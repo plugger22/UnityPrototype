@@ -55,12 +55,13 @@ public class Npc : ScriptableObject
     public List<Effect> listOfBadEffects;
 
     #region Save Compatible Data
-    [HideInInspector] public NpcStatus status;              //current status
-    [HideInInspector] public int timerTurns;                //counts down from maxTurns to zero (max turns allowed on map, if zero will leave map upon reaching currentEndNode)
+    [HideInInspector] public NpcStatus status;                                      //current status
+    [HideInInspector] public int timerTurns;                                        //counts down from maxTurns to zero (max turns allowed on map, if zero will leave map upon reaching currentEndNode)
     [HideInInspector] public Node currentStartNode;
     [HideInInspector] public Node currentEndNode;
-    [HideInInspector] public Node currentNode;              //where Npc is now
-    [HideInInspector] public int daysActive;                //tally of days spent in City
+    [HideInInspector] public Node currentNode;                                      //where Npc is now
+    [HideInInspector] public int daysActive;                                        //tally of days spent in City
+    [HideInInspector] public List<int> listOfStealthNodes = new List<int>();        //nodes where Player's position is known and NPC goes into stealth mode and can't be intercepted in that location
     #endregion
 
 
@@ -72,7 +73,28 @@ public class Npc : ScriptableObject
         Debug.AssertFormat(nodeStart != null, "Invalid nodeStart (Null) for {0}", name);
         Debug.AssertFormat(nodeEnd != null, "Invalid nodeEnd (Null) for {0}", name);
         Debug.AssertFormat(action != null, "Invalid action (Null) for {0}", name);
+        //clear stealth list
+        listOfStealthNodes.Clear();
     }
+
+    /// <summary>
+    /// Add node where player's position was known immediately
+    /// </summary>
+    /// <param name="nodeID"></param>
+    public void AddStealthNode(int nodeID)
+    {
+        Debug.Assert(nodeID > -1 && nodeID < GameManager.i.nodeScript.maxNodeValue);
+        //check not already in list
+        if (listOfStealthNodes.Exists(x => x == nodeID) == false)
+        { listOfStealthNodes.Add(nodeID); }
+    }
+
+    /// <summary>
+    /// returns true if Npc's currentNode.nodeID is in listofStealthNodes and Npc is assumed to be in Stealth mode and can't be interdicted or spotted
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckIfStealthMode()
+    { return listOfStealthNodes.Exists(x => x == currentNode.nodeID); }
 
 }
 

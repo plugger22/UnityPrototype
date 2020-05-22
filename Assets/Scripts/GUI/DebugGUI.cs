@@ -1731,7 +1731,7 @@ public class DebugGUI : MonoBehaviour
                         analysis = GameManager.i.dataScript.DebugDisplayCurrentOrganisations();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
-                    //V.I.P Tracker data
+                    //Npc Tracker data
                     case 79:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.dataScript.DebugShowNpcMoves();

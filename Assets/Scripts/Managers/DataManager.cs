@@ -9530,7 +9530,7 @@ public class DataManager : MonoBehaviour
             if (data.Value != null)
             {
                 builder.AppendFormat(" -Scenario {0}{1}", data.Key, "\n");
-                builder.AppendFormat("  \"{0}\", {1}, turns [2}{3}", data.Value.scenarioDescriptor, data.Value.cityName, data.Value.turns, "\n");
+                builder.AppendFormat("  \"{0}\", {1}, turns {2}{3}", data.Value.scenarioDescriptor, data.Value.cityName, data.Value.turns, "\n");
                 builder.AppendFormat("  cityLoyalty: start {0}, end {1}{2}", data.Value.cityLoyaltyStart, data.Value.cityLoyaltyEnd, "\n");
                 builder.AppendFormat("  hqApproval: start {0}, end {1}{2}", data.Value.hqApprovalStart, data.Value.hqApprovalEnd, "\n");
                 builder.AppendLine();

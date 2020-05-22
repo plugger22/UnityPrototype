@@ -396,6 +396,20 @@ public class MissionManager : MonoBehaviour
     }
 
     /// <summary>
+    /// returns true if there is an active NPC onMap (false otherwise, auto handles cases of no NPC present in level)
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckIfNpcOnMap()
+    {
+        if (mission.npc != null)
+        {
+            if (mission.npc.status == NpcStatus.Active)
+            { return true; }
+        }
+        return false;
+    }
+
+    /// <summary>
     /// subMethod to return a colour formatted string to explain what a listOfEffects would do. ColourEffect is to differentiate between good and bad effects
     /// </summary>
     /// <param name="listOfEffects"></param>
@@ -469,9 +483,13 @@ public class MissionManager : MonoBehaviour
         //check if in same district as Player
         if (npc.currentNode.nodeID == GameManager.i.nodeScript.GetPlayerNodeID())
         {
-            //Player Interacts with Npc
-            if (ProcessNpcInteract(npc) == true)
-            { return; }
+            //stealth mode?
+            if (npc.CheckIfStealthMode() == false)
+            {
+                //Player Interacts with Npc
+                if (ProcessNpcInteract(npc) == true)
+                { return; }
+            }
         }
         else
         {

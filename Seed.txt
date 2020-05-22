@@ -1694,3 +1694,13 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 30448 -> Friday, 22 May 2020 3:30 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 47850 -> Friday, 22 May 2020 4:36 PM
+City seed 5678 -> London, United Kingdom
+ASSERT FormatException: Input string was not in a correct format.
+System.Text.StringBuilder.FormatError () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Text.StringBuilder.AppendFormat (System.String format, System.Object[] args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	DataManager.DebugDisplayCampaignHistory () (at Assets/Scripts/Managers/DataManager.cs:9533)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1950)
+	

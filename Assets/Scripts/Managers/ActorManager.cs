@@ -6765,6 +6765,8 @@ public class ActorManager : MonoBehaviour
                                     actor.AddSecret(secret);
                                     secret.AddActor(actor.actorID);
                                     actor.AddHistory(new HistoryActor() { text = string.Format("Learnt one of your Secrets ({0})", secret.tag) });
+                                    //popUp
+                                    GameManager.i.popUpFixedScript.SetData(actor.slotID, "Learns Secret");
                                     //Admin
                                     Debug.LogFormat("[Rnd] PlayerManager.cs -> CheckForSecrets: {0} learned SECRET need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
                                     if (isPlayer == true)
@@ -6832,6 +6834,8 @@ public class ActorManager : MonoBehaviour
                         //actor doesn't already know the secret
                         if (secret.CheckActorPresent(actor.actorID) == false)
                         {
+                            //popUp
+                            GameManager.i.popUpFixedScript.SetData(actor.slotID, "Learns Secret");
                             //actor learns of secret
                             actor.AddSecret(secret);
                             secret.AddActor(actor.actorID);
@@ -6881,6 +6885,8 @@ public class ActorManager : MonoBehaviour
                         Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessCompatibility: Resign check SUCCESS need < {0}, rolled {1}{2}", chance, rnd, "\n");
                         string text = string.Format("{0} Resign attempt SUCCESS", actor.arc.name);
                         GameManager.i.messageScript.GeneralRandom(text, "Resignation", chance, rnd, true);
+                        //popUp
+                        GameManager.i.popUpFixedScript.SetData(actor.slotID, "Resigns");
                         //resignation
                         if (GameManager.i.dataScript.RemoveCurrentActor(side, actor, ActorStatus.Resigned) == true)
                         {
@@ -7039,6 +7045,8 @@ public class ActorManager : MonoBehaviour
             actor.tooltipStatus = ActorTooltip.Breakdown;
             actor.isBreakdown = true;
             actor.numOfTimesBreakdown++;
+            //popUp
+            GameManager.i.popUpFixedScript.SetData(actor.slotID, "BREAKDOWN");
             //change alpha of actor to indicate inactive status
             GameManager.i.actorPanelScript.UpdateActorAlpha(actor.slotID, GameManager.i.guiScript.alphaInactive);
             //message (public)

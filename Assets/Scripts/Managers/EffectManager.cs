@@ -1081,7 +1081,7 @@ public class EffectManager : MonoBehaviour
                                                 else { Debug.LogWarning("Invalid conditionWounded (Null)"); errorFlag = true; }
                                                 break;
                                             case "ConditionWoundedYes":
-                                                //player only has the 'Blackmailer' condition
+                                                //player only has the 'Wounded' condition
                                                 if (conditionWounded != null)
                                                 {
                                                     if (GameManager.i.playerScript.CheckConditionPresent(conditionWounded, playerSide) == false)
@@ -5379,6 +5379,9 @@ public class EffectManager : MonoBehaviour
                         reason = "TAGGED condition";
                         GameManager.i.aiScript.immediateFlagResistance = true;
                         popText = "POSITION KNOWN";
+                        //Npc stealth node
+                        if (GameManager.i.missionScript.CheckIfNpcOnMap() == true)
+                        { GameManager.i.missionScript.mission.npc.AddStealthNode(node.nodeID); }
                     }
                     //NOT Tagged
                     else
@@ -5398,6 +5401,9 @@ public class EffectManager : MonoBehaviour
                                     colourAlert, colourEnd, "\n", "\n", colourBadSide, colourEnd);
                                 popText = string.Format("{0}{1}POSITION KNOWN", popText, "\n");
                                 GameManager.i.aiScript.immediateFlagResistance = true;
+                                //Npc stealth node
+                                if (GameManager.i.missionScript.CheckIfNpcOnMap() == true)
+                                { GameManager.i.missionScript.mission.npc.AddStealthNode(node.nodeID); }
                             }
                         }
                         else
@@ -5413,6 +5419,9 @@ public class EffectManager : MonoBehaviour
                                     colourAlert, effect.description, colourEnd, "\n", "\n", colourBadSide, colourEnd);
                                 popText = string.Format("{0}{1}POSITION KNOWN", popText, "\n");
                                 GameManager.i.aiScript.immediateFlagResistance = true;
+                                //Npc stealth node
+                                if (GameManager.i.missionScript.CheckIfNpcOnMap() == true)
+                                { GameManager.i.missionScript.mission.npc.AddStealthNode(node.nodeID); }
                             }
 
                         }
