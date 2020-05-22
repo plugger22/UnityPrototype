@@ -540,7 +540,7 @@ public class CaptureManager : MonoBehaviour
                 if (actorID == GameManager.i.playerScript.actorID)
                 {
                     //check player at node
-                    if (nodeID == GameManager.i.nodeScript.nodePlayer)
+                    if (nodeID == GameManager.i.nodeScript.GetPlayerNodeID())
                     {
                         //Erasure team picks up player/actor immediately if invisibility low enough
                         if (CheckCaptureVisibility(GameManager.i.playerScript.Invisibility) == true)
@@ -679,7 +679,7 @@ public class CaptureManager : MonoBehaviour
         //only check if player active
         if ( status == ActorStatus.Active)
         {
-            CaptureDetails details = CheckCaptured(GameManager.i.nodeScript.nodePlayer);
+            CaptureDetails details = CheckCaptured(GameManager.i.nodeScript.GetPlayerNodeID());
             if (details != null)
             {
                 //Player captured
@@ -702,7 +702,7 @@ public class CaptureManager : MonoBehaviour
         if (GameManager.i.playerScript.status != ActorStatus.Captured)
         {
             //get player node
-            Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
+            Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
             if (node != null)
             {
                 //get default ID 0 team (could be anything)
@@ -711,7 +711,7 @@ public class CaptureManager : MonoBehaviour
                 { CapturePlayer(new CaptureDetails() { node = node, team = team }); }
                 else { Debug.LogError("Invalid team ID 0 (Null)"); }
             }
-            else { Debug.LogErrorFormat("Invalid player node (Null), ID {0}", GameManager.i.nodeScript.nodePlayer); }
+            else { Debug.LogErrorFormat("Invalid player node (Null), ID {0}", GameManager.i.nodeScript.GetPlayerNodeID()); }
         }
         else { Debug.LogWarning("Player can't be Debug Captured as they are already Captured"); }
     }

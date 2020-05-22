@@ -2314,7 +2314,7 @@ public class EffectManager : MonoBehaviour
                         if (node != null)
                         {
                             //player
-                            if (node.nodeID == GameManager.i.nodeScript.nodePlayer)
+                            if (node.nodeID == GameManager.i.nodeScript.GetPlayerNodeID())
                             { effectReturn.bottomText = ExecutePlayerInvisibility(effect, dataInput, node); }
                             else
                             {
@@ -2339,7 +2339,7 @@ public class EffectManager : MonoBehaviour
                         if (node != null)
                         {
                             //Player
-                            if (node.nodeID == GameManager.i.nodeScript.nodePlayer)
+                            if (node.nodeID == GameManager.i.nodeScript.GetPlayerNodeID())
                             { effectReturn.bottomText = ExecutePlayerRenown(effect); }
                             else
                             {
@@ -3368,7 +3368,7 @@ public class EffectManager : MonoBehaviour
                 if (condition != null)
                 {
                     //assign condition to player if at their node, otherwise actor
-                    if (node.nodeID == GameManager.i.nodeScript.nodePlayer)
+                    if (node.nodeID == GameManager.i.nodeScript.GetPlayerNodeID())
                     {
                         //Player Condition
                         switch (effect.operand.name)
@@ -3457,7 +3457,7 @@ public class EffectManager : MonoBehaviour
                         break;
                 }
                 //Player
-                if (node.nodeID == GameManager.i.nodeScript.nodePlayer)
+                if (node.nodeID == GameManager.i.nodeScript.GetPlayerNodeID())
                 {
                     if (GameManager.i.playerScript.CheckNumOfConditions(dataInput.side) > 0)
                     {
@@ -4482,7 +4482,7 @@ public class EffectManager : MonoBehaviour
                 if (node == null)
                 {
                     //get player node for a general loss of invisibility effect, if none present
-                    node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
+                    node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
                 }
                 if (node != null)
                 { effectResolve.bottomText = ExecutePlayerInvisibility(effect, dataInput, node); }
@@ -5847,7 +5847,7 @@ public class EffectManager : MonoBehaviour
                         EffectDataInput effectInput = new EffectDataInput();
                         effectInput.originText = "Org Reveals Secret";
                         effectInput.dataName = secret.org.name;
-                        Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
+                        Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
                         if (node != null)
                         {
                             if (secret.listOfEffects.Count > 0)

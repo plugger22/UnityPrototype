@@ -303,7 +303,7 @@ public class ActionManager : MonoBehaviour
                     if (details.side.level == GameManager.i.globalScript.sideResistance.level)
                     {
                         int actorID = actor.actorID;
-                        if (node.nodeID == GameManager.i.nodeScript.nodePlayer) { actorID = 999; isPlayer = true; }
+                        if (node.nodeID == GameManager.i.nodeScript.GetPlayerNodeID()) { actorID = 999; isPlayer = true; }
                         captureDetails = GameManager.i.captureScript.CheckCaptured(node.nodeID, actorID);
                     }
                     if (captureDetails != null)
@@ -1823,7 +1823,7 @@ public class ActionManager : MonoBehaviour
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
         ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
-        Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
+        Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
         if (node != null)
         {
             //resolve action
@@ -1908,7 +1908,7 @@ public class ActionManager : MonoBehaviour
         else
         {
             errorFlag = true;
-            Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", GameManager.i.nodeScript.nodePlayer);
+            Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", GameManager.i.nodeScript.GetPlayerNodeID());
         }
         //
         // - - - Outcome - - -
@@ -2386,7 +2386,7 @@ public class ActionManager : MonoBehaviour
                 //
 
                 //Player
-                if (nodeID == GameManager.i.nodeScript.nodePlayer)
+                if (nodeID == GameManager.i.nodeScript.GetPlayerNodeID())
                 {
                     isPlayer = true;
                     details = GameManager.i.captureScript.CheckCaptured(nodeID, actorID);

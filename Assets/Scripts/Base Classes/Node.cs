@@ -371,7 +371,7 @@ public class Node : MonoBehaviour
                         {
                             EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Move, "Node.cs -> OnMouseOver");
                             //if at Player's current node then Gear Node menu
-                            if (nodeID == GameManager.i.nodeScript.nodePlayer)
+                            if (nodeID == GameManager.i.nodeScript.GetPlayerNodeID())
                             { EventManager.instance.PostNotification(EventType.CreateGearNodeMenu, this, nodeID, "Node.cs -> OnMouseOver"); }
                         }
                     }

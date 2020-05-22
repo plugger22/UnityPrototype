@@ -4130,7 +4130,7 @@ public class AIManager : MonoBehaviour
                             //Detected by AITrackback results in immediate notification regardless of circumstances (unless detection negated by Gear)
                             immediateFlagResistance = true;
                             text = "AI Hacking attempt Detected (IMMEDIATE TraceBack)";
-                            GameManager.i.messageScript.AIDetected(text, GameManager.i.nodeScript.nodePlayer, 0);
+                            GameManager.i.messageScript.AIDetected(text, GameManager.i.nodeScript.GetPlayerNodeID(), 0);
                         }
                         else
                         {

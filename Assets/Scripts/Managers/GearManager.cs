@@ -648,7 +648,7 @@ public class GearManager : MonoBehaviour
             #region CaptureCheck
             //check for player/actor being captured
             int actorID = GameManager.i.playerScript.actorID;
-            if (node.nodeID != GameManager.i.nodeScript.nodePlayer)
+            if (node.nodeID != GameManager.i.nodeScript.GetPlayerNodeID())
             {
                 Actor actor = GameManager.i.dataScript.GetCurrentActor(details.actorDataID, globalResistance);
                 if (actor != null)
@@ -1166,7 +1166,7 @@ public class GearManager : MonoBehaviour
                     Node node = GameManager.i.dataScript.GetNode(data.nodeID);
                     if (node != null)
                     {
-                        if (GameManager.i.nodeScript.nodePlayer == node.nodeID)
+                        if (GameManager.i.nodeScript.GetPlayerNodeID() == node.nodeID)
                         { isPlayer = true; }
                         Actor actor = GameManager.i.dataScript.GetCurrentActor(data.actorSlotID, GameManager.i.globalScript.sideResistance);
                         if (actor != null)

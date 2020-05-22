@@ -1414,7 +1414,7 @@ public class TeamManager : MonoBehaviour
                     Node node = GameManager.i.dataScript.GetNode(data.nodeID);
                     if (node != null)
                     {
-                        if (node.nodeID == GameManager.i.nodeScript.nodePlayer) { isPlayer = true; }
+                        if (node.nodeID == GameManager.i.nodeScript.GetPlayerNodeID()) { isPlayer = true; }
                         Actor actor = GameManager.i.dataScript.GetCurrentActor(data.actorSlotID, globalResistance);
                         if (actor != null)
                         {

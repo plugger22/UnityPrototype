@@ -1126,7 +1126,7 @@ public class TargetManager : MonoBehaviour
                             break;
                         case TargetFactors.ActorAndGear:
                             //player or Active Actor?
-                            if (GameManager.i.nodeScript.nodePlayer == node.nodeID)
+                            if (GameManager.i.nodeScript.GetPlayerNodeID() == node.nodeID)
                             {
                                 //Player at node -> active actor not applicable
                                 if (target.actorArc != null)
@@ -1305,7 +1305,7 @@ public class TargetManager : MonoBehaviour
                             break;
                         case TargetFactors.ActorAndGear:
                             //player or Active Actor?
-                            if (GameManager.i.nodeScript.nodePlayer == node.nodeID)
+                            if (GameManager.i.nodeScript.GetPlayerNodeID() == node.nodeID)
                             {
                                 //player has special gear?
                                 if (target.gear != null)
@@ -1708,7 +1708,7 @@ public class TargetManager : MonoBehaviour
             #region CaptureCheck
             //check for player/actor being captured
             int actorID = GameManager.i.playerScript.actorID;
-            if (node.nodeID != GameManager.i.nodeScript.nodePlayer)
+            if (node.nodeID != GameManager.i.nodeScript.GetPlayerNodeID())
             {
                 Actor actor = GameManager.i.dataScript.GetCurrentActor(details.actorDataID, globalResistance);
                 if (actor != null)
@@ -1924,7 +1924,7 @@ public class TargetManager : MonoBehaviour
                     StringBuilder builderTop = new StringBuilder();
                     StringBuilder builderBottom = new StringBuilder();
                     //check if player action
-                    if (node.nodeID == GameManager.i.nodeScript.nodePlayer) { isPlayer = true; }
+                    if (node.nodeID == GameManager.i.nodeScript.GetPlayerNodeID()) { isPlayer = true; }
                     //update target info level
                     target.intel = target.newIntel;
                     if (target.intel > maxTargetInfo)

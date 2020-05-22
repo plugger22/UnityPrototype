@@ -728,10 +728,10 @@ public class DebugGUI : MonoBehaviour
             //third button
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), "Remove Tracer"))
             {
-                Debug.LogFormat("[Dbg] Button -> Toggle Remove Tracer at nodeID {0}{1}", GameManager.i.nodeScript.nodePlayer, "\n");
+                Debug.LogFormat("[Dbg] Button -> Toggle Remove Tracer at nodeID {0}{1}", GameManager.i.nodeScript.GetPlayerNodeID(), "\n");
                 if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideResistance.level)
                 {
-                    Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
+                    Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
                     if (node != null) { node.RemoveTracer(); } else { Debug.LogError("Invalid current Player node (Null)"); }
                 }
             }

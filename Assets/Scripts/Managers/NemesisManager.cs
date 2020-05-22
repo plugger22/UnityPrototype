@@ -1034,7 +1034,7 @@ public class NemesisManager : MonoBehaviour
                 GameManager.i.nodeScript.NodeRedraw = true;
                 hasMoved = true;
                 Debug.LogFormat("[Nem] NemesisManager.cs -> ProcessMoveNemesis: Nemesis MOVES to node {0}, {1}, id {2}{3}", nemesisNode.nodeName, nemesisNode.Arc.name, nemesisNode.nodeID, "\n");
-                int playerNodeID = GameManager.i.nodeScript.nodePlayer;
+                int playerNodeID = GameManager.i.nodeScript.GetPlayerNodeID();
                 //tracker
                 HistoryNemesisMove history = new HistoryNemesisMove();
                 history.turn = GameManager.i.turnScript.Turn;
@@ -1237,7 +1237,7 @@ public class NemesisManager : MonoBehaviour
                 //prevent a double warning if player moves into a node with nemesis and nemesis is stationary
                 if (hasWarning == false)
                 {
-                    Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
+                    Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
                     if (node != null)
                     {
                         hasWarning = true;
@@ -1460,7 +1460,7 @@ public class NemesisManager : MonoBehaviour
                     if (isCheckNeeded == true)
                     {
                         //both at same node
-                        if (nemesisNode.nodeID == GameManager.i.nodeScript.nodePlayer)
+                        if (nemesisNode.nodeID == GameManager.i.nodeScript.GetPlayerNodeID())
                         { ProcessPlayerInteraction(isPlayerMove); }
                     }
                 }

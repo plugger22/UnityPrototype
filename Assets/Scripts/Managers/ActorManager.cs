@@ -1397,7 +1397,7 @@ public class ActorManager : MonoBehaviour
         //string builder for cancel button (handles all no go cases
         StringBuilder infoBuilder = new StringBuilder();
         //player's current node
-        int playerID = GameManager.i.nodeScript.nodePlayer;
+        int playerID = GameManager.i.nodeScript.GetPlayerNodeID();
         #endregion
 
         //Get Node
@@ -3698,7 +3698,7 @@ public class ActorManager : MonoBehaviour
             {
                 //check for player/actor being captured
                 int actorID = GameManager.i.playerScript.actorID;
-                if (node.nodeID != GameManager.i.nodeScript.nodePlayer)
+                if (node.nodeID != GameManager.i.nodeScript.GetPlayerNodeID())
                 {
                     Actor actor = GameManager.i.dataScript.GetCurrentActor(details.actorDataID, globalResistance);
                     if (actor != null)
@@ -3791,7 +3791,7 @@ public class ActorManager : MonoBehaviour
                 //selection methodology varies for each side -> need to populate 'listOfPoolActors'
                 if (details.side.level == globalResistance.level)
                 {
-                    if (node.nodeID == GameManager.i.nodeScript.nodePlayer)
+                    if (node.nodeID == GameManager.i.nodeScript.GetPlayerNodeID())
                     {
                         //player at node, select from 3 x level 1 options, different from current OnMap actor types
                         listOfPoolActors.AddRange(GameManager.i.dataScript.GetActorRecruitPool(1, details.side));
@@ -4674,7 +4674,7 @@ public class ActorManager : MonoBehaviour
                             if (node != null)
                             {
                                 //reset recruit actor cache flags
-                                if (GameManager.i.nodeScript.nodePlayer == node.nodeID)
+                                if (GameManager.i.nodeScript.GetPlayerNodeID() == node.nodeID)
                                 {
                                     isPlayer = true;
                                     isNewActionResistancePlayer = true;
@@ -4729,7 +4729,7 @@ public class ActorManager : MonoBehaviour
                                     {
                                         turn = GameManager.i.turnScript.Turn,
                                         actorID = 999,
-                                        nodeID = GameManager.i.nodeScript.nodePlayer,
+                                        nodeID = GameManager.i.nodeScript.GetPlayerNodeID(),
                                         dataName = actorRecruited.actorName,
                                         nodeAction = NodeAction.PlayerRecruitActor
                                     };
@@ -4860,7 +4860,7 @@ public class ActorManager : MonoBehaviour
                         {
                             turn = GameManager.i.turnScript.Turn,
                             actorID = 999,
-                            nodeID = GameManager.i.nodeScript.nodePlayer,
+                            nodeID = GameManager.i.nodeScript.GetPlayerNodeID(),
                             dataName = actorRecruited.actorName,
                             nodeAction = NodeAction.PlayerRecruitActor
                         };
@@ -5080,7 +5080,7 @@ public class ActorManager : MonoBehaviour
                                 //
                                 // - - - Effect - - -
                                 //
-                                int nodeID = GameManager.i.nodeScript.nodePlayer;
+                                int nodeID = GameManager.i.nodeScript.GetPlayerNodeID();
 
                                 switch (actorConflict.who.level)
                                 {
@@ -5089,7 +5089,7 @@ public class ActorManager : MonoBehaviour
                                         Node nodePlayer = GameManager.i.dataScript.GetNode(nodeID);
                                         if (nodePlayer != null)
                                         { effectReturn = GameManager.i.effectScript.ProcessEffect(actorConflict.effect, nodePlayer, effectInput); }
-                                        else { Debug.LogWarningFormat("Invalid player Node (Null) for playerNodeID {0}", GameManager.i.nodeScript.nodePlayer); }
+                                        else { Debug.LogWarningFormat("Invalid player Node (Null) for playerNodeID {0}", GameManager.i.nodeScript.GetPlayerNodeID()); }
                                         break;
                                     case 1:
                                         //actor -> can't use player node, need a different one (use nodeID 0 or 1 as safe options)
@@ -6659,7 +6659,7 @@ public class ActorManager : MonoBehaviour
                         effectInput.originText = "Reveal Secret";
                         /*effectInput.dataName = secret.org.name;*/
                         effectInput.dataName = secret.tag;
-                        Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
+                        Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
                         if (node != null)
                         {
                             //loop effects
@@ -7390,7 +7390,7 @@ public class ActorManager : MonoBehaviour
                     {
                         //Player has IMAGED condition. Random chance of them being picked up by facial recognition software
                         rnd = Random.Range(0, 100);
-                        Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
+                        Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
                         if (rnd < playerRecognisedChance)
                         {
                             text = "Player SPOTTED by Facial Recognition Scan";
@@ -7414,7 +7414,7 @@ public class ActorManager : MonoBehaviour
                                     //AI Immediate message
                                     GameManager.i.messageScript.AIImmediateActivity("Immediate Activity \"IMAGED\" (Player)", "Facial Recognition Scan", node.nodeID, -1, playerID);
                                 }
-                                else { Debug.LogErrorFormat("Invalid node (Null) for playerNodeID {0}", GameManager.i.nodeScript.nodePlayer); }
+                                else { Debug.LogErrorFormat("Invalid node (Null) for playerNodeID {0}", GameManager.i.nodeScript.GetPlayerNodeID()); }
                             }
                             //messages
                             GameManager.i.messageScript.PlayerSpotted(text, detailsTop, detailsBottom, node);
@@ -7598,7 +7598,7 @@ public class ActorManager : MonoBehaviour
                                 //message -> status change
                                 text = string.Format("{0} has automatically reactivated", playerName);
                                 GameManager.i.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", playerID, globalResistance);
-                                Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerResistanceAI: Player no longer Lying Low at node id {0}{1}", GameManager.i.nodeScript.nodePlayer, "\n");
+                                Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerResistanceAI: Player no longer Lying Low at node id {0}{1}", GameManager.i.nodeScript.GetPlayerNodeID(), "\n");
                             }
                             //check if Player has stressed condition
                             if (GameManager.i.playerScript.CheckConditionPresent(conditionStressed, globalResistance) == true)
@@ -7680,7 +7680,7 @@ public class ActorManager : MonoBehaviour
                     {
                         //Random chance of them being picked up by facial recognition software
                         rnd = Random.Range(0, 100);
-                        Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
+                        Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
                         if (rnd < playerRecognisedChance)
                         {
                             text = "Player SPOTTED by Facial Recognition Scan";
@@ -7704,7 +7704,7 @@ public class ActorManager : MonoBehaviour
                                     //AI Immediate message
                                     GameManager.i.messageScript.AIImmediateActivity("Immediate Activity \"IMAGED\" (Player)", "Facial Recognition Scan", node.nodeID, -1, playerID);
                                 }
-                                else { Debug.LogErrorFormat("Invalid node (Null) for playerNodeID {0}", GameManager.i.nodeScript.nodePlayer); }
+                                else { Debug.LogErrorFormat("Invalid node (Null) for playerNodeID {0}", GameManager.i.nodeScript.GetPlayerNodeID()); }
                             }
                             //messages
                             if (isPlayer == true)
@@ -8327,7 +8327,7 @@ public class ActorManager : MonoBehaviour
                         //data packages
                         EffectDataInput effectInput = new EffectDataInput();
                         effectInput.originText = "Reveal Secret";
-                        Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
+                        Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
                         if (node != null)
                         {
                             //loop effects
@@ -8841,7 +8841,7 @@ public class ActorManager : MonoBehaviour
                 //statistic
                 GameManager.i.dataScript.StatisticIncrement(StatType.PlayerBetrayed);
                 //immediate notification if invis 0
-                Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
+                Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
                 if (node != null)
                 {
                     if (invisibility == 0)
@@ -8855,7 +8855,7 @@ public class ActorManager : MonoBehaviour
                     text = string.Format("{0}, Resistance Leader, BETRAYED at {0}, {1}, ID {2}{3}", GameManager.i.playerScript.PlayerName, node.nodeName, node.Arc.name, node.nodeID);
                     GameManager.i.messageScript.PlayerBetrayed(text, true);
                 }
-                else { Debug.LogErrorFormat("Invalid node (Null) for playerNodeID {0}", GameManager.i.nodeScript.nodePlayer); }
+                else { Debug.LogErrorFormat("Invalid node (Null) for playerNodeID {0}", GameManager.i.nodeScript.GetPlayerNodeID()); }
             }
             else { Debug.LogFormat("[Rnd] ActorManager.cs -> CheckForBetrayal: Resistance Leader Not Betrayed (need {0}, rolled {1}){2}", chance, rndNum, "\n"); }
         }
@@ -8883,7 +8883,7 @@ public class ActorManager : MonoBehaviour
                     {
                         if (listOfCurrentArcs.Count > 0)
                         {
-                            if (node.nodeID == GameManager.i.nodeScript.nodePlayer)
+                            if (node.nodeID == GameManager.i.nodeScript.GetPlayerNodeID())
                             {
                                 //player at node, select from 3 x level 1 options, different from current OnMap actor types
                                 listOfPoolActors.AddRange(GameManager.i.dataScript.GetActorRecruitPool(1, side));

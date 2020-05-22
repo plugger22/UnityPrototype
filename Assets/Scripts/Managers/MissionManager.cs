@@ -467,7 +467,7 @@ public class MissionManager : MonoBehaviour
         //update day tally regardless
         npc.daysActive++;
         //check if in same district as Player
-        if (npc.currentNode.nodeID == GameManager.i.nodeScript.nodePlayer)
+        if (npc.currentNode.nodeID == GameManager.i.nodeScript.GetPlayerNodeID())
         {
             //Player Interacts with Npc
             if (ProcessNpcInteract(npc) == true)

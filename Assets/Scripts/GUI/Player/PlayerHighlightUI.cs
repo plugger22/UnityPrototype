@@ -52,7 +52,7 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
                     node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodeCaptured);
                     break;
                 default:
-                    node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.nodePlayer);
+                    node = GameManager.instance.dataScript.GetNode(GameManager.instance.nodeScript.GetPlayerNodeID());
                     break;
             }*/
         }
@@ -65,7 +65,7 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
                     node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodeCaptured);
                     break;
                 default:
-                    node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
+                    node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
                     break;
             }
         }
@@ -76,7 +76,7 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
             GameManager.i.nodeScript.SetShowPlayerNode(false);
             myFlashCoroutine = StartCoroutine("FlashingPlayerNode", node);
         }
-        else { Debug.LogWarningFormat("Invalid player node (Null) for node ID {0}", GameManager.i.nodeScript.nodePlayer); }
+        else { Debug.LogWarningFormat("Invalid player node (Null) for node ID {0}", GameManager.i.nodeScript.GetPlayerNodeID()); }
     }
 
     /// <summary>
@@ -96,7 +96,7 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
             switch (GameManager.i.playerScript.status)
             {
                 case ActorStatus.Active:
-                    node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
+                    node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
                     if (node != null)
                     {
                         node.SetPlayerNormal();
