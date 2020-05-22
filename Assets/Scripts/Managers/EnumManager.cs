@@ -28,7 +28,7 @@
     public enum ModalGenericPickerSubState { None, Normal, CompromisedGear }                                                     //if ModalUI.GenericPicker -> what type of picker
     public enum ModalMetaSubState { None, PlayerOptions, OptionsConfirm, EndScreen }                                                    //if ModalUI.MetaGame -> what type of meta UI
     public enum ModalReviewSubState { None, Open, Review, Close }                                                           //ModalReviewUI different states
-    public enum InventoryState { None, Gear, ReservePool, HQ}
+    public enum ModalInventorySubState { None, Gear, ReservePool, HQ}
     public enum AlignHorizontal { None, Left, Centre, Right }
     public enum Background { None, Start, NewGame, NewGameOptions, SaveGame, LoadGame, Options, EndLevel, MetaGame, NewCampaign, EndCampaign }             //full screen backgrounds
     public enum ActionMenuType { None, Node, NodeGear, Gear, Actor, Player, Move, Reserve }

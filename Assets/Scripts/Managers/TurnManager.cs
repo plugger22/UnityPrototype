@@ -278,6 +278,13 @@ public class TurnManager : MonoBehaviour
     { isNewTurn = false; }
 
     /// <summary>
+    /// returns true if new Turn blocked (already processing one), false if O.K for a new turn. Used by InputManager.cs  to prevent certain actions during new turn processing
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckNewTurnBlocked()
+    { return isNewTurn; }
+
+    /// <summary>
     /// autorun active or not
     /// </summary>
     /// <returns></returns>

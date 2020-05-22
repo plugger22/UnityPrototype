@@ -4006,7 +4006,7 @@ public class ActorManager : MonoBehaviour
                 data.textHeader = "HQ Hierarchy";
                 data.textTop = string.Format("This is the {0}{1}{2} HQ Hierarchy", colourNeutral, data.side.name, colourEnd);
                 data.textBottom = string.Format("{0}MOUSE OVER{1} portrait for more information", colourAlert, colourEnd);
-                data.state = InventoryState.HQ;
+                data.state = ModalInventorySubState.HQ;
                 //compatibility tooltip
                 GenericTooltipData compatibilityData = GameManager.i.guiScript.GetCompatibilityTooltip();
                 if (compatibilityData == null) { Debug.LogWarning("Invalid compatibilityData (Null)"); }
@@ -4370,7 +4370,7 @@ public class ActorManager : MonoBehaviour
             data.textBottom = string.Format("{0}LEFT CLICK{1}{2} portrait for Info, {3}{4}RIGHT CLICK{5}{6} portrait for Options{7}", colourAlert, colourEnd, colourDefault,
                 colourEnd, colourAlert, colourEnd, colourDefault, colourEnd);
             data.handler = RefreshReservePool;
-            data.state = InventoryState.ReservePool;
+            data.state = ModalInventorySubState.ReservePool;
             data.help0 = "reserve_0";
             data.help1 = "reserve_1";
             data.help2 = "reserve_2";

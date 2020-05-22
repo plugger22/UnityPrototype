@@ -902,7 +902,7 @@ public class GearManager : MonoBehaviour
                     colourDefault, colourEnd, colourAlert, colourEnd, colourDefault, colourEnd);
                 data.side = GameManager.i.sideScript.PlayerSide;
                 data.handler = RefreshGearInventory;
-                data.state = InventoryState.Gear;
+                data.state = ModalInventorySubState.Gear;
                 //Loop Gear list and populate arrays
                 List<string> listOfGear = GameManager.i.playerScript.GetListOfGear();
                 if (listOfGear != null)

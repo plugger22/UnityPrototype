@@ -296,166 +296,157 @@ public class ActionManager : MonoBehaviour
             if (actor != null)
             {
                 //get node
-                GameObject nodeObject = GameManager.i.dataScript.GetNodeObject(details.nodeID);
-                if (nodeObject != null)
+                Node node = GameManager.i.dataScript.GetNode(details.nodeID);
+                if (node != null)
                 {
-                    Node node = nodeObject.GetComponent<Node>();
-                    if (node != null)
+                    //check for Resistance player/actor getting captured prior to carrying out action
+                    if (details.side.level == GameManager.i.globalScript.sideResistance.level)
                     {
-                        //check for Resistance player/actor getting captured prior to carrying out action
+                        int actorID = actor.actorID;
+                        if (node.nodeID == GameManager.i.nodeScript.nodePlayer) { actorID = 999; isPlayer = true; }
+                        captureDetails = GameManager.i.captureScript.CheckCaptured(node.nodeID, actorID);
+                    }
+                    if (captureDetails != null)
+                    {
+                        //Captured. Mission a wipe.
+                        captureDetails.effects = string.Format("{0}Mission at \"{1}\" aborted{2}", colourNeutral, node.nodeName, colourEnd);
+                        EventManager.instance.PostNotification(EventType.Capture, this, captureDetails, "ActionManager.cs -> ProcessNodeAction");
+                        return;
+                    }
+
+                    //Get Action & Effects
+                    Action action = actor.arc.nodeAction;
+                    List<Effect> listOfEffects = action.GetEffects();
+                    if (listOfEffects.Count > 0)
+                    {
+                        //return class
+                        EffectDataReturn effectReturn = new EffectDataReturn();
+                        //two builders for top and bottom texts
+                        StringBuilder builderTop = new StringBuilder();
+                        StringBuilder builderBottom = new StringBuilder();
+                        //pass through data package
+                        EffectDataInput dataInput = new EffectDataInput();
+                        dataInput.originText = action.tag;
+                        //
+                        // - - - Process effects
+                        //
+                        foreach (Effect effect in listOfEffects)
+                        {
+                            //ongoing effect?
+                            if (effect.duration.name.Equals("Ongoing", StringComparison.Ordinal) == true)
+                            {
+                                //NOTE: A standard node action can use ongoing effects but there is no way of linking it. The node effects will time out and that's it
+                                dataInput.ongoingID = GameManager.i.effectScript.GetOngoingEffectID();
+                            }
+                            else { dataInput.ongoingID = -1; dataInput.ongoingText = action.name; }
+                            effectReturn = GameManager.i.effectScript.ProcessEffect(effect, node, dataInput, actor);
+                            if (effectReturn != null)
+                            {
+                                outcomeDetails.sprite = actor.sprite;
+                                //update stringBuilder texts
+                                if (string.IsNullOrEmpty(effectReturn.topText) == false)
+                                {
+                                    if (builderTop.Length > 0) { builderTop.AppendLine(); builderTop.AppendLine(); }
+                                    builderTop.Append(effectReturn.topText);
+                                }
+                                if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                                builderBottom.Append(effectReturn.bottomText);
+                                //exit effect loop on error
+                                if (effectReturn.errorFlag == true) { break; }
+                                //valid action? -> only has to be true once for an action to be valid
+                                if (effectReturn.isAction == true) { isAction = true; }
+                            }
+                            else
+                            {
+                                builderTop.AppendLine();
+                                builderTop.Append("Error");
+                                builderBottom.AppendLine();
+                                builderBottom.Append("Error");
+                                effectReturn.errorFlag = true;
+                                break;
+                            }
+                        }
+                        //Nervous trait gains Stressed condition if security measures are in place
+                        if (actor.CheckTraitEffect(actorStressedDuringSecurity) == true && GameManager.i.turnScript.authoritySecurityState != AuthoritySecurityState.Normal)
+                        {
+                            //actor gains condition stressed
+                            Condition stressed = GameManager.i.dataScript.GetCondition("STRESSED");
+                            if (stressed != null)
+                            {
+                                actor.AddCondition(stressed, string.Format("Acquired due to {0} trait", actor.GetTrait().tag));
+                                if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                                builderBottom.AppendFormat("{0}{1} gains {2}{3}STRESSED{4}{5} condition due to {6}{7}{8}{9}{10} trait{11}", colourBad, actor.arc.name, colourEnd,
+                                    colourAlert, colourEnd, colourBad, colourEnd, colourAlert, actor.GetTrait().tag.ToUpper(), colourEnd, colourBad, colourEnd);
+                                GameManager.i.actorScript.TraitLogMessage(actor, "for carrying out a district action", "to become STRESSED due to Security Measures");
+                            }
+                            else { Debug.LogWarning("Invalid condition STRESSED (Null)"); }
+                        }
+                        //only applies to resistance (authority node actions, eg. insert team, go through here and thence to TeamManager.cs -> MoveTeam via EffectManager.cs -> ProcessEffect)
                         if (details.side.level == GameManager.i.globalScript.sideResistance.level)
                         {
-                            int actorID = actor.actorID;
-                            if (node.nodeID == GameManager.i.nodeScript.nodePlayer) { actorID = 999; isPlayer = true; }
-                            captureDetails = GameManager.i.captureScript.CheckCaptured(node.nodeID, actorID);
-                        }
-                        if (captureDetails != null)
-                        {
-                            //Captured. Mission a wipe.
-                            captureDetails.effects = string.Format("{0}Mission at \"{1}\" aborted{2}", colourNeutral, node.nodeName, colourEnd);
-                            EventManager.instance.PostNotification(EventType.Capture, this, captureDetails, "ActionManager.cs -> ProcessNodeAction");
-                            return;
-                        }
-
-                        //Get Action & Effects
-                        Action action = actor.arc.nodeAction;
-                        List<Effect> listOfEffects = action.GetEffects();
-                        if (listOfEffects.Count > 0)
-                        {
-                            //return class
-                            EffectDataReturn effectReturn = new EffectDataReturn();
-                            //two builders for top and bottom texts
-                            StringBuilder builderTop = new StringBuilder();
-                            StringBuilder builderBottom = new StringBuilder();
-                            //pass through data package
-                            EffectDataInput dataInput = new EffectDataInput();
-                            dataInput.originText = action.tag;
-                            //
-                            // - - - Process effects
-                            //
-                            foreach (Effect effect in listOfEffects)
+                            //NodeActionData package -> get type
+                            NodeAction nodeActionActor = NodeAction.None;
+                            NodeAction nodeActionPlayer = NodeAction.None;
+                            switch (actor.arc.name)
                             {
-                                //ongoing effect?
-                                if (effect.duration.name.Equals("Ongoing", StringComparison.Ordinal) == true)
-                                {
-                                    //NOTE: A standard node action can use ongoing effects but there is no way of linking it. The node effects will time out and that's it
-                                    dataInput.ongoingID = GameManager.i.effectScript.GetOngoingEffectID();
-                                }
-                                else { dataInput.ongoingID = -1; dataInput.ongoingText = action.name; }
-                                effectReturn = GameManager.i.effectScript.ProcessEffect(effect, node, dataInput, actor);
-                                if (effectReturn != null)
-                                {
-                                    outcomeDetails.sprite = actor.sprite;
-                                    //update stringBuilder texts
-                                    if (string.IsNullOrEmpty(effectReturn.topText) == false)
-                                    {
-                                        if (builderTop.Length > 0) { builderTop.AppendLine(); builderTop.AppendLine(); }
-                                        builderTop.Append(effectReturn.topText);
-                                    }
-                                    if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
-                                    builderBottom.Append(effectReturn.bottomText);
-                                    //exit effect loop on error
-                                    if (effectReturn.errorFlag == true) { break; }
-                                    //valid action? -> only has to be true once for an action to be valid
-                                    if (effectReturn.isAction == true) { isAction = true; }
-                                }
-                                else
-                                {
-                                    builderTop.AppendLine();
-                                    builderTop.Append("Error");
-                                    builderBottom.AppendLine();
-                                    builderBottom.Append("Error");
-                                    effectReturn.errorFlag = true;
-                                    break;
-                                }
+                                case "ANARCHIST": nodeActionActor = NodeAction.ActorBlowStuffUp; nodeActionPlayer = NodeAction.PlayerBlowStuffUp; break;
+                                case "BLOGGER": nodeActionActor = NodeAction.ActorSpreadFakeNews; nodeActionPlayer = NodeAction.PlayerSpreadFakeNews; break;
+                                case "HACKER": nodeActionActor = NodeAction.ActorHackSecurity; nodeActionPlayer = NodeAction.PlayerHackSecurity; break;
+                                case "HEAVY": nodeActionActor = NodeAction.ActorCreateRiots; nodeActionPlayer = NodeAction.PlayerCreateRiots; break;
+                                case "OBSERVER": nodeActionActor = NodeAction.ActorInsertTracer; nodeActionPlayer = NodeAction.PlayerInsertTracer; break;
+                                default: Debug.LogWarningFormat("Unrecognised actor.arc \"{0}\"", actor.arc.name); break;
                             }
-                            //Nervous trait gains Stressed condition if security measures are in place
-                            if (actor.CheckTraitEffect(actorStressedDuringSecurity) == true && GameManager.i.turnScript.authoritySecurityState != AuthoritySecurityState.Normal)
+                            if (isPlayer == false)
                             {
-                                //actor gains condition stressed
-                                Condition stressed = GameManager.i.dataScript.GetCondition("STRESSED");
-                                if (stressed != null)
+                                //actor action
+                                NodeActionData nodeActionData = new NodeActionData()
                                 {
-                                    actor.AddCondition(stressed, string.Format("Acquired due to {0} trait", actor.GetTrait().tag));
-                                    if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
-                                    builderBottom.AppendFormat("{0}{1} gains {2}{3}STRESSED{4}{5} condition due to {6}{7}{8}{9}{10} trait{11}", colourBad, actor.arc.name, colourEnd,
-                                        colourAlert, colourEnd, colourBad, colourEnd, colourAlert, actor.GetTrait().tag.ToUpper(), colourEnd, colourBad, colourEnd);
-                                    GameManager.i.actorScript.TraitLogMessage(actor, "for carrying out a district action", "to become STRESSED due to Security Measures");
-                                }
-                                else { Debug.LogWarning("Invalid condition STRESSED (Null)"); }
-                            }
-                            //only applies to resistance (authority node actions, eg. insert team, go through here and thence to TeamManager.cs -> MoveTeam via EffectManager.cs -> ProcessEffect)
-                            if (details.side.level == GameManager.i.globalScript.sideResistance.level)
-                            {
-                                //NodeActionData package -> get type
-                                NodeAction nodeActionActor = NodeAction.None;
-                                NodeAction nodeActionPlayer = NodeAction.None;
+                                    turn = GameManager.i.turnScript.Turn,
+                                    actorID = actor.actorID,
+                                    nodeID = node.nodeID,
+                                    nodeAction = nodeActionActor
+                                };
+                                //special cases
                                 switch (actor.arc.name)
                                 {
-                                    case "ANARCHIST": nodeActionActor = NodeAction.ActorBlowStuffUp; nodeActionPlayer = NodeAction.PlayerBlowStuffUp; break;
-                                    case "BLOGGER": nodeActionActor = NodeAction.ActorSpreadFakeNews; nodeActionPlayer = NodeAction.PlayerSpreadFakeNews; break;
-                                    case "HACKER": nodeActionActor = NodeAction.ActorHackSecurity; nodeActionPlayer = NodeAction.PlayerHackSecurity; break;
-                                    case "HEAVY": nodeActionActor = NodeAction.ActorCreateRiots; nodeActionPlayer = NodeAction.PlayerCreateRiots; break;
-                                    case "OBSERVER": nodeActionActor = NodeAction.ActorInsertTracer; nodeActionPlayer = NodeAction.PlayerInsertTracer; break;
-                                    default: Debug.LogWarningFormat("Unrecognised actor.arc \"{0}\"", actor.arc.name); break;
+                                    case "ANARCHIST": nodeActionData.dataName = GameManager.i.topicScript.textlistGenericLocation.GetRandomRecord(); break;
                                 }
-                                if (isPlayer == false)
-                                {
-                                    //actor action
-                                    NodeActionData nodeActionData = new NodeActionData()
-                                    {
-                                        turn = GameManager.i.turnScript.Turn,
-                                        actorID = actor.actorID,
-                                        nodeID = node.nodeID,
-                                        nodeAction = nodeActionActor
-                                    };
-                                    //special cases
-                                    switch (actor.arc.name)
-                                    {
-                                        case "ANARCHIST": nodeActionData.dataName = GameManager.i.topicScript.textlistGenericLocation.GetRandomRecord(); break;
-                                    }
-                                    //add to actor's personal list
-                                    actor.AddNodeAction(nodeActionData);
-                                    /*Debug.LogFormat("[Tst] ActionManager.cs -> ProcessNodeAction: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");*/
-                                }
-                                else
-                                {
-                                    //player action
-                                    NodeActionData nodeActionData = new NodeActionData()
-                                    {
-                                        turn = GameManager.i.turnScript.Turn,
-                                        actorID = 999,
-                                        nodeID = node.nodeID,
-                                        nodeAction = nodeActionPlayer
-                                    };
-                                    //add to player's personal list
-                                    GameManager.i.playerScript.AddNodeAction(nodeActionData);
-                                    Debug.LogFormat("[Act] ActionManager.cs -> ProcessNodeAction: Player node Action \"{0}\"{1}", nodeActionPlayer, "\n");
-                                    //statistics
-                                    GameManager.i.dataScript.StatisticIncrement(StatType.PlayerNodeActions);
-                                }
-                                //statistics
-                                GameManager.i.dataScript.StatisticIncrement(StatType.NodeActionsResistance);
+                                //add to actor's personal list
+                                actor.AddNodeAction(nodeActionData);
+                                /*Debug.LogFormat("[Tst] ActionManager.cs -> ProcessNodeAction: nodeActionData added to {0}, {1}{2}", actor.actorName, actor.arc.name, "\n");*/
                             }
-                            //texts
-                            outcomeDetails.textTop = builderTop.ToString();
-                            outcomeDetails.textBottom = builderBottom.ToString();
+                            else
+                            {
+                                //player action
+                                NodeActionData nodeActionData = new NodeActionData()
+                                {
+                                    turn = GameManager.i.turnScript.Turn,
+                                    actorID = 999,
+                                    nodeID = node.nodeID,
+                                    nodeAction = nodeActionPlayer
+                                };
+                                //add to player's personal list
+                                GameManager.i.playerScript.AddNodeAction(nodeActionData);
+                                Debug.LogFormat("[Act] ActionManager.cs -> ProcessNodeAction: Player node Action \"{0}\"{1}", nodeActionPlayer, "\n");
+                                //statistics
+                                GameManager.i.dataScript.StatisticIncrement(StatType.PlayerNodeActions);
+                            }
+                            //statistics
+                            GameManager.i.dataScript.StatisticIncrement(StatType.NodeActionsResistance);
                         }
-                        else
-                        {
-                            Debug.LogErrorFormat("There are no Effects for this \"{0}\" Action", action.name);
-                            errorFlag = true;
-                        }
+                        //texts
+                        outcomeDetails.textTop = builderTop.ToString();
+                        outcomeDetails.textBottom = builderBottom.ToString();
                     }
                     else
                     {
-                        Debug.LogError("Invalid Node (null)");
+                        Debug.LogErrorFormat("There are no Effects for this \"{0}\" Action", action.name);
                         errorFlag = true;
                     }
                 }
                 else
                 {
-                    Debug.LogError("Invalid NodeObject (null)");
+                    Debug.LogError("Invalid Node (null)");
                     errorFlag = true;
                 }
             }
@@ -492,89 +483,79 @@ public class ActionManager : MonoBehaviour
         Node node = null;
         Action action = null;
         ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
-        if (node.nodeID == GameManager.i.nodeScript.GetPlayerNodeID()) { isPlayer = true; }
+
         //renown (do prior to effects as Player renown will change)
         int renownBefore = GameManager.i.playerScript.Renown;
         //resolve action
         if (details != null)
         {
-            //get node
-            GameObject nodeObject = GameManager.i.dataScript.GetNodeObject(details.nodeID);
-            if (nodeObject != null)
+            node = GameManager.i.dataScript.GetNode(details.nodeID);
+            if (node != null)
             {
-                node = nodeObject.GetComponent<Node>();
-                if (node != null)
+                if (node.nodeID == GameManager.i.nodeScript.GetPlayerNodeID()) { isPlayer = true; }
+                //Get Action & Effects
+                action = details.gearAction;
+                List<Effect> listOfEffects = action.GetEffects();
+                if (listOfEffects.Count > 0)
                 {
+                    //return class
+                    EffectDataReturn effectReturn = new EffectDataReturn();
+                    //two builders for top and bottom texts
+                    StringBuilder builderTop = new StringBuilder();
+                    StringBuilder builderBottom = new StringBuilder();
+                    //pass through data package
+                    EffectDataInput dataInput = new EffectDataInput();
+                    dataInput.originText = string.Format("{0} District Action", details.gearName);
 
-                    //Get Action & Effects
-                    action = details.gearAction;
-                    List<Effect> listOfEffects = action.GetEffects();
-                    if (listOfEffects.Count > 0)
+                    //
+                    // - - - Process effects
+                    //
+                    foreach (Effect effect in listOfEffects)
                     {
-                        //return class
-                        EffectDataReturn effectReturn = new EffectDataReturn();
-                        //two builders for top and bottom texts
-                        StringBuilder builderTop = new StringBuilder();
-                        StringBuilder builderBottom = new StringBuilder();
-                        //pass through data package
-                        EffectDataInput dataInput = new EffectDataInput();
-                        dataInput.originText = string.Format("{0} District Action", details.gearName);
-
-                        //
-                        // - - - Process effects
-                        //
-                        foreach (Effect effect in listOfEffects)
+                        //no ongoing effect allowed for nodeGear actions
+                        dataInput.ongoingID = -1;
+                        dataInput.ongoingText = string.Format("{0} District Action", details.gearName);
+                        effectReturn = GameManager.i.effectScript.ProcessEffect(effect, node, dataInput);
+                        if (effectReturn != null)
                         {
-                            //no ongoing effect allowed for nodeGear actions
-                            dataInput.ongoingID = -1;
-                            dataInput.ongoingText = string.Format("{0} District Action", details.gearName);
-                            effectReturn = GameManager.i.effectScript.ProcessEffect(effect, node, dataInput);
-                            if (effectReturn != null)
-                            {
-                                outcomeDetails.sprite = GameManager.i.guiScript.errorSprite;
-                                //update stringBuilder texts
-                                if (String.IsNullOrEmpty(effectReturn.topText) == false) { builderTop.AppendLine(); builderTop.AppendLine(); }
-                                builderTop.Append(effectReturn.topText);
-                                if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
-                                builderBottom.Append(effectReturn.bottomText);
-                                //exit effect loop on error
-                                if (effectReturn.errorFlag == true) { break; }
-                                //valid action? -> only has to be true once for an action to be valid
-                                if (effectReturn.isAction == true) { isAction = true; }
-                            }
-                            else
-                            {
-                                builderTop.AppendLine();
-                                builderTop.Append("Error");
-                                builderBottom.AppendLine();
-                                builderBottom.Append("Error");
-                                effectReturn.errorFlag = true;
-                                break;
-                            }
+                            outcomeDetails.sprite = GameManager.i.guiScript.errorSprite;
+                            //update stringBuilder texts
+                            if (String.IsNullOrEmpty(effectReturn.topText) == false) { builderTop.AppendLine(); builderTop.AppendLine(); }
+                            builderTop.Append(effectReturn.topText);
+                            if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                            builderBottom.Append(effectReturn.bottomText);
+                            //exit effect loop on error
+                            if (effectReturn.errorFlag == true) { break; }
+                            //valid action? -> only has to be true once for an action to be valid
+                            if (effectReturn.isAction == true) { isAction = true; }
                         }
-                        //texts
-                        outcomeDetails.textTop = builderTop.ToString();
-                        outcomeDetails.textBottom = builderBottom.ToString();
-                        //statistics
-                        if (isPlayer == true)
-                        { GameManager.i.dataScript.StatisticIncrement(StatType.PlayerNodeActions); }
-                        GameManager.i.dataScript.StatisticIncrement(StatType.NodeActionsResistance);
+                        else
+                        {
+                            builderTop.AppendLine();
+                            builderTop.Append("Error");
+                            builderBottom.AppendLine();
+                            builderBottom.Append("Error");
+                            effectReturn.errorFlag = true;
+                            break;
+                        }
                     }
-                    else
-                    {
-                        Debug.LogErrorFormat("There are no Effects for this \"{0}\" Action", action.name);
-                        errorFlag = true;
-                    }
+                    //texts
+                    outcomeDetails.textTop = builderTop.ToString();
+                    outcomeDetails.textBottom = builderBottom.ToString();
+                    //statistics
+                    if (isPlayer == true)
+                    { GameManager.i.dataScript.StatisticIncrement(StatType.PlayerNodeActions); }
+                    GameManager.i.dataScript.StatisticIncrement(StatType.NodeActionsResistance);
                 }
                 else
                 {
-                    Debug.LogError("Invalid Node (null)");
+                    Debug.LogErrorFormat("There are no Effects for this \"{0}\" Action", action.name);
                     errorFlag = true;
                 }
             }
             else
             {
-                Debug.LogError("Invalid NodeObject (null)");
+                Debug.LogError("Invalid Node (null)");
                 errorFlag = true;
             }
         }
@@ -2977,10 +2958,10 @@ public class ActionManager : MonoBehaviour
             }
             else
             { Debug.LogError("Invalid optionText (Null or empty)"); }
-        //mood info
-        builderBottom.AppendFormat("{0}{1}{2}", "\n", "\n", moodText);
-        //statistics
-        GameManager.i.dataScript.StatisticIncrement(StatType.PlayerManageActions);
+            //mood info
+            builderBottom.AppendFormat("{0}{1}{2}", "\n", "\n", moodText);
+            //statistics
+            GameManager.i.dataScript.StatisticIncrement(StatType.PlayerManageActions);
         }
         else
         {

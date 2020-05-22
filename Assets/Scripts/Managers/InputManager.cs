@@ -10,12 +10,14 @@ public class ModalStateData
     public ModalSubState mainState;
     public ModalInfoSubState infoState;
     public ModalGenericPickerSubState pickerState;
+    public ModalInventorySubState inventoryState;
     public ModalMetaSubState metaState;
 
     public ModalStateData()
     {
         infoState = ModalInfoSubState.None;
         pickerState = ModalGenericPickerSubState.None;
+        inventoryState = ModalInventorySubState.None;
         metaState = ModalMetaSubState.None;
     }
 }
@@ -28,10 +30,13 @@ public class InputManager : MonoBehaviour
     private GameState _gameState;                                   //overall big picture game state
     private ModalState _modalState;                                 //main modal state status
     private ModalSubState _modalSubState;                           //sub state for when game state is 'ModalUI'
-    private ModalInfoSubState _modalInfoState;                      //sub sub state of ModalState.InfoDisplay -> what type of info?
-    private ModalGenericPickerSubState _modalGenericPickerState;    //sub state of ModalState.GenericPicker -> what type of picker?
-    private ModalMetaSubState _modalMetaState;                      //sub state of ModalState.MetaGame -> what type of MetaUI?
+    private ModalInfoSubState _modalInfoState;                      //sub sub state of ModalSubState.InfoDisplay -> what type of info?
+    private ModalGenericPickerSubState _modalGenericPickerState;    //sub state of ModalSubState.GenericPicker -> what type of picker?
+    private ModalMetaSubState _modalMetaState;                      //sub state of ModalSubState.MetaGame -> what type of MetaUI?
+    private ModalInventorySubState _modalInventoryState;                //sub state of ModalSubState.Inventory
     private ModalReviewSubState _modalReviewState;                  //sub state for ModalReviewUI
+
+    
 
     public void Initialise(GameState state)
     {
@@ -101,6 +106,16 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    public ModalInventorySubState ModalInventoryState
+    {
+        get { return _modalInventoryState; }
+        private set
+        {
+            _modalInventoryState = value;
+            Debug.LogFormat("[Inp] InputManager.cs: ModalInventoryState now {0}{1}", _modalInventoryState, "\n");
+        }
+    }
+
     public ModalReviewSubState ModalReviewState
     {
         get { return _modalReviewState; }
@@ -135,6 +150,9 @@ public class InputManager : MonoBehaviour
             //metaGame
             if (ModalSubState == ModalSubState.MetaGame)
             { ModalMetaState = data.metaState; }
+            //inventory
+            if (ModalSubState == ModalSubState.Inventory)
+            { ModalInventoryState = data.inventoryState; }
         }
         else { Debug.LogWarning("Invalid ModalStateData (Null)"); }
     }
@@ -158,6 +176,7 @@ public class InputManager : MonoBehaviour
                 ModalInfoState = ModalInfoSubState.None;
                 ModalMetaState = ModalMetaSubState.None;
                 ModalGenericPickerState = ModalGenericPickerSubState.None;
+                ModalInventoryState = ModalInventorySubState.None;
             }
         }
     }
@@ -272,79 +291,112 @@ public class InputManager : MonoBehaviour
                     }
                     else if (Input.GetButtonDown("ShowReserves") == true)
                     {
-                        EventManager.instance.PostNotification(EventType.InventorySetReserve, this, "Reserve Pool", string.Format("InputManager.cs -> ProcessKeyInput ShowReserves \"{0}\"", Input.inputString.ToUpper()));
+                        //only do so if new turn processing hasn't commenced
+                        if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
+                        { EventManager.instance.PostNotification(EventType.InventorySetReserve, this, "Reserve Pool", string.Format("InputManager.cs -> ProcessKeyInput ShowReserves \"{0}\"", Input.inputString.ToUpper())); }
                     }
                     else if (Input.GetButtonDown("ShowGear") == true)
                     {
-                        EventManager.instance.PostNotification(EventType.InventorySetGear, this, "Gear Inventory", string.Format("InputManager.cs -> ProcessKeyInput ShowGear \"{0}\"", Input.inputString.ToUpper()));
+                        //only do so if new turn processing hasn't commenced
+                        if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
+                        { EventManager.instance.PostNotification(EventType.InventorySetGear, this, "Gear Inventory", string.Format("InputManager.cs -> ProcessKeyInput ShowGear \"{0}\"", Input.inputString.ToUpper())); }
                     }
                     else if (Input.GetButtonDown("ShowHQ") == true)
                     {
-                        EventManager.instance.PostNotification(EventType.InventorySetHQ, this, "HQ Inventory", string.Format("InputManager.cs -> ProcessKeyInput ShowHQ \"{0}\"", Input.inputString.ToUpper()));
+                        //only do so if new turn processing hasn't commenced
+                        if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
+                        { EventManager.instance.PostNotification(EventType.InventorySetHQ, this, "HQ Inventory", string.Format("InputManager.cs -> ProcessKeyInput ShowHQ \"{0}\"", Input.inputString.ToUpper())); }
                     }
                     else if (Input.GetButtonDown("ShowTargets") == true)
                     {
-                        EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowTargets, string.Format("InputManager.cs -> ProcessKeyInput ShowTargets \"{0}\"", Input.inputString.ToUpper()));
+                        //only do so if new turn processing hasn't commenced
+                        if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
+                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowTargets, string.Format("InputManager.cs -> ProcessKeyInput ShowTargets \"{0}\"", Input.inputString.ToUpper())); }
                     }
                     else if (Input.GetButtonDown("ShowSpiders") == true)
                     {
-                        EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowSpiders, string.Format("InputManager.cs -> ProcessKeyInput ShowSpiders \"{0}\"", Input.inputString.ToUpper()));
+                        //only do so if new turn processing hasn't commenced
+                        if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
+                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowSpiders, string.Format("InputManager.cs -> ProcessKeyInput ShowSpiders \"{0}\"", Input.inputString.ToUpper())); }
                     }
                     else if (Input.GetButtonDown("ShowTracers") == true)
                     {
-                        EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowTracers, string.Format("InputManager.cs -> ProcessKeyInput ShowTracers \"{0}\"", Input.inputString.ToUpper()));
+                        //only do so if new turn processing hasn't commenced
+                        if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
+                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowTracers, string.Format("InputManager.cs -> ProcessKeyInput ShowTracers \"{0}\"", Input.inputString.ToUpper())); }
                     }
                     else if (Input.GetButtonDown("ShowTeams") == true)
                     {
-                        EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowTeams, string.Format("InputManager.cs -> ProcessKeyInput ShowTeams \"{0}\"", Input.inputString.ToUpper()));
+                        //only do so if new turn processing hasn't commenced
+                        if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
+                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowTeams, string.Format("InputManager.cs -> ProcessKeyInput ShowTeams \"{0}\"", Input.inputString.ToUpper())); }
                     }
                     else if (Input.GetButtonDown("ShowAutoRun") == true)
                     {
-                        GameManager.i.sideScript.ShowAutoRunMessage();
-                        /*//debug
-                        GameManager.instance.actorScript.InitialiseReview();*/
+                        //only do so if new turn processing hasn't commenced
+                        if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
+                        { GameManager.i.sideScript.ShowAutoRunMessage(); }
                     }
                     //Generic NodeArc's 0 to 9 correspond to function keys F1 -> F10 and map directly to ArcTypeID's 0 to 9
                     else if (Input.GetButtonDown("NodeArc0") == true)
                     {
-                        EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc0, "InputManager.cs -> ProcessKeyInput NodeArc0");
+                        //only do so if new turn processing hasn't commenced
+                        if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
+                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc0, "InputManager.cs -> ProcessKeyInput NodeArc0"); }
                     }
                     else if (Input.GetButtonDown("NodeArc1") == true)
                     {
-                        EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc1, "InputManager.cs -> ProcessKeyInput NodeArc1");
+                        //only do so if new turn processing hasn't commenced
+                        if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
+                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc1, "InputManager.cs -> ProcessKeyInput NodeArc1"); }
                     }
                     else if (Input.GetButtonDown("NodeArc2") == true)
                     {
-                        EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc2, "InputManager.cs -> ProcessKeyInput NodeArc2");
+                        //only do so if new turn processing hasn't commenced
+                        if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
+                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc2, "InputManager.cs -> ProcessKeyInput NodeArc2"); }
                     }
                     else if (Input.GetButtonDown("NodeArc3") == true)
                     {
-                        EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc3, "InputManager.cs -> ProcessKeyInput NodeArc3");
+                        //only do so if new turn processing hasn't commenced
+                        if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
+                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc3, "InputManager.cs -> ProcessKeyInput NodeArc3"); }
                     }
                     else if (Input.GetButtonDown("NodeArc4") == true)
                     {
-                        EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc4, "InputManager.cs -> ProcessKeyInput NodeArc4");
+                        //only do so if new turn processing hasn't commenced
+                        if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
+                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc4, "InputManager.cs -> ProcessKeyInput NodeArc4"); }
                     }
                     else if (Input.GetButtonDown("NodeArc5") == true)
                     {
-                        EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc5, "InputManager.cs -> ProcessKeyInput NodeArc5");
+                        //only do so if new turn processing hasn't commenced
+                        if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
+                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc5, "InputManager.cs -> ProcessKeyInput NodeArc5"); }
                     }
                     else if (Input.GetButtonDown("NodeArc6") == true)
                     {
-                        EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc6, "InputManager.cs -> ProcessKeyInput NodeArc6");
+                        //only do so if new turn processing hasn't commenced
+                        if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
+                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc6, "InputManager.cs -> ProcessKeyInput NodeArc6"); }
                     }
                     else if (Input.GetButtonDown("ActivityTime") == true)
                     {
-                        EventManager.instance.PostNotification(EventType.ActivityDisplay, this, ActivityUI.Time, "InputManager.cs -> ProcessKeyInput ActivityTime");
+                        //only do so if new turn processing hasn't commenced
+                        if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
+                        { EventManager.instance.PostNotification(EventType.ActivityDisplay, this, ActivityUI.Time, "InputManager.cs -> ProcessKeyInput ActivityTime"); }
                     }
                     else if (Input.GetButtonDown("ActivityCount") == true)
                     {
-                        EventManager.instance.PostNotification(EventType.ActivityDisplay, this, ActivityUI.Count, "InputManager.cs -> ProcessKeyInput ActivityCount");
+                        //only do so if new turn processing hasn't commenced
+                        if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
+                        { EventManager.instance.PostNotification(EventType.ActivityDisplay, this, ActivityUI.Count, "InputManager.cs -> ProcessKeyInput ActivityCount"); }
                     }
                     else if (Input.GetButtonDown("OpenMainInfo") == true)
                     {
-                        //Keyboard shortcut to open MainInfoApp between turns -> 'I'
-                        EventManager.instance.PostNotification(EventType.MainInfoOpenInterim, this, null, string.Format("InputManager.cs -> ProcessKeyInput OpenMainInfo \"{0}\"", Input.inputString.ToUpper()));
+                        //only do so if new turn processing hasn't commenced -> Keyboard shortcut to open MainInfoApp between turns -> 'I'
+                        if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
+                        { EventManager.instance.PostNotification(EventType.MainInfoOpenInterim, this, null, string.Format("InputManager.cs -> ProcessKeyInput OpenMainInfo \"{0}\"", Input.inputString.ToUpper())); }
                     }
                     break;
                 case ModalState.ModalUI:
@@ -369,6 +421,21 @@ public class InputManager : MonoBehaviour
                             else if (Input.GetButtonDown("Multipurpose") == true)
                             {
                                 EventManager.instance.PostNotification(EventType.InventoryCloseUI, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
+                            }
+                            else if (Input.GetButtonDown("ShowReserves") == true)
+                            {
+                                if (ModalInventoryState == ModalInventorySubState.ReservePool)
+                                { EventManager.instance.PostNotification(EventType.InventoryCloseUI, this, null, string.Format("InputManager.cs -> ProcessKeyInput ShowReserves \"{0}\"", Input.inputString.ToUpper())); }
+                            }
+                            else if (Input.GetButtonDown("ShowGear") == true)
+                            {
+                                if (ModalInventoryState == ModalInventorySubState.Gear)
+                                { EventManager.instance.PostNotification(EventType.InventoryCloseUI, this, null, string.Format("InputManager.cs -> ProcessKeyInput ShowGear \"{0}\"", Input.inputString.ToUpper())); }
+                            }
+                            else if (Input.GetButtonDown("ShowHQ") == true)
+                            {
+                                if (ModalInventoryState == ModalInventorySubState.HQ)
+                                { EventManager.instance.PostNotification(EventType.InventoryCloseUI, this, null, string.Format("InputManager.cs -> ProcessKeyInput ShowHQ \"{0}\"", Input.inputString.ToUpper())); }
                             }
                             break;
                         case ModalSubState.TeamPicker:

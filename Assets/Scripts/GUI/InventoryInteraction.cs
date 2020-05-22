@@ -24,7 +24,7 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
 
     [HideInInspector] public int optionData;                                            //multipurpose field to hold ID of actor, etc.
     [HideInInspector] public string optionName;                                         //multipurpose field for key name fields, eg. gear
-    [HideInInspector] public InventoryState type;
+    [HideInInspector] public ModalInventorySubState type;
 
 
     public void Awake()
@@ -60,7 +60,7 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
                     {
                         switch (type)
                         {
-                            case InventoryState.Gear:
+                            case ModalInventorySubState.Gear:
                                 Gear gear = GameManager.i.dataScript.GetGear(optionName);
                                 if (gear != null)
                                 {
@@ -88,7 +88,7 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
                                 else
                                 { Debug.LogError(string.Format("Invalid Gear (Null) for gearID / optionData {0}", optionData)); }
                                 break;
-                            case InventoryState.ReservePool:
+                            case ModalInventorySubState.ReservePool:
                                 Actor actor = GameManager.i.dataScript.GetActor(optionData);
                                 if (actor != null)
                                 {

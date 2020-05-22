@@ -304,7 +304,7 @@ namespace modalAPI
         public EventType leftClickEvent;                                                        //type of event triggered when any option is left clicked
         public EventType rightClickEvent;                                                       //type of event triggered when any option is right clicked
         public InventoryDelegate handler;                                                       //method to call for refreshing inventory options
-        public InventoryState state;                                                              //enum -> type of Inventory, eg. Gear / Reserve Pool
+        public ModalInventorySubState state;                                                              //enum -> type of Inventory, eg. Gear / Reserve Pool
         public string textHeader;
         public string textTop;
         public string textBottom;
