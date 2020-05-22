@@ -378,6 +378,7 @@ public class ActionManager : MonoBehaviour
                                 builderBottom.AppendFormat("{0}{1} gains {2}{3}STRESSED{4}{5} condition due to {6}{7}{8}{9}{10} trait{11}", colourBad, actor.arc.name, colourEnd,
                                     colourAlert, colourEnd, colourBad, colourEnd, colourAlert, actor.GetTrait().tag.ToUpper(), colourEnd, colourBad, colourEnd);
                                 GameManager.i.actorScript.TraitLogMessage(actor, "for carrying out a district action", "to become STRESSED due to Security Measures");
+                                GameManager.i.popUpFixedScript.SetData(actor.slotID, "gains STRESSED");
                             }
                             else { Debug.LogWarning("Invalid condition STRESSED (Null)"); }
                         }
@@ -1371,6 +1372,8 @@ public class ActionManager : MonoBehaviour
                         outcomeDetails.sprite = GameManager.i.playerScript.sprite;
                         outcomeDetails.textTop = string.Format("{0} has cured your {1}{2}{3} condition", cure.cureName, colourBad, cure.condition.tag, colourEnd);
                         outcomeDetails.textBottom = string.Format("{0}{1}{2}", colourNormal, cure.outcomeText, colourEnd);
+                        //PopUp
+                        GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"{cure.condition} Cured");
                     }
                     else { Debug.LogWarning("Condition Not Removed"); }
                 }
@@ -1496,6 +1499,9 @@ public class ActionManager : MonoBehaviour
                 Debug.LogWarningFormat("Renown dropped below Zero");
             }
             GameManager.i.playerScript.Renown = renown;
+            //popUp
+            GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Renown -{modalDetails.renownCost}");
+            GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, "Stress Leave");
             //change alpha of actor to indicate inactive status
             GameManager.i.actorPanelScript.UpdatePlayerAlpha(GameManager.i.guiScript.alphaInactive);
             GameManager.i.actorPanelScript.UpdatePlayerRenownUI(renown);
@@ -1546,6 +1552,9 @@ public class ActionManager : MonoBehaviour
                     Debug.LogWarningFormat("Renown dropped below Zero");
                 }
                 GameManager.i.playerScript.Renown = renown;
+                //PopUpFixed
+                GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Renown -{modalDetails.renownCost}");
+                GameManager.i.popUpFixedScript.SetData(actor.slotID, "Stress Leave");
                 //change alpha of actor to indicate inactive status
                 GameManager.i.actorPanelScript.UpdateActorAlpha(actor.slotID, GameManager.i.guiScript.alphaInactive);
                 GameManager.i.actorPanelScript.UpdatePlayerRenownUI(renown);
