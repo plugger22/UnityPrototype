@@ -548,6 +548,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numOfChoices: 6
   renownRecommendMin: 2
+  maxNumOfGear: 3
   arrayOfOrganisationOptions:
   - {fileID: 11400000, guid: 37c1fd6d6d79e0f4e8f2ceb34b9ab884, type: 2}
   - {fileID: 11400000, guid: 2d8648348b558e74fbeb4d142dc3c8b6, type: 2}
@@ -4467,7 +4468,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 11400000, guid: 4cba5038018744a4f83ed80beeb223c4, type: 2}
+  debugTopicPool: {fileID: 0}
   numOfGearItems: -1
   numOfWorkers: 8
   bonusRenown: 10

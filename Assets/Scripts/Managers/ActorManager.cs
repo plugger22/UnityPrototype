@@ -7183,7 +7183,7 @@ public class ActorManager : MonoBehaviour
                             if (GameManager.i.playerScript.isStressed == true)
                             { GameManager.i.playerScript.RemoveCondition(conditionStressed, playerSide, "Lying Low removes Stress"); }
                             //improve mood
-                            GameManager.i.playerScript.ChangeMood(GameManager.i.playerScript.moodReset, "Finished Lying Low", "n.a");
+                            GameManager.i.playerScript.ChangeMood(GameManager.i.playerScript.moodReset, "Finished Lying Low", "n.a", false);
                             //message -> status change
                             text = string.Format("{0} has automatically reactivated", playerName);
                             GameManager.i.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", playerID, globalResistance, null, HelpType.LieLow);

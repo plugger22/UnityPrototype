@@ -2192,6 +2192,7 @@ public class ActionManager : MonoBehaviour
                 int playerRenown = GameManager.i.playerScript.Renown;
                 ManageRenownCost renownData = GameManager.i.actorScript.GetManageRenownCost(actor, GameManager.i.actorScript.manageDismissRenown);
                 playerRenown -= renownData.renownCost;
+                GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Renown -{renownData.renownCost}");
                 //min capped at Zero
                 playerRenown = Mathf.Max(0, playerRenown);
                 GameManager.i.playerScript.Renown = playerRenown;
@@ -2296,6 +2297,8 @@ public class ActionManager : MonoBehaviour
                     GameManager.i.personScript.SetAllActorsCompatibility();
                     //update actorPanelUI
                     GameManager.i.actorPanelScript.UpdateActorCompatibilityUI(actor.slotID, actor.GetPersonality().GetCompatibilityWithPlayer());
+                    //popUp
+                    GameManager.i.popUpFixedScript.SetData(actor.slotID, $"Motivation +{motivationGain}");
                     //history
                     actor.AddHistory(new HistoryActor() { text = "Recalled up for Active Duty" });
                     //Authority Actor brings team with them (if space available)
@@ -2832,6 +2835,7 @@ public class ActionManager : MonoBehaviour
         string msgTextMain = "Who Knows?";
         string msgReason = "Unknown";
         string moodText = "Unknown";
+        int slotID;
         int numOfTeams = 0;
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
@@ -2848,6 +2852,7 @@ public class ActionManager : MonoBehaviour
                     Actor actor = GameManager.i.dataScript.GetCurrentActor(data.actorSlotID, playerSide);
                     if (actor != null)
                     {
+                        slotID = actor.slotID;
                         if (data.optionNested.Equals("DismissPromote", System.StringComparison.Ordinal) == true)
                         { status = ActorStatus.Promoted; }
                         //add actor to the dismissed or promoted lists
@@ -2874,6 +2879,7 @@ public class ActionManager : MonoBehaviour
                                         GameManager.i.hqScript.GetCurrentHQ().tag);
                                     moodText = GameManager.i.personScript.UpdateMood(MoodType.DismissPromote, actor.arc.name);
                                     actor.AddHistory(new HistoryActor() { text = "Has been Promoted" });
+                                    GameManager.i.popUpFixedScript.SetData(slotID, "Promoted");
                                     break;
                                 case "DismissIncompetent":
                                     builderTop.AppendFormat("{0}{1} {2} scowls and curses before stomping off{3}",
@@ -2883,6 +2889,7 @@ public class ActionManager : MonoBehaviour
                                     msgTextMain = string.Format("{0} {1} has been Dismissed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
                                     moodText = GameManager.i.personScript.UpdateMood(MoodType.DismissIncompetent, actor.arc.name);
                                     actor.AddHistory(new HistoryActor() { text = "Has been Dismissed (Incompetent)" });
+                                    GameManager.i.popUpFixedScript.SetData(slotID, "Dismissed");
                                     break;
                                 case "DismissUnsuited":
                                     builderTop.AppendFormat("{0}{1} {2} lets you know that they won't forget this{3}",
@@ -2892,6 +2899,7 @@ public class ActionManager : MonoBehaviour
                                     msgTextMain = string.Format("{0} {1} has been Dismissed ({2})", actor.arc.name, actor.actorName, msgTextStatus);
                                     moodText = GameManager.i.personScript.UpdateMood(MoodType.DismissUnsuited, actor.arc.name);
                                     actor.AddHistory(new HistoryActor() { text = "Has been Dismissed (unsuited for their role)" });
+                                    GameManager.i.popUpFixedScript.SetData(slotID, "Dismissed");
                                     break;
                                 default:
                                     Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionNested);
@@ -3018,6 +3026,7 @@ public class ActionManager : MonoBehaviour
                     Actor actor = GameManager.i.dataScript.GetCurrentActor(data.actorSlotID, playerSide);
                     if (actor != null)
                     {
+                        GameManager.i.popUpFixedScript.SetData(actor.slotID, "Disposed Off");
                         //add actor to the dismissed or promoted lists
                         if (GameManager.i.dataScript.RemoveCurrentActor(playerSide, actor, ActorStatus.Killed) == true)
                         {

@@ -27,6 +27,10 @@ MonoBehaviour:
   listOfCriteria: []
   listOfEffects:
   - {fileID: 11400000, guid: 10acb683f8e58b44c9914955bd2ef4bb, type: 2}
+  help0: 
+  help1: 
+  help2: 
+  help3: 
   statTimesSelected: 0
   isActive: 0
   dataName: 
