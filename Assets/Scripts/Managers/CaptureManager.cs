@@ -327,6 +327,8 @@ public class CaptureManager : MonoBehaviour
             builder.AppendFormat("{0}City Loyalty +{1}{2}{3}{4}", colourBad, actorCaptured, colourEnd, "\n", "\n");
             //reduce actor alpha to show inactive (sprite and text)
             GameManager.i.actorPanelScript.UpdateActorAlpha(details.actor.slotID, GameManager.i.guiScript.alphaInactive);
+            //popUpFixed -> don't wait for an outcome Msg, display straight away
+            GameManager.i.popUpFixedScript.SetData(details.actor.slotID, "CAPTURED!");
             //actor captured outcome window
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
             {
