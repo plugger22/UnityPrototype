@@ -41,6 +41,10 @@ public class MissionManager : MonoBehaviour
         switch (GameManager.i.inputScript.GameState)
         {
             case GameState.NewInitialisation:
+                SubInitialiseAll();
+                SubInitialiseEvents();
+                SubInitialiseNpc();
+                break;
             case GameState.LoadAtStart:
             case GameState.LoadGame:
                 SubInitialiseAll();
@@ -48,6 +52,7 @@ public class MissionManager : MonoBehaviour
                 break;
             case GameState.FollowOnInitialisation:
                 SubInitialiseAll();
+                SubInitialiseNpc();
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
@@ -83,6 +88,17 @@ public class MissionManager : MonoBehaviour
         //register listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "EffectManager");
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "MissionManager");
+    }
+    #endregion
+
+    #region SubInitialiseNpc
+    /// <summary>
+    /// Npc initialisation start of a new level
+    /// </summary>
+    private void SubInitialiseNpc()
+    {
+        //clear out stealth nodes
+        mission.npc.Reset();
     }
     #endregion
 
@@ -382,12 +398,7 @@ public class MissionManager : MonoBehaviour
                     //msg
                     GameManager.i.messageScript.NpcOngoing("Npc arrives onMap", npc);
                     //tracer
-                    if (npc.currentNode.isTracer == true)
-                    {
-                        //OrgInfo not involved
-                        if (GameManager.i.dataScript.CheckOrgInfoType(OrgInfoType.Npc) == false)
-                        { GameManager.i.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
-                    }
+                    CheckIfTracerSpotsNpc(npc);
                 }
                 else { Debug.LogWarning("Invalid Npc currentStartNode (Null)"); }
             }
@@ -525,12 +536,7 @@ public class MissionManager : MonoBehaviour
                                 //msg
                                 GameManager.i.messageScript.NpcOngoing("Npc still onMap", npc);
                                 //tracer
-                                if (npc.currentNode.isTracer == true)
-                                {
-                                    //OrgInfo not involved
-                                    if (GameManager.i.dataScript.CheckOrgInfoType(OrgInfoType.Npc) == false)
-                                    { GameManager.i.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
-                                }
+                                CheckIfTracerSpotsNpc(npc);
                             }
                             else
                             {
@@ -570,12 +576,7 @@ public class MissionManager : MonoBehaviour
                                     //msg
                                     GameManager.i.messageScript.NpcOngoing("Npc still onMap", npc);
                                     //tracer
-                                    if (npc.currentNode.isTracer == true)
-                                    {
-                                        //OrgInfo not involved
-                                        if (GameManager.i.dataScript.CheckOrgInfoType(OrgInfoType.Npc) == false)
-                                        { GameManager.i.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
-                                    }
+                                    CheckIfTracerSpotsNpc(npc);
                                 }
                                 else { Debug.LogWarningFormat("Invalid move node (Null) for nextNodeID {0}", nextNodeID); }
                             }
@@ -592,15 +593,31 @@ public class MissionManager : MonoBehaviour
                 //msg
                 GameManager.i.messageScript.NpcOngoing("Npc still onMap", npc);
                 //tracer
-                if (npc.currentNode.isTracer == true)
-                {
-                    //OrgInfo not involved
-                    if (GameManager.i.dataScript.CheckOrgInfoType(OrgInfoType.Npc) == false)
-                    { GameManager.i.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
-                }
+                CheckIfTracerSpotsNpc(npc);
             }
             //tracker
             AddTrackerRecord(npc);
+        }
+    }
+
+    /// <summary>
+    /// SubMethod to determine if tracer present and if so, does it spot npc? (automatic spotting but no if orgInfo active or npc in stealthMode). Generates message if so.
+    /// </summary>
+    private void CheckIfTracerSpotsNpc(Npc npc)
+    {
+        if (npc.currentNode.isTracer == true)
+        {
+            //OrgInfo not involved
+            if (GameManager.i.dataScript.CheckOrgInfoType(OrgInfoType.Npc) == false)
+            {
+                if (npc.CheckIfStealthMode() == false)
+                { GameManager.i.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
+                else
+                {
+                    Debug.LogFormat("[Npc] MissionManager.cs -> CheckNpcActive: Npc in StealthMode and MISSED by Tracer at {0}, {1}, nodeID {2}{3}",
+                        npc.currentNode.nodeName, npc.currentNode.Arc.name, npc.currentNode.nodeID, "\n");
+                }
+            }
         }
     }
 

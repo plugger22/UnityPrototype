@@ -73,8 +73,6 @@ public class Npc : ScriptableObject
         Debug.AssertFormat(nodeStart != null, "Invalid nodeStart (Null) for {0}", name);
         Debug.AssertFormat(nodeEnd != null, "Invalid nodeEnd (Null) for {0}", name);
         Debug.AssertFormat(action != null, "Invalid action (Null) for {0}", name);
-        //clear stealth list
-        listOfStealthNodes.Clear();
     }
 
     /// <summary>
@@ -83,10 +81,13 @@ public class Npc : ScriptableObject
     /// <param name="nodeID"></param>
     public void AddStealthNode(int nodeID)
     {
-        Debug.Assert(nodeID > -1 && nodeID < GameManager.i.nodeScript.maxNodeValue);
+        Debug.Assert(nodeID > -1 && nodeID <= GameManager.i.nodeScript.maxNodeValue);
         //check not already in list
         if (listOfStealthNodes.Exists(x => x == nodeID) == false)
-        { listOfStealthNodes.Add(nodeID); }
+        {
+            listOfStealthNodes.Add(nodeID);
+            Debug.LogFormat("[Npc] Npc.SO -> AddStealthNode: nodeID {0} added to listOfStealthNodes{1}", nodeID, "\n");
+        }
     }
 
     /// <summary>
@@ -95,6 +96,14 @@ public class Npc : ScriptableObject
     /// <returns></returns>
     public bool CheckIfStealthMode()
     { return listOfStealthNodes.Exists(x => x == currentNode.nodeID); }
+
+    /// <summary>
+    /// Reset at start of each level including first
+    /// </summary>
+    public void Reset()
+    {
+        listOfStealthNodes.Clear();
+    }
 
 }
 
