@@ -630,6 +630,7 @@ public class CampaignManager : MonoBehaviour
                 builder.AppendFormat(" timerTurns: {0} (start {1}){2}", mission.npc.timerTurns, mission.npc.maxTurns, "\n");
                 builder.AppendFormat(" moveChance: {0}{1}", mission.npc.moveChance, "\n");
                 builder.AppendFormat(" isRepeat: {0}{1}", mission.npc.isRepeat, "\n");
+                builder.AppendFormat(" isIgnoreStealthMode: {0}{1}", mission.npc.isIgnoreStealthMode, "\n");
             }
             //npc stealth nodes
             builder.AppendFormat("{0}- Npc ListOfStealthNodes{1}", "\n", "\n");

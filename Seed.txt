@@ -138,3 +138,52 @@ Dev seed 39491 -> Saturday, 23 May 2020 2:36 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
 City seed 5678 -> London, United Kingdom
+
+Dev seed 15513 -> Saturday, 23 May 2020 4:00 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 52285 -> Saturday, 23 May 2020 4:09 PM
+City seed 5678 -> London, United Kingdom
+WARNING Counter reached 1000 -> FAILSAFE activated
+UnityEngine.Debug:LogWarning(Object)
+	<PopUp>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/PopUps/PopUpFixed.cs:423)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING PopUpFixed.cs -> ExecuteFixed: isActive true (should be false) -> Info Only
+UnityEngine.Debug:LogWarning(Object)
+	PopUpFixed:ExecuteFixed(Single) (at Assets/Scripts/GUI/PopUps/PopUpFixed.cs:365)
+	ModalOutcome:SetModalOutcome(ModalOutcomeDetails) (at Assets/Scripts/GUI/ModalOutcome.cs:199)
+	ModalOutcome:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalOutcome.cs:92)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:307)
+	ActionManager:ProcessNodeAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:472)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:151)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:307)
+	<GetNodeActions>c__AnonStorey2:<>m__0() (at Assets/Scripts/Managers/ActorManager.cs:1636)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 31319 -> Saturday, 23 May 2020 4:14 PM
+City seed 5678 -> London, United Kingdom
+WARNING PopUpFixed.cs -> ExecuteFixed: isActive true (should be false) -> Info Only
+UnityEngine.Debug:LogWarning(Object)
+	PopUpFixed:ExecuteFixed(Single) (at Assets/Scripts/GUI/PopUps/PopUpFixed.cs:365)
+	ModalOutcome:SetModalOutcome(ModalOutcomeDetails) (at Assets/Scripts/GUI/ModalOutcome.cs:199)
+	ModalOutcome:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalOutcome.cs:92)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:307)
+	NodeManager:ProcessMoveOutcome(MoveReturnData) (at Assets/Scripts/Managers/NodeManager.cs:2258)
+	NodeManager:ProcessPlayerMove(ModalMoveDetails) (at Assets/Scripts/Managers/NodeManager.cs:2207)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:398)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:307)
+	<CreateMoveMenu>c__AnonStorey2:<>m__0() (at Assets/Scripts/Managers/NodeManager.cs:1595)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING PopUpFixed.cs -> ExecuteFixed: isActive true (should be false) -> Info Only
+UnityEngine.Debug:LogWarning(Object)
+	PopUpFixed:ExecuteFixed(Single) (at Assets/Scripts/GUI/PopUps/PopUpFixed.cs:365)
+	ModalOutcome:SetModalOutcome(ModalOutcomeDetails) (at Assets/Scripts/GUI/ModalOutcome.cs:199)
+	ModalOutcome:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalOutcome.cs:92)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:307)
+	NodeManager:ProcessMoveOutcome(MoveReturnData) (at Assets/Scripts/Managers/NodeManager.cs:2258)
+	NodeManager:ProcessPlayerMove(ModalMoveDetails) (at Assets/Scripts/Managers/NodeManager.cs:2207)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:398)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:307)
+	<CreateMoveMenu>c__AnonStorey2:<>m__0() (at Assets/Scripts/Managers/NodeManager.cs:1595)
+	UnityEngine.EventSystems.EventSystem:Update()
+	

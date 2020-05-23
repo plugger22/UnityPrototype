@@ -23,6 +23,8 @@ public class Npc : ScriptableObject
     [Header("Stealth")]
     [Tooltip("A resistance contact in the same node will detect presence of Npc if it's effectiveness is >= Npc's stealth rating")]
     [Range(0, 3)] public int stealthRating = 1;
+    [Tooltip("If true, Npc ignores stealth Mode and will be automatically interdicted whenever at same node as player")]
+    public bool isIgnoreStealthMode;
 
     [Header("Entry")]
     [Tooltip("Earliest possible turn that rolls will being to see if Npc enters map")]
@@ -81,16 +83,20 @@ public class Npc : ScriptableObject
     /// <param name="nodeID"></param>
     public void AddStealthNode(int nodeID)
     {
-        if (nodeID > -1 && nodeID < GameManager.i.nodeScript.nodeIDCounter)
+        //only add if stealthMode active
+        if (isIgnoreStealthMode == false)
         {
-            //check not already in list
-            if (listOfStealthNodes.Exists(x => x == nodeID) == false)
+            if (nodeID > -1 && nodeID < GameManager.i.nodeScript.nodeIDCounter)
             {
-                listOfStealthNodes.Add(nodeID);
-                Debug.LogFormat("[Npc] Npc.SO -> AddStealthNode: nodeID {0} added to listOfStealthNodes{1}", nodeID, "\n");
+                //check not already in list
+                if (listOfStealthNodes.Exists(x => x == nodeID) == false)
+                {
+                    listOfStealthNodes.Add(nodeID);
+                    Debug.LogFormat("[Npc] Npc.SO -> AddStealthNode: nodeID {0} added to listOfStealthNodes{1}", nodeID, "\n");
+                }
             }
+            else { Debug.LogWarningFormat("Npc {0}, nodeID {1} NOT added to listOfStealthNodes (nodeIDCounter {2}){3}", tag, currentNode.nodeID, GameManager.i.nodeScript.nodeIDCounter, "\n"); }
         }
-        else { Debug.LogWarningFormat("Npc {0}, nodeID {1} NOT added to listOfStealthNodes (nodeIDCounter {2}){3}", tag, currentNode.nodeID, GameManager.i.nodeScript.nodeIDCounter, "\n"); }
     }
 
     /// <summary>
