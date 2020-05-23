@@ -81,13 +81,16 @@ public class Npc : ScriptableObject
     /// <param name="nodeID"></param>
     public void AddStealthNode(int nodeID)
     {
-        Debug.Assert(nodeID > -1 && nodeID <= GameManager.i.nodeScript.maxNodeValue);
-        //check not already in list
-        if (listOfStealthNodes.Exists(x => x == nodeID) == false)
+        if (nodeID > -1 && nodeID < GameManager.i.nodeScript.nodeIDCounter)
         {
-            listOfStealthNodes.Add(nodeID);
-            Debug.LogFormat("[Npc] Npc.SO -> AddStealthNode: nodeID {0} added to listOfStealthNodes{1}", nodeID, "\n");
+            //check not already in list
+            if (listOfStealthNodes.Exists(x => x == nodeID) == false)
+            {
+                listOfStealthNodes.Add(nodeID);
+                Debug.LogFormat("[Npc] Npc.SO -> AddStealthNode: nodeID {0} added to listOfStealthNodes{1}", nodeID, "\n");
+            }
         }
+        else { Debug.LogWarningFormat("Npc {0}, nodeID {1} NOT added to listOfStealthNodes (nodeIDCounter {2}){3}", tag, currentNode.nodeID, GameManager.i.nodeScript.nodeIDCounter, "\n"); }
     }
 
     /// <summary>

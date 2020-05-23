@@ -7998,21 +7998,27 @@ public class DataManager : MonoBehaviour
         Npc npc = GameManager.i.campaignScript.scenario.missionResistance.npc;
         if (npc != null)
         {
-            builder.AppendFormat("-Npc Move History (start  nodeID {0}){1}{2}", npc.currentStartNode.nodeID, "\n", "\n");
-            int count = listOfHistoryNpcMove.Count;
-            if (count > 0)
+            List<int> listOfStealthNodes = GameManager.i.missionScript.mission.npc.listOfStealthNodes;
+            if (listOfStealthNodes != null)
             {
-                for (int index = 0; index < count; index++)
+                builder.AppendFormat("-Npc Move History (start  nodeID {0}){1}{2}", npc.currentStartNode.nodeID, "\n", "\n");
+                int count = listOfHistoryNpcMove.Count;
+                if (count > 0)
                 {
-                    HistoryNpcMove history = listOfHistoryNpcMove[index];
-                    if (history != null)
+                    for (int index = 0; index < count; index++)
                     {
-                        builder.AppendFormat(" t{0}: nodeID {1}, endID {2}, timer {3}{4}", history.turn, history.currentNodeID, history.endNodeID, history.timer, "\n");
+                        HistoryNpcMove history = listOfHistoryNpcMove[index];
+                        if (history != null)
+                        {
+                            builder.AppendFormat(" t{0}: nodeID {1}, endID {2}, timer {3}{4}{5}", history.turn, history.currentNodeID, history.endNodeID, history.timer,
+                               listOfStealthNodes.Exists(x => x == history.currentNodeID) ? ", StealthMode" : "", "\n");
+                        }
+                        else { Debug.LogErrorFormat("Invalid history (Null) in listOfHistoryNpcMoves[{0}]", index); }
                     }
-                    else { Debug.LogErrorFormat("Invalid history (Null) in listOfHistoryNpcMoves[{0}]", index); }
                 }
+                else { builder.Append(" No records present"); }
             }
-            else { builder.Append(" No records present"); }
+            else { Debug.LogError("Invalid listOfStealthNodes (Null)"); }
         }
         else { builder.Append(" No Npc present"); }
         return builder.ToString();

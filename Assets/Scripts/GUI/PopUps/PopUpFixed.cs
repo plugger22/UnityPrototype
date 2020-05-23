@@ -362,10 +362,12 @@ public class PopUpFixed : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("PopUpFixed.cs -> ExecuteFixed: isActive true (should be false)");
-            StopMyCoroutine();
+            Debug.LogWarning("PopUpFixed.cs -> ExecuteFixed: isActive true (should be false) -> Info Only");
+            /*StopMyCoroutine(); -> no, let it complete*/
         }
     }
+
+    
 
     /// <summary>
     /// Coroutine -> batch processes all active popUps

@@ -693,7 +693,7 @@ public class MissionManager : MonoBehaviour
                 isSuccess = true;
             }
         }
-        else { Debug.LogFormat("[Npc] MissionManager.cs -> ProcessNpcInteract: Npc in Stealth Mode, {1}, {2}, nodeID {3}{4}", npc.currentNode.nodeName, npc.currentNode.Arc.name, npc.currentNode.nodeID, "\n"); }
+        else { Debug.LogFormat("[Npc] MissionManager.cs -> ProcessNpcInteract: Npc in Stealth Mode, {0}, {1}, nodeID {2}{3}", npc.currentNode.nodeName, npc.currentNode.Arc.name, npc.currentNode.nodeID, "\n"); }
         return isSuccess;
     }
 
@@ -795,7 +795,7 @@ public class MissionManager : MonoBehaviour
             }
             /*else { Debug.LogWarning("Invalid listOfActorsWithContactsAtNode (Null)"); }  Edit -> if no contacts at node this will trigger. No need for warning */
         }
-        else { Debug.LogFormat("[Npc] MissionManager.cs -> ProcessContactInteraction: Npc in Stealth Mode, {1}, {2}, nodeID {3}{4}", npc.currentNode.nodeName, npc.currentNode.Arc.name, npc.currentNode.nodeID, "\n"); }
+        else { Debug.LogFormat("[Npc] MissionManager.cs -> ProcessContactInteraction: Npc in Stealth Mode, {0}, {1}, nodeID {2}{3}", npc.currentNode.nodeName, npc.currentNode.Arc.name, npc.currentNode.nodeID, "\n"); }
     }
 
 

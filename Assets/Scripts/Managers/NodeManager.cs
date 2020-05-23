@@ -2151,6 +2151,8 @@ public class NodeManager : MonoBehaviour
                             //AI Immediate notification
                             GameManager.i.messageScript.AIImmediateActivity("Immediate Activity \"Move\" (Player)",
                                 "Moving", moveDetails.nodeID, moveDetails.connectionID);
+                            //Npc stealth node
+                            GameManager.i.missionScript.mission.npc.AddStealthNode(moveDetails.nodeID);
                         }
                         else
                         {
@@ -2164,6 +2166,8 @@ public class NodeManager : MonoBehaviour
                         invisibility += moveDetails.changeInvisibility;
                         invisibility = Mathf.Max(0, invisibility);
                         GameManager.i.playerScript.Invisibility = invisibility;
+                        //popUp
+                        GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Invisibility {moveDetails.changeInvisibility}");
                     }
                     else { Debug.LogErrorFormat("Invalid connection (Null) for connectionID {0}", moveDetails.connectionID); }
                 }
@@ -2179,7 +2183,10 @@ public class NodeManager : MonoBehaviour
                 {
                     Gear gear = GameManager.i.dataScript.GetGear(moveDetails.gearName);
                     if (gear != null)
-                    {
+                    { 
+                        //popUp
+                        GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"{gear.tag} used");
+                        //process move
                         builder.AppendFormat("{0}{1}{2}{3}{4}{5} used to minimise recognition{6}", "\n", "\n", colourNeutral, gear.tag, colourEnd, colourNormal, colourEnd);
                         GameManager.i.gearScript.SetGearUsed(gear, "move with as little recognition as possible");
                         MoveReturnData moveData = new MoveReturnData();
