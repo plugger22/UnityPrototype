@@ -102,6 +102,9 @@ public class ModalActionMenu : MonoBehaviour
     /// <param name="details"></param>
     public void SetActionMenu(ModalGenericMenuDetails details)
     {
+        //close all tooltips
+        GameManager.i.guiScript.SetTooltipsOff();
+        //check enough actions
         if (GameManager.i.turnScript.CheckRemainingActions() == true)
         {
             //modalActionObject.SetActive(true);
@@ -250,7 +253,7 @@ public class ModalActionMenu : MonoBehaviour
         GameManager.i.nodeScript.ToggleNodeHighlight();
         //close Alert UI safety check (ignored if not active)
         GameManager.i.alertScript.CloseAlertUI();
-        //close Generic toolip (eg. from button)
+        //close toolips (eg. from button)
         GameManager.i.guiScript.SetTooltipsOff();
 
         /*GameManager.i.tooltipGenericScript.CloseTooltip("ModalActionMenu -> CloseActionMenu");*/

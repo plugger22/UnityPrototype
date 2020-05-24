@@ -92,7 +92,7 @@ public class Npc : ScriptableObject
                 if (listOfInvisibleNodes.Exists(x => x == nodeID) == false)
                 {
                     listOfInvisibleNodes.Add(nodeID);
-                    Debug.LogFormat("[Npc] Npc.SO -> AddInvisibleNode: nodeID {0} added to listOfInvisibleNodes{1}", nodeID, "\n");
+                    /*Debug.LogFormat("[Npc] Npc.SO -> AddInvisibleNode: nodeID {0} added to listOfInvisibleNodes{1}", nodeID, "\n");*/
                 }
             }
             else { Debug.LogWarningFormat("Npc {0}, nodeID {1} NOT added to listOfInvisibleNodes (nodeIDCounter {2}){3}", tag, currentNode.nodeID, GameManager.i.nodeScript.nodeIDCounter, "\n"); }
