@@ -7998,8 +7998,8 @@ public class DataManager : MonoBehaviour
         Npc npc = GameManager.i.campaignScript.scenario.missionResistance.npc;
         if (npc != null)
         {
-            List<int> listOfStealthNodes = GameManager.i.missionScript.mission.npc.listOfStealthNodes;
-            if (listOfStealthNodes != null)
+            List<int> listOfInvisibleNodes = GameManager.i.missionScript.mission.npc.listOfInvisibleNodes;
+            if (listOfInvisibleNodes != null)
             {
                 builder.AppendFormat("-Npc Move History (start  nodeID {0}){1}{2}", npc.currentStartNode.nodeID, "\n", "\n");
                 int count = listOfHistoryNpcMove.Count;
@@ -8011,14 +8011,14 @@ public class DataManager : MonoBehaviour
                         if (history != null)
                         {
                             builder.AppendFormat(" t{0}: nodeID {1}, endID {2}, timer {3}{4}{5}", history.turn, history.currentNodeID, history.endNodeID, history.timer,
-                               listOfStealthNodes.Exists(x => x == history.currentNodeID) ? ", StealthMode" : "", "\n");
+                               listOfInvisibleNodes.Exists(x => x == history.currentNodeID) ? ", Inivisible" : "", "\n");
                         }
                         else { Debug.LogErrorFormat("Invalid history (Null) in listOfHistoryNpcMoves[{0}]", index); }
                     }
                 }
                 else { builder.Append(" No records present"); }
             }
-            else { Debug.LogError("Invalid listOfStealthNodes (Null)"); }
+            else { Debug.LogError("Invalid listOfInvisibleNodes (Null)"); }
         }
         else { builder.Append(" No Npc present"); }
         return builder.ToString();

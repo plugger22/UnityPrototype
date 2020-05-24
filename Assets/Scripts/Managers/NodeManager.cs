@@ -2151,8 +2151,8 @@ public class NodeManager : MonoBehaviour
                             //AI Immediate notification
                             GameManager.i.messageScript.AIImmediateActivity("Immediate Activity \"Move\" (Player)",
                                 "Moving", moveDetails.nodeID, moveDetails.connectionID);
-                            //Npc stealth node
-                            GameManager.i.missionScript.mission.npc.AddStealthNode(moveDetails.nodeID);
+                            //Npc invisible node
+                            GameManager.i.missionScript.mission.npc.AddInvisibleNode(moveDetails.nodeID);
                         }
                         else
                         {

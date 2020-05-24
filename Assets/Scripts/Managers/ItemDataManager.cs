@@ -2290,12 +2290,14 @@ public class ItemDataManager : MonoBehaviour
     /// <param name="npc"></param>
     /// <param name="org"></param>
     /// <returns></returns>
-    public string GetOrgNpcDetails(Node node, Npc npc, Organisation org)
+    public string GetOrgNpcDetails(Node node, Npc npc, Organisation org, bool isStealthMode)
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("<b>{0}{1}{2}</b> info feed{3}has the{4}{5}", colourAlert, org.tag, colourEnd, "\n", "\n", "\n");
         builder.AppendFormat("<b>{0}{1}{2}</b>{3}{4}", colourNeutral, npc.tag, colourEnd, "\n", "\n");
         builder.AppendFormat("At <b>{0}, {1}{2}{3}</b> district", node.nodeName, colourAlert, node.Arc.name, colourEnd);
+        if (isStealthMode == true)
+        { builder.AppendFormat("{0}{1}<b>INVISIBLE</b>{2}", "\n", colourBad, colourEnd); }
         return builder.ToString();
     }
 

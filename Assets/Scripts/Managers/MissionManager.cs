@@ -601,7 +601,7 @@ public class MissionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// SubMethod to determine if tracer present and if so, does it spot npc? (automatic spotting but no if orgInfo active or npc in stealthMode). Generates message if so.
+    /// SubMethod to determine if tracer present and if so, does it spot npc? (automatic spotting but no if orgInfo active or npc in Invisible Mode). Generates message if so.
     /// </summary>
     private void CheckIfTracerSpotsNpc(Npc npc)
     {
@@ -610,11 +610,11 @@ public class MissionManager : MonoBehaviour
             //OrgInfo not involved
             if (GameManager.i.dataScript.CheckOrgInfoType(OrgInfoType.Npc) == false)
             {
-                if (npc.CheckIfStealthMode() == false)
+                if (npc.CheckIfInvisibleMode() == false)
                 { GameManager.i.messageScript.TracerNpcSpotted("Npc Spotted", npc); }
                 else
                 {
-                    Debug.LogFormat("[Npc] MissionManager.cs -> CheckNpcActive: Npc in StealthMode and MISSED by Tracer at {0}, {1}, nodeID {2}{3}",
+                    Debug.LogFormat("[Npc] MissionManager.cs -> CheckNpcActive: Npc in Invisible Mode and MISSED by Tracer at {0}, {1}, nodeID {2}{3}",
                         npc.currentNode.nodeName, npc.currentNode.Arc.name, npc.currentNode.nodeID, "\n");
                 }
             }
@@ -657,13 +657,13 @@ public class MissionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Active Player at same node as Npc ->  interacts (can't happen if Npc in stealth mode)
+    /// Active Player at same node as Npc ->  interacts (can't happen if Npc in Invisible mode)
     /// </summary>
     /// <param name="npc"></param>
     private bool ProcessNpcInteract(Npc npc)
     {
         bool isSuccess = false;
-        if (npc.CheckIfStealthMode() == false)
+        if (npc.CheckIfInvisibleMode() == false)
         {
             //Player interacts with Npc
             if (GameManager.i.playerScript.status == ActorStatus.Active)
@@ -693,7 +693,7 @@ public class MissionManager : MonoBehaviour
                 isSuccess = true;
             }
         }
-        else { Debug.LogFormat("[Npc] MissionManager.cs -> ProcessNpcInteract: Npc in Stealth Mode, {0}, {1}, nodeID {2}{3}", npc.currentNode.nodeName, npc.currentNode.Arc.name, npc.currentNode.nodeID, "\n"); }
+        else { Debug.LogFormat("[Npc] MissionManager.cs -> ProcessNpcInteract: Npc in Invisible Mode, {0}, {1}, nodeID {2}{3}", npc.currentNode.nodeName, npc.currentNode.Arc.name, npc.currentNode.nodeID, "\n"); }
         return isSuccess;
     }
 
@@ -722,11 +722,11 @@ public class MissionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks to see if Npc spotted by contact (can't happen if Npc in stealth mode)
+    /// Checks to see if Npc spotted by contact (can't happen if Npc in Invisible mode)
     /// </summary>
     private void ProcessContactInteraction(Npc npc)
     {
-        if (npc.CheckIfStealthMode() == false)
+        if (npc.CheckIfInvisibleMode() == false)
         {
             Actor actor;
             Contact contact;
@@ -795,7 +795,7 @@ public class MissionManager : MonoBehaviour
             }
             /*else { Debug.LogWarning("Invalid listOfActorsWithContactsAtNode (Null)"); }  Edit -> if no contacts at node this will trigger. No need for warning */
         }
-        else { Debug.LogFormat("[Npc] MissionManager.cs -> ProcessContactInteraction: Npc in Stealth Mode, {0}, {1}, nodeID {2}{3}", npc.currentNode.nodeName, npc.currentNode.Arc.name, npc.currentNode.nodeID, "\n"); }
+        else { Debug.LogFormat("[Npc] MissionManager.cs -> ProcessContactInteraction: Npc in Invisible Mode, {0}, {1}, nodeID {2}{3}", npc.currentNode.nodeName, npc.currentNode.Arc.name, npc.currentNode.nodeID, "\n"); }
     }
 
 

@@ -987,6 +987,12 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("Any {0}Contact or Tracer{1} sighting reports of the same target type are {2}suppressed{3} (they're redundant) while you are receiving a {4}Direct Feed{5} from the Organisation", 
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
+        //Limitations
+        data = new HelpData();
+        data.tag = "orgInfo_3";
+        data.header = "Invisibile";
+        data.text = string.Format("The target Npc is in a district where the {0}Player previously made themselves known{1}. They {2}can't be interdicted{3} here", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
         #endregion
 
         #region Organisations
@@ -1294,7 +1300,6 @@ public class HelpManager : MonoBehaviour
         #endregion
 
         #endregion
-
 
         #region Player Betrayed
         //

@@ -5379,8 +5379,8 @@ public class EffectManager : MonoBehaviour
                         reason = "TAGGED condition";
                         GameManager.i.aiScript.immediateFlagResistance = true;
                         popText = "POSITION KNOWN";
-                        //Npc stealth node
-                        GameManager.i.missionScript.mission.npc.AddStealthNode(node.nodeID);
+                        //Npc Invisible node
+                        GameManager.i.missionScript.mission.npc.AddInvisibleNode(node.nodeID);
                     }
                     //NOT Tagged
                     else
@@ -5401,7 +5401,7 @@ public class EffectManager : MonoBehaviour
                                 popText = string.Format("{0}{1}POSITION KNOWN", popText, "\n");
                                 GameManager.i.aiScript.immediateFlagResistance = true;
                                 //Npc stealth node
-                                GameManager.i.missionScript.mission.npc.AddStealthNode(node.nodeID);
+                                GameManager.i.missionScript.mission.npc.AddInvisibleNode(node.nodeID);
                             }
                         }
                         else
@@ -5417,8 +5417,8 @@ public class EffectManager : MonoBehaviour
                                     colourAlert, effect.description, colourEnd, "\n", "\n", colourBadSide, colourEnd);
                                 popText = string.Format("{0}{1}POSITION KNOWN", popText, "\n");
                                 GameManager.i.aiScript.immediateFlagResistance = true;
-                                //Npc stealth node
-                                GameManager.i.missionScript.mission.npc.AddStealthNode(node.nodeID);
+                                //Npc Invisible node
+                                GameManager.i.missionScript.mission.npc.AddInvisibleNode(node.nodeID);
                             }
 
                         }

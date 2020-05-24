@@ -630,11 +630,11 @@ public class CampaignManager : MonoBehaviour
                 builder.AppendFormat(" timerTurns: {0} (start {1}){2}", mission.npc.timerTurns, mission.npc.maxTurns, "\n");
                 builder.AppendFormat(" moveChance: {0}{1}", mission.npc.moveChance, "\n");
                 builder.AppendFormat(" isRepeat: {0}{1}", mission.npc.isRepeat, "\n");
-                builder.AppendFormat(" isIgnoreStealthMode: {0}{1}", mission.npc.isIgnoreStealthMode, "\n");
+                builder.AppendFormat(" isIgnoreInvisible: {0}{1}", mission.npc.isIgnoreInvisible, "\n");
             }
             //npc stealth nodes
             builder.AppendFormat("{0}- Npc ListOfStealthNodes{1}", "\n", "\n");
-            List<int> listOfNodes = GameManager.i.missionScript.mission.npc.listOfStealthNodes;
+            List<int> listOfNodes = GameManager.i.missionScript.mission.npc.listOfInvisibleNodes;
             if (listOfNodes != null)
             {
                 int count = listOfNodes.Count;

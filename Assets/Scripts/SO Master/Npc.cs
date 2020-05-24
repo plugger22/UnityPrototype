@@ -23,8 +23,8 @@ public class Npc : ScriptableObject
     [Header("Stealth")]
     [Tooltip("A resistance contact in the same node will detect presence of Npc if it's effectiveness is >= Npc's stealth rating")]
     [Range(0, 3)] public int stealthRating = 1;
-    [Tooltip("If true, Npc ignores stealth Mode and will be automatically interdicted whenever at same node as player")]
-    public bool isIgnoreStealthMode;
+    [Tooltip("If true, Npc ignores Invisible Mode and will be automatically interdicted whenever at same node as player")]
+    public bool isIgnoreInvisible;
 
     [Header("Entry")]
     [Tooltip("Earliest possible turn that rolls will being to see if Npc enters map")]
@@ -63,7 +63,7 @@ public class Npc : ScriptableObject
     [HideInInspector] public Node currentEndNode;
     [HideInInspector] public Node currentNode;                                      //where Npc is now
     [HideInInspector] public int daysActive;                                        //tally of days spent in City
-    [HideInInspector] public List<int> listOfStealthNodes = new List<int>();        //nodes where Player's position is known and NPC goes into stealth mode and can't be intercepted in that location
+    [HideInInspector] public List<int> listOfInvisibleNodes = new List<int>();        //nodes where Player's position is known and NPC goes into invisible mode and can't be intercepted in that location
     #endregion
 
 
@@ -81,37 +81,46 @@ public class Npc : ScriptableObject
     /// Add node where player's position was known immediately
     /// </summary>
     /// <param name="nodeID"></param>
-    public void AddStealthNode(int nodeID)
+    public void AddInvisibleNode(int nodeID)
     {
-        //only add if stealthMode active
-        if (isIgnoreStealthMode == false)
+        //only add if Invisible Mode active
+        if (isIgnoreInvisible == false)
         {
             if (nodeID > -1 && nodeID < GameManager.i.nodeScript.nodeIDCounter)
             {
                 //check not already in list
-                if (listOfStealthNodes.Exists(x => x == nodeID) == false)
+                if (listOfInvisibleNodes.Exists(x => x == nodeID) == false)
                 {
-                    listOfStealthNodes.Add(nodeID);
-                    Debug.LogFormat("[Npc] Npc.SO -> AddStealthNode: nodeID {0} added to listOfStealthNodes{1}", nodeID, "\n");
+                    listOfInvisibleNodes.Add(nodeID);
+                    Debug.LogFormat("[Npc] Npc.SO -> AddInvisibleNode: nodeID {0} added to listOfInvisibleNodes{1}", nodeID, "\n");
                 }
             }
-            else { Debug.LogWarningFormat("Npc {0}, nodeID {1} NOT added to listOfStealthNodes (nodeIDCounter {2}){3}", tag, currentNode.nodeID, GameManager.i.nodeScript.nodeIDCounter, "\n"); }
+            else { Debug.LogWarningFormat("Npc {0}, nodeID {1} NOT added to listOfInvisibleNodes (nodeIDCounter {2}){3}", tag, currentNode.nodeID, GameManager.i.nodeScript.nodeIDCounter, "\n"); }
         }
     }
 
     /// <summary>
-    /// returns true if Npc's currentNode.nodeID is in listofStealthNodes and Npc is assumed to be in Stealth mode and can't be interdicted or spotted
+    /// returns true if Npc's currentNode.nodeID is in listofInvisibleNodes and Npc is assumed to be in Invisibile mode and can't be interdicted or spotted
+    /// NOTE: if isIgnoreInvisibleMode is true then the listOfInvisibleNodes will be Empty and method will return false
     /// </summary>
     /// <returns></returns>
-    public bool CheckIfStealthMode()
-    { return listOfStealthNodes.Exists(x => x == currentNode.nodeID); }
+    public bool CheckIfInvisibleMode()
+    { return listOfInvisibleNodes.Exists(x => x == currentNode.nodeID); }
+
+    /// <summary>
+    /// returns true if specified node is in listofInvisibleNodes and Npc is assumed to be in Invisible mode and can't be interdicted or spotted
+    /// NOTE: if isIgnoreInvisibleMode is true then the listOfInvisibleNodes will be Empty and method will return false
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckIfInvisibleMode(int nodeID)
+    { return listOfInvisibleNodes.Exists(x => x == nodeID); }
 
     /// <summary>
     /// Reset at start of each level including first
     /// </summary>
     public void Reset()
     {
-        listOfStealthNodes.Clear();
+        listOfInvisibleNodes.Clear();
     }
 
 }

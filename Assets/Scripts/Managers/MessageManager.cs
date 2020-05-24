@@ -4826,6 +4826,7 @@ public class MessageManager : MonoBehaviour
             Organisation org = GameManager.i.campaignScript.campaign.orgInfo;
             if (org != null)
             {
+                bool isStealthMode = false;
                 Message message = new Message();
                 message.text = text;
                 message.type = MessageType.ORGANISATION;
@@ -4837,7 +4838,10 @@ public class MessageManager : MonoBehaviour
                 ItemData data = new ItemData();
                 data.itemText = string.Format("The {0} track the {1}", org.tag, npc.tag);
                 data.topText = string.Format("{0} Direct Feed", org.tag);
-                data.bottomText = GameManager.i.itemDataScript.GetOrgNpcDetails(node, npc, org);
+                //stealth mode check
+                if (GameManager.i.missionScript.mission.npc.CheckIfInvisibleMode(node.nodeID) == true)
+                { isStealthMode = true; }
+                data.bottomText = GameManager.i.itemDataScript.GetOrgNpcDetails(node, npc, org, isStealthMode);
                 data.priority = ItemPriority.High;
                 data.sprite = GameManager.i.guiScript.aiAlertSprite;
                 data.spriteName = data.sprite.name;
@@ -4850,6 +4854,9 @@ public class MessageManager : MonoBehaviour
                 data.tag0 = "orgInfo_0";
                 data.tag1 = "orgInfo_1";
                 data.tag2 = "orgInfo_2";
+                //extra text to explain stealth mode, ignore otherwise as may confuse player
+                if (isStealthMode == true)
+                { data.tag2 = "orgInfo_3"; }
                 //add
                 GameManager.i.dataScript.AddMessage(message);
                 GameManager.i.dataScript.AddItemData(data);
