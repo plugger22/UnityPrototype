@@ -380,6 +380,12 @@ public class InputManager : MonoBehaviour
                         if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
                         { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc6, "InputManager.cs -> ProcessKeyInput NodeArc6"); }
                     }
+                    else if (Input.GetButtonDown("PlayerKnown") == true)
+                    {
+                        //only do so if new turn processing hasn't commenced
+                        if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
+                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.PlayerKnown, "InputManager.cs -> ProcessKeyInput PlayerKnown"); }
+                    }
                     else if (Input.GetButtonDown("ActivityTime") == true)
                     {
                         //only do so if new turn processing hasn't commenced

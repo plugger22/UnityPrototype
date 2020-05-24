@@ -632,8 +632,8 @@ public class CampaignManager : MonoBehaviour
                 builder.AppendFormat(" isRepeat: {0}{1}", mission.npc.isRepeat, "\n");
                 builder.AppendFormat(" isIgnoreInvisible: {0}{1}", mission.npc.isIgnoreInvisible, "\n");
             }
-            //npc stealth nodes
-            builder.AppendFormat("{0}- Npc ListOfStealthNodes{1}", "\n", "\n");
+            //npc invisible nodes
+            builder.AppendFormat("{0}- Npc ListOfInvisibleNodes{1}", "\n", "\n");
             List<int> listOfNodes = GameManager.i.missionScript.mission.npc.listOfInvisibleNodes;
             if (listOfNodes != null)
             {
@@ -650,7 +650,7 @@ public class CampaignManager : MonoBehaviour
                 }
                 else { builder.AppendFormat("  No nodes present{0}", "\n"); }
             }
-            else { Debug.LogError("Invalid listOfStealthNodes (Null)"); }
+            else { Debug.LogError("Invalid listOfInvisibleNodes (Null)"); }
 
         }
         return builder.ToString();

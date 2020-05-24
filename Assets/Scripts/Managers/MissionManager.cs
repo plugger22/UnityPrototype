@@ -76,7 +76,7 @@ public class MissionManager : MonoBehaviour
         //initialise and assign targets
         GameManager.i.targetScript.Initialise();
         GameManager.i.targetScript.AssignTargets(mission);
-        //Human Resistance Player
+        //Npc -> Human Resistance Player only
         if (GameManager.i.campaignScript.campaign.side.level == 2)
         { InitialiseNpc(); }
     }
@@ -97,7 +97,7 @@ public class MissionManager : MonoBehaviour
     /// </summary>
     private void SubInitialiseNpc()
     {
-        //clear out stealth nodes
+        //clear out Invisible nodes
         mission.npc.Reset();
     }
     #endregion

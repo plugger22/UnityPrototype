@@ -187,3 +187,91 @@ UnityEngine.Debug:LogWarning(Object)
 	<CreateMoveMenu>c__AnonStorey2:<>m__0() (at Assets/Scripts/Managers/NodeManager.cs:1595)
 	UnityEngine.EventSystems.EventSystem:Update()
 	
+Dev seed 58182 -> Sunday, 24 May 2020 11:48 AM
+City seed 5678 -> London, United Kingdom
+WARNING Counter reached 1000 -> FAILSAFE activated
+UnityEngine.Debug:LogWarning(Object)
+	<PopUp>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/PopUps/PopUpFixed.cs:423)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 43907 -> Sunday, 24 May 2020 12:01 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 34852 -> Sunday, 24 May 2020 12:31 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 14129 -> Sunday, 24 May 2020 12:33 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 45836 -> Sunday, 24 May 2020 12:35 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 17709 -> Sunday, 24 May 2020 12:36 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 41162 -> Sunday, 24 May 2020 12:37 PM
+City seed 5678 -> London, United Kingdom
+WARNING Counter reached 1000 -> FAILSAFE activated
+UnityEngine.Debug:LogWarning(Object)
+	<PopUp>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/PopUps/PopUpFixed.cs:423)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 46497 -> Sunday, 24 May 2020 12:49 PM
+City seed 5678 -> London, United Kingdom
+WARNING Counter reached 500 -> FAILSAFE activated (elapsedTime 0, timeLimt 3.4)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	<PopUp>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/PopUps/PopUpFixed.cs:423)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 40743 -> Sunday, 24 May 2020 12:52 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 44186 -> Sunday, 24 May 2020 12:53 PM
+City seed 5678 -> London, United Kingdom
+WARNING PopUpFixed.cs -> ExecuteFixed: isActive true (should be false) -> Info Only
+UnityEngine.Debug:LogWarning(Object)
+	PopUpFixed:ExecuteFixed(Single) (at Assets/Scripts/GUI/PopUps/PopUpFixed.cs:365)
+	ModalOutcome:SetModalOutcome(ModalOutcomeDetails) (at Assets/Scripts/GUI/ModalOutcome.cs:199)
+	ModalOutcome:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalOutcome.cs:92)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:307)
+	ActionManager:ProcessNodeAction(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:472)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:151)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:307)
+	<GetNodeActions>c__AnonStorey2:<>m__0() (at Assets/Scripts/Managers/ActorManager.cs:1636)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 40646 -> Sunday, 24 May 2020 12:57 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 28661 -> Sunday, 24 May 2020 12:59 PM
+City seed 5678 -> London, United Kingdom
+WARNING PopUpFixed.cs -> ExecuteFixed: isActive true (still running) -> Info Only
+UnityEngine.Debug:LogWarning(Object)
+	PopUpFixed:ExecuteFixed(Single) (at Assets/Scripts/GUI/PopUps/PopUpFixed.cs:365)
+	ModalOutcome:SetModalOutcome(ModalOutcomeDetails) (at Assets/Scripts/GUI/ModalOutcome.cs:199)
+	ModalOutcome:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalOutcome.cs:92)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:307)
+	NodeManager:ProcessMoveOutcome(MoveReturnData) (at Assets/Scripts/Managers/NodeManager.cs:2286)
+	NodeManager:ProcessPlayerMove(ModalMoveDetails) (at Assets/Scripts/Managers/NodeManager.cs:2235)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:399)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:307)
+	<CreateMoveMenu>c__AnonStorey2:<>m__0() (at Assets/Scripts/Managers/NodeManager.cs:1623)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 41941 -> Sunday, 24 May 2020 1:00 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10017 -> Sunday, 24 May 2020 1:01 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46847 -> Sunday, 24 May 2020 1:01 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 37626 -> Sunday, 24 May 2020 1:02 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 867 -> Sunday, 24 May 2020 1:03 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 3562 -> Sunday, 24 May 2020 1:03 PM
+City seed 5678 -> London, United Kingdom

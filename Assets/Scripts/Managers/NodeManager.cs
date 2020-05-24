@@ -355,6 +355,7 @@ public class NodeManager : MonoBehaviour
                     case NodeUI.NodeArc4:
                     case NodeUI.NodeArc5:
                     case NodeUI.NodeArc6:
+                    case NodeUI.PlayerKnown:
                         if (NodeShowFlag > 0)
                         { ResetAll(); }
                         else { ShowNodes(nodeUI); }
@@ -1008,7 +1009,34 @@ public class NodeManager : MonoBehaviour
                     displayText = string.Format("{0}{1}{2}", colourError, "ERROR: Null listOfCentreNodes", colourEnd);
                 }
                 break;
-
+            case NodeUI.PlayerKnown:
+                List<int> listOfInvisibleNodes = GameManager.i.missionScript.mission.npc.listOfInvisibleNodes;
+                if (listOfInvisibleNodes != null)
+                {
+                    counter = 0;
+                    int count = listOfInvisibleNodes.Count;
+                    if (count > 0)
+                    {
+                        for (int i = 0; i < count; i++)
+                        {
+                            Node node = GameManager.i.dataScript.GetNode(listOfInvisibleNodes[i]);
+                            if (node != null)
+                            {
+                                node.SetActive();
+                                counter++;
+                            }
+                            else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}, listOfInvisibleNodes[{1}]", listOfInvisibleNodes[i], i); }
+                        }
+                        displayText = string.Format("{0}There {1} {2} District{3} where the Player is Known{4}", colourNeutral,  counter != 1 ? "are" : "is", counter, counter != 1 ? "s" : "", colourEnd);
+                    }
+                    else { displayText = string.Format("{0}{1}{2}", colourNeutral, "There are NO Districts where the Player is Known", colourEnd); }
+                }
+                else
+                {
+                    Debug.LogWarning("Invalid listOfInvisibleNodes (Null)");
+                    displayText = string.Format("{0}{1}{2}", colourError, "ERROR: Null listOfInvisibileNodes", colourEnd);
+                }
+                break;
             //show specific NodeArcTypes
             case NodeUI.NodeArc0: data = 0; nodeTypeFlag = true; break;
             case NodeUI.NodeArc1: data = 1; nodeTypeFlag = true; break;

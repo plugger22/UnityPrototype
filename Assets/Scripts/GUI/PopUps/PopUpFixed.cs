@@ -276,7 +276,7 @@ public class PopUpFixed : MonoBehaviour
             else { arrayOfTexts[index].text = textToDisplay; }
             //set active index true (enables display)
             arrayOfActive[index] = true;
-            /*Debug.LogFormat("[Tst] PopUpFixed.cs -> SetData: {0} -> \"{1}\"{2}", popPos, textToDisplay, "\n");*/
+            Debug.LogFormat("[Tst] PopUpFixed.cs -> SetData: {0} -> \"{1}\"{2}", popPos, textToDisplay, "\n");
         }
         else { Debug.LogWarning("Invalid textToDisplay (Null or Empty)"); }
     }
@@ -362,7 +362,7 @@ public class PopUpFixed : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("PopUpFixed.cs -> ExecuteFixed: isActive true (should be false) -> Info Only");
+            Debug.LogWarning("PopUpFixed.cs -> ExecuteFixed: isActive true (still running) -> Info Only");
             /*StopMyCoroutine(); -> no, let it complete*/
         }
     }
@@ -420,7 +420,8 @@ public class PopUpFixed : MonoBehaviour
             }
             //fail safe
             counter++;
-            if (counter > 500) { Debug.LogWarning("Counter reached 1000 -> FAILSAFE activated"); break; }
+            if (counter > 500)
+            { Debug.LogWarningFormat("Counter reached 500 -> FAILSAFE activated (elapsedTime {0}, timeLimt {1})", elapsedTime, timeLimit); break; }
             yield return null;
         }
         while (elapsedTime < timeLimit);
