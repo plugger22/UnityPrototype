@@ -94,6 +94,7 @@ public class PlayerManager : MonoBehaviour
     private Condition conditionImaged;
     private Condition conditionStressed;
     private Condition conditionAddicted;
+    private Gear gearSpecialMove;
 
 
 
@@ -304,6 +305,7 @@ public class PlayerManager : MonoBehaviour
         globalResistance = GameManager.i.globalScript.sideResistance;
         hackingGear = GameManager.i.gearScript.typeHacking.name;
         maxNumOfSecrets = GameManager.i.secretScript.secretMaxNum;
+        gearSpecialMove = GameManager.i.gearScript.gearSpecialMove;
         conditionCorrupt = GameManager.i.dataScript.GetCondition("CORRUPT");
         conditionIncompetent = GameManager.i.dataScript.GetCondition("INCOMPETENT");
         conditionQuestionable = GameManager.i.dataScript.GetCondition("QUESTIONABLE");
@@ -326,6 +328,7 @@ public class PlayerManager : MonoBehaviour
         Debug.Assert(conditionImaged != null, "Invalid conditionImaged (Null)");
         Debug.Assert(conditionStressed != null, "Invalid conditionStressed (Null)");
         Debug.Assert(conditionAddicted != null, "Invalid conditionAddicted (Null)");
+        Debug.Assert(gearSpecialMove != null, "Invalid gearSpecialMove (Null)");
     }
     #endregion
 
@@ -665,8 +668,11 @@ public class PlayerManager : MonoBehaviour
                     //add to listOfCurrentGear (if not already present)
                     GameManager.i.dataScript.AddGearNew(gear);
                     //special Move gear
-                    if (gearName.Equals("SewerMap", StringComparison.Ordinal) == true)
-                    { isSpecialMoveGear = true; }
+                    if (gearName.Equals(gearSpecialMove.name, StringComparison.Ordinal) == true)
+                    {
+                        isSpecialMoveGear = true;
+                        UpdateMoveNodes();
+                    }
                     //statistics
                     GameManager.i.dataScript.StatisticIncrement(StatType.GearTotal);
                     return true;
@@ -698,8 +704,11 @@ public class PlayerManager : MonoBehaviour
                 {
                     RemoveGearItem(gear, isLost);
                     //special Move gear
-                    if (gearName.Equals("SewerMap", StringComparison.Ordinal) == true)
-                    { isSpecialMoveGear = false; }
+                    if (gearName.Equals(gearSpecialMove.name, StringComparison.Ordinal) == true)
+                    {
+                        isSpecialMoveGear = false;
+                        UpdateMoveNodes();
+                    }
                     return true;
                 }
                 else
@@ -716,6 +725,18 @@ public class PlayerManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid gearName (Null or Empty)"); }
         return false;
+    }
+
+    /// <summary>
+    /// subMethod to update player's possible move nodes when special move gear is added or removed
+    /// </summary>
+    private void UpdateMoveNodes()
+    {
+        //update nodes where player can move (now only immediate neighbours)
+        Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
+        if (node != null)
+        { node.SetPlayerMoveNodes(); }
+        else { Debug.LogErrorFormat("Invalid node (Null) for playerID {0}", GameManager.i.nodeScript.GetPlayerNodeID()); }
     }
 
     /// <summary>

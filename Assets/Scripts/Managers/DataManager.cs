@@ -66,6 +66,8 @@ public class DataManager : MonoBehaviour
     private List<NodeCrisis> listOfCrisisSecurity = new List<NodeCrisis>();                     //pick lists set up at start of session
     private List<NodeCrisis> listOfCrisisSupport = new List<NodeCrisis>();
     private List<NodeCrisis> listOfCrisisStability = new List<NodeCrisis>();
+    //move nodes
+    private List<int> listOfMoveNodes = new List<int>();                                    //nodeID's of all valid node move options from player's current position
 
     //Connections
     private List<Connection> listOfConnections = new List<Connection>();                       //main list of connections used for iteration (rather than dictOfConnections)
@@ -125,8 +127,7 @@ public class DataManager : MonoBehaviour
     private List<ActorArc> authorityActorArcs = new List<ActorArc>();
     private List<ActorArc> resistanceActorArcs = new List<ActorArc>();
     private List<Trait> listOfAllTraits = new List<Trait>();
-    //move nodes
-    private List<int> listOfMoveNodes = new List<int>();                                    //nodeID's of all valid node move options from player's current position
+
 
     //manage actor choices
     private List<ManageAction> listOfActorHandle = new List<ManageAction>();

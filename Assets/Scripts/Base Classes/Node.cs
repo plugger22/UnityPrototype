@@ -331,7 +331,7 @@ public class Node : MonoBehaviour
     }
 
     /// <summary>
-    /// Mouse Over tool tip & Right Click
+    /// Mouse Over tool tip and Right Click
     /// </summary>
     private void OnMouseOver()
     {
@@ -340,7 +340,9 @@ public class Node : MonoBehaviour
         //check modal block isn't in place
         if (GameManager.i.guiScript.CheckIsBlocked() == false)
         {
-            //Right click node -> Show either move options (node highlights) or Move Menu
+            //
+            // - - - Right click node -> Show either move options (node highlights) or Move Menu
+            //
             if (Input.GetMouseButtonDown(1) == true)
             {
                 //exit any tooltip
@@ -361,8 +363,9 @@ public class Node : MonoBehaviour
                     //proceed
                     if (proceedFlag == true)
                     {
-                        //exit any tooltip
-                        GameManager.i.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseOver");
+                        /*//exit any tooltip
+                        GameManager.i.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseOver");*/
+
                         //Create a Move Menu at the node
                         if (GameManager.i.dataScript.CheckValidMoveNode(nodeID) == true)
                         { EventManager.instance.PostNotification(EventType.CreateMoveMenu, this, nodeID, "Node.cs -> OnMouseOver"); }
@@ -383,7 +386,9 @@ public class Node : MonoBehaviour
                     }
                 }
             }
-            //Tool tip
+            //
+            // - - - Tool tip
+            //
             else
             {
                 onMouseFlag = true;
@@ -676,8 +681,24 @@ public class Node : MonoBehaviour
     public void SetPlayerMoveNodes()
     {
         List<int> listOfNodeID = new List<int>();
-        foreach (Node node in listOfNeighbourNodes)
-        { listOfNodeID.Add(node.nodeID); }
+
+        //special move gear, eg. SewerMap?
+        if (GameManager.i.playerScript.isSpecialMoveGear == true)
+        {
+            //need to add all nodes 2 distance away
+            foreach (Node node in listOfNearNeighbours)
+            {
+                //exclude current node (player node)
+                if (node.nodeID != nodeID)
+                { listOfNodeID.Add(node.nodeID); }
+            }
+        }
+        else
+        {
+            //no special move gear, immediate neighbours only
+            foreach (Node node in listOfNeighbourNodes)
+            { listOfNodeID.Add(node.nodeID); }
+        }
         if (listOfNodeID.Count > 0)
         { GameManager.i.dataScript.UpdateMoveNodes(listOfNodeID); }
         else { Debug.LogError("listOfNeighbourNodes has no records, listOfNodeID has no records -> MoveNodes not updated"); }

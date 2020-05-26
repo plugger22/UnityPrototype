@@ -345,3 +345,107 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 Dev seed 21842 -> Tuesday, 26 May 2020 11:54 AM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 12659 -> Tuesday, 26 May 2020 3:58 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51293 -> Tuesday, 26 May 2020 4:04 PM
+City seed 5678 -> London, United Kingdom
+WARNING Gear Not found sewerMap, in dict 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetGear(String) (at Assets/Scripts/Managers/DataManager.cs:5856)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2021)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1264)
+	WARNING Invalid Gear rarity level 3 for "Sewer Map"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveGearFromPool(Gear) (at Assets/Scripts/Managers/DataManager.cs:6037)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2032)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1264)
+	WARNING Gear not removed from Pool (Null or other problem)
+UnityEngine.Debug:LogWarning(Object)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2033)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1264)
+	
+Dev seed 20533 -> Tuesday, 26 May 2020 4:17 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid Gear rarity level 3 for "Sewer Map"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveGearFromPool(Gear) (at Assets/Scripts/Managers/DataManager.cs:6037)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2043)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1264)
+	WARNING Gear not removed from Pool (Null or other problem)
+UnityEngine.Debug:LogWarning(Object)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2044)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1264)
+	
+Dev seed 30924 -> Tuesday, 26 May 2020 4:27 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid Gear rarity level 3 for "Sewer Map"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveGearFromPool(Gear) (at Assets/Scripts/Managers/DataManager.cs:6037)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2043)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1264)
+	WARNING Gear not removed from Pool (Null or other problem)
+UnityEngine.Debug:LogWarning(Object)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2044)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1264)
+	
+Dev seed 15461 -> Tuesday, 26 May 2020 4:30 PM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid nodeList (Null) for GetNeighbouring nodes
+UnityEngine.Debug:LogError(Object)
+	NodeManager:ShowNodes(NodeUI) (at Assets/Scripts/Managers/NodeManager.cs:666)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:361)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:307)
+	Node:OnMouseOver() (at Assets/Scripts/Base Classes/Node.cs:375)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ERROR Invalid nodeList (Null) for GetNeighbouring nodes
+UnityEngine.Debug:LogError(Object)
+	NodeManager:ShowNodes(NodeUI) (at Assets/Scripts/Managers/NodeManager.cs:666)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:361)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:307)
+	Node:OnMouseOver() (at Assets/Scripts/Base Classes/Node.cs:375)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	
+Dev seed 223 -> Tuesday, 26 May 2020 4:32 PM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid nodeList (Null) for GetNeighbouring nodes
+UnityEngine.Debug:LogError(Object)
+	NodeManager:ShowNodes(NodeUI) (at Assets/Scripts/Managers/NodeManager.cs:666)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:361)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:307)
+	Node:OnMouseOver() (at Assets/Scripts/Base Classes/Node.cs:375)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ERROR Invalid nodeList (Null) for GetNeighbouring nodes
+UnityEngine.Debug:LogError(Object)
+	NodeManager:ShowNodes(NodeUI) (at Assets/Scripts/Managers/NodeManager.cs:666)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:361)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:307)
+	Node:OnMouseOver() (at Assets/Scripts/Base Classes/Node.cs:375)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	
+Dev seed 53040 -> Tuesday, 26 May 2020 4:33 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid Gear rarity level 3 for "Sewer Map"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveGearFromPool(Gear) (at Assets/Scripts/Managers/DataManager.cs:6037)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2043)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1264)
+	WARNING Gear not removed from Pool (Null or other problem)
+UnityEngine.Debug:LogWarning(Object)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2044)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1264)
+	
+Dev seed 48305 -> Tuesday, 26 May 2020 4:38 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid Gear rarity level 3 for "Sewer Map"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveGearFromPool(Gear) (at Assets/Scripts/Managers/DataManager.cs:6037)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2043)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1264)
+	WARNING Gear not removed from Pool (Null or other problem)
+UnityEngine.Debug:LogWarning(Object)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2044)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1264)
+	

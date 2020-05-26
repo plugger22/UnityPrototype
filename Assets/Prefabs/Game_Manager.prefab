@@ -4530,6 +4530,7 @@ MonoBehaviour:
   gearSaveBaseCost: 2
   actorGearGracePeriod: 3
   actorGearLostChance: 5
+  gearSpecialMove: {fileID: 11400000, guid: a421e433723b4964ea1bf65d7c0b5fa3, type: 2}
   gearCommon: {fileID: 0}
   gearRare: {fileID: 0}
   gearUnique: {fileID: 0}

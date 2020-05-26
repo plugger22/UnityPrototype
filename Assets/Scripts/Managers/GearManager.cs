@@ -33,6 +33,10 @@ public class GearManager : MonoBehaviour
     [Tooltip("% Chance, per turn, of actor losing gear in his possession. Only checked after actorGearGracePeriod number of turns")]
     [Range(0, 100)] public int actorGearLostChance = 20;
 
+    [Header("Special Gear")]
+    [Tooltip("Gear that gives movement rate of 2 districts instead of one and ignores all security")]
+    public Gear gearSpecialMove;
+
     //used for quick reference  -> rarity
     [HideInInspector] public GearRarity gearCommon;
     [HideInInspector] public GearRarity gearRare;

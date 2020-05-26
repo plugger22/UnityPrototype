@@ -630,18 +630,35 @@ public class NodeManager : MonoBehaviour
                 Node nodeRef = GameManager.i.dataScript.GetNode(GetPlayerNodeID());
                 if (nodeRef != null)
                 {
-                    List<Node> nodeList = nodeRef.GetNeighbouringNodes();
+                    List<Node> nodeList = null;
+                    //get list of move nodes (depends on whether player has special move gear in their inventory)
+                    if (GameManager.i.playerScript.isSpecialMoveGear == true)
+                    { nodeList = nodeRef.GetNearNeighbours(); }
+                    else { nodeList = nodeRef.GetNeighbouringNodes(); }
+
+                    /*List<int> nodeList = GameManager.i.dataScript.GetListOfMoveNodes();*/
+
                     if (nodeList != null)
                     {
                         if (nodeList.Count > 0)
                         {
                             foreach (Node node in nodeList)
                             {
-                                if (node != null)
+                                if (node != null && node.nodeID != nodeRef.nodeID)
                                 { node.SetActive(); }
                             }
-                            displayText = string.Format("{0}{1}{2} {3}valid Move district{4}{5}", colourDefault, nodeList.Count, colourEnd,
+                            if (GameManager.i.playerScript.isSpecialMoveGear == false)
+                            {
+                                //normal move
+                                displayText = string.Format("{0}{1}{2} {3}valid Move district{4}{5}", colourDefault, nodeList.Count, colourEnd,
                                 colourHighlight, nodeList.Count != 1 ? "s" : "", colourEnd);
+                            }
+                            else
+                            {
+                                //has special move gear
+                                displayText = string.Format("{0}{1}{2} {3}valid Move district{4} (using {5}){6}", colourDefault, nodeList.Count, colourEnd,
+                                colourHighlight, nodeList.Count != 1 ? "s" : "", GameManager.i.gearScript.gearSpecialMove.tag, colourEnd);
+                            }
                         }
                         else
                         {
@@ -1481,7 +1498,7 @@ public class NodeManager : MonoBehaviour
     /// <param name="nodeID"></param>
     private void CreateMoveMenu(int nodeID)
     {
-        Debug.Log("CreateMoveMenu");
+        Debug.LogFormat("[UI] NodeManager.cs -> CreateMoveMenu: CreateMoveMenu (right click on node)");
 
         List<EventButtonDetails> tempList = new List<EventButtonDetails>();
 
@@ -1660,7 +1677,7 @@ public class NodeManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Right Click the Resistance Player's current node -> special actions (Gear & Cure)
+    /// Right Click the Resistance Player's current node -> special actions (Gear and Cure)
     /// </summary>
     /// <param name="nodeID"></param>
     private void CreateSpecialNodeMenu(int nodeID)
