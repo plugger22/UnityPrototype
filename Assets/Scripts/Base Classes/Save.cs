@@ -347,6 +347,7 @@ public class SaveNodeData
     public List<SaveNode> listOfNodes = new List<SaveNode>();
     public List<int> listOfCrisisNodes = new List<int>();
     public List<int> listOfCureNodes = new List<int>();
+    public List<int> listOfMoveNodes = new List<int>();
 }
 #endregion
 

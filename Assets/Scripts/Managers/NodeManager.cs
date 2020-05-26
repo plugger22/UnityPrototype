@@ -630,14 +630,13 @@ public class NodeManager : MonoBehaviour
                 Node nodeRef = GameManager.i.dataScript.GetNode(GetPlayerNodeID());
                 if (nodeRef != null)
                 {
-                    List<Node> nodeList = null;
+                    /*List<Node> nodeList = null;
                     //get list of move nodes (depends on whether player has special move gear in their inventory)
                     if (GameManager.i.playerScript.isSpecialMoveGear == true)
                     { nodeList = nodeRef.GetNearNeighbours(); }
-                    else { nodeList = nodeRef.GetNeighbouringNodes(); }
+                    else { nodeList = nodeRef.GetNeighbouringNodes(); }*/
 
-                    /*List<int> nodeList = GameManager.i.dataScript.GetListOfMoveNodes();*/
-
+                    List<Node> nodeList = GameManager.i.dataScript.GetListOfMoveNodes();
                     if (nodeList != null)
                     {
                         if (nodeList.Count > 0)

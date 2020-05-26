@@ -449,3 +449,22 @@ UnityEngine.Debug:LogWarning(Object)
 	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2044)
 	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1264)
 	
+Dev seed 61358 -> Tuesday, 26 May 2020 5:44 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid Gear rarity level 3 for "Sewer Map"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveGearFromPool(Gear) (at Assets/Scripts/Managers/DataManager.cs:6037)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2043)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1264)
+	WARNING Gear not removed from Pool (Null or other problem)
+UnityEngine.Debug:LogWarning(Object)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2044)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1264)
+	ERROR Invalid Connection (Null)
+UnityEngine.Debug:LogError(Object)
+	NodeManager:CreateMoveMenu(Int32) (at Assets/Scripts/Managers/NodeManager.cs:1659)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:392)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:307)
+	Node:OnMouseOver() (at Assets/Scripts/Base Classes/Node.cs:371)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	

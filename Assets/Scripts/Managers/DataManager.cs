@@ -63,11 +63,10 @@ public class DataManager : MonoBehaviour
     private List<Node> listOfLoiterNodes = new List<Node>();                                    //nodes where the nemesis can go to and wait until something happens
     private List<Node> listOfCureNodes = new List<Node>();
     private List<Node> listOfCrisisNodes = new List<Node>();
+    private List<Node> listOfMoveNodes = new List<Node>();                                      //nodes of all valid node move options from player's current position
     private List<NodeCrisis> listOfCrisisSecurity = new List<NodeCrisis>();                     //pick lists set up at start of session
     private List<NodeCrisis> listOfCrisisSupport = new List<NodeCrisis>();
     private List<NodeCrisis> listOfCrisisStability = new List<NodeCrisis>();
-    //move nodes
-    private List<int> listOfMoveNodes = new List<int>();                                    //nodeID's of all valid node move options from player's current position
 
     //Connections
     private List<Connection> listOfConnections = new List<Connection>();                       //main list of connections used for iteration (rather than dictOfConnections)
@@ -2547,14 +2546,14 @@ public class DataManager : MonoBehaviour
         return node;
     }
 
-    public List<int> GetListOfMoveNodes()
+    public List<Node> GetListOfMoveNodes()
     { return listOfMoveNodes; }
 
-    /// <summary>
+    /*/// <summary>
     /// clear and copy across listOfMoveNodes from loaded save game data
     /// </summary>
     /// <param name="listOfNodes"></param>
-    public void SetListOfMoveNodes(List<int> listOfNodes)
+    public void SetListOfMoveNodes(List<Node> listOfNodes)
     {
         if (listOfNodes != null)
         {
@@ -2562,17 +2561,17 @@ public class DataManager : MonoBehaviour
             listOfMoveNodes.AddRange(listOfNodes);
         }
         else { Debug.LogError("Invalid listOfMoveNodes (Null)"); }
-    }
+    }*/
 
     /// <summary>
     /// Update list of valid node move options for Player (clears out any previous data)
     /// </summary>
     /// <param name="listOfNodeIDs"></param>
-    public void UpdateMoveNodes(List<int> listOfNodeIDs)
+    public void UpdateMoveNodes(List<Node> listOfNodes)
     {
-        Debug.Assert(listOfNodeIDs != null, "Invalid listOfNodeIDs (Null)");
+        Debug.Assert(listOfNodes != null, "Invalid listOfNodes (Null)");
         listOfMoveNodes.Clear();
-        listOfMoveNodes.AddRange(listOfNodeIDs);
+        listOfMoveNodes.AddRange(listOfNodes);
     }
 
     /// <summary>
@@ -2582,7 +2581,7 @@ public class DataManager : MonoBehaviour
     /// <returns></returns>
     public bool CheckValidMoveNode(int nodeID)
     {
-        return listOfMoveNodes.Exists(x => x == nodeID);
+        return listOfMoveNodes.Exists(x => x.nodeID == nodeID);
     }
 
     /// <summary>

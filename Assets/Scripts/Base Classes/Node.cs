@@ -680,7 +680,7 @@ public class Node : MonoBehaviour
     /// </summary>
     public void SetPlayerMoveNodes()
     {
-        List<int> listOfNodeID = new List<int>();
+        List<Node> listOfNodes = new List<Node>();
 
         //special move gear, eg. SewerMap?
         if (GameManager.i.playerScript.isSpecialMoveGear == true)
@@ -690,17 +690,17 @@ public class Node : MonoBehaviour
             {
                 //exclude current node (player node)
                 if (node.nodeID != nodeID)
-                { listOfNodeID.Add(node.nodeID); }
+                { listOfNodes.Add(node); }
             }
         }
         else
         {
             //no special move gear, immediate neighbours only
             foreach (Node node in listOfNeighbourNodes)
-            { listOfNodeID.Add(node.nodeID); }
+            { listOfNodes.Add(node); }
         }
-        if (listOfNodeID.Count > 0)
-        { GameManager.i.dataScript.UpdateMoveNodes(listOfNodeID); }
+        if (listOfNodes.Count > 0)
+        { GameManager.i.dataScript.UpdateMoveNodes(listOfNodes); }
         else { Debug.LogError("listOfNeighbourNodes has no records, listOfNodeID has no records -> MoveNodes not updated"); }
     }
 

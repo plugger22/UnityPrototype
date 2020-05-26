@@ -936,12 +936,12 @@ public class FileManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfActionAdjustments (Null)"); }
         #endregion
 
-        #region moveNodes
+        /*#region moveNodes
         List<int> listOfNodes = GameManager.i.dataScript.GetListOfMoveNodes();
         if (listOfNodes != null)
         { write.dataData.listOfMoveNodes.AddRange(listOfNodes); }
         else { Debug.LogError("Invalid listOfMoveNodes (Null)"); }
-        #endregion
+        #endregion*/
 
         #region InfoPipeLine
         Dictionary<MsgPipelineType, ModalOutcomeDetails> dictOfPipeline = GameManager.i.guiScript.GetDictOfPipeline();
@@ -1410,6 +1410,22 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid listOfCureNodes (Null)"); }
+        //
+        // - - - Move Nodes
+        //
+        List<Node> listOfMoveNodes = GameManager.i.dataScript.GetListOfMoveNodes();
+        if (listOfMoveNodes != null)
+        {
+            //save nodeID's
+            for (int i = 0; i < listOfMoveNodes.Count; i++)
+            {
+                Node node = listOfMoveNodes[i];
+                if (node != null)
+                { write.nodeData.listOfMoveNodes.Add(node.nodeID); }
+                else { Debug.LogWarningFormat("Invalid node (Null) in listOfMoveNodes[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfMoveNodes (Null)"); }
     }
     #endregion
 
@@ -2741,9 +2757,9 @@ public class FileManager : MonoBehaviour
 
         #endregion
 
-        #region moveNodes
+        /*#region moveNodes
         GameManager.i.dataScript.SetListOfMoveNodes(read.dataData.listOfMoveNodes);
-        #endregion
+        #endregion*/
 
         #region infoPipeLine
         if (read.dataData.listOfInfoPipelineDetails != null && read.dataData.listOfInfoPipelineDetails.Count > 0)
@@ -3214,6 +3230,7 @@ public class FileManager : MonoBehaviour
                     node.crisisTimer = saveNode.crisisTimer;
                     node.waitTimer = saveNode.waitTimer;
                     node.defaultChar = saveNode.defaultChar;
+                    //crisis
                     if (string.IsNullOrEmpty(saveNode.nodeCrisisName) == false)
                     {
                         NodeCrisis crisis = GameManager.i.dataScript.GetNodeCrisis(saveNode.nodeCrisisName);
@@ -3319,6 +3336,28 @@ public class FileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid listOfCureNodes (Null)"); }
+        //
+        // - - - Move Nodes
+        //
+        List<Node> listOfMoveNodes = GameManager.i.dataScript.GetListOfMoveNodes();
+        if (listOfMoveNodes != null)
+        {
+            //clear list
+            listOfMoveNodes.Clear();
+            int count = read.nodeData.listOfMoveNodes.Count;
+            if (count > 0)
+            {
+                //repopulate list with save data
+                for (int i = 0; i < count; i++)
+                {
+                    Node node = GameManager.i.dataScript.GetNode(read.nodeData.listOfMoveNodes[i]);
+                    if (node != null)
+                    { listOfMoveNodes.Add(node); }
+                    else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", read.nodeData.listOfMoveNodes[i]); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid listOfMoveNodes (Null)"); }
     }
     #endregion'
 
