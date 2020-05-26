@@ -284,3 +284,64 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 30233 -> Sunday, 24 May 2020 7:37 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 25485 -> Monday, 25 May 2020 3:45 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 52276 -> Tuesday, 26 May 2020 11:05 AM
+City seed 5678 -> London, United Kingdom
+WARNING Gear Not found Ghost ID, in dict 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetGear(String) (at Assets/Scripts/Managers/DataManager.cs:5856)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2004)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1264)
+	WARNING Gear Not found ghost ID, in dict 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetGear(String) (at Assets/Scripts/Managers/DataManager.cs:5856)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2004)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1264)
+	WARNING Gear Not found Ghost ID, in dict 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetGear(String) (at Assets/Scripts/Managers/DataManager.cs:5856)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2004)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1264)
+	WARNING Gear Not found Work Permit, in dict 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetGear(String) (at Assets/Scripts/Managers/DataManager.cs:5856)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2004)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1264)
+	
+Dev seed 43010 -> Tuesday, 26 May 2020 11:42 AM
+WARNING [Val] ValidateSO: MISMATCH on Gear, array 32, assets 33 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Gear[]) (at Assets/Scripts/Managers/ValidationManager.cs:1925)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1840)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:805)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:367)
+	City seed 5678 -> London, United Kingdom
+WARNING Gear Not found SewerMap, in dict 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetGear(String) (at Assets/Scripts/Managers/DataManager.cs:5856)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2011)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1264)
+	WARNING Gear Not found SewerMap, in dict 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetGear(String) (at Assets/Scripts/Managers/DataManager.cs:5856)
+	EffectManager:ResolveMetaGame(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:4113)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1937)
+	MetaGameUI:ExecuteConfirm() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:2086)
+	MetaGameUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:696)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:307)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	City seed 765 -> New York, America
+
+Dev seed 21842 -> Tuesday, 26 May 2020 11:54 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

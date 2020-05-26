@@ -327,6 +327,7 @@ public class FileManager : MonoBehaviour
         write.playerData.isAddicted = GameManager.i.playerScript.isAddicted;
         write.playerData.isStressLeave = GameManager.i.playerScript.isStressLeave;
         write.playerData.isStressed = GameManager.i.playerScript.isStressed;
+        write.playerData.isSpecialMoveGear = GameManager.i.playerScript.isSpecialMoveGear;
         write.playerData.numOfSuperStress = GameManager.i.playerScript.numOfSuperStress;
         write.playerData.stressImmunityCurrent = GameManager.i.playerScript.stressImmunityCurrent;
         write.playerData.stressImmunityStart = GameManager.i.playerScript.stressImmunityStart;
@@ -1884,6 +1885,7 @@ public class FileManager : MonoBehaviour
         GameManager.i.playerScript.isAddicted = read.playerData.isAddicted;
         GameManager.i.playerScript.isStressLeave = read.playerData.isStressLeave;
         GameManager.i.playerScript.isStressed = read.playerData.isStressed;
+        GameManager.i.playerScript.isSpecialMoveGear = read.playerData.isSpecialMoveGear;
         GameManager.i.playerScript.numOfSuperStress = read.playerData.numOfSuperStress;
         GameManager.i.playerScript.stressImmunityCurrent = read.playerData.stressImmunityCurrent;
         GameManager.i.playerScript.stressImmunityStart = read.playerData.stressImmunityStart;

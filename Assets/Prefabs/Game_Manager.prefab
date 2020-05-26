@@ -2248,6 +2248,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 43e196e2c34ba0d40917fddc8bf911e5, type: 2}
   - {fileID: 11400000, guid: 46142d0d1b8ab87488e3f3dfdeebfd15, type: 2}
   - {fileID: 11400000, guid: 78c823328e39d9e4baf7795145e717d5, type: 2}
+  - {fileID: 11400000, guid: a421e433723b4964ea1bf65d7c0b5fa3, type: 2}
   arrayOfGearRarity:
   - {fileID: 11400000, guid: 3d0b61cde6078dd42b40a76a8a7b431e, type: 2}
   - {fileID: 11400000, guid: 29a5ff6dd8a67844584616ce94662e11, type: 2}
@@ -4494,7 +4495,7 @@ MonoBehaviour:
   testRatioDoNothing: 0
   testRatioAddictedDays: 0
   isTopicManager: 0
-  isMetaGame: 1
+  isMetaGame: 0
 --- !u!114 &114584680957149894
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4797,6 +4798,7 @@ MonoBehaviour:
   isLieLowFirstturn: 0
   isStressLeave: 0
   isStressed: 0
+  isSpecialMoveGear: 0
   numOfSuperStress: 0
   isAddicted: 0
   stressImmunityStart: 0

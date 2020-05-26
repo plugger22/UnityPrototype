@@ -204,6 +204,7 @@ public class SavePlayerData
     public bool isAddicted;
     public bool isStressLeave;
     public bool isStressed;
+    public bool isSpecialMoveGear;
     public int numOfSuperStress;
     public int stressImmunityCurrent;
     public int stressImmunityStart;

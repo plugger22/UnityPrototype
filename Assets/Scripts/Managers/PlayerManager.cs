@@ -46,6 +46,7 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public bool isLieLowFirstturn;                                //set true when lie low action, prevents invis incrementing on first turn
     [HideInInspector] public bool isStressLeave;                                    //set true to ensure player spends one turn inactive on stress leave
     [HideInInspector] public bool isStressed;                                       //true if player stressed
+    [HideInInspector] public bool isSpecialMoveGear;                                //player has/doesn't have special gear in inventory that allows move x 2 districts with no security issues
     [HideInInspector] public int numOfSuperStress;                                  //increments whenever the player gets stressed when already stressed
     [HideInInspector] public bool isAddicted;                                       //true if player addicted
     [HideInInspector] public int stressImmunityStart;                               //starting value of stressImmunityCurrent (decreases each time drug used)
@@ -663,6 +664,9 @@ public class PlayerManager : MonoBehaviour
                     CheckForAIUpdate(gear);
                     //add to listOfCurrentGear (if not already present)
                     GameManager.i.dataScript.AddGearNew(gear);
+                    //special Move gear
+                    if (gearName.Equals("SewerMap", StringComparison.Ordinal) == true)
+                    { isSpecialMoveGear = true; }
                     //statistics
                     GameManager.i.dataScript.StatisticIncrement(StatType.GearTotal);
                     return true;
@@ -693,6 +697,9 @@ public class PlayerManager : MonoBehaviour
                 if (CheckGearPresent(gearName) == true)
                 {
                     RemoveGearItem(gear, isLost);
+                    //special Move gear
+                    if (gearName.Equals("SewerMap", StringComparison.Ordinal) == true)
+                    { isSpecialMoveGear = false; }
                     return true;
                 }
                 else
@@ -2477,6 +2484,7 @@ public class PlayerManager : MonoBehaviour
         builder.AppendFormat(" isLieLowFirstTurn {0}{1}", isLieLowFirstturn, "\n");
         builder.AppendFormat(" isStressLeave {0}{1}", isStressLeave, "\n");
         builder.AppendFormat(" isStressed {0}{1}", isStressed, "\n");
+        builder.AppendFormat(" isSpecialMoveGear {0}{1}", isSpecialMoveGear, "\n");
         builder.AppendFormat(" numOfSuperStressed {0}{1}", numOfSuperStress, "\n");
         builder.AppendFormat(" stressImmunityStart {0}{1}", stressImmunityStart, "\n");
         builder.AppendFormat(" stressImmunityCurrent {0}{1}", stressImmunityCurrent, "\n");
