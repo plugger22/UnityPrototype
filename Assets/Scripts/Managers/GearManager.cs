@@ -1,6 +1,7 @@
 ﻿using gameAPI;
 using modalAPI;
 using packageAPI;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -928,6 +929,7 @@ public class GearManager : MonoBehaviour
                                     case "Common": colourRarity = colourBad; break;
                                     case "Rare": colourRarity = colourNeutral; break;
                                     case "Unique": colourRarity = colourGood; break;
+                                    case "Special": colourRarity = colourGood; break;
                                     default: colourRarity = colourDefault; break;
                                 }
                                 optionData.textLower = string.Format("{0}{1}{2}{3}{4}{5}{6}", colourRarity, gear.rarity.name, colourEnd, "\n",
@@ -1044,6 +1046,7 @@ public class GearManager : MonoBehaviour
                                 case "Common": colourRarity = colourBad; break;
                                 case "Rare": colourRarity = colourNeutral; break;
                                 case "Unique": colourRarity = colourGood; break;
+                                case "Special": colourRarity = colourGood; break;
                                 default: colourRarity = colourDefault; break;
                             }
                             optionData.textLower = string.Format("{0}{1}{2}{3}{4}{5}{6}", colourRarity, gear.rarity.name, colourEnd, "\n",
@@ -1322,6 +1325,7 @@ public class GearManager : MonoBehaviour
                 //chance of compromise same for all
                 switch (gear.rarity.name)
                 {
+                    case "Special":
                     case "Unique":
                     case "Rare":
                     case "Common":
@@ -1400,7 +1404,7 @@ public class GearManager : MonoBehaviour
             switch (gear.type.name)
             {
                 case "Movement":
-                    builderHeader.AppendFormat("{0}{1}{2}{3}", "\n", colourGearEffect, (ConnectionType)gear.data, colourEnd);
+                    builderHeader.AppendFormat("{0}{1}defeats {2}{3}{4}{5}{6} security{7}", "\n", colourNormal, colourEnd, colourGearEffect, (ConnectionType)gear.data, colourEnd, colourNormal, colourEnd);
                     break;
             }
             //Node use
@@ -1431,6 +1435,12 @@ public class GearManager : MonoBehaviour
             { builderHeader.AppendFormat("{0}AI use? Yes{1}", colourAlert, colourEnd); }
             else
             { builderHeader.AppendFormat("{0}AI use? No{1}", colourGrey, colourEnd); }
+            //move use
+            builderHeader.AppendLine();
+            if (gear.type.name.Equals("Movement", StringComparison.Ordinal) == true)
+            { builderHeader.AppendFormat("{0}Move use? Yes{1}", colourAlert, colourEnd); }
+            else
+            { builderHeader.AppendFormat("{0}Move use? No{1}", colourGrey, colourEnd); }
             //has been used this turn
             if (gear.timesUsed > 0)
             {
@@ -1438,7 +1448,15 @@ public class GearManager : MonoBehaviour
                 builderHeader.AppendFormat("</size>{0}Already USED this Turn{1}", colourBad, colourEnd);
             }
             //details
-            builderDetails.AppendFormat("{0}{1}{2}", colourGood, gear.rarity.name, colourEnd);
+            string colourRarity = colourDefault;
+            switch (gear.rarity.name)
+            {
+                case "Common": colourRarity = colourBad; break;
+                case "Rare": colourRarity = colourNeutral; break;
+                case "Unique": colourRarity = colourGood; break;
+                case "Special": colourRarity = colourGood; break;
+            }
+            builderDetails.AppendFormat("{0}Rarity {1}{2}{3}{4}", colourNormal, colourEnd, colourRarity, gear.rarity.name, colourEnd);
             builderDetails.AppendLine();
             builderDetails.AppendFormat("{0}{1} gear{2}", colourSide, gear.type.name, colourEnd);
 

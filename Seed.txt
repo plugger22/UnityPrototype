@@ -468,3 +468,15 @@ UnityEngine.Debug:LogError(Object)
 	Node:OnMouseOver() (at Assets/Scripts/Base Classes/Node.cs:371)
 	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
 	
+Dev seed 1731 -> Wednesday, 27 May 2020 10:01 AM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid Gear rarity level 3 for "Sewer Map"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveGearFromPool(Gear) (at Assets/Scripts/Managers/DataManager.cs:6037)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2043)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1264)
+	WARNING Gear not removed from Pool (Null or other problem)
+UnityEngine.Debug:LogWarning(Object)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2044)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1264)
+	
