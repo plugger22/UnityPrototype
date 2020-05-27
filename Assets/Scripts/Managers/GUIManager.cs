@@ -97,6 +97,8 @@ public class GUIManager : MonoBehaviour
     public Sprite infoSprite;
     [Tooltip("Alarm (spotted) sprite")]
     public Sprite alarmSprite;
+    [Tooltip("Undetected (NOT spotted) sprite")]
+    public Sprite undetectedSprite;
     [Tooltip("Used for Target attempts that succeed")]
     public Sprite targetSuccessSprite;
     [Tooltip("Used for Target attempts that fail")]
@@ -274,6 +276,7 @@ public class GUIManager : MonoBehaviour
         Debug.Assert(errorSprite != null, "Invalid errorSprite (Null)");
         Debug.Assert(infoSprite != null, "Invalid infoSprite (Null)");
         Debug.Assert(alarmSprite != null, "Invalid alarmSprite (Null)");
+        Debug.Assert(undetectedSprite != null, "Invalid undetectedSprite (Null)");
         Debug.Assert(targetSuccessSprite != null, "Invalid targetSuccessSprite (Null)");
         Debug.Assert(targetFailSprite != null, "Invalid targetFailSprite (Null)");
         Debug.Assert(capturedSprite != null, "Invalid capturedSprite (Null)");

@@ -1546,6 +1546,22 @@ public class NodeManager : MonoBehaviour
                         action = () => { EventManager.instance.PostNotification(EventType.MoveAction, this, moveGearDetails, "NodeManager.cs -> CreateMoveMenu"); }
                     };
                     tempList.Add(eventMoveDetails);
+                    //
+                    // - - - Cancel
+                    //
+                    //Cancel button is added last
+                    EventButtonDetails cancelDetails = null;
+                    //necessary to prevent color tags triggering the bottom divider in TooltipGeneric
+                    cancelDetails = new EventButtonDetails()
+                    {
+                        buttonTitle = "CANCEL",
+                        buttonTooltipHeader = moveHeader,
+                        buttonTooltipMain = "You'd like to think about it",
+                        //use a Lambda to pass arguments to the action
+                        action = () => { EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "NodeManager.cs -> CreateMoveMenu"); }
+                    };
+                    //add Cancel button to list
+                    tempList.Add(cancelDetails);
                 }
                 else { Debug.LogError("Invalid gearManager.cs -> gearSpecialMove (Null)"); }
             }
@@ -2211,11 +2227,11 @@ public class NodeManager : MonoBehaviour
                       moveDetails.ai_Delay, moveDetails.ai_Delay != 1 ? "s" : "", "\n");
                 }
                 else { Debug.LogFormat("[Ply] NodeManager.cs -> ProcessPlayerMove: Player moves to node {0}, {1}, nodeID {2}{3}", node.nodeName, node.Arc.name, node.nodeID, "\n"); }
-                string destination = string.Format("\"{0}\", {1} district", node.nodeName, node.Arc.name);
+                string destination = string.Format("Moved to {0}{1}{2}, {3}{4}{5} district", colourNeutral, node.nodeName, colourEnd, colourAlert, node.Arc.name, colourEnd);
                 StringBuilder builder = new StringBuilder();
                 builder.Append(string.Format("{0}{1}", destination, "\n"));
                 //message
-                string text = string.Format("Player has moved to {0}", destination);
+                string text = string.Format("You've moved to {0}", destination);
                 GameManager.i.messageScript.PlayerMove(text, node, moveDetails.changeInvisibility, moveDetails.ai_Delay);
                 //
                 // - - - Invisibility - - -
@@ -2261,11 +2277,11 @@ public class NodeManager : MonoBehaviour
                     }
                     else { Debug.LogErrorFormat("Invalid connection (Null) for connectionID {0}", moveDetails.connectionID); }
                 }
-                else
+                /*else
                 {
                     builder.AppendLine();
                     builder.Append(string.Format("{0}Player not spotted{1}", colourGood, colourEnd));
-                }
+                }*/
                 //
                 // - - - Gear - - -
                 //
@@ -2277,9 +2293,19 @@ public class NodeManager : MonoBehaviour
                         //popUp
                         GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"{gear.tag} used");
                         //process move
-                        builder.AppendFormat("{0}{1}{2}{3}{4}{5} used to minimise recognition{6}", "\n", "\n", colourNeutral, gear.tag, colourEnd, colourNormal, colourEnd);
-                        GameManager.i.gearScript.SetGearUsed(gear, "move with as little recognition as possible");
                         MoveReturnData moveData = new MoveReturnData();
+                        if (moveDetails.changeInvisibility != 0)
+                        {
+                            moveData.isChangeInvisibility = true;
+                            builder.AppendFormat("{0}{1}{2}{3}{4}{5} used to minimise recognition{6}", "\n", "\n", colourNeutral, gear.tag, colourEnd, colourNormal, colourEnd);
+                            GameManager.i.gearScript.SetGearUsed(gear, "move with as little recognition as possible");
+                        }
+                        else
+                        {
+                            moveData.isChangeInvisibility = false;
+                            builder.AppendFormat("{0}{1}{2}{3}{4} used to avoid detection{5}", "\n", colourNeutral, gear.tag, colourEnd, colourNormal, colourEnd);
+                            GameManager.i.gearScript.SetGearUsed(gear, "avoid detection while moving");
+                        }
                         moveData.node = node;
                         moveData.text = builder.ToString();
                         ProcessMoveOutcome(moveData);
@@ -2294,6 +2320,7 @@ public class NodeManager : MonoBehaviour
                         MoveReturnData moveData = new MoveReturnData();
                         moveData.node = node;
                         moveData.text = builder.ToString();
+                        moveData.isChangeInvisibility = true;
                         ProcessMoveOutcome(moveData);
                     }
                     else
@@ -2333,18 +2360,32 @@ public class NodeManager : MonoBehaviour
         if (captureDetails != null)
         {
             //Player captured!
-            captureDetails.effects = string.Format("{0}The move went bad{1}", colourNeutral, colourEnd);
+            captureDetails.effects = string.Format("{0}The move went bad, you were spotted on Arrival{1}", colourNeutral, colourEnd);
             EventManager.instance.PostNotification(EventType.Capture, this, captureDetails, "NodeManager.cs -> ProcessMoveOutcome");
         }
         else
         {
             //Normal Move  Outcome
-            outcomeDetails.textTop = string.Format("You have been {0}DETECTED{1} moving to", colourBad, colourEnd);
-            outcomeDetails.textBottom = data.text;
-            outcomeDetails.sprite = GameManager.i.guiScript.alarmSprite;
-            outcomeDetails.isAction = true;
-            outcomeDetails.side = globalResistance;
-            outcomeDetails.reason = "Player Move";
+            if (data.isChangeInvisibility == true)
+            {
+                //Detected
+                outcomeDetails.textTop = string.Format("You have been {0}DETECTED{1} moving to", colourBad, colourEnd);
+                outcomeDetails.textBottom = data.text;
+                outcomeDetails.sprite = GameManager.i.guiScript.alarmSprite;
+                outcomeDetails.isAction = true;
+                outcomeDetails.side = globalResistance;
+                outcomeDetails.reason = "Player Move";
+            }
+            else
+            {
+                //Not detected
+                outcomeDetails.textTop = string.Format("You Move {0}without being Detected{1}", colourGood, colourEnd);
+                outcomeDetails.textBottom = data.text;
+                outcomeDetails.sprite = GameManager.i.guiScript.undetectedSprite;
+                outcomeDetails.isAction = true;
+                outcomeDetails.side = globalResistance;
+                outcomeDetails.reason = "Player Move";
+            }
             EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "NodeManager.cs -> ProcessMoveOutcome");
             //Nemesis, if at same node, can interact and damage player
             GameManager.i.nemesisScript.CheckNemesisAtPlayerNode(true);

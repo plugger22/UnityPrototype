@@ -1404,7 +1404,7 @@ public class GearManager : MonoBehaviour
             switch (gear.type.name)
             {
                 case "Movement":
-                    builderHeader.AppendFormat("{0}{1}<size=90%>defeats </size>{2}{3}{4}{5}{6} <size=90%>security</size>{7}", "\n", colourNormal, colourEnd, 
+                    builderHeader.AppendFormat("{0}{1}<size=90%>defeats </size>{2}{3}<size=110%>{4}</size>{5}{6} <size=90%>security</size>{7}", "\n", colourNormal, colourEnd, 
                         colourGearEffect, (ConnectionType)gear.data, colourEnd, colourNormal, colourEnd);
                     break;
             }
@@ -1448,6 +1448,12 @@ public class GearManager : MonoBehaviour
             { builderHeader.AppendFormat("{0}Invisibility{1}", colourAlert, colourEnd); }
             else
             { builderHeader.AppendFormat("{0}Invisibility{1}", colourGrey, colourEnd); }
+            //target use
+            builderHeader.AppendLine();
+            if (gear.type.name.Equals("Infiltration", StringComparison.Ordinal) == true)
+            { builderHeader.AppendFormat("{0}Target use{1}", colourAlert, colourEnd); }
+            else
+            { builderHeader.AppendFormat("{0}Target use{1}", colourGrey, colourEnd); }
             //has been used this turn
             if (gear.timesUsed > 0)
             {

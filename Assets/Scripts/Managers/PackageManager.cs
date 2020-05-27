@@ -208,6 +208,7 @@ namespace packageAPI
     /// </summary>
     public class MoveReturnData
     {
+        public bool isChangeInvisibility;
         public Node node;
         public string text;
     }

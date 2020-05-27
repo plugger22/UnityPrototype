@@ -276,7 +276,7 @@ public class PopUpFixed : MonoBehaviour
             else { arrayOfTexts[index].text = textToDisplay; }
             //set active index true (enables display)
             arrayOfActive[index] = true;
-            /*Debug.LogFormat("[Tst] PopUpFixed.cs -> SetData: {0} -> \"{1}\"{2}", popPos, textToDisplay, "\n");*/
+            Debug.LogFormat("[Tst] PopUpFixed.cs -> SetData: {0} -> \"{1}\"{2}", popPos, textToDisplay, "\n");
         }
         else { Debug.LogWarning("Invalid textToDisplay (Null or Empty)"); }
     }

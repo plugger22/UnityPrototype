@@ -5714,9 +5714,11 @@ public class TopicManager : MonoBehaviour
                         else { CountTextTag("contactLong", dictOfTags); }
                         break;
                     case "gear":
-                        //gear tag (Node action)
+                        //gear tag (Node action) -> default 'Gear'
                         if (isValidate == false)
                         {
+                            //fail safe
+                            if (string.IsNullOrEmpty(tagGear) == true) { tagGear = "Gear"; }
                             if (isColourHighlighting == true)
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, tagGear, colourEnd); }
                             else { replaceText = tagGear; }
