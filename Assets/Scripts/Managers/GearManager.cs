@@ -1404,7 +1404,8 @@ public class GearManager : MonoBehaviour
             switch (gear.type.name)
             {
                 case "Movement":
-                    builderHeader.AppendFormat("{0}{1}defeats {2}{3}{4}{5}{6} security{7}", "\n", colourNormal, colourEnd, colourGearEffect, (ConnectionType)gear.data, colourEnd, colourNormal, colourEnd);
+                    builderHeader.AppendFormat("{0}{1}<size=90%>defeats </size>{2}{3}{4}{5}{6} <size=90%>security</size>{7}", "\n", colourNormal, colourEnd, 
+                        colourGearEffect, (ConnectionType)gear.data, colourEnd, colourNormal, colourEnd);
                     break;
             }
             //Node use
@@ -1414,33 +1415,39 @@ public class GearManager : MonoBehaviour
                 case "Hacking":
                 case "Kinetic":
                 case "Persuasion":
-                    builderHeader.AppendFormat("{0}<size=90%>District use? Yes{1}", colourAlert, colourEnd);
+                    builderHeader.AppendFormat("{0}<size=90%>District use{1}", colourAlert, colourEnd);
                     break;
                 default:
-                    builderHeader.AppendFormat("{0}<size=90%>District use? No{1}", colourGrey, colourEnd);
+                    builderHeader.AppendFormat("{0}<size=90%>District use{1}", colourGrey, colourEnd);
                     break;
             }
             //gear use
             builderHeader.AppendLine();
-            builderHeader.AppendFormat("{0}Gift use? Yes{1}", colourAlert, colourEnd);
+            builderHeader.AppendFormat("{0}Can be Gifted{1}", colourAlert, colourEnd);
             //personal use
             builderHeader.AppendLine();
             if (gear.listOfPersonalEffects != null && gear.listOfPersonalEffects.Count > 0)
-            { builderHeader.AppendFormat("{0}Personal use? Yes{1}", colourAlert, colourEnd); }
+            { builderHeader.AppendFormat("{0}Personal use{1}", colourAlert, colourEnd); }
             else
-            { builderHeader.AppendFormat("{0}Personal use? No{1}", colourGrey, colourEnd); }
+            { builderHeader.AppendFormat("{0}Personal use{1}", colourGrey, colourEnd); }
             //AI use
             builderHeader.AppendLine();
             if (gear.aiHackingEffect != null)
-            { builderHeader.AppendFormat("{0}AI use? Yes{1}", colourAlert, colourEnd); }
+            { builderHeader.AppendFormat("{0}AI use{1}", colourAlert, colourEnd); }
             else
-            { builderHeader.AppendFormat("{0}AI use? No{1}", colourGrey, colourEnd); }
+            { builderHeader.AppendFormat("{0}AI use{1}", colourGrey, colourEnd); }
             //move use
             builderHeader.AppendLine();
             if (gear.type.name.Equals("Movement", StringComparison.Ordinal) == true)
-            { builderHeader.AppendFormat("{0}Move use? Yes{1}", colourAlert, colourEnd); }
+            { builderHeader.AppendFormat("{0}Movement{1}", colourAlert, colourEnd); }
             else
-            { builderHeader.AppendFormat("{0}Move use? No{1}", colourGrey, colourEnd); }
+            { builderHeader.AppendFormat("{0}Movement{1}", colourGrey, colourEnd); }
+            //invisibility use
+            builderHeader.AppendLine();
+            if (gear.type.name.Equals("Invisibility", StringComparison.Ordinal) == true)
+            { builderHeader.AppendFormat("{0}Invisibility{1}", colourAlert, colourEnd); }
+            else
+            { builderHeader.AppendFormat("{0}Invisibility{1}", colourGrey, colourEnd); }
             //has been used this turn
             if (gear.timesUsed > 0)
             {
@@ -1456,7 +1463,7 @@ public class GearManager : MonoBehaviour
                 case "Unique": colourRarity = colourGood; break;
                 case "Special": colourRarity = colourGood; break;
             }
-            builderDetails.AppendFormat("{0}Rarity {1}{2}{3}{4}", colourNormal, colourEnd, colourRarity, gear.rarity.name, colourEnd);
+            builderDetails.AppendFormat("{0}{1}{2}", colourRarity, gear.rarity.name, colourEnd);
             builderDetails.AppendLine();
             builderDetails.AppendFormat("{0}{1} gear{2}", colourSide, gear.type.name, colourEnd);
 

@@ -6033,6 +6033,9 @@ public class DataManager : MonoBehaviour
                     if (listOfUniqueGear.Remove(gear.name) == false)
                     { Debug.LogWarningFormat("Gear \"{0}\", not found in listOfUniqueGear", gear.tag); }
                     break;
+                case 3:
+                    //special -> ignore as this gear doesn't exist in pools
+                    break;
                 default:
                     Debug.LogWarningFormat("Invalid Gear rarity level {0} for \"{1}\"", gear.rarity.level, gear.tag);
                     isSuccess = false;

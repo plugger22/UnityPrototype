@@ -380,6 +380,9 @@ public class SideManager : MonoBehaviour
                 GameManager.i.playerScript.status = status;
                 GameManager.i.playerScript.inactiveStatus = inactiveStatus;
                 GameManager.i.playerScript.isBreakdown = GameManager.i.aiScript.isBreakdown;
+                //testManager.cs Invisibility
+                if (GameManager.i.testScript.playerInvisibility > -1)
+                { GameManager.i.playerScript.Invisibility = GameManager.i.testScript.playerInvisibility; }
                 //player
                 switch (status)
                 {

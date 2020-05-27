@@ -47,6 +47,8 @@ public class TestManager : MonoBehaviour
     public int conditionWhoResistance = 999;
     [Tooltip("Condition to be applied")]
     public Condition conditionResistance;
+    [Tooltip("Invisibility at end of AutoRun (-1 default allows it to be whatever it would normally be) Resistance Player only")]
+    [Range(-1, 3)] public int playerInvisibility = -1;
 
     [Header("Actor -> First Scenario Only")]
     [Tooltip("slotID (0 -3) of actor you want to specify. Leave as '-1' (default) for no effect. All changes made at start")]

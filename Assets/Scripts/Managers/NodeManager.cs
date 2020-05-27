@@ -1512,17 +1512,21 @@ public class NodeManager : MonoBehaviour
             //check player has special move gear and node to move to is 2 nodes distance away
             if (GameManager.i.playerScript.isSpecialMoveGear == true && GameManager.i.dijkstraScript.GetDistanceUnweighted(playerNodeID, nodeID) == 2)
             {
+                //
+                // - - - Special gear Move 2 nodes
+                //
                 Gear gear = GameManager.i.gearScript.gearSpecialMove;
                 if (gear != null)
                 {
                     //tooltip details
                     StringBuilder builderDetail = new StringBuilder();
-                    //gear handles security level
-                    adjustInvisibility = 0;
+
                     builderDetail.Append(string.Format("{0}No risk of being spotted{1}", colourGood, colourEnd));
                     //add gear chance of compromise
                     builderDetail.Append(string.Format("{0}{1}Gear has a {2}{3}{4} %{5}{6} chance of being compromised{7}", "\n", colourAlert, colourEnd, colourNeutral,
                         GameManager.i.gearScript.GetChanceOfCompromise(gear.name), colourEnd, colourAlert, colourEnd));
+                    //gear handles security level
+                    adjustInvisibility = 0;
                     //Move details
                     ModalMoveDetails moveGearDetails = new ModalMoveDetails();
                     moveGearDetails.nodeID = nodeID;
@@ -1530,12 +1534,12 @@ public class NodeManager : MonoBehaviour
                     moveGearDetails.changeInvisibility = adjustInvisibility;
                     moveGearDetails.gearName = gear.name;
                     //button target details (red for High security to match red connection security colour on map)
-                    string colourGearLevel = colourGood;
+                    string colourGearLevel = colourBad;
                     EventButtonDetails eventMoveDetails = new EventButtonDetails()
                     {
                         buttonTitle = string.Format("{0} Move", gear.tag),
-                        buttonTooltipHeader = string.Format("Move using{0}{1}{2}{3}{4}{5}{6}{7}", "\n", colourNeutral, gear.tag, colourEnd,
-                        "\n", colourGearLevel, (ConnectionType)gear.data, colourEnd),
+                        buttonTooltipHeader = string.Format("Move using{0}{1}{2}{3}{4}{5}<size=90%>defeats</size> {6}{7}{8}{9} <size=90%>Security</size>{10}", "\n", colourNeutral, gear.tag, colourEnd,
+                        "\n", colourNormal, colourEnd, colourGearLevel, (ConnectionType)gear.data, colourEnd, colourNormal, colourEnd),
                         buttonTooltipMain = string.Format("{0}Underground Movement{1}", colourGood, colourEnd),
                         buttonTooltipDetail = builderDetail.ToString(),
                         //use a Lambda to pass arguments to the action
@@ -1624,8 +1628,8 @@ public class NodeManager : MonoBehaviour
                                         EventButtonDetails eventMoveDetails = new EventButtonDetails()
                                         {
                                             buttonTitle = string.Format("{0} Move", gear.tag),
-                                            buttonTooltipHeader = string.Format("Move using{0}{1}{2}{3}{4}{5}{6}{7}", "\n", colourNeutral, gear.tag, colourEnd,
-                                            "\n", colourGearLevel, (ConnectionType)gear.data, colourEnd),
+                                            buttonTooltipHeader = string.Format("Move using{0}{1}{2}{3}{4}{5}<size=90%>defeats</size> {6}{7}{8}{9} <size=90%>Security</size>{10}", "\n", 
+                                            colourNeutral, gear.tag, colourEnd, "\n", colourNormal, colourEnd, colourGearLevel, (ConnectionType)gear.data, colourEnd, colourNormal, colourEnd),
                                             buttonTooltipMain = moveMain,
                                             buttonTooltipDetail = builderDetail.ToString(),
                                             //use a Lambda to pass arguments to the action
@@ -1673,7 +1677,7 @@ public class NodeManager : MonoBehaviour
                     EventButtonDetails eventDetails = new EventButtonDetails()
                     {
                         buttonTitle = "Move",
-                        buttonTooltipHeader = string.Format("{0}Move (no gear){1}", colourNeutral, colourEnd),
+                        buttonTooltipHeader = string.Format("{0}Move{1}", colourNeutral, colourEnd),
                         buttonTooltipMain = moveMain,
                         buttonTooltipDetail = moveDetail,
                         //use a Lambda to pass arguments to the action

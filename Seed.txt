@@ -480,3 +480,38 @@ UnityEngine.Debug:LogWarning(Object)
 	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2044)
 	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1264)
 	
+Dev seed 47004 -> Wednesday, 27 May 2020 10:56 AM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid Gear rarity level 3 for "Sewer Map"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:RemoveGearFromPool(Gear) (at Assets/Scripts/Managers/DataManager.cs:6037)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2043)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1264)
+	WARNING Gear not removed from Pool (Null or other problem)
+UnityEngine.Debug:LogWarning(Object)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2044)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1264)
+	
+Dev seed 7402 -> Wednesday, 27 May 2020 11:05 AM
+City seed 5678 -> London, United Kingdom
+WARNING Gear Not found Work Permit, in dict 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetGear(String) (at Assets/Scripts/Managers/DataManager.cs:5856)
+	PlayerManager:DebugAddGear(String) (at Assets/Scripts/Managers/PlayerManager.cs:2032)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1264)
+	
+Dev seed 18559 -> Wednesday, 27 May 2020 11:27 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38687 -> Wednesday, 27 May 2020 11:38 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 25511 -> Wednesday, 27 May 2020 11:59 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 64914 -> Wednesday, 27 May 2020 12:08 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 60335 -> Wednesday, 27 May 2020 12:29 PM
+City seed 5678 -> London, United Kingdom
