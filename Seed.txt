@@ -560,3 +560,32 @@ UnityEngine.Debug:LogWarning(Object)
 	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:830)
 	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
 	
+Dev seed 4353 -> Wednesday, 27 May 2020 4:20 PM
+City seed 5678 -> London, United Kingdom
+WARNING Counter reached 500 -> FAILSAFE activated (elapsedTime 0, timeLimt 3.4)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	<PopUp>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/PopUps/PopUpFixed.cs:424)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 4353 -> Wednesday, 27 May 2020 4:25 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 4353 -> Wednesday, 27 May 2020 4:41 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 4353 -> Wednesday, 27 May 2020 4:49 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31295 -> Wednesday, 27 May 2020 4:50 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 8797 -> Wednesday, 27 May 2020 4:50 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 47506 -> Wednesday, 27 May 2020 4:52 PM
+City seed 5678 -> London, United Kingdom
+WARNING Counter reached 500 -> FAILSAFE activated (elapsedTime 1.011325, timeLimt 2)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	<PopUp>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/PopUps/PopUpFixed.cs:424)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	

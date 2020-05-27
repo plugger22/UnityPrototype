@@ -493,7 +493,7 @@ public class InputManager : MonoBehaviour
                                 case ModalReviewSubState.Review:
                                     if (Input.GetButtonDown("Multipurpose") == true)
                                     {
-                                        Debug.LogFormat("[Tst] InputManager.cs -> ProcessKeyInput: SKIP REVIEW{0}", "\n");
+                                        Debug.LogFormat("[Inp] InputManager.cs -> ProcessKeyInput: SKIP REVIEW{0}", "\n");
                                         GameManager.i.reviewScript.reviewWaitTime = 0.0f;
                                     }
                                     break;
