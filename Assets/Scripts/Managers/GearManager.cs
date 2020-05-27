@@ -908,6 +908,8 @@ public class GearManager : MonoBehaviour
                 data.side = GameManager.i.sideScript.PlayerSide;
                 data.handler = RefreshGearInventory;
                 data.state = ModalInventorySubState.Gear;
+                data.help0 = "gearInv_0";
+                data.help1 = "gearInv_1";
                 //Loop Gear list and populate arrays
                 List<string> listOfGear = GameManager.i.playerScript.GetListOfGear();
                 if (listOfGear != null)

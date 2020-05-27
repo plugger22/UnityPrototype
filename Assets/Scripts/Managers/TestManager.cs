@@ -91,6 +91,8 @@ public class TestManager : MonoBehaviour
     public bool isTopicManager;
     [Tooltip("Toggle ON to record [Tst] messages for the MetaGame (MetaManager.cs / ActorManager.cs / HQ Manager.cs")]
     public bool isMetaGame;
+    [Tooltip("Toggle ON to record [Tst] messages for the PopUpFixed.cs class")]
+    public bool isPopUpFixed;
 
     /*[Header("MetaGame Options")]
     [Tooltip("Options only taken into account if this is True")]
@@ -107,7 +109,7 @@ public class TestManager : MonoBehaviour
     public bool isLevelTwo = false;
     [Tooltip("If true, all actors in the selection pool will be level 3")]
     public bool isLevelThree = false;*/
-    
+
 
     Stopwatch timer;
 

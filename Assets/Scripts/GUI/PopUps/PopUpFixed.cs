@@ -55,6 +55,7 @@ public class PopUpFixed : MonoBehaviour
     private TextMeshProUGUI[] arrayOfTexts;
     private Canvas[] arrayOfCanvas;
     private bool[] arrayOfActive;
+    private bool isTestLog;
 
     private int sizeOfArray;
     private bool isActive;
@@ -220,6 +221,8 @@ public class PopUpFixed : MonoBehaviour
         Debug.Assert(increaseScale > -1, "Invalid increaseScale (-1)");
         Debug.Assert(decreaseScale > -1, "Invalid decreaseScale (-1)");
         Debug.Assert(fadeSpeed > -1, "Invalid fadeSpeed (-1)");
+        //[Tst] debug logging on/off
+        isTestLog = GameManager.i.testScript.isPopUpFixed;
         /*//threshold
         threshold = timerMax * 0.5f;*/
     }
@@ -256,7 +259,8 @@ public class PopUpFixed : MonoBehaviour
             }
         }
         isActive = false;
-        /*Debug.LogFormat("[Tst] PopUpFixed.cs -> Reset: RESET{0}", "\n");*/
+        if (isTestLog)
+        { Debug.LogFormat("[Tst] PopUpFixed.cs -> Reset: RESET{0}", "\n"); }
     }
 
     /// <summary>
@@ -267,18 +271,22 @@ public class PopUpFixed : MonoBehaviour
     /// <param name="textToDisplay"></param>
     public void SetData(PopUpPosition popPos, string textToDisplay)
     {
-        if (string.IsNullOrEmpty(textToDisplay) == false)
+        if (GameManager.i.turnScript.CheckIsAutoRun() == false)
         {
-            int index = (int)popPos;
-            //if existing text use line break
-            if (arrayOfTexts[index].text.Length > 0)
-            { arrayOfTexts[index].text = string.Format("{0}{1}{2}", arrayOfTexts[index].text, "\n", textToDisplay); }
-            else { arrayOfTexts[index].text = textToDisplay; }
-            //set active index true (enables display)
-            arrayOfActive[index] = true;
-            Debug.LogFormat("[Tst] PopUpFixed.cs -> SetData: {0} -> \"{1}\"{2}", popPos, textToDisplay, "\n");
+            if (string.IsNullOrEmpty(textToDisplay) == false)
+            {
+                int index = (int)popPos;
+                //if existing text use line break
+                if (arrayOfTexts[index].text.Length > 0)
+                { arrayOfTexts[index].text = string.Format("{0}{1}{2}", arrayOfTexts[index].text, "\n", textToDisplay); }
+                else { arrayOfTexts[index].text = textToDisplay; }
+                //set active index true (enables display)
+                arrayOfActive[index] = true;
+                if (isTestLog)
+                { Debug.LogFormat("[Tst] PopUpFixed.cs -> SetData: {0} -> \"{1}\"{2}", popPos, textToDisplay, "\n"); }
+            }
+            else { Debug.LogWarning("Invalid textToDisplay (Null or Empty)"); }
         }
-        else { Debug.LogWarning("Invalid textToDisplay (Null or Empty)"); }
     }
 
     /// <summary>
@@ -348,26 +356,36 @@ public class PopUpFixed : MonoBehaviour
                         //if more than one popUp, adjust max timer upwards to give more time for coroutine to run (otherwise the visuals aren't on the screen for long enough)
                         if (counter > 1)
                         {
-                            timeLimit *= (1 + (counter * 0.35f));
-                            Debug.LogFormat("[Tst] PopUpFixed.cs -> ExecuteFixed: timeLimit {0}, counter {1}{2}", timeLimit, counter, "\n");
+                            timeLimit += counter * 0.5f;
+                            if (isTestLog)
+                            { Debug.LogFormat("[Tst] PopUpFixed.cs -> ExecuteFixed: timeLimit {0}, counter {1}{2}", timeLimit, counter, "\n"); }
                         }
 
                         myCoroutine = StartCoroutine("PopUp", timeDelay);
                     }
                     else { Debug.LogWarning("PopUpFixed has NO data to display"); }
                 }
-                /*else { Debug.LogFormat("[Tst] PopUpFixed.cs -> ExecuteFixed: CheckIfActive FALSE{0}", "\n"); }*/
+                else
+                {
+                    if (isTestLog)
+                    { Debug.LogFormat("[Tst] PopUpFixed.cs -> ExecuteFixed: CheckIfActive FALSE{0}", "\n"); }
+                }
             }
-            else { Debug.LogFormat("[Tst] PopUpFixed.cs -> ExecuteFixed: GameState \"{0}\" (NOT PlayGame){1}", GameManager.i.inputScript.GameState, "\n"); }
+            else
+            {
+                if (isTestLog)
+                { Debug.LogFormat("[Tst] PopUpFixed.cs -> ExecuteFixed: GameState \"{0}\" (NOT PlayGame){1}", GameManager.i.inputScript.GameState, "\n"); }
+            }
         }
         else
         {
-            Debug.LogWarning("PopUpFixed.cs -> ExecuteFixed: isActive true (still running) -> Info Only");
+            if (isTestLog)
+            { Debug.LogWarning("PopUpFixed.cs -> ExecuteFixed: isActive true (still running) -> Info Only"); }
             /*StopMyCoroutine(); -> no, let it complete*/
         }
     }
 
-    
+
 
     /// <summary>
     /// Coroutine -> batch processes all active popUps
@@ -375,7 +393,8 @@ public class PopUpFixed : MonoBehaviour
     /// <returns></returns>
     IEnumerator PopUp(float timeDelay)
     {
-        /*Debug.LogFormat("[Tst] PopUpFixed.cs -> Enumerator.PopUp: start Coroutine{0}", "\n");*/
+        if (isTestLog)
+        { Debug.LogFormat("[Tst] PopUpFixed.cs -> Enumerator.PopUp: start Coroutine{0}", "\n"); }
         float threshold = timeLimit * 0.5f;
         float elapsedTime = 0f;
         int counter = 0;

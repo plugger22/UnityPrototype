@@ -399,6 +399,8 @@ public class HelpManager : MonoBehaviour
         #endregion
 
         #region Inventory UI
+
+        #region Reserves Inventory
         //
         // - - - Reserves UI
         //
@@ -422,6 +424,45 @@ public class HelpManager : MonoBehaviour
         data.header = string.Format("{0}Recruiting{1}", colourTip, colourEnd);
         data.text = string.Format("Your {0}RECRUITER{1} will always source {2}better candidates{3} than you can. Aim to source new subordinates with your RECRUITER if possible", colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
+        #endregion
+
+        #region Gear Inventory
+        //
+        // - - - Reserves UI
+        //
+        //Capabilities
+        data = new HelpData();
+        data.tag = "gearInv_0";
+        data.header = "Gear Capabilities";
+        data.text = new StringBuilder()
+                    .AppendFormat("{0}District use{1} indicates gear can be used in a district. Right Click on a district{2}", colourAlert, colourEnd, "\n")
+                    .AppendLine()
+                    .AppendFormat("{0}Can be Gifted{1} can be given to one of your subordinates. Right Click subordinate's portrait{2}", colourAlert, colourEnd, "\n")
+                    .AppendLine()
+                    .AppendFormat("{0}Personal use{1} indicates gear with a personal dimension. Right Click on your portrait{2}", colourAlert, colourEnd, "\n")
+                    .AppendLine()
+                    .AppendFormat("{0}AI use{1} provides a benefit when hacking the AI. Use the Left Hand side tab{2}", colourAlert, colourEnd, "\n")
+                    .AppendLine()
+                    .AppendFormat("{0}Movement{1} allows you to negate different levels of Connection security when moving between districts{2}", colourAlert, colourEnd, "\n")
+                    .AppendLine()
+                    .AppendFormat("{0}Invisibility{1} prevents detection whenever you do a district action{2}", colourAlert, colourEnd, "\n")
+                    .AppendLine()
+                    .AppendFormat("{0}Target Use{1} can be used on ANY target. Other gear may be usable on specific targets{2}", colourAlert, colourEnd, "\n")
+                    .ToString();
+        listOfHelp.Add(data);
+        //Rarity
+        data = new HelpData();
+        data.tag = "gearInv_1";
+        data.header = "Gear Rarity";
+        data.text = new StringBuilder()
+            .AppendFormat("Gear comes in {0}four levels{1} of rarity, in order of frequency and value{2}", colourAlert, colourEnd, "\n")
+            .AppendFormat("  {0} {1}Common{2}{3}", bullet, colourAlert, colourEnd, "\n")
+            .AppendFormat("  {0} {1}Rare{2}{3}", bullet, colourAlert, colourEnd, "\n")
+            .AppendFormat("  {0} {1}Unique{2}{3}", bullet, colourAlert, colourEnd, "\n")
+            .AppendFormat("  {0} {1}Special{2} only from HQ between missions{3}", bullet, colourAlert, colourEnd, "\n")
+            .ToString();
+        listOfHelp.Add(data);
+        #endregion
 
         #endregion
 

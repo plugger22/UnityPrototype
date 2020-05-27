@@ -9097,7 +9097,7 @@ public class DataManager : MonoBehaviour
                         }
                         else { Debug.LogErrorFormat("Entry not found in dictOfRelations for slotID {0}", i); }
                     }
-                    else { Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: {0} not Active for slotID {1}{2}", actor.arc.name, i, "\n"); }
+                    /*else { Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: {0} not Active for slotID {1}{2}", actor.arc.name, i, "\n"); }*/
                 }
                 else { Debug.LogErrorFormat("Invalid actor (Null) for relation.Key slotID {0}", i); }
             }
