@@ -1891,7 +1891,7 @@ public class NemesisManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns true if Nemesis is active (Normal or Hunt modes), false if Inactive
+    /// returns true if Nemesis is active (Normal or Hunt modes), false if Inactive. NOTE: Assumes Nemesis is present (use CheckNemesisPresent to determine this)
     /// </summary>
     /// <returns></returns>
     public bool CheckNemesisActive()
@@ -1899,6 +1899,13 @@ public class NemesisManager : MonoBehaviour
         if (mode != NemesisMode.Inactive) { return true; }
         return false;
     }
+
+    /// <summary>
+    /// returns true if a Nemesis is present, false if not
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckNemesisPresent()
+    { return nemesis != null ? true : false; }
 
     /// <summary>
     /// returns true if Nemesis currently has an Ambush goal, false otherwise

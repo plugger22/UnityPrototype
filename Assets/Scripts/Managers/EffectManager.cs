@@ -2300,6 +2300,10 @@ public class EffectManager : MonoBehaviour
                             effectReturn.errorFlag = true;
                         }
                         break;
+                    case "InsideMan":
+                        //display location of Nemesis, Npc and Erasure Teams
+                        effectReturn.bottomText = ExecuteInsideMan();
+                        break;
                     case "Gear":
                         //no effect, handled directly elsewhere (check ActorManager.cs -> GetNodeActions
                         break;
@@ -2575,7 +2579,7 @@ public class EffectManager : MonoBehaviour
                         {
                             if (actorExclude.actorID == actor.actorID)
                             { isProceed = false; }
-                        }                       
+                        }
                         //adjust actor
                         if (isProceed == true)
                         {
@@ -6030,6 +6034,70 @@ public class EffectManager : MonoBehaviour
         }
         GameManager.i.turnScript.SetWinStateCampaign(WinStateCampaign.Authority, WinReasonCampaign.Innocence, "Authority Locks up Rebel Leader", text);
         return "Player locked up permanently";
+    }
+
+    /// <summary>
+    /// reveals location of Nemesis, Npc and any Erasure Teams
+    /// </summary>
+    /// <returns></returns>
+    private string ExecuteInsideMan()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}Your Inside Man has leaked the following information{1}{2}", colourGood, colourEnd, "\n");
+        //nemesis
+        if (GameManager.i.nemesisScript.CheckNemesisPresent() == true)
+        {
+            Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodeNemesis);
+            if (node != null)
+            {
+                builder.AppendFormat("{0}Nemesis{1}{2} is at {3}, {4}{5}{6}{7}{8}", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd, colourAlert, node.Arc.name, colourEnd, "\n");
+            }
+            else { Debug.LogWarningFormat("Invalid node (Null) for nodeNemesisID {0}", GameManager.i.nodeScript.nodeNemesis); }
+        }
+        else { builder.AppendFormat("{0}Nemesis data unavailable{1}{2} (not present?){3}{4}", colourBad, colourEnd, colourNormal, colourEnd, "\n"); }
+        //npc
+        if (GameManager.i.missionScript.CheckIfNpcOnMap() == true)
+        {
+            Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodeNpc);
+            if (node != null)
+            {
+                builder.AppendFormat("{0}{1}{2}{3} is at {4}, {5}{6}{7}{8}{9}", colourNeutral, GameManager.i.campaignScript.scenario.missionResistance.npc.tag, colourEnd,
+                    colourNormal, node.nodeName, colourEnd, colourAlert, node.Arc.name, colourEnd, "\n");
+            }
+            else { Debug.LogWarningFormat("Invalid node (Null) for nodeNpcID {0}", GameManager.i.nodeScript.nodeNpc); }
+        }
+        else { builder.AppendFormat("{0}{1} data unavailable{2}{3} (not present?){4}{5}", colourBad, "NPC", colourEnd, colourNormal, colourEnd, "\n"); }
+        //erasure teams
+        int count = GameManager.i.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.OnMap);
+        if (count > 0)
+        {
+            List<int> listOfErasureTeams = GameManager.i.dataScript.GetTeamPool(TeamPool.OnMap);
+            if (listOfErasureTeams != null)
+            {
+                if (listOfErasureTeams.Count > 0)
+                {
+                    for (int i = 0; i < listOfErasureTeams.Count; i++)
+                    {
+                        Team team = GameManager.i.dataScript.GetTeam(listOfErasureTeams[i]);
+                        if (team != null)
+                        {
+                            Node node = GameManager.i.dataScript.GetNode(team.nodeID);
+                            if (node != null)
+                            {
+                                builder.AppendFormat("{0}Erasure Team{1}{2} present at {3}, {4}{5}{6}{7}{8}", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd,
+                                    colourAlert, node.Arc.name, colourEnd, "\n");
+                            }
+                            else { Debug.LogWarningFormat("Invalid node (Null) for team {0} {1}, ID {2}", team.arc.name, team.teamName, team.teamID); }
+                        }
+                        else { Debug.LogWarningFormat("Invalid team (Null) for teamID {0}, listOfErasureTeams[{1}]", listOfErasureTeams[i], i); }
+                    }
+                }
+                else { Debug.LogWarning("Invalid listOfErasureTeams (Empty)"); }
+            }
+            else { Debug.LogWarning("Invalid listOfErasureTeams (Null)"); }
+        }
+        else { builder.AppendFormat("{0}Erasure Team data unavailable{1}{2} (not present?){3}{4}", colourBad, colourEnd, colourNormal, colourEnd, "\n"); }
+        return builder.ToString();
     }
 
     /// <summary>
