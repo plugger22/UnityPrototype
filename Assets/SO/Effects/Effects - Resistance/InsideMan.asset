@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
   m_Name: InsideMan
   m_EditorClassIdentifier: 
-  description: A Resistance supporter within the Authority
+  description: A Resistance supporter within the Authority leaks key information
   ongoingTooltip: 
   listOfCriteria: []
   apply: {fileID: 11400000, guid: b1a5eb697db12fa4f97041e18423c8eb, type: 2}

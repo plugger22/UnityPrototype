@@ -6043,7 +6043,8 @@ public class EffectManager : MonoBehaviour
     private string ExecuteInsideMan()
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}Your source has leaked the following information{1}{2}", colourGood, colourEnd, "\n");
+        List<Node> listOfNodes = new List<Node>();
+        builder.AppendFormat("{0}Your source has leaked the following information{1}{2}{3}", colourGood, colourEnd, "\n", "\n");
         //nemesis
         if (GameManager.i.nemesisScript.CheckNemesisPresent() == true)
         {
@@ -6051,6 +6052,7 @@ public class EffectManager : MonoBehaviour
             if (node != null)
             {
                 builder.AppendFormat("{0}Nemesis{1}{2} is at {3}, {4}{5}{6}{7}{8}", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd, colourAlert, node.Arc.name, colourEnd, "\n");
+                listOfNodes.Add(node);
             }
             else { Debug.LogWarningFormat("Invalid node (Null) for nodeNemesisID {0}", GameManager.i.nodeScript.nodeNemesis); }
         }
@@ -6063,6 +6065,7 @@ public class EffectManager : MonoBehaviour
             {
                 builder.AppendFormat("{0}{1}{2}{3} is at {4}, {5}{6}{7}{8}{9}", colourNeutral, GameManager.i.campaignScript.scenario.missionResistance.npc.tag, colourEnd,
                     colourNormal, node.nodeName, colourEnd, colourAlert, node.Arc.name, colourEnd, "\n");
+                listOfNodes.Add(node);
             }
             else { Debug.LogWarningFormat("Invalid node (Null) for nodeNpcID {0}", GameManager.i.nodeScript.nodeNpc); }
         }
@@ -6090,16 +6093,18 @@ public class EffectManager : MonoBehaviour
                                 {
                                     builder.AppendFormat("{0}Erasure Team{1}{2} present at {3}, {4}{5}{6}{7}{8}", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd,
                                         colourAlert, node.Arc.name, colourEnd, "\n");
+                                    listOfNodes.Add(node);
                                     count++;
                                 }
                                 else { Debug.LogWarningFormat("Invalid node (Null) for team {0} {1}, ID {2}", team.arc.name, team.teamName, team.teamID); }
                             }
                         }
                         else { Debug.LogWarningFormat("Invalid team (Null) for teamID {0}, listOfErasureTeams[{1}]", listOfErasureTeams[i], i); }
-                        //none found
-                        if (count == 0)
-                        { builder.AppendFormat("{0}No Erasure Teams present{3}{4}", colourBad, colourEnd, colourNormal, colourEnd, "\n"); }
+
                     }
+                    //none found
+                    if (count == 0)
+                    { builder.AppendFormat("{0}No Erasure Teams present{3}{4}", colourBad, colourEnd, colourNormal, colourEnd, "\n"); }
                 }
                 else { Debug.LogWarning("Invalid listOfErasureTeams (Empty)"); }
             }
