@@ -59,7 +59,7 @@ MonoBehaviour:
   specialBossGear: {fileID: 11400000, guid: a421e433723b4964ea1bf65d7c0b5fa3, type: 2}
   specialSubBoss1Gear: {fileID: 11400000, guid: a421e433723b4964ea1bf65d7c0b5fa3,
     type: 2}
-  specialSubBoss2Gear: {fileID: 11400000, guid: a421e433723b4964ea1bf65d7c0b5fa3,
+  specialSubBoss2Gear: {fileID: 11400000, guid: 7c618f3f04e7f2b48bcb09e5a9989467,
     type: 2}
-  specialSubBoss3Gear: {fileID: 11400000, guid: a421e433723b4964ea1bf65d7c0b5fa3,
+  specialSubBoss3Gear: {fileID: 11400000, guid: 7c618f3f04e7f2b48bcb09e5a9989467,
     type: 2}

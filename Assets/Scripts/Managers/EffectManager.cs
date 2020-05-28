@@ -6043,7 +6043,7 @@ public class EffectManager : MonoBehaviour
     private string ExecuteInsideMan()
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}Your Inside Man has leaked the following information{1}{2}", colourGood, colourEnd, "\n");
+        builder.AppendFormat("{0}Your source has leaked the following information{1}{2}", colourGood, colourEnd, "\n");
         //nemesis
         if (GameManager.i.nemesisScript.CheckNemesisPresent() == true)
         {
@@ -6054,7 +6054,7 @@ public class EffectManager : MonoBehaviour
             }
             else { Debug.LogWarningFormat("Invalid node (Null) for nodeNemesisID {0}", GameManager.i.nodeScript.nodeNemesis); }
         }
-        else { builder.AppendFormat("{0}Nemesis data unavailable{1}{2} (not present?){3}{4}", colourBad, colourEnd, colourNormal, colourEnd, "\n"); }
+        else { builder.AppendFormat("{0}Nemesis not present{3}{4}", colourBad, colourEnd, colourNormal, colourEnd, "\n"); }
         //npc
         if (GameManager.i.missionScript.CheckIfNpcOnMap() == true)
         {
@@ -6066,7 +6066,7 @@ public class EffectManager : MonoBehaviour
             }
             else { Debug.LogWarningFormat("Invalid node (Null) for nodeNpcID {0}", GameManager.i.nodeScript.nodeNpc); }
         }
-        else { builder.AppendFormat("{0}{1} data unavailable{2}{3} (not present?){4}{5}", colourBad, "NPC", colourEnd, colourNormal, colourEnd, "\n"); }
+        else { builder.AppendFormat("{0}NPC not present{3}{4}", colourBad, colourEnd, colourNormal, colourEnd, "\n"); }
         //erasure teams
         int count = GameManager.i.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.OnMap);
         if (count > 0)
@@ -6076,27 +6076,36 @@ public class EffectManager : MonoBehaviour
             {
                 if (listOfErasureTeams.Count > 0)
                 {
+                    count = 0;
                     for (int i = 0; i < listOfErasureTeams.Count; i++)
                     {
                         Team team = GameManager.i.dataScript.GetTeam(listOfErasureTeams[i]);
                         if (team != null)
                         {
-                            Node node = GameManager.i.dataScript.GetNode(team.nodeID);
-                            if (node != null)
+                            //check an erasure team
+                            if (team.arc.TeamArcID == teamArcErasure)
                             {
-                                builder.AppendFormat("{0}Erasure Team{1}{2} present at {3}, {4}{5}{6}{7}{8}", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd,
-                                    colourAlert, node.Arc.name, colourEnd, "\n");
+                                Node node = GameManager.i.dataScript.GetNode(team.nodeID);
+                                if (node != null)
+                                {
+                                    builder.AppendFormat("{0}Erasure Team{1}{2} present at {3}, {4}{5}{6}{7}{8}", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd,
+                                        colourAlert, node.Arc.name, colourEnd, "\n");
+                                    count++;
+                                }
+                                else { Debug.LogWarningFormat("Invalid node (Null) for team {0} {1}, ID {2}", team.arc.name, team.teamName, team.teamID); }
                             }
-                            else { Debug.LogWarningFormat("Invalid node (Null) for team {0} {1}, ID {2}", team.arc.name, team.teamName, team.teamID); }
                         }
                         else { Debug.LogWarningFormat("Invalid team (Null) for teamID {0}, listOfErasureTeams[{1}]", listOfErasureTeams[i], i); }
+                        //none found
+                        if (count == 0)
+                        { builder.AppendFormat("{0}No Erasure Teams present{3}{4}", colourBad, colourEnd, colourNormal, colourEnd, "\n"); }
                     }
                 }
                 else { Debug.LogWarning("Invalid listOfErasureTeams (Empty)"); }
             }
             else { Debug.LogWarning("Invalid listOfErasureTeams (Null)"); }
         }
-        else { builder.AppendFormat("{0}Erasure Team data unavailable{1}{2} (not present?){3}{4}", colourBad, colourEnd, colourNormal, colourEnd, "\n"); }
+        else { builder.AppendFormat("{0}No Erasure Teams present{3}{4}", colourBad, colourEnd, colourNormal, colourEnd, "\n"); }
         return builder.ToString();
     }
 
