@@ -3387,8 +3387,13 @@ public class EffectManager : MonoBehaviour
                                 if (GameManager.i.playerScript.CheckConditionPresent(condition, dataInput.side) == true)
                                 {
                                     GameManager.i.playerScript.RemoveCondition(condition, dataInput.side, string.Format("due to {0}", dataInput.originText));
-                                    effectResolve.bottomText = string.Format("{0}Player condition {1} removed{2}", colourEffect, condition.tag, colourEnd);
+                                    effectResolve.bottomText = string.Format("{0}Your {1} condition is removed{2}", colourEffect, condition.tag, colourEnd);
                                     GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Loses {condition.tag}");
+                                }
+                                else
+                                {
+                                    //condition not present -> explanatory message 
+                                    effectResolve.bottomText = string.Format("{0}Your {1} condition would have be removed, if present{2}", colourNeutral, condition.tag, colourEnd);
                                 }
                                 break;
                             default:

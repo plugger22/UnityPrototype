@@ -1315,6 +1315,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5f64e5e4f1a025b46a3cfc2cc5678ba9, type: 2}
   - {fileID: 11400000, guid: 31a062dc4b17ed74daa7cec61d2ee78a, type: 2}
   - {fileID: 11400000, guid: 415d3338fbc4be84ab439db3c3f03007, type: 2}
+  - {fileID: 11400000, guid: 9efac04aa3c65d145ac08d98525a034b, type: 2}
   arrayOfContactTypes:
   - {fileID: 11400000, guid: e83571238ceb3544f8ef9d46cb18cbc3, type: 2}
   - {fileID: 11400000, guid: 88efaf6304c9e364c8719f9c954d687d, type: 2}
@@ -1929,6 +1930,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 35837c4c4d6a6494498e133c6892c886, type: 2}
   - {fileID: 11400000, guid: d0b72a8ebac94404e941665f4e8cdf9c, type: 2}
   - {fileID: 11400000, guid: 12090b4ed907cb1409d2d74db5d991a5, type: 2}
+  - {fileID: 11400000, guid: 1e2ad571da5e26b4ab5e4621607cad95, type: 2}
   arrayOfEffectsTeams:
   - {fileID: 11400000, guid: f9bf6133533fed941835fab042079c0a, type: 2}
   - {fileID: 11400000, guid: 1e584f551182f5543a80bc5349564aaa, type: 2}
@@ -4479,7 +4481,7 @@ MonoBehaviour:
   conditionTurnResistance: -1
   conditionWhoResistance: 999
   conditionResistance: {fileID: 0}
-  playerInvisibility: -1
+  playerInvisibility: 0
   actorSlotID: 0
   actorType: {fileID: 0}
   actorDatapoint0: -1

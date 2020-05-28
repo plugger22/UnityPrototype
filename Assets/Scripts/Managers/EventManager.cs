@@ -301,7 +301,7 @@ public class EventManager : MonoBehaviour
             if (ListenList[i] != null)
             {
                 if (Param != null)
-                { Debug.Log(string.Format("[Evm]: PostNotification -> type: {0}, param: {1}, sender: {2}{3}", eventType, Param.GetType(), methodName, "\n")); }
+                { Debug.Log(string.Format("[Evm]: PostNotification -> type: {0}, param: {1}, {2}, sender: {3}{4}", eventType, Param.ToString(), Param.GetType(), methodName, "\n")); }
                 else { Debug.Log(string.Format("[Evm]: PostNotification -> type: {0}, NO param, sender: {1}{2}", eventType, methodName, "\n")); }
                 //If object is not null, then send message via delegate
                 ListenList[i](eventType, Sender, Param);

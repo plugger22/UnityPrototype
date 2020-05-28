@@ -33,3 +33,29 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:859)
 	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
 	
+Dev seed 13631 -> Thursday, 28 May 2020 2:35 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 29398 -> Thursday, 28 May 2020 2:44 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 12968 -> Thursday, 28 May 2020 2:46 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 4876 -> Thursday, 28 May 2020 2:46 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 35637 -> Thursday, 28 May 2020 2:46 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 64280 -> Thursday, 28 May 2020 2:56 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51130 -> Thursday, 28 May 2020 3:06 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 18842 -> Thursday, 28 May 2020 3:19 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 14361 -> Thursday, 28 May 2020 3:38 PM
+City seed 5678 -> London, United Kingdom

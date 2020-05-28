@@ -606,13 +606,34 @@ public class TurnManager : MonoBehaviour
         currentSide = GameManager.i.sideScript.PlayerSide;
         //decrement any action adjustments
         GameManager.i.dataScript.UpdateActionAdjustments();
-        //actions
-        _actionsCurrent = 0;
-        _actionsTotal = _actionsLimit + GameManager.i.dataScript.GetActionAdjustment(GameManager.i.sideScript.PlayerSide);
-        _actionsTotal = Mathf.Max(0, _actionsTotal);
+        //refresh new actions
+        SetActionsForNewTurn();
         Debug.LogFormat("TurnManager: - - - EndTurnLate - - - turn {0}{1}", _turn, "\n");
-        EventManager.instance.PostNotification(EventType.ChangeActionPoints, this, _actionsTotal, "TurnManager.cs -> EndTurnLate");
         EventManager.instance.PostNotification(EventType.EndTurnLate, this, null, "TurnManager.cs -> EndTurnLate");
+    }
+
+    /// <summary>
+    /// Used to initialise Player actions at start of a new turn
+    /// </summary>
+    public void SetActionsForNewTurn()
+    {
+        //Player active -> normal actions
+        if (GameManager.i.playerScript.status == ActorStatus.Active)
+        {
+            _actionsCurrent = 0;
+            _actionsTotal = _actionsLimit + GameManager.i.dataScript.GetActionAdjustment(GameManager.i.sideScript.PlayerSide);
+            _actionsTotal = Mathf.Max(0, _actionsTotal);
+        }
+        else
+        {
+            //player inactive, Zero actions
+            _actionsTotal = 0;
+        }
+
+        /*Debug.LogFormat("[Tst] TurnManager.cs -> SetActionsForNewTurn: Player status \"{0}\", actions {1}{2}", GameManager.i.playerScript.status, _actionsTotal, "\n");*/
+
+        //update widget
+        EventManager.instance.PostNotification(EventType.ChangeActionPoints, this, _actionsTotal, "TurnManager.cs -> SetActionsforNewTurn");
     }
 
 
@@ -713,7 +734,6 @@ public class TurnManager : MonoBehaviour
     public void SetActionsToZero()
     {
         _actionsCurrent = _actionsTotal;
-        EventManager.instance.PostNotification(EventType.ChangeActionPoints, this, 0, "TurnManager.cs -> SetActionsToZero");
         ProcessNewTurn();
     }
 

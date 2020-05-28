@@ -278,8 +278,12 @@ public class CaptureManager : MonoBehaviour
         GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, "Gear Lost");
         GameManager.i.popUpFixedScript.SetData(PopUpPosition.TopCentre, $"City Loyalty +{actorCaptured}");
         GameManager.i.popUpFixedScript.ExecuteFixed();
-        //end turn
-        GameManager.i.turnScript.SetActionsToZero();
+        //Human player captured and not autorun
+        if (GameManager.i.sideScript.resistanceOverall == SideState.Human && GameManager.i.turnScript.CheckIsAutoRun() == false)
+        {
+            //end turn
+            GameManager.i.turnScript.SetActionsToZero();
+        }
     }
 
     /// <summary>
@@ -429,6 +433,8 @@ public class CaptureManager : MonoBehaviour
                     if (GameManager.i.guiScript.InfoPipelineAdd(outcomeDetails) == false)
                     { Debug.LogWarningFormat("Player Released from Captivity infoPipeline message FAILED to be added to dictOfPipeline"); }
                 }
+                //generate Action Points for the turn (Turn sequence has already reset to Zero due to player being captured)
+                GameManager.i.turnScript.SetActionsForNewTurn();
             }
             else
             {
