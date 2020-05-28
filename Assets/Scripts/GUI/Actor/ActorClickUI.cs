@@ -76,7 +76,7 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                             {
                                 //explanatory message
                                 if (alertType != AlertType.None)
-                                { GameManager.i.guiScript.SetAlertMessage(alertType, data); }
+                                { GameManager.i.guiScript.SetAlertMessageModalOne(alertType, data); }
                             }
                         }
                         else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", actorSlotID)); }

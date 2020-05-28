@@ -313,7 +313,7 @@ public class Node : MonoBehaviour
             {
                 //explanatory message
                 if (alertType != AlertType.None)
-                { GameManager.i.guiScript.SetAlertMessage(alertType); }
+                { GameManager.i.guiScript.SetAlertMessageModalOne(alertType); }
             }
         }
     }
@@ -382,7 +382,7 @@ public class Node : MonoBehaviour
                     {
                         //explanatory message
                         if (alertType != AlertType.None)
-                        { GameManager.i.guiScript.SetAlertMessage(alertType); }
+                        { GameManager.i.guiScript.SetAlertMessageModalOne(alertType); }
                     }
                 }
             }

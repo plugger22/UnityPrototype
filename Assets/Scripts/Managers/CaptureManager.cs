@@ -278,6 +278,8 @@ public class CaptureManager : MonoBehaviour
         GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, "Gear Lost");
         GameManager.i.popUpFixedScript.SetData(PopUpPosition.TopCentre, $"City Loyalty +{actorCaptured}");
         GameManager.i.popUpFixedScript.ExecuteFixed();
+        //end turn
+        GameManager.i.turnScript.SetActionsToZero();
     }
 
     /// <summary>

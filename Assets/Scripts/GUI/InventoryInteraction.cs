@@ -124,7 +124,7 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
                     else
                     {
                         //player not active
-                        GameManager.i.guiScript.SetAlertMessage(AlertType.PlayerStatus);
+                        GameManager.i.guiScript.SetAlertMessageModalTwo(AlertType.PlayerStatus, ModalSubState.Inventory);
                     }
                 }
                 break;

@@ -199,7 +199,7 @@ public class ModalMainMenu : MonoBehaviour
         else
         {
             //display a pop-up info window
-            GameManager.i.guiScript.SetAlertMessage(AlertType.MainMenuUnavailable);
+            GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.MainMenuUnavailable);
         }
     }
 

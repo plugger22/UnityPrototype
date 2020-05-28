@@ -71,7 +71,7 @@ public class PlayerClickUI : MonoBehaviour, IPointerClickHandler
                     {
                         //explanatory message
                         if (alertType != AlertType.None)
-                        { GameManager.i.guiScript.SetAlertMessage(alertType); }
+                        { GameManager.i.guiScript.SetAlertMessageModalOne(alertType); }
                     }
                 }
                 break;

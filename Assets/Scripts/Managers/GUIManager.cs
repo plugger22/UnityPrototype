@@ -469,141 +469,170 @@ public class GUIManager : MonoBehaviour
         return arrayIsBlocked[level];
     }
 
-
     /// <summary>
-    /// generates an Alert messsage (generic UI) of a particular type (extend by adding to enum and providing relevant code to handle below).
-    /// Multipurpose data point, eg. actorID, ignore otherwise.
+    /// Generates an Alert message of a particular type. Modal Two, shown above a GUI element. Specify what GUI element should take control once message accepted
     /// </summary>
     /// <param name="type"></param>
-    public void SetAlertMessage(AlertType type, int data = -1)
+    /// <param name="data"></param>
+    public void SetAlertMessageModalTwo(AlertType type, ModalSubState subState, int data = -1)
     {
         ModalOutcomeDetails details = new ModalOutcomeDetails();
         //sprite can be override in case statements below
         details.sprite = infoSprite;
         details.side = GameManager.i.sideScript.PlayerSide;
-        switch (type)
+        details.modalState = subState;
+        CreateAlertMessage(type, details, data);
+    }
+
+    /// <summary>
+    /// generates an Alert messsage (generic UI) of a particular type (extend by adding to enum and providing relevant code to handle below). Modal One, eg. no underlying GUI element
+    /// Multipurpose data point, eg. actorID, ignore otherwise.
+    /// </summary>
+    /// <param name="type"></param>
+    public void SetAlertMessageModalOne(AlertType type, int data = -1)
+    {
+        ModalOutcomeDetails details = new ModalOutcomeDetails();
+        //sprite can be override in case statements below
+        details.sprite = infoSprite;
+        details.side = GameManager.i.sideScript.PlayerSide;
+        CreateAlertMessage(type, details, data);
+    }
+
+    /// <summary>
+    /// SubMethod for generating an alert Message. Called by SetAlertMessageModalOne\Two
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="details"></param>
+    /// <param name="data"></param>
+    private void CreateAlertMessage(AlertType type, ModalOutcomeDetails details, int data)
+    {
+        if (details != null)
         {
-            case AlertType.SomethingWrong:
-                //generic fault message
-                details.textTop = string.Format("{0}Something has gone horribly wrong{1}", colourBad, colourEnd);
-                details.textBottom = "We aren't sure what but we've got our best man on it";
-                break;
-            case AlertType.MainMenuUnavailable:
-                //generic fault message
-                details.textTop = string.Format("{0}Main Menu is unavailable{1}", colourBad, colourEnd);
-                details.textBottom = string.Format("If you are {0}Lying Low{1} or have been {2}Captured{3} your options are limited", colourAlert, colourEnd, colourAlert, colourEnd);
-                break;
-            case AlertType.PlayerStatus:
-                switch (GameManager.i.playerScript.status)
-                {
-                    case ActorStatus.Captured:
-                        details.textTop = string.Format("This action can't be taken because you have been {0}Captured{1}", colourBad, colourEnd);
-                        break;
-                    case ActorStatus.Inactive:
-                        details.sprite = GameManager.i.playerScript.sprite;
-                        switch (GameManager.i.playerScript.inactiveStatus)
-                        {
-                            case ActorInactive.Breakdown:
-                                details.textTop = string.Format("This action can't be taken because you{0}are undergoing a{1}{2}{3}STRESS BREAKDOWN{4}", "\n", "\n", "\n",
-                                    colourBad, colourEnd);
-                                break;
-                            case ActorInactive.LieLow:
-                                details.textTop = string.Format("This action can't be taken because you are {0}{1}{2}Lying Low{3}", "\n", "\n", colourNeutral, colourEnd);
-                                break;
-                            case ActorInactive.StressLeave:
-                                details.textTop = string.Format("This action can't be taken because you are on{0}{1}{2}Stress Leave{3}", "\n", "\n", colourNeutral, colourEnd);
-                                break;
-                        }
-                        break;
-                    default:
-                        details.textTop = "This action can't be taken because the Player is indisposed";
-                        break;
-                }
-                break;
-            case AlertType.ActorStatus:
-                //data is actorID
-                Actor actor = GameManager.i.dataScript.GetActor(data);
-                if (actor != null)
-                {
-                    details.sprite = actor.sprite;
-                    switch (actor.Status)
+            switch (type)
+            {
+                case AlertType.SomethingWrong:
+                    //generic fault message
+                    details.textTop = string.Format("{0}Something has gone horribly wrong{1}", colourBad, colourEnd);
+                    details.textBottom = "We aren't sure what but we've got our best man on it";
+                    break;
+                case AlertType.MainMenuUnavailable:
+                    //generic fault message
+                    details.textTop = string.Format("{0}Main Menu is unavailable{1}", colourBad, colourEnd);
+                    details.textBottom = string.Format("If you are {0}Lying Low{1} or have been {2}Captured{3} your options are limited", colourAlert, colourEnd, colourAlert, colourEnd);
+                    break;
+                case AlertType.PlayerStatus:
+                    switch (GameManager.i.playerScript.status)
                     {
                         case ActorStatus.Captured:
-                            details.textTop = string.Format("This action can't be taken because {0}, {1}, has been {2}Captured{3}", actor.actorName, actor.arc.name, colourBad, colourEnd);
+                            details.textTop = string.Format("This action can't be taken because you have been {0}Captured{1}", colourBad, colourEnd);
                             break;
                         case ActorStatus.Inactive:
-                            switch (actor.inactiveStatus)
+                            details.sprite = GameManager.i.playerScript.sprite;
+                            switch (GameManager.i.playerScript.inactiveStatus)
                             {
                                 case ActorInactive.Breakdown:
-                                    details.textTop = string.Format("This action can't be taken because {0}, {1},{2}is undergoing a{3}{4}{5}STRESS BREAKDOWN{6}", actor.actorName, actor.arc.name, "\n",
-                                        "\n", "\n", colourBad, colourEnd);
+                                    details.textTop = string.Format("This action can't be taken because you{0}are undergoing a{1}{2}{3}STRESS BREAKDOWN{4}", "\n", "\n", "\n",
+                                        colourBad, colourEnd);
                                     break;
                                 case ActorInactive.LieLow:
-                                    details.textTop = string.Format("This action can't be taken because {0}, {1}, is {2}{3}{4}Lying Low{5}", actor.actorName, actor.arc.name,
-                                        "\n", "\n", colourNeutral, colourEnd);
+                                    details.textTop = string.Format("This action can't be taken because you are {0}{1}{2}Lying Low{3}", "\n", "\n", colourNeutral, colourEnd);
                                     break;
                                 case ActorInactive.StressLeave:
-                                    details.textTop = string.Format("This action can't be taken because {0}, {1}, is on{2}{3}{4}Stress Leave{5}", actor.actorName, actor.arc.name,
-                                        "\n", "\n", colourNeutral, colourEnd);
+                                    details.textTop = string.Format("This action can't be taken because you are on{0}{1}{2}Stress Leave{3}", "\n", "\n", colourNeutral, colourEnd);
                                     break;
                             }
                             break;
                         default:
-                            details.textTop = string.Format("This action can't be taken because {0}, {1}, is indisposed", actor.actorName, actor.arc.name);
+                            details.textTop = "This action can't be taken because the Player is indisposed";
                             break;
                     }
-                }
-                else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", data); }
-                break;
-            case AlertType.SideStatus:
-                details.textTop = string.Format("{0}This action is unavailable as the AI controls this side{1}", colourAlert, colourEnd);
-                break;
-            case AlertType.DebugAI:
-                details.textTop = "The AI has been switched OFF";
-                details.textBottom = string.Format("The Player now has {0}<b>Manual control</b>{1} of both sides", colourNeutral, colourEnd);
-                break;
-            case AlertType.DebugPlayer:
-                switch (GameManager.i.sideScript.PlayerSide.level)
-                {
-                    case 1:
-                        //authority
-                        details.textTop = "The AI has been switched back ON (Resistance)";
-                        details.textBottom = string.Format("The Player has {0}<b>Manual control</b>{1} of the AUTHORITY side only", colourNeutral, colourEnd);
-                        break;
-                    case 2:
-                        //resistance
-                        details.textTop = "The AI has been switched back ON (Authority)";
-                        details.textBottom = string.Format("The Player has {0}<b>Manual control</b>{1} of the RESISTANCE side only", colourNeutral, colourEnd);
-                        break;
-                }
-                break;
-            case AlertType.HackingInitialising:
-                details.textTop = "Jacking into Authority AI. Initialising Icebreakers.";
-                details.textBottom = string.Format("{0}Wait one...{1}", colourNeutral, colourEnd);
-                break;
-            case AlertType.HackingInsufficientRenown:
-                details.textTop = string.Format("You have {0}{1}Insufficient Renown{2}{3}for a Hacking attempt", "\n", colourBad, colourEnd, "\n");
-                details.textBottom = string.Format("Check the colour of the Renown cost. If {0}Yellow{1} then just enough, {2}Green{3} then more than enough",
-                    colourNeutral, colourEnd, colourGood, colourEnd);
-                break;
-            case AlertType.HackingRebootInProgress:
-                details.textTop = string.Format("The AI is {0}Rebooting{1} it's Security Systems", colourBad, colourEnd);
-                details.textBottom = string.Format("Hacking attempts {0}aren't possible{1} until the Reboot is complete", colourNeutral, colourEnd);
-                break;
-            case AlertType.HackingOffline:
-                details.textTop = string.Format("The AI has been {0}Isolated{1} from all external access", colourBad, colourEnd);
-                details.textBottom = string.Format("Until the AI comes back online hacking attempts {0}aren't possible{1}", colourNeutral, colourEnd);
-                break;
-            case AlertType.HackingIndisposed:
-                details.textTop = string.Format("The AI is currently {0}inaccessible{1}", colourBad, colourEnd);
-                details.textBottom = string.Format("This is a {0}temporary{1} state and is due to the Player being {2}indisposed{3}", colourNeutral, colourEnd,
-                    colourNeutral, colourEnd);
-                break;
-            default:
-                details.textTop = "This action is unavailable";
-                break;
+                    break;
+                case AlertType.ActorStatus:
+                    //data is actorID
+                    Actor actor = GameManager.i.dataScript.GetActor(data);
+                    if (actor != null)
+                    {
+                        details.sprite = actor.sprite;
+                        switch (actor.Status)
+                        {
+                            case ActorStatus.Captured:
+                                details.textTop = string.Format("This action can't be taken because {0}, {1}, has been {2}Captured{3}", actor.actorName, actor.arc.name, colourBad, colourEnd);
+                                break;
+                            case ActorStatus.Inactive:
+                                switch (actor.inactiveStatus)
+                                {
+                                    case ActorInactive.Breakdown:
+                                        details.textTop = string.Format("This action can't be taken because {0}, {1},{2}is undergoing a{3}{4}{5}STRESS BREAKDOWN{6}", actor.actorName, actor.arc.name, "\n",
+                                            "\n", "\n", colourBad, colourEnd);
+                                        break;
+                                    case ActorInactive.LieLow:
+                                        details.textTop = string.Format("This action can't be taken because {0}, {1}, is {2}{3}{4}Lying Low{5}", actor.actorName, actor.arc.name,
+                                            "\n", "\n", colourNeutral, colourEnd);
+                                        break;
+                                    case ActorInactive.StressLeave:
+                                        details.textTop = string.Format("This action can't be taken because {0}, {1}, is on{2}{3}{4}Stress Leave{5}", actor.actorName, actor.arc.name,
+                                            "\n", "\n", colourNeutral, colourEnd);
+                                        break;
+                                }
+                                break;
+                            default:
+                                details.textTop = string.Format("This action can't be taken because {0}, {1}, is indisposed", actor.actorName, actor.arc.name);
+                                break;
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", data); }
+                    break;
+                case AlertType.SideStatus:
+                    details.textTop = string.Format("{0}This action is unavailable as the AI controls this side{1}", colourAlert, colourEnd);
+                    break;
+                case AlertType.DebugAI:
+                    details.textTop = "The AI has been switched OFF";
+                    details.textBottom = string.Format("The Player now has {0}<b>Manual control</b>{1} of both sides", colourNeutral, colourEnd);
+                    break;
+                case AlertType.DebugPlayer:
+                    switch (GameManager.i.sideScript.PlayerSide.level)
+                    {
+                        case 1:
+                            //authority
+                            details.textTop = "The AI has been switched back ON (Resistance)";
+                            details.textBottom = string.Format("The Player has {0}<b>Manual control</b>{1} of the AUTHORITY side only", colourNeutral, colourEnd);
+                            break;
+                        case 2:
+                            //resistance
+                            details.textTop = "The AI has been switched back ON (Authority)";
+                            details.textBottom = string.Format("The Player has {0}<b>Manual control</b>{1} of the RESISTANCE side only", colourNeutral, colourEnd);
+                            break;
+                    }
+                    break;
+                case AlertType.HackingInitialising:
+                    details.textTop = "Jacking into Authority AI. Initialising Icebreakers.";
+                    details.textBottom = string.Format("{0}Wait one...{1}", colourNeutral, colourEnd);
+                    break;
+                case AlertType.HackingInsufficientRenown:
+                    details.textTop = string.Format("You have {0}{1}Insufficient Renown{2}{3}for a Hacking attempt", "\n", colourBad, colourEnd, "\n");
+                    details.textBottom = string.Format("Check the colour of the Renown cost. If {0}Yellow{1} then just enough, {2}Green{3} then more than enough",
+                        colourNeutral, colourEnd, colourGood, colourEnd);
+                    break;
+                case AlertType.HackingRebootInProgress:
+                    details.textTop = string.Format("The AI is {0}Rebooting{1} it's Security Systems", colourBad, colourEnd);
+                    details.textBottom = string.Format("Hacking attempts {0}aren't possible{1} until the Reboot is complete", colourNeutral, colourEnd);
+                    break;
+                case AlertType.HackingOffline:
+                    details.textTop = string.Format("The AI has been {0}Isolated{1} from all external access", colourBad, colourEnd);
+                    details.textBottom = string.Format("Until the AI comes back online hacking attempts {0}aren't possible{1}", colourNeutral, colourEnd);
+                    break;
+                case AlertType.HackingIndisposed:
+                    details.textTop = string.Format("The AI is currently {0}inaccessible{1}", colourBad, colourEnd);
+                    details.textBottom = string.Format("This is a {0}temporary{1} state and is due to the Player being {2}indisposed{3}", colourNeutral, colourEnd,
+                        colourNeutral, colourEnd);
+                    break;
+                default:
+                    details.textTop = "This action is unavailable";
+                    break;
+            }
+            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "GUIManager.cs -> SetAlertMessage");
         }
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "GUIManager.cs -> SetAlertMessage");
+        else { Debug.LogError("Invalid ModalOutcomeDetails (Null)"); }
     }
 
 

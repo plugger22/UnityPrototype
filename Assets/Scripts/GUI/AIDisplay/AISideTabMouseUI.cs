@@ -30,19 +30,19 @@ public class AISideTabMouseUI : MonoBehaviour, IPointerClickHandler/*, IPointerE
                     switch (GameManager.i.aiSideTabScript.hackingStatus)
                     {
                         case HackingStatus.Initialising:
-                            GameManager.i.guiScript.SetAlertMessage(AlertType.HackingInitialising);
+                            GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.HackingInitialising);
                             break;
                         case HackingStatus.Rebooting:
-                            GameManager.i.guiScript.SetAlertMessage(AlertType.HackingRebootInProgress);
+                            GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.HackingRebootInProgress);
                             break;
                         case HackingStatus.Offline:
-                            GameManager.i.guiScript.SetAlertMessage(AlertType.HackingOffline);
+                            GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.HackingOffline);
                             break;
                         case HackingStatus.InsufficientRenown:
-                            GameManager.i.guiScript.SetAlertMessage(AlertType.HackingInsufficientRenown);
+                            GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.HackingInsufficientRenown);
                             break;
                         case HackingStatus.Indisposed:
-                            GameManager.i.guiScript.SetAlertMessage(AlertType.HackingIndisposed);
+                            GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.HackingIndisposed);
                             break;
                         case HackingStatus.Possible:
                             /*//update hacking status
@@ -52,7 +52,7 @@ public class AISideTabMouseUI : MonoBehaviour, IPointerClickHandler/*, IPointerE
                             break;
                         default:
                             Debug.LogWarningFormat("Invalid aiSideTabUI.cs hackingStatus {0}", GameManager.i.aiSideTabScript.hackingStatus);
-                            GameManager.i.guiScript.SetAlertMessage(AlertType.SomethingWrong);
+                            GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.SomethingWrong);
                             break;
                     }
                 }

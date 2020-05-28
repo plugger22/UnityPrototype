@@ -708,6 +708,16 @@ public class TurnManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Zeros out actions and ends turn. Used for Capture situations
+    /// </summary>
+    public void SetActionsToZero()
+    {
+        _actionsCurrent = _actionsTotal;
+        EventManager.instance.PostNotification(EventType.ChangeActionPoints, this, 0, "TurnManager.cs -> SetActionsToZero");
+        ProcessNewTurn();
+    }
+
+    /// <summary>
     /// returns true if Player wounded (in TurnManager.cs because all set up with cached 'conditionWounded')
     /// </summary>
     /// <returns></returns>

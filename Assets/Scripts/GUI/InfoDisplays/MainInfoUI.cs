@@ -1314,7 +1314,7 @@ public class MainInfoUI : MonoBehaviour
             else
             {
                 //outcome message explaining why not
-                GameManager.i.guiScript.SetAlertMessage(AlertType.PlayerStatus);
+                GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.PlayerStatus);
             }
         }
     }

@@ -606,7 +606,7 @@ public class DebugGUI : MonoBehaviour
                                     GameManager.i.sideScript.authorityOverall = SideState.Human;
                                     GameManager.i.sideScript.resistanceOverall = SideState.Human;
                                     //notification
-                                    GameManager.i.guiScript.SetAlertMessage(AlertType.DebugAI);
+                                    GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.DebugAI);
                                 }
                                 //reverts back to Authority Player, Resistance AI
                                 else if (GameManager.i.sideScript.resistanceOverall == SideState.Human)
@@ -618,7 +618,7 @@ public class DebugGUI : MonoBehaviour
                                     GameManager.i.sideScript.authorityOverall = SideState.Human;
                                     GameManager.i.sideScript.resistanceOverall = SideState.AI;
                                     //notification
-                                    GameManager.i.guiScript.SetAlertMessage(AlertType.DebugPlayer);
+                                    GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.DebugPlayer);
                                 }
                                 break;
                             //resistance player
@@ -633,7 +633,7 @@ public class DebugGUI : MonoBehaviour
                                     GameManager.i.sideScript.authorityOverall = SideState.Human;
                                     GameManager.i.sideScript.resistanceOverall = SideState.Human;
                                     //notification
-                                    GameManager.i.guiScript.SetAlertMessage(AlertType.DebugAI);
+                                    GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.DebugAI);
                                 }
                                 //reverts back to Resistance Player, Authority AI
                                 else if (GameManager.i.sideScript.authorityOverall == SideState.Human)
@@ -645,7 +645,7 @@ public class DebugGUI : MonoBehaviour
                                     GameManager.i.sideScript.authorityOverall = SideState.AI;
                                     GameManager.i.sideScript.resistanceOverall = SideState.Human;
                                     //notification
-                                    GameManager.i.guiScript.SetAlertMessage(AlertType.DebugPlayer);
+                                    GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.DebugPlayer);
                                 }
                                 break;
                         }

@@ -2,3 +2,34 @@ ERROR Assets/Scripts/Managers/CaptureManager.cs(258,12): error CS1525: Unexpecte
 
 Dev seed 19930 -> Thursday, 28 May 2020 11:14 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 7627 -> Thursday, 28 May 2020 11:55 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 58922 -> Thursday, 28 May 2020 12:13 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 2344 -> Thursday, 28 May 2020 12:14 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 3789 -> Thursday, 28 May 2020 12:17 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 15024 -> Thursday, 28 May 2020 12:17 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 36058 -> Thursday, 28 May 2020 12:22 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 7796 -> Thursday, 28 May 2020 12:23 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 13210 -> Thursday, 28 May 2020 12:24 PM
+City seed 5678 -> London, United Kingdom
+WARNING tempList has 22 records for tab 0 -> INFO only
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:676)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:878)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:859)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
