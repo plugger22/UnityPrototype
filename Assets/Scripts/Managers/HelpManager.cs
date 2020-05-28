@@ -459,7 +459,7 @@ public class HelpManager : MonoBehaviour
             .AppendFormat("  {0} {1}Common{2}{3}", bullet, colourAlert, colourEnd, "\n")
             .AppendFormat("  {0} {1}Rare{2}{3}", bullet, colourAlert, colourEnd, "\n")
             .AppendFormat("  {0} {1}Unique{2}{3}", bullet, colourAlert, colourEnd, "\n")
-            .AppendFormat("  {0} {1}Special{2} only from HQ between missions{3}", bullet, colourAlert, colourEnd, "\n")
+            .AppendFormat("  {0} {1}Special{2} Available only from HQ between missions{3}", bullet, colourAlert, colourEnd, "\n")
             .ToString();
         listOfHelp.Add(data);
         #endregion
@@ -1376,9 +1376,11 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
-        #region Captured
+        #region Captured...
+
+        #region Player Captured
         //
-        // - - - Captured
+        // - - - Player Captured
         //
         //Overview
         data = new HelpData();
@@ -1387,22 +1389,32 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("You can be captured by an {0}Erasure Team{1} that is in your {2}district{3} whenever you have {4}Zero Invisibility{5}",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
-        //Moving
+        //All Points Bulletin
         data = new HelpData();
         data.tag = "capture_1";
-        data.header = "Can I be Captured while Moving?";
+        data.header = "All Points Bulletin";
+        data.text = string.Format("If this Authority {0}security measure{1} is in force (see top Centre, if flashing red, check tooltip), you can be {2}captured{3} with {4}1 Star Invisibility{5}. " +
+            "They are actively looking for you, beware! ",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Moving
+        data = new HelpData();
+        data.tag = "capture_2";
+        data.header = string.Format("{0}Can I be Captured while Moving?{1}", colourTip, colourEnd);
         data.text = string.Format("No, you can only be detected while moving, but not Captured. However, when you {0}arrive{1} at your {2}destination{3} district and there is an Erasure Team waiting, " +
             "you may be captured if your {4}Invisibility is Zero{5}",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Invisibility Gear
         data = new HelpData();
-        data.tag = "capture_2";
+        data.tag = "capture_3";
         data.header = string.Format("{0}Will Invisibility Gear save me from Capture?{1}", colourTip, colourEnd);
-        data.text = string.Format("Maybe. It will prevent you from being detected and lowering your invisibility, which, if it went below Zero could result in you being Captured immediately. " +
-            "Once your Invisibility reaches Zero, it can't help you as you are then vulnerable to multiple forms of capture. It's job is to maintain your Invisibiity rating",
-            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("It's purpose is to {0}prevent you from being detected{1} and having your Invisibility fall to Zero. Once your Invisibility reaches {2}Zero{3} you are {4}vulnerable{5} to " +
+            "capture and the {6}gear can't help you{7}",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
+        #endregion
+
         #endregion
 
         #region Traitor

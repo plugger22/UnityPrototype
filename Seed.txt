@@ -1,0 +1,4 @@
+ERROR Assets/Scripts/Managers/CaptureManager.cs(258,12): error CS1525: Unexpected symbol `}'
+
+Dev seed 19930 -> Thursday, 28 May 2020 11:14 AM
+City seed 5678 -> London, United Kingdom

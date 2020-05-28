@@ -254,7 +254,10 @@ public class CaptureManager : MonoBehaviour
                 isAction = false,
                 side = GameManager.i.globalScript.sideResistance,
                 type = MsgPipelineType.CapturePlayer,
-                help0 = 
+                help0 = "capture_0",
+                help1 = "capture_1",
+                help2 = "capture_2",
+                help3 = "capture_3"
             };
             if (GameManager.i.guiScript.InfoPipelineAdd(outcomeDetails) == false)
             { Debug.LogWarningFormat("Player Captured infoPipeline message FAILED to be added to dictOfPipeline"); }

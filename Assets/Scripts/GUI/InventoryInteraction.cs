@@ -121,6 +121,11 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
                                 break;
                         }
                     }
+                    else
+                    {
+                        //player not active
+                        GameManager.i.guiScript.SetAlertMessage(AlertType.PlayerStatus);
+                    }
                 }
                 break;
             default:
