@@ -644,6 +644,9 @@ public class GUIManager : MonoBehaviour
     {
         if (data != null)
         {
+            //hide any underlying UI
+            if (data.hideOtherEvent != EventType.None)
+            { EventManager.instance.PostNotification(data.hideOtherEvent, this, null, "GUIManager.cs -> SetShowMe"); }
             showMeData = data;
             //multiple nodes has priority
             if (data.listOfNodes.Count > 0)
@@ -693,13 +696,16 @@ public class GUIManager : MonoBehaviour
     {
         //reset nodes, or node, back to normal, if required
         if (showMeData.listOfNodes.Count > 0)
-        { EventManager.instance.PostNotification(EventType.FlashNodesStop, this, showMeData.nodeID, "GUIManager.cs -> ExecuteShowMeRestore"); }
+        { EventManager.instance.PostNotification(EventType.FlashNodesStop, this, showMeData.nodeID, "GUIManager.cs -> ShowMeRestore"); }
         else if (showMeData.nodeID > -1)
-        { EventManager.instance.PostNotification(EventType.FlashNodesStop, this, showMeData.nodeID, "GUIManager.cs -> ExecuteShowMeRestore"); }
+        { EventManager.instance.PostNotification(EventType.FlashNodesStop, this, showMeData.nodeID, "GUIManager.cs -> ShowMeRestore"); }
         //reset connection back to normal, if required
         if (showMeData.connID > -1)
-        { EventManager.instance.PostNotification(EventType.FlashSingleConnectionStop, this, showMeData.connID, "GUIManager.cs -> ExecuteShowMeRestore"); }
-        //reactivate calling UI element
+        { EventManager.instance.PostNotification(EventType.FlashSingleConnectionStop, this, showMeData.connID, "GUIManager.cs -> ShowMeRestore"); }
+        //restore any underlying UI
+        if (showMeData.restoreOtherEvent != EventType.None)
+        { EventManager.instance.PostNotification(showMeData.restoreOtherEvent, this, null, "GUIManager.cs -> ShowMeRestore"); }
+        //restore calling UI element
         EventManager.instance.PostNotification(showMeData.restoreEvent, this, null, "GUIManager.cs -> ShowMeRestore");
     }
 

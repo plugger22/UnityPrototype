@@ -421,9 +421,12 @@ namespace packageAPI
     public class ShowMeData
     {
         public EventType restoreEvent;
-        public int nodeID;              //if > -1 the relevant node is highlighted in ModalState.ShowMe
-        public int connID;              //if > -1 the relevant connection is highlighted in ModalState.ShowMe
-        public List<Node> listOfNodes;  //optional -> if provided will override the single nodeID  
+        public int nodeID;                      //if > -1 the relevant node is highlighted in ModalState.ShowMe
+        public int connID;                      //if > -1 the relevant connection is highlighted in ModalState.ShowMe
+        public List<Node> listOfNodes;          //optional -> if provided will override the single nodeID 
+        //only if underlying UI Element
+        public EventType hideOtherEvent;        //optional -> used only when there is an underlying UI element, eg. outcome window on top of a Gear Inventory, hides underlying UI element
+        public EventType restoreOtherEvent;     //optional -> used only when there is an underlying UI element -> handles restoring of underlying UI element
 
         public ShowMeData()
         {

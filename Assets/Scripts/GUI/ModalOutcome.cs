@@ -1,11 +1,10 @@
-﻿using modalAPI;
-using System.Collections;
+﻿using gameAPI;
+using modalAPI;
+using packageAPI;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using gameAPI;
-using packageAPI;
 
 /// <summary>
 /// Handles Modal Outcome window.
@@ -21,7 +20,7 @@ public class ModalOutcome : MonoBehaviour
     public Button confirmButton;
     public Button showMeButton;
     public Button helpButton;
-   
+
 
     private static ModalOutcome modalOutcome;
     private RectTransform rectTransform;
@@ -35,6 +34,8 @@ public class ModalOutcome : MonoBehaviour
     private ModalSubState modalState;                       //modal state to return to once outcome window closed (handles modalLevel 2+ cases, ignored for rest)
     private string reason;                               //reason outcome window is being used (passed on via CloseOutcomeWindow event to UseAction event for debugging
     private List<Node> listOfShowMeNodes = new List<Node>();    //used to store data passed in for any 'ShowMe' use
+    private EventType hideOtherEvent;                   //event to call to hide underlying UI if 'ShowMe'. Can ignore
+    private EventType restoreOtherEvent;                   //event to call to restore underlying UI if 'ShowMe'. Can ignore
 
     private bool isAction;                              //triggers 'UseAction' event on confirmation button click if true (passed in to method by ModalOutcomeDetails)
 
@@ -98,7 +99,7 @@ public class ModalOutcome : MonoBehaviour
     public void OnEvent(EventType eventType, Component Sender, object Param = null)
     {
         //detect event type
-        switch(eventType)
+        switch (eventType)
         {
             case EventType.OutcomeOpen:
                 ModalOutcomeDetails details = Param as ModalOutcomeDetails;
@@ -129,7 +130,7 @@ public class ModalOutcome : MonoBehaviour
         EventManager.instance.RemoveEvent(EventType.OutcomeOpen);
     }
 
-   
+
 
     /// <summary>
     /// Initiate Modal Outcome window
@@ -191,15 +192,15 @@ public class ModalOutcome : MonoBehaviour
                 //Show Me
                 if (details.listOfNodes != null && details.listOfNodes.Count > 0)
                 {
-                    //only Modal 1
-                    if (details.modalLevel == 1)
-                    {
-                        //showMe data
-                        listOfShowMeNodes = details.listOfNodes;
-                        //disable Confirm, activate Show Me button
-                        confirmButton.gameObject.SetActive(false);
-                        showMeButton.gameObject.SetActive(true);
-                    }
+
+                    //showMe data
+                    listOfShowMeNodes = details.listOfNodes;
+                    //disable Confirm, activate Show Me button
+                    confirmButton.gameObject.SetActive(false);
+                    showMeButton.gameObject.SetActive(true);
+                    //events to call to handle underlying UI (if any)
+                    hideOtherEvent = details.hideEvent;
+                    restoreOtherEvent = details.restoreEvent;
                 }
                 else
                 {
@@ -207,6 +208,9 @@ public class ModalOutcome : MonoBehaviour
                     //disable ShowMe, activate Confirm button
                     confirmButton.gameObject.SetActive(true);
                     showMeButton.gameObject.SetActive(false);
+                    //default settings for events
+                    hideOtherEvent = EventType.None;
+                    restoreOtherEvent = EventType.None;
                 }
 
                 //set opacity to zero (invisible)
@@ -337,6 +341,8 @@ public class ModalOutcome : MonoBehaviour
         ShowMeData data = new ShowMeData();
         data.restoreEvent = EventType.OutcomeRestore;
         data.listOfNodes.AddRange(listOfShowMeNodes);
+        data.hideOtherEvent = hideOtherEvent;
+        data.restoreOtherEvent = restoreOtherEvent;
         GameManager.i.guiScript.SetShowMe(data);
     }
 

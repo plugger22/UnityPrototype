@@ -127,7 +127,9 @@ namespace modalAPI
         public string help1;                //optional
         public string help2;                //optional
         public string help3;                //optional
-        public List<Node> listOfNodes;     //optional -> if valid then a 'Show Me' button will appear (replaces Confirm until used)
+        public List<Node> listOfNodes;      //optional -> if valid then a 'Show Me' button will appear (replaces Confirm until used)
+        public EventType hideEvent;         //only if underlying UI element and a possible ShowMe use. Event to call when ShowMe pressed in Outcome window to hide underlying UI 
+        public EventType restoreEvent;      //only if underlying UI element and a possible ShowMe use. Event to call when ShowMe pressed in Outcome window to restore underlying UI 
 
         public ModalOutcomeDetails()
         {

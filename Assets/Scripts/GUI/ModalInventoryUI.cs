@@ -114,6 +114,8 @@ public class ModalInventoryUI : MonoBehaviour
         //register listener
         EventManager.instance.AddListener(EventType.InventoryOpenUI, OnEvent, "ModalInventoryUI");
         EventManager.instance.AddListener(EventType.InventoryCloseUI, OnEvent, "ModalInventoryUI");
+        EventManager.instance.AddListener(EventType.InventoryShowMe, OnEvent, "ModalInventoryUI");
+        EventManager.instance.AddListener(EventType.InventoryRestore, OnEvent, "ModalInventoryUI");
     }
 
     /// <summary>
@@ -133,6 +135,12 @@ public class ModalInventoryUI : MonoBehaviour
                 break;
             case EventType.InventoryCloseUI:
                 CloseInventoryUI();
+                break;
+            case EventType.InventoryShowMe:
+                ExecuteShowMe();
+                break;
+            case EventType.InventoryRestore:
+                ExecuteRestore();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -462,13 +470,31 @@ public class ModalInventoryUI : MonoBehaviour
         }
     }
 
-    /// <summary>
+    /*/// <summary>
     /// Method to run when a gear option is left clicked (action menu)
     /// </summary>
     /// <param name="optionData"></param>
     public void GearLeftClicked(int optionData)
     {
+        
+    }*/
 
+
+    /// <summary>
+    /// ShowMe button pressed on an overlaying ModalOutcome window -> Hide inventory to reveal flashing nodes underneath
+    /// </summary>
+    private void ExecuteShowMe()
+    {
+        modalInventoryObject.SetActive(false);
+    }
+
+
+    /// <summary>
+    /// Restore from ShowMe. Toggle inventory back on after a ModalOutcome showMe button pressed
+    /// </summary>
+    private void ExecuteRestore()
+    {
+        modalInventoryObject.SetActive(true);
     }
 
     //place new methods above here

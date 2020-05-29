@@ -1891,6 +1891,13 @@ public class ActionManager : MonoBehaviour
                                     //clear out any previous (shouldn't be but hypothetically there could be multiple effects generating nodes)
                                     outcomeDetails.listOfNodes.Clear();
                                     outcomeDetails.listOfNodes.AddRange(effectReturn.listOfNodes);
+                                    //is the Gear Inventory open?
+                                    if (details.modalState == ModalSubState.Inventory)
+                                    {
+                                        //set events to allow inventory UI to hide/restore if ShowMe pressed in Outcome window
+                                        outcomeDetails.hideEvent = EventType.InventoryShowMe;
+                                        outcomeDetails.restoreEvent = EventType.InventoryRestore;
+                                    }
                                 }
                             }
                             else
