@@ -127,3 +127,100 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 4012 -> Friday, 29 May 2020 5:01 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 924 -> Friday, 29 May 2020 5:40 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 60112 -> Friday, 29 May 2020 5:41 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46980 -> Friday, 29 May 2020 5:47 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 29312 -> Friday, 29 May 2020 5:55 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 23390 -> Friday, 29 May 2020 5:56 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfTopics (EMPTY) for topicSubType "ActorDistrict" -> INFO Only
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1785)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:3036)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2965)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:341)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:311)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:289)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:408)
+	WARNING Not found in hqID 53, in dictOfHQ
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHqActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:3981)
+	TopicManager:GetEffectPrefix(Effect) (at Assets/Scripts/Managers/TopicManager.cs:5330)
+	TopicManager:GetGoodEffects(List`1, String, StringBuilder) (at Assets/Scripts/Managers/TopicManager.cs:5099)
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:5015)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:3162)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2965)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:341)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:311)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:289)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:408)
+	ERROR Invalid HQ actor (Null) for tagActorID 53
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	TopicManager:GetEffectPrefix(Effect) (at Assets/Scripts/Managers/TopicManager.cs:5332)
+	TopicManager:GetGoodEffects(List`1, String, StringBuilder) (at Assets/Scripts/Managers/TopicManager.cs:5099)
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:5015)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:3162)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2965)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:341)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:311)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:289)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:408)
+	WARNING Not found in hqID 53, in dictOfHQ
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHqActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:3981)
+	TopicManager:GetEffectPrefix(Effect) (at Assets/Scripts/Managers/TopicManager.cs:5330)
+	TopicManager:GetGoodEffects(List`1, String, StringBuilder) (at Assets/Scripts/Managers/TopicManager.cs:5099)
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:5015)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:3162)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2965)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:341)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:311)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:289)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:408)
+	ERROR Invalid HQ actor (Null) for tagActorID 53
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	TopicManager:GetEffectPrefix(Effect) (at Assets/Scripts/Managers/TopicManager.cs:5332)
+	TopicManager:GetGoodEffects(List`1, String, StringBuilder) (at Assets/Scripts/Managers/TopicManager.cs:5099)
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:5015)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:3162)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:2965)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:341)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:311)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:289)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:408)
+	WARNING Not found in hqID 53, in dictOfHQ
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHqActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:3981)
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:4197)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1922)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3406)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:656)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:311)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for effect "B_GainRenHq", data.actorID 53
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:4214)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1922)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3406)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:656)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:311)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
