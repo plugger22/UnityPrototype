@@ -2563,7 +2563,6 @@ public class EffectManager : MonoBehaviour
     private bool ResolveGroupActorEffect(Effect effect, EffectDataInput dataInput, Actor actorExclude = null)
     {
         bool isSuccess = true;
-        int change;
         GlobalSide side = GameManager.i.sideScript.PlayerSide;
         Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(side);
         if (arrayOfActors != null)
@@ -2596,11 +2595,13 @@ public class EffectManager : MonoBehaviour
                                             motivation += effect.value;
                                             motivation = Mathf.Min(GameManager.i.actorScript.maxStatValue, motivation);
                                             actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, dataInput.originText);
+                                            GameManager.i.popUpFixedScript.SetData(actor.slotID, string.Format("Motivation +{0}", effect.value));
                                             break;
                                         case "Subtract":
                                             motivation -= effect.value;
                                             motivation = Mathf.Max(GameManager.i.actorScript.minStatValue, motivation);
                                             actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, dataInput.originText);
+                                            GameManager.i.popUpFixedScript.SetData(actor.slotID, string.Format("Motivation -{0}", effect.value));
                                             break;
                                         default:
                                             Debug.LogWarningFormat("Invalid effect.operand \"{0}\"", effect.operand.name);
@@ -2611,9 +2612,6 @@ public class EffectManager : MonoBehaviour
                                     {
                                         Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Motivation changed from {2} to {3}{4}", actor.actorName, actor.arc.name,
                                             dataBefore, motivation, "\n");
-                                        //onMap actor -> popUp
-                                        change = dataBefore - motivation;
-                                        GameManager.i.popUpFixedScript.SetData(actor.slotID, string.Format("Motivation {0}{1}", change > 0 ? "+" : "", change));
                                     }
                                     break;
                                 case "Renown":

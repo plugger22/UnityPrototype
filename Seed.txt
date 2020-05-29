@@ -224,3 +224,8 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
 	UnityEngine.EventSystems.EventSystem:Update()
 	
+Dev seed 25807 -> Friday, 29 May 2020 8:31 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 27369 -> Friday, 29 May 2020 8:40 PM
+City seed 5678 -> London, United Kingdom
