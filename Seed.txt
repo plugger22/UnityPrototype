@@ -7,3 +7,93 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 51123 -> Friday, 29 May 2020 9:44 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 28195 -> Friday, 29 May 2020 11:57 AM
+City seed 5678 -> London, United Kingdom
+WARNING GUIManager.cs -> SetShowMe: There are no nodes or connections to show
+UnityEngine.Debug:LogWarning(Object)
+	GUIManager:SetShowMe(ShowMeData) (at Assets/Scripts/Managers/GUIManager.cs:672)
+	ModalOutcome:ExecuteShowMe() (at Assets/Scripts/GUI/ModalOutcome.cs:336)
+	ModalOutcome:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalOutcome.cs:112)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:309)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 45950 -> Friday, 29 May 2020 12:02 PM
+City seed 5678 -> London, United Kingdom
+WARNING GUIManager.cs -> SetShowMe: There are no nodes or connections to show
+UnityEngine.Debug:LogWarning(Object)
+	GUIManager:SetShowMe(ShowMeData) (at Assets/Scripts/Managers/GUIManager.cs:672)
+	ModalOutcome:ExecuteShowMe() (at Assets/Scripts/GUI/ModalOutcome.cs:336)
+	ModalOutcome:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalOutcome.cs:112)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:309)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 48645 -> Friday, 29 May 2020 12:06 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid ModalOutcomeDetails package (Null)
+UnityEngine.Debug:LogWarning(Object)
+	ModalOutcome:SetModalOutcome(ModalOutcomeDetails) (at Assets/Scripts/GUI/ModalOutcome.cs:238)
+	ModalOutcome:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalOutcome.cs:106)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:309)
+	GUIManager:ShowMeRestore() (at Assets/Scripts/Managers/GUIManager.cs:703)
+	GUIManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/GUIManager.cs:417)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:309)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:647)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:408)
+	WARNING Invalid ModalOutcomeDetails package (Null)
+UnityEngine.Debug:LogWarning(Object)
+	ModalOutcome:SetModalOutcome(ModalOutcomeDetails) (at Assets/Scripts/GUI/ModalOutcome.cs:238)
+	ModalOutcome:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalOutcome.cs:106)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:309)
+	GUIManager:ShowMeRestore() (at Assets/Scripts/Managers/GUIManager.cs:703)
+	GUIManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/GUIManager.cs:417)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:309)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:647)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:408)
+	WARNING Invalid ModalOutcomeDetails package (Null)
+UnityEngine.Debug:LogWarning(Object)
+	ModalOutcome:SetModalOutcome(ModalOutcomeDetails) (at Assets/Scripts/GUI/ModalOutcome.cs:238)
+	ModalOutcome:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalOutcome.cs:106)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:309)
+	GUIManager:ShowMeRestore() (at Assets/Scripts/Managers/GUIManager.cs:703)
+	GUIManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/GUIManager.cs:417)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:309)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:647)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:408)
+	WARNING Invalid ModalOutcomeDetails package (Null)
+UnityEngine.Debug:LogWarning(Object)
+	ModalOutcome:SetModalOutcome(ModalOutcomeDetails) (at Assets/Scripts/GUI/ModalOutcome.cs:238)
+	ModalOutcome:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalOutcome.cs:106)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:309)
+	GUIManager:ShowMeRestore() (at Assets/Scripts/Managers/GUIManager.cs:703)
+	GUIManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/GUIManager.cs:417)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:309)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:647)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:408)
+	WARNING Invalid ModalOutcomeDetails package (Null)
+UnityEngine.Debug:LogWarning(Object)
+	ModalOutcome:SetModalOutcome(ModalOutcomeDetails) (at Assets/Scripts/GUI/ModalOutcome.cs:238)
+	ModalOutcome:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalOutcome.cs:106)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:309)
+	GUIManager:ShowMeRestore() (at Assets/Scripts/Managers/GUIManager.cs:703)
+	GUIManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/GUIManager.cs:417)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:309)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:647)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:408)
+	
+Dev seed 50117 -> Friday, 29 May 2020 12:12 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 5628 -> Friday, 29 May 2020 12:23 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 43399 -> Friday, 29 May 2020 12:26 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38159 -> Friday, 29 May 2020 12:31 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 17585 -> Friday, 29 May 2020 12:37 PM
+City seed 5678 -> London, United Kingdom

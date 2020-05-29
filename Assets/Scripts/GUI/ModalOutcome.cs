@@ -60,7 +60,7 @@ public class ModalOutcome : MonoBehaviour
         if (interactConfirm != null)
         { interactConfirm.SetButton(EventType.OutcomeClose); }
         else { Debug.LogError("Invalid interactConfirm (Null)"); }
-        interactShowMe = confirmButton.GetComponent<ButtonInteraction>();
+        interactShowMe = showMeButton.GetComponent<ButtonInteraction>();
         if (interactShowMe != null)
         { interactShowMe.SetButton(EventType.OutcomeShowMe); }
         else { Debug.LogError("Invalid interactShowMe (Null)"); }
@@ -191,11 +191,15 @@ public class ModalOutcome : MonoBehaviour
                 //Show Me
                 if (details.listOfNodes != null && details.listOfNodes.Count > 0)
                 {
-                    //showMe data
-                    listOfShowMeNodes = details.listOfNodes;
-                    //disable Confirm, activate Show Me button
-                    confirmButton.gameObject.SetActive(false);
-                    showMeButton.gameObject.SetActive(true);
+                    //only Modal 1
+                    if (details.modalLevel == 1)
+                    {
+                        //showMe data
+                        listOfShowMeNodes = details.listOfNodes;
+                        //disable Confirm, activate Show Me button
+                        confirmButton.gameObject.SetActive(false);
+                        showMeButton.gameObject.SetActive(true);
+                    }
                 }
                 else
                 {
@@ -331,7 +335,7 @@ public class ModalOutcome : MonoBehaviour
         modalOutcomeWindow.SetActive(false);
         //pass data package to GUIManager.cs
         ShowMeData data = new ShowMeData();
-        data.restoreEvent = EventType.OutcomeOpen;
+        data.restoreEvent = EventType.OutcomeRestore;
         data.listOfNodes.AddRange(listOfShowMeNodes);
         GameManager.i.guiScript.SetShowMe(data);
     }

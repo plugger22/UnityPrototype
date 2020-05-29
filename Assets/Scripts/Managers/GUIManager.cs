@@ -683,7 +683,7 @@ public class GUIManager : MonoBehaviour
         GameManager.i.inputScript.SetModalState(package);
         //alert message
         GameManager.i.nodeScript.NodeShowFlag = 1;
-        GameManager.i.alertScript.SetAlertUI("Press any KEY or BUTTON to Return");
+        GameManager.i.alertScript.SetAlertUI("Press any KEY or BUTTON to Return", 999f);
     }
 
     /// <summary>
