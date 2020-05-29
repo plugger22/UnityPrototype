@@ -203,7 +203,7 @@ public class ActionManager : MonoBehaviour
                 break;
             case EventType.UseGearAction:
                 ModalActionDetails detailsUseGear = Param as ModalActionDetails;
-                ProcessUseGearAction(detailsUseGear);
+                ProcessPersonalGearAction(detailsUseGear);
                 break;
             case EventType.InventoryActiveDuty:
                 ModalActionDetails detailsActive = Param as ModalActionDetails;
@@ -255,7 +255,7 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     public void OnDisable()
     {
-        EventManager.instance.RemoveEvent(EventType.OpenOutcomeWindow);
+        EventManager.instance.RemoveEvent(EventType.OutcomeOpen);
     }
 
     /// <summary>
@@ -469,7 +469,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.reason = "Node Action";
         }
         //generate a create modal window event
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessNodeAction");
+        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessNodeAction");
     }
 
     /// <summary>
@@ -579,7 +579,7 @@ public class ActionManager : MonoBehaviour
             {
                 GameManager.i.gearScript.SetGearUsed(gear, string.Format("affect {0} district", node.nodeName));
                 //generate a create modal outcome dialogue
-                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessNodeGearAction");
+                EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessNodeGearAction");
             }
             else
             {
@@ -589,7 +589,7 @@ public class ActionManager : MonoBehaviour
         }
         //ERROR ->  go straight to outcome window
         else
-        { EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessNodeGearAction"); }
+        { EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessNodeGearAction"); }
     }
 
 
@@ -711,7 +711,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.textTop = string.Format("{0}You are unable to send anyone to the Reserve Pool at this time{1}", colourAlert, colourEnd);
             outcomeDetails.textBottom = "Why is that so? Nobody knows.";
             outcomeDetails.sprite = GameManager.i.guiScript.errorSprite;
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessManageActorAction");
+            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessManageActorAction");
         }
         else
         {
@@ -874,7 +874,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.textTop = string.Format("{0}You are unable to send anyone to the Reserve pool at this time{1}", colourAlert, colourEnd);
             outcomeDetails.textBottom = "Why is it so? Nobody knows.";
             outcomeDetails.sprite = GameManager.i.guiScript.errorSprite;
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> InitialiseReserveActorAction");
+            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> InitialiseReserveActorAction");
         }
         else
         {
@@ -1031,7 +1031,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.textTop = string.Format("{0}You are unable to Dismiss of anyone at this time{1}", colourAlert, colourEnd);
             outcomeDetails.textBottom = "Why this is so is under investigation";
             outcomeDetails.sprite = GameManager.i.guiScript.errorSprite;
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> InitialiseDismissActorAction");
+            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> InitialiseDismissActorAction");
         }
         else
         {
@@ -1204,7 +1204,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.textTop = string.Format("{0}You are unable to Dispose of anyone at this time{1}", colourAlert, colourEnd);
             outcomeDetails.textBottom = "Why this is so is under investigation";
             outcomeDetails.sprite = GameManager.i.guiScript.errorSprite;
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> InitailiseDisposeActorAction");
+            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> InitailiseDisposeActorAction");
         }
         else
         {
@@ -1269,7 +1269,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.textBottom = GetLieLowMessage(numOfTurns, actorName, actorArc, isStressed);
         }
         //generate a create modal window event
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessLieLowActorAction");
+        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessLieLowActorAction");
     }
 
     /// <summary>
@@ -1319,7 +1319,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.textBottom = GetLieLowMessage(numOfTurns, playerName, "PLAYER", isStressed);
         }
         //generate a create modal window event
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessLieLowPlayerAction");
+        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessLieLowPlayerAction");
     }
 
     /// <summary>
@@ -1383,7 +1383,7 @@ public class ActionManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); }
         //generate a create modal window event
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessActivateActorAction");
+        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessActivateActorAction");
     }
 
 
@@ -1432,7 +1432,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.reason = "Activate Actor";
         }
         //generate a create modal window event
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessActivateActorAction");
+        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessActivateActorAction");
     }
 
     /// <summary>
@@ -1475,7 +1475,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.reason = "Activate Player";
         }
         //generate a create modal window event
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessActivatePlayerAction");
+        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessActivatePlayerAction");
     }
 
     /// <summary>
@@ -1523,7 +1523,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.textBottom = string.Format("You, {0}{1}{2}, have taken Stress Leave and will return a better person, {3}free of Stress{4}{5}{6}{7}You cannot be captured while on Leave{8}",
                 colourAlert, playerName, colourEnd, colourNeutral, colourEnd, "\n", "\n", colourGood, colourEnd);
             //generate a create modal window event
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessLeavePlayerAction");
+            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessLeavePlayerAction");
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); }
     }
@@ -1575,7 +1575,7 @@ public class ActionManager : MonoBehaviour
                 outcomeDetails.textBottom = string.Format("{0}, {1}{2}{3}, has taken Stress Leave and will return a better person, {4}free of Stress{5}{6}{7}{8}{9} cannot be Captured while on Leave{10}",
                     actor.actorName, colourAlert, actor.arc.name, colourEnd, colourNeutral, colourEnd, "\n", "\n", colourGood, actor.actorName, colourEnd);
                 //generate a create modal window event
-                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessLeaveActorAction");
+                EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessLeaveActorAction");
             }
             else { Debug.LogError("Invalid actor (Null)"); }
         }
@@ -1710,7 +1710,7 @@ public class ActionManager : MonoBehaviour
             details.handler?.Invoke();
         }
         //generate a create modal window event
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessGiveGearAction");
+        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessGiveGearAction");
     }
 
     /// <summary>
@@ -1821,14 +1821,14 @@ public class ActionManager : MonoBehaviour
             details.handler?.Invoke();
         }
         //generate a create modal window event
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessGiveGearAction");
+        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessGiveGearAction");
     }
 
     /// <summary>
     /// Process Use Gear (Player use) action (Resistance only)
     /// </summary>
     /// <param name="details"></param>
-    public void ProcessUseGearAction(ModalActionDetails details)
+    public void ProcessPersonalGearAction(ModalActionDetails details)
     {
         bool errorFlag = false;
         bool isAction = false;
@@ -1885,6 +1885,13 @@ public class ActionManager : MonoBehaviour
                                 if (effectReturn.errorFlag == true) { break; }
                                 //valid action? -> only has to be true once for an action to be valid
                                 if (effectReturn.isAction == true) { isAction = true; }
+                                //Show Me node list
+                                if (effectReturn.listOfNodes.Count > 0)
+                                {
+                                    //clear out any previous (shouldn't be but hypothetically there could be multiple effects generating nodes)
+                                    outcomeDetails.listOfNodes.Clear();
+                                    outcomeDetails.listOfNodes.AddRange(effectReturn.listOfNodes);
+                                }
                             }
                             else
                             {
@@ -1949,7 +1956,7 @@ public class ActionManager : MonoBehaviour
             details.handler?.Invoke();
         }
         //generate a create modal window event
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessUseGearAction");
+        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessUseGearAction");
     }
 
 
@@ -2009,7 +2016,7 @@ public class ActionManager : MonoBehaviour
             details.handler?.Invoke();
         }
         //generate a create modal window event
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessReassureActor");
+        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessReassureActor");
     }
 
 
@@ -2077,7 +2084,7 @@ public class ActionManager : MonoBehaviour
             details.handler?.Invoke();
         }
         //generate a create modal window event
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessThreatenActor");
+        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessThreatenActor");
     }
 
 
@@ -2161,7 +2168,7 @@ public class ActionManager : MonoBehaviour
             details.handler?.Invoke();
         }
         //generate a create modal window event
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessLetGoActor");
+        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessLetGoActor");
     }
 
     /// <summary>
@@ -2259,7 +2266,7 @@ public class ActionManager : MonoBehaviour
             details.handler?.Invoke();
         }
         //generate a create modal window event
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessFireActor");
+        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessFireActor");
     }
 
     /// <summary>
@@ -2368,7 +2375,7 @@ public class ActionManager : MonoBehaviour
             details.handler?.Invoke();
         }
         //generate a create modal window event
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessActiveDutyActor");
+        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessActiveDutyActor");
     }
 
     /// <summary>
@@ -2624,7 +2631,7 @@ public class ActionManager : MonoBehaviour
                     else { outcomeDetails.sprite = GameManager.i.guiScript.targetFailSprite; }
                 }
                 //generate a create modal window event
-                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessNodeTarget");
+                EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessNodeTarget");
             }
             else { Debug.LogErrorFormat("Invalid Target (Null) for node.targetID {0}", nodeID); }
         }
@@ -2835,7 +2842,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.reason = "Manager Reserve Actor";
         }
         //generate a create modal window event
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessReserveActorAction");
+        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessReserveActorAction");
     }
 
     /// <summary>
@@ -3011,7 +3018,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.reason = "Dismiss Actor";
         }
         //generate a create modal window event
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessDismissActorAction");
+        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessDismissActorAction");
     }
 
     /// <summary>
@@ -3178,7 +3185,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.reason = "Dispose of Actor";
         }
         //generate a create modal window event
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessDisposeActorAction");
+        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessDisposeActorAction");
     }
 
     /// <summary>
@@ -3243,7 +3250,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.side = playerSide;
             outcomeDetails.textTop = string.Format("{0}You are unable to conduct any Managerial actions at this point for reasons unknown{1}", colourAlert, colourEnd);
             outcomeDetails.textBottom = "Phone calls are being made but don't hold your breath";
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActionManager.cs -> ProcessHandleActor");
+            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessHandleActor");
         }
         else
         {

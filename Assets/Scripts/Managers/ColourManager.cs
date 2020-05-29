@@ -173,7 +173,7 @@ public class ColourManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfColour (Null)"); }
         outcomeDetails.textBottom = builder.ToString();
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "TargetManager.cs -> InitialiseGenericPickerTargetInfo");
+        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "TargetManager.cs -> InitialiseGenericPickerTargetInfo");
     }
 
 }

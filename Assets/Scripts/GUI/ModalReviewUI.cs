@@ -370,7 +370,7 @@ public class ModalReviewUI : MonoBehaviour
             outcomeDetails.textTop = "There has been a hiccup and the information isn't available";
             outcomeDetails.textBottom = "We've called the WolfMan. He's on his way";
             outcomeDetails.side = playerSide;
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ModalInventoryUI.cs -> SetInventoryUI");
+            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ModalInventoryUI.cs -> SetInventoryUI");
         }
         else
         {

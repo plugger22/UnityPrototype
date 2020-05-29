@@ -2302,7 +2302,8 @@ public class EffectManager : MonoBehaviour
                         break;
                     case "InsideMan":
                         //display location of Nemesis, Npc and Erasure Teams
-                        effectReturn.bottomText = ExecuteInsideMan();
+                        effectResolve = ResolveInsideMan();
+                        effectReturn = ConvertEffectResolveToReturn(effectResolve, effectReturn);
                         break;
                     case "Gear":
                         //no effect, handled directly elsewhere (check ActorManager.cs -> GetNodeActions
@@ -2477,6 +2478,7 @@ public class EffectManager : MonoBehaviour
                     effectReturn.topText = effectResolve.topText;
                     effectReturn.bottomText = effectResolve.bottomText;
                     effectReturn.isAction = false;
+                    effectReturn.listOfNodes = effectResolve.listOfNodes;
                 }
             }
             else { Debug.LogError("Invalid EffectDataReturn (Null)"); }
@@ -6040,8 +6042,9 @@ public class EffectManager : MonoBehaviour
     /// reveals location of Nemesis, Npc and any Erasure Teams
     /// </summary>
     /// <returns></returns>
-    private string ExecuteInsideMan()
+    private EffectDataResolve ResolveInsideMan()
     {
+        EffectDataResolve data = new EffectDataResolve();
         StringBuilder builder = new StringBuilder();
         List<Node> listOfNodes = new List<Node>();
         builder.AppendFormat("{0}Your source has leaked the following information{1}{2}{3}", colourGood, colourEnd, "\n", "\n");
@@ -6111,7 +6114,10 @@ public class EffectManager : MonoBehaviour
             else { Debug.LogWarning("Invalid listOfErasureTeams (Null)"); }
         }
         else { builder.AppendFormat("{0}No Erasure Teams present{3}{4}", colourBad, colourEnd, colourNormal, colourEnd, "\n"); }
-        return builder.ToString();
+        //return
+        data.bottomText = builder.ToString();
+        data.listOfNodes.AddRange(listOfNodes);
+        return data;
     }
 
     /// <summary>

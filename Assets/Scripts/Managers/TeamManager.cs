@@ -1217,7 +1217,7 @@ public class TeamManager : MonoBehaviour
             outcomeDetails.textTop = "There has been an error in communication and No teams can be Recalled.";
             outcomeDetails.textBottom = "Heads will roll!";
             outcomeDetails.side = globalAuthority;
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "TeamManager.cs -> InitialiseGenericPickerRecall");
+            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "TeamManager.cs -> InitialiseGenericPickerRecall");
         }
         else
         {
@@ -1304,7 +1304,7 @@ public class TeamManager : MonoBehaviour
             outcomeDetails.textTop = "There has been an error in communication and No teams can be Neutralised.";
             outcomeDetails.textBottom = "Heads will roll!";
             outcomeDetails.sprite = GameManager.i.guiScript.errorSprite;
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "TeamManager.cs -> InitialiseGenericPickerNeutralise");
+            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "TeamManager.cs -> InitialiseGenericPickerNeutralise");
         }
         else
         {
@@ -1382,7 +1382,7 @@ public class TeamManager : MonoBehaviour
                             details.isAction = true;
                             details.reason = "Recall Team";
                         }
-                        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "TeamManager.cs -> ProcessRecallTeam");
+                        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "TeamManager.cs -> ProcessRecallTeam");
                     }
                     else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", data.nodeID)); }
                 }
@@ -1516,7 +1516,7 @@ public class TeamManager : MonoBehaviour
                                 details.isAction = true;
                                 details.reason = "Neutralise Team";
                             }
-                            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "TeamManager.cs -> ProcessNeutraliseTeam");
+                            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "TeamManager.cs -> ProcessNeutraliseTeam");
                         }
                         else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", data.actorSlotID)); }
                     }

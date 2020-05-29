@@ -630,7 +630,7 @@ public class GUIManager : MonoBehaviour
                     details.textTop = "This action is unavailable";
                     break;
             }
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "GUIManager.cs -> SetAlertMessage");
+            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "GUIManager.cs -> SetAlertMessage");
         }
         else { Debug.LogError("Invalid ModalOutcomeDetails (Null)"); }
     }
@@ -645,24 +645,45 @@ public class GUIManager : MonoBehaviour
         if (data != null)
         {
             showMeData = data;
-            if (data.nodeID > -1 || data.connID > -1)
+            //multiple nodes has priority
+            if (data.listOfNodes.Count > 0)
             {
-                //set game state
-                ModalStateData package = new ModalStateData();
-                package.mainState = ModalSubState.ShowMe;
-                GameManager.i.inputScript.SetModalState(package);
-                //alert message
-                GameManager.i.nodeScript.NodeShowFlag = 1;
-                GameManager.i.alertScript.SetAlertUI("Press any KEY or BUTTON to Return");
+                InitialiseShowMe();
+                EventManager.instance.PostNotification(EventType.FlashNodesStart, this, data.listOfNodes, "GUIManager.cs -> SetShowMe");
+            }
+            else if (data.nodeID > -1 || data.connID > -1)
+            {
+                InitialiseShowMe();
                 //highlight
                 if (data.nodeID > -1)
-                { EventManager.instance.PostNotification(EventType.FlashNodeStart, this, showMeData.nodeID, "GUIManager.cs -> SetShowMe"); }
+                {
+                    //add to a list (parameter changed to be a list, not a single node)
+                    Node node = GameManager.i.dataScript.GetNode(data.nodeID);
+                    if (node != null)
+                    {
+                        List<Node> listOfNodes = new List<Node>() { node };
+                        EventManager.instance.PostNotification(EventType.FlashNodesStart, this, listOfNodes, "GUIManager.cs -> SetShowMe");
+                    }
+                    else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", data.nodeID); }
+                }
                 if (data.connID > -1)
                 { EventManager.instance.PostNotification(EventType.FlashSingleConnectionStart, this, showMeData.connID, "GUIManager.cs -> SetShowMe"); }
             }
-            else { Debug.LogWarning("GUIManager.cs -> SetShowMe: There are no node or connections to show"); }
+            else { Debug.LogWarning("GUIManager.cs -> SetShowMe: There are no nodes or connections to show"); }
         }
         else { Debug.LogError("Invalid ShowMeData package (Null)"); }
+    }
+
+
+    private void InitialiseShowMe()
+    {
+        //set game state
+        ModalStateData package = new ModalStateData();
+        package.mainState = ModalSubState.ShowMe;
+        GameManager.i.inputScript.SetModalState(package);
+        //alert message
+        GameManager.i.nodeScript.NodeShowFlag = 1;
+        GameManager.i.alertScript.SetAlertUI("Press any KEY or BUTTON to Return");
     }
 
     /// <summary>
@@ -670,9 +691,11 @@ public class GUIManager : MonoBehaviour
     /// </summary>
     private void ShowMeRestore()
     {
-        //reset node back to normal, if required
-        if (showMeData.nodeID > -1)
-        { EventManager.instance.PostNotification(EventType.FlashNodeStop, this, showMeData.nodeID, "GUIManager.cs -> ExecuteShowMeRestore"); }
+        //reset nodes, or node, back to normal, if required
+        if (showMeData.listOfNodes.Count > 0)
+        { EventManager.instance.PostNotification(EventType.FlashNodesStop, this, showMeData.nodeID, "GUIManager.cs -> ExecuteShowMeRestore"); }
+        else if (showMeData.nodeID > -1)
+        { EventManager.instance.PostNotification(EventType.FlashNodesStop, this, showMeData.nodeID, "GUIManager.cs -> ExecuteShowMeRestore"); }
         //reset connection back to normal, if required
         if (showMeData.connID > -1)
         { EventManager.instance.PostNotification(EventType.FlashSingleConnectionStop, this, showMeData.connID, "GUIManager.cs -> ExecuteShowMeRestore"); }
@@ -808,7 +831,7 @@ public class GUIManager : MonoBehaviour
             if (details != null)
             {
                 waitUntilDone = true;
-                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "GUIManager.cs -> InfoPipelineProcess");
+                EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "GUIManager.cs -> InfoPipelineProcess");
             }
             else { Debug.LogWarningFormat("Invalid details (Null) for dictOfPipeline[{0}]", type); }
         }
@@ -919,7 +942,7 @@ public class GUIManager : MonoBehaviour
                 details.textTop = text;
                 details.textBottom = string.Format("{0}You are out of contact{1}{2}{3}Messages will be available for review once you return", colourAlert, colourEnd, "\n", "\n");
                 details.sprite = sprite;
-                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+                EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details);
             }
         }
     }

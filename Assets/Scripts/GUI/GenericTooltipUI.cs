@@ -76,8 +76,14 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
             //node Highlight?
             if (nodeID > -1 && isNodeHighlightOn == false)
             {
-                EventManager.instance.PostNotification(EventType.FlashNodeStart, this, nodeID, "GenericTooltipUI.cs -> OnPointerEnter");
-                isNodeHighlightOn = true;
+                Node node = GameManager.i.dataScript.GetNode(nodeID);
+                if (node != null)
+                {
+                    List<Node> listOfNodes = new List<Node>() { node };
+                    EventManager.instance.PostNotification(EventType.FlashNodesStart, this, listOfNodes, "GenericTooltipUI.cs -> OnPointerEnter");
+                    isNodeHighlightOn = true;
+                }
+                else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
             }
             //connection Highlight?
             if (connID > -1 && isConnectionHighlightOn == false)
@@ -102,7 +108,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
             //cancel node highlight
             if (nodeID > -1 && isNodeHighlightOn == true)
             {
-                EventManager.instance.PostNotification(EventType.FlashNodeStop, this, nodeID, "GenericTooltipUI.cs -> OnPointerExit");
+                EventManager.instance.PostNotification(EventType.FlashNodesStop, this, nodeID, "GenericTooltipUI.cs -> OnPointerExit");
                 isNodeHighlightOn = false;
             }
             //cancel connection highlight

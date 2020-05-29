@@ -133,6 +133,7 @@ namespace packageAPI
         public bool isAction;                                       //true if effect is considered an action
         public int ongoingID;                                       //only needed if there is an ongoing effect (any value > -1, if '-1' ignore)
         public List<string> listOfHelpTags = new List<string>();    //Effects can returns specific help strings to show in the outcome dialogue. Only the first four are taken into account (UI limit)
+        public List<Node> listOfNodes = new List<Node>();           //optional -> for 'Show Me' purposes in ModalOutcome
     }
 
     /// <summary>
@@ -144,6 +145,7 @@ namespace packageAPI
         public string topText;
         public string bottomText;
         public bool isError;
+        public List<Node> listOfNodes = new List<Node>();           //optional -> for 'Show Me' purposes in ModalOutcome
     }
 
     /// <summary>
@@ -419,11 +421,16 @@ namespace packageAPI
     public class ShowMeData
     {
         public EventType restoreEvent;
-        public int nodeID;             //if > -1 the relevant node is highlighted in ModalState.ShowMe
-        public int connID;             //if > -1 the relevant connection is highlighted in ModalState.ShowMe
+        public int nodeID;              //if > -1 the relevant node is highlighted in ModalState.ShowMe
+        public int connID;              //if > -1 the relevant connection is highlighted in ModalState.ShowMe
+        public List<Node> listOfNodes;  //optional -> if provided will override the single nodeID  
 
         public ShowMeData()
-        { nodeID = -1; connID = -1; }
+        {
+            nodeID = -1;
+            connID = -1;
+            listOfNodes = new List<Node>();
+        }
     }
 
 

@@ -830,7 +830,7 @@ public class GearManager : MonoBehaviour
             outcomeDetails.side = globalResistance;
             outcomeDetails.textTop = "There has been an error in communication and no gear can be sourced.";
             outcomeDetails.textBottom = "Heads will roll!";
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "GearManager.cs -> InitialiseGenericPickerGear");
+            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "GearManager.cs -> InitialiseGenericPickerGear");
         }
         else
         {
@@ -966,7 +966,7 @@ public class GearManager : MonoBehaviour
                         sprite = GameManager.i.guiScript.errorSprite,
                         isAction = false
                     };
-                    EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "GearManager.cs -> InitialiseGearInventoryDisplay");
+                    EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "GearManager.cs -> InitialiseGearInventoryDisplay");
                 }
                 else
                 {
@@ -985,7 +985,7 @@ public class GearManager : MonoBehaviour
                     sprite = GameManager.i.guiScript.infoSprite,
                     isAction = false
                 };
-                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "GearManager.cs -> InitialiseGearInventoryDisplay");
+                EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "GearManager.cs -> InitialiseGearInventoryDisplay");
             }
         }
         else
@@ -998,7 +998,7 @@ public class GearManager : MonoBehaviour
                 sprite = GameManager.i.guiScript.infoSprite,
                 isAction = false
             };
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "GearManager.cs -> InitialiseGearInventoryDisplay");
+            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "GearManager.cs -> InitialiseGearInventoryDisplay");
         }
     }
 
@@ -1126,7 +1126,7 @@ public class GearManager : MonoBehaviour
                     }
                 }
                 details.textBottom = builderBottom.ToString();
-                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "GearManager.cs -> ProcessCompromisedGear");
+                EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "GearManager.cs -> ProcessCompromisedGear");
             }
         }
         else
@@ -1146,7 +1146,7 @@ public class GearManager : MonoBehaviour
                 builderBottom.AppendFormat("{0}{1}{2}{3} has been LOST{4}", colourNeutral, gearName, colourEnd, colourBad, colourEnd);
             }
             details.textBottom = builderBottom.ToString();
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "GearManager.cs -> ProcessCompromisedGear");
+            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "GearManager.cs -> ProcessCompromisedGear");
         }
     }
 
@@ -1298,7 +1298,7 @@ public class GearManager : MonoBehaviour
                                 details.isAction = true;
                                 details.reason = "Select Gear";
                             }
-                            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "GearManager.cs -> ProcessGearChoice");
+                            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "GearManager.cs -> ProcessGearChoice");
                         }
                         else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", data.actorSlotID)); }
                     }

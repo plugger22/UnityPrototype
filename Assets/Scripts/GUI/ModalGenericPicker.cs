@@ -347,7 +347,7 @@ public class ModalGenericPicker : MonoBehaviour
             outcomeDetails.textTop = "There has been a SNAFU";
             outcomeDetails.textBottom = "Heads, toes and other limbswill be removed";
             outcomeDetails.side = details.side;
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ModalGenericPicker.cs -> SetGenericPicker");
+            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ModalGenericPicker.cs -> SetGenericPicker");
         }
         //all good, generate
         else

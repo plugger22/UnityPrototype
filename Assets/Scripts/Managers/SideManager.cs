@@ -535,7 +535,7 @@ public class SideManager : MonoBehaviour
                 outcomeDetails.side = _playerSide;
                 outcomeDetails.textTop = "AutoRun complete";
                 outcomeDetails.textBottom = builder.ToString();
-                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "SideManager.cs -> RevertToHumanPlayer");
+                EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "SideManager.cs -> RevertToHumanPlayer");
             }
             else { Debug.LogError("Invalid listOfHistoryAutoRun (Null)"); }
         }

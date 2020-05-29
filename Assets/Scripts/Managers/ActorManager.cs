@@ -3902,7 +3902,7 @@ public class ActorManager : MonoBehaviour
             outcomeDetails.side = globalResistance;
             outcomeDetails.textTop = "There has been a Snafu in communication and no recruits can be found.";
             outcomeDetails.textBottom = "Heads will roll!";
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActorManager.cs -> InitialiseGenericPickerRecruit");
+            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActorManager.cs -> InitialiseGenericPickerRecruit");
         }
         else
         {
@@ -4075,7 +4075,7 @@ public class ActorManager : MonoBehaviour
                         sprite = GameManager.i.guiScript.errorSprite,
                         isAction = false
                     };
-                    EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "ActorManager.cs -> InitialiseHqActorsInventory");
+                    EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "ActorManager.cs -> InitialiseHqActorsInventory");
                 }
                 else
                 {
@@ -4094,7 +4094,7 @@ public class ActorManager : MonoBehaviour
                     sprite = GameManager.i.guiScript.infoSprite,
                     isAction = false
                 };
-                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "ActorManager.cs -> InitialiseHqActorsInventory");
+                EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "ActorManager.cs -> InitialiseHqActorsInventory");
             }
         }
         else { Debug.LogError("Invalid arrayOfHQActors (Null)"); }
@@ -4297,7 +4297,7 @@ public class ActorManager : MonoBehaviour
                 sprite = GameManager.i.guiScript.errorSprite,
                 isAction = false
             };
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "ActorManager.cs -> InitialiseReview");
+            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "ActorManager.cs -> InitialiseReview");
         }
         else
         {
@@ -4490,7 +4490,7 @@ public class ActorManager : MonoBehaviour
                     sprite = GameManager.i.guiScript.errorSprite,
                     isAction = false
                 };
-                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "ActorManager.cs -> InitialiseReservePoolInventory");
+                EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "ActorManager.cs -> InitialiseReservePoolInventory");
             }
             else
             {
@@ -4510,7 +4510,7 @@ public class ActorManager : MonoBehaviour
                 sprite = GameManager.i.guiScript.infoSprite,
                 isAction = false
             };
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "ActorManager.cs -> InitialiseReservePoolInventory");
+            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "ActorManager.cs -> InitialiseReservePoolInventory");
         }
     }
 
@@ -4788,7 +4788,7 @@ public class ActorManager : MonoBehaviour
             outcomeDetails.reason = "Recruit Actor";
         }
         //generate a create modal window event
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActorManager.cs -> ProcessRecruitChoiceResistance");
+        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActorManager.cs -> ProcessRecruitChoiceResistance");
     }
 
     /// <summary>
@@ -4908,7 +4908,7 @@ public class ActorManager : MonoBehaviour
             details.isAction = true;
             details.reason = "Recruit Actor";
         }
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "ActorManager.cs -> ProcessRecruitChoiceAuthority");
+        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "ActorManager.cs -> ProcessRecruitChoiceAuthority");
     }
 
     /// <summary>
@@ -9596,7 +9596,7 @@ public class ActorManager : MonoBehaviour
                 outcomeDetails.side = playerSide;
                 outcomeDetails.textTop = string.Format("{0}, {1}{2}{3}, initiates a DEBUG Relationship Conflict", actor.actorName, colourAlert, actor.arc.name, colourEnd);
                 outcomeDetails.textBottom = conflictText;
-                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "ActorManager.cs -> DebugCreateConflict");
+                EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActorManager.cs -> DebugCreateConflict");
             }
             else { result = string.Format("Invalid actor (Null) at slot {0}", slotID); }
         }

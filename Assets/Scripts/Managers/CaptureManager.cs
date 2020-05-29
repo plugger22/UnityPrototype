@@ -351,7 +351,7 @@ public class CaptureManager : MonoBehaviour
             //edge case of Inactive player and Authority AI capture an actor which may (?) generate a message that'll upset the info pipeline. If player active, display at time of action, otherwise put in pipeline
             if (GameManager.i.playerScript.status != ActorStatus.Active)
             { outcomeDetails.type = MsgPipelineType.CaptureActor; }
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "CaptureManager.cs -> CaptureActor");
+            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "CaptureManager.cs -> CaptureActor");
         }
     }
 

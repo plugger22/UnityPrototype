@@ -1747,7 +1747,7 @@ public class MetaGameUI : MonoBehaviour
                 modalState = ModalSubState.MetaGame,
                 reason = "Recommended pressed"
             };
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details);
         }
     }
 
@@ -1926,7 +1926,7 @@ public class MetaGameUI : MonoBehaviour
                 modalState = ModalSubState.MetaGame,
                 reason = "Reset pressed"
             };
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details);
         }
     }
 
@@ -2042,7 +2042,7 @@ public class MetaGameUI : MonoBehaviour
         }
         //outcome message
         if (details != null)
-        { EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details); }
+        { EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details); }
     }
 
     /// <summary>
@@ -2123,7 +2123,7 @@ public class MetaGameUI : MonoBehaviour
                     modalState = ModalSubState.MetaGame,
                     reason = "Effect Outcomes"
                 };
-                EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+                EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details);
                 //need a coroutine to handle execution to prevent metaGameUI closing prematurely
                 StartCoroutine(CloseMetaGameOutcome(details));
             }
@@ -2166,7 +2166,7 @@ public class MetaGameUI : MonoBehaviour
     /// <returns></returns>
     IEnumerator CloseOutcome(ModalOutcomeDetails details)
     {
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details);
         //will wait until ModalOutcome -> CloseModalOutcome resets flag
         yield return new WaitUntil(() => GameManager.i.guiScript.waitUntilDone == false);
     }

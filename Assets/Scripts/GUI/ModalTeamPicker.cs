@@ -520,6 +520,6 @@ public class ModalTeamPicker : MonoBehaviour
             details.reason = "Team Picker";
         }
         //fire up Outcome dialogue
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details, "ModalTeamPicker.cs -> ProcessTeamChoice");
+        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "ModalTeamPicker.cs -> ProcessTeamChoice");
     }
 }

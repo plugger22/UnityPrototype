@@ -452,7 +452,7 @@ public class TopicManager : MonoBehaviour
     {
         //event listener
         EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TopicManager");
-        EventManager.instance.AddListener(EventType.CloseOutcomeWindow, OnEvent, "TopicManager");
+        EventManager.instance.AddListener(EventType.OutcomeClose, OnEvent, "TopicManager");
     }
     #endregion
 
@@ -472,7 +472,7 @@ public class TopicManager : MonoBehaviour
             case EventType.ChangeColour:
                 SetColours();
                 break;
-            case EventType.CloseOutcomeWindow:
+            case EventType.OutcomeClose:
                 haltExecution = false;
                 break;
             default:
@@ -3595,7 +3595,7 @@ public class TopicManager : MonoBehaviour
             textBottom = lowerText,
             sprite = sprite,
         };
-        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details);
     }
     #endregion
 
@@ -7057,7 +7057,7 @@ public class TopicManager : MonoBehaviour
                             textBottom = newsSnippet,
                             sprite = debugSprite
                         };
-                        EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, details);
+                        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details);
                         yield return new WaitUntil(() => haltExecution == false);
                     }
                 }

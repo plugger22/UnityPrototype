@@ -1863,7 +1863,7 @@ public class TargetManager : MonoBehaviour
             outcomeDetails.side = globalResistance;
             outcomeDetails.textTop = "There has been an error in communication and no Targets can be located.";
             outcomeDetails.textBottom = "Backsides will be kicked!";
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "TargetManager.cs -> InitialiseGenericPickerTargetInfo");
+            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "TargetManager.cs -> InitialiseGenericPickerTargetInfo");
         }
         else
         {
@@ -2002,7 +2002,7 @@ public class TargetManager : MonoBehaviour
                     detailsModal.side = GameManager.i.globalScript.sideResistance;
                     detailsModal.isAction = true;
                     detailsModal.reason = "Gain Target Intel";
-                    EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, detailsModal, "TargetManager.cs -> ProcessTargetInfo");
+                    EventManager.instance.PostNotification(EventType.OutcomeOpen, this, detailsModal, "TargetManager.cs -> ProcessTargetInfo");
                 }
                 else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", detailsGeneric.nodeID)); }
             }

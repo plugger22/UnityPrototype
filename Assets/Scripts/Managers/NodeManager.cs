@@ -239,8 +239,8 @@ public class NodeManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.CreateGearNodeMenu, OnEvent, "NodeManager");
         EventManager.instance.AddListener(EventType.MoveAction, OnEvent, "NodeManager");
         EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "NodeManager");
-        EventManager.instance.AddListener(EventType.FlashNodeStart, OnEvent, "NodeManager");
-        EventManager.instance.AddListener(EventType.FlashNodeStop, OnEvent, "NodeManager");
+        EventManager.instance.AddListener(EventType.FlashNodesStart, OnEvent, "NodeManager");
+        EventManager.instance.AddListener(EventType.FlashNodesStop, OnEvent, "NodeManager");
     }
     #endregion
 
@@ -367,11 +367,11 @@ public class NodeManager : MonoBehaviour
                         break;
                 }
                 break;
-            case EventType.FlashNodeStart:
-                StartFlashingNode((int)Param);
+            case EventType.FlashNodesStart:
+                StartFlashingNodes((List<Node>)Param);
                 break;
-            case EventType.FlashNodeStop:
-                StopFlashingNode();
+            case EventType.FlashNodesStop:
+                StopFlashingNodes();
                 break;
             case EventType.ActivityDisplay:
                 ActivityUI activityUI = (ActivityUI)Param;
@@ -2386,7 +2386,7 @@ public class NodeManager : MonoBehaviour
                 outcomeDetails.side = globalResistance;
                 outcomeDetails.reason = "Player Move";
             }
-            EventManager.instance.PostNotification(EventType.OpenOutcomeWindow, this, outcomeDetails, "NodeManager.cs -> ProcessMoveOutcome");
+            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "NodeManager.cs -> ProcessMoveOutcome");
             //Nemesis, if at same node, can interact and damage player
             GameManager.i.nemesisScript.CheckNemesisAtPlayerNode(true);
         }
@@ -2535,53 +2535,60 @@ public class NodeManager : MonoBehaviour
     }
 
     /// <summary>
-    /// event driven -> start coroutine
+    /// NODES plural -> event driven -> start coroutine
     /// </summary>
     /// <param name="nodeID"></param>
-    private void StartFlashingNode(int nodeID)
+    private void StartFlashingNodes(List<Node> listOfNodes)
     {
-        Node node = GameManager.i.dataScript.GetNode(nodeID);
-        if (node != null)
+        if (listOfNodes != null)
         {
-            isFlashOn = false;
-            myCoroutine = StartCoroutine("FlashingNode", node);
+            if (listOfNodes.Count > 0)
+            {
+                isFlashOn = false;
+                myCoroutine = StartCoroutine("FlashingNodes", listOfNodes);
+            }
+            else { Debug.LogWarning("Invalid listOfNodes (Empty)"); }
         }
-        else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); }
+        else { Debug.LogWarning("Invalid listOfNodes (Null)"); }
     }
 
     /// <summary>
-    /// event driven -> stop coroutine
+    /// NODES plural -> event driven -> stop coroutine
     /// </summary>
-    private void StopFlashingNode()
+    private void StopFlashingNodes()
     {
         if (myCoroutine != null)
-        { StopCoroutine(myCoroutine); }
+        {
+            StopCoroutine(myCoroutine);
+            myCoroutine = null;
+        }
         ResetNodes();
     }
 
     /// <summary>
-    /// coroutine to flash a node
-    /// NOTE: Node checked for null by calling procedure
+    /// coroutine to flash NODES plural
+    /// NOTE: listOfNodes checked for null and Empty by calling procedure
     /// </summary>
     /// <param name="node"></param>
     /// <returns></returns>
-    IEnumerator FlashingNode(Node node)
+    IEnumerator FlashingNodes(List<Node> listOfNodes)
     {
+        int count = listOfNodes.Count;
         //forever loop
         for (; ; )
         {
             if (isFlashOn == false)
             {
-                /*node.SetMaterial(materialActive);*/
-                node.SetActive();
+                for (int i = 0; i < count; i++)
+                { listOfNodes[i].SetActive(); }
                 NodeRedraw = true;
                 isFlashOn = true;
                 yield return new WaitForSecondsRealtime(flashNodeTime);
             }
             else
             {
-                /*node.SetMaterial(materialNormal);*/
-                node.SetNormal();
+                for (int i = 0; i < count; i++)
+                { listOfNodes[i].SetNormal(); }
                 NodeRedraw = true;
                 isFlashOn = false;
                 yield return new WaitForSecondsRealtime(flashNodeTime);

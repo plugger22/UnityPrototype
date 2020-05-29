@@ -127,6 +127,7 @@ namespace modalAPI
         public string help1;                //optional
         public string help2;                //optional
         public string help3;                //optional
+        public List<Node> listOfNodes;     //optional -> if valid then a 'Show Me' button will appear (replaces Confirm until used)
 
         public ModalOutcomeDetails()
         {
@@ -137,6 +138,7 @@ namespace modalAPI
             side = GameManager.i.sideScript.PlayerSide;
             sprite = GameManager.i.guiScript.infoSprite;
             type = MsgPipelineType.None;
+            listOfNodes = new List<Node>();
         }
     }
 

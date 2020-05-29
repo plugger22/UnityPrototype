@@ -34,15 +34,17 @@ public enum EventType
     CreateMoveMenu,
     CreateGearNodeMenu,
     //ModalOutcome
-    CloseOutcomeWindow,
-    OpenOutcomeWindow,
+    OutcomeClose,
+    OutcomeOpen,
+    OutcomeShowMe,
+    OutcomeRestore,
     //ModalConfirm
     OpenConfirmWindow,
     ConfirmCloseLeft,
     ConfirmCloseRight,
     //highlighted node or connection
-    FlashNodeStart,
-    FlashNodeStop,
+    FlashNodesStart,   
+    FlashNodesStop,
     FlashSingleConnectionStart,
     FlashSingleConnectionStop,
     FlashMultipleConnectionsStart,
