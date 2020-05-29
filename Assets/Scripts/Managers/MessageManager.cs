@@ -3520,6 +3520,8 @@ public class MessageManager : MonoBehaviour
         return null;
     }
 
+
+
     /// <summary>
     /// Gear possessed by an Actor has been Lost. Returns null if text invalid. 'isGivenToHQ' set true if gear given to actor who already has gear (old gear given to HQ)
     /// </summary>
@@ -3639,6 +3641,42 @@ public class MessageManager : MonoBehaviour
             data.subType = message.subType;
             data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
+            data.help = 1;
+            //add
+            GameManager.i.dataScript.AddMessage(message);
+            GameManager.i.dataScript.AddItemData(data);
+        }
+        else { Debug.LogWarning("Invalid text (Null or empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// InsideMan (special gear) intel dump
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public Message GearInsideMan(string text, string intelDump)
+    {
+        //message
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            Message message = new Message();
+            message.text = text;
+            message.type = MessageType.GEAR;
+            message.subType = MessageSubType.Gear_InsideMan;
+            message.sideLevel = globalResistance.level;
+            //ItemData
+            ItemData data = new ItemData();
+            data.itemText = "Inside Man Intel Dump";
+            data.topText = "Inside Man";
+            data.bottomText = GameManager.i.itemDataScript.GetGearInsideMan(intelDump);
+            data.priority = ItemPriority.Low;
+            data.sprite = GameManager.i.guiScript.infoSprite;
+            data.spriteName = data.sprite.name;
+            data.tab = ItemTab.ALERTS;
+            data.type = message.type;
+            data.subType = message.subType;
+            data.sideLevel = message.sideLevel;
             data.help = 1;
             //add
             GameManager.i.dataScript.AddMessage(message);

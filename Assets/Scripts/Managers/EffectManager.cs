@@ -6045,34 +6045,46 @@ public class EffectManager : MonoBehaviour
     private EffectDataResolve ResolveInsideMan()
     {
         EffectDataResolve data = new EffectDataResolve();
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builderEffect = new StringBuilder();
+        StringBuilder builderIntel = new StringBuilder();
         List<Node> listOfNodes = new List<Node>();
-        builder.AppendFormat("{0}Your source has leaked the following information{1}{2}{3}", colourGood, colourEnd, "\n", "\n");
+        builderEffect.AppendFormat("{0}Your source has leaked the following information{1}{2}{3}", colourGood, colourEnd, "\n", "\n");
         //nemesis
         if (GameManager.i.nemesisScript.CheckNemesisPresent() == true)
         {
             Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodeNemesis);
             if (node != null)
             {
-                builder.AppendFormat("{0}Nemesis{1}{2} is at {3}, {4}{5}{6}{7}{8}", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd, colourAlert, node.Arc.name, colourEnd, "\n");
+                builderEffect.AppendFormat("{0}Nemesis{1}{2} is at {3}, {4}{5}{6}{7}{8}", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd, colourAlert, node.Arc.name, colourEnd, "\n");
+                builderIntel.AppendFormat("{0}<b>Nemesis{1}{2} at {3}{4}</b>{5}", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd, "\n");
                 listOfNodes.Add(node);
             }
             else { Debug.LogWarningFormat("Invalid node (Null) for nodeNemesisID {0}", GameManager.i.nodeScript.nodeNemesis); }
         }
-        else { builder.AppendFormat("{0}Nemesis not present{3}{4}", colourBad, colourEnd, colourNormal, colourEnd, "\n"); }
+        else
+        {
+            builderEffect.AppendFormat("{0}Nemesis not present{3}{4}", colourBad, colourEnd, colourNormal, colourEnd, "\n");
+            builderIntel.AppendFormat("{0}<b>Nemesis not present</b>{1}{2}", colourBad, colourEnd, "\n");
+        }
         //npc
         if (GameManager.i.missionScript.CheckIfNpcOnMap() == true)
         {
             Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodeNpc);
             if (node != null)
             {
-                builder.AppendFormat("{0}{1}{2}{3} is at {4}, {5}{6}{7}{8}{9}", colourNeutral, GameManager.i.campaignScript.scenario.missionResistance.npc.tag, colourEnd,
+                builderEffect.AppendFormat("{0}{1}{2}{3} is at {4}, {5}{6}{7}{8}{9}", colourNeutral, GameManager.i.campaignScript.scenario.missionResistance.npc.tag, colourEnd,
                     colourNormal, node.nodeName, colourEnd, colourAlert, node.Arc.name, colourEnd, "\n");
+                builderIntel.AppendFormat("{0}<b>{1}{2}{3} at {4}{5}</b>{6}", colourNeutral, GameManager.i.campaignScript.scenario.missionResistance.npc.tag, 
+                    colourEnd, colourNormal, node.nodeName, colourEnd, "\n");
                 listOfNodes.Add(node);
             }
             else { Debug.LogWarningFormat("Invalid node (Null) for nodeNpcID {0}", GameManager.i.nodeScript.nodeNpc); }
         }
-        else { builder.AppendFormat("{0}NPC not present{3}{4}", colourBad, colourEnd, colourNormal, colourEnd, "\n"); }
+        else
+        {
+            builderEffect.AppendFormat("{0}NPC not present{3}{4}", colourBad, colourEnd, colourNormal, colourEnd, "\n");
+            builderIntel.AppendFormat("{0}<b>NPC not present</b>{1}{2}", colourBad, colourEnd, "\n");
+        }
         //erasure teams
         int count = GameManager.i.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.OnMap);
         if (count > 0)
@@ -6094,8 +6106,9 @@ public class EffectManager : MonoBehaviour
                                 Node node = GameManager.i.dataScript.GetNode(team.nodeID);
                                 if (node != null)
                                 {
-                                    builder.AppendFormat("{0}Erasure Team{1}{2} present at {3}, {4}{5}{6}{7}{8}", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd,
+                                    builderEffect.AppendFormat("{0}Erasure Team{1}{2} present at {3}, {4}{5}{6}{7}{8}", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd,
                                         colourAlert, node.Arc.name, colourEnd, "\n");
+                                    builderIntel.AppendFormat("{0}<b>Erasure Team{1}{2} at {3}{4}</b>{5}", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd, "\n");
                                     listOfNodes.Add(node);
                                     count++;
                                 }
@@ -6107,15 +6120,25 @@ public class EffectManager : MonoBehaviour
                     }
                     //none found
                     if (count == 0)
-                    { builder.AppendFormat("{0}No Erasure Teams present{3}{4}", colourBad, colourEnd, colourNormal, colourEnd, "\n"); }
+                    {
+                        builderEffect.AppendFormat("{0}No Erasure Teams present{1}{2}", colourBad, colourEnd, "\n");
+                        builderIntel.AppendFormat("{0}<b>No Erasure Teams present{1}</b>{2}", colourBad, colourEnd, "\n");
+                    }
                 }
                 else { Debug.LogWarning("Invalid listOfErasureTeams (Empty)"); }
             }
             else { Debug.LogWarning("Invalid listOfErasureTeams (Null)"); }
         }
-        else { builder.AppendFormat("{0}No Erasure Teams present{3}{4}", colourBad, colourEnd, colourNormal, colourEnd, "\n"); }
+        else
+        {
+            builderEffect.AppendFormat("{0}No Erasure Teams present{1}{2}", colourBad, colourEnd, "\n");
+            builderIntel.AppendFormat("{0}<b>No Erasure Teams present{1}</b>{2}", colourBad, colourEnd, "\n");
+        }
+        //message
+        if (builderIntel.Length > 0)
+        { GameManager.i.messageScript.GearInsideMan("Inside Man gives Intel Dump", builderIntel.ToString()); }
         //return
-        data.bottomText = builder.ToString();
+        data.bottomText = builderEffect.ToString();
         data.listOfNodes.AddRange(listOfNodes);
         return data;
     }

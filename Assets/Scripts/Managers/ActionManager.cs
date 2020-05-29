@@ -1951,7 +1951,7 @@ public class ActionManager : MonoBehaviour
             //Gear Used            
             Gear gear = GameManager.i.dataScript.GetGear(details.gearName);
             if (gear != null)
-            { GameManager.i.gearScript.SetGearUsed(gear, "provide Player with a benefit"); }
+            { GameManager.i.gearScript.SetGearUsed(gear, "for <b>personal reasons</b>"); }
             else
             {
                 Debug.LogErrorFormat("Invalid Gear (Null) for gear {0}", details.gearName);

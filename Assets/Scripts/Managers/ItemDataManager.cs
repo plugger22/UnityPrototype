@@ -1144,8 +1144,20 @@ public class ItemDataManager : MonoBehaviour
         builder.AppendFormat("{0}<b>{1}</b>{2} gear{3}", colourNeutral, gear.tag, colourEnd, "\n");
         builder.AppendFormat("{0}{1}{2}", gear.reasonUsed, "\n", "\n");
         int turnsOwned = GameManager.i.turnScript.Turn - gear.statTurnObtained;
-        builder.AppendFormat("Owned for {0}{1}{2} turn{3}{4}", colourNeutral, turnsOwned, colourEnd, turnsOwned != 1 ? "s" : "", "\n");
-        builder.AppendFormat("Used {0}{1}{2} time{3}", colourNeutral, gear.statTimesUsed, colourEnd, gear.statTimesUsed != 1 ? "s" : "");
+        builder.AppendFormat("<b>Owned</b> for {0}<b>{1}</b>{2} day{3}{4}", colourNeutral, turnsOwned, colourEnd, turnsOwned != 1 ? "s" : "", "\n");
+        builder.AppendFormat("<b>Used {0}{1}{2} time</b>{3}", colourNeutral, gear.statTimesUsed, colourEnd, gear.statTimesUsed != 1 ? "s" : "");
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Inside man intel dump
+    /// </summary>
+    /// <param name="intel"></param>
+    /// <returns></returns>
+    public string GetGearInsideMan(string intel)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}<b>Your source leaked intel</b>{1}{2}{3}{4}", colourGood, colourEnd, "\n", "\n", intel);
         return builder.ToString();
     }
 
