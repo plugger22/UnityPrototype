@@ -3651,11 +3651,11 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// InsideMan (special gear) intel dump
+    /// InsideMan/SpiderSpray (special gear) intel dump. Anything that has ShowMe nodes plural
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
-    public Message GearInsideMan(string text, string intelDump)
+    public Message GearSpecial(string text, string intelDump)
     {
         //message
         if (string.IsNullOrEmpty(text) == false)

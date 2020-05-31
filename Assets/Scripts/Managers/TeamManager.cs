@@ -1587,13 +1587,6 @@ public class TeamManager : MonoBehaviour
             case "SPIDER":
                 if (node.isSpider == false)
                 {
-                    //add spider
-                    node.isSpider = true;
-                    node.spiderTimer = GameManager.i.nodeScript.observerTimer;
-                    //check if same node as a Tracer
-                    if (node.isTracer == true)
-                    { node.isSpiderKnown = true; }
-                    else { node.isSpiderKnown = false; }
                     //message
                     text = string.Format("{0} {1}: Spider inserted at \"{2}\", ID {3}", team.arc.name, team.teamName, node.nodeName, node.nodeID);
                     itemText = string.Format("{0} Team completes TASK at District", team.arc.name);
@@ -1602,14 +1595,14 @@ public class TeamManager : MonoBehaviour
                 }
                 else
                 {
-                    //spider already present -> reset timer
-                    node.spiderTimer = GameManager.i.nodeScript.observerTimer;
                     //message
                     text = string.Format("{0} {1}: Spider NOT inserted at \"{2}\", ID {3}", team.arc.name, team.teamName, node.nodeName, node.nodeID);
                     itemText = string.Format("{0} Team completes TASK at District", team.arc.name);
                     effectText = string.Format("{0}Spider already present in District, timer updated{1}", colourGood, colourEnd);
                     GameManager.i.messageScript.TeamEffect(text, itemText, effectText, node, team);
                 }
+                //Adds spider, if already present, maxxes out timer
+                node.AddSpider();
                 break;
             case "ERASURE":
                 //deletes any KNOWN Resistance contacts

@@ -853,6 +853,7 @@ public class Node : MonoBehaviour
         //teams
         if (listOfTeams.Count > 0)
         { isTeamKnown = true; }
+        Debug.LogFormat("[Nod] Node.cs -> AddTracer: Tracer added at {0}, {1}, nodeID {2}{3}", nodeName, Arc.name, nodeID, "\n");
     }
 
     /// <summary>
@@ -867,7 +868,7 @@ public class Node : MonoBehaviour
             isTeamKnown = false;
             tracerTimer = 0;
             /*sSpiderKnown = false;*/
-            Debug.LogFormat("[Nod] Node.cs -> RemoveTracer: Tracer removed at nodeID {0}, \"{1}\"{2}", nodeID, nodeName, "\n");
+            Debug.LogFormat("[Nod] Node.cs -> RemoveTracer: Tracer removed at {0}, {1}, nodeID {2}{3}", nodeName, Arc.name, nodeID,  "\n");
             
             /*//check neighbours
             foreach(Node node in listOfNeighbourNodes)
@@ -901,6 +902,30 @@ public class Node : MonoBehaviour
     }
 
     /// <summary>
+    /// Add spider to node and handle all admin
+    /// </summary>
+    public void AddSpider()
+    {
+        if (isSpider == false)
+        {
+            //add spider
+            isSpider = true;
+            spiderTimer = GameManager.i.nodeScript.observerTimer;
+            //check if same node as a Tracer
+            if (isTracer == true)
+            { isSpiderKnown = true; }
+            else { isSpiderKnown = false; }
+            Debug.LogFormat("[Nod] Node.cs -> AddSpider: Spider added at {0}, {1}, nodeID {2}{3}", nodeName, Arc.name, nodeID, "\n");
+        }
+        else
+        {
+            //spider already present -> reset timer
+            spiderTimer = GameManager.i.nodeScript.observerTimer;
+            Debug.LogFormat("[Nod] Node.cs -> AddSpider: Spider already present at {0}, {1}, nodeID {2}. Timer extended{3}", nodeName, Arc.name, nodeID, "\n");
+        }
+    }
+
+    /// <summary>
     /// Remove spider from node
     /// </summary>
     public void RemoveSpider()
@@ -910,7 +935,7 @@ public class Node : MonoBehaviour
             isSpider = false;
             isSpiderKnown = false;
             spiderTimer = 0;
-            Debug.Log(string.Format("Spider Removed at nodeID {0}, \"{1}\"{2}", nodeID, nodeName, "\n"));
+            Debug.LogFormat("[Nod] Node.cs -> RemoveSpider: Spider removed at {0}, {1}, nodeID {2}{3}", nodeName, Arc.name, nodeID, "\n");
         }
     }
 

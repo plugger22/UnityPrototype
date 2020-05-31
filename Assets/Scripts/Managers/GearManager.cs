@@ -412,7 +412,7 @@ public class GearManager : MonoBehaviour
                                     //gear not compromised
                                     gear.chanceOfCompromise = chance;
                                     Debug.LogFormat("[Rnd] GearManager.cs -> CheckForCompromisedGear: {0} NOT compromised, need < {1}, rolled {2}{3}", gear.tag, chance, rnd, "\n");
-                                    string msgText = string.Format("Gear {0} NOT Compromised", gear.tag);
+                                    string msgText = string.Format("{0} gear NOT Compromised", gear.tag);
                                     GameManager.i.messageScript.GeneralRandom(msgText, "Compromised Gear", chance, rnd, true);
                                 }
                             }

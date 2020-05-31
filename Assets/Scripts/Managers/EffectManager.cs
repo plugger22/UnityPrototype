@@ -2305,9 +2305,9 @@ public class EffectManager : MonoBehaviour
                         effectResolve = ResolveInsideMan();
                         effectReturn = ConvertEffectResolveToReturn(effectResolve, effectReturn);
                         break;
-                    case "SpiderSpray":
+                    case "BugSpray":
                         //remove spiders from current and neighbouring nodes
-                        effectResolve = ResolveSpiderSpray(node);
+                        effectResolve = ResolveBugSpray(node);
                         effectReturn = ConvertEffectResolveToReturn(effectResolve, effectReturn);
                         break;
                     case "Gear":
@@ -6139,7 +6139,7 @@ public class EffectManager : MonoBehaviour
         }
         //message
         if (builderIntel.Length > 0)
-        { GameManager.i.messageScript.GearInsideMan("Inside Man gives Intel Dump", builderIntel.ToString()); }
+        { GameManager.i.messageScript.GearSpecial("Inside Man gives Intel Dump", builderIntel.ToString()); }
         //return
         data.bottomText = builderEffect.ToString();
         data.listOfNodes.AddRange(listOfNodes);
@@ -6150,7 +6150,7 @@ public class EffectManager : MonoBehaviour
     /// Removes spiders from current, and all neighbouring nodes and provides a showMe for any nodes where spiders have been removed
     /// </summary>
     /// <returns></returns>
-    private EffectDataResolve ResolveSpiderSpray(Node node)
+    private EffectDataResolve ResolveBugSpray(Node node)
     {
         EffectDataResolve data = new EffectDataResolve();
         StringBuilder builderEffect = new StringBuilder();
@@ -6158,11 +6158,16 @@ public class EffectManager : MonoBehaviour
         List<Node> listOfNodes = new List<Node>();
         if (node != null)
         {
+            builderEffect.AppendFormat("{0}You disinfect the District Surveillance grid{1}{2}{3}", colourGood, colourEnd, "\n", "\n");
+            builderIntel.AppendFormat("{0}You've disinfected the local surveillance grids{1}{2}{3}", colourGood, colourEnd, "\n", "\n");
             //current node
             if (node.isSpider == true)
             {
                 node.RemoveSpider();
                 listOfNodes.Add(node);
+                builderEffect.AppendFormat("{0}Spider{1}{2} removed from {3}, {4}{5}{6}{7}{8}", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd,
+                    colourAlert, node.Arc.name, colourEnd, "\n");
+                builderIntel.AppendFormat("{0}<b>Spider{1}{2} removed from {3}{4}</b>{5}", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd, "\n");
             }
             //neighbouring nodes
             List<Node> listOfNeighbours = node.GetNeighbouringNodes();
@@ -6170,12 +6175,16 @@ public class EffectManager : MonoBehaviour
             {
                 for (int i = 0; i < listOfNeighbours.Count; i++)
                 {
-                    if (listOfNeighbours[i] != null)
+                    Node nodeTemp = listOfNeighbours[i];
+                    if (nodeTemp != null)
                     {
-                        if (listOfNeighbours[i].isSpider == true)
+                        if (nodeTemp.isSpider == true)
                         {
-                            listOfNeighbours[i].RemoveSpider();
-                            listOfNodes.Add(listOfNeighbours[i]);
+                            nodeTemp.RemoveSpider();
+                            listOfNodes.Add(nodeTemp);
+                            builderEffect.AppendFormat("{0}Spider{1}{2} removed from {3}, {4}{5}{6}{7}{8}", colourNeutral, colourEnd, colourNormal, nodeTemp.nodeName, colourEnd,
+                                colourAlert, nodeTemp.Arc.name, colourEnd, "\n");
+                            builderIntel.AppendFormat("{0}<b>Spider{1}{2} removed from {3}{4}</b>{5}", colourNeutral, colourEnd, colourNormal, nodeTemp.nodeName, colourEnd, "\n");
                         }
                     }
                     else { Debug.LogErrorFormat("Invalid Node (Null) for lisOfNeighbours[{0}]", i); }
@@ -6184,6 +6193,18 @@ public class EffectManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfNeighbours (Null)"); }
         }
         else { Debug.LogError("Invalid node (Null)"); }
+        //check number of spiders removed
+        if (listOfNodes.Count == 0)
+        {
+            builderEffect.AppendFormat("{0}No spiders found in current, or neighbouring, districts{1}", colourAlert, colourEnd);
+            builderIntel.AppendFormat("{0}No spiders found in current, or neighbouring, districts{1}", colourAlert, colourEnd);
+        }
+        //message
+        if (builderIntel.Length > 0)
+        { GameManager.i.messageScript.GearSpecial("Spider Spray Intel dump", builderIntel.ToString()); }
+        //return
+        data.bottomText = builderEffect.ToString();
+        data.listOfNodes.AddRange(listOfNodes);
         return data;
     }
 
