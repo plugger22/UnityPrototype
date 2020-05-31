@@ -2305,6 +2305,11 @@ public class EffectManager : MonoBehaviour
                         effectResolve = ResolveInsideMan();
                         effectReturn = ConvertEffectResolveToReturn(effectResolve, effectReturn);
                         break;
+                    case "SpiderSpray":
+                        //remove spiders from current and neighbouring nodes
+                        effectResolve = ResolveSpiderSpray(node);
+                        effectReturn = ConvertEffectResolveToReturn(effectResolve, effectReturn);
+                        break;
                     case "Gear":
                         //no effect, handled directly elsewhere (check ActorManager.cs -> GetNodeActions
                         break;
@@ -6140,6 +6145,48 @@ public class EffectManager : MonoBehaviour
         data.listOfNodes.AddRange(listOfNodes);
         return data;
     }
+
+    /// <summary>
+    /// Removes spiders from current, and all neighbouring nodes and provides a showMe for any nodes where spiders have been removed
+    /// </summary>
+    /// <returns></returns>
+    private EffectDataResolve ResolveSpiderSpray(Node node)
+    {
+        EffectDataResolve data = new EffectDataResolve();
+        StringBuilder builderEffect = new StringBuilder();
+        StringBuilder builderIntel = new StringBuilder();
+        List<Node> listOfNodes = new List<Node>();
+        if (node != null)
+        {
+            //current node
+            if (node.isSpider == true)
+            {
+                node.RemoveSpider();
+                listOfNodes.Add(node);
+            }
+            //neighbouring nodes
+            List<Node> listOfNeighbours = node.GetNeighbouringNodes();
+            if (listOfNeighbours != null)
+            {
+                for (int i = 0; i < listOfNeighbours.Count; i++)
+                {
+                    if (listOfNeighbours[i] != null)
+                    {
+                        if (listOfNeighbours[i].isSpider == true)
+                        {
+                            listOfNeighbours[i].RemoveSpider();
+                            listOfNodes.Add(listOfNeighbours[i]);
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid Node (Null) for lisOfNeighbours[{0}]", i); }
+                }
+            }
+            else { Debug.LogError("Invalid listOfNeighbours (Null)"); }
+        }
+        else { Debug.LogError("Invalid node (Null)"); }
+        return data;
+    }
+
 
     /// <summary>
     /// subMethod for topic condition methods to return a colour of effect (good/bad/neutral) string

@@ -1316,6 +1316,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 31a062dc4b17ed74daa7cec61d2ee78a, type: 2}
   - {fileID: 11400000, guid: 415d3338fbc4be84ab439db3c3f03007, type: 2}
   - {fileID: 11400000, guid: 9efac04aa3c65d145ac08d98525a034b, type: 2}
+  - {fileID: 11400000, guid: 7fe93a0efd35e1c4cadb198e68060fb6, type: 2}
   arrayOfContactTypes:
   - {fileID: 11400000, guid: e83571238ceb3544f8ef9d46cb18cbc3, type: 2}
   - {fileID: 11400000, guid: 88efaf6304c9e364c8719f9c954d687d, type: 2}
@@ -1931,6 +1932,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d0b72a8ebac94404e941665f4e8cdf9c, type: 2}
   - {fileID: 11400000, guid: 12090b4ed907cb1409d2d74db5d991a5, type: 2}
   - {fileID: 11400000, guid: 1e2ad571da5e26b4ab5e4621607cad95, type: 2}
+  - {fileID: 11400000, guid: a015f7bd388dd404896fe8a717124468, type: 2}
   arrayOfEffectsTeams:
   - {fileID: 11400000, guid: f9bf6133533fed941835fab042079c0a, type: 2}
   - {fileID: 11400000, guid: 1e584f551182f5543a80bc5349564aaa, type: 2}
@@ -4471,7 +4473,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 11400000, guid: 694dd75b495d9b34f820f1979dd93266, type: 2}
+  debugTopicPool: {fileID: 11400000, guid: 4cba5038018744a4f83ed80beeb223c4, type: 2}
   numOfGearItems: -1
   numOfWorkers: 8
   bonusRenown: 10
@@ -4483,7 +4485,7 @@ MonoBehaviour:
   conditionResistance: {fileID: 0}
   playerInvisibility: -1
   actorSlotID: 0
-  actorType: {fileID: 11400000, guid: 33cfb0c161a7cde409d27df1080bd2c8, type: 2}
+  actorType: {fileID: 0}
   actorDatapoint0: -1
   actorDatapoint1: -1
   actorDatapoint2: -1

@@ -909,6 +909,7 @@ public class Node : MonoBehaviour
         {
             isSpider = false;
             isSpiderKnown = false;
+            spiderTimer = 0;
             Debug.Log(string.Format("Spider Removed at nodeID {0}, \"{1}\"{2}", nodeID, nodeName, "\n"));
         }
     }

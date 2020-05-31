@@ -9,16 +9,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d96992d72a471341a07839d8d2b39b2, type: 3}
-  m_Name: SpecialSubBoss1
+  m_Name: SpiderSpray
   m_EditorClassIdentifier: 
-  description: SpecialSubBoss1
-  tag: SpecialSubBoss1
+  description: Disinfect Districts from Spiders
+  tag: Spider Spray
   rarity: {fileID: 11400000, guid: 5067f2c35f4b9ce4d8fb86779d5b3052, type: 2}
-  type: {fileID: 11400000, guid: e8011a067725d9e46bc9a30e85ee9700, type: 2}
+  type: {fileID: 11400000, guid: 11c5f192680724a4c96f53aec300aead, type: 2}
   data: 0
   sprite: {fileID: 21300000, guid: d1c114319b9549f46995595d0bc5db8c, type: 3}
   listOfPersonalEffects: []
-  aiHackingEffect: {fileID: 0}
+  aiHackingEffect: {fileID: 11400000, guid: a015f7bd388dd404896fe8a717124468, type: 2}
   timesUsed: 0
   isCompromised: 0
   reasonUsed: 
