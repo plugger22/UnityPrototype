@@ -4140,6 +4140,16 @@ public class EffectManager : MonoBehaviour
                     { effectResolve.bottomText = string.Format("{0}gained {1} gear{2}", colourEffect, gear.tag, colourEnd); }
                 }
                 break;
+            case "MetaOptionTool":
+                //special capture tools available becuase HQ actor has a good opinion of you
+                CaptureTool tool = GameManager.i.captureScript.GetCaptureTool(dataInput.data);
+                if (tool != null)
+                {
+                    //place in listOfCaptureTools
+                    if (GameManager.i.dataScript.AddCaptureTool(tool) == true)
+                        { effectResolve.bottomText = string.Format("{0}gained {1} capture tool{2}", colourEffect, tool.tag, colourEnd); }
+                }
+                break;
 
             default: Debug.LogWarningFormat("Invalid MetaGame effect.outcome.name \"{0}\"", effect.outcome.name); break;
         }

@@ -62,12 +62,14 @@ public class MetaOption : ScriptableObject
 
     //data reset prior to use
     [HideInInspector] public bool isActive;                                 //set true or false depending on whether it passed criteria checks (if any)
+    [HideInInspector] public int data;                                      //generic data point, eg. interrogation device, default -1
     [HideInInspector] public string dataName;                               //generic data point, eg. organisation/secret/investigation name
     [HideInInspector] public string dataTag;                                //generic data point, eg. organisation/secret/investigation tag (used in metaOption text to replace '*' symbol)
 
     public void Reset()
     {
         isActive = false;
+        data = -1;
         dataName = "";
         dataTag = "";
     }

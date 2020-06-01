@@ -143,6 +143,7 @@ public class DataManager : MonoBehaviour
     private List<string> listOfLostGear = new List<string>();
     private List<string> listOfCurrentGear = new List<string>();                                          //gear held by OnMap resistance player or actors
     private List<string> listOfSpecialGear = new List<string>();                                          //MetaGame gear, only used for player selections during MetaGame. cleared at level start
+    private List<CaptureTool> listOfCaptureTools = new List<CaptureTool>();                               //MetaGame capture tool, only used for player selections during MetaGame, cleared at level start
 
     //organisations current for campaign
     private List<Organisation> listOfCurrentOrganisations = new List<Organisation>();
@@ -5883,6 +5884,29 @@ public class DataManager : MonoBehaviour
         return false;
     }
 
+
+    public List<CaptureTool> GetListOfCaptureTools()
+    { return listOfCaptureTools; }
+
+    /// <summary>
+    /// Add a CaptureTool to list. Returns true if successful, false if an error or a duplicate
+    /// </summary>
+    /// <param name="tool"></param>
+    /// <returns></returns>
+    public bool AddCaptureTool(CaptureTool tool)
+    {
+        if (tool != null)
+        {
+            if (listOfCaptureTools.Exists(x => x.innocenceLevel == tool.innocenceLevel) == false)
+            {
+                listOfCaptureTools.Add(tool);
+                return true;
+            }
+            else { Debug.LogWarningFormat("CaptureTool \"{0}\" already exists in listOfCaptureTools (Duplicate)", tool.tag); }
+        }
+        else { Debug.LogWarning("Invalid Capture Tool (Null)"); }
+        return false;
+    }
 
     /// <summary>
     /// Initialise lists of gear that are available in the current level (clears first)

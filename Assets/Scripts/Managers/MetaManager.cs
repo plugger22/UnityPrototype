@@ -17,6 +17,8 @@ public class MetaManager : MonoBehaviour
     [Range(0, 10)] public int renownRecommendMin = 2;
     [Tooltip("Maximum amount of Special Gear available during MetaGame (priority order of enum.ActorHQ.Boss on down)")]
     [Range(0, 3)] public int maxNumOfGear = 3;
+    [Tooltip("Maximum amount of Interrogation Devices available during MetaGame (priority order of enum.ActorHQ.Boss on down")]
+    [Range(0, 3)] public int maxNumOfDevices = 3;
 
     [Header("MetaOption Arrays")]
     [Tooltip("Place metaOptions here to handle the max number of possible organisation metaOptions that may be required")]
@@ -27,6 +29,8 @@ public class MetaManager : MonoBehaviour
     public MetaOption[] arrayOfInvestigationOptions;
     [Tooltip("Place metaOptions here to handle special gear from each member of the HQ hierarchy (1 for each), in order of hierarchy, eg. Boss first, subBoss1 second, etc.")]
     public MetaOption[] arrayOfGearOptions;
+    [Tooltip("Place metaOptions here to handle interrogation devices for each member of HQ (1 for each), in order of Hierarchy, eg. Boss first, subBoss1 second, etc.")]
+    public MetaOption[] arrayOfDeviceOptions;
 
     [Header("Renown cost of MetaOptions")]
     [Range(0, 10)] public int costLowPriority = 2;
@@ -58,6 +62,16 @@ public class MetaManager : MonoBehaviour
         metaLevel = GameManager.i.globalScript.metaBottom;
         isTestLog = GameManager.i.testScript.isMetaGame;
         /*metaEffect = new MetaEffectData();*/
+        Debug.AssertFormat(arrayOfOrganisationOptions.Length == GameManager.i.loadScript.arrayOfOrgTypes.Length, "Invalid arrayOfOrganisationOptions (has {0} records, should be {1})",
+            arrayOfOrganisationOptions.Length, GameManager.i.loadScript.arrayOfOrgTypes.Length);
+        Debug.AssertFormat(arrayOfSecretOptions.Length == GameManager.i.secretScript.secretMaxNum, "Invalid arrayOfSecretOptions (has {0} records, should be {1})",
+            arrayOfSecretOptions.Length, GameManager.i.secretScript.secretMaxNum);
+        Debug.AssertFormat(arrayOfInvestigationOptions.Length == GameManager.i.playerScript.maxInvestigations, "Invalid arrayOfInvestigations (has {0} records, should be {1})",
+            arrayOfInvestigationOptions.Length, GameManager.i.playerScript.maxInvestigations);
+        Debug.AssertFormat(arrayOfGearOptions.Length == GameManager.i.hqScript.numOfActorsHQ, "Invalid arrayOfGearOptions (has {0} records, should be {1}",
+            arrayOfGearOptions.Length, GameManager.i.hqScript.numOfActorsHQ);
+        Debug.AssertFormat(arrayOfDeviceOptions.Length == GameManager.i.hqScript.numOfActorsHQ, "Invalid arrayOfDeviceOptions (has {0} records, should be {1})",
+            arrayOfDeviceOptions.Length, GameManager.i.hqScript.numOfActorsHQ);
     }
 
 
@@ -325,11 +339,13 @@ public class MetaManager : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid metaOption (Null) in dictOfMetaOptions for \"{0}\"", metaOption.Key); }
             }
             //
-            // - - - Specials -> Organisations / Secrets / Investigations / Gear
+            // - - - Specials  Organisations / Secrets / Investigations / Gear / Interrogation Devices
             //
             if (isTestLog)
             { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: SPECIAl MetaOptions - - - {0}", "\n"); }
-            //Organisations -> don't exceed max number of org options available
+            //
+            // - - - Organisations -> don't exceed max number of org options available
+            //
             count = Mathf.Min(listOfOrganisations.Count, arrayOfOrganisationOptions.Length);
             if (count > 0)
             {
@@ -363,7 +379,9 @@ public class MetaManager : MonoBehaviour
                 if (isTestLog)
                 { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: No Organisations currently in contact with Player{0}", "\n"); }
             }
-            //Secrets -> don't exceed max number of secret options available
+            //
+            // - - - Secrets -> don't exceed max number of secret options available
+            //
             count = Mathf.Min(listOfSecrets.Count, arrayOfSecretOptions.Length);
             if (count > 0)
             {
@@ -396,8 +414,9 @@ public class MetaManager : MonoBehaviour
                 if (isTestLog)
                 { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Player has no secrets{0}", "\n"); }
             }
-
-            //Investigations -> don't exceed max number of investigation options available
+            //
+            // - - - Investigations -> don't exceed max number of investigation options available
+            //
             count = Mathf.Min(listOfInvestigations.Count, arrayOfInvestigationOptions.Length);
             if (count > 0)
             {
@@ -430,8 +449,9 @@ public class MetaManager : MonoBehaviour
                 if (isTestLog)
                 { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Player has no outstanding investigations{0}", "\n"); }
             }
-
-            //Special Gear -> offered if relevant HQ characters have a good opinion of you
+            //
+            // - - - Special Gear -> offered if relevant HQ characters have a good opinion of you
+            //
             count = arrayOfGearOptions.Length;
             if (count > 0)
             {
@@ -473,7 +493,7 @@ public class MetaManager : MonoBehaviour
                                         metaSpecial.text = metaSpecial.template.Replace("*", gear.tag);
                                         //customise descriptor
                                         metaSpecial.descriptor = string.Format("<b>Special gear</b> that is <b>only available</b>{0}{1}because your <b>{2}</b> " +
-                                            "(<b>current tab</b>) has{3}{4}a <b>good opinion</b> of you (<b>Motivation 2+ stars</b>)", "\n", "\n", 
+                                            "(<b>current tab</b>) has{3}{4}a <b>good opinion</b> of you (<b>Motivation 2+ stars</b>)", "\n", "\n",
                                             GameManager.GetFormattedString(title, ColourType.dataNeutral), "\n", "\n");
                                         //add to list
                                         listOfMetaOptions.Add(metaSpecial);
@@ -504,6 +524,84 @@ public class MetaManager : MonoBehaviour
             {
                 if (isTestLog)
                 { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Player has no gear MetaOptions in arrayOfGearOptions{0}", "\n"); }
+            }
+            //
+            // - - - Interrogation Devices -> offered if relevant HQ characters have a good opinion of you
+            //
+            count = arrayOfDeviceOptions.Length;
+            if (count > 0)
+            {
+                //double check one option for each hierarchy member
+                if (count == GameManager.i.hqScript.numOfActorsHQ)
+                {
+                    int numOfDeviceOptions = 0;
+                    Actor actor = null;
+                    CaptureTool device = null;
+                    string title = "Unknown";
+                    for (int i = 0; i < count; i++)
+                    {
+                        ActorHQ actorHQ = ActorHQ.None;
+                        switch (i)
+                        {
+                            case 0: actorHQ = ActorHQ.Boss; break;
+                            case 1: actorHQ = ActorHQ.SubBoss1; break;
+                            case 2: actorHQ = ActorHQ.SubBoss2; break;
+                            case 3: actorHQ = ActorHQ.SubBoss3; break;
+                        }
+                        if (actorHQ != ActorHQ.None)
+                        {
+                            actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
+                            title = GameManager.i.hqScript.GetHqTitle(actorHQ);
+                            device = GameManager.i.captureScript.GetCaptureTool(actorHQ);
+                            if (actor != null)
+                            {
+                                MetaOption metaSpecial = arrayOfDeviceOptions[i];
+                                if (device != null)
+                                {
+                                    metaSpecial.data = device.innocenceLevel;
+                                    metaSpecial.dataTag = device.tag;
+                                    //option active and displayed only if actor has a good opinion of player
+                                    if (actor.GetDatapoint(ActorDatapoint.Motivation1) >= 2)
+                                    {
+                                        metaSpecial.isActive = true;
+                                        numOfDeviceOptions++;
+                                        //swap '*' for device.tag
+                                        metaSpecial.text = metaSpecial.template.Replace("*", device.tag);
+                                        //customise descriptor
+                                        metaSpecial.descriptor = string.Format("<b>Interrogation Device</b> that is <b>only available</b>{0}{1}because your <b>{2}</b> " +
+                                            "(<b>current tab</b>) has{3}{4}a <b>good opinion</b> of you (<b>Motivation 2+ stars</b>)", "\n", "\n",
+                                            GameManager.GetFormattedString(title, ColourType.dataNeutral), "\n", "\n");
+                                        //add to list
+                                        listOfMetaOptions.Add(metaSpecial);
+                                        if (isTestLog)
+                                        {
+                                            Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Device option \"{0}\", {1}, {2} added{3}", 
+                                                metaSpecial.name, metaSpecial.data, metaSpecial.dataTag, "\n");
+                                            Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Device option \"{0}\", {1}{2}", metaSpecial.name, metaSpecial.text, "\n");
+                                        }
+                                        //check max number of allowed gear options hasn't been reached
+                                        if (numOfDeviceOptions >= maxNumOfDevices)
+                                        {
+                                            if (isTestLog)
+                                            { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Max Cap on Device Options reached (current {0}, max {1}){2}", 
+                                                numOfDeviceOptions, maxNumOfDevices, "\n"); }
+                                            break;
+                                        }
+                                    }
+                                }
+                                else { Debug.LogWarningFormat("Invalid Device (Null) for listOfDeviceOptions[{0}]", i); }
+                            }
+                            else { Debug.LogWarningFormat("Invalid actor (Null) for listOfDeviceOptions[{0}]", i); }
+                        }
+                        else { Debug.LogWarningFormat("Invalid actorHQ (None) for index {0}", i); }
+                    }
+                }
+                else { Debug.LogWarningFormat("Incorrect number of arrayOfDevice metaOptions (is {0}, should be {1})", count, GameManager.i.hqScript.numOfActorsHQ); }
+            }
+            else
+            {
+                if (isTestLog)
+                { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Player has no device MetaOptions in arrayOfDeviceOptions{0}", "\n"); }
             }
         }
         else { Debug.LogError("Invalid dictOfMetaOptions (Null)"); }

@@ -761,6 +761,25 @@ public class CaptureManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Returns captureTool for the specified ActorHQ, null if not present
+    /// </summary>
+    /// <param name="actorHQ"></param>
+    /// <returns></returns>
+    public CaptureTool GetCaptureTool(ActorHQ actorHQ)
+    {
+        CaptureTool tool = null;
+        switch (actorHQ)
+        {
+            case ActorHQ.Boss: tool = innocence_0; break;
+            case ActorHQ.SubBoss1: tool = innocence_1; break;
+            case ActorHQ.SubBoss2: tool = innocence_2; break;
+            case ActorHQ.SubBoss3: tool = innocence_3; break;
+            default: Debug.LogWarningFormat("Unrecognised actorHQ \"{0}\"", actorHQ); break;
+        }
+        return tool;
+    }
+
+    /// <summary>
     /// Returns true if specified innocence level has an associated CaptureTool present, false otherwise
     /// </summary>
     /// <param name="innocenceLevel"></param>
