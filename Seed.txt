@@ -28,3 +28,20 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 Dev seed 26651 -> Monday, 1 June 2020 8:24 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 1891 -> Tuesday, 2 June 2020 9:35 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+
+Dev seed 63101 -> Tuesday, 2 June 2020 9:44 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 58582 -> Tuesday, 2 June 2020 9:52 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 19441 -> Tuesday, 2 June 2020 9:54 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

@@ -812,12 +812,8 @@ public class MetaGameUI : MonoBehaviour
         //tab pressed default settings (starts with side tab index 0)
         isLastTabTop = false;
         currentTopTabIndex = 0;
-        //set checkmarks to false
-        for (int index = 0; index < numOfItemsTotal; index++)
-        {
-            arrayOfSideMetaCheckMark[index].gameObject.SetActive(false);
-            arrayOfTopMetaCheckMark[index].gameObject.SetActive(false);
-        }
+        //Turn off checkmarks
+        ResetCheckMarks();
         //clear out dict
         dictOfSelected.Clear();
         //
@@ -1867,6 +1863,7 @@ public class MetaGameUI : MonoBehaviour
     {
         if (dictOfSelected.Count > 0)
         {
+            ResetCheckMarks();
             //set all selected metaData to isSelected false
             foreach (var data in dictOfSelected)
             {
@@ -2205,6 +2202,19 @@ public class MetaGameUI : MonoBehaviour
     //
     // - - - SubMethods
     //
+
+    /// <summary>
+    /// Sets all item checkmarks to OFF
+    /// </summary>
+    private void ResetCheckMarks()
+    {
+        //set checkmarks to false
+        for (int index = 0; index < numOfItemsTotal; index++)
+        {
+            arrayOfSideMetaCheckMark[index].gameObject.SetActive(false);
+            arrayOfTopMetaCheckMark[index].gameObject.SetActive(false);
+        }
+    }
 
     /// <summary>
     /// subMethod to update renown display with renownCurrent (use this for readability and enhanced code maintenance)
