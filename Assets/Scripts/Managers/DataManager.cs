@@ -6275,6 +6275,20 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// dictOfGear debug display
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayGearDict()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("- DictionaryOfGear{0}{1}", "\n", "\n");
+        foreach(var gear in dictOfGear)
+        { builder.AppendFormat("{0} ({1}), {2}, d {3}, used {4} times (total {5}{6}", gear.Value.tag, gear.Value.type.name, gear.Value.rarity.name, gear.Value.data, gear.Value.timesUsed, 
+            gear.Value.statTimesUsed, "\n"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
     /// submethod (Debug) to turn a list of gear into a readable display item, called by DataManager.cs -> DisplayGearData
     /// </summary>
     /// <param name="listOfGear"></param>

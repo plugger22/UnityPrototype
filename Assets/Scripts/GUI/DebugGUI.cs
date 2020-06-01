@@ -52,6 +52,7 @@ public class DebugGUI : MonoBehaviour
     private int trackerToggle = 0;
     private int messageToggle = 0;
     private int newsToggle = 0;
+    private int gearToggle = 0;
     private int actorToggle = 0;
     private int topicToggle = 0;
     private int secretToggle = 0;
@@ -314,9 +315,12 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 13 + button_height * 13, button_width, button_height), "Gear Data"))
             {
                 Debug.Log("[Dbg] Button -> Gear Data");
-                if (debugDisplay != 24)
-                { debugDisplay = 24; }
-                else { debugDisplay = 0; }
+                switch (gearToggle)
+                {
+                    case 0: debugDisplay = 24; gearToggle = 1; break;
+                    case 1: debugDisplay = 108; gearToggle = 2; break;
+                    case 2: debugDisplay = 0; gearToggle = 0; break;
+                }
             }
 
             //fifteenth button
@@ -1949,6 +1953,12 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.dataScript.DebugDisplayCampaignHistory();
                         GUI.Box(new Rect(Screen.width - 455, 10, 450, 900), analysis, customBackground);
+                        break;
+                    //Gear Dict Display
+                    case 108:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.i.dataScript.DebugDisplayGearDict();
+                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 750), analysis, customBackground);
                         break;
                 }
             }

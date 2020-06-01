@@ -1876,12 +1876,13 @@ public class ActionManager : MonoBehaviour
                                     builderTop.AppendFormat("{0} has been used by the Player", gear.tag);
                                 }
                                 //update stringBuilder texts
-                                if (effectReturn.topText != null && effectReturn.topText.Length > 0)
+                                if (string.IsNullOrEmpty(effectReturn.topText) == false)
                                 {
                                     builderTop.AppendLine(); builderTop.AppendLine();
                                     builderTop.Append(effectReturn.topText);
                                 }
-                                if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                                if (builderBottom.Length > 0 && builderTop.Length > 0)
+                                { builderBottom.AppendLine(); builderBottom.AppendLine(); }
                                 builderBottom.Append(effectReturn.bottomText);
                                 //exit effect loop on error
                                 if (effectReturn.errorFlag == true) { break; }

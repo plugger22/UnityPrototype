@@ -299,3 +299,18 @@ NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:443)
 	
 Dev seed 64466 -> Monday, 1 June 2020 12:32 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 8805 -> Monday, 1 June 2020 2:28 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 3445 -> Monday, 1 June 2020 2:34 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 6688 -> Monday, 1 June 2020 2:37 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 29127 -> Monday, 1 June 2020 2:49 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 16104 -> Monday, 1 June 2020 2:52 PM
+City seed 5678 -> London, United Kingdom
