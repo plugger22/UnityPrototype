@@ -3651,11 +3651,11 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// InsideMan/SpiderSpray (special gear) intel dump. Anything that has ShowMe nodes plural
+    /// InsideMan/BugSpray/Neural Whisper (special gear) info dump. Anything that has ShowMe nodes plural. Text doubles as ItemText
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
-    public Message GearSpecial(string text, string intelDump)
+    public Message GearSpecial(string text, string infoDump)
     {
         //message
         if (string.IsNullOrEmpty(text) == false)
@@ -3663,13 +3663,13 @@ public class MessageManager : MonoBehaviour
             Message message = new Message();
             message.text = text;
             message.type = MessageType.GEAR;
-            message.subType = MessageSubType.Gear_InsideMan;
+            message.subType = MessageSubType.Gear_Special;
             message.sideLevel = globalResistance.level;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = "Inside Man Intel Dump";
-            data.topText = "Inside Man";
-            data.bottomText = GameManager.i.itemDataScript.GetGearInsideMan(intelDump);
+            data.itemText = text;
+            data.topText = "Special Gear Used";
+            data.bottomText = GameManager.i.itemDataScript.GetGearSpecialDetails(infoDump);
             data.priority = ItemPriority.Low;
             data.sprite = GameManager.i.guiScript.infoSprite;
             data.spriteName = data.sprite.name;

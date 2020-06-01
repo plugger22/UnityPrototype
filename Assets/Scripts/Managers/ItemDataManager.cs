@@ -1150,14 +1150,16 @@ public class ItemDataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Inside man intel dump
+    /// Special Gear info dump
     /// </summary>
-    /// <param name="intel"></param>
+    /// <param name="info"></param>
     /// <returns></returns>
-    public string GetGearInsideMan(string intel)
+    public string GetGearSpecialDetails(string info)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}<b>Your source leaked intel</b>{1}{2}{3}{4}", colourGood, colourEnd, "\n", "\n", intel);
+            if (string.IsNullOrEmpty(info) == false)
+            { builder.AppendFormat("{0}{1}{2}", "\n", "\n", info); }
+            else { Debug.LogError("Invalid info (Null or Empty"); }
         return builder.ToString();
     }
 

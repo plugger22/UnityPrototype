@@ -286,7 +286,7 @@
         Gear_Available,
         Gear_Obtained,
         Gear_Given,
-        Gear_InsideMan,
+        Gear_Special,
         //Actor
         Actor_Recruited,
         Actor_Action,

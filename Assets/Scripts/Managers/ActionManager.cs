@@ -1832,6 +1832,7 @@ public class ActionManager : MonoBehaviour
     {
         bool errorFlag = false;
         bool isAction = false;
+        string gearTag = "Unknown";
         //two builders for top and bottom texts
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
@@ -1846,6 +1847,7 @@ public class ActionManager : MonoBehaviour
                 Gear gear = GameManager.i.dataScript.GetGear(details.gearName);
                 if (gear != null)
                 {
+                    gearTag = gear.tag;
                     List<Effect> listOfEffects = gear.listOfPersonalEffects;
                     if (listOfEffects != null && listOfEffects.Count > 0)
                     {
@@ -1946,7 +1948,7 @@ public class ActionManager : MonoBehaviour
             if (isAction == true)
             {
                 outcomeDetails.isAction = true;
-                outcomeDetails.reason = "Use Gear (Personal Use)";
+                outcomeDetails.reason = string.Format("Use {0} gear (Personal)", gearTag);
             }
             //Gear Used            
             Gear gear = GameManager.i.dataScript.GetGear(details.gearName);

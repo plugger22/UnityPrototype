@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: gearPersuasion
   m_EditorClassIdentifier: 
   tag: Persuade district VIP's
-  tooltipText: Persuade key node VIP's that your cause is worth supporting
+  tooltipText: Persuade key District VIP's that your cause is worth supporting
   intendedActor: {fileID: 0}
   listOfEffects:
   - {fileID: 11400000, guid: 4fb86b3fd91efa142bea3767664cbbfd, type: 2}

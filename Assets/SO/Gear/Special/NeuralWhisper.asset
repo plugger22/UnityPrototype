@@ -9,19 +9,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d96992d72a471341a07839d8d2b39b2, type: 3}
-  m_Name: SpecialSubBoss2
+  m_Name: NeuralWhisper
   m_EditorClassIdentifier: 
-  description: SpecialSubBoss2
-  tag: SpecialSubBoss2
+  description: Spread a meme engineered viral rumour
+  tag: Neural Whisper
   rarity: {fileID: 11400000, guid: 5067f2c35f4b9ce4d8fb86779d5b3052, type: 2}
   type: {fileID: 11400000, guid: e8011a067725d9e46bc9a30e85ee9700, type: 2}
   data: 0
   sprite: {fileID: 21300000, guid: d1c114319b9549f46995595d0bc5db8c, type: 3}
-  listOfPersonalEffects: []
+  listOfPersonalEffects:
+  - {fileID: 11400000, guid: f629637e8bed0d9498a7c3c360c52c34, type: 2}
+  - {fileID: 11400000, guid: 5446f3b13dcee5c4f9f00dcdedb86c24, type: 2}
   aiHackingEffect: {fileID: 0}
   timesUsed: 0
   isCompromised: 0
-  reasonUsed: 
+  reasonUsed: Used to for <b>personal reasons</b>
   chanceOfCompromise: 0
   statTurnObtained: 0
   statTurnLost: 0

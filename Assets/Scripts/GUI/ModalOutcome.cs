@@ -241,6 +241,7 @@ public class ModalOutcome : MonoBehaviour
                 Debug.LogFormat("[UI] ModalOutcome.cs -> SetModalOutcome{0}", "\n");
                 //fixed popUps
                 GameManager.i.popUpFixedScript.ExecuteFixed(0.75f);
+
             }
         }
         else { Debug.LogWarning("Invalid ModalOutcomeDetails package (Null)"); }

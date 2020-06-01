@@ -241,3 +241,61 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 61741 -> Sunday, 31 May 2020 12:38 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 41928 -> Monday, 1 June 2020 9:08 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 16985 -> Monday, 1 June 2020 9:15 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 6378 -> Monday, 1 June 2020 9:16 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 8760 -> Monday, 1 June 2020 9:57 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 25136 -> Monday, 1 June 2020 10:37 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 65050 -> Monday, 1 June 2020 11:09 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 63313 -> Monday, 1 June 2020 11:12 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 27235 -> Monday, 1 June 2020 11:15 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 26979 -> Monday, 1 June 2020 12:16 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 40937 -> Monday, 1 June 2020 12:22 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 13684 -> Monday, 1 June 2020 12:25 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:592)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActionManager.OnDisable () (at Assets/Scripts/Managers/ActionManager.cs:258)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:443)
+	
+Dev seed 64466 -> Monday, 1 June 2020 12:32 PM
+City seed 5678 -> London, United Kingdom

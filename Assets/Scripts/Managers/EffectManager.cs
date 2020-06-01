@@ -2301,14 +2301,22 @@ public class EffectManager : MonoBehaviour
                         }
                         break;
                     case "InsideMan":
-                        //display location of Nemesis, Npc and Erasure Teams
+                        //Special Gear -> display location of Nemesis, Npc and Erasure Teams
                         effectResolve = ResolveInsideMan();
                         effectReturn = ConvertEffectResolveToReturn(effectResolve, effectReturn);
+                        effectReturn.isAction = true;
                         break;
                     case "BugSpray":
-                        //remove spiders from current and neighbouring nodes
+                        //Special Gear -> remove spiders from current and neighbouring nodes
                         effectResolve = ResolveBugSpray(node);
                         effectReturn = ConvertEffectResolveToReturn(effectResolve, effectReturn);
+                        effectReturn.isAction = true;
+                        break;
+                    case "Whisper":
+                        //Special Gear -> support +1 in current and neighbouring nodes
+                        effectResolve = ResolveWhisper(node);
+                        effectReturn = ConvertEffectResolveToReturn(effectResolve, effectReturn);
+                        effectReturn.isAction = true;
                         break;
                     case "Gear":
                         //no effect, handled directly elsewhere (check ActorManager.cs -> GetNodeActions
@@ -4479,7 +4487,7 @@ public class EffectManager : MonoBehaviour
         //data package to return to the calling methods
         EffectDataResolve effectResolve = new EffectDataResolve();
         //default data
-        effectResolve.topText = "Unknown effect";
+        /*effectResolve.topText = "Unknown effect";*/
         effectResolve.bottomText = "Unknown effect";
         effectResolve.isError = false;
         //get node (sometimes won't be needed)
@@ -6051,23 +6059,23 @@ public class EffectManager : MonoBehaviour
         StringBuilder builderEffect = new StringBuilder();
         StringBuilder builderIntel = new StringBuilder();
         List<Node> listOfNodes = new List<Node>();
-        builderEffect.AppendFormat("{0}Your source has leaked the following information{1}{2}{3}", colourGood, colourEnd, "\n", "\n");
+        builderEffect.AppendFormat("{0}Your source has leaked the following information{1}{2}", colourGood, colourEnd, "\n");
         //nemesis
         if (GameManager.i.nemesisScript.CheckNemesisPresent() == true)
         {
             Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodeNemesis);
             if (node != null)
             {
-                builderEffect.AppendFormat("{0}Nemesis{1}{2} is at {3}, {4}{5}{6}{7}{8}", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd, colourAlert, node.Arc.name, colourEnd, "\n");
-                builderIntel.AppendFormat("{0}<b>Nemesis{1}{2} at {3}{4}</b>{5}", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd, "\n");
+                builderEffect.AppendFormat("{0}{1}Nemesis{2}{3} is at {4}, {5}{6}{7}{8}", "\n", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd, colourAlert, node.Arc.name, colourEnd);
+                builderIntel.AppendFormat("{0}{1}<b>Nemesis{2}{3} at {4}</b>{5}", "\n", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd);
                 listOfNodes.Add(node);
             }
             else { Debug.LogWarningFormat("Invalid node (Null) for nodeNemesisID {0}", GameManager.i.nodeScript.nodeNemesis); }
         }
         else
         {
-            builderEffect.AppendFormat("{0}Nemesis not present{3}{4}", colourBad, colourEnd, colourNormal, colourEnd, "\n");
-            builderIntel.AppendFormat("{0}<b>Nemesis not present</b>{1}{2}", colourBad, colourEnd, "\n");
+            builderEffect.AppendFormat("{0}{1}Nemesis not present{2}", colourBad, colourEnd, colourNormal, colourEnd);
+            builderIntel.AppendFormat("{0}{1}<b>Nemesis not present</b>{1}", "\n", colourBad, colourEnd);
         }
         //npc
         if (GameManager.i.missionScript.CheckIfNpcOnMap() == true)
@@ -6075,18 +6083,18 @@ public class EffectManager : MonoBehaviour
             Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodeNpc);
             if (node != null)
             {
-                builderEffect.AppendFormat("{0}{1}{2}{3} is at {4}, {5}{6}{7}{8}{9}", colourNeutral, GameManager.i.campaignScript.scenario.missionResistance.npc.tag, colourEnd,
-                    colourNormal, node.nodeName, colourEnd, colourAlert, node.Arc.name, colourEnd, "\n");
-                builderIntel.AppendFormat("{0}<b>{1}{2}{3} at {4}{5}</b>{6}", colourNeutral, GameManager.i.campaignScript.scenario.missionResistance.npc.tag, 
-                    colourEnd, colourNormal, node.nodeName, colourEnd, "\n");
+                builderEffect.AppendFormat("{0}{1}{2}{3}{4} is at {5}, {6}{7}{8}{9}", "\n", colourNeutral, GameManager.i.campaignScript.scenario.missionResistance.npc.tag, colourEnd,
+                    colourNormal, node.nodeName, colourEnd, colourAlert, node.Arc.name, colourEnd);
+                builderIntel.AppendFormat("{0}{1}<b>{2}{3}{4} at {5}</b>{6}", "\n", colourNeutral, GameManager.i.campaignScript.scenario.missionResistance.npc.tag, 
+                    colourEnd, colourNormal, node.nodeName, colourEnd);
                 listOfNodes.Add(node);
             }
             else { Debug.LogWarningFormat("Invalid node (Null) for nodeNpcID {0}", GameManager.i.nodeScript.nodeNpc); }
         }
         else
         {
-            builderEffect.AppendFormat("{0}NPC not present{3}{4}", colourBad, colourEnd, colourNormal, colourEnd, "\n");
-            builderIntel.AppendFormat("{0}<b>NPC not present</b>{1}{2}", colourBad, colourEnd, "\n");
+            builderEffect.AppendFormat("{0}{1}NPC not present{2}", "\n", colourBad, colourEnd);
+            builderIntel.AppendFormat("{0}{1}<b>NPC not present</b>{2}", "\n", colourBad, colourEnd);
         }
         //erasure teams
         int count = GameManager.i.dataScript.CheckTeamInfo(teamArcErasure, TeamInfo.OnMap);
@@ -6109,9 +6117,9 @@ public class EffectManager : MonoBehaviour
                                 Node node = GameManager.i.dataScript.GetNode(team.nodeID);
                                 if (node != null)
                                 {
-                                    builderEffect.AppendFormat("{0}Erasure Team{1}{2} present at {3}, {4}{5}{6}{7}{8}", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd,
-                                        colourAlert, node.Arc.name, colourEnd, "\n");
-                                    builderIntel.AppendFormat("{0}<b>Erasure Team{1}{2} at {3}{4}</b>{5}", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd, "\n");
+                                    builderEffect.AppendFormat("{0}{1}Erasure Team{2}{3} present at {4}, {5}{6}{7}{8}", "\n", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd,
+                                        colourAlert, node.Arc.name, colourEnd);
+                                    builderIntel.AppendFormat("{0}{1}<b>Erasure Team{2}{3} at {4}</b>{5}", "\n", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd);
                                     listOfNodes.Add(node);
                                     count++;
                                 }
@@ -6124,8 +6132,8 @@ public class EffectManager : MonoBehaviour
                     //none found
                     if (count == 0)
                     {
-                        builderEffect.AppendFormat("{0}No Erasure Teams present{1}{2}", colourBad, colourEnd, "\n");
-                        builderIntel.AppendFormat("{0}<b>No Erasure Teams present{1}</b>{2}", colourBad, colourEnd, "\n");
+                        builderEffect.AppendFormat("{0}{1}No Erasure Teams present{2}", "\n", colourBad, colourEnd);
+                        builderIntel.AppendFormat("{0}{1}<b>No Erasure Teams present</b>{2}", "\n", colourBad, colourEnd);
                     }
                 }
                 else { Debug.LogWarning("Invalid listOfErasureTeams (Empty)"); }
@@ -6134,12 +6142,12 @@ public class EffectManager : MonoBehaviour
         }
         else
         {
-            builderEffect.AppendFormat("{0}No Erasure Teams present{1}{2}", colourBad, colourEnd, "\n");
-            builderIntel.AppendFormat("{0}<b>No Erasure Teams present{1}</b>{2}", colourBad, colourEnd, "\n");
+            builderEffect.AppendFormat("{0}{1}No Erasure Teams present{2}", "\n", colourBad, colourEnd);
+            builderIntel.AppendFormat("{0}{1}<b>No Erasure Teams present{2}</b>", "\n", colourBad, colourEnd);
         }
         //message
         if (builderIntel.Length > 0)
-        { GameManager.i.messageScript.GearSpecial("Inside Man gives Intel Dump", builderIntel.ToString()); }
+        { GameManager.i.messageScript.GearSpecial("Inside Man leaks important Intel", builderIntel.ToString()); }
         //return
         data.bottomText = builderEffect.ToString();
         data.listOfNodes.AddRange(listOfNodes);
@@ -6158,16 +6166,16 @@ public class EffectManager : MonoBehaviour
         List<Node> listOfNodes = new List<Node>();
         if (node != null)
         {
-            builderEffect.AppendFormat("{0}You disinfect the District Surveillance grid{1}{2}{3}", colourGood, colourEnd, "\n", "\n");
-            builderIntel.AppendFormat("{0}You've disinfected the local surveillance grids{1}{2}{3}", colourGood, colourEnd, "\n", "\n");
+            builderEffect.AppendFormat("{0}You disinfect the District Surveillance grid{1}{2}", colourGood, colourEnd, "\n");
+            builderIntel.AppendFormat("{0}<b>You've disinfected the local surveillance grids</b>{1}{2}", colourGood, colourEnd, "\n");
             //current node
             if (node.isSpider == true)
             {
                 node.RemoveSpider();
                 listOfNodes.Add(node);
-                builderEffect.AppendFormat("{0}Spider{1}{2} removed from {3}, {4}{5}{6}{7}{8}", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd,
-                    colourAlert, node.Arc.name, colourEnd, "\n");
-                builderIntel.AppendFormat("{0}<b>Spider{1}{2} removed from {3}{4}</b>{5}", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd, "\n");
+                builderEffect.AppendFormat("{0}{1}Spider{2}{3} removed from {4}, {5}{6}{7}{8}", "\n", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd,
+                    colourAlert, node.Arc.name, colourEnd);
+                builderIntel.AppendFormat("{0}{1}<b>Spider{2}{3} removed from {4}</b>{5}", "\n", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd);
             }
             //neighbouring nodes
             List<Node> listOfNeighbours = node.GetNeighbouringNodes();
@@ -6182,9 +6190,9 @@ public class EffectManager : MonoBehaviour
                         {
                             nodeTemp.RemoveSpider();
                             listOfNodes.Add(nodeTemp);
-                            builderEffect.AppendFormat("{0}Spider{1}{2} removed from {3}, {4}{5}{6}{7}{8}", colourNeutral, colourEnd, colourNormal, nodeTemp.nodeName, colourEnd,
-                                colourAlert, nodeTemp.Arc.name, colourEnd, "\n");
-                            builderIntel.AppendFormat("{0}<b>Spider{1}{2} removed from {3}{4}</b>{5}", colourNeutral, colourEnd, colourNormal, nodeTemp.nodeName, colourEnd, "\n");
+                            builderEffect.AppendFormat("{0}{1}Spider{2}{3} removed from {4}, {5}{6}{7}{8}", "\n", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd,
+                                colourAlert, node.Arc.name, colourEnd);
+                            builderIntel.AppendFormat("{0}{1}<b>Spider{2}{3} removed from {4}</b>{5}", "\n", colourNeutral, colourEnd, colourNormal, node.nodeName, colourEnd);
                         }
                     }
                     else { Debug.LogErrorFormat("Invalid Node (Null) for lisOfNeighbours[{0}]", i); }
@@ -6196,12 +6204,71 @@ public class EffectManager : MonoBehaviour
         //check number of spiders removed
         if (listOfNodes.Count == 0)
         {
-            builderEffect.AppendFormat("{0}No spiders found in current, or neighbouring, districts{1}", colourAlert, colourEnd);
-            builderIntel.AppendFormat("{0}No spiders found in current, or neighbouring, districts{1}", colourAlert, colourEnd);
+            builderEffect.AppendFormat("{0}{1}No spiders found in current, or neighbouring, districts{2}", "\n", colourAlert, colourEnd);
+            builderIntel.AppendFormat("{0}{1}No spiders found in current, or neighbouring, districts{2}", "\n", colourAlert, colourEnd);
         }
         //message
         if (builderIntel.Length > 0)
-        { GameManager.i.messageScript.GearSpecial("Spider Spray Intel dump", builderIntel.ToString()); }
+        { GameManager.i.messageScript.GearSpecial("Spider Spray disinfectant applied", builderIntel.ToString()); }
+        //return
+        data.bottomText = builderEffect.ToString();
+        data.listOfNodes.AddRange(listOfNodes);
+        return data;
+    }
+
+
+    /// <summary>
+    /// Support +1 in current and neighbouring nodes and provides a ShowMe of all nodes affected
+    /// </summary>
+    /// <returns></returns>
+    private EffectDataResolve ResolveWhisper(Node node)
+    {
+        EffectDataResolve data = new EffectDataResolve();
+        StringBuilder builderEffect = new StringBuilder();
+        StringBuilder builderIntel = new StringBuilder();
+        List<Node> listOfNodes = new List<Node>();
+        if (node != null)
+        {
+            builderEffect.AppendFormat("{0}You release a Neural Whisper in the District and stand well back. {1}{2}Support +1{3}{4} in the following{5}{6}", 
+                colourGood, colourEnd, colourNeutral, colourEnd, colourGood, colourEnd, "\n");
+            builderIntel.AppendFormat("{0}<b>Resistance Support has grown in the following districts {1}{2}(Support +1){3}</b>{4}", colourGood, colourEnd, colourNeutral, colourEnd, "\n");
+            //current node
+            node.Support += 1;
+            listOfNodes.Add(node);
+            builderEffect.AppendFormat("{0}{1}{2}, {3}{4}{5}{6}", "\n", colourNormal, node.nodeName, colourEnd, colourAlert, node.Arc.name, colourEnd);
+            builderIntel.AppendFormat("{0}{1}<b>{2}</b>{3}", "\n", colourNormal, node.nodeName, colourEnd);
+            //neighbouring nodes
+            List<Node> listOfNeighbours = node.GetNeighbouringNodes();
+            if (listOfNeighbours != null)
+            {
+                for (int i = 0; i < listOfNeighbours.Count; i++)
+                {
+                    Node nodeTemp = listOfNeighbours[i];
+                    if (nodeTemp != null)
+                    {
+                        if (nodeTemp.Support < maxStatValue)
+                        {
+                            nodeTemp.Support += 1;
+                            listOfNodes.Add(nodeTemp);
+                            builderEffect.AppendFormat("{0}{1}{2}, {3}{4}{5}{6}", "\n", colourNormal, nodeTemp.nodeName, colourEnd, colourAlert, nodeTemp.Arc.name, colourEnd);
+                            builderIntel.AppendFormat("{0}{1}<b>{2}</b>{3}", "\n", colourNormal, nodeTemp.nodeName, colourEnd);
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid Node (Null) for lisOfNeighbours[{0}]", i); }
+                }
+            }
+            else { Debug.LogError("Invalid listOfNeighbours (Null)"); }
+        }
+        else { Debug.LogError("Invalid node (Null)"); }
+        //check at least one district affected
+        if (listOfNodes.Count == 0)
+        {
+            builderEffect.AppendFormat("{0}{1}No districts affected{2}", "\n", colourAlert, colourEnd);
+            builderIntel.AppendFormat("{0}{1}No districts affected{2}", "\n", colourAlert, colourEnd);
+        }
+        //message
+        if (builderIntel.Length > 0)
+        { GameManager.i.messageScript.GearSpecial("Neural Whisper released into the wild", builderIntel.ToString()); }
         //return
         data.bottomText = builderEffect.ToString();
         data.listOfNodes.AddRange(listOfNodes);

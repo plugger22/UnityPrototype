@@ -9,14 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
-  m_Name: BugSpray
+  m_Name: NeuralWhisper
   m_EditorClassIdentifier: 
-  description: Disinfects the current, and neighbouring, districts of Spiders
+  description: A viral rumour. Support +1 to current and neighbouring districts
   ongoingTooltip: 
   listOfCriteria: []
   apply: {fileID: 11400000, guid: b1a5eb697db12fa4f97041e18423c8eb, type: 2}
   topicApply: {fileID: 0}
-  outcome: {fileID: 11400000, guid: 7fe93a0efd35e1c4cadb198e68060fb6, type: 2}
+  outcome: {fileID: 11400000, guid: a633223d0440a2d4f966187c2a130607, type: 2}
   operand: {fileID: 0}
   typeOfEffect: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   duration: {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}

@@ -19,6 +19,7 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: d1c114319b9549f46995595d0bc5db8c, type: 3}
   listOfPersonalEffects:
   - {fileID: 11400000, guid: a015f7bd388dd404896fe8a717124468, type: 2}
+  - {fileID: 11400000, guid: 5446f3b13dcee5c4f9f00dcdedb86c24, type: 2}
   aiHackingEffect: {fileID: 0}
   timesUsed: 0
   isCompromised: 0
@@ -26,8 +27,8 @@ MonoBehaviour:
   chanceOfCompromise: 0
   statTurnObtained: 0
   statTurnLost: 0
-  statTimesUsed: 1
+  statTimesUsed: 0
   statTimesGiven: 0
-  statTimesCompromised: 1
-  statTimesSaved: 1
-  statRenownSpent: 2
+  statTimesCompromised: 0
+  statTimesSaved: 0
+  statRenownSpent: 0
