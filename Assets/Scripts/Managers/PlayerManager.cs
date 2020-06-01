@@ -410,6 +410,21 @@ public class PlayerManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid listOfSpecialGear (Null)"); }
+        //Check listOfCaptureTools (populated during MetaGame) Place any devicews into Player inventory
+        List<CaptureTool> listOfCaptureTools = GameManager.i.dataScript.GetListOfCaptureTools();
+        if (listOfCaptureTools != null)
+        {
+            int count = listOfCaptureTools.Count;
+            if (count > 0)
+            {
+                //add to Player's inventory
+                for (int i = 0; i < count; i++)
+                { AddCaptureTool(listOfCaptureTools[i].innocenceLevel); }
+                //empty out listOfCaptureTools
+                listOfCaptureTools.Clear();
+            }
+        }
+        else { Debug.LogError("Invalid listOfCaptureTools (Null)"); }
     }
     #endregion
 
@@ -2897,6 +2912,10 @@ public class PlayerManager : MonoBehaviour
         { GameManager.i.metaScript.SetMetaSecrets(listOfSecrets); }
         if (listOfInvestigations.Count > 0)
         { GameManager.i.metaScript.SetMetaInvestigations(listOfInvestigations); }
+        //zero out arrayOfCaptureTools at end of level
+        for (int i = 0; i < arrayOfCaptureTools.Length; i++)
+        { arrayOfCaptureTools[i] = false; }
+        
     }
 
 

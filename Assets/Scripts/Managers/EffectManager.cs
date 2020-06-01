@@ -4140,7 +4140,7 @@ public class EffectManager : MonoBehaviour
                     { effectResolve.bottomText = string.Format("{0}gained {1} gear{2}", colourEffect, gear.tag, colourEnd); }
                 }
                 break;
-            case "MetaOptionTool":
+            case "MetaOptionDevice":
                 //special capture tools available becuase HQ actor has a good opinion of you
                 CaptureTool tool = GameManager.i.captureScript.GetCaptureTool(dataInput.data);
                 if (tool != null)

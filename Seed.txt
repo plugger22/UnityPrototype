@@ -1,0 +1,30 @@
+
+Dev seed 7998 -> Monday, 1 June 2020 8:17 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid MetaGame effect.outcome.name "MetaOptionDevice"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EffectManager:ResolveMetaGame(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:4154)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1937)
+	MetaGameUI:ExecuteConfirm() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:2086)
+	MetaGameUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:696)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:311)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	City seed 765 -> New York, America
+
+Dev seed 35959 -> Monday, 1 June 2020 8:20 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid MetaGame effect.outcome.name "MetaOptionDevice"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EffectManager:ResolveMetaGame(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:4154)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1937)
+	MetaGameUI:ExecuteConfirm() (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:2086)
+	MetaGameUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/MetaGame/MetaGameUI.cs:696)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:311)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.EventSystem:Update()
+	City seed 765 -> New York, America
+
+Dev seed 26651 -> Monday, 1 June 2020 8:24 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
