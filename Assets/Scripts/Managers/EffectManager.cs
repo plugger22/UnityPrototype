@@ -4147,7 +4147,7 @@ public class EffectManager : MonoBehaviour
                 {
                     //place in listOfCaptureTools
                     if (GameManager.i.dataScript.AddCaptureTool(tool) == true)
-                        { effectResolve.bottomText = string.Format("{0}gained {1} capture tool{2}", colourEffect, tool.tag, colourEnd); }
+                        { effectResolve.bottomText = string.Format("{0}gained {1} device{2}", colourEffect, tool.tag, colourEnd); }
                 }
                 break;
 
