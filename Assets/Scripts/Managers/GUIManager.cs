@@ -88,6 +88,10 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Font size for Compatibility and Player Moods stars")]
     [Range(14, 24)] public int actorFontSize = 18;
 
+    [Header("ModalInventoryUI")]
+    [Tooltip("Max number of options available in UI")]
+    [Range(4, 4)] public int maxInventoryOptions = 4;
+
     [Header("Sprites")]
     [Tooltip("Sprite to use for ActorGUI to show that the position is vacant")]
     public Sprite vacantActorSprite;

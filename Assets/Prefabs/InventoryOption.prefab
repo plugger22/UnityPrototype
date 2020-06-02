@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: 224816813924769026}
   - component: {fileID: 114525781696955744}
   - component: {fileID: 114668023496721710}
+  - component: {fileID: 225627259608909356}
   m_Layer: 5
   m_Name: InventoryOption
   m_TagString: Untagged
@@ -161,8 +162,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 12
-  m_fontSizeBase: 12
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 12
@@ -739,3 +740,14 @@ RectTransform:
   m_AnchoredPosition: {x: 44.99997, y: -153.90002}
   m_SizeDelta: {x: 100, y: 90}
   m_Pivot: {x: 0, y: 0}
+--- !u!225 &225627259608909356
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1495198540931258}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0

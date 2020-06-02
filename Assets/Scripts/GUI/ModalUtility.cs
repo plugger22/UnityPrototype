@@ -317,10 +317,19 @@ namespace modalAPI
         public string help2;
         public string help3;
         public GlobalSide side;
-        public GenericOptionData[] arrayOfOptions = new GenericOptionData[4];                               //only the first four are recognised
-        public GenericTooltipDetails[] arrayOfTooltipsSprite = new GenericTooltipDetails[4];                //same [index] for both arrays. Keep in synch!! -> Sprite tooltip
-        public GenericTooltipDetails[] arrayOfTooltipsStars = new GenericTooltipDetails[4];                 //same [index] for both arrays. Keep in synch!! -> bottom text (Stars) tooltip, optional
-        public GenericTooltipDetails[] arrayOfTooltipsCompatibility = new GenericTooltipDetails[4];         //same [index] for both arrays. Keep in synch!! -> top text (Stars) tooltip, optional
+        public GenericOptionData[] arrayOfOptions;                                              //only the first four are recognised
+        public GenericTooltipDetails[] arrayOfTooltipsSprite;                                   //same [index] for both arrays. Keep in synch!! -> Sprite tooltip
+        public GenericTooltipDetails[] arrayOfTooltipsStars;                                    //same [index] for both arrays. Keep in synch!! -> bottom text (Stars) tooltip, optional
+        public GenericTooltipDetails[] arrayOfTooltipsCompatibility;                            //same [index] for both arrays. Keep in synch!! -> top text (Stars) tooltip, optional
+
+        public InventoryInputData()
+        {
+            int maxOptions = GameManager.i.guiScript.maxInventoryOptions;
+            arrayOfOptions = new GenericOptionData[maxOptions];
+            arrayOfTooltipsSprite = new GenericTooltipDetails[maxOptions];
+            arrayOfTooltipsStars = new GenericTooltipDetails[maxOptions];
+            arrayOfTooltipsCompatibility = new GenericTooltipDetails[maxOptions];
+        }
     }
 
     /// <summary>
@@ -333,7 +342,8 @@ namespace modalAPI
         public string textUpper;                //keep SHORT, name of inventory item, eg. 'FIXER' or 'CHAOS CRITTER'
         public string textLower;                //details that go below name, eg. "Unhappy in 2 turns", motivational stars, etc
         public int optionID;                    //Used when the Generic Picker returns a result which is then processed, eg. teamID, actorID, etc.
-        public string optionName;                  //used when Generic Picker returns a result which is then processed, for name key's, eg. gear. Optional
+        public string optionName;               //used when Generic Picker returns a result which is then processed, for name key's, eg. gear. Optional
+        public bool isFaded;                    //optional. If true entire option is displayed 'greyed out'
     }
 
     /// <summary>

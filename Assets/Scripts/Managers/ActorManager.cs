@@ -288,6 +288,7 @@ public class ActorManager : MonoBehaviour
         EventManager.instance.AddListener(EventType.GenericRecruitActorAuthority, OnEvent, "ActorManager");
         EventManager.instance.AddListener(EventType.InventorySetReserve, OnEvent, "ActorManager");
         EventManager.instance.AddListener(EventType.InventorySetHQ, OnEvent, "ActorManager");
+        EventManager.instance.AddListener(EventType.InventorySetDevice, OnEvent, "ActorManager.cs");
     }
     #endregion
 
@@ -459,6 +460,9 @@ public class ActorManager : MonoBehaviour
                 break;
             case EventType.InventorySetHQ:
                 InitialiseHqHierarchyInventory();
+                break;
+            case EventType.InventorySetDevice:
+                InitialiseDeviceInventory();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -4098,6 +4102,90 @@ public class ActorManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid arrayOfHQActors (Null)"); }
+    }
+
+
+    /// <summary>
+    /// sets up all needed data for Interrogation Devices Inventory and triggers ModalInventoryUI to display such
+    /// Displays all devices with ones not in player's inventory greyed out
+    /// </summary>
+    private void InitialiseDeviceInventory()
+    {
+        int numOfDevices = GameManager.i.guiScript.maxInventoryOptions;
+        int lengthOfArray;
+        bool errorFlag = false;
+        //get devices
+        bool[] arrayOfDevices = GameManager.i.playerScript.GetArrayOfCaptureTools();
+        lengthOfArray = arrayOfDevices.Length;
+        if (arrayOfDevices != null)
+        {
+            //At least one device in Player's possession
+            InventoryInputData data = new InventoryInputData();
+            data.side = GameManager.i.sideScript.PlayerSide;
+            data.textHeader = "Interrogation Devices";
+            data.textTop = string.Format("Only {0}highlighted{1} devices are in your {2}possession{3}", colourNeutral, colourEnd, colourNeutral, colourEnd);
+            data.textBottom = string.Format("{0}MOUSE OVER{1} devices{2} for more information", colourAlert, colourEnd, numOfDevices > 1 ? "s" : "");
+            data.state = ModalInventorySubState.CaptureTool;
+            //loop devices and populate data packages
+            for (int i = 0; i < lengthOfArray; i++)
+            {
+                CaptureTool device = GameManager.i.captureScript.GetCaptureTool(i);
+                if (device != null)
+                {
+                    GenericOptionData optionData = new GenericOptionData();
+                    optionData.sprite = device.sprite;
+                    optionData.textUpper = string.Format("{0}{1}{2}", colourAlert, device.tag, colourEnd);
+                    //present in player's inventory
+                    if (arrayOfDevices[i] == true) { optionData.isFaded = false; }
+                    else { optionData.isFaded = true; }
+                    //innocence level
+                    optionData.textLower = GameManager.i.guiScript.GetDatapointStars(device.innocenceLevel);
+                    optionData.optionID = device.innocenceLevel;
+                    //tooltip -> sprite
+                    GenericTooltipDetails tooltipDetailsSprite = new GenericTooltipDetails();
+                    tooltipDetailsSprite.textHeader = string.Format("{0}<size=120%>{1}{2}", colourAlert, device.tag.ToUpper(), colourEnd);
+                    tooltipDetailsSprite.textMain = string.Format("{0}{1}{2}", colourNormal, device.descriptor, colourEnd);
+                    tooltipDetailsSprite.textDetails = string.Format("Innocence {0}", GameManager.i.guiScript.GetDatapointStars(device.innocenceLevel));
+                    //tooltip -> stars (bottom text, innocence -> same for all)
+                    GenericTooltipDetails tooltipDetailsStars = new GenericTooltipDetails();
+                    tooltipDetailsStars.textHeader = string.Format("{0}'s{1}{2}<size=120%>INNOCENCE{3}", device.tag, "\n", colourNeutral, colourEnd);
+                    tooltipDetailsStars.textMain = string.Format("{0}The device can be used in any {1}interrogation{2} where your {3}innocence{4} level is the {5}same{6}", 
+                        "\n", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+                    tooltipDetailsStars.textDetails = string.Format("0 to 3 stars{0}{1}Higher the better{2}", "\n", colourAlert, colourEnd);
+                    //add to arrays
+                    data.arrayOfOptions[i] = optionData;
+                    data.arrayOfTooltipsSprite[i] = tooltipDetailsSprite;
+                    data.arrayOfTooltipsStars[i] = tooltipDetailsStars;
+                    //help
+                    data.help0 = "hq_over_0";
+                    data.help1 = "hq_over_1";
+                    data.help2 = "hq_over_2";
+                    data.help3 = "hq_over_3";
+                }
+                else { Debug.LogWarningFormat("Invalid device (Null) for innocenceLevel {0}", i); }
+            }
+            //data package has been populated, proceed if all O.K
+            if (errorFlag == true)
+            {
+                //error msg
+                ModalOutcomeDetails details = new ModalOutcomeDetails()
+                {
+                    side = GameManager.i.sideScript.PlayerSide,
+                    textTop = string.Format("{0}There is a mess on the floor. It's all turned to poo{1}", colourAlert, colourEnd),
+                    textBottom = "Call the Cleaner, he'll fix it",
+                    sprite = GameManager.i.guiScript.errorSprite,
+                    isAction = false
+                };
+                EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "ActorManager.cs -> InitialiseDeviceInventory");
+            }
+            else
+            {
+                //open Inventory UI
+                EventManager.instance.PostNotification(EventType.InventoryOpenUI, this, data, "ActorManager.cs -> InitialiseDeviceInventory");
+            }
+
+        }
+        else { Debug.LogError("Invalid arrayOfDevices (Null)"); }
     }
 
 
@@ -8669,31 +8757,31 @@ public class ActorManager : MonoBehaviour
             char bullet = '\u2022';
             int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
             switch (motivation)
-                {
+            {
                 case 3:
                     opinion = string.Format("{0}{1}{2} thinks you are doing a {3}great job{4}, by the way", colourAlert, actor.firstName, colourEnd, colourAlert, colourEnd);
                     assistance = string.Format("{0}{1}{2} is happy to help you and has gone out of their way to offer {3}special options{4}", colourAlert, actor.actorName, colourEnd, colourAlert, colourEnd);
                     break;
                 case 2:
-                    opinion = string.Format("{0}{1}{2} is {3}indifferent{4} and considers you {5}just another leader{6}", 
+                    opinion = string.Format("{0}{1}{2} is {3}indifferent{4} and considers you {5}just another leader{6}",
                         colourAlert, actor.firstName, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
-                    assistance = string.Format("{0}{1}{2} is willing to help you because it's their job. They have some {3}additional options{4} but only because it's standard protocol", 
+                    assistance = string.Format("{0}{1}{2} is willing to help you because it's their job. They have some {3}additional options{4} but only because it's standard protocol",
                         colourAlert, actor.actorName, colourEnd, colourAlert, colourEnd);
                     break;
                 case 1:
                     opinion = string.Format("{0}{1}{2} is {3}disappointed{4} in your performance to date", colourAlert, actor.firstName, colourEnd, colourAlert, colourEnd);
-                    assistance = string.Format("{0}{1}{2} is reluctant to help you and {3}won't{4} be offering any {5}special options{6}", 
+                    assistance = string.Format("{0}{1}{2} is reluctant to help you and {3}won't{4} be offering any {5}special options{6}",
                         colourAlert, actor.actorName, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
                     break;
                 case 0:
-                    opinion = string.Format("{0}{1}{2} wonders {3}why you are still here{4} considering that you're a {5}walking disaster{6}", 
+                    opinion = string.Format("{0}{1}{2} wonders {3}why you are still here{4} considering that you're a {5}walking disaster{6}",
                         colourAlert, actor.firstName, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
-                    assistance = string.Format("{0}{1}{2} can't stand you but will do what is required. You can {3}forget{4} about any {5}special options{6}", 
+                    assistance = string.Format("{0}{1}{2} can't stand you but will do what is required. You can {3}forget{4} about any {5}special options{6}",
                         colourAlert, actor.actorName, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
                     break;
             }
-            string status = string.Format("{0}{1}{2}{3} {4} Renown {5}{6}{7}{8} {9} Motivation {10}  (current opinion of you)", 
-                colourAlert, actor.actorName, colourEnd, "\n",  bullet, colourAlert, actor.Renown, colourEnd, "\n", bullet, GameManager.i.guiScript.GetDatapointStars(motivation));
+            string status = string.Format("{0}{1}{2}{3} {4} Renown {5}{6}{7}{8} {9} Motivation {10}  (current opinion of you)",
+                colourAlert, actor.actorName, colourEnd, "\n", bullet, colourAlert, actor.Renown, colourEnd, "\n", bullet, GameManager.i.guiScript.GetDatapointStars(motivation));
             //title and name
             HelpData data0 = new HelpData()
             {

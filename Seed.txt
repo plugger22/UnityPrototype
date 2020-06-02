@@ -45,3 +45,43 @@ City seed 765 -> New York, America
 Dev seed 19441 -> Tuesday, 2 June 2020 9:54 AM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 45560 -> Tuesday, 2 June 2020 10:10 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 39944 -> Tuesday, 2 June 2020 11:54 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 44836 -> Tuesday, 2 June 2020 11:58 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 36994 -> Tuesday, 2 June 2020 12:01 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46099 -> Tuesday, 2 June 2020 12:16 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 60933 -> Tuesday, 2 June 2020 12:34 PM
+City seed 5678 -> London, United Kingdom
+WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "InventoryOpenUI"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:299)
+	ActorManager:InitialiseDeviceInventory() (at Assets/Scripts/Managers/ActorManager.cs:4184)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:465)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:312)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:314)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:408)
+	WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "InventoryOpenUI"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:299)
+	ActorManager:InitialiseDeviceInventory() (at Assets/Scripts/Managers/ActorManager.cs:4184)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:465)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:312)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:314)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:408)
+	
+Dev seed 62819 -> Tuesday, 2 June 2020 12:35 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 8747 -> Tuesday, 2 June 2020 12:36 PM
+City seed 5678 -> London, United Kingdom

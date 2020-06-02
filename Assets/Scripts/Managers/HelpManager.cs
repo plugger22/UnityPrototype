@@ -1900,6 +1900,7 @@ public class HelpManager : MonoBehaviour
             .AppendFormat(" End Turn -> Enter{0}", "\n")
             .AppendFormat(" End Level -> X{0}{1}", "\n", "\n")
             .AppendFormat(" HQ Hierarchy -> H{0}", "\n")
+            .AppendFormat(" Interrogation Devices -> V{0}", "\n")
             .AppendFormat(" Reserves -> R{0}", "\n")
             .AppendFormat(" Gear -> G{0}{1}", "\n", "\n")
             .AppendFormat(" Targets -> T{0}", "\n")

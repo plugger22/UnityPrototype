@@ -13,6 +13,8 @@ public class CaptureTool : ScriptableObject
     public string tag;
     [Tooltip("In Game description")]
     [TextArea] public string descriptor;
+    [Tooltip("Sprite image of device")]
+    public Sprite sprite;
 
     [Header("Innocence")]
     [Tooltip("Innocence level (incarceration type) that this tool applies to, eg. Innocence level 3 which is countering an InterroBot")]
@@ -22,7 +24,8 @@ public class CaptureTool : ScriptableObject
     public void OnEnable()
     {
         Debug.AssertFormat(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty) for {0}", name);
-        Debug.AssertFormat(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or Empty) for {0}", name);       
+        Debug.AssertFormat(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or Empty) for {0}", name);
+        Debug.AssertFormat(sprite != null, "Invalid sprite (Null) for {0}", name);
     }
 
 }

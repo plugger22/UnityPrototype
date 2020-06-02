@@ -307,6 +307,12 @@ public class InputManager : MonoBehaviour
                         if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
                         { EventManager.instance.PostNotification(EventType.InventorySetHQ, this, "HQ Inventory", string.Format("InputManager.cs -> ProcessKeyInput ShowHQ \"{0}\"", Input.inputString.ToUpper())); }
                     }
+                    else if (Input.GetButtonDown("ShowDevices") == true)
+                    {
+                        //only do so if new turn processing hasn't commenced
+                        if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
+                        { EventManager.instance.PostNotification(EventType.InventorySetDevice, this, "Device Inventory", string.Format("InputManager.cs -> ProcessKeyInput ShowDevices \"{0}\"", Input.inputString.ToUpper())); }
+                    }
                     else if (Input.GetButtonDown("ShowTargets") == true)
                     {
                         //only do so if new turn processing hasn't commenced
@@ -442,6 +448,11 @@ public class InputManager : MonoBehaviour
                             {
                                 if (ModalInventoryState == ModalInventorySubState.HQ)
                                 { EventManager.instance.PostNotification(EventType.InventoryCloseUI, this, null, string.Format("InputManager.cs -> ProcessKeyInput ShowHQ \"{0}\"", Input.inputString.ToUpper())); }
+                            }
+                            else if (Input.GetButtonDown("ShowDevices") == true)
+                            {
+                                if (ModalInventoryState == ModalInventorySubState.CaptureTool)
+                                { EventManager.instance.PostNotification(EventType.InventoryCloseUI, this, null, string.Format("InputManager.cs -> ProcessKeyInput ShowDevices \"{0}\"", Input.inputString.ToUpper())); }
                             }
                             break;
                         case ModalSubState.TeamPicker:

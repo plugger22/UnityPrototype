@@ -52,6 +52,7 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public int stressImmunityStart;                               //starting value of stressImmunityCurrent (decreases each time drug used)
     [HideInInspector] public int stressImmunityCurrent;                             //dynamic number of turns player is immune from stress (due to drug)
     [HideInInspector] public int addictedTally;                                     //starts from 0 whenever player becomes addicted (needed to provide a buffer before feed the need kicks in)
+    [HideInInspector] public int maxNumOfDevices;                                   //max number of interrogation devices (captureTools) player can have in inventory at any one time (UI restriction)
     //collections
     private bool[] arrayOfCaptureTools = new bool[4];                               //if true Player has CaptureTool.SO corresponding to array index (0 to 3) level of Innocence
     private List<string> listOfGear = new List<string>();                           //gear names of all gear items in inventory
@@ -379,10 +380,6 @@ public class PlayerManager : MonoBehaviour
         status = ActorStatus.Active;
         inactiveStatus = ActorInactive.None;
         tooltipStatus = ActorTooltip.None;
-
-        /*//remove any conditions, Player starts followOn level with a clean slate
-        RemoveAllConditions(GameManager.instance.sideScript.PlayerSide);*/
-
         //reset mood to default
         SetMood(moodStart);
         //clear out required collections
@@ -2861,16 +2858,26 @@ public class PlayerManager : MonoBehaviour
 
     /// <summary>
     /// Add capture tool, for the specified innocence level, to player's inventory. Returns true if successful, false otherwise, eg. may not be a CaptureTool present for that particular level
+    /// Or may already be present, or inventory may be maxxed out (limit of 3)
     /// </summary>
     /// <param name="innocenceLevel"></param>
     /// <returns></returns>
     public bool AddCaptureTool(int innocenceLevel)
     {
         Debug.AssertFormat(innocenceLevel > -1 && innocenceLevel < 4, "Invalid innocence level \"{0}\" (should be within range 0 to 3)", innocenceLevel);
+        //capture tool exist for that innocence level
         if (GameManager.i.captureScript.CheckIfCaptureToolPresent(innocenceLevel) == true)
         {
-            arrayOfCaptureTools[innocenceLevel] = true;
-            return true;
+            //check if already present
+            if (arrayOfCaptureTools[innocenceLevel] == false)
+            {
+                //check inventory not maxxed out
+
+                arrayOfCaptureTools[innocenceLevel] = true;
+                return true;
+            }
+            else
+            { Debug.LogWarningFormat("Capture tool already present for InnocenceLevel {0}", innocenceLevel); }
         }
         return false;
     }
@@ -2901,6 +2908,14 @@ public class PlayerManager : MonoBehaviour
         Debug.AssertFormat(innocenceLevel > -1 && innocenceLevel < 4, "Invalid innocence level \"{0}\" (should be within range 0 to 3)", innocenceLevel);
         return arrayOfCaptureTools[innocenceLevel];
     }
+
+
+    
+
+
+    //
+    // - - - MetaGame
+    //
 
     /// <summary>
     /// take care of all MetaGame matters

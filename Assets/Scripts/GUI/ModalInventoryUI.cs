@@ -28,6 +28,7 @@ public class ModalInventoryUI : MonoBehaviour
     public Button buttonHelp;
 
     public GameObject[] arrayOfInventoryOptions;                //place Inventory option UI elements here (up to 4 options)
+    private CanvasGroup[] arrayOfCanvasGroups;                  //used to grey out options
     private InventoryInteraction[] arrayOfInteractions;         //used for fast access to interaction components
     private GenericTooltipUI[] arrayOfTooltipsSprites;          //used for fast access to tooltip components (Sprites)
     private GenericTooltipUI[] arrayOfTooltipsStars;            //used for fast access to tooltip components for Stars (bottomText)
@@ -59,6 +60,9 @@ public class ModalInventoryUI : MonoBehaviour
 
     private void Awake()
     {
+        //inventory interaction & tooltip arrays set up
+        int numOfOptions = arrayOfInventoryOptions.Length;
+        /*Debug.AssertFormat(numOfOptions == GameManager.i.guiScript.maxInventoryOptions, "Mismatch on Option numbers (is {0}, should be {1})", numOfOptions, GameManager.i.guiScript.maxInventoryOptions);*/
         //Asserts
         Debug.Assert(buttonHelp != null, "Invalid GenericHelpTooltipUI (Null)");
         Debug.Assert(buttonCancel != null, "Invalid buttonCancel (Null)");
@@ -70,8 +74,8 @@ public class ModalInventoryUI : MonoBehaviour
         //help button
         help = buttonHelp.GetComponent<GenericHelpTooltipUI>();
         if (help == null) { Debug.LogError("Invalid help script (Null)"); }
-        //inventory interaction & tooltip arrays set up
-        int numOfOptions = arrayOfInventoryOptions.Length;
+        //initialise arrays
+        arrayOfCanvasGroups = new CanvasGroup[numOfOptions];
         arrayOfInteractions = new InventoryInteraction[numOfOptions];
         arrayOfTooltipsSprites = new GenericTooltipUI[numOfOptions];
         arrayOfTooltipsStars = new GenericTooltipUI[numOfOptions];
@@ -80,6 +84,11 @@ public class ModalInventoryUI : MonoBehaviour
         {
             if (arrayOfInventoryOptions[i] != null)
             {
+                //canvas groups
+                CanvasGroup canvasGroup = arrayOfInventoryOptions[i].GetComponent<CanvasGroup>();
+                if (canvasGroup != null)
+                { arrayOfCanvasGroups[i] = canvasGroup; }
+                else { Debug.LogErrorFormat("Invalid canvasGroup (Null) arrayOfInventoryOptions[{0}]", i); }
                 //interaction
                 InventoryInteraction interaction = arrayOfInventoryOptions[i].GetComponent<InventoryInteraction>();
                 if (interaction != null)
@@ -89,21 +98,21 @@ public class ModalInventoryUI : MonoBehaviour
                     GenericTooltipUI tooltipSprite = arrayOfInventoryOptions[i].GetComponent<GenericTooltipUI>();
                     if (tooltipSprite != null)
                     { arrayOfTooltipsSprites[i] = tooltipSprite; }
-                    else { Debug.LogError(string.Format("Invalid GenericTooltipUI for arrayOfInventoryOptions[{0}] (Null)", i)); }
+                    else { Debug.LogErrorFormat("Invalid GenericTooltipUI for arrayOfInventoryOptions[{0}] (Null)", i); }
                     //tooltip -> stars (bottomText, optional)
                     GenericTooltipUI tooltipStars = interaction.tooltipStars.GetComponent<GenericTooltipUI>();
                     if (tooltipStars != null)
                     { arrayOfTooltipsStars[i] = tooltipStars; }
-                    else { Debug.LogError(string.Format("Invalid GenericTooltipUI for interaction.tooltipStars \"{0}\" (Null)", i)); }
+                    else { Debug.LogErrorFormat("Invalid GenericTooltipUI for interaction.tooltipStars \"{0}\" (Null)", i); }
                     //tooltip -> compatibility (topText, optional)
                     GenericTooltipUI tooltipCompatibility = interaction.tooltipCompatibility.GetComponent<GenericTooltipUI>();
                     if (tooltipCompatibility != null)
                     { arrayOfTooltipsCompatibility[i] = tooltipCompatibility; }
-                    else { Debug.LogError(string.Format("Invalid GenericTooltipUI for interaction.tooltipCompatibility \"{0}\" (Null)", i)); }
+                    else { Debug.LogErrorFormat("Invalid GenericTooltipUI for interaction.tooltipCompatibility \"{0}\" (Null)", i); }
                 }
-                else { Debug.LogError(string.Format("Invalid InventoryInteraction for arrayOfInventoryOptions[{0}] (Null)", i)); }
+                else { Debug.LogErrorFormat("Invalid InventoryInteraction for arrayOfInventoryOptions[{0}] (Null)", i); }
             }
-            else { Debug.LogError(string.Format("Invalid arrayOfInventoryOptions[{0}] (Null)", i)); }
+            else { Debug.LogErrorFormat("Invalid arrayOfInventoryOptions[{0}] (Null)", i); }
         }
 
     }
@@ -222,6 +231,10 @@ public class ModalInventoryUI : MonoBehaviour
                         {
                             //activate option
                             arrayOfInventoryOptions[i].SetActive(true);
+                            //check if greyed out
+                            if (details.arrayOfOptions[i].isFaded == true)
+                            { arrayOfCanvasGroups[i].alpha = 0.35f; }
+                            else { arrayOfCanvasGroups[i].alpha = 1.0f; }
                             //populate option data
                             arrayOfInteractions[i].optionImage.sprite = details.arrayOfOptions[i].sprite;
                             arrayOfInteractions[i].textTop.text = details.arrayOfOptions[i].textTop;

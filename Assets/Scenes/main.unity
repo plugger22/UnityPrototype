@@ -19129,16 +19129,6 @@ Prefab:
       propertyPath: m_Name
       value: Option0
       objectReference: {fileID: 0}
-    - target: {fileID: 114037131444707108, guid: d9a80798936ec17458b94ace33baa876,
-        type: 2}
-      propertyPath: m_fontSize
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 114037131444707108, guid: d9a80798936ec17458b94ace33baa876,
-        type: 2}
-      propertyPath: m_fontSizeBase
-      value: 14
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9a80798936ec17458b94ace33baa876, type: 2}
   m_IsPrefabAsset: 0
