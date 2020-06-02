@@ -28,7 +28,6 @@ public class ModalInventoryUI : MonoBehaviour
     public Button buttonHelp;
 
     public GameObject[] arrayOfInventoryOptions;                //place Inventory option UI elements here (up to 4 options)
-    private CanvasGroup[] arrayOfCanvasGroups;                  //used to grey out options
     private InventoryInteraction[] arrayOfInteractions;         //used for fast access to interaction components
     private GenericTooltipUI[] arrayOfTooltipsSprites;          //used for fast access to tooltip components (Sprites)
     private GenericTooltipUI[] arrayOfTooltipsStars;            //used for fast access to tooltip components for Stars (bottomText)
@@ -75,7 +74,6 @@ public class ModalInventoryUI : MonoBehaviour
         help = buttonHelp.GetComponent<GenericHelpTooltipUI>();
         if (help == null) { Debug.LogError("Invalid help script (Null)"); }
         //initialise arrays
-        arrayOfCanvasGroups = new CanvasGroup[numOfOptions];
         arrayOfInteractions = new InventoryInteraction[numOfOptions];
         arrayOfTooltipsSprites = new GenericTooltipUI[numOfOptions];
         arrayOfTooltipsStars = new GenericTooltipUI[numOfOptions];
@@ -84,11 +82,6 @@ public class ModalInventoryUI : MonoBehaviour
         {
             if (arrayOfInventoryOptions[i] != null)
             {
-                //canvas groups
-                CanvasGroup canvasGroup = arrayOfInventoryOptions[i].GetComponent<CanvasGroup>();
-                if (canvasGroup != null)
-                { arrayOfCanvasGroups[i] = canvasGroup; }
-                else { Debug.LogErrorFormat("Invalid canvasGroup (Null) arrayOfInventoryOptions[{0}]", i); }
                 //interaction
                 InventoryInteraction interaction = arrayOfInventoryOptions[i].GetComponent<InventoryInteraction>();
                 if (interaction != null)
@@ -164,6 +157,7 @@ public class ModalInventoryUI : MonoBehaviour
     /// <param name="details"></param>
     private void SetInventoryUI(InventoryInputData details)
     {
+        Color colorImage, colorStars, colorText;
         bool errorFlag = false;
         //set modal status
         GameManager.i.guiScript.SetIsBlocked(true);
@@ -231,10 +225,29 @@ public class ModalInventoryUI : MonoBehaviour
                         {
                             //activate option
                             arrayOfInventoryOptions[i].SetActive(true);
-                            //check if greyed out
+
+                            //check if greyed out (NOTE: doesn't include stars/text above image, eg. compatibility as only CaptureTool options can be greyed out and they don't have compatibility stars)
+                            colorImage = arrayOfInteractions[i].optionImage.color;
+                            colorText = arrayOfInteractions[i].textUpper.color;
+                            colorStars = arrayOfInteractions[i].textLower.color;
                             if (details.arrayOfOptions[i].isFaded == true)
-                            { arrayOfCanvasGroups[i].alpha = 0.35f; }
-                            else { arrayOfCanvasGroups[i].alpha = 1.0f; }
+                            {
+                                //fade image
+                                colorImage.a = 0.25f;
+                                colorText.a = 0.25f;
+                                colorStars.a = 0.25f;
+                            }
+                            else
+                            {
+                                //need to set to full alpha otherwise previous settings will carry over
+                                colorImage.a = 1.0f;
+                                colorText.a = 1.0f;
+                                colorStars.a = 1.0f;
+                            }
+                            arrayOfInteractions[i].optionImage.color = colorImage;
+                            arrayOfInteractions[i].textUpper.color = colorText;
+                            arrayOfInteractions[i].textLower.color = colorStars;
+
                             //populate option data
                             arrayOfInteractions[i].optionImage.sprite = details.arrayOfOptions[i].sprite;
                             arrayOfInteractions[i].textTop.text = details.arrayOfOptions[i].textTop;
@@ -311,7 +324,6 @@ public class ModalInventoryUI : MonoBehaviour
                     {
                         //error -> Null Interaction data
                         Debug.LogErrorFormat("Invalid arrayOfInventoryOptions[\"{0}\"] optionInteraction (Null)", i);
-                        errorFlag = true;
                         break;
                     }
                 }
@@ -319,7 +331,6 @@ public class ModalInventoryUI : MonoBehaviour
                 {
                     //error -> Null array
                     Debug.LogErrorFormat("Invalid arrayOfInventoryOptions[{0}] (Null)", i);
-                    errorFlag = true;
                     break;
                 }
             }
@@ -489,7 +500,7 @@ public class ModalInventoryUI : MonoBehaviour
     /// <param name="optionData"></param>
     public void GearLeftClicked(int optionData)
     {
-        
+
     }*/
 
 

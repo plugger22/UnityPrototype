@@ -2075,6 +2075,7 @@ public class MetaGameUI : MonoBehaviour
                         {
                             effectInput.originText = data.Key;
                             effectInput.dataName = data.Value.dataName;
+                            effectInput.data = data.Value.data;
                             for (int i = 0; i < count; i++)
                             {
                                 Effect effect = data.Value.listOfEffects[i];

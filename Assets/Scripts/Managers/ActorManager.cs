@@ -4114,6 +4114,7 @@ public class ActorManager : MonoBehaviour
         int numOfDevices = GameManager.i.guiScript.maxInventoryOptions;
         int lengthOfArray;
         bool errorFlag = false;
+        string stars;
         //get devices
         bool[] arrayOfDevices = GameManager.i.playerScript.GetArrayOfCaptureTools();
         lengthOfArray = arrayOfDevices.Length;
@@ -4126,12 +4127,14 @@ public class ActorManager : MonoBehaviour
             data.textTop = string.Format("Only {0}highlighted{1} devices are in your {2}possession{3}", colourNeutral, colourEnd, colourNeutral, colourEnd);
             data.textBottom = string.Format("{0}MOUSE OVER{1} devices{2} for more information", colourAlert, colourEnd, numOfDevices > 1 ? "s" : "");
             data.state = ModalInventorySubState.CaptureTool;
+            data.isOptionsCanFade = true;
             //loop devices and populate data packages
             for (int i = 0; i < lengthOfArray; i++)
             {
                 CaptureTool device = GameManager.i.captureScript.GetCaptureTool(i);
                 if (device != null)
                 {
+                    stars = GameManager.i.guiScript.GetDatapointStars(device.innocenceLevel);
                     GenericOptionData optionData = new GenericOptionData();
                     optionData.sprite = device.sprite;
                     optionData.textUpper = string.Format("{0}{1}{2}", colourAlert, device.tag, colourEnd);
@@ -4139,19 +4142,22 @@ public class ActorManager : MonoBehaviour
                     if (arrayOfDevices[i] == true) { optionData.isFaded = false; }
                     else { optionData.isFaded = true; }
                     //innocence level
-                    optionData.textLower = GameManager.i.guiScript.GetDatapointStars(device.innocenceLevel);
+                    optionData.textLower = stars;
                     optionData.optionID = device.innocenceLevel;
                     //tooltip -> sprite
                     GenericTooltipDetails tooltipDetailsSprite = new GenericTooltipDetails();
                     tooltipDetailsSprite.textHeader = string.Format("{0}<size=120%>{1}{2}", colourAlert, device.tag.ToUpper(), colourEnd);
                     tooltipDetailsSprite.textMain = string.Format("{0}{1}{2}", colourNormal, device.descriptor, colourEnd);
-                    tooltipDetailsSprite.textDetails = string.Format("Innocence {0}", GameManager.i.guiScript.GetDatapointStars(device.innocenceLevel));
+                    if (arrayOfDevices[i] == true)
+                    { tooltipDetailsSprite.textDetails = string.Format("{0}You <size=115%>HAVE</size> this Device{1}", colourGood, colourEnd); }
+                    else { tooltipDetailsSprite.textDetails = string.Format("{0}You <size=115%>DO NOT</size> have this Device{1}", colourBad, colourEnd); }
                     //tooltip -> stars (bottom text, innocence -> same for all)
                     GenericTooltipDetails tooltipDetailsStars = new GenericTooltipDetails();
                     tooltipDetailsStars.textHeader = string.Format("{0}'s{1}{2}<size=120%>INNOCENCE{3}", device.tag, "\n", colourNeutral, colourEnd);
-                    tooltipDetailsStars.textMain = string.Format("{0}The device can be used in any {1}interrogation{2} where your {3}innocence{4} level is the {5}same{6}", 
-                        "\n", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
-                    tooltipDetailsStars.textDetails = string.Format("0 to 3 stars{0}{1}Higher the better{2}", "\n", colourAlert, colourEnd);
+                    tooltipDetailsStars.textMain = string.Format("The device can be used in any {0}<size=115%>Interrogation</size>{1} where your {2}Innocence{3} level is the {4}same{5}", 
+                        colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+                    tooltipDetailsStars.textDetails = string.Format("{0}{1}<size=90%>0 to 3 stars{2}{3}Higher the better</size>{4}", stars, "\n",
+                        "\n", colourAlert, colourEnd);
                     //add to arrays
                     data.arrayOfOptions[i] = optionData;
                     data.arrayOfTooltipsSprite[i] = tooltipDetailsSprite;

@@ -608,7 +608,7 @@ public class MetaManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Converts listOfMetaOptions into idividual MetaData and packages up into a MetaInfoData package ready for MetaGameUI
+    /// Converts listOfMetaOptions into individual MetaData and packages up into a MetaInfoData package ready for MetaGameUI
     /// </summary>
     private void InitialiseMetaData()
     {
@@ -638,6 +638,7 @@ public class MetaManager : MonoBehaviour
                             bottomText = metaOption.descriptor,
                             inactiveText = metaOption.textInactive,
                             sideLevel = level,
+                            data = metaOption.data,
                             dataName = metaOption.dataName,
                             dataTag = metaOption.dataTag,
                             sprite = metaOption.sprite,

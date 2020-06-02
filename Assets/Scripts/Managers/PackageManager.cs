@@ -392,18 +392,23 @@ namespace packageAPI
         public bool isRecommended;                  //if true part of recommended selection of options
         public bool isCriteria;                     //true if any criteria involved, false otherwise
         public bool isSelected;                     //used within MetaGameUI (if true has been selected by player)
-        public MetaPriority recommendedPriority;      //recommendations selected on priority until renown runs out
+        public MetaPriority recommendedPriority;    //recommendations selected on priority until renown runs out
         public List<Effect> listOfEffects;          //effects that happen as a result of metaData being selected
-        public string dataName;                     //used to implement outcome
+        public int data;                            //used to iplement outcome (where a number is needed) 
+        public string dataName;                     //used to implement outcome (where a name is needed)
         public string dataTag;                      //used to implement outcome (optional, eg. name of a secret/investigation/organisation)
-        public int help = -1;                       //key to dictOfHelp for info button down at bottom (can ignore) -> will display help button if present (make sure tag's ae set below for specific topics
+        public int help;                            //key to dictOfHelp for info button down at bottom (can ignore) -> will display help button if present (make sure tag's ae set below for specific topics
         public string tag0;                         //help topic, provide tag or leave Null if none. NOTE: add help topics in sequence -> 0 / 1 / 2 / 3, and make sure help > 0 
         public string tag1;
         public string tag2;
         public string tag3;
 
         public MetaData()
-        { listOfEffects = new List<Effect>(); }
+        {
+            listOfEffects = new List<Effect>();
+            help = -1;
+            data = -1;
+        }
     }
 
     /// <summary>

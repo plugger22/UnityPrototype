@@ -312,6 +312,7 @@ namespace modalAPI
         public string textHeader;
         public string textTop;
         public string textBottom;
+        public bool isOptionsCanFade;                                                           //optional, if true, any options with isFaded true will appear 'greyed out'
         public string help0;                                                                    //optional help, icon displayed only if help0 present
         public string help1;
         public string help2;

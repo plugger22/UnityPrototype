@@ -2871,8 +2871,6 @@ public class PlayerManager : MonoBehaviour
             //check if already present
             if (arrayOfCaptureTools[innocenceLevel] == false)
             {
-                //check inventory not maxxed out
-
                 arrayOfCaptureTools[innocenceLevel] = true;
                 return true;
             }
