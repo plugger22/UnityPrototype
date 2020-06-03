@@ -827,12 +827,14 @@ public class TurnManager : MonoBehaviour
                         builder.AppendFormat("{0}{1}Erasure Teams capture on Invisibility 1 or less{2}", "\n", colourNormal, colourEnd);
                         builder.AppendFormat("{0}{1}Actors with{2} {3}Spooked{4}{5} Trait will refuse to do anything (Resistance){6}", "\n", colourAlert, colourEnd,
                             colourNeutral, colourEnd, colourAlert, colourEnd);
+                        builder.AppendFormat("{0}{1}100%{2}{3} chance Gear Compromised{4}", "\n", colourNeutral, colourEnd, colourNormal, colourEnd);
                         break;
                     case AuthoritySecurityState.SecurityAlert:
                         builder.AppendFormat("{0}<size=115%>Security Alert</size>{1}", colourGood, colourEnd);
                         builder.AppendFormat("{0}{1}Erasure Teams capture in <b>ADJACENT</b> districts{2}", "\n", colourNormal, colourEnd);
                         builder.AppendFormat("{0}{1}Actors with{2} {3}Spooked{4}{5} Trait will refuse to do anything (Resistance){6}", "\n", colourAlert, colourEnd,
                             colourNeutral, colourEnd, colourAlert, colourEnd);
+                        builder.AppendFormat("{0}{1}100%{2}{3} chance Gear Compromised{4}", "\n", colourNeutral, colourEnd, colourNormal, colourEnd);
                         break;
                     case AuthoritySecurityState.SurveillanceCrackdown:
                         builder.AppendFormat("{0}<size=115%>Surveillance Crackdown</size>{1}", colourGood, colourEnd);
@@ -841,6 +843,7 @@ public class TurnManager : MonoBehaviour
                         builder.AppendFormat("{0}{1}Chance of a Nervous Breakdown doubled (Resistance){2}", "\n", colourAlert, colourEnd);
                         builder.AppendFormat("{0}{1}Actors with{2} {3}Spooked{4}{5} Trait will refuse to do anything (Resistance){6}", "\n", colourNormal, colourEnd,
                             colourNeutral, colourEnd, colourNormal, colourEnd);
+                        builder.AppendFormat("{0}{1}100%{2}{3} chance Gear Compromised{4}", "\n", colourNeutral, colourEnd, colourAlert, colourEnd);
                         break;
                     default:
                         Debug.LogWarningFormat("Invalid AuthoritySecurityState \"{0}\"", GameManager.i.turnScript.authoritySecurityState);
@@ -856,16 +859,18 @@ public class TurnManager : MonoBehaviour
                         builder.AppendFormat("{0}No Security Measures in place{1}", colourGood, colourEnd);
                         break;
                     case AuthoritySecurityState.APB:
-                        builder.AppendFormat("{0}<size=115%>All Points Bulletin</size>{1}", colourBad, colourEnd);
+                        builder.AppendFormat("{0}<size=115%>All Points Bulletin</size>{1}", colourBad, colourEnd, "\n");
                         builder.AppendFormat("{0}{1}Erasure Teams capture on Invisibility 1 or less{2}", "\n", colourNormal, colourEnd);
                         builder.AppendFormat("{0}{1}Actors with{2} {3}Spooked{4}{5} Trait will refuse to do anything{6}", "\n", colourAlert, colourEnd,
                             colourNeutral, colourEnd, colourAlert, colourEnd);
+                        builder.AppendFormat("{0}{1}100%{2}{3} chance Gear Compromised{4}", "\n", colourNeutral, colourEnd, colourNormal, colourEnd);
                         break;
                     case AuthoritySecurityState.SecurityAlert:
                         builder.AppendFormat("{0}<size=115%>Security Alert</size>{1}", colourBad, colourEnd);
                         builder.AppendFormat("{0}{1}Erasure Teams capture in <b>ADJACENT</b> districts{2}", "\n", colourNormal, colourEnd);
                         builder.AppendFormat("{0}{1}Actors with{2} {3}Spooked{4}{5} Trait will refuse to do anything{6}", "\n", colourAlert, colourEnd,
                             colourNeutral, colourEnd, colourAlert, colourEnd);
+                        builder.AppendFormat("{0}{1}100%{2}{3} chance Gear Compromised{4}", "\n", colourNeutral, colourEnd, colourNormal, colourEnd);
                         break;
                     case AuthoritySecurityState.SurveillanceCrackdown:
                         builder.AppendFormat("{0}<size=115%>Surveillance Crackdown</size>{1}", colourBad, colourEnd);
@@ -874,6 +879,7 @@ public class TurnManager : MonoBehaviour
                         builder.AppendFormat("{0}{1}Chance of a Nervous Breakdown doubled{2}", "\n", colourAlert, colourEnd);
                         builder.AppendFormat("{0}{1}Actors with{2} {3}Spooked{4}{5} Trait will refuse to do anything{6}", "\n", colourNormal, colourEnd,
                             colourNeutral, colourEnd, colourNormal, colourEnd);
+                        builder.AppendFormat("{0}{1}100%{2}{3} chance Gear Compromised{4}", "\n", colourNeutral, colourEnd, colourAlert, colourEnd);
                         break;
                     default:
                         Debug.LogWarningFormat("Invalid AuthoritySecurityState \"{0}\"", GameManager.i.turnScript.authoritySecurityState);

@@ -3037,11 +3037,11 @@ public class ActorManager : MonoBehaviour
                         if (listOfEffects.Count > 0)
                         {
                             proceedFlag = true;
-                            for (int i = 0; i < listOfEffects.Count; i++)
+                            for (int index = 0; index < listOfEffects.Count; index++)
                             {
 
                                 colourEffect = colourDefault;
-                                Effect effect = listOfEffects[i];
+                                Effect effect = listOfEffects[index];
                                 //colour code effects according to type
                                 if (effect.typeOfEffect != null)
                                 {
@@ -3064,10 +3064,11 @@ public class ActorManager : MonoBehaviour
                                 effectCriteria = GameManager.i.effectScript.CheckCriteria(criteriaInput);
                                 if (effectCriteria == null && proceedFlag == true)
                                 {
-                                    if (i == 0)
+                                    if (index == 0)
                                     {
                                         //chance of compromise
                                         int compromiseChance = GameManager.i.gearScript.GetChanceOfCompromise(gear.name);
+                                        if (builder.Length > 0) { builder.AppendLine(); }
                                         builder.AppendFormat("{0}Chance of Gear being Compromised {1}{2}{3}%{4}", colourAlert, colourEnd,
                                             colourNeutral, compromiseChance, colourEnd);
                                     }
@@ -4154,7 +4155,7 @@ public class ActorManager : MonoBehaviour
                     //tooltip -> stars (bottom text, innocence -> same for all)
                     GenericTooltipDetails tooltipDetailsStars = new GenericTooltipDetails();
                     tooltipDetailsStars.textHeader = string.Format("{0}'s{1}{2}<size=120%>INNOCENCE{3}", device.tag, "\n", colourNeutral, colourEnd);
-                    tooltipDetailsStars.textMain = string.Format("The device can be used in any {0}<size=115%>Interrogation</size>{1} where your {2}Innocence{3} level is the {4}same{5}", 
+                    tooltipDetailsStars.textMain = string.Format("The device can be used in any {0}<size=115%>Interrogation</size>{1} where your {2}Innocence{3} level is the {4}same{5}",
                         colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
                     tooltipDetailsStars.textDetails = string.Format("{0}{1}<size=90%>0 to 3 stars{2}{3}Higher the better</size>{4}", stars, "\n",
                         "\n", colourAlert, colourEnd);

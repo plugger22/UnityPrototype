@@ -1746,7 +1746,7 @@ public class NodeManager : MonoBehaviour
         Debug.LogFormat("[UI] NodeManager.cs -> CreateGearNodeMenu{0}", "\n");
         int counter = 0;                    //num of gear that can be used
         List<EventButtonDetails> tempList = new List<EventButtonDetails>();
-
+        string gearCompromise;
         //Get Node
         Node node = GameManager.i.dataScript.GetNode(nodeID);
         if (node != null)
@@ -1856,13 +1856,16 @@ public class NodeManager : MonoBehaviour
                                         actionDetails.nodeID = nodeID;
                                         actionDetails.gearAction = actionKinetic;
                                         actionDetails.gearName = kineticGear.name;
+                                        //gear compromise tooltip
+                                        gearCompromise = string.Format("{0}Chance of Gear being Compromised {1}{2}{3}%{4}", colourAlert, colourEnd,
+                                            colourNeutral, GameManager.i.gearScript.GetChanceOfCompromise(kineticGear.name), colourEnd);
                                         //pass all relevant details to ModalActionMenu via Node.OnClick()
                                         EventButtonDetails kineticDetails = new EventButtonDetails()
                                         {
                                             buttonTitle = string.Format("Use {0}", kineticGear.tag),
                                             buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, kineticGear.tag, colourEnd),
                                             buttonTooltipMain = tempAction.tooltipText,
-                                            buttonTooltipDetail = builder.ToString(),
+                                            buttonTooltipDetail = string.Format("{0}{1}{2}", gearCompromise, "\n", builder.ToString()),
                                             //use a Lambda to pass arguments to the action
                                             action = () => { EventManager.i.PostNotification(EventType.NodeGearAction, this, actionDetails, "NodeManager.cs -> CreateGearNodeMenu"); }
                                         };
@@ -1967,13 +1970,16 @@ public class NodeManager : MonoBehaviour
                                         actionDetails.nodeID = nodeID;
                                         actionDetails.gearAction = actionHacking;
                                         actionDetails.gearName = hackingGear.name;
+                                        //gear compromise tooltip
+                                        gearCompromise = string.Format("{0}Chance of Gear being Compromised {1}{2}{3}%{4}", colourAlert, colourEnd,
+                                            colourNeutral, GameManager.i.gearScript.GetChanceOfCompromise(hackingGear.name), colourEnd);
                                         //pass all relevant details to ModalActionMenu via Node.OnClick()
                                         EventButtonDetails hackingDetails = new EventButtonDetails()
                                         {
                                             buttonTitle = string.Format("Use {0}", hackingGear.tag),
                                             buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, hackingGear.tag, colourEnd),
                                             buttonTooltipMain = tempAction.tooltipText,
-                                            buttonTooltipDetail = builder.ToString(),
+                                            buttonTooltipDetail = string.Format("{0}{1}{2}", gearCompromise, "\n", builder.ToString()),
                                             //use a Lambda to pass arguments to the action
                                             action = () => { EventManager.i.PostNotification(EventType.NodeGearAction, this, actionDetails, "NodeManager.cs -> CreateGearNodeMenu"); }
                                         };
@@ -2078,13 +2084,16 @@ public class NodeManager : MonoBehaviour
                                         actionDetails.nodeID = nodeID;
                                         actionDetails.gearAction = actionPersuasion;
                                         actionDetails.gearName = persuasionGear.name;
+                                        //gear compromise tooltip
+                                        gearCompromise = string.Format("{0}Chance of Gear being Compromised {1}{2}{3}%{4}", colourAlert, colourEnd,
+                                            colourNeutral, GameManager.i.gearScript.GetChanceOfCompromise(persuasionGear.name), colourEnd);
                                         //pass all relevant details to ModalActionMenu via Node.OnClick()
                                         EventButtonDetails persuasionDetails = new EventButtonDetails()
                                         {
                                             buttonTitle = string.Format("Use {0}", persuasionGear.tag),
                                             buttonTooltipHeader = string.Format("{0}{1}{2}", colourResistance, persuasionGear.tag, colourEnd),
                                             buttonTooltipMain = tempAction.tooltipText,
-                                            buttonTooltipDetail = builder.ToString(),
+                                            buttonTooltipDetail = string.Format("{0}{1}{2}", gearCompromise, "\n", builder.ToString()),
                                             //use a Lambda to pass arguments to the action
                                             action = () => { EventManager.i.PostNotification(EventType.NodeGearAction, this, actionDetails, "NodeManager.cs -> CreateGearNodeMenu"); }
                                         };
