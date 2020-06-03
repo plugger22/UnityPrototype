@@ -19137,20 +19137,7 @@ Prefab:
       propertyPath: m_Name
       value: Option0
       objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_IgnoreParentGroups
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_Interactable
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 0}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9a80798936ec17458b94ace33baa876, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &474468879 stripped

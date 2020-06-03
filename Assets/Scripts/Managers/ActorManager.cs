@@ -4163,10 +4163,10 @@ public class ActorManager : MonoBehaviour
                     data.arrayOfTooltipsSprite[i] = tooltipDetailsSprite;
                     data.arrayOfTooltipsStars[i] = tooltipDetailsStars;
                     //help
-                    data.help0 = "hq_over_0";
-                    data.help1 = "hq_over_1";
-                    data.help2 = "hq_over_2";
-                    data.help3 = "hq_over_3";
+                    data.help0 = "deviceInv_0";
+                    data.help1 = "deviceInv_1";
+                    data.help2 = "deviceInv_2";
+                    data.help3 = "deviceInv_3";
                 }
                 else { Debug.LogWarningFormat("Invalid device (Null) for innocenceLevel {0}", i); }
             }
@@ -4465,9 +4465,9 @@ public class ActorManager : MonoBehaviour
                 colourEnd, colourAlert, colourEnd, colourDefault, colourEnd);
             data.handler = RefreshReservePool;
             data.state = ModalInventorySubState.ReservePool;
-            data.help0 = "reserve_0";
-            data.help1 = "reserve_1";
-            data.help2 = "reserve_2";
+            data.help0 = "reserveInv_0";
+            data.help1 = "reserveInv_1";
+            data.help2 = "reserveInv_2";
             //Loop Actor list and populate arrays
             List<int> listOfActors = GameManager.i.dataScript.GetActorList(data.side, ActorList.Reserve);
             if (listOfActors != null)

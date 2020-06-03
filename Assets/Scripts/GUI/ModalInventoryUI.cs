@@ -56,12 +56,36 @@ public class ModalInventoryUI : MonoBehaviour
         return modalInventoryUI;
     }
 
+    public void Initialise(GameState state)
+    {
+        switch (state)
+        {
+            case GameState.LoadGame:
+            case GameState.NewInitialisation:
+            case GameState.LoadAtStart:
+                SubInitialiseSessionStart();
+                break;
+            case GameState.FollowOnInitialisation:
+                //do nothing
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
+                break;
+        }
+    }
 
-    private void Awake()
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseSessionStart
+    /// <summary>
+    /// Session start
+    /// </summary>
+    private void SubInitialiseSessionStart()
     {
         //inventory interaction & tooltip arrays set up
         int numOfOptions = arrayOfInventoryOptions.Length;
-        /*Debug.AssertFormat(numOfOptions == GameManager.i.guiScript.maxInventoryOptions, "Mismatch on Option numbers (is {0}, should be {1})", numOfOptions, GameManager.i.guiScript.maxInventoryOptions);*/
+        Debug.AssertFormat(numOfOptions == GameManager.i.guiScript.maxInventoryOptions, "Mismatch on Option numbers (is {0}, should be {1})", numOfOptions, GameManager.i.guiScript.maxInventoryOptions);
         //Asserts
         Debug.Assert(buttonHelp != null, "Invalid GenericHelpTooltipUI (Null)");
         Debug.Assert(buttonCancel != null, "Invalid buttonCancel (Null)");
@@ -107,8 +131,10 @@ public class ModalInventoryUI : MonoBehaviour
             }
             else { Debug.LogErrorFormat("Invalid arrayOfInventoryOptions[{0}] (Null)", i); }
         }
-
     }
+    #endregion
+
+    #endregion
 
 
     private void Start()

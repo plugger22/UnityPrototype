@@ -406,21 +406,21 @@ public class HelpManager : MonoBehaviour
         //
         //Open
         data = new HelpData();
-        data.tag = "reserve_0";
+        data.tag = "reserveInv_0";
         data.header = "Overview";
         data.text = string.Format("Subordinates are willing to sit in the Reserves for a while, {0}but not forever{1}. At some point they'll become {2}Unhappy{3} and will eventually take decisive action", 
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Options
         data = new HelpData();
-        data.tag = "reserve_1";
+        data.tag = "reserveInv_1";
         data.header = "Options";
         data.text = string.Format("You can {0}delay{1} a subordinate becoming unhappy by Reassuring or Threatening them, change your mind and {2}get rid of them{3}, or select them for {4}Active Duty{5}",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Quality
         data = new HelpData();
-        data.tag = "reserve_2";
+        data.tag = "reserveInv_2";
         data.header = string.Format("{0}Recruiting{1}", colourTip, colourEnd);
         data.text = string.Format("Your {0}RECRUITER{1} will always source {2}better candidates{3} than you can. Aim to source new subordinates with your RECRUITER if possible", colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
@@ -428,7 +428,7 @@ public class HelpManager : MonoBehaviour
 
         #region Gear Inventory
         //
-        // - - - Reserves UI
+        // - - - Gear UI
         //
         //Capabilities
         data = new HelpData();
@@ -461,6 +461,41 @@ public class HelpManager : MonoBehaviour
             .AppendFormat("  {0} {1}Unique{2}{3}", bullet, colourAlert, colourEnd, "\n")
             .AppendFormat("  {0} {1}Special{2} Available only from HQ between missions{3}", bullet, colourAlert, colourEnd, "\n")
             .ToString();
+        listOfHelp.Add(data);
+        #endregion
+
+        #region Capture Tool Inventory
+        //
+        // - - - Capture Tools (Devices) Ui
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "deviceInv_0";
+        data.header = "Overview";
+        data.text = string.Format("Devices used to {0}counter Interrogations when captured{1}. Each can be used for a {2}specific Innocence Level{3} and are separate to any Gear that you have",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Details
+        data = new HelpData();
+        data.tag = "deviceInv_1";
+        data.header = "Details";
+        data.text = string.Format("Devices are {0}single use{1} items and {2}don't carry over{3} between cities. " +
+            "They are only available from your {4}HQ superiors{5} during a transition and are dependant on their having a good opinion of you ({6}Motivation){7}",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Limits
+        data = new HelpData();
+        data.tag = "deviceInv_2";
+        data.header = "Limits";
+        data.text = string.Format("There are {0}four{1} possible devices (one for each Innocence Level) and you {2}can have all four{3} at once in your possession. " +
+            "Devices have {4}no uses other than{5} helping you when you've been captured",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Tip
+        data = new HelpData();
+        data.tag = "deviceInv_3";
+        data.header = string.Format("{0}Tip{1}", colourTip, colourEnd);
+        data.text = string.Format("These are {0}'Get Out Of Jail for Free'{1} devices. Don't leave home without them", colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 
