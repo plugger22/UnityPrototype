@@ -268,14 +268,11 @@ public class MetaManager : MonoBehaviour
     /// </summary>
     public void InitialiseMetaOptions()
     {
-        //
         // - - - Create MetaOptions
-        //
-
         Dictionary<string, MetaOption> dictOfMetaOptions = GameManager.i.dataScript.GetDictOfMetaOptions();
         if (dictOfMetaOptions != null)
         {
-            int count, index;
+            int count, index, motivation;
             bool isSuccess;
             string result;
             CriteriaDataInput data = new CriteriaDataInput();
@@ -484,17 +481,25 @@ public class MetaManager : MonoBehaviour
                                 {
                                     metaSpecial.dataName = gear.name;
                                     metaSpecial.dataTag = gear.tag;
+                                    motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
                                     //option active and displayed only if actor has a good opinion of player
-                                    if (actor.GetDatapoint(ActorDatapoint.Motivation1) >= 2)
+                                    if (motivation >= 2)
                                     {
                                         metaSpecial.isActive = true;
                                         numOfGearOptions++;
                                         //swap '*' for investigation.tag
                                         metaSpecial.text = metaSpecial.template.Replace("*", gear.tag);
                                         //customise descriptor
-                                        metaSpecial.descriptor = string.Format("<b>Special gear</b> that is <b>only available</b>{0}{1}because your <b>{2}</b> " +
+                                        /*metaSpecial.descriptor = string.Format("<b>Special gear</b> that is <b>only available</b>{0}{1}because your <b>{2}</b> " +
                                             "(<b>current tab</b>) has{3}{4}a <b>good opinion</b> of you (<b>Motivation 2+ stars</b>)", "\n", "\n",
-                                            GameManager.GetFormattedString(title, ColourType.dataNeutral), "\n", "\n");
+                                            GameManager.GetFormattedString(title, ColourType.dataNeutral), "\n", "\n");*/
+                                        metaSpecial.descriptor = string.Format("<b>{0}{1}{2}{3}</b>", GameManager.GetFormattedString(gear.tag, ColourType.neutralText), "\n", "\n", gear.description);
+                                        //modify cost according to relationship (Mot 3 -> use base cost, Mot 2 -> double base cost
+                                        if (motivation == 2) { metaSpecial.relationshipModifier = 2; }
+                                        else { metaSpecial.relationshipModifier = 1; }
+                                        if (isTestLog)
+                                        { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: \"{0}\", {1}, {2} Relationship Modifier {3}{4}",
+                                              metaSpecial.name, metaSpecial.data, metaSpecial.dataTag, metaSpecial.relationshipModifier, "\n"); }
                                         //add to list
                                         listOfMetaOptions.Add(metaSpecial);
                                         if (isTestLog)
@@ -561,16 +566,23 @@ public class MetaManager : MonoBehaviour
                                     metaSpecial.data = device.innocenceLevel;
                                     metaSpecial.dataTag = device.tag;
                                     //option active and displayed only if actor has a good opinion of player
-                                    if (actor.GetDatapoint(ActorDatapoint.Motivation1) >= 2)
+                                    motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                                    if (motivation >= 2)
                                     {
                                         metaSpecial.isActive = true;
                                         numOfDeviceOptions++;
                                         //swap '*' for device.tag
                                         metaSpecial.text = metaSpecial.template.Replace("*", device.tag);
                                         //customise descriptor
-                                        metaSpecial.descriptor = string.Format("<b>Interrogation Device</b> that is <b>only available</b>{0}{1}because your <b>{2}</b> " +
-                                            "(<b>current tab</b>) has{3}{4}a <b>good opinion</b> of you (<b>Motivation 2+ stars</b>)", "\n", "\n",
-                                            GameManager.GetFormattedString(title, ColourType.dataNeutral), "\n", "\n");
+                                        metaSpecial.descriptor = string.Format("<b>{0}{1}{2}{3}{4}Innocence</b> {5}", GameManager.GetFormattedString(device.tag, ColourType.neutralText), "\n", "\n", 
+                                            device.descriptor, "\n", GameManager.i.guiScript.GetDatapointStars(device.innocenceLevel));
+                                        //modify cost according to relationship (Mot 3 -> use base cost, Mot 2 -> double base cost
+                                        if (motivation == 2)
+                                        { metaSpecial.relationshipModifier = 2; }
+                                        else { metaSpecial.relationshipModifier = 1; }
+                                        if (isTestLog)
+                                        { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: \"{0}\", {1}, {2} Relationship Modifier {3}{4}",
+                                              metaSpecial.name, metaSpecial.data, metaSpecial.dataTag, metaSpecial.relationshipModifier, "\n"); }
                                         //add to list
                                         listOfMetaOptions.Add(metaSpecial);
                                         if (isTestLog)
@@ -667,12 +679,13 @@ public class MetaManager : MonoBehaviour
                             case 3: metaData.priority = MetaPriority.Extreme; cost = costExtremePriority; break;
                             default: Debug.LogWarningFormat("Invalid metaOption.RenownCost.level \"{0}\" for metaOption {1}", metaOption.renownCost.level, metaOption.name); break;
                         }
+                        //RenownCost (base cost * relationship modifier which is default 1 in case where this doesn't apply)
+                        cost *= metaOption.relationshipModifier;
+                        metaData.renownCost = cost;
                         //header texts
                         metaData.textSelect = $"Costs <size=130%>{GameManager.GetFormattedString(cost.ToString(), ColourType.neutralText)}</size> Renown";
                         metaData.textDeselect = $"Gain <size=130%>{GameManager.GetFormattedString(cost.ToString(), ColourType.neutralText)}</size> Renown";
                         metaData.textInsufficient = $"Not enough Renown (need <size=130%>{GameManager.GetFormattedString(cost.ToString(), ColourType.neutralText)}</size>)";
-                        //RenownCost
-                        metaData.renownCost = cost;
                         //recommendation priority
                         if (metaOption.isRecommended == true)
                         {
@@ -742,7 +755,7 @@ public class MetaManager : MonoBehaviour
                             metaName = "Default",
                             itemText = string.Format("Nothing available from your {0}", leader),
                             textSelect = "No Options",
-                            bottomText = string.Format("Your {0}<br><br><b>Does Not</b><br><br>have anything for you currently", leader),
+                            bottomText = string.Format("Your {0}<br><br><b>{1}</b><br><br>have anything for you currently", leader, GameManager.GetFormattedString("Does Not", ColourType.salmonText)),
                             sideLevel = level,
                             sprite = GameManager.i.guiScript.infoSprite,
                             isActive = false,

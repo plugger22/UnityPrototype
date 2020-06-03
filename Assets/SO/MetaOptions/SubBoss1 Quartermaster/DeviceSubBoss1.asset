@@ -33,12 +33,13 @@ MonoBehaviour:
   listOfCriteria: []
   listOfEffects:
   - {fileID: 11400000, guid: 27f825689575bf442868da0fbd30c6c4, type: 2}
-  help0: 
-  help1: 
-  help2: 
-  help3: 
+  help0: metaDevice_0
+  help1: metaDevice_1
+  help2: metaDevice_2
+  help3: metaDevice_3
   statTimesSelected: 0
   isActive: 1
   data: 1
   dataName: 
   dataTag: Neural Bypass
+  relationshipModifier: 2

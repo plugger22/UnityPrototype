@@ -12,9 +12,15 @@ MonoBehaviour:
   m_Name: DeviceBoss
   m_EditorClassIdentifier: 
   template: You are offered an interrogation device (*)
-  text: You are offered an interrogation device (SpecialBoss)
+  text: You are offered an interrogation device (Zen Refuge)
   header: Gain Device
-  descriptor: 
+  descriptor: '<b>Interrogation Device</b> that is <b>only available</b>
+
+
+    because your <b><color=#FFFF00>Director</color></b> (<b>current tab</b>) has
+
+
+    a <b>good opinion</b> of you (<b>Motivation 2+ stars</b>)'
   renownCost: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   hqPosition: {fileID: 11400000, guid: 49b17439fb97b1d4e86200f567743fd1, type: 2}
   sprite: {fileID: 21300000, guid: b409a5bb3e60fe2449c54d6642ca4a19, type: 3}
@@ -26,11 +32,13 @@ MonoBehaviour:
   listOfCriteria: []
   listOfEffects:
   - {fileID: 11400000, guid: 27f825689575bf442868da0fbd30c6c4, type: 2}
-  help0: 
-  help1: 
-  help2: 
-  help3: 
+  help0: metaDevice_0
+  help1: metaDevice_1
+  help2: metaDevice_2
+  help3: metaDevice_3
   statTimesSelected: 0
-  isActive: 1
-  dataName: SpecialBoss
-  dataTag: SpecialBoss
+  isActive: 0
+  data: 0
+  dataName: 
+  dataTag: Zen Refuge
+  relationshipModifier: 1

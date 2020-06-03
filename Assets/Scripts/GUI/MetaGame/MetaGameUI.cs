@@ -1691,15 +1691,6 @@ public class MetaGameUI : MonoBehaviour
         if (numOfChoicesCurrent < numOfChoicesMax)
         {
             MetaData metaData = GetMetaData(itemIndex);
-
-            /*//update highlight index for itemInteraction right click only
-            if (itemIndex > -1)
-            { highlightIndex = itemIndex; }
-            //metaData depends on which tab type has been selected (each has it's own records)
-            if (isLastTabTop == true)
-            { metaData = listOfCurrentPageTopMetaData[highlightIndex]; }
-            else { metaData = listOfCurrentPageSideMetaData[highlightIndex]; }*/
-
             //process metaData
             if (metaData != null)
             {

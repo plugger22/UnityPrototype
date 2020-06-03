@@ -472,8 +472,8 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "deviceInv_0";
         data.header = "Overview";
-        data.text = string.Format("Devices used to {0}counter Interrogations when captured{1}. Each can be used for a {2}specific Innocence Level{3} and are separate to any Gear that you have",
-            colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("Devices used to counter {0}Interrogations{1} when {2}captured{3}. Each can be used for a {4}specific Innocence Level{5} and are separate to any Gear that you have",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Details
         data = new HelpData();
@@ -1309,8 +1309,8 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "metaGear_1";
         data.header = "Good Opinion";
-        data.text = string.Format("They will only {0}offer the gear{1} to you if their opinion of you is positive ({2}Motivation 2 stars{3}, or better). They don't offer their gear to just anyone", 
-            colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("They will only {0}offer the gear{1} to you if their opinion of you is positive ({2}Motivation 2+ stars{3}). They don't offer their gear to just anyone. " +
+            "The {4}cost depends{5} on how good their {6}opinion{7} of you is", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Max options
         data = new HelpData();
@@ -1324,6 +1324,41 @@ public class HelpManager : MonoBehaviour
         data.tag = "metaGear_3";
         data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
         data.text = string.Format("Relationships matter. Special Gear, if it's on offer, is {0}gear that you want{1}. Think twice before passing on the opportunity.", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
+        #region Capture Tools
+        //
+        // - - - Capture Tools (Devices)
+        //
+        //Relationship affected option
+        data = new HelpData();
+        data.tag = "metaDevice_0";
+        data.header = "Good Relationship";
+        data.text = string.Format("This device is {0}only available{1} because your {2}HQ Superior{3} (current tab) has a good opinion of you ({4}Movtivation 2+ stars{5})",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Cost of Option (relationship dependant)
+        data = new HelpData();
+        data.tag = "metaDevice_1";
+        data.header = "Variable Cost";
+        data.text = string.Format("The {0}cost{1} of this option {2}varies{3} dependant on your {4}superior's current opinion{5} of you. The better their opinion ({6}Motivation{7}) " +
+            "the less Renown it will cost", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Poor Relationship
+        data = new HelpData();
+        data.tag = "metaDevice_2";
+        data.header = "Poor Relationship";
+        data.text = string.Format("If your HQ Superior's opinion of you is poor ({0}Motivation 1, or less, stars{1}), they won't bother helping you and this {2}option won't be shown{3}",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Tip
+        //Poor Relationship
+        data = new HelpData();
+        data.tag = "metaDevice_3";
+        data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
+        data.text = string.Format("{0}Relationships matter{1}. If your HQ superior views you in a positive light they will actively try to {2}help you{3} by offering special devices",
+            colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 
