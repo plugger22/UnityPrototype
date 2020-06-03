@@ -89,11 +89,11 @@ public class CaptureManager : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //register listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "CaptureManager");
-        EventManager.instance.AddListener(EventType.Capture, OnEvent, "CaptureManager");
+        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "CaptureManager");
+        EventManager.i.AddListener(EventType.Capture, OnEvent, "CaptureManager");
         /*EventManager.instance.AddListener(EventType.ReleasePlayer, OnEvent, "CaptureManager");*/
-        EventManager.instance.AddListener(EventType.ReleaseActor, OnEvent, "CaptureManager");
-        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "CaptureManager");
+        EventManager.i.AddListener(EventType.ReleaseActor, OnEvent, "CaptureManager");
+        EventManager.i.AddListener(EventType.StartTurnEarly, OnEvent, "CaptureManager");
     }
     #endregion
 
@@ -242,7 +242,7 @@ public class CaptureManager : MonoBehaviour
                 else { Debug.LogError("Invalid listOfGear (Null)"); }
             }
             //switch off flashing red indicator on top widget UI
-            EventManager.instance.PostNotification(EventType.StopSecurityFlash, this, null, "CaptureManager.cs -> CapturePlayer");
+            EventManager.i.PostNotification(EventType.StopSecurityFlash, this, null, "CaptureManager.cs -> CapturePlayer");
             //reduce player alpha to show inactive (sprite and text)
             GameManager.i.actorPanelScript.UpdatePlayerAlpha(GameManager.i.guiScript.alphaInactive);
             //player captured outcome window
@@ -351,7 +351,7 @@ public class CaptureManager : MonoBehaviour
             //edge case of Inactive player and Authority AI capture an actor which may (?) generate a message that'll upset the info pipeline. If player active, display at time of action, otherwise put in pipeline
             if (GameManager.i.playerScript.status != ActorStatus.Active)
             { outcomeDetails.type = MsgPipelineType.CaptureActor; }
-            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "CaptureManager.cs -> CaptureActor");
+            EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "CaptureManager.cs -> CaptureActor");
         }
     }
 

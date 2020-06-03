@@ -110,8 +110,8 @@ public class TooltipPlayer : MonoBehaviour
         fadeInTime = GameManager.i.guiScript.tooltipFade;
         offset = GameManager.i.guiScript.tooltipOffset;
         //event listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TooltipPlayer");
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "TooltipPlayer");
+        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "TooltipPlayer");
+        EventManager.i.AddListener(EventType.ChangeSide, OnEvent, "TooltipPlayer");
     }
 
     /// <summary>
@@ -289,9 +289,9 @@ public class TooltipPlayer : MonoBehaviour
                 /*builderRes.AppendFormat("<size=110%><b>Invisibility<pos=70%>{0}{1}{2}</b></size>{3}", GameManager.instance.colourScript.GetValueColour(invisibility), invisibility, colourEnd, "\n");
                 builderRes.AppendFormat("<size=110%><b>Mood<pos=70%>{0}{1}{2}</b></size>", GameManager.instance.colourScript.GetValueColour(mood), mood, colourEnd);*/
 
-                builderRes.AppendFormat("{0} <b>Invisibility<pos=60%>{1}</b>{2}", arrayOfIcons[0], GameManager.i.guiScript.GetDatapointStars(invisibility), "\n");
-                builderRes.AppendFormat("{0} <b>Mood<pos=60%>{1}</b>{2}", arrayOfIcons[1], GameManager.i.guiScript.GetDatapointStars(mood), "\n");
-                builderRes.AppendFormat("{0} <b>Innocence<pos=60%>{1}</b>", arrayOfIcons[2], GameManager.i.guiScript.GetDatapointStars(GameManager.i.playerScript.Innocence));
+                builderRes.AppendFormat("{0} <b>Invisibility<pos=60%>{1}</b>{2}", arrayOfIcons[0], GameManager.i.guiScript.GetNormalStars(invisibility), "\n");
+                builderRes.AppendFormat("{0} <b>Mood<pos=60%>{1}</b>{2}", arrayOfIcons[1], GameManager.i.guiScript.GetNormalStars(mood), "\n");
+                builderRes.AppendFormat("{0} <b>Innocence<pos=60%>{1}</b>", arrayOfIcons[2], GameManager.i.guiScript.GetNormalStars(GameManager.i.playerScript.Innocence));
                 playerStats.text = builderRes.ToString();
                 break;
         }

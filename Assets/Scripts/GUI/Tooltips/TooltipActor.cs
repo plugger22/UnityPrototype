@@ -130,8 +130,8 @@ public class TooltipActor : MonoBehaviour
         Debug.Assert(gracePeriod > -1, "Invalid gracePeriod (-1)");
 
         //event listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TooltipActor");
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "TooltipActor");
+        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "TooltipActor");
+        EventManager.i.AddListener(EventType.ChangeSide, OnEvent, "TooltipActor");
     }
 
     /// <summary>
@@ -327,7 +327,7 @@ public class TooltipActor : MonoBehaviour
             {
                 dataStats = data.arrayOfStats[i];
                 if (i > 0) { builder.AppendLine(); }
-                builder.AppendFormat("{0} {1}<pos=57%>{2}", arrayOfIcons[i], data.arrayOfQualities[i], GameManager.i.guiScript.GetDatapointStars(dataStats));
+                builder.AppendFormat("{0} {1}<pos=57%>{2}", arrayOfIcons[i], data.arrayOfQualities[i], GameManager.i.guiScript.GetNormalStars(dataStats));
             }
             actorStats.text = builder.ToString();
         }

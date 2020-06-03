@@ -57,7 +57,7 @@ public class CityManager : MonoBehaviour
             Debug.LogFormat("[Cit] CityManager.cs: {0} loyalty now {1}{2}", city.tag, _cityLoyalty, "\n");
             _cityLoyalty = Mathf.Clamp(_cityLoyalty, 0, 10);
             //update top widget bar and city icon
-            EventManager.instance.PostNotification(EventType.ChangeCityBar, this, _cityLoyalty, "CityManager.cs -> CityLoyalty");
+            EventManager.i.PostNotification(EventType.ChangeCityBar, this, _cityLoyalty, "CityManager.cs -> CityLoyalty");
         }
     }
 
@@ -143,8 +143,8 @@ public class CityManager : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //register listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "CityManager");
-        EventManager.instance.AddListener(EventType.EndTurnLate, OnEvent, "CityManager");
+        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "CityManager");
+        EventManager.i.AddListener(EventType.EndTurnLate, OnEvent, "CityManager");
     }
     #endregion
 

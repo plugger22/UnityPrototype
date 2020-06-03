@@ -47,8 +47,8 @@ public class MessageManager : MonoBehaviour
         Debug.Assert(string.IsNullOrEmpty(tagAIName) == false, "Invalid tagAIName (Null or Empty)");
 
         //event Listeners
-        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "MessageManager");
-        EventManager.instance.AddListener(EventType.EndTurnEarly, OnEvent, "MessageManager");
+        EventManager.i.AddListener(EventType.StartTurnEarly, OnEvent, "MessageManager");
+        EventManager.i.AddListener(EventType.EndTurnEarly, OnEvent, "MessageManager");
     }
     #endregion
 

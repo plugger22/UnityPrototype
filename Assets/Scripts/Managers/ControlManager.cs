@@ -13,21 +13,21 @@ public class ControlManager : MonoBehaviour
     public void Initialise(GameState state)
     {
         //event Listeners
-        EventManager.instance.AddListener(EventType.NewGameOptions, OnEvent, "ControlManager");
-        EventManager.instance.AddListener(EventType.CreateNewGame, OnEvent, "ControlManager");
-        EventManager.instance.AddListener(EventType.CreateOptions, OnEvent, "ControlManager");
-        EventManager.instance.AddListener(EventType.CloseNewGame, OnEvent, "ControlManager");
-        EventManager.instance.AddListener(EventType.CloseOptions, OnEvent, "ControlManager");
-        EventManager.instance.AddListener(EventType.CreateMetaGame, OnEvent, "ControlManager");
-        EventManager.instance.AddListener(EventType.CloseMetaGame, OnEvent, "ControlManager");
-        EventManager.instance.AddListener(EventType.ExitLevel, OnEvent, "ControlManager");
-        EventManager.instance.AddListener(EventType.ExitGame, OnEvent, "ControlManager");
-        EventManager.instance.AddListener(EventType.ExitCampaign, OnEvent, "ControlManager");
-        EventManager.instance.AddListener(EventType.ResumeGame, OnEvent, "ControlManager");
-        EventManager.instance.AddListener(EventType.LoadGame, OnEvent, "ControlManager");
-        EventManager.instance.AddListener(EventType.SaveGame, OnEvent, "ControlManager");
-        EventManager.instance.AddListener(EventType.CloseLoadGame, OnEvent, "ControlManager");
-        EventManager.instance.AddListener(EventType.CloseSaveGame, OnEvent, "CampaignManager");
+        EventManager.i.AddListener(EventType.NewGameOptions, OnEvent, "ControlManager");
+        EventManager.i.AddListener(EventType.CreateNewGame, OnEvent, "ControlManager");
+        EventManager.i.AddListener(EventType.CreateOptions, OnEvent, "ControlManager");
+        EventManager.i.AddListener(EventType.CloseNewGame, OnEvent, "ControlManager");
+        EventManager.i.AddListener(EventType.CloseOptions, OnEvent, "ControlManager");
+        EventManager.i.AddListener(EventType.CreateMetaGame, OnEvent, "ControlManager");
+        EventManager.i.AddListener(EventType.CloseMetaGame, OnEvent, "ControlManager");
+        EventManager.i.AddListener(EventType.ExitLevel, OnEvent, "ControlManager");
+        EventManager.i.AddListener(EventType.ExitGame, OnEvent, "ControlManager");
+        EventManager.i.AddListener(EventType.ExitCampaign, OnEvent, "ControlManager");
+        EventManager.i.AddListener(EventType.ResumeGame, OnEvent, "ControlManager");
+        EventManager.i.AddListener(EventType.LoadGame, OnEvent, "ControlManager");
+        EventManager.i.AddListener(EventType.SaveGame, OnEvent, "ControlManager");
+        EventManager.i.AddListener(EventType.CloseLoadGame, OnEvent, "ControlManager");
+        EventManager.i.AddListener(EventType.CloseSaveGame, OnEvent, "CampaignManager");
     }
 
 
@@ -108,7 +108,7 @@ public class ControlManager : MonoBehaviour
         //set background
         GameManager.i.modalGUIScript.SetBackground(Background.NewGame);
         //close MainMenu
-        EventManager.instance.PostNotification(EventType.CloseMainMenu, this, null, "CampaignManager.cs -> ProcessNewGame");
+        EventManager.i.PostNotification(EventType.CloseMainMenu, this, null, "CampaignManager.cs -> ProcessNewGame");
         //change game state (allows inputManager.cs to handle relevant input)
         GameManager.i.inputScript.GameState = GameState.NewGame;
     }
@@ -166,7 +166,7 @@ public class ControlManager : MonoBehaviour
         //open Options background
         GameManager.i.modalGUIScript.SetBackground(Background.Options);
         //close MainMenu
-        EventManager.instance.PostNotification(EventType.CloseMainMenu, this, null, "CampaignManager.cs -> ProcessOptions");
+        EventManager.i.PostNotification(EventType.CloseMainMenu, this, null, "CampaignManager.cs -> ProcessOptions");
         gameState = state;
         //change game state (allows inputManager.cs to handle relevant input)
         GameManager.i.inputScript.GameState = GameState.Options;
@@ -326,7 +326,7 @@ public class ControlManager : MonoBehaviour
         if (GameManager.i.inputScript.GameState == GameState.LoadAtStart)
         {
             //update colours (not done with FileManager.cs -> ReadOptionData due to sequencing issues (colour changes to objects that aren't yet initialised)
-            EventManager.instance.PostNotification(EventType.ChangeColour, this, null, "OptionManager.cs -> ColourOption");
+            EventManager.i.PostNotification(EventType.ChangeColour, this, null, "OptionManager.cs -> ColourOption");
         }
         //Close any open background
         GameManager.i.modalGUIScript.CloseBackgrounds();

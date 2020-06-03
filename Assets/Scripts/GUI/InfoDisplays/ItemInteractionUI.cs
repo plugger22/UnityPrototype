@@ -42,7 +42,7 @@ public class ItemInteractionUI : MonoBehaviour, IPointerClickHandler
                     //same for left or right click
                     case PointerEventData.InputButton.Left:
                     case PointerEventData.InputButton.Right:
-                        EventManager.instance.PostNotification(EventType.MainInfoShowDetails, this, itemIndex, "ItemInteractionUI.cs -> OnPointClick");
+                        EventManager.i.PostNotification(EventType.MainInfoShowDetails, this, itemIndex, "ItemInteractionUI.cs -> OnPointClick");
                         break;
                 }
                 break;
@@ -51,11 +51,11 @@ public class ItemInteractionUI : MonoBehaviour, IPointerClickHandler
                 {
                     case PointerEventData.InputButton.Left:
                         //show details
-                        EventManager.instance.PostNotification(EventType.MetaGameShowDetails, this, itemIndex, "ItemInteractionUI.cs -> OnPointClick"); break;
+                        EventManager.i.PostNotification(EventType.MetaGameShowDetails, this, itemIndex, "ItemInteractionUI.cs -> OnPointClick"); break;
                     case PointerEventData.InputButton.Right:
                         //show details and select/deselect
-                        EventManager.instance.PostNotification(EventType.MetaGameShowDetails, this, itemIndex, "ItemInteractionUI.cs -> OnPointClick");
-                        EventManager.instance.PostNotification(EventType.MetaGameButton, this, itemIndex, "ItemInteractionUI.cs -> OnPointClick");
+                        EventManager.i.PostNotification(EventType.MetaGameShowDetails, this, itemIndex, "ItemInteractionUI.cs -> OnPointClick");
+                        EventManager.i.PostNotification(EventType.MetaGameButton, this, itemIndex, "ItemInteractionUI.cs -> OnPointClick");
                         break;
                 }
                 break;

@@ -140,10 +140,10 @@ public class ModalInventoryUI : MonoBehaviour
     private void Start()
     {
         //register listener
-        EventManager.instance.AddListener(EventType.InventoryOpenUI, OnEvent, "ModalInventoryUI");
-        EventManager.instance.AddListener(EventType.InventoryCloseUI, OnEvent, "ModalInventoryUI");
-        EventManager.instance.AddListener(EventType.InventoryShowMe, OnEvent, "ModalInventoryUI");
-        EventManager.instance.AddListener(EventType.InventoryRestore, OnEvent, "ModalInventoryUI");
+        EventManager.i.AddListener(EventType.InventoryOpenUI, OnEvent, "ModalInventoryUI");
+        EventManager.i.AddListener(EventType.InventoryCloseUI, OnEvent, "ModalInventoryUI");
+        EventManager.i.AddListener(EventType.InventoryShowMe, OnEvent, "ModalInventoryUI");
+        EventManager.i.AddListener(EventType.InventoryRestore, OnEvent, "ModalInventoryUI");
     }
 
     /// <summary>
@@ -375,7 +375,7 @@ public class ModalInventoryUI : MonoBehaviour
             outcomeDetails.textTop = "There has been a hiccup and the information isn't available";
             outcomeDetails.textBottom = "We've called the WolfMan. He's on his way";
             outcomeDetails.side = details.side;
-            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ModalInventoryUI.cs -> SetInventoryUI");
+            EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ModalInventoryUI.cs -> SetInventoryUI");
         }
         else
         {

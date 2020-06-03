@@ -2887,7 +2887,7 @@ public class AIRebelManager : MonoBehaviour
                 {
                     //Player captured!
                     captureDetails.effects = "The move went bad";
-                    EventManager.instance.PostNotification(EventType.Capture, this, captureDetails, "AIRebelManager.cs -> ExecuteMoveTask");
+                    EventManager.i.PostNotification(EventType.Capture, this, captureDetails, "AIRebelManager.cs -> ExecuteMoveTask");
                 }
             }
             if (GameManager.i.playerScript.status != ActorStatus.Captured)
@@ -4167,7 +4167,7 @@ public class AIRebelManager : MonoBehaviour
                     isCaptured = true;
                     Debug.LogFormat("[Rim] AIRebelManager.cs -> UpdateInvisibilityNode: {0}, Player, CAPTURED by Erasure Team at {1}, {2}, ID {3}{4}", playerName, node.nodeName, node.Arc.name, node.nodeID, "\n");
                     captureDetails.effects = "They kicked in the door before you could run";
-                    EventManager.instance.PostNotification(EventType.Capture, this, captureDetails, "AIRebelManager.cs -> UpdateInvisibilityNode");
+                    EventManager.i.PostNotification(EventType.Capture, this, captureDetails, "AIRebelManager.cs -> UpdateInvisibilityNode");
                 }
             }
         }
@@ -4212,7 +4212,7 @@ public class AIRebelManager : MonoBehaviour
                     Debug.LogFormat("[Rim] AIRebelManager.cs -> UpdateInvisibilityNode: {0}, {1}, ID {2}, CAPTURED by Erasure Team at {3}, {4}, ID {5}{6}", actorName, actorArc, actorID,
                         node.nodeName, node.Arc.name, node.nodeID, "\n");
                     captureDetails.effects = "They got you";
-                    EventManager.instance.PostNotification(EventType.Capture, this, captureDetails, "AIRebelManager.cs -> UpdateInvisibility");
+                    EventManager.i.PostNotification(EventType.Capture, this, captureDetails, "AIRebelManager.cs -> UpdateInvisibility");
                 }
             }
         }

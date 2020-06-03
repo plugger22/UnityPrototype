@@ -36,7 +36,7 @@ public class MainInfoRightTabUI : MonoBehaviour, IPointerClickHandler
             //same for left or right click
             case PointerEventData.InputButton.Left:
             case PointerEventData.InputButton.Right:
-                EventManager.instance.PostNotification(EventType.MainInfoTabOpen, this, tabIndex, "MainInfoRightTabUI.cs -> OnPointClick");
+                EventManager.i.PostNotification(EventType.MainInfoTabOpen, this, tabIndex, "MainInfoRightTabUI.cs -> OnPointClick");
                 break;
         }
     }

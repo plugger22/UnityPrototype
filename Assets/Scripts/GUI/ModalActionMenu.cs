@@ -58,7 +58,7 @@ public class ModalActionMenu : MonoBehaviour
     {
         offset = GameManager.i.guiScript.tooltipOffset * 2;
         //register listener
-        EventManager.instance.AddListener(EventType.CloseActionMenu, OnEvent, "ModalActionMenu");
+        EventManager.i.AddListener(EventType.CloseActionMenu, OnEvent, "ModalActionMenu");
     }
 
     /// <summary>
@@ -236,7 +236,7 @@ public class ModalActionMenu : MonoBehaviour
             outcomeDetails.sprite = GameManager.i.guiScript.infoSprite;
             outcomeDetails.modalLevel = details.modalLevel;
             outcomeDetails.modalState = details.modalState;
-            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ModalActionMenu.cs -> SetActionMenu");
+            EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ModalActionMenu.cs -> SetActionMenu");
         }
     }
 

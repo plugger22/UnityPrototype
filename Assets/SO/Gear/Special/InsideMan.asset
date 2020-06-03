@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d96992d72a471341a07839d8d2b39b2, type: 3}
   m_Name: InsideMan
   m_EditorClassIdentifier: 
-  description: Inside Man within authority leaking info
+  description: An inside source within the Authority leaking valuable intelligence
   tag: Inside Man
   rarity: {fileID: 11400000, guid: 5067f2c35f4b9ce4d8fb86779d5b3052, type: 2}
   type: {fileID: 11400000, guid: 805f99c9900229e4ab288e5a82b2e46d, type: 2}
@@ -21,13 +21,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1e2ad571da5e26b4ab5e4621607cad95, type: 2}
   - {fileID: 11400000, guid: 5446f3b13dcee5c4f9f00dcdedb86c24, type: 2}
   aiHackingEffect: {fileID: 0}
-  timesUsed: 1
+  timesUsed: 0
   isCompromised: 0
   reasonUsed: Used to for <b>personal reasons</b>
   chanceOfCompromise: 0
   statTurnObtained: 0
   statTurnLost: 0
-  statTimesUsed: 1
+  statTimesUsed: 0
   statTimesGiven: 0
   statTimesCompromised: 0
   statTimesSaved: 0

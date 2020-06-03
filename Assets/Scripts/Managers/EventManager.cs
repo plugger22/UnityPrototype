@@ -225,7 +225,7 @@ public enum EventType
 //Works with IListener implementations
 public class EventManager : MonoBehaviour
 {
-    public static EventManager instance = null;
+    public static EventManager i = null;
 
     // Declare a delegate type for events
     public delegate void OnEvent(EventType Event_Type, Component Sender, object Param = null);
@@ -240,10 +240,10 @@ public class EventManager : MonoBehaviour
     private void Awake()
     {
         //check if instance already exists
-        if (instance == null)
-        { instance = this; }
+        if (i == null)
+        { i = this; }
         //if instance already exists and it's not this
-        else if (instance != this)
+        else if (i != this)
         {
             //Then destroy this in order to reinforce the singleton pattern (can only ever be one instance of GameManager)
             Destroy(gameObject);

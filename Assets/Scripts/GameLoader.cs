@@ -20,7 +20,7 @@ public class GameLoader : MonoBehaviour
             Instantiate(gameManager);
         }
         //Check if a eventManager has already been assigned to static variable eventManager.instance or if it's still null
-        if (EventManager.instance == null)
+        if (EventManager.i == null)
         {
             //create EventManager instance from prefab
             Instantiate(eventManager);

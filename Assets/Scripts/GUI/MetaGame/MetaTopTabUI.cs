@@ -39,7 +39,7 @@ public class MetaTopTabUI : MonoBehaviour, IPointerClickHandler
             //same for left or right click
             case PointerEventData.InputButton.Left:
             case PointerEventData.InputButton.Right:
-                EventManager.instance.PostNotification(EventType.MetaGameTopTabOpen, this, tabIndex, "MetaTopTabUI.cs -> OnPointClick");
+                EventManager.i.PostNotification(EventType.MetaGameTopTabOpen, this, tabIndex, "MetaTopTabUI.cs -> OnPointClick");
                 break;
         }
     }

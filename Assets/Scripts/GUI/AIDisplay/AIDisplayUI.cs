@@ -139,11 +139,11 @@ public class AIDisplayUI : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //event listener
-        EventManager.instance.AddListener(EventType.AIDisplayOpen, OnEvent, "AIDisplayUI");
-        EventManager.instance.AddListener(EventType.AIDisplayClose, OnEvent, "AIDisplayUI");
-        EventManager.instance.AddListener(EventType.AISendDisplayData, OnEvent, "AIDisplayUI");
-        EventManager.instance.AddListener(EventType.AISendHackingData, OnEvent, "AIDisplayUI");
-        EventManager.instance.AddListener(EventType.AIDisplayPanelOpen, OnEvent, "AIDisplayUI");
+        EventManager.i.AddListener(EventType.AIDisplayOpen, OnEvent, "AIDisplayUI");
+        EventManager.i.AddListener(EventType.AIDisplayClose, OnEvent, "AIDisplayUI");
+        EventManager.i.AddListener(EventType.AISendDisplayData, OnEvent, "AIDisplayUI");
+        EventManager.i.AddListener(EventType.AISendHackingData, OnEvent, "AIDisplayUI");
+        EventManager.i.AddListener(EventType.AIDisplayPanelOpen, OnEvent, "AIDisplayUI");
     }
     #endregion
 
@@ -421,7 +421,7 @@ public class AIDisplayUI : MonoBehaviour
     public void SetAIDisplay()
     {
         //close side tab
-        EventManager.instance.PostNotification(EventType.AISideTabClose, this, null, "AIDisplayUI.cs -> SetAIDisplay");
+        EventManager.i.PostNotification(EventType.AISideTabClose, this, null, "AIDisplayUI.cs -> SetAIDisplay");
         //renown panel on/off
         if (isFree == true)
         {
@@ -493,7 +493,7 @@ public class AIDisplayUI : MonoBehaviour
         GameManager.i.inputScript.ResetStates();
         Debug.LogFormat("[UI] AIDisplay.cs -> CloseAIDisplay{0}", "\n");
         //open side tab
-        EventManager.instance.PostNotification(EventType.AISideTabOpen, this, null, "AIDisplayUI.cs -> CloseAIDisplay");
+        EventManager.i.PostNotification(EventType.AISideTabOpen, this, null, "AIDisplayUI.cs -> CloseAIDisplay");
     }
 
     /// <summary>

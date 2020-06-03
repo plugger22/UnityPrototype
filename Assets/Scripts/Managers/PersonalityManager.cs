@@ -876,19 +876,19 @@ public class PersonalityManager : MonoBehaviour
                 switch (belief.type.name)
                 {
                     case "Good":
-                        if (hqValue > 0) { tooltip = GameManager.GetFormattedString("Approves", ColourType.goodText); }
-                        else { tooltip = GameManager.GetFormattedString("Disapproves", ColourType.badText); }
+                        if (hqValue > 0) { tooltip = GameManager.Formatt("Approves", ColourType.goodText); }
+                        else { tooltip = GameManager.Formatt("Disapproves", ColourType.badText); }
                         break;
                     case "Bad":
-                        if (hqValue < 0) { tooltip = GameManager.GetFormattedString("Approves", ColourType.goodText); }
-                        else { tooltip = GameManager.GetFormattedString("Disapproves", ColourType.badText); }
+                        if (hqValue < 0) { tooltip = GameManager.Formatt("Approves", ColourType.goodText); }
+                        else { tooltip = GameManager.Formatt("Disapproves", ColourType.badText); }
                         break;
                     default:
                         Debug.LogWarningFormat("Unrecognised belief.type.name \"{0}\"", belief.type.name);
                         break;
                 }
             }
-            else { tooltip = GameManager.GetFormattedString("no view", ColourType.greyText); }
+            else { tooltip = GameManager.Formatt("no view", ColourType.greyText); }
         }
         else { Debug.LogErrorFormat("Invalid index \"{0}\"", index); }
         return tooltip;
@@ -1066,12 +1066,12 @@ public class PersonalityManager : MonoBehaviour
         if (change == 0)
         {
             text = "No effect on Player Mood";
-            builder.AppendFormat(GameManager.GetFormattedString(text, ColourType.greyText));
+            builder.AppendFormat(GameManager.Formatt(text, ColourType.greyText));
         }
         else if (change > 0)
         {
             text = string.Format("Player Mood +{0}", change);
-            builder.AppendFormat(GameManager.GetFormattedString(text, ColourType.goodText));
+            builder.AppendFormat(GameManager.Formatt(text, ColourType.goodText));
         }
         else
         {
@@ -1083,7 +1083,7 @@ public class PersonalityManager : MonoBehaviour
                 if (GameManager.i.playerScript.stressImmunityCurrent == 0)
                 { text = string.Format("Player Mood {0}{1}", change, isStressed == true ? ", STRESSED" : ""); }
                 else { text = string.Format("Player Mood {0}{1}", change, isStressed == true ? ", IMMUNE" : ""); }
-                builder.AppendFormat(GameManager.GetFormattedString(text, ColourType.badText));
+                builder.AppendFormat(GameManager.Formatt(text, ColourType.badText));
             }
             else
             {
@@ -1091,7 +1091,7 @@ public class PersonalityManager : MonoBehaviour
                 if (GameManager.i.playerScript.stressImmunityCurrent == 0)
                 { text = string.Format("Player Mood {0}{1}{2}", change, "\n", isStressed == true ? "SUPER STRESSED" : ""); }
                 else { text = string.Format("Player Mood {0}{1}{2}", change, "\n", isStressed == true ? "IMMUNE" : ""); }
-                builder.AppendFormat(GameManager.GetFormattedString(text, ColourType.badText));
+                builder.AppendFormat(GameManager.Formatt(text, ColourType.badText));
             }
         }
         if (GameManager.i.optionScript.fullMoodInfo == true)
@@ -1100,30 +1100,30 @@ public class PersonalityManager : MonoBehaviour
             builder.AppendLine();
             switch (factorType)
             {
-                case "Good": builder.Append(GameManager.GetFormattedString(factorName + " +", ColourType.normalText)); break;
-                case "Bad": builder.Append(GameManager.GetFormattedString(factorName + " -", ColourType.normalText)); break;
+                case "Good": builder.Append(GameManager.Formatt(factorName + " +", ColourType.normalText)); break;
+                case "Bad": builder.Append(GameManager.Formatt(factorName + " -", ColourType.normalText)); break;
                 default:
                     Debug.LogWarningFormat("Unrecognised factorType \"{0}\"", factorType);
                     builder.Append("Unknown");
                     break;
             }
-            builder.Append(GameManager.GetFormattedString(string.Format("{0}for Mood increase{1}", "\n", "\n"), ColourType.normalText));
+            builder.Append(GameManager.Formatt(string.Format("{0}for Mood increase{1}", "\n", "\n"), ColourType.normalText));
             //third line of msg -> player's factor (coloured green for good, red for bad)
             switch (change)
             {
                 case 2:
                 case 1:
-                    builder.Append(GameManager.GetFormattedString(string.Format("Player has{0}", "\n"), ColourType.goodText));
-                    builder.Append(GameManager.GetFormattedString(factorPlayer, ColourType.goodText));
+                    builder.Append(GameManager.Formatt(string.Format("Player has{0}", "\n"), ColourType.goodText));
+                    builder.Append(GameManager.Formatt(factorPlayer, ColourType.goodText));
                     break;
                 case 0:
-                    builder.Append(GameManager.GetFormattedString(string.Format("Player has{0}", "\n"), ColourType.neutralText));
-                    builder.Append(GameManager.GetFormattedString(factorPlayer, ColourType.neutralText));
+                    builder.Append(GameManager.Formatt(string.Format("Player has{0}", "\n"), ColourType.neutralText));
+                    builder.Append(GameManager.Formatt(factorPlayer, ColourType.neutralText));
                     break;
                 case -1:
                 case -2:
-                    builder.Append(GameManager.GetFormattedString(string.Format("Player has{0}", "\n"), ColourType.badText));
-                    builder.Append(GameManager.GetFormattedString(factorPlayer, ColourType.badText));
+                    builder.Append(GameManager.Formatt(string.Format("Player has{0}", "\n"), ColourType.badText));
+                    builder.Append(GameManager.Formatt(factorPlayer, ColourType.badText));
                     break;
                 default: Debug.LogWarningFormat("Unrecognised change \"{0}\"", change); break;
             }

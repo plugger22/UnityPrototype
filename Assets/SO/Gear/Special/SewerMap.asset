@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d96992d72a471341a07839d8d2b39b2, type: 3}
   m_Name: SewerMap
   m_EditorClassIdentifier: 
-  description: Safe, underground movement
+  description: Safe, underground movement up to two Districts away
   tag: Sewer Map
   rarity: {fileID: 11400000, guid: 5067f2c35f4b9ce4d8fb86779d5b3052, type: 2}
   type: {fileID: 11400000, guid: a88df17476114704ab637e71e32b4140, type: 2}

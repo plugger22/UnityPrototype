@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d96992d72a471341a07839d8d2b39b2, type: 3}
   m_Name: BugSpray
   m_EditorClassIdentifier: 
-  description: Disinfect Districts from Spiders
+  description: Remove Spiders from your current and neighbouring districts
   tag: Bug Spray
   rarity: {fileID: 11400000, guid: 5067f2c35f4b9ce4d8fb86779d5b3052, type: 2}
   type: {fileID: 11400000, guid: 37fa744a3cca2c641840caf14360a4db, type: 2}

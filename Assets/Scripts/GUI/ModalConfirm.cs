@@ -66,9 +66,9 @@ public class ModalConfirm : MonoBehaviour
         Debug.Assert(falseText != null, "Invalid falseText (Null)");
         Debug.Assert(trueText != null, "Invalid trueText (Null)");
         //register a listener
-        EventManager.instance.AddListener(EventType.ConfirmCloseLeft, OnEvent, "ModalConfirm");
-        EventManager.instance.AddListener(EventType.ConfirmCloseRight, OnEvent, "ModalConfirm");
-        EventManager.instance.AddListener(EventType.OpenConfirmWindow, OnEvent, "ModalConfirm");
+        EventManager.i.AddListener(EventType.ConfirmCloseLeft, OnEvent, "ModalConfirm");
+        EventManager.i.AddListener(EventType.ConfirmCloseRight, OnEvent, "ModalConfirm");
+        EventManager.i.AddListener(EventType.OpenConfirmWindow, OnEvent, "ModalConfirm");
     }
 
 

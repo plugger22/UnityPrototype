@@ -67,3 +67,23 @@ City seed 765 -> New York, America
 Dev seed 34354 -> Wednesday, 3 June 2020 12:39 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 64816 -> Wednesday, 3 June 2020 2:32 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 56659 -> Wednesday, 3 June 2020 2:34 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 16166 -> Wednesday, 3 June 2020 2:36 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 11378 -> Wednesday, 3 June 2020 2:47 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 49207 -> Wednesday, 3 June 2020 3:05 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 50720 -> Wednesday, 3 June 2020 3:07 PM
+City seed 5678 -> London, United Kingdom

@@ -164,9 +164,9 @@ public class ModalReviewUI : MonoBehaviour
         Debug.Assert(reviewButtonIncrement > 0, "Invalid reviewButtonIncrement (Zero)");
         Debug.Assert(reviewTimeInterval > 0, "Invalid reviewTimeInterval (Zero)");
         //register listener
-        EventManager.instance.AddListener(EventType.ReviewOpenUI, OnEvent, "ReviewInventoryUI");
-        EventManager.instance.AddListener(EventType.ReviewStart, OnEvent, "ReviewInventoryUI");
-        EventManager.instance.AddListener(EventType.ReviewCloseUI, OnEvent, "ReviewInventoryUI");
+        EventManager.i.AddListener(EventType.ReviewOpenUI, OnEvent, "ReviewInventoryUI");
+        EventManager.i.AddListener(EventType.ReviewStart, OnEvent, "ReviewInventoryUI");
+        EventManager.i.AddListener(EventType.ReviewCloseUI, OnEvent, "ReviewInventoryUI");
     }
 
     /// <summary>
@@ -370,7 +370,7 @@ public class ModalReviewUI : MonoBehaviour
             outcomeDetails.textTop = "There has been a hiccup and the information isn't available";
             outcomeDetails.textBottom = "We've called the WolfMan. He's on his way";
             outcomeDetails.side = playerSide;
-            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ModalInventoryUI.cs -> SetInventoryUI");
+            EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ModalInventoryUI.cs -> SetInventoryUI");
         }
         else
         {
@@ -510,8 +510,8 @@ public class ModalReviewUI : MonoBehaviour
         //outcome text and symbols -> must have a majority and have a minimum number of votes to get a campaign outcome
         if (votesAgainst > votesFor && votesAgainst >= votesMinimum)
         {
-            outcomeText = string.Format("<size=120%>{0}</size> earned", GameManager.GetFormattedString("BLACK MARK", ColourType.badText));
-            outcomeSymbol = string.Format("{0}", GameManager.GetFormattedString(GameManager.i.guiScript.blackmarkChar.ToString(), ColourType.dataTerrible));
+            outcomeText = string.Format("<size=120%>{0}</size> earned", GameManager.Formatt("BLACK MARK", ColourType.badText));
+            outcomeSymbol = string.Format("{0}", GameManager.Formatt(GameManager.i.guiScript.blackmarkChar.ToString(), ColourType.dataTerrible));
             outcomeLeft.gameObject.SetActive(true);
             outcomeRight.gameObject.SetActive(true);
             outcomeLeft.text = outcomeSymbol;
@@ -525,8 +525,8 @@ public class ModalReviewUI : MonoBehaviour
         }
         else if (votesFor > votesAgainst && votesFor >= votesMinimum)
         {
-            outcomeText = string.Format("<size=120%>{0}</size> earned", GameManager.GetFormattedString("COMMENDATION", ColourType.goodText));
-            outcomeSymbol = string.Format("{0}", GameManager.GetFormattedString(GameManager.i.guiScript.commendationChar.ToString(), ColourType.dataGood));
+            outcomeText = string.Format("<size=120%>{0}</size> earned", GameManager.Formatt("COMMENDATION", ColourType.goodText));
+            outcomeSymbol = string.Format("{0}", GameManager.Formatt(GameManager.i.guiScript.commendationChar.ToString(), ColourType.dataGood));
             outcomeLeft.gameObject.SetActive(true);
             outcomeRight.gameObject.SetActive(true);
             outcomeLeft.text = outcomeSymbol;
@@ -540,7 +540,7 @@ public class ModalReviewUI : MonoBehaviour
         }
         else
         {
-            outcomeText = string.Format("<size=120%>{0}</size> result", GameManager.GetFormattedString("INCONCLUSIVE", ColourType.neutralText));
+            outcomeText = string.Format("<size=120%>{0}</size> result", GameManager.Formatt("INCONCLUSIVE", ColourType.neutralText));
             //admin
             GameManager.i.dataScript.StatisticIncrement(StatType.ReviewInconclusive);
             text = string.Format("Review Topic, votes FOR {0}, AGAINST {1}, Abstained {2}, outcome {3}{4}", votesFor, votesAgainst, votesAbstained, CampaignOutcome.Inconclusive, "\n");

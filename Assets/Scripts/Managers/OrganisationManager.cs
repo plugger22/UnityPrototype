@@ -152,7 +152,7 @@ public class OrganisationManager : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //register event listeners
-        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "OrganisationManager.cs");
+        EventManager.i.AddListener(EventType.StartTurnLate, OnEvent, "OrganisationManager.cs");
     }
     #endregion
 
@@ -250,14 +250,14 @@ public class OrganisationManager : MonoBehaviour
         switch (orgType)
         {
             case OrgInfoType.Nemesis:
-                orgText = string.Format("Reporting the position of your {0}", GameManager.GetFormattedString("Nemesis", ColourType.salmonText));
+                orgText = string.Format("Reporting the position of your {0}", GameManager.Formatt("Nemesis", ColourType.salmonText));
                 break;
             case OrgInfoType.ErasureTeams:
-                orgText = string.Format("Reporting the position of any {0}", GameManager.GetFormattedString("Erasure Teams", ColourType.salmonText));
+                orgText = string.Format("Reporting the position of any {0}", GameManager.Formatt("Erasure Teams", ColourType.salmonText));
                 break;
             case OrgInfoType.Npc:
                 if (GameManager.i.missionScript.mission.npc != null)
-                { orgText = string.Format("Reporting the position of the {0}", GameManager.GetFormattedString(GameManager.i.missionScript.mission.npc.tag, ColourType.salmonText)); }
+                { orgText = string.Format("Reporting the position of the {0}", GameManager.Formatt(GameManager.i.missionScript.mission.npc.tag, ColourType.salmonText)); }
                 break;
             default: Debug.LogWarningFormat("Unrecognised orgType \"{0}\"", orgType); break;
         }
@@ -266,8 +266,8 @@ public class OrganisationManager : MonoBehaviour
         {
             text = string.Format("{0} active", org.tag.ToUpper()),
             topText = string.Format("{0} Direct Feed", org.tag),
-            detailsTop = string.Format("{0} will continue to provide a direct feed for", GameManager.GetFormattedString(org.tag, ColourType.neutralText)),
-            detailsBottom = string.Format("{0} days{1}", GameManager.GetFormattedString(Convert.ToString(org.timer), ColourType.neutralText),
+            detailsTop = string.Format("{0} will continue to provide a direct feed for", GameManager.Formatt(org.tag, ColourType.neutralText)),
+            detailsBottom = string.Format("{0} days{1}", GameManager.Formatt(Convert.ToString(org.timer), ColourType.neutralText),
                 string.IsNullOrEmpty(orgText) == false ? string.Format("{0}{1}{2}", "\n", "\n", orgText) : ""),
             sprite = org.sprite,
             help0 = "orgInfo_0",

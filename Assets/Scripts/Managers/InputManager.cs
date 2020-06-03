@@ -194,7 +194,7 @@ public class InputManager : MonoBehaviour
         if (Input.GetButtonDown("ActorInfo") == true)
         {
             //Toggle Actor Info display between Renown and Compatibility
-            EventManager.instance.PostNotification(EventType.ActorInfo, this, "ActorInfo Toggle", string.Format("InputManager.cs -> ProcessKeyInput ActorInfo"));
+            EventManager.i.PostNotification(EventType.ActorInfo, this, "ActorInfo Toggle", string.Format("InputManager.cs -> ProcessKeyInput ActorInfo"));
         }
         else if (Input.GetButtonDown("Test") == true)
         {
@@ -218,7 +218,7 @@ public class InputManager : MonoBehaviour
                         switch (_gameState)
                         {
                             case GameState.PlayGame:
-                                EventManager.instance.PostNotification(EventType.ExitLevel, this, null, string.Format("InputManager.cs -> ProcessKeyInput ExitLevel \"{0}\"", Input.inputString.ToUpper()));
+                                EventManager.i.PostNotification(EventType.ExitLevel, this, null, string.Format("InputManager.cs -> ProcessKeyInput ExitLevel \"{0}\"", Input.inputString.ToUpper()));
                                 break;
                         }
                     }
@@ -229,7 +229,7 @@ public class InputManager : MonoBehaviour
                         {
                             case GameState.MainMenu:
                                 //close main menu
-                                EventManager.instance.PostNotification(EventType.CloseMainMenu, this, null, "InputManager.cs -> ProcessKeyInput Exit \"Cancel (ESC)\"");
+                                EventManager.i.PostNotification(EventType.CloseMainMenu, this, null, "InputManager.cs -> ProcessKeyInput Exit \"Cancel (ESC)\"");
                                 break;
                             case GameState.ExitGame:
                                 //do nothing, already exiting game
@@ -239,7 +239,7 @@ public class InputManager : MonoBehaviour
                                 if (GameManager.i.debugScript.showGUI == false)
                                 {
                                     //all other options revert to main menu (default option of displaying over the top of whatever is present with no background initiated)
-                                    EventManager.instance.PostNotification(EventType.OpenMainMenu, this, null, "InputManager.cs -> ProcessKeyInput Exit \"Cancel (ESC)\"");
+                                    EventManager.i.PostNotification(EventType.OpenMainMenu, this, null, "InputManager.cs -> ProcessKeyInput Exit \"Cancel (ESC)\"");
                                 }
                                 else { GameManager.i.debugScript.showGUI = false; }
                                 break;
@@ -250,30 +250,30 @@ public class InputManager : MonoBehaviour
                         switch (_gameState)
                         {
                             case GameState.NewGame:
-                                EventManager.instance.PostNotification(EventType.NewGameOptions, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
+                                EventManager.i.PostNotification(EventType.NewGameOptions, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
                                 break;
                             case GameState.NewGameOptions:
-                                EventManager.instance.PostNotification(EventType.CloseNewGame, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
+                                EventManager.i.PostNotification(EventType.CloseNewGame, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
                                 break;
                             case GameState.LoadGame:
                             case GameState.LoadAtStart:
-                                EventManager.instance.PostNotification(EventType.CloseLoadGame, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
+                                EventManager.i.PostNotification(EventType.CloseLoadGame, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
                                 break;
                             case GameState.SaveGame:
-                                EventManager.instance.PostNotification(EventType.CloseSaveGame, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
+                                EventManager.i.PostNotification(EventType.CloseSaveGame, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
                                 break;
                             case GameState.Options:
                                 //close Options background -> Debug: need to set new Game State
-                                EventManager.instance.PostNotification(EventType.CloseOptions, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
+                                EventManager.i.PostNotification(EventType.CloseOptions, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
                                 break;
                             case GameState.ExitLevel:
-                                EventManager.instance.PostNotification(EventType.CreateMetaGame, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
+                                EventManager.i.PostNotification(EventType.CreateMetaGame, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
                                 break;
                             case GameState.MetaGame:
-                                EventManager.instance.PostNotification(EventType.CloseMetaGame, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
+                                EventManager.i.PostNotification(EventType.CloseMetaGame, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
                                 break;
                             case GameState.ExitCampaign:
-                                EventManager.instance.PostNotification(EventType.ExitGame, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
+                                EventManager.i.PostNotification(EventType.ExitGame, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
                                 break;
                             default:
                                 //ignore all the rest
@@ -286,56 +286,56 @@ public class InputManager : MonoBehaviour
                         if (GameState == GameState.PlayGame)
                         {
                             //Force a new turn (perhaps didn't want to take any actions), otherwise TurnManager.cs handles this once action quota used up
-                            EventManager.instance.PostNotification(EventType.NewTurn, this, null, "InputManager.cs -> ProcessKeyInput NewTurn");
+                            EventManager.i.PostNotification(EventType.NewTurn, this, null, "InputManager.cs -> ProcessKeyInput NewTurn");
                         }
                     }
                     else if (Input.GetButtonDown("ShowReserves") == true)
                     {
                         //only do so if new turn processing hasn't commenced
                         if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
-                        { EventManager.instance.PostNotification(EventType.InventorySetReserve, this, "Reserve Pool", string.Format("InputManager.cs -> ProcessKeyInput ShowReserves \"{0}\"", Input.inputString.ToUpper())); }
+                        { EventManager.i.PostNotification(EventType.InventorySetReserve, this, "Reserve Pool", string.Format("InputManager.cs -> ProcessKeyInput ShowReserves \"{0}\"", Input.inputString.ToUpper())); }
                     }
                     else if (Input.GetButtonDown("ShowGear") == true)
                     {
                         //only do so if new turn processing hasn't commenced
                         if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
-                        { EventManager.instance.PostNotification(EventType.InventorySetGear, this, "Gear Inventory", string.Format("InputManager.cs -> ProcessKeyInput ShowGear \"{0}\"", Input.inputString.ToUpper())); }
+                        { EventManager.i.PostNotification(EventType.InventorySetGear, this, "Gear Inventory", string.Format("InputManager.cs -> ProcessKeyInput ShowGear \"{0}\"", Input.inputString.ToUpper())); }
                     }
                     else if (Input.GetButtonDown("ShowHQ") == true)
                     {
                         //only do so if new turn processing hasn't commenced
                         if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
-                        { EventManager.instance.PostNotification(EventType.InventorySetHQ, this, "HQ Inventory", string.Format("InputManager.cs -> ProcessKeyInput ShowHQ \"{0}\"", Input.inputString.ToUpper())); }
+                        { EventManager.i.PostNotification(EventType.InventorySetHQ, this, "HQ Inventory", string.Format("InputManager.cs -> ProcessKeyInput ShowHQ \"{0}\"", Input.inputString.ToUpper())); }
                     }
                     else if (Input.GetButtonDown("ShowDevices") == true)
                     {
                         //only do so if new turn processing hasn't commenced
                         if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
-                        { EventManager.instance.PostNotification(EventType.InventorySetDevice, this, "Device Inventory", string.Format("InputManager.cs -> ProcessKeyInput ShowDevices \"{0}\"", Input.inputString.ToUpper())); }
+                        { EventManager.i.PostNotification(EventType.InventorySetDevice, this, "Device Inventory", string.Format("InputManager.cs -> ProcessKeyInput ShowDevices \"{0}\"", Input.inputString.ToUpper())); }
                     }
                     else if (Input.GetButtonDown("ShowTargets") == true)
                     {
                         //only do so if new turn processing hasn't commenced
                         if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
-                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowTargets, string.Format("InputManager.cs -> ProcessKeyInput ShowTargets \"{0}\"", Input.inputString.ToUpper())); }
+                        { EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowTargets, string.Format("InputManager.cs -> ProcessKeyInput ShowTargets \"{0}\"", Input.inputString.ToUpper())); }
                     }
                     else if (Input.GetButtonDown("ShowSpiders") == true)
                     {
                         //only do so if new turn processing hasn't commenced
                         if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
-                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowSpiders, string.Format("InputManager.cs -> ProcessKeyInput ShowSpiders \"{0}\"", Input.inputString.ToUpper())); }
+                        { EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowSpiders, string.Format("InputManager.cs -> ProcessKeyInput ShowSpiders \"{0}\"", Input.inputString.ToUpper())); }
                     }
                     else if (Input.GetButtonDown("ShowTracers") == true)
                     {
                         //only do so if new turn processing hasn't commenced
                         if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
-                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowTracers, string.Format("InputManager.cs -> ProcessKeyInput ShowTracers \"{0}\"", Input.inputString.ToUpper())); }
+                        { EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowTracers, string.Format("InputManager.cs -> ProcessKeyInput ShowTracers \"{0}\"", Input.inputString.ToUpper())); }
                     }
                     else if (Input.GetButtonDown("ShowTeams") == true)
                     {
                         //only do so if new turn processing hasn't commenced
                         if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
-                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowTeams, string.Format("InputManager.cs -> ProcessKeyInput ShowTeams \"{0}\"", Input.inputString.ToUpper())); }
+                        { EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowTeams, string.Format("InputManager.cs -> ProcessKeyInput ShowTeams \"{0}\"", Input.inputString.ToUpper())); }
                     }
                     else if (Input.GetButtonDown("ShowAutoRun") == true)
                     {
@@ -348,67 +348,67 @@ public class InputManager : MonoBehaviour
                     {
                         //only do so if new turn processing hasn't commenced
                         if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
-                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc0, "InputManager.cs -> ProcessKeyInput NodeArc0"); }
+                        { EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc0, "InputManager.cs -> ProcessKeyInput NodeArc0"); }
                     }
                     else if (Input.GetButtonDown("NodeArc1") == true)
                     {
                         //only do so if new turn processing hasn't commenced
                         if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
-                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc1, "InputManager.cs -> ProcessKeyInput NodeArc1"); }
+                        { EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc1, "InputManager.cs -> ProcessKeyInput NodeArc1"); }
                     }
                     else if (Input.GetButtonDown("NodeArc2") == true)
                     {
                         //only do so if new turn processing hasn't commenced
                         if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
-                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc2, "InputManager.cs -> ProcessKeyInput NodeArc2"); }
+                        { EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc2, "InputManager.cs -> ProcessKeyInput NodeArc2"); }
                     }
                     else if (Input.GetButtonDown("NodeArc3") == true)
                     {
                         //only do so if new turn processing hasn't commenced
                         if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
-                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc3, "InputManager.cs -> ProcessKeyInput NodeArc3"); }
+                        { EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc3, "InputManager.cs -> ProcessKeyInput NodeArc3"); }
                     }
                     else if (Input.GetButtonDown("NodeArc4") == true)
                     {
                         //only do so if new turn processing hasn't commenced
                         if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
-                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc4, "InputManager.cs -> ProcessKeyInput NodeArc4"); }
+                        { EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc4, "InputManager.cs -> ProcessKeyInput NodeArc4"); }
                     }
                     else if (Input.GetButtonDown("NodeArc5") == true)
                     {
                         //only do so if new turn processing hasn't commenced
                         if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
-                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc5, "InputManager.cs -> ProcessKeyInput NodeArc5"); }
+                        { EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc5, "InputManager.cs -> ProcessKeyInput NodeArc5"); }
                     }
                     else if (Input.GetButtonDown("NodeArc6") == true)
                     {
                         //only do so if new turn processing hasn't commenced
                         if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
-                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc6, "InputManager.cs -> ProcessKeyInput NodeArc6"); }
+                        { EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.NodeArc6, "InputManager.cs -> ProcessKeyInput NodeArc6"); }
                     }
                     else if (Input.GetButtonDown("PlayerKnown") == true)
                     {
                         //only do so if new turn processing hasn't commenced
                         if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
-                        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.PlayerKnown, "InputManager.cs -> ProcessKeyInput PlayerKnown"); }
+                        { EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.PlayerKnown, "InputManager.cs -> ProcessKeyInput PlayerKnown"); }
                     }
                     else if (Input.GetButtonDown("ActivityTime") == true)
                     {
                         //only do so if new turn processing hasn't commenced
                         if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
-                        { EventManager.instance.PostNotification(EventType.ActivityDisplay, this, ActivityUI.Time, "InputManager.cs -> ProcessKeyInput ActivityTime"); }
+                        { EventManager.i.PostNotification(EventType.ActivityDisplay, this, ActivityUI.Time, "InputManager.cs -> ProcessKeyInput ActivityTime"); }
                     }
                     else if (Input.GetButtonDown("ActivityCount") == true)
                     {
                         //only do so if new turn processing hasn't commenced
                         if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
-                        { EventManager.instance.PostNotification(EventType.ActivityDisplay, this, ActivityUI.Count, "InputManager.cs -> ProcessKeyInput ActivityCount"); }
+                        { EventManager.i.PostNotification(EventType.ActivityDisplay, this, ActivityUI.Count, "InputManager.cs -> ProcessKeyInput ActivityCount"); }
                     }
                     else if (Input.GetButtonDown("OpenMainInfo") == true)
                     {
                         //only do so if new turn processing hasn't commenced -> Keyboard shortcut to open MainInfoApp between turns -> 'I'
                         if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
-                        { EventManager.instance.PostNotification(EventType.MainInfoOpenInterim, this, null, string.Format("InputManager.cs -> ProcessKeyInput OpenMainInfo \"{0}\"", Input.inputString.ToUpper())); }
+                        { EventManager.i.PostNotification(EventType.MainInfoOpenInterim, this, null, string.Format("InputManager.cs -> ProcessKeyInput OpenMainInfo \"{0}\"", Input.inputString.ToUpper())); }
                     }
                     break;
                 case ModalState.ModalUI:
@@ -418,51 +418,51 @@ public class InputManager : MonoBehaviour
                         case ModalSubState.Outcome:
                             if (Input.GetButtonDown("Cancel") == true)
                             {
-                                EventManager.instance.PostNotification(EventType.OutcomeClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                                EventManager.i.PostNotification(EventType.OutcomeClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
                             }
                             else if (Input.GetButtonDown("Multipurpose") == true)
                             {
-                                EventManager.instance.PostNotification(EventType.OutcomeClose, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
+                                EventManager.i.PostNotification(EventType.OutcomeClose, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
                             }
                             break;
                         case ModalSubState.Inventory:
                             if (Input.GetButtonDown("Cancel") == true)
                             {
-                                EventManager.instance.PostNotification(EventType.InventoryCloseUI, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                                EventManager.i.PostNotification(EventType.InventoryCloseUI, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
                             }
                             else if (Input.GetButtonDown("Multipurpose") == true)
                             {
-                                EventManager.instance.PostNotification(EventType.InventoryCloseUI, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
+                                EventManager.i.PostNotification(EventType.InventoryCloseUI, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
                             }
                             else if (Input.GetButtonDown("ShowReserves") == true)
                             {
                                 if (ModalInventoryState == ModalInventorySubState.ReservePool)
-                                { EventManager.instance.PostNotification(EventType.InventoryCloseUI, this, null, string.Format("InputManager.cs -> ProcessKeyInput ShowReserves \"{0}\"", Input.inputString.ToUpper())); }
+                                { EventManager.i.PostNotification(EventType.InventoryCloseUI, this, null, string.Format("InputManager.cs -> ProcessKeyInput ShowReserves \"{0}\"", Input.inputString.ToUpper())); }
                             }
                             else if (Input.GetButtonDown("ShowGear") == true)
                             {
                                 if (ModalInventoryState == ModalInventorySubState.Gear)
-                                { EventManager.instance.PostNotification(EventType.InventoryCloseUI, this, null, string.Format("InputManager.cs -> ProcessKeyInput ShowGear \"{0}\"", Input.inputString.ToUpper())); }
+                                { EventManager.i.PostNotification(EventType.InventoryCloseUI, this, null, string.Format("InputManager.cs -> ProcessKeyInput ShowGear \"{0}\"", Input.inputString.ToUpper())); }
                             }
                             else if (Input.GetButtonDown("ShowHQ") == true)
                             {
                                 if (ModalInventoryState == ModalInventorySubState.HQ)
-                                { EventManager.instance.PostNotification(EventType.InventoryCloseUI, this, null, string.Format("InputManager.cs -> ProcessKeyInput ShowHQ \"{0}\"", Input.inputString.ToUpper())); }
+                                { EventManager.i.PostNotification(EventType.InventoryCloseUI, this, null, string.Format("InputManager.cs -> ProcessKeyInput ShowHQ \"{0}\"", Input.inputString.ToUpper())); }
                             }
                             else if (Input.GetButtonDown("ShowDevices") == true)
                             {
                                 if (ModalInventoryState == ModalInventorySubState.CaptureTool)
-                                { EventManager.instance.PostNotification(EventType.InventoryCloseUI, this, null, string.Format("InputManager.cs -> ProcessKeyInput ShowDevices \"{0}\"", Input.inputString.ToUpper())); }
+                                { EventManager.i.PostNotification(EventType.InventoryCloseUI, this, null, string.Format("InputManager.cs -> ProcessKeyInput ShowDevices \"{0}\"", Input.inputString.ToUpper())); }
                             }
                             break;
                         case ModalSubState.TeamPicker:
                             if (Input.GetButtonDown("Cancel") == true)
                             {
-                                EventManager.instance.PostNotification(EventType.CloseTeamPicker, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                                EventManager.i.PostNotification(EventType.CloseTeamPicker, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
                             }
                             else if (Input.GetButtonDown("Multipurpose") == true)
                             {
-                                EventManager.instance.PostNotification(EventType.CloseTeamPicker, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
+                                EventManager.i.PostNotification(EventType.CloseTeamPicker, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
                             }
                             break;
                         case ModalSubState.GenericPicker:
@@ -471,23 +471,23 @@ public class InputManager : MonoBehaviour
                                 case ModalGenericPickerSubState.Normal:
                                     if (Input.GetButtonDown("Cancel") == true)
                                     {
-                                        EventManager.instance.PostNotification(EventType.CloseGenericPicker, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                                        EventManager.i.PostNotification(EventType.CloseGenericPicker, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
                                     }
                                     else if (Input.GetButtonDown("Multipurpose") == true)
                                     {
-                                        EventManager.instance.PostNotification(EventType.CloseGenericPicker, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
+                                        EventManager.i.PostNotification(EventType.CloseGenericPicker, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
                                     }
                                     break;
                                 case ModalGenericPickerSubState.CompromisedGear:
                                     if (Input.GetButtonDown("Cancel") == true)
                                     {
-                                        EventManager.instance.PostNotification(EventType.CloseGenericPicker, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
-                                        EventManager.instance.PostNotification(EventType.GenericCompromisedGear, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                                        EventManager.i.PostNotification(EventType.CloseGenericPicker, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                                        EventManager.i.PostNotification(EventType.GenericCompromisedGear, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
                                     }
                                     else if (Input.GetButtonDown("Multipurpose") == true)
                                     {
-                                        EventManager.instance.PostNotification(EventType.CloseGenericPicker, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
-                                        EventManager.instance.PostNotification(EventType.GenericCompromisedGear, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
+                                        EventManager.i.PostNotification(EventType.CloseGenericPicker, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
+                                        EventManager.i.PostNotification(EventType.GenericCompromisedGear, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
                                     }
                                     break;
                             }
@@ -497,9 +497,9 @@ public class InputManager : MonoBehaviour
                             {
                                 case ModalReviewSubState.Open:
                                     if (Input.GetButtonDown("Cancel") == true)
-                                    { EventManager.instance.PostNotification(EventType.ReviewStart, this, null, "InputManager.cs -> ProcessKeyInput Cancel"); }
+                                    { EventManager.i.PostNotification(EventType.ReviewStart, this, null, "InputManager.cs -> ProcessKeyInput Cancel"); }
                                     else if (Input.GetButtonDown("Multipurpose") == true)
-                                    { EventManager.instance.PostNotification(EventType.ReviewStart, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose"); }
+                                    { EventManager.i.PostNotification(EventType.ReviewStart, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose"); }
                                     break;
                                 case ModalReviewSubState.Review:
                                     if (Input.GetButtonDown("Multipurpose") == true)
@@ -510,23 +510,23 @@ public class InputManager : MonoBehaviour
                                     break;
                                 case ModalReviewSubState.Close:
                                     if (Input.GetButtonDown("Cancel") == true)
-                                    { EventManager.instance.PostNotification(EventType.ReviewCloseUI, this, null, "InputManager.cs -> ProcessKeyInput Cancel"); }
+                                    { EventManager.i.PostNotification(EventType.ReviewCloseUI, this, null, "InputManager.cs -> ProcessKeyInput Cancel"); }
                                     break;
                             }
                             break;
                         case ModalSubState.ActionMenu:
                             if (Input.GetButtonDown("Cancel") == true)
                             {
-                                EventManager.instance.PostNotification(EventType.CloseActionMenu, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                                EventManager.i.PostNotification(EventType.CloseActionMenu, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
                             }
                             break;
                         case ModalSubState.Topic:
                             if (Input.GetButtonDown("Cancel") == true)
-                            { EventManager.instance.PostNotification(EventType.TopicDisplayIgnore, this, null, "InputManager.cs -> ProcessKeyInput Cancel"); }
+                            { EventManager.i.PostNotification(EventType.TopicDisplayIgnore, this, null, "InputManager.cs -> ProcessKeyInput Cancel"); }
                             else if (Input.GetButtonDown("Multipurpose") == true)
                             {
                                 //Space bar is keyboard shortcut for 'Show Me' button
-                                EventManager.instance.PostNotification(EventType.TopicDisplayShowMe, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
+                                EventManager.i.PostNotification(EventType.TopicDisplayShowMe, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
                                 Input.ResetInputAxes();
                             }
                             break;
@@ -540,71 +540,71 @@ public class InputManager : MonoBehaviour
                                     case ModalInfoSubState.CityInfo:
                                         if (Input.GetButtonDown("Cancel") == true)
                                         {
-                                            EventManager.instance.PostNotification(EventType.CityInfoClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                                            EventManager.i.PostNotification(EventType.CityInfoClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
                                         }
                                         break;
                                     case ModalInfoSubState.AIInfo:
                                         if (Input.GetButtonDown("Cancel") == true)
                                         {
-                                            EventManager.instance.PostNotification(EventType.AIDisplayClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                                            EventManager.i.PostNotification(EventType.AIDisplayClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
                                         }
                                         break;
                                     case ModalInfoSubState.MainInfo:
                                         if (Input.GetButtonDown("Cancel") == true)
                                         {
-                                            EventManager.instance.PostNotification(EventType.MainInfoClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                                            EventManager.i.PostNotification(EventType.MainInfoClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
                                         }
                                         else if (Input.GetButtonDown("Vertical"))
                                         {
                                             y_axis = Input.GetAxisRaw("Vertical");
                                             if (y_axis > 0)
-                                            { EventManager.instance.PostNotification(EventType.MainInfoUpArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical"); }
+                                            { EventManager.i.PostNotification(EventType.MainInfoUpArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical"); }
                                             else if (y_axis < 0)
-                                            { EventManager.instance.PostNotification(EventType.MainInfoDownArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical"); }
+                                            { EventManager.i.PostNotification(EventType.MainInfoDownArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical"); }
                                         }
                                         else if (Input.GetButtonDown("Horizontal"))
                                         {
                                             x_axis = Input.GetAxisRaw("Horizontal");
                                             if (x_axis > 0)
-                                            { EventManager.instance.PostNotification(EventType.MainInfoRightArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal"); }
+                                            { EventManager.i.PostNotification(EventType.MainInfoRightArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal"); }
                                             else if (x_axis < 0)
-                                            { EventManager.instance.PostNotification(EventType.MainInfoLeftArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal"); }
+                                            { EventManager.i.PostNotification(EventType.MainInfoLeftArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal"); }
                                         }
                                         else if (Input.GetButtonDown("Multipurpose") == true)
                                         {
                                             //Space bar is keyboard shortcut for 'Show Me' button
-                                            EventManager.instance.PostNotification(EventType.MainInfoShowMe, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
+                                            EventManager.i.PostNotification(EventType.MainInfoShowMe, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
                                             Input.ResetInputAxes();
                                         }
                                         else if (Input.GetButtonDown("PageUp") == true)
                                         {
                                             //Keyboard shortcut for forward a day -> PgUp
-                                            EventManager.instance.PostNotification(EventType.MainInfoForward, this, null, string.Format("InputManager.cs -> ProcessKeyInput DayAhead (PageUp) \"{0}\"", Input.inputString.ToUpper()));
+                                            EventManager.i.PostNotification(EventType.MainInfoForward, this, null, string.Format("InputManager.cs -> ProcessKeyInput DayAhead (PageUp) \"{0}\"", Input.inputString.ToUpper()));
                                         }
                                         else if (Input.GetButtonDown("PageDown") == true)
                                         {
                                             //Keyboard shortcut for back a day -> PgDown
-                                            EventManager.instance.PostNotification(EventType.MainInfoBack, this, null, string.Format("InputManager.cs -> ProcessKeyInput DayBehind (PageDown) \"{0}\"", Input.inputString.ToUpper()));
+                                            EventManager.i.PostNotification(EventType.MainInfoBack, this, null, string.Format("InputManager.cs -> ProcessKeyInput DayBehind (PageDown) \"{0}\"", Input.inputString.ToUpper()));
                                         }
                                         else if (Input.GetButtonDown("CurrentDay") == true)
                                         {
                                             //Keyboard shortcut for go to current day (Home) day -> Home
-                                            EventManager.instance.PostNotification(EventType.MainInfoHome, this, null, string.Format("InputManager.cs -> ProcessKeyInput CurrentDay \"{0}\"", Input.inputString.ToUpper()));
+                                            EventManager.i.PostNotification(EventType.MainInfoHome, this, null, string.Format("InputManager.cs -> ProcessKeyInput CurrentDay \"{0}\"", Input.inputString.ToUpper()));
                                         }
                                         else if (Input.GetButtonDown("StartDay") == true)
                                         {
                                             //Keyboard shortcut for go to start (day 1) -> End
-                                            EventManager.instance.PostNotification(EventType.MainInfoEnd, this, null, string.Format("InputManager.cs -> ProcessKeyInput StartDay \"{0}\"", Input.inputString.ToUpper()));
+                                            EventManager.i.PostNotification(EventType.MainInfoEnd, this, null, string.Format("InputManager.cs -> ProcessKeyInput StartDay \"{0}\"", Input.inputString.ToUpper()));
                                         }
                                         else if (Input.GetButtonDown("Plus") == true)
                                         {
                                             //Keyboard shortcut to increase speed of ticker tape
-                                            EventManager.instance.PostNotification(EventType.MainInfoTickerFaster, this, null, string.Format("InputManager.cs -> ProcessKeyInput Plus \"{0}\"", Input.inputString.ToUpper()));
+                                            EventManager.i.PostNotification(EventType.MainInfoTickerFaster, this, null, string.Format("InputManager.cs -> ProcessKeyInput Plus \"{0}\"", Input.inputString.ToUpper()));
                                         }
                                         else if (Input.GetButtonDown("Minus") == true)
                                         {
                                             //Keyboard shortcut to decrease speed of ticker tape
-                                            EventManager.instance.PostNotification(EventType.MainInfoTickerSlower, this, null, string.Format("InputManager.cs -> ProcessKeyInput Minus \"{0}\"", Input.inputString.ToUpper()));
+                                            EventManager.i.PostNotification(EventType.MainInfoTickerSlower, this, null, string.Format("InputManager.cs -> ProcessKeyInput Minus \"{0}\"", Input.inputString.ToUpper()));
                                         }
                                         break;
                                 }
@@ -616,38 +616,38 @@ public class InputManager : MonoBehaviour
                             {
                                 if (Input.GetButtonDown("Cancel") == true)
                                 {
-                                    EventManager.instance.PostNotification(EventType.MetaGameClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                                    EventManager.i.PostNotification(EventType.MetaGameClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
                                 }
                                 else if (Input.GetButtonDown("Vertical"))
                                 {
                                     y_axis = Input.GetAxisRaw("Vertical");
                                     if (y_axis > 0)
-                                    { EventManager.instance.PostNotification(EventType.MetaGameUpArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical"); }
+                                    { EventManager.i.PostNotification(EventType.MetaGameUpArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical"); }
                                     else if (y_axis < 0)
-                                    { EventManager.instance.PostNotification(EventType.MetaGameDownArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical"); }
+                                    { EventManager.i.PostNotification(EventType.MetaGameDownArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical"); }
                                 }
                                 else if (Input.GetButtonDown("Horizontal"))
                                 {
                                     x_axis = Input.GetAxisRaw("Horizontal");
                                     if (x_axis > 0)
-                                    { EventManager.instance.PostNotification(EventType.MetaGameRightArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal"); }
+                                    { EventManager.i.PostNotification(EventType.MetaGameRightArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal"); }
                                     else if (x_axis < 0)
-                                    { EventManager.instance.PostNotification(EventType.MetaGameLeftArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal"); }
+                                    { EventManager.i.PostNotification(EventType.MetaGameLeftArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal"); }
                                 }
                                 else if (Input.GetButtonDown("PageUp") == true)
                                 {
                                     //Keyboard shortcut for forward a day -> PgUp
-                                    EventManager.instance.PostNotification(EventType.MetaGamePageUp, this, null, string.Format("InputManager.cs -> ProcessKeyInput PageUp \"{0}\"", Input.inputString.ToUpper()));
+                                    EventManager.i.PostNotification(EventType.MetaGamePageUp, this, null, string.Format("InputManager.cs -> ProcessKeyInput PageUp \"{0}\"", Input.inputString.ToUpper()));
                                 }
                                 else if (Input.GetButtonDown("PageDown") == true)
                                 {
                                     //Keyboard shortcut for back a day -> PgDown
-                                    EventManager.instance.PostNotification(EventType.MetaGamePageDown, this, null, string.Format("InputManager.cs -> ProcessKeyInput PageDown \"{0}\"", Input.inputString.ToUpper()));
+                                    EventManager.i.PostNotification(EventType.MetaGamePageDown, this, null, string.Format("InputManager.cs -> ProcessKeyInput PageDown \"{0}\"", Input.inputString.ToUpper()));
                                 }
                                 else if (Input.GetButtonDown("Multipurpose") == true)
                                 {
                                     //Space bar is keyboard shortcut for 'Select/Deselect' buttons (parameter needs to be '-1' for MetaGameUI.cs -> ExecuteButton to deal with correctly
-                                    EventManager.instance.PostNotification(EventType.MetaGameButton, this, -1, "InputManager.cs -> ProcessKeyInput Multipurpose");
+                                    EventManager.i.PostNotification(EventType.MetaGameButton, this, -1, "InputManager.cs -> ProcessKeyInput Multipurpose");
                                     Input.ResetInputAxes();
                                 }
                             }
@@ -655,7 +655,7 @@ public class InputManager : MonoBehaviour
                         case ModalSubState.ShowMe:
                             //'Show Me' -> retore infoApp
                             if (Input.anyKeyDown == true)
-                            { EventManager.instance.PostNotification(EventType.ShowMeRestore, this, null, "InputManager.cs -> ProcessKeyInput ShowMe"); }
+                            { EventManager.i.PostNotification(EventType.ShowMeRestore, this, null, "InputManager.cs -> ProcessKeyInput ShowMe"); }
                             break;
                     }
                     break;
@@ -722,9 +722,9 @@ public class InputManager : MonoBehaviour
                                     break;
                                 case ModalInfoSubState.MainInfo:
                                     if (change > 0)
-                                    { EventManager.instance.PostNotification(EventType.MainInfoUpArrow, this, null, "InputManager.cs -> ProcessMouseWheelInput"); }
+                                    { EventManager.i.PostNotification(EventType.MainInfoUpArrow, this, null, "InputManager.cs -> ProcessMouseWheelInput"); }
                                     else if (change < 0)
-                                    { EventManager.instance.PostNotification(EventType.MainInfoDownArrow, this, null, "InputManager.cs -> ProcessMouseWheelInput"); }
+                                    { EventManager.i.PostNotification(EventType.MainInfoDownArrow, this, null, "InputManager.cs -> ProcessMouseWheelInput"); }
                                     break;
                             }
                         }
@@ -737,9 +737,9 @@ public class InputManager : MonoBehaviour
                             {
                                 case ModalMetaSubState.PlayerOptions:
                                     if (change > 0)
-                                    { EventManager.instance.PostNotification(EventType.MetaGameUpArrow, this, null, "InputManager.cs -> ProcessMouseWheelInput"); }
+                                    { EventManager.i.PostNotification(EventType.MetaGameUpArrow, this, null, "InputManager.cs -> ProcessMouseWheelInput"); }
                                     else if (change < 0)
-                                    { EventManager.instance.PostNotification(EventType.MetaGameDownArrow, this, null, "InputManager.cs -> ProcessMouseWheelInput"); }
+                                    { EventManager.i.PostNotification(EventType.MetaGameDownArrow, this, null, "InputManager.cs -> ProcessMouseWheelInput"); }
                                     break;
                             }
                         }

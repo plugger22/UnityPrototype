@@ -94,8 +94,8 @@ public class TooltipNode : MonoBehaviour
         /*fadeInTime = GameManager.i.guiScript.tooltipFade;*/
         offset = GameManager.i.guiScript.tooltipOffset;
         //event listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TooltipNode");
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "TooltipNode");
+        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "TooltipNode");
+        EventManager.i.AddListener(EventType.ChangeSide, OnEvent, "TooltipNode");
     }
 
     /// <summary>
@@ -320,7 +320,7 @@ public class TooltipNode : MonoBehaviour
             {
                 statData = data.arrayOfStats[i];
                 if (i > 0) { builderStats.AppendLine(); }
-                builderStats.AppendFormat("{0} {1}<pos=57%>{2}", arrayOfIcons[i], (NodeData)i, GameManager.i.guiScript.GetDatapointStars(statData));
+                builderStats.AppendFormat("{0} {1}<pos=57%>{2}", arrayOfIcons[i], (NodeData)i, GameManager.i.guiScript.GetNormalStars(statData));
                 //idiot check to handle case of being too many stats
                 checkCounter++;
                 if (checkCounter >= 3) { break; }

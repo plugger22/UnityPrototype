@@ -519,8 +519,8 @@ public class AIManager : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //event listeners
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "AIManager");
-        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "AIManager");
+        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "AIManager");
+        EventManager.i.AddListener(EventType.StartTurnEarly, OnEvent, "AIManager");
     }
     #endregion
 
@@ -2906,7 +2906,7 @@ public class AIManager : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid AITask for listOfTasksFinal[{0}]", i); }
             }
         }
-        EventManager.instance.PostNotification(EventType.AISendDisplayData, this, data, "AIManager.cs -> UpdateTaskDisplayData");
+        EventManager.i.PostNotification(EventType.AISendDisplayData, this, data, "AIManager.cs -> UpdateTaskDisplayData");
     }
 
 
@@ -3307,17 +3307,17 @@ public class AIManager : MonoBehaviour
             if (task.dataName.Equals(decisionAPB.name, StringComparison.Ordinal) == true)
             {
                 isSuccess = GameManager.i.authorityScript.SetAuthoritySecurityState(decisionAPB.descriptor, decisionAPB.warning, AuthoritySecurityState.APB);
-                EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "AIManager.cs -> ExecuteDecisionTask");
+                EventManager.i.PostNotification(EventType.StartSecurityFlash, this, null, "AIManager.cs -> ExecuteDecisionTask");
             }
             else if (task.dataName.Equals(decisionSecAlert.name, StringComparison.Ordinal) == true)
             {
                 isSuccess = GameManager.i.authorityScript.SetAuthoritySecurityState(decisionSecAlert.descriptor, decisionSecAlert.warning, AuthoritySecurityState.SecurityAlert);
-                EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "AIManager.cs -> ExecuteDecisionTask");
+                EventManager.i.PostNotification(EventType.StartSecurityFlash, this, null, "AIManager.cs -> ExecuteDecisionTask");
             }
             else if (task.dataName.Equals(decisionCrackdown.name, StringComparison.Ordinal) == true)
             {
                 isSuccess = GameManager.i.authorityScript.SetAuthoritySecurityState(decisionCrackdown.descriptor, decisionCrackdown.warning, AuthoritySecurityState.SurveillanceCrackdown);
-                EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "AIManager.cs -> ExecuteDecisionTask");
+                EventManager.i.PostNotification(EventType.StartSecurityFlash, this, null, "AIManager.cs -> ExecuteDecisionTask");
             }
             else if (task.dataName.Equals(decisionConnSec.name, StringComparison.Ordinal) == true)
             { isSuccess = GameManager.i.connScript.ProcessConnectionSecurityDecision(task.data0); }
@@ -3899,7 +3899,7 @@ public class AIManager : MonoBehaviour
             }
             data.tooltipDetails = string.Format("Hacking the AI does{0}{1}NOT{2}{3}cost an Action", "\n", colourNeutral, colourEnd, "\n");
             //send data package
-            EventManager.instance.PostNotification(EventType.AISendSideData, this, data, "AIManager.cs -> UpdateSideTabData");
+            EventManager.i.PostNotification(EventType.AISendSideData, this, data, "AIManager.cs -> UpdateSideTabData");
         }
         else { Debug.LogWarning("Invalid side (can only be for Resistance Human player)"); }
     }
@@ -4336,7 +4336,7 @@ public class AIManager : MonoBehaviour
             data.hackingStatus = string.Format("{0} Hacking Attempt{1}{2}AI Alert Status {3}{4}{5}", hackingAttemptsReboot,
                 hackingAttemptsReboot != 1 ? "s" : "", "\n", colourStatus, aiAlertStatus, colourEnd);
             //send data package to AIDisplayUI
-            EventManager.instance.PostNotification(EventType.AISendHackingData, this, data, "AIManager.cs -> UpdateHackingStatus");
+            EventManager.i.PostNotification(EventType.AISendHackingData, this, data, "AIManager.cs -> UpdateHackingStatus");
         }
         return isDetected;
     }
@@ -4379,7 +4379,7 @@ public class AIManager : MonoBehaviour
         data.tooltipDetails = string.Format("{0}The AI has detected{1}{2}{3}{4} hacking attempt{5}{6}{7}{8}since its last Reboot{9}", colourNormal, colourEnd, "\n",
             colourNeutral, hackingAttemptsDetected, hackingAttemptsDetected != 1 ? "s" : "", colourEnd, "\n", colourNormal, colourEnd);
         //send data package to AIDisplayUI
-        EventManager.instance.PostNotification(EventType.AISendHackingData, this, data, "AIManager.cs -> UpdateHackingStatus");
+        EventManager.i.PostNotification(EventType.AISendHackingData, this, data, "AIManager.cs -> UpdateHackingStatus");
     }
 
     /// <summary>

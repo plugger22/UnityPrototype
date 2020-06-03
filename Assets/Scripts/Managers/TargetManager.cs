@@ -129,10 +129,10 @@ public class TargetManager : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //event listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TargetManager");
-        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "TargetManager");
-        EventManager.instance.AddListener(EventType.TargetInfoAction, OnEvent, "TargetManager");
-        EventManager.instance.AddListener(EventType.GenericTargetInfo, OnEvent, "TargetManager");
+        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "TargetManager");
+        EventManager.i.AddListener(EventType.StartTurnEarly, OnEvent, "TargetManager");
+        EventManager.i.AddListener(EventType.TargetInfoAction, OnEvent, "TargetManager");
+        EventManager.i.AddListener(EventType.GenericTargetInfo, OnEvent, "TargetManager");
     }
     #endregion
 
@@ -1723,7 +1723,7 @@ public class TargetManager : MonoBehaviour
                 {
                     //capture happened, abort recruitment
                     captureDetails.effects = string.Format("{0}The contact wasn't there. It was a wash.{1}", colourNeutral, colourEnd);
-                    EventManager.instance.PostNotification(EventType.Capture, this, captureDetails, "TargetManager.cs -> InitialiseGenericPickerTargetInfo");
+                    EventManager.i.PostNotification(EventType.Capture, this, captureDetails, "TargetManager.cs -> InitialiseGenericPickerTargetInfo");
                     return;
                 }
             }
@@ -1863,14 +1863,14 @@ public class TargetManager : MonoBehaviour
             outcomeDetails.side = globalResistance;
             outcomeDetails.textTop = "There has been an error in communication and no Targets can be located.";
             outcomeDetails.textBottom = "Backsides will be kicked!";
-            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "TargetManager.cs -> InitialiseGenericPickerTargetInfo");
+            EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "TargetManager.cs -> InitialiseGenericPickerTargetInfo");
         }
         else
         {
             //deactivate back button
             GameManager.i.genericPickerScript.SetBackButton(EventType.None);
             //activate Generic Picker window
-            EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "TargetManager.cs -> InitialiseGenericPickerTargetInfo");
+            EventManager.i.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "TargetManager.cs -> InitialiseGenericPickerTargetInfo");
         }
     }
 
@@ -2002,7 +2002,7 @@ public class TargetManager : MonoBehaviour
                     detailsModal.side = GameManager.i.globalScript.sideResistance;
                     detailsModal.isAction = true;
                     detailsModal.reason = "Gain Target Intel";
-                    EventManager.instance.PostNotification(EventType.OutcomeOpen, this, detailsModal, "TargetManager.cs -> ProcessTargetInfo");
+                    EventManager.i.PostNotification(EventType.OutcomeOpen, this, detailsModal, "TargetManager.cs -> ProcessTargetInfo");
                 }
                 else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", detailsGeneric.nodeID)); }
             }

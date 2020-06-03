@@ -206,7 +206,7 @@ public class NemesisManager : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //event listeners
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "NemesisManager");
+        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "NemesisManager");
     }
     #endregion
 

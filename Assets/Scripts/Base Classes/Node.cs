@@ -368,14 +368,14 @@ public class Node : MonoBehaviour
 
                         //Create a Move Menu at the node
                         if (GameManager.i.dataScript.CheckValidMoveNode(nodeID) == true)
-                        { EventManager.instance.PostNotification(EventType.CreateMoveMenu, this, nodeID, "Node.cs -> OnMouseOver"); }
+                        { EventManager.i.PostNotification(EventType.CreateMoveMenu, this, nodeID, "Node.cs -> OnMouseOver"); }
                         //highlight all possible move options
                         else
                         {
-                            EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Move, "Node.cs -> OnMouseOver");
+                            EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.Move, "Node.cs -> OnMouseOver");
                             //if at Player's current node then Gear Node menu
                             if (nodeID == GameManager.i.nodeScript.GetPlayerNodeID())
-                            { EventManager.instance.PostNotification(EventType.CreateGearNodeMenu, this, nodeID, "Node.cs -> OnMouseOver"); }
+                            { EventManager.i.PostNotification(EventType.CreateGearNodeMenu, this, nodeID, "Node.cs -> OnMouseOver"); }
                         }
                     }
                     else

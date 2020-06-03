@@ -1030,7 +1030,7 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_level + offset_x, box_y + gap_y + offset_y * 0 + button_height * 0, button_width, button_height), "Most Connected"))
             {
                 Debug.Log("[Dbg] Button -> Show Most Connected Nodes");
-                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.MostConnected, "DebugGUI.cs -> OnGUI");
+                EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.MostConnected, "DebugGUI.cs -> OnGUI");
             }
 
             //second button
@@ -1038,28 +1038,28 @@ public class DebugGUI : MonoBehaviour
             {
                 Debug.Log("[Dbg] Button -> Centre Nodes");
                 GameManager.i.debugGraphicsScript.SetCentrePane(true);
-                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Centre, "DebugGUI.cs -> OnGUI");
+                EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.Centre, "DebugGUI.cs -> OnGUI");
             }
 
             //third button
             if (GUI.Button(new Rect(box_level + offset_x, box_y + gap_y + offset_y * 2 + button_height * 2, button_width, button_height), "Near Neighbours"))
             {
                 Debug.Log("[Dbg] Button -> NearNeighbours");
-                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.NearNeighbours, "DebugGUI.cs -> OnGUI");
+                EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.NearNeighbours, "DebugGUI.cs -> OnGUI");
             }
 
             //fourth button
             if (GUI.Button(new Rect(box_level + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), "Decision Nodes"))
             {
                 Debug.Log("[Dbg] Button -> Show Decision Nodes");
-                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.DecisionNodes, "DebugGUI.cs -> OnGUI");
+                EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.DecisionNodes, "DebugGUI.cs -> OnGUI");
             }
 
             //fifth button
             if (GUI.Button(new Rect(box_level + offset_x, box_y + gap_y + offset_y * 4 + button_height * 4, button_width, button_height), "Crisis Nodes"))
             {
                 Debug.Log("[Dbg] Button -> Show Crisis Nodes");
-                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.CrisisNodes, "DebugGUI.cs -> OnGUI");
+                EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.CrisisNodes, "DebugGUI.cs -> OnGUI");
             }
 
             //sixth button
@@ -1095,21 +1095,21 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_level + offset_x, box_y + gap_y + offset_y * 8 + button_height * 8, button_width, button_height), "Loiter Nodes"))
             {
                 Debug.Log("[Dbg] Button -> Show Loiter Nodes");
-                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.LoiterNodes, "DebugGUI.cs -> OnGUI");
+                EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.LoiterNodes, "DebugGUI.cs -> OnGUI");
             }
 
             //tenth button
             if (GUI.Button(new Rect(box_level + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), "Cure Nodes"))
             {
                 Debug.Log("[Dbg] Button -> Show Cure Nodes");
-                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.CureNodes, "DebugGUI.cs -> OnGUI");
+                EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.CureNodes, "DebugGUI.cs -> OnGUI");
             }
 
             //eleventh button
             if (GUI.Button(new Rect(box_level + offset_x, box_y + gap_y + offset_y * 10 + button_height * 10, button_width, button_height), "Show Contacts"))
             {
                 Debug.Log("[Dbg] Button -> Show Contact Nodes");
-                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowContacts, "DebugGUI.cs -> OnGUI");
+                EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowContacts, "DebugGUI.cs -> OnGUI");
             }
 
 
@@ -1450,7 +1450,7 @@ public class DebugGUI : MonoBehaviour
                         break;
                     //Swith Path OFF
                     case 39:
-                        EventManager.instance.PostNotification(EventType.FlashMultipleConnectionsStop, this, "DebugGUI.cs -> OnGUI");
+                        EventManager.i.PostNotification(EventType.FlashMultipleConnectionsStop, this, "DebugGUI.cs -> OnGUI");
                         status = GUIStatus.None;
                         optionPath = "Input Path";
                         break;

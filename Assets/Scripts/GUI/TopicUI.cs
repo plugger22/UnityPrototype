@@ -239,13 +239,13 @@ public class TopicUI : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //event listener
-        EventManager.instance.AddListener(EventType.TopicDisplayOpen, OnEvent, "TopicUI");
-        EventManager.instance.AddListener(EventType.TopicDisplayClose, OnEvent, "TopicUI");
-        EventManager.instance.AddListener(EventType.TopicDisplayRestore, OnEvent, "TopicUI");
-        EventManager.instance.AddListener(EventType.TopicDisplayShowMe, OnEvent, "TopicUI");
-        EventManager.instance.AddListener(EventType.TopicDisplayIgnore, OnEvent, "TopicUI");
-        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "TopicUI");
-        EventManager.instance.AddListener(EventType.TopicDisplayOption, OnEvent, "TopicUI");
+        EventManager.i.AddListener(EventType.TopicDisplayOpen, OnEvent, "TopicUI");
+        EventManager.i.AddListener(EventType.TopicDisplayClose, OnEvent, "TopicUI");
+        EventManager.i.AddListener(EventType.TopicDisplayRestore, OnEvent, "TopicUI");
+        EventManager.i.AddListener(EventType.TopicDisplayShowMe, OnEvent, "TopicUI");
+        EventManager.i.AddListener(EventType.TopicDisplayIgnore, OnEvent, "TopicUI");
+        EventManager.i.AddListener(EventType.StartTurnEarly, OnEvent, "TopicUI");
+        EventManager.i.AddListener(EventType.TopicDisplayOption, OnEvent, "TopicUI");
     }
     #endregion
 

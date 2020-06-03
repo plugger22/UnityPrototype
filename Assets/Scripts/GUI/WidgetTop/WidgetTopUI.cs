@@ -134,13 +134,13 @@ public class WidgetTopUI : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //event listener
-        EventManager.instance.AddListener(EventType.ChangeActionPoints, OnEvent, "WidgetTopUI");
-        EventManager.instance.AddListener(EventType.ChangeCityBar, OnEvent, "WidgetTopUI");
-        EventManager.instance.AddListener(EventType.ChangeHqBar, OnEvent, "WidgetTopUI");
-        EventManager.instance.AddListener(EventType.ChangeTurn, OnEvent, "WidgetTopUI");
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "WidgetTopUI");
-        EventManager.instance.AddListener(EventType.StartSecurityFlash, OnEvent, "WidgetTopUI");
-        EventManager.instance.AddListener(EventType.StopSecurityFlash, OnEvent, "WidgetTopUI");
+        EventManager.i.AddListener(EventType.ChangeActionPoints, OnEvent, "WidgetTopUI");
+        EventManager.i.AddListener(EventType.ChangeCityBar, OnEvent, "WidgetTopUI");
+        EventManager.i.AddListener(EventType.ChangeHqBar, OnEvent, "WidgetTopUI");
+        EventManager.i.AddListener(EventType.ChangeTurn, OnEvent, "WidgetTopUI");
+        EventManager.i.AddListener(EventType.ChangeSide, OnEvent, "WidgetTopUI");
+        EventManager.i.AddListener(EventType.StartSecurityFlash, OnEvent, "WidgetTopUI");
+        EventManager.i.AddListener(EventType.StopSecurityFlash, OnEvent, "WidgetTopUI");
         /*EventManager.instance.AddListener(EventType.ChangeStarLeft, OnEvent, "WidgetTopUI");
         EventManager.instance.AddListener(EventType.ChangeStarMiddle, OnEvent, "WidgetTopUI");
         EventManager.instance.AddListener(EventType.ChangeStarRight, OnEvent, "WidgetTopUI");*/

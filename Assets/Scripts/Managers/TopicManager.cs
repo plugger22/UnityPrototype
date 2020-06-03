@@ -451,8 +451,8 @@ public class TopicManager : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //event listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TopicManager");
-        EventManager.instance.AddListener(EventType.OutcomeClose, OnEvent, "TopicManager");
+        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "TopicManager");
+        EventManager.i.AddListener(EventType.OutcomeClose, OnEvent, "TopicManager");
     }
     #endregion
 
@@ -3595,7 +3595,7 @@ public class TopicManager : MonoBehaviour
             textBottom = lowerText,
             sprite = sprite,
         };
-        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details);
+        EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
     }
     #endregion
 
@@ -7057,7 +7057,7 @@ public class TopicManager : MonoBehaviour
                             textBottom = newsSnippet,
                             sprite = debugSprite
                         };
-                        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details);
+                        EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
                         yield return new WaitUntil(() => haltExecution == false);
                     }
                 }

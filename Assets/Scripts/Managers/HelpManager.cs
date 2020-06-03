@@ -30,7 +30,7 @@ public class HelpManager : MonoBehaviour
         SetColours();
         bullet = GameManager.i.guiScript.bulletChar;
         //register listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ItemDataManager");
+        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "ItemDataManager");
     }
 
 
@@ -472,8 +472,8 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "deviceInv_0";
         data.header = "Overview";
-        data.text = string.Format("Devices used to counter {0}Interrogations{1} when {2}captured{3}. Each can be used for a {4}specific Innocence Level{5} and are separate to any Gear that you have",
-            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("Devices used to counter {0}Interrogations{1} when {2}captured{3}. Each can be used for a particular {4}Innocence{5} Level and are {6}separate{7} to any {8}Gear{9}" +
+            " that you have", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Details
         data = new HelpData();
@@ -494,7 +494,7 @@ public class HelpManager : MonoBehaviour
         //Tip
         data = new HelpData();
         data.tag = "deviceInv_3";
-        data.header = string.Format("{0}Tip{1}", colourTip, colourEnd);
+        data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
         data.text = string.Format("These are {0}'Get Out Of Jail for Free'{1} devices. Don't leave home without them", colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
@@ -1342,7 +1342,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "metaDevice_1";
         data.header = "Variable Cost";
-        data.text = string.Format("The {0}cost{1} of this option {2}varies{3} dependant on your {4}superior's current opinion{5} of you. The better their opinion ({6}Motivation{7}) " +
+        data.text = string.Format("The {0}cost{1} of this option {2}varies{3} dependant on your superior's current {4}opinion{5} of you. The better their opinion ({6}Motivation{7}) " +
             "the less Renown it will cost", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Poor Relationship
@@ -1353,12 +1353,11 @@ public class HelpManager : MonoBehaviour
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Tip
-        //Poor Relationship
         data = new HelpData();
         data.tag = "metaDevice_3";
         data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
-        data.text = string.Format("{0}Relationships matter{1}. If your HQ superior views you in a positive light they will actively try to {2}help you{3} by offering special devices",
-            colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("{0}Relationships matter{1}. If your HQ superior views you in a positive light they will actively try to {2}help you{3} by offering {4}special{5} devices",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 

@@ -333,8 +333,8 @@ public class GUIManager : MonoBehaviour
         { arrayIsBlocked[i] = false; }
         //event listener
         /*EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "GUIManager");*/
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "GUIManager");
-        EventManager.instance.AddListener(EventType.ShowMeRestore, OnEvent, "GUIManager");
+        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "GUIManager");
+        EventManager.i.AddListener(EventType.ShowMeRestore, OnEvent, "GUIManager");
     }
 
     /// <summary>
@@ -634,7 +634,7 @@ public class GUIManager : MonoBehaviour
                     details.textTop = "This action is unavailable";
                     break;
             }
-            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "GUIManager.cs -> SetAlertMessage");
+            EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "GUIManager.cs -> SetAlertMessage");
         }
         else { Debug.LogError("Invalid ModalOutcomeDetails (Null)"); }
     }
@@ -650,13 +650,13 @@ public class GUIManager : MonoBehaviour
         {
             //hide any underlying UI
             if (data.hideOtherEvent != EventType.None)
-            { EventManager.instance.PostNotification(data.hideOtherEvent, this, null, "GUIManager.cs -> SetShowMe"); }
+            { EventManager.i.PostNotification(data.hideOtherEvent, this, null, "GUIManager.cs -> SetShowMe"); }
             showMeData = data;
             //multiple nodes has priority
             if (data.listOfNodes.Count > 0)
             {
                 InitialiseShowMe();
-                EventManager.instance.PostNotification(EventType.FlashNodesStart, this, data.listOfNodes, "GUIManager.cs -> SetShowMe");
+                EventManager.i.PostNotification(EventType.FlashNodesStart, this, data.listOfNodes, "GUIManager.cs -> SetShowMe");
             }
             else if (data.nodeID > -1 || data.connID > -1)
             {
@@ -669,12 +669,12 @@ public class GUIManager : MonoBehaviour
                     if (node != null)
                     {
                         List<Node> listOfNodes = new List<Node>() { node };
-                        EventManager.instance.PostNotification(EventType.FlashNodesStart, this, listOfNodes, "GUIManager.cs -> SetShowMe");
+                        EventManager.i.PostNotification(EventType.FlashNodesStart, this, listOfNodes, "GUIManager.cs -> SetShowMe");
                     }
                     else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", data.nodeID); }
                 }
                 if (data.connID > -1)
-                { EventManager.instance.PostNotification(EventType.FlashSingleConnectionStart, this, showMeData.connID, "GUIManager.cs -> SetShowMe"); }
+                { EventManager.i.PostNotification(EventType.FlashSingleConnectionStart, this, showMeData.connID, "GUIManager.cs -> SetShowMe"); }
             }
             else { Debug.LogWarning("GUIManager.cs -> SetShowMe: There are no nodes or connections to show"); }
         }
@@ -700,17 +700,17 @@ public class GUIManager : MonoBehaviour
     {
         //reset nodes, or node, back to normal, if required
         if (showMeData.listOfNodes.Count > 0)
-        { EventManager.instance.PostNotification(EventType.FlashNodesStop, this, showMeData.nodeID, "GUIManager.cs -> ShowMeRestore"); }
+        { EventManager.i.PostNotification(EventType.FlashNodesStop, this, showMeData.nodeID, "GUIManager.cs -> ShowMeRestore"); }
         else if (showMeData.nodeID > -1)
-        { EventManager.instance.PostNotification(EventType.FlashNodesStop, this, showMeData.nodeID, "GUIManager.cs -> ShowMeRestore"); }
+        { EventManager.i.PostNotification(EventType.FlashNodesStop, this, showMeData.nodeID, "GUIManager.cs -> ShowMeRestore"); }
         //reset connection back to normal, if required
         if (showMeData.connID > -1)
-        { EventManager.instance.PostNotification(EventType.FlashSingleConnectionStop, this, showMeData.connID, "GUIManager.cs -> ShowMeRestore"); }
+        { EventManager.i.PostNotification(EventType.FlashSingleConnectionStop, this, showMeData.connID, "GUIManager.cs -> ShowMeRestore"); }
         //restore any underlying UI
         if (showMeData.restoreOtherEvent != EventType.None)
-        { EventManager.instance.PostNotification(showMeData.restoreOtherEvent, this, null, "GUIManager.cs -> ShowMeRestore"); }
+        { EventManager.i.PostNotification(showMeData.restoreOtherEvent, this, null, "GUIManager.cs -> ShowMeRestore"); }
         //restore calling UI element
-        EventManager.instance.PostNotification(showMeData.restoreEvent, this, null, "GUIManager.cs -> ShowMeRestore");
+        EventManager.i.PostNotification(showMeData.restoreEvent, this, null, "GUIManager.cs -> ShowMeRestore");
     }
 
     //
@@ -841,7 +841,7 @@ public class GUIManager : MonoBehaviour
             if (details != null)
             {
                 waitUntilDone = true;
-                EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "GUIManager.cs -> InfoPipelineProcess");
+                EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "GUIManager.cs -> InfoPipelineProcess");
             }
             else { Debug.LogWarningFormat("Invalid details (Null) for dictOfPipeline[{0}]", type); }
         }
@@ -912,7 +912,7 @@ public class GUIManager : MonoBehaviour
         //only display InfoApp if player is Active (out of contact otherwise but data is collected and can be accessed when player returns to active status)
         ActorStatus playerStatus = GameManager.i.playerScript.status;
         if (playerStatus == ActorStatus.Active)
-        { EventManager.instance.PostNotification(EventType.MainInfoOpen, this, data, "TurnManager.cs -> ProcessNewTurn"); }
+        { EventManager.i.PostNotification(EventType.MainInfoOpen, this, data, "TurnManager.cs -> ProcessNewTurn"); }
         else
         {
             Sprite sprite = GameManager.i.guiScript.errorSprite;
@@ -952,7 +952,7 @@ public class GUIManager : MonoBehaviour
                 details.textTop = text;
                 details.textBottom = string.Format("{0}You are out of contact{1}{2}{3}Messages will be available for review once you return", colourAlert, colourEnd, "\n", "\n");
                 details.sprite = sprite;
-                EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details);
+                EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
             }
         }
     }
@@ -1031,20 +1031,20 @@ public class GUIManager : MonoBehaviour
     /// <summary>
     /// returns TMP Pro self contained string for the required number of stars (always returns 3 stars, colourNeutral for active, grey, low opacity, for inactive). Returns "Unknown" if an issue
     /// </summary>
-    /// <param name="datapoint"></param>
+    /// <param name="stars"></param>
     /// <returns></returns>
-    public string GetDatapointStars(int datapoint)
+    public string GetNormalStars(int stars)
     {
-        string stars = "Unknown";
-        switch (datapoint)
+        string starString = "Unknown";
+        switch (stars)
         {
-            case 3: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1} {2} {3}{4}</font>", colourNeutral, starChar, starChar, starChar, colourEnd); break;
-            case 2: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1} {2} {3}{4}{5}{6}{7}</font>", colourNeutral, starChar, starChar, colourEnd, colourGrey, alpha, starChar, colourEnd); break;
-            case 1: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1}{2} {3}{4}{5} {6}{7}</font>", colourNeutral, starChar, colourEnd, colourGrey, alpha, starChar, starChar, colourEnd); break;
-            case 0: stars = string.Format("<font=\"fontAwesomeSolid\">{0}{1}{2} {3} {4}{5}</font>", colourGrey, alpha, starChar, starChar, starChar, colourEnd); break;
-            default: Debug.LogWarningFormat("Unrecognised num \"{0}\"", datapoint); break;
+            case 3: starString = string.Format("<font=\"fontAwesomeSolid\">{0}{1} {2} {3}{4}</font>", colourNeutral, starChar, starChar, starChar, colourEnd); break;
+            case 2: starString = string.Format("<font=\"fontAwesomeSolid\">{0}{1} {2} {3}{4}{5}{6}{7}</font>", colourNeutral, starChar, starChar, colourEnd, colourGrey, alpha, starChar, colourEnd); break;
+            case 1: starString = string.Format("<font=\"fontAwesomeSolid\">{0}{1}{2} {3}{4}{5} {6}{7}</font>", colourNeutral, starChar, colourEnd, colourGrey, alpha, starChar, starChar, colourEnd); break;
+            case 0: starString = string.Format("<font=\"fontAwesomeSolid\">{0}{1}{2} {3} {4}{5}</font>", colourGrey, alpha, starChar, starChar, starChar, colourEnd); break;
+            default: Debug.LogWarningFormat("Unrecognised num \"{0}\"", starString); break;
         }
-        return stars;
+        return starString;
     }
 
     /// <summary>
@@ -1082,20 +1082,20 @@ public class GUIManager : MonoBehaviour
     {
         string tooltipHeader = string.Format("{0} <size=120%>{1}</size>{2}with Player",
             GameManager.i.guiScript.compatibilityIcon,
-            GameManager.GetFormattedString("Compatibility", ColourType.moccasinText), "\n");
+            GameManager.Formatt("Compatibility", ColourType.moccasinText), "\n");
         string tooltipMain = string.Format("<align=\"left\">Due to Personalities{0}   {1} Good relations{2}   {3} Bad relations {4}{5} of Stars shows {6} of relationship.{7}{8}, doesn't change", "\n",
-            GameManager.GetFormattedString(starIconGood, ColourType.goodText), "\n",
-            GameManager.GetFormattedString(starIconBad, ColourType.badText), "\n",
-            GameManager.GetFormattedString("Number", ColourType.salmonText),
-            GameManager.GetFormattedString("Intensity", ColourType.salmonText), "\n",
-            GameManager.GetFormattedString("Constant", ColourType.salmonText)
+            GameManager.Formatt(starIconGood, ColourType.goodText), "\n",
+            GameManager.Formatt(starIconBad, ColourType.badText), "\n",
+            GameManager.Formatt("Number", ColourType.salmonText),
+            GameManager.Formatt("Intensity", ColourType.salmonText), "\n",
+            GameManager.Formatt("Constant", ColourType.salmonText)
             );
         string tooltipDetails = string.Format("<align=\"left\">A character {0} ignore {1} ({2}) or {3} ({4}){5}{6} Motivational outcomes",
-            GameManager.GetFormattedString("may", ColourType.salmonText),
-            GameManager.GetFormattedString("GOOD", ColourType.salmonText),
-            GameManager.GetFormattedString(starIconBad, ColourType.badText),
-            GameManager.GetFormattedString("BAD", ColourType.salmonText),
-            GameManager.GetFormattedString(starIconGood, ColourType.goodText), "\n", motivationIcon);
+            GameManager.Formatt("may", ColourType.salmonText),
+            GameManager.Formatt("GOOD", ColourType.salmonText),
+            GameManager.Formatt(starIconBad, ColourType.badText),
+            GameManager.Formatt("BAD", ColourType.salmonText),
+            GameManager.Formatt(starIconGood, ColourType.goodText), "\n", motivationIcon);
         GenericTooltipData tooltip = new GenericTooltipData()
         {
             header = tooltipHeader,

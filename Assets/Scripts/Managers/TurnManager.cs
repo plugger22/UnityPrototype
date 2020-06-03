@@ -164,10 +164,10 @@ public class TurnManager : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //event Listeners
-        EventManager.instance.AddListener(EventType.NewTurn, OnEvent, "TurnManager");
-        EventManager.instance.AddListener(EventType.UseAction, OnEvent, "TurnManager");
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "TurnManager");
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TurnManager");
+        EventManager.i.AddListener(EventType.NewTurn, OnEvent, "TurnManager");
+        EventManager.i.AddListener(EventType.UseAction, OnEvent, "TurnManager");
+        EventManager.i.AddListener(EventType.ChangeSide, OnEvent, "TurnManager");
+        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "TurnManager");
     }
     #endregion
 
@@ -375,7 +375,7 @@ public class TurnManager : MonoBehaviour
                 if (isLevelOver == true)
                 {
                     //level over -> start MetaGame
-                    EventManager.instance.PostNotification(EventType.ExitLevel, this, _turn, "TurnManager.cs -> ProcessNewTurn");
+                    EventManager.i.PostNotification(EventType.ExitLevel, this, _turn, "TurnManager.cs -> ProcessNewTurn");
                     isLevelOver = false;
                     AllowNewTurn();
                     winStateLevel = WinStateLevel.None;
@@ -384,7 +384,7 @@ public class TurnManager : MonoBehaviour
                 else if (isCampaignOver == true)
                 {
                     //campaign over -> start EndGame
-                    EventManager.instance.PostNotification(EventType.ExitCampaign, this, _turn, "TurnManager.cs -> ProcessNewTurn");
+                    EventManager.i.PostNotification(EventType.ExitCampaign, this, _turn, "TurnManager.cs -> ProcessNewTurn");
                     isCampaignOver = false;
                 }
             }
@@ -514,12 +514,12 @@ public class TurnManager : MonoBehaviour
         Debug.LogFormat("[Trn] TurnManager: New Turn {0} -> Player: {1}, Current: {2}{3}",
             _turn, GameManager.i.sideScript.PlayerSide.name, currentSide.name, "\n");
         Debug.LogFormat("TurnManager: - - - StartTurnEarly - - - turn {0}{1}", _turn, "\n");
-        EventManager.instance.PostNotification(EventType.StartTurnEarly, this, null, "TurnManager.cs -> StartTurnEarly");
+        EventManager.i.PostNotification(EventType.StartTurnEarly, this, null, "TurnManager.cs -> StartTurnEarly");
         //reset nodes and connections if not in normal state
         if (GameManager.i.nodeScript.activityState != ActivityUI.None)
         { GameManager.i.nodeScript.ResetAll(); }
         //update turn in top widget UI
-        EventManager.instance.PostNotification(EventType.ChangeTurn, this, _turn, "TurnManager.cs -> StartTurnEarly");
+        EventManager.i.PostNotification(EventType.ChangeTurn, this, _turn, "TurnManager.cs -> StartTurnEarly");
         //check Scenario timer (winstate if expires)
         CheckScenarioTimer();
     }
@@ -531,7 +531,7 @@ public class TurnManager : MonoBehaviour
     {
         Debug.LogFormat("TurnManager: - - - StartTurnLate - - - turn {0}{1}", _turn, "\n");
         currentSide = GameManager.i.sideScript.PlayerSide;
-        EventManager.instance.PostNotification(EventType.StartTurnLate, this, null, "TurnManager.cs -> StartTurnLate");
+        EventManager.i.PostNotification(EventType.StartTurnLate, this, null, "TurnManager.cs -> StartTurnLate");
         UpdateStates();
     }
 
@@ -594,7 +594,7 @@ public class TurnManager : MonoBehaviour
         if (unusedActions > 0 && GameManager.i.sideScript.CheckInteraction() == true)
         { GameManager.i.playerScript.ProcessDoNothing(unusedActions); }
         //broadcast event
-        EventManager.instance.PostNotification(EventType.EndTurnEarly, this, null, "TurnManager.cs -> StartTurnLate");
+        EventManager.i.PostNotification(EventType.EndTurnEarly, this, null, "TurnManager.cs -> StartTurnLate");
     }
 
     /// <summary>
@@ -609,7 +609,7 @@ public class TurnManager : MonoBehaviour
         //refresh new actions
         SetActionsForNewTurn();
         Debug.LogFormat("TurnManager: - - - EndTurnLate - - - turn {0}{1}", _turn, "\n");
-        EventManager.instance.PostNotification(EventType.EndTurnLate, this, null, "TurnManager.cs -> EndTurnLate");
+        EventManager.i.PostNotification(EventType.EndTurnLate, this, null, "TurnManager.cs -> EndTurnLate");
     }
 
     /// <summary>
@@ -633,7 +633,7 @@ public class TurnManager : MonoBehaviour
         /*Debug.LogFormat("[Tst] TurnManager.cs -> SetActionsForNewTurn: Player status \"{0}\", actions {1}{2}", GameManager.i.playerScript.status, _actionsTotal, "\n");*/
 
         //update widget
-        EventManager.instance.PostNotification(EventType.ChangeActionPoints, this, _actionsTotal, "TurnManager.cs -> SetActionsforNewTurn");
+        EventManager.i.PostNotification(EventType.ChangeActionPoints, this, _actionsTotal, "TurnManager.cs -> SetActionsforNewTurn");
     }
 
 
@@ -687,7 +687,7 @@ public class TurnManager : MonoBehaviour
         if (remainder < 0)
         { Debug.LogError("_actionsTotal exceeded by _actionsCurrent"); }
         else
-        { EventManager.instance.PostNotification(EventType.ChangeActionPoints, this, remainder, "TurnManager.cs -> UseAction"); }
+        { EventManager.i.PostNotification(EventType.ChangeActionPoints, this, remainder, "TurnManager.cs -> UseAction"); }
     }
 
     /// <summary>
@@ -913,7 +913,7 @@ public class TurnManager : MonoBehaviour
                         text = "Authorities issue a city wide All Points Bulletin";
                         //start flashing red alarm (top WidgetUI) if not already going
                         if (authoritySecurityState == AuthoritySecurityState.Normal)
-                        { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "TurnManager.cs -> DebugSetState"); }
+                        { EventManager.i.PostNotification(EventType.StartSecurityFlash, this, null, "TurnManager.cs -> DebugSetState"); }
                         //set state
                         GameManager.i.authorityScript.SetAuthoritySecurityState(text, "Debug Action", AuthoritySecurityState.APB);
 
@@ -924,7 +924,7 @@ public class TurnManager : MonoBehaviour
                         text = "Authorities issue a city wide Security Alert";
                         //start flashing red alarm (top WidgetUI) if not already going
                         if (authoritySecurityState == AuthoritySecurityState.Normal)
-                        { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "TurnManager.cs -> DebugSetState"); }
+                        { EventManager.i.PostNotification(EventType.StartSecurityFlash, this, null, "TurnManager.cs -> DebugSetState"); }
                         //set state
                         GameManager.i.authorityScript.SetAuthoritySecurityState(text, "Debug Action", AuthoritySecurityState.SecurityAlert);
                         break;
@@ -934,7 +934,7 @@ public class TurnManager : MonoBehaviour
                         text = "Authorities declare a city wide Surveillance Crackdown";
                         //start flashing red alarm (top WidgetUI) if not already going
                         if (authoritySecurityState == AuthoritySecurityState.Normal)
-                        { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "TurnManager.cs -> DebugSetState"); }
+                        { EventManager.i.PostNotification(EventType.StartSecurityFlash, this, null, "TurnManager.cs -> DebugSetState"); }
                         //set state
                         GameManager.i.authorityScript.SetAuthoritySecurityState(text, "Debug Action", AuthoritySecurityState.SurveillanceCrackdown);
                         break;
@@ -944,7 +944,7 @@ public class TurnManager : MonoBehaviour
                         text = string.Format("AuthorityState reset to {0}", state);
                         GameManager.i.authorityScript.SetAuthoritySecurityState(text, "Debug Action");
                         //stop flashing red alarm
-                        EventManager.instance.PostNotification(EventType.StopSecurityFlash, this, null, "TurnManager.cs -> DebugSetState");
+                        EventManager.i.PostNotification(EventType.StopSecurityFlash, this, null, "TurnManager.cs -> DebugSetState");
                         break;
                 }
                 break;
@@ -983,7 +983,7 @@ public class TurnManager : MonoBehaviour
             {
                 GameManager.i.authorityScript.SetAuthoritySecurityState(text, "Security Measures Cancelled");
                 //switch off flashing red indicator on top widget UI
-                EventManager.instance.PostNotification(EventType.StopSecurityFlash, this, null, "TurnManager.cs -> UpdateStates");
+                EventManager.i.PostNotification(EventType.StopSecurityFlash, this, null, "TurnManager.cs -> UpdateStates");
             }
         }
     }

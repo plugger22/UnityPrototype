@@ -86,8 +86,8 @@ public class MissionManager : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //register listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "EffectManager");
-        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "MissionManager");
+        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "EffectManager");
+        EventManager.i.AddListener(EventType.StartTurnLate, OnEvent, "MissionManager");
     }
     #endregion
 

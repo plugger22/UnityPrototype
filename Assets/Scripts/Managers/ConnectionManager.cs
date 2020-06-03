@@ -78,10 +78,10 @@ public class ConnectionManager : MonoBehaviour
     private void SubInitialiseEvents()
     {
             //register listener
-            EventManager.instance.AddListener(EventType.FlashSingleConnectionStart, OnEvent, "ConnectionManager");
-            EventManager.instance.AddListener(EventType.FlashSingleConnectionStop, OnEvent, "ConnectionManager");
-            EventManager.instance.AddListener(EventType.FlashMultipleConnectionsStart, OnEvent, "ConnectionManager");
-            EventManager.instance.AddListener(EventType.FlashMultipleConnectionsStop, OnEvent, "ConnectionManager");
+            EventManager.i.AddListener(EventType.FlashSingleConnectionStart, OnEvent, "ConnectionManager");
+            EventManager.i.AddListener(EventType.FlashSingleConnectionStop, OnEvent, "ConnectionManager");
+            EventManager.i.AddListener(EventType.FlashMultipleConnectionsStart, OnEvent, "ConnectionManager");
+            EventManager.i.AddListener(EventType.FlashMultipleConnectionsStop, OnEvent, "ConnectionManager");
     }
     #endregion
 

@@ -106,15 +106,15 @@ public class ModalGenericPicker : MonoBehaviour
     {
         Debug.Assert(maxOptions == 3, "Invalid maxOptions (must be 3)");
         //register listener
-        EventManager.instance.AddListener(EventType.OpenGenericPicker, OnEvent, "ModalGenericPicker");
-        EventManager.instance.AddListener(EventType.CloseGenericPicker, OnEvent, "ModalGenericPicker");
-        EventManager.instance.AddListener(EventType.CancelButtonGeneric, OnEvent, "ModalGenericPicker");
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ModalGenericPicker");
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "ModalGenericPicker");
-        EventManager.instance.AddListener(EventType.ConfirmGenericActivate, OnEvent, "ModalGenericPicker");
-        EventManager.instance.AddListener(EventType.ConfirmGenericChoice, OnEvent, "ModalGenericPicker");
-        EventManager.instance.AddListener(EventType.ConfirmGenericDeactivate, OnEvent, "ModalGenericPicker");
-        EventManager.instance.AddListener(EventType.BackButtonGeneric, OnEvent, "ModalGenericPicker");
+        EventManager.i.AddListener(EventType.OpenGenericPicker, OnEvent, "ModalGenericPicker");
+        EventManager.i.AddListener(EventType.CloseGenericPicker, OnEvent, "ModalGenericPicker");
+        EventManager.i.AddListener(EventType.CancelButtonGeneric, OnEvent, "ModalGenericPicker");
+        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "ModalGenericPicker");
+        EventManager.i.AddListener(EventType.ChangeSide, OnEvent, "ModalGenericPicker");
+        EventManager.i.AddListener(EventType.ConfirmGenericActivate, OnEvent, "ModalGenericPicker");
+        EventManager.i.AddListener(EventType.ConfirmGenericChoice, OnEvent, "ModalGenericPicker");
+        EventManager.i.AddListener(EventType.ConfirmGenericDeactivate, OnEvent, "ModalGenericPicker");
+        EventManager.i.AddListener(EventType.BackButtonGeneric, OnEvent, "ModalGenericPicker");
     }
 
     /// <summary>
@@ -347,7 +347,7 @@ public class ModalGenericPicker : MonoBehaviour
             outcomeDetails.textTop = "There has been a SNAFU";
             outcomeDetails.textBottom = "Heads, toes and other limbswill be removed";
             outcomeDetails.side = details.side;
-            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ModalGenericPicker.cs -> SetGenericPicker");
+            EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ModalGenericPicker.cs -> SetGenericPicker");
         }
         //all good, generate
         else
@@ -379,7 +379,7 @@ public class ModalGenericPicker : MonoBehaviour
         //close help tooltip
         GameManager.i.tooltipHelpScript.CloseTooltip("ModalGenericPickerUI.cs -> CloseGenericPicker");
         //deselect all generic options to prevent picker opening next time with a preselected team
-        EventManager.instance.PostNotification(EventType.DeselectOtherGenerics, this, null, "ModalGenericPicker.cs -> CloseGenericPicker");
+        EventManager.i.PostNotification(EventType.DeselectOtherGenerics, this, null, "ModalGenericPicker.cs -> CloseGenericPicker");
         //reset GUI elements to default
         SetConfirmButton(false);
 
@@ -399,7 +399,7 @@ public class ModalGenericPicker : MonoBehaviour
         //close current GenericPicker Window
         CloseGenericPicker();
         //trigger event that calls previous window
-        EventManager.instance.PostNotification(backReturnEvent, this, nestedDetails, "ModalGenericPicker.cs -> ProcessBackButton");
+        EventManager.i.PostNotification(backReturnEvent, this, nestedDetails, "ModalGenericPicker.cs -> ProcessBackButton");
     }
 
 
@@ -703,7 +703,7 @@ public class ModalGenericPicker : MonoBehaviour
         returnData.actorSlotID = actorSlotIDSelected;
 
         //close picker window regardless
-        EventManager.instance.PostNotification(EventType.CloseGenericPicker, this, null, "ModalGenericPicker.cs -> ProcessGenericChoice");
+        EventManager.i.PostNotification(EventType.CloseGenericPicker, this, null, "ModalGenericPicker.cs -> ProcessGenericChoice");
         //trigger the appropriate return Event and pass selected optionID back to the originating class
         switch (defaultReturnEvent)
         {
@@ -718,7 +718,7 @@ public class ModalGenericPicker : MonoBehaviour
             case EventType.GenericReserveActor:
             case EventType.GenericDismissActor:
             case EventType.GenericDisposeActor:
-                EventManager.instance.PostNotification(defaultReturnEvent, this, returnData, "ModalGenericPicker.cs -> ProcessGenericChoice");
+                EventManager.i.PostNotification(defaultReturnEvent, this, returnData, "ModalGenericPicker.cs -> ProcessGenericChoice");
                 break;
             default:
                 Debug.LogError(string.Format("Invalid returnEvent \"{0}\"", defaultReturnEvent));
@@ -732,12 +732,12 @@ public class ModalGenericPicker : MonoBehaviour
     private void ProcessCancelButton()
     {
         //close picker window regardless
-        EventManager.instance.PostNotification(EventType.CloseGenericPicker, this, null, "ModalGenericPicker.cs -> ProcessGenericChoice");
+        EventManager.i.PostNotification(EventType.CloseGenericPicker, this, null, "ModalGenericPicker.cs -> ProcessGenericChoice");
         //trigger the appropriate return Event and pass selected optionID back to the originating class
         switch (defaultReturnEvent)
         {
             case EventType.GenericCompromisedGear:
-                EventManager.instance.PostNotification(defaultReturnEvent, this, null, "ModalGenericPicker.cs -> ProcessCancelButton");
+                EventManager.i.PostNotification(defaultReturnEvent, this, null, "ModalGenericPicker.cs -> ProcessCancelButton");
                 break;
             default:
                 //No default needed

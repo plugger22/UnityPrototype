@@ -158,8 +158,8 @@ public class ActorPanelUI : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //event listener
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "ActorPanelUI");
-        EventManager.instance.AddListener(EventType.ActorInfo, OnEvent, "ActorPanelUI");
+        EventManager.i.AddListener(EventType.ChangeSide, OnEvent, "ActorPanelUI");
+        EventManager.i.AddListener(EventType.ActorInfo, OnEvent, "ActorPanelUI");
     }
     #endregion
 
@@ -434,15 +434,15 @@ public class ActorPanelUI : MonoBehaviour
     {
         //player mood UI
         playerMoodTooltip.tooltipHeader = "Mood";
-        playerMoodTooltip.tooltipMain = string.Format("{0}  {1}", GameManager.i.guiScript.motivationIcon, GameManager.GetFormattedString("0 to 3 Stars", ColourType.neutralText));
+        playerMoodTooltip.tooltipMain = string.Format("{0}  {1}", GameManager.i.guiScript.motivationIcon, GameManager.Formatt("0 to 3 Stars", ColourType.neutralText));
         string details = string.Format("You will become STRESSED if your mood goes below zero");
-        playerMoodTooltip.tooltipDetails = GameManager.GetFormattedString(details, ColourType.moccasinText);
+        playerMoodTooltip.tooltipDetails = GameManager.Formatt(details, ColourType.moccasinText);
         playerMoodTooltip.y_offset = 100;
         //player stressed UI
-        playerStressedTooltip.tooltipHeader = GameManager.GetFormattedString("Stressed", ColourType.badText);
-        playerStressedTooltip.tooltipMain = GameManager.GetFormattedString("Mood falls below Zero", ColourType.neutralText);
+        playerStressedTooltip.tooltipHeader = GameManager.Formatt("Stressed", ColourType.badText);
+        playerStressedTooltip.tooltipMain = GameManager.Formatt("Mood falls below Zero", ColourType.neutralText);
         details = "You can take Stress Leave or Lie Low (Right Click Player pic) to remove. You run the risk of suffering a BREAKDOWN";
-        playerStressedTooltip.tooltipDetails = GameManager.GetFormattedString(details, ColourType.moccasinText);
+        playerStressedTooltip.tooltipDetails = GameManager.Formatt(details, ColourType.moccasinText);
         playerStressedTooltip.y_offset = 100;
         //actor compatibility
         GenericTooltipData data = GameManager.i.guiScript.GetCompatibilityTooltip();
@@ -506,7 +506,7 @@ public class ActorPanelUI : MonoBehaviour
         {
             playerStressed.gameObject.SetActive(false);
             moodStars.gameObject.SetActive(true);
-            moodStars.text = GameManager.i.guiScript.GetDatapointStars(mood);
+            moodStars.text = GameManager.i.guiScript.GetNormalStars(mood);
         }
     }
 

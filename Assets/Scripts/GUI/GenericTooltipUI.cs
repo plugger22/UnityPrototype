@@ -80,7 +80,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
                 if (node != null)
                 {
                     List<Node> listOfNodes = new List<Node>() { node };
-                    EventManager.instance.PostNotification(EventType.FlashNodesStart, this, listOfNodes, "GenericTooltipUI.cs -> OnPointerEnter");
+                    EventManager.i.PostNotification(EventType.FlashNodesStart, this, listOfNodes, "GenericTooltipUI.cs -> OnPointerEnter");
                     isNodeHighlightOn = true;
                 }
                 else { Debug.LogErrorFormat("Invalid node (Null) for nodeID {0}", nodeID); }
@@ -88,7 +88,7 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
             //connection Highlight?
             if (connID > -1 && isConnectionHighlightOn == false)
             {
-                EventManager.instance.PostNotification(EventType.FlashSingleConnectionStart, this, connID, "GenericTooltipUI.cs -> OnPointerEnter");
+                EventManager.i.PostNotification(EventType.FlashSingleConnectionStart, this, connID, "GenericTooltipUI.cs -> OnPointerEnter");
                 isConnectionHighlightOn = true;
             }
         }
@@ -108,13 +108,13 @@ public class GenericTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
             //cancel node highlight
             if (nodeID > -1 && isNodeHighlightOn == true)
             {
-                EventManager.instance.PostNotification(EventType.FlashNodesStop, this, nodeID, "GenericTooltipUI.cs -> OnPointerExit");
+                EventManager.i.PostNotification(EventType.FlashNodesStop, this, nodeID, "GenericTooltipUI.cs -> OnPointerExit");
                 isNodeHighlightOn = false;
             }
             //cancel connection highlight
             if (connID > -1 && isConnectionHighlightOn == true)
             {
-                EventManager.instance.PostNotification(EventType.FlashSingleConnectionStop, this, connID, "GenericTooltipUI.cs -> OnPointerExit");
+                EventManager.i.PostNotification(EventType.FlashSingleConnectionStop, this, connID, "GenericTooltipUI.cs -> OnPointerExit");
                 isConnectionHighlightOn = false;
             }
         }

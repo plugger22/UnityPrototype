@@ -90,7 +90,7 @@ public class TraitManager : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //register listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TraitManager");
+        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "TraitManager");
     }
     #endregion
 

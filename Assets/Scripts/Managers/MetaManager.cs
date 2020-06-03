@@ -122,7 +122,7 @@ public class MetaManager : MonoBehaviour
         InitialiseMetaGameOptions();
         ResetMetaAdmin();
         //hide top bar UI at start of meta game
-        EventManager.instance.PostNotification(EventType.TopBarHide, this, null, "MetaManager.cs -> Hide TopBarUI");
+        EventManager.i.PostNotification(EventType.TopBarHide, this, null, "MetaManager.cs -> Hide TopBarUI");
         GameManager.i.statScript.ProcessMetaStatistics();
         GameManager.i.topicScript.ProcessMetaTopics();
         GameManager.i.hqScript.ProcessMetaHq(playerSide);          //needs to be BEFORE MetaActors
@@ -493,7 +493,7 @@ public class MetaManager : MonoBehaviour
                                         /*metaSpecial.descriptor = string.Format("<b>Special gear</b> that is <b>only available</b>{0}{1}because your <b>{2}</b> " +
                                             "(<b>current tab</b>) has{3}{4}a <b>good opinion</b> of you (<b>Motivation 2+ stars</b>)", "\n", "\n",
                                             GameManager.GetFormattedString(title, ColourType.dataNeutral), "\n", "\n");*/
-                                        metaSpecial.descriptor = string.Format("<b>{0}{1}{2}{3}</b>", GameManager.GetFormattedString(gear.tag, ColourType.neutralText), "\n", "\n", gear.description);
+                                        metaSpecial.descriptor = string.Format("<b>{0}{1}{2}{3}</b>", GameManager.Formatt(gear.tag, ColourType.neutralText), "\n", "\n", gear.description);
                                         //modify cost according to relationship (Mot 3 -> use base cost, Mot 2 -> double base cost
                                         if (motivation == 2) { metaSpecial.relationshipModifier = 2; }
                                         else { metaSpecial.relationshipModifier = 1; }
@@ -574,8 +574,8 @@ public class MetaManager : MonoBehaviour
                                         //swap '*' for device.tag
                                         metaSpecial.text = metaSpecial.template.Replace("*", device.tag);
                                         //customise descriptor
-                                        metaSpecial.descriptor = string.Format("<b>{0}{1}{2}{3}{4}Innocence</b> {5}", GameManager.GetFormattedString(device.tag, ColourType.neutralText), "\n", "\n", 
-                                            device.descriptor, "\n", GameManager.i.guiScript.GetDatapointStars(device.innocenceLevel));
+                                        metaSpecial.descriptor = string.Format("<b>{0}{1}{2}{3}{4}{5}Innocence</b> {6}", GameManager.Formatt(device.tag, ColourType.neutralText), "\n", "\n", 
+                                            device.descriptor, "\n", "\n", GameManager.i.guiScript.GetNormalStars(device.innocenceLevel));
                                         //modify cost according to relationship (Mot 3 -> use base cost, Mot 2 -> double base cost
                                         if (motivation == 2)
                                         { metaSpecial.relationshipModifier = 2; }
@@ -683,9 +683,9 @@ public class MetaManager : MonoBehaviour
                         cost *= metaOption.relationshipModifier;
                         metaData.renownCost = cost;
                         //header texts
-                        metaData.textSelect = $"Costs <size=130%>{GameManager.GetFormattedString(cost.ToString(), ColourType.neutralText)}</size> Renown";
-                        metaData.textDeselect = $"Gain <size=130%>{GameManager.GetFormattedString(cost.ToString(), ColourType.neutralText)}</size> Renown";
-                        metaData.textInsufficient = $"Not enough Renown (need <size=130%>{GameManager.GetFormattedString(cost.ToString(), ColourType.neutralText)}</size>)";
+                        metaData.textSelect = $"Costs <size=130%>{GameManager.Formatt(cost.ToString(), ColourType.neutralText)}</size> Renown";
+                        metaData.textDeselect = $"Gain <size=130%>{GameManager.Formatt(cost.ToString(), ColourType.neutralText)}</size> Renown";
+                        metaData.textInsufficient = $"Not enough Renown (need <size=130%>{GameManager.Formatt(cost.ToString(), ColourType.neutralText)}</size>)";
                         //recommendation priority
                         if (metaOption.isRecommended == true)
                         {
@@ -755,7 +755,7 @@ public class MetaManager : MonoBehaviour
                             metaName = "Default",
                             itemText = string.Format("Nothing available from your {0}", leader),
                             textSelect = "No Options",
-                            bottomText = string.Format("Your {0}<br><br><b>{1}</b><br><br>have anything for you currently", leader, GameManager.GetFormattedString("Does Not", ColourType.salmonText)),
+                            bottomText = string.Format("Your {0}<br><br><b>{1}</b><br><br>have anything for you currently", leader, GameManager.Formatt("Does Not", ColourType.salmonText)),
                             sideLevel = level,
                             sprite = GameManager.i.guiScript.infoSprite,
                             isActive = false,

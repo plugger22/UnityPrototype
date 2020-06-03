@@ -87,8 +87,8 @@ public class SideManager : MonoBehaviour
                     break;
             }
             //Post notification - Player side has been changed, update colours as well
-            EventManager.instance.PostNotification(EventType.ChangeSide, this, _playerSide, "SideManager.cs -> PlayerSide");
-            EventManager.instance.PostNotification(EventType.ChangeColour, this, null, "SideManager.cs -> PlayerSide");
+            EventManager.i.PostNotification(EventType.ChangeSide, this, _playerSide, "SideManager.cs -> PlayerSide");
+            EventManager.i.PostNotification(EventType.ChangeColour, this, null, "SideManager.cs -> PlayerSide");
             Debug.Log(string.Format("OptionManager -> Player Side now {0}{1}", _playerSide, "\n"));
         }
     }
@@ -281,9 +281,9 @@ public class SideManager : MonoBehaviour
         float activeAlpha = GameManager.i.guiScript.alphaActive;
         //flashing red alert at top UI for Security Status -> switch on/off
         if (GameManager.i.turnScript.authoritySecurityState != AuthoritySecurityState.Normal)
-        { EventManager.instance.PostNotification(EventType.StartSecurityFlash, this, null, "SideManager.cs -> RevertToHumanPlayer"); }
+        { EventManager.i.PostNotification(EventType.StartSecurityFlash, this, null, "SideManager.cs -> RevertToHumanPlayer"); }
         else
-        { EventManager.instance.PostNotification(EventType.StopSecurityFlash, this, null, "SideManager.cs -> RevertToHumanPlayer"); }
+        { EventManager.i.PostNotification(EventType.StopSecurityFlash, this, null, "SideManager.cs -> RevertToHumanPlayer"); }
         switch (_playerSide.level)
         {
             case 1:
@@ -535,7 +535,7 @@ public class SideManager : MonoBehaviour
                 outcomeDetails.side = _playerSide;
                 outcomeDetails.textTop = "AutoRun complete";
                 outcomeDetails.textBottom = builder.ToString();
-                EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "SideManager.cs -> RevertToHumanPlayer");
+                EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "SideManager.cs -> RevertToHumanPlayer");
             }
             else { Debug.LogError("Invalid listOfHistoryAutoRun (Null)"); }
         }

@@ -121,13 +121,13 @@ public class TeamManager : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //event Listeners
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TeamManager");
-        EventManager.instance.AddListener(EventType.EndTurnEarly, OnEvent, "TeamManager");
-        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "TeamManager");
-        EventManager.instance.AddListener(EventType.RecallTeamAction, OnEvent, "TeamManager");
-        EventManager.instance.AddListener(EventType.GenericTeamRecall, OnEvent, "TeamManager");
-        EventManager.instance.AddListener(EventType.NeutraliseTeamAction, OnEvent, "TeamManager");
-        EventManager.instance.AddListener(EventType.GenericNeutraliseTeam, OnEvent, "TeamManager");
+        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "TeamManager");
+        EventManager.i.AddListener(EventType.EndTurnEarly, OnEvent, "TeamManager");
+        EventManager.i.AddListener(EventType.StartTurnEarly, OnEvent, "TeamManager");
+        EventManager.i.AddListener(EventType.RecallTeamAction, OnEvent, "TeamManager");
+        EventManager.i.AddListener(EventType.GenericTeamRecall, OnEvent, "TeamManager");
+        EventManager.i.AddListener(EventType.NeutraliseTeamAction, OnEvent, "TeamManager");
+        EventManager.i.AddListener(EventType.GenericNeutraliseTeam, OnEvent, "TeamManager");
     }
     #endregion
 
@@ -1217,14 +1217,14 @@ public class TeamManager : MonoBehaviour
             outcomeDetails.textTop = "There has been an error in communication and No teams can be Recalled.";
             outcomeDetails.textBottom = "Heads will roll!";
             outcomeDetails.side = globalAuthority;
-            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "TeamManager.cs -> InitialiseGenericPickerRecall");
+            EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "TeamManager.cs -> InitialiseGenericPickerRecall");
         }
         else
         {
             //deactivate back button
             GameManager.i.genericPickerScript.SetBackButton(EventType.None);
             //activate Generic Picker window
-            EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "TeamManager.cs -> InitialiseGenericPickerRecall");
+            EventManager.i.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "TeamManager.cs -> InitialiseGenericPickerRecall");
         }
     }
 
@@ -1304,14 +1304,14 @@ public class TeamManager : MonoBehaviour
             outcomeDetails.textTop = "There has been an error in communication and No teams can be Neutralised.";
             outcomeDetails.textBottom = "Heads will roll!";
             outcomeDetails.sprite = GameManager.i.guiScript.errorSprite;
-            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "TeamManager.cs -> InitialiseGenericPickerNeutralise");
+            EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "TeamManager.cs -> InitialiseGenericPickerNeutralise");
         }
         else
         {
             //deactivate back button
             GameManager.i.genericPickerScript.SetBackButton(EventType.None);
             //activate Generic Picker window
-            EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "TeamManager.cs -> InitialiseGenericPickerNeutralise");
+            EventManager.i.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "TeamManager.cs -> InitialiseGenericPickerNeutralise");
         }
     }
 
@@ -1382,7 +1382,7 @@ public class TeamManager : MonoBehaviour
                             details.isAction = true;
                             details.reason = "Recall Team";
                         }
-                        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "TeamManager.cs -> ProcessRecallTeam");
+                        EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "TeamManager.cs -> ProcessRecallTeam");
                     }
                     else { Debug.LogError(string.Format("Invalid node (Null) for NodeID {0}", data.nodeID)); }
                 }
@@ -1516,7 +1516,7 @@ public class TeamManager : MonoBehaviour
                                 details.isAction = true;
                                 details.reason = "Neutralise Team";
                             }
-                            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "TeamManager.cs -> ProcessNeutraliseTeam");
+                            EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "TeamManager.cs -> ProcessNeutraliseTeam");
                         }
                         else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", data.actorSlotID)); }
                     }

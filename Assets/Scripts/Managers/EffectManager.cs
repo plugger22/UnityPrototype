@@ -217,7 +217,7 @@ public class EffectManager : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //register listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "EffectManager");
+        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "EffectManager");
     }
     #endregion
 
@@ -6051,8 +6051,8 @@ public class EffectManager : MonoBehaviour
         string text = "Unknown";
         switch (GameManager.i.sideScript.PlayerSide.level)
         {
-            case 1: text = GameManager.GetFormattedString("You have identified and incarcerated the leader of the Resistance in the City", ColourType.goodText); break;
-            case 2: text = GameManager.GetFormattedString("You have been identified and incarcerated permanently", ColourType.badText); break;
+            case 1: text = GameManager.Formatt("You have identified and incarcerated the leader of the Resistance in the City", ColourType.goodText); break;
+            case 2: text = GameManager.Formatt("You have been identified and incarcerated permanently", ColourType.badText); break;
             default: Debug.LogWarningFormat("Unrecognised playerSide {0}", GameManager.i.sideScript.PlayerSide.name); break;
         }
         GameManager.i.turnScript.SetWinStateCampaign(WinStateCampaign.Authority, WinReasonCampaign.Innocence, "Authority Locks up Rebel Leader", text);

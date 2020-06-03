@@ -118,7 +118,7 @@ public class HQManager : MonoBehaviour
             _approvalAuthority = Mathf.Clamp(_approvalAuthority, 0, maxHqApproval);
             //update top widget bar if current side is authority
             if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideAuthority.level)
-            { EventManager.instance.PostNotification(EventType.ChangeHqBar, this, _approvalAuthority, "HqManager.cs -> ApprovalAuthority"); }
+            { EventManager.i.PostNotification(EventType.ChangeHqBar, this, _approvalAuthority, "HqManager.cs -> ApprovalAuthority"); }
         }
     }
 
@@ -134,7 +134,7 @@ public class HQManager : MonoBehaviour
             _approvalResistance = Mathf.Clamp(_approvalResistance, 0, maxHqApproval);
             //update top widget bar if current side is resistance
             if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideResistance.level)
-            { EventManager.instance.PostNotification(EventType.ChangeHqBar, this, _approvalResistance, "HqManager.cs -> ApprovalResistance"); }
+            { EventManager.i.PostNotification(EventType.ChangeHqBar, this, _approvalResistance, "HqManager.cs -> ApprovalResistance"); }
         }
     }
 
@@ -205,9 +205,9 @@ public class HQManager : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //register listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "HQManager");
-        EventManager.instance.AddListener(EventType.StartTurnEarly, OnEvent, "HQManager");
-        EventManager.instance.AddListener(EventType.EndTurnLate, OnEvent, "HQManager");
+        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "HQManager");
+        EventManager.i.AddListener(EventType.StartTurnEarly, OnEvent, "HQManager");
+        EventManager.i.AddListener(EventType.EndTurnLate, OnEvent, "HQManager");
     }
     #endregion
 
@@ -366,7 +366,7 @@ public class HQManager : MonoBehaviour
             {
                 Debug.LogFormat("[HQ] HqManager.cs -> CheckHQRenownSupport: NO support as HQ Relocating{0}", "\n");
                 string text = string.Format("HQ support unavailable as HQ is currently Relocating{0}", "\n");
-                string reason = GameManager.GetFormattedString(string.Format("<b>{0} is currently Relocating</b>", hqFaction.tag), ColourType.salmonText);
+                string reason = GameManager.Formatt(string.Format("<b>{0} is currently Relocating</b>", hqFaction.tag), ColourType.salmonText);
                 GameManager.i.messageScript.HqSupportUnavailable(text, reason, hqFaction);
             }
             else { Debug.LogWarning("Invalid current HQ (Null)"); }

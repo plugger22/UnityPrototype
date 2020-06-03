@@ -54,8 +54,8 @@ public class TooltipConnection : MonoBehaviour
         fadeInTime = GameManager.i.guiScript.tooltipFade;
         offset = GameManager.i.guiScript.tooltipOffset;
         //event listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "TooltipConnection");
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "TooltipConnection");
+        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "TooltipConnection");
+        EventManager.i.AddListener(EventType.ChangeSide, OnEvent, "TooltipConnection");
     }
 
     /// <summary>

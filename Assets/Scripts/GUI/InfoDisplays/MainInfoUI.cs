@@ -562,25 +562,25 @@ public class MainInfoUI : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //event listener
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoOpen, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoOpenInterim, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoClose, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoTabOpen, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoShowDetails, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoHome, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoEnd, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoBack, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoForward, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoUpArrow, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoDownArrow, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoLeftArrow, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoRightArrow, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoShowMe, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoRestore, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoTickerFaster, OnEvent, "MainInfoUI");
-        EventManager.instance.AddListener(EventType.MainInfoTickerSlower, OnEvent, "MainInfoUI");
+        EventManager.i.AddListener(EventType.ChangeSide, OnEvent, "MainInfoUI");
+        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "MainInfoUI");
+        EventManager.i.AddListener(EventType.MainInfoOpen, OnEvent, "MainInfoUI");
+        EventManager.i.AddListener(EventType.MainInfoOpenInterim, OnEvent, "MainInfoUI");
+        EventManager.i.AddListener(EventType.MainInfoClose, OnEvent, "MainInfoUI");
+        EventManager.i.AddListener(EventType.MainInfoTabOpen, OnEvent, "MainInfoUI");
+        EventManager.i.AddListener(EventType.MainInfoShowDetails, OnEvent, "MainInfoUI");
+        EventManager.i.AddListener(EventType.MainInfoHome, OnEvent, "MainInfoUI");
+        EventManager.i.AddListener(EventType.MainInfoEnd, OnEvent, "MainInfoUI");
+        EventManager.i.AddListener(EventType.MainInfoBack, OnEvent, "MainInfoUI");
+        EventManager.i.AddListener(EventType.MainInfoForward, OnEvent, "MainInfoUI");
+        EventManager.i.AddListener(EventType.MainInfoUpArrow, OnEvent, "MainInfoUI");
+        EventManager.i.AddListener(EventType.MainInfoDownArrow, OnEvent, "MainInfoUI");
+        EventManager.i.AddListener(EventType.MainInfoLeftArrow, OnEvent, "MainInfoUI");
+        EventManager.i.AddListener(EventType.MainInfoRightArrow, OnEvent, "MainInfoUI");
+        EventManager.i.AddListener(EventType.MainInfoShowMe, OnEvent, "MainInfoUI");
+        EventManager.i.AddListener(EventType.MainInfoRestore, OnEvent, "MainInfoUI");
+        EventManager.i.AddListener(EventType.MainInfoTickerFaster, OnEvent, "MainInfoUI");
+        EventManager.i.AddListener(EventType.MainInfoTickerSlower, OnEvent, "MainInfoUI");
     }
     #endregion
 

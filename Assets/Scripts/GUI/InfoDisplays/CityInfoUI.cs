@@ -141,9 +141,9 @@ public class CityInfoUI : MonoBehaviour
     public void Start()
     {
         //event listener
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "CityInfoUI");
-        EventManager.instance.AddListener(EventType.CityInfoOpen, OnEvent, "CityInfoUI");
-        EventManager.instance.AddListener(EventType.CityInfoClose, OnEvent, "CityInfoUI");
+        EventManager.i.AddListener(EventType.ChangeSide, OnEvent, "CityInfoUI");
+        EventManager.i.AddListener(EventType.CityInfoOpen, OnEvent, "CityInfoUI");
+        EventManager.i.AddListener(EventType.CityInfoClose, OnEvent, "CityInfoUI");
     }
 
     /// <summary>

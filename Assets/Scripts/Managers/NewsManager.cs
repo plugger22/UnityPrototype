@@ -89,7 +89,7 @@ public class NewsManager : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //event listener
-        EventManager.instance.AddListener(EventType.StartTurnLate, OnEvent, "NewsManager");
+        EventManager.i.AddListener(EventType.StartTurnLate, OnEvent, "NewsManager");
     }
     #endregion
 

@@ -625,23 +625,23 @@ public class MetaGameUI : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //listeners
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "MetaGamesUI");
-        EventManager.instance.AddListener(EventType.MetaGameClose, OnEvent, "MetaGamesUI");
-        EventManager.instance.AddListener(EventType.MetaGameSideTabOpen, OnEvent, "MetaGamesUI");
-        EventManager.instance.AddListener(EventType.MetaGameTopTabOpen, OnEvent, "MetaGamesUI");
-        EventManager.instance.AddListener(EventType.MetaGameShowDetails, OnEvent, "MetaGamesUI");
-        EventManager.instance.AddListener(EventType.MetaGameUpArrow, OnEvent, "MetaGamesUI");
-        EventManager.instance.AddListener(EventType.MetaGameDownArrow, OnEvent, "MetaGamesUI");
-        EventManager.instance.AddListener(EventType.MetaGameLeftArrow, OnEvent, "MetaGamesUI");
-        EventManager.instance.AddListener(EventType.MetaGameRightArrow, OnEvent, "MetaGamesUI");
-        EventManager.instance.AddListener(EventType.MetaGamePageUp, OnEvent, "MetaGamesUI");
-        EventManager.instance.AddListener(EventType.MetaGamePageDown, OnEvent, "MetaGamesUI");
-        EventManager.instance.AddListener(EventType.MetaGameSelect, OnEvent, "MetaGamesUI");
-        EventManager.instance.AddListener(EventType.MetaGameDeselect, OnEvent, "MetaGamesUI");
-        EventManager.instance.AddListener(EventType.MetaGameButton, OnEvent, "MetaGamesUI");
-        EventManager.instance.AddListener(EventType.MetaGameReset, OnEvent, "MetaGamesUI");
-        EventManager.instance.AddListener(EventType.MetaGameRecommended, OnEvent, "MetaGamesUI");
-        EventManager.instance.AddListener(EventType.MetaGameConfirm, OnEvent, "MetaGamesUI");
+        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "MetaGamesUI");
+        EventManager.i.AddListener(EventType.MetaGameClose, OnEvent, "MetaGamesUI");
+        EventManager.i.AddListener(EventType.MetaGameSideTabOpen, OnEvent, "MetaGamesUI");
+        EventManager.i.AddListener(EventType.MetaGameTopTabOpen, OnEvent, "MetaGamesUI");
+        EventManager.i.AddListener(EventType.MetaGameShowDetails, OnEvent, "MetaGamesUI");
+        EventManager.i.AddListener(EventType.MetaGameUpArrow, OnEvent, "MetaGamesUI");
+        EventManager.i.AddListener(EventType.MetaGameDownArrow, OnEvent, "MetaGamesUI");
+        EventManager.i.AddListener(EventType.MetaGameLeftArrow, OnEvent, "MetaGamesUI");
+        EventManager.i.AddListener(EventType.MetaGameRightArrow, OnEvent, "MetaGamesUI");
+        EventManager.i.AddListener(EventType.MetaGamePageUp, OnEvent, "MetaGamesUI");
+        EventManager.i.AddListener(EventType.MetaGamePageDown, OnEvent, "MetaGamesUI");
+        EventManager.i.AddListener(EventType.MetaGameSelect, OnEvent, "MetaGamesUI");
+        EventManager.i.AddListener(EventType.MetaGameDeselect, OnEvent, "MetaGamesUI");
+        EventManager.i.AddListener(EventType.MetaGameButton, OnEvent, "MetaGamesUI");
+        EventManager.i.AddListener(EventType.MetaGameReset, OnEvent, "MetaGamesUI");
+        EventManager.i.AddListener(EventType.MetaGameRecommended, OnEvent, "MetaGamesUI");
+        EventManager.i.AddListener(EventType.MetaGameConfirm, OnEvent, "MetaGamesUI");
     }
     #endregion
 
@@ -958,7 +958,7 @@ public class MetaGameUI : MonoBehaviour
         GameManager.i.playerScript.Renown = renownCurrent;
         Debug.LogFormat("[Met] MetaGameUI.cs -> CloseMetaUI: Player carries over {0} Renown{1}", renownCurrent, "\n");
         //show top bar UI at completion of meta game
-        EventManager.instance.PostNotification(EventType.TopBarShow, this, null, "MetaGameUI.cs -> Show TopBarUI");
+        EventManager.i.PostNotification(EventType.TopBarShow, this, null, "MetaGameUI.cs -> Show TopBarUI");
     }
 
 
@@ -1734,7 +1734,7 @@ public class MetaGameUI : MonoBehaviour
                 modalState = ModalSubState.MetaGame,
                 reason = "Recommended pressed"
             };
-            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details);
+            EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
         }
     }
 
@@ -1914,7 +1914,7 @@ public class MetaGameUI : MonoBehaviour
                 modalState = ModalSubState.MetaGame,
                 reason = "Reset pressed"
             };
-            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details);
+            EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
         }
     }
 
@@ -2030,7 +2030,7 @@ public class MetaGameUI : MonoBehaviour
         }
         //outcome message
         if (details != null)
-        { EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details); }
+        { EventManager.i.PostNotification(EventType.OutcomeOpen, this, details); }
     }
 
     /// <summary>
@@ -2112,7 +2112,7 @@ public class MetaGameUI : MonoBehaviour
                     modalState = ModalSubState.MetaGame,
                     reason = "Effect Outcomes"
                 };
-                EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details);
+                EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
                 //need a coroutine to handle execution to prevent metaGameUI closing prematurely
                 StartCoroutine(CloseMetaGameOutcome(details));
             }
@@ -2128,7 +2128,7 @@ public class MetaGameUI : MonoBehaviour
                 modalLevel = 2,
                 modalState = ModalSubState.MetaGame
             };
-            EventManager.instance.PostNotification(EventType.OpenConfirmWindow, this, details);
+            EventManager.i.PostNotification(EventType.OpenConfirmWindow, this, details);
             //need a coroutine to handle execution to prevent metaGameUI closing prematurely
             StartCoroutine(CloseMetaGameConfirm(details));
         }
@@ -2155,7 +2155,7 @@ public class MetaGameUI : MonoBehaviour
     /// <returns></returns>
     IEnumerator CloseOutcome(ModalOutcomeDetails details)
     {
-        EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details);
+        EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
         //will wait until ModalOutcome -> CloseModalOutcome resets flag
         yield return new WaitUntil(() => GameManager.i.guiScript.waitUntilDone == false);
     }
@@ -2186,7 +2186,7 @@ public class MetaGameUI : MonoBehaviour
     /// <returns></returns>
     IEnumerator CloseConfirm(ModalConfirmDetails details)
     {
-        EventManager.instance.PostNotification(EventType.OpenConfirmWindow, this, details);
+        EventManager.i.PostNotification(EventType.OpenConfirmWindow, this, details);
         //will wait until ModalConfirm -> True or False button pressed which resets flag
         yield return new WaitUntil(() => GameManager.i.guiScript.waitUntilDone == false);
     }

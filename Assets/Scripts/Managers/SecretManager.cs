@@ -343,19 +343,19 @@ public class SecretManager : MonoBehaviour
                         text = string.Format("Investigation into Player {0} launched by {1}", invest.tag, invest.lead);
                         GameManager.i.messageScript.InvestigationNew(text, invest);
                         //outcome (message pipeline)
-                        text = string.Format("<size=120%>INVESTIGATION</size>{0}Launched into your{1}{2}", "\n", "\n", GameManager.GetFormattedString(invest.tag, ColourType.neutralText));
+                        text = string.Format("<size=120%>INVESTIGATION</size>{0}Launched into your{1}{2}", "\n", "\n", GameManager.Formatt(invest.tag, ColourType.neutralText));
                         string bottomText = "Unknown";
                         Actor actor = GameManager.i.dataScript.GetHqHierarchyActor(invest.lead);
                         if (actor == null)
                         {
                             Debug.LogErrorFormat("Invalid HQ actor for ActorHQ invest.lead \"{0}\"", GameManager.i.hqScript.GetHqTitle(invest.lead));
                             bottomText = string.Format("HQ have assigned their {0} to lead the investigation{1}",
-                            actor.actorName, GameManager.GetFormattedString(GameManager.i.hqScript.GetHqTitle(invest.lead), ColourType.salmonText).ToUpper(), "\n");
+                            actor.actorName, GameManager.Formatt(GameManager.i.hqScript.GetHqTitle(invest.lead), ColourType.salmonText).ToUpper(), "\n");
                         }
                         else
                         {
                             bottomText = string.Format("HQ have assigned{0}{1}, {2}{3}to lead the investigation{4}", "\n", actor.actorName,
-                                GameManager.GetFormattedString(GameManager.i.hqScript.GetHqTitle(invest.lead), ColourType.salmonText).ToUpper(), "\n", "\n");
+                                GameManager.Formatt(GameManager.i.hqScript.GetHqTitle(invest.lead), ColourType.salmonText).ToUpper(), "\n", "\n");
                         }
                         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
                         {

@@ -396,7 +396,7 @@ public class GameManager : MonoBehaviour
         mouseWheelInput = 0;
         //redraw any Nodes where required
         if (nodeScript.NodeRedraw == true)
-        { EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw, "GameManager.cs -> Update"); }
+        { EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw, "GameManager.cs -> Update"); }
 
         //get any mouse wheel input (restricts max value) and pass as a parameter as Input.anyKeyDown won't pick up mouse wheel input)
         mouseWheelInput += Input.GetAxis("Mouse ScrollWheel");
@@ -886,7 +886,7 @@ public class GameManager : MonoBehaviour
         //lock mouse to prevent mouseover events occuring prior to full initialisation
         Cursor.lockState = CursorLockMode.Locked;
         //remove redundant events (just in case, shouldn't be any)
-        EventManager.instance.RemoveRedundancies();
+        EventManager.i.RemoveRedundancies();
         //start sequence
         if (isPerformanceLog == false)
         {
@@ -1033,7 +1033,7 @@ public class GameManager : MonoBehaviour
     /// <param name="text"></param>
     /// <param name="colorType"></param>
     /// <returns></returns>
-    public static string GetFormattedString(string text, ColourType colourType)
+    public static string Formatt(string text, ColourType colourType)
     {
         string formattedText = text;
         if (string.IsNullOrEmpty(text) == false)

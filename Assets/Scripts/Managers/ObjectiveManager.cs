@@ -61,7 +61,7 @@ public class ObjectiveManager : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //event listeners
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ObjectiveManager");
+        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "ObjectiveManager");
     }
     #endregion
 

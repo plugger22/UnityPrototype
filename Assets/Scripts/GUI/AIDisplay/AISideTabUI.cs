@@ -126,9 +126,9 @@ public class AISideTabUI : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //event listener
-        EventManager.instance.AddListener(EventType.AISideTabOpen, OnEvent, "AISideTabUI");
-        EventManager.instance.AddListener(EventType.AISideTabClose, OnEvent, "AISideTabUI");
-        EventManager.instance.AddListener(EventType.AISendSideData, OnEvent, "AISideTabUI");
+        EventManager.i.AddListener(EventType.AISideTabOpen, OnEvent, "AISideTabUI");
+        EventManager.i.AddListener(EventType.AISideTabClose, OnEvent, "AISideTabUI");
+        EventManager.i.AddListener(EventType.AISendSideData, OnEvent, "AISideTabUI");
     }
     #endregion
 

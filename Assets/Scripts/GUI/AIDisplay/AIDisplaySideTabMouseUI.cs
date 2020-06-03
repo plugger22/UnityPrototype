@@ -20,7 +20,7 @@ public class AIDisplaySideTabMouseUI : MonoBehaviour, IPointerClickHandler
             case PointerEventData.InputButton.Left:
             case PointerEventData.InputButton.Right:
                 //closes AI Display (auto opens side tab)
-                EventManager.instance.PostNotification(EventType.AIDisplayClose, this, null, "AIDisplaySideTabMouseUI.cs -> OnPointerClick");
+                EventManager.i.PostNotification(EventType.AIDisplayClose, this, null, "AIDisplaySideTabMouseUI.cs -> OnPointerClick");
                 break;
             default:
                 Debug.LogError("Unknown InputButton");

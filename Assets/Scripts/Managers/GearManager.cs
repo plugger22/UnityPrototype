@@ -218,12 +218,12 @@ public class GearManager : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //event Listeners
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "GearManager");
-        EventManager.instance.AddListener(EventType.GearAction, OnEvent, "GearManager");
-        EventManager.instance.AddListener(EventType.GenericGearChoice, OnEvent, "GearManager");
-        EventManager.instance.AddListener(EventType.GenericCompromisedGear, OnEvent, "GearManager");
-        EventManager.instance.AddListener(EventType.InventorySetGear, OnEvent, "GearManager");
-        EventManager.instance.AddListener(EventType.EndTurnEarly, OnEvent, "GearManager");
+        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "GearManager");
+        EventManager.i.AddListener(EventType.GearAction, OnEvent, "GearManager");
+        EventManager.i.AddListener(EventType.GenericGearChoice, OnEvent, "GearManager");
+        EventManager.i.AddListener(EventType.GenericCompromisedGear, OnEvent, "GearManager");
+        EventManager.i.AddListener(EventType.InventorySetGear, OnEvent, "GearManager");
+        EventManager.i.AddListener(EventType.EndTurnEarly, OnEvent, "GearManager");
     }
     #endregion
 
@@ -625,7 +625,7 @@ public class GearManager : MonoBehaviour
             //deactivate back button
             GameManager.i.genericPickerScript.SetBackButton(EventType.None);
             //open picker
-            EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "GearManager.cs -> InitialiseGenericPickerGear");
+            EventManager.i.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "GearManager.cs -> InitialiseGenericPickerGear");
         }
         else
         { Debug.LogWarning("Invalid listOfGear (Null or Empty). Compromised Gear Picker cancelled"); }
@@ -669,7 +669,7 @@ public class GearManager : MonoBehaviour
                 {
                     //capture happened, abort recruitment
                     captureDetails.effects = string.Format("{0}The contact wasn't there. Nor was the gear.{1}", colourNeutral, colourEnd);
-                    EventManager.instance.PostNotification(EventType.Capture, this, captureDetails, "GearManager.cs -> InitialiseGenericPickerGear");
+                    EventManager.i.PostNotification(EventType.Capture, this, captureDetails, "GearManager.cs -> InitialiseGenericPickerGear");
                     return;
                 }
             }
@@ -830,7 +830,7 @@ public class GearManager : MonoBehaviour
             outcomeDetails.side = globalResistance;
             outcomeDetails.textTop = "There has been an error in communication and no gear can be sourced.";
             outcomeDetails.textBottom = "Heads will roll!";
-            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "GearManager.cs -> InitialiseGenericPickerGear");
+            EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "GearManager.cs -> InitialiseGenericPickerGear");
         }
         else
         {
@@ -839,7 +839,7 @@ public class GearManager : MonoBehaviour
             if (isIgnoreCache == true)
             {
                 //activate Generic Picker window
-                EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "GearManager.cs -> InitialiseGenericPickerGear");
+                EventManager.i.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "GearManager.cs -> InitialiseGenericPickerGear");
                 if (isPlayer == true)
                 {
                     //cache details in case player attempts to access Player gear selection again this action
@@ -862,7 +862,7 @@ public class GearManager : MonoBehaviour
                 {
                     //Player gear selection
                     if (cachedPlayerDetails != null)
-                    { EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, cachedPlayerDetails, "GearManager.cs -> InitialiseGenericPickerGear"); }
+                    { EventManager.i.PostNotification(EventType.OpenGenericPicker, this, cachedPlayerDetails, "GearManager.cs -> InitialiseGenericPickerGear"); }
                     else
                     { Debug.LogWarning("Invalid cachedGenericDetails Player(Null)"); }
                 }
@@ -870,7 +870,7 @@ public class GearManager : MonoBehaviour
                 {
                     //Actor gear selection
                     if (cachedActorDetails != null)
-                    { EventManager.instance.PostNotification(EventType.OpenGenericPicker, this, cachedActorDetails, "GearManager.cs -> InitialiseGenericPickerGear"); }
+                    { EventManager.i.PostNotification(EventType.OpenGenericPicker, this, cachedActorDetails, "GearManager.cs -> InitialiseGenericPickerGear"); }
                     else
                     { Debug.LogWarning("Invalid cachedGenericDetails Actor (Null)"); }
                 }
@@ -966,12 +966,12 @@ public class GearManager : MonoBehaviour
                         sprite = GameManager.i.guiScript.errorSprite,
                         isAction = false
                     };
-                    EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "GearManager.cs -> InitialiseGearInventoryDisplay");
+                    EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "GearManager.cs -> InitialiseGearInventoryDisplay");
                 }
                 else
                 {
                     //open Inventory UI
-                    EventManager.instance.PostNotification(EventType.InventoryOpenUI, this, data, "GearManager.cs -> InitialiseGearInventoryDisplay");
+                    EventManager.i.PostNotification(EventType.InventoryOpenUI, this, data, "GearManager.cs -> InitialiseGearInventoryDisplay");
                 }
             }
             else
@@ -985,7 +985,7 @@ public class GearManager : MonoBehaviour
                     sprite = GameManager.i.guiScript.infoSprite,
                     isAction = false
                 };
-                EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "GearManager.cs -> InitialiseGearInventoryDisplay");
+                EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "GearManager.cs -> InitialiseGearInventoryDisplay");
             }
         }
         else
@@ -998,7 +998,7 @@ public class GearManager : MonoBehaviour
                 sprite = GameManager.i.guiScript.infoSprite,
                 isAction = false
             };
-            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "GearManager.cs -> InitialiseGearInventoryDisplay");
+            EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "GearManager.cs -> InitialiseGearInventoryDisplay");
         }
     }
 
@@ -1126,7 +1126,7 @@ public class GearManager : MonoBehaviour
                     }
                 }
                 details.textBottom = builderBottom.ToString();
-                EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "GearManager.cs -> ProcessCompromisedGear");
+                EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "GearManager.cs -> ProcessCompromisedGear");
             }
         }
         else
@@ -1146,7 +1146,7 @@ public class GearManager : MonoBehaviour
                 builderBottom.AppendFormat("{0}{1}{2}{3} has been LOST{4}", colourNeutral, gearName, colourEnd, colourBad, colourEnd);
             }
             details.textBottom = builderBottom.ToString();
-            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "GearManager.cs -> ProcessCompromisedGear");
+            EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "GearManager.cs -> ProcessCompromisedGear");
         }
     }
 
@@ -1298,7 +1298,7 @@ public class GearManager : MonoBehaviour
                                 details.isAction = true;
                                 details.reason = "Select Gear";
                             }
-                            EventManager.instance.PostNotification(EventType.OutcomeOpen, this, details, "GearManager.cs -> ProcessGearChoice");
+                            EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "GearManager.cs -> ProcessGearChoice");
                         }
                         else { Debug.LogError(string.Format("Invalid actor (Null) for actorSlotID {0}", data.actorSlotID)); }
                     }

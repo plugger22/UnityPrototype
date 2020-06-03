@@ -67,11 +67,11 @@ public class ModalOutcome : MonoBehaviour
         else { Debug.LogError("Invalid interactShowMe (Null)"); }
 
         //register a listener
-        EventManager.instance.AddListener(EventType.OutcomeOpen, OnEvent, "ModalOutcome");
-        EventManager.instance.AddListener(EventType.OutcomeClose, OnEvent, "ModalOutcome");
-        EventManager.instance.AddListener(EventType.OutcomeShowMe, OnEvent, "ModalOutcome");
-        EventManager.instance.AddListener(EventType.OutcomeRestore, OnEvent, "ModalOutcome");
-        EventManager.instance.AddListener(EventType.ChangeSide, OnEvent, "ModalOutcome");
+        EventManager.i.AddListener(EventType.OutcomeOpen, OnEvent, "ModalOutcome");
+        EventManager.i.AddListener(EventType.OutcomeClose, OnEvent, "ModalOutcome");
+        EventManager.i.AddListener(EventType.OutcomeShowMe, OnEvent, "ModalOutcome");
+        EventManager.i.AddListener(EventType.OutcomeRestore, OnEvent, "ModalOutcome");
+        EventManager.i.AddListener(EventType.ChangeSide, OnEvent, "ModalOutcome");
     }
 
     /// <summary>
@@ -127,7 +127,7 @@ public class ModalOutcome : MonoBehaviour
 
     public void OnDisable()
     {
-        EventManager.instance.RemoveEvent(EventType.OutcomeOpen);
+        EventManager.i.RemoveEvent(EventType.OutcomeOpen);
     }
 
 
@@ -291,7 +291,7 @@ public class ModalOutcome : MonoBehaviour
         GameManager.i.inputScript.ResetStates(modalState);
         //end of turn check
         if (isAction == true)
-        { EventManager.instance.PostNotification(EventType.UseAction, this, reason, "ModalOutcome.cs -> CloseModalOutcome"); }
+        { EventManager.i.PostNotification(EventType.UseAction, this, reason, "ModalOutcome.cs -> CloseModalOutcome"); }
         //auto set haltExecution to false (in case execution halted at end of turn, waiting on Compromised Gear Outcome dialogue to be sorted)
         GameManager.i.turnScript.haltExecution = false;
         //auto set waitUntilDone for InfoPipeline (waiting on a message in the pipeline to be done)

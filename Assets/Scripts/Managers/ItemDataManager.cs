@@ -55,7 +55,7 @@ public class ItemDataManager : MonoBehaviour
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         //register listener
-        EventManager.instance.AddListener(EventType.ChangeColour, OnEvent, "ItemDataManager");
+        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "ItemDataManager");
     }
 
     /// <summary>
@@ -2478,14 +2478,14 @@ public class ItemDataManager : MonoBehaviour
         {
             int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
             builder.AppendFormat("Lead Investigator{0}<b>{1}, {2}{3}{4}</b>{5}{6}", "\n", actor.actorName, colourAlert, GameManager.i.dataScript.GetHqActorPosition(invest.lead), colourEnd, "\n", "\n");
-            builder.AppendFormat("<b>Motivation</b><pos=57%>{0}{1}{2}", GameManager.i.guiScript.GetDatapointStars(motivation), "\n", "\n");
+            builder.AppendFormat("<b>Motivation</b><pos=57%>{0}{1}{2}", GameManager.i.guiScript.GetNormalStars(motivation), "\n", "\n");
         }
         else
         {
             Debug.LogWarningFormat("Invalid actor (Null) for investigation lead {0}", invest.lead);
             builder.AppendFormat("{0}It is not known who is leading the Investigation{1}{2}{3}", colourAlert, colourEnd, "\n", "\n");
         }
-        builder.AppendFormat("<b>Evidence</b><pos=57%>{0}{1}{2}", GameManager.i.guiScript.GetDatapointStars(invest.evidence), "\n", "\n");
+        builder.AppendFormat("<b>Evidence</b><pos=57%>{0}{1}{2}", GameManager.i.guiScript.GetNormalStars(invest.evidence), "\n", "\n");
         switch (invest.evidence)
         {
             case 0: outcome = string.Format("{0}Guilty{1}", colourBad, colourEnd); break;

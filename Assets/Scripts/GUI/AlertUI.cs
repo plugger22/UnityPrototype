@@ -88,7 +88,7 @@ public class AlertUI : MonoBehaviour
             if (resetFlag == true)
             {
                 //redraw to remove highlighted nodes
-                EventManager.instance.PostNotification(EventType.NodeDisplay, this, NodeUI.Reset, "AlertUI.cs -> CloseAlertUI");
+                EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.Reset, "AlertUI.cs -> CloseAlertUI");
             }
         }
     }
