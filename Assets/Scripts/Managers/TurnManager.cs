@@ -963,17 +963,21 @@ public class TurnManager : MonoBehaviour
     public void UpdateStates()
     {
         string text = "";
+        StatType stat = 0;
         //Authority State
         switch (authoritySecurityState)
         {
             case AuthoritySecurityState.APB:
                 text = "The city wide All Points Bulletin (APB) has been cancelled";
+                stat = StatType.DaysAPB;
                 break;
             case AuthoritySecurityState.SecurityAlert:
                 text = "The city wide Security Alert has been cancelled";
+                stat = StatType.DaysAlert;
                 break;
             case AuthoritySecurityState.SurveillanceCrackdown:
                 text = "The city wide Surveillance Crackdown has been cancelled";
+                stat = StatType.DaysCrackdown;
                 break;
         }
         if (string.IsNullOrEmpty(text) == false)
@@ -984,6 +988,13 @@ public class TurnManager : MonoBehaviour
                 GameManager.i.authorityScript.SetAuthoritySecurityState(text, "Security Measures Cancelled");
                 //switch off flashing red indicator on top widget UI
                 EventManager.i.PostNotification(EventType.StopSecurityFlash, this, null, "TurnManager.cs -> UpdateStates");
+            }
+            else
+            {
+                //accumulate stats (days spent with a particular security measure and, for comparison purposes, days when at least one erasure team was on the map)
+                if (stat > 0)
+                { GameManager.i.dataScript.StatisticIncrement(stat); }
+                GameManager.i.dataScript.StatisticIncrement(StatType.DaysErasureTeam);
             }
         }
     }

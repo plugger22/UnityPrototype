@@ -17,7 +17,7 @@ public class GearManager : MonoBehaviour
     [Range(1, 10)] public int chanceOfRareGear = 5;
 
     [Header("Compromised Gear")]
-    [Tooltip("Chance gear will be compromised and be no longer of any benefit after each use")]
+    [Tooltip("Chance gear will be compromised and be no longer of any benefit after each use (doesn't apply if Security Measures in place -> 100% chance)")]
     [Range(25, 75)] public int chanceOfCompromise = 50;
 
     [Header("Swap Gear")]
@@ -910,6 +910,7 @@ public class GearManager : MonoBehaviour
                 data.state = ModalInventorySubState.Gear;
                 data.help0 = "gearInv_0";
                 data.help1 = "gearInv_1";
+                data.help2 = "gearInv_2";
                 //Loop Gear list and populate arrays
                 List<string> listOfGear = GameManager.i.playerScript.GetListOfGear();
                 if (listOfGear != null)
@@ -1324,15 +1325,21 @@ public class GearManager : MonoBehaviour
             Gear gear = GameManager.i.dataScript.GetGear(gearName);
             if (gear != null)
             {
-                //chance of compromise same for all
-                switch (gear.rarity.name)
+                //100% chance if security measure in place (APB/crackdown/Alert)
+                if (GameManager.i.turnScript.authoritySecurityState != AuthoritySecurityState.Normal)
+                { chance = 100; }
+                else
                 {
-                    case "Special":
-                    case "Unique":
-                    case "Rare":
-                    case "Common":
-                        chance = chanceOfCompromise;
-                        break;
+                    //chance of compromise same for all
+                    switch (gear.rarity.name)
+                    {
+                        case "Special":
+                        case "Unique":
+                        case "Rare":
+                        case "Common":
+                            chance = chanceOfCompromise;
+                            break;
+                    }
                 }
             }
             else

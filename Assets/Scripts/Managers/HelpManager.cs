@@ -462,6 +462,13 @@ public class HelpManager : MonoBehaviour
             .AppendFormat("  {0} {1}Special{2} Available only from HQ between missions{3}", bullet, colourAlert, colourEnd, "\n")
             .ToString();
         listOfHelp.Add(data);
+        //Gifting
+        data = new HelpData();
+        data.tag = "gearInv_2";
+        data.header = "Gifting Gear to Subordinates";
+        data.text = string.Format("Will give your subordinate a {0}Motivation{1} boost. You can {2}ask for the gear back{3} after {4}{5} turns{6}. Would you be happy about returning a gift?",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, GameManager.i.gearScript.actorGearGracePeriod, colourEnd);
+        listOfHelp.Add(data);
         #endregion
 
         #region Capture Tool Inventory

@@ -208,6 +208,7 @@
         InvestigationsLaunched, InvestigationsCompleted,
         OrgCures, OrgContractHits, OrgInfoHacks, OrgHQDropped, OrgEscapes,
         ReviewsTotal, ReviewCommendations, ReviewBlackmarks, ReviewInconclusive,
+        DaysAPB, DaysAlert, DaysCrackdown, DaysErasureTeam,
         HQRelocations
     }
 

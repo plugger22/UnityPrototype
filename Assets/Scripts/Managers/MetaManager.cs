@@ -457,7 +457,6 @@ public class MetaManager : MonoBehaviour
                 {
                     int numOfGearOptions = 0;
                     Actor actor = null;
-                    string title = "Unknown";
                     Gear gear = null;
                     for (int i = 0; i < count; i++)
                     {
@@ -472,7 +471,6 @@ public class MetaManager : MonoBehaviour
                         if (actorHQ != ActorHQ.None)
                         {
                             actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
-                            title = GameManager.i.hqScript.GetHqTitle(actorHQ);
                             gear = GameManager.i.campaignScript.GetHqSpecialGear(actorHQ);
                             if (actor != null)
                             {
@@ -490,9 +488,6 @@ public class MetaManager : MonoBehaviour
                                         //swap '*' for investigation.tag
                                         metaSpecial.text = metaSpecial.template.Replace("*", gear.tag);
                                         //customise descriptor
-                                        /*metaSpecial.descriptor = string.Format("<b>Special gear</b> that is <b>only available</b>{0}{1}because your <b>{2}</b> " +
-                                            "(<b>current tab</b>) has{3}{4}a <b>good opinion</b> of you (<b>Motivation 2+ stars</b>)", "\n", "\n",
-                                            GameManager.GetFormattedString(title, ColourType.dataNeutral), "\n", "\n");*/
                                         metaSpecial.descriptor = string.Format("<b>{0}{1}{2}{3}</b>", GameManager.Formatt(gear.tag, ColourType.neutralText), "\n", "\n", gear.description);
                                         //modify cost according to relationship (Mot 3 -> use base cost, Mot 2 -> double base cost
                                         if (motivation == 2) { metaSpecial.relationshipModifier = 2; }
@@ -542,7 +537,6 @@ public class MetaManager : MonoBehaviour
                     int numOfDeviceOptions = 0;
                     Actor actor = null;
                     CaptureTool device = null;
-                    string title = "Unknown";
                     for (int i = 0; i < count; i++)
                     {
                         ActorHQ actorHQ = ActorHQ.None;
@@ -556,7 +550,6 @@ public class MetaManager : MonoBehaviour
                         if (actorHQ != ActorHQ.None)
                         {
                             actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
-                            title = GameManager.i.hqScript.GetHqTitle(actorHQ);
                             device = GameManager.i.captureScript.GetCaptureTool(actorHQ);
                             if (actor != null)
                             {

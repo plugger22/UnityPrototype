@@ -208,9 +208,8 @@ public class InputManager : MonoBehaviour
             //
             switch (_modalState)
             {
-                //
-                // - - - Normal Modal state - - -
-                //
+
+                #region ModalStateNormal
                 case ModalState.Normal:
                     if (Input.GetButton("ExitLevel") == true)
                     {
@@ -411,10 +410,14 @@ public class InputManager : MonoBehaviour
                         { EventManager.i.PostNotification(EventType.MainInfoOpenInterim, this, null, string.Format("InputManager.cs -> ProcessKeyInput OpenMainInfo \"{0}\"", Input.inputString.ToUpper())); }
                     }
                     break;
+                #endregion
+
+                #region ModalStateModalUI
                 case ModalState.ModalUI:
                     //Hotkeys for Modal UI windows
                     switch (_modalSubState)
                     {
+                        #region Outcome
                         case ModalSubState.Outcome:
                             if (Input.GetButtonDown("Cancel") == true)
                             {
@@ -425,6 +428,9 @@ public class InputManager : MonoBehaviour
                                 EventManager.i.PostNotification(EventType.OutcomeClose, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
                             }
                             break;
+                        #endregion
+
+                        #region Inventory
                         case ModalSubState.Inventory:
                             if (Input.GetButtonDown("Cancel") == true)
                             {
@@ -455,6 +461,9 @@ public class InputManager : MonoBehaviour
                                 { EventManager.i.PostNotification(EventType.InventoryCloseUI, this, null, string.Format("InputManager.cs -> ProcessKeyInput ShowDevices \"{0}\"", Input.inputString.ToUpper())); }
                             }
                             break;
+                        #endregion
+
+                        #region TeamPicker
                         case ModalSubState.TeamPicker:
                             if (Input.GetButtonDown("Cancel") == true)
                             {
@@ -465,6 +474,9 @@ public class InputManager : MonoBehaviour
                                 EventManager.i.PostNotification(EventType.CloseTeamPicker, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
                             }
                             break;
+                        #endregion
+
+                        #region GenericPicker
                         case ModalSubState.GenericPicker:
                             switch (_modalGenericPickerState)
                             {
@@ -492,6 +504,9 @@ public class InputManager : MonoBehaviour
                                     break;
                             }
                             break;
+                        #endregion
+
+                        #region Review
                         case ModalSubState.Review:
                             switch (_modalReviewState)
                             {
@@ -514,12 +529,18 @@ public class InputManager : MonoBehaviour
                                     break;
                             }
                             break;
+                        #endregion
+
+                        #region ActionMenu
                         case ModalSubState.ActionMenu:
                             if (Input.GetButtonDown("Cancel") == true)
                             {
                                 EventManager.i.PostNotification(EventType.CloseActionMenu, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
                             }
                             break;
+                        #endregion
+
+                        #region Topic
                         case ModalSubState.Topic:
                             if (Input.GetButtonDown("Cancel") == true)
                             { EventManager.i.PostNotification(EventType.TopicDisplayIgnore, this, null, "InputManager.cs -> ProcessKeyInput Cancel"); }
@@ -530,6 +551,9 @@ public class InputManager : MonoBehaviour
                                 Input.ResetInputAxes();
                             }
                             break;
+                        #endregion
+
+                        #region InfoDisplay
                         case ModalSubState.InfoDisplay:
                             //info displays are all at ModalLevel 1. Ignore commands if level > 1, eg. outcome window open on top of an info display.
                             if (GameManager.i.modalGUIScript.CheckModalLevel() == 1)
@@ -610,13 +634,17 @@ public class InputManager : MonoBehaviour
                                 }
                             }
                             break;
+                        #endregion
+
+                        #region MetaGame
                         case ModalSubState.MetaGame:
                             //MetaGame displays are all at ModalLevel 1. Ignore commands if level > 1, eg. outcome window open on top of an info display.
                             if (GameManager.i.modalGUIScript.CheckModalLevel() == 1)
                             {
                                 if (Input.GetButtonDown("Cancel") == true)
                                 {
-                                    EventManager.i.PostNotification(EventType.MetaGameClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                                    //same as pressing 'Confirm'
+                                    EventManager.i.PostNotification(EventType.MetaGameConfirm, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
                                 }
                                 else if (Input.GetButtonDown("Vertical"))
                                 {
@@ -652,13 +680,18 @@ public class InputManager : MonoBehaviour
                                 }
                             }
                             break;
+                        #endregion
+
+                        #region ShowMe
                         case ModalSubState.ShowMe:
                             //'Show Me' -> retore infoApp
                             if (Input.anyKeyDown == true)
                             { EventManager.i.PostNotification(EventType.ShowMeRestore, this, null, "InputManager.cs -> ProcessKeyInput ShowMe"); }
                             break;
+                            #endregion
                     }
                     break;
+                    #endregion
             }
         }
     }
