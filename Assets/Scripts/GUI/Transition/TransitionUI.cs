@@ -267,6 +267,59 @@ public class TransitionUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// toggles on/off main buttons
+    /// </summary>
+    /// <param name="state"></param>
+    private void SetButtons(ModalTransitionSubState state)
+    {
+        switch (state)
+        {
+            case ModalTransitionSubState.EndLevel:
+                buttonBack.gameObject.SetActive(false);
+                buttonContinue.gameObject.SetActive(true);
+                buttonExit.gameObject.SetActive(false);
+                break;
+            case ModalTransitionSubState.HQ:
+                buttonBack.gameObject.SetActive(true);
+                buttonContinue.gameObject.SetActive(true);
+                buttonExit.gameObject.SetActive(false);
+                break;
+            case ModalTransitionSubState.PlayerStatus:
+                buttonBack.gameObject.SetActive(true);
+                buttonContinue.gameObject.SetActive(true);
+                buttonExit.gameObject.SetActive(false);
+                break;
+            case ModalTransitionSubState.BriefingOne:
+                buttonBack.gameObject.SetActive(true);
+                buttonContinue.gameObject.SetActive(true);
+                buttonExit.gameObject.SetActive(false);
+                break;
+            case ModalTransitionSubState.BriefingTwo:
+                buttonBack.gameObject.SetActive(true);
+                buttonContinue.gameObject.SetActive(false);
+                buttonExit.gameObject.SetActive(true);
+                break;
+            default: Debug.LogWarningFormat("Unrecognised ModalTransitionState \"{0}\"", GameManager.i.inputScript.ModalTransitionState); break;
+        }
+    }
+
+    /// <summary>
+    /// Sets Header text correct for state
+    /// </summary>
+    /// <param name="state"></param>
+    private void SetHeader(ModalTransitionSubState state)
+    {
+        switch (state)
+        {
+            case ModalTransitionSubState.EndLevel: transitionHeader.text = "Mission Review"; break;
+            case ModalTransitionSubState.HQ: transitionHeader.text = "HQ Changes"; break;
+            case ModalTransitionSubState.PlayerStatus: transitionHeader.text = "Your Status"; break;
+            case ModalTransitionSubState.BriefingOne: transitionHeader.text = "Briefing Part A"; break;
+            case ModalTransitionSubState.BriefingTwo: transitionHeader.text = "Briefing Part B"; break;
+            default: Debug.LogWarningFormat("Unrecognised ModalTransitionState \"{0}\"", GameManager.i.inputScript.ModalTransitionState); break;
+        }
+    }
 
 
 
@@ -282,16 +335,14 @@ public class TransitionUI : MonoBehaviour
             ModalTransitionSubState startState = ModalTransitionSubState.EndLevel;
             InitialiseTransitionUI(data);
             transitionCanvas.gameObject.SetActive(true);
-            
-            
 
-            //buttons
-            buttonBack.gameObject.SetActive(false);
-            buttonContinue.gameObject.SetActive(true);
-            buttonExit.gameObject.SetActive(false);
+
+
+            //Main UI elements
+            SetButtons(startState);
             buttonHelpMain.gameObject.SetActive(true);
-            //canvas
             SetCanvas(startState);
+            SetHeader(startState);
             GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Transition, transitionState = startState });
             Debug.LogFormat("[UI] TransitionUI.cs -> TransitionUI{0}", "\n");
         }
@@ -304,7 +355,8 @@ public class TransitionUI : MonoBehaviour
     /// </summary>
     private void ExecuteClose()
     {
-
+        transitionCanvas.gameObject.SetActive(false);
+        //EventManager.i.PostNotification(EventType.MetaGameOpen, this, details);
     }
 
     /// <summary>
@@ -315,17 +367,16 @@ public class TransitionUI : MonoBehaviour
         ModalTransitionSubState newState = ModalTransitionSubState.None;
         switch (GameManager.i.inputScript.ModalTransitionState)
         {
-            case ModalTransitionSubState.EndLevel:
-                newState = ModalTransitionSubState.HQ;
-                //buttons
-                buttonBack.gameObject.SetActive(true);
-                buttonContinue.gameObject.SetActive(true);
-                buttonExit.gameObject.SetActive(false);
-                //Canvas's
-                SetCanvas(newState);
-                break;
+            case ModalTransitionSubState.EndLevel: newState = ModalTransitionSubState.HQ; break;
+            case ModalTransitionSubState.HQ: newState = ModalTransitionSubState.PlayerStatus; break;
+            case ModalTransitionSubState.PlayerStatus: newState = ModalTransitionSubState.BriefingOne; break;
+            case ModalTransitionSubState.BriefingOne: newState = ModalTransitionSubState.BriefingTwo; break;
             default: Debug.LogWarningFormat("Unrecognised ModalTransitionState \"{0}\"", GameManager.i.inputScript.ModalTransitionState); break;
         }
+        //Adjust UI
+        SetButtons(newState);
+        SetHeader(newState);
+        SetCanvas(newState);
         //set new state
         GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Transition, transitionState = newState });
     }
@@ -335,7 +386,21 @@ public class TransitionUI : MonoBehaviour
     /// </summary>
     private void ExecuteBack()
     {
-
+        ModalTransitionSubState newState = ModalTransitionSubState.None;
+        switch (GameManager.i.inputScript.ModalTransitionState)
+        {
+            case ModalTransitionSubState.HQ: newState = ModalTransitionSubState.EndLevel; break;
+            case ModalTransitionSubState.PlayerStatus: newState = ModalTransitionSubState.HQ; break;
+            case ModalTransitionSubState.BriefingOne: newState = ModalTransitionSubState.PlayerStatus; break;
+            case ModalTransitionSubState.BriefingTwo: newState = ModalTransitionSubState.BriefingOne; break;
+            default: Debug.LogWarningFormat("Unrecognised ModalTransitionState \"{0}\"", GameManager.i.inputScript.ModalTransitionState); break;
+        }
+        //Adjust UI
+        SetButtons(newState);
+        SetHeader(newState);
+        SetCanvas(newState);
+        //set new state
+        GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Transition, transitionState = newState });
     }
 
 }
