@@ -21,12 +21,15 @@ public class TransitionUI : MonoBehaviour
     public Button buttonHelpMain;
 
     [Header("End Level")]
+    public Canvas endLevelCanvas;
     public Image endLevelBackground;
 
     [Header("HQ Status")]
+    public Canvas hqCanvas;
     public Image hqBackground;
 
     [Header("Player Status")]
+    public Canvas playerStatusCanvas;
     public Image playerStatusBackground;
 
     //static reference
