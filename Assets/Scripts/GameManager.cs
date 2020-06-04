@@ -98,6 +98,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public TopBarUI topBarScript;                         //Top Bar UI
     [HideInInspector] public CityInfoUI cityInfoScript;                 //City Info UI
     [HideInInspector] public MainInfoUI mainInfoScript;                 //Main Info UI
+    [HideInInspector] public TransitionUI transitionScript;             //Transition UI
     [HideInInspector] public MetaGameUI metaUIScript;                   //Meta Game UI
     [HideInInspector] public AIDisplayUI aiDisplayScript;               //AI Display UI
     [HideInInspector] public AISideTabUI aiSideTabScript;               //AI SideTab UI
@@ -246,6 +247,7 @@ public class GameManager : MonoBehaviour
         topBarScript = TopBarUI.Instance();
         cityInfoScript = CityInfoUI.Instance();
         mainInfoScript = MainInfoUI.Instance();
+        transitionScript = TransitionUI.Instance();
         metaUIScript = MetaGameUI.Instance();
         aiDisplayScript = AIDisplayUI.Instance();
         aiSideTabScript = AISideTabUI.Instance();
@@ -325,6 +327,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(topBarScript != null, "Invalid topBarScript (Null)");
         Debug.Assert(cityInfoScript != null, "Invalid cityInfoScript (Null)");
         Debug.Assert(mainInfoScript != null, "Invalid mainInfoScript (Null)");
+        Debug.Assert(transitionScript != null, "Invalid transitionScript (Null)");
         Debug.Assert(metaUIScript != null, "Invalid metaGameScript (Null)");
         Debug.Assert(aiDisplayScript != null, "Invalid aiDisplayScript (Null)");
         Debug.Assert(aiSideTabScript != null, "Invalid aiSideTabScript (Null)");
@@ -1028,7 +1031,8 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns inputted string formatted in the specified colour, ready for display. Returns original, unformatted text if a problem
+    /// returns inputted string formatted in the specified colour, ready for display. Returns original, unformatted text if a problem. 
+    /// NOTE: Named 'Formatt' so as not to clash with C# 'Format'
     /// </summary>
     /// <param name="text"></param>
     /// <param name="colorType"></param>

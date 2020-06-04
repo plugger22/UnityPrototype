@@ -143,6 +143,8 @@ public enum EventType
     //topBarUI
     TopBarShow,
     TopBarHide,
+
+    #region diceArchive
     /*//Dice UI
     OpenDiceUI,
     CloseDiceUI,
@@ -155,6 +157,7 @@ public enum EventType
     DiceBypass,
     DiceReturnMove,
     DiceReturnGear,*/
+    #endregion
 
     //Main Info
     MainInfoOpen,
@@ -338,7 +341,7 @@ public class EventManager : MonoBehaviour
                 //If null, then remove item
                 if (Item.Value[i] == null)
                 {
-                    Debug.LogWarningFormat("EventManager.cs -> RemoveRedundancies: eventType {0} removed from dict as Null", Item.Key);
+                    Debug.LogWarningFormat("EventManager.cs -> RemoveRedundancies: eventType {0} removed from dict as Null -> Info only", Item.Key);
                     Item.Value.RemoveAt(i);
                 }
             }
