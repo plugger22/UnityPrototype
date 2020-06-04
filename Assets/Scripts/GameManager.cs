@@ -702,6 +702,10 @@ public class GameManager : MonoBehaviour
         startMethod.handler = mainInfoScript.Initialise;
         startMethod.className = "MainInfoUI";
         listOfUIMethods.Add(startMethod);
+        //Transition UI
+        startMethod.handler = transitionScript.Initialise;
+        startMethod.className = "transitionUI";
+        listOfUIMethods.Add(startMethod);
         //Meta Game UI
         startMethod.handler = metaUIScript.Initialise;
         startMethod.className = "MetaGameUI";
