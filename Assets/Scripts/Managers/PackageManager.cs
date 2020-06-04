@@ -1147,6 +1147,22 @@ namespace packageAPI
         public string text;                         //text to display
     }
 
+    /// <summary>
+    /// Transition UI initialisation data package
+    /// </summary>
+    [System.Serializable]
+    public class TransitionInfoData
+    {
+
+        //End Level
+
+        //HQ changes
+
+        //Player Status
+
+        //Briefing
+
+    }
 
 
     //new classes above here

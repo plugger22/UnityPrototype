@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using gameAPI;
+using packageAPI;
 
 /// <summary>
 /// handles TransitionUI which is a single master UI with three togglable panels ->  end of level / HQ changes / Player status
@@ -19,6 +20,7 @@ public class TransitionUI : MonoBehaviour
     [Header("Main Buttons")]
     public Button buttonBack;
     public Button buttonContinue;
+    public Button buttonExit;
     public Button buttonHelpMain;
 
     [Header("End Level")]
@@ -40,6 +42,9 @@ public class TransitionUI : MonoBehaviour
     [Header("BriefingTwo")]
     public Canvas briefingTwoCanvas;
     public Image briefingTwoBackground;
+
+
+    private ModalTransitionSubState state;
 
     //colours
     string colourDefault;
@@ -106,7 +111,8 @@ public class TransitionUI : MonoBehaviour
     /// </summary>
     private void SubInitialiseSessionStart()
     {
-        
+        //Set starting Initialisation states
+        InitialiseTooltips();
     }
     #endregion
 
@@ -127,7 +133,11 @@ public class TransitionUI : MonoBehaviour
     private void SubInitialiseEvents()
     {
         //listeners
-        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "MetaGamesUI");
+        EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "TransitionUI");
+        EventManager.i.AddListener(EventType.TransitionOpen, OnEvent, "TransitionUI");
+        EventManager.i.AddListener(EventType.TransitionClose, OnEvent, "TransitionUI");
+        EventManager.i.AddListener(EventType.TransitionContinue, OnEvent, "TransitionUI");
+        EventManager.i.AddListener(EventType.TransitionBack, OnEvent, "TransitionUI");
     }
     #endregion
 
@@ -146,6 +156,19 @@ public class TransitionUI : MonoBehaviour
         {
             case EventType.ChangeColour:
                 SetColours();
+                break;
+            case EventType.TransitionOpen:
+                TransitionInfoData data = Param as TransitionInfoData;
+                SetTransitionUI(data);
+                break;
+            case EventType.TransitionClose:
+                ExecuteClose();
+                break;
+            case EventType.TransitionContinue:
+                ExecuteContinue();
+                break;
+            case EventType.TransitionBack:
+                ExecuteBack();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -172,4 +195,79 @@ public class TransitionUI : MonoBehaviour
         colourCancel = GameManager.i.colourScript.GetColour(ColourType.moccasinText);
         colourEnd = GameManager.i.colourScript.GetEndTag();
     }
+
+    /// <summary>
+    /// Initialise Transition UI prior to use. Called from within SetTransitionUI
+    /// NOTE: data checked for Null by parent method
+    /// </summary>
+    /// <param name="data"></param>
+    public void InitialiseTransitionUI(TransitionInfoData data)
+    {
+
+    }
+
+    /// <summary>
+    /// Initialise fixed tooltips
+    /// </summary>
+    private void InitialiseTooltips()
+    {
+        List<HelpData> listOfHelp;
+        /*//main help button
+        listOfHelp = GameManager.i.helpScript.GetHelpData("metaGameUI_0", "metaGameUI_1", "metaGameUI_2", "metaGameUI_3");
+        if (listOfHelp != null)
+        { helpMain.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
+        else { Debug.LogWarning("Invalid listOfHelp for helpMain (Null)"); }*/
+        
+    }
+
+
+    /// <summary>
+    /// Display TransitionUI
+    /// </summary>
+    public void SetTransitionUI(TransitionInfoData data)
+    {
+        if (data != null)
+        {
+            InitialiseTransitionUI(data);
+            transitionCanvas.gameObject.SetActive(true);
+            
+            
+
+            //buttons
+            buttonBack.gameObject.SetActive(false);
+            buttonContinue.gameObject.SetActive(true);
+            buttonExit.gameObject.SetActive(false);
+            buttonHelpMain.gameObject.SetActive(true);
+            //start in EndLevel
+            GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Transition, transitionState = ModalTransitionSubState.EndLevel });
+            Debug.LogFormat("[UI] TransitionUI.cs -> TransitionUI{0}", "\n");
+        }
+        else { Debug.LogWarning("Invalid TranistionInfoData (Null)"); }
+    }
+
+
+    /// <summary>
+    /// Close TransitionUI
+    /// </summary>
+    private void ExecuteClose()
+    {
+
+    }
+
+    /// <summary>
+    /// Continue button pressed
+    /// </summary>
+    private void ExecuteContinue()
+    {
+
+    }
+
+    /// <summary>
+    /// Back button pressed
+    /// </summary>
+    private void ExecuteBack()
+    {
+
+    }
+
 }

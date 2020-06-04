@@ -195,6 +195,11 @@ public enum EventType
     MetaGameRightArrow,
     MetaGamePageUp,
     MetaGamePageDown,
+    //TransitionUI
+    TransitionOpen,
+    TransitionClose,
+    TransitionContinue,
+    TransitionBack,
     //Topic UI
     TopicDisplayOpen,
     TopicDisplayClose,

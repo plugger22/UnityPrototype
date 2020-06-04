@@ -11,6 +11,7 @@ public class ModalStateData
     public ModalInfoSubState infoState;
     public ModalGenericPickerSubState pickerState;
     public ModalInventorySubState inventoryState;
+    public ModalTransitionSubState transitionState;
     public ModalMetaSubState metaState;
 
     public ModalStateData()
@@ -18,6 +19,7 @@ public class ModalStateData
         infoState = ModalInfoSubState.None;
         pickerState = ModalGenericPickerSubState.None;
         inventoryState = ModalInventorySubState.None;
+        transitionState = ModalTransitionSubState.None;
         metaState = ModalMetaSubState.None;
     }
 }

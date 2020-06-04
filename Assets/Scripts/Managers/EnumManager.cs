@@ -22,14 +22,14 @@
     //
     //  - - - UI - - -
     //
-    public enum ModalState { Normal, ModalUI}                                                                            //main modal state
+    public enum ModalState { Normal, ModalUI}                                                                                           //main modal state
     public enum ModalSubState { None, Outcome, Confirm, GenericPicker, ActionMenu, MainMenu, Inventory, TeamPicker, DiceRoller, Topic, InfoDisplay, ShowMe, Review, Transition, MetaGame } //ModalUI sub game states
-    public enum ModalInfoSubState { None, CityInfo, AIInfo, MainInfo }                                                   //if ModalUI.InfoDisplay -> what type of info
-    public enum ModalGenericPickerSubState { None, Normal, CompromisedGear }                                                     //if ModalUI.GenericPicker -> what type of picker
+    public enum ModalInfoSubState { None, CityInfo, AIInfo, MainInfo }                                                                  //if ModalUI.InfoDisplay -> what type of info
+    public enum ModalGenericPickerSubState { None, Normal, CompromisedGear }                                                            //if ModalUI.GenericPicker -> what type of picker
     public enum ModalMetaSubState { None, PlayerOptions, OptionsConfirm, EndScreen }                                                    //if ModalUI.MetaGame -> what type of meta UI
-    public enum ModalReviewSubState { None, Open, Review, Close }                                                           //ModalReviewUI different states
-    public enum ModalInventorySubState { None, Gear, ReservePool, HQ, CaptureTool}
-    public enum ModalTransitionSubState { EndLevel, HQ, PlayerStatus, BriefingOne, BriefingTwo}
+    public enum ModalReviewSubState { None, Open, Review, Close }                                                                       //if ModalUI.Review -> what type of Review
+    public enum ModalInventorySubState { None, Gear, ReservePool, HQ, CaptureTool}                                                      //if ModalUI.Inventory -> what type of Inventory
+    public enum ModalTransitionSubState { None, EndLevel, HQ, PlayerStatus, BriefingOne, BriefingTwo}                                   //if ModalUI.Transition -> what type of Transition
     public enum AlignHorizontal { None, Left, Centre, Right }
     public enum Background { None, Start, NewGame, NewGameOptions, SaveGame, LoadGame, Options, EndLevel, MetaGame, NewCampaign, EndCampaign }             //full screen backgrounds
     public enum ActionMenuType { None, Node, NodeGear, Gear, Actor, Player, Move, Reserve }
@@ -37,7 +37,6 @@
     public enum GenericTooltipType { Any, ActorInfo }                                           //ability to specify tooltip types that must be closed and to ignore the rest. Create group types as required.
     public enum MajorUI { None, MainInfoApp, MetaGameUI }                                       //used for Item prefab attached scripts to determine which UI they are working within
     public enum PopUpPosition { ActorSlot0, ActorSlot1, ActorSlot2, ActorSlot3, Player, TopBarLeft, TopBarRight, TopCentre, Count}  //used for fixed UI PopUps
-    //public enum MainInfoTab { Main, HQ, People, Random, Summary, Help};                       //tabs for RHS of MainInfoUI. Order important (ties in with array indexes)
     public enum AlertType {
         None,
         MainMenuUnavailable,
@@ -46,7 +45,17 @@
         DebugAI, DebugPlayer,
         HackingRebootInProgress, HackingInsufficientRenown, HackingInitialising, HackingIndisposed, HackingOffline
     }
-   
+
+    //
+    // - - - ItemData / MetaData - - -
+    //
+    public enum ItemPriority { Low, Medium, High, Count }                                           //DataManager.cs -> arrayOfItemsByDataPriority is keyed off ItemPriority & ItemTab 'Count'
+    public enum ItemTab { ALERTS, Request, Meeting, Effects, Traits, Random, Count }                //PackageManager.cs -> MainInfoData array keyed off this
+    public enum MetaTabSide { Boss, SubBoss1, SubBoss2, SubBoss3, Count }                            //MetaGameUI side tabs (HQ actors). NOTE: order needs to correspond to UI (arrays keyed off this)
+    public enum MetaTabTop { Status, Selected, Count }                                              //MetaGameUI top tabs. NOTE: order needs to correspond to UI (arrays keyed off this)
+    public enum MetaPriority { Low, Medium, High, Extreme, Count }
+
+
     //
     // - - - Connections - - - 
     //
@@ -221,15 +230,6 @@
         None,
         PlayerBreakdown, StressLeave, LieLow, BadCondition
     }
-
-    //
-    // - - - ItemData / MetaData - - -
-    //
-    public enum ItemPriority { Low, Medium, High, Count }                                           //DataManager.cs -> arrayOfItemsByDataPriority is keyed off ItemPriority & ItemTab 'Count'
-    public enum ItemTab { ALERTS, Request, Meeting, Effects, Traits, Random, Count }                //PackageManager.cs -> MainInfoData array keyed off this
-    public enum MetaTabSide { Boss, SubBoss1, SubBoss2, SubBoss3, Count}                            //MetaGameUI side tabs (HQ actors). NOTE: order needs to correspond to UI (arrays keyed off this)
-    public enum MetaTabTop { Status, Selected, Count }                                              //MetaGameUI top tabs. NOTE: order needs to correspond to UI (arrays keyed off this)
-    public enum MetaPriority { Low, Medium, High, Extreme, Count}
 
     //
     // - - - Messages - - -
