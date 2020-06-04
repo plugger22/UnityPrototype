@@ -34,8 +34,9 @@ public class InputManager : MonoBehaviour
     private ModalSubState _modalSubState;                           //sub state for when game state is 'ModalUI'
     private ModalInfoSubState _modalInfoState;                      //sub sub state of ModalSubState.InfoDisplay -> what type of info?
     private ModalGenericPickerSubState _modalGenericPickerState;    //sub state of ModalSubState.GenericPicker -> what type of picker?
+    private ModalTransitionSubState _modalTransitionState;          //subState of ModalSubState.Transition -> what type of transition?
     private ModalMetaSubState _modalMetaState;                      //sub state of ModalSubState.MetaGame -> what type of MetaUI?
-    private ModalInventorySubState _modalInventoryState;                //sub state of ModalSubState.Inventory
+    private ModalInventorySubState _modalInventoryState;            //sub state of ModalSubState.Inventory
     private ModalReviewSubState _modalReviewState;                  //sub state for ModalReviewUI
 
     
@@ -46,7 +47,7 @@ public class InputManager : MonoBehaviour
         ModalState = ModalState.Normal;
     }
 
-    #region properties
+    #region Properties
     public GameState GameState
     {
         get { return _gameState; }
@@ -95,6 +96,16 @@ public class InputManager : MonoBehaviour
         {
             _modalGenericPickerState = value;
             Debug.LogFormat("[Inp] InputManager.cs: ModalGenericPickerState now {0}{1}", _modalGenericPickerState, "\n");
+        }
+    }
+
+    public ModalTransitionSubState ModalTransitionState
+    {
+        get { return _modalTransitionState; }
+        private set
+        {
+            _modalTransitionState = value;
+            Debug.LogFormat("[Inp] InputManager.cs: ModalTransitionState now {0}{1}", _modalTransitionState, "\n");
         }
     }
 

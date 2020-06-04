@@ -53,6 +53,7 @@ public class MetaManager : MonoBehaviour
     //MetaOptions to display
     private List<MetaOption> listOfMetaOptions = new List<MetaOption>();        //metaOptions to be converted to MetaData
     private MetaInfoData metaInfoData = new MetaInfoData();                     //package to send to MetaGameUI
+    private TransitionInfoData transitionInfoData = new TransitionInfoData();   //package to send to TransitionUI
 
     private bool isTestLog;                                                     //enables toggling of [Tst] log messages
 
@@ -135,8 +136,8 @@ public class MetaManager : MonoBehaviour
         //Player metaGame Options choice
         InitialiseMetaOptions();
         InitialiseMetaData();
-        EventManager.i.PostNotification(EventType.MetaGameOpen, this, metaInfoData, "ProcessMetaGame");
-        /*GameManager.i.metaUIScript.SetMetaUI(metaInfoData);*/
+        /*EventManager.i.PostNotification(EventType.MetaGameOpen, this, metaInfoData, "ProcessMetaGame");*/
+        EventManager.i.PostNotification(EventType.TransitionOpen, this, transitionInfoData, "ProcessMetaGame");
 
 
     }

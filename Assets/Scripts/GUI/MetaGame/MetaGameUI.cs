@@ -626,6 +626,7 @@ public class MetaGameUI : MonoBehaviour
     {
         //listeners
         EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "MetaGamesUI");
+        EventManager.i.AddListener(EventType.MetaGameOpen, OnEvent, "MetaGamesUI");
         EventManager.i.AddListener(EventType.MetaGameClose, OnEvent, "MetaGamesUI");
         EventManager.i.AddListener(EventType.MetaGameSideTabOpen, OnEvent, "MetaGamesUI");
         EventManager.i.AddListener(EventType.MetaGameTopTabOpen, OnEvent, "MetaGamesUI");
