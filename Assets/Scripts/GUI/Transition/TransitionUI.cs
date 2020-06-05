@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using gameAPI;
 using packageAPI;
+using modalAPI;
 
 /// <summary>
 /// handles TransitionUI which is a single master UI with three togglable panels ->  end of level / HQ changes / Player status
@@ -412,8 +413,14 @@ public class TransitionUI : MonoBehaviour
     private void ExecuteClose()
     {
         transitionCanvas.gameObject.SetActive(false);
-
-        EventManager.i.PostNotification(EventType.MetaGameOpen, this, "TransitionUI.cs -> ExecuteClose");
+        ModalOutcomeDetails details = new ModalOutcomeDetails();
+        details.side = GameManager.i.sideScript.PlayerSide;
+        details.textTop = GameManager.Formatt("HQ Assistance", ColourType.goodText);
+        details.textBottom = string.Format("HQ are willing to offer you {0} prior to your deployment", GameManager.Formatt("assistance", ColourType.moccasinText));
+        details.sprite = GameManager.i.guiScript.infoSprite;
+        details.triggerEvent = EventType.MetaGameOpen;
+        //open outcome windown (will open MetaGameUI via triggerEvent once closed
+        EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "TransitionUI.cs -> ExecuteClose");
     }
 
     /// <summary>
