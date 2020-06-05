@@ -186,6 +186,9 @@ public class MetaGameUI : MonoBehaviour
     private int x_offset = 200;
     private int y_offset = 40;
 
+    //data needed to run UI
+    private MetaInfoData metaInfoData;
+
     //fast access
     private int costLow = -1;                                        //renown cost for low priority metaOptions
     private int costMedium = -1;
@@ -672,8 +675,7 @@ public class MetaGameUI : MonoBehaviour
                 OpenTopTab((int)Param);
                 break;
             case EventType.MetaGameOpen:
-                MetaInfoData data = Param as MetaInfoData;
-                SetMetaUI(data);
+                SetMetaUI();
                 break;
             case EventType.MetaGameShowDetails:
                 ShowItemDetails((int)Param);
@@ -740,106 +742,121 @@ public class MetaGameUI : MonoBehaviour
     }
 
     /// <summary>
+    /// Input data required to populate UI
+    /// </summary>
+    /// <param name="data"></param>
+    public void SetMetaInfoData(MetaInfoData data)
+    {
+        if (data != null)
+        { metaInfoData = data; }
+        else { Debug.LogError("Invalid metaInfoData (Null)"); }
+    }
+
+    /// <summary>
     /// run prior to every metaGameUI use. Run from SetMetaUI
     /// </summary>
-    private void InitialiseMetaUI(MetaInfoData data)
+    private void InitialiseMetaUI()
     {
-        int count;
-        //player renown
-        int playerRenown = GameManager.i.playerScript.Renown;
-        renownCurrent = playerRenown;
-        UpdateRenown();
-        Debug.LogFormat("[Met] MetaGameUI.cs -> InitialiseMetaUI: Player has {0} Renown{1}", playerRenown, "\n");
-        Color portraitColor, backgroundColor;
-        //default metaData for selected tab (when nothing has been selected)
-        defaultSelected = data.selectedDefault;
-        Debug.Assert(defaultSelected != null, "Invalid defaultSelected (Null)");
-        listOfRecommended = data.listOfRecommended;
-        Debug.Assert(listOfRecommended != null, "Invalid listOfRecommended (Null)");
-        //initialise HQ side tabs'
-        for (int index = 0; index < numOfSideTabs; index++)
+        if (metaInfoData != null)
         {
-            backgroundColor = arrayOfSideTabItems[index].background.color;
-            if (arrayOfSideTabItems[index] != null)
+            int count;
+            //player renown
+            int playerRenown = GameManager.i.playerScript.Renown;
+            renownCurrent = playerRenown;
+            UpdateRenown();
+            Debug.LogFormat("[Met] MetaGameUI.cs -> InitialiseMetaUI: Player has {0} Renown{1}", playerRenown, "\n");
+            Color portraitColor, backgroundColor;
+            //default metaData for selected tab (when nothing has been selected)
+            defaultSelected = metaInfoData.selectedDefault;
+            Debug.Assert(defaultSelected != null, "Invalid defaultSelected (Null)");
+            listOfRecommended = metaInfoData.listOfRecommended;
+            Debug.Assert(listOfRecommended != null, "Invalid listOfRecommended (Null)");
+            //initialise HQ side tabs'
+            for (int index = 0; index < numOfSideTabs; index++)
             {
-                //sprite
-                Actor actor = GameManager.i.dataScript.GetHqHierarchyActor((ActorHQ)(index + offset));
-                if (actor != null)
-                { arrayOfSideTabItems[index].portrait.sprite = actor.sprite; }
-                else
+                backgroundColor = arrayOfSideTabItems[index].background.color;
+                if (arrayOfSideTabItems[index] != null)
                 {
-                    //default error sprite if a problem
-                    Debug.LogWarningFormat("Invalid actor (Null) for ActorHQ \"{0}\"", (ActorHQ)(index + offset));
-                    arrayOfSideTabItems[index].portrait.sprite = GameManager.i.guiScript.errorSprite;
+                    //sprite
+                    Actor actor = GameManager.i.dataScript.GetHqHierarchyActor((ActorHQ)(index + offset));
+                    if (actor != null)
+                    { arrayOfSideTabItems[index].portrait.sprite = actor.sprite; }
+                    else
+                    {
+                        //default error sprite if a problem
+                        Debug.LogWarningFormat("Invalid actor (Null) for ActorHQ \"{0}\"", (ActorHQ)(index + offset));
+                        arrayOfSideTabItems[index].portrait.sprite = GameManager.i.guiScript.errorSprite;
+                    }
+                    portraitColor = arrayOfSideTabItems[index].portrait.color;
+                    //title
+                    arrayOfSideTabItems[index].title.text = GameManager.i.hqScript.GetHqTitle(actor.statusHQ);
+                    //first tab (Boss) should be active on opening, rest passive
+                    if (index == 0)
+                    { portraitColor.a = 1.0f; backgroundColor.a = 1.0f; }
+                    else
+                    { portraitColor.a = sideTabAlpha; backgroundColor.a = sideTabAlpha; }
+                    //set colors
+                    arrayOfSideTabItems[index].portrait.color = portraitColor;
+                    arrayOfSideTabItems[index].background.color = backgroundColor;
+                    //set count of active items in each tab
+                    count = 0;
+                    for (int j = 0; j < metaInfoData.arrayOfMetaData[index].Count; j++)
+                    {
+                        if (metaInfoData.arrayOfMetaData[index][j].isActive == true)
+                        { count++; }
+                    }
+                    arrayOfSideTabOptions[index] = count;
                 }
-                portraitColor = arrayOfSideTabItems[index].portrait.color;
-                //title
-                arrayOfSideTabItems[index].title.text = GameManager.i.hqScript.GetHqTitle(actor.statusHQ);
-                //first tab (Boss) should be active on opening, rest passive
-                if (index == 0)
-                { portraitColor.a = 1.0f; backgroundColor.a = 1.0f; }
-                else
-                { portraitColor.a = sideTabAlpha; backgroundColor.a = sideTabAlpha; }
-                //set colors
-                arrayOfSideTabItems[index].portrait.color = portraitColor;
-                arrayOfSideTabItems[index].background.color = backgroundColor;
-                //set count of active items in each tab
-                count = 0;
-                for (int j = 0; j < data.arrayOfMetaData[index].Count; j++)
-                {
-                    if (data.arrayOfMetaData[index][j].isActive == true)
-                    { count++; }
-                }
-                arrayOfSideTabOptions[index] = count;
+                else { Debug.LogErrorFormat("Invalid tabItems[{0}] (Null)", index); }
             }
-            else { Debug.LogErrorFormat("Invalid tabItems[{0}] (Null)", index); }
+            //initialise top status tab count (selected tab is dynamic and resolved at time of DisplayTopItemPage
+            arrayOfTopTabOptions[(int)MetaTabTop.Status] = metaInfoData.listOfStatusData.Count;
+            //initialise top tabs (start inactive) -> status tab 
+            backgroundColor = tabStatus.color;
+            backgroundColor.a = topTabAlpha;
+            tabStatus.color = backgroundColor;
+            backgroundColor = textStatus.color;
+            backgroundColor.a = topTabAlpha;
+            textStatus.color = backgroundColor;
+            //Selected tab
+            backgroundColor = tabSelected.color;
+            backgroundColor.a = topTabAlpha;
+            tabSelected.color = backgroundColor;
+            backgroundColor = textSelected.color;
+            backgroundColor.a = topTabAlpha;
+            textSelected.color = backgroundColor;
+            //tab pressed default settings (starts with side tab index 0)
+            isLastTabTop = false;
+            currentTopTabIndex = 0;
+            //Turn off checkmarks
+            ResetCheckMarks();
+            //clear out dict
+            dictOfSelected.Clear();
+            //
+            // - - - dynamic tooltip help
+            //
+            //Boss tab
+            List<HelpData> listOfHelp = GameManager.i.actorScript.GetHqTooltip(ActorHQ.Boss);
+            if (listOfHelp != null)
+            { helpTabBoss.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
+            else { Debug.LogWarning("Invalid listOfHelp for helpTabBoss (Null)"); }
+            //subBoss1 tab
+            listOfHelp = GameManager.i.actorScript.GetHqTooltip(ActorHQ.SubBoss1);
+            if (listOfHelp != null)
+            { helpTabSubBoss1.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
+            else { Debug.LogWarning("Invalid listOfHelp for helpTabSubBoss1 (Null)"); }
+            //subBoss2 tab
+            listOfHelp = GameManager.i.actorScript.GetHqTooltip(ActorHQ.SubBoss2);
+            if (listOfHelp != null)
+            { helpTabSubBoss2.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
+            else { Debug.LogWarning("Invalid listOfHelp for helpTabSubBoss2 (Null)"); }
+            //subBoss1 tab
+            listOfHelp = GameManager.i.actorScript.GetHqTooltip(ActorHQ.SubBoss3);
+            if (listOfHelp != null)
+            { helpTabSubBoss3.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
+            else { Debug.LogWarning("Invalid listOfHelp for helpTabSubBoss3 (Null)"); }
         }
-        //initialise top status tab count (selected tab is dynamic and resolved at time of DisplayTopItemPage
-        arrayOfTopTabOptions[(int)MetaTabTop.Status] = data.listOfStatusData.Count;
-        //initialise top tabs (start inactive) -> status tab 
-        backgroundColor = tabStatus.color;
-        backgroundColor.a = topTabAlpha;
-        tabStatus.color = backgroundColor;
-        backgroundColor = textStatus.color;
-        backgroundColor.a = topTabAlpha;
-        textStatus.color = backgroundColor;
-        //Selected tab
-        backgroundColor = tabSelected.color;
-        backgroundColor.a = topTabAlpha;
-        tabSelected.color = backgroundColor;
-        backgroundColor = textSelected.color;
-        backgroundColor.a = topTabAlpha;
-        textSelected.color = backgroundColor;
-        //tab pressed default settings (starts with side tab index 0)
-        isLastTabTop = false;
-        currentTopTabIndex = 0;
-        //Turn off checkmarks
-        ResetCheckMarks();
-        //clear out dict
-        dictOfSelected.Clear();
-        //
-        // - - - dynamic tooltip help
-        //
-        //Boss tab
-        List<HelpData> listOfHelp = GameManager.i.actorScript.GetHqTooltip(ActorHQ.Boss);
-        if (listOfHelp != null)
-        { helpTabBoss.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
-        else { Debug.LogWarning("Invalid listOfHelp for helpTabBoss (Null)"); }
-        //subBoss1 tab
-        listOfHelp = GameManager.i.actorScript.GetHqTooltip(ActorHQ.SubBoss1);
-        if (listOfHelp != null)
-        { helpTabSubBoss1.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
-        else { Debug.LogWarning("Invalid listOfHelp for helpTabSubBoss1 (Null)"); }
-        //subBoss2 tab
-        listOfHelp = GameManager.i.actorScript.GetHqTooltip(ActorHQ.SubBoss2);
-        if (listOfHelp != null)
-        { helpTabSubBoss2.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
-        else { Debug.LogWarning("Invalid listOfHelp for helpTabSubBoss2 (Null)"); }
-        //subBoss1 tab
-        listOfHelp = GameManager.i.actorScript.GetHqTooltip(ActorHQ.SubBoss3);
-        if (listOfHelp != null)
-        { helpTabSubBoss3.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
-        else { Debug.LogWarning("Invalid listOfHelp for helpTabSubBoss3 (Null)"); }
+        else { Debug.LogError("Invalid metaInfoData (Null)"); }
     }
 
 
@@ -917,14 +934,14 @@ public class MetaGameUI : MonoBehaviour
     /// <summary>
     /// Display MetaGame Player options UI
     /// </summary>
-    public void SetMetaUI(MetaInfoData data)
+    public void SetMetaUI()
     {
-        if (data != null)
+        if (metaInfoData != null)
         {
-            InitialiseMetaUI(data);
+            InitialiseMetaUI();
             canvasMeta.gameObject.SetActive(true);
             // Populate data
-            UpdateData(data);
+            UpdateData(metaInfoData);
             // Display Boss page by default
             OpenSideTab(0);
             //select buttons, RHS, off by default

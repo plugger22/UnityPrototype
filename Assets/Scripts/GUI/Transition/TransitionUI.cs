@@ -48,6 +48,8 @@ public class TransitionUI : MonoBehaviour
     private ButtonInteraction buttonInteractionContinue;
     private ButtonInteraction buttonInteractionExit;
 
+    //data package required to populate UI
+    private TransitionInfoData transitionInfoData;
 
     private ModalTransitionSubState state;
 
@@ -197,8 +199,7 @@ public class TransitionUI : MonoBehaviour
                 SetColours();
                 break;
             case EventType.TransitionOpen:
-                TransitionInfoData data = Param as TransitionInfoData;
-                SetTransitionUI(data);
+                SetTransitionUI();
                 break;
             case EventType.TransitionClose:
                 ExecuteClose();
@@ -236,13 +237,28 @@ public class TransitionUI : MonoBehaviour
     }
 
     /// <summary>
+    /// copy data package required to populate UI
+    /// </summary>
+    /// <param name="data"></param>
+    public void SetTransitionInfoData(TransitionInfoData data)
+    {
+        if (data != null)
+        { transitionInfoData = data; }
+        else { Debug.LogError("Invalid TransitionInfoData (Null)"); }
+    }
+
+    /// <summary>
     /// Initialise Transition UI prior to use. Called from within SetTransitionUI
     /// NOTE: data checked for Null by parent method
     /// </summary>
     /// <param name="data"></param>
-    public void InitialiseTransitionUI(TransitionInfoData data)
+    public void InitialiseTransitionUI()
     {
+        if (transitionInfoData != null)
+        {
 
+        }
+        else { Debug.LogError("Invalid transitionInfoData (Null)"); }
     }
 
     /// <summary>
@@ -366,23 +382,24 @@ public class TransitionUI : MonoBehaviour
     /// <summary>
     /// Display TransitionUI
     /// </summary>
-    public void SetTransitionUI(TransitionInfoData data)
+    public void SetTransitionUI()
     {
-        if (data != null)
+        if (transitionInfoData != null)
         {
             //start in End Level
             ModalTransitionSubState startState = ModalTransitionSubState.EndLevel;
-            InitialiseTransitionUI(data);
+            GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Transition, transitionState = startState });
+            InitialiseTransitionUI();
             transitionCanvas.gameObject.SetActive(true);
 
 
 
             //Main UI elements
-            SetButtons(startState);
             buttonHelpMain.gameObject.SetActive(true);
+            SetButtons(startState);
             SetCanvas(startState);
             SetHeader(startState);
-            GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Transition, transitionState = startState });
+
             Debug.LogFormat("[UI] TransitionUI.cs -> TransitionUI{0}", "\n");
         }
         else { Debug.LogWarning("Invalid TranistionInfoData (Null)"); }
@@ -395,7 +412,8 @@ public class TransitionUI : MonoBehaviour
     private void ExecuteClose()
     {
         transitionCanvas.gameObject.SetActive(false);
-        //EventManager.i.PostNotification(EventType.MetaGameOpen, this, details);
+
+        EventManager.i.PostNotification(EventType.MetaGameOpen, this, "TransitionUI.cs -> ExecuteClose");
     }
 
     /// <summary>
@@ -412,12 +430,12 @@ public class TransitionUI : MonoBehaviour
             case ModalTransitionSubState.BriefingOne: newState = ModalTransitionSubState.BriefingTwo; break;
             default: Debug.LogWarningFormat("Unrecognised ModalTransitionState \"{0}\"", GameManager.i.inputScript.ModalTransitionState); break;
         }
+        //set new state
+        GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Transition, transitionState = newState });
         //Adjust UI
         SetButtons(newState);
         SetHeader(newState);
         SetCanvas(newState);
-        //set new state
-        GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Transition, transitionState = newState });
     }
 
     /// <summary>
@@ -434,12 +452,12 @@ public class TransitionUI : MonoBehaviour
             case ModalTransitionSubState.BriefingTwo: newState = ModalTransitionSubState.BriefingOne; break;
             default: Debug.LogWarningFormat("Unrecognised ModalTransitionState \"{0}\"", GameManager.i.inputScript.ModalTransitionState); break;
         }
+        //set new state
+        GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Transition, transitionState = newState });
         //Adjust UI
         SetButtons(newState);
         SetHeader(newState);
         SetCanvas(newState);
-        //set new state
-        GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Transition, transitionState = newState });
     }
 
 }

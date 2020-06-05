@@ -131,18 +131,19 @@ public class MetaManager : MonoBehaviour
         GameManager.i.dataScript.ProcessMetaCures();
         GameManager.i.orgScript.ProcessMetaOrgs();
         GameManager.i.playerScript.ProcessMetaPlayer();
-
-
+        //Transition data
+        InitialiseEndLevel();
+        InitialiseHQ();
+        InitialisePlayerStatus();
+        InitialiseBriefingOne();
+        InitialiseBriefingTwo();
         //Player metaGame Options choice
         InitialiseMetaOptions();
         InitialiseMetaData();
-
-        /*EventManager.i.PostNotification(EventType.MetaGameOpen, this, metaInfoData, "ProcessMetaGame");
-        EventManager.i.PostNotification(EventType.TransitionOpen, this, transitionInfoData, "ProcessMetaGame");*/
-
-        GameManager.i.transitionScript.SetTransitionUI(transitionInfoData);
-        GameManager.i.metaUIScript.SetMetaUI(metaInfoData);
-
+        GameManager.i.metaUIScript.SetMetaInfoData(metaInfoData);
+        GameManager.i.transitionScript.SetTransitionInfoData(transitionInfoData);
+        //TransitionUI
+        EventManager.i.PostNotification(EventType.TransitionOpen, this, null, "ProcessMetaGame");
     }
 
     /// <summary>
@@ -164,6 +165,8 @@ public class MetaManager : MonoBehaviour
     public AuthorityTitle GetAuthorityTitle()
     { return (AuthorityTitle)(metaLevel.level); }
 
+    public MetaInfoData GetMetaInfoData()
+    { return metaInfoData; }
 
     //
     // - - - MetaGameOptions
@@ -265,7 +268,7 @@ public class MetaManager : MonoBehaviour
     }
 
     //
-    // - - - UI
+    // - - - MetaGameUI ->  populate metaInfoData package
     //
 
     /// <summary>
@@ -572,7 +575,7 @@ public class MetaManager : MonoBehaviour
                                         //swap '*' for device.tag
                                         metaSpecial.text = metaSpecial.template.Replace("*", device.tag);
                                         //customise descriptor
-                                        metaSpecial.descriptor = string.Format("<b>{0}{1}{2}{3}{4}{5}Innocence</b> {6}", GameManager.Formatt(device.tag, ColourType.neutralText), "\n", "\n", 
+                                        metaSpecial.descriptor = string.Format("<b>{0}{1}{2}{3}{4}{5}Innocence</b> {6}", GameManager.Formatt(device.tag, ColourType.neutralText), "\n", "\n",
                                             device.descriptor, "\n", "\n", GameManager.i.guiScript.GetNormalStars(device.innocenceLevel));
                                         //modify cost according to relationship (Mot 3 -> use base cost, Mot 2 -> double base cost
                                         if (motivation == 2)
@@ -585,7 +588,7 @@ public class MetaManager : MonoBehaviour
                                         listOfMetaOptions.Add(metaSpecial);
                                         if (isTestLog)
                                         {
-                                            Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Device option \"{0}\", {1}, {2} added{3}", 
+                                            Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Device option \"{0}\", {1}, {2} added{3}",
                                                 metaSpecial.name, metaSpecial.data, metaSpecial.dataTag, "\n");
                                             Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Device option \"{0}\", {1}{2}", metaSpecial.name, metaSpecial.text, "\n");
                                         }
@@ -593,7 +596,7 @@ public class MetaManager : MonoBehaviour
                                         if (numOfDeviceOptions >= maxNumOfDevices)
                                         {
                                             if (isTestLog)
-                                            { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Max Cap on Device Options reached (current {0}, max {1}){2}", 
+                                            { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Max Cap on Device Options reached (current {0}, max {1}){2}",
                                                 numOfDeviceOptions, maxNumOfDevices, "\n"); }
                                             break;
                                         }
@@ -851,6 +854,50 @@ public class MetaManager : MonoBehaviour
             else { Debug.LogWarning("Invalid listOfMetaOptions (Empty)"); }
         }
         else { Debug.LogWarning("Invalid listOfMetaOptions (Null)"); }
+    }
+
+    //
+    // - - - TransitionUI ->  populate transitionInfoData package
+    //
+
+    /// <summary>
+    /// populate EndLevel part of transitionInfoData package
+    /// </summary>
+    private void InitialiseEndLevel()
+    {
+
+    }
+
+    /// <summary>
+    /// populate HQ part of transitionInfoData package
+    /// </summary>
+    private void InitialiseHQ()
+    {
+
+    }
+
+    /// <summary>
+    /// populate PlayerStatus part of transitionInfoData package
+    /// </summary>
+    private void InitialisePlayerStatus()
+    {
+
+    }
+
+    /// <summary>
+    /// populate BriefingOne part of transitionInfoData package
+    /// </summary>
+    private void InitialiseBriefingOne()
+    {
+
+    }
+
+    /// <summary>
+    /// populate BriefingTwo part of transitionInfoData package
+    /// </summary>
+    private void InitialiseBriefingTwo()
+    {
+
     }
 
     //new methods above here

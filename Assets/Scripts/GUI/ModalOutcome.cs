@@ -35,8 +35,8 @@ public class ModalOutcome : MonoBehaviour
     private string reason;                               //reason outcome window is being used (passed on via CloseOutcomeWindow event to UseAction event for debugging
     private List<Node> listOfShowMeNodes = new List<Node>();    //used to store data passed in for any 'ShowMe' use
     private EventType hideOtherEvent;                   //event to call to hide underlying UI if 'ShowMe'. Can ignore
-    private EventType restoreOtherEvent;                   //event to call to restore underlying UI if 'ShowMe'. Can ignore
-
+    private EventType restoreOtherEvent;                //event to call to restore underlying UI if 'ShowMe'. Can ignore
+    private EventType triggerEvent;                     //optional event that triggers when Outcome Window closes
     private bool isAction;                              //triggers 'UseAction' event on confirmation button click if true (passed in to method by ModalOutcomeDetails)
 
     /// <summary>
@@ -148,6 +148,7 @@ public class ModalOutcome : MonoBehaviour
                 GameManager.i.tooltipNodeScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcome");
                 GameManager.i.tooltipHelpScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcome");
                 reason = details.reason;
+                triggerEvent = details.triggerEvent;
                 //set help
                 List<HelpData> listOfHelpData = GameManager.i.helpScript.GetHelpData(details.help0, details.help1, details.help2, details.help3);
                 if (listOfHelpData != null && listOfHelpData.Count > 0)
@@ -296,6 +297,9 @@ public class ModalOutcome : MonoBehaviour
         GameManager.i.turnScript.haltExecution = false;
         //auto set waitUntilDone for InfoPipeline (waiting on a message in the pipeline to be done)
         GameManager.i.guiScript.waitUntilDone = false;
+        //check trigger event
+        if (triggerEvent != EventType.None)
+        { EventManager.i.PostNotification(triggerEvent, this, null, "ModalOutcome.cs -> CloseModalOutcome"); }
     }
 
 

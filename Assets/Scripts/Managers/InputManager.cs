@@ -166,6 +166,9 @@ public class InputManager : MonoBehaviour
             //inventory
             if (ModalSubState == ModalSubState.Inventory)
             { ModalInventoryState = data.inventoryState; }
+            //transition
+            if (ModalSubState == ModalSubState.Transition)
+            { ModalTransitionState = data.transitionState; }
         }
         else { Debug.LogWarning("Invalid ModalStateData (Null)"); }
     }
