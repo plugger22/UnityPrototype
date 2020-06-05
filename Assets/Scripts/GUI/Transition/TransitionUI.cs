@@ -43,6 +43,11 @@ public class TransitionUI : MonoBehaviour
     public Canvas briefingTwoCanvas;
     public Image briefingTwoBackground;
 
+    //button interactions
+    private ButtonInteraction buttonInteractionBack;
+    private ButtonInteraction buttonInteractionContinue;
+    private ButtonInteraction buttonInteractionExit;
+
 
     private ModalTransitionSubState state;
 
@@ -111,6 +116,40 @@ public class TransitionUI : MonoBehaviour
     /// </summary>
     private void SubInitialiseSessionStart()
     {
+        //main
+        Debug.Assert(transitionObject != null, "Invalid transitionObject (Null)");
+        Debug.Assert(transitionCanvas != null, "Invalid transitionCanvas (Null)");
+        Debug.Assert(transitionBackground != null, "Invalid transitionBackground (Null)");
+        Debug.Assert(transitionHeader != null, "Invalid transitionHeader (Null)");
+        Debug.Assert(buttonBack != null, "Invalid buttonBack (Null)");
+        Debug.Assert(buttonContinue != null, "Invalid buttonContinue (Null)");
+        Debug.Assert(buttonExit != null, "Invalid buttonExit (Null)");
+        Debug.Assert(buttonHelpMain != null, "Invalid buttonHelpMain (Null)");
+        //end level
+        Debug.Assert(endLevelCanvas != null, "Invalid endLevelCanvas (Null)");
+        Debug.Assert(endLevelBackground != null, "Invalid endLevelBackground (Null)");
+        //hq
+        Debug.Assert(hqCanvas != null, "Invalid hqCanvas (Null)");
+        Debug.Assert(hqBackground != null, "Invalid hqBackground (Null)");
+        //playerStatus
+        Debug.Assert(playerStatusCanvas != null, "Invalid playerStatusCanvas (Null)");
+        Debug.Assert(playerStatusBackground != null, "Invalid playerStatusBackground (Null)");
+        //BriefingOne
+        Debug.Assert(briefingOneCanvas != null, "Invalid briefingOneCanvas (Null)");
+        Debug.Assert(briefingOneBackground != null, "Invalid briefingOneBackground (Null)");
+        //BriefingTwo
+        Debug.Assert(briefingTwoCanvas != null, "Invalid briefingTwoCanvas (Null)");
+        Debug.Assert(briefingTwoBackground != null, "Invalid briefingTwoBackground (Null)");
+        //Button events
+        buttonInteractionBack = buttonBack.GetComponent<ButtonInteraction>();
+        buttonInteractionContinue = buttonContinue.GetComponent<ButtonInteraction>();
+        buttonInteractionExit = buttonExit.GetComponent<ButtonInteraction>();
+        Debug.Assert(buttonInteractionBack != null, "Invalid buttonInteractionBack (Null)");
+        Debug.Assert(buttonInteractionContinue != null, "Invalid buttonInteractionContinue (Null)");
+        Debug.Assert(buttonInteractionExit != null, "Invalid buttonInteractionExit (Null)");
+        buttonInteractionBack.SetButton(EventType.TransitionBack);
+        buttonInteractionContinue.SetButton(EventType.TransitionContinue);
+        buttonInteractionExit.SetButton(EventType.TransitionClose);
         //Set starting Initialisation states
         InitialiseTooltips();
     }

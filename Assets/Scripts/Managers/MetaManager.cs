@@ -136,9 +136,12 @@ public class MetaManager : MonoBehaviour
         //Player metaGame Options choice
         InitialiseMetaOptions();
         InitialiseMetaData();
-        /*EventManager.i.PostNotification(EventType.MetaGameOpen, this, metaInfoData, "ProcessMetaGame");*/
-        EventManager.i.PostNotification(EventType.TransitionOpen, this, transitionInfoData, "ProcessMetaGame");
 
+        /*EventManager.i.PostNotification(EventType.MetaGameOpen, this, metaInfoData, "ProcessMetaGame");
+        EventManager.i.PostNotification(EventType.TransitionOpen, this, transitionInfoData, "ProcessMetaGame");*/
+
+        GameManager.i.transitionScript.SetTransitionUI(transitionInfoData);
+        GameManager.i.metaUIScript.SetMetaUI(metaInfoData);
 
     }
 
