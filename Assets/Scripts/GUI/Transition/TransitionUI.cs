@@ -413,6 +413,7 @@ public class TransitionUI : MonoBehaviour
     private void ExecuteClose()
     {
         transitionCanvas.gameObject.SetActive(false);
+        //outcome
         ModalOutcomeDetails details = new ModalOutcomeDetails();
         details.side = GameManager.i.sideScript.PlayerSide;
         details.textTop = GameManager.Formatt("HQ Assistance", ColourType.neutralText);

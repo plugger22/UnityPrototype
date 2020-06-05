@@ -967,16 +967,24 @@ public class MetaGameUI : MonoBehaviour
         GameManager.i.tooltipGenericScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
         GameManager.i.tooltipHelpScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
         canvasMeta.gameObject.SetActive(false);
-        /*//set game state
-        isRunning = false;*/
-        GameManager.i.guiScript.SetIsBlocked(false);
-        GameManager.i.inputScript.ResetStates();
         Debug.LogFormat("[UI] MainInfoUI.cs -> CloseMainInfo{0}", "\n");
         //update player renown
         GameManager.i.playerScript.Renown = renownCurrent;
         Debug.LogFormat("[Met] MetaGameUI.cs -> CloseMetaUI: Player carries over {0} Renown{1}", renownCurrent, "\n");
-        //show top bar UI at completion of meta game
-        EventManager.i.PostNotification(EventType.TopBarShow, this, null, "MetaGameUI.cs -> Show TopBarUI");
+        //set state
+        GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.MetaGame, metaState = ModalMetaSubState.EndScreen });
+        //outcome
+        ModalOutcomeDetails details = new ModalOutcomeDetails();
+        details.side = GameManager.i.sideScript.PlayerSide;
+        details.textTop = GameManager.Formatt("Prepare for Insertion", ColourType.neutralText);
+        details.textBottom = string.Format("Are you ready for deployment, soldier? Are you willing to {0} for the Cause?", GameManager.Formatt("fight and die", ColourType.moccasinText));
+        details.sprite = GameManager.i.guiScript.infoSprite;
+        details.modalLevel = 2;
+        details.modalState = ModalSubState.MetaGame;
+        details.triggerEvent = EventType.CloseMetaOverall;
+        //open outcome windown (will open MetaGameUI via triggerEvent once closed
+        EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "TransitionUI.cs -> ExecuteClose");
+
     }
 
 

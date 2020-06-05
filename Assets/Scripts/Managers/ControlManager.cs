@@ -18,8 +18,8 @@ public class ControlManager : MonoBehaviour
         EventManager.i.AddListener(EventType.CreateOptions, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.CloseNewGame, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.CloseOptions, OnEvent, "ControlManager");
-        EventManager.i.AddListener(EventType.CreateMetaGame, OnEvent, "ControlManager");
-        EventManager.i.AddListener(EventType.CloseMetaGame, OnEvent, "ControlManager");
+        EventManager.i.AddListener(EventType.CreateMetaOverall, OnEvent, "ControlManager");
+        EventManager.i.AddListener(EventType.CloseMetaOverall, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.ExitLevel, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.ExitGame, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.ExitCampaign, OnEvent, "ControlManager");
@@ -76,10 +76,10 @@ public class ControlManager : MonoBehaviour
             case EventType.ExitLevel:
                 ProcessEndLevel();
                 break;
-            case EventType.CreateMetaGame:
+            case EventType.CreateMetaOverall:
                 ProcessMetaGame();
                 break;
-            case EventType.CloseMetaGame:
+            case EventType.CloseMetaOverall:
                 CloseMetaGame();
                 break;
             case EventType.ExitCampaign:
@@ -190,6 +190,7 @@ public class ControlManager : MonoBehaviour
     /// </summary>
     private void ProcessEndLevel()
     {
+        Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessEndLevel: ProcessEndLevel selected{0}", "\n");
         //save existing game state
         gameState = GameManager.i.inputScript.GameState;
         //close all tooltips
@@ -202,6 +203,8 @@ public class ControlManager : MonoBehaviour
         GameManager.i.inputScript.GameState = GameState.ExitLevel;
         //campaign history
         GameManager.i.dataScript.SetCampaignHistoryEnd();
+        //start metaGame
+        EventManager.i.PostNotification(EventType.CreateMetaOverall, this, null, "ControlManager.cs -> ProcessEndLevel");
     }
 
     /// <summary>
@@ -211,6 +214,7 @@ public class ControlManager : MonoBehaviour
     {
         //save existing game state
         gameState = GameManager.i.inputScript.GameState;
+        Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessMetaGame: ProcessMetaGame selected{0}", "\n");
         //modal block
         GameManager.i.guiScript.SetIsBlocked(true);
         //Open end level background
@@ -230,6 +234,7 @@ public class ControlManager : MonoBehaviour
     { 
         //save existing game state
         gameState = GameManager.i.inputScript.GameState;
+        Debug.LogFormat("[Ctrl] ControlManager.cs -> CloseMetaGame: CloseMetaGame selected{0}", "\n");
         //go to next scenario
         if (GameManager.i.campaignScript.IncrementScenarioIndex() == true)
         {
@@ -246,8 +251,11 @@ public class ControlManager : MonoBehaviour
             GameManager.i.inputScript.GameState = GameState.PlayGame;
             //close background
             GameManager.i.modalGUIScript.CloseBackgrounds();
+            GameManager.i.inputScript.ResetStates();
             //toggle of modal block
             GameManager.i.guiScript.SetIsBlocked(false);
+            //show top bar UI at completion of meta game
+            EventManager.i.PostNotification(EventType.TopBarShow, this, null, "MetaGameUI.cs -> Show TopBarUI");
         }
         else
         {

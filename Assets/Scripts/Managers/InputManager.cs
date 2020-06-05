@@ -39,7 +39,7 @@ public class InputManager : MonoBehaviour
     private ModalInventorySubState _modalInventoryState;            //sub state of ModalSubState.Inventory
     private ModalReviewSubState _modalReviewState;                  //sub state for ModalReviewUI
 
-    
+
 
     public void Initialise(GameState state)
     {
@@ -281,12 +281,12 @@ public class InputManager : MonoBehaviour
                                 //close Options background -> Debug: need to set new Game State
                                 EventManager.i.PostNotification(EventType.CloseOptions, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
                                 break;
-                            case GameState.ExitLevel:
-                                EventManager.i.PostNotification(EventType.CreateMetaGame, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
+                            /*case GameState.ExitLevel:
+                                EventManager.i.PostNotification(EventType.CreateMetaOverall, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
                                 break;
                             case GameState.MetaGame:
-                                EventManager.i.PostNotification(EventType.CloseMetaGame, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
-                                break;
+                                EventManager.i.PostNotification(EventType.CloseMetaOverall, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
+                                break;*/
                             case GameState.ExitCampaign:
                                 EventManager.i.PostNotification(EventType.ExitGame, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
                                 break;
@@ -690,9 +690,18 @@ public class InputManager : MonoBehaviour
                                 }
                                 else if (Input.GetButtonDown("Multipurpose") == true)
                                 {
-                                    //Space bar is keyboard shortcut for 'Select/Deselect' buttons (parameter needs to be '-1' for MetaGameUI.cs -> ExecuteButton to deal with correctly
-                                    EventManager.i.PostNotification(EventType.MetaGameButton, this, -1, "InputManager.cs -> ProcessKeyInput Multipurpose");
-                                    Input.ResetInputAxes();
+                                    switch (ModalMetaState)
+                                    {
+                                        case ModalMetaSubState.PlayerOptions:
+                                            //Space bar is keyboard shortcut for 'Select/Deselect' buttons (parameter needs to be '-1' for MetaGameUI.cs -> ExecuteButton to deal with correctly
+                                            EventManager.i.PostNotification(EventType.MetaGameButton, this, -1, "InputManager.cs -> ProcessKeyInput Multipurpose");
+                                            Input.ResetInputAxes();
+                                            break;
+                                        /*case ModalMetaSubState.EndScreen:
+                                            //close down overall metaGame
+                                            EventManager.i.PostNotification(EventType.CloseMetaOverall, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
+                                            break;*/
+                                    }
                                 }
                             }
                             break;
@@ -792,7 +801,7 @@ public class InputManager : MonoBehaviour
                                     break;
                             }
                         }
-                            break;
+                        break;
                     case ModalSubState.ShowMe:
                         break;
                 }
