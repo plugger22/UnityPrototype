@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using modalAPI;
 using packageAPI;
 using System.Collections.Generic;
 using System.Linq;
@@ -142,8 +143,18 @@ public class MetaManager : MonoBehaviour
         InitialiseMetaData();
         GameManager.i.metaUIScript.SetMetaInfoData(metaInfoData);
         GameManager.i.transitionScript.SetTransitionInfoData(transitionInfoData);
-        //TransitionUI
-        EventManager.i.PostNotification(EventType.TransitionOpen, this, null, "ProcessMetaGame");
+        //outcome that will open transition on closing
+        ModalOutcomeDetails details = new ModalOutcomeDetails();
+        details.side = GameManager.i.sideScript.PlayerSide;
+        details.textTop = GameManager.Formatt("Debriefing", ColourType.neutralText);
+        details.textBottom = string.Format("You have been successfully {0} from {1}. There are a few things to take care of before your next mission", 
+            GameManager.Formatt("extracted", ColourType.moccasinText), GameManager.Formatt(GameManager.i.campaignScript.scenario.city.tag, ColourType.neutralText));
+        details.sprite = GameManager.i.guiScript.infoSprite;
+        details.modalLevel = 2;
+        details.modalState = ModalSubState.MetaGame;
+        details.triggerEvent = EventType.TransitionOpen;
+        //open outcome windown (will open MetaGameUI via triggerEvent once closed
+        EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "MetaManager.cs -> ProcessMetaGame");
     }
 
     /// <summary>

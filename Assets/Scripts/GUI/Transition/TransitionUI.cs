@@ -415,9 +415,11 @@ public class TransitionUI : MonoBehaviour
         transitionCanvas.gameObject.SetActive(false);
         ModalOutcomeDetails details = new ModalOutcomeDetails();
         details.side = GameManager.i.sideScript.PlayerSide;
-        details.textTop = GameManager.Formatt("HQ Assistance", ColourType.goodText);
+        details.textTop = GameManager.Formatt("HQ Assistance", ColourType.neutralText);
         details.textBottom = string.Format("HQ are willing to offer you {0} prior to your deployment", GameManager.Formatt("assistance", ColourType.moccasinText));
         details.sprite = GameManager.i.guiScript.infoSprite;
+        details.modalLevel = 2;
+        details.modalState = ModalSubState.MetaGame;
         details.triggerEvent = EventType.MetaGameOpen;
         //open outcome windown (will open MetaGameUI via triggerEvent once closed
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "TransitionUI.cs -> ExecuteClose");
