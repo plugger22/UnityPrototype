@@ -143,6 +143,8 @@ public class MetaManager : MonoBehaviour
         InitialiseMetaData();
         GameManager.i.metaUIScript.SetMetaInfoData(metaInfoData);
         GameManager.i.transitionScript.SetTransitionInfoData(transitionInfoData);
+
+        /*
         //outcome that will open transition on closing
         ModalOutcomeDetails details = new ModalOutcomeDetails();
         details.side = GameManager.i.sideScript.PlayerSide;
@@ -155,6 +157,21 @@ public class MetaManager : MonoBehaviour
         details.triggerEvent = EventType.TransitionOpen;
         //open outcome windown (will open MetaGameUI via triggerEvent once closed
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "MetaManager.cs -> ProcessMetaGame");
+        */
+
+        //confirm window that will open transition on closing
+        ModalConfirmDetails details = new ModalConfirmDetails();
+        details.topText = string.Format("You have been successfully {0} from {1}. There are a few things to take care of before your next mission",
+            GameManager.Formatt("extracted", ColourType.moccasinText), GameManager.Formatt(GameManager.i.campaignScript.scenario.city.tag, ColourType.neutralText));
+        details.bottomText = "Are you ready?";
+        details.buttonFalse = "SAVE and EXIT";
+        details.buttonTrue = "CONTINUE";
+        details.eventFalse = EventType.SaveAndExit;
+        details.eventTrue = EventType.TransitionOpen;
+        details.modalState = ModalSubState.MetaGame;
+        details.restorePoint = RestorePoint.MetaTransition;
+        //open confirm
+        EventManager.i.PostNotification(EventType.ConfirmOpen, this, details, "MetaManager.cs -> ProcessMetaGame");
     }
 
     /// <summary>

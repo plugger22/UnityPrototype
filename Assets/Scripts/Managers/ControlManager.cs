@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using modalAPI;
 using UnityEngine;
 
 /// <summary>
@@ -8,7 +9,7 @@ public class ControlManager : MonoBehaviour
 {
 
     private GameState gameState;                    //stores current game state prior to change to enable a revert after change
-
+    private RestorePoint restorePoint;              //stores point of game to restore to if user changes their mind (eg. 'Save And Exit')
 
     public void Initialise(GameState state)
     {
@@ -24,8 +25,10 @@ public class ControlManager : MonoBehaviour
         EventManager.i.AddListener(EventType.ExitGame, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.ExitCampaign, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.ResumeGame, OnEvent, "ControlManager");
+        EventManager.i.AddListener(EventType.ResumeMetaGame, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.LoadGame, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.SaveGame, OnEvent, "ControlManager");
+        EventManager.i.AddListener(EventType.SaveAndExit, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.CloseLoadGame, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.CloseSaveGame, OnEvent, "CampaignManager");
     }
@@ -46,11 +49,17 @@ public class ControlManager : MonoBehaviour
             case EventType.ResumeGame:
                 ProcessResumeGame();
                 break;
+            case EventType.ResumeMetaGame:
+                ProcessResumeMetaGame();
+                break;
             case EventType.LoadGame:
                 ProcessLoadGame((GameState)Param);
                 break;
             case EventType.SaveGame:
                 ProcessSaveGame((GameState)Param);
+                break;
+            case EventType.SaveAndExit:
+                ProcessSaveAndExit((RestorePoint)Param);
                 break;
             case EventType.NewGameOptions:
                 ProcessNewGameOptions();
@@ -235,7 +244,7 @@ public class ControlManager : MonoBehaviour
     /// Close Meta Game and start up new level (debug)
     /// </summary>
     private void CloseMetaGame()
-    { 
+    {
         //save existing game state
         gameState = GameManager.i.inputScript.GameState;
         Debug.LogFormat("[Ctrl] ControlManager.cs -> CloseMetaGame: CloseMetaGame selected{0}", "\n");
@@ -284,7 +293,42 @@ public class ControlManager : MonoBehaviour
         //if anything other than play Game then set a modal block (it cancels otherwise due to Main Menu closing)
         if (GameManager.i.inputScript.GameState != GameState.PlayGame)
         { GameManager.i.guiScript.SetIsBlocked(true); }
-        
+
+    }
+
+    /// <summary>
+    /// Return to the MetaGame (different points) after SaveAndExit but opting to resume game once having Saved
+    /// </summary>
+    private void ProcessResumeMetaGame()
+    {
+        //modal block
+        GameManager.i.guiScript.SetIsBlocked(true);
+        //Open end level background
+        GameManager.i.modalGUIScript.SetBackground(Background.MetaGame);
+        //disable end level background
+        GameManager.i.modalGUIScript.CloseBackgrounds(Background.MetaGame);
+        //change game state
+        GameManager.i.inputScript.GameState = GameState.MetaGame;
+        switch (restorePoint)
+        {
+            case RestorePoint.MetaTransition:
+                //open TransitionUI
+                EventManager.i.PostNotification(EventType.TransitionOpen, this, null, "ControlManager.cs -> ProcessResumMetaGame");
+                break;
+            case RestorePoint.MetaOptions:
+                //open MetaGameUI
+                EventManager.i.PostNotification(EventType.MetaGameOpen, this, null, "ControlManager.cs -> ProcessResumMetaGame");
+                break;
+            case RestorePoint.MetaEnd:
+                //open new Level
+                EventManager.i.PostNotification(EventType.CloseMetaOverall, this, null, "ControlManager.cs -> ProcessResumMetaGame");
+                break;
+            default:
+                //default exit game
+                Debug.LogWarningFormat("Unrecognised restorePoint \"[0}\"", restorePoint);
+                EventManager.i.PostNotification(EventType.ExitGame, this, null, "ControlManager.cs -> ProcessResumMetaGame");
+                break;
+        }
     }
 
     /// <summary>
@@ -382,6 +426,42 @@ public class ControlManager : MonoBehaviour
         //how long did it take?
         long timeElapsed = GameManager.i.testScript.StopTimer();
         Debug.LogFormat("[Per] ControlManager.cs -> ProcessSaveGame: SAVE GAME took {0} ms", timeElapsed);
+    }
+
+    /// <summary>
+    /// Save the current game and Exit. Used during MetaGame
+    /// </summary>
+    private void ProcessSaveAndExit(RestorePoint restorePointInput)
+    {
+        Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessSaveAndExit: Save and Exit selected{0}", "\n");
+        //save restore point in case user changes their mind
+        restorePoint = restorePointInput;
+        //toggle on modal block
+        GameManager.i.guiScript.SetIsBlocked(true);
+        //Save Game -> open background
+        GameManager.i.modalGUIScript.SetBackground(Background.SaveGame);
+        //Close any open background
+        GameManager.i.modalGUIScript.CloseBackgrounds(Background.SaveGame);
+        //change game state
+        GameManager.i.inputScript.GameState = GameState.SaveAndExit;
+        //Debug -> time load game process
+        GameManager.i.testScript.StartTimer();
+        GameManager.i.fileScript.WriteSaveData();
+        GameManager.i.fileScript.SaveGame();
+        //how long did it take?
+        long timeElapsed = GameManager.i.testScript.StopTimer();
+        Debug.LogFormat("[Per] ControlManager.cs -> ProcessSaveGame: SAVE GAME took {0} ms", timeElapsed);
+        //Game saved, ask user if they want to exit
+        ModalConfirmDetails details = new ModalConfirmDetails();
+        details.topText = string.Format("Your game has been {0}. You are about to Exit", GameManager.Formatt("SAVED", ColourType.neutralText));
+        details.bottomText = "Are you sure?";
+        details.buttonFalse = "EXIT";
+        details.buttonTrue = "RESUME";
+        details.eventFalse = EventType.ExitGame;
+        details.eventTrue = EventType.ResumeMetaGame;
+        details.modalState = ModalSubState.MetaGame;
+        //open confirm
+        EventManager.i.PostNotification(EventType.ConfirmOpen, this, details, "MetaManager.cs -> ProcessMetaGame");
     }
 
     /// <summary>

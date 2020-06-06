@@ -71,7 +71,7 @@ public class ModalConfirm : MonoBehaviour
         //register a listener
         EventManager.i.AddListener(EventType.ConfirmCloseLeft, OnEvent, "ModalConfirm");
         EventManager.i.AddListener(EventType.ConfirmCloseRight, OnEvent, "ModalConfirm");
-        EventManager.i.AddListener(EventType.OpenConfirmWindow, OnEvent, "ModalConfirm");
+        EventManager.i.AddListener(EventType.ConfirmOpen, OnEvent, "ModalConfirm");
     }
 
 
@@ -86,7 +86,7 @@ public class ModalConfirm : MonoBehaviour
         //detect event type
         switch (eventType)
         {
-            case EventType.OpenConfirmWindow:
+            case EventType.ConfirmOpen:
                 ModalConfirmDetails details = Param as ModalConfirmDetails;
                 SetModalConfirm(details);
                 break;
@@ -138,13 +138,20 @@ public class ModalConfirm : MonoBehaviour
     /// </summary>
     private void ConfirmCloseLeft()
     {
-
         CloseConfirm();
         result = false;
         //optional event to run on buttonFalse being clicked
         if (confirmDetails.eventFalse != EventType.None)
-        { }
-
+        {
+            //Sends 'RestorePoint' as a paramter (if present) in case of 'Save and Exit' to allow user to change their mind and return to game
+            if (confirmDetails.restorePoint != RestorePoint.None)
+            { EventManager.i.PostNotification(confirmDetails.eventFalse, this, confirmDetails.restorePoint, "ModalConfirm.cs -> ConfirmCloseLeft"); }
+            else
+            {
+                //No restorePoint, normal event, no parameter
+                EventManager.i.PostNotification(confirmDetails.eventFalse, this, null, "ModalConfirm.cs -> ConfirmCloseLeft");
+            }
+        }
     }
 
 
@@ -156,7 +163,9 @@ public class ModalConfirm : MonoBehaviour
 
         CloseConfirm();
         result = true;
-        
+        //optional event to run on buttonTrue being clicked
+        if (confirmDetails.eventTrue != EventType.None)
+        { EventManager.i.PostNotification(confirmDetails.eventTrue, this, null, "ModalConfirm.cs -> ConfirmCloseRight"); }
     }
 
     /// <summary>

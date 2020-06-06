@@ -11003,6 +11003,12 @@ Prefab:
       propertyPath: m_fontSizeBase
       value: 22
       objectReference: {fileID: 0}
+    - target: {fileID: 114622461413177228, guid: ef585abc49bbb17438231262bfaa7c31,
+        type: 2}
+      propertyPath: m_SpriteState.m_HighlightedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 20a58138803019b41be30d481caaf3c0,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef585abc49bbb17438231262bfaa7c31, type: 2}
   m_IsPrefabAsset: 0
@@ -18187,6 +18193,12 @@ Prefab:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 114622461413177228, guid: a9c4bff2707d81d4494c581e6051a17e,
+        type: 2}
+      propertyPath: m_SpriteState.m_HighlightedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 20a58138803019b41be30d481caaf3c0,
+        type: 3}
     m_RemovedComponents:
     - {fileID: 0}
     - {fileID: 114971844599413504, guid: a9c4bff2707d81d4494c581e6051a17e, type: 2}
@@ -27432,6 +27444,12 @@ Prefab:
       propertyPath: m_fontSizeBase
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 114622461413177228, guid: ef585abc49bbb17438231262bfaa7c31,
+        type: 2}
+      propertyPath: m_SpriteState.m_HighlightedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 20a58138803019b41be30d481caaf3c0,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef585abc49bbb17438231262bfaa7c31, type: 2}
   m_IsPrefabAsset: 0
@@ -28232,6 +28250,12 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 1.0000007
       objectReference: {fileID: 0}
+    - target: {fileID: 114622461413177228, guid: ef585abc49bbb17438231262bfaa7c31,
+        type: 2}
+      propertyPath: m_SpriteState.m_HighlightedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 20a58138803019b41be30d481caaf3c0,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef585abc49bbb17438231262bfaa7c31, type: 2}
   m_IsPrefabAsset: 0
@@ -71320,6 +71344,12 @@ Prefab:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 114622461413177228, guid: a9c4bff2707d81d4494c581e6051a17e,
+        type: 2}
+      propertyPath: m_SpriteState.m_HighlightedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 20a58138803019b41be30d481caaf3c0,
+        type: 3}
     m_RemovedComponents:
     - {fileID: 0}
     - {fileID: 114971844599413504, guid: a9c4bff2707d81d4494c581e6051a17e, type: 2}

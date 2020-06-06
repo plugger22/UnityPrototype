@@ -25,8 +25,10 @@ public enum EventType
     LoadGame,
     CloseLoadGame,
     ResumeGame,
+    ResumeMetaGame,
     SaveGame,
     CloseSaveGame,
+    SaveAndExit,
     //UI Menus
     CloseActionMenu,
     CloseMainMenu,
@@ -39,7 +41,7 @@ public enum EventType
     OutcomeShowMe,
     OutcomeRestore,
     //ModalConfirm
-    OpenConfirmWindow,
+    ConfirmOpen,
     ConfirmCloseLeft,
     ConfirmCloseRight,
     //highlighted node or connection

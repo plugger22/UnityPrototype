@@ -938,6 +938,9 @@ public class MetaGameUI : MonoBehaviour
     {
         if (metaInfoData != null)
         {
+            //set blocked (failsafe)
+            GameManager.i.guiScript.SetIsBlocked(true);
+            //initialise
             InitialiseMetaUI();
             canvasMeta.gameObject.SetActive(true);
             // Populate data
@@ -973,6 +976,7 @@ public class MetaGameUI : MonoBehaviour
         Debug.LogFormat("[Met] MetaGameUI.cs -> CloseMetaUI: Player carries over {0} Renown{1}", renownCurrent, "\n");
         //set state
         GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.MetaGame, metaState = ModalMetaSubState.EndScreen });
+        /*
         //outcome
         ModalOutcomeDetails details = new ModalOutcomeDetails();
         details.side = GameManager.i.sideScript.PlayerSide;
@@ -984,6 +988,20 @@ public class MetaGameUI : MonoBehaviour
         details.triggerEvent = EventType.CloseMetaOverall;
         //open outcome windown (will open MetaGameUI via triggerEvent once closed
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "TransitionUI.cs -> ExecuteClose");
+        */
+
+        //confirm window that will open new level on closing
+        ModalConfirmDetails details = new ModalConfirmDetails();
+        details.topText = string.Format("Prepare for deployment, soldier. It's time to do whatever it takes to further the Cause", GameManager.Formatt("assistance", ColourType.moccasinText));
+        details.bottomText = "Are you Ready?";
+        details.buttonFalse = "SAVE and EXIT";
+        details.buttonTrue = "CONTINUE";
+        details.eventFalse = EventType.SaveAndExit;
+        details.eventTrue = EventType.CloseMetaOverall;
+        details.modalState = ModalSubState.MetaGame;
+        details.restorePoint = RestorePoint.MetaEnd;
+        //open confirm
+        EventManager.i.PostNotification(EventType.ConfirmOpen, this, details, "TransitionUI.cs -> ExecuteClose");
 
     }
 
@@ -2154,7 +2172,7 @@ public class MetaGameUI : MonoBehaviour
                 modalLevel = 2,
                 modalState = ModalSubState.MetaGame
             };
-            EventManager.i.PostNotification(EventType.OpenConfirmWindow, this, details);
+            EventManager.i.PostNotification(EventType.ConfirmOpen, this, details);
             //need a coroutine to handle execution to prevent metaGameUI closing prematurely
             StartCoroutine(CloseMetaGameConfirm(details));
         }
@@ -2212,7 +2230,7 @@ public class MetaGameUI : MonoBehaviour
     /// <returns></returns>
     IEnumerator CloseConfirm(ModalConfirmDetails details)
     {
-        EventManager.i.PostNotification(EventType.OpenConfirmWindow, this, details);
+        EventManager.i.PostNotification(EventType.ConfirmOpen, this, details);
         //will wait until ModalConfirm -> True or False button pressed which resets flag
         yield return new WaitUntil(() => GameManager.i.guiScript.waitUntilDone == false);
     }

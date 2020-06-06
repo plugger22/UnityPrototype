@@ -8,7 +8,7 @@
     // - - - Game Manager - - -
     //
     public enum GameState {
-        None, MainMenu, StartUp, Options, NewGame, NewGameOptions, NewInitialisation, FollowOnInitialisation, NewCampaign, SaveGame, LoadGame, LoadAtStart,
+        None, MainMenu, StartUp, Options, NewGame, NewGameOptions, NewInitialisation, FollowOnInitialisation, NewCampaign, SaveGame, SaveAndExit, LoadGame, LoadAtStart,
         PlayGame, MetaGame, ExitLevel, ExitCampaign, ExitGame}  //overall game state
     public enum WinStateLevel { None, Authority, Resistance }                                                                                   //none indicates nobody has yet won level
     public enum WinReasonLevel { None, CityLoyaltyMin, CityLoyaltyMax, HqSupportMin, MissionTimerMin, ObjectivesCompleted, Investigation, CampaignResult } //reason for Level Win State (from POV of winner)
@@ -37,6 +37,7 @@
     public enum GenericTooltipType { Any, ActorInfo }                                           //ability to specify tooltip types that must be closed and to ignore the rest. Create group types as required.
     public enum MajorUI { None, MainInfoApp, MetaGameUI }                                       //used for Item prefab attached scripts to determine which UI they are working within
     public enum PopUpPosition { ActorSlot0, ActorSlot1, ActorSlot2, ActorSlot3, Player, TopBarLeft, TopBarRight, TopCentre, Count}  //used for fixed UI PopUps
+    public enum RestorePoint { None, MetaTransition, MetaOptions, MetaEnd }                       //when save and exit, chance to return to game. This specifies the point of return
     public enum AlertType {
         None,
         MainMenuUnavailable,

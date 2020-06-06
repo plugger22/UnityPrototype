@@ -387,6 +387,8 @@ public class TransitionUI : MonoBehaviour
     {
         if (transitionInfoData != null)
         {
+            //set blocked (fail safe)
+            GameManager.i.guiScript.SetIsBlocked(true);
             //start in End Level
             ModalTransitionSubState startState = ModalTransitionSubState.EndLevel;
             GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Transition, transitionState = startState });
@@ -413,6 +415,7 @@ public class TransitionUI : MonoBehaviour
     private void ExecuteClose()
     {
         transitionCanvas.gameObject.SetActive(false);
+        /*
         //outcome
         ModalOutcomeDetails details = new ModalOutcomeDetails();
         details.side = GameManager.i.sideScript.PlayerSide;
@@ -424,6 +427,20 @@ public class TransitionUI : MonoBehaviour
         details.triggerEvent = EventType.MetaGameOpen;
         //open outcome windown (will open MetaGameUI via triggerEvent once closed
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "TransitionUI.cs -> ExecuteClose");
+        */
+
+        //confirm window that will open metaOptions on closing
+        ModalConfirmDetails details = new ModalConfirmDetails();
+        details.topText = string.Format("HQ are willing to offer you {0} prior to your deployment", GameManager.Formatt("assistance", ColourType.moccasinText));
+        details.bottomText = "Talk to HQ?";
+        details.buttonFalse = "SAVE and EXIT";
+        details.buttonTrue = "CONTINUE";
+        details.eventFalse = EventType.SaveAndExit;
+        details.eventTrue = EventType.MetaGameOpen;
+        details.modalState = ModalSubState.MetaGame;
+        details.restorePoint = RestorePoint.MetaOptions;
+        //open confirm
+        EventManager.i.PostNotification(EventType.ConfirmOpen, this, details, "TransitionUI.cs -> ExecuteClose");
     }
 
     /// <summary>

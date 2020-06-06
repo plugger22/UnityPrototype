@@ -161,6 +161,7 @@ namespace modalAPI
         public ModalSubState modalState;        //modal level to return to once outcome window closes (only for modallevel's 2+, ignore otherwise)
         public EventType eventFalse;            //event to run if buttonFalse pressed -> Optional, will be ignored if no event present
         public EventType eventTrue;             //event to run if buttonTrue pressed -> Optional, will be ignored if no event present
+        public RestorePoint restorePoint;       //if it's a Save and Exit situation, player given option to return to game after saving. This tells where to return to. Optional
 
         public ModalConfirmDetails()
         {
@@ -171,6 +172,7 @@ namespace modalAPI
             modalState = ModalSubState.None;
             eventFalse = EventType.None;
             eventTrue = EventType.None;
+            restorePoint = RestorePoint.None;
         }
     }
 
