@@ -397,6 +397,12 @@ public class FileManager : MonoBehaviour
         MetaInfoData data = GameManager.i.metaScript.GetMetaInfoData();
         if (data != null)
         {
+            int count = data.arrayOfMetaData[(int)MetaTabSide.Boss].Count;
+            if (count > 0)
+            {
+                
+                MetaData metaData = 
+            }
             write.metaGameData.listOfBoss = data.arrayOfMetaData[(int)MetaTabSide.Boss];
             write.metaGameData.listOfSubBoss1 = data.arrayOfMetaData[(int)MetaTabSide.SubBoss1];
             write.metaGameData.listOfSubBoss2 = data.arrayOfMetaData[(int)MetaTabSide.SubBoss2];
@@ -410,6 +416,8 @@ public class FileManager : MonoBehaviour
         write.metaData.transitionInfoData = GameManager.i.metaScript.GetTransitionInfoData();*/
     }
     #endregion
+
+
 
 
     #region Write Game Data
@@ -4174,6 +4182,56 @@ public class FileManager : MonoBehaviour
         return saveActor;
     }
     #endregion
+
+    #region  WriteIndividualMetaData
+    /// <summary>
+    /// subMethod to convert MetaData into a SaveMetaData class (excludes Sprite and Effects)
+    /// </summary>
+    /// <param name="metaData"></param>
+    /// <returns></returns>
+    private SaveMetaData WriteIndividualMetaData(MetaData metaData)
+    {
+        SaveMetaData saveData = new SaveMetaData();
+        saveData.metaName = metaData.metaName;
+        saveData.itemText = metaData.itemText;
+        saveData.textSelect = metaData.textSelect;
+        saveData.textDeselect = metaData.textDeselect;
+        saveData.textInsufficient = metaData.textInsufficient;
+        saveData.bottomText = metaData.bottomText;
+        saveData.inactiveText = metaData.inactiveText;
+        saveData.spriteName = metaData.spriteName;
+        saveData.priority = metaData.priority;
+        saveData.tabSide = metaData.tabSide;
+        saveData.tabTop = metaData.tabTop;
+        saveData.renownCost = metaData.renownCost;
+        saveData.sideLevel = metaData.sideLevel;
+        saveData.isActive = metaData.isActive;
+        saveData.isRecommended = metaData.isRecommended;
+        saveData.isCriteria = metaData.isCriteria;
+        saveData.isSelected = metaData.isSelected;
+        saveData.recommendedPriority = metaData.recommendedPriority;
+        saveData.data = metaData.data;
+        saveData.dataName = metaData.dataName;
+        saveData.dataTag = metaData.dataTag;
+        saveData.help = metaData.help;
+        saveData.tag0 = metaData.tag0;
+        saveData.tag1 = metaData.tag1;
+        saveData.tag2 = metaData.tag2;
+        saveData.tag3 = metaData.tag3;
+        if (metaData.listOfEffects.Count > 0)
+        {
+            for (int i = 0; i < metaData.listOfEffects.Count; i++)
+            {
+                Effect effect = metaData.listOfEffects[i];
+                if (effect != null)
+                { saveData.listOfEffects.Add(effect.name); }
+                else { Debug.LogWarningFormat("Invalid Effect (Null) for listOfEffects[{0}]", i); }
+            }
+        }
+        return saveData;
+    }
+    #endregion
+    
 
     #region ReadIndividualActor
     /// <summary>

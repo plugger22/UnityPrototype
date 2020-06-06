@@ -915,7 +915,7 @@ public class SaveMetaData
     public bool isCriteria;
     public bool isSelected;
     public MetaPriority recommendedPriority;
-    public List<string> listOfEffects;
+    public List<string> listOfEffects = new List<string>();
     public int data;
     public string dataName;
     public string dataTag;
