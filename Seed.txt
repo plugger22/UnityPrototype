@@ -1,0 +1,27 @@
+
+Dev seed 1502 -> Saturday, 6 June 2020 5:16 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 39697 -> Saturday, 6 June 2020 5:33 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 1247 -> Saturday, 6 June 2020 5:37 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 63634 -> Saturday, 6 June 2020 5:38 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38340 -> Saturday, 6 June 2020 5:39 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 49501 -> Saturday, 6 June 2020 5:41 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 36451 -> Saturday, 6 June 2020 5:45 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 13466 -> Saturday, 6 June 2020 5:55 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 43878 -> Saturday, 6 June 2020 5:59 PM
+City seed 5678 -> London, United Kingdom

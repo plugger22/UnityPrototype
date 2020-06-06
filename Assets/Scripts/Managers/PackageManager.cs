@@ -393,7 +393,7 @@ namespace packageAPI
         public bool isCriteria;                     //true if any criteria involved, false otherwise
         public bool isSelected;                     //used within MetaGameUI (if true has been selected by player)
         public MetaPriority recommendedPriority;    //recommendations selected on priority until renown runs out
-        public List<Effect> listOfEffects;          //effects that happen as a result of metaData being selected
+        [System.NonSerialized] public List<Effect> listOfEffects;          //effects that happen as a result of metaData being selected
         public int data;                            //used to iplement outcome (where a number is needed) 
         public string dataName;                     //used to implement outcome (where a name is needed)
         public string dataTag;                      //used to implement outcome (optional, eg. name of a secret/investigation/organisation)

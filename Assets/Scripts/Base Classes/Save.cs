@@ -27,7 +27,7 @@ public class Save
     public SaveTargetData targetData = new SaveTargetData();
     public SaveStatisticsData statisticsData = new SaveStatisticsData();
     public SaveGUIData guiData = new SaveGUIData();
-    public SaveMetaGameData metaData = new SaveMetaGameData();
+    public SaveMetaData metaData = new SaveMetaData();
 }
 
 #region Managers
@@ -227,11 +227,12 @@ public class SavePlayerData
 #endregion
 
 
-#region SaveMetaGameData
+#region SaveMetaData
 /// <summary>
 /// MetaGame data (save/load during metaGame)
 /// </summary>
-public class SaveMetaGameData
+[System.Serializable]
+public class SaveMetaData
 {
     //metaData
     public List<MetaData> listOfBoss = new List<MetaData>();

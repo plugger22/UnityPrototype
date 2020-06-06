@@ -83,7 +83,7 @@ public class FileManager : MonoBehaviour
         WriteTargetData();
         WriteStatisticsData();
         WriteGUIData();
-        WriteMetaGameData();
+        WriteMetaData();
     }
     #endregion
 
@@ -386,21 +386,27 @@ public class FileManager : MonoBehaviour
     #endregion
 
 
-    #region Write MetaGameData
+    #region Write MetaData
     /// <summary>
     /// MetaGame data (transition and metaGame UI data)
     /// </summary>
-    private void WriteMetaGameData()
+    private void WriteMetaData()
     {
         //MetaInfoData
         MetaInfoData data = GameManager.i.metaScript.GetMetaInfoData();
         if (data != null)
         {
             write.metaData.listOfBoss = data.arrayOfMetaData[(int)MetaTabSide.Boss];
+            write.metaData.listOfSubBoss1 = data.arrayOfMetaData[(int)MetaTabSide.SubBoss1];
+            write.metaData.listOfSubBoss2 = data.arrayOfMetaData[(int)MetaTabSide.SubBoss2];
+            write.metaData.listOfSubBoss3 = data.arrayOfMetaData[(int)MetaTabSide.SubBoss3];
+            write.metaData.listOfStatusData = data.listOfStatusData;
+            write.metaData.listOfRecommended = data.listOfRecommended;
+            write.metaData.selectedDefault = data.selectedDefault;
         }
         else { Debug.LogError("Invalid metaInfoData (Null)"); }
-        //TransitionInfoData
-        write.metaData.transitionInfoData = GameManager.i.metaScript.GetTransitionInfoData();
+        /*//TransitionInfoData
+        write.metaData.transitionInfoData = GameManager.i.metaScript.GetTransitionInfoData();*/
     }
     #endregion
 
