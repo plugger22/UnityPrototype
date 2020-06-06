@@ -226,6 +226,7 @@ public class InputManager : MonoBehaviour
             {
 
                 #region ModalStateNormal
+
                 case ModalState.Normal:
                     if (Input.GetButton("ExitLevel") == true)
                     {
@@ -429,6 +430,7 @@ public class InputManager : MonoBehaviour
                 #endregion
 
                 #region ModalStateModalUI
+
                 case ModalState.ModalUI:
                     //Hotkeys for Modal UI windows
                     switch (_modalSubState)

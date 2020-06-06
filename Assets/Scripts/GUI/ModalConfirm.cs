@@ -29,6 +29,7 @@ public class ModalConfirm : MonoBehaviour
 
     private bool result;                                    //outcome of button press, false for buttonFalse, true for button true. Retrieve by CheckResult()
 
+    private ModalConfirmDetails confirmDetails;
 
     /// <summary>
     /// provide a static reference to ModalConfirm that can be accessed from any script
@@ -60,6 +61,8 @@ public class ModalConfirm : MonoBehaviour
         ButtonInteraction interactRight = buttonTrue.GetComponent<ButtonInteraction>();
         if (interactRight != null)
         { interactRight.SetButton(EventType.ConfirmCloseRight); }
+        //details empty
+        confirmDetails = null;
         //buttons -> text components
         falseText = buttonFalseText.GetComponent<TextMeshProUGUI>();
         trueText = buttonTrueText.GetComponent<TextMeshProUGUI>();
@@ -107,6 +110,7 @@ public class ModalConfirm : MonoBehaviour
     {
         if (details != null)
         {
+            confirmDetails = details;
             //close tooltips
             GameManager.i.guiScript.SetTooltipsOff();
 
@@ -137,6 +141,10 @@ public class ModalConfirm : MonoBehaviour
 
         CloseConfirm();
         result = false;
+        //optional event to run on buttonFalse being clicked
+        if (confirmDetails.eventFalse != EventType.None)
+        { }
+
     }
 
 
@@ -148,6 +156,7 @@ public class ModalConfirm : MonoBehaviour
 
         CloseConfirm();
         result = true;
+        
     }
 
     /// <summary>

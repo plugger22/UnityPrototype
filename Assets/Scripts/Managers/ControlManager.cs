@@ -103,6 +103,7 @@ public class ControlManager : MonoBehaviour
     /// </summary>
     private void ProcessNewGame()
     {
+        Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessNewGame: ProcessNewGame selected{0}", "\n");
         //save existing game state
         gameState = GameManager.i.inputScript.GameState;
         //set background
@@ -118,6 +119,7 @@ public class ControlManager : MonoBehaviour
     /// </summary>
     private void ProcessNewGameOptions()
     {
+        Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessNewGameOptions: ProcessNewGameOptions selected{0}", "\n");
         //save existing game state
         gameState = GameManager.i.inputScript.GameState;
         //modal block
@@ -135,6 +137,7 @@ public class ControlManager : MonoBehaviour
     /// </summary>
     private void CloseNewGameOptions()
     {
+        Debug.LogFormat("[Ctrl] ControlManager.cs -> CloseNewGameOptions: CloseNewGameOptions selected{0}", "\n");
         //save existing game state
         gameState = GameManager.i.inputScript.GameState;
         //revert to playGame state by default
@@ -160,7 +163,7 @@ public class ControlManager : MonoBehaviour
     /// </summary>
     private void ProcessOptions(GameState state)
     {
-        Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessResumeGame: game OPTIONS selected{0}", "\n");
+        Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessOptions: game OPTIONS selected{0}", "\n");
         //modal block
         GameManager.i.guiScript.SetIsBlocked(true);
         //open Options background
@@ -177,6 +180,7 @@ public class ControlManager : MonoBehaviour
     /// </summary>
     private void CloseOptions()
     {
+        Debug.LogFormat("[Ctrl] ControlManager.cs -> CloseOptions: CloseOptions selected{0}", "\n");
         //revert to original game screen prior to Options being chosen
         GameManager.i.inputScript.GameState = gameState;
         //close background
@@ -247,15 +251,16 @@ public class ControlManager : MonoBehaviour
             //data Integrity check
             if (GameManager.i.isIntegrityCheck == true)
             { GameManager.i.validateScript.ExecuteIntegrityCheck(); }
-            //revert to playGame state by default
-            GameManager.i.inputScript.GameState = GameState.PlayGame;
             //close background
             GameManager.i.modalGUIScript.CloseBackgrounds();
-            GameManager.i.inputScript.ResetStates();
             //toggle of modal block
             GameManager.i.guiScript.SetIsBlocked(false);
             //show top bar UI at completion of meta game
             EventManager.i.PostNotification(EventType.TopBarShow, this, null, "MetaGameUI.cs -> Show TopBarUI");
+            //revert to playGame state by default
+            GameManager.i.inputScript.GameState = GameState.PlayGame;
+            //reset modal states back to normal
+            GameManager.i.inputScript.ResetStates();
         }
         else
         {
@@ -330,6 +335,7 @@ public class ControlManager : MonoBehaviour
     /// </summary>
     private void CloseLoadGame()
     {
+        Debug.LogFormat("[Ctrl] ControlManager.cs -> CloseLoadGame: CloseLoadGame selected{0}", "\n");
         //LoadAtStart
         if (GameManager.i.inputScript.GameState == GameState.LoadAtStart)
         {
@@ -383,6 +389,7 @@ public class ControlManager : MonoBehaviour
     /// </summary>
     private void ProcessEndCampaign()
     {
+        Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessEndCampaign: ProcessEndCampaign selected{0}", "\n");
         //close any Node tooltip
         GameManager.i.tooltipNodeScript.CloseTooltip("CityInfoUI.cs -> SetCityInfo");
         //modal block
@@ -400,6 +407,7 @@ public class ControlManager : MonoBehaviour
     /// </summary>
     private void CloseSaveGame()
     {
+        Debug.LogFormat("[Ctrl] ControlManager.cs -> CloseSaveGame: CloseSaveGame selected{0}", "\n");
         //Close any open background
         GameManager.i.modalGUIScript.CloseBackgrounds();
         //toggle of modal block

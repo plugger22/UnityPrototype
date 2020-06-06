@@ -159,6 +159,8 @@ namespace modalAPI
         public string buttonTrue;               //text of right button, default 'Yes', returns true if selected
         public int modalLevel;                  //modal level of outcome window, default 1
         public ModalSubState modalState;        //modal level to return to once outcome window closes (only for modallevel's 2+, ignore otherwise)
+        public EventType eventFalse;            //event to run if buttonFalse pressed -> Optional, will be ignored if no event present
+        public EventType eventTrue;             //event to run if buttonTrue pressed -> Optional, will be ignored if no event present
 
         public ModalConfirmDetails()
         {
@@ -167,6 +169,8 @@ namespace modalAPI
             buttonTrue = "Yes";
             modalLevel = 1;
             modalState = ModalSubState.None;
+            eventFalse = EventType.None;
+            eventTrue = EventType.None;
         }
     }
 
