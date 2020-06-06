@@ -204,6 +204,7 @@ public class FileManager : MonoBehaviour
                 ReadContactData();
                 ReadTargetData();
                 ReadStatisticsData();
+                ReadMetaGameData();
                 UpdateGUI(playerSide);
                 Debug.LogFormat("[Fil] FileManager.cs -> LoadSaveData: Saved Game Data has been LOADED{0}", "\n");
             }
@@ -396,13 +397,13 @@ public class FileManager : MonoBehaviour
         MetaInfoData data = GameManager.i.metaScript.GetMetaInfoData();
         if (data != null)
         {
-            write.metaData.listOfBoss = data.arrayOfMetaData[(int)MetaTabSide.Boss];
-            write.metaData.listOfSubBoss1 = data.arrayOfMetaData[(int)MetaTabSide.SubBoss1];
-            write.metaData.listOfSubBoss2 = data.arrayOfMetaData[(int)MetaTabSide.SubBoss2];
-            write.metaData.listOfSubBoss3 = data.arrayOfMetaData[(int)MetaTabSide.SubBoss3];
-            write.metaData.listOfStatusData = data.listOfStatusData;
-            write.metaData.listOfRecommended = data.listOfRecommended;
-            write.metaData.selectedDefault = data.selectedDefault;
+            write.metaGameData.listOfBoss = data.arrayOfMetaData[(int)MetaTabSide.Boss];
+            write.metaGameData.listOfSubBoss1 = data.arrayOfMetaData[(int)MetaTabSide.SubBoss1];
+            write.metaGameData.listOfSubBoss2 = data.arrayOfMetaData[(int)MetaTabSide.SubBoss2];
+            write.metaGameData.listOfSubBoss3 = data.arrayOfMetaData[(int)MetaTabSide.SubBoss3];
+            write.metaGameData.listOfStatusData = data.listOfStatusData;
+            write.metaGameData.listOfRecommended = data.listOfRecommended;
+            write.metaGameData.selectedDefault = data.selectedDefault;
         }
         else { Debug.LogError("Invalid metaInfoData (Null)"); }
         /*//TransitionInfoData
@@ -1984,6 +1985,15 @@ public class FileManager : MonoBehaviour
     }
     #endregion
 
+    #region Read MetaGame Data
+    /// <summary>
+    /// MetaGame related data
+    /// </summary>
+    private void ReadMetaGameData()
+    {
+
+    }
+    #endregion
 
     #region Read Game Data
     /// <summary>
@@ -4338,6 +4348,6 @@ public class FileManager : MonoBehaviour
     }
     #endregion
 
-
+    
     //new methods above here
 }

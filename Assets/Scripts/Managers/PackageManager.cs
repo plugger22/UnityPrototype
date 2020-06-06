@@ -371,7 +371,6 @@ namespace packageAPI
     /// <summary>
     /// ItemData equivalent for MetaGameUI
     /// </summary>
-    [System.Serializable]
     public class MetaData
     {
         public string metaName;                     //metaOption.name for reference and debugging purposes
@@ -381,7 +380,7 @@ namespace packageAPI
         public string textInsufficient;             //top text RHS if can't afford the renown required ("Not enough renown (need 2)")
         public string bottomText;
         public string inactiveText;                 //text shown if option isActive.False
-        [System.NonSerialized] public Sprite sprite;    //ItemData must have a sprite.
+        public Sprite sprite;                       //ItemData must have a sprite.
         public string spriteName;                       //used for serialization (store name and access sprite from dictOfSprites on load), ignore otherwise
         public MetaPriority priority;
         public MetaTabSide tabSide;                 //specify a side or top tab
@@ -393,7 +392,7 @@ namespace packageAPI
         public bool isCriteria;                     //true if any criteria involved, false otherwise
         public bool isSelected;                     //used within MetaGameUI (if true has been selected by player)
         public MetaPriority recommendedPriority;    //recommendations selected on priority until renown runs out
-        [System.NonSerialized] public List<Effect> listOfEffects;          //effects that happen as a result of metaData being selected
+        public List<Effect> listOfEffects;          //effects that happen as a result of metaData being selected
         public int data;                            //used to iplement outcome (where a number is needed) 
         public string dataName;                     //used to implement outcome (where a name is needed)
         public string dataTag;                      //used to implement outcome (optional, eg. name of a secret/investigation/organisation)

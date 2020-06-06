@@ -27,7 +27,7 @@ public class Save
     public SaveTargetData targetData = new SaveTargetData();
     public SaveStatisticsData statisticsData = new SaveStatisticsData();
     public SaveGUIData guiData = new SaveGUIData();
-    public SaveMetaData metaData = new SaveMetaData();
+    public SaveMetaGameData metaGameData = new SaveMetaGameData();
 }
 
 #region Managers
@@ -232,16 +232,16 @@ public class SavePlayerData
 /// MetaGame data (save/load during metaGame)
 /// </summary>
 [System.Serializable]
-public class SaveMetaData
+public class SaveMetaGameData
 {
     //metaData
-    public List<MetaData> listOfBoss = new List<MetaData>();
-    public List<MetaData> listOfSubBoss1 = new List<MetaData>();
-    public List<MetaData> listOfSubBoss2 = new List<MetaData>();
-    public List<MetaData> listOfSubBoss3 = new List<MetaData>();
-    public List<MetaData> listOfStatusData = new List<MetaData>();
-    public List<MetaData> listOfRecommended = new List<MetaData>();
-    public MetaData selectedDefault = new MetaData();
+    public List<SaveMetaData> listOfBoss = new List<SaveMetaData>();
+    public List<SaveMetaData> listOfSubBoss1 = new List<SaveMetaData>();
+    public List<SaveMetaData> listOfSubBoss2 = new List<SaveMetaData>();
+    public List<SaveMetaData> listOfSubBoss3 = new List<SaveMetaData>();
+    public List<SaveMetaData> listOfStatusData = new List<SaveMetaData>();
+    public List<SaveMetaData> listOfRecommended = new List<SaveMetaData>();
+    public SaveMetaData selectedDefault = new SaveMetaData();
     public TransitionInfoData transitionInfoData;
 }
 
@@ -876,6 +876,7 @@ public class SaveNpc
 }
 #endregion
 
+
 #region SaveMetaOption
 /// <summary>
 /// MetaOption.SO dynamic data
@@ -885,6 +886,44 @@ public class SaveMetaOption
 {
     public string optionName;
     public int statTimesSelected;
+}
+#endregion
+
+
+#region SaveMetaData
+/// <summary>
+/// MetaData packageManager data
+/// </summary>
+[System.Serializable]
+public class SaveMetaData
+{
+    public string metaName;
+    public string itemText;
+    public string textSelect;
+    public string textDeselect;
+    public string textInsufficient;
+    public string bottomText;
+    public string inactiveText;
+    public string spriteName;
+    public MetaPriority priority;
+    public MetaTabSide tabSide;
+    public MetaTabTop tabTop;
+    public int renownCost;
+    public int sideLevel;
+    public bool isActive;
+    public bool isRecommended;
+    public bool isCriteria;
+    public bool isSelected;
+    public MetaPriority recommendedPriority;
+    public List<string> listOfEffects;
+    public int data;
+    public string dataName;
+    public string dataTag;
+    public int help;
+    public string tag0;
+    public string tag1;
+    public string tag2;
+    public string tag3;
 }
 #endregion
 
