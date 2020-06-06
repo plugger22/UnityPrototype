@@ -83,6 +83,7 @@ public class FileManager : MonoBehaviour
         WriteTargetData();
         WriteStatisticsData();
         WriteGUIData();
+        WriteMetaGameData();
     }
     #endregion
 
@@ -385,6 +386,25 @@ public class FileManager : MonoBehaviour
     #endregion
 
 
+    #region Write MetaGameData
+    /// <summary>
+    /// MetaGame data (transition and metaGame UI data)
+    /// </summary>
+    private void WriteMetaGameData()
+    {
+        //MetaInfoData
+        MetaInfoData data = GameManager.i.metaScript.GetMetaInfoData();
+        if (data != null)
+        {
+            write.metaData.listOfBoss = data.arrayOfMetaData[(int)MetaTabSide.Boss];
+        }
+        else { Debug.LogError("Invalid metaInfoData (Null)"); }
+        //TransitionInfoData
+        write.metaData.transitionInfoData = GameManager.i.metaScript.GetTransitionInfoData();
+    }
+    #endregion
+
+
     #region Write Game Data
     /// <summary>
     /// Important Game data write to file
@@ -584,7 +604,7 @@ public class FileManager : MonoBehaviour
         Dictionary<string, MetaOption> dictOfMetaOptions = GameManager.i.dataScript.GetDictOfMetaOptions();
         if (dictOfMetaOptions != null)
         {
-            foreach(var metaOption in dictOfMetaOptions)
+            foreach (var metaOption in dictOfMetaOptions)
             {
                 if (metaOption.Value != null)
                 {
@@ -2180,48 +2200,48 @@ public class FileManager : MonoBehaviour
         #endregion
 
         #region organisations
-            string orgName;
-            List<Organisation> listOfCurrentOrganisations = new List<Organisation>();
-            for (int i = 0; i < read.dataData.listOfCurrentOrganisations.Count; i++)
+        string orgName;
+        List<Organisation> listOfCurrentOrganisations = new List<Organisation>();
+        for (int i = 0; i < read.dataData.listOfCurrentOrganisations.Count; i++)
+        {
+            orgName = read.dataData.listOfCurrentOrganisations[i];
+            if (string.IsNullOrEmpty(orgName) == false)
             {
-                orgName = read.dataData.listOfCurrentOrganisations[i];
-                if (string.IsNullOrEmpty(orgName) == false)
+                //get org from dict
+                Organisation org = GameManager.i.dataScript.GetOrganisaton(orgName);
+                if (org != null)
                 {
-                    //get org from dict
-                    Organisation org = GameManager.i.dataScript.GetOrganisaton(orgName);
-                    if (org != null)
+                    //get dynamic data
+                    SaveOrganisation saveOrg = read.dataData.listOfSaveOrganisations.Find(x => x.name.Equals(orgName, StringComparison.Ordinal));
+                    if (saveOrg != null)
                     {
-                        //get dynamic data
-                        SaveOrganisation saveOrg = read.dataData.listOfSaveOrganisations.Find(x => x.name.Equals(orgName, StringComparison.Ordinal));
-                        if (saveOrg != null)
-                        {
-                            //copy across dynamic data
-                            org.isContact = saveOrg.isContact;
-                            org.isCutOff = saveOrg.isCutOff;
-                            org.isSecretKnown = saveOrg.isSecretKnown;
-                            org.maxStat = saveOrg.maxStat;
-                            org.SetReputation(saveOrg.reputation);
-                            org.SetFreedom(saveOrg.freedom);
-                            org.timer = saveOrg.timer;
-                            //add org to list
-                            listOfCurrentOrganisations.Add(org);
-                        }
-                        else { Debug.LogWarningFormat("Invalid saveOrg in listOfSaveOrganisations for orgName \"{0}\"", orgName); }
+                        //copy across dynamic data
+                        org.isContact = saveOrg.isContact;
+                        org.isCutOff = saveOrg.isCutOff;
+                        org.isSecretKnown = saveOrg.isSecretKnown;
+                        org.maxStat = saveOrg.maxStat;
+                        org.SetReputation(saveOrg.reputation);
+                        org.SetFreedom(saveOrg.freedom);
+                        org.timer = saveOrg.timer;
+                        //add org to list
+                        listOfCurrentOrganisations.Add(org);
                     }
-                    else { Debug.LogWarningFormat("Invalid org (Null) for orgName \"{0}\"", orgName); }
+                    else { Debug.LogWarningFormat("Invalid saveOrg in listOfSaveOrganisations for orgName \"{0}\"", orgName); }
                 }
-                else { Debug.LogWarningFormat("Invalid orgName (Null or Empty) for listOfCurrentOrganisations[{0}]", i); }
+                else { Debug.LogWarningFormat("Invalid org (Null) for orgName \"{0}\"", orgName); }
             }
-            //update DM -> listOfCurrentOrganisations
-            GameManager.i.dataScript.SetListOfCurrentOrganisation(listOfCurrentOrganisations);
-            //OrgData lists
-            GameManager.i.dataScript.SetOrgData(read.dataData.listOfCureOrgData, OrganisationType.Cure);
-            GameManager.i.dataScript.SetOrgData(read.dataData.listOfContractOrgData, OrganisationType.Contract);
-            GameManager.i.dataScript.SetOrgData(read.dataData.listOfEmergencyOrgData, OrganisationType.Emergency);
-            GameManager.i.dataScript.SetOrgData(read.dataData.listOfHQOrgData, OrganisationType.HQ);
-            GameManager.i.dataScript.SetOrgData(read.dataData.listOfInfoOrgData, OrganisationType.Info);
-            //OrgInfoArray
-            GameManager.i.dataScript.SetOrgInfoArray(read.dataData.listOfOrgInfoData);
+            else { Debug.LogWarningFormat("Invalid orgName (Null or Empty) for listOfCurrentOrganisations[{0}]", i); }
+        }
+        //update DM -> listOfCurrentOrganisations
+        GameManager.i.dataScript.SetListOfCurrentOrganisation(listOfCurrentOrganisations);
+        //OrgData lists
+        GameManager.i.dataScript.SetOrgData(read.dataData.listOfCureOrgData, OrganisationType.Cure);
+        GameManager.i.dataScript.SetOrgData(read.dataData.listOfContractOrgData, OrganisationType.Contract);
+        GameManager.i.dataScript.SetOrgData(read.dataData.listOfEmergencyOrgData, OrganisationType.Emergency);
+        GameManager.i.dataScript.SetOrgData(read.dataData.listOfHQOrgData, OrganisationType.HQ);
+        GameManager.i.dataScript.SetOrgData(read.dataData.listOfInfoOrgData, OrganisationType.Info);
+        //OrgInfoArray
+        GameManager.i.dataScript.SetOrgInfoArray(read.dataData.listOfOrgInfoData);
         #endregion
 
         #region metaOptions

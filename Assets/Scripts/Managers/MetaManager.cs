@@ -888,6 +888,9 @@ public class MetaManager : MonoBehaviour
     // - - - TransitionUI ->  populate transitionInfoData package
     //
 
+    public TransitionInfoData GetTransitionInfoData()
+    { return transitionInfoData; }
+
     /// <summary>
     /// populate EndLevel part of transitionInfoData package
     /// </summary>

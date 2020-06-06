@@ -27,6 +27,7 @@ public class Save
     public SaveTargetData targetData = new SaveTargetData();
     public SaveStatisticsData statisticsData = new SaveStatisticsData();
     public SaveGUIData guiData = new SaveGUIData();
+    public SaveMetaGameData metaData = new SaveMetaGameData();
 }
 
 #region Managers
@@ -223,6 +224,26 @@ public class SavePlayerData
     public List<Investigation> listOfInvestigations = new List<Investigation>();
     public List<NodeActionData> listOfNodeActions = new List<NodeActionData>();
 }
+#endregion
+
+
+#region SaveMetaGameData
+/// <summary>
+/// MetaGame data (save/load during metaGame)
+/// </summary>
+public class SaveMetaGameData
+{
+    //metaData
+    public List<MetaData> listOfBoss = new List<MetaData>();
+    public List<MetaData> listOfSubBoss1 = new List<MetaData>();
+    public List<MetaData> listOfSubBoss2 = new List<MetaData>();
+    public List<MetaData> listOfSubBoss3 = new List<MetaData>();
+    public List<MetaData> listOfStatusData = new List<MetaData>();
+    public List<MetaData> listOfRecommended = new List<MetaData>();
+    public MetaData selectedDefault = new MetaData();
+    public TransitionInfoData transitionInfoData;
+}
+
 #endregion
 
 
