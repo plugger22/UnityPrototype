@@ -2016,6 +2016,9 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void ReadMetaGameData()
     {
+        //
+        // - - - MetaInfoData
+        //
         List<MetaData> listOfBoss = ReadListOfSaveMetaData(read.metaGameData.listOfBoss, "ListOfBoss");
         List<MetaData> listOfSubBoss1 = ReadListOfSaveMetaData(read.metaGameData.listOfSubBoss1, "ListOfSubBoss1");
         List<MetaData> listOfSubBoss2 = ReadListOfSaveMetaData(read.metaGameData.listOfSubBoss2, "ListOfSubBoss2");
@@ -2043,6 +2046,11 @@ public class FileManager : MonoBehaviour
         //Set metaInfoData
         GameManager.i.metaScript.SetMetaInfoData(metaInfoData);
         GameManager.i.metaUIScript.SetMetaInfoData(metaInfoData);
+        //
+        // - - - TransitionInfoData
+        //
+        TransitionInfoData transitionInfoData = new TransitionInfoData();
+        GameManager.i.transitionScript.SetTransitionInfoData(transitionInfoData);
     }
     #endregion
 
@@ -4374,7 +4382,7 @@ public class FileManager : MonoBehaviour
                     else { Debug.LogErrorFormat("Invalid effectName (Null or Empty) for saveMetaData.listOfEffects[{0}]", i); }
                 }
             }
-            Debug.LogError("Invalid saveMetaData.listOfEffects (Null)");
+            else { Debug.LogError("Invalid saveMetaData.listOfEffects (Null)"); }
         }
         else { Debug.LogWarning("Invalid saveMetaData (Null)"); }
         return metaData;
