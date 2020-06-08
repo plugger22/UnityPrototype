@@ -1,5 +1,6 @@
 ﻿using gameAPI;
 using modalAPI;
+using packageAPI;
 using UnityEngine;
 
 /// <summary>
@@ -102,6 +103,7 @@ public class ControlManager : MonoBehaviour
                 break;
         }
     }
+
 
     //
     // - - - Event methods - - -
@@ -367,7 +369,25 @@ public class ControlManager : MonoBehaviour
         if (GameManager.i.fileScript.ReadSaveData() == true)
         {
             //load data into game
-            GameManager.i.fileScript.LoadSaveData();
+            LoadGameState loadGameState = GameManager.i.fileScript.LoadSaveData();
+            if (loadGameState != null)
+            {
+                //standard load game drops you straight into gameState.PlayGame
+                if (loadGameState.gameState != GameState.PlayGame)
+                {
+                    //special cases
+                    switch (loadGameState.gameState)
+                    {
+                        case GameState.MetaGame:
+                            //MetaGame requires special handling
+                            restorePoint = loadGameState.restorePoint;
+                            ProcessResumeMetaGame();
+                            break;
+                        default: Debug.LogWarningFormat("Unrecognised gameState \"{0}\"", loadGameState.gameState); break;
+                    }
+                }
+            }
+            else { Debug.LogError("Invalid loadGameState (Null)"); }
         }
         //how long did it take?
         long timeElapsed = GameManager.i.testScript.StopTimer();
@@ -398,7 +418,7 @@ public class ControlManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Save the current game
+    /// Save the current game (Normal save operation during gameState.PlayGame)
     /// </summary>
     private void ProcessSaveGame(GameState state)
     {
@@ -421,7 +441,7 @@ public class ControlManager : MonoBehaviour
         { GameManager.i.connScript.RestoreConnections(); }
         //Debug -> time load game process
         GameManager.i.testScript.StartTimer();
-        GameManager.i.fileScript.WriteSaveData();
+        GameManager.i.fileScript.WriteSaveData(new LoadGameState() { gameState = GameState.PlayGame, restorePoint = RestorePoint.None });
         GameManager.i.fileScript.SaveGame();
         //how long did it take?
         long timeElapsed = GameManager.i.testScript.StopTimer();
@@ -429,13 +449,14 @@ public class ControlManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Save the current game and Exit. Used during MetaGame
+    /// Save the current game and Exit. Special Save operation during gameState.MetaGame)
     /// </summary>
     private void ProcessSaveAndExit(RestorePoint restorePointInput)
     {
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessSaveAndExit: Save and Exit selected{0}", "\n");
-        //save restore point in case user changes their mind
+        //save restore point in case user changes their mind (update InputManager.cs as save/load is keyed off this value)
         restorePoint = restorePointInput;
+        GameManager.i.inputScript.RestorePoint = restorePointInput;
         //toggle on modal block
         GameManager.i.guiScript.SetIsBlocked(true);
         //Save Game -> open background
@@ -446,7 +467,7 @@ public class ControlManager : MonoBehaviour
         GameManager.i.inputScript.GameState = GameState.SaveAndExit;
         //Debug -> time load game process
         GameManager.i.testScript.StartTimer();
-        GameManager.i.fileScript.WriteSaveData();
+        GameManager.i.fileScript.WriteSaveData(new LoadGameState() { gameState = GameState.MetaGame, restorePoint = restorePointInput });
         GameManager.i.fileScript.SaveGame();
         //how long did it take?
         long timeElapsed = GameManager.i.testScript.StopTimer();

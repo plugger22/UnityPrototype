@@ -388,6 +388,26 @@ public class LoadManager : MonoBehaviour
         listOfEffects.AddRange(arrayOfEffectsTeams);
         listOfEffects.AddRange(arrayOfEffectsTopics);
         arrayOfEffects = listOfEffects.ToArray();
+        numArray = arrayOfEffects.Length;
+        Debug.LogFormat("[Loa] InitialiseStart -> arrayOfEffects has {0} entries{1}", numArray, "\n");
+        //add to dictOfEffects
+        Dictionary<string, Effect> dictOfEffects = GameManager.i.dataScript.GetDictOfEffects();
+        if (dictOfEffects != null)
+        {
+            for (int i = 0; i < numArray; i++)
+            {
+                Effect effect = arrayOfEffects[i];
+                if (effect != null)
+                {
+                    try { dictOfEffects.Add(effect.name, effect); }
+                    catch (ArgumentException)
+                    { Debug.LogErrorFormat("Duplicate record exists for arrayOfEffects[{0}], effect.name \"{1}\"", i, effect.name); }
+                }
+                else { Debug.LogErrorFormat("Invalid effect (Null) for arrayOfEffects[{0}]", i); }
+            }
+            Debug.AssertFormat(dictOfEffects.Count == numArray, "Mismatch for dictOfEffects ({0} records) and arrayOfEffects ({1} records)", dictOfEffects.Count, numArray);
+        }
+        else { Debug.LogError("Invalid dictOfEffects (Null)"); }
         //check master array
         numArray = arrayOfEffects.Length;
         if (numArray > 0)

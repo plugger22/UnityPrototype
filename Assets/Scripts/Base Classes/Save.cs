@@ -10,6 +10,7 @@ using System.Collections.Generic;
 [System.Serializable]
 public class Save
 {
+    public SaveGameStatus gameStatus = new SaveGameStatus();
     public SaveCampaignData campaignData = new SaveCampaignData();
     public SaveDataData dataData = new SaveDataData();
     public SaveOptionData optionData = new SaveOptionData();
@@ -34,6 +35,19 @@ public class Save
 //
 // - - - Managers - - -
 //
+
+#region SaveGameStatus
+/// <summary>
+/// GameStatus -> used to restore game correctly, eg. coul be the middle of a MetaGame, for example
+/// </summary>
+[System.Serializable]
+public class SaveGameStatus
+{
+    public GameState gameState;
+    public RestorePoint restorePoint;                   //only relevant if gameState.MetaGame. Ignored otherwise.
+}
+#endregion
+
 
 #region SaveCampaignData
 /// <summary>

@@ -30,6 +30,7 @@ public class ModalStateData
 public class InputManager : MonoBehaviour
 {
     private GameState _gameState;                                   //overall big picture game state
+    private RestorePoint _restorePoint;
     private ModalState _modalState;                                 //main modal state status
     private ModalSubState _modalSubState;                           //sub state for when game state is 'ModalUI'
     private ModalInfoSubState _modalInfoState;                      //sub sub state of ModalSubState.InfoDisplay -> what type of info?
@@ -40,12 +41,13 @@ public class InputManager : MonoBehaviour
     private ModalReviewSubState _modalReviewState;                  //sub state for ModalReviewUI
 
 
-
+    #region Initialise
     public void Initialise(GameState state)
     {
         /*GameState = GameState.StartUp;*/
         ModalState = ModalState.Normal;
     }
+    #endregion
 
     #region Properties
     public GameState GameState
@@ -56,6 +58,20 @@ public class InputManager : MonoBehaviour
             _gameState = value;
             Debug.LogFormat("[Inp] InputManager: GameState now {0}{1}", _gameState, "\n");
         }
+    }
+
+    /// <summary>
+    /// only used during MetaGame to restore processing to the correct place in the sequence
+    /// </summary>
+    public RestorePoint RestorePoint
+    {
+        get { return _restorePoint; }
+        set
+        {
+            _restorePoint = value;
+            Debug.LogFormat("[Inp] InputManager: RestorePoint now {0}{1}", _restorePoint, "\n");
+        }
+
     }
 
     //needs to be updated whenever changed
@@ -723,6 +739,8 @@ public class InputManager : MonoBehaviour
         }
     }
 
+
+    #region ProcessMouseWheelInput
     /// <summary>
     /// Handles mouse wheel input exclusively. Change is +ve if UP (+0.1), -ve if DOWN (-0.1)
     /// </summary>
@@ -810,6 +828,7 @@ public class InputManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
 
     #region DisplayGameState
@@ -824,6 +843,7 @@ public class InputManager : MonoBehaviour
         builder.Append(" Game States");
         builder.AppendLine(); builder.AppendLine();
         builder.AppendFormat(" GameState -> {0}{1}", GameState, "\n");
+        builder.AppendFormat(" RestorePoint -> {0}{1}", RestorePoint, "\n");
         builder.AppendFormat(" ModalState -> {0}{1}", ModalState, "\n");
         builder.AppendFormat(" ModalSubState -> {0}{1}", ModalSubState, "\n");
         builder.AppendFormat(" ModalLevel -> {0}{1}", modalLevel, "\n");

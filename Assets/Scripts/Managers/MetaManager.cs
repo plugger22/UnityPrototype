@@ -196,6 +196,17 @@ public class MetaManager : MonoBehaviour
     public MetaInfoData GetMetaInfoData()
     { return metaInfoData; }
 
+    /// <summary>
+    /// Used for Save/Load to recreate metaInfoData (not really needed but done for completion's sake)
+    /// </summary>
+    /// <param name="data"></param>
+    public void SetMetaInfoData(MetaInfoData data)
+    {
+        if (data != null)
+        { metaInfoData = data; }
+        else { Debug.LogError("Invalid metaInfoData (Null)"); }
+    }
+
     //
     // - - - MetaGameOptions
     //
@@ -683,6 +694,7 @@ public class MetaManager : MonoBehaviour
                             dataName = metaOption.dataName,
                             dataTag = metaOption.dataTag,
                             sprite = metaOption.sprite,
+                            spriteName = metaOption.sprite.name,
                             isActive = metaOption.isActive,
                             isRecommended = metaOption.isRecommended,
                             isSelected = false,
@@ -787,6 +799,7 @@ public class MetaManager : MonoBehaviour
                             bottomText = string.Format("Your {0}<br><br><b>{1}</b><br><br>have anything for you currently", leader, GameManager.Formatt("Does Not", ColourType.salmonText)),
                             sideLevel = level,
                             sprite = GameManager.i.guiScript.infoSprite,
+                            spriteName = GameManager.i.guiScript.infoSprite.name,
                             isActive = false,
                             isRecommended = false,
                             isSelected = false,
@@ -848,6 +861,7 @@ public class MetaManager : MonoBehaviour
                         bottomText = "<b>There are no Conditions, Secrets, Investigations or contacts with Organisations that will carry over to the next city</b>",
                         sideLevel = level,
                         sprite = GameManager.i.guiScript.infoSprite,
+                        spriteName = GameManager.i.guiScript.infoSprite.name,
                         isActive = false,
                         isRecommended = false,
                         isSelected = false,
@@ -868,6 +882,7 @@ public class MetaManager : MonoBehaviour
                     bottomText = "<b>Any options that you select will be shown here</b>",
                     sideLevel = level,
                     sprite = GameManager.i.guiScript.infoSprite,
+                    spriteName = GameManager.i.guiScript.infoSprite.name,
                     isActive = false,
                     isRecommended = false,
                     isSelected = false,
@@ -930,6 +945,8 @@ public class MetaManager : MonoBehaviour
     {
 
     }
+
+
 
     //new methods above here
 }

@@ -1163,6 +1163,15 @@ namespace packageAPI
 
     }
 
+    /// <summary>
+    /// Used to pass saved Game state to ControlManager.cs -> ProcessLoadGame via FileManager.cs -> LoadSaveData
+    /// </summary>
+    public class LoadGameState
+    {
+        public GameState gameState;
+        public RestorePoint restorePoint;
+    }
+
 
     //new classes above here
 }

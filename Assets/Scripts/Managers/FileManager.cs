@@ -62,10 +62,11 @@ public class FileManager : MonoBehaviour
     /// <summary>
     /// copy inGame data to saveData
     /// </summary>
-    public void WriteSaveData()
+    public void WriteSaveData(LoadGameState loadGameState)
     {
         write = new Save();
         //Sequentially write data
+        WriteGameStatus(loadGameState);
         WriteDataData();
         WriteCampaignData();
         WriteOptionData();
@@ -83,7 +84,9 @@ public class FileManager : MonoBehaviour
         WriteTargetData();
         WriteStatisticsData();
         WriteGUIData();
-        WriteMetaData();
+        //only do so if gameState.MetaGame
+        if (write.gameStatus.gameState == GameState.MetaGame)
+        { WriteMetaData(); }
     }
     #endregion
 
@@ -174,14 +177,17 @@ public class FileManager : MonoBehaviour
     #region Load Save Data
     /// <summary>
     /// Load data from Save file back into game
+    /// Returns LoadGameState to enable ControlManager.cs -> ProcessLoadGame to restore game to the correct place, eg. normal gameState.playGame or a specific restore point in the MetaGame sequence
     /// </summary>
-    public void LoadSaveData()
+    public LoadGameState LoadSaveData()
     {
+        LoadGameState loadGameState = new LoadGameState();
         if (read != null)
         {
             GlobalSide playerSide = GameManager.i.dataScript.GetGlobalSide(read.gameData.playerSide);
             if (playerSide != null)
             {
+                loadGameState.gameState = read.gameStatus.gameState;
                 //side (player) at start
                 ReadOptionData();
                 ReadDataData();
@@ -204,18 +210,36 @@ public class FileManager : MonoBehaviour
                 ReadContactData();
                 ReadTargetData();
                 ReadStatisticsData();
-                ReadMetaGameData();
                 UpdateGUI(playerSide);
+                //only read metaGame back in if it's a metaGame save
+                if (read.gameStatus.gameState == GameState.MetaGame)
+                {
+                    ReadMetaGameData();
+                    loadGameState.restorePoint = read.gameStatus.restorePoint;
+                }
                 Debug.LogFormat("[Fil] FileManager.cs -> LoadSaveData: Saved Game Data has been LOADED{0}", "\n");
             }
             else { Debug.LogError("Invalid playerSide (Null)"); }
         }
+        return loadGameState;
     }
     #endregion
 
     //
     // - - - Write - - -
     //
+
+    #region WriteGameStatus
+    /// <summary>
+    /// records game status in order to know whether a normal save/load operation (gameState.playGame) or a MetaGame one (gameState.MetaGame and restorePoint required)
+    /// </summary>
+    private void WriteGameStatus(LoadGameState loadGameState)
+    {
+        write.gameStatus.gameState = loadGameState.gameState;
+        write.gameStatus.restorePoint = loadGameState.restorePoint;
+    }
+    #endregion
+
 
     #region Write Campaign Data
     /// <summary>
@@ -398,11 +422,11 @@ public class FileManager : MonoBehaviour
         if (data != null)
         {
             write.metaGameData.listOfBoss = WriteListOfMetaData(data.arrayOfMetaData[(int)MetaTabSide.Boss], "listOfBoss");
-            write.metaGameData.listOfSubBoss1 = WriteListOfMetaData(data.arrayOfMetaData[(int)MetaTabSide.SubBoss1], "listOfSbBoss1");
-            write.metaGameData.listOfSubBoss2 = WriteListOfMetaData(data.arrayOfMetaData[(int)MetaTabSide.SubBoss2], "listOfSbBoss2");
-            write.metaGameData.listOfSubBoss3 = WriteListOfMetaData(data.arrayOfMetaData[(int)MetaTabSide.SubBoss3], "listOfSbBoss3");
+            write.metaGameData.listOfSubBoss1 = WriteListOfMetaData(data.arrayOfMetaData[(int)MetaTabSide.SubBoss1], "listOfSubBoss1");
+            write.metaGameData.listOfSubBoss2 = WriteListOfMetaData(data.arrayOfMetaData[(int)MetaTabSide.SubBoss2], "listOfSubBoss2");
+            write.metaGameData.listOfSubBoss3 = WriteListOfMetaData(data.arrayOfMetaData[(int)MetaTabSide.SubBoss3], "listOfSubBoss3");
             write.metaGameData.listOfStatusData = WriteListOfMetaData(data.listOfStatusData, "listOfStatusData");
-            write.metaGameData.listOfStatusData = WriteListOfMetaData(data.listOfRecommended, "listOfRecommended");
+            write.metaGameData.listOfRecommended = WriteListOfMetaData(data.listOfRecommended, "listOfRecommended");
             write.metaGameData.selectedDefault = WriteIndividualMetaData(data.selectedDefault);
         }
         else { Debug.LogError("Invalid metaInfoData (Null)"); }
@@ -410,8 +434,6 @@ public class FileManager : MonoBehaviour
         write.metaData.transitionInfoData = GameManager.i.metaScript.GetTransitionInfoData();*/
     }
     #endregion
-
-
 
 
     #region Write Game Data
@@ -1987,15 +2009,43 @@ public class FileManager : MonoBehaviour
     }
     #endregion
 
+
     #region Read MetaGame Data
     /// <summary>
     /// MetaGame related data
     /// </summary>
     private void ReadMetaGameData()
     {
-
+        List<MetaData> listOfBoss = ReadListOfSaveMetaData(read.metaGameData.listOfBoss, "ListOfBoss");
+        List<MetaData> listOfSubBoss1 = ReadListOfSaveMetaData(read.metaGameData.listOfSubBoss1, "ListOfSubBoss1");
+        List<MetaData> listOfSubBoss2 = ReadListOfSaveMetaData(read.metaGameData.listOfSubBoss2, "ListOfSubBoss2");
+        List<MetaData> listOfSubBoss3 = ReadListOfSaveMetaData(read.metaGameData.listOfSubBoss3, "ListOfSubBoss3");
+        List<MetaData> listOfStatusData = ReadListOfSaveMetaData(read.metaGameData.listOfStatusData, "ListOfStatusData");
+        List<MetaData> listOfRecommended = ReadListOfSaveMetaData(read.metaGameData.listOfRecommended, "ListOfRecommended");
+        MetaData selectedDefault = ReadIndividualSaveMetaData(read.metaGameData.selectedDefault);
+        //error checks
+        if (listOfBoss == null) { Debug.LogError("Invalid listOfBoss (Null)"); }
+        if (listOfSubBoss1 == null) { Debug.LogError("Invalid listOfSubBoss1 (Null)"); }
+        if (listOfSubBoss2 == null) { Debug.LogError("Invalid listOfSubBoss2 (Null)"); }
+        if (listOfSubBoss3 == null) { Debug.LogError("Invalid listOfSubBoss3 (Null)"); }
+        if (listOfStatusData == null) { Debug.LogError("Invalid listOfStatusData (Null)"); }
+        if (listOfRecommended == null) { Debug.LogError("Invalid listOfRecommended (Null)"); }
+        if (selectedDefault == null) { Debug.LogError("Invalid selectedDefault (Null)"); }
+        //populate MetaInfoData
+        MetaInfoData metaInfoData = new MetaInfoData();
+        metaInfoData.arrayOfMetaData[(int)MetaTabSide.Boss] = listOfBoss;
+        metaInfoData.arrayOfMetaData[(int)MetaTabSide.SubBoss1] = listOfSubBoss1;
+        metaInfoData.arrayOfMetaData[(int)MetaTabSide.SubBoss2] = listOfSubBoss2;
+        metaInfoData.arrayOfMetaData[(int)MetaTabSide.SubBoss3] = listOfSubBoss3;
+        metaInfoData.listOfStatusData = listOfStatusData;
+        metaInfoData.listOfRecommended = listOfRecommended;
+        metaInfoData.selectedDefault = selectedDefault;
+        //Set metaInfoData
+        GameManager.i.metaScript.SetMetaInfoData(metaInfoData);
+        GameManager.i.metaUIScript.SetMetaInfoData(metaInfoData);
     }
     #endregion
+
 
     #region Read Game Data
     /// <summary>
@@ -4316,8 +4366,9 @@ public class FileManager : MonoBehaviour
                     {
                         Effect effect = GameManager.i.dataScript.GetEffect(effectName);
                         if (effect != null)
-                        { metaData.listOfEffects.Add(effect);
- }
+                        {
+                            metaData.listOfEffects.Add(effect);
+                        }
                         else { Debug.LogErrorFormat("Invalid Effect (Null) for effectName \"{0}\"", effectName); }
                     }
                     else { Debug.LogErrorFormat("Invalid effectName (Null or Empty) for saveMetaData.listOfEffects[{0}]", i); }
@@ -4347,7 +4398,7 @@ public class FileManager : MonoBehaviour
             {
                 for (int i = 0; i < count; i++)
                 {
-                SaveMetaData saveMetaData = listOfSaveMetaData[i];
+                    SaveMetaData saveMetaData = listOfSaveMetaData[i];
                     if (saveMetaData != null)
                     {
                         MetaData metaData = ReadIndividualSaveMetaData(saveMetaData);
