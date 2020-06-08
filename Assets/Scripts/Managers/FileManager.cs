@@ -397,19 +397,13 @@ public class FileManager : MonoBehaviour
         MetaInfoData data = GameManager.i.metaScript.GetMetaInfoData();
         if (data != null)
         {
-            int count = data.arrayOfMetaData[(int)MetaTabSide.Boss].Count;
-            if (count > 0)
-            {
-                
-                MetaData metaData = 
-            }
-            write.metaGameData.listOfBoss = data.arrayOfMetaData[(int)MetaTabSide.Boss];
-            write.metaGameData.listOfSubBoss1 = data.arrayOfMetaData[(int)MetaTabSide.SubBoss1];
-            write.metaGameData.listOfSubBoss2 = data.arrayOfMetaData[(int)MetaTabSide.SubBoss2];
-            write.metaGameData.listOfSubBoss3 = data.arrayOfMetaData[(int)MetaTabSide.SubBoss3];
-            write.metaGameData.listOfStatusData = data.listOfStatusData;
-            write.metaGameData.listOfRecommended = data.listOfRecommended;
-            write.metaGameData.selectedDefault = data.selectedDefault;
+            write.metaGameData.listOfBoss = WriteListOfMetaData(data.arrayOfMetaData[(int)MetaTabSide.Boss], "listOfBoss");
+            write.metaGameData.listOfSubBoss1 = WriteListOfMetaData(data.arrayOfMetaData[(int)MetaTabSide.SubBoss1], "listOfSbBoss1");
+            write.metaGameData.listOfSubBoss2 = WriteListOfMetaData(data.arrayOfMetaData[(int)MetaTabSide.SubBoss2], "listOfSbBoss2");
+            write.metaGameData.listOfSubBoss3 = WriteListOfMetaData(data.arrayOfMetaData[(int)MetaTabSide.SubBoss3], "listOfSbBoss3");
+            write.metaGameData.listOfStatusData = WriteListOfMetaData(data.listOfStatusData, "listOfStatusData");
+            write.metaGameData.listOfStatusData = WriteListOfMetaData(data.listOfRecommended, "listOfRecommended");
+            write.metaGameData.selectedDefault = WriteIndividualMetaData(data.selectedDefault);
         }
         else { Debug.LogError("Invalid metaInfoData (Null)"); }
         /*//TransitionInfoData
@@ -4185,53 +4179,90 @@ public class FileManager : MonoBehaviour
 
     #region  WriteIndividualMetaData
     /// <summary>
-    /// subMethod to convert MetaData into a SaveMetaData class (excludes Sprite and Effects)
+    /// subMethod to convert MetaData into a SaveMetaData class (excludes Sprite and Effects). Returns empty SaveMetaData if metaData parameter null or empty
     /// </summary>
     /// <param name="metaData"></param>
     /// <returns></returns>
     private SaveMetaData WriteIndividualMetaData(MetaData metaData)
     {
         SaveMetaData saveData = new SaveMetaData();
-        saveData.metaName = metaData.metaName;
-        saveData.itemText = metaData.itemText;
-        saveData.textSelect = metaData.textSelect;
-        saveData.textDeselect = metaData.textDeselect;
-        saveData.textInsufficient = metaData.textInsufficient;
-        saveData.bottomText = metaData.bottomText;
-        saveData.inactiveText = metaData.inactiveText;
-        saveData.spriteName = metaData.spriteName;
-        saveData.priority = metaData.priority;
-        saveData.tabSide = metaData.tabSide;
-        saveData.tabTop = metaData.tabTop;
-        saveData.renownCost = metaData.renownCost;
-        saveData.sideLevel = metaData.sideLevel;
-        saveData.isActive = metaData.isActive;
-        saveData.isRecommended = metaData.isRecommended;
-        saveData.isCriteria = metaData.isCriteria;
-        saveData.isSelected = metaData.isSelected;
-        saveData.recommendedPriority = metaData.recommendedPriority;
-        saveData.data = metaData.data;
-        saveData.dataName = metaData.dataName;
-        saveData.dataTag = metaData.dataTag;
-        saveData.help = metaData.help;
-        saveData.tag0 = metaData.tag0;
-        saveData.tag1 = metaData.tag1;
-        saveData.tag2 = metaData.tag2;
-        saveData.tag3 = metaData.tag3;
-        if (metaData.listOfEffects.Count > 0)
+        if (metaData != null)
         {
-            for (int i = 0; i < metaData.listOfEffects.Count; i++)
+            saveData.metaName = metaData.metaName;
+            saveData.itemText = metaData.itemText;
+            saveData.textSelect = metaData.textSelect;
+            saveData.textDeselect = metaData.textDeselect;
+            saveData.textInsufficient = metaData.textInsufficient;
+            saveData.bottomText = metaData.bottomText;
+            saveData.inactiveText = metaData.inactiveText;
+            saveData.spriteName = metaData.spriteName;
+            saveData.priority = metaData.priority;
+            saveData.tabSide = metaData.tabSide;
+            saveData.tabTop = metaData.tabTop;
+            saveData.renownCost = metaData.renownCost;
+            saveData.sideLevel = metaData.sideLevel;
+            saveData.isActive = metaData.isActive;
+            saveData.isRecommended = metaData.isRecommended;
+            saveData.isCriteria = metaData.isCriteria;
+            saveData.isSelected = metaData.isSelected;
+            saveData.recommendedPriority = metaData.recommendedPriority;
+            saveData.data = metaData.data;
+            saveData.dataName = metaData.dataName;
+            saveData.dataTag = metaData.dataTag;
+            saveData.help = metaData.help;
+            saveData.tag0 = metaData.tag0;
+            saveData.tag1 = metaData.tag1;
+            saveData.tag2 = metaData.tag2;
+            saveData.tag3 = metaData.tag3;
+            if (metaData.listOfEffects.Count > 0)
             {
-                Effect effect = metaData.listOfEffects[i];
-                if (effect != null)
-                { saveData.listOfEffects.Add(effect.name); }
-                else { Debug.LogWarningFormat("Invalid Effect (Null) for listOfEffects[{0}]", i); }
+                for (int i = 0; i < metaData.listOfEffects.Count; i++)
+                {
+                    Effect effect = metaData.listOfEffects[i];
+                    if (effect != null)
+                    { saveData.listOfEffects.Add(effect.name); }
+                    else { Debug.LogWarningFormat("Invalid Effect (Null) for listOfEffects[{0}]", i); }
+                }
             }
         }
         return saveData;
     }
     #endregion
-    
+
+    #region WriteListOfMetaData
+    /// <summary>
+    /// Takes a list of MetaData and returns a list of SaveMetaData. If MetaData list Null or Empty, returns an empty SaveMetaData list
+    /// 'listName' is name of list for debugging purposes in case of an error
+    /// </summary>
+    /// <param name="listOfMetaData"></param>
+    /// <returns></returns>
+    private List<SaveMetaData> WriteListOfMetaData(List<MetaData> listOfMetaData, string listName)
+    {
+        List<SaveMetaData> listOfSaveMetaData = new List<SaveMetaData>();
+        if (listOfMetaData != null)
+        {
+            int count = listOfMetaData.Count;
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    MetaData metaData = listOfMetaData[i];
+                    if (metaData != null)
+                    {
+                        SaveMetaData saveData = WriteIndividualMetaData(metaData);
+                        if (saveData != null)
+                        { listOfSaveMetaData.Add(saveData); }
+                    }
+                    else { Debug.LogWarningFormat("Invalid metaData (Null) for listOfMetaData[{0}] for {1}", i, listName); }
+                }
+            }
+            else { Debug.LogWarningFormat("WriteListOfMetaData -> \"{0}\" Empty, Info only", listName); }
+        }
+        else { Debug.LogWarningFormat("Invalid listOfMetaData (Null) for {0}", listName); }
+        return listOfSaveMetaData;
+    }
+    #endregion
+
 
     #region ReadIndividualActor
     /// <summary>
@@ -4406,6 +4437,6 @@ public class FileManager : MonoBehaviour
     }
     #endregion
 
-    
+
     //new methods above here
 }
