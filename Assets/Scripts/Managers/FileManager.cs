@@ -4253,6 +4253,7 @@ public class FileManager : MonoBehaviour
                         SaveMetaData saveData = WriteIndividualMetaData(metaData);
                         if (saveData != null)
                         { listOfSaveMetaData.Add(saveData); }
+                        else { Debug.LogWarningFormat("Invalid saveData for listOfMetaData[{0}]", i); }
                     }
                     else { Debug.LogWarningFormat("Invalid metaData (Null) for listOfMetaData[{0}] for {1}", i, listName); }
                 }
@@ -4313,8 +4314,12 @@ public class FileManager : MonoBehaviour
                     effectName = saveMetaData.listOfEffects[i];
                     if (string.IsNullOrEmpty(effectName) == false)
                     {
-                        Effect effect = GameManager.i.dataScript.GetEffect
-                            }
+                        Effect effect = GameManager.i.dataScript.GetEffect(effectName);
+                        if (effect != null)
+                        { metaData.listOfEffects.Add(effect);
+ }
+                        else { Debug.LogErrorFormat("Invalid Effect (Null) for effectName \"{0}\"", effectName); }
+                    }
                     else { Debug.LogErrorFormat("Invalid effectName (Null or Empty) for saveMetaData.listOfEffects[{0}]", i); }
                 }
             }
@@ -4325,6 +4330,41 @@ public class FileManager : MonoBehaviour
     }
     #endregion
 
+    #region ReadListOfSaveMetaData
+    /// <summary>
+    /// Takes a list of SaveMetaData and returns a list of MetaData. If listOFSaveMetaData parameter is null or Empty, returns an empty listOfMetaData
+    /// 'listName' is name of list for debugging purposes in case of an error
+    /// </summary>
+    /// <param name="listOfSaveMetaData"></param>
+    /// <returns></returns>
+    private List<MetaData> ReadListOfSaveMetaData(List<SaveMetaData> listOfSaveMetaData, string listName)
+    {
+        List<MetaData> listOfMetaData = new List<MetaData>();
+        if (listOfSaveMetaData != null)
+        {
+            int count = listOfSaveMetaData.Count;
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                SaveMetaData saveMetaData = listOfSaveMetaData[i];
+                    if (saveMetaData != null)
+                    {
+                        MetaData metaData = ReadIndividualSaveMetaData(saveMetaData);
+                        if (metaData != null)
+                        { listOfMetaData.Add(metaData); }
+                        else { Debug.LogWarningFormat("Invalid metaData (Null) for listOfSaveMetaData[{0}]", i); }
+                    }
+                    else { Debug.LogWarningFormat("Invalid saveMetaData (Null) for listOfSaveMetaData[{0}]", i); }
+                }
+            }
+            else { Debug.LogWarningFormat("ReadListOfMetaData -> \"{0}\" Empty, Info only", listName); }
+        }
+        else { Debug.LogWarningFormat("Invalid listOfSaveMetaData (Null) for {0}", listName); }
+        return listOfMetaData;
+    }
+
+    #endregion
 
     #region ReadIndividualActor
     /// <summary>

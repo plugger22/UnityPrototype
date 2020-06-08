@@ -222,6 +222,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, Message> dictOfPendingMessages = new Dictionary<int, Message>();                    //Key -> msgID, Value -> Message
     private Dictionary<int, Message> dictOfCurrentMessages = new Dictionary<int, Message>();                    //Key -> msgID, Value -> Message
     private Dictionary<int, Message> dictOfAIMessages = new Dictionary<int, Message>();                         //Key -> msgID, Value -> Message
+    private Dictionary<string, Effect> dictOfEffects = new Dictionary<string, Effect>();                        //Key -> effect.name, Value -> Effect
     private Dictionary<int, EffectDataOngoing> dictOfOngoingID = new Dictionary<int, EffectDataOngoing>();      //Key -> ongoingID, Value -> Ongoing effect details
     private Dictionary<string, Hq> dictOfHQs = new Dictionary<string, Hq>();                                    //Key -> HQ.name, Value -> HQ
     private Dictionary<string, City> dictOfCities = new Dictionary<string, City>();                             //Key -> city.name, Value -> City
@@ -6759,6 +6760,26 @@ public class DataManager : MonoBehaviour
         builderOverall.Append(builderResistance.ToString());
         builderOverall.Append(builderAuthority.ToString());
         return builderOverall.ToString();
+    }
+
+    //
+    // - - - Effects - - - 
+    //
+
+    public Dictionary<string, Effect> GetDictOfEffects()
+    { return dictOfEffects; }
+
+    //returns effect, null if not found in dict
+    public Effect GetEffect(string effectName)
+    {
+        Effect effect = null;
+        if (string.IsNullOrEmpty(effectName) == false)
+        {
+            if (dictOfEffects.ContainsKey(effectName) == true)
+            { return dictOfEffects[effectName]; }
+        }
+        else { Debug.LogError("Invalid stringName parameter (Null or Empty)"); }
+        return effect;
     }
 
     //
