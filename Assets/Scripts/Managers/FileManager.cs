@@ -4225,6 +4225,7 @@ public class FileManager : MonoBehaviour
                 }
             }
         }
+        else { Debug.LogWarning("Invalid metaData (Null)"); }
         return saveData;
     }
     #endregion
@@ -4260,6 +4261,67 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogWarningFormat("Invalid listOfMetaData (Null) for {0}", listName); }
         return listOfSaveMetaData;
+    }
+    #endregion
+
+    #region ReadIndividualMetaData
+    /// <summary>
+    /// Takes an individual SaveMetaData and returns a MetaData object. Returns an empty metaData if saveMetaData parameter is null or empty
+    /// </summary>
+    /// <param name="saveMetaData"></param>
+    /// <returns></returns>
+    private MetaData ReadIndividualSaveMetaData(SaveMetaData saveMetaData)
+    {
+        MetaData metaData = new MetaData();
+        if (saveMetaData != null)
+        {
+            metaData.metaName = saveMetaData.metaName;
+            metaData.itemText = saveMetaData.itemText;
+            metaData.textSelect = saveMetaData.textSelect;
+            metaData.textDeselect = saveMetaData.textDeselect;
+            metaData.textInsufficient = saveMetaData.textInsufficient;
+            metaData.bottomText = saveMetaData.bottomText;
+            metaData.inactiveText = saveMetaData.inactiveText;
+            metaData.priority = saveMetaData.priority;
+            metaData.tabSide = saveMetaData.tabSide;
+            metaData.tabTop = saveMetaData.tabTop;
+            metaData.renownCost = saveMetaData.renownCost;
+            metaData.sideLevel = saveMetaData.sideLevel;
+            metaData.isActive = saveMetaData.isActive;
+            metaData.isRecommended = saveMetaData.isRecommended;
+            metaData.isCriteria = saveMetaData.isCriteria;
+            metaData.isSelected = saveMetaData.isSelected;
+            metaData.recommendedPriority = saveMetaData.recommendedPriority;
+            metaData.data = saveMetaData.data;
+            metaData.dataName = saveMetaData.dataName;
+            metaData.dataTag = saveMetaData.dataTag;
+            metaData.help = saveMetaData.help;
+            metaData.tag0 = saveMetaData.tag0;
+            metaData.tag1 = saveMetaData.tag1;
+            metaData.tag2 = saveMetaData.tag2;
+            metaData.tag3 = saveMetaData.tag3;
+            //sprite
+            metaData.spriteName = saveMetaData.spriteName;
+            metaData.sprite = GameManager.i.dataScript.GetSprite(metaData.spriteName);
+            if (metaData.sprite == null) { Debug.LogErrorFormat("Invalid sprite (Null) for metaData.spriteName \"{0}\"", metaData.spriteName); }
+            //effects
+            if (saveMetaData.listOfEffects != null)
+            {
+                string effectName;
+                for (int i = 0; i < saveMetaData.listOfEffects.Count; i++)
+                {
+                    effectName = saveMetaData.listOfEffects[i];
+                    if (string.IsNullOrEmpty(effectName) == false)
+                    {
+                        Effect effect = GameManager.i.dataScript.GetEffect
+                            }
+                    else { Debug.LogErrorFormat("Invalid effectName (Null or Empty) for saveMetaData.listOfEffects[{0}]", i); }
+                }
+            }
+            Debug.LogError("Invalid saveMetaData.listOfEffects (Null)");
+        }
+        else { Debug.LogWarning("Invalid saveMetaData (Null)"); }
+        return metaData;
     }
     #endregion
 
