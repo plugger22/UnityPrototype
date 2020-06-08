@@ -44,14 +44,13 @@ public class MetaManager : MonoBehaviour
 
     [HideInInspector] public GlobalMeta metaLevel;
 
-    private MetaGameOptions metaGameOptions;
-
     //data for compiling available metaOptions (sent at end of a level by ProcessMeta... methods in individual classes)
     private List<Organisation> listOfOrganisations = new List<Organisation>();
     private List<Secret> listOfSecrets = new List<Secret>();
     private List<Investigation> listOfInvestigations = new List<Investigation>();
 
-    //MetaOptions to display
+    //MetaOptions to display 
+    private MetaGameOptions metaGameOptions;
     private List<MetaOption> listOfMetaOptions = new List<MetaOption>();        //metaOptions to be converted to MetaData
     private MetaInfoData metaInfoData = new MetaInfoData();                     //package to send to MetaGameUI
     private TransitionInfoData transitionInfoData = new TransitionInfoData();   //package to send to TransitionUI

@@ -30,7 +30,7 @@ public class ModalStateData
 public class InputManager : MonoBehaviour
 {
     private GameState _gameState;                                   //overall big picture game state
-    private RestorePoint _restorePoint;
+    /*private RestorePoint _restorePoint;*/
     private ModalState _modalState;                                 //main modal state status
     private ModalSubState _modalSubState;                           //sub state for when game state is 'ModalUI'
     private ModalInfoSubState _modalInfoState;                      //sub sub state of ModalSubState.InfoDisplay -> what type of info?
@@ -60,7 +60,7 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    /// <summary>
+    /*/// <summary>
     /// only used during MetaGame to restore processing to the correct place in the sequence
     /// </summary>
     public RestorePoint RestorePoint
@@ -72,7 +72,7 @@ public class InputManager : MonoBehaviour
             Debug.LogFormat("[Inp] InputManager: RestorePoint now {0}{1}", _restorePoint, "\n");
         }
 
-    }
+    }*/
 
     //needs to be updated whenever changed
     public ModalState ModalState
@@ -843,7 +843,7 @@ public class InputManager : MonoBehaviour
         builder.Append(" Game States");
         builder.AppendLine(); builder.AppendLine();
         builder.AppendFormat(" GameState -> {0}{1}", GameState, "\n");
-        builder.AppendFormat(" RestorePoint -> {0}{1}", RestorePoint, "\n");
+        /*builder.AppendFormat(" RestorePoint -> {0}{1}", RestorePoint, "\n");*/
         builder.AppendFormat(" ModalState -> {0}{1}", ModalState, "\n");
         builder.AppendFormat(" ModalSubState -> {0}{1}", ModalSubState, "\n");
         builder.AppendFormat(" ModalLevel -> {0}{1}", modalLevel, "\n");

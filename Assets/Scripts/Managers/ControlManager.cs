@@ -456,7 +456,9 @@ public class ControlManager : MonoBehaviour
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessSaveAndExit: Save and Exit selected{0}", "\n");
         //save restore point in case user changes their mind (update InputManager.cs as save/load is keyed off this value)
         restorePoint = restorePointInput;
-        GameManager.i.inputScript.RestorePoint = restorePointInput;
+
+        /*GameManager.i.inputScript.RestorePoint = restorePointInput;*/
+
         //toggle on modal block
         GameManager.i.guiScript.SetIsBlocked(true);
         //Save Game -> open background
