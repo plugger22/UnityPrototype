@@ -28,6 +28,8 @@ public class LevelManager : MonoBehaviour
     [Tooltip("Chance of a connection having a high security level (more than 'None'). Set to CitySecurity 'Normal' value")]
     [Range(0, 100)] public int connectionSecurityDefault = 25;
 
+    [HideInInspector] public int seed;      //random seed used for level generation (different for each level. Save/Loaded)
+
     //How many different node connection totals are there in sequential order going upwards from 1 to the specified number. Used to set up arrays, etc. DO NOT CHANGE
     private int maxConnections = 5;
 
@@ -76,9 +78,14 @@ public class LevelManager : MonoBehaviour
         {
             case GameState.NewInitialisation:
             case GameState.FollowOnInitialisation:
+                SubInitialiseFastAccess();
+                SubInitialiseRandomSeed(); //needs to be before SubInitialiseAll
+                SubInitialiseAll();
+                break;
             case GameState.LoadAtStart:
             case GameState.LoadGame:
                 SubInitialiseFastAccess();
+                SubInitialiseLoadedSeed(); //needs to be before SubInitialiseAll
                 SubInitialiseAll();
                 break;
             default:
@@ -102,8 +109,8 @@ public class LevelManager : MonoBehaviour
     #region SubInitialiseAll
     private void SubInitialiseAll()
     {
+        RandomSeedFileOps();
         //ProcGen level
-        InitialiseLevelRandomSeed();
         InitialiseData();
         InitialiseNodes(numOfNodes, minSpacing);
         InitialiseSortedDistances();
@@ -117,18 +124,48 @@ public class LevelManager : MonoBehaviour
     }
     #endregion
 
+    #region SubInitialiseRandomSeed
+    /// <summary>
+    /// normal operations ->  random seed
+    /// </summary>
+    private void SubInitialiseRandomSeed()
+    { InitialiseLevelRandomSeed(); }
+    #endregion
+
+    #region SubInitialiseLoadedSeed
+    /// <summary>
+    /// handles save/load level seed
+    /// </summary>
+    private void SubInitialiseLoadedSeed()
+    {
+        GameManager.i.SaveRandomDevState();
+        Random.InitState(seed);
+    }
+    #endregion
+
     #endregion
 
     /// <summary>
     /// uses Scenario seedCity to set up a level random number sequence such that and identical level can be generated each time by using the same seed
+    /// NOTE: normal use, NOT for Load games
     /// </summary>
     private void InitialiseLevelRandomSeed()
     {
         //save existing random dev state
         GameManager.i.SaveRandomDevState();
-        //reset to level specific random seed
-        int seed = GameManager.i.campaignScript.scenario.seedCity;
+        //reset to level specific scenario (default) or random (GameManager debug options) seed
+        seed = 0;
+        if (GameManager.i.isRandomLevel == true)
+        { seed = GameManager.i.GetRandomSeed(); }
+        else { seed = GameManager.i.campaignScript.scenario.seedCity; }
         Random.InitState(seed);
+    }
+
+    /// <summary>
+    /// Records seed in use for level Generation
+    /// </summary>
+    private void RandomSeedFileOps()
+    {
         string seedInfo = string.Format("City seed {0} -> {1}, {2}", seed, city.tag, city.country.name) + Environment.NewLine;
         File.AppendAllText("Seed.txt", seedInfo);
         Debug.LogFormat("[Cit] LevelManager.cs -> InitialiseLevelRandomSeed: City seed {0} -> {1}, {2}", seed, city.tag, city.country.name);

@@ -71,6 +71,7 @@ public class FileManager : MonoBehaviour
         write = new Save();
         //Sequentially write data
         WriteGameStatus(loadGameState);
+        WriteSeedData();
         WriteDataData();
         WriteCampaignData();
         WriteOptionData();
@@ -211,6 +212,7 @@ public class FileManager : MonoBehaviour
                 ReadDataData();
                 ReadCampaignData();
                 ReadGameData(playerSide);
+                ReadSeedData();
                 //set up level based on loaded current scenario seed
                 GameManager.i.InitialiseLoadGame(playerSide.level);
                 ReadScenarioData();
@@ -258,6 +260,18 @@ public class FileManager : MonoBehaviour
         write.gameStatus.turn = GameManager.i.turnScript.Turn;
         DateTime date1 = DateTime.Now;
         write.gameStatus.time = string.Format("{0}", date1.ToString("f", CultureInfo.CreateSpecificCulture("en-AU")));
+    }
+    #endregion
+
+
+    #region WriteSeedData
+    /// <summary>
+    /// game seeds used within
+    /// </summary>
+    private void WriteSeedData()
+    {
+        write.seedData.levelSeed = GameManager.i.levelScript.seed;
+        write.seedData.devSeed = GameManager.i.seedDev;
     }
     #endregion
 
@@ -1909,6 +1923,18 @@ public class FileManager : MonoBehaviour
         GameManager.i.campaignScript.SetCommendations(read.campaignData.commendations);
         GameManager.i.campaignScript.SetBlackMarks(read.campaignData.blackMarks);
         GameManager.i.campaignScript.SetInvestigationBlackmarks(read.campaignData.investigationBlackMarks);
+    }
+    #endregion
+
+
+    #region Read Seed Data
+    /// <summary>
+    /// LevelManager.cs seed used to generate level
+    /// </summary>
+    private void ReadSeedData()
+    {
+        GameManager.i.levelScript.seed = read.seedData.levelSeed;
+        GameManager.i.seedDev = read.seedData.devSeed;
     }
     #endregion
 

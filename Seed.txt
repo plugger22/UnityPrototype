@@ -26,3 +26,83 @@ Dev seed 60222 -> Tuesday, 9 June 2020 3:20 PM
 City seed 5678 -> London, United Kingdom
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 46765 -> Tuesday, 9 June 2020 3:39 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 17846 -> Tuesday, 9 June 2020 3:41 PM
+City seed 6643 -> London, United Kingdom
+
+Dev seed 51649 -> Tuesday, 9 June 2020 3:42 PM
+City seed 53056 -> London, United Kingdom
+
+Dev seed 20437 -> Tuesday, 9 June 2020 3:43 PM
+City seed 5678 -> London, United Kingdom
+City seed 5678 -> London, United Kingdom
+
+Dev seed 13141 -> Tuesday, 9 June 2020 4:05 PM
+City seed 16969 -> London, United Kingdom
+
+Dev seed 49717 -> Tuesday, 9 June 2020 4:08 PM
+City seed 5678 -> London, United Kingdom
+City seed 16969 -> London, United Kingdom
+ERROR Invalid connection (Null) for connID 34
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	FileManager:ReadConnectionData() (at Assets/Scripts/Managers/FileManager.cs:3531)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:221)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:322)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid connection (Null) for connID 35
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	FileManager:ReadConnectionData() (at Assets/Scripts/Managers/FileManager.cs:3531)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:221)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:322)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid connection (Null) for connID 36
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	FileManager:ReadConnectionData() (at Assets/Scripts/Managers/FileManager.cs:3531)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:221)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:322)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid connection (Null) for connID 37
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	FileManager:ReadConnectionData() (at Assets/Scripts/Managers/FileManager.cs:3531)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:221)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:322)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 3152 -> Tuesday, 9 June 2020 4:16 PM
+City seed 5678 -> London, United Kingdom
+City seed 16969 -> London, United Kingdom
+
+Dev seed 41959 -> Tuesday, 9 June 2020 4:17 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 9196 -> Tuesday, 9 June 2020 4:18 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 62764 -> Tuesday, 9 June 2020 4:20 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 5468 -> Tuesday, 9 June 2020 4:28 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 62510 -> Tuesday, 9 June 2020 4:31 PM
+City seed 5678 -> London, United Kingdom
+City seed 5678 -> London, United Kingdom
+
+Dev seed 25916 -> Tuesday, 9 June 2020 4:34 PM
+City seed 5678 -> London, United Kingdom
+City seed 5678 -> London, United Kingdom

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 public class Save
 {
     public SaveGameStatus gameStatus = new SaveGameStatus();
+    public SaveSeedData seedData = new SaveSeedData();
     public SaveCampaignData campaignData = new SaveCampaignData();
     public SaveDataData dataData = new SaveDataData();
     public SaveOptionData optionData = new SaveOptionData();
@@ -50,6 +51,18 @@ public class SaveGameStatus
 }
 #endregion
 
+
+#region SaveSeedData
+/// <summary>
+/// Level seed used to generate level
+/// </summary>
+[System.Serializable]
+public class SaveSeedData
+{
+    public int levelSeed;
+    public int devSeed;  
+}
+#endregion
 
 #region SaveCampaignData
 /// <summary>

@@ -127,8 +127,14 @@ public class GameManager : MonoBehaviour
     public bool isValidateSO;
     [Tooltip("Runs Data Integrity checks at completion of an autorun, at the start of a followOn level or once a save game has been loaded")]
     public bool isIntegrityCheck;
+
+    [Header("Randomisation")]
+    [Tooltip("If true then a random seed is used to generate cities rather than the specified scenario seed")]
+    public bool isRandomLevel;
     [Tooltip("If true a Random city is used, not a campaign city")]
     public bool isRandomCity;
+
+    [Header("Save/Load")]
     [Tooltip("If true then save files are encrypted")]
     public bool isEncrypted;
     [Tooltip("If true then autoSaves made at start of every turn")]
@@ -170,7 +176,7 @@ public class GameManager : MonoBehaviour
         }
         //random seed to facilitate replication of results
         if (seedDev == 0)
-        { seedDev = (int)DateTime.Now.Ticks & 0x0000FFFF; }
+        { seedDev = GetRandomSeed(); }
         Debug.Log("Seed: " + seedDev);
         Random.InitState(seedDev);
         //debug -> write seed to file
@@ -986,6 +992,14 @@ public class GameManager : MonoBehaviour
 
 
     #region Random Seed
+
+    /// <summary>
+    /// supplies a random seed
+    /// </summary>
+    /// <returns></returns>
+    public int GetRandomSeed()
+    { return (int)DateTime.Now.Ticks & 0x0000FFFF; }
+
     /// <summary>
     /// used to save random seedDev sequence state prior to changing the seed
     /// </summary>
