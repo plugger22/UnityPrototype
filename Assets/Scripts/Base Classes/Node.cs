@@ -474,7 +474,10 @@ public class Node : MonoBehaviour
                         /*if (GameManager.instance.sideScript.PlayerSide.level == GameManager.instance.globalScript.sideResistance.level)
                         { textName = string.Format("isCon <b>{0}</b> isK <b>{1}</b>", isContactResistance, isContactKnown); }
                         else { textName = string.Format("isCon <b>{0}</b> isK <b>{1}</b>", isContactAuthority, isContactKnown); }*/
-                        textName = string.Format("L id {0}, dist {1}, N id {2}", loiter.nodeID, loiter.distance, loiter.neighbourID);
+
+                        /*textName = string.Format("L id {0}, dist {1}, N id {2}", loiter.nodeID, loiter.distance, loiter.neighbourID);*/
+
+                        textName = string.Format("Coords x: {0}, y: {1}, z: {2}", nodePosition.x, nodePosition.y, nodePosition.z);
                     }
                     else
                     {

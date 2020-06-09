@@ -387,13 +387,19 @@ public class LevelManager : MonoBehaviour
     private bool CheckPositionValid(Vector3 pos, float spacing)
     {
         bool isValidPos = true;
-        float distance;
-        //loop existing nodes
-        for (int j = 0; j < listOfCoordinates.Count; j++)
+        //exclude bottom node position as it sits under Player's Portrait and tooltips can get tricky
+        if (pos.x == -5 && pos.z == -5)
+        { isValidPos = false; }
+        else
         {
-            distance = Vector3.Distance(listOfCoordinates[j], pos);
-            //fails minimum spacing test
-            if (distance <= spacing) { isValidPos = false; break; }
+            float distance;
+            //loop existing nodes
+            for (int j = 0; j < listOfCoordinates.Count; j++)
+            {
+                distance = Vector3.Distance(listOfCoordinates[j], pos);
+                //fails minimum spacing test
+                if (distance <= spacing) { isValidPos = false; break; }
+            }
         }
         return isValidPos;
     }

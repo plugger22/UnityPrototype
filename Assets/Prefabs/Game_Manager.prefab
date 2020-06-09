@@ -461,6 +461,7 @@ MonoBehaviour:
   minSpacingDefault: 1
   connectionFrequencyDefault: 50
   connectionSecurityDefault: 25
+  seed: 0
 --- !u!114 &114258654278774664
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5175,9 +5176,10 @@ MonoBehaviour:
   isDataValidation: 1
   isValidateSO: 1
   isIntegrityCheck: 1
+  isRandomLevel: 0
   isRandomCity: 0
   isEncrypted: 0
-  isAutoSave: 1
+  isAutoSave: 0
   isLoadAutoSave: 0
   isSession: 0
 --- !u!114 &114762690547149900
