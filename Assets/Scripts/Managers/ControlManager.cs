@@ -321,7 +321,7 @@ public class ControlManager : MonoBehaviour
                 //open MetaGameUI
                 EventManager.i.PostNotification(EventType.MetaGameOpen, this, null, "ControlManager.cs -> ProcessResumMetaGame");
                 break;
-            case RestorePoint.MetaEnd:
+            case RestorePoint.MetaComplete:
                 //open new Level
                 EventManager.i.PostNotification(EventType.CloseMetaOverall, this, null, "ControlManager.cs -> ProcessResumMetaGame");
                 break;
@@ -490,11 +490,11 @@ public class ControlManager : MonoBehaviour
     /// <summary>
     /// AutoSave file (TurnManager.cs -> ProcessNewTurn)
     /// </summary>
-    public void ProcessAutoSave()
+    public void ProcessAutoSave(GameState state, RestorePoint restore = RestorePoint.None)
     {
         //Debug -> time load game process
         GameManager.i.testScript.StartTimer();
-        GameManager.i.fileScript.WriteSaveData(new LoadGameState() { gameState = GameState.PlayGame, restorePoint = RestorePoint.None });
+        GameManager.i.fileScript.WriteSaveData(new LoadGameState() { gameState = state, restorePoint = restore });
         GameManager.i.fileScript.SaveGame(true);
         //how long did it take?
         long timeElapsed = GameManager.i.testScript.StopTimer();

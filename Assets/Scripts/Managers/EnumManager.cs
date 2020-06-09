@@ -37,7 +37,7 @@
     public enum GenericTooltipType { Any, ActorInfo }                                           //ability to specify tooltip types that must be closed and to ignore the rest. Create group types as required.
     public enum MajorUI { None, MainInfoApp, MetaGameUI }                                       //used for Item prefab attached scripts to determine which UI they are working within
     public enum PopUpPosition { ActorSlot0, ActorSlot1, ActorSlot2, ActorSlot3, Player, TopBarLeft, TopBarRight, TopCentre, Count}  //used for fixed UI PopUps
-    public enum RestorePoint { None, MetaTransition, MetaOptions, MetaEnd }                       //when save and exit, chance to return to game. This specifies the point of return
+    public enum RestorePoint { None, MetaTransition, MetaOptions, MetaComplete }                       //when save and exit, chance to return to game. This specifies the point of return
     public enum AlertType {
         None,
         MainMenuUnavailable,

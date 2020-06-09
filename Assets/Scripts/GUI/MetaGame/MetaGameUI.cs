@@ -999,7 +999,7 @@ public class MetaGameUI : MonoBehaviour
         details.eventFalse = EventType.SaveAndExit;
         details.eventTrue = EventType.CloseMetaOverall;
         details.modalState = ModalSubState.MetaGame;
-        details.restorePoint = RestorePoint.MetaEnd;
+        details.restorePoint = RestorePoint.MetaComplete;
         //open confirm
         EventManager.i.PostNotification(EventType.ConfirmOpen, this, details, "TransitionUI.cs -> ExecuteClose");
 
