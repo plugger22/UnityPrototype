@@ -248,6 +248,10 @@ public class SavePlayerData
 [System.Serializable]
 public class SaveMetaGameData
 {
+    //metaGameOptions
+    public MetaGameOptions metaGameOptions;
+    //transitionData
+    public TransitionInfoData transitionInfoData;
     //metaData
     public List<SaveMetaData> listOfBoss = new List<SaveMetaData>();
     public List<SaveMetaData> listOfSubBoss1 = new List<SaveMetaData>();
@@ -256,7 +260,7 @@ public class SaveMetaGameData
     public List<SaveMetaData> listOfStatusData = new List<SaveMetaData>();
     public List<SaveMetaData> listOfRecommended = new List<SaveMetaData>();
     public SaveMetaData selectedDefault = new SaveMetaData();
-    public TransitionInfoData transitionInfoData;
+    
 }
 
 #endregion

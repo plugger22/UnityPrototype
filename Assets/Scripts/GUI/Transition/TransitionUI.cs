@@ -455,14 +455,18 @@ public class TransitionUI : MonoBehaviour
             case ModalTransitionSubState.HQ: newState = ModalTransitionSubState.PlayerStatus; break;
             case ModalTransitionSubState.PlayerStatus: newState = ModalTransitionSubState.BriefingOne; break;
             case ModalTransitionSubState.BriefingOne: newState = ModalTransitionSubState.BriefingTwo; break;
+            case ModalTransitionSubState.BriefingTwo:  break; //do nothing
             default: Debug.LogWarningFormat("Unrecognised ModalTransitionState \"{0}\"", GameManager.i.inputScript.ModalTransitionState); break;
         }
         //set new state
-        GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Transition, transitionState = newState });
-        //Adjust UI
-        SetButtons(newState);
-        SetHeader(newState);
-        SetCanvas(newState);
+        if (newState != ModalTransitionSubState.None)
+        {
+            GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Transition, transitionState = newState });
+            //Adjust UI
+            SetButtons(newState);
+            SetHeader(newState);
+            SetCanvas(newState);
+        }
     }
 
     /// <summary>
@@ -473,6 +477,7 @@ public class TransitionUI : MonoBehaviour
         ModalTransitionSubState newState = ModalTransitionSubState.None;
         switch (GameManager.i.inputScript.ModalTransitionState)
         {
+            case ModalTransitionSubState.EndLevel:  break; //do nothing
             case ModalTransitionSubState.HQ: newState = ModalTransitionSubState.EndLevel; break;
             case ModalTransitionSubState.PlayerStatus: newState = ModalTransitionSubState.HQ; break;
             case ModalTransitionSubState.BriefingOne: newState = ModalTransitionSubState.PlayerStatus; break;
@@ -480,11 +485,14 @@ public class TransitionUI : MonoBehaviour
             default: Debug.LogWarningFormat("Unrecognised ModalTransitionState \"{0}\"", GameManager.i.inputScript.ModalTransitionState); break;
         }
         //set new state
-        GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Transition, transitionState = newState });
-        //Adjust UI
-        SetButtons(newState);
-        SetHeader(newState);
-        SetCanvas(newState);
+        if (newState != ModalTransitionSubState.None)
+        {
+            GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Transition, transitionState = newState });
+            //Adjust UI
+            SetButtons(newState);
+            SetHeader(newState);
+            SetCanvas(newState);
+        }
     }
 
 }

@@ -1105,6 +1105,7 @@ namespace packageAPI
     /// <summary>
     /// Option set derived from MetaGame decisions that drive the new level's lineup of OnMap actors
     /// </summary>
+    [System.Serializable]
     public class MetaGameOptions
     {
         public bool isDismissed;            //listOfActorsDismissed: true -> included, false -> excluded          

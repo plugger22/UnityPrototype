@@ -50,7 +50,7 @@ public class MetaManager : MonoBehaviour
     private List<Investigation> listOfInvestigations = new List<Investigation>();
 
     //MetaOptions to display 
-    private MetaGameOptions metaGameOptions;
+    private MetaGameOptions metaGameOptions = new MetaGameOptions();
     private List<MetaOption> listOfMetaOptions = new List<MetaOption>();        //metaOptions to be converted to MetaData
     private MetaInfoData metaInfoData = new MetaInfoData();                     //package to send to MetaGameUI
     private TransitionInfoData transitionInfoData = new TransitionInfoData();   //package to send to TransitionUI
@@ -81,8 +81,6 @@ public class MetaManager : MonoBehaviour
     /// </summary>
     public void InitialiseMetaGameOptions()
     {
-        //debug metaGame options
-        metaGameOptions = new MetaGameOptions();
         /*if (GameManager.i.testScript.isValidMetaOptions == true)
         {
             metaGameOptions.isDismissed = GameManager.i.testScript.isDismissed;
@@ -216,6 +214,23 @@ public class MetaManager : MonoBehaviour
     /// <returns></returns>
     public MetaGameOptions GetMetaOptions()
     { return metaGameOptions; }
+
+    /// <summary>
+    /// used for Save/Load 
+    /// </summary>
+    /// <param name="metaGameOptions"></param>
+    public void SetMetaOptions(MetaGameOptions loadOptions)
+    {
+        if (loadOptions != null)
+        {
+            metaGameOptions.isDismissed = loadOptions.isDismissed;
+            metaGameOptions.isResigned = loadOptions.isResigned;
+            metaGameOptions.isLowMotivation = loadOptions.isLowMotivation;
+            metaGameOptions.isTraitor = loadOptions.isTraitor;
+            metaGameOptions.isLevelTwo = loadOptions.isLevelTwo;
+        }
+        else { Debug.LogError("Invalid loadOptions (Null)"); }
+    }
 
     /// <summary>
     /// Set metaGame setting, isDismissed

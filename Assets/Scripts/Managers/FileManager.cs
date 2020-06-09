@@ -417,6 +417,12 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void WriteMetaData()
     {
+        //MetaGameOptions
+        write.metaGameData.metaGameOptions = GameManager.i.metaScript.GetMetaOptions();
+
+        /*//TransitionInfoData
+        write.metaData.transitionInfoData = GameManager.i.metaScript.GetTransitionInfoData();*/
+
         //MetaInfoData
         MetaInfoData data = GameManager.i.metaScript.GetMetaInfoData();
         if (data != null)
@@ -430,8 +436,7 @@ public class FileManager : MonoBehaviour
             write.metaGameData.selectedDefault = WriteIndividualMetaData(data.selectedDefault);
         }
         else { Debug.LogError("Invalid metaInfoData (Null)"); }
-        /*//TransitionInfoData
-        write.metaData.transitionInfoData = GameManager.i.metaScript.GetTransitionInfoData();*/
+
     }
     #endregion
 
@@ -2016,6 +2021,13 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void ReadMetaGameData()
     {
+        // - - - MetaGameOptions
+        GameManager.i.metaScript.SetMetaOptions(read.metaGameData.metaGameOptions);
+        //
+        // - - - TransitionInfoData
+        //
+        TransitionInfoData transitionInfoData = new TransitionInfoData();
+        GameManager.i.transitionScript.SetTransitionInfoData(transitionInfoData);
         //
         // - - - MetaInfoData
         //
@@ -2046,11 +2058,6 @@ public class FileManager : MonoBehaviour
         //Set metaInfoData
         GameManager.i.metaScript.SetMetaInfoData(metaInfoData);
         GameManager.i.metaUIScript.SetMetaInfoData(metaInfoData);
-        //
-        // - - - TransitionInfoData
-        //
-        TransitionInfoData transitionInfoData = new TransitionInfoData();
-        GameManager.i.transitionScript.SetTransitionInfoData(transitionInfoData);
     }
     #endregion
 

@@ -451,6 +451,7 @@ public class InputManager : MonoBehaviour
                     //Hotkeys for Modal UI windows
                     switch (_modalSubState)
                     {
+
                         #region Outcome
                         case ModalSubState.Outcome:
                             if (Input.GetButtonDown("Cancel") == true)
@@ -668,6 +669,27 @@ public class InputManager : MonoBehaviour
                                 }
                             }
                             break;
+                        #endregion
+
+                        #region Transition
+                        case ModalSubState.Transition:
+                            if (Input.GetButtonDown("Multipurpose") == true)
+                            {
+                                //same as pressing 'Continue'
+                                EventManager.i.PostNotification(EventType.TransitionContinue, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                            }
+                            if (Input.GetButtonDown("PageUp") == true)
+                            {
+                                //same as pressing 'Continue'
+                                EventManager.i.PostNotification(EventType.TransitionContinue, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                            }
+                            if (Input.GetButtonDown("PageDown") == true)
+                            {
+                                //same as pressing 'Back'
+                                EventManager.i.PostNotification(EventType.TransitionBack, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                            }
+                            break;
+
                         #endregion
 
                         #region MetaGame
