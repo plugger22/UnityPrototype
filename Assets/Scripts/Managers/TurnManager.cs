@@ -304,6 +304,10 @@ public class TurnManager : MonoBehaviour
             //only process new turn if a win State hasn't already been acheived
             if (isLevelOver == false && isCampaignOver == false)
             {
+                //AutoSave (not during autoRun)
+                if (isAutoRun == false && GameManager.i.isAutoSave == true)
+                { GameManager.i.controlScript.ProcessAutoSave(); }
+
                 //set flag to prevent multiple calls to new turn (Set false at end of coroutine.StartPipeline)
                 isNewTurn = true;
                 Debug.LogFormat("TurnManager.cs : - - - PROCESS NEW TURN - - - turn {0}{1}", Turn, "\n");
@@ -320,7 +324,6 @@ public class TurnManager : MonoBehaviour
                     //start the new turn
                     StartTurnEarly();
                     StartTurnLate();
-
                     //only do for player
                     if (playerSide != null && currentSide.level == playerSide.level)
                     {

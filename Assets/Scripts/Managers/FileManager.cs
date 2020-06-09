@@ -3,6 +3,7 @@ using modalAPI;
 using packageAPI;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using UnityEngine;
@@ -15,9 +16,11 @@ public class FileManager : MonoBehaviour
 {
 
     private static readonly string SAVE_FILE = "savefile.json";
+    private static readonly string AUTO_FILE = "autoSaveFile.json";
     private Save write;
     private Save read;
-    private string filename;
+    private string filenamePlayer;
+    private string filenameAuto;
     private string jsonWrite;
     private string jsonRead;
     private byte[] soupWrite;               //encryption out
@@ -38,7 +41,8 @@ public class FileManager : MonoBehaviour
     /// </summary>
     public void Initialise(GameState state)
     {
-        filename = Path.Combine(Application.persistentDataPath, SAVE_FILE);
+        filenamePlayer = Path.Combine(Application.persistentDataPath, SAVE_FILE);
+        filenameAuto = Path.Combine(Application.persistentDataPath, AUTO_FILE);
         codeKey = "#kJ83DAl50$*@.<__'][90{4#dDA'a?~";                         //needs to be 32 characters long exactly
         //fast access
         globalAuthority = GameManager.i.globalScript.sideAuthority;
@@ -95,36 +99,43 @@ public class FileManager : MonoBehaviour
     /// <summary>
     /// Save game method
     /// </summary>
-    public void SaveGame()
+    public void SaveGame(bool isAutoSave = false)
     {
+        string filename;
+        if (isAutoSave == true) { filename = filenameAuto; }
+        else { filename = filenamePlayer; }
         if (write != null)
         {
-            //convert to Json (NOTE: second, optional, parameter gives pretty output for debugging purposes)
-            jsonWrite = JsonUtility.ToJson(write, true);
+            if (string.IsNullOrEmpty(filename) == false)
+            {
+                //convert to Json (NOTE: second, optional, parameter gives pretty output for debugging purposes)
+                jsonWrite = JsonUtility.ToJson(write, true);
 
-            //file present? If so delete
-            if (File.Exists(filename) == true)
-            {
-                try { File.Delete(filename); }
-                catch (Exception e) { Debug.LogErrorFormat("Failed to DELETE FILE, error \"{0}\"", e.Message); }
-            }
+                //file present? If so delete
+                if (File.Exists(filename) == true)
+                {
+                    try { File.Delete(filename); }
+                    catch (Exception e) { Debug.LogErrorFormat("Failed to DELETE FILE, error \"{0}\"", e.Message); }
+                }
 
-            if (GameManager.i.isEncrypted == false)
-            {
-                //create new file
-                try { File.WriteAllText(filename, jsonWrite); }
-                catch (Exception e) { Debug.LogErrorFormat("Failed to write TEXT FROM FILE, error \"{0}\"", e.Message); }
-                Debug.LogFormat("[Fil] FileManager.cs -> SaveGame: GAME SAVED to \"{0}\"{1}", filename, "\n");
+                if (GameManager.i.isEncrypted == false)
+                {
+                    //create new file
+                    try { File.WriteAllText(filename, jsonWrite); }
+                    catch (Exception e) { Debug.LogErrorFormat("Failed to write TEXT FROM FILE, error \"{0}\"", e.Message); }
+                    Debug.LogFormat("[Fil] FileManager.cs -> SaveGame: GAME SAVED to \"{0}\"{1}", filename, "\n");
+                }
+                else
+                {
+                    //encrypt save file
+                    Rijndael crypto = new Rijndael();
+                    soupWrite = crypto.Encrypt(jsonWrite, codeKey);
+                    try { File.WriteAllBytes(filename, soupWrite); }
+                    catch (Exception e) { Debug.LogErrorFormat("Failed to write BYTES TO FILE, error \"{0}\"", e.Message); }
+                    Debug.LogFormat("[Fil] FileManager.cs -> SaveGame: Encrypted GAME SAVED to \"{0}\"{1}", filename, "\n");
+                }
             }
-            else
-            {
-                //encrypt save file
-                Rijndael crypto = new Rijndael();
-                soupWrite = crypto.Encrypt(jsonWrite, codeKey);
-                try { File.WriteAllBytes(filename, soupWrite); }
-                catch (Exception e) { Debug.LogErrorFormat("Failed to write BYTES TO FILE, error \"{0}\"", e.Message); }
-                Debug.LogFormat("[Fil] FileManager.cs -> SaveGame: Encrypted GAME SAVED to \"{0}\"{1}", filename, "\n");
-            }
+            else { Debug.LogError("Invalid fileName (Null or Empty)"); }
         }
         else { Debug.LogError("Invalid saveData (Null)"); }
     }
@@ -138,37 +149,44 @@ public class FileManager : MonoBehaviour
     public bool ReadSaveData()
     {
         bool isSuccess = false;
-        if (File.Exists(filename) == true)
+        string filename;
+        if (GameManager.i.isLoadAutoSave == true) { filename = filenameAuto; }
+        else { filename = filenamePlayer; }
+        if (string.IsNullOrEmpty(filename) == false)
         {
-            if (GameManager.i.isEncrypted == false)
+            if (File.Exists(filename) == true)
             {
-                //read data from File
-                try { jsonRead = File.ReadAllText(filename); }
-                catch (Exception e) { Debug.LogErrorFormat("Failed to read TEXT FROM FILE, error \"{0}\"", e.Message); }
-                isSuccess = true;
-            }
-            else
-            {
-                //encrypted file
-                Rijndael crypto = new Rijndael();
-                try { soupRead = File.ReadAllBytes(filename); }
-                catch (Exception e) { Debug.LogErrorFormat("Failed to read BYTES FROM FILE, error \"{0}\"", e.Message); }
-                jsonRead = crypto.Decrypt(soupRead, codeKey);
-                isSuccess = true;
-            }
-            if (isSuccess == true)
-            {
-                //read to Save file
-                try
+                if (GameManager.i.isEncrypted == false)
                 {
-                    read = JsonUtility.FromJson<Save>(jsonRead);
-                    return true;
+                    //read data from File
+                    try { jsonRead = File.ReadAllText(filename); }
+                    catch (Exception e) { Debug.LogErrorFormat("Failed to read TEXT FROM FILE, error \"{0}\"", e.Message); }
+                    isSuccess = true;
                 }
-                catch (Exception e)
-                { Debug.LogErrorFormat("Failed to read Json, error \"{0}\"", e.Message); }
+                else
+                {
+                    //encrypted file
+                    Rijndael crypto = new Rijndael();
+                    try { soupRead = File.ReadAllBytes(filename); }
+                    catch (Exception e) { Debug.LogErrorFormat("Failed to read BYTES FROM FILE, error \"{0}\"", e.Message); }
+                    jsonRead = crypto.Decrypt(soupRead, codeKey);
+                    isSuccess = true;
+                }
+                if (isSuccess == true)
+                {
+                    //read to Save file
+                    try
+                    {
+                        read = JsonUtility.FromJson<Save>(jsonRead);
+                        return true;
+                    }
+                    catch (Exception e)
+                    { Debug.LogErrorFormat("Failed to read Json, error \"{0}\"", e.Message); }
+                }
             }
+            else { Debug.LogErrorFormat("File \"{0}\" not found", filename); }
         }
-        else { Debug.LogErrorFormat("File \"{0}\" not found", filename); }
+        Debug.LogError("Invalid filename (Null or Empty)");
         return false;
     }
     #endregion
@@ -237,6 +255,9 @@ public class FileManager : MonoBehaviour
     {
         write.gameStatus.gameState = loadGameState.gameState;
         write.gameStatus.restorePoint = loadGameState.restorePoint;
+        write.gameStatus.turn = GameManager.i.turnScript.Turn;
+        DateTime date1 = DateTime.Now;
+        write.gameStatus.time = string.Format("{0}", date1.ToString("f", CultureInfo.CreateSpecificCulture("en-AU")));
     }
     #endregion
 

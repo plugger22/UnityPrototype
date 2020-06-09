@@ -44,7 +44,9 @@ public class Save
 public class SaveGameStatus
 {
     public GameState gameState;
-    public RestorePoint restorePoint;                   //only relevant if gameState.MetaGame. Ignored otherwise.
+    public RestorePoint restorePoint;                   //only relevant if gameState.MetaGame. Ignored otherwise
+    public int turn;                                    //info purposes only (top of the file, easy to read)
+    public string time;                                 //time of save (info only)
 }
 #endregion
 

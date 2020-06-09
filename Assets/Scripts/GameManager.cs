@@ -131,6 +131,10 @@ public class GameManager : MonoBehaviour
     public bool isRandomCity;
     [Tooltip("If true then save files are encrypted")]
     public bool isEncrypted;
+    [Tooltip("If true then autoSaves made at start of every turn")]
+    public bool isAutoSave;
+    [Tooltip("If true then autoSave file is loaded instead of normal save file")]
+    public bool isLoadAutoSave;
 
 
     private Random.State devState;                                                  //used to restore seedDev random sequence after any interlude, eg. level generation with a unique seed

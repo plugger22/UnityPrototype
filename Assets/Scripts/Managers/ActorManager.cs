@@ -3783,7 +3783,7 @@ public class ActorManager : MonoBehaviour
                 genericDetails.textMiddle = string.Format("{0}Recruit will be assigned to your reserve list{1}",
                     colourNormal, colourEnd);
                 genericDetails.textBottom = "Click on a Recruit to Select. Press CONFIRM to hire Recruit. Mouseover recruit for more information.";
-                genericDetails.help0 = "reserve_2";
+                genericDetails.help0 = "reserveInv_2";
                 //
                 //generate temp list of Recruits to choose from and a list of ones for the picker
                 //

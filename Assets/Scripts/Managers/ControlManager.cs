@@ -422,7 +422,7 @@ public class ControlManager : MonoBehaviour
     /// </summary>
     private void ProcessSaveGame(GameState state)
     {
-        Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessResumeGame: SAVE game option selected{0}", "\n");
+        Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessSaveGame: SAVE game option selected{0}", "\n");
         //save existing game state
         gameState = state;
         //toggle on modal block
@@ -486,6 +486,24 @@ public class ControlManager : MonoBehaviour
         //open confirm
         EventManager.i.PostNotification(EventType.ConfirmOpen, this, details, "MetaManager.cs -> ProcessMetaGame");
     }
+
+    /// <summary>
+    /// AutoSave file (TurnManager.cs -> ProcessNewTurn)
+    /// </summary>
+    public void ProcessAutoSave()
+    {
+        //Debug -> time load game process
+        GameManager.i.testScript.StartTimer();
+        GameManager.i.fileScript.WriteSaveData(new LoadGameState() { gameState = GameState.PlayGame, restorePoint = RestorePoint.None });
+        GameManager.i.fileScript.SaveGame(true);
+        //how long did it take?
+        long timeElapsed = GameManager.i.testScript.StopTimer();
+        Debug.LogFormat("[Per] ControlManager.cs -> ProcessSaveGame: SAVE GAME took {0} ms", timeElapsed);
+    }
+
+
+
+
 
     /// <summary>
     /// win/Loss state achieved for end of campaign -> summaries, etc before exiting
