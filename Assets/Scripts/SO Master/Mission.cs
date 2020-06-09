@@ -52,7 +52,7 @@ public class Mission : ScriptableObject
     public TargetProfile profileGenericFollowOn;
 
     [Header("Objective Targets")]
-    [Tooltip("Targets that are connected to Objectives. Maximum ONE target per ONE objective")]
+    [Tooltip("Targets that are connected to Objectives. A target can affect multiple objects (ObjectiveTargets)")]
     public List<ObjectiveTarget> listOfObjectiveTargets;
 
     [Header("Npc")]

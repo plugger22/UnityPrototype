@@ -122,3 +122,6 @@ City seed 38664 -> London, United Kingdom
 Dev seed 32904 -> Tuesday, 9 June 2020 5:23 PM
 City seed 49014 -> London, United Kingdom
 City seed 9771 -> New York, America
+
+Dev seed 59397 -> Tuesday, 9 June 2020 8:08 PM
+City seed 39366 -> London, United Kingdom

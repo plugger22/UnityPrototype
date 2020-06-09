@@ -216,11 +216,11 @@ public class ObjectiveManager : MonoBehaviour
     }
 
     /// <summary>
-    /// checks whether a successfully completed target has a progress effect on a current objective
+    /// checks whether a successfully completed target has a progress effect on a current objective/s
     /// called by TargetManager.cs -> SetTargetDone automatically whenever a target is status.OUTSTANDING (doesn't matter if there are ongoing effects and target is outstanding)
     /// </summary>
     /// <param name="targetName"></param>
-    public void CheckObjectiveTarget(Target target)
+    public void CheckObjectiveTargets(Target target)
     {
         if (target != null)
         {
@@ -228,14 +228,23 @@ public class ObjectiveManager : MonoBehaviour
             if (mission.listOfObjectiveTargets != null)
             {
                 string targetName = target.name;
-                //target present
-                ObjectiveTarget objectiveTarget = mission.listOfObjectiveTargets.Find(x => x.target.name == targetName);
+                //target present (can handle multiple)
+                var objectTargets = mission.listOfObjectiveTargets.FindAll(x => x.target.name == targetName);
+                if (objectTargets.Count > 0)
+                {
+                    foreach (var record in objectTargets)
+                    {
+                        //update progress of objective
+                        UpdateObjectiveProgress(record.objective.name, record.adjustment, target.reasonText);
+                    }
+                }
+                /*ObjectiveTarget objectiveTarget = mission.listOfObjectiveTargets.Find(x => x.target.name == targetName);
                 //no need for error check as a match may not be present
                 if (objectiveTarget != null)
                 {
                     //update progress of objective
                     UpdateObjectiveProgress(objectiveTarget.objective.name, objectiveTarget.adjustment, target.reasonText);
-                }
+                }*/
             }
         }
         else { Debug.LogError("Invalid target (Null)"); }
