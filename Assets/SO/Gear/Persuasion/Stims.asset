@@ -23,7 +23,7 @@ MonoBehaviour:
   aiHackingEffect: {fileID: 0}
   timesUsed: 0
   isCompromised: 0
-  reasonUsed: Used to affect Marleborne district
+  reasonUsed: 
   chanceOfCompromise: 0
   statTurnObtained: 0
   statTurnLost: 0

@@ -4486,7 +4486,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 11400000, guid: 4cba5038018744a4f83ed80beeb223c4, type: 2}
+  debugTopicPool: {fileID: 11400000, guid: 694dd75b495d9b34f820f1979dd93266, type: 2}
   numOfGearItems: -1
   numOfWorkers: 8
   bonusRenown: 10
@@ -4497,8 +4497,8 @@ MonoBehaviour:
   conditionWhoResistance: 999
   conditionResistance: {fileID: 0}
   playerInvisibility: -1
-  actorSlotID: 0
-  actorType: {fileID: 0}
+  actorSlotID: 2
+  actorType: {fileID: 11400000, guid: 268c960d386d285478b3ab6aaa5796bf, type: 2}
   actorDatapoint0: -1
   actorDatapoint1: -1
   actorDatapoint2: -1
@@ -4512,7 +4512,7 @@ MonoBehaviour:
   testRatioPlayManageAct: 0
   testRatioDoNothing: 0
   testRatioAddictedDays: 0
-  isTopicManager: 0
+  isTopicManager: 1
   isMetaGame: 0
   isPopUpFixed: 0
 --- !u!114 &114584680957149894
@@ -5177,6 +5177,8 @@ MonoBehaviour:
   isIntegrityCheck: 1
   isRandomCity: 0
   isEncrypted: 0
+  isAutoSave: 1
+  isLoadAutoSave: 0
   isSession: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:

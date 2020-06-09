@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: ActGeaRES1
   m_EditorClassIdentifier: 
   tag: Gear Complaint
-  text: Your [actor] is complaining long and loud that their [gear] has a problem
+  text: Your [actor] is complaining long and loud that their gear ([gear]) has a problem
     which needs to be fixed ASAP!
   designNotes: negative gear event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
@@ -39,9 +39,9 @@ MonoBehaviour:
   status: 2
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 4
+  timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 21
+  turnsLive: 24
   turnsDone: 0

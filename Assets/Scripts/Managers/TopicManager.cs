@@ -2080,6 +2080,8 @@ public class TopicManager : MonoBehaviour
                 NodeActionData data = actor.GetMostRecentNodeAction();
                 if (data != null)
                 {
+                    //update turnTopicSubType to accommodate currently selected actor, not just the last one in the  loop above
+                    turnTopicSubSubType = GetTopicSubSubType(data.nodeAction);
                     //group depends on actor motivation
                     group = GetGroupMotivation(actor.GetDatapoint(ActorDatapoint.Motivation1));
                     //if no entries use entire list by default

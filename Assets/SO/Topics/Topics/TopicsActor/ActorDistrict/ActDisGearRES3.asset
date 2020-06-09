@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: ActDisGearRES3
   m_EditorClassIdentifier: 
   tag: Queue Jumper
-  text: The [gear] that your [actor] sourced recently from [node] was promised to
-    somebody else. They aren't happy and are demanding compensation
+  text: Your [actor] sourced gear ([gear]) recently from [node] which was promised
+    to somebody else. They aren't happy and are demanding compensation
   designNotes: negative fixer event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
@@ -32,15 +32,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7612422a7cf73eb4ea47b7185f05ae2f, type: 2}
   - {fileID: 11400000, guid: 462476691e857ab49a51d7930fc694c6, type: 2}
   - {fileID: 11400000, guid: 79b8c26dc1bf78b44b88746594bea635, type: 2}
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 2
+  status: 0
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 2
+  timerRepeat: 3
   timerWindow: 0
-  turnsDormant: 0
-  turnsActive: 0
-  turnsLive: 25
+  turnsDormant: 4
+  turnsActive: 1
+  turnsLive: 19
   turnsDone: 0

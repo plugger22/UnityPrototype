@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Light Switch
   text: 'Hey, do you want to go DARK? Disappear off the radar? I can make that happen,
-    says [npc] if you give me that [gear] of yours. '
+    says [npc] if you give me that gear ([gear]) of yours. '
   designNotes: 'Player Gear bad event
 
     No ignore penalty
@@ -40,12 +40,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 2
+  status: 1
   isCurrent: 1
   timerStart: 0
   timerRepeat: 8
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 9
-  turnsLive: 9
+  turnsActive: 20
+  turnsLive: 4
   turnsDone: 0
