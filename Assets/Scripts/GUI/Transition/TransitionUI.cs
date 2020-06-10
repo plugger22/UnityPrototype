@@ -12,6 +12,9 @@ using modalAPI;
 /// </summary>
 public class TransitionUI : MonoBehaviour
 {
+
+    #region Main
+
     [Header("Main")]
     public GameObject transitionObject;
     public Canvas transitionCanvas;
@@ -24,26 +27,6 @@ public class TransitionUI : MonoBehaviour
     public Button buttonExit;
     public Button buttonHelpMain;
 
-    [Header("End Level")]
-    public Canvas endLevelCanvas;
-    public Image endLevelBackground;
-
-    [Header("HQ Status")]
-    public Canvas hqCanvas;
-    public Image hqBackground;
-
-    [Header("Player Status")]
-    public Canvas playerStatusCanvas;
-    public Image playerStatusBackground;
-
-    [Header("BriefingOne")]
-    public Canvas briefingOneCanvas;
-    public Image briefingOneBackground;
-
-    [Header("BriefingTwo")]
-    public Canvas briefingTwoCanvas;
-    public Image briefingTwoBackground;
-
     //button interactions
     private ButtonInteraction buttonInteractionBack;
     private ButtonInteraction buttonInteractionContinue;
@@ -53,7 +36,7 @@ public class TransitionUI : MonoBehaviour
     private TransitionInfoData transitionInfoData;
 
     private ModalTransitionSubState state;
-
+   
     //colours
     string colourDefault;
     string colourNeutral;
@@ -69,6 +52,69 @@ public class TransitionUI : MonoBehaviour
 
     //static reference
     private static TransitionUI transitionUI;
+
+    #endregion
+
+    #region End Level
+
+    [Header("End Level")]
+    public Canvas endLevelCanvas;
+    public Image endLevelBackground;
+
+    #endregion
+
+    #region HQ Status
+
+    [Header("HQ Status")]
+    public Canvas hqCanvas;
+    public Image hqBackground;
+    public Image hierarchyBackground;
+    public Image workerBackground;
+    public Image textBackground;
+
+    public HqInteraction optionBoss;
+    public HqInteraction optionSubBoss1;
+    public HqInteraction optionSubBoss2;
+    public HqInteraction optionSubBoss3;
+
+    public WorkerInteraction worker0;
+    public WorkerInteraction worker1;
+    public WorkerInteraction worker2;
+    public WorkerInteraction worker3;
+    public WorkerInteraction worker4;
+    public WorkerInteraction worker5;
+    public WorkerInteraction worker6;
+    public WorkerInteraction worker7;
+
+    //collections
+    private HqInteraction[] arrayOfHqOptions;
+    private WorkerInteraction[] arrayOfWorkerOptions;
+
+    #endregion
+
+    #region Player Status
+
+    [Header("Player Status")]
+    public Canvas playerStatusCanvas;
+    public Image playerStatusBackground;
+
+    #endregion
+
+    #region Briefing One
+
+    [Header("BriefingOne")]
+    public Canvas briefingOneCanvas;
+    public Image briefingOneBackground;
+
+    #endregion
+
+    #region Briefing Two
+
+    [Header("BriefingTwo")]
+    public Canvas briefingTwoCanvas;
+    public Image briefingTwoBackground;
+    #endregion
+
 
     /// <summary>
     /// provide a static reference to TransitionUI that can be accessed from any script
@@ -119,7 +165,10 @@ public class TransitionUI : MonoBehaviour
     /// </summary>
     private void SubInitialiseSessionStart()
     {
-        //main
+        #region Main
+        //
+        // - - - Main
+        //
         Debug.Assert(transitionObject != null, "Invalid transitionObject (Null)");
         Debug.Assert(transitionCanvas != null, "Invalid transitionCanvas (Null)");
         Debug.Assert(transitionBackground != null, "Invalid transitionBackground (Null)");
@@ -155,6 +204,72 @@ public class TransitionUI : MonoBehaviour
         buttonInteractionExit.SetButton(EventType.TransitionClose);
         //Set starting Initialisation states
         InitialiseTooltips();
+        #endregion
+
+        #region EndLevel
+
+        #endregion
+
+        #region HQ Status
+        //
+        // - - - HQ Status
+        //
+        Debug.Assert(hierarchyBackground != null, "Invalid hierarchyBackground (Null)");
+        Debug.Assert(workerBackground != null, "Invalid workerBackground (Null)");
+        Debug.Assert(textBackground != null, "Invalid textBackground (Null)");
+        Debug.Assert(optionBoss != null, "Invalid optionBoss (Null)");
+        Debug.Assert(optionSubBoss1 != null, "Invalid optionSubBoss1 (Null)");
+        Debug.Assert(optionSubBoss2 != null, "Invalid optionSubBoss2 (Null)");
+        Debug.Assert(optionSubBoss3 != null, "Invalid optionSubBoss3 (Null)");
+        Debug.Assert(worker0 != null, "Invalid worker0 (Null)");
+        Debug.Assert(worker1 != null, "Invalid worker1 (Null)");
+        Debug.Assert(worker2 != null, "Invalid worker2 (Null)");
+        Debug.Assert(worker3 != null, "Invalid worker3 (Null)");
+        Debug.Assert(worker4 != null, "Invalid worker4 (Null)");
+        Debug.Assert(worker5 != null, "Invalid worker5 (Null)");
+        Debug.Assert(worker6 != null, "Invalid worker6 (Null)");
+        Debug.Assert(worker7 != null, "Invalid worker7 (Null)");
+        //collections
+        arrayOfHqOptions = new HqInteraction[GameManager.i.hqScript.numOfActorsHQ];
+        arrayOfWorkerOptions = new WorkerInteraction[GameManager.i.hqScript.maxNumOfWorkers];
+        //populate
+        if (arrayOfHqOptions.Length == 4)
+        {
+            arrayOfHqOptions[0] = optionBoss;
+            arrayOfHqOptions[1] = optionSubBoss1;
+            arrayOfHqOptions[2] = optionSubBoss2;
+            arrayOfHqOptions[3] = optionSubBoss3;
+        }
+        else { Debug.LogErrorFormat("Invalid arrayOfHqOptions.Length \"{0}\"", arrayOfHqOptions.Length); }
+        if (arrayOfWorkerOptions.Length == 8)
+        {
+            arrayOfWorkerOptions[0] = worker0;
+            arrayOfWorkerOptions[1] = worker1;
+            arrayOfWorkerOptions[2] = worker2;
+            arrayOfWorkerOptions[3] = worker3;
+            arrayOfWorkerOptions[4] = worker4;
+            arrayOfWorkerOptions[5] = worker5;
+            arrayOfWorkerOptions[6] = worker6;
+            arrayOfWorkerOptions[7] = worker7;
+        }
+        else { Debug.LogErrorFormat("Invalid arrayOfWorkerOptions.Length \"{0}\"", arrayOfWorkerOptions.Length); }
+        //initialise main screen components
+        hierarchyBackground.gameObject.SetActive(true);
+        workerBackground.gameObject.SetActive(true);
+        textBackground.gameObject.SetActive(true);
+        #endregion
+
+        #region Player Status
+
+        #endregion
+
+        #region Briefing One
+
+        #endregion
+
+        #region Briefing Two
+
+        #endregion
     }
     #endregion
 
@@ -369,7 +484,7 @@ public class TransitionUI : MonoBehaviour
         switch (state)
         {
             case ModalTransitionSubState.EndLevel: transitionHeader.text = "Mission Review"; break;
-            case ModalTransitionSubState.HQ: transitionHeader.text = "HQ Changes"; break;
+            case ModalTransitionSubState.HQ: transitionHeader.text = "HQ Status"; break;
             case ModalTransitionSubState.PlayerStatus: transitionHeader.text = "Your Status"; break;
             case ModalTransitionSubState.BriefingOne: transitionHeader.text = "Briefing Part A"; break;
             case ModalTransitionSubState.BriefingTwo: transitionHeader.text = "Briefing Part B"; break;

@@ -477,7 +477,7 @@ public class Node : MonoBehaviour
 
                         /*textName = string.Format("L id {0}, dist {1}, N id {2}", loiter.nodeID, loiter.distance, loiter.neighbourID);*/
 
-                        textName = string.Format("Coords x: {0}, y: {1}, z: {2}", nodePosition.x, nodePosition.y, nodePosition.z);
+                        textName = string.Format("pos x: {0}, y: {1}, z: {2}", nodePosition.x, nodePosition.y, nodePosition.z);
                     }
                     else
                     {
