@@ -4501,7 +4501,7 @@ MonoBehaviour:
   actorSlotID: 2
   actorType: {fileID: 11400000, guid: 268c960d386d285478b3ab6aaa5796bf, type: 2}
   actorDatapoint0: -1
-  actorDatapoint1: -1
+  actorDatapoint1: 1
   actorDatapoint2: -1
   orgReputation: 2
   orgFreedom: 1
@@ -5029,6 +5029,7 @@ MonoBehaviour:
   colourIconActiveBad: {r: 1, g: 0, b: 0, a: 0}
   colourTopWidget: {r: 0.2509804, g: 0.25490198, b: 0.3019608, a: 0}
   colourTopWidgetBarBacks: {r: 0.5568628, g: 0.80784315, b: 0.99215686, a: 1}
+  colourTransitionHqBackground: {r: 0.2509804, g: 0.25490198, b: 0.3019608, a: 1}
   bulletChar: 0
   starChar: 61445
   airportChar: 61554
@@ -5176,7 +5177,7 @@ MonoBehaviour:
   isDataValidation: 1
   isValidateSO: 1
   isIntegrityCheck: 1
-  isRandomLevel: 1
+  isRandomLevel: 0
   isRandomCity: 0
   isEncrypted: 0
   isAutoSave: 0

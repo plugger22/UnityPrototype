@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 224333963289256942}
   - component: {fileID: 114882813092413880}
   - component: {fileID: 114209028923692970}
+  - component: {fileID: 225364694670964016}
   m_Layer: 5
   m_Name: WorkerOption
   m_TagString: Untagged
@@ -194,11 +195,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -330,3 +331,14 @@ RectTransform:
   m_AnchoredPosition: {x: -15, y: 30}
   m_SizeDelta: {x: 100, y: 30}
   m_Pivot: {x: 0, y: 1}
+--- !u!225 &225364694670964016
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1186754199621774}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0

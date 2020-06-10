@@ -6,6 +6,7 @@ using TMPro;
 using gameAPI;
 using packageAPI;
 using modalAPI;
+using System;
 
 /// <summary>
 /// handles TransitionUI which is a single master UI with three togglable panels ->  end of level / HQ changes / Player status
@@ -33,7 +34,7 @@ public class TransitionUI : MonoBehaviour
     private ButtonInteraction buttonInteractionExit;
 
     //data package required to populate UI
-    private TransitionInfoData transitionInfoData;
+    private TransitionInfoData transitionInfoData = new TransitionInfoData();
 
     private ModalTransitionSubState state;
    
@@ -72,10 +73,25 @@ public class TransitionUI : MonoBehaviour
     public Image workerBackground;
     public Image textBackground;
 
+    public GameObject hqBoss;
+    public GameObject hqSubBoss1;
+    public GameObject hqSubBoss2;
+    public GameObject hqSubBoss3;
+
     public HqInteraction optionBoss;
     public HqInteraction optionSubBoss1;
     public HqInteraction optionSubBoss2;
     public HqInteraction optionSubBoss3;
+
+    public CanvasGroup canvasWorker0;
+    public CanvasGroup canvasWorker1;
+    public CanvasGroup canvasWorker2;
+    public CanvasGroup canvasWorker3;
+    public CanvasGroup canvasWorker4;
+    public CanvasGroup canvasWorker5;
+    public CanvasGroup canvasWorker6;
+    public CanvasGroup canvasWorker7;
+
 
     public WorkerInteraction worker0;
     public WorkerInteraction worker1;
@@ -89,6 +105,14 @@ public class TransitionUI : MonoBehaviour
     //collections
     private HqInteraction[] arrayOfHqOptions;
     private WorkerInteraction[] arrayOfWorkerOptions;
+    private CanvasGroup[] arrayOfWorkerCanvas;
+
+    //assorted
+    private float vacantActorAlpha = 0.50f;
+
+    //fast access
+    private Sprite vacantActorSprite;
+    private string vacantActorCompatibility;
 
     #endregion
 
@@ -221,6 +245,10 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(optionSubBoss1 != null, "Invalid optionSubBoss1 (Null)");
         Debug.Assert(optionSubBoss2 != null, "Invalid optionSubBoss2 (Null)");
         Debug.Assert(optionSubBoss3 != null, "Invalid optionSubBoss3 (Null)");
+        Debug.Assert(hqBoss != null, "Invalid hqBoss (Null)");
+        Debug.Assert(hqSubBoss1 != null, "Invalid hqSubBoss1 (Null)");
+        Debug.Assert(hqSubBoss2 != null, "Invalid hqSubBoss2 (Null)");
+        Debug.Assert(hqSubBoss3 != null, "Invalid hqSubBoss3 (Null)");
         Debug.Assert(worker0 != null, "Invalid worker0 (Null)");
         Debug.Assert(worker1 != null, "Invalid worker1 (Null)");
         Debug.Assert(worker2 != null, "Invalid worker2 (Null)");
@@ -229,9 +257,18 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(worker5 != null, "Invalid worker5 (Null)");
         Debug.Assert(worker6 != null, "Invalid worker6 (Null)");
         Debug.Assert(worker7 != null, "Invalid worker7 (Null)");
+        Debug.Assert(canvasWorker0 != null, "Invalid canvasWorker0 (Null)");
+        Debug.Assert(canvasWorker1 != null, "Invalid canvasWorker1 (Null)");
+        Debug.Assert(canvasWorker2 != null, "Invalid canvasWorker2 (Null)");
+        Debug.Assert(canvasWorker3 != null, "Invalid canvasWorker3 (Null)");
+        Debug.Assert(canvasWorker4 != null, "Invalid canvasWorker4 (Null)");
+        Debug.Assert(canvasWorker5 != null, "Invalid canvasWorker5 (Null)");
+        Debug.Assert(canvasWorker6 != null, "Invalid canvasWorker6 (Null)");
+        Debug.Assert(canvasWorker7 != null, "Invalid canvasWorker7 (Null)");
         //collections
         arrayOfHqOptions = new HqInteraction[GameManager.i.hqScript.numOfActorsHQ];
         arrayOfWorkerOptions = new WorkerInteraction[GameManager.i.hqScript.maxNumOfWorkers];
+        arrayOfWorkerCanvas = new CanvasGroup[GameManager.i.hqScript.maxNumOfWorkers];
         //populate
         if (arrayOfHqOptions.Length == 4)
         {
@@ -253,8 +290,24 @@ public class TransitionUI : MonoBehaviour
             arrayOfWorkerOptions[7] = worker7;
         }
         else { Debug.LogErrorFormat("Invalid arrayOfWorkerOptions.Length \"{0}\"", arrayOfWorkerOptions.Length); }
+        if (arrayOfWorkerCanvas.Length == 8)
+        {
+            arrayOfWorkerCanvas[0] = canvasWorker0;
+            arrayOfWorkerCanvas[1] = canvasWorker1;
+            arrayOfWorkerCanvas[2] = canvasWorker2;
+            arrayOfWorkerCanvas[3] = canvasWorker3;
+            arrayOfWorkerCanvas[4] = canvasWorker4;
+            arrayOfWorkerCanvas[5] = canvasWorker5;
+            arrayOfWorkerCanvas[6] = canvasWorker6;
+            arrayOfWorkerCanvas[7] = canvasWorker7;
+        }
+        else { Debug.LogErrorFormat("Invalid arrayOfWorkerCanvas.Length \"{0}\"", arrayOfWorkerCanvas.Length); }
         //initialise main screen components
+        Color color = GameManager.i.guiScript.colourTransitionHqBackground;
+        color.a = 0.50f;
+        hierarchyBackground.color = color;
         hierarchyBackground.gameObject.SetActive(true);
+        workerBackground.color = color;
         workerBackground.gameObject.SetActive(true);
         textBackground.gameObject.SetActive(true);
         #endregion
@@ -279,7 +332,10 @@ public class TransitionUI : MonoBehaviour
     /// </summary>
     private void SubInitialiseFastAccess()
     {
-        
+        vacantActorSprite = GameManager.i.guiScript.vacantActorSprite;
+        vacantActorCompatibility = GameManager.i.guiScript.GetCompatibilityStars(0);
+        Debug.Assert(vacantActorSprite != null, "Invalid vacantActorSprite (Null)");
+        Debug.Assert(string.IsNullOrEmpty(vacantActorCompatibility) == false, "Invalid vacantActorCompatibiity (Null or Empty)");
     }
     #endregion
 
@@ -359,7 +415,11 @@ public class TransitionUI : MonoBehaviour
     public void SetTransitionInfoData(TransitionInfoData data)
     {
         if (data != null)
-        { transitionInfoData = data; }
+        {
+            //clear out existing data and repopulate with new
+            transitionInfoData.Reset();
+            transitionInfoData = data;
+        }
         else { Debug.LogError("Invalid TransitionInfoData (Null)"); }
     }
 
@@ -383,18 +443,55 @@ public class TransitionUI : MonoBehaviour
             //
             // - - - HQ Status
             //
-            //hq options
-            for (int i = 0; i < data.arrayOfHqSprites.Length; i++)
+            //clear out hq arrays
+            for (int i = 0; i < arrayOfHqOptions.Length; i++)
             {
-                arrayOfHqOptions[i].optionImage.sprite = data.arrayOfHqSprites[i];
-                arrayOfHqOptions[i].textUpper.text = data.arrayOfHqCompatibility[i];
-                arrayOfHqOptions[i].textLower.text = data.arrayOfHqTitles[i];
+                arrayOfHqOptions[i].optionImage.sprite = null;
+                arrayOfHqOptions[i].textUpper.text = "";
+                arrayOfHqOptions[i].textLower.text = "";
             }
-            //worker options
-            for (int i = 0; i < data.arrayOfWorkerSprites.Length; i++)
+            //clear out worker arrays
+            for (int i = 0; i < arrayOfWorkerOptions.Length; i++)
             {
-                arrayOfWorkerOptions[i].optionImage.sprite = data.arrayOfWorkerSprites[i];
-                arrayOfWorkerOptions[i].textUpper.text = data.arrayOfWorkerCompatibility[i];
+                arrayOfWorkerOptions[i].optionImage.sprite = null;
+                arrayOfWorkerOptions[i].textUpper.text = "";
+            }
+            //hq options -> Populate
+            Debug.AssertFormat(data.listOfHqSprites.Count == data.listOfHqCompatibility.Count, "Mismatch on count for listOfHqSprites ({0} records) and listOfHqCompatibility ({1} records)",
+                data.listOfHqSprites.Count, data.listOfHqCompatibility.Count);
+            Debug.AssertFormat(data.listOfHqSprites.Count == data.listOfHqTitles.Count, "Mismatch on count for listOfHqSprites ({0} records) and listOfHqTitles ({1} records)",
+                data.listOfHqSprites.Count, data.listOfHqTitles.Count);
+
+            for (int i = 0; i < data.listOfHqSprites.Count; i++)
+            {
+                arrayOfHqOptions[i].optionImage.sprite = data.listOfHqSprites[i];
+                //arrayOfHqOptions[i].textUpper.text = data.listOfHqCompatibility[i];
+                arrayOfHqOptions[i].textLower.text = data.listOfHqTitles[i];
+            }
+            //worker options -> populate
+            Debug.AssertFormat(data.listOfWorkerSprites.Count == data.listOfWorkerCompatibility.Count, "Mismatch -> listOfWorkersSprites has {0} records, listOfWorkerCompatibility has {1} records",
+                data.listOfWorkerSprites.Count, data.listOfWorkerCompatibility.Count);
+
+            for (int i = 0; i < data.listOfWorkerSprites.Count; i++)
+            {
+                arrayOfWorkerOptions[i].optionImage.sprite = data.listOfWorkerSprites[i];
+                //arrayOfWorkerOptions[i].textUpper.text = data.listOfWorkerCompatibility[i];
+            }
+
+            //toggle worker options on/alpha low
+            for (int i = 0; i < arrayOfWorkerOptions.Length; i++)
+            {
+                if (arrayOfWorkerOptions[i].optionImage.sprite == null)
+                {
+                    arrayOfWorkerOptions[i].optionImage.sprite = vacantActorSprite;
+                    //arrayOfWorkerOptions[i].textUpper.text = vacantActorCompatibility;
+                    arrayOfWorkerCanvas[i].alpha = vacantActorAlpha;
+                }
+                else
+                {
+                    //viable option
+                    arrayOfWorkerCanvas[i].alpha = 1.0f;
+                }
             }
 
             #endregion

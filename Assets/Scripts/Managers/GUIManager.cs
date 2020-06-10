@@ -197,6 +197,8 @@ public class GUIManager : MonoBehaviour
     public Color colourTopWidget;
     [Tooltip("Top Widget bar backgrounds colour")]
     public Color colourTopWidgetBarBacks;
+    [Tooltip("Transition HQ Status background colour")]
+    public Color colourTransitionHqBackground;
 
     //font awesome icons
     [HideInInspector] public char bulletChar;

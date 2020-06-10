@@ -3823,6 +3823,37 @@ public class DataManager : MonoBehaviour
     }
 
     //
+    // - - - HQs - - - 
+    //
+
+    /// <summary>
+    /// returns faction for a side, null if a problem (NOTE: only one faction should be present for each side, if more present by mistake only first found is returned)
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public Hq GetHq(GlobalSide sideRequired)
+    {
+        Hq hqReturn = null;
+        if (sideRequired != null)
+        {
+            foreach (var hq in dictOfHQs)
+            {
+                if (hq.Value.side.level == sideRequired.level)
+                {
+                    hqReturn = hq.Value;
+                    break;
+                }
+            }
+        }
+        else { Debug.LogError("Invalid sideRequired (Null)"); }
+        return hqReturn;
+    }
+
+    public Dictionary<string, Hq> GetDictOfHQs()
+    { return dictOfHQs; }
+
+
+    //
     // - - - HQ Actors - - -
     //
 
@@ -7184,35 +7215,6 @@ public class DataManager : MonoBehaviour
     { return dictOfManageActions; }
 
 
-    //
-    // - - - HQs - - - 
-    //
-
-    /// <summary>
-    /// returns faction for a side, null if a problem (NOTE: only one faction should be present for each side, if more present by mistake only first found is returned)
-    /// </summary>
-    /// <param name="side"></param>
-    /// <returns></returns>
-    public Hq GetHq(GlobalSide sideRequired)
-    {
-        Hq hqReturn = null;
-        if (sideRequired != null)
-        {
-            foreach (var hq in dictOfHQs)
-            {
-                if (hq.Value.side.level == sideRequired.level)
-                {
-                    hqReturn = hq.Value;
-                    break;
-                }
-            }
-        }
-        else { Debug.LogError("Invalid sideRequired (Null)"); }
-        return hqReturn;
-    }
-
-    public Dictionary<string, Hq> GetDictOfHQs()
-    { return dictOfHQs; }
 
     //
     // - - - Cities - - -
@@ -8196,7 +8198,6 @@ public class DataManager : MonoBehaviour
     /// <param name="statValue"></param>
     public void StatisticAddNew(StatType statType, int statValue = 0)
     {
-
         try
         {
             dictOfStatisticsLevel.Add(statType, statValue);

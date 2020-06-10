@@ -140,3 +140,218 @@ City seed 21837 -> London, United Kingdom
 
 Dev seed 19849 -> Wednesday, 10 June 2020 12:37 PM
 City seed 32873 -> London, United Kingdom
+
+Dev seed 63759 -> Wednesday, 10 June 2020 3:28 PM
+City seed 16953 -> London, United Kingdom
+ERROR Invalid Actor (Null) for None
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	MetaManager:InitialiseHQ() (at Assets/Scripts/Managers/MetaManager.cs:950)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:135)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:242)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:90)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:322)
+	ControlManager:ProcessEndLevel() (at Assets/Scripts/Managers/ControlManager.cs:222)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:87)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:322)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:253)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:421)
+	ASSERT ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument argument, System.ExceptionResource resource) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.ThrowHelper.ThrowArgumentOutOfRangeException () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].set_Item (System.Int32 index, T value) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	MetaManager.InitialiseHQ () (at Assets/Scripts/Managers/MetaManager.cs:946)
+	MetaManager.ProcessMetaGame () (at Assets/Scripts/Managers/MetaManager.cs:135)
+	ControlManager.ProcessMetaGame () (at Assets/Scripts/Managers/ControlManager.cs:242)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:90)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:322)
+	ControlManager.ProcessEndLevel () (at Assets/Scripts/Managers/ControlManager.cs:222)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:87)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:322)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:253)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:421)
+	
+Dev seed 42876 -> Wednesday, 10 June 2020 3:42 PM
+City seed 31723 -> London, United Kingdom
+ERROR Invalid Actor (Null) for None
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	MetaManager:InitialiseHQ() (at Assets/Scripts/Managers/MetaManager.cs:947)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:135)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:242)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:90)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:322)
+	ControlManager:ProcessEndLevel() (at Assets/Scripts/Managers/ControlManager.cs:222)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:87)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:322)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:253)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:421)
+	ASSERT ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument argument, System.ExceptionResource resource) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.ThrowHelper.ThrowArgumentOutOfRangeException () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].set_Item (System.Int32 index, T value) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	MetaManager.InitialiseHQ () (at Assets/Scripts/Managers/MetaManager.cs:943)
+	MetaManager.ProcessMetaGame () (at Assets/Scripts/Managers/MetaManager.cs:135)
+	ControlManager.ProcessMetaGame () (at Assets/Scripts/Managers/ControlManager.cs:242)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:90)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:322)
+	ControlManager.ProcessEndLevel () (at Assets/Scripts/Managers/ControlManager.cs:222)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:87)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:322)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:253)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:421)
+	
+Dev seed 54296 -> Wednesday, 10 June 2020 3:46 PM
+City seed 8489 -> London, United Kingdom
+ASSERT ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument argument, System.ExceptionResource resource) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.ThrowHelper.ThrowArgumentOutOfRangeException () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].set_Item (System.Int32 index, T value) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	MetaManager.InitialiseHQ () (at Assets/Scripts/Managers/MetaManager.cs:943)
+	MetaManager.ProcessMetaGame () (at Assets/Scripts/Managers/MetaManager.cs:135)
+	ControlManager.ProcessMetaGame () (at Assets/Scripts/Managers/ControlManager.cs:242)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:90)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:322)
+	ControlManager.ProcessEndLevel () (at Assets/Scripts/Managers/ControlManager.cs:222)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:87)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:322)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:253)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:421)
+	
+Dev seed 7300 -> Wednesday, 10 June 2020 3:50 PM
+City seed 37550 -> London, United Kingdom
+ASSERT ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument argument, System.ExceptionResource resource) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.ThrowHelper.ThrowArgumentOutOfRangeException () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].set_Item (System.Int32 index, T value) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	MetaManager.InitialiseHQ () (at Assets/Scripts/Managers/MetaManager.cs:944)
+	MetaManager.ProcessMetaGame () (at Assets/Scripts/Managers/MetaManager.cs:135)
+	ControlManager.ProcessMetaGame () (at Assets/Scripts/Managers/ControlManager.cs:242)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:90)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:322)
+	ControlManager.ProcessEndLevel () (at Assets/Scripts/Managers/ControlManager.cs:222)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:87)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:322)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:253)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:421)
+	
+Dev seed 17242 -> Wednesday, 10 June 2020 3:52 PM
+City seed 45659 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TransitionUI.SetTransitionInfoData (packageAPI.TransitionInfoData data) (at Assets/Scripts/GUI/Transition/TransitionUI.cs:390)
+	MetaManager.ProcessMetaGame () (at Assets/Scripts/Managers/MetaManager.cs:143)
+	ControlManager.ProcessMetaGame () (at Assets/Scripts/Managers/ControlManager.cs:242)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:90)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:322)
+	ControlManager.ProcessEndLevel () (at Assets/Scripts/Managers/ControlManager.cs:222)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:87)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:322)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:253)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:421)
+	
+Dev seed 19093 -> Wednesday, 10 June 2020 3:54 PM
+City seed 59177 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TransitionUI.SetTransitionInfoData (packageAPI.TransitionInfoData data) (at Assets/Scripts/GUI/Transition/TransitionUI.cs:390)
+	MetaManager.ProcessMetaGame () (at Assets/Scripts/Managers/MetaManager.cs:143)
+	ControlManager.ProcessMetaGame () (at Assets/Scripts/Managers/ControlManager.cs:242)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:90)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:322)
+	ControlManager.ProcessEndLevel () (at Assets/Scripts/Managers/ControlManager.cs:222)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:87)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:322)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:253)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:421)
+	
+Dev seed 42301 -> Wednesday, 10 June 2020 3:55 PM
+City seed 19684 -> London, United Kingdom
+City seed 60759 -> New York, America
+
+Dev seed 20743 -> Wednesday, 10 June 2020 4:02 PM
+City seed 50857 -> London, United Kingdom
+City seed 17178 -> New York, America
+
+Dev seed 55614 -> Wednesday, 10 June 2020 4:20 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TransitionUI.InitialiseTransitionUI () (at Assets/Scripts/GUI/Transition/TransitionUI.cs:460)
+	TransitionUI.SetTransitionUI () (at Assets/Scripts/GUI/Transition/TransitionUI.cs:637)
+	TransitionUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/Transition/TransitionUI.cs:367)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:322)
+	ModalConfirm.ConfirmCloseRight () (at Assets/Scripts/GUI/ModalConfirm.cs:168)
+	ModalConfirm.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalConfirm.cs:97)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:322)
+	ButtonInteraction.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 46940 -> Wednesday, 10 June 2020 4:23 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TransitionUI.InitialiseTransitionUI () (at Assets/Scripts/GUI/Transition/TransitionUI.cs:460)
+	TransitionUI.SetTransitionUI () (at Assets/Scripts/GUI/Transition/TransitionUI.cs:637)
+	TransitionUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/Transition/TransitionUI.cs:367)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:322)
+	ModalConfirm.ConfirmCloseRight () (at Assets/Scripts/GUI/ModalConfirm.cs:168)
+	ModalConfirm.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalConfirm.cs:97)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:322)
+	ButtonInteraction.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 44112 -> Wednesday, 10 June 2020 4:31 PM
+City seed 5678 -> London, United Kingdom
+ASSERT UnassignedReferenceException: The variable canvasWorker0 of TransitionUI has not been assigned.
+You probably need to assign the canvasWorker0 variable of the TransitionUI script in the inspector.
+TransitionUI.InitialiseTransitionUI () (at Assets/Scripts/GUI/Transition/TransitionUI.cs:486)
+	TransitionUI.SetTransitionUI () (at Assets/Scripts/GUI/Transition/TransitionUI.cs:637)
+	TransitionUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/Transition/TransitionUI.cs:367)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:322)
+	ModalConfirm.ConfirmCloseRight () (at Assets/Scripts/GUI/ModalConfirm.cs:168)
+	ModalConfirm.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalConfirm.cs:97)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:322)
+	ButtonInteraction.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 47323 -> Wednesday, 10 June 2020 4:32 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 52967 -> Wednesday, 10 June 2020 4:35 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 58945 -> Wednesday, 10 June 2020 4:43 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 50863 -> Wednesday, 10 June 2020 4:47 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 32102 -> Wednesday, 10 June 2020 4:52 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 54506 -> Wednesday, 10 June 2020 5:05 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20556 -> Wednesday, 10 June 2020 5:06 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 27430 -> Wednesday, 10 June 2020 5:12 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 22347 -> Wednesday, 10 June 2020 5:16 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 29491 -> Wednesday, 10 June 2020 5:16 PM
+City seed 5678 -> London, United Kingdom

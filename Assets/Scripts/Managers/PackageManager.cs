@@ -1164,11 +1164,11 @@ namespace packageAPI
         //
         // - - - HQ Status
         //
-        public Sprite[] arrayOfHqSprites = new Sprite[GameManager.i.hqScript.numOfActorsHQ];
-        public string[] arrayOfHqCompatibility = new string[GameManager.i.hqScript.numOfActorsHQ];
-        public string[] arrayOfHqTitles = new string[GameManager.i.hqScript.numOfActorsHQ];
-        public Sprite[] arrayOfWorkerSprites = new Sprite[GameManager.i.hqScript.maxNumOfWorkers];
-        public string[] arrayOfWorkerCompatibility = new string[GameManager.i.hqScript.maxNumOfWorkers];
+        public List <Sprite> listOfHqSprites = new List<Sprite> ();
+        public List<string> listOfHqCompatibility = new List<string>();
+        public List<string> listOfHqTitles = new List<string>();
+        public List<Sprite> listOfWorkerSprites = new List<Sprite>();
+        public List<string> listOfWorkerCompatibility = new List<string>();
         //
         // - - - Player Status
         //
@@ -1184,12 +1184,32 @@ namespace packageAPI
 
         public void Reset()
         {
+            #region Main
+
+            #endregion
+
+            #region End Level
+
+            #endregion
+
             #region HQ status
-            Array.Clear(arrayOfHqSprites, 0, arrayOfHqSprites.Length);
-            Array.Clear(arrayOfHqCompatibility, 0, arrayOfHqCompatibility.Length);
-            Array.Clear(arrayOfHqTitles, 0, arrayOfHqTitles.Length);
-            Array.Clear(arrayOfWorkerSprites, 0, arrayOfWorkerSprites.Length);
-            Array.Clear(arrayOfWorkerCompatibility, 0, arrayOfWorkerCompatibility.Length);
+            listOfHqSprites.Clear();
+            listOfHqCompatibility.Clear();
+            listOfHqTitles.Clear();
+            listOfWorkerSprites.Clear();
+            listOfWorkerCompatibility.Clear();
+            #endregion
+
+            #region Player Status
+
+            #endregion
+
+            #region Briefing One
+
+            #endregion
+
+            #region Briefing Two
+
             #endregion
         }
 
