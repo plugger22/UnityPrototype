@@ -102,6 +102,9 @@ public class TransitionUI : MonoBehaviour
     public WorkerInteraction worker6;
     public WorkerInteraction worker7;
 
+    public TextMeshProUGUI hierarchyLeft;
+    public TextMeshProUGUI hierarchyRight;
+
     //collections
     private HqInteraction[] arrayOfHqOptions;
     private WorkerInteraction[] arrayOfWorkerOptions;
@@ -265,6 +268,8 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(canvasWorker5 != null, "Invalid canvasWorker5 (Null)");
         Debug.Assert(canvasWorker6 != null, "Invalid canvasWorker6 (Null)");
         Debug.Assert(canvasWorker7 != null, "Invalid canvasWorker7 (Null)");
+        Debug.Assert(hierarchyLeft != null, "Invalid hierarchyLeft (Null)");
+        Debug.Assert(hierarchyRight != null, "Invalid hierarchyRight (Null)");
         //collections
         arrayOfHqOptions = new HqInteraction[GameManager.i.hqScript.numOfActorsHQ];
         arrayOfWorkerOptions = new WorkerInteraction[GameManager.i.hqScript.maxNumOfWorkers];
@@ -303,7 +308,12 @@ public class TransitionUI : MonoBehaviour
         }
         else { Debug.LogErrorFormat("Invalid arrayOfWorkerCanvas.Length \"{0}\"", arrayOfWorkerCanvas.Length); }
         //initialise main screen components
+        hierarchyLeft.text = "HIERARCHY";
+        hierarchyRight.text = "HIERARCHY";
         Color color = GameManager.i.guiScript.colourTransitionHqBackground;
+        hierarchyLeft.color = color;
+        hierarchyRight.color = color;
+        //lower alpha
         color.a = 0.50f;
         hierarchyBackground.color = color;
         hierarchyBackground.gameObject.SetActive(true);

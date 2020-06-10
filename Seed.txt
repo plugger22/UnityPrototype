@@ -355,3 +355,11 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 29491 -> Wednesday, 10 June 2020 5:16 PM
 City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 63657 -> Wednesday, 10 June 2020 7:47 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51262 -> Wednesday, 10 June 2020 7:47 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
