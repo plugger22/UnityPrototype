@@ -372,7 +372,44 @@ public class TransitionUI : MonoBehaviour
     {
         if (transitionInfoData != null)
         {
+            //shorten name for ease of coding
+            TransitionInfoData data = transitionInfoData;
 
+            #region End Level
+
+            #endregion
+
+            #region HQ Status
+            //
+            // - - - HQ Status
+            //
+            //hq options
+            for (int i = 0; i < data.arrayOfHqSprites.Length; i++)
+            {
+                arrayOfHqOptions[i].optionImage.sprite = data.arrayOfHqSprites[i];
+                arrayOfHqOptions[i].textUpper.text = data.arrayOfHqCompatibility[i];
+                arrayOfHqOptions[i].textLower.text = data.arrayOfHqTitles[i];
+            }
+            //worker options
+            for (int i = 0; i < data.arrayOfWorkerSprites.Length; i++)
+            {
+                arrayOfWorkerOptions[i].optionImage.sprite = data.arrayOfWorkerSprites[i];
+                arrayOfWorkerOptions[i].textUpper.text = data.arrayOfWorkerCompatibility[i];
+            }
+
+            #endregion
+
+            #region Player Status
+
+            #endregion
+
+            #region Briefing One
+
+            #endregion
+
+            #region Briefing Two
+
+            #endregion
         }
         else { Debug.LogError("Invalid transitionInfoData (Null)"); }
     }

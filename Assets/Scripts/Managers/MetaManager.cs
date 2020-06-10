@@ -130,6 +130,7 @@ public class MetaManager : MonoBehaviour
         GameManager.i.orgScript.ProcessMetaOrgs();
         GameManager.i.playerScript.ProcessMetaPlayer();
         //Transition data
+        transitionInfoData.Reset();
         InitialiseEndLevel();
         InitialiseHQ();
         InitialisePlayerStatus();
@@ -543,8 +544,10 @@ public class MetaManager : MonoBehaviour
                                         if (motivation == 2) { metaSpecial.relationshipModifier = 2; }
                                         else { metaSpecial.relationshipModifier = 1; }
                                         if (isTestLog)
-                                        { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: \"{0}\", {1}, {2} Relationship Modifier {3}{4}",
-                                              metaSpecial.name, metaSpecial.data, metaSpecial.dataTag, metaSpecial.relationshipModifier, "\n"); }
+                                        {
+                                            Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: \"{0}\", {1}, {2} Relationship Modifier {3}{4}",
+                                                metaSpecial.name, metaSpecial.data, metaSpecial.dataTag, metaSpecial.relationshipModifier, "\n");
+                                        }
                                         //add to list
                                         listOfMetaOptions.Add(metaSpecial);
                                         if (isTestLog)
@@ -624,8 +627,10 @@ public class MetaManager : MonoBehaviour
                                         { metaSpecial.relationshipModifier = 2; }
                                         else { metaSpecial.relationshipModifier = 1; }
                                         if (isTestLog)
-                                        { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: \"{0}\", {1}, {2} Relationship Modifier {3}{4}",
-                                              metaSpecial.name, metaSpecial.data, metaSpecial.dataTag, metaSpecial.relationshipModifier, "\n"); }
+                                        {
+                                            Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: \"{0}\", {1}, {2} Relationship Modifier {3}{4}",
+                                                metaSpecial.name, metaSpecial.data, metaSpecial.dataTag, metaSpecial.relationshipModifier, "\n");
+                                        }
                                         //add to list
                                         listOfMetaOptions.Add(metaSpecial);
                                         if (isTestLog)
@@ -638,8 +643,10 @@ public class MetaManager : MonoBehaviour
                                         if (numOfDeviceOptions >= maxNumOfDevices)
                                         {
                                             if (isTestLog)
-                                            { Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Max Cap on Device Options reached (current {0}, max {1}){2}",
-                                                numOfDeviceOptions, maxNumOfDevices, "\n"); }
+                                            {
+                                                Debug.LogFormat("[Tst] MetaManager.cs -> InitialiseMetaOptions: Max Cap on Device Options reached (current {0}, max {1}){2}",
+                                                  numOfDeviceOptions, maxNumOfDevices, "\n");
+                                            }
                                             break;
                                         }
                                     }
@@ -922,7 +929,23 @@ public class MetaManager : MonoBehaviour
     /// </summary>
     private void InitialiseHQ()
     {
-
+        //HQ hierarchy
+        for (int i = 0; i < transitionInfoData.arrayOfHqSprites.Length; i++)
+        {
+            Actor actor = GameManager.i.dataScript.GetHqHierarchyActor((ActorHQ)i);
+            if (actor != null)
+            {
+                transitionInfoData.arrayOfHqSprites[i] = actor.sprite;
+                transitionInfoData.arrayOfHqTitles[i] = GameManager.i.hqScript.GetHqTitle(actor.statusHQ);
+                transitionInfoData.arrayOfHqCompatibility[i] = GameManager.i.guiScript.GetCompatibilityStars(actor.GetPersonality().GetCompatibilityWithPlayer());
+            }
+            else { Debug.LogErrorFormat("Invalid Actor (Null) for {0}", (ActorHQ)i); }
+        }
+        //HQ workers
+        for (int i = 0; i < transitionInfoData.arrayOfWorkerSprites.Length; i++)
+        {
+            
+        }
     }
 
     /// <summary>

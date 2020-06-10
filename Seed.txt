@@ -137,3 +137,6 @@ City seed 28487 -> London, United Kingdom
 
 Dev seed 3715 -> Wednesday, 10 June 2020 11:02 AM
 City seed 21837 -> London, United Kingdom
+
+Dev seed 19849 -> Wednesday, 10 June 2020 12:37 PM
+City seed 32873 -> London, United Kingdom

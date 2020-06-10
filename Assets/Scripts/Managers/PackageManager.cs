@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -1150,17 +1151,47 @@ namespace packageAPI
     /// <summary>
     /// Transition UI initialisation data package
     /// </summary>
-    [System.Serializable]
     public class TransitionInfoData
     {
+        //
+        // - - - Main
+        //
 
-        //End Level
+        //
+        // - - - End Level
+        //
 
-        //HQ changes
+        //
+        // - - - HQ Status
+        //
+        public Sprite[] arrayOfHqSprites = new Sprite[GameManager.i.hqScript.numOfActorsHQ];
+        public string[] arrayOfHqCompatibility = new string[GameManager.i.hqScript.numOfActorsHQ];
+        public string[] arrayOfHqTitles = new string[GameManager.i.hqScript.numOfActorsHQ];
+        public Sprite[] arrayOfWorkerSprites = new Sprite[GameManager.i.hqScript.maxNumOfWorkers];
+        public string[] arrayOfWorkerCompatibility = new string[GameManager.i.hqScript.maxNumOfWorkers];
+        //
+        // - - - Player Status
+        //
+        
+        //
+        // - - - BriefingOne
+        //
 
-        //Player Status
+        //
+        // - - - BriefingTwo
+        //
 
-        //Briefing
+
+        public void Reset()
+        {
+            #region HQ status
+            Array.Clear(arrayOfHqSprites, 0, arrayOfHqSprites.Length);
+            Array.Clear(arrayOfHqCompatibility, 0, arrayOfHqCompatibility.Length);
+            Array.Clear(arrayOfHqTitles, 0, arrayOfHqTitles.Length);
+            Array.Clear(arrayOfWorkerSprites, 0, arrayOfWorkerSprites.Length);
+            Array.Clear(arrayOfWorkerCompatibility, 0, arrayOfWorkerCompatibility.Length);
+            #endregion
+        }
 
     }
 
