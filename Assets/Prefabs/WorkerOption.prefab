@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 224333963289256942}
   - component: {fileID: 114882813092413880}
   - component: {fileID: 114209028923692970}
-  - component: {fileID: 225364694670964016}
   m_Layer: 5
   m_Name: WorkerOption
   m_TagString: Untagged
@@ -310,7 +309,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 41.25, y: -115}
+  m_AnchoredPosition: {x: 42.5, y: -115}
   m_SizeDelta: {x: 75, y: 80}
   m_Pivot: {x: 0, y: 0}
 --- !u!224 &224713428348379100
@@ -331,14 +330,3 @@ RectTransform:
   m_AnchoredPosition: {x: -15, y: 30}
   m_SizeDelta: {x: 100, y: 30}
   m_Pivot: {x: 0, y: 1}
---- !u!225 &225364694670964016
-CanvasGroup:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1186754199621774}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 0
-  m_IgnoreParentGroups: 0

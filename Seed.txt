@@ -426,3 +426,21 @@ TransitionUI.InitialiseTransitionUI () (at Assets/Scripts/GUI/Transition/Transit
 	
 Dev seed 22874 -> Thursday, 11 June 2020 12:44 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 27476 -> Thursday, 11 June 2020 2:29 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 49711 -> Thursday, 11 June 2020 2:30 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 50678 -> Thursday, 11 June 2020 2:31 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 12317 -> Thursday, 11 June 2020 2:33 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 45797 -> Thursday, 11 June 2020 2:36 PM
+City seed 5678 -> London, United Kingdom

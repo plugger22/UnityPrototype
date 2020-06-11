@@ -78,16 +78,6 @@ public class TransitionUI : MonoBehaviour
     public HqInteraction optionSubBoss2;
     public HqInteraction optionSubBoss3;
 
-    public CanvasGroup canvasWorker0;
-    public CanvasGroup canvasWorker1;
-    public CanvasGroup canvasWorker2;
-    public CanvasGroup canvasWorker3;
-    public CanvasGroup canvasWorker4;
-    public CanvasGroup canvasWorker5;
-    public CanvasGroup canvasWorker6;
-    public CanvasGroup canvasWorker7;
-
-
     public WorkerInteraction worker0;
     public WorkerInteraction worker1;
     public WorkerInteraction worker2;
@@ -103,7 +93,6 @@ public class TransitionUI : MonoBehaviour
     //collections
     private HqInteraction[] arrayOfHqOptions;
     private WorkerInteraction[] arrayOfWorkerOptions;
-    private CanvasGroup[] arrayOfWorkerCanvas;
 
     //assorted
     private float vacantActorAlpha = 0.50f;
@@ -251,20 +240,11 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(worker5 != null, "Invalid worker5 (Null)");
         Debug.Assert(worker6 != null, "Invalid worker6 (Null)");
         Debug.Assert(worker7 != null, "Invalid worker7 (Null)");
-        Debug.Assert(canvasWorker0 != null, "Invalid canvasWorker0 (Null)");
-        Debug.Assert(canvasWorker1 != null, "Invalid canvasWorker1 (Null)");
-        Debug.Assert(canvasWorker2 != null, "Invalid canvasWorker2 (Null)");
-        Debug.Assert(canvasWorker3 != null, "Invalid canvasWorker3 (Null)");
-        Debug.Assert(canvasWorker4 != null, "Invalid canvasWorker4 (Null)");
-        Debug.Assert(canvasWorker5 != null, "Invalid canvasWorker5 (Null)");
-        Debug.Assert(canvasWorker6 != null, "Invalid canvasWorker6 (Null)");
-        Debug.Assert(canvasWorker7 != null, "Invalid canvasWorker7 (Null)");
         Debug.Assert(hierarchyLeft != null, "Invalid hierarchyLeft (Null)");
         Debug.Assert(hierarchyRight != null, "Invalid hierarchyRight (Null)");
         //collections
         arrayOfHqOptions = new HqInteraction[GameManager.i.hqScript.numOfActorsHQ];
         arrayOfWorkerOptions = new WorkerInteraction[GameManager.i.hqScript.maxNumOfWorkers];
-        arrayOfWorkerCanvas = new CanvasGroup[GameManager.i.hqScript.maxNumOfWorkers];
         //populate
         if (arrayOfHqOptions.Length == 4)
         {
@@ -286,18 +266,6 @@ public class TransitionUI : MonoBehaviour
             arrayOfWorkerOptions[7] = worker7;
         }
         else { Debug.LogErrorFormat("Invalid arrayOfWorkerOptions.Length \"{0}\"", arrayOfWorkerOptions.Length); }
-        if (arrayOfWorkerCanvas.Length == 8)
-        {
-            arrayOfWorkerCanvas[0] = canvasWorker0;
-            arrayOfWorkerCanvas[1] = canvasWorker1;
-            arrayOfWorkerCanvas[2] = canvasWorker2;
-            arrayOfWorkerCanvas[3] = canvasWorker3;
-            arrayOfWorkerCanvas[4] = canvasWorker4;
-            arrayOfWorkerCanvas[5] = canvasWorker5;
-            arrayOfWorkerCanvas[6] = canvasWorker6;
-            arrayOfWorkerCanvas[7] = canvasWorker7;
-        }
-        else { Debug.LogErrorFormat("Invalid arrayOfWorkerCanvas.Length \"{0}\"", arrayOfWorkerCanvas.Length); }
         //initialise main screen components
         hierarchyLeft.text = "HIERARCHY";
         hierarchyRight.text = "HIERARCHY";
@@ -496,6 +464,7 @@ public class TransitionUI : MonoBehaviour
                     arrayOfWorkerOptions[i].optionTooltip.tooltipHeader = data.listOfWorkerTooltips[i].header;
                     arrayOfWorkerOptions[i].optionTooltip.tooltipMain = data.listOfWorkerTooltips[i].main;
                     arrayOfWorkerOptions[i].optionTooltip.tooltipDetails = data.listOfWorkerTooltips[i].details;
+                    /*Debug.LogFormat("[Tst] index {0}, {1}{2}", i, data.listOfWorkerTooltips[i].header, "\n");*/
                 }
                 else { Debug.LogWarningFormat("Invalid tooltip (Null) for arrayOfWorkerOptions[{0}].optionTooltip", i); }
             }
@@ -506,13 +475,10 @@ public class TransitionUI : MonoBehaviour
                 if (arrayOfWorkerOptions[i].optionImage.sprite == null)
                 {
                     arrayOfWorkerOptions[i].optionImage.sprite = vacantActorSprite;
-                    //arrayOfWorkerOptions[i].textUpper.text = vacantActorCompatibility;
-                    arrayOfWorkerCanvas[i].alpha = vacantActorAlpha;
                 }
                 else
                 {
                     //viable option
-                    arrayOfWorkerCanvas[i].alpha = 1.0f;
                 }
             }
 
