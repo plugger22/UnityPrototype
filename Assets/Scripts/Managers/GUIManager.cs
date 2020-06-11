@@ -200,7 +200,7 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Transition HQ Status background colour")]
     public Color colourTransitionHqBackground;
 
-    //font awesome icons
+    //font awesome icons (characters)
     [HideInInspector] public char bulletChar;
     [HideInInspector] public char starChar;
     [HideInInspector] public char airportChar;
@@ -233,9 +233,10 @@ public class GUIManager : MonoBehaviour
     [HideInInspector] public char connectionsChar;
     [HideInInspector] public char cityChar;
     [HideInInspector] public char compatibilityChar;
+    [HideInInspector] public char alertChar;
 
 
-    //predefined data icons
+    //predefined data icons (colour formatted characters)
     [HideInInspector] public string stabilityIcon;
     [HideInInspector] public string supportIcon;
     [HideInInspector] public string securityIcon;
@@ -251,6 +252,8 @@ public class GUIManager : MonoBehaviour
     [HideInInspector] public string compatibilityIcon;
     [HideInInspector] public string starIconGood;
     [HideInInspector] public string starIconBad;
+    [HideInInspector] public string alertIconGood;
+    [HideInInspector] public string alertIconBad;
 
 
 
@@ -376,10 +379,11 @@ public class GUIManager : MonoBehaviour
         connectionsChar = '\uf500';
         cityChar = '\uf64f';
         compatibilityChar = '\uf6ad';
+        alertChar = '\uf06a';
     }
 
     /// <summary>
-    /// Set colour formatted icon strings for data values. Used throughout code base, central repositry here
+    /// Set colour formatted predefined icon strings for data values. Used throughout code base, central repositry here
     /// </summary>
     private void SetIcons()
     {
@@ -401,7 +405,8 @@ public class GUIManager : MonoBehaviour
         hqIconBad = string.Format("{0}HQ{1}", colourDataTerrible, colourEnd);
         starIconGood = string.Format("{0}{1}{2}", colourDataGood, starChar, colourEnd);
         starIconBad = string.Format("{0}{1}{2}", colourDataTerrible, starChar, colourEnd);
-
+        alertIconGood = string.Format("{0}{1}{2}", colourDataGood, alertChar, colourEnd);
+        alertIconBad = string.Format("{0}{1}{2}", colourDataTerrible, alertChar, colourEnd);
     }
 
 

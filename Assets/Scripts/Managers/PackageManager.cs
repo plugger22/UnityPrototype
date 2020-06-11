@@ -1097,7 +1097,7 @@ namespace packageAPI
         public int scenarioIndex;           //taken care of automatically in constructor
         public int change;                  //amount renown is changing by
         public int newRenown;               //what renown is after change
-        public string reason;
+        public string reason;               //if a metaGame event then 'due to ...'
 
         public HqRenownData()
         { scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex(); }
@@ -1164,11 +1164,15 @@ namespace packageAPI
         //
         // - - - HQ Status
         //
+        //NOTE: indexes of all relevant lists refer to the same actor
         public List <Sprite> listOfHqSprites = new List<Sprite> ();
         public List<string> listOfHqCompatibility = new List<string>();
         public List<string> listOfHqTitles = new List<string>();
         public List<Sprite> listOfWorkerSprites = new List<Sprite>();
         public List<string> listOfWorkerCompatibility = new List<string>();
+        public List<TooltipData> listOfHqTooltips = new List<TooltipData>();
+        public List<TooltipData> listOfWorkerTooltips = new List<TooltipData>();
+
         //
         // - - - Player Status
         //
@@ -1213,6 +1217,17 @@ namespace packageAPI
             #endregion
         }
 
+    }
+
+
+    /// <summary>
+    /// Global class to pass generic tooltip details
+    /// </summary>
+    public class TooltipData
+    {
+        public string header;
+        public string main;
+        public string details;
     }
 
     /// <summary>

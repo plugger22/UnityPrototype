@@ -73,11 +73,6 @@ public class TransitionUI : MonoBehaviour
     public Image workerBackground;
     public Image textBackground;
 
-    public GameObject hqBoss;
-    public GameObject hqSubBoss1;
-    public GameObject hqSubBoss2;
-    public GameObject hqSubBoss3;
-
     public HqInteraction optionBoss;
     public HqInteraction optionSubBoss1;
     public HqInteraction optionSubBoss2;
@@ -248,10 +243,6 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(optionSubBoss1 != null, "Invalid optionSubBoss1 (Null)");
         Debug.Assert(optionSubBoss2 != null, "Invalid optionSubBoss2 (Null)");
         Debug.Assert(optionSubBoss3 != null, "Invalid optionSubBoss3 (Null)");
-        Debug.Assert(hqBoss != null, "Invalid hqBoss (Null)");
-        Debug.Assert(hqSubBoss1 != null, "Invalid hqSubBoss1 (Null)");
-        Debug.Assert(hqSubBoss2 != null, "Invalid hqSubBoss2 (Null)");
-        Debug.Assert(hqSubBoss3 != null, "Invalid hqSubBoss3 (Null)");
         Debug.Assert(worker0 != null, "Invalid worker0 (Null)");
         Debug.Assert(worker1 != null, "Invalid worker1 (Null)");
         Debug.Assert(worker2 != null, "Invalid worker2 (Null)");
@@ -471,12 +462,20 @@ public class TransitionUI : MonoBehaviour
                 data.listOfHqSprites.Count, data.listOfHqCompatibility.Count);
             Debug.AssertFormat(data.listOfHqSprites.Count == data.listOfHqTitles.Count, "Mismatch on count for listOfHqSprites ({0} records) and listOfHqTitles ({1} records)",
                 data.listOfHqSprites.Count, data.listOfHqTitles.Count);
-
+            Debug.AssertFormat(data.listOfHqSprites.Count == data.listOfHqTooltips.Count, "Mismatch on count for listOfHqSprites ({0} records) and listOfHqTooltips ({1} records)",
+                data.listOfHqSprites.Count, data.listOfHqTooltips.Count);
             for (int i = 0; i < data.listOfHqSprites.Count; i++)
             {
                 arrayOfHqOptions[i].optionImage.sprite = data.listOfHqSprites[i];
                 //arrayOfHqOptions[i].textUpper.text = data.listOfHqCompatibility[i];
                 arrayOfHqOptions[i].textLower.text = data.listOfHqTitles[i];
+                //tooltip
+                if (data.listOfHqTooltips[i] != null)
+                {
+                    arrayOfHqOptions[i].optionTooltip.tooltipHeader = data.listOfHqTooltips[i].header;
+                    arrayOfHqOptions[i].optionTooltip.tooltipMain = data.listOfHqTooltips[i].main;
+                    arrayOfHqOptions[i].optionTooltip.tooltipDetails = data.listOfHqTooltips[i].details;
+                }
             }
             //worker options -> populate
             Debug.AssertFormat(data.listOfWorkerSprites.Count == data.listOfWorkerCompatibility.Count, "Mismatch -> listOfWorkersSprites has {0} records, listOfWorkerCompatibility has {1} records",
@@ -485,7 +484,13 @@ public class TransitionUI : MonoBehaviour
             for (int i = 0; i < data.listOfWorkerSprites.Count; i++)
             {
                 arrayOfWorkerOptions[i].optionImage.sprite = data.listOfWorkerSprites[i];
-                //arrayOfWorkerOptions[i].textUpper.text = data.listOfWorkerCompatibility[i];
+                //tooltip
+                if (data.listOfWorkerTooltips[i] != null)
+                {
+                    arrayOfWorkerOptions[i].optionTooltip.tooltipHeader = data.listOfWorkerTooltips[i].header;
+                    arrayOfWorkerOptions[i].optionTooltip.tooltipMain = data.listOfWorkerTooltips[i].main;
+                    arrayOfWorkerOptions[i].optionTooltip.tooltipDetails = data.listOfWorkerTooltips[i].details;
+                }
             }
 
             //toggle worker options on/alpha low

@@ -53,7 +53,6 @@ namespace gameAPI
         [HideInInspector] public int departedNumOfSecrets;      //used to record the number of secrets known at time of dismissal, etc. (needed to work out accurate renown cost as secrets removed when actor leaves)
         [HideInInspector] public int numOfDaysStressed;         //tally of days spent stressed (excludes breakdown & stress leave days)
         [HideInInspector] public int numOfDaysLieLow;           //tally of days spent lying low
-
         //sprite
         [HideInInspector] [NonSerialized] public Sprite sprite;   //sprite used in-game (default copied from actorArc at present)
         [HideInInspector] public string spriteName;              //used for serialization (used to access sprite from dictOfSprites on load)
@@ -1428,6 +1427,19 @@ namespace gameAPI
         }
 
         /// <summary>
+        /// Returns most recent hqRenownData, null if none
+        /// </summary>
+        /// <returns></returns>
+        public HqRenownData GetMostRecentHqRenownData()
+        {
+            HqRenownData data = null;
+            int count = listOfHqRenownData.Count;
+            if (count > 0)
+            { data = listOfHqRenownData[count - 1]; }
+            return data;
+        }
+
+        /// <summary>
         /// refresh HQ renown data list for Save/Load data
         /// </summary>
         /// <param name="tempList"></param>
@@ -1465,6 +1477,19 @@ namespace gameAPI
         /// <returns></returns>
         public bool CheckHistory()
         { return listOfHistory.Count > 0 ? true : false; }
+
+        /// <summary>
+        /// returns most recent actor History entry, Null if none found
+        /// </summary>
+        /// <returns></returns>
+        public HistoryActor GetMostRecentActorHistory()
+        {
+            HistoryActor history = null;
+            int count = listOfHistory.Count;
+            if (count > 0)
+            { return listOfHistory[count - 1]; }
+            return history;
+        }
 
         /// <summary>
         /// Display Actor History

@@ -8146,10 +8146,10 @@ public class DataManager : MonoBehaviour
     {
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         StringBuilder builder = new StringBuilder();
-        //loop actors
+        //Hierarchy
         if (arrayOfActorsHQ != null)
         {
-            builder.AppendFormat("- HQ Hierarchy Actors History{0}{1}", "\n", "\n");
+            builder.AppendFormat("- HQ Hierarchy History{0}{1}", "\n", "\n");
             for (int i = 1; i < (int)ActorHQ.Count - 2; i++)
             {
                 Actor actor = arrayOfActorsHQ[i];
@@ -8157,11 +8157,27 @@ public class DataManager : MonoBehaviour
                 {
                     builder.Append(actor.DebugDisplayHistory());
                     builder.AppendLine();
-                    builder.AppendLine();
                 }
             }
         }
         else { Debug.LogError("Invalid arrayOfActorsHQ (Null)"); }
+        //Workers
+        List<Actor> listOfWorkers = GetListOfHqWorkers();
+        if (listOfWorkers != null)
+        {
+            builder.AppendFormat("{0}- HQ Workers History{1}{2}", "\n", "\n", "\n");
+            for (int i = 0; i < listOfWorkers.Count; i++)
+            {
+                Actor actor = listOfWorkers[i];
+                if (actor != null)
+                {
+                    builder.Append(actor.DebugDisplayHistory());
+                    builder.AppendLine();
+                }
+                else { Debug.LogWarningFormat("Invalid actor (Null) for listOfWorkers[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfWorkers (Null)"); }
         return builder.ToString();
     }
 

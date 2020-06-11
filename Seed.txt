@@ -363,3 +363,29 @@ City seed 5678 -> London, United Kingdom
 Dev seed 51262 -> Wednesday, 10 June 2020 7:47 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 44130 -> Thursday, 11 June 2020 9:59 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 12938 -> Thursday, 11 June 2020 9:59 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 54417 -> Thursday, 11 June 2020 10:12 AM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+City seed 234 -> Sydney, Australia
+
+Dev seed 34856 -> Thursday, 11 June 2020 10:54 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 43190 -> Thursday, 11 June 2020 11:48 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 64711 -> Thursday, 11 June 2020 12:13 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 3495 -> Thursday, 11 June 2020 12:23 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

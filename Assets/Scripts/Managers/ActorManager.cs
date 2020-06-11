@@ -8821,6 +8821,47 @@ public class ActorManager : MonoBehaviour
 
 
     /// <summary>
+    /// creates tooltip ready data for a particular Hq actor (hierarchy or worker) -> Used by MetaManager.cs -> InitialiseHQ
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <returns></returns>
+    public TooltipData GetHqTransitionTooltip(Actor actor)
+    {
+        TooltipData data = new TooltipData();
+        //actor data
+        int motivation = actor.GetDatapoint(ActorDatapoint.Datapoint1);
+        string title = GameManager.i.hqScript.GetHqTitle(actor.statusHQ);
+        //header
+        data.header = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, title.ToUpper(), colourEnd);
+        //main
+        if (actor.GetTrait().isHqTrait == false)
+        { data.main = string.Format("Renown  {0}{1}{2}", colourNeutral, actor.Renown, colourEnd); }
+        else
+        {
+            //actor has an HQ relevant trait
+            data.main = string.Format("Renown  {0}{1}{2}{3}{4}{5}<size=120%>{6}</size>{7}{8}", colourNeutral, actor.Renown, colourEnd, "\n", "<font=\"Bangers SDF\">", "<cspace=0.6em>",
+                 actor.GetTrait().tagFormatted, "</cspace>", "</font>");
+        }
+        //details -> renown event, otherwise actor history
+        HqRenownData renownData = actor.GetMostRecentHqRenownData();
+        if (renownData != null)
+        {
+            string colourRenown = colourGood;
+            if (renownData.change < 0) { colourRenown = colourBad; }
+            data.details = string.Format("{0}Renown {1}{2}{3}{4}{5}Due to {6}{7}", colourRenown, renownData.change > 0 ? "+" : "", renownData.change, 
+                colourEnd, "\n", colourNormal, renownData.reason, colourEnd);
+        }
+        else
+        {
+            HistoryActor history = actor.GetMostRecentActorHistory();
+            if (history != null)
+            { data.details = string.Format("{0}{1}{2}", colourNormal, history.text, colourEnd); }
+        }
+        return data;
+    }
+
+
+    /// <summary>
     /// sub method used to calculate adjusted renown cost for dismissing, firing , disposing off actors (where a cost is involved) due to actor threatening player and/or knowing secrets
     /// Returns a ManageRenown data package giving adjusted cost and a colour formatted tooltip string (starts on next line) explaining why, eg. '(HEAVY knows 1 secret, +1 Renown cost)'
     /// Returns baseCost and null for tooltip if no change
