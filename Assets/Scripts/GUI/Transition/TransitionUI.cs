@@ -450,12 +450,18 @@ public class TransitionUI : MonoBehaviour
                 arrayOfHqOptions[i].optionImage.sprite = null;
                 arrayOfHqOptions[i].textUpper.text = "";
                 arrayOfHqOptions[i].textLower.text = "";
+                arrayOfHqOptions[i].optionTooltip.tooltipHeader = "";
+                arrayOfHqOptions[i].optionTooltip.tooltipMain = "";
+                arrayOfHqOptions[i].optionTooltip.tooltipDetails = "";
             }
             //clear out worker arrays
             for (int i = 0; i < arrayOfWorkerOptions.Length; i++)
             {
                 arrayOfWorkerOptions[i].optionImage.sprite = null;
                 arrayOfWorkerOptions[i].textUpper.text = "";
+                arrayOfWorkerOptions[i].optionTooltip.tooltipHeader = "";
+                arrayOfWorkerOptions[i].optionTooltip.tooltipMain = "";
+                arrayOfWorkerOptions[i].optionTooltip.tooltipDetails = "";
             }
             //hq options -> Populate
             Debug.AssertFormat(data.listOfHqSprites.Count == data.listOfHqCompatibility.Count, "Mismatch on count for listOfHqSprites ({0} records) and listOfHqCompatibility ({1} records)",
@@ -491,6 +497,7 @@ public class TransitionUI : MonoBehaviour
                     arrayOfWorkerOptions[i].optionTooltip.tooltipMain = data.listOfWorkerTooltips[i].main;
                     arrayOfWorkerOptions[i].optionTooltip.tooltipDetails = data.listOfWorkerTooltips[i].details;
                 }
+                else { Debug.LogWarningFormat("Invalid tooltip (Null) for arrayOfWorkerOptions[{0}].optionTooltip", i); }
             }
 
             //toggle worker options on/alpha low
