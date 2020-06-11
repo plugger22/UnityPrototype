@@ -1200,8 +1200,10 @@ namespace packageAPI
             listOfHqSprites.Clear();
             listOfHqCompatibility.Clear();
             listOfHqTitles.Clear();
+            listOfHqTooltips.Clear();
             listOfWorkerSprites.Clear();
             listOfWorkerCompatibility.Clear();
+            listOfWorkerTooltips.Clear();
             #endregion
 
             #region Player Status
