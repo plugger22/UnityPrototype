@@ -9515,7 +9515,7 @@ public class ActorManager : MonoBehaviour
                         scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex() + 1,
                         change = actor.Renown - oldRenown,
                         newRenown = actor.Renown,
-                        reason = "Promoted to HQ"
+                        reason = "being Promoted to HQ"
                     };
                     actor.AddHqRenownData(renownData);
                     //remove any secrets and conditions
@@ -9529,7 +9529,7 @@ public class ActorManager : MonoBehaviour
                     listOfWorkers.RemoveAt(results.Item1);
                     //add actor
                     listOfWorkers.Add(actor);
-                    actor.AddHistory(new HistoryActor() { text = "being Promoted to HQ (Worker)" });
+                    actor.AddHistory(new HistoryActor() { text = "Promoted to HQ (Worker)" });
                     Debug.LogFormat("[HQ] ActorManager.cs -> ProcessMetaActors: {0}, {1}, actorID {2}, renown {3}, PROMOTED to HQ{4}", actor.actorName, actor.arc.name,
                         actor.actorID, actor.Renown, "\n");
                 }

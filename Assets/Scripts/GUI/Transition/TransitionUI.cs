@@ -43,9 +43,9 @@ public class TransitionUI : MonoBehaviour
     string colourNeutral;
     string colourGrey;
     string colourAlert;
+    string colourNormal;
     /*string colourGood;
     string colourBlue;
-    string colourNormal;
     string colourError;
     string colourInvalid;*/
     string colourCancel;
@@ -98,6 +98,7 @@ public class TransitionUI : MonoBehaviour
 
     //assorted
     private float vacantActorAlpha = 0.50f;
+    private TooltipData renownTooltip;
 
     //fast access
     private Sprite vacantActorSprite;
@@ -290,6 +291,14 @@ public class TransitionUI : MonoBehaviour
         workerBackground.color = color;
         workerBackground.gameObject.SetActive(true);
         textBackground.gameObject.SetActive(true);
+        //renown tooltip
+        SetColours();
+        renownTooltip = new TooltipData()
+        {
+            header = string.Format("{0}RENOWN{1}", colourCancel, colourEnd),
+            main = string.Format("{0}Hierarchy positions are determined by <b>who has the most Renown</b>{1}", colourNormal, colourEnd),
+            details = string.Format("{0}If a <b>Worker</b> accumulates more Renown than a member of the Hierarchy they will <b>take their spot</b>{1}", colourNormal, colourEnd)
+        };
         #endregion
 
         #region Player Status
@@ -378,9 +387,9 @@ public class TransitionUI : MonoBehaviour
         colourNeutral = GameManager.i.colourScript.GetColour(ColourType.neutralText);
         colourGrey = GameManager.i.colourScript.GetColour(ColourType.greyText);
         colourAlert = GameManager.i.colourScript.GetColour(ColourType.salmonText);
+        colourNormal = GameManager.i.colourScript.GetColour(ColourType.normalText);
         /*colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
         colourBlue = GameManager.instance.colourScript.GetColour(ColourType.blueText)
-        colourNormal = GameManager.i.colourScript.GetColour(ColourType.normalText);
         colourBad = GameManager.instance.colourScript.GetColour(ColourType.badText);
         colourError = GameManager.instance.colourScript.GetColour(ColourType.dataBad);
         colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.salmonText);*/
@@ -443,6 +452,7 @@ public class TransitionUI : MonoBehaviour
                 arrayOfWorkerOptions[i].optionTooltip.tooltipMain = "";
                 arrayOfWorkerOptions[i].optionTooltip.tooltipDetails = "";
             }
+            
             //hq options -> Populate
             Debug.AssertFormat(data.listOfHqSprites.Count == data.listOfHqRenown.Count, "Mismatch on count for listOfHqSprites ({0} records) and listOfHqCompatibility ({1} records)",
                 data.listOfHqSprites.Count, data.listOfHqRenown.Count);
@@ -455,13 +465,18 @@ public class TransitionUI : MonoBehaviour
                 arrayOfHqOptions[i].optionImage.sprite = data.listOfHqSprites[i];
                 arrayOfHqOptions[i].textUpper.text = data.listOfHqRenown[i];
                 arrayOfHqOptions[i].textLower.text = data.listOfHqTitles[i];
-                //tooltip
+                //sprite tooltip
                 if (data.listOfHqTooltips[i] != null)
                 {
                     arrayOfHqOptions[i].optionTooltip.tooltipHeader = data.listOfHqTooltips[i].header;
                     arrayOfHqOptions[i].optionTooltip.tooltipMain = data.listOfHqTooltips[i].main;
                     arrayOfHqOptions[i].optionTooltip.tooltipDetails = data.listOfHqTooltips[i].details;
                 }
+                else { Debug.LogWarningFormat("Invalid tooltip (Null) for arrayOfHqOptions[{0}].optionTooltip", i); }
+                //renown tooltip
+                arrayOfHqOptions[i].renownTooltip.tooltipHeader = renownTooltip.header;
+                arrayOfHqOptions[i].renownTooltip.tooltipMain = renownTooltip.main;
+                arrayOfHqOptions[i].renownTooltip.tooltipDetails = renownTooltip.details;
             }
             //worker options -> populate
             Debug.AssertFormat(data.listOfWorkerSprites.Count == data.listOfWorkerArcs.Count, "Mismatch -> listOfWorkersSprites has {0} records, listOfWorkerNames has {1} records",
@@ -472,7 +487,7 @@ public class TransitionUI : MonoBehaviour
                 arrayOfWorkerOptions[i].optionImage.sprite = data.listOfWorkerSprites[i];
                 arrayOfWorkerOptions[i].textUpper.text = data.listOfWorkerRenown[i];
                 arrayOfWorkerOptions[i].textLower.text = data.listOfWorkerArcs[i];
-                //tooltip
+                //sprite tooltip
                 if (data.listOfWorkerTooltips[i] != null)
                 {
                     arrayOfWorkerOptions[i].optionTooltip.tooltipHeader = data.listOfWorkerTooltips[i].header;
@@ -480,6 +495,10 @@ public class TransitionUI : MonoBehaviour
                     arrayOfWorkerOptions[i].optionTooltip.tooltipDetails = data.listOfWorkerTooltips[i].details;
                 }
                 else { Debug.LogWarningFormat("Invalid tooltip (Null) for arrayOfWorkerOptions[{0}].optionTooltip", i); }
+                //renown tooltip
+                arrayOfWorkerOptions[i].renownTooltip.tooltipHeader = renownTooltip.header;
+                arrayOfWorkerOptions[i].renownTooltip.tooltipMain = renownTooltip.main;
+                arrayOfWorkerOptions[i].renownTooltip.tooltipDetails = renownTooltip.details;
             }
 
             //toggle worker options on/alpha low

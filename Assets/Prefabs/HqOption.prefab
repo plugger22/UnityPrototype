@@ -95,7 +95,7 @@ MonoBehaviour:
   textUpper: {fileID: 114884164084918936}
   textLower: {fileID: 114684070775434894}
   optionTooltip: {fileID: 114575183237963954}
-  compatibilityTooltip: {fileID: 114532336366065342}
+  renownTooltip: {fileID: 114532336366065342}
 --- !u!114 &114532336366065342
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -300,13 +300,13 @@ MonoBehaviour:
   m_text: XXX
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4284935915
   m_fontColor: {r: 0.92156863, g: 0.93333334, b: 0.4, a: 1}
   m_enableVertexGradient: 0
   m_fontColorGradient:
@@ -342,7 +342,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 0
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -379,7 +379,7 @@ MonoBehaviour:
   m_spriteAnimator: {fileID: 0}
   m_isInputParsingRequired: 1
   m_inputSource: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -445,8 +445,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 45}
-  m_SizeDelta: {x: 100, y: 30}
+  m_AnchoredPosition: {x: 0, y: 40}
+  m_SizeDelta: {x: 100, y: 25}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224616681872183464
 RectTransform:

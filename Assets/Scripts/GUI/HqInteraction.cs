@@ -15,7 +15,7 @@ public class HqInteraction : MonoBehaviour
     public TextMeshProUGUI textUpper;
     public TextMeshProUGUI textLower;
     public GenericTooltipUI optionTooltip;
-    public GenericTooltipUI compatibilityTooltip;
+    public GenericTooltipUI renownTooltip;
 
     public void Awake()
     {
@@ -23,6 +23,6 @@ public class HqInteraction : MonoBehaviour
         Debug.Assert(textUpper != null, "Invalid textUpper (Null)");
         Debug.Assert(textLower != null, "Invalid textLower (Null)");
         Debug.Assert(optionTooltip != null, "Invalid optionTooltip (Null)");
-        Debug.Assert(compatibilityTooltip != null, "Invalid compatibilityTooltip (Null)");
+        Debug.Assert(renownTooltip != null, "Invalid compatibilityTooltip (Null)");
     }
 }

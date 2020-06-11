@@ -17835,6 +17835,11 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114884164084918936, guid: 31fc6bb33a1c8b84dbe87b540deaa8cf,
+        type: 2}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 31fc6bb33a1c8b84dbe87b540deaa8cf, type: 2}
   m_IsPrefabAsset: 0
@@ -20359,6 +20364,11 @@ Prefab:
         type: 2}
       propertyPath: m_isInputParsingRequired
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114884164084918936, guid: 31fc6bb33a1c8b84dbe87b540deaa8cf,
+        type: 2}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 31fc6bb33a1c8b84dbe87b540deaa8cf, type: 2}
@@ -28370,6 +28380,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1186754199621774, guid: eb5bc91465955384aa2391370801e294, type: 2}
+      propertyPath: m_Name
+      value: Worker2
+      objectReference: {fileID: 0}
     - target: {fileID: 114521199813221882, guid: eb5bc91465955384aa2391370801e294,
         type: 2}
       propertyPath: m_havePropertiesChanged
@@ -28379,25 +28393,6 @@ Prefab:
         type: 2}
       propertyPath: m_isInputParsingRequired
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224333963289256942, guid: eb5bc91465955384aa2391370801e294,
-        type: 2}
-      propertyPath: m_LocalScale.x
-      value: 1.0000007
-      objectReference: {fileID: 0}
-    - target: {fileID: 224333963289256942, guid: eb5bc91465955384aa2391370801e294,
-        type: 2}
-      propertyPath: m_LocalScale.y
-      value: 1.0000007
-      objectReference: {fileID: 0}
-    - target: {fileID: 224333963289256942, guid: eb5bc91465955384aa2391370801e294,
-        type: 2}
-      propertyPath: m_LocalScale.z
-      value: 1.0000007
-      objectReference: {fileID: 0}
-    - target: {fileID: 1186754199621774, guid: eb5bc91465955384aa2391370801e294, type: 2}
-      propertyPath: m_Name
-      value: Worker2
       objectReference: {fileID: 0}
     - target: {fileID: 114793407518117886, guid: eb5bc91465955384aa2391370801e294,
         type: 2}
@@ -44561,56 +44556,6 @@ Prefab:
     - target: {fileID: 1242306722270084, guid: 31fc6bb33a1c8b84dbe87b540deaa8cf, type: 2}
       propertyPath: m_Name
       value: HqOptionBoss
-      objectReference: {fileID: 0}
-    - target: {fileID: 114884164084918936, guid: 31fc6bb33a1c8b84dbe87b540deaa8cf,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114884164084918936, guid: 31fc6bb33a1c8b84dbe87b540deaa8cf,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114684070775434894, guid: 31fc6bb33a1c8b84dbe87b540deaa8cf,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114684070775434894, guid: 31fc6bb33a1c8b84dbe87b540deaa8cf,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114884164084918936, guid: 31fc6bb33a1c8b84dbe87b540deaa8cf,
-        type: 2}
-      propertyPath: m_text
-      value: XXX
-      objectReference: {fileID: 0}
-    - target: {fileID: 114884164084918936, guid: 31fc6bb33a1c8b84dbe87b540deaa8cf,
-        type: 2}
-      propertyPath: m_textInfo.characterCount
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114884164084918936, guid: 31fc6bb33a1c8b84dbe87b540deaa8cf,
-        type: 2}
-      propertyPath: m_textInfo.spaceCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114884164084918936, guid: 31fc6bb33a1c8b84dbe87b540deaa8cf,
-        type: 2}
-      propertyPath: m_textInfo.wordCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114884164084918936, guid: 31fc6bb33a1c8b84dbe87b540deaa8cf,
-        type: 2}
-      propertyPath: m_textInfo.lineCount
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114884164084918936, guid: 31fc6bb33a1c8b84dbe87b540deaa8cf,
-        type: 2}
-      propertyPath: m_textInfo.pageCount
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 31fc6bb33a1c8b84dbe87b540deaa8cf, type: 2}
@@ -64724,6 +64669,11 @@ Prefab:
         type: 2}
       propertyPath: m_isInputParsingRequired
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114884164084918936, guid: 31fc6bb33a1c8b84dbe87b540deaa8cf,
+        type: 2}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 31fc6bb33a1c8b84dbe87b540deaa8cf, type: 2}
