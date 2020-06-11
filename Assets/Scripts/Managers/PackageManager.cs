@@ -1166,12 +1166,14 @@ namespace packageAPI
         //
         //NOTE: indexes of all relevant lists refer to the same actor
         public List <Sprite> listOfHqSprites = new List<Sprite> ();
-        public List<string> listOfHqCompatibility = new List<string>();
+        public List<string> listOfHqRenown = new List<string>();
         public List<string> listOfHqTitles = new List<string>();
-        public List<Sprite> listOfWorkerSprites = new List<Sprite>();
-        public List<string> listOfWorkerCompatibility = new List<string>();
         public List<TooltipData> listOfHqTooltips = new List<TooltipData>();
+        public List<Sprite> listOfWorkerSprites = new List<Sprite>();
+        public List<string> listOfWorkerArcs = new List<string>();
+        public List<string> listOfWorkerRenown = new List<string>();
         public List<TooltipData> listOfWorkerTooltips = new List<TooltipData>();
+        
 
         //
         // - - - Player Status
@@ -1198,11 +1200,11 @@ namespace packageAPI
 
             #region HQ status
             listOfHqSprites.Clear();
-            listOfHqCompatibility.Clear();
+            listOfHqRenown.Clear();
             listOfHqTitles.Clear();
             listOfHqTooltips.Clear();
             listOfWorkerSprites.Clear();
-            listOfWorkerCompatibility.Clear();
+            listOfWorkerArcs.Clear();
             listOfWorkerTooltips.Clear();
             #endregion
 

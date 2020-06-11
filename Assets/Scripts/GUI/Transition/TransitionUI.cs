@@ -89,6 +89,8 @@ public class TransitionUI : MonoBehaviour
 
     public TextMeshProUGUI hierarchyLeft;
     public TextMeshProUGUI hierarchyRight;
+    public TextMeshProUGUI workersLeft;
+    public TextMeshProUGUI workersRight;
 
     //collections
     private HqInteraction[] arrayOfHqOptions;
@@ -213,6 +215,9 @@ public class TransitionUI : MonoBehaviour
         buttonInteractionBack.SetButton(EventType.TransitionBack);
         buttonInteractionContinue.SetButton(EventType.TransitionContinue);
         buttonInteractionExit.SetButton(EventType.TransitionClose);
+        //colours
+        Color color = GameManager.i.guiScript.colourTransitionHeader;
+        transitionHeader.color = color;
         //Set starting Initialisation states
         InitialiseTooltips();
         #endregion
@@ -242,6 +247,8 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(worker7 != null, "Invalid worker7 (Null)");
         Debug.Assert(hierarchyLeft != null, "Invalid hierarchyLeft (Null)");
         Debug.Assert(hierarchyRight != null, "Invalid hierarchyRight (Null)");
+        Debug.Assert(workersLeft != null, "Invalid workersLeft (Null)");
+        Debug.Assert(workersRight != null, "Invalid workersRight (Null)");
         //collections
         arrayOfHqOptions = new HqInteraction[GameManager.i.hqScript.numOfActorsHQ];
         arrayOfWorkerOptions = new WorkerInteraction[GameManager.i.hqScript.maxNumOfWorkers];
@@ -269,9 +276,13 @@ public class TransitionUI : MonoBehaviour
         //initialise main screen components
         hierarchyLeft.text = "HIERARCHY";
         hierarchyRight.text = "HIERARCHY";
-        Color color = GameManager.i.guiScript.colourTransitionHqBackground;
+        workersLeft.text = "WORKERS";
+        workersRight.text = "WORKERS";
+        color = GameManager.i.guiScript.colourTransitionHqBackground;
         hierarchyLeft.color = color;
         hierarchyRight.color = color;
+        workersLeft.color = color;
+        workersRight.color = color;
         //lower alpha
         color.a = 0.50f;
         hierarchyBackground.color = color;
@@ -427,13 +438,14 @@ public class TransitionUI : MonoBehaviour
             {
                 arrayOfWorkerOptions[i].optionImage.sprite = null;
                 arrayOfWorkerOptions[i].textUpper.text = "";
+                arrayOfWorkerOptions[i].textLower.text = "";
                 arrayOfWorkerOptions[i].optionTooltip.tooltipHeader = "";
                 arrayOfWorkerOptions[i].optionTooltip.tooltipMain = "";
                 arrayOfWorkerOptions[i].optionTooltip.tooltipDetails = "";
             }
             //hq options -> Populate
-            Debug.AssertFormat(data.listOfHqSprites.Count == data.listOfHqCompatibility.Count, "Mismatch on count for listOfHqSprites ({0} records) and listOfHqCompatibility ({1} records)",
-                data.listOfHqSprites.Count, data.listOfHqCompatibility.Count);
+            Debug.AssertFormat(data.listOfHqSprites.Count == data.listOfHqRenown.Count, "Mismatch on count for listOfHqSprites ({0} records) and listOfHqCompatibility ({1} records)",
+                data.listOfHqSprites.Count, data.listOfHqRenown.Count);
             Debug.AssertFormat(data.listOfHqSprites.Count == data.listOfHqTitles.Count, "Mismatch on count for listOfHqSprites ({0} records) and listOfHqTitles ({1} records)",
                 data.listOfHqSprites.Count, data.listOfHqTitles.Count);
             Debug.AssertFormat(data.listOfHqSprites.Count == data.listOfHqTooltips.Count, "Mismatch on count for listOfHqSprites ({0} records) and listOfHqTooltips ({1} records)",
@@ -441,7 +453,7 @@ public class TransitionUI : MonoBehaviour
             for (int i = 0; i < data.listOfHqSprites.Count; i++)
             {
                 arrayOfHqOptions[i].optionImage.sprite = data.listOfHqSprites[i];
-                //arrayOfHqOptions[i].textUpper.text = data.listOfHqCompatibility[i];
+                arrayOfHqOptions[i].textUpper.text = data.listOfHqRenown[i];
                 arrayOfHqOptions[i].textLower.text = data.listOfHqTitles[i];
                 //tooltip
                 if (data.listOfHqTooltips[i] != null)
@@ -452,19 +464,20 @@ public class TransitionUI : MonoBehaviour
                 }
             }
             //worker options -> populate
-            Debug.AssertFormat(data.listOfWorkerSprites.Count == data.listOfWorkerCompatibility.Count, "Mismatch -> listOfWorkersSprites has {0} records, listOfWorkerCompatibility has {1} records",
-                data.listOfWorkerSprites.Count, data.listOfWorkerCompatibility.Count);
+            Debug.AssertFormat(data.listOfWorkerSprites.Count == data.listOfWorkerArcs.Count, "Mismatch -> listOfWorkersSprites has {0} records, listOfWorkerNames has {1} records",
+                data.listOfWorkerSprites.Count, data.listOfWorkerArcs.Count);
 
             for (int i = 0; i < data.listOfWorkerSprites.Count; i++)
             {
                 arrayOfWorkerOptions[i].optionImage.sprite = data.listOfWorkerSprites[i];
+                arrayOfWorkerOptions[i].textUpper.text = data.listOfWorkerRenown[i];
+                arrayOfWorkerOptions[i].textLower.text = data.listOfWorkerArcs[i];
                 //tooltip
                 if (data.listOfWorkerTooltips[i] != null)
                 {
                     arrayOfWorkerOptions[i].optionTooltip.tooltipHeader = data.listOfWorkerTooltips[i].header;
                     arrayOfWorkerOptions[i].optionTooltip.tooltipMain = data.listOfWorkerTooltips[i].main;
                     arrayOfWorkerOptions[i].optionTooltip.tooltipDetails = data.listOfWorkerTooltips[i].details;
-                    /*Debug.LogFormat("[Tst] index {0}, {1}{2}", i, data.listOfWorkerTooltips[i].header, "\n");*/
                 }
                 else { Debug.LogWarningFormat("Invalid tooltip (Null) for arrayOfWorkerOptions[{0}].optionTooltip", i); }
             }

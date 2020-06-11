@@ -8828,19 +8828,23 @@ public class ActorManager : MonoBehaviour
     public TooltipData GetHqTransitionTooltip(Actor actor)
     {
         TooltipData data = new TooltipData();
+        StringBuilder builderMain = new StringBuilder();
+        StringBuilder builderHeader = new StringBuilder();
         //actor data
         int motivation = actor.GetDatapoint(ActorDatapoint.Datapoint1);
         string title = GameManager.i.hqScript.GetHqTitle(actor.statusHQ);
         //header
-        data.header = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, title.ToUpper(), colourEnd);
+        builderHeader.AppendFormat("{0}<size=110%>{1}{2}{3}{4}</size>{5}", actor.actorName, "\n", colourAlert, title.ToUpper(), colourEnd, "\n");
+        builderHeader.AppendFormat("{0}{1}<size=120%>{2}</size>{3}{4}{5}", "<font=\"Bangers SDF\">", "<cspace=0.6em>", actor.GetTrait().tagFormatted, "</cspace>", "</font>", "\n");
+        builderHeader.AppendFormat("<size=110%>Renown  {0}{1}{2}</size>", colourNeutral, actor.Renown, colourEnd);
         //main
         if (actor.GetTrait().isHqTrait == false)
         { data.main = string.Format("Renown  {0}{1}{2}", colourNeutral, actor.Renown, colourEnd); }
         else
         {
             //actor has an HQ relevant trait
-            data.main = string.Format("Renown  {0}{1}{2}{3}{4}{5}<size=120%>{6}</size>{7}{8}", colourNeutral, actor.Renown, colourEnd, "\n", "<font=\"Bangers SDF\">", "<cspace=0.6em>",
-                 actor.GetTrait().tagFormatted, "</cspace>", "</font>");
+            builderMain.AppendFormat("Motivation<pos=57%>{0}{1}", GameManager.i.guiScript.GetNormalStars(actor.GetDatapoint(ActorDatapoint.Motivation1)), "\n");
+            builderMain.AppendFormat("Compatibility<pos=57%>{0}", GameManager.i.guiScript.GetCompatibilityStars(actor.GetPersonality().GetCompatibilityWithPlayer()));
         }
         //details -> renown event, otherwise actor history
         HqRenownData renownData = actor.GetMostRecentHqRenownData();
@@ -8848,7 +8852,7 @@ public class ActorManager : MonoBehaviour
         {
             string colourRenown = colourGood;
             if (renownData.change < 0) { colourRenown = colourBad; }
-            data.details = string.Format("{0}Renown {1}{2}{3}{4}{5}Due to {6}{7}", colourRenown, renownData.change > 0 ? "+" : "", renownData.change, 
+            data.details = string.Format("{0}Renown {1}{2}{3}{4}{5}Due to {6}{7}", colourRenown, renownData.change > 0 ? "+" : "", renownData.change,
                 colourEnd, "\n", colourNormal, renownData.reason, colourEnd);
         }
         else
@@ -8857,6 +8861,8 @@ public class ActorManager : MonoBehaviour
             if (history != null)
             { data.details = string.Format("{0}{1}{2}", colourNormal, history.text, colourEnd); }
         }
+        data.header = builderHeader.ToString();
+        data.main = builderMain.ToString();
         return data;
     }
 
@@ -9523,7 +9529,7 @@ public class ActorManager : MonoBehaviour
                     listOfWorkers.RemoveAt(results.Item1);
                     //add actor
                     listOfWorkers.Add(actor);
-                    actor.AddHistory(new HistoryActor() { text = "Promoted to HQ (Worker)" });
+                    actor.AddHistory(new HistoryActor() { text = "being Promoted to HQ (Worker)" });
                     Debug.LogFormat("[HQ] ActorManager.cs -> ProcessMetaActors: {0}, {1}, actorID {2}, renown {3}, PROMOTED to HQ{4}", actor.actorName, actor.arc.name,
                         actor.actorID, actor.Renown, "\n");
                 }

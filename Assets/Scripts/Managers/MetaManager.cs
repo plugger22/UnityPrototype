@@ -941,7 +941,7 @@ public class MetaManager : MonoBehaviour
             {
                 transitionInfoData.listOfHqSprites.Add(actor.sprite);
                 transitionInfoData.listOfHqTitles.Add(GameManager.i.hqScript.GetHqTitle(actor.statusHQ));
-                transitionInfoData.listOfHqCompatibility.Add(GameManager.i.guiScript.GetCompatibilityStars(actor.GetPersonality().GetCompatibilityWithPlayer()));
+                transitionInfoData.listOfHqRenown.Add(actor.Renown.ToString());
                 transitionInfoData.listOfHqTooltips.Add(GameManager.i.actorScript.GetHqTransitionTooltip(actor));
             }
             else { Debug.LogErrorFormat("Invalid Actor (Null) for {0}", (ActorHQ)i); }
@@ -949,8 +949,8 @@ public class MetaManager : MonoBehaviour
         //error checks
         Debug.AssertFormat(transitionInfoData.listOfHqSprites.Count == count, "Mismatch on listOfHqSprites.Count (has {0} records, should be {1})", transitionInfoData.listOfHqSprites.Count, count);
         Debug.AssertFormat(transitionInfoData.listOfHqTitles.Count == count, "Mismatch on listOfHqTitles.Count (has {0} records, should be {1})", transitionInfoData.listOfHqTitles.Count, count);
-        Debug.AssertFormat(transitionInfoData.listOfHqCompatibility.Count == count, "Mismatch on listOfHqCompatibility.Count (has {0} records, should be {1})", 
-            transitionInfoData.listOfHqCompatibility.Count, count);
+        Debug.AssertFormat(transitionInfoData.listOfHqRenown.Count == count, "Mismatch on listOfHqCompatibility.Count (has {0} records, should be {1})", 
+            transitionInfoData.listOfHqRenown.Count, count);
         Debug.AssertFormat(transitionInfoData.listOfHqTooltips.Count == count, "Mismatch on listOfHqTootips.Count (has {0} records, should be {1})", transitionInfoData.listOfHqTooltips.Count, count);
         //
         // - - - HQ workers
@@ -970,7 +970,8 @@ public class MetaManager : MonoBehaviour
                 if (actor != null)
                 {
                     transitionInfoData.listOfWorkerSprites.Add(actor.sprite);
-                    transitionInfoData.listOfWorkerCompatibility.Add(GameManager.i.guiScript.GetCompatibilityStars(actor.GetPersonality().GetCompatibilityWithPlayer()));
+                    transitionInfoData.listOfWorkerArcs.Add(actor.arc.name);
+                    transitionInfoData.listOfWorkerRenown.Add(actor.Renown.ToString());
                     transitionInfoData.listOfWorkerTooltips.Add(GameManager.i.actorScript.GetHqTransitionTooltip(actor));
                 }
                 else { Debug.LogErrorFormat("Invalid actor (Null) for listOfWorkers[{0}]", i); }
@@ -980,8 +981,8 @@ public class MetaManager : MonoBehaviour
         //error Checks
         Debug.AssertFormat(transitionInfoData.listOfWorkerSprites.Count <= GameManager.i.hqScript.maxNumOfWorkers, "Mismatch on listOfWorkerSprites (has {0} records, should be {1}",
             transitionInfoData.listOfWorkerSprites.Count, GameManager.i.hqScript.maxNumOfWorkers);
-        Debug.AssertFormat(transitionInfoData.listOfWorkerCompatibility.Count <= GameManager.i.hqScript.maxNumOfWorkers, "Mismatch on listOfWorkerCompatibility (has {0} records, should be {1}",
-            transitionInfoData.listOfWorkerCompatibility.Count, GameManager.i.hqScript.maxNumOfWorkers);
+        Debug.AssertFormat(transitionInfoData.listOfWorkerArcs.Count <= GameManager.i.hqScript.maxNumOfWorkers, "Mismatch on listOfWorkerNames (has {0} records, should be {1}",
+            transitionInfoData.listOfWorkerArcs.Count, GameManager.i.hqScript.maxNumOfWorkers);
         Debug.AssertFormat(transitionInfoData.listOfWorkerTooltips.Count <= GameManager.i.hqScript.maxNumOfWorkers, "Mismatch on listOfWorkerTooltips (has {0} records, should be {1}",
             transitionInfoData.listOfWorkerTooltips.Count, GameManager.i.hqScript.maxNumOfWorkers);
 

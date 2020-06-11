@@ -4514,7 +4514,7 @@ MonoBehaviour:
   testRatioDoNothing: 0
   testRatioAddictedDays: 0
   isTopicManager: 0
-  isMetaGame: 1
+  isMetaGame: 0
   isPopUpFixed: 0
 --- !u!114 &114584680957149894
 MonoBehaviour:
@@ -5030,6 +5030,7 @@ MonoBehaviour:
   colourTopWidget: {r: 0.2509804, g: 0.25490198, b: 0.3019608, a: 0}
   colourTopWidgetBarBacks: {r: 0.5568628, g: 0.80784315, b: 0.99215686, a: 1}
   colourTransitionHqBackground: {r: 0.2509804, g: 0.25490198, b: 0.3019608, a: 1}
+  colourTransitionHeader: {r: 0.92156863, g: 0.93333334, b: 0.4, a: 1}
   bulletChar: 0
   starChar: 61445
   airportChar: 61554

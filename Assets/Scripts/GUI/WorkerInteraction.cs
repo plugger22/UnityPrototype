@@ -12,6 +12,7 @@ public class WorkerInteraction : MonoBehaviour
 
     public Image optionImage;
     public TextMeshProUGUI textUpper;
+    public TextMeshProUGUI textLower;
     public GenericTooltipUI optionTooltip;
     public GenericTooltipUI compatibilityTooltip;
 
