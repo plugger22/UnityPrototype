@@ -226,8 +226,9 @@ public class TransitionUI : MonoBehaviour
         buttonInteractionExit.SetButton(EventType.TransitionClose);
         //colours
         Color color = GameManager.i.guiScript.colourTransitionHeader;
-        transitionHeader.color = color;       
+        transitionHeader.color = color;
         //Set starting Initialisation states
+        SetColours();
         InitialiseTooltips();
         InitialiseMainTexts();
         #endregion
@@ -302,7 +303,6 @@ public class TransitionUI : MonoBehaviour
         workerBackground.gameObject.SetActive(true);
         textBackground.gameObject.SetActive(true);
         //renown tooltip
-        SetColours();
         renownTooltip = new TooltipData()
         {
             header = string.Format("{0}RENOWN{1}", colourCancel, colourEnd),
@@ -584,9 +584,9 @@ public class TransitionUI : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         //HQ Status
         builder.Clear();
-        builder.AppendFormat("{0}Mouse Over{1}{2} Portraits for details{3}{4}{5}", colourAlert, colourEnd, colourNormal, colourEnd, "\n", "\n");
-        builder.AppendFormat("{0}Left Click{1}{2} Portraits for more information{3}{4}{5}", colourAlert, colourEnd, colourNormal, colourEnd, "\n", "\n");
-        builder.AppendFormat("{0}Click {1}{2}SPECIAL{3}{4} button for a Summary of HQ Events{5}", colourNormal, colourEnd, colourHeader, colourEnd, colourNormal, colourEnd);
+        builder.AppendFormat("<pos=35%>{0}Mouse Over{1}{2} Portraits for details{3}{4}", colourAlert, colourEnd, colourNormal, colourEnd, "\n");
+        builder.AppendFormat("<pos=35%>{0}Left Click{1}{2} Portraits for more information{3}{4}", colourAlert, colourEnd, colourNormal, colourEnd, "\n");
+        builder.AppendFormat("<pos=35%>{0}SPECIAL{1}{2} button for a Summary of HQ Events{3}", colourAlert, colourEnd, colourNormal, colourEnd);
         hqBottomText.text = builder.ToString();
     }
 
