@@ -237,7 +237,7 @@ public class FileManager : MonoBehaviour
                     ReadMetaGameData();
                     loadGameState.restorePoint = read.gameStatus.restorePoint;
                 }
-                Debug.LogFormat("[Fil] FileManager.cs -> LoadSaveData: Saved Game Data has been LOADED{0}", "\n");
+                Debug.LogFormat("[Fil] FileManager.cs -> LoadSaveData: Saved Game Data has been LOADED (gameState {0}, restorePoint {1}){2}", read.gameStatus.gameState, read.gameStatus.restorePoint, "\n");
             }
             else { Debug.LogError("Invalid playerSide (Null)"); }
         }
@@ -455,9 +455,38 @@ public class FileManager : MonoBehaviour
         //MetaGameOptions
         write.metaGameData.metaGameOptions = GameManager.i.metaScript.GetMetaOptions();
 
-        /*//TransitionInfoData
-        write.metaData.transitionInfoData = GameManager.i.metaScript.GetTransitionInfoData();*/
+        #region TransitionInfoData
+        TransitionInfoData info = GameManager.i.metaScript.GetTransitionInfoData();
+        if (info != null)
+        {
+            //HQ status
+            write.metaGameData.listOfHqRenown = info.listOfHqRenown;
+            write.metaGameData.listOfHqTitles = info.listOfHqTitles;
+            write.metaGameData.listOfHqTooltips = info.listOfHqTooltips;
+            write.metaGameData.listOfWorkerRenown = info.listOfWorkerRenown;
+            write.metaGameData.listOfWorkerArcs = info.listOfWorkerArcs;
+            write.metaGameData.listOfWorkerTooltips = info.listOfWorkerTooltips;
+            //sprites -> hq
+            for (int i = 0; i < info.listOfHqSprites.Count; i++)
+            {
+                Sprite sprite = info.listOfHqSprites[i];
+                if (sprite != null)
+                { write.metaGameData.listOfHqSprites.Add(sprite.name); }
+                else { Debug.LogErrorFormat("Invalid sprite (Null) for listOfHqSprites[{0}]", i); }
+            }
+            //sprites -> worker
+            for (int i = 0; i < info.listOfWorkerSprites.Count; i++)
+            {
+                Sprite sprite = info.listOfWorkerSprites[i];
+                if (sprite != null)
+                { write.metaGameData.listOfWorkerSprites.Add(sprite.name); }
+                else { Debug.LogErrorFormat("Invalid sprite (Null) for listOfWorkerSprites[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid transitionInfoData (Null)"); }
+        #endregion
 
+        #region MetaInfoData
         //MetaInfoData
         MetaInfoData data = GameManager.i.metaScript.GetMetaInfoData();
         if (data != null)
@@ -471,6 +500,7 @@ public class FileManager : MonoBehaviour
             write.metaGameData.selectedDefault = WriteIndividualMetaData(data.selectedDefault);
         }
         else { Debug.LogError("Invalid metaInfoData (Null)"); }
+        #endregion
 
     }
     #endregion
@@ -2070,11 +2100,53 @@ public class FileManager : MonoBehaviour
     {
         // - - - MetaGameOptions
         GameManager.i.metaScript.SetMetaOptions(read.metaGameData.metaGameOptions);
+
+        #region TransitionInfoData
         //
         // - - - TransitionInfoData
         //
-        TransitionInfoData transitionInfoData = new TransitionInfoData();
-        GameManager.i.transitionScript.SetTransitionInfoData(transitionInfoData);
+        TransitionInfoData info = new TransitionInfoData();
+
+        #region HQ Status
+        //Hq -> standard lists
+        info.listOfHqRenown = read.metaGameData.listOfHqRenown;
+        info.listOfHqTitles = read.metaGameData.listOfHqTitles;
+        info.listOfHqTooltips = read.metaGameData.listOfHqTooltips;
+        info.listOfWorkerRenown = read.metaGameData.listOfWorkerRenown;
+        info.listOfWorkerArcs = read.metaGameData.listOfWorkerArcs;
+        info.listOfWorkerTooltips = read.metaGameData.listOfWorkerTooltips;
+        //sprites -> hq
+        if (read.metaGameData.listOfHqSprites != null)
+        {
+            for (int i = 0; i < read.metaGameData.listOfHqSprites.Count; i++)
+            {
+                Sprite sprite = GameManager.i.dataScript.GetSprite(read.metaGameData.listOfHqSprites[i]);
+                if (sprite != null)
+                { info.listOfHqSprites.Add(sprite); }
+                else { Debug.LogErrorFormat("Invalid sprite (Null) for spriteName \"{0}\", listOfHqSprites[{1}]", read.metaGameData.listOfHqSprites[i], i); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfHqSprites (Null)"); }
+        //sprites -> workers
+        if (read.metaGameData.listOfWorkerSprites != null)
+        {
+            for (int i = 0; i < read.metaGameData.listOfWorkerSprites.Count; i++)
+            {
+                Sprite sprite = GameManager.i.dataScript.GetSprite(read.metaGameData.listOfWorkerSprites[i]);
+                if (sprite != null)
+                { info.listOfWorkerSprites.Add(sprite); }
+                else { Debug.LogErrorFormat("Invalid sprite (Null) for spriteName \"{0}\", listOfWorkerSprites[{1}]", read.metaGameData.listOfWorkerSprites[i], i); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfWorkerSprites (Null)"); }
+        #endregion
+
+        //set TransitionInfoData
+        GameManager.i.metaScript.SetTransitionInfoData(info);
+        GameManager.i.transitionScript.SetTransitionInfoData(info);
+        #endregion
+
+        #region MetaInfoData
         //
         // - - - MetaInfoData
         //
@@ -2105,6 +2177,7 @@ public class FileManager : MonoBehaviour
         //Set metaInfoData
         GameManager.i.metaScript.SetMetaInfoData(metaInfoData);
         GameManager.i.metaUIScript.SetMetaInfoData(metaInfoData);
+        #endregion
     }
     #endregion
 

@@ -187,7 +187,7 @@ public class MetaGameUI : MonoBehaviour
     private int y_offset = 40;
 
     //data needed to run UI
-    private MetaInfoData metaInfoData;
+    private MetaInfoData metaInfoData = new MetaInfoData();
 
     //fast access
     private int costLow = -1;                                        //renown cost for low priority metaOptions
@@ -748,7 +748,10 @@ public class MetaGameUI : MonoBehaviour
     public void SetMetaInfoData(MetaInfoData data)
     {
         if (data != null)
-        { metaInfoData = data; }
+        {
+            metaInfoData.Reset();
+            metaInfoData = new MetaInfoData(data);
+        }
         else { Debug.LogError("Invalid metaInfoData (Null)"); }
     }
 
@@ -2219,7 +2222,7 @@ public class MetaGameUI : MonoBehaviour
         {
             //True button pressed - > close metaGameUI
             CloseMetaUI();
-            Debug.LogFormat("[Met] MetaGameUI.cs -> CloseMetaGameConfirm: Nooptions selected{0}", "\n");
+            Debug.LogFormat("[Met] MetaGameUI.cs -> CloseMetaGameConfirm: No options selected{0}", "\n");
         }
     }
 

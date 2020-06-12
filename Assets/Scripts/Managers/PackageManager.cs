@@ -343,6 +343,9 @@ namespace packageAPI
         {
             for (int i = 0; i < (int)MetaTabSide.Count; i++)
             { arrayOfMetaData[i] = new List<MetaData>(dataCopy.arrayOfMetaData[i]); }
+            listOfStatusData.AddRange(dataCopy.listOfStatusData);
+            listOfRecommended.AddRange(dataCopy.listOfRecommended);
+            selectedDefault = dataCopy.selectedDefault;
         }
 
         /// <summary>
@@ -1165,20 +1168,22 @@ namespace packageAPI
         // - - - HQ Status
         //
         //NOTE: indexes of all relevant lists refer to the same actor
+        #region saveData
         public List <Sprite> listOfHqSprites = new List<Sprite> ();
         public List<string> listOfHqRenown = new List<string>();
         public List<string> listOfHqTitles = new List<string>();
         public List<TooltipData> listOfHqTooltips = new List<TooltipData>();
         public List<Sprite> listOfWorkerSprites = new List<Sprite>();
-        public List<string> listOfWorkerArcs = new List<string>();
         public List<string> listOfWorkerRenown = new List<string>();
+        public List<string> listOfWorkerArcs = new List<string>();
         public List<TooltipData> listOfWorkerTooltips = new List<TooltipData>();
-        
+        #endregion
+
 
         //
         // - - - Player Status
         //
-        
+
         //
         // - - - BriefingOne
         //
@@ -1187,7 +1192,37 @@ namespace packageAPI
         // - - - BriefingTwo
         //
 
+        /// <summary>
+        /// default constructor
+        /// </summary>
+        public TransitionInfoData()
+        { }
 
+        /// <summary>
+        /// copy constructor
+        /// </summary>
+        /// <param name="data"></param>
+        public TransitionInfoData(TransitionInfoData data)
+        {
+            if (data != null)
+            {
+                #region HQ Status
+                listOfHqSprites.AddRange(data.listOfHqSprites);
+                listOfHqRenown.AddRange(data.listOfHqRenown);
+                listOfHqTitles.AddRange(data.listOfHqTitles);
+                listOfHqTooltips.AddRange(data.listOfHqTooltips);
+                listOfWorkerSprites.AddRange(data.listOfWorkerSprites);
+                listOfWorkerRenown.AddRange(data.listOfWorkerRenown);
+                listOfWorkerArcs.AddRange(data.listOfWorkerArcs);
+                listOfWorkerTooltips.AddRange(data.listOfWorkerTooltips);
+                #endregion
+            }
+            else { Debug.LogError("Invalid transitionInfoData parameter (Null)"); }
+        }
+
+        /// <summary>
+        /// Full data reset
+        /// </summary>
         public void Reset()
         {
             #region Main
@@ -1204,6 +1239,7 @@ namespace packageAPI
             listOfHqTitles.Clear();
             listOfHqTooltips.Clear();
             listOfWorkerSprites.Clear();
+            listOfWorkerRenown.Clear();
             listOfWorkerArcs.Clear();
             listOfWorkerTooltips.Clear();
             #endregion
@@ -1227,6 +1263,7 @@ namespace packageAPI
     /// <summary>
     /// Global class to pass generic tooltip details
     /// </summary>
+    [System.Serializable]
     public class TooltipData
     {
         public string header;

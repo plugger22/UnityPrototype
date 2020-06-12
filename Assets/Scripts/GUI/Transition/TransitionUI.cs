@@ -51,6 +51,9 @@ public class TransitionUI : MonoBehaviour
     string colourCancel;
     string colourEnd;
 
+    //special colours
+    string colourHeader;
+
     //static reference
     private static TransitionUI transitionUI;
 
@@ -218,7 +221,7 @@ public class TransitionUI : MonoBehaviour
         buttonInteractionExit.SetButton(EventType.TransitionClose);
         //colours
         Color color = GameManager.i.guiScript.colourTransitionHeader;
-        transitionHeader.color = color;
+        transitionHeader.color = color;       
         //Set starting Initialisation states
         InitialiseTooltips();
         #endregion
@@ -395,6 +398,12 @@ public class TransitionUI : MonoBehaviour
         colourInvalid = GameManager.instance.colourScript.GetColour(ColourType.salmonText);*/
         colourCancel = GameManager.i.colourScript.GetColour(ColourType.moccasinText);
         colourEnd = GameManager.i.colourScript.GetEndTag();
+
+        //special colours
+        Color color = GameManager.i.guiScript.colourTransitionHeader;
+        if (color != null)
+        { colourHeader = string.Format("<color=#{0}>", ColorUtility.ToHtmlStringRGB(color)); }
+        else { Debug.LogError("Invalid colorTransitionHeader (Null)"); }
     }
 
     /// <summary>
@@ -407,7 +416,7 @@ public class TransitionUI : MonoBehaviour
         {
             //clear out existing data and repopulate with new
             transitionInfoData.Reset();
-            transitionInfoData = data;
+            transitionInfoData = new TransitionInfoData(data);
         }
         else { Debug.LogError("Invalid TransitionInfoData (Null)"); }
     }
@@ -452,7 +461,9 @@ public class TransitionUI : MonoBehaviour
                 arrayOfWorkerOptions[i].optionTooltip.tooltipMain = "";
                 arrayOfWorkerOptions[i].optionTooltip.tooltipDetails = "";
             }
-            
+            //tooltip offsets
+            int x_offset = 50;
+            int y_offset = 100;
             //hq options -> Populate
             Debug.AssertFormat(data.listOfHqSprites.Count == data.listOfHqRenown.Count, "Mismatch on count for listOfHqSprites ({0} records) and listOfHqCompatibility ({1} records)",
                 data.listOfHqSprites.Count, data.listOfHqRenown.Count);
@@ -464,19 +475,24 @@ public class TransitionUI : MonoBehaviour
             {
                 arrayOfHqOptions[i].optionImage.sprite = data.listOfHqSprites[i];
                 arrayOfHqOptions[i].textUpper.text = data.listOfHqRenown[i];
-                arrayOfHqOptions[i].textLower.text = data.listOfHqTitles[i];
+                arrayOfHqOptions[i].textLower.text = string.Format("{0}{1}{2}", colourHeader, data.listOfHqTitles[i], colourEnd);
                 //sprite tooltip
                 if (data.listOfHqTooltips[i] != null)
                 {
                     arrayOfHqOptions[i].optionTooltip.tooltipHeader = data.listOfHqTooltips[i].header;
                     arrayOfHqOptions[i].optionTooltip.tooltipMain = data.listOfHqTooltips[i].main;
                     arrayOfHqOptions[i].optionTooltip.tooltipDetails = data.listOfHqTooltips[i].details;
+                    arrayOfHqOptions[i].optionTooltip.x_offset = x_offset;
+                    arrayOfHqOptions[i].optionTooltip.y_offset = y_offset;
+
                 }
                 else { Debug.LogWarningFormat("Invalid tooltip (Null) for arrayOfHqOptions[{0}].optionTooltip", i); }
                 //renown tooltip
                 arrayOfHqOptions[i].renownTooltip.tooltipHeader = renownTooltip.header;
                 arrayOfHqOptions[i].renownTooltip.tooltipMain = renownTooltip.main;
                 arrayOfHqOptions[i].renownTooltip.tooltipDetails = renownTooltip.details;
+                arrayOfHqOptions[i].renownTooltip.x_offset = x_offset;
+                arrayOfHqOptions[i].renownTooltip.y_offset = x_offset;     //NOTE: I want x_offset for both here
             }
             //worker options -> populate
             Debug.AssertFormat(data.listOfWorkerSprites.Count == data.listOfWorkerArcs.Count, "Mismatch -> listOfWorkersSprites has {0} records, listOfWorkerNames has {1} records",
@@ -493,12 +509,16 @@ public class TransitionUI : MonoBehaviour
                     arrayOfWorkerOptions[i].optionTooltip.tooltipHeader = data.listOfWorkerTooltips[i].header;
                     arrayOfWorkerOptions[i].optionTooltip.tooltipMain = data.listOfWorkerTooltips[i].main;
                     arrayOfWorkerOptions[i].optionTooltip.tooltipDetails = data.listOfWorkerTooltips[i].details;
+                    arrayOfWorkerOptions[i].optionTooltip.x_offset = x_offset;
+                    arrayOfWorkerOptions[i].optionTooltip.y_offset = y_offset;
                 }
                 else { Debug.LogWarningFormat("Invalid tooltip (Null) for arrayOfWorkerOptions[{0}].optionTooltip", i); }
                 //renown tooltip
                 arrayOfWorkerOptions[i].renownTooltip.tooltipHeader = renownTooltip.header;
                 arrayOfWorkerOptions[i].renownTooltip.tooltipMain = renownTooltip.main;
                 arrayOfWorkerOptions[i].renownTooltip.tooltipDetails = renownTooltip.details;
+                arrayOfWorkerOptions[i].renownTooltip.x_offset = x_offset;
+                arrayOfWorkerOptions[i].renownTooltip.y_offset = x_offset;   //NOTE: I want x_offset for both here
             }
 
             //toggle worker options on/alpha low
@@ -637,11 +657,11 @@ public class TransitionUI : MonoBehaviour
     {
         switch (state)
         {
-            case ModalTransitionSubState.EndLevel: transitionHeader.text = "Mission Review"; break;
-            case ModalTransitionSubState.HQ: transitionHeader.text = "HQ Status"; break;
-            case ModalTransitionSubState.PlayerStatus: transitionHeader.text = "Your Status"; break;
-            case ModalTransitionSubState.BriefingOne: transitionHeader.text = "Briefing Part A"; break;
-            case ModalTransitionSubState.BriefingTwo: transitionHeader.text = "Briefing Part B"; break;
+            case ModalTransitionSubState.EndLevel: transitionHeader.text = string.Format("{0}Mission Review{1}", colourHeader, colourEnd); break;
+            case ModalTransitionSubState.HQ: transitionHeader.text = string.Format("{0}HQ Status{1}", colourHeader, colourEnd); break;
+            case ModalTransitionSubState.PlayerStatus: transitionHeader.text = string.Format("{0}Player Status{1}", colourHeader, colourEnd); break;
+            case ModalTransitionSubState.BriefingOne: transitionHeader.text = string.Format("{0}Briefing One{1}", colourHeader, colourEnd); break;
+            case ModalTransitionSubState.BriefingTwo: transitionHeader.text = string.Format("{0}Briefing Two{1}", colourHeader, colourEnd); break;
             default: Debug.LogWarningFormat("Unrecognised ModalTransitionState \"{0}\"", GameManager.i.inputScript.ModalTransitionState); break;
         }
     }

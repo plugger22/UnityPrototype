@@ -64,6 +64,7 @@ public class SaveSeedData
 }
 #endregion
 
+
 #region SaveCampaignData
 /// <summary>
 /// CampaignManager.cs data
@@ -265,9 +266,24 @@ public class SaveMetaGameData
 {
     //metaGameOptions
     public MetaGameOptions metaGameOptions;
-    //transitionData
-    public TransitionInfoData transitionInfoData;
-    //metaData
+    //
+    // - - - TransitionData
+    //
+    //HQ status
+    public List<string> listOfHqSprites = new List<string>();
+    public List<string> listOfHqRenown = new List<string>();
+    public List<string> listOfHqTitles = new List<string>();
+    public List<TooltipData> listOfHqTooltips = new List<TooltipData>();
+    public List<string> listOfWorkerSprites = new List<string>();
+    public List<string> listOfWorkerRenown = new List<string>();
+    public List<string> listOfWorkerArcs = new List<string>();
+    public List<TooltipData> listOfWorkerTooltips = new List<TooltipData>();
+
+
+
+    //
+    // - - - MetaData
+    //
     public List<SaveMetaData> listOfBoss = new List<SaveMetaData>();
     public List<SaveMetaData> listOfSubBoss1 = new List<SaveMetaData>();
     public List<SaveMetaData> listOfSubBoss2 = new List<SaveMetaData>();

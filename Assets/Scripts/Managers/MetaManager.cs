@@ -137,8 +137,10 @@ public class MetaManager : MonoBehaviour
         InitialiseBriefingOne();
         InitialiseBriefingTwo();
         //Player metaGame Options choice
+        metaInfoData.Reset();
         InitialiseMetaOptions();
         InitialiseMetaData();
+        //send data to MetaGame UI's
         GameManager.i.metaUIScript.SetMetaInfoData(metaInfoData);
         GameManager.i.transitionScript.SetTransitionInfoData(transitionInfoData);
 
@@ -190,8 +192,25 @@ public class MetaManager : MonoBehaviour
     public void SetMetaInfoData(MetaInfoData data)
     {
         if (data != null)
-        { metaInfoData = data; }
+        {
+            metaInfoData.Reset();
+            metaInfoData = data;
+        }
         else { Debug.LogError("Invalid metaInfoData (Null)"); }
+    }
+
+    /// <summary>
+    /// Use for Save/Load to recreate transitionInfoData (not really needed but done for completion's sake)
+    /// </summary>
+    /// <param name="data"></param>
+    public void SetTransitionInfoData(TransitionInfoData data)
+    {
+        if (data != null)
+        {
+            transitionInfoData.Reset();
+            transitionInfoData = data;
+        }
+        else { Debug.LogError("Invalid transitionInfoData (Null)"); }
     }
 
     //
@@ -674,8 +693,6 @@ public class MetaManager : MonoBehaviour
     /// </summary>
     private void InitialiseMetaData()
     {
-        //Take list of MetaData and populate MetaInfoData temp package
-        metaInfoData.Reset();
         //process MetaOptions
         if (listOfMetaOptions != null)
         {
