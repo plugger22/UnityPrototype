@@ -7,6 +7,7 @@ using gameAPI;
 using packageAPI;
 using modalAPI;
 using System;
+using System.Text;
 
 /// <summary>
 /// handles TransitionUI which is a single master UI with three togglable panels ->  end of level / HQ changes / Player status
@@ -20,15 +21,17 @@ public class TransitionUI : MonoBehaviour
     public GameObject transitionObject;
     public Canvas transitionCanvas;
     public Image transitionBackground;
-    public TextMeshProUGUI transitionHeader; 
+    public TextMeshProUGUI transitionHeader;
 
     [Header("Main Buttons")]
+    public Button buttonSpecial;
     public Button buttonBack;
     public Button buttonContinue;
     public Button buttonExit;
     public Button buttonHelpMain;
 
     //button interactions
+    private ButtonInteraction buttonInteractionSpecial;
     private ButtonInteraction buttonInteractionBack;
     private ButtonInteraction buttonInteractionContinue;
     private ButtonInteraction buttonInteractionExit;
@@ -94,13 +97,13 @@ public class TransitionUI : MonoBehaviour
     public TextMeshProUGUI hierarchyRight;
     public TextMeshProUGUI workersLeft;
     public TextMeshProUGUI workersRight;
+    public TextMeshProUGUI hqBottomText;
 
     //collections
     private HqInteraction[] arrayOfHqOptions;
     private WorkerInteraction[] arrayOfWorkerOptions;
 
     //assorted
-    private float vacantActorAlpha = 0.50f;
     private TooltipData renownTooltip;
 
     //fast access
@@ -190,6 +193,7 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(transitionCanvas != null, "Invalid transitionCanvas (Null)");
         Debug.Assert(transitionBackground != null, "Invalid transitionBackground (Null)");
         Debug.Assert(transitionHeader != null, "Invalid transitionHeader (Null)");
+        Debug.Assert(buttonSpecial != null, "Invalid buttonSpecial (Null)");
         Debug.Assert(buttonBack != null, "Invalid buttonBack (Null)");
         Debug.Assert(buttonContinue != null, "Invalid buttonContinue (Null)");
         Debug.Assert(buttonExit != null, "Invalid buttonExit (Null)");
@@ -210,6 +214,7 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(briefingTwoCanvas != null, "Invalid briefingTwoCanvas (Null)");
         Debug.Assert(briefingTwoBackground != null, "Invalid briefingTwoBackground (Null)");
         //Button events
+        buttonInteractionSpecial = buttonSpecial.GetComponent<ButtonInteraction>();
         buttonInteractionBack = buttonBack.GetComponent<ButtonInteraction>();
         buttonInteractionContinue = buttonContinue.GetComponent<ButtonInteraction>();
         buttonInteractionExit = buttonExit.GetComponent<ButtonInteraction>();
@@ -224,6 +229,7 @@ public class TransitionUI : MonoBehaviour
         transitionHeader.color = color;       
         //Set starting Initialisation states
         InitialiseTooltips();
+        InitialiseMainTexts();
         #endregion
 
         #region EndLevel
@@ -253,6 +259,7 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(hierarchyRight != null, "Invalid hierarchyRight (Null)");
         Debug.Assert(workersLeft != null, "Invalid workersLeft (Null)");
         Debug.Assert(workersRight != null, "Invalid workersRight (Null)");
+        Debug.Assert(hqBottomText != null, "Invalid mainBottomText (Null)");
         //collections
         arrayOfHqOptions = new HqInteraction[GameManager.i.hqScript.numOfActorsHQ];
         arrayOfWorkerOptions = new WorkerInteraction[GameManager.i.hqScript.maxNumOfWorkers];
@@ -277,7 +284,7 @@ public class TransitionUI : MonoBehaviour
             arrayOfWorkerOptions[7] = worker7;
         }
         else { Debug.LogErrorFormat("Invalid arrayOfWorkerOptions.Length \"{0}\"", arrayOfWorkerOptions.Length); }
-        //initialise main screen components
+        //texts and colours
         hierarchyLeft.text = "HIERARCHY";
         hierarchyRight.text = "HIERARCHY";
         workersLeft.text = "WORKERS";
@@ -343,6 +350,7 @@ public class TransitionUI : MonoBehaviour
         EventManager.i.AddListener(EventType.TransitionClose, OnEvent, "TransitionUI");
         EventManager.i.AddListener(EventType.TransitionContinue, OnEvent, "TransitionUI");
         EventManager.i.AddListener(EventType.TransitionBack, OnEvent, "TransitionUI");
+        EventManager.i.AddListener(EventType.TransitionHqEvents, OnEvent, "TransitionUI");
     }
     #endregion
 
@@ -373,6 +381,9 @@ public class TransitionUI : MonoBehaviour
                 break;
             case EventType.TransitionBack:
                 ExecuteBack();
+                break;
+            case EventType.TransitionHqEvents:
+                ExecuteHqEvents();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -566,6 +577,20 @@ public class TransitionUI : MonoBehaviour
     }
 
     /// <summary>
+    /// Initialise Main texts on the various screens (Instructional texts)
+    /// </summary>
+    private void InitialiseMainTexts()
+    {
+        StringBuilder builder = new StringBuilder();
+        //HQ Status
+        builder.Clear();
+        builder.AppendFormat("{0}Mouse Over{1}{2} Portraits for details{3}{4}{5}", colourAlert, colourEnd, colourNormal, colourEnd, "\n", "\n");
+        builder.AppendFormat("{0}Left Click{1}{2} Portraits for more information{3}{4}{5}", colourAlert, colourEnd, colourNormal, colourEnd, "\n", "\n");
+        builder.AppendFormat("{0}Click {1}{2}SPECIAL{3}{4} button for a Summary of HQ Events{5}", colourNormal, colourEnd, colourHeader, colourEnd, colourNormal, colourEnd);
+        hqBottomText.text = builder.ToString();
+    }
+
+    /// <summary>
     /// toggles on state canvas and turns all others off
     /// </summary>
     /// <param name="state"></param>
@@ -621,26 +646,36 @@ public class TransitionUI : MonoBehaviour
         switch (state)
         {
             case ModalTransitionSubState.EndLevel:
+                buttonInteractionSpecial.SetButton(EventType.None);
+                buttonSpecial.gameObject.SetActive(true);
                 buttonBack.gameObject.SetActive(false);
                 buttonContinue.gameObject.SetActive(true);
                 buttonExit.gameObject.SetActive(false);
                 break;
             case ModalTransitionSubState.HQ:
+                buttonInteractionSpecial.SetButton(EventType.TransitionHqEvents);
+                buttonSpecial.gameObject.SetActive(true);
                 buttonBack.gameObject.SetActive(true);
                 buttonContinue.gameObject.SetActive(true);
                 buttonExit.gameObject.SetActive(false);
                 break;
             case ModalTransitionSubState.PlayerStatus:
+                buttonInteractionSpecial.SetButton(EventType.None);
+                buttonSpecial.gameObject.SetActive(true);
                 buttonBack.gameObject.SetActive(true);
                 buttonContinue.gameObject.SetActive(true);
                 buttonExit.gameObject.SetActive(false);
                 break;
             case ModalTransitionSubState.BriefingOne:
+                buttonInteractionSpecial.SetButton(EventType.None);
+                buttonSpecial.gameObject.SetActive(false);
                 buttonBack.gameObject.SetActive(true);
                 buttonContinue.gameObject.SetActive(true);
                 buttonExit.gameObject.SetActive(false);
                 break;
             case ModalTransitionSubState.BriefingTwo:
+                buttonInteractionSpecial.SetButton(EventType.None);
+                buttonSpecial.gameObject.SetActive(true);
                 buttonBack.gameObject.SetActive(true);
                 buttonContinue.gameObject.SetActive(false);
                 buttonExit.gameObject.SetActive(true);
@@ -782,6 +817,14 @@ public class TransitionUI : MonoBehaviour
             SetHeader(newState);
             SetCanvas(newState);
         }
+    }
+
+    /// <summary>
+    /// Special button pressed in HQ status screen
+    /// </summary>
+    private void ExecuteHqEvents()
+    {
+        Debug.LogFormat("[Tst] ExecuteHqEvents -> Special Button pressed");
     }
 
 }
