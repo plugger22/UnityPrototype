@@ -486,6 +486,10 @@ public class GUIManager : MonoBehaviour
         return arrayIsBlocked[level];
     }
 
+    //
+    // - - - Alert Messages
+    //
+
     /// <summary>
     /// Generates an Alert message of a particular type. Modal Two, shown above a GUI element. Specify what GUI element should take control once message accepted
     /// </summary>
@@ -652,6 +656,9 @@ public class GUIManager : MonoBehaviour
         else { Debug.LogError("Invalid ModalOutcomeDetails (Null)"); }
     }
 
+    //
+    // - - - Show Me
+    //
 
     /// <summary>
     /// Sets event type to call when a 'Show Me' event is restored, eg. UI element hidden, map showing and user presses any key to exit map and restore UI element (eg. MainInfoApp)

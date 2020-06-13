@@ -4084,6 +4084,20 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid eventText (Null or Empty)"); }
     }
 
+    /// <summary>
+    /// Save/Load method to restore listOfHqEvents 
+    /// </summary>
+    /// <param name="listOfEvents"></param>
+    public void SetListOfHqEvents(List<string> listOfEvents)
+    {
+        if (listOfEvents != null)
+        {
+            listOfHqEvents.Clear();
+            listOfHqEvents.AddRange(listOfEvents);
+        }
+        else { Debug.LogError("Invalid listOfHqEvents (Null)"); }
+    }
+
     //
     // - - - Actors - - -
     //

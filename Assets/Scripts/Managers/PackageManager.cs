@@ -1177,9 +1177,9 @@ namespace packageAPI
         public List<string> listOfWorkerRenown = new List<string>();
         public List<string> listOfWorkerArcs = new List<string>();
         public List<TooltipData> listOfWorkerTooltips = new List<TooltipData>();
+        public List<string> listOfHqEvents = new List<string>();
         #endregion
 
-        public List<string> listOfHqEvents = new List<string>();
         //
         // - - - Player Status
         //

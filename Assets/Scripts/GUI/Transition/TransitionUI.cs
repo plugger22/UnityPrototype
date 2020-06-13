@@ -825,11 +825,16 @@ public class TransitionUI : MonoBehaviour
     private void ExecuteHqEvents()
     {
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < transitionInfoData.listOfHqEvents.Count; i++)
+        int count = transitionInfoData.listOfHqEvents.Count;
+        if (count > 0)
         {
-            if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
-            builder.Append(transitionInfoData.listOfHqEvents[i]);
+            for (int i = 0; i < count; i++)
+            {
+                if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
+                builder.Append(transitionInfoData.listOfHqEvents[i]);
+            }
         }
+        else { builder.Append("No events have occurred"); }
 
         //outcome
         ModalOutcomeDetails details = new ModalOutcomeDetails();

@@ -131,6 +131,8 @@ public class SaveDataData
     public List<OrgData> listOfEmergencyOrgData = new List<OrgData>();
     public List<OrgData> listOfHQOrgData = new List<OrgData>();
     public List<OrgData> listOfInfoOrgData = new List<OrgData>();
+    //HQ
+    public List<string> listOfHqEvents = new List<string>();
     //metaOptions
     public List<SaveMetaOption> listOfMetaOptions = new List<SaveMetaOption>();
     //contacts
@@ -273,13 +275,12 @@ public class SaveMetaGameData
     public List<string> listOfHqSprites = new List<string>();
     public List<string> listOfHqRenown = new List<string>();
     public List<string> listOfHqTitles = new List<string>();
+    public List<string> listOfHqEvents = new List<string>();
     public List<TooltipData> listOfHqTooltips = new List<TooltipData>();
     public List<string> listOfWorkerSprites = new List<string>();
     public List<string> listOfWorkerRenown = new List<string>();
     public List<string> listOfWorkerArcs = new List<string>();
     public List<TooltipData> listOfWorkerTooltips = new List<TooltipData>();
-
-
 
     //
     // - - - MetaData

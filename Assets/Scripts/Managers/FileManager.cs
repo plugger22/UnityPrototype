@@ -462,6 +462,7 @@ public class FileManager : MonoBehaviour
             //HQ status
             write.metaGameData.listOfHqRenown = info.listOfHqRenown;
             write.metaGameData.listOfHqTitles = info.listOfHqTitles;
+            write.metaGameData.listOfHqEvents = info.listOfHqEvents;
             write.metaGameData.listOfHqTooltips = info.listOfHqTooltips;
             write.metaGameData.listOfWorkerRenown = info.listOfWorkerRenown;
             write.metaGameData.listOfWorkerArcs = info.listOfWorkerArcs;
@@ -699,6 +700,11 @@ public class FileManager : MonoBehaviour
             write.dataData.listOfOrgInfoData.AddRange(GameManager.i.dataScript.GetArrayOfOrgInfo().ToList());
         }
         else { Debug.LogError("Invalid listOfCurrentOrganisations (Null)"); }
+        #endregion
+
+        #region HQ
+        if (write.dataData.listOfHqEvents != null)
+        { GameManager.i.dataScript.SetListOfHqEvents(write.dataData.listOfHqEvents); }
         #endregion
 
         #region MetaOptions
@@ -2111,13 +2117,14 @@ public class FileManager : MonoBehaviour
         //Hq -> standard lists
         info.listOfHqRenown = read.metaGameData.listOfHqRenown;
         info.listOfHqTitles = read.metaGameData.listOfHqTitles;
+        info.listOfHqEvents = read.metaGameData.listOfHqEvents;
         info.listOfHqTooltips = read.metaGameData.listOfHqTooltips;
         info.listOfWorkerRenown = read.metaGameData.listOfWorkerRenown;
         info.listOfWorkerArcs = read.metaGameData.listOfWorkerArcs;
         info.listOfWorkerTooltips = read.metaGameData.listOfWorkerTooltips;
         //sprites -> hq
         if (read.metaGameData.listOfHqSprites != null)
-        {
+            {
             for (int i = 0; i < read.metaGameData.listOfHqSprites.Count; i++)
             {
                 Sprite sprite = GameManager.i.dataScript.GetSprite(read.metaGameData.listOfHqSprites[i]);
