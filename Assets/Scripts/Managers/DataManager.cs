@@ -104,7 +104,8 @@ public class DataManager : MonoBehaviour
     private List<int> resistanceActorResigned = new List<int>();                            //uses actorID
 
     //HQ
-    private List<int> actorHQPool = new List<int>();                                        //player side HQ actors, uses hqID NOT actorID
+    private List<int> actorHqPool = new List<int>();                                            //player side HQ actors, uses hqID NOT actorID
+    private List<string> listOfHqEvents = new List<string>();                                   //list of events that happen every metaGame
 
     //Awards
     private List<AwardData> listOfCommendations = new List<AwardData>();
@@ -536,6 +537,8 @@ public class DataManager : MonoBehaviour
         listOfHistoryNemesisMove.Clear();
         listOfHistoryNpcMove.Clear();
         listOfHistoryAutoRun.Clear();
+        //hq events
+        listOfHqEvents.Clear();
         //organisation lists
         listOfOrgCureServices.Clear();
         listOfOrgContractServices.Clear();
@@ -3894,7 +3897,7 @@ public class DataManager : MonoBehaviour
     }
 
     public List<int> GetListOfActorHq()
-    { return actorHQPool; }
+    { return actorHqPool; }
 
     /// <summary>
     /// returns number of workers in actorHQPool
@@ -3904,15 +3907,15 @@ public class DataManager : MonoBehaviour
     {
         Actor actor = null;
         int count = 0;
-        for (int i = 0; i < actorHQPool.Count; i++)
+        for (int i = 0; i < actorHqPool.Count; i++)
         {
-            actor = GameManager.i.dataScript.GetHqActor(actorHQPool[i]);
+            actor = GameManager.i.dataScript.GetHqActor(actorHqPool[i]);
             if (actor != null)
             {
                 if (actor.statusHQ == ActorHQ.Worker)
                 { count++; }
             }
-            else { Debug.LogWarningFormat("Invalid HQ pool actor (Null) for hqID {0}", actorHQPool[i]); }
+            else { Debug.LogWarningFormat("Invalid HQ pool actor (Null) for hqID {0}", actorHqPool[i]); }
         }
         return count;
     }
@@ -3925,15 +3928,15 @@ public class DataManager : MonoBehaviour
     {
         Actor actor = null;
         List<Actor> listOfWorkers = new List<Actor>();
-        for (int i = 0; i < actorHQPool.Count; i++)
+        for (int i = 0; i < actorHqPool.Count; i++)
         {
-            actor = GetHqActor(actorHQPool[i]);
+            actor = GetHqActor(actorHqPool[i]);
             if (actor != null)
             {
                 if (actor.statusHQ == ActorHQ.Worker)
                 { listOfWorkers.Add(actor); }
             }
-            else { Debug.LogWarningFormat("Invalid HQ pool actor (Null) for hqID {0}", actorHQPool[i]); }
+            else { Debug.LogWarningFormat("Invalid HQ pool actor (Null) for hqID {0}", actorHqPool[i]); }
         }
         return listOfWorkers;
     }
@@ -3948,15 +3951,15 @@ public class DataManager : MonoBehaviour
         {
             //reverse loop list and remove workers
             Actor actor = null;
-            for (int i = actorHQPool.Count - 1; i >= 0; i--)
+            for (int i = actorHqPool.Count - 1; i >= 0; i--)
             {
-                actor = GetHqActor(actorHQPool[i]);
+                actor = GetHqActor(actorHqPool[i]);
                 if (actor != null)
                 {
                     if (actor.statusHQ == ActorHQ.Worker)
-                    { actorHQPool.RemoveAt(i); }
+                    { actorHqPool.RemoveAt(i); }
                 }
-                else { Debug.LogWarningFormat("Invalid HQ pool actor (Null) for hqID {0}", actorHQPool[i]); }
+                else { Debug.LogWarningFormat("Invalid HQ pool actor (Null) for hqID {0}", actorHqPool[i]); }
             }
             //add updated list of workers
             for (int i = 0; i < listOfWorkers.Count; i++)
@@ -3965,7 +3968,7 @@ public class DataManager : MonoBehaviour
                 if (actor != null)
                 {
                     if (actor.hqID > -1)
-                    { actorHQPool.Add(actor.hqID); }
+                    { actorHqPool.Add(actor.hqID); }
                     else
                     {
                         //new addition
@@ -3993,7 +3996,7 @@ public class DataManager : MonoBehaviour
             if (actor.Status == ActorStatus.HQ)
             {
                 if (actor.statusHQ != ActorHQ.None && actor.statusHQ != ActorHQ.LeftHQ)
-                { actorHQPool.Add(hqID); }
+                { actorHqPool.Add(hqID); }
                 else { Debug.LogWarningFormat("Invalid HQ status \"{0}\" (can't be 'None' or 'LeftHQ') for actor {1}, hqID {2}", actor.statusHQ, actor.actorName, actor.hqID); }
             }
             else { Debug.LogWarningFormat("Invalid HQ actor status \"{0}\" (should be 'HQ') for actor {1}, hqID {2}", actor.Status, actor.actorName, actor.hqID); }
@@ -4038,8 +4041,8 @@ public class DataManager : MonoBehaviour
                     break;
             }
             //remove from actorHQPool
-            if (actorHQPool.Exists(x => x == hqID) == true)
-            { actorHQPool.Remove(hqID); }
+            if (actorHqPool.Exists(x => x == hqID) == true)
+            { actorHqPool.Remove(hqID); }
             //update status
             actor.statusHQ = ActorHQ.LeftHQ;
         }
@@ -4064,6 +4067,21 @@ public class DataManager : MonoBehaviour
             default: Debug.LogWarningFormat("Unrecognised actorHQ \"{0}\"", actorHQ); break;
         }
         return hqPosition;
+    }
+
+
+    public List<string> GetListOfHqEvents()
+    { return listOfHqEvents; }
+
+    /// <summary>
+    /// Add an hq Event (HqManager.cs -> ProcessHqHierarchy) to list ready for MetaGame
+    /// </summary>
+    /// <param name="eventText"></param>
+    public void AddHqEvent(string eventText)
+    {
+        if (string.IsNullOrEmpty(eventText) == false)
+        { listOfHqEvents.Add(eventText); }
+        else { Debug.LogError("Invalid eventText (Null or Empty)"); }
     }
 
     //
@@ -4634,7 +4652,7 @@ public class DataManager : MonoBehaviour
                     case ActorList.Promoted: listOfActors = authorityActorPromoted; break;
                     case ActorList.Disposed: listOfActors = authorityActorDisposedOf; break;
                     case ActorList.Resigned: listOfActors = authorityActorResigned; break;
-                    case ActorList.HQ: listOfActors = actorHQPool; break;
+                    case ActorList.HQ: listOfActors = actorHqPool; break;
                     default: Debug.LogWarning(string.Format("Invalid ActorList \"{0}\"", list)); break;
                 }
                 break;
@@ -4647,7 +4665,7 @@ public class DataManager : MonoBehaviour
                     case ActorList.Promoted: listOfActors = resistanceActorPromoted; break;
                     case ActorList.Disposed: listOfActors = resistanceActorDisposedOf; break;
                     case ActorList.Resigned: listOfActors = resistanceActorResigned; break;
-                    case ActorList.HQ: listOfActors = actorHQPool; break;
+                    case ActorList.HQ: listOfActors = actorHqPool; break;
                     default: Debug.LogWarning(string.Format("Invalid ActorList \"{0}\"", list)); break;
                 }
                 break;
@@ -5321,7 +5339,7 @@ public class DataManager : MonoBehaviour
         builder.Append(DebugGetActorList(resistanceActorResigned));
         //hq
         builder.Append(string.Format("{0} - HQ List{1}", "\n", "\n"));
-        builder.Append(DebugGetActorList(actorHQPool, false));
+        builder.Append(DebugGetActorList(actorHqPool, false));
         return builder.ToString();
     }
 

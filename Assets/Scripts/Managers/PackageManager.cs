@@ -1179,7 +1179,7 @@ namespace packageAPI
         public List<TooltipData> listOfWorkerTooltips = new List<TooltipData>();
         #endregion
 
-
+        public List<string> listOfEvents = new List<string>();
         //
         // - - - Player Status
         //
@@ -1215,6 +1215,7 @@ namespace packageAPI
                 listOfWorkerRenown.AddRange(data.listOfWorkerRenown);
                 listOfWorkerArcs.AddRange(data.listOfWorkerArcs);
                 listOfWorkerTooltips.AddRange(data.listOfWorkerTooltips);
+                listOfEvents.AddRange(data.listOfEvents);
                 #endregion
             }
             else { Debug.LogError("Invalid transitionInfoData parameter (Null)"); }
@@ -1242,6 +1243,7 @@ namespace packageAPI
             listOfWorkerRenown.Clear();
             listOfWorkerArcs.Clear();
             listOfWorkerTooltips.Clear();
+            listOfEvents.Clear();
             #endregion
 
             #region Player Status

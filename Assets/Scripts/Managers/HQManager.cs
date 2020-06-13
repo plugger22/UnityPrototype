@@ -1016,6 +1016,9 @@ public class HQManager : MonoBehaviour
                 Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqHierarchy:{0}, {1}, hqID {2} MAJOR EVENT{3}", actor.actorName, GetHqTitle(actor.statusHQ), actor.hqID, "\n");
                 Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqHierarchy: {0}, {1}, leaves HQ due to {2}{3}", actor.actorName, GetHqTitle(actor.statusHQ),
                     reason, "\n");
+                //add to list
+                text = string.Format("{0}, {1}{2}{3}{4}Leaves HQ ({5})", actor.actorName, colourNeutral, GetHqTitle(actor.statusHQ), colourEnd, "\n", reason);
+                GameManager.i.dataScript.AddHqEvent(text);
                 //remove actor from hierarcy and hq current list (permanent departure)
                 GameManager.i.dataScript.RemoveHqActor(actor.hqID);
             }
