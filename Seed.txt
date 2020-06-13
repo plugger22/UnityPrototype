@@ -649,3 +649,26 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 38117 -> Saturday, 13 June 2020 1:22 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 44223 -> Saturday, 13 June 2020 1:28 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 41588 -> Saturday, 13 June 2020 2:06 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20876 -> Saturday, 13 June 2020 2:19 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 59319 -> Saturday, 13 June 2020 2:21 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 14769 -> Saturday, 13 June 2020 2:30 PM
+City seed 5678 -> London, United Kingdom

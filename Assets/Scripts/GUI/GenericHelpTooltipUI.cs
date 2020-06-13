@@ -52,15 +52,19 @@ public class GenericHelpTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     /// </summary>
     public void OnPointerEnter(PointerEventData eventData)
     {
-        //check modal block isn't in place
+        /*//check modal block isn't in place                                    EDIT: Jun '20 removed block check in order to make ModalOutcome help work on ModalLevel 2 (code changed in coroutine)
         if (GameManager.i.guiScript.CheckIsBlocked(2) == false)
         {
             //Tool tip
             onMouseFlag = true;
-
             //start tooltip routine
             myCoroutine = StartCoroutine("ShowTooltip");
-        }
+        }*/
+
+        //Tool tip
+        onMouseFlag = true;
+        //start tooltip routine
+        myCoroutine = StartCoroutine("ShowTooltip");
     }
 
     /// <summary>
@@ -68,13 +72,18 @@ public class GenericHelpTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     /// </summary>
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (GameManager.i.guiScript.CheckIsBlocked(2) == false)
+        /*if (GameManager.i.guiScript.CheckIsBlocked(2) == false)                EDIT: Jun '20 removed block check in order to make ModalOutcome help work on ModalLevel 2 (code changed in coroutine)
         {
             onMouseFlag = false;
             if (myCoroutine != null)
             { StopCoroutine(myCoroutine); }
             GameManager.i.tooltipHelpScript.CloseTooltip("GenericHelpTooltipUI.cs -> OnPointerExit");
-        }
+        }*/
+
+        onMouseFlag = false;
+        if (myCoroutine != null)
+        { StopCoroutine(myCoroutine); }
+        GameManager.i.tooltipHelpScript.CloseTooltip("GenericHelpTooltipUI.cs -> OnPointerExit");
     }
 
     /// <summary>
@@ -96,7 +105,7 @@ public class GenericHelpTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
                     Vector3 screenPos = transform.position;
                     screenPos.x += x_offset;
                     screenPos.y += y_offset;
-                    while (GameManager.i.tooltipHelpScript.CheckTooltipActive() == false && GameManager.i.guiScript.CheckIsBlocked(2) == false)
+                    while (GameManager.i.tooltipHelpScript.CheckTooltipActive() == false/* && GameManager.i.guiScript.CheckIsBlocked(2) == false*/)
                     {
                         GameManager.i.tooltipHelpScript.SetTooltip(listOfHelp, screenPos);
                         yield return null;
