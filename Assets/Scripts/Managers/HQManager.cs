@@ -1003,6 +1003,7 @@ public class HQManager : MonoBehaviour
             ProcessHqTraits(actor, ref chanceMajor, ref chanceGood, ref changeMultiplier);
             string reason = "Unknown";
             string text = "Unknown";
+            string eventText = "Unknown";
             rnd = Random.Range(0, 100);
             Debug.LogFormat("[Rnd] HQManager.cs -> ProcessHqHierarchy: {0}, {1}, hqID {2} MAJOR Event Check, need < {3}, rolled {4}{5}", actor.actorName,
                 GetHqTitle(actor.statusHQ), actor.hqID, chanceMajor, rnd, "\n");
@@ -1017,8 +1018,8 @@ public class HQManager : MonoBehaviour
                 Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqHierarchy: {0}, {1}, leaves HQ due to {2}{3}", actor.actorName, GetHqTitle(actor.statusHQ),
                     reason, "\n");
                 //add to list
-                text = string.Format("{0}, {1}{2}{3}{4}{5}Leaves HQ{6} ({7})", actor.actorName, colourNeutral, GetHqTitle(actor.statusHQ), colourEnd, "\n", colourBad, colourEnd, reason);
-                GameManager.i.dataScript.AddHqEvent(text);
+                eventText = string.Format("{0}, {1}{2}{3}{4}{5}LEAVES HQ{6} because of {7}", actor.actorName, colourNeutral, GetHqTitle(actor.statusHQ), colourEnd, "\n", colourBad, colourEnd, reason);
+                GameManager.i.dataScript.AddHqEvent(eventText);
                 //remove actor from hierarcy and hq current list (permanent departure)
                 GameManager.i.dataScript.RemoveHqActor(actor.hqID);
             }
@@ -1045,8 +1046,9 @@ public class HQManager : MonoBehaviour
                     reason = string.Format("gains +{0} renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Renown);
                     actor.AddHistory(new HistoryActor() { text = string.Format("Gains Renown at HQ because of {0}", text) });
                     //add to list
-                    text = string.Format("{0}, {1}{2}{3}{4}gains +{5} Renown ({6})", actor.actorName, colourNeutral, GetHqTitle(actor.statusHQ), colourEnd, "\n", change, reason);
-                    GameManager.i.dataScript.AddHqEvent(text);
+                    eventText = string.Format("{0}{1}{2}, {3}{4}{5}{6}gains {7}+{8} Renown{9} due to {10}", colourNormal, actor.actorName, colourEnd, colourNeutral, GetHqTitle(actor.statusHQ), 
+                        colourEnd, "\n", colourGood, change, colourEnd, text);
+                    GameManager.i.dataScript.AddHqEvent(eventText);
                 }
                 else
                 {
@@ -1057,8 +1059,9 @@ public class HQManager : MonoBehaviour
                     reason = string.Format("loses {0} renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Renown);
                     actor.AddHistory(new HistoryActor() { text = string.Format("Loses Renown at HQ because of {0}", text) });
                     //add to list
-                    text = string.Format("{0}, {1}{2}{3}{4}loses {5} Renown ({6})", actor.actorName, colourNeutral, GetHqTitle(actor.statusHQ), colourEnd, "\n", change, reason);
-                    GameManager.i.dataScript.AddHqEvent(text);
+                    eventText = string.Format("{0}{1}{2}, {3}{4}{5}{6}loses {7}{8} Renown{9} because of {10}", colourNormal, actor.actorName, colourEnd, colourNeutral, GetHqTitle(actor.statusHQ), 
+                        colourEnd, "\n", colourBad, change, colourEnd, text);
+                    GameManager.i.dataScript.AddHqEvent(eventText);
                 }
                 Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqHierarchy: {0}, {1}, {2}{3}", actor.actorName, GetHqTitle(actor.statusHQ),
                     reason, "\n");
@@ -1124,7 +1127,8 @@ public class HQManager : MonoBehaviour
                 reason = string.Format("gains +{0} Renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Renown);
                 actor.AddHistory(new HistoryActor() { text = string.Format("Gains Renown at HQ because of {0}", text) });
                 //add to list
-                text = string.Format("{0}, {1}{2}{3}{4}gains +{5} Renown ({6})", actor.actorName, colourAlert, GetHqTitle(actor.statusHQ), colourEnd, "\n", change, reason);
+                text = string.Format("{0}{1}{2}, {3}{4}{5}{6}gains {7}+{8} Renown{9} due to {10}", colourNormal, actor.actorName, colourEnd, colourAlert, GetHqTitle(actor.statusHQ), 
+                    colourEnd, "\n", colourGood, change, colourEnd, text);
                 GameManager.i.dataScript.AddHqEvent(text);
             }
             else
@@ -1136,7 +1140,8 @@ public class HQManager : MonoBehaviour
                 reason = string.Format("loses {0} Renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Renown);
                 actor.AddHistory(new HistoryActor() { text = string.Format("Loses Renown at HQ because of {0}", text) });
                 //add to list
-                text = string.Format("{0}, {1}{2}{3}{4}loses {5} Renown ({6})", actor.actorName, colourAlert, GetHqTitle(actor.statusHQ), colourEnd, "\n", change, reason);
+                text = string.Format("{0}{1}{2}, {3}{4}{5}{6}loses {7}{8} Renown{9} due to {10}", colourNormal, actor.actorName, colourEnd, colourAlert, GetHqTitle(actor.statusHQ), colourEnd, 
+                    "\n", colourBad, change, colourEnd, text);
                 GameManager.i.dataScript.AddHqEvent(text);
             }
             Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqWorkers: {0}, {1}, {2}{3}", actor.actorName, GetHqTitle(actor.statusHQ),

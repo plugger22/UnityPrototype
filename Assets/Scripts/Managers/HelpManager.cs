@@ -228,6 +228,40 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
+        #region TransitionUI
+        //
+        // - - - Transition UI
+        //
+
+        #region Hq Status
+        //
+        // - - - HQ status
+        //
+        //HQ events
+        data = new HelpData();
+        data.tag = "transitionHq_0";
+        data.header = "HQ Events";
+        data.text = string.Format("{0}Background events{1} occur that change people's {2}renown{3} which, in turn, {4}determines{5}, who has what {6}position{7} in the hierarchy (highest to lowest)", 
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Type of Event
+        data = new HelpData();
+        data.tag = "transitionHq_1";
+        data.header = "Traits";
+        data.text = string.Format("The {0}probability{1} and {2}type{3} of event that a person may experience is determined by their {4}Trait{5}",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Tip
+        data = new HelpData();
+        data.tag = "transitionHq_2";
+        data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
+        data.text = string.Format("The {0} person HQ Hierarchy has a {1}significant influence{2} on the amount of {3}assistance{4} you will receive. Aim to have people with a {5}favourable opinion{6}" +
+            " of you take these positions where ever possible", GameManager.i.hqScript.numOfActorsHQ, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
+        #endregion
+
         #region MetaGame UI
         //
         // - - - Meta Game UI

@@ -826,16 +826,22 @@ public class TransitionUI : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < transitionInfoData.listOfHqEvents.Count; i++)
-        { builder.AppendFormat("{0}{1}", transitionInfoData.listOfHqEvents[i], "\n"); }
+        {
+            if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
+            builder.Append(transitionInfoData.listOfHqEvents[i]);
+        }
 
         //outcome
         ModalOutcomeDetails details = new ModalOutcomeDetails();
         details.side = GameManager.i.sideScript.PlayerSide;
-        details.textTop = GameManager.Formatt("Recent HQ Events", ColourType.neutralText);
+        details.textTop = string.Format("{0}Recent HQ Events{1}", colourAlert, colourEnd);
         details.textBottom = builder.ToString();
         details.sprite = GameManager.i.guiScript.infoSprite;
         details.modalLevel = 2;
         details.modalState = ModalSubState.Transition;
+        details.help0 = "transitionHq_0";
+        details.help1 = "transitionHq_1";
+        details.help2 = "transitionHq_2";
         //open outcome windown (will open MetaGameUI via triggerEvent once closed
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "TransitionUI.cs -> ExecuteHqEvents");
 

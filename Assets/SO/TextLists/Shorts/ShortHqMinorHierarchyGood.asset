@@ -11,21 +11,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
   m_Name: ShortHqMinorHierarchyGood
   m_EditorClassIdentifier: 
-  descriptor: '''actor gains ''x'' renown because of [shortHqMinorGood]''
+  descriptor: '''actor gains ''x'' renown ''because of'' / ''due to'' [shortHqMinorGood]''
 
     HQ hierarchy actors only'
   category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
   isTestForDuplicates: 1
   isTestForTextTags: 0
   randomList:
-  - oustanding leadership
-  - inspiring leadership
-  - exemplary leadership
-  - effective crisis management
-  - administrative excellence
-  - sly cunning
-  - adroit political manoeuvering
-  - friends in high places
-  - backstabbing behaviour
-  - ruthless drive
-  index: 0
+  - their oustanding leadership
+  - their inspiring leadership
+  - their exemplary leadership
+  - their effective crisis management
+  - their administrative excellence
+  - their sly cunning
+  - their adroit political manoeuvering
+  - their friends in high places
+  - their backstabbing behaviour
+  - their ruthless drive
+  index: 3
