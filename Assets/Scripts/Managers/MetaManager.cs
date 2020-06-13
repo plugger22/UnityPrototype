@@ -1002,7 +1002,11 @@ public class MetaManager : MonoBehaviour
             transitionInfoData.listOfWorkerArcs.Count, GameManager.i.hqScript.maxNumOfWorkers);
         Debug.AssertFormat(transitionInfoData.listOfWorkerTooltips.Count <= GameManager.i.hqScript.maxNumOfWorkers, "Mismatch on listOfWorkerTooltips (has {0} records, should be {1}",
             transitionInfoData.listOfWorkerTooltips.Count, GameManager.i.hqScript.maxNumOfWorkers);
-
+        //hq events
+        List<string> listOfEvents = GameManager.i.dataScript.GetListOfHqEvents();
+        if (listOfEvents != null)
+        { transitionInfoData.listOfHqEvents.AddRange(listOfEvents); }
+        else { Debug.LogError("Invalid listOfHqEvents (Null)"); }
     }
 
     /// <summary>

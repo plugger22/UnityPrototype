@@ -824,7 +824,21 @@ public class TransitionUI : MonoBehaviour
     /// </summary>
     private void ExecuteHqEvents()
     {
-        Debug.LogFormat("[Tst] ExecuteHqEvents -> Special Button pressed");
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < transitionInfoData.listOfHqEvents.Count; i++)
+        { builder.AppendFormat("{0}{1}", transitionInfoData.listOfHqEvents[i], "\n"); }
+
+        //outcome
+        ModalOutcomeDetails details = new ModalOutcomeDetails();
+        details.side = GameManager.i.sideScript.PlayerSide;
+        details.textTop = GameManager.Formatt("Recent HQ Events", ColourType.neutralText);
+        details.textBottom = builder.ToString();
+        details.sprite = GameManager.i.guiScript.infoSprite;
+        details.modalLevel = 2;
+        details.modalState = ModalSubState.Transition;
+        //open outcome windown (will open MetaGameUI via triggerEvent once closed
+        EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "TransitionUI.cs -> ExecuteHqEvents");
+
     }
 
 }
