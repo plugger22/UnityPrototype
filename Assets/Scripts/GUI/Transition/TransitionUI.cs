@@ -125,6 +125,9 @@ public class TransitionUI : MonoBehaviour
     [Header("Player Status")]
     public Canvas playerStatusCanvas;
     public Image playerStatusBackground;
+    public Image playerImage;
+    public Image playerTextBackground;
+    public TextMeshProUGUI playerText;
 
     #endregion
 
@@ -323,6 +326,11 @@ public class TransitionUI : MonoBehaviour
         #endregion
 
         #region Player Status
+        Debug.Assert(playerStatusCanvas != null, "Invalid playerStatusCanvas (Null)");
+        Debug.Assert(playerStatusBackground != null, "Invalid playerStatusBackground (Null)");
+        Debug.Assert(playerImage != null, "Invalid playerImage (Null)");
+        Debug.Assert(playerTextBackground != null, "Invalid playerTextBackground (Null)");
+        Debug.Assert(playerText != null, "Invalid playerText (Null)");
 
         #endregion
 
@@ -568,6 +576,8 @@ public class TransitionUI : MonoBehaviour
             #endregion
 
             #region Player Status
+            playerTextBackground.gameObject.SetActive(true);
+            playerImage.sprite = GameManager.i.playerScript.sprite;
 
             #endregion
 
@@ -724,7 +734,7 @@ public class TransitionUI : MonoBehaviour
         {
             case ModalTransitionSubState.EndLevel: transitionHeader.text = string.Format("{0}Mission Review{1}", colourHeader, colourEnd); break;
             case ModalTransitionSubState.HQ: transitionHeader.text = string.Format("{0}HQ Status{1}", colourHeader, colourEnd); break;
-            case ModalTransitionSubState.PlayerStatus: transitionHeader.text = string.Format("{0}Player Status{1}", colourHeader, colourEnd); break;
+            case ModalTransitionSubState.PlayerStatus: transitionHeader.text = string.Format("{0}Current Status{1}", colourHeader, colourEnd); break;
             case ModalTransitionSubState.BriefingOne: transitionHeader.text = string.Format("{0}Briefing One{1}", colourHeader, colourEnd); break;
             case ModalTransitionSubState.BriefingTwo: transitionHeader.text = string.Format("{0}Briefing Two{1}", colourHeader, colourEnd); break;
             default: Debug.LogWarningFormat("Unrecognised ModalTransitionState \"{0}\"", GameManager.i.inputScript.ModalTransitionState); break;
