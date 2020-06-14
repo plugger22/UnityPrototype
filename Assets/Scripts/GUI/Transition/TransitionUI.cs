@@ -36,6 +36,13 @@ public class TransitionUI : MonoBehaviour
     private ButtonInteraction buttonInteractionContinue;
     private ButtonInteraction buttonInteractionExit;
 
+    //button tooltips
+    public GenericTooltipUI tooltipSpecial;
+
+    //button help
+    public GenericHelpTooltipUI helpMain;
+    
+
     //data package required to populate UI
     private TransitionInfoData transitionInfoData = new TransitionInfoData();
 
@@ -105,6 +112,7 @@ public class TransitionUI : MonoBehaviour
 
     //assorted
     private TooltipData renownTooltip;
+    private TooltipData specialTooltip;
 
     //fast access
     private Sprite vacantActorSprite;
@@ -198,6 +206,8 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(buttonContinue != null, "Invalid buttonContinue (Null)");
         Debug.Assert(buttonExit != null, "Invalid buttonExit (Null)");
         Debug.Assert(buttonHelpMain != null, "Invalid buttonHelpMain (Null)");
+        Debug.Assert(tooltipSpecial != null, "Invalid tooltipSpecial (Null)");
+        Debug.Assert(helpMain != null, "Invalid helpMain (Null)");
         //end level
         Debug.Assert(endLevelCanvas != null, "Invalid endLevelCanvas (Null)");
         Debug.Assert(endLevelBackground != null, "Invalid endLevelBackground (Null)");
@@ -230,6 +240,7 @@ public class TransitionUI : MonoBehaviour
         //Set starting Initialisation states
         SetColours();
         InitialiseTooltips();
+        InitialiseHelp();
         InitialiseMainTexts();
         #endregion
 
@@ -532,7 +543,16 @@ public class TransitionUI : MonoBehaviour
                 arrayOfWorkerOptions[i].renownTooltip.y_offset = x_offset;   //NOTE: I want x_offset for both here
             }
 
-            //toggle worker options on/alpha low
+            //special button tooltip
+            int count = transitionInfoData.listOfHqEvents.Count;
+            specialTooltip = new TooltipData()
+            {
+                header = string.Format("{0}HQ Events{1}", colourCancel, colourEnd),
+                main = string.Format("There {0} {1}{2}{3} event{4}", count != 1 ? "are" : "is only", colourNeutral, count, colourEnd, count != 1 ? "s" : ""),
+                details = string.Format("{0}Click to View{1}", colourAlert, colourEnd)
+            };
+
+            //toggle worker options on (EDIT: was for alpha
             for (int i = 0; i < arrayOfWorkerOptions.Length; i++)
             {
                 if (arrayOfWorkerOptions[i].optionImage.sprite == null)
@@ -567,13 +587,23 @@ public class TransitionUI : MonoBehaviour
     /// </summary>
     private void InitialiseTooltips()
     {
+
+        
+    }
+    
+    /// <summary>
+    /// Initialise Help
+    /// </summary>
+    private void InitialiseHelp()
+    {
+        int x_offset = 100;
+        int y_offset = 100;
         List<HelpData> listOfHelp;
-        /*//main help button
-        listOfHelp = GameManager.i.helpScript.GetHelpData("metaGameUI_0", "metaGameUI_1", "metaGameUI_2", "metaGameUI_3");
+        //main help button
+        listOfHelp = GameManager.i.helpScript.GetHelpData("test_0");
         if (listOfHelp != null)
         { helpMain.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
-        else { Debug.LogWarning("Invalid listOfHelp for helpMain (Null)"); }*/
-        
+        else { Debug.LogWarning("Invalid listOfHelp for helpMain (Null)"); }
     }
 
     /// <summary>
@@ -775,10 +805,25 @@ public class TransitionUI : MonoBehaviour
         ModalTransitionSubState newState = ModalTransitionSubState.None;
         switch (GameManager.i.inputScript.ModalTransitionState)
         {
-            case ModalTransitionSubState.EndLevel: newState = ModalTransitionSubState.HQ; break;
-            case ModalTransitionSubState.HQ: newState = ModalTransitionSubState.PlayerStatus; break;
-            case ModalTransitionSubState.PlayerStatus: newState = ModalTransitionSubState.BriefingOne; break;
-            case ModalTransitionSubState.BriefingOne: newState = ModalTransitionSubState.BriefingTwo; break;
+            case ModalTransitionSubState.EndLevel:
+                newState = ModalTransitionSubState.HQ;
+                //special button tooltip (HQ events)
+                tooltipSpecial.tooltipHeader = specialTooltip.header;
+                tooltipSpecial.tooltipMain = specialTooltip.main;
+                tooltipSpecial.tooltipDetails = specialTooltip.details;
+                break;
+            case ModalTransitionSubState.HQ:
+                newState = ModalTransitionSubState.PlayerStatus;
+                ClearSpecialButtonTooltip();
+                break;
+            case ModalTransitionSubState.PlayerStatus:
+                newState = ModalTransitionSubState.BriefingOne;
+                ClearSpecialButtonTooltip();
+                break;
+            case ModalTransitionSubState.BriefingOne:
+                newState = ModalTransitionSubState.BriefingTwo;
+                ClearSpecialButtonTooltip();
+                break;
             case ModalTransitionSubState.BriefingTwo:  break; //do nothing
             default: Debug.LogWarningFormat("Unrecognised ModalTransitionState \"{0}\"", GameManager.i.inputScript.ModalTransitionState); break;
         }
@@ -794,6 +839,16 @@ public class TransitionUI : MonoBehaviour
     }
 
     /// <summary>
+    /// Zero out special button tooltip to prevent data carrying over between pages
+    /// </summary>
+    private void ClearSpecialButtonTooltip()
+    {
+        tooltipSpecial.tooltipHeader = "";
+        tooltipSpecial.tooltipMain = "";
+        tooltipSpecial.tooltipDetails = "";
+    }
+
+    /// <summary>
     /// Back button pressed
     /// </summary>
     private void ExecuteBack()
@@ -802,10 +857,25 @@ public class TransitionUI : MonoBehaviour
         switch (GameManager.i.inputScript.ModalTransitionState)
         {
             case ModalTransitionSubState.EndLevel:  break; //do nothing
-            case ModalTransitionSubState.HQ: newState = ModalTransitionSubState.EndLevel; break;
-            case ModalTransitionSubState.PlayerStatus: newState = ModalTransitionSubState.HQ; break;
-            case ModalTransitionSubState.BriefingOne: newState = ModalTransitionSubState.PlayerStatus; break;
-            case ModalTransitionSubState.BriefingTwo: newState = ModalTransitionSubState.BriefingOne; break;
+            case ModalTransitionSubState.HQ:
+                ClearSpecialButtonTooltip();
+                newState = ModalTransitionSubState.EndLevel;
+                break;
+            case ModalTransitionSubState.PlayerStatus:
+                newState = ModalTransitionSubState.HQ;
+                //special button tooltip (HQ events)
+                tooltipSpecial.tooltipHeader = specialTooltip.header;
+                tooltipSpecial.tooltipMain = specialTooltip.main;
+                tooltipSpecial.tooltipDetails = specialTooltip.details;
+                break;
+            case ModalTransitionSubState.BriefingOne:
+                newState = ModalTransitionSubState.PlayerStatus;
+                ClearSpecialButtonTooltip();
+                break;
+            case ModalTransitionSubState.BriefingTwo:
+                newState = ModalTransitionSubState.BriefingOne;
+                ClearSpecialButtonTooltip();
+                break;
             default: Debug.LogWarningFormat("Unrecognised ModalTransitionState \"{0}\"", GameManager.i.inputScript.ModalTransitionState); break;
         }
         //set new state
@@ -852,4 +922,9 @@ public class TransitionUI : MonoBehaviour
 
     }
 
+
+    
+
+
+    //new methods above here
 }

@@ -694,3 +694,181 @@ UnityEngine.Debug:LogWarning(Object)
 	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
 	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
 	
+Dev seed 60385 -> Sunday, 14 June 2020 2:46 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 13619 -> Sunday, 14 June 2020 3:12 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 57941 -> Sunday, 14 June 2020 3:15 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 16385 -> Sunday, 14 June 2020 3:33 PM
+City seed 5678 -> London, United Kingdom
+WARNING Not found, tag "test_0", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7898)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:84)
+	TransitionUI:InitialiseHelp() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:600)
+	TransitionUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:243)
+	TransitionUI:Initialise(GameState) (at Assets/Scripts/GUI/Transition/TransitionUI.cs:170)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:881)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	WARNING Invalid HelpData (Null) for tag0 "test_0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:87)
+	TransitionUI:InitialiseHelp() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:600)
+	TransitionUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:243)
+	TransitionUI:Initialise(GameState) (at Assets/Scripts/GUI/Transition/TransitionUI.cs:170)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:881)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	WARNING Invalid listOfHelpData (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:39)
+	TransitionUI:InitialiseHelp() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:602)
+	TransitionUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:243)
+	TransitionUI:Initialise(GameState) (at Assets/Scripts/GUI/Transition/TransitionUI.cs:170)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:881)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	City seed 765 -> New York, America
+
+Dev seed 22773 -> Sunday, 14 June 2020 3:53 PM
+City seed 5678 -> London, United Kingdom
+WARNING Not found, tag "test_0", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7898)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:84)
+	TransitionUI:InitialiseHelp() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:600)
+	TransitionUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:243)
+	TransitionUI:Initialise(GameState) (at Assets/Scripts/GUI/Transition/TransitionUI.cs:170)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:881)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	WARNING Invalid HelpData (Null) for tag0 "test_0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:87)
+	TransitionUI:InitialiseHelp() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:600)
+	TransitionUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:243)
+	TransitionUI:Initialise(GameState) (at Assets/Scripts/GUI/Transition/TransitionUI.cs:170)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:881)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	WARNING Invalid listOfHelpData (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:39)
+	TransitionUI:InitialiseHelp() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:602)
+	TransitionUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:243)
+	TransitionUI:Initialise(GameState) (at Assets/Scripts/GUI/Transition/TransitionUI.cs:170)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:881)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	
+Dev seed 14740 -> Sunday, 14 June 2020 3:58 PM
+City seed 5678 -> London, United Kingdom
+WARNING Not found, tag "test_0", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7898)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:84)
+	TransitionUI:InitialiseHelp() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:603)
+	TransitionUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:243)
+	TransitionUI:Initialise(GameState) (at Assets/Scripts/GUI/Transition/TransitionUI.cs:170)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:881)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	WARNING Invalid HelpData (Null) for tag0 "test_0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:87)
+	TransitionUI:InitialiseHelp() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:603)
+	TransitionUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:243)
+	TransitionUI:Initialise(GameState) (at Assets/Scripts/GUI/Transition/TransitionUI.cs:170)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:881)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	WARNING Invalid listOfHelpData (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:39)
+	TransitionUI:InitialiseHelp() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:605)
+	TransitionUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:243)
+	TransitionUI:Initialise(GameState) (at Assets/Scripts/GUI/Transition/TransitionUI.cs:170)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:881)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	
+Dev seed 48685 -> Sunday, 14 June 2020 3:59 PM
+City seed 5678 -> London, United Kingdom
+WARNING Not found, tag "test_0", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7898)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:84)
+	TransitionUI:InitialiseHelp() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:603)
+	TransitionUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:243)
+	TransitionUI:Initialise(GameState) (at Assets/Scripts/GUI/Transition/TransitionUI.cs:170)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:881)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	WARNING Invalid HelpData (Null) for tag0 "test_0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:87)
+	TransitionUI:InitialiseHelp() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:603)
+	TransitionUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:243)
+	TransitionUI:Initialise(GameState) (at Assets/Scripts/GUI/Transition/TransitionUI.cs:170)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:881)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	WARNING Invalid listOfHelpData (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:39)
+	TransitionUI:InitialiseHelp() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:605)
+	TransitionUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:243)
+	TransitionUI:Initialise(GameState) (at Assets/Scripts/GUI/Transition/TransitionUI.cs:170)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:881)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	
+Dev seed 1663 -> Sunday, 14 June 2020 4:00 PM
+City seed 5678 -> London, United Kingdom
+WARNING Not found, tag "test_0", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:7898)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:84)
+	TransitionUI:InitialiseHelp() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:603)
+	TransitionUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:243)
+	TransitionUI:Initialise(GameState) (at Assets/Scripts/GUI/Transition/TransitionUI.cs:170)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:881)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	WARNING Invalid HelpData (Null) for tag0 "test_0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:87)
+	TransitionUI:InitialiseHelp() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:603)
+	TransitionUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:243)
+	TransitionUI:Initialise(GameState) (at Assets/Scripts/GUI/Transition/TransitionUI.cs:170)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:881)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	WARNING Invalid listOfHelpData (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:39)
+	TransitionUI:InitialiseHelp() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:605)
+	TransitionUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/Transition/TransitionUI.cs:243)
+	TransitionUI:Initialise(GameState) (at Assets/Scripts/GUI/Transition/TransitionUI.cs:170)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:881)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	City seed 5678 -> London, United Kingdom

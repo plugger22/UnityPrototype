@@ -157,10 +157,7 @@ public class GUIManager : MonoBehaviour
     public Sprite friendSprite;
     [Tooltip("Sprite for an Enemy relationship")]
     public Sprite enemySprite;
-    [Tooltip("Sprite for Resistance HQ")]
-    public Sprite resistanceHqSprite;
-    [Tooltip("Sprite for Authority HQ")]
-    public Sprite authorityHqSprite;
+
 
     [Header("Priorities")]
     [Tooltip("Used for itemData priority High in MainInfoUI (20 x 20 artboard with icon being 15 x 15 png)")]
