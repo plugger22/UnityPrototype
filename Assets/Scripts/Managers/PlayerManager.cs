@@ -938,7 +938,7 @@ public class PlayerManager : MonoBehaviour
     /// <summary>
     /// Initialise the listOfConditions (overwrites existing list). Used for load save game
     /// </summary>
-    /// <param name="listOfSecrets"></param>
+    /// <param name="listOfConditions"></param>
     public void SetConditions(List<Condition> listOfConditions, GlobalSide side)
     {
         if (listOfConditions != null)

@@ -9753,7 +9753,7 @@ public class ActorManager : MonoBehaviour
     public string GetPlayerCurrentStatus()
     {
         int count;
-        string size = "<size=130%>";
+        string size = "<size=140%>";
         StringBuilder builder = new StringBuilder();
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         //special colour to match page header
@@ -9782,7 +9782,7 @@ public class ActorManager : MonoBehaviour
                     {
                         Condition condition = listOfConditions[i];
                         if (condition != null)
-                        { builder.AppendFormat("{0}{1}{2} {3}{4}{5}{6}", colourAlert, condition.tag, colourEnd, colourNormal, condition.bottomTextPlayer, colourEnd, "\n"); }
+                        { builder.AppendFormat("{0}{1}{2} {3}{4}", colourAlert, condition.tag, colourEnd, condition.bottomTextPlayer, "\n"); }
                         else { Debug.LogWarningFormat("Invalid condition (Null) for listOfConditions[{0}]", i); }
                     }
                 }
@@ -9819,8 +9819,55 @@ public class ActorManager : MonoBehaviour
                 builder.AppendFormat("There are currently NO ongoing Investigations into you conduct{0}", "\n");
             }
             //Secrets
-
+            builder.AppendFormat("{0}{1}{2}Secrets</size>{3}{4}", "\n", colourHeader, size, colourEnd, "\n");
+            List<Secret> listOfSecrets = GameManager.i.playerScript.GetListOfSecrets();
+            if (listOfSecrets != null)
+            {
+                count = listOfSecrets.Count;
+                if (count > 0)
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        Secret secret = listOfSecrets[i];
+                        if (secret != null)
+                        { builder.AppendFormat("{0}{1}{2} {3}{4}", colourAlert, secret.tag, colourEnd, secret.descriptor, "\n"); }
+                        else { Debug.LogWarningFormat("Invalid secret (Null) for listOfSecrets[{0}]", i); }
+                    }
+                }
+                else { builder.AppendFormat("You don't currently have any skeletons rattling around in your closet{0}", "\n"); }
+            }
+            else
+            {
+                Debug.LogWarning("Invalid listOfSecrets (Null)");
+                builder.AppendFormat("You don't currently have any skeletons in your cupboard{0}", "\n");
+            }
             //Organisations
+            builder.AppendFormat("{0}{1}{2}Illegal Organisations</size>{3}{4}", "\n", colourHeader, size, colourEnd, "\n");
+            count = GameManager.i.dataScript.GetNumOfPlayerOrganisations();
+            if (count > 0)
+            {
+                List<Organisation> listOfOrganisations = GameManager.i.dataScript.GetListOfCurrentOrganisations();
+                if (listOfOrganisations != null)
+                {
+                    for (int i = 0; i < listOfOrganisations.Count; i++)
+                    {
+                        Organisation organisation = listOfOrganisations[i];
+                        if (organisation != null)
+                        {
+                            //currently in contact
+                            if (organisation.isContact == true)
+                            { builder.AppendFormat("{0}{1}{2} {3}{4}", colourAlert, organisation.tag, colourEnd, organisation.descriptor, "\n"); }
+                        }
+                        else { Debug.LogWarningFormat("Invalid organisation (Null) for listOfOrganisations[{0}]", i); }
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("Invalid listOfCurrentOrganisations (Null)");
+                    builder.AppendFormat("You aren't currently in contact with any dubious Organisations{0}", "\n");
+                }
+            }
+            else { builder.AppendFormat("You aren't currently in contact with any dubious Organisations{0}", "\n"); }
         }
         else
         {
