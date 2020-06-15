@@ -1211,6 +1211,7 @@ public class HQManager : MonoBehaviour
             {
                 int limitRenown = 0;
                 ActorHQ currentStatus;
+                ActorHQ previousStatus;
                 for (int index = 1; index < (int)ActorHQ.Count - 2; index++)
                 {
                     //accomodate empty HQ hierarchy slots
@@ -1231,6 +1232,7 @@ public class HQManager : MonoBehaviour
                         Actor newActor = GetActorWithHighestRenown(listOfHqActors, currentActor.Renown, limitRenown);
                         if (newActor != null)
                         {
+                            previousStatus = newActor.statusHQ;
                             Debug.LogFormat("[HQ] HQManager.cs -> CheckHqHierarchy: {0}, {1}, r{2}, Replaced by {3}, {4}, r{5}{6}",
                                 currentActor.actorName, GetHqTitle(currentActor.statusHQ), currentActor.Renown,
                                 newActor.actorName, GetHqTitle(newActor.statusHQ), newActor.Renown, "\n");
@@ -1247,7 +1249,8 @@ public class HQManager : MonoBehaviour
                             currentActor.statusHQ = ActorHQ.Worker;
                             //history
                             currentActor.AddHistory(new HistoryActor() { text = string.Format("Demoted from {0}{1}{2} position at HQ", colourAlert, GetHqTitle(newActor.statusHQ), colourEnd) });
-                            newActor.AddHistory(new HistoryActor() { text = string.Format("Promoted to {0}{1}{2} position at HQ", colourAlert, GetHqTitle(newActor.statusHQ), colourEnd) });
+                            newActor.AddHistory(new HistoryActor() { text = string.Format("Promoted to {0}{1}{2} position at HQ (previously ({3}{4}{5})", 
+                                colourAlert, GetHqTitle(newActor.statusHQ), colourEnd, colourAlert, GetHqTitle(previousStatus), colourEnd) });
                         }
                         else
                         {
@@ -1263,6 +1266,7 @@ public class HQManager : MonoBehaviour
                         Actor newActor = GetActorWithHighestRenown(listOfHqActors, 0, limitRenown);
                         if (newActor != null)
                         {
+                            previousStatus = newActor.statusHQ;
                             //replace actor -> new actor into Hierarchy slot, current actor back to hqPool
                             arrayOfHqActors[index] = newActor;
                             Debug.LogFormat("[HQ] HQManager.cs -> CheckHqHierarchy: {0}, {1}, r{2}, assumes vacant role of {3}{4}",
@@ -1275,7 +1279,8 @@ public class HQManager : MonoBehaviour
                             }
                             //assign new position
                             newActor.statusHQ = (ActorHQ)index;
-                            newActor.AddHistory(new HistoryActor() { text = string.Format("Promoted to {0}{1}{2} position at HQ", colourAlert, GetHqTitle(newActor.statusHQ), colourEnd) });
+                            newActor.AddHistory(new HistoryActor() { text = string.Format("Promoted to {0}{1}{2} position at HQ (previously {3}{4}{5})", 
+                                colourAlert, GetHqTitle(newActor.statusHQ), colourEnd, colourAlert, GetHqTitle(previousStatus), colourEnd) });
                         }
                         else { Debug.LogErrorFormat("No actor found suitable for vacant slot {0}", (ActorHQ)index); }
                     }

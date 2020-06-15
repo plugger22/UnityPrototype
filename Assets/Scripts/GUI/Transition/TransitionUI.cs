@@ -38,6 +38,8 @@ public class TransitionUI : MonoBehaviour
 
     //button tooltips
     public GenericTooltipUI tooltipSpecial;
+    public GenericTooltipUI tooltipContinue;
+    public GenericTooltipUI tooltipBack;
 
     //button help
     public GenericHelpTooltipUI helpMain;
@@ -84,7 +86,7 @@ public class TransitionUI : MonoBehaviour
     public Image hqBackground;
     public Image hierarchyBackground;
     public Image workerBackground;
-    public Image textBackground;
+    public Image hqTextBackground;
 
     public HqInteraction optionBoss;
     public HqInteraction optionSubBoss1;
@@ -210,6 +212,8 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(buttonExit != null, "Invalid buttonExit (Null)");
         Debug.Assert(buttonHelpMain != null, "Invalid buttonHelpMain (Null)");
         Debug.Assert(tooltipSpecial != null, "Invalid tooltipSpecial (Null)");
+        Debug.Assert(tooltipContinue != null, "Invalid tooltipContinue (Null)");
+        Debug.Assert(tooltipBack != null, "Invalid tooltipBack (Null)");
         Debug.Assert(helpMain != null, "Invalid helpMain (Null)");
         //end level
         Debug.Assert(endLevelCanvas != null, "Invalid endLevelCanvas (Null)");
@@ -257,7 +261,7 @@ public class TransitionUI : MonoBehaviour
         //
         Debug.Assert(hierarchyBackground != null, "Invalid hierarchyBackground (Null)");
         Debug.Assert(workerBackground != null, "Invalid workerBackground (Null)");
-        Debug.Assert(textBackground != null, "Invalid textBackground (Null)");
+        Debug.Assert(hqTextBackground != null, "Invalid textBackground (Null)");
         Debug.Assert(optionBoss != null, "Invalid optionBoss (Null)");
         Debug.Assert(optionSubBoss1 != null, "Invalid optionSubBoss1 (Null)");
         Debug.Assert(optionSubBoss2 != null, "Invalid optionSubBoss2 (Null)");
@@ -315,7 +319,7 @@ public class TransitionUI : MonoBehaviour
         hierarchyBackground.gameObject.SetActive(true);
         workerBackground.color = color;
         workerBackground.gameObject.SetActive(true);
-        textBackground.gameObject.SetActive(true);
+        hqTextBackground.gameObject.SetActive(true);
         //renown tooltip
         renownTooltip = new TooltipData()
         {
@@ -600,8 +604,21 @@ public class TransitionUI : MonoBehaviour
     /// </summary>
     private void InitialiseTooltips()
     {
-
-        
+        int x_offset = 50;
+        int y_offset = 50;
+        //Special Button
+        tooltipSpecial.x_offset = x_offset;
+        tooltipSpecial.y_offset = y_offset;
+        //Continue button
+        tooltipContinue.tooltipHeader = string.Format("{0}CONTINUE{1}", colourAlert, colourEnd);
+        tooltipContinue.tooltipMain = string.Format("Keyboard Shortcut{0}{1}Right Arrow{2}", "\n", colourNeutral, colourEnd);
+        tooltipContinue.x_offset = x_offset;
+        tooltipContinue.y_offset = y_offset;
+        //Back button
+        tooltipBack.tooltipHeader = string.Format("{0}BACK{1}", colourAlert, colourEnd);
+        tooltipBack.tooltipMain = string.Format("Keyboard Shortcut{0}{1}Left Arrow{2}", "\n", colourNeutral, colourEnd);
+        tooltipBack.x_offset = x_offset;
+        tooltipBack.y_offset = y_offset;
     }
     
     /// <summary>

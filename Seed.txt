@@ -4930,3 +4930,26 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 46371 -> Monday, 15 June 2020 5:30 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 19314 -> Monday, 15 June 2020 8:17 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TransitionUI.InitialiseTooltips () (at Assets/Scripts/GUI/Transition/TransitionUI.cs:607)
+	TransitionUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/Transition/TransitionUI.cs:249)
+	TransitionUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/Transition/TransitionUI.cs:175)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:826)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:881)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:389)
+	
+Dev seed 11756 -> Monday, 15 June 2020 8:19 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 52075 -> Monday, 15 June 2020 8:21 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 56514 -> Monday, 15 June 2020 8:23 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 24279 -> Monday, 15 June 2020 8:32 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

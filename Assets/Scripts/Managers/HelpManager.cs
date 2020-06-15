@@ -232,7 +232,6 @@ public class HelpManager : MonoBehaviour
         //
         // - - - Transition UI
         //
-
         #region Hq Status
         //
         // - - - HQ status
