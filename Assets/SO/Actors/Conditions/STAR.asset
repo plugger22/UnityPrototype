@@ -16,7 +16,7 @@ MonoBehaviour:
   resignTag: 
   topText: is a proven top performer
   bottomTextActor: Can be <b>PROMOTED</b> at no cost (Manage Menu)
-  bottomTextPlayer: 
+  bottomTextPlayer: You're so awesome that we're considering erecting a statue
   type: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   bottomTextTypeActor: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3,
     type: 2}

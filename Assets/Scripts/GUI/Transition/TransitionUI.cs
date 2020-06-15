@@ -331,8 +331,6 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(playerImage != null, "Invalid playerImage (Null)");
         Debug.Assert(playerTextBackground != null, "Invalid playerTextBackground (Null)");
         Debug.Assert(playerText != null, "Invalid playerText (Null)");
-        //assign status text
-        playerText.text = transitionInfoData.playerStatus;
         #endregion
 
         #region Briefing One
@@ -579,7 +577,9 @@ public class TransitionUI : MonoBehaviour
             #region Player Status
             playerTextBackground.gameObject.SetActive(true);
             playerImage.sprite = GameManager.i.playerScript.sprite;
-
+            playerText.gameObject.SetActive(true);
+            //assign status text
+            playerText.text = transitionInfoData.playerStatus;
             #endregion
 
             #region Briefing One

@@ -9753,6 +9753,7 @@ public class ActorManager : MonoBehaviour
     public string GetPlayerCurrentStatus()
     {
         int count;
+        string size = "<size=130%>";
         StringBuilder builder = new StringBuilder();
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         //special colour to match page header
@@ -9767,11 +9768,10 @@ public class ActorManager : MonoBehaviour
         if (playerSide.level == 2)
         {
             //Innocence
-            builder.AppendFormat("{0}<size=120%>Innocence{1}{2}", colourHeader, colourEnd, "\n");
-            builder.AppendFormat("{0} Authority views you as a {1}{2}{3}{4}",
-                GameManager.i.guiScript.GetNormalStars(3), colourAlert, GameManager.i.playerScript.GetInnocenceDescriptor(), colourEnd, "\n");
+            builder.AppendFormat("{0}{1}Innocence</size>{2}{3}", colourHeader, size, colourEnd, "\n");
+            builder.AppendFormat("{0} Authority views you as a {1}{2}", GameManager.i.guiScript.GetNormalStars(3), GameManager.i.playerScript.GetInnocenceDescriptor(), "\n");
             //Conditions
-            builder.AppendFormat("{0}{1}<size=120%>Conditions{2}{3}", "\n", colourHeader, colourEnd, "\n");
+            builder.AppendFormat("{0}{1}{2}Conditions</size>{3}{4}", "\n", colourHeader, size, colourEnd, "\n");
             List<Condition> listOfConditions = GameManager.i.playerScript.GetListOfConditions(GameManager.i.sideScript.PlayerSide);
             if (listOfConditions != null)
             {
@@ -9788,9 +9788,36 @@ public class ActorManager : MonoBehaviour
                 }
                 else { builder.AppendFormat("You aren't currently inflicted with any Conditions{0}", "\n"); }
             }
-            else { Debug.LogWarning("Invalid listOfConditions (Null)"); }
+            else
+            {
+                Debug.LogWarning("Invalid listOfConditions (Null)");
+                builder.AppendFormat("You aren't currently inflicted with any Conditions{0}", "\n");
+            }
             //Investigations
-
+            builder.AppendFormat("{0}{1}{2}Investigations</size>{3}{4}", "\n", colourHeader, size, colourEnd, "\n");
+            List<Investigation> listOfInvestigations = GameManager.i.playerScript.GetListOfInvestigations();
+            if (listOfInvestigations != null)
+            {
+                count = listOfInvestigations.Count;
+                if (count > 0)
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        Investigation investigation = listOfInvestigations[i];
+                        if (investigation != null)
+                        { builder.AppendFormat("{0}{1}{2} investigation, evidence {3}, lead Investigator {4}{5}{6}{7}", colourAlert, investigation.tag, colourEnd, 
+                            GameManager.i.guiScript.GetNormalStars(investigation.evidence), 
+                            colourAlert, GameManager.i.hqScript.GetHqTitle(investigation.lead), colourEnd, "\n"); }
+                        else { Debug.LogWarningFormat("Invalid investigation (Null) for listOfInvestigations[{0}]", i); }
+                    }
+                }
+                else { builder.AppendFormat("There are currently NO ongoing Investigations into you conduct{0}", "\n"); }
+            }
+            else
+            {
+                Debug.LogWarning("Invalid listOfInvestigations (Null)");
+                builder.AppendFormat("There are currently NO ongoing Investigations into you conduct{0}", "\n");
+            }
             //Secrets
 
             //Organisations
