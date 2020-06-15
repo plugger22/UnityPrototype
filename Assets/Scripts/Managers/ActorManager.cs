@@ -8846,14 +8846,16 @@ public class ActorManager : MonoBehaviour
             builderMain.AppendFormat("Motivation<pos=57%>{0}{1}", GameManager.i.guiScript.GetNormalStars(actor.GetDatapoint(ActorDatapoint.Motivation1)), "\n");
             builderMain.AppendFormat("Compatibility<pos=57%>{0}", GameManager.i.guiScript.GetCompatibilityStars(actor.GetPersonality().GetCompatibilityWithPlayer()));
         }
-        //details -> renown event, otherwise actor history
+
+        //details -> renown event, otherwise actor history -> EDIT June '20, not working as different formats
         HqRenownData renownData = actor.GetMostRecentHqRenownData();
         if (renownData != null)
         {
-            string colourRenown = colourGood;
+            /*string colourRenown = colourGood;   EDIT: Obsolete code June '20
             if (renownData.change < 0) { colourRenown = colourBad; }
             data.details = string.Format("{0}Renown {1}{2}{3}{4}{5}Due to {6}{7}", colourRenown, renownData.change > 0 ? "+" : "", renownData.change,
-                colourEnd, "\n", colourNormal, renownData.reason, colourEnd);
+                colourEnd, "\n", colourNormal, renownData.reason, colourEnd);*/
+            data.details = renownData.reason;
         }
         else
         {
@@ -8861,6 +8863,7 @@ public class ActorManager : MonoBehaviour
             if (history != null)
             { data.details = string.Format("{0}{1}{2}", colourNormal, history.text, colourEnd); }
         }
+
         data.header = builderHeader.ToString();
         data.main = builderMain.ToString();
         return data;
@@ -9805,18 +9808,19 @@ public class ActorManager : MonoBehaviour
                     {
                         Investigation investigation = listOfInvestigations[i];
                         if (investigation != null)
-                        { builder.AppendFormat("{0}{1}{2} investigation, evidence {3}, lead Investigator {4}{5}{6}{7}", colourAlert, investigation.tag, colourEnd, 
-                            GameManager.i.guiScript.GetNormalStars(investigation.evidence), 
-                            colourAlert, GameManager.i.hqScript.GetHqTitle(investigation.lead), colourEnd, "\n"); }
+                        {
+                            builder.AppendFormat("{0}{1}{2} investigation, lead Investigator {3}{4}{5}{6}", colourAlert, investigation.tag, colourEnd,
+                              colourAlert, GameManager.i.hqScript.GetHqTitle(investigation.lead), colourEnd, "\n");
+                        }
                         else { Debug.LogWarningFormat("Invalid investigation (Null) for listOfInvestigations[{0}]", i); }
                     }
                 }
-                else { builder.AppendFormat("There are currently NO ongoing Investigations into you conduct{0}", "\n"); }
+                else { builder.AppendFormat("There are currently NO ongoing Investigations into your conduct{0}", "\n"); }
             }
             else
             {
                 Debug.LogWarning("Invalid listOfInvestigations (Null)");
-                builder.AppendFormat("There are currently NO ongoing Investigations into you conduct{0}", "\n");
+                builder.AppendFormat("There are currently NO ongoing Investigations into your conduct{0}", "\n");
             }
             //Secrets
             builder.AppendFormat("{0}{1}{2}Secrets</size>{3}{4}", "\n", colourHeader, size, colourEnd, "\n");
@@ -9843,31 +9847,27 @@ public class ActorManager : MonoBehaviour
             }
             //Organisations
             builder.AppendFormat("{0}{1}{2}Illegal Organisations</size>{3}{4}", "\n", colourHeader, size, colourEnd, "\n");
-            count = GameManager.i.dataScript.GetNumOfPlayerOrganisations();
-            if (count > 0)
+            List<Organisation> listOfOrganisations = GameManager.i.metaScript.GetListOfMetaOrganisations();
+            if (listOfOrganisations != null)
             {
-                List<Organisation> listOfOrganisations = GameManager.i.dataScript.GetListOfCurrentOrganisations();
-                if (listOfOrganisations != null)
+                count = listOfOrganisations.Count;
+                if (count > 0)
                 {
-                    for (int i = 0; i < listOfOrganisations.Count; i++)
+                    for (int i = 0; i < count; i++)
                     {
                         Organisation organisation = listOfOrganisations[i];
                         if (organisation != null)
-                        {
-                            //currently in contact
-                            if (organisation.isContact == true)
-                            { builder.AppendFormat("{0}{1}{2} {3}{4}", colourAlert, organisation.tag, colourEnd, organisation.descriptor, "\n"); }
-                        }
+                        { builder.AppendFormat("{0}{1}{2} {3}{4}", colourAlert, organisation.tag, colourEnd, organisation.descriptor, "\n"); }
                         else { Debug.LogWarningFormat("Invalid organisation (Null) for listOfOrganisations[{0}]", i); }
                     }
                 }
-                else
-                {
-                    Debug.LogWarning("Invalid listOfCurrentOrganisations (Null)");
-                    builder.AppendFormat("You aren't currently in contact with any dubious Organisations{0}", "\n");
-                }
+                else { builder.AppendFormat("You aren't currently in contact with any organisations of a dubious nature{0}", "\n"); }
             }
-            else { builder.AppendFormat("You aren't currently in contact with any dubious Organisations{0}", "\n"); }
+            else
+            {
+                Debug.LogWarning("Invalid listOfMetaOrganisations (Null)");
+                builder.AppendFormat("You aren't currently in contact with any organisations of a dubious nature{0}", "\n");
+            }
         }
         else
         {

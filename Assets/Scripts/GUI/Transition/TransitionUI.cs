@@ -688,7 +688,7 @@ public class TransitionUI : MonoBehaviour
         {
             case ModalTransitionSubState.EndLevel:
                 buttonInteractionSpecial.SetButton(EventType.None);
-                buttonSpecial.gameObject.SetActive(true);
+                buttonSpecial.gameObject.SetActive(false);
                 buttonBack.gameObject.SetActive(false);
                 buttonContinue.gameObject.SetActive(true);
                 buttonExit.gameObject.SetActive(false);
@@ -702,7 +702,7 @@ public class TransitionUI : MonoBehaviour
                 break;
             case ModalTransitionSubState.PlayerStatus:
                 buttonInteractionSpecial.SetButton(EventType.None);
-                buttonSpecial.gameObject.SetActive(true);
+                buttonSpecial.gameObject.SetActive(false);
                 buttonBack.gameObject.SetActive(true);
                 buttonContinue.gameObject.SetActive(true);
                 buttonExit.gameObject.SetActive(false);
@@ -716,7 +716,7 @@ public class TransitionUI : MonoBehaviour
                 break;
             case ModalTransitionSubState.BriefingTwo:
                 buttonInteractionSpecial.SetButton(EventType.None);
-                buttonSpecial.gameObject.SetActive(true);
+                buttonSpecial.gameObject.SetActive(false);
                 buttonBack.gameObject.SetActive(true);
                 buttonContinue.gameObject.SetActive(false);
                 buttonExit.gameObject.SetActive(true);
@@ -824,6 +824,9 @@ public class TransitionUI : MonoBehaviour
             case ModalTransitionSubState.BriefingTwo:  break; //do nothing
             default: Debug.LogWarningFormat("Unrecognised ModalTransitionState \"{0}\"", GameManager.i.inputScript.ModalTransitionState); break;
         }
+        //close tooltips
+        GameManager.i.tooltipGenericScript.CloseTooltip("GUIManager.cs -> SetTooltipsOff");
+        GameManager.i.tooltipHelpScript.CloseTooltip("GUIManager.cs -> SetTooltipsOff");
         //set new state
         if (newState != ModalTransitionSubState.None)
         {
@@ -875,6 +878,9 @@ public class TransitionUI : MonoBehaviour
                 break;
             default: Debug.LogWarningFormat("Unrecognised ModalTransitionState \"{0}\"", GameManager.i.inputScript.ModalTransitionState); break;
         }
+        //close tooltips
+        GameManager.i.tooltipGenericScript.CloseTooltip("GUIManager.cs -> SetTooltipsOff");
+        GameManager.i.tooltipHelpScript.CloseTooltip("GUIManager.cs -> SetTooltipsOff");
         //set new state
         if (newState != ModalTransitionSubState.None)
         {

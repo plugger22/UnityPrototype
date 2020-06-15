@@ -17,8 +17,8 @@ MonoBehaviour:
   topText: has had their facial likeness obtained by the Authority. You are now a
     <b>KNOWN QUANTITY</b>
   bottomTextActor: 
-  bottomTextPlayer: There is a <b>Chance</b> each turn that you will be <b>DETECTED</b>
-    by facial recognition scans and <b>Lose Invisibility</b>
+  bottomTextPlayer: You may be <b>DETECTED</b> by facial recognition scans and <b>lose
+    Invisibility</b>
   type: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   bottomTextTypeActor: {fileID: 0}
   bottomTextTypePlayer: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11,

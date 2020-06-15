@@ -1072,7 +1072,7 @@ public class HQManager : MonoBehaviour
                     scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex() + 1,
                     change = change,
                     newRenown = actor.Renown,
-                    reason = text
+                    reason = eventText
                 };
                 actor.AddHqRenownData(renownData);
             }
@@ -1106,6 +1106,7 @@ public class HQManager : MonoBehaviour
             ProcessHqTraits(actor, ref chanceMajor, ref chanceGood, ref changeMultiplier);
             string reason = "Unknown";
             string text = "Unknown";
+            string eventText = "Unknown";
             //
             // - - - Minor events only -> change in renown
             //
@@ -1127,9 +1128,9 @@ public class HQManager : MonoBehaviour
                 reason = string.Format("gains +{0} Renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Renown);
                 actor.AddHistory(new HistoryActor() { text = string.Format("Gains Renown at HQ because of {0}", text) });
                 //add to list
-                text = string.Format("{0}{1}{2}, {3}{4}{5}{6}gains {7}+{8} Renown{9} due to {10}", colourNormal, actor.actorName, colourEnd, colourAlert, GetHqTitle(actor.statusHQ), 
+                eventText = string.Format("{0}{1}{2}, {3}{4}{5}{6}gains {7}+{8} Renown{9} due to {10}", colourNormal, actor.actorName, colourEnd, colourAlert, GetHqTitle(actor.statusHQ), 
                     colourEnd, "\n", colourGood, change, colourEnd, text);
-                GameManager.i.dataScript.AddHqEvent(text);
+                GameManager.i.dataScript.AddHqEvent(eventText);
             }
             else
             {
@@ -1153,7 +1154,7 @@ public class HQManager : MonoBehaviour
                 scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex() + 1,
                 change = change,
                 newRenown = actor.Renown,
-                reason = text
+                reason = eventText
             };
             actor.AddHqRenownData(renownData);
             //limit of events exceeded?
@@ -1163,6 +1164,11 @@ public class HQManager : MonoBehaviour
             //Renown dropped below Zero, remove actor from hq
             if (renownBefore + change < 0)
             {
+                //record event
+                text = string.Format("{0}{1}{2}, {3}{4}{5}{6}dismissed from HQ", colourNormal, actor.actorName, colourEnd, colourAlert, GetHqTitle(actor.statusHQ),
+                    colourEnd, "\n");
+                GameManager.i.dataScript.AddHqEvent(text);
+                //remove actor
                 GameManager.i.dataScript.RemoveHqActor(actor.hqID);
                 Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqWorker: {0}, {1}, hqID {2}, Worker, forcefully removed from HQ (Renown < 0){3}", actor.actorName, actor.arc.name, actor.hqID, "\n");
             }
@@ -1204,6 +1210,7 @@ public class HQManager : MonoBehaviour
             if (listOfHqActors != null)
             {
                 int limitRenown = 0;
+                string text = "Unknown";
                 ActorHQ currentStatus;
                 for (int index = 1; index < (int)ActorHQ.Count - 2; index++)
                 {
@@ -1237,6 +1244,9 @@ public class HQManager : MonoBehaviour
                             //replace actor -> new actor into Hierarchy slot, current actor back to hqPool
                             newActor.statusHQ = (ActorHQ)index;
                             arrayOfHqActors[index] = newActor;
+                            //history
+                            newActor.AddHistory(new HistoryActor() { text = string.Format("Promoted to HQ Worker", "identified potential") });
+
                             //bump current actor back to work status (they can then compete for lower level hierarchy positions)
                             currentActor.statusHQ = ActorHQ.Worker;
                             //history

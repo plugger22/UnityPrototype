@@ -309,6 +309,13 @@ public class MetaManager : MonoBehaviour
     }
 
     /// <summary>
+    /// returns list of all orgs that player was in contact with at the end fo the level
+    /// </summary>
+    /// <returns></returns>
+    public List<Organisation> GetListOfMetaOrganisations()
+    { return listOfOrganisations; }
+
+    /// <summary>
     /// Update Player's secrets at end of level prior to MetaGame process
     /// </summary>
     /// <param name="tempList"></param>

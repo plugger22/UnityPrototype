@@ -678,15 +678,24 @@ public class InputManager : MonoBehaviour
                                 //same as pressing 'Continue'
                                 EventManager.i.PostNotification(EventType.TransitionContinue, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
                             }
-                            if (Input.GetButtonDown("PageUp") == true)
+                            else if (Input.GetButtonDown("PageUp") == true)
                             {
                                 //same as pressing 'Continue'
                                 EventManager.i.PostNotification(EventType.TransitionContinue, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
                             }
-                            if (Input.GetButtonDown("PageDown") == true)
+                            else if (Input.GetButtonDown("PageDown") == true)
                             {
                                 //same as pressing 'Back'
                                 EventManager.i.PostNotification(EventType.TransitionBack, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                            }
+                            else if (Input.GetButtonDown("Horizontal"))
+                            {
+                                //right / left arrows
+                                x_axis = Input.GetAxisRaw("Horizontal");
+                                if (x_axis > 0)
+                                { EventManager.i.PostNotification(EventType.TransitionContinue, this, null, "InputManager.cs -> ProcessKeyInput Horizontal"); }
+                                else if (x_axis < 0)
+                                { EventManager.i.PostNotification(EventType.TransitionBack, this, null, "InputManager.cs -> ProcessKeyInput Horizontal"); }
                             }
                             break;
 
