@@ -9746,6 +9746,65 @@ public class ActorManager : MonoBehaviour
         return result;
     }
 
+    /// <summary>
+    /// Generates a composite, formatted string ready for display in Player Status page in TransitionUI
+    /// </summary>
+    /// <returns></returns>
+    public string GetPlayerCurrentStatus()
+    {
+        int count;
+        StringBuilder builder = new StringBuilder();
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
+        //special colour to match page header
+        string colourHeader = colourNeutral;
+        Color color = GameManager.i.guiScript.colourTransitionHeader;
+        if (color != null)
+        { colourHeader = string.Format("<color=#{0}>", ColorUtility.ToHtmlStringRGB(color)); }
+        else { Debug.LogWarning("Invalid colorTransitionHeader (Null)"); }
+        //
+        // - - - Resistance Player
+        //
+        if (playerSide.level == 2)
+        {
+            //Innocence
+            builder.AppendFormat("{0}<size=120%>Innocence{1}{2}", colourHeader, colourEnd, "\n");
+            builder.AppendFormat("{0} Authority views you as a {1}{2}{3}{4}",
+                GameManager.i.guiScript.GetNormalStars(3), colourAlert, GameManager.i.playerScript.GetInnocenceDescriptor(), colourEnd, "\n");
+            //Conditions
+            builder.AppendFormat("{0}{1}<size=120%>Conditions{2}{3}", "\n", colourHeader, colourEnd, "\n");
+            List<Condition> listOfConditions = GameManager.i.playerScript.GetListOfConditions(GameManager.i.sideScript.PlayerSide);
+            if (listOfConditions != null)
+            {
+                count = listOfConditions.Count;
+                if (count > 0)
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        Condition condition = listOfConditions[i];
+                        if (condition != null)
+                        { builder.AppendFormat("{0}{1}{2} {3}{4}{5}{6}", colourAlert, condition.tag, colourEnd, colourNormal, condition.bottomTextPlayer, colourEnd, "\n"); }
+                        else { Debug.LogWarningFormat("Invalid condition (Null) for listOfConditions[{0}]", i); }
+                    }
+                }
+                else { builder.AppendFormat("You aren't currently inflicted with any Conditions{0}", "\n"); }
+            }
+            else { Debug.LogWarning("Invalid listOfConditions (Null)"); }
+            //Investigations
+
+            //Secrets
+
+            //Organisations
+        }
+        else
+        {
+            //
+            // - - - Authority Player  -> TO DO
+            //
+
+        }
+        return builder.ToString();
+    }
+
     //
     // - - - Relations
     //

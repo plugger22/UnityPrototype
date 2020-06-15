@@ -566,7 +566,7 @@ public class TopBarUI : MonoBehaviour
         //innocence
         tipInnocence.tooltipHeader = string.Format("<size=120%>{0}</size>{1}{2}", GameManager.Formatt("Innocence", ColourType.neutralText), "\n",
             GameManager.i.guiScript.GetNormalStars(GameManager.i.playerScript.Innocence));
-        tipInnocence.tooltipMain = string.Format("Authority currently views you as a{0}{1}", "\n", GameManager.i.topicScript.GetInnocenceDescriptor());
+        tipInnocence.tooltipMain = string.Format("Authority currently views you as a{0}{1}", "\n", GameManager.i.playerScript.GetInnocenceDescriptor());
         tipInnocence.tooltipDetails = string.Format("If it drops to {0} you will be {1} when next captured{2}{3}",
             GameManager.Formatt("ZERO", ColourType.neutralText),
             GameManager.Formatt("ERASED", ColourType.badText),
@@ -661,13 +661,13 @@ public class TopBarUI : MonoBehaviour
             tipInnocence.tooltipHeader = string.Format("<size=120%>{0}</size>{1}{2}", GameManager.Formatt("Innocence", ColourType.neutralText), "\n",
                 GameManager.i.guiScript.GetNormalStars(value));
             tipInnocence.tooltipMain = string.Format("Authority currently views you as a{0}{1}", "\n",
-                GameManager.Formatt(GameManager.i.topicScript.GetInnocenceDescriptor(), ColourType.salmonText));
+                GameManager.Formatt(GameManager.i.playerScript.GetInnocenceDescriptor(), ColourType.salmonText));
         }
         else
         {
             tipInnocence.tooltipHeader = string.Format("<size=120%>{0}</size>{1}{2}", GameManager.Formatt("Innocence", ColourType.neutralText), "\n",
                 GameManager.i.guiScript.GetNormalStars(value));
-            tipInnocence.tooltipMain = string.Format("Authority currently views you as a{0}{1}", "\n", GameManager.i.topicScript.GetInnocenceDescriptor());
+            tipInnocence.tooltipMain = string.Format("Authority currently views you as a{0}{1}", "\n", GameManager.i.playerScript.GetInnocenceDescriptor());
         }
     }
 

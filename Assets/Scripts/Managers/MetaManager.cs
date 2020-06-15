@@ -3,6 +3,7 @@ using modalAPI;
 using packageAPI;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 
 /// <summary>
@@ -1014,7 +1015,10 @@ public class MetaManager : MonoBehaviour
     /// </summary>
     private void InitialisePlayerStatus()
     {
-
+        string status = GameManager.i.actorScript.GetPlayerCurrentStatus();
+        if (string.IsNullOrEmpty(status) == false)
+        { transitionInfoData.playerStatus = status; }
+        else { Debug.LogError("Invalid playerStatus (Null or Empty)"); }
     }
 
     /// <summary>

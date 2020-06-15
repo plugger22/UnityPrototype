@@ -1183,7 +1183,7 @@ namespace packageAPI
         //
         // - - - Player Status
         //
-        public List<string> listOfPlayerStatus = new List<string>();
+        public string playerStatus;
 
         //
         // - - - BriefingOne
@@ -1220,7 +1220,7 @@ namespace packageAPI
                 #endregion
 
                 #region Player Status
-                listOfPlayerStatus.AddRange(data.listOfPlayerStatus);
+                playerStatus = data.playerStatus;
                 #endregion
             }
             else { Debug.LogError("Invalid transitionInfoData parameter (Null)"); }
@@ -1252,7 +1252,7 @@ namespace packageAPI
             #endregion
 
             #region Player Status
-            listOfPlayerStatus.Clear();
+            playerStatus = "";
             #endregion
 
             #region Briefing One

@@ -331,7 +331,8 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(playerImage != null, "Invalid playerImage (Null)");
         Debug.Assert(playerTextBackground != null, "Invalid playerTextBackground (Null)");
         Debug.Assert(playerText != null, "Invalid playerText (Null)");
-
+        //assign status text
+        playerText.text = transitionInfoData.playerStatus;
         #endregion
 
         #region Briefing One
@@ -433,7 +434,7 @@ public class TransitionUI : MonoBehaviour
         Color color = GameManager.i.guiScript.colourTransitionHeader;
         if (color != null)
         { colourHeader = string.Format("<color=#{0}>", ColorUtility.ToHtmlStringRGB(color)); }
-        else { Debug.LogError("Invalid colorTransitionHeader (Null)"); }
+        else { Debug.LogWarning("Invalid colorTransitionHeader (Null)"); }
     }
 
     /// <summary>
@@ -610,7 +611,7 @@ public class TransitionUI : MonoBehaviour
         int y_offset = 100;
         List<HelpData> listOfHelp;
         //main help button
-        listOfHelp = GameManager.i.helpScript.GetHelpData("test_0");
+        listOfHelp = GameManager.i.helpScript.GetHelpData("test0");
         if (listOfHelp != null)
         { helpMain.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
         else { Debug.LogWarning("Invalid listOfHelp for helpMain (Null)"); }
@@ -779,20 +780,6 @@ public class TransitionUI : MonoBehaviour
     private void ExecuteClose()
     {
         transitionCanvas.gameObject.SetActive(false);
-        /*
-        //outcome
-        ModalOutcomeDetails details = new ModalOutcomeDetails();
-        details.side = GameManager.i.sideScript.PlayerSide;
-        details.textTop = GameManager.Formatt("HQ Assistance", ColourType.neutralText);
-        details.textBottom = string.Format("HQ are willing to offer you {0} prior to your deployment", GameManager.Formatt("assistance", ColourType.moccasinText));
-        details.sprite = GameManager.i.guiScript.infoSprite;
-        details.modalLevel = 2;
-        details.modalState = ModalSubState.MetaGame;
-        details.triggerEvent = EventType.MetaGameOpen;
-        //open outcome windown (will open MetaGameUI via triggerEvent once closed
-        EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "TransitionUI.cs -> ExecuteClose");
-        */
-
         //confirm window that will open metaOptions on closing
         ModalConfirmDetails details = new ModalConfirmDetails();
         details.topText = string.Format("HQ are willing to offer you {0} prior to your deployment", GameManager.Formatt("assistance", ColourType.moccasinText));

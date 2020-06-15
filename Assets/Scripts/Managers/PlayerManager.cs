@@ -2932,5 +2932,24 @@ public class PlayerManager : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Returns a colour formatted, and Bolded, string 'The authority views you as a [...]'. Used for CheckText as well as TopBarUI tooltip. Standardises innocence descriptors across code base.
+    /// </summary>
+    /// <returns></returns>
+    public string GetInnocenceDescriptor()
+    {
+        string replaceText = "Unknown";
+        switch (Innocence)
+        {
+            case 3: replaceText = GameManager.Formatt("<b>Low level street Operative</b>", ColourType.neutralText); break;
+            case 2: replaceText = GameManager.Formatt("<b>Mid level Organiser</b>", ColourType.neutralText); break;
+            case 1: replaceText = GameManager.Formatt("<b>High level Operative</b>", ColourType.neutralText); break;
+            case 0: replaceText = GameManager.Formatt("<b>City Commander</b>", ColourType.neutralText); break;
+            default: Debug.LogWarningFormat("Unrecognised Innocence {0}", Innocence); break;
+        }
+        return replaceText;
+    }
+
+
     //place new methods above here
 }
