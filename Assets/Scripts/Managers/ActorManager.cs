@@ -9518,7 +9518,7 @@ public class ActorManager : MonoBehaviour
                         scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex() + 1,
                         change = actor.Renown - oldRenown,
                         newRenown = actor.Renown,
-                        reason = "being Promoted to HQ"
+                        reason = string.Format("{0}, {1}{2}{3}, Promoted to HQ", actor.actorName, colourAlert, actor.arc.name, colourEnd)
                     };
                     actor.AddHqRenownData(renownData);
                     //remove any secrets and conditions

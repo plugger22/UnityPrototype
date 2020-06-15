@@ -331,6 +331,8 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(playerImage != null, "Invalid playerImage (Null)");
         Debug.Assert(playerTextBackground != null, "Invalid playerTextBackground (Null)");
         Debug.Assert(playerText != null, "Invalid playerText (Null)");
+        //background color (transitionHqBackground / 100% alpha
+        playerTextBackground.color = color;
         #endregion
 
         #region Briefing One

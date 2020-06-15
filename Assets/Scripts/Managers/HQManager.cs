@@ -1210,7 +1210,6 @@ public class HQManager : MonoBehaviour
             if (listOfHqActors != null)
             {
                 int limitRenown = 0;
-                string text = "Unknown";
                 ActorHQ currentStatus;
                 for (int index = 1; index < (int)ActorHQ.Count - 2; index++)
                 {
@@ -1244,21 +1243,18 @@ public class HQManager : MonoBehaviour
                             //replace actor -> new actor into Hierarchy slot, current actor back to hqPool
                             newActor.statusHQ = (ActorHQ)index;
                             arrayOfHqActors[index] = newActor;
-                            //history
-                            newActor.AddHistory(new HistoryActor() { text = string.Format("Promoted to HQ Worker", "identified potential") });
-
                             //bump current actor back to work status (they can then compete for lower level hierarchy positions)
                             currentActor.statusHQ = ActorHQ.Worker;
                             //history
-                            currentActor.AddHistory(new HistoryActor() { text = string.Format("Demoted from {0} position at HQ", GetHqTitle(newActor.statusHQ)) });
-                            newActor.AddHistory(new HistoryActor() { text = string.Format("Assigned to {0} position at HQ", GetHqTitle(newActor.statusHQ)) });
+                            currentActor.AddHistory(new HistoryActor() { text = string.Format("Demoted from {0}{1}{2} position at HQ", colourAlert, GetHqTitle(newActor.statusHQ), colourEnd) });
+                            newActor.AddHistory(new HistoryActor() { text = string.Format("Promoted to {0}{1}{2} position at HQ", colourAlert, GetHqTitle(newActor.statusHQ), colourEnd) });
                         }
                         else
                         {
                             Debug.LogFormat("[HQ] HQManager.cs -> CheckHqHierarchy: {0}, {1}, renown {2} is secure in their position{3}", currentActor.actorName,
                                 GetHqTitle(currentActor.statusHQ), currentActor.Renown, "\n");
                             if (GameManager.i.campaignScript.GetScenarioIndex() > 0)
-                            { currentActor.AddHistory(new HistoryActor() { text = string.Format("Position secure at HQ as {0}", GetHqTitle(currentActor.statusHQ)) }); }
+                            { currentActor.AddHistory(new HistoryActor() { text = string.Format("Position secure at HQ as {0}{1}{2}", colourAlert, GetHqTitle(currentActor.statusHQ), colourEnd) }); }
                         }
                     }
                     else
@@ -1279,7 +1275,7 @@ public class HQManager : MonoBehaviour
                             }
                             //assign new position
                             newActor.statusHQ = (ActorHQ)index;
-                            newActor.AddHistory(new HistoryActor() { text = string.Format("Assigned to {0} position at HQ", GetHqTitle(newActor.statusHQ)) });
+                            newActor.AddHistory(new HistoryActor() { text = string.Format("Promoted to {0}{1}{2} position at HQ", colourAlert, GetHqTitle(newActor.statusHQ), colourEnd) });
                         }
                         else { Debug.LogErrorFormat("No actor found suitable for vacant slot {0}", (ActorHQ)index); }
                     }
