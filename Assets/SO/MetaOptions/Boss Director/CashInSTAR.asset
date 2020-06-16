@@ -9,31 +9,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75137ae3da0caf74383d26d8e9c80713, type: 3}
-  m_Name: RemoveADDICTED
+  m_Name: CashInSTAR
   m_EditorClassIdentifier: 
   template: 
-  text: Detox Clinic (ADDICTED)
-  header: ADDICTION Cure
-  descriptor: We will push you through a <b>Detox Clinic</b> that will<br><br><b>remove
-    your Addiction</b>
-  renownCost: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  text: Cash in your STAR status for bonus Renown
+  header: STAR
+  descriptor: You're a <b>STAR</b><br><br>It's time to trade your reputation for <b>bonus
+    Renown</b>
+  renownCost: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   hqPosition: {fileID: 11400000, guid: 49b17439fb97b1d4e86200f567743fd1, type: 2}
-  sprite: {fileID: 21300000, guid: 1e2bcaaa7e6fbaf4da0bb00f2ceba3f6, type: 3}
-  isRecommended: 1
-  recommendPriority: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  sprite: {fileID: 21300000, guid: b409a5bb3e60fe2449c54d6642ca4a19, type: 3}
+  isRecommended: 0
+  recommendPriority: {fileID: 0}
   isPlayerStatus: 1
   isAlways: 0
+  isRenownGain: 1
   textInactive: 
   listOfCriteria:
-  - {fileID: 11400000, guid: a80f97b49bf3d1a4ba5bd7454b54a50f, type: 2}
+  - {fileID: 11400000, guid: e0b19eb9239649a4ca7e24ecfd383469, type: 2}
   listOfEffects:
-  - {fileID: 11400000, guid: 4f942eb01025b4f4bb342eb842e348ab, type: 2}
+  - {fileID: 11400000, guid: 9ae2e643b61cdcd4d8cb836a3f262ba9, type: 2}
   help0: 
   help1: 
   help2: 
   help3: 
   statTimesSelected: 0
-  isActive: 0
+  isActive: 1
   data: -1
   dataName: 
   dataTag: 

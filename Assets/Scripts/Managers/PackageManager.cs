@@ -395,6 +395,7 @@ namespace packageAPI
         public bool isRecommended;                  //if true part of recommended selection of options
         public bool isCriteria;                     //true if any criteria involved, false otherwise
         public bool isSelected;                     //used within MetaGameUI (if true has been selected by player)
+        public bool isRenownGain;                   //true if there is a renown GAIN, not cost (gain equal to 'renownCost')
         public MetaPriority recommendedPriority;    //recommendations selected on priority until renown runs out
         public List<Effect> listOfEffects;          //effects that happen as a result of metaData being selected
         public int data;                            //used to iplement outcome (where a number is needed) 

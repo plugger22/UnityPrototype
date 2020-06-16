@@ -733,6 +733,7 @@ public class MetaManager : MonoBehaviour
                             isActive = metaOption.isActive,
                             isRecommended = metaOption.isRecommended,
                             isSelected = false,
+                            isRenownGain = metaOption.isRenownGain,
                             help = 1,
                             tag0 = metaOption.help0,
                             tag1 = metaOption.help1,
@@ -759,9 +760,20 @@ public class MetaManager : MonoBehaviour
                         cost *= metaOption.relationshipModifier;
                         metaData.renownCost = cost;
                         //header texts
-                        metaData.textSelect = $"Costs <size=130%>{GameManager.Formatt(cost.ToString(), ColourType.neutralText)}</size> Renown";
-                        metaData.textDeselect = $"Gain <size=130%>{GameManager.Formatt(cost.ToString(), ColourType.neutralText)}</size> Renown";
-                        metaData.textInsufficient = $"Not enough Renown (need <size=130%>{GameManager.Formatt(cost.ToString(), ColourType.neutralText)}</size>)";
+                        if (metaOption.isRenownGain == false)
+                        {
+                            //costs renown
+                            metaData.textSelect = $"Costs <size=130%>{GameManager.Formatt(cost.ToString(), ColourType.neutralText)}</size> Renown";
+                            metaData.textDeselect = $"Gain <size=130%>{GameManager.Formatt(cost.ToString(), ColourType.neutralText)}</size> Renown";
+                            metaData.textInsufficient = $"Not enough Renown (need <size=130%>{GameManager.Formatt(cost.ToString(), ColourType.neutralText)}</size>)";
+                        }
+                        else
+                        {
+                            //gain renown
+                            metaData.textSelect = $"Gain <size=130%>{GameManager.Formatt(cost.ToString(), ColourType.neutralText)}</size> Renown";
+                            metaData.textDeselect = $"Costs <size=130%>{GameManager.Formatt(cost.ToString(), ColourType.neutralText)}</size> Renown";
+                            metaData.textInsufficient = $"ERROR";
+                        }
                         //recommendation priority
                         if (metaOption.isRecommended == true)
                         {
@@ -839,6 +851,7 @@ public class MetaManager : MonoBehaviour
                             isRecommended = false,
                             isSelected = false,
                             isCriteria = false,
+                            isRenownGain = false,
                             tabSide = (MetaTabSide)index,
                             priority = MetaPriority.Low,
                             help = 1,
@@ -901,6 +914,7 @@ public class MetaManager : MonoBehaviour
                         isRecommended = false,
                         isSelected = false,
                         isCriteria = false,
+                        isRenownGain = false,
                         tabTop = MetaTabTop.Status,
                         priority = MetaPriority.Low,
                         help = 1,
@@ -922,6 +936,7 @@ public class MetaManager : MonoBehaviour
                     isRecommended = false,
                     isSelected = false,
                     isCriteria = false,
+                    isRenownGain = false,
                     tabTop = MetaTabTop.Selected,
                     priority = MetaPriority.Low,
                     help = 1,

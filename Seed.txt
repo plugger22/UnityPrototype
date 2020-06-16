@@ -80,3 +80,35 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 18883 -> Tuesday, 16 June 2020 12:44 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 5798 -> Tuesday, 16 June 2020 3:01 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 15790 -> Tuesday, 16 June 2020 3:02 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 16831 -> Tuesday, 16 June 2020 3:03 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+MetaManager.InitialiseMetaData () (at Assets/Scripts/Managers/MetaManager.cs:750)
+	MetaManager.ProcessMetaGame () (at Assets/Scripts/Managers/MetaManager.cs:143)
+	ControlManager.ProcessMetaGame () (at Assets/Scripts/Managers/ControlManager.cs:242)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:90)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:323)
+	ControlManager.ProcessEndLevel () (at Assets/Scripts/Managers/ControlManager.cs:222)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:87)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:323)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:253)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:421)
+	
+Dev seed 32418 -> Tuesday, 16 June 2020 3:09 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 64539 -> Tuesday, 16 June 2020 4:06 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 8091 -> Tuesday, 16 June 2020 4:15 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

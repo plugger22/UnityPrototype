@@ -1423,13 +1423,22 @@ public class MetaGameUI : MonoBehaviour
                     //hasn't been selected
                     buttonDeselect.gameObject.SetActive(false);
                     //enough renown for option
-                    if (data.renownCost <= renownCurrent)
-                    { buttonSelect.gameObject.SetActive(true); }
+                    if (data.isRenownGain == false)
+                    {
+                        //costs renown
+                        if (data.renownCost <= renownCurrent)
+                        { buttonSelect.gameObject.SetActive(true); }
+                        else
+                        {
+                            //insufficient renown
+                            buttonSelect.gameObject.SetActive(false);
+                            rightTextTop.text = data.textInsufficient;
+                        }
+                    }
                     else
                     {
-                        //insufficient renown
-                        buttonSelect.gameObject.SetActive(false);
-                        rightTextTop.text = data.textInsufficient;
+                        //gain renown
+                        buttonSelect.gameObject.SetActive(true);
                     }
                 }
                 else
@@ -1447,17 +1456,27 @@ public class MetaGameUI : MonoBehaviour
                     if (listOfHelp != null)
                     { helpCombined.SetHelpTooltip(listOfHelp, -400, 0); }
                     else { Debug.LogWarning("Invalid listOfHelp (Null)"); }
-                    if (data.renownCost <= renownCurrent)
+                    if (data.isRenownGain == false)
                     {
-                        //enough renown
-                        buttonHelpCentre.gameObject.SetActive(false);
-                        buttonHelpCombined.gameObject.SetActive(true);
+                        //costs renown
+                        if (data.renownCost <= renownCurrent)
+                        {
+                            //enough renown
+                            buttonHelpCentre.gameObject.SetActive(false);
+                            buttonHelpCombined.gameObject.SetActive(true);
+                        }
+                        else
+                        {
+                            //insufficient renown
+                            buttonHelpCombined.gameObject.SetActive(false);
+                            buttonHelpCentre.gameObject.SetActive(true);
+                        }
                     }
                     else
                     {
-                        //insufficient renown
-                        buttonHelpCombined.gameObject.SetActive(false);
-                        buttonHelpCentre.gameObject.SetActive(true);
+                        //gains renown
+                        buttonHelpCentre.gameObject.SetActive(false);
+                        buttonHelpCombined.gameObject.SetActive(true);
                     }
                 }
             }
@@ -1744,11 +1763,15 @@ public class MetaGameUI : MonoBehaviour
                 MetaOption metaOption = GameManager.i.dataScript.GetMetaOption(metaData.metaName);
                 if (metaOption != null)
                 {
+                    //adjust renown display
+                    if (metaData.isRenownGain == false)
+                    {
+                        renownCurrent -= metaData.renownCost;
+                        renownCurrent = Mathf.Max(0, renownCurrent);
+                    }
+                    else { renownCurrent += metaData.renownCost; }
                     //add to dictOfSelected
                     AddToSelected(metaData);
-                    //adjust renown display
-                    renownCurrent -= metaData.renownCost;
-                    renownCurrent = Mathf.Max(0, renownCurrent);
                     UpdateRenown();
                     //set as selected
                     metaData.isSelected = true;
@@ -1761,7 +1784,9 @@ public class MetaGameUI : MonoBehaviour
                     //switch top texts
                     rightTextTop.text = metaData.textDeselect;
                     //popUp floating text -> test
-                    SetRenownPopUp(metaData.renownCost * -1);
+                    if (metaData.isRenownGain == false)
+                    { SetRenownPopUp(metaData.renownCost * -1); }
+                    else { SetRenownPopUp(metaData.renownCost); }
                 }
                 else { Debug.LogWarningFormat("Invalid metaOption (Null) for metaData.metaName \"{0}\"", metaData.metaName); }
             }
@@ -1800,10 +1825,16 @@ public class MetaGameUI : MonoBehaviour
             MetaOption metaOption = GameManager.i.dataScript.GetMetaOption(metaData.metaName);
             if (metaOption != null)
             {
+                //adjust renown display
+                if (metaData.isRenownGain == false)
+                { renownCurrent += metaData.renownCost; }
+                else
+                {
+                    renownCurrent -= metaData.renownCost;
+                    renownCurrent = Mathf.Max(0, renownCurrent);
+                }
                 //remove from dictOfSelected
                 RemoveFromSelected(metaData);
-                //adjust renown display
-                renownCurrent += metaData.renownCost;
                 UpdateRenown();
                 //set as deSelected
                 metaData.isSelected = false;
@@ -1813,8 +1844,10 @@ public class MetaGameUI : MonoBehaviour
                 //checkmark
                 arrayOfSideMetaCheckMark[highlightIndex].gameObject.SetActive(false);
                 arrayOfTopMetaCheckMark[highlightIndex].gameObject.SetActive(false);
-                //popUp floating text -> test
-                SetRenownPopUp(metaData.renownCost);
+                //popUp floating text
+                if (metaData.isRenownGain == false)
+                { SetRenownPopUp(metaData.renownCost); }
+                else { SetRenownPopUp(metaData.renownCost * -1); }
                 //switch top texts
                 rightTextTop.text = metaData.textSelect;
             }
@@ -1909,7 +1942,13 @@ public class MetaGameUI : MonoBehaviour
                 {
                     data.Value.isSelected = false;
                     //update renown
-                    renownCurrent += data.Value.renownCost;
+                    if (data.Value.isRenownGain == false)
+                    { renownCurrent += data.Value.renownCost; }
+                    else
+                    {
+                        renownCurrent -= data.Value.renownCost;
+                        renownCurrent = Mathf.Max(0, renownCurrent);
+                    }
                     Debug.LogFormat("[Met] MetaGameUI.cs -> ExecuteReset: metaData \"{0}\" Deselected (Reset button pressed){1}", data.Key, "\n");
                 }
                 else { Debug.LogWarningFormat("Invalid metaData (Null) for \"{0}\" in dictOfSelected", data.Key); }
@@ -1939,13 +1978,16 @@ public class MetaGameUI : MonoBehaviour
                     }
                     else if (buttonSelect.gameObject.activeSelf == false)
                     {
-                        if (renownCurrent >= data.renownCost)
+                        if (data.isRenownGain == false)
                         {
-                            //unaffordable option
-                            rightTextTop.text = data.textInsufficient;
-                            buttonHelpCentre.gameObject.SetActive(false);
-                            buttonHelpCombined.gameObject.SetActive(true);
-                            buttonSelect.gameObject.SetActive(true);
+                            if (renownCurrent >= data.renownCost)
+                            {
+                                //unaffordable option
+                                rightTextTop.text = data.textInsufficient;
+                                buttonHelpCentre.gameObject.SetActive(false);
+                                buttonHelpCombined.gameObject.SetActive(true);
+                                buttonSelect.gameObject.SetActive(true);
+                            }
                         }
                     }
                 }
@@ -1993,22 +2035,26 @@ public class MetaGameUI : MonoBehaviour
                     MetaData metaData = listOfRecommended[i];
                     if (metaData != null)
                     {
-                        cost = metaData.renownCost;
-                        //check affordability
-                        if (renownCurrent >= cost)
+                        //should be no
+                        if (metaData.isRenownGain == false)
                         {
-                            //Select item
-                            metaData.isSelected = true;
-                            renownCurrent -= cost;
-                            totalCost += cost;
-                            numSelected++;
-                            AddToSelected(metaData);
+                            cost = metaData.renownCost;
+                            //check affordability
+                            if (renownCurrent >= cost)
+                            {
+                                //Select item
+                                metaData.isSelected = true;
+                                renownCurrent -= cost;
+                                totalCost += cost;
+                                numSelected++;
+                                AddToSelected(metaData);
+                            }
+                            //run out of available renown -> exit
+                            if (renownCurrent < renownRecommendMin)
+                            { break; }
+                            if (numSelected >= numOfChoicesMax)
+                            { break; }
                         }
-                        //run out of available renown -> exit
-                        if (renownCurrent < renownRecommendMin)
-                        { break; }
-                        if (numSelected >= numOfChoicesMax)
-                        { break; }
                     }
                     else { Debug.LogWarningFormat("Invalid metaData (Null) for listOfRecommended[{0}]", i); }
                 }
@@ -2272,7 +2318,10 @@ public class MetaGameUI : MonoBehaviour
         {
             dictOfSelected.Add(metaData.metaName, metaData);
             numOfChoicesCurrent++;
-            Debug.LogFormat("[Met] MetaGameUI.cs -> AddToSelected: metaOption \"{0}\" Selected at a cost of {1} Renown ({2} remaining){3}", metaData.metaName, metaData.renownCost, renownCurrent, "\n");
+            if (metaData.isRenownGain == false)
+            { Debug.LogFormat("[Met] MetaGameUI.cs -> AddToSelected: metaOption \"{0}\" Selected at a cost of {1} Renown ({2} remaining){3}", metaData.metaName, metaData.renownCost, renownCurrent, "\n"); }
+            else
+            { Debug.LogFormat("[Met] MetaGameUI.cs -> AddToSelected: metaOption \"{0}\" Selected for a gain of {1} Renown ({2} remaining){3}", metaData.metaName, metaData.renownCost, renownCurrent, "\n"); }
         }
         catch (ArgumentNullException)
         { Debug.LogError("Invalid metaData (Null)"); }
@@ -2290,7 +2339,10 @@ public class MetaGameUI : MonoBehaviour
         {
             dictOfSelected.Remove(metaData.metaName);
             numOfChoicesCurrent--;
-            Debug.LogFormat("[Met] MetaGameUI.cs -> RemoveFromSelected: metaOption \"{0}\" Deselected for +{1} Renown (now {2}){3}", metaData.metaName, metaData.renownCost, renownCurrent, "\n");
+            if (metaData.isRenownGain == false)
+            { Debug.LogFormat("[Met] MetaGameUI.cs -> RemoveFromSelected: metaOption \"{0}\" Deselected for +{1} Renown (now {2}){3}", metaData.metaName, metaData.renownCost, renownCurrent, "\n"); }
+            else
+            { Debug.LogFormat("[Met] MetaGameUI.cs -> RemoveFromSelected: metaOption \"{0}\" Deselected for -{1} Renown (now {2}){3}", metaData.metaName, metaData.renownCost, renownCurrent, "\n"); }
         }
         else { Debug.LogWarningFormat("metaData \"{0}\" not found in dictOfSelected (Not removed)", metaData.metaName); }
     }
@@ -2317,7 +2369,7 @@ public class MetaGameUI : MonoBehaviour
                     {
                         if (data.Value != null)
                         {
-                            builder.AppendFormat(" {0}, cost {1} R, dataN {2}, dataT {3}{4}", data.Key, data.Value.renownCost,
+                            builder.AppendFormat(" {0}, Renown {1}{2}, dataN {3}, dataT {4}{5}", data.Key, data.Value.isRenownGain ? "+" : "-", data.Value.renownCost,
                                 string.IsNullOrEmpty(data.Key) ? "n.a" : data.Value.dataName, string.IsNullOrEmpty(data.Value.dataTag) ? "n.a" : data.Value.dataTag, "\n");
                         }
                         else { Debug.LogWarningFormat("Invalid metaData in dictOfSelected[{0}]", data.Key); }

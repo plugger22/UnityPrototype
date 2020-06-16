@@ -17,7 +17,7 @@ public class MetaOption : ScriptableObject
     public string header;
     [Tooltip("Right hand side item details. Multi-line O.K")]
     [TextArea] public string descriptor;
-    [Tooltip("Base cost level of option in renown prior to any adjustments")]
+    [Tooltip("Base cost level of option in renown prior to any adjustments. NOTE: If 'isRenownGain' true then renown cost is the amount of renown GAINED")]
     public GlobalChance renownCost;   
     [Tooltip("HQ actor who handles this option")]
     public HqPosition hqPosition;
@@ -35,8 +35,11 @@ public class MetaOption : ScriptableObject
     public bool isPlayerStatus;
     [Tooltip("If true, option is always displayed, regardless of valid criteria, or not. NOTE: If false there must be Criteria unless it's a Special case")]
     public bool isAlways;
+    [Tooltip("If true then there is NO renown cost and instead a renown GAIN equal to whatever is set in Renown Cost")]
+    public bool isRenownGain;
     [Tooltip("Must be present if isAlways is TRUE and CRITERIA present (ignore otherwise) as a self contained explanation as to why option can't be selected if isActive False due to failed criteria")]
     [TextArea] public string textInactive;
+    
 
     [Header("Criteria")]
     [Tooltip("Any criteria needed for option to be valid. Can be ignored")]
