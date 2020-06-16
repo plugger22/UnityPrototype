@@ -112,3 +112,21 @@ City seed 765 -> New York, America
 Dev seed 8091 -> Tuesday, 16 June 2020 4:15 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 46430 -> Tuesday, 16 June 2020 4:32 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 61161 -> Tuesday, 16 June 2020 4:33 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46949 -> Tuesday, 16 June 2020 4:34 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 2428 -> Tuesday, 16 June 2020 4:36 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 27894 -> Tuesday, 16 June 2020 5:23 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 1046 -> Tuesday, 16 June 2020 5:24 PM
+City seed 5678 -> London, United Kingdom

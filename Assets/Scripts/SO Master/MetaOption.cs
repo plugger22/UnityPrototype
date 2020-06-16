@@ -35,7 +35,7 @@ public class MetaOption : ScriptableObject
     public bool isPlayerStatus;
     [Tooltip("If true, option is always displayed, regardless of valid criteria, or not. NOTE: If false there must be Criteria unless it's a Special case")]
     public bool isAlways;
-    [Tooltip("If true then there is NO renown cost and instead a renown GAIN equal to whatever is set in Renown Cost")]
+    [Tooltip("If true then there is NO renown cost and instead a renown GAIN equal to whatever is set in Renown Cost/ NOTE: if True, can't be 'isRecommended'")]
     public bool isRenownGain;
     [Tooltip("Must be present if isAlways is TRUE and CRITERIA present (ignore otherwise) as a self contained explanation as to why option can't be selected if isActive False due to failed criteria")]
     [TextArea] public string textInactive;

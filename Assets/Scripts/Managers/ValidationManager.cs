@@ -458,7 +458,7 @@ public class ValidationManager : MonoBehaviour
     #endregion
 
     //
-    // - - - Validation checks (Session start)
+    // - - - Validation checks (Session start, Static data)
     //
 
     #region ValidateTargets
@@ -1730,9 +1730,13 @@ public class ValidationManager : MonoBehaviour
                         if (meta.Value.isAlways == true)
                         {
                             if (string.IsNullOrEmpty(meta.Value.textInactive) == true)
-                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: Invalid textInactive (must be present if isAlways true and Criteria presnt) for metaOption \"{0}\"{1}", meta.Value.name, "\n"); }
+                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: Invalid textInactive (must be present if isAlways true and Criteria presnt) for " +
+                                "metaOption \"{0}\"{1}", meta.Value.name, "\n"); }
                         }
                     }
+                    //check isRenownGain isn't a Recommended option
+                    if (meta.Value.isRenownGain == true && meta.Value.isRecommended == true)
+                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: isRenownGain TRUE and isRecommended TRUE (not allowed) for metaOption \"{0}\"{1}", meta.Value.name, "\n"); }
                 }
                 else { Debug.LogWarningFormat("Invalid metaOption (Null) in dictOfMetaOptions for \"{0}\"", meta.Key); }
             } 
