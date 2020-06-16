@@ -41,9 +41,20 @@ public class TransitionUI : MonoBehaviour
     public GenericTooltipUI tooltipContinue;
     public GenericTooltipUI tooltipBack;
 
+    //button texts
+    public TextMeshProUGUI buttonSpecialText;
+
     //button help
     public GenericHelpTooltipUI helpMain;
-    
+
+    //Lists of Help
+    List<HelpData> listOfEndLevelHelp = new List<HelpData>();
+    List<HelpData> listOfHqHelp = new List<HelpData>();
+    List<HelpData> listOfPlayerStatusHelp = new List<HelpData>();
+    List<HelpData> listOfBriefingOneHelp = new List<HelpData>();
+    List<HelpData> listOfBriefingTwoHelp = new List<HelpData>();
+
+
 
     //data package required to populate UI
     private TransitionInfoData transitionInfoData = new TransitionInfoData();
@@ -130,6 +141,7 @@ public class TransitionUI : MonoBehaviour
     public Image playerImage;
     public Image playerTextBackground;
     public TextMeshProUGUI playerText;
+    public TextMeshProUGUI playerImageText;
 
     #endregion
 
@@ -337,6 +349,7 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(playerText != null, "Invalid playerText (Null)");
         //background color (transitionHqBackground / 100% alpha
         playerTextBackground.color = color;
+        playerImageText.text = GameManager.i.playerScript.PlayerName;
         #endregion
 
         #region Briefing One
@@ -436,9 +449,7 @@ public class TransitionUI : MonoBehaviour
 
         //special colours
         Color color = GameManager.i.guiScript.colourTransitionHeader;
-        if (color != null)
-        { colourHeader = string.Format("<color=#{0}>", ColorUtility.ToHtmlStringRGB(color)); }
-        else { Debug.LogWarning("Invalid colorTransitionHeader (Null)"); }
+        colourHeader = string.Format("<color=#{0}>", ColorUtility.ToHtmlStringRGB(color));
     }
 
     /// <summary>
@@ -604,7 +615,7 @@ public class TransitionUI : MonoBehaviour
     /// </summary>
     private void InitialiseTooltips()
     {
-        int x_offset = 50;
+        int x_offset = -50;
         int y_offset = 50;
         //Special Button
         tooltipSpecial.x_offset = x_offset;
@@ -626,14 +637,11 @@ public class TransitionUI : MonoBehaviour
     /// </summary>
     private void InitialiseHelp()
     {
-        int x_offset = 100;
-        int y_offset = 100;
-        List<HelpData> listOfHelp;
-        //main help button
-        listOfHelp = GameManager.i.helpScript.GetHelpData("test0");
-        if (listOfHelp != null)
-        { helpMain.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
-        else { Debug.LogWarning("Invalid listOfHelp for helpMain (Null)"); }
+        listOfEndLevelHelp = GameManager.i.helpScript.GetHelpData("test0");
+        listOfHqHelp = GameManager.i.helpScript.GetHelpData("transitionHq_3", "transitionHq_4", "transitionHq_5", "transitionHq_6");
+        listOfPlayerStatusHelp = GameManager.i.helpScript.GetHelpData("transitionPlayer_0", "transitionPlayer_1");
+        listOfBriefingOneHelp = GameManager.i.helpScript.GetHelpData("test0");
+        listOfBriefingTwoHelp = GameManager.i.helpScript.GetHelpData("test0");
     }
 
     /// <summary>
@@ -714,6 +722,7 @@ public class TransitionUI : MonoBehaviour
                 break;
             case ModalTransitionSubState.HQ:
                 buttonInteractionSpecial.SetButton(EventType.TransitionHqEvents);
+                buttonSpecialText.text = "HQ Events";
                 buttonSpecial.gameObject.SetActive(true);
                 buttonBack.gameObject.SetActive(true);
                 buttonContinue.gameObject.SetActive(true);
@@ -761,6 +770,42 @@ public class TransitionUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sets Help button texts (down at main button bar)
+    /// </summary>
+    /// <param name="state"></param>
+    private void SetHelp(ModalTransitionSubState state)
+    {
+        int x_offset = 125;
+        int y_offset = 125;
+        List<HelpData> listOfHelp = null;
+        switch (state)
+        {
+            case ModalTransitionSubState.EndLevel:
+                listOfHelp = listOfEndLevelHelp;
+                break;
+            case ModalTransitionSubState.HQ:
+                listOfHelp = listOfHqHelp;
+                break;
+            case ModalTransitionSubState.PlayerStatus:
+                listOfHelp = listOfPlayerStatusHelp;
+                break;
+            case ModalTransitionSubState.BriefingOne:
+                listOfHelp = listOfBriefingOneHelp;
+                break;
+            case ModalTransitionSubState.BriefingTwo:
+                listOfHelp = listOfBriefingTwoHelp;
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised ModalTransitionState \"{0}\"", GameManager.i.inputScript.ModalTransitionState);
+                listOfHelp = GameManager.i.helpScript.GetHelpData("test0");
+                break;
+        }
+        //main help button -> default
+        if (listOfHelp != null)
+        { helpMain.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
+        else { Debug.LogWarning("Invalid listOfHelp for helpMain (Null)"); }
+    }
 
 
 
@@ -783,15 +828,23 @@ public class TransitionUI : MonoBehaviour
 
             //Main UI elements
             buttonHelpMain.gameObject.SetActive(true);
-            SetButtons(startState);
-            SetCanvas(startState);
-            SetHeader(startState);
-
+            SetStates(startState);
             Debug.LogFormat("[UI] TransitionUI.cs -> TransitionUI{0}", "\n");
         }
         else { Debug.LogWarning("Invalid TranistionInfoData (Null)"); }
     }
 
+    /// <summary>
+    /// Sets different states at start up and during page changes
+    /// </summary>
+    /// <param name="state"></param>
+    private void SetStates(ModalTransitionSubState state)
+    {
+        SetButtons(state);
+        SetCanvas(state);
+        SetHeader(state);
+        SetHelp(state);
+    }
 
     /// <summary>
     /// Close TransitionUI
@@ -851,9 +904,7 @@ public class TransitionUI : MonoBehaviour
         {
             GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Transition, transitionState = newState });
             //Adjust UI
-            SetButtons(newState);
-            SetHeader(newState);
-            SetCanvas(newState);
+            SetStates(newState);
         }
     }
 
@@ -905,9 +956,7 @@ public class TransitionUI : MonoBehaviour
         {
             GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Transition, transitionState = newState });
             //Adjust UI
-            SetButtons(newState);
-            SetHeader(newState);
-            SetCanvas(newState);
+            SetStates(newState);
         }
     }
 

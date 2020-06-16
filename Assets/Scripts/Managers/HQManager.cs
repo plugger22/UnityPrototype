@@ -1279,8 +1279,14 @@ public class HQManager : MonoBehaviour
                             }
                             //assign new position
                             newActor.statusHQ = (ActorHQ)index;
-                            newActor.AddHistory(new HistoryActor() { text = string.Format("Promoted to {0}{1}{2} position at HQ (previously {3}{4}{5})", 
-                                colourAlert, GetHqTitle(newActor.statusHQ), colourEnd, colourAlert, GetHqTitle(previousStatus), colourEnd) });
+                            if (newActor.Renown > 15 && newActor.statusHQ == ActorHQ.Worker)
+                            {
+                                //had a higher position previously (can't say what it was 'cause when they were bumped they were sent back to the Worker pool)
+                                newActor.AddHistory(new HistoryActor() { text = string.Format("Reasssigned to {0}{1}{2} position at HQ", colourAlert, GetHqTitle(newActor.statusHQ), colourEnd)});
+                            }
+                            else { newActor.AddHistory(new HistoryActor() { text = string.Format("Promoted to {0}{1}{2} position at HQ (previously {3}{4}{5})", 
+                                colourAlert, GetHqTitle(newActor.statusHQ), colourEnd, colourAlert, GetHqTitle(previousStatus), colourEnd) }); }
+
                         }
                         else { Debug.LogErrorFormat("No actor found suitable for vacant slot {0}", (ActorHQ)index); }
                     }

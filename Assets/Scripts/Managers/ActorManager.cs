@@ -8843,7 +8843,7 @@ public class ActorManager : MonoBehaviour
         else
         {
             //actor has an HQ relevant trait
-            builderMain.AppendFormat("Motivation<pos=57%>{0}{1}", GameManager.i.guiScript.GetNormalStars(actor.GetDatapoint(ActorDatapoint.Motivation1)), "\n");
+            builderMain.AppendFormat("Motivation<pos=57%>{0}{1}", GameManager.i.guiScript.GetNormalStars(motivation), "\n");
             builderMain.AppendFormat("Compatibility<pos=57%>{0}", GameManager.i.guiScript.GetCompatibilityStars(actor.GetPersonality().GetCompatibilityWithPlayer()));
         }
 
@@ -9762,9 +9762,7 @@ public class ActorManager : MonoBehaviour
         //special colour to match page header
         string colourHeader = colourNeutral;
         Color color = GameManager.i.guiScript.colourTransitionHeader;
-        if (color != null)
-        { colourHeader = string.Format("<color=#{0}>", ColorUtility.ToHtmlStringRGB(color)); }
-        else { Debug.LogWarning("Invalid colorTransitionHeader (Null)"); }
+        colourHeader = string.Format("<color=#{0}>", ColorUtility.ToHtmlStringRGB(color));
         //
         // - - - Resistance Player
         //
@@ -9772,7 +9770,7 @@ public class ActorManager : MonoBehaviour
         {
             //Innocence
             builder.AppendFormat("{0}{1}Innocence</size>{2}{3}", colourHeader, size, colourEnd, "\n");
-            builder.AppendFormat("{0} Authority views you as a {1}{2}", GameManager.i.guiScript.GetNormalStars(3), GameManager.i.playerScript.GetInnocenceDescriptor(), "\n");
+            builder.AppendFormat("{0} Authority views you as a {1}{2}", GameManager.i.guiScript.GetNormalStars(3), GameManager.i.playerScript.GetInnocenceDescriptor(ColourType.salmonText), "\n");
             //Conditions
             builder.AppendFormat("{0}{1}{2}Conditions</size>{3}{4}", "\n", colourHeader, size, colourEnd, "\n");
             List<Condition> listOfConditions = GameManager.i.playerScript.GetListOfConditions(GameManager.i.sideScript.PlayerSide);

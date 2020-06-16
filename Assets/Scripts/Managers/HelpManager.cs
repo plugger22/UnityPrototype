@@ -183,7 +183,7 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("No help has been provided here. You need to go into {0}HelpManager.cs{1} and create a series of topics for the this item", colourAlert, colourEnd);
         listOfHelp.Add(data);
 
-        
+
 
         #region ...GUI
 
@@ -240,22 +240,69 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "transitionHq_0";
         data.header = "HQ Events";
-        data.text = string.Format("{0}Background events{1} occur that change people's {2}renown{3} which, in turn, {4}determines{5}, who has what {6}position{7} in the hierarchy (highest to lowest)", 
+        data.text = string.Format("Things happen and change people's {0}renown{1} which, in turn, {2}determines{3}, who has what {4}position{5} in the hierarchy ({6}highest to lowest{7})",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Type of Event
         data = new HelpData();
         data.tag = "transitionHq_1";
         data.header = "Traits";
-        data.text = string.Format("The {0}probability{1} and {2}type{3} of event that a person may experience is determined by their {4}Trait{5}",
-            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("A person's {0}Trait{1} strongly {2}influences{3} what happens to them while at HQ", colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Tip
         data = new HelpData();
         data.tag = "transitionHq_2";
         data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
-        data.text = string.Format("The {0} person HQ Hierarchy has a {1}significant influence{2} on the amount of {3}assistance{4} you will receive. Aim to have people with a {5}favourable opinion{6}" +
-            " of you take these positions where ever possible", GameManager.i.hqScript.numOfActorsHQ, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("These happen in the background and are {0}outside of your control{1} however you can {2}influence{3} who gains or loses renown through {4}HQ events{5}" +
+            " which can shake up the hierarchy", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Hq main overview
+        data = new HelpData();
+        data.tag = "transitionHq_3";
+        data.header = "Overview";
+        data.text = string.Format("Your HQ consists of a {0}{1}{2} person {3}hierarchy{4} (the {5}important{6} people that you interact with) and a group of workers who {7}aspire{8} to be promoted",
+            colourAlert, GameManager.i.hqScript.numOfActorsHQ, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //promotion
+        data = new HelpData();
+        data.tag = "transitionHq_4";
+        data.header = "Promotion";
+        data.text = string.Format("Promotion is based around {0}renown{1}. The person with the most renown gets the job. The {2}hierarchy{3} are those with the highest renown, in " +
+            "{4}descending order of importance{5}", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //workers
+        data = new HelpData();
+        data.tag = "transitionHq_5";
+        data.header = "Workers";
+        data.text = string.Format("At the {0}end{1} of every level, there is a chance that some of your {2}subordinates{3} (current, or previous) may get {4}moved{5} to HQ as a Worker. " +
+            "From here they can, with the right circumstances, climb there way up the ladder to a hierarchy position of power", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //game tip
+        data = new HelpData();
+        data.tag = "transitionHq_6";
+        data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
+        data.text = string.Format("The HQ heirarchy are the people who {0}may help you{1}. Opinions matter. Aim to {2}Promote{3} subordinates ({4}MANAGE{5} action)" +
+            " who have a favourable view of you ({6}Compatibility{7})", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
+        #region Player Status
+        //
+        // - - - Player Status
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "transitionPlayer_0";
+        data.header = "Overvew";
+        data.text = string.Format("Shows all the things that {0}currently affect you{1} and which will {2}carry over{3} (unless dealt with) to the {4}next City{5}",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Deal with
+        data = new HelpData();
+        data.tag = "transitionPlayer_1";
+        data.header = "How do Get Rid of Them?";
+        data.text = string.Format("You will be given the {0}opportunity{1} by various HQ Hierarchy members to take care of your problems (it'll {2}cost you{3} Renown) {4}before{5} your next mission",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 
@@ -269,7 +316,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "metaGameUI_0";
         data.header = "HQ Assistance";
-        data.text = string.Format("Your HQ is standing by to offer assistance {0}prior to your next assignment{1}. Each member of your HQ has a {2}unique range of services{3} that you can access. ", 
+        data.text = string.Format("Your HQ is standing by to offer assistance {0}prior to your next assignment{1}. Each member of your HQ has a {2}unique range of services{3} that you can access. ",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //controls
@@ -316,7 +363,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "metaGameUI_6";
         data.header = "Confirm Button";
-        data.text = string.Format("{0}Selected{1} Options will be {2}locked in{3} and any {4}remaining renown{5} will carry over to your {6}next assignment{7}", 
+        data.text = string.Format("{0}Selected{1} Options will be {2}locked in{3} and any {4}remaining renown{5} will carry over to your {6}next assignment{7}",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Confirm button tip
@@ -348,7 +395,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "metaGameUI_11";
         data.header = "Organisation";
-        data.text = string.Format("Any Organisations that you have {0}been in contact{1} with are shown and, if their option is {2}NOT{3} selected, contact with them will be {4}lost{5}", 
+        data.text = string.Format("Any Organisations that you have {0}been in contact{1} with are shown and, if their option is {2}NOT{3} selected, contact with them will be {4}lost{5}",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Status tab -> can I select here?
@@ -391,7 +438,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "review_0";
         data.header = "Overview";
-        data.text = string.Format("At regular intervals your {0}performance will be assessed{1} by your peers. You may, as a result, gain a {2}Commendation{3} or a {4}Black Mark{5}", 
+        data.text = string.Format("At regular intervals your {0}performance will be assessed{1} by your peers. You may, as a result, gain a {2}Commendation{3} or a {4}Black Mark{5}",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Votes
@@ -405,21 +452,21 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "review_2";
         data.header = "Head of HQ";
-        data.text = string.Format("Your Head of HQ votes once for his {0}personal opinion{1} of you (Motivation) and once for his view of the {2}decisions you have taken{3}", 
+        data.text = string.Format("Your Head of HQ votes once for his {0}personal opinion{1} of you (Motivation) and once for his view of the {2}decisions you have taken{3}",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Close
         data = new HelpData();
         data.tag = "review_3";
         data.header = "Outcome";
-        data.text = string.Format("If there is a {0}majority of votes{1} FOR (Green Tick) or AGAINST (Red Cross) and there is enough to meet the {2}minimum requirement{3} ({4} votes) you gain a Commendation or a Black Star", 
+        data.text = string.Format("If there is a {0}majority of votes{1} FOR (Green Tick) or AGAINST (Red Cross) and there is enough to meet the {2}minimum requirement{3} ({4} votes) you gain a Commendation or a Black Star",
             colourAlert, colourEnd, colourAlert, colourEnd, GameManager.i.campaignScript.reviewMinVotes);
         listOfHelp.Add(data);
         //Commendations
         data = new HelpData();
         data.tag = "review_4";
         data.header = "Commendations";
-        data.text = string.Format("You have done good things and your efforts have been {0}rewarded{1}. Gain {2} Commendations and you will {3}Win the Campaign{4}", 
+        data.text = string.Format("You have done good things and your efforts have been {0}rewarded{1}. Gain {2} Commendations and you will {3}Win the Campaign{4}",
             colourAlert, colourEnd, GameManager.i.campaignScript.awardsWinLose, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Black Marks
@@ -441,7 +488,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "reserveInv_0";
         data.header = "Overview";
-        data.text = string.Format("Subordinates are willing to sit in the Reserves for a while, {0}but not forever{1}. At some point they'll become {2}Unhappy{3} and will eventually take decisive action", 
+        data.text = string.Format("Subordinates are willing to sit in the Reserves for a while, {0}but not forever{1}. At some point they'll become {2}Unhappy{3} and will eventually take decisive action",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Options
@@ -575,7 +622,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "topicUI_3";
         data.header = "HQ Boss (if present)";
         builder = new StringBuilder();
-        builder.AppendFormat("Your Boss has an opinion ({0}tooltip, image, top right{1}) on each option. It is your decision what to do but your {2}Boss remembers{3} your choices. ", 
+        builder.AppendFormat("Your Boss has an opinion ({0}tooltip, image, top right{1}) on each option. It is your decision what to do but your {2}Boss remembers{3} your choices. ",
             colourAlert, colourEnd, colourAlert, colourEnd);
         builder.AppendFormat("{0}Ignoring{1} a decision will always earn your Boss's {2}disapproval{3}", colourAlert, colourEnd, colourAlert, colourEnd);
         data.text = builder.ToString();
@@ -760,21 +807,21 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "topicSub_22";
         data.header = "Reputation";
-        data.text = string.Format("You have a Reputation ({0}0 to 3 stars{1}, higher the better) with an Organisation which represents their {2}willingness to help{3} you", 
+        data.text = string.Format("You have a Reputation ({0}0 to 3 stars{1}, higher the better) with an Organisation which represents their {2}willingness to help{3} you",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Organisations -> Freedom
         data = new HelpData();
         data.tag = "topicSub_23";
         data.header = "Freedom";
-        data.text = string.Format("Once you use an Organisation's services, you start incurring a debt with them. Freedom ({0}0 to 3 stars{1}, higher the better) indicates have much {2}obligation (debt){3} you have", 
+        data.text = string.Format("Once you use an Organisation's services, you start incurring a debt with them. Freedom ({0}0 to 3 stars{1}, higher the better) indicates have much {2}obligation (debt){3} you have",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
 
         #endregion
 
         #endregion
-    
+
         #region ...Actors
 
         #region Actor Compatibility
@@ -1026,7 +1073,7 @@ public class HelpManager : MonoBehaviour
         data.header = "Diminishing Returns";
         int immuneMin = GameManager.i.actorScript.playerAddictedImmuneMin;
         data.text = string.Format("Every time you take a dose of {0}{1}{2} your period of immunity {3}decreases by one day{4} down to a minimum of {5}{6}{7} day{8}", colourAlert,
-            GameManager.i.globalScript.tagGlobalDrug, colourEnd, colourAlert, colourEnd, colourAlert, immuneMin, colourEnd, immuneMin != 1 ? "s" : "");           
+            GameManager.i.globalScript.tagGlobalDrug, colourEnd, colourAlert, colourEnd, colourAlert, immuneMin, colourEnd, immuneMin != 1 ? "s" : "");
         listOfHelp.Add(data);
         #endregion
 
@@ -1039,7 +1086,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "stressLeave_0";
         data.header = "Stress Leave";
         data.text = string.Format("Is only available when your, or your subordinate, (Resistance only) has {0}Invisibility{1} at Max ({2} stars), and are {3}STRESSED{4}. You also need permission from HQ ({5}{6}{7})",
-            colourAlert, colourEnd, GameManager.i.actorScript.maxStatValue, colourAlert, colourEnd, colourAlert, 
+            colourAlert, colourEnd, GameManager.i.actorScript.maxStatValue, colourAlert, colourEnd, colourAlert,
             GameManager.i.actorScript.stressLeaveHQApproval == true ? "Given" : "Denied", colourEnd);
         listOfHelp.Add(data);
         //Breakdowns
@@ -1048,7 +1095,7 @@ public class HelpManager : MonoBehaviour
         data.header = "Taking Stress Leave";
         data.text = string.Format("It's {0}quicker{1} (one turn) than Lying Low but costs {2}{3}{4} Renown. You are {5}Safe{6} while taking Stress Leave",
             colourAlert, colourEnd, colourAlert,
-            GameManager.i.sideScript.PlayerSide.level == 1 ? GameManager.i.actorScript.stressLeaveRenownCostAuthority : GameManager.i.actorScript.stressLeaveRenownCostResistance, 
+            GameManager.i.sideScript.PlayerSide.level == 1 ? GameManager.i.actorScript.stressLeaveRenownCostAuthority : GameManager.i.actorScript.stressLeaveRenownCostResistance,
             colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Chance of Breakdowns
@@ -1100,7 +1147,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "orgInfo_2";
         data.header = "Other Sighting Reports";
-        data.text = string.Format("Any {0}Contact or Tracer{1} sighting reports of the same target type are {2}suppressed{3} (they're redundant) while you are receiving a {4}Direct Feed{5} from the Organisation", 
+        data.text = string.Format("Any {0}Contact or Tracer{1} sighting reports of the same target type are {2}suppressed{3} (they're redundant) while you are receiving a {4}Direct Feed{5} from the Organisation",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Limitations
@@ -1119,7 +1166,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "org_0";
         data.header = "Underground Organisations";
-        data.text = string.Format("Underground Organisations can, once contact has been made, provide {0}special services{1}. Note that these are {2}illegal{3} and {4}frowned up by HQ{5}", 
+        data.text = string.Format("Underground Organisations can, once contact has been made, provide {0}special services{1}. Note that these are {2}illegal{3} and {4}frowned up by HQ{5}",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Duration
@@ -1150,20 +1197,20 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "hq_over_0";
         data.header = "Overview";
-        data.text = string.Format("You report to your HQ. They provide you with support and services. If you {0}displease{1} your HQ you may get {2}FIRED{3}",  colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("You report to your HQ. They provide you with support and services. If you {0}displease{1} your HQ you may get {2}FIRED{3}", colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Opinion
         data = new HelpData();
         data.tag = "hq_over_1";
         data.header = "HQ's Opinion of You";
-        data.text = string.Format("The level of {0}HQ Approval{1} (top centre) reflects your standing with your HQ as a whole. Each HQ member has a personal opinion of you according to their {2}Motivation{3}", 
+        data.text = string.Format("The level of {0}HQ Approval{1} (top centre) reflects your standing with your HQ as a whole. Each HQ member has a personal opinion of you according to their {2}Motivation{3}",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Hierarchy
         data = new HelpData();
         data.tag = "hq_over_2";
         data.header = "HQ Hierarcy";
-        data.text = string.Format("HQ has a {0}four member{1} hierarchy with the {2}seniority{3} running from {4}LEFT{5} (most senior) to {6}RIGHT{7} (least senior)", 
+        data.text = string.Format("HQ has a {0}four member{1} hierarchy with the {2}seniority{3} running from {4}LEFT{5} (most senior) to {6}RIGHT{7} (least senior)",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Boss
@@ -1594,7 +1641,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "secret_4";
         data.header = "Secret Revealed";
-        data.text = string.Format("Every time one of your secrets is revealed there is a {0}{1} %{2} chance that your HQ will launch an {3}Investigation{4} into your conduct", 
+        data.text = string.Format("Every time one of your secrets is revealed there is a {0}{1} %{2} chance that your HQ will launch an {3}Investigation{4} into your conduct",
             colourAlert, GameManager.i.playerScript.chanceInvestigation, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
@@ -1865,7 +1912,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "invest_1";
         data.header = "Process";
-        data.text = string.Format("Investigations continue until their is sufficient evidence to Incriminate you ({0}< 0 stars, found Guilty{1}) or be Exonerated ({2}> 3 stars, found Innocent{3})", 
+        data.text = string.Format("Investigations continue until their is sufficient evidence to Incriminate you ({0}< 0 stars, found Guilty{1}) or be Exonerated ({2}> 3 stars, found Innocent{3})",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Evidence
@@ -1887,7 +1934,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "invest_4";
         data.header = "Lead Investigator";
         data.text = new StringBuilder()
-        .AppendFormat("There is a {0}{1} %{2} chance of them finding new evidence {3}each turn{4}. The type of evidence depends on the Motivation of the Lead{5}", 
+        .AppendFormat("There is a {0}{1} %{2} chance of them finding new evidence {3}each turn{4}. The type of evidence depends on the Motivation of the Lead{5}",
             colourAlert, GameManager.i.playerScript.chanceEvidence, colourEnd, colourAlert, colourEnd, "\n")
         .AppendFormat("  {0} Motivation 3, {1}Good 80%{2}, Bad 20%{3}", bullet, colourAlert, colourEnd, "\n")
         .AppendFormat("  {0} Motivation 2, {1}Good 60%{2}, Bad 40%{3}", bullet, colourAlert, colourEnd, "\n")
@@ -1899,7 +1946,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "invest_5";
         data.header = "Evidence";
-        data.text = string.Format("Evidence is assessed at between {0}0{1} (Bad, {2}Guilty{3}) and {4}3{5} (Good, {6}Innocent{7}) stars", 
+        data.text = string.Format("Evidence is assessed at between {0}0{1} (Bad, {2}Guilty{3}) and {4}3{5} (Good, {6}Innocent{7}) stars",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Verdict
@@ -1926,7 +1973,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "invest_9";
         data.header = "Innocent";
-        data.text = string.Format("If the investigation reaches a resolution with an {0}Innocent verdict{1} you will be exonerated and gain {2}+{3} HQ Approval{4}", colourAlert, colourEnd, 
+        data.text = string.Format("If the investigation reaches a resolution with an {0}Innocent verdict{1} you will be exonerated and gain {2}+{3} HQ Approval{4}", colourAlert, colourEnd,
             colourTip, GameManager.i.playerScript.investHQApproval, colourEnd);
         listOfHelp.Add(data);
         //Tip

@@ -21,9 +21,6 @@ public class ModalConfirm : MonoBehaviour
 
     public static ModalConfirm modalConfirm;
 
-    private TextMeshProUGUI falseText;                      //false button text (default 'No')
-    private TextMeshProUGUI trueText;                       //true button text (default 'Yes')
-
     private int modalLevel;                                 //modal level of menu, passed in by ModalConfirmDetails in SetModalConfirm
     private ModalSubState modalState;                       //modal state to return to once confirm window closed (handles modalLevel 2+ cases, ignored for rest)
 
@@ -63,11 +60,6 @@ public class ModalConfirm : MonoBehaviour
         { interactRight.SetButton(EventType.ConfirmCloseRight); }
         //details empty
         confirmDetails = null;
-        //buttons -> text components
-        falseText = buttonFalseText.GetComponent<TextMeshProUGUI>();
-        trueText = buttonTrueText.GetComponent<TextMeshProUGUI>();
-        Debug.Assert(falseText != null, "Invalid falseText (Null)");
-        Debug.Assert(trueText != null, "Invalid trueText (Null)");
         //register a listener
         EventManager.i.AddListener(EventType.ConfirmCloseLeft, OnEvent, "ModalConfirm");
         EventManager.i.AddListener(EventType.ConfirmCloseRight, OnEvent, "ModalConfirm");
@@ -116,8 +108,8 @@ public class ModalConfirm : MonoBehaviour
 
             topText.text = details.topText;
             bottomText.text = details.bottomText;
-            falseText.text = details.buttonFalse;
-            trueText.text = details.buttonTrue;
+            buttonFalseText.text = details.buttonFalse;
+            buttonTrueText.text = details.buttonTrue;
 
             //set modal true
             GameManager.i.guiScript.SetIsBlocked(true, details.modalLevel);
