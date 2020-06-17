@@ -81,6 +81,11 @@ public class TransitionUI : MonoBehaviour
     //special colours
     string colourHeader;
 
+    //predefined colours (NOTE: spelt 'color')
+    Color colorHeader;
+    Color colorBackground;
+    Color colorText;
+
     //static reference
     private static TransitionUI transitionUI;
 
@@ -270,8 +275,7 @@ public class TransitionUI : MonoBehaviour
         buttonInteractionContinue.SetButton(EventType.TransitionContinue);
         buttonInteractionExit.SetButton(EventType.TransitionClose);
         //colours
-        Color color = GameManager.i.guiScript.colourTransitionHeader;
-        transitionHeader.color = color;
+        transitionHeader.color = colorHeader;
         //Set starting Initialisation states
         SetColours();
         InitialiseTooltips();
@@ -298,22 +302,21 @@ public class TransitionUI : MonoBehaviour
         }
         else { Debug.LogErrorFormat("Invalid arrayOfEndLevelOptions.Length \"[0}\"", arrayOfEndLevelOptions.Length); }
         //set up options
-        color = GameManager.i.guiScript.colourTransitionBackground;
         for (int i = 0; i < arrayOfEndLevelOptions.Length; i++)
         {
             EndLevelInteraction option = arrayOfEndLevelOptions[i];
             if (option != null)
             {
                 //background colours
-                color.a = 0.50f;
-                option.commentBackground.color = color;
-                option.statBackground.color = color;
-                color.a = 0.75f;
-                option.barLeft.color = color;
-                option.barRight.color = color;
-                /*color.a = 0.50f;
-                option.barTextLeft.color = color;
-                option.barTextRight.color = color;*/
+                colorBackground.a = 0.50f;
+                option.commentBackground.color = colorBackground;
+                option.statBackground.color = colorBackground;
+                colorBackground.a = 0.75f;
+                option.barLeft.color = colorBackground;
+                option.barRight.color = colorBackground;
+                colorText.a = 0.25f;
+                option.barTextLeft.color = colorText;
+                option.barTextRight.color = colorText;
 
             }
             else { Debug.LogWarningFormat("Invalid endLevelOption (Null) for arrayOfEndLevelOptions[{0}]", i); }
@@ -378,23 +381,23 @@ public class TransitionUI : MonoBehaviour
         hierarchyRight.text = "HIERARCHY";
         workersLeft.text = "WORKERS";
         workersRight.text = "WORKERS";
-        color = GameManager.i.guiScript.colourTransitionBackground;
-        hierarchyLeft.color = color;
-        hierarchyRight.color = color;
-        workersLeft.color = color;
-        workersRight.color = color;
+        colorBackground.a = 0.25f;
+        hierarchyLeft.color = colorText;
+        hierarchyRight.color = colorText;
+        workersLeft.color = colorText;
+        workersRight.color = colorText;
         //lower alpha
-        color.a = 0.50f;
-        hierarchyBackground.color = color;
+        colorBackground.a = 0.50f;
+        hierarchyBackground.color = colorBackground;
         hierarchyBackground.gameObject.SetActive(true);
-        workerBackground.color = color;
+        workerBackground.color = colorBackground;
         workerBackground.gameObject.SetActive(true);
         hqTextBackground.gameObject.SetActive(true);
-        color.a = 0.75f;
-        hierarchySprite.color = color;
-        workerSprite.color = color;
-        hierarchyBar.color = color;
-        workerBar.color = color;
+        colorBackground.a = 0.75f;
+        hierarchySprite.color = colorBackground;
+        workerSprite.color = colorBackground;
+        hierarchyBar.color = colorBackground;
+        workerBar.color = colorBackground;
         //renown tooltip
         renownTooltip = new TooltipData()
         {
@@ -414,8 +417,8 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(playerText != null, "Invalid playerText (Null)");
         //background color (transitionHqBackground / 100% alpha
         playerStatusBackground.gameObject.SetActive(true);
-        color.a = 0.50f;
-        playerTextBackground.color = color;
+        colorBackground.a = 0.50f;
+        playerTextBackground.color = colorBackground;
         playerImageText.text = GameManager.i.playerScript.PlayerName;
         #endregion
 
@@ -439,6 +442,10 @@ public class TransitionUI : MonoBehaviour
         vacantActorCompatibility = GameManager.i.guiScript.GetCompatibilityStars(0);
         Debug.Assert(vacantActorSprite != null, "Invalid vacantActorSprite (Null)");
         Debug.Assert(string.IsNullOrEmpty(vacantActorCompatibility) == false, "Invalid vacantActorCompatibiity (Null or Empty)");
+        //colors
+        colorHeader = GameManager.i.guiScript.colourTransitionHeader;
+        colorBackground = GameManager.i.guiScript.colourTransitionBackground;
+        colorText = GameManager.i.guiScript.colourTransitionText;
     }
     #endregion
 
@@ -519,8 +526,7 @@ public class TransitionUI : MonoBehaviour
         colourEnd = GameManager.i.colourScript.GetEndTag();
 
         //special colours
-        Color color = GameManager.i.guiScript.colourTransitionHeader;
-        colourHeader = string.Format("<color=#{0}>", ColorUtility.ToHtmlStringRGB(color));
+        colourHeader = string.Format("<color=#{0}>", ColorUtility.ToHtmlStringRGB(colorHeader));
     }
 
     /// <summary>
@@ -572,8 +578,8 @@ public class TransitionUI : MonoBehaviour
                         text = "BAD";
                         option.medal.sprite = GameManager.i.guiScript.failureSprite;
                     }
-                    option.barTextLeft.text = string.Format("{0}{1}{2}", colourHeader, text, colourEnd);
-                    option.barTextRight.text = string.Format("{0}{1}{2}", colourHeader, text, colourEnd);
+                    option.barTextLeft.text = text;
+                    option.barTextRight.text = text;
 
                 }
                 else { Debug.LogWarningFormat("Invalid arrayOfEndLevelInteraction (Null) for arrayOfEndLevelOptions[{0}]", i); }

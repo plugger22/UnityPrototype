@@ -206,6 +206,8 @@ public class GUIManager : MonoBehaviour
     public Color colourTransitionBackground;
     [Tooltip("Transition Header and highlight text colour")]
     public Color colourTransitionHeader;
+    [Tooltip("Transition background Text (that sits ontop of colourTransitionBackground")]
+    public Color colourTransitionText;
 
     //font awesome icons (characters)
     [HideInInspector] public char bulletChar;
