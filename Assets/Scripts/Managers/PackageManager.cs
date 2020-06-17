@@ -1208,6 +1208,10 @@ namespace packageAPI
         {
             if (data != null)
             {
+                #region EndLevel
+
+                #endregion
+
                 #region HQ Status
                 listOfHqSprites.AddRange(data.listOfHqSprites);
                 listOfHqRenown.AddRange(data.listOfHqRenown);

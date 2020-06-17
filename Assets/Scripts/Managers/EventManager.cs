@@ -203,6 +203,7 @@ public enum EventType
     TransitionContinue,
     TransitionBack,
     TransitionHqEvents,
+    TransitionObjectives,
     //Topic UI
     TopicDisplayOpen,
     TopicDisplayClose,

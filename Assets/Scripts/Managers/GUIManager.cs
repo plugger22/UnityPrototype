@@ -157,6 +157,8 @@ public class GUIManager : MonoBehaviour
     public Sprite friendSprite;
     [Tooltip("Sprite for an Enemy relationship")]
     public Sprite enemySprite;
+    [Tooltip("Sprite for medal (placeholder prior to implementing full medal system")]
+    public Sprite medalSprite;
 
 
     [Header("Priorities")]
@@ -198,8 +200,8 @@ public class GUIManager : MonoBehaviour
     public Color colourTopWidget;
     [Tooltip("Top Widget bar backgrounds colour")]
     public Color colourTopWidgetBarBacks;
-    [Tooltip("Transition HQ Status background colour")]
-    public Color colourTransitionHqBackground;
+    [Tooltip("Transition background colour")]
+    public Color colourTransitionBackground;
     [Tooltip("Transition Header and highlight text colour")]
     public Color colourTransitionHeader;
 

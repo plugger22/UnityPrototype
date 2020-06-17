@@ -5011,6 +5011,7 @@ MonoBehaviour:
   topicReviewSprite: {fileID: 21300000, guid: 4bc3f8ffc1e52f741ba6d5f9d475aa7c, type: 3}
   friendSprite: {fileID: 21300000, guid: 8a947f318ba8ccf45895e42cc50c6af3, type: 3}
   enemySprite: {fileID: 21300000, guid: f8252a05227cda24b978271c78b656b7, type: 3}
+  medalSprite: {fileID: 21300000, guid: d69df3d1ce9a7604a9cded423938c844, type: 3}
   priorityHighSprite: {fileID: 21300000, guid: 4c387499a0331884f95c8c367871611f, type: 3}
   priorityMediumSprite: {fileID: 21300000, guid: ff0b496ae1f6f0d4c95c374cee7818ae,
     type: 3}
@@ -5030,7 +5031,7 @@ MonoBehaviour:
   colourIconActiveBad: {r: 1, g: 0, b: 0, a: 0}
   colourTopWidget: {r: 0.2509804, g: 0.25490198, b: 0.3019608, a: 0}
   colourTopWidgetBarBacks: {r: 0.5568628, g: 0.80784315, b: 0.99215686, a: 1}
-  colourTransitionHqBackground: {r: 0.2509804, g: 0.25490198, b: 0.3019608, a: 1}
+  colourTransitionBackground: {r: 0.2509804, g: 0.25490198, b: 0.3019608, a: 0}
   colourTransitionHeader: {r: 0.92156863, g: 0.93333334, b: 0.4, a: 1}
   bulletChar: 0
   starChar: 61445

@@ -232,6 +232,19 @@ public class HelpManager : MonoBehaviour
         //
         // - - - Transition UI
         //
+        #region Main
+        //
+        // - - - Main
+        //
+        //Keyboard
+        //Type of Event
+        data = new HelpData();
+        data.tag = "transitionMain_0";
+        data.header = "Keyboard Shortcuts";
+        data.text = string.Format("{0}Left and Right Arrow{1} keys to cycle through pages", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
         #region Hq Status
         //
         // - - - HQ status
@@ -259,7 +272,7 @@ public class HelpManager : MonoBehaviour
         //Hq main overview
         data = new HelpData();
         data.tag = "transitionHq_3";
-        data.header = "Overview";
+        data.header = "HQ Events";
         data.text = string.Format("Your HQ consists of a {0}{1}{2} person {3}hierarchy{4} (the {5}important{6} people that you interact with) and a group of workers who {7}aspire{8} to be promoted",
             colourAlert, GameManager.i.hqScript.numOfActorsHQ, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
@@ -293,7 +306,7 @@ public class HelpManager : MonoBehaviour
         //Overview
         data = new HelpData();
         data.tag = "transitionPlayer_0";
-        data.header = "Overvew";
+        data.header = "Current Status";
         data.text = string.Format("Shows all the things that {0}currently affect you{1} and which will {2}carry over{3} (unless dealt with) to the {4}next City{5}",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);

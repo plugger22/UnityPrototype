@@ -8,6 +8,7 @@ using packageAPI;
 using modalAPI;
 using System;
 using System.Text;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// handles TransitionUI which is a single master UI with three togglable panels ->  end of level / HQ changes / Player status
@@ -29,6 +30,7 @@ public class TransitionUI : MonoBehaviour
     public Button buttonContinue;
     public Button buttonExit;
     public Button buttonHelpMain;
+    public Button buttonHelpPage;
 
     //button interactions
     private ButtonInteraction buttonInteractionSpecial;
@@ -38,23 +40,25 @@ public class TransitionUI : MonoBehaviour
 
     //button tooltips
     public GenericTooltipUI tooltipSpecial;
-    public GenericTooltipUI tooltipContinue;
-    public GenericTooltipUI tooltipBack;
 
     //button texts
     public TextMeshProUGUI buttonSpecialText;
 
     //button help
     public GenericHelpTooltipUI helpMain;
+    public GenericHelpTooltipUI helpPage;
+
 
     //Lists of Help
+    List<HelpData> listOfMainHelp = new List<HelpData>();
     List<HelpData> listOfEndLevelHelp = new List<HelpData>();
     List<HelpData> listOfHqHelp = new List<HelpData>();
     List<HelpData> listOfPlayerStatusHelp = new List<HelpData>();
     List<HelpData> listOfBriefingOneHelp = new List<HelpData>();
     List<HelpData> listOfBriefingTwoHelp = new List<HelpData>();
 
-
+    private int buttonHelpOffset_x = 125;
+    private int buttonHelpOffset_y = 125;
 
     //data package required to populate UI
     private TransitionInfoData transitionInfoData = new TransitionInfoData();
@@ -87,6 +91,14 @@ public class TransitionUI : MonoBehaviour
     [Header("End Level")]
     public Canvas endLevelCanvas;
     public Image endLevelBackground;
+
+    public EndLevelInteraction endLevelBoss;
+    public EndLevelInteraction endLevelSubBoss1;
+    public EndLevelInteraction endLevelSubBoss2;
+    public EndLevelInteraction endLevelSubBoss3;
+
+    //collection
+    private EndLevelInteraction[] arrayOfEndLevelOptions;
 
     #endregion
 
@@ -223,10 +235,10 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(buttonContinue != null, "Invalid buttonContinue (Null)");
         Debug.Assert(buttonExit != null, "Invalid buttonExit (Null)");
         Debug.Assert(buttonHelpMain != null, "Invalid buttonHelpMain (Null)");
+        Debug.Assert(buttonHelpPage != null, "Invalid buttonHelpPage (Null)");
         Debug.Assert(tooltipSpecial != null, "Invalid tooltipSpecial (Null)");
-        Debug.Assert(tooltipContinue != null, "Invalid tooltipContinue (Null)");
-        Debug.Assert(tooltipBack != null, "Invalid tooltipBack (Null)");
         Debug.Assert(helpMain != null, "Invalid helpMain (Null)");
+        Debug.Assert(helpPage != null, "Invalid helpPage (Null)");
         //end level
         Debug.Assert(endLevelCanvas != null, "Invalid endLevelCanvas (Null)");
         Debug.Assert(endLevelBackground != null, "Invalid endLevelBackground (Null)");
@@ -264,13 +276,48 @@ public class TransitionUI : MonoBehaviour
         #endregion
 
         #region EndLevel
+        Debug.Assert(endLevelCanvas != null, "Invalid endlLevelCanvas (Null)");
+        Debug.Assert(endLevelBackground != null, "Invalid endlLevelBackground (Null)");
+        Debug.Assert(endLevelBoss != null, "Invalid endLevelBoss (Null)");
+        Debug.Assert(endLevelSubBoss1 != null, "Invalid endLevelSubBoss1 (Null)");
+        Debug.Assert(endLevelSubBoss2 != null, "Invalid endLevelSubBoss2 (Null)");
+        Debug.Assert(endLevelSubBoss3 != null, "Invalid endLevelSubBoss3 (Null)");
+        //collections
+        arrayOfEndLevelOptions = new EndLevelInteraction[GameManager.i.hqScript.numOfActorsHQ];
+        //populate
+        if (arrayOfEndLevelOptions.Length == 4)
+        {
+            arrayOfEndLevelOptions[0] = endLevelBoss;
+            arrayOfEndLevelOptions[1] = endLevelSubBoss1;
+            arrayOfEndLevelOptions[2] = endLevelSubBoss2;
+            arrayOfEndLevelOptions[3] = endLevelSubBoss3;
+        }
+        else { Debug.LogErrorFormat("Invalid arrayOfEndLevelOptions.Length \"[0}\"", arrayOfEndLevelOptions.Length); }
+        //set up options
+        color = GameManager.i.guiScript.colourTransitionBackground;
+        for (int i = 0; i < arrayOfEndLevelOptions.Length; i++)
+        {
+            EndLevelInteraction option = arrayOfEndLevelOptions[i];
+            if (option != null)
+            {
+                //background colours
+                color.a = 0.50f;
+                option.commentBackground.color = color;
+                option.statBackground.color = color;
+                color.a = 0.25f;
+                option.barLeft.color = color;
+                option.barRight.color = color;
 
+            }
+            else { Debug.LogWarningFormat("Invalid endLevelOption (Null) for arrayOfEndLevelOptions[{0}]", i); }
+        }
         #endregion
 
         #region HQ Status
         //
         // - - - HQ Status
         //
+        Debug.Assert(hqBackground != null, "Invalid hqBackground (Null)");
         Debug.Assert(hierarchyBackground != null, "Invalid hierarchyBackground (Null)");
         Debug.Assert(workerBackground != null, "Invalid workerBackground (Null)");
         Debug.Assert(hqTextBackground != null, "Invalid textBackground (Null)");
@@ -320,7 +367,7 @@ public class TransitionUI : MonoBehaviour
         hierarchyRight.text = "HIERARCHY";
         workersLeft.text = "WORKERS";
         workersRight.text = "WORKERS";
-        color = GameManager.i.guiScript.colourTransitionHqBackground;
+        color = GameManager.i.guiScript.colourTransitionBackground;
         hierarchyLeft.color = color;
         hierarchyRight.color = color;
         workersLeft.color = color;
@@ -339,6 +386,8 @@ public class TransitionUI : MonoBehaviour
             main = string.Format("{0}Hierarchy positions are determined by <b>who has the most Renown</b>{1}", colourNormal, colourEnd),
             details = string.Format("{0}If a <b>Worker</b> accumulates more Renown than a member of the Hierarchy they will <b>take their spot</b>{1}", colourNormal, colourEnd)
         };
+        //background
+        hqBackground.gameObject.SetActive(true);
         #endregion
 
         #region Player Status
@@ -348,6 +397,8 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(playerTextBackground != null, "Invalid playerTextBackground (Null)");
         Debug.Assert(playerText != null, "Invalid playerText (Null)");
         //background color (transitionHqBackground / 100% alpha
+        playerStatusBackground.gameObject.SetActive(true);
+        color.a = 0.50f;
         playerTextBackground.color = color;
         playerImageText.text = GameManager.i.playerScript.PlayerName;
         #endregion
@@ -388,6 +439,7 @@ public class TransitionUI : MonoBehaviour
         EventManager.i.AddListener(EventType.TransitionContinue, OnEvent, "TransitionUI");
         EventManager.i.AddListener(EventType.TransitionBack, OnEvent, "TransitionUI");
         EventManager.i.AddListener(EventType.TransitionHqEvents, OnEvent, "TransitionUI");
+        EventManager.i.AddListener(EventType.TransitionObjectives, OnEvent, "TransitionUI");
     }
     #endregion
 
@@ -421,6 +473,9 @@ public class TransitionUI : MonoBehaviour
                 break;
             case EventType.TransitionHqEvents:
                 ExecuteHqEvents();
+                break;
+            case EventType.TransitionObjectives:
+                ExecuteObjectives();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -480,6 +535,26 @@ public class TransitionUI : MonoBehaviour
             TransitionInfoData data = transitionInfoData;
 
             #region End Level
+            endLevelBackground.gameObject.SetActive(true);
+            for (int i = 0; i < arrayOfEndLevelOptions.Length; i++)
+            {
+                EndLevelInteraction option = arrayOfEndLevelOptions[i];
+                if (option != null)
+                {
+                    //hq
+                    option.hqPortrait.sprite = data.listOfHqSprites[i];
+                    option.hqTitle.text = string.Format("{0}{1}{2}", colourHeader, data.listOfHqTitles[i], colourEnd);
+                    //medal (debug placeholder)
+                    option.medal.sprite = GameManager.i.guiScript.medalSprite;
+                    //bar text
+                    if (Random.Range(0, 100) < 50)
+                    { option.barTextLeft.text = string.Format("{0}GOOD{1}", colourHeader, colourEnd); }
+                    else { option.barTextLeft.text = string.Format("{0}BAD{1}", colourHeader, colourEnd); }
+                }
+                else { Debug.LogWarningFormat("Invalid arrayOfEndLevelInteraction (Null) for arrayOfEndLevelOptions[{0}]", i); }
+            }
+
+
 
             #endregion
 
@@ -620,16 +695,6 @@ public class TransitionUI : MonoBehaviour
         //Special Button
         tooltipSpecial.x_offset = x_offset;
         tooltipSpecial.y_offset = y_offset;
-        //Continue button
-        tooltipContinue.tooltipHeader = string.Format("{0}CONTINUE{1}", colourAlert, colourEnd);
-        tooltipContinue.tooltipMain = string.Format("Keyboard Shortcut{0}{1}Right Arrow{2}", "\n", colourNeutral, colourEnd);
-        tooltipContinue.x_offset = x_offset;
-        tooltipContinue.y_offset = y_offset;
-        //Back button
-        tooltipBack.tooltipHeader = string.Format("{0}BACK{1}", colourAlert, colourEnd);
-        tooltipBack.tooltipMain = string.Format("Keyboard Shortcut{0}{1}Left Arrow{2}", "\n", colourNeutral, colourEnd);
-        tooltipBack.x_offset = x_offset;
-        tooltipBack.y_offset = y_offset;
     }
     
     /// <summary>
@@ -642,6 +707,11 @@ public class TransitionUI : MonoBehaviour
         listOfPlayerStatusHelp = GameManager.i.helpScript.GetHelpData("transitionPlayer_0", "transitionPlayer_1");
         listOfBriefingOneHelp = GameManager.i.helpScript.GetHelpData("test0");
         listOfBriefingTwoHelp = GameManager.i.helpScript.GetHelpData("test0");
+        //main help button -> default
+        listOfMainHelp = GameManager.i.helpScript.GetHelpData("transitionMain_0");
+        if (listOfMainHelp != null)
+        { helpMain.SetHelpTooltip(listOfMainHelp, buttonHelpOffset_x, buttonHelpOffset_y); }
+        else { Debug.LogWarning("Invalid listOfMainHelp for helpMain (Null)"); }
     }
 
     /// <summary>
@@ -714,8 +784,9 @@ public class TransitionUI : MonoBehaviour
         switch (state)
         {
             case ModalTransitionSubState.EndLevel:
-                buttonInteractionSpecial.SetButton(EventType.None);
-                buttonSpecial.gameObject.SetActive(false);
+                buttonInteractionSpecial.SetButton(EventType.TransitionObjectives);
+                buttonSpecialText.text = "Objectives";
+                buttonSpecial.gameObject.SetActive(true);
                 buttonBack.gameObject.SetActive(false);
                 buttonContinue.gameObject.SetActive(true);
                 buttonExit.gameObject.SetActive(false);
@@ -776,8 +847,6 @@ public class TransitionUI : MonoBehaviour
     /// <param name="state"></param>
     private void SetHelp(ModalTransitionSubState state)
     {
-        int x_offset = 125;
-        int y_offset = 125;
         List<HelpData> listOfHelp = null;
         switch (state)
         {
@@ -801,10 +870,10 @@ public class TransitionUI : MonoBehaviour
                 listOfHelp = GameManager.i.helpScript.GetHelpData("test0");
                 break;
         }
-        //main help button -> default
+        //page help button -> default
         if (listOfHelp != null)
-        { helpMain.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
-        else { Debug.LogWarning("Invalid listOfHelp for helpMain (Null)"); }
+        { helpPage.SetHelpTooltip(listOfHelp, buttonHelpOffset_x, buttonHelpOffset_y); }
+        else { Debug.LogWarning("Invalid listOfHelp for helpPage (Null)"); }
     }
 
 
@@ -828,6 +897,7 @@ public class TransitionUI : MonoBehaviour
 
             //Main UI elements
             buttonHelpMain.gameObject.SetActive(true);
+            buttonHelpPage.gameObject.SetActive(true);
             SetStates(startState);
             Debug.LogFormat("[UI] TransitionUI.cs -> TransitionUI{0}", "\n");
         }
@@ -991,6 +1061,38 @@ public class TransitionUI : MonoBehaviour
         //open outcome windown (will open MetaGameUI via triggerEvent once closed
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "TransitionUI.cs -> ExecuteHqEvents");
 
+    }
+
+    /// <summary>
+    /// Special button pressed in EndLevel status Screen -> displays objective outcomes (current text is placeholder)
+    /// </summary>
+    private void ExecuteObjectives()
+    {
+        StringBuilder builder = new StringBuilder();
+        int count = transitionInfoData.listOfHqEvents.Count;
+        if (count > 0)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
+                builder.Append(transitionInfoData.listOfHqEvents[i]);
+            }
+        }
+        else { builder.Append("No events have occurred"); }
+
+        //outcome
+        ModalOutcomeDetails details = new ModalOutcomeDetails();
+        details.side = GameManager.i.sideScript.PlayerSide;
+        details.textTop = string.Format("{0}Recent HQ Events{1}", colourAlert, colourEnd);
+        details.textBottom = builder.ToString();
+        details.sprite = GameManager.i.guiScript.infoSprite;
+        details.modalLevel = 2;
+        details.modalState = ModalSubState.Transition;
+        details.help0 = "transitionHq_0";
+        details.help1 = "transitionHq_1";
+        details.help2 = "transitionHq_2";
+        //open outcome windown (will open MetaGameUI via triggerEvent once closed
+        EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "TransitionUI.cs -> ExecuteHqEvents");
     }
 
 
