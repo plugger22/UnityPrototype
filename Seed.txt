@@ -190,3 +190,21 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 12914 -> Wednesday, 17 June 2020 3:10 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 1553 -> Wednesday, 17 June 2020 5:35 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 50358 -> Wednesday, 17 June 2020 5:42 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 48088 -> Wednesday, 17 June 2020 5:52 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 45093 -> Wednesday, 17 June 2020 5:58 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 28943 -> Wednesday, 17 June 2020 6:00 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 26584 -> Wednesday, 17 June 2020 6:05 PM
+City seed 5678 -> London, United Kingdom

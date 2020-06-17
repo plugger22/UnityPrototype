@@ -110,6 +110,10 @@ public class TransitionUI : MonoBehaviour
     public Image hierarchyBackground;
     public Image workerBackground;
     public Image hqTextBackground;
+    public Image hierarchySprite;
+    public Image workerSprite;
+    public Image hierarchyBar;
+    public Image workerBar;
 
     public HqInteraction optionBoss;
     public HqInteraction optionSubBoss1;
@@ -304,9 +308,12 @@ public class TransitionUI : MonoBehaviour
                 color.a = 0.50f;
                 option.commentBackground.color = color;
                 option.statBackground.color = color;
-                color.a = 0.25f;
+                color.a = 0.75f;
                 option.barLeft.color = color;
                 option.barRight.color = color;
+                /*color.a = 0.50f;
+                option.barTextLeft.color = color;
+                option.barTextRight.color = color;*/
 
             }
             else { Debug.LogWarningFormat("Invalid endLevelOption (Null) for arrayOfEndLevelOptions[{0}]", i); }
@@ -321,6 +328,10 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(hierarchyBackground != null, "Invalid hierarchyBackground (Null)");
         Debug.Assert(workerBackground != null, "Invalid workerBackground (Null)");
         Debug.Assert(hqTextBackground != null, "Invalid textBackground (Null)");
+        Debug.Assert(hierarchySprite != null, "Invalid hierarchySprite (Null)");
+        Debug.Assert(workerSprite != null, "Invalid workerSprite (Null)");
+        Debug.Assert(hierarchyBar != null, "Invalid hierarchyBar (Null)");
+        Debug.Assert(workerBar != null, "Invalid workerBar (Null)");
         Debug.Assert(optionBoss != null, "Invalid optionBoss (Null)");
         Debug.Assert(optionSubBoss1 != null, "Invalid optionSubBoss1 (Null)");
         Debug.Assert(optionSubBoss2 != null, "Invalid optionSubBoss2 (Null)");
@@ -379,6 +390,11 @@ public class TransitionUI : MonoBehaviour
         workerBackground.color = color;
         workerBackground.gameObject.SetActive(true);
         hqTextBackground.gameObject.SetActive(true);
+        color.a = 0.75f;
+        hierarchySprite.color = color;
+        workerSprite.color = color;
+        hierarchyBar.color = color;
+        workerBar.color = color;
         //renown tooltip
         renownTooltip = new TooltipData()
         {
@@ -548,16 +564,16 @@ public class TransitionUI : MonoBehaviour
                     string text;
                     if (Random.Range(0, 100) < 50)
                     {
-                        text = string.Format("{0}GOOD{1}", colourHeader, colourEnd);
+                        text = "GOOD";
                         option.medal.sprite = GameManager.i.guiScript.medalSprite;
                     }
                     else
                     {
-                        text = string.Format("{0}BAD{1}", colourHeader, colourEnd);
+                        text = "BAD";
                         option.medal.sprite = GameManager.i.guiScript.failureSprite;
                     }
-                    option.barTextLeft.text = text;
-                    option.barTextRight.text = text;
+                    option.barTextLeft.text = string.Format("{0}{1}{2}", colourHeader, text, colourEnd);
+                    option.barTextRight.text = string.Format("{0}{1}{2}", colourHeader, text, colourEnd);
 
                 }
                 else { Debug.LogWarningFormat("Invalid arrayOfEndLevelInteraction (Null) for arrayOfEndLevelOptions[{0}]", i); }
