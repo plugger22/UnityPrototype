@@ -159,6 +159,8 @@ public class GUIManager : MonoBehaviour
     public Sprite enemySprite;
     [Tooltip("Sprite for medal (placeholder prior to implementing full medal system")]
     public Sprite medalSprite;
+    [Tooltip("Sprite used for failure (placeholder)")]
+    public Sprite failureSprite;
 
 
     [Header("Priorities")]
@@ -321,6 +323,8 @@ public class GUIManager : MonoBehaviour
         Debug.Assert(topicReviewSprite != null, "Invalid topicReviewSprite (Null)");
         Debug.Assert(friendSprite != null, "Invalid friendSprite (Null)");
         Debug.Assert(enemySprite != null, "Invalid enemySprite (Null)");
+        Debug.Assert(medalSprite != null, "Invalid medalSprite (Null)");
+        Debug.Assert(failureSprite != null, "Invalid failureSprite (Null)");
         Debug.Assert(moodStar0 != null, "Invalid moodStar0 (Null)");
         Debug.Assert(moodStar1 != null, "Invalid moodStar1 (Null)");
         Debug.Assert(moodStar2 != null, "Invalid moodStar2 (Null)");

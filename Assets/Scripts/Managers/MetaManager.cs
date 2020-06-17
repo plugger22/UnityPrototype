@@ -961,7 +961,7 @@ public class MetaManager : MonoBehaviour
     /// </summary>
     private void InitialiseEndLevel()
     {
-
+        transitionInfoData.objectiveStatus = GameManager.i.objectiveScript.GetObjectiveDetails();
     }
 
     /// <summary>

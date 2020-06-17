@@ -1161,15 +1161,20 @@ namespace packageAPI
         // - - - Main
         //
 
+        #region EndLevel
         //
         // - - - End Level
         //
+
+        public List<string> listOfObjectives = new List<string>();
+        public string objectiveStatus;
+        #endregion
 
         //
         // - - - HQ Status
         //
         //NOTE: indexes of all relevant lists refer to the same actor
-        #region saveData
+        #region HQ Status
         public List <Sprite> listOfHqSprites = new List<Sprite> ();
         public List<string> listOfHqRenown = new List<string>();
         public List<string> listOfHqTitles = new List<string>();
@@ -1181,18 +1186,26 @@ namespace packageAPI
         public List<string> listOfHqEvents = new List<string>();
         #endregion
 
+        #region playerStatus
         //
         // - - - Player Status
         //
         public string playerStatus;
+        #endregion
 
+        #region Briefing One
         //
         // - - - BriefingOne
         //
 
+        #endregion
+
+        #region Briefing Two
         //
         // - - - BriefingTwo
         //
+
+        #endregion
 
         /// <summary>
         /// default constructor
@@ -1209,7 +1222,7 @@ namespace packageAPI
             if (data != null)
             {
                 #region EndLevel
-
+                objectiveStatus = data.objectiveStatus;
                 #endregion
 
                 #region HQ Status
@@ -1241,7 +1254,7 @@ namespace packageAPI
             #endregion
 
             #region End Level
-
+            objectiveStatus = "";
             #endregion
 
             #region HQ status

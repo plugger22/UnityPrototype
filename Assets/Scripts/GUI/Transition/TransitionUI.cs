@@ -544,12 +544,21 @@ public class TransitionUI : MonoBehaviour
                     //hq
                     option.hqPortrait.sprite = data.listOfHqSprites[i];
                     option.hqTitle.text = string.Format("{0}{1}{2}", colourHeader, data.listOfHqTitles[i], colourEnd);
-                    //medal (debug placeholder)
-                    option.medal.sprite = GameManager.i.guiScript.medalSprite;
-                    //bar text
+                    //bar texts
+                    string text;
                     if (Random.Range(0, 100) < 50)
-                    { option.barTextLeft.text = string.Format("{0}GOOD{1}", colourHeader, colourEnd); }
-                    else { option.barTextLeft.text = string.Format("{0}BAD{1}", colourHeader, colourEnd); }
+                    {
+                        text = string.Format("{0}GOOD{1}", colourHeader, colourEnd);
+                        option.medal.sprite = GameManager.i.guiScript.medalSprite;
+                    }
+                    else
+                    {
+                        text = string.Format("{0}BAD{1}", colourHeader, colourEnd);
+                        option.medal.sprite = GameManager.i.guiScript.failureSprite;
+                    }
+                    option.barTextLeft.text = text;
+                    option.barTextRight.text = text;
+
                 }
                 else { Debug.LogWarningFormat("Invalid arrayOfEndLevelInteraction (Null) for arrayOfEndLevelOptions[{0}]", i); }
             }
@@ -1068,23 +1077,24 @@ public class TransitionUI : MonoBehaviour
     /// </summary>
     private void ExecuteObjectives()
     {
-        StringBuilder builder = new StringBuilder();
-        int count = transitionInfoData.listOfHqEvents.Count;
+        /*StringBuilder builder = new StringBuilder();
+        int count = transitionInfoData.listOfObjectives.Count;
         if (count > 0)
         {
             for (int i = 0; i < count; i++)
             {
                 if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
-                builder.Append(transitionInfoData.listOfHqEvents[i]);
+                builder.Append(transitionInfoData.listOfObjectives[i]);
             }
         }
-        else { builder.Append("No events have occurred"); }
+        else { builder.Append("The mission had no objectives"); }*/
+
 
         //outcome
         ModalOutcomeDetails details = new ModalOutcomeDetails();
         details.side = GameManager.i.sideScript.PlayerSide;
-        details.textTop = string.Format("{0}Recent HQ Events{1}", colourAlert, colourEnd);
-        details.textBottom = builder.ToString();
+        details.textTop = string.Format("{0}Mission Objectives{1}", colourAlert, colourEnd);
+        details.textBottom = transitionInfoData.objectiveStatus;
         details.sprite = GameManager.i.guiScript.infoSprite;
         details.modalLevel = 2;
         details.modalState = ModalSubState.Transition;
@@ -1092,7 +1102,7 @@ public class TransitionUI : MonoBehaviour
         details.help1 = "transitionHq_1";
         details.help2 = "transitionHq_2";
         //open outcome windown (will open MetaGameUI via triggerEvent once closed
-        EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "TransitionUI.cs -> ExecuteHqEvents");
+        EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "TransitionUI.cs -> ExecuteObjectives");
     }
 
 

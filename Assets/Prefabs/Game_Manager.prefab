@@ -5012,6 +5012,7 @@ MonoBehaviour:
   friendSprite: {fileID: 21300000, guid: 8a947f318ba8ccf45895e42cc50c6af3, type: 3}
   enemySprite: {fileID: 21300000, guid: f8252a05227cda24b978271c78b656b7, type: 3}
   medalSprite: {fileID: 21300000, guid: d69df3d1ce9a7604a9cded423938c844, type: 3}
+  failureSprite: {fileID: 21300000, guid: 75560ce0fa7205b4793a6710efa45e5b, type: 3}
   priorityHighSprite: {fileID: 21300000, guid: 4c387499a0331884f95c8c367871611f, type: 3}
   priorityMediumSprite: {fileID: 21300000, guid: ff0b496ae1f6f0d4c95c374cee7818ae,
     type: 3}

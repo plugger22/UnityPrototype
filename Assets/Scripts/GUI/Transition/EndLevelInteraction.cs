@@ -20,6 +20,7 @@ public class EndLevelInteraction : MonoBehaviour
     public Image barLeft;
     public Image barRight;
     public TextMeshProUGUI barTextLeft;
+    public TextMeshProUGUI barTextRight;
 
 
     public void Awake()
@@ -34,5 +35,6 @@ public class EndLevelInteraction : MonoBehaviour
         Debug.Assert(barLeft != null, "Invalid barLeft (Null)");
         Debug.Assert(barRight != null, "Invalid barRight (Null)");
         Debug.Assert(barTextLeft != null, "Invalid barTextLeft (Null)");
+        Debug.Assert(barTextRight != null, "Invalid barTextRight (Null)");
     }
 }

@@ -345,7 +345,7 @@ public class ObjectiveManager : MonoBehaviour
                 builder.AppendFormat("{0}{1}{2}  ", colourNormal, objective.tag, colourEnd);
                 //objective complete if progress 100% or above
                 if (objective.progress >= 100)
-                { builder.AppendFormat("{0}Done{1}", colourGood, colourEnd); }
+                { builder.AppendFormat("{0}100 %{1}", colourGood, colourEnd); }
                 else if (objective.progress > 0)
                 { builder.AppendFormat("{0}{1} %{2}", colourNeutral, objective.progress, colourEnd); }
                 else { builder.AppendFormat("{0}{1} %{2}", colourBad, objective.progress, colourEnd); }
