@@ -96,6 +96,9 @@ public class TransitionUI : MonoBehaviour
     [Header("End Level")]
     public Canvas endLevelCanvas;
     public Image endLevelBackground;
+    public Image endLevelPanel;
+    public Image endLevelSprite;
+    public Image endLevelBar;
 
     public EndLevelInteraction endLevelBoss;
     public EndLevelInteraction endLevelSubBoss1;
@@ -286,6 +289,9 @@ public class TransitionUI : MonoBehaviour
         #region EndLevel
         Debug.Assert(endLevelCanvas != null, "Invalid endlLevelCanvas (Null)");
         Debug.Assert(endLevelBackground != null, "Invalid endlLevelBackground (Null)");
+        Debug.Assert(endLevelPanel != null, "Invalid endLevelPanel (Null)");
+        Debug.Assert(endLevelBar != null, "Invalid endLevelBar (Null)");
+        Debug.Assert(endLevelSprite != null, "Invalid endLevelSprite (Null)");
         Debug.Assert(endLevelBoss != null, "Invalid endLevelBoss (Null)");
         Debug.Assert(endLevelSubBoss1 != null, "Invalid endLevelSubBoss1 (Null)");
         Debug.Assert(endLevelSubBoss2 != null, "Invalid endLevelSubBoss2 (Null)");
@@ -301,6 +307,13 @@ public class TransitionUI : MonoBehaviour
             arrayOfEndLevelOptions[3] = endLevelSubBoss3;
         }
         else { Debug.LogErrorFormat("Invalid arrayOfEndLevelOptions.Length \"[0}\"", arrayOfEndLevelOptions.Length); }
+        //bar
+        colorBackground.a = 1.00f;
+        endLevelSprite.color = colorBackground;
+        colorBackground.a = 0.75f;
+        endLevelBar.color = colorBackground;
+        colorBackground.a = 0.50f;
+        endLevelPanel.color = colorBackground;
         //set up options
         for (int i = 0; i < arrayOfEndLevelOptions.Length; i++)
         {
@@ -309,15 +322,7 @@ public class TransitionUI : MonoBehaviour
             {
                 //background colours
                 colorBackground.a = 0.50f;
-                option.commentBackground.color = colorBackground;
                 option.statBackground.color = colorBackground;
-                colorBackground.a = 0.75f;
-                option.barLeft.color = colorBackground;
-                option.barRight.color = colorBackground;
-                colorText.a = 0.25f;
-                option.barTextLeft.color = colorText;
-                option.barTextRight.color = colorText;
-
             }
             else { Debug.LogWarningFormat("Invalid endLevelOption (Null) for arrayOfEndLevelOptions[{0}]", i); }
         }
@@ -381,7 +386,7 @@ public class TransitionUI : MonoBehaviour
         hierarchyRight.text = "HIERARCHY";
         workersLeft.text = "WORKERS";
         workersRight.text = "WORKERS";
-        colorBackground.a = 0.25f;
+        colorText.a = 0.25f;
         hierarchyLeft.color = colorText;
         hierarchyRight.color = colorText;
         workersLeft.color = colorText;
@@ -566,21 +571,10 @@ public class TransitionUI : MonoBehaviour
                     //hq
                     option.hqPortrait.sprite = data.listOfHqSprites[i];
                     option.hqTitle.text = string.Format("{0}{1}{2}", colourHeader, data.listOfHqTitles[i], colourEnd);
-                    //bar texts
-                    string text;
                     if (Random.Range(0, 100) < 50)
-                    {
-                        text = "GOOD";
-                        option.medal.sprite = GameManager.i.guiScript.medalSprite;
-                    }
+                    { option.medal.sprite = GameManager.i.guiScript.medalSprite;  }
                     else
-                    {
-                        text = "BAD";
-                        option.medal.sprite = GameManager.i.guiScript.failureSprite;
-                    }
-                    option.barTextLeft.text = text;
-                    option.barTextRight.text = text;
-
+                    { option.medal.sprite = GameManager.i.guiScript.failureSprite; }
                 }
                 else { Debug.LogWarningFormat("Invalid arrayOfEndLevelInteraction (Null) for arrayOfEndLevelOptions[{0}]", i); }
             }

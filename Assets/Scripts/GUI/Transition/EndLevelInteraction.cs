@@ -13,14 +13,14 @@ public class EndLevelInteraction : MonoBehaviour
     public Image hqPortrait;
     public TextMeshProUGUI hqTitle;
     public Image medal;
-    public Image commentBackground;
-    public TextMeshProUGUI commentText;
     public Image statBackground;
     public TextMeshProUGUI statText;
-    public Image barLeft;
+    /*public Image barLeft;
     public Image barRight;
     public TextMeshProUGUI barTextLeft;
     public TextMeshProUGUI barTextRight;
+    public Image commentBackground;
+    public TextMeshProUGUI commentText;*/
 
 
     public void Awake()
@@ -28,13 +28,13 @@ public class EndLevelInteraction : MonoBehaviour
         Debug.Assert(hqPortrait != null, "Invalid hqPortrait (Null)");
         Debug.Assert(hqTitle != null, "Invalid hqTitle (Null)");
         Debug.Assert(medal != null, "Invalid medal (Null)");
-        Debug.Assert(commentBackground != null, "Invalid commentBackground (Null)");
-        Debug.Assert(commentText != null, "Invalid commentText (Null)");
         Debug.Assert(statBackground != null, "Invalid statBackground (Null)");
         Debug.Assert(statText != null, "Invalid statText (Null)");
+        /*Debug.Assert(commentBackground != null, "Invalid commentBackground (Null)");
+        Debug.Assert(commentText != null, "Invalid commentText (Null)");
         Debug.Assert(barLeft != null, "Invalid barLeft (Null)");
         Debug.Assert(barRight != null, "Invalid barRight (Null)");
         Debug.Assert(barTextLeft != null, "Invalid barTextLeft (Null)");
-        Debug.Assert(barTextRight != null, "Invalid barTextRight (Null)");
+        Debug.Assert(barTextRight != null, "Invalid barTextRight (Null)");*/
     }
 }
