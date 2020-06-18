@@ -1165,9 +1165,8 @@ namespace packageAPI
         //
         // - - - End Level
         //
-
-        public List<string> listOfObjectives = new List<string>();
         public string objectiveStatus;
+        public List<EndLevelData> listOfEndLevelData = new List<EndLevelData>();
         #endregion
 
         //
@@ -1223,6 +1222,7 @@ namespace packageAPI
             {
                 #region EndLevel
                 objectiveStatus = data.objectiveStatus;
+                listOfEndLevelData.AddRange(data.listOfEndLevelData);
                 #endregion
 
                 #region HQ Status
@@ -1255,6 +1255,7 @@ namespace packageAPI
 
             #region End Level
             objectiveStatus = "";
+            listOfEndLevelData.Clear();
             #endregion
 
             #region HQ status
@@ -1282,6 +1283,17 @@ namespace packageAPI
             #endregion
         }
 
+    }
+
+    /// <summary>
+    /// Subclass to provide endLevel data for EndLevel page of TransitionUI
+    /// </summary>
+    [System.Serializable]
+    public class EndLevelData
+    {
+        public string headerText;                   //goes above hqPortrait
+        public string factorText;                   //goes into Assessment text
+        public EndlLevelMedal medal;                //type of medal awarded
     }
 
 

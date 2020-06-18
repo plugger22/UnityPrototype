@@ -99,6 +99,8 @@ public class TransitionUI : MonoBehaviour
     public Image endLevelPanel;
     public Image endLevelSprite;
     public Image endLevelBar;
+    public TextMeshProUGUI endLevelTextLeft;
+    public TextMeshProUGUI endLevelTextRight;
 
     public EndLevelInteraction endLevelBoss;
     public EndLevelInteraction endLevelSubBoss1;
@@ -292,6 +294,8 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(endLevelPanel != null, "Invalid endLevelPanel (Null)");
         Debug.Assert(endLevelBar != null, "Invalid endLevelBar (Null)");
         Debug.Assert(endLevelSprite != null, "Invalid endLevelSprite (Null)");
+        Debug.Assert(endLevelTextLeft != null, "Invalid endLevelTextLeft (Null)");
+        Debug.Assert(endLevelTextRight != null, "Invalid endLevelTextRight (Null)");
         Debug.Assert(endLevelBoss != null, "Invalid endLevelBoss (Null)");
         Debug.Assert(endLevelSubBoss1 != null, "Invalid endLevelSubBoss1 (Null)");
         Debug.Assert(endLevelSubBoss2 != null, "Invalid endLevelSubBoss2 (Null)");
@@ -314,14 +318,20 @@ public class TransitionUI : MonoBehaviour
         endLevelBar.color = colorBackground;
         colorBackground.a = 0.50f;
         endLevelPanel.color = colorBackground;
+        //bar texts
+        endLevelTextLeft.gameObject.SetActive(true);
+        endLevelTextRight.gameObject.SetActive(true);
+        colorText.a = 0.25f;
+        endLevelTextLeft.color = colorText;
+        endLevelTextRight.color = colorText;
         //set up options
+        colorBackground.a = 0.50f;
         for (int i = 0; i < arrayOfEndLevelOptions.Length; i++)
         {
             EndLevelInteraction option = arrayOfEndLevelOptions[i];
             if (option != null)
             {
                 //background colours
-                colorBackground.a = 0.50f;
                 option.statBackground.color = colorBackground;
             }
             else { Debug.LogWarningFormat("Invalid endLevelOption (Null) for arrayOfEndLevelOptions[{0}]", i); }

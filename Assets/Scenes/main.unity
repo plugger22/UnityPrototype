@@ -1918,11 +1918,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -26674,6 +26674,8 @@ MonoBehaviour:
   endLevelPanel: {fileID: 1047560940}
   endLevelSprite: {fileID: 60783829}
   endLevelBar: {fileID: 2105061024}
+  endLevelTextLeft: {fileID: 1349239368}
+  endLevelTextRight: {fileID: 831286916}
   endLevelBoss: {fileID: 2118979187}
   endLevelSubBoss1: {fileID: 1944613913}
   endLevelSubBoss2: {fileID: 2065989542}
@@ -31318,12 +31320,12 @@ GameObject:
   - component: {fileID: 831286917}
   - component: {fileID: 831286916}
   m_Layer: 5
-  m_Name: HierarchyRight
+  m_Name: HQRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &831286915
 RectTransform:
   m_ObjectHideFlags: 0
@@ -31339,8 +31341,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 320, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 550, y: 0}
+  m_SizeDelta: {x: 75, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &831286916
 MonoBehaviour:
@@ -31361,7 +31363,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: HIERARCHY
+  m_text: HQ
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
@@ -31429,7 +31431,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 831286916}
-    characterCount: 9
+    characterCount: 2
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
@@ -42016,6 +42018,36 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114073095542948952, guid: 238d3b06188a3604a8953b78de8ca8f1,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114073095542948952, guid: 238d3b06188a3604a8953b78de8ca8f1,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114900381668243864, guid: 238d3b06188a3604a8953b78de8ca8f1,
+        type: 2}
+      propertyPath: m_text
+      value: '* * *'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114900381668243864, guid: 238d3b06188a3604a8953b78de8ca8f1,
+        type: 2}
+      propertyPath: m_textInfo.characterCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114900381668243864, guid: 238d3b06188a3604a8953b78de8ca8f1,
+        type: 2}
+      propertyPath: m_textInfo.spaceCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114900381668243864, guid: 238d3b06188a3604a8953b78de8ca8f1,
+        type: 2}
+      propertyPath: m_textInfo.wordCount
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 238d3b06188a3604a8953b78de8ca8f1, type: 2}
   m_IsPrefabAsset: 0
@@ -48816,12 +48848,12 @@ GameObject:
   - component: {fileID: 1349239369}
   - component: {fileID: 1349239368}
   m_Layer: 5
-  m_Name: HierarchyLeft
+  m_Name: HQLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1349239367
 RectTransform:
   m_ObjectHideFlags: 0
@@ -48837,8 +48869,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -320, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -550, y: 0}
+  m_SizeDelta: {x: 75, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1349239368
 MonoBehaviour:
@@ -48859,7 +48891,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: HIERARCHY
+  m_text: HQ
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
@@ -48927,7 +48959,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1349239368}
-    characterCount: 9
+    characterCount: 2
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
@@ -50628,26 +50660,6 @@ Prefab:
     - target: {fileID: 1000185516460920, guid: 238d3b06188a3604a8953b78de8ca8f1, type: 2}
       propertyPath: m_Name
       value: EndLevelBoss
-      objectReference: {fileID: 0}
-    - target: {fileID: 114534887791321134, guid: 238d3b06188a3604a8953b78de8ca8f1,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114534887791321134, guid: 238d3b06188a3604a8953b78de8ca8f1,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114900381668243864, guid: 238d3b06188a3604a8953b78de8ca8f1,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114900381668243864, guid: 238d3b06188a3604a8953b78de8ca8f1,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 238d3b06188a3604a8953b78de8ca8f1, type: 2}
@@ -69494,6 +69506,36 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114073095542948952, guid: 238d3b06188a3604a8953b78de8ca8f1,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114073095542948952, guid: 238d3b06188a3604a8953b78de8ca8f1,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114900381668243864, guid: 238d3b06188a3604a8953b78de8ca8f1,
+        type: 2}
+      propertyPath: m_text
+      value: '* * *'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114900381668243864, guid: 238d3b06188a3604a8953b78de8ca8f1,
+        type: 2}
+      propertyPath: m_textInfo.characterCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114900381668243864, guid: 238d3b06188a3604a8953b78de8ca8f1,
+        type: 2}
+      propertyPath: m_textInfo.spaceCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114900381668243864, guid: 238d3b06188a3604a8953b78de8ca8f1,
+        type: 2}
+      propertyPath: m_textInfo.wordCount
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 238d3b06188a3604a8953b78de8ca8f1, type: 2}
   m_IsPrefabAsset: 0
@@ -73343,6 +73385,36 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1000185516460920, guid: 238d3b06188a3604a8953b78de8ca8f1, type: 2}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114073095542948952, guid: 238d3b06188a3604a8953b78de8ca8f1,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114073095542948952, guid: 238d3b06188a3604a8953b78de8ca8f1,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114900381668243864, guid: 238d3b06188a3604a8953b78de8ca8f1,
+        type: 2}
+      propertyPath: m_text
+      value: '* * *'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114900381668243864, guid: 238d3b06188a3604a8953b78de8ca8f1,
+        type: 2}
+      propertyPath: m_textInfo.characterCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114900381668243864, guid: 238d3b06188a3604a8953b78de8ca8f1,
+        type: 2}
+      propertyPath: m_textInfo.spaceCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114900381668243864, guid: 238d3b06188a3604a8953b78de8ca8f1,
+        type: 2}
+      propertyPath: m_textInfo.wordCount
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
