@@ -295,3 +295,54 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 30724 -> Thursday, 18 June 2020 3:50 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 8963 -> Thursday, 18 June 2020 4:51 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 47296 -> Thursday, 18 June 2020 5:04 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 5584 -> Thursday, 18 June 2020 5:20 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 9354 -> Thursday, 18 June 2020 5:22 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 49987 -> Thursday, 18 June 2020 5:27 PM
+City seed 5678 -> London, United Kingdom
+WARNING Unrecognised num "Unknown"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	GUIManager:GetNormalStars(Int32) (at Assets/Scripts/Managers/GUIManager.cs:1070)
+	HQManager:GetEndLevelData(ActorHQ) (at Assets/Scripts/Managers/HQManager.cs:1614)
+	MetaManager:InitialiseEndLevel() (at Assets/Scripts/Managers/MetaManager.cs:969)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:135)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:242)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:90)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ControlManager:ProcessEndLevel() (at Assets/Scripts/Managers/ControlManager.cs:222)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:87)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:253)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:421)
+	
+Dev seed 12888 -> Thursday, 18 June 2020 5:38 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid overall "0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HQManager:GetEndLevelData(ActorHQ) (at Assets/Scripts/Managers/HQManager.cs:1621)
+	MetaManager:InitialiseEndLevel() (at Assets/Scripts/Managers/MetaManager.cs:972)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:135)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:242)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:90)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ControlManager:ProcessEndLevel() (at Assets/Scripts/Managers/ControlManager.cs:222)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:87)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:253)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:421)
+	
+Dev seed 22691 -> Thursday, 18 June 2020 5:43 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 54142 -> Thursday, 18 June 2020 5:46 PM
+City seed 5678 -> London, United Kingdom

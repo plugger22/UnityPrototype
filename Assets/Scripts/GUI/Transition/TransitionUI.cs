@@ -1,14 +1,11 @@
-﻿using System.Collections;
+﻿using gameAPI;
+using modalAPI;
+using packageAPI;
 using System.Collections.Generic;
+using System.Text;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using gameAPI;
-using packageAPI;
-using modalAPI;
-using System;
-using System.Text;
-using Random = UnityEngine.Random;
 
 /// <summary>
 /// handles TransitionUI which is a single master UI with three togglable panels ->  end of level / HQ changes / Player status
@@ -64,7 +61,7 @@ public class TransitionUI : MonoBehaviour
     private TransitionInfoData transitionInfoData = new TransitionInfoData();
 
     private ModalTransitionSubState state;
-   
+
     //colours
     string colourDefault;
     string colourNeutral;
@@ -325,7 +322,7 @@ public class TransitionUI : MonoBehaviour
         endLevelTextLeft.color = colorText;
         endLevelTextRight.color = colorText;
         //set up options
-        colorBackground.a = 0.50f;
+        colorBackground.a = 0.75f;
         for (int i = 0; i < arrayOfEndLevelOptions.Length; i++)
         {
             EndLevelInteraction option = arrayOfEndLevelOptions[i];
@@ -572,19 +569,44 @@ public class TransitionUI : MonoBehaviour
             TransitionInfoData data = transitionInfoData;
 
             #region End Level
+            //
+            // - - - End Level
+            //
             endLevelBackground.gameObject.SetActive(true);
             for (int i = 0; i < arrayOfEndLevelOptions.Length; i++)
             {
                 EndLevelInteraction option = arrayOfEndLevelOptions[i];
                 if (option != null)
                 {
-                    //hq
+                    //hq Portrait
                     option.hqPortrait.sprite = data.listOfHqSprites[i];
                     option.hqTitle.text = string.Format("{0}{1}{2}", colourHeader, data.listOfHqTitles[i], colourEnd);
-                    if (Random.Range(0, 100) < 50)
-                    { option.medal.sprite = GameManager.i.guiScript.medalSprite;  }
-                    else
-                    { option.medal.sprite = GameManager.i.guiScript.failureSprite; }
+                    //EndLevelData
+                    EndLevelData endData = data.listOfEndLevelData[i];
+                    if (endData != null)
+                    {
+                        //renown
+                        option.hqRenown.text = string.Format("{0}{1}{2}{3}", colourHeader, endData.renown > 0 ? "+" : "", endData.renown, colourEnd);
+                        //medal
+                        switch (endData.medal)
+                        {
+                            case EndlLevelMedal.Gold:
+                            case EndlLevelMedal.Silver:
+                            case EndlLevelMedal.Bronze:
+                                option.medal.sprite = GameManager.i.guiScript.medalSprite;
+                                break;
+                            case EndlLevelMedal.DeadDuck:
+                                option.medal.sprite = GameManager.i.guiScript.failureSprite;
+                                break;
+                            default:
+                                Debug.LogWarningFormat("Unrecognised endData.medal \"{0}\"", endData.medal);
+                                option.medal.sprite = GameManager.i.guiScript.failureSprite;
+                                break;
+                        }
+                        //stat text
+                        option.assessmentText.text = endData.factorText;
+                    }
+                    else { Debug.LogWarningFormat("Invalid EndLevelData (Null) for listOfEndLevelData[{0}]", i); }
                 }
                 else { Debug.LogWarningFormat("Invalid arrayOfEndLevelInteraction (Null) for arrayOfEndLevelOptions[{0}]", i); }
             }
@@ -731,7 +753,7 @@ public class TransitionUI : MonoBehaviour
         tooltipSpecial.x_offset = x_offset;
         tooltipSpecial.y_offset = y_offset;
     }
-    
+
     /// <summary>
     /// Initialise Help
     /// </summary>
@@ -998,7 +1020,7 @@ public class TransitionUI : MonoBehaviour
                 newState = ModalTransitionSubState.BriefingTwo;
                 ClearSpecialButtonTooltip();
                 break;
-            case ModalTransitionSubState.BriefingTwo:  break; //do nothing
+            case ModalTransitionSubState.BriefingTwo: break; //do nothing
             default: Debug.LogWarningFormat("Unrecognised ModalTransitionState \"{0}\"", GameManager.i.inputScript.ModalTransitionState); break;
         }
         //close tooltips
@@ -1031,7 +1053,7 @@ public class TransitionUI : MonoBehaviour
         ModalTransitionSubState newState = ModalTransitionSubState.None;
         switch (GameManager.i.inputScript.ModalTransitionState)
         {
-            case ModalTransitionSubState.EndLevel:  break; //do nothing
+            case ModalTransitionSubState.EndLevel: break; //do nothing
             case ModalTransitionSubState.HQ:
                 ClearSpecialButtonTooltip();
                 newState = ModalTransitionSubState.EndLevel;
@@ -1132,7 +1154,7 @@ public class TransitionUI : MonoBehaviour
     }
 
 
-    
+
 
 
     //new methods above here

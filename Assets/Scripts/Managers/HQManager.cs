@@ -1515,6 +1515,130 @@ public class HQManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// Gets EndLevelData for a specified HQ actor for End Level transitionUI page. Returns empty data package if a problem.
+    /// </summary>
+    /// <param name="actorHQ"></param>
+    /// <returns></returns>
+    public EndLevelData GetEndLevelData(ActorHQ actorHQ)
+    {
+        EndLevelData data = new EndLevelData();
+        int rndNum;
+        int overall = 0;
+        int factorBoss = 4;
+        int factorSubBoss1 = 3;
+        int factorSubBoss2 = 2;
+        int factorSubBoss3 = 1;
+        int factorFirst = 3;
+        int factorSecond = 2;
+        int factorThird = 1;
+        int overallDivisor = 4;
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("{0}<b>Assessment</b>{1}{2}{3}", colourAlert, colourEnd, "\n", "\n");
+        switch (actorHQ)
+        {
+            case ActorHQ.Boss:
+                //first factor -> Objectives
+                rndNum = Random.Range(0, 4);
+                overall += rndNum * factorFirst;
+                builder.Append(GetFactorString("Objectives", rndNum));
+                //second factor -> City Support
+                rndNum = Random.Range(0, 4);
+                overall += rndNum * factorSecond;
+                builder.Append(GetFactorString("City Support", rndNum));
+                //third factor -> Personal Opinion
+                rndNum = Random.Range(0, 4);
+                overall += rndNum * factorThird;
+                builder.Append(GetFactorString("Opinion", rndNum));
+                //overall
+                overall /= overallDivisor;
+                data.renown = overall * factorBoss;
+                data.medal = (EndlLevelMedal)overall;
+                break;
+            case ActorHQ.SubBoss1:
+                //first factor -> Targets completed
+                rndNum = Random.Range(0, 4);
+                overall += rndNum * factorFirst;
+                builder.Append(GetFactorString("Targets", rndNum));
+                //second factor -> Gear Lost
+                rndNum = Random.Range(0, 4);
+                overall += rndNum * factorSecond;
+                builder.Append(GetFactorString("Gear Lost", rndNum));
+                //third factor -> Personal Opinion
+                rndNum = Random.Range(0, 4);
+                overall += rndNum * factorThird;
+                builder.Append(GetFactorString("Opinion", rndNum));
+                //overall
+                overall /= overallDivisor;
+                data.renown = overall * factorSubBoss1;
+                data.medal = (EndlLevelMedal)overall;
+                break;
+            case ActorHQ.SubBoss2:
+                //first factor -> Exploding Criss
+                rndNum = Random.Range(0, 4);
+                overall += rndNum * factorFirst;
+                builder.Append(GetFactorString("District Crisis", rndNum));
+                //second factor -> HQ Approval
+                rndNum = Random.Range(0, 4);
+                overall += rndNum * factorSecond;
+                builder.Append(GetFactorString("HQ Approval", rndNum));
+                //third factor -> Personal Opinion
+                rndNum = Random.Range(0, 4);
+                overall += rndNum * factorThird;
+                builder.Append(GetFactorString("Opinion", rndNum));
+                //overall
+                overall /= overallDivisor;
+                data.renown = overall * factorSubBoss2;
+                data.medal = (EndlLevelMedal)overall;
+                break;
+            case ActorHQ.SubBoss3:
+                //first factor -> Captured
+                rndNum = Random.Range(0, 4);
+                overall += rndNum * factorFirst;
+                builder.Append(GetFactorString("Captured", rndNum));
+                //second factor -> Investigations
+                rndNum = Random.Range(0, 4);
+                overall += rndNum * factorSecond;
+                builder.Append(GetFactorString("Investigations", rndNum));
+                //third factor -> Personal Opinion
+                rndNum = Random.Range(0, 4);
+                overall += rndNum * factorThird;
+                builder.Append(GetFactorString("Opinion", rndNum));
+                //overall
+                overall /= overallDivisor;
+                data.renown = overall * factorSubBoss3;
+                data.medal = (EndlLevelMedal)overall;
+                break;
+            default: Debug.LogWarningFormat("Unrecognised actorHQ \"{0}\"", actorHQ); break;
+        }
+        if (overall > 0 && overall < 4)
+        {
+            builder.AppendFormat("{0}{1}<b>Overall</b><pos=65%>{2}{3}", "\n", colourAlert, colourEnd, GameManager.i.guiScript.GetNormalStars(overall));
+            data.factorText = builder.ToString();
+        }
+        else
+        {
+            Debug.LogWarningFormat("Invalid overall \"{0}\"", overall);
+            builder.AppendFormat("{0}{1}<b>Overall</b><pos=65%>{2}{3}", "\n", colourAlert, colourEnd, GameManager.i.guiScript.GetNormalStars(0));
+            data.factorText = builder.ToString();
+        }
+        return data;
+    }
+
+    /// <summary>
+    /// Returns a colour Formatted string for a factor
+    /// </summary>
+    /// <param name="factorName"></param>
+    /// <param name="stars"></param>
+    /// <returns></returns>
+    private string GetFactorString(string factorName, int stars)
+    {
+        if (string.IsNullOrEmpty(factorName) == false)
+        { return string.Format("<b><size=90%>{0}</size></b><pos=65%>{1}{2}", factorName, GameManager.i.guiScript.GetNormalStars(stars), "\n"); }
+        else
+        { Debug.LogWarning("Invalid factorName (Null or Empty)"); }
+        return "Unknown";
+    }
 
     //new methods above here
 }

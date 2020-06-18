@@ -962,6 +962,18 @@ public class MetaManager : MonoBehaviour
     private void InitialiseEndLevel()
     {
         transitionInfoData.objectiveStatus = GameManager.i.objectiveScript.GetObjectiveDetails();
+        // - - - Director
+        EndLevelData dataBoss = GameManager.i.hqScript.GetEndLevelData(ActorHQ.Boss);
+        transitionInfoData.listOfEndLevelData.Add(dataBoss);
+        // - - - Quartermaster
+        EndLevelData dataSubBoss1 = GameManager.i.hqScript.GetEndLevelData(ActorHQ.SubBoss1);
+        transitionInfoData.listOfEndLevelData.Add(dataSubBoss1);
+        // - - - Financier
+        EndLevelData dataSubBoss2 = GameManager.i.hqScript.GetEndLevelData(ActorHQ.SubBoss2);
+        transitionInfoData.listOfEndLevelData.Add(dataSubBoss2);
+        // - - - Enforcer
+        EndLevelData dataSubBoss3 = GameManager.i.hqScript.GetEndLevelData(ActorHQ.SubBoss3);
+        transitionInfoData.listOfEndLevelData.Add(dataSubBoss3);
     }
 
     /// <summary>

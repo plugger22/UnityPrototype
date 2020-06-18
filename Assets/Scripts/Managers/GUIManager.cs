@@ -1067,7 +1067,7 @@ public class GUIManager : MonoBehaviour
             case 2: starString = string.Format("<font=\"fontAwesomeSolid\">{0}{1} {2} {3}{4}{5}{6}{7}</font>", colourNeutral, starChar, starChar, colourEnd, colourGrey, alpha, starChar, colourEnd); break;
             case 1: starString = string.Format("<font=\"fontAwesomeSolid\">{0}{1}{2} {3}{4}{5} {6}{7}</font>", colourNeutral, starChar, colourEnd, colourGrey, alpha, starChar, starChar, colourEnd); break;
             case 0: starString = string.Format("<font=\"fontAwesomeSolid\">{0}{1}{2} {3} {4}{5}</font>", colourGrey, alpha, starChar, starChar, starChar, colourEnd); break;
-            default: Debug.LogWarningFormat("Unrecognised num \"{0}\"", starString); break;
+            default: Debug.LogWarningFormat("Unrecognised num \"{0}\"", stars); break;
         }
         return starString;
     }

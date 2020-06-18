@@ -1291,9 +1291,9 @@ namespace packageAPI
     [System.Serializable]
     public class EndLevelData
     {
-        public string headerText;                   //goes above hqPortrait
-        public string factorText;                   //goes into Assessment text
+        public string factorText;                   //Assessment text
         public EndlLevelMedal medal;                //type of medal awarded
+        public int renown;                          //renown given
     }
 
 
