@@ -1016,10 +1016,11 @@ public class DebugGUI : MonoBehaviour
 
             //thirtieth button
             modifier = 29;
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * modifier + button_height * modifier, button_width, button_height), "TEST"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * modifier + button_height * modifier, button_width, button_height), "Rnd Obj Prog"))
             {
-                Debug.Log("[Dbg] Button -> TEST");
-                //test condition
+                Debug.Log("[Dbg] Button -> Random Objective Progress");
+                //test condition -> randomly give progress to objectives
+                GameManager.i.objectiveScript.DebugTestObjectives();
             }
 
             //

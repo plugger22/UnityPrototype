@@ -335,6 +335,7 @@ public class ObjectiveManager : MonoBehaviour
     /// <returns></returns>
     public string GetObjectiveDetails()
     {
+        string posTag = "<pos=70%>";
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < listOfObjectives.Count; i++)
         {
@@ -345,10 +346,10 @@ public class ObjectiveManager : MonoBehaviour
                 builder.AppendFormat("{0}{1}{2}  ", colourNormal, objective.tag, colourEnd);
                 //objective complete if progress 100% or above
                 if (objective.progress >= 100)
-                { builder.AppendFormat("{0}100 %{1}", colourGood, colourEnd); }
+                { builder.AppendFormat("{0}{1}100 %{2}", posTag, colourGood, colourEnd); }
                 else if (objective.progress > 0)
-                { builder.AppendFormat("{0}{1} %{2}", colourNeutral, objective.progress, colourEnd); }
-                else { builder.AppendFormat("{0}{1} %{2}", colourBad, objective.progress, colourEnd); }
+                { builder.AppendFormat("{0}{1}{2} %{3}", posTag, colourNeutral, objective.progress, colourEnd); }
+                else { builder.AppendFormat("{0}{1}{2} %{3}", posTag, colourBad, objective.progress, colourEnd); }
             }
             else { Debug.LogWarningFormat("Invalid objective (Null) for listOfObjectives[{0}]", i); }
         }
@@ -375,6 +376,20 @@ public class ObjectiveManager : MonoBehaviour
             else { Debug.LogWarningFormat("Invalid objective (Null) for listOfObjectives[{0}]", i); }
         }
         return numCompleted;
+    }
+
+    /// <summary>
+    /// updates all objectives with a random progress amount each time clicked
+    /// </summary>
+    public void DebugTestObjectives()
+    {
+        for (int i = 0; i < listOfObjectives.Count; i++)
+        {
+            Objective objective = listOfObjectives[i];
+            if (objective != null)
+            { UpdateObjectiveProgress(objective.name, UnityEngine.Random.Range(0, 100), "Debug"); }
+            else { Debug.LogErrorFormat("Invalid objective (Null) for listOfObjectives[{0}]", i); }
+        }
     }
 
     //new methods above here

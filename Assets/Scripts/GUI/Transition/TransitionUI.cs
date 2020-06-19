@@ -1155,9 +1155,7 @@ public class TransitionUI : MonoBehaviour
         details.sprite = GameManager.i.guiScript.infoSprite;
         details.modalLevel = 2;
         details.modalState = ModalSubState.Transition;
-        details.help0 = "transitionHq_0";
-        details.help1 = "transitionHq_1";
-        details.help2 = "transitionHq_2";
+        details.help0 = "test0";
         //open outcome windown (will open MetaGameUI via triggerEvent once closed
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "TransitionUI.cs -> ExecuteObjectives");
     }

@@ -220,3 +220,21 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	
 Dev seed 45349 -> Friday, 19 June 2020 12:50 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 22922 -> Friday, 19 June 2020 12:54 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 9935 -> Friday, 19 June 2020 12:54 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 63221 -> Friday, 19 June 2020 4:43 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 25165 -> Friday, 19 June 2020 4:50 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 53375 -> Friday, 19 June 2020 4:59 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 5811 -> Friday, 19 June 2020 5:04 PM
+City seed 5678 -> London, United Kingdom

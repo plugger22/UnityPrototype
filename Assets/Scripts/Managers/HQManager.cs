@@ -1536,9 +1536,11 @@ public class HQManager : MonoBehaviour
     public EndLevelData GetEndLevelData(ActorHQ actorHQ)
     {
         EndLevelData data = new EndLevelData();
-        int num, times;
         int tally = 0;
         int overall = 0;
+        int num = 0;
+        int times = 0;
+        int count = 0;
         int factorBoss = 4;
         int factorSubBoss1 = 3;
         int factorSubBoss2 = 2;
@@ -1551,16 +1553,49 @@ public class HQManager : MonoBehaviour
         switch (actorHQ)
         {
             case ActorHQ.Boss:
-                //first factor -> Objectives
-                num = 0;
+                //
+                // - - - first factor -> Objectives
+                //
+                List<Objective> listOfObjectives = GameManager.i.objectiveScript.GetListOfObjectives();
+                if (listOfObjectives != null)
+                {
+                    count = listOfObjectives.Count;
+                    if (count > 0)
+                    {
+                        for (int i = 0; i < count; i++)
+                        {
+                            Objective objective = listOfObjectives[i];
+                            if (objective != null)
+                            {
+                                num += objective.progress;
+                                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Objective \"{1}\", progress {2}, num {3}{4}", actorHQ, objective.tag, objective.progress, num, "\n");
+                            }
+                            else { Debug.LogWarningFormat("Invalid objective (Null) for listOfObjectives[{0}]", i); }
+                        }
+                    }
+                    else { Debug.LogWarning("Invalid listOfObjectives (Empty)"); }
+                }
+                else { Debug.LogWarning("Invalid listOfObjectives (Null)"); }
+                //adjust tally to a 0 to 3 range
+                if (count > 0)
+                {
+                    num = Mathf.RoundToInt(num / count);
+                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Objectives num RndToInt {1}{2}", actorHQ, num, "\n");
+                    num = GetTenFactor(num / 10);
+                }
+                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Objectives  TenFactor result {1}{2}", actorHQ, num, "\n");
                 builder.Append(GetFactorString("Objectives", num));
                 tally += num * factorFirst;
-                //second factor -> City Loyalty
+                //
+                // - - - second factor -> City Loyalty
+                //
                 num = GetTenFactor(GameManager.i.cityScript.CityLoyalty);
                 Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} City Loyalty {1}{2}", actorHQ, num, "\n");
                 builder.Append(GetFactorString("City Loyalty", num));
                 tally += num * factorSecond;
-                //third factor -> Personal Opinion
+                //
+                // - - - third factor -> Personal Opinion
+                //
                 Actor actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
                 if (actor != null)
                 { num = actor.GetDatapoint(ActorDatapoint.Motivation1); }
@@ -1578,17 +1613,23 @@ public class HQManager : MonoBehaviour
                 data.medal = (EndlLevelMedal)overall;
                 break;
             case ActorHQ.SubBoss1:
-                //first factor -> Targets completed -> 3+ targets is 3 stars (capped)
+                //
+                // - - - first factor -> Targets completed -> 3+ targets is 3 stars (capped)
+                //
                 num = GameManager.i.dataScript.StatisticGetLevel(StatType.TargetSuccesses);
                 Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Targets (succeeded) {1}{2}", actorHQ, num, "\n");
                 num = Mathf.Min(num, 3);
                 builder.Append(GetFactorString("Targets", num));
                 tally += num * factorFirst;
-                //second factor -> Gear Lost
+                //
+                // - - - second factor -> Gear Lost
+                //
                 num = 0;
                 builder.Append(GetFactorString("Gear Lost", num));
                 tally += num * factorSecond;
-                //third factor -> Personal Opinion
+                //
+                // - - - third factor -> Personal Opinion
+                //
                 actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
                 if (actor != null)
                 { num = actor.GetDatapoint(ActorDatapoint.Motivation1); }
@@ -1606,18 +1647,24 @@ public class HQManager : MonoBehaviour
                 data.medal = (EndlLevelMedal)overall;
                 break;
             case ActorHQ.SubBoss2:
-                //first factor -> Exploding Crisis (one star for each instance, capped at 3)
+                //
+                // - - - first factor -> Exploding Crisis (one star for each instance, capped at 3)
+                //
                 times = GameManager.i.dataScript.StatisticGetLevel(StatType.NodeCrisisExplodes);
                 num = Mathf.Min(times, 3);
                 Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} NodeCrisisExploded {1}, stars {2}{3}", actorHQ, times, num, "\n");
                 builder.Append(GetFactorString("District Crisis", num));
                 tally += num * factorFirst;
-                //second factor -> HQ Approval
+                //
+                // - - - second factor -> HQ Approval
+                //
                 num = GetTenFactor(GetHqApproval());
                 Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} HQ Approval {1}{2}", actorHQ, num, "\n");
                 builder.Append(GetFactorString("HQ Approval", num));
                 tally += num * factorSecond;
-                //third factor -> Personal Opinion
+                //
+                // - - - third factor -> Personal Opinion
+                //
                 actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
                 if (actor != null)
                 { num = actor.GetDatapoint(ActorDatapoint.Motivation1); }
@@ -1635,19 +1682,25 @@ public class HQManager : MonoBehaviour
                 data.medal = (EndlLevelMedal)overall;
                 break;
             case ActorHQ.SubBoss3:
-                //first factor -> Captured (3 stars if not captured, 0 stars if so)
+                //
+                // - - - first factor -> Captured (3 stars if not captured, 0 stars if so)
+                //
                 times = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerCaptured);
                 if (times == 0) { num = 3; } else { num = 0; }
                 Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} TimesCaptured {1}, stars {2}{3}", actorHQ, times, num, "\n");
                 builder.Append(GetFactorString("Captured", num));
                 tally += num * factorFirst;
-                //second factor -> Investigations (3 stars if no Investigations launched, 0 stars if so)
+                //
+                // - - - second factor -> Investigations (3 stars if no Investigations launched, 0 stars if so)
+                //
                 times = GameManager.i.dataScript.StatisticGetLevel(StatType.InvestigationsLaunched);
                 if (times == 0) { num = 3; } else { num = 0; }
                 Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} TimesInvestigated {1}, stars {2}{3}", actorHQ, times, num, "\n");
                 builder.Append(GetFactorString("Investigations", num));
                 tally += num * factorSecond;
-                //third factor -> Personal Opinion
+                //
+                // - - - third factor -> Personal Opinion
+                //
                 actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
                 if (actor != null)
                 { num = actor.GetDatapoint(ActorDatapoint.Motivation1); }
