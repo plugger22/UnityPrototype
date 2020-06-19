@@ -1579,7 +1579,7 @@ public class HQManager : MonoBehaviour
                 //adjust tally to a 0 to 3 range
                 if (count > 0)
                 {
-                    num = Mathf.RoundToInt(num / count);
+                    num = num / count;
                     Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Objectives num RndToInt {1}{2}", actorHQ, num, "\n");
                     num = GetTenFactor(num / 10);
                 }
