@@ -329,7 +329,7 @@ public class TransitionUI : MonoBehaviour
             if (option != null)
             {
                 //background colours
-                option.statBackground.color = colorBackground;
+                option.assessmentBackground.color = colorBackground;
             }
             else { Debug.LogWarningFormat("Invalid endLevelOption (Null) for arrayOfEndLevelOptions[{0}]", i); }
         }
@@ -572,6 +572,15 @@ public class TransitionUI : MonoBehaviour
             //
             // - - - End Level
             //
+            //clear out options
+            for (int i = 0; i < arrayOfEndLevelOptions.Length; i++)
+            {
+                arrayOfEndLevelOptions[i].hqPortrait.sprite = null;
+                arrayOfEndLevelOptions[i].hqTitle.text = "";
+                arrayOfEndLevelOptions[i].hqRenown.text = "";
+                arrayOfEndLevelOptions[i].medal.sprite = null;
+                arrayOfEndLevelOptions[i].assessmentText.text = "";
+            }
             endLevelBackground.gameObject.SetActive(true);
             for (int i = 0; i < arrayOfEndLevelOptions.Length; i++)
             {
@@ -604,7 +613,7 @@ public class TransitionUI : MonoBehaviour
                                 break;
                         }
                         //stat text
-                        option.assessmentText.text = endData.factorText;
+                        option.assessmentText.text = endData.assessmentText;
                     }
                     else { Debug.LogWarningFormat("Invalid EndLevelData (Null) for listOfEndLevelData[{0}]", i); }
                 }

@@ -14,7 +14,7 @@ public class EndLevelInteraction : MonoBehaviour
     public TextMeshProUGUI hqTitle;
     public TextMeshProUGUI hqRenown;
     public Image medal;
-    public Image statBackground;
+    public Image assessmentBackground;
     public TextMeshProUGUI assessmentText;
 
 
@@ -25,7 +25,7 @@ public class EndLevelInteraction : MonoBehaviour
         Debug.Assert(hqTitle != null, "Invalid hqTitle (Null)");
         Debug.Assert(hqRenown != null, "Invalid hqStars (Null)");
         Debug.Assert(medal != null, "Invalid medal (Null)");
-        Debug.Assert(statBackground != null, "Invalid statBackground (Null)");
+        Debug.Assert(assessmentBackground != null, "Invalid statBackground (Null)");
         Debug.Assert(assessmentText != null, "Invalid statText (Null)");
     }
 }

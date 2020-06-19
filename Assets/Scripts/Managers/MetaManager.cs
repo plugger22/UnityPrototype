@@ -123,7 +123,6 @@ public class MetaManager : MonoBehaviour
         ResetMetaAdmin();
         //hide top bar UI at start of meta game
         EventManager.i.PostNotification(EventType.TopBarHide, this, null, "MetaManager.cs -> Hide TopBarUI");
-        GameManager.i.statScript.ProcessMetaStatistics();
         GameManager.i.topicScript.ProcessMetaTopics();
         GameManager.i.hqScript.ProcessMetaHq(playerSide);          //needs to be BEFORE MetaActors
         GameManager.i.actorScript.ProcessMetaActors(playerSide);
@@ -137,6 +136,8 @@ public class MetaManager : MonoBehaviour
         InitialisePlayerStatus();
         InitialiseBriefingOne();
         InitialiseBriefingTwo();
+        //needs to AFTER InitialiseEndLevel (relies on level stats)
+        GameManager.i.statScript.ProcessMetaStatistics();
         //Player metaGame Options choice
         metaInfoData.Reset();
         InitialiseMetaOptions();

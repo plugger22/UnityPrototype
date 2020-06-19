@@ -114,8 +114,10 @@ public class HQManager : MonoBehaviour
         get { return _approvalAuthority; }
         private set
         {
+            int previous = _approvalAuthority;
             _approvalAuthority = value;
             _approvalAuthority = Mathf.Clamp(_approvalAuthority, 0, maxHqApproval);
+            Debug.LogFormat("[HQ] HqManager.cs: HQ Approval Authority now {0}, was {1}{2}", _approvalAuthority, previous, "\n");
             //update top widget bar if current side is authority
             if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideAuthority.level)
             { EventManager.i.PostNotification(EventType.ChangeHqBar, this, _approvalAuthority, "HqManager.cs -> ApprovalAuthority"); }
@@ -130,8 +132,10 @@ public class HQManager : MonoBehaviour
         get { return _approvalResistance; }
         private set
         {
+            int previous = _approvalResistance;
             _approvalResistance = value;
             _approvalResistance = Mathf.Clamp(_approvalResistance, 0, maxHqApproval);
+            Debug.LogFormat("[HQ] HqManager.cs: HQ Approval Resistance now {0}, was {1}{2}", _approvalResistance, previous, "\n");
             //update top widget bar if current side is resistance
             if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideResistance.level)
             { EventManager.i.PostNotification(EventType.ChangeHqBar, this, _approvalResistance, "HqManager.cs -> ApprovalResistance"); }
@@ -1523,7 +1527,7 @@ public class HQManager : MonoBehaviour
     public EndLevelData GetEndLevelData(ActorHQ actorHQ)
     {
         EndLevelData data = new EndLevelData();
-        int rndNum;
+        int num;
         int overall = 0;
         int factorBoss = 4;
         int factorSubBoss1 = 3;
@@ -1539,35 +1543,54 @@ public class HQManager : MonoBehaviour
         {
             case ActorHQ.Boss:
                 //first factor -> Objectives
-                rndNum = Random.Range(0, 4);
-                overall += rndNum * factorFirst;
-                builder.Append(GetFactorString("Objectives", rndNum));
-                //second factor -> City Support
-                rndNum = Random.Range(0, 4);
-                overall += rndNum * factorSecond;
-                builder.Append(GetFactorString("City Support", rndNum));
+                num = 0;
+                builder.Append(GetFactorString("Objectives", num));
+                overall += num * factorFirst;
+                //second factor -> City Loyalty
+                num = GetTenFactor(GameManager.i.cityScript.CityLoyalty);
+                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} City Loyalty {1}{2}", actorHQ, num, "\n");
+                builder.Append(GetFactorString("City Loyalty", num));
+                overall += num * factorSecond;
                 //third factor -> Personal Opinion
-                rndNum = Random.Range(0, 4);
-                overall += rndNum * factorThird;
-                builder.Append(GetFactorString("Opinion", rndNum));
+                Actor actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
+                if (actor != null)
+                { num = actor.GetDatapoint(ActorDatapoint.Motivation1); }
+                else
+                {
+                    Debug.LogWarning("Invalid actor (Null) for ActorHQ.Boss");
+                    num = 0;
+                }
+                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Opinion {1}{2}", actorHQ, num, "\n");
+                builder.Append(GetFactorString("Opinion", num));
+                overall += num * factorThird;
                 //overall
                 overall /= overallDivisor;
                 data.renown = overall * factorBoss;
                 data.medal = (EndlLevelMedal)overall;
                 break;
             case ActorHQ.SubBoss1:
-                //first factor -> Targets completed
-                rndNum = Random.Range(0, 4);
-                overall += rndNum * factorFirst;
-                builder.Append(GetFactorString("Targets", rndNum));
+                //first factor -> Targets completed -> 3+ targets is 3 stars (capped)
+                num = GameManager.i.dataScript.StatisticGetLevel(StatType.TargetSuccesses);
+                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Targets (succeeded) {1}{2}", actorHQ, num, "\n");
+                num = Mathf.Min(num, 3);
+                builder.Append(GetFactorString("Targets", num));
+                overall += num * factorFirst;
                 //second factor -> Gear Lost
-                rndNum = Random.Range(0, 4);
-                overall += rndNum * factorSecond;
-                builder.Append(GetFactorString("Gear Lost", rndNum));
+                num = 0;
+                builder.Append(GetFactorString("Gear Lost", num));
+                overall += num * factorSecond;
                 //third factor -> Personal Opinion
-                rndNum = Random.Range(0, 4);
-                overall += rndNum * factorThird;
-                builder.Append(GetFactorString("Opinion", rndNum));
+                actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
+                if (actor != null)
+                { num = actor.GetDatapoint(ActorDatapoint.Motivation1); }
+                else
+                {
+                    Debug.LogWarning("Invalid actor (Null) for ActorHQ.Boss");
+                    num = 0;
+                }
+                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Opinion {1}{2}", actorHQ, num, "\n");
+                builder.Append(GetFactorString("Opinion", num));
+                overall += num * factorThird;
                 //overall
                 overall /= overallDivisor;
                 data.renown = overall * factorSubBoss1;
@@ -1575,35 +1598,56 @@ public class HQManager : MonoBehaviour
                 break;
             case ActorHQ.SubBoss2:
                 //first factor -> Exploding Criss
-                rndNum = Random.Range(0, 4);
-                overall += rndNum * factorFirst;
-                builder.Append(GetFactorString("District Crisis", rndNum));
+                num = 0;
+                builder.Append(GetFactorString("District Crisis", num));
+                overall += num * factorFirst;
                 //second factor -> HQ Approval
-                rndNum = Random.Range(0, 4);
-                overall += rndNum * factorSecond;
-                builder.Append(GetFactorString("HQ Approval", rndNum));
+                num = GetTenFactor(GetHqApproval());
+                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} HQ Approval {1}{2}", actorHQ, num, "\n");
+                builder.Append(GetFactorString("HQ Approval", num));
+                overall += num * factorSecond;
                 //third factor -> Personal Opinion
-                rndNum = Random.Range(0, 4);
-                overall += rndNum * factorThird;
-                builder.Append(GetFactorString("Opinion", rndNum));
+                actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
+                if (actor != null)
+                { num = actor.GetDatapoint(ActorDatapoint.Motivation1); }
+                else
+                {
+                    Debug.LogWarning("Invalid actor (Null) for ActorHQ.Boss");
+                    num = 0;
+                }
+                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Opinion {1}{2}", actorHQ, num, "\n");
+                builder.Append(GetFactorString("Opinion", num));
+                overall += num * factorThird;
                 //overall
                 overall /= overallDivisor;
                 data.renown = overall * factorSubBoss2;
                 data.medal = (EndlLevelMedal)overall;
                 break;
             case ActorHQ.SubBoss3:
-                //first factor -> Captured
-                rndNum = Random.Range(0, 4);
-                overall += rndNum * factorFirst;
-                builder.Append(GetFactorString("Captured", rndNum));
-                //second factor -> Investigations
-                rndNum = Random.Range(0, 4);
-                overall += rndNum * factorSecond;
-                builder.Append(GetFactorString("Investigations", rndNum));
+                //first factor -> Captured (3 stars if not captured, 0 stars if so)
+                int timesCaptured = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerCaptured);
+                if (timesCaptured == 0) { num = 3; }  else { num = 0; }
+                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} TimesCaptured {1}, stars {2}{3}", actorHQ, timesCaptured, num, "\n");
+                builder.Append(GetFactorString("Captured", num));
+                overall += num * factorFirst;
+                //second factor -> Investigations (3 stars if no Investigations launched, 0 stars if so)
+                int timesInvestigated = GameManager.i.dataScript.StatisticGetLevel(StatType.InvestigationsLaunched);
+                if (timesInvestigated == 0) { num = 3; } else { num = 0; }
+                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} TimesInvestigated {1}, stars {2}{3}", actorHQ, timesInvestigated, num, "\n");
+                builder.Append(GetFactorString("Investigations", num));
+                overall += num * factorSecond;
                 //third factor -> Personal Opinion
-                rndNum = Random.Range(0, 4);
-                overall += rndNum * factorThird;
-                builder.Append(GetFactorString("Opinion", rndNum));
+                actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
+                if (actor != null)
+                { num = actor.GetDatapoint(ActorDatapoint.Motivation1); }
+                else
+                {
+                    Debug.LogWarning("Invalid actor (Null) for ActorHQ.Boss");
+                    num = 0;
+                }
+                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Opinion {1}{2}", actorHQ, num, "\n");
+                builder.Append(GetFactorString("Opinion", num));
+                overall += num * factorThird;
                 //overall
                 overall /= overallDivisor;
                 data.renown = overall * factorSubBoss3;
@@ -1611,16 +1655,16 @@ public class HQManager : MonoBehaviour
                 break;
             default: Debug.LogWarningFormat("Unrecognised actorHQ \"{0}\"", actorHQ); break;
         }
-        if (overall > 0 && overall < 4)
+        if (overall >= 0 && overall <= 3)
         {
             builder.AppendFormat("{0}{1}<b>Overall</b><pos=65%>{2}{3}", "\n", colourAlert, colourEnd, GameManager.i.guiScript.GetNormalStars(overall));
-            data.factorText = builder.ToString();
+            data.assessmentText = builder.ToString();
         }
         else
         {
             Debug.LogWarningFormat("Invalid overall \"{0}\"", overall);
             builder.AppendFormat("{0}{1}<b>Overall</b><pos=65%>{2}{3}", "\n", colourAlert, colourEnd, GameManager.i.guiScript.GetNormalStars(0));
-            data.factorText = builder.ToString();
+            data.assessmentText = builder.ToString();
         }
         return data;
     }
@@ -1634,10 +1678,45 @@ public class HQManager : MonoBehaviour
     private string GetFactorString(string factorName, int stars)
     {
         if (string.IsNullOrEmpty(factorName) == false)
-        { return string.Format("<b><size=90%>{0}</size></b><pos=65%>{1}{2}", factorName, GameManager.i.guiScript.GetNormalStars(stars), "\n"); }
+        {
+            if (stars >= 0 && stars <= 3)
+            { return string.Format("<b><size=90%>{0}</size></b><pos=65%>{1}{2}", factorName, GameManager.i.guiScript.GetNormalStars(stars), "\n"); }
+            else
+            { Debug.LogWarningFormat("Invalid stars \"{0}\"", stars); }
+        }
         else
         { Debug.LogWarning("Invalid factorName (Null or Empty)"); }
         return "Unknown";
+    }
+
+    /// <summary>
+    /// returns a 0 - 3 star rating for anything that has a 0 - 10 value range, eg. City Support, HQ Approval
+    /// </summary>
+    /// <param name="factor"></param>
+    /// <returns></returns>
+    private int GetTenFactor(int factor)
+    {
+        int num = 0;
+        switch (factor)
+        {
+            case 10:
+            case 9:
+                num = 3; break;
+            case 8:
+            case 7:
+            case 6:
+                num = 2; break;
+            case 5:
+            case 4:
+            case 3:
+                num = 1; break;
+            case 2:
+            case 1:
+            case 0:
+                num = 0; break;
+            default: Debug.LogWarningFormat("Invalid factor \"{0}\" (should be 0 to 10)", factor); break;
+        }
+        return num;
     }
 
     //new methods above here

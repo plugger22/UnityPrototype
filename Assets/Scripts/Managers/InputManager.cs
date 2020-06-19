@@ -897,7 +897,8 @@ public class InputManager : MonoBehaviour
         builder.AppendFormat(" Authority Player -> {0}{1}", GameManager.i.playerScript.GetPlayerNameAuthority(), "\n");
         builder.AppendFormat(" Resistance Player -> {0}{1}{2}", GameManager.i.playerScript.GetPlayerNameResistance(), "\n", "\n");
         builder.AppendFormat(" HQ Approval Authority -> {0}{1}", GameManager.i.hqScript.ApprovalAuthority, "\n");
-        builder.AppendFormat(" HQ Approval Resistance -> {0}{1}", GameManager.i.hqScript.ApprovalResistance, "\n");
+        builder.AppendFormat(" HQ Approval Resistance -> {0}{1}{2}", GameManager.i.hqScript.ApprovalResistance, "\n", "\n");
+        builder.AppendFormat(" City Loyalty -> {0}{1}", GameManager.i.cityScript.CityLoyalty, "\n");
         //backgrounds
         builder.AppendLine();
         builder.AppendLine();

@@ -259,7 +259,7 @@ MonoBehaviour:
   hqTitle: {fileID: 114073095542948952}
   hqRenown: {fileID: 114900381668243864}
   medal: {fileID: 114667803216296222}
-  statBackground: {fileID: 114884930409303778}
+  assessmentBackground: {fileID: 114884930409303778}
   assessmentText: {fileID: 114534887791321134}
 --- !u!114 &114184948689915628
 MonoBehaviour:
