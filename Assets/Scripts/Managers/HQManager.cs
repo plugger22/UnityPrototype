@@ -1050,7 +1050,7 @@ public class HQManager : MonoBehaviour
                     reason = string.Format("gains +{0} renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Renown);
                     actor.AddHistory(new HistoryActor() { text = string.Format("Gains Renown at HQ because of {0}", text) });
                     //add to list
-                    eventText = string.Format("{0}{1}{2}, {3}{4}{5}{6}gains {7}+{8} Renown{9} due to {10}", colourNormal, actor.actorName, colourEnd, colourNeutral, GetHqTitle(actor.statusHQ), 
+                    eventText = string.Format("{0}{1}{2}, {3}{4}{5}{6}gains {7}+{8} Renown{9} due to {10}", colourNormal, actor.actorName, colourEnd, colourNeutral, GetHqTitle(actor.statusHQ),
                         colourEnd, "\n", colourGood, change, colourEnd, text);
                     GameManager.i.dataScript.AddHqEvent(eventText);
                 }
@@ -1063,7 +1063,7 @@ public class HQManager : MonoBehaviour
                     reason = string.Format("loses {0} renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Renown);
                     actor.AddHistory(new HistoryActor() { text = string.Format("Loses Renown at HQ because of {0}", text) });
                     //add to list
-                    eventText = string.Format("{0}{1}{2}, {3}{4}{5}{6}loses {7}{8} Renown{9} because of {10}", colourNormal, actor.actorName, colourEnd, colourNeutral, GetHqTitle(actor.statusHQ), 
+                    eventText = string.Format("{0}{1}{2}, {3}{4}{5}{6}loses {7}{8} Renown{9} because of {10}", colourNormal, actor.actorName, colourEnd, colourNeutral, GetHqTitle(actor.statusHQ),
                         colourEnd, "\n", colourBad, change, colourEnd, text);
                     GameManager.i.dataScript.AddHqEvent(eventText);
                 }
@@ -1132,7 +1132,7 @@ public class HQManager : MonoBehaviour
                 reason = string.Format("gains +{0} Renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Renown);
                 actor.AddHistory(new HistoryActor() { text = string.Format("Gains Renown at HQ because of {0}", text) });
                 //add to list
-                eventText = string.Format("{0}{1}{2}, {3}{4}{5}{6}gains {7}+{8} Renown{9} due to {10}", colourNormal, actor.actorName, colourEnd, colourAlert, GetHqTitle(actor.statusHQ), 
+                eventText = string.Format("{0}{1}{2}, {3}{4}{5}{6}gains {7}+{8} Renown{9} due to {10}", colourNormal, actor.actorName, colourEnd, colourAlert, GetHqTitle(actor.statusHQ),
                     colourEnd, "\n", colourGood, change, colourEnd, text);
                 GameManager.i.dataScript.AddHqEvent(eventText);
             }
@@ -1145,7 +1145,7 @@ public class HQManager : MonoBehaviour
                 reason = string.Format("loses {0} Renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Renown);
                 actor.AddHistory(new HistoryActor() { text = string.Format("Loses Renown at HQ because of {0}", text) });
                 //add to list
-                text = string.Format("{0}{1}{2}, {3}{4}{5}{6}loses {7}{8} Renown{9} due to {10}", colourNormal, actor.actorName, colourEnd, colourAlert, GetHqTitle(actor.statusHQ), colourEnd, 
+                text = string.Format("{0}{1}{2}, {3}{4}{5}{6}loses {7}{8} Renown{9} due to {10}", colourNormal, actor.actorName, colourEnd, colourAlert, GetHqTitle(actor.statusHQ), colourEnd,
                     "\n", colourBad, change, colourEnd, text);
                 GameManager.i.dataScript.AddHqEvent(text);
             }
@@ -1253,8 +1253,11 @@ public class HQManager : MonoBehaviour
                             currentActor.statusHQ = ActorHQ.Worker;
                             //history
                             currentActor.AddHistory(new HistoryActor() { text = string.Format("Demoted from {0}{1}{2} position at HQ", colourAlert, GetHqTitle(newActor.statusHQ), colourEnd) });
-                            newActor.AddHistory(new HistoryActor() { text = string.Format("Promoted to {0}{1}{2} position at HQ (previously ({3}{4}{5})", 
-                                colourAlert, GetHqTitle(newActor.statusHQ), colourEnd, colourAlert, GetHqTitle(previousStatus), colourEnd) });
+                            newActor.AddHistory(new HistoryActor()
+                            {
+                                text = string.Format("Promoted to {0}{1}{2} position at HQ (previously ({3}{4}{5})",
+                                colourAlert, GetHqTitle(newActor.statusHQ), colourEnd, colourAlert, GetHqTitle(previousStatus), colourEnd)
+                            });
                         }
                         else
                         {
@@ -1286,10 +1289,16 @@ public class HQManager : MonoBehaviour
                             if (newActor.Renown > 15 && newActor.statusHQ == ActorHQ.Worker)
                             {
                                 //had a higher position previously (can't say what it was 'cause when they were bumped they were sent back to the Worker pool)
-                                newActor.AddHistory(new HistoryActor() { text = string.Format("Reasssigned to {0}{1}{2} position at HQ", colourAlert, GetHqTitle(newActor.statusHQ), colourEnd)});
+                                newActor.AddHistory(new HistoryActor() { text = string.Format("Reasssigned to {0}{1}{2} position at HQ", colourAlert, GetHqTitle(newActor.statusHQ), colourEnd) });
                             }
-                            else { newActor.AddHistory(new HistoryActor() { text = string.Format("Promoted to {0}{1}{2} position at HQ (previously {3}{4}{5})", 
-                                colourAlert, GetHqTitle(newActor.statusHQ), colourEnd, colourAlert, GetHqTitle(previousStatus), colourEnd) }); }
+                            else
+                            {
+                                newActor.AddHistory(new HistoryActor()
+                                {
+                                    text = string.Format("Promoted to {0}{1}{2} position at HQ (previously {3}{4}{5})",
+                             colourAlert, GetHqTitle(newActor.statusHQ), colourEnd, colourAlert, GetHqTitle(previousStatus), colourEnd)
+                                });
+                            }
 
                         }
                         else { Debug.LogErrorFormat("No actor found suitable for vacant slot {0}", (ActorHQ)index); }
@@ -1470,7 +1479,7 @@ public class HQManager : MonoBehaviour
                             if (data != null)
                             { builder.AppendFormat("  s{0}, t{1}: R {2}{3}, now {4}, {5}{6}", data.scenarioIndex, data.turn, data.change > 0 ? "+" : "", data.change, data.newRenown, data.reason, "\n"); }
                             else
-                            { Debug.LogWarningFormat("Invalid hqRenownData (Null) for listOfHqRenownData[{0}], actor {1}, {2}, ID {3}", j, actor.actorName, GetHqTitle(actor.statusHQ), actor.actorID);  }
+                            { Debug.LogWarningFormat("Invalid hqRenownData (Null) for listOfHqRenownData[{0}], actor {1}, {2}, ID {3}", j, actor.actorName, GetHqTitle(actor.statusHQ), actor.actorID); }
                         }
                     }
                 }
@@ -1527,7 +1536,8 @@ public class HQManager : MonoBehaviour
     public EndLevelData GetEndLevelData(ActorHQ actorHQ)
     {
         EndLevelData data = new EndLevelData();
-        int num;
+        int num, times;
+        int tally = 0;
         int overall = 0;
         int factorBoss = 4;
         int factorSubBoss1 = 3;
@@ -1536,7 +1546,6 @@ public class HQManager : MonoBehaviour
         int factorFirst = 3;
         int factorSecond = 2;
         int factorThird = 1;
-        int overallDivisor = 4;
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("{0}<b>Assessment</b>{1}{2}{3}", colourAlert, colourEnd, "\n", "\n");
         switch (actorHQ)
@@ -1545,12 +1554,12 @@ public class HQManager : MonoBehaviour
                 //first factor -> Objectives
                 num = 0;
                 builder.Append(GetFactorString("Objectives", num));
-                overall += num * factorFirst;
+                tally += num * factorFirst;
                 //second factor -> City Loyalty
                 num = GetTenFactor(GameManager.i.cityScript.CityLoyalty);
                 Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} City Loyalty {1}{2}", actorHQ, num, "\n");
                 builder.Append(GetFactorString("City Loyalty", num));
-                overall += num * factorSecond;
+                tally += num * factorSecond;
                 //third factor -> Personal Opinion
                 Actor actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
                 if (actor != null)
@@ -1562,9 +1571,9 @@ public class HQManager : MonoBehaviour
                 }
                 Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Opinion {1}{2}", actorHQ, num, "\n");
                 builder.Append(GetFactorString("Opinion", num));
-                overall += num * factorThird;
+                tally += num * factorThird;
                 //overall
-                overall /= overallDivisor;
+                overall = GetOverall(tally);
                 data.renown = overall * factorBoss;
                 data.medal = (EndlLevelMedal)overall;
                 break;
@@ -1574,11 +1583,11 @@ public class HQManager : MonoBehaviour
                 Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Targets (succeeded) {1}{2}", actorHQ, num, "\n");
                 num = Mathf.Min(num, 3);
                 builder.Append(GetFactorString("Targets", num));
-                overall += num * factorFirst;
+                tally += num * factorFirst;
                 //second factor -> Gear Lost
                 num = 0;
                 builder.Append(GetFactorString("Gear Lost", num));
-                overall += num * factorSecond;
+                tally += num * factorSecond;
                 //third factor -> Personal Opinion
                 actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
                 if (actor != null)
@@ -1590,22 +1599,24 @@ public class HQManager : MonoBehaviour
                 }
                 Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Opinion {1}{2}", actorHQ, num, "\n");
                 builder.Append(GetFactorString("Opinion", num));
-                overall += num * factorThird;
+                tally += num * factorThird;
                 //overall
-                overall /= overallDivisor;
+                overall = GetOverall(tally);
                 data.renown = overall * factorSubBoss1;
                 data.medal = (EndlLevelMedal)overall;
                 break;
             case ActorHQ.SubBoss2:
-                //first factor -> Exploding Criss
-                num = 0;
+                //first factor -> Exploding Crisis (one star for each instance, capped at 3)
+                times = GameManager.i.dataScript.StatisticGetLevel(StatType.NodeCrisisExplodes);
+                num = Mathf.Min(times, 3);
+                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} NodeCrisisExploded {1}, stars {2}{3}", actorHQ, times, num, "\n");
                 builder.Append(GetFactorString("District Crisis", num));
-                overall += num * factorFirst;
+                tally += num * factorFirst;
                 //second factor -> HQ Approval
                 num = GetTenFactor(GetHqApproval());
                 Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} HQ Approval {1}{2}", actorHQ, num, "\n");
                 builder.Append(GetFactorString("HQ Approval", num));
-                overall += num * factorSecond;
+                tally += num * factorSecond;
                 //third factor -> Personal Opinion
                 actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
                 if (actor != null)
@@ -1617,25 +1628,25 @@ public class HQManager : MonoBehaviour
                 }
                 Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Opinion {1}{2}", actorHQ, num, "\n");
                 builder.Append(GetFactorString("Opinion", num));
-                overall += num * factorThird;
+                tally += num * factorThird;
                 //overall
-                overall /= overallDivisor;
+                overall = GetOverall(tally);
                 data.renown = overall * factorSubBoss2;
                 data.medal = (EndlLevelMedal)overall;
                 break;
             case ActorHQ.SubBoss3:
                 //first factor -> Captured (3 stars if not captured, 0 stars if so)
-                int timesCaptured = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerCaptured);
-                if (timesCaptured == 0) { num = 3; }  else { num = 0; }
-                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} TimesCaptured {1}, stars {2}{3}", actorHQ, timesCaptured, num, "\n");
+                times = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerCaptured);
+                if (times == 0) { num = 3; } else { num = 0; }
+                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} TimesCaptured {1}, stars {2}{3}", actorHQ, times, num, "\n");
                 builder.Append(GetFactorString("Captured", num));
-                overall += num * factorFirst;
+                tally += num * factorFirst;
                 //second factor -> Investigations (3 stars if no Investigations launched, 0 stars if so)
-                int timesInvestigated = GameManager.i.dataScript.StatisticGetLevel(StatType.InvestigationsLaunched);
-                if (timesInvestigated == 0) { num = 3; } else { num = 0; }
-                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} TimesInvestigated {1}, stars {2}{3}", actorHQ, timesInvestigated, num, "\n");
+                times = GameManager.i.dataScript.StatisticGetLevel(StatType.InvestigationsLaunched);
+                if (times == 0) { num = 3; } else { num = 0; }
+                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} TimesInvestigated {1}, stars {2}{3}", actorHQ, times, num, "\n");
                 builder.Append(GetFactorString("Investigations", num));
-                overall += num * factorSecond;
+                tally += num * factorSecond;
                 //third factor -> Personal Opinion
                 actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
                 if (actor != null)
@@ -1647,9 +1658,9 @@ public class HQManager : MonoBehaviour
                 }
                 Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Opinion {1}{2}", actorHQ, num, "\n");
                 builder.Append(GetFactorString("Opinion", num));
-                overall += num * factorThird;
+                tally += num * factorThird;
                 //overall
-                overall /= overallDivisor;
+                overall = GetOverall(tally);
                 data.renown = overall * factorSubBoss3;
                 data.medal = (EndlLevelMedal)overall;
                 break;
@@ -1715,6 +1726,51 @@ public class HQManager : MonoBehaviour
             case 0:
                 num = 0; break;
             default: Debug.LogWarningFormat("Invalid factor \"{0}\" (should be 0 to 10)", factor); break;
+        }
+        return num;
+    }
+
+    /// <summary>
+    /// returns a 0 to 3 star rating based on a 0 to 18 input (18 if all three factors are at 3 stars)
+    /// </summary>
+    /// <param name="num"></param>
+    /// <returns></returns>
+    private int GetOverall(int score)
+    {
+        int num = 0;
+        if (score >= 0 && score <= 18)
+        {
+            switch (score)
+            {
+                case 18:
+                case 17:
+                case 16:
+                case 15:
+                case 14:
+                    num = 3; break;
+                case 13:
+                case 12:
+                case 11:
+                case 10:
+                case 9:
+                    num = 2; break;
+                case 8:
+                case 7:
+                case 6:
+                case 5:
+                case 4:
+                    num = 1; break;
+                case 3:
+                case 2:
+                case 1:
+                case 0:
+                    num = 0; break;
+            }
+        }
+        else
+        {
+            Debug.LogWarningFormat("Invalid score \"{0}\" (should be between 0 and 18)", score);
+            num = 0;
         }
         return num;
     }
