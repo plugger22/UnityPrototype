@@ -16,7 +16,7 @@ public class EndLevelInteraction : MonoBehaviour
     public Image medal;
     public Image assessmentBackground;
     public TextMeshProUGUI assessmentText;
-
+    public GenericTooltipUI tooltip;
 
 
     public void Awake()

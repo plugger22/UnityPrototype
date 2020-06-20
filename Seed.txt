@@ -250,3 +250,72 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 59801 -> Friday, 19 June 2020 5:15 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 20307 -> Saturday, 20 June 2020 11:16 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11836 -> Saturday, 20 June 2020 11:39 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 63159 -> Saturday, 20 June 2020 11:40 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 32685 -> Saturday, 20 June 2020 11:42 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 5638 -> Saturday, 20 June 2020 11:46 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46077 -> Saturday, 20 June 2020 11:59 AM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+HQManager.GetEndLevelData (gameAPI.ActorHQ actorHQ) (at Assets/Scripts/Managers/HQManager.cs:1610)
+	MetaManager.InitialiseEndLevel () (at Assets/Scripts/Managers/MetaManager.cs:967)
+	MetaManager.ProcessMetaGame () (at Assets/Scripts/Managers/MetaManager.cs:134)
+	ControlManager.ProcessMetaGame () (at Assets/Scripts/Managers/ControlManager.cs:242)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:90)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ControlManager.ProcessEndLevel () (at Assets/Scripts/Managers/ControlManager.cs:222)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:87)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:253)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:421)
+	
+Dev seed 34526 -> Saturday, 20 June 2020 12:02 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 29648 -> Saturday, 20 June 2020 12:42 PM
+City seed 5678 -> London, United Kingdom
+ASSERT FormatException: Index (zero based) must be greater than or equal to zero and less than the size of the argument list.
+System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Text.StringBuilder.AppendFormat (System.String format, System.Object[] args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	HQManager.GetEndLevelHqMainTooltip (gameAPI.ActorHQ actorHQ, System.String factorOne, System.String factorTwo, System.String factorThree, System.Int32 factorFirst, System.Int32 factorSecond, System.Int32 factorThird) (at Assets/Scripts/Managers/HQManager.cs:1877)
+	HQManager.GetEndLevelData (gameAPI.ActorHQ actorHQ) (at Assets/Scripts/Managers/HQManager.cs:1616)
+	MetaManager.InitialiseEndLevel () (at Assets/Scripts/Managers/MetaManager.cs:967)
+	MetaManager.ProcessMetaGame () (at Assets/Scripts/Managers/MetaManager.cs:134)
+	ControlManager.ProcessMetaGame () (at Assets/Scripts/Managers/ControlManager.cs:242)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:90)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ControlManager.ProcessEndLevel () (at Assets/Scripts/Managers/ControlManager.cs:222)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:87)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:253)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:421)
+	
+Dev seed 3027 -> Saturday, 20 June 2020 12:43 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 52881 -> Saturday, 20 June 2020 12:46 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 52656 -> Saturday, 20 June 2020 12:47 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 61531 -> Saturday, 20 June 2020 12:48 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 6228 -> Saturday, 20 June 2020 12:52 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 2569 -> Saturday, 20 June 2020 12:58 PM
+City seed 5678 -> London, United Kingdom

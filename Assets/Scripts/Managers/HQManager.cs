@@ -1536,200 +1536,230 @@ public class HQManager : MonoBehaviour
     public EndLevelData GetEndLevelData(ActorHQ actorHQ)
     {
         EndLevelData data = new EndLevelData();
-        int tally = 0;
-        int overall = 0;
-        int num = 0;
-        int times = 0;
-        int count = 0;
-        int factorBoss = 4;
-        int factorSubBoss1 = 3;
-        int factorSubBoss2 = 2;
-        int factorSubBoss3 = 1;
-        int factorFirst = 3;
-        int factorSecond = 2;
-        int factorThird = 1;
-        StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}<b>Assessment</b>{1}{2}{3}", colourAlert, colourEnd, "\n", "\n");
-        switch (actorHQ)
+        Actor actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
+        if (actor != null)
         {
-            case ActorHQ.Boss:
-                //
-                // - - - first factor -> Objectives
-                //
-                List<Objective> listOfObjectives = GameManager.i.objectiveScript.GetListOfObjectives();
-                if (listOfObjectives != null)
-                {
-                    count = listOfObjectives.Count;
+            int tally = 0;
+            int overall = 0;
+            int num = 0;
+            int times = 0;
+            int count = 0;
+            int factorBoss = 4;
+            int factorSubBoss1 = 3;
+            int factorSubBoss2 = 2;
+            int factorSubBoss3 = 1;
+            int factorFirst = 3;
+            int factorSecond = 2;
+            int factorThird = 1;
+            string factorOne, factorTwo, factorThree;
+            string posTooltip = "<pos=75%>";
+            StringBuilder builder = new StringBuilder();
+            builder.AppendFormat("{0}<align=\"center\"><b>{1}</b></align>{2}{3}{4}", colourAlert, GetHqTitle(actorHQ), colourEnd, "\n", "\n");
+            switch (actorHQ)
+            {
+                case ActorHQ.Boss:
+                    factorOne = "Objectives";
+                    factorTwo = "City Loyalty";
+                    factorThree = "Opinion";
+                    //
+                    // - - - first factor -> Objectives
+                    //
+                    List<Objective> listOfObjectives = GameManager.i.objectiveScript.GetListOfObjectives();
+                    if (listOfObjectives != null)
+                    {
+                        count = listOfObjectives.Count;
+                        if (count > 0)
+                        {
+                            for (int i = 0; i < count; i++)
+                            {
+                                Objective objective = listOfObjectives[i];
+                                if (objective != null)
+                                {
+                                    num += objective.progress;
+                                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Objective \"{1}\", progress {2}, num {3}{4}", actorHQ, objective.tag, objective.progress, num, "\n");
+                                }
+                                else { Debug.LogWarningFormat("Invalid objective (Null) for listOfObjectives[{0}]", i); }
+                            }
+                        }
+                        else { Debug.LogWarning("Invalid listOfObjectives (Empty)"); }
+                    }
+                    else { Debug.LogWarning("Invalid listOfObjectives (Null)"); }
+                    //adjust tally to a 0 to 3 range
                     if (count > 0)
                     {
-                        for (int i = 0; i < count; i++)
-                        {
-                            Objective objective = listOfObjectives[i];
-                            if (objective != null)
-                            {
-                                num += objective.progress;
-                                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Objective \"{1}\", progress {2}, num {3}{4}", actorHQ, objective.tag, objective.progress, num, "\n");
-                            }
-                            else { Debug.LogWarningFormat("Invalid objective (Null) for listOfObjectives[{0}]", i); }
-                        }
+                        num = num / count;
+                        Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Objectives num RndToInt {1}{2}", actorHQ, num, "\n");
+                        num = GetTenFactor(num / 10);
                     }
-                    else { Debug.LogWarning("Invalid listOfObjectives (Empty)"); }
-                }
-                else { Debug.LogWarning("Invalid listOfObjectives (Null)"); }
-                //adjust tally to a 0 to 3 range
-                if (count > 0)
-                {
-                    num = num / count;
-                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Objectives num RndToInt {1}{2}", actorHQ, num, "\n");
-                    num = GetTenFactor(num / 10);
-                }
-                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Objectives  TenFactor result {1}{2}", actorHQ, num, "\n");
-                builder.Append(GetFactorString("Objectives", num));
-                tally += num * factorFirst;
-                //
-                // - - - second factor -> City Loyalty
-                //
-                num = GetTenFactor(GameManager.i.cityScript.CityLoyalty);
-                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} City Loyalty {1}{2}", actorHQ, num, "\n");
-                builder.Append(GetFactorString("City Loyalty", num));
-                tally += num * factorSecond;
-                //
-                // - - - third factor -> Personal Opinion
-                //
-                Actor actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
-                if (actor != null)
-                { num = actor.GetDatapoint(ActorDatapoint.Motivation1); }
-                else
-                {
-                    Debug.LogWarning("Invalid actor (Null) for ActorHQ.Boss");
-                    num = 0;
-                }
-                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Opinion {1}{2}", actorHQ, num, "\n");
-                builder.Append(GetFactorString("Opinion", num));
-                tally += num * factorThird;
-                //overall
-                overall = GetOverall(tally);
-                data.renown = overall * factorBoss;
-                data.medal = (EndlLevelMedal)overall;
-                break;
-            case ActorHQ.SubBoss1:
-                //
-                // - - - first factor -> Targets completed -> 3+ targets is 3 stars (capped)
-                //
-                num = GameManager.i.dataScript.StatisticGetLevel(StatType.TargetSuccesses);
-                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Targets (succeeded) {1}{2}", actorHQ, num, "\n");
-                num = Mathf.Min(num, 3);
-                builder.Append(GetFactorString("Targets", num));
-                tally += num * factorFirst;
-                //
-                // - - - second factor -> Gear Lost
-                //
-                num = 0;
-                builder.Append(GetFactorString("Gear Lost", num));
-                tally += num * factorSecond;
-                //
-                // - - - third factor -> Personal Opinion
-                //
-                actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
-                if (actor != null)
-                { num = actor.GetDatapoint(ActorDatapoint.Motivation1); }
-                else
-                {
-                    Debug.LogWarning("Invalid actor (Null) for ActorHQ.Boss");
-                    num = 0;
-                }
-                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Opinion {1}{2}", actorHQ, num, "\n");
-                builder.Append(GetFactorString("Opinion", num));
-                tally += num * factorThird;
-                //overall
-                overall = GetOverall(tally);
-                data.renown = overall * factorSubBoss1;
-                data.medal = (EndlLevelMedal)overall;
-                break;
-            case ActorHQ.SubBoss2:
-                //
-                // - - - first factor -> Exploding Crisis (one star for each instance, capped at 3)
-                //
-                times = GameManager.i.dataScript.StatisticGetLevel(StatType.NodeCrisisExplodes);
-                num = Mathf.Min(times, 3);
-                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} NodeCrisisExploded {1}, stars {2}{3}", actorHQ, times, num, "\n");
-                builder.Append(GetFactorString("District Crisis", num));
-                tally += num * factorFirst;
-                //
-                // - - - second factor -> HQ Approval
-                //
-                num = GetTenFactor(GetHqApproval());
-                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} HQ Approval {1}{2}", actorHQ, num, "\n");
-                builder.Append(GetFactorString("HQ Approval", num));
-                tally += num * factorSecond;
-                //
-                // - - - third factor -> Personal Opinion
-                //
-                actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
-                if (actor != null)
-                { num = actor.GetDatapoint(ActorDatapoint.Motivation1); }
-                else
-                {
-                    Debug.LogWarning("Invalid actor (Null) for ActorHQ.Boss");
-                    num = 0;
-                }
-                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Opinion {1}{2}", actorHQ, num, "\n");
-                builder.Append(GetFactorString("Opinion", num));
-                tally += num * factorThird;
-                //overall
-                overall = GetOverall(tally);
-                data.renown = overall * factorSubBoss2;
-                data.medal = (EndlLevelMedal)overall;
-                break;
-            case ActorHQ.SubBoss3:
-                //
-                // - - - first factor -> Captured (3 stars if not captured, 0 stars if so)
-                //
-                times = GameManager.i.dataScript.StatisticGetLevel(StatType.PlayerCaptured);
-                if (times == 0) { num = 3; } else { num = 0; }
-                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} TimesCaptured {1}, stars {2}{3}", actorHQ, times, num, "\n");
-                builder.Append(GetFactorString("Captured", num));
-                tally += num * factorFirst;
-                //
-                // - - - second factor -> Investigations (3 stars if no Investigations launched, 0 stars if so)
-                //
-                times = GameManager.i.dataScript.StatisticGetLevel(StatType.InvestigationsLaunched);
-                if (times == 0) { num = 3; } else { num = 0; }
-                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} TimesInvestigated {1}, stars {2}{3}", actorHQ, times, num, "\n");
-                builder.Append(GetFactorString("Investigations", num));
-                tally += num * factorSecond;
-                //
-                // - - - third factor -> Personal Opinion
-                //
-                actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
-                if (actor != null)
-                { num = actor.GetDatapoint(ActorDatapoint.Motivation1); }
-                else
-                {
-                    Debug.LogWarning("Invalid actor (Null) for ActorHQ.Boss");
-                    num = 0;
-                }
-                Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Opinion {1}{2}", actorHQ, num, "\n");
-                builder.Append(GetFactorString("Opinion", num));
-                tally += num * factorThird;
-                //overall
-                overall = GetOverall(tally);
-                data.renown = overall * factorSubBoss3;
-                data.medal = (EndlLevelMedal)overall;
-                break;
-            default: Debug.LogWarningFormat("Unrecognised actorHQ \"{0}\"", actorHQ); break;
+                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Objectives  TenFactor result {1}{2}", actorHQ, num, "\n");
+                    builder.Append(GetFactorString(factorOne, num));
+                    tally += num * factorFirst;
+                    //
+                    // - - - second factor -> City Loyalty
+                    //
+                    num = GetTenFactor(GameManager.i.cityScript.CityLoyalty);
+                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} City Loyalty {1}{2}", actorHQ, num, "\n");
+                    builder.Append(GetFactorString(factorTwo, num));
+                    tally += num * factorSecond;
+                    //
+                    // - - - third factor -> Personal Opinion
+                    //
+                    num = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Opinion {1}{2}", actorHQ, num, "\n");
+                    builder.Append(GetFactorString(factorThree, num));
+                    tally += num * factorThird;
+                    //overall
+                    overall = GetOverall(tally);
+                    data.renown = overall * factorBoss;
+                    data.medal = (EndlLevelMedal)overall;
+                    data.tooltip.header = string.Format("{0}{1}{2}<size=120%>{3}</size>{4}{5}Renown {6}{7}{8}", actor.actorName, "\n", colourAlert, GetHqTitle(actorHQ), colourEnd,
+                        "\n", colourNeutral, actor.Renown, colourEnd);
+                    data.tooltip.main = GetEndLevelHqMainTooltip(actorHQ, factorOne, factorTwo, factorThree, posTooltip, factorFirst, factorSecond, factorThird);
+                    data.tooltip.details = string.Format("{0}Overall{1}{2} Renown per Star{3}{4}{5}{6}", colourAlert, colourEnd, "\n", posTooltip, colourNeutral, factorBoss, colourEnd);
+                    break;
+                case ActorHQ.SubBoss1:
+                    factorOne = "Targets";
+                    factorTwo = "Exposure";
+                    factorThree = "Opinion";
+                    //
+                    // - - - first factor -> Targets completed -> 3+ targets is 3 stars (capped)
+                    //
+                    num = GameManager.i.dataScript.StatisticGetLevel(StatType.TargetSuccesses);
+                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Targets (succeeded) {1}{2}", actorHQ, num, "\n");
+                    num = Mathf.Min(num, 3);
+                    builder.Append(GetFactorString(factorOne, num));
+                    tally += num * factorFirst;
+                    //
+                    // - - - second factor -> Exposure (Innocence)
+                    //
+                    num = GameManager.i.playerScript.Innocence;
+                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Innocence {1}{2}", actorHQ, num, "\n");
+                    builder.Append(GetFactorString(factorTwo, num));
+                    tally += num * factorSecond;
+                    //
+                    // - - - third factor -> Personal Opinion
+                    //
+                    actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
+                    if (actor != null)
+                    { num = actor.GetDatapoint(ActorDatapoint.Motivation1); }
+                    else
+                    {
+                        Debug.LogWarning("Invalid actor (Null) for ActorHQ.Boss");
+                        num = 0;
+                    }
+                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Opinion {1}{2}", actorHQ, num, "\n");
+                    builder.Append(GetFactorString(factorThree, num));
+                    tally += num * factorThird;
+                    //overall
+                    overall = GetOverall(tally);
+                    data.renown = overall * factorSubBoss1;
+                    data.medal = (EndlLevelMedal)overall;
+                    data.tooltip.header = string.Format("{0}{1}{2}<size=120%>{3}</size>{4}{5}Renown {6}{7}{8}", actor.actorName, "\n", colourAlert, GetHqTitle(actorHQ), colourEnd,
+                        "\n", colourNeutral, actor.Renown, colourEnd);
+                    data.tooltip.main = GetEndLevelHqMainTooltip(actorHQ, factorOne, factorTwo, factorThree, posTooltip, factorFirst, factorSecond, factorThird);
+                    data.tooltip.details = string.Format("{0}Overall{1}{2} Renown per Star{3}{4}{5}{6}", colourAlert, colourEnd, "\n", posTooltip, colourNeutral, factorSubBoss1, colourEnd);
+                    break;
+                case ActorHQ.SubBoss2:
+                    factorOne = "District Crisis";
+                    factorTwo = "HQ Approval";
+                    factorThree = "Opinion";
+                    //
+                    // - - - first factor -> Exploding Crisis (one star for each instance, capped at 3)
+                    //
+                    times = GameManager.i.dataScript.StatisticGetLevel(StatType.NodeCrisisExplodes);
+                    num = Mathf.Min(times, 3);
+                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} NodeCrisisExploded {1}, stars {2}{3}", actorHQ, times, num, "\n");
+                    builder.Append(GetFactorString(factorOne, num));
+                    tally += num * factorFirst;
+                    //
+                    // - - - second factor -> HQ Approval
+                    //
+                    num = GetTenFactor(GetHqApproval());
+                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} HQ Approval {1}{2}", actorHQ, num, "\n");
+                    builder.Append(GetFactorString(factorTwo, num));
+                    tally += num * factorSecond;
+                    //
+                    // - - - third factor -> Personal Opinion
+                    //
+                    actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
+                    if (actor != null)
+                    { num = actor.GetDatapoint(ActorDatapoint.Motivation1); }
+                    else
+                    {
+                        Debug.LogWarning("Invalid actor (Null) for ActorHQ.Boss");
+                        num = 0;
+                    }
+                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Opinion {1}{2}", actorHQ, num, "\n");
+                    builder.Append(GetFactorString(factorThree, num));
+                    tally += num * factorThird;
+                    //overall
+                    overall = GetOverall(tally);
+                    data.renown = overall * factorSubBoss2;
+                    data.medal = (EndlLevelMedal)overall;
+                    data.tooltip.header = string.Format("{0}{1}{2}<size=120%>{3}</size>{4}{5}Renown {6}{7}{8}", actor.actorName, "\n", colourAlert, GetHqTitle(actorHQ), colourEnd,
+                        "\n", colourNeutral, actor.Renown, colourEnd);
+                    data.tooltip.main = GetEndLevelHqMainTooltip(actorHQ, factorOne, factorTwo, factorThree, posTooltip, factorFirst, factorSecond, factorThird);
+                    data.tooltip.details = string.Format("{0}Overall{1}{2} Renown per Star{3}{4}{5}{6}", colourAlert, colourEnd, "\n", posTooltip, colourNeutral, factorSubBoss2, colourEnd);
+                    break;
+                case ActorHQ.SubBoss3:
+                    factorOne = "Reviews";
+                    factorTwo = "Investigations";
+                    factorThree = "Opinion";
+                    //
+                    // - - - first factor -> Reviews
+                    //
+                    times = GameManager.i.dataScript.StatisticGetLevel(StatType.ReviewCommendations) - GameManager.i.dataScript.StatisticGetLevel(StatType.ReviewBlackmarks);
+                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Reviews commendations - blackmarks {1}{2}", actorHQ, times, "\n");
+                    num = Mathf.Clamp(times, 0, 3);
+                    builder.Append(GetFactorString(factorOne, num));
+                    tally += num * factorFirst;
+                    //
+                    // - - - second factor -> Investigations (3 stars if no Investigations launched, 0 stars if so)
+                    //
+                    times = GameManager.i.dataScript.StatisticGetLevel(StatType.InvestigationsLaunched);
+                    if (times == 0) { num = 3; } else { num = 0; }
+                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} TimesInvestigated {1}, stars {2}{3}", actorHQ, times, num, "\n");
+                    builder.Append(GetFactorString(factorTwo, num));
+                    tally += num * factorSecond;
+                    //
+                    // - - - third factor -> Personal Opinion
+                    //
+                    actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
+                    if (actor != null)
+                    { num = actor.GetDatapoint(ActorDatapoint.Motivation1); }
+                    else
+                    {
+                        Debug.LogWarning("Invalid actor (Null) for ActorHQ.Boss");
+                        num = 0;
+                    }
+                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Opinion {1}{2}", actorHQ, num, "\n");
+                    builder.Append(GetFactorString(factorThree, num));
+                    tally += num * factorThird;
+                    //overall
+                    overall = GetOverall(tally);
+                    data.renown = overall * factorSubBoss3;
+                    data.medal = (EndlLevelMedal)overall;
+                    data.tooltip.header = string.Format("{0}{1}{2}<size=120%>{3}</size>{4}{5}Renown {6}{7}{8}", actor.actorName, "\n", colourAlert, GetHqTitle(actorHQ), colourEnd,
+                        "\n", colourNeutral, actor.Renown, colourEnd);
+                    data.tooltip.main = GetEndLevelHqMainTooltip(actorHQ, factorOne, factorTwo, factorThree, posTooltip, factorFirst, factorSecond, factorThird);
+                    data.tooltip.details = string.Format("{0}Overall{1}{2} Renown per Star{3}{4}{5}{6}", colourAlert, colourEnd, "\n", posTooltip, colourNeutral, factorSubBoss3, colourEnd);
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised actorHQ \"{0}\"", actorHQ); break;
+            }
+
+            if (overall >= 0 && overall <= 3)
+            {
+                builder.AppendFormat("{0}{1}<b>Overall</b><pos=65%>{2}{3}", "\n", colourAlert, colourEnd, GameManager.i.guiScript.GetNormalStars(overall));
+                data.assessmentText = builder.ToString();
+            }
+            else
+            {
+                Debug.LogWarningFormat("Invalid overall \"{0}\"", overall);
+                builder.AppendFormat("{0}{1}<b>Overall</b><pos=65%>{2}{3}", "\n", colourAlert, colourEnd, GameManager.i.guiScript.GetNormalStars(0));
+                data.assessmentText = builder.ToString();
+            }
         }
-        if (overall >= 0 && overall <= 3)
-        {
-            builder.AppendFormat("{0}{1}<b>Overall</b><pos=65%>{2}{3}", "\n", colourAlert, colourEnd, GameManager.i.guiScript.GetNormalStars(overall));
-            data.assessmentText = builder.ToString();
-        }
-        else
-        {
-            Debug.LogWarningFormat("Invalid overall \"{0}\"", overall);
-            builder.AppendFormat("{0}{1}<b>Overall</b><pos=65%>{2}{3}", "\n", colourAlert, colourEnd, GameManager.i.guiScript.GetNormalStars(0));
-            data.assessmentText = builder.ToString();
-        }
+        else { Debug.LogErrorFormat("Invalid actor (Null) for actorHQ \"{0}\"", actorHQ); }
         return data;
     }
 
@@ -1827,6 +1857,51 @@ public class HQManager : MonoBehaviour
         }
         return num;
     }
+
+    /// <summary>
+    /// subMethod that returns tooltip.Main data for relevant HQ hierarchy actor for endLevel 'Assessment' page in TransitionUI
+    /// </summary>
+    /// <param name="actorHQ"></param>
+    /// <param name="factorOne"></param>
+    /// <param name="factorTwo"></param>
+    /// <param name="factorThree"></param>
+    /// <returns></returns>
+    private string GetEndLevelHqMainTooltip(ActorHQ actorHQ, string factorOne, string factorTwo, string factorThree, string pos, int factorFirst, int factorSecond, int factorThird)
+    {
+        StringBuilder builder = new StringBuilder();
+        switch (actorHQ)
+        {
+            case ActorHQ.Boss:
+                builder.AppendFormat("{0}Weighting{1}{2}", colourAlert, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}", colourNormal, factorOne, colourEnd, pos, colourNeutral, factorFirst, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}", colourNormal, factorTwo, colourEnd, pos, colourNeutral, factorSecond, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, factorThree, colourEnd, pos, colourNeutral, factorThird, colourEnd);
+                break;
+            case ActorHQ.SubBoss1:
+                builder.AppendFormat("{0}Weighting{1}{2}", colourAlert, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}", colourNormal, factorOne, colourEnd, pos, colourNeutral, factorFirst, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}", colourNormal, factorTwo, colourEnd, pos, colourNeutral, factorSecond, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, factorThree, colourEnd, pos, colourNeutral, factorThird, colourEnd);
+                break;
+            case ActorHQ.SubBoss2:
+                builder.AppendFormat("{0}Weighting{1}{2}", colourAlert, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}", colourNormal, factorOne, colourEnd, pos, colourNeutral, factorFirst, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}", colourNormal, factorTwo, colourEnd, pos, colourNeutral, factorSecond, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, factorThree, colourEnd, pos, colourNeutral, factorThird, colourEnd);
+                break;
+            case ActorHQ.SubBoss3:
+                builder.AppendFormat("{0}Weighting{1}{2}", colourAlert, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}", colourNormal, factorOne, colourEnd, pos, colourNeutral, factorFirst, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}", colourNormal, factorTwo, colourEnd, pos, colourNeutral, factorSecond, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, factorThree, colourEnd, pos, colourNeutral, factorThird, colourEnd);
+                break;
+        }
+        return builder.ToString();
+    }
+
+
+
+
 
     //new methods above here
 }

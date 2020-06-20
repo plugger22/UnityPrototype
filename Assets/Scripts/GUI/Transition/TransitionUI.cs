@@ -580,6 +580,9 @@ public class TransitionUI : MonoBehaviour
                 arrayOfEndLevelOptions[i].hqRenown.text = "";
                 arrayOfEndLevelOptions[i].medal.sprite = null;
                 arrayOfEndLevelOptions[i].assessmentText.text = "";
+                arrayOfEndLevelOptions[i].tooltip.tooltipHeader = "";
+                arrayOfEndLevelOptions[i].tooltip.tooltipMain = "";
+                arrayOfEndLevelOptions[i].tooltip.tooltipDetails = "";
             }
             endLevelBackground.gameObject.SetActive(true);
             for (int i = 0; i < arrayOfEndLevelOptions.Length; i++)
@@ -614,6 +617,11 @@ public class TransitionUI : MonoBehaviour
                         }
                         //stat text
                         option.assessmentText.text = endData.assessmentText;
+                        //tooltip
+                        option.tooltip.tooltipHeader = endData.tooltip.header;
+                        option.tooltip.tooltipMain = endData.tooltip.main;
+                        option.tooltip.tooltipDetails = endData.tooltip.details;
+                        option.tooltip.x_offset = 50;
                     }
                     else { Debug.LogWarningFormat("Invalid EndLevelData (Null) for listOfEndLevelData[{0}]", i); }
                 }
