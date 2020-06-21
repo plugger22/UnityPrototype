@@ -319,3 +319,47 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 2569 -> Saturday, 20 June 2020 12:58 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 32852 -> Sunday, 21 June 2020 3:12 PM
+City seed 5678 -> London, United Kingdom
+ASSERT FormatException: Index (zero based) must be greater than or equal to zero and less than the size of the argument list.
+System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Text.StringBuilder.AppendFormat (System.String format, System.Object arg0, System.Object arg1, System.Object arg2) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	HelpManager.CreateItemDataHelp () (at Assets/Scripts/Managers/HelpManager.cs:270)
+	LoadManager.InitialiseLate (gameAPI.GameState state) (at Assets/Scripts/Managers/LoadManager.cs:2097)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:826)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:880)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:389)
+	
+Dev seed 11556 -> Sunday, 21 June 2020 3:14 PM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid HelpData (duplicate) tag "transitionHq_3" for listOfHelp["13"]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	LoadManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/LoadManager.cs:2109)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:880)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	
+Dev seed 60280 -> Sunday, 21 June 2020 3:19 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 26187 -> Sunday, 21 June 2020 3:22 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 1765 -> Sunday, 21 June 2020 3:24 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 37520 -> Sunday, 21 June 2020 3:25 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31114 -> Sunday, 21 June 2020 3:27 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 14311 -> Sunday, 21 June 2020 3:29 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 58029 -> Sunday, 21 June 2020 3:35 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 21812 -> Sunday, 21 June 2020 3:44 PM
+City seed 5678 -> London, United Kingdom

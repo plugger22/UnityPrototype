@@ -55,7 +55,7 @@ public class TransitionUI : MonoBehaviour
     List<HelpData> listOfBriefingTwoHelp = new List<HelpData>();
 
     private int buttonHelpOffset_x = 125;
-    private int buttonHelpOffset_y = 125;
+    private int buttonHelpOffset_y = 200;
 
     //data package required to populate UI
     private TransitionInfoData transitionInfoData = new TransitionInfoData();
@@ -776,7 +776,7 @@ public class TransitionUI : MonoBehaviour
     /// </summary>
     private void InitialiseHelp()
     {
-        listOfEndLevelHelp = GameManager.i.helpScript.GetHelpData("test0");
+        listOfEndLevelHelp = GameManager.i.helpScript.GetHelpData("transitionEnd_0", "transitionEnd_1", "transitionEnd_2", "transitionEnd_3");
         listOfHqHelp = GameManager.i.helpScript.GetHelpData("transitionHq_3", "transitionHq_4", "transitionHq_5", "transitionHq_6");
         listOfPlayerStatusHelp = GameManager.i.helpScript.GetHelpData("transitionPlayer_0", "transitionPlayer_1");
         listOfBriefingOneHelp = GameManager.i.helpScript.GetHelpData("test0");
@@ -922,10 +922,13 @@ public class TransitionUI : MonoBehaviour
     private void SetHelp(ModalTransitionSubState state)
     {
         List<HelpData> listOfHelp = null;
+        int x_offset = buttonHelpOffset_x;
+        int y_offset = buttonHelpOffset_y;
         switch (state)
         {
             case ModalTransitionSubState.EndLevel:
                 listOfHelp = listOfEndLevelHelp;
+                y_offset += 150;
                 break;
             case ModalTransitionSubState.HQ:
                 listOfHelp = listOfHqHelp;
@@ -946,7 +949,7 @@ public class TransitionUI : MonoBehaviour
         }
         //page help button -> default
         if (listOfHelp != null)
-        { helpPage.SetHelpTooltip(listOfHelp, buttonHelpOffset_x, buttonHelpOffset_y); }
+        { helpPage.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
         else { Debug.LogWarning("Invalid listOfHelp for helpPage (Null)"); }
     }
 

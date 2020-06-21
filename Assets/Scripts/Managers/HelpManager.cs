@@ -237,11 +237,63 @@ public class HelpManager : MonoBehaviour
         // - - - Main
         //
         //Keyboard
-        //Type of Event
         data = new HelpData();
         data.tag = "transitionMain_0";
         data.header = "Keyboard Shortcuts";
         data.text = string.Format("{0}Left and Right Arrow{1} keys to cycle through pages", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
+        #region End Level
+        //
+        // - - - End Level
+        //
+        //overview
+        data = new HelpData();
+        data.tag = "transitionEnd_0";
+        data.header = "Overview";
+        data.text = string.Format("Each HQ member will grant you {0}Renown{1} according to their {2}assessment{3}. Each assesses you on {4}three criteria{5}", 
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //renown
+        data = new HelpData();
+        data.tag = "transitionEnd_1";
+        data.header = "Renown";
+        data.text = string.Format("Their {0}Overall{1} assessment ({2}weighted average{3} of all three criteria) determines how much renown you are given. {4}Senior{5} HQ members will can grant" +
+            ", potentially, {6}more renown{7} than less senior members", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //factors
+        data = new HelpData();
+        data.tag = "transitionEnd_2";
+        data.header = "Criteria";
+        data.text = new StringBuilder()
+            .AppendFormat("{0}Objectives{1}{2}", colourAlert, colourEnd, "\n")
+            .AppendFormat("3 stars if you have completed all objectives. The most important criteria{0}", "\n")
+            .AppendFormat("{0}City Support{1}{2}", colourAlert, colourEnd, "\n")
+            .AppendFormat("The level of City Support for the Authority at the end of the level (lower the better){0}", "\n")
+            .AppendFormat("{0}Opinion{1}{2}", colourAlert, colourEnd, "\n")
+            .AppendFormat("HQ Members personal opinion of you (<b>Motivation</b>){0}", "\n")
+            .AppendFormat("{0}Targets{1}{2}", colourAlert, colourEnd, "\n")
+            .AppendFormat("One star for each successfully completed Target{0}", "\n")
+            .AppendFormat("{0}Exposure{1}{2}", colourAlert, colourEnd, "\n")
+            .AppendFormat("Your Innocence level at the end of the level{0}", "\n")
+            .AppendFormat("{0}District Crisis{1}{2}", colourAlert, colourEnd, "\n")
+            .AppendFormat("One star for each crisis that Explodes{0}", "\n")
+            .AppendFormat("{0}HQ Approval{1}{2}", colourAlert, colourEnd, "\n")
+            .AppendFormat("Your HQ Approval at the end of the level (higher the better){0}", "\n")
+            .AppendFormat("{0}Reviews{1}{2}", colourAlert, colourEnd, "\n")
+            .AppendFormat("Commendations less Blackmarks for this level{0}", "\n")
+            .AppendFormat("{0}Investigations{1}{2}", colourAlert, colourEnd, "\n")
+            .AppendFormat("3 stars if no investigations launched, 0 stars otherwise{0}", "\n")
+            .ToString();
+        listOfHelp.Add(data);
+        //Tip
+        data = new HelpData();
+        data.tag = "transitionEnd_3";
+        data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
+        data.text = string.Format("Pay attention to the {0}criteria{1}. The first criteria is {2}3 times more important{3} (weighting) than the last. HQ {4}seniority{5} counts. " +
+            "Each {6}Overall{7} star from the most senior member is worth {8}4x more renown{9} than a star from the least senior member", 
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 
