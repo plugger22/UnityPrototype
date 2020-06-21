@@ -93,6 +93,7 @@ public class TestManager : MonoBehaviour
     public bool isMetaGame;
     [Tooltip("Toggle ON to record [Tst] messages for the PopUpFixed.cs class")]
     public bool isPopUpFixed;
+  
 
     /*[Header("MetaGame Options")]
     [Tooltip("Options only taken into account if this is True")]

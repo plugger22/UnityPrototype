@@ -136,9 +136,14 @@ public class TooltipHelp : MonoBehaviour
             float width = rectTransform.rect.width;
             float height = rectTransform.rect.height;
             float halfWidth = width * 0.5f;
-            //y pos
-            if (screenPos.y + height >= Screen.height)
-            { screenPos.y -= (screenPos.y + height - Screen.height) - offset; } //NOTE: change from '+' offset to '-' offset
+            float halfHeight = height * 0.5f;
+            float difference_y = screenPos.y - halfHeight;
+            //y pos (from top of screen)
+            if (screenPos.y + halfHeight >= Screen.height)
+            { screenPos.y -= (screenPos.y + halfHeight - Screen.height) - offset; } //NOTE: change from '+' offset to '-' offset
+            //y pos (from bottom of screen)
+            else if (difference_y <= 0)
+            { screenPos.y += difference_y * -1 + offset; }
             //x pos
             if (screenPos.x + width >= Screen.width)
             { screenPos.x -= (width * 2 + screenPos.x - Screen.width); }

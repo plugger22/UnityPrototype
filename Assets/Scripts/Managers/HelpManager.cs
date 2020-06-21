@@ -259,8 +259,8 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "transitionEnd_1";
         data.header = "Renown";
-        data.text = string.Format("Their {0}Overall{1} assessment ({2}weighted average{3} of all three criteria) determines how much renown you are given. {4}Senior{5} HQ members will can grant" +
-            ", potentially, {6}more renown{7} than less senior members", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("Their {0}Overall{1} assessment ({2}weighted{3} average of all three criteria) determines how much renown you are given. {4}Senior{5} HQ members will can grant" +
+            ", potentially, {6}more renown{7} than junior members", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //factors
         data = new HelpData();
@@ -278,7 +278,7 @@ public class HelpManager : MonoBehaviour
             .AppendFormat("{0}Exposure{1}{2}", colourAlert, colourEnd, "\n")
             .AppendFormat("Your Innocence level at the end of the level{0}", "\n")
             .AppendFormat("{0}District Crisis{1}{2}", colourAlert, colourEnd, "\n")
-            .AppendFormat("One star for each crisis that Explodes{0}", "\n")
+            .AppendFormat("One star for each crisis that explodes{0}", "\n")
             .AppendFormat("{0}HQ Approval{1}{2}", colourAlert, colourEnd, "\n")
             .AppendFormat("Your HQ Approval at the end of the level (higher the better){0}", "\n")
             .AppendFormat("{0}Reviews{1}{2}", colourAlert, colourEnd, "\n")
@@ -292,7 +292,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "transitionEnd_3";
         data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
         data.text = string.Format("Pay attention to the {0}criteria{1}. The first criteria is {2}3 times more important{3} (weighting) than the last. HQ {4}seniority{5} counts. " +
-            "Each {6}Overall{7} star from the most senior member is worth {8}4x more renown{9} than a star from the least senior member", 
+            "Each {6}Overall{7} star from the most senior member is worth {8}4x more renown{9} than a star from the most junior member", 
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion

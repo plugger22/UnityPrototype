@@ -55,7 +55,7 @@ public class TransitionUI : MonoBehaviour
     List<HelpData> listOfBriefingTwoHelp = new List<HelpData>();
 
     private int buttonHelpOffset_x = 125;
-    private int buttonHelpOffset_y = 200;
+    private int buttonHelpOffset_y = 100;
 
     //data package required to populate UI
     private TransitionInfoData transitionInfoData = new TransitionInfoData();
@@ -928,7 +928,6 @@ public class TransitionUI : MonoBehaviour
         {
             case ModalTransitionSubState.EndLevel:
                 listOfHelp = listOfEndLevelHelp;
-                y_offset += 150;
                 break;
             case ModalTransitionSubState.HQ:
                 listOfHelp = listOfHqHelp;

@@ -1576,7 +1576,8 @@ public class HQManager : MonoBehaviour
                                 if (objective != null)
                                 {
                                     num += objective.progress;
-                                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Objective \"{1}\", progress {2}, num {3}{4}", actorHQ, objective.tag, objective.progress, num, "\n");
+                                    if (isMetaLogs)
+                                    { Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Objective \"{1}\", progress {2}, num {3}{4}", actorHQ, objective.tag, objective.progress, num, "\n"); }
                                 }
                                 else { Debug.LogWarningFormat("Invalid objective (Null) for listOfObjectives[{0}]", i); }
                             }
@@ -1588,24 +1589,28 @@ public class HQManager : MonoBehaviour
                     if (count > 0)
                     {
                         num = num / count;
-                        Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Objectives num RndToInt {1}{2}", actorHQ, num, "\n");
+                        if (isMetaLogs)
+                        { Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Objectives num RndToInt {1}{2}", actorHQ, num, "\n"); }
                         num = GetTenFactor(num / 10);
                     }
-                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Objectives  TenFactor result {1}{2}", actorHQ, num, "\n");
+                    if (isMetaLogs)
+                    { Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Objectives  TenFactor result {1}{2}", actorHQ, num, "\n"); }
                     builder.Append(GetFactorString(factorOne, num));
                     tally += num * factorFirst;
                     //
                     // - - - second factor -> City Loyalty
                     //
                     num = GetTenFactor(GameManager.i.cityScript.CityLoyalty);
-                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} City Loyalty {1}{2}", actorHQ, num, "\n");
+                    if (isMetaLogs)
+                    { Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} City Loyalty {1}{2}", actorHQ, num, "\n"); }
                     builder.Append(GetFactorString(factorTwo, num));
                     tally += num * factorSecond;
                     //
                     // - - - third factor -> Personal Opinion
                     //
                     num = actor.GetDatapoint(ActorDatapoint.Motivation1);
-                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Opinion {1}{2}", actorHQ, num, "\n");
+                    if (isMetaLogs)
+                    { Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Opinion {1}{2}", actorHQ, num, "\n"); }
                     builder.Append(GetFactorString(factorThree, num));
                     tally += num * factorThird;
                     //overall
@@ -1625,7 +1630,8 @@ public class HQManager : MonoBehaviour
                     // - - - first factor -> Targets completed -> 3+ targets is 3 stars (capped)
                     //
                     num = GameManager.i.dataScript.StatisticGetLevel(StatType.TargetSuccesses);
-                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Targets (succeeded) {1}{2}", actorHQ, num, "\n");
+                    if (isMetaLogs)
+                    { Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Targets (succeeded) {1}{2}", actorHQ, num, "\n"); }
                     num = Mathf.Min(num, 3);
                     builder.Append(GetFactorString(factorOne, num));
                     tally += num * factorFirst;
@@ -1633,7 +1639,8 @@ public class HQManager : MonoBehaviour
                     // - - - second factor -> Exposure (Innocence)
                     //
                     num = GameManager.i.playerScript.Innocence;
-                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Innocence {1}{2}", actorHQ, num, "\n");
+                    if (isMetaLogs)
+                    { Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Innocence {1}{2}", actorHQ, num, "\n"); }
                     builder.Append(GetFactorString(factorTwo, num));
                     tally += num * factorSecond;
                     //
@@ -1647,7 +1654,8 @@ public class HQManager : MonoBehaviour
                         Debug.LogWarning("Invalid actor (Null) for ActorHQ.Boss");
                         num = 0;
                     }
-                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Opinion {1}{2}", actorHQ, num, "\n");
+                    if (isMetaLogs)
+                    { Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Opinion {1}{2}", actorHQ, num, "\n"); }
                     builder.Append(GetFactorString(factorThree, num));
                     tally += num * factorThird;
                     //overall
@@ -1668,14 +1676,16 @@ public class HQManager : MonoBehaviour
                     //
                     times = GameManager.i.dataScript.StatisticGetLevel(StatType.NodeCrisisExplodes);
                     num = Mathf.Min(times, 3);
-                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} NodeCrisisExploded {1}, stars {2}{3}", actorHQ, times, num, "\n");
+                    if (isMetaLogs)
+                    { Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} NodeCrisisExploded {1}, stars {2}{3}", actorHQ, times, num, "\n"); }
                     builder.Append(GetFactorString(factorOne, num));
                     tally += num * factorFirst;
                     //
                     // - - - second factor -> HQ Approval
                     //
                     num = GetTenFactor(GetHqApproval());
-                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} HQ Approval {1}{2}", actorHQ, num, "\n");
+                    if (isMetaLogs)
+                    { Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} HQ Approval {1}{2}", actorHQ, num, "\n"); }
                     builder.Append(GetFactorString(factorTwo, num));
                     tally += num * factorSecond;
                     //
@@ -1689,7 +1699,8 @@ public class HQManager : MonoBehaviour
                         Debug.LogWarning("Invalid actor (Null) for ActorHQ.Boss");
                         num = 0;
                     }
-                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Opinion {1}{2}", actorHQ, num, "\n");
+                    if (isMetaLogs)
+                    { Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Opinion {1}{2}", actorHQ, num, "\n"); }
                     builder.Append(GetFactorString(factorThree, num));
                     tally += num * factorThird;
                     //overall
@@ -1709,7 +1720,8 @@ public class HQManager : MonoBehaviour
                     // - - - first factor -> Reviews
                     //
                     times = GameManager.i.dataScript.StatisticGetLevel(StatType.ReviewCommendations) - GameManager.i.dataScript.StatisticGetLevel(StatType.ReviewBlackmarks);
-                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Reviews commendations - blackmarks {1}{2}", actorHQ, times, "\n");
+                    if (isMetaLogs)
+                    { Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Reviews commendations - blackmarks {1}{2}", actorHQ, times, "\n"); }
                     num = Mathf.Clamp(times, 0, 3);
                     builder.Append(GetFactorString(factorOne, num));
                     tally += num * factorFirst;
@@ -1718,7 +1730,8 @@ public class HQManager : MonoBehaviour
                     //
                     times = GameManager.i.dataScript.StatisticGetLevel(StatType.InvestigationsLaunched);
                     if (times == 0) { num = 3; } else { num = 0; }
-                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} TimesInvestigated {1}, stars {2}{3}", actorHQ, times, num, "\n");
+                    if (isMetaLogs)
+                    { Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} TimesInvestigated {1}, stars {2}{3}", actorHQ, times, num, "\n"); }
                     builder.Append(GetFactorString(factorTwo, num));
                     tally += num * factorSecond;
                     //
@@ -1732,7 +1745,8 @@ public class HQManager : MonoBehaviour
                         Debug.LogWarning("Invalid actor (Null) for ActorHQ.Boss");
                         num = 0;
                     }
-                    Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Opinion {1}{2}", actorHQ, num, "\n");
+                    if (isMetaLogs)
+                    { Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Opinion {1}{2}", actorHQ, num, "\n"); }
                     builder.Append(GetFactorString(factorThree, num));
                     tally += num * factorThird;
                     //overall

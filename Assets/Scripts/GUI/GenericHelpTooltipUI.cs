@@ -29,7 +29,7 @@ public class GenericHelpTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
     /// <param name="listOfHelpData"></param>
     /// <param name="x_offset"></param>
     /// <param name="y_offset"></param>
-    public void SetHelpTooltip(List<HelpData> listOfHelpData, int x_offset = 150, int y_offset = 200)
+    public void SetHelpTooltip(List<HelpData> listOfHelpData, int x_offset = 150, int y_offset = 0)
     {
         listOfHelp.Clear();
         if (listOfHelpData != null && listOfHelpData.Count > 0)
