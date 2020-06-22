@@ -243,6 +243,9 @@ public class GUIManager : MonoBehaviour
     [HideInInspector] public char cityChar;
     [HideInInspector] public char compatibilityChar;
     [HideInInspector] public char alertChar;
+    //UI
+    [HideInInspector] public char arrowRight;
+    [HideInInspector] public char arrowLeft;
 
 
     //predefined data icons (colour formatted characters)
@@ -263,6 +266,9 @@ public class GUIManager : MonoBehaviour
     [HideInInspector] public string starIconBad;
     [HideInInspector] public string alertIconGood;
     [HideInInspector] public string alertIconBad;
+    //UI
+    [HideInInspector] public string arrowIconRight;
+    [HideInInspector] public string arrowIconLeft;
 
 
 
@@ -391,6 +397,8 @@ public class GUIManager : MonoBehaviour
         cityChar = '\uf64f';
         compatibilityChar = '\uf6ad';
         alertChar = '\uf06a';
+        arrowRight = '\uf0a9';
+        arrowLeft = '\uf0a8';
     }
 
     /// <summary>
@@ -408,7 +416,6 @@ public class GUIManager : MonoBehaviour
         connectionsIcon = string.Format("{0}{1}{2}", colourIcon, connectionsChar, colourEnd);
         innocenceIcon = string.Format("{0}{1}{2}", colourIcon, innocenceChar, colourEnd);
         compatibilityIcon = string.Format("{0}{1}{2}", colourIcon, compatibilityChar, colourEnd);
-        //uncoloured
         cityIcon = string.Format("{0}{1}{2}", colourIcon, cityChar, colourEnd);
         cityIconGood = string.Format("{0}{1}{2}", colourDataGood, cityChar, colourEnd);
         cityIconBad = string.Format("{0}{1}{2}", colourDataTerrible, cityChar, colourEnd);
@@ -418,6 +425,9 @@ public class GUIManager : MonoBehaviour
         starIconBad = string.Format("{0}{1}{2}", colourDataTerrible, starChar, colourEnd);
         alertIconGood = string.Format("{0}{1}{2}", colourDataGood, alertChar, colourEnd);
         alertIconBad = string.Format("{0}{1}{2}", colourDataTerrible, alertChar, colourEnd);
+        //UI
+        arrowIconRight = string.Format("{0}<size=120%>{1}</size>{2}", colourIcon, arrowRight, colourEnd);
+        arrowIconLeft = string.Format("{0}<size=120%>{1}</size>{2}", colourIcon, arrowLeft, colourEnd);
     }
 
 

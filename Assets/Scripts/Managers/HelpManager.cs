@@ -11,6 +11,8 @@ public class HelpManager : MonoBehaviour
 {
     //bullet character for help topics
     char bullet;
+    string arrowLeft;
+    string arrowRight;
 
     //
     // - - - Colour Scheme - - -
@@ -28,7 +30,12 @@ public class HelpManager : MonoBehaviour
     public void Initialise(GameState state)
     {
         SetColours();
+        //fast access
         bullet = GameManager.i.guiScript.bulletChar;
+        arrowLeft = GameManager.i.guiScript.arrowIconLeft;
+        arrowRight = GameManager.i.guiScript.arrowIconRight;
+        Debug.Assert(string.IsNullOrEmpty(arrowLeft) == false, "Invalid arrowLeft (Null or Empty)");
+        Debug.Assert(string.IsNullOrEmpty(arrowRight) == false, "Invalid arrowRight (Null or Empty)");
         //register listener
         EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "ItemDataManager");
     }
@@ -240,7 +247,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "transitionMain_0";
         data.header = "Keyboard Shortcuts";
-        data.text = string.Format("{0}Left and Right Arrow{1} keys to cycle through pages", colourAlert, colourEnd);
+        data.text = string.Format("{0} {1}Left{2} and {3} {4}Right Arrow{5} keys to cycle through pages", arrowLeft, colourAlert, colourEnd, arrowRight, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 
@@ -391,7 +398,8 @@ public class HelpManager : MonoBehaviour
         data.text = new StringBuilder()
             .AppendFormat("The following controls are available{0}", "\n")
             .AppendFormat(" {0} {1}PgUp & PgDown{2}, cycles through the {3}Side Tabs{4}{5}", bullet, colourAlert, colourEnd, colourAlert, colourEnd, "\n")
-            .AppendFormat(" {0} {1}Left & Right Arrows{2}, cycles through the {3}Top Tabs{4}{5}", bullet, colourAlert, colourEnd, colourAlert, colourEnd, "\n")
+            .AppendFormat(" {0} {1} {2}Left{3} & {4} {5}Right Arrows{6}, cycles {7}Top Tabs{8}{9}", bullet, arrowLeft, colourAlert, colourEnd, arrowRight, 
+            colourAlert, colourEnd, colourAlert, colourEnd, "\n")
             .AppendFormat(" {0} {1}Right Click{2} an Option to {3}Select/Deselect{4}{5}", bullet, colourAlert, colourEnd, colourAlert, colourEnd, "\n")
             .AppendFormat(" {0} {1}SPACE{2} to {3}Select/Deselect{4} highlighted Option{5}", bullet, colourAlert, colourEnd, colourAlert, colourEnd, "\n")
             .AppendFormat(" {0} {1}Mouse Wheel{2} to {3}scroll{4} through options{5}", bullet, colourAlert, colourEnd, colourAlert, colourEnd, "\n")
