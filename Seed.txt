@@ -427,3 +427,103 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 9575 -> Monday, 22 June 2020 3:15 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 12174 -> Monday, 22 June 2020 4:35 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 32127 -> Monday, 22 June 2020 4:52 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid score "21" (should be between 0 and 18)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HQManager:GetOverall(Int32) (at Assets/Scripts/Managers/HQManager.cs:1878)
+	HQManager:GetEndLevelData(ActorHQ) (at Assets/Scripts/Managers/HQManager.cs:1671)
+	MetaManager:InitialiseEndLevel() (at Assets/Scripts/Managers/MetaManager.cs:970)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:134)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:242)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:90)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ControlManager:ProcessEndLevel() (at Assets/Scripts/Managers/ControlManager.cs:222)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:87)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:253)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 14394 -> Monday, 22 June 2020 5:16 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 22440 -> Monday, 22 June 2020 5:16 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 52583 -> Monday, 22 June 2020 5:21 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 41846 -> Monday, 22 June 2020 5:42 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 56036 -> Monday, 22 June 2020 5:44 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 36370 -> Monday, 22 June 2020 5:46 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid score "20" (should be between 0 and 18)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HQManager:GetOverall(Int32) (at Assets/Scripts/Managers/HQManager.cs:1878)
+	HQManager:GetEndLevelData(ActorHQ) (at Assets/Scripts/Managers/HQManager.cs:1716)
+	MetaManager:InitialiseEndLevel() (at Assets/Scripts/Managers/MetaManager.cs:973)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:134)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:242)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:90)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ControlManager:ProcessEndLevel() (at Assets/Scripts/Managers/ControlManager.cs:222)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:87)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:253)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:421)
+	
+Dev seed 50966 -> Monday, 22 June 2020 5:50 PM
+City seed 5678 -> London, United Kingdom
+ASSERT ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument argument, System.ExceptionResource resource) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.ThrowHelper.ThrowArgumentOutOfRangeException () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].get_Item (System.Int32 index) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	TransitionUI.InitialiseTransitionUI () (at Assets/Scripts/GUI/Transition/TransitionUI.cs:650)
+	TransitionUI.SetTransitionUI () (at Assets/Scripts/GUI/Transition/TransitionUI.cs:994)
+	TransitionUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/Transition/TransitionUI.cs:503)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalConfirm.ConfirmCloseRight () (at Assets/Scripts/GUI/ModalConfirm.cs:160)
+	ModalConfirm.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalConfirm.cs:89)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ButtonInteraction.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:41)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 52177 -> Monday, 22 June 2020 5:52 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 7986 -> Monday, 22 June 2020 5:55 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid score "20" (should be between 0 and 18)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HQManager:GetOverall(Int32) (at Assets/Scripts/Managers/HQManager.cs:1878)
+	HQManager:GetEndLevelData(ActorHQ) (at Assets/Scripts/Managers/HQManager.cs:1716)
+	MetaManager:InitialiseEndLevel() (at Assets/Scripts/Managers/MetaManager.cs:973)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:134)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:242)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:90)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ControlManager:ProcessEndLevel() (at Assets/Scripts/Managers/ControlManager.cs:222)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:87)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:253)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:421)
+	

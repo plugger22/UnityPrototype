@@ -2,6 +2,7 @@
 using modalAPI;
 using packageAPI;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -98,11 +99,14 @@ public class TransitionUI : MonoBehaviour
     public Image endLevelBar;
     public TextMeshProUGUI endLevelTextLeft;
     public TextMeshProUGUI endLevelTextRight;
+    public TextMeshProUGUI renownText;
 
     public EndLevelInteraction endLevelBoss;
     public EndLevelInteraction endLevelSubBoss1;
     public EndLevelInteraction endLevelSubBoss2;
     public EndLevelInteraction endLevelSubBoss3;
+
+    public GenericTooltipUI tooltipEndRenown;
 
     //collection
     private EndLevelInteraction[] arrayOfEndLevelOptions;
@@ -297,6 +301,7 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(endLevelSubBoss1 != null, "Invalid endLevelSubBoss1 (Null)");
         Debug.Assert(endLevelSubBoss2 != null, "Invalid endLevelSubBoss2 (Null)");
         Debug.Assert(endLevelSubBoss3 != null, "Invalid endLevelSubBoss3 (Null)");
+        Debug.Assert(tooltipEndRenown != null, "Invalid tooltipEndRenown (Null)");
         //collections
         arrayOfEndLevelOptions = new EndLevelInteraction[GameManager.i.hqScript.numOfActorsHQ];
         //populate
@@ -628,8 +633,27 @@ public class TransitionUI : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid arrayOfEndLevelInteraction (Null) for arrayOfEndLevelOptions[{0}]", i); }
             }
 
-
-
+            //renown tooltip
+            string posRenown = "<pos=70%>";
+            int playerRenown = GameManager.i.playerScript.Renown;
+            int renownTotal = playerRenown + data.listOfEndLevelData.Select(x => x.renown).Sum();
+            StringBuilder builder = new StringBuilder();
+            builder.AppendFormat("{0}<align=\"left\">Carried Over</align>{1}{2}{3}{4}{5}{6}", colourNormal, colourEnd, posRenown, colourNeutral, playerRenown, colourEnd, "\n");
+            builder.AppendFormat("{0}<align=\"left\">{1}</align>{2}{3}{4}{5}{6}{7}", colourNormal, GameManager.i.hqScript.GetHqTitle(ActorHQ.Boss), colourEnd, posRenown, colourNeutral, 
+                data.listOfEndLevelData[(int)ActorHQ.Boss - 1].renown, colourEnd, "\n");
+            builder.AppendFormat("{0}<align=\"left\">{1}</align>{2}{3}{4}{5}{6}{7}", colourNormal, GameManager.i.hqScript.GetHqTitle(ActorHQ.SubBoss1), colourEnd, posRenown, colourNeutral,
+                data.listOfEndLevelData[(int)ActorHQ.SubBoss1 - 1].renown, colourEnd, "\n");
+            builder.AppendFormat("{0}<align=\"left\">{1}</align>{2}{3}{4}{5}{6}{7}", colourNormal, GameManager.i.hqScript.GetHqTitle(ActorHQ.SubBoss2), colourEnd, posRenown, colourNeutral,
+                data.listOfEndLevelData[(int)ActorHQ.SubBoss2 - 1].renown, colourEnd, "\n");
+            builder.AppendFormat("{0}<align=\"left\">{1}</align>{2}{3}{4}{5}{6}{7}", colourNormal, GameManager.i.hqScript.GetHqTitle(ActorHQ.SubBoss3), colourEnd, posRenown, colourNeutral,
+                data.listOfEndLevelData[(int)ActorHQ.SubBoss3 - 1].renown, colourEnd, "\n");
+            tooltipEndRenown.tooltipHeader = string.Format("{0}Player Renown{1}", colourAlert, colourEnd);
+            tooltipEndRenown.tooltipMain = builder.ToString();
+            tooltipEndRenown.tooltipDetails = string.Format("{0}Total Renown{1}{2}{3}{4}{5}", colourNormal, colourEnd, posRenown, colourNeutral, renownTotal, colourEnd);
+            tooltipEndRenown.x_offset = 0;
+            //renown -> update player for renown granted by HQ and update renown display
+            renownText.text = renownTotal.ToString();
+            GameManager.i.playerScript.Renown = renownTotal;
             #endregion
 
             #region HQ Status
