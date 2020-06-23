@@ -1294,7 +1294,9 @@ namespace packageAPI
         public string assessmentText;                               //Assessment text
         public EndlLevelMedal medal;                                //type of medal awarded
         public int renown;                                          //renown given
-        public TooltipData tooltip = new TooltipData();             //Hq portrait tooltip data
+        public TooltipData tooltipPortrait = new TooltipData();     //Hq portrait tooltip data
+        public TooltipData tooltipMedal = new TooltipData();        //Medal tooltip data
+
     }
 
 
@@ -1307,6 +1309,18 @@ namespace packageAPI
         public string header;
         public string main;
         public string details;
+
+        //default constructor
+        public TooltipData()
+        { }
+
+        //copy constructor
+        public TooltipData(TooltipData data)
+        {
+            header = data.header;
+            main = data.main;
+            details = data.details;
+        }
     }
 
     /// <summary>

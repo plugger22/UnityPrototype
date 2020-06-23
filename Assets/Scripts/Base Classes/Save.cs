@@ -271,6 +271,9 @@ public class SaveMetaGameData
     //
     // - - - TransitionData
     //
+    //End Level
+    public string objectiveStatus;
+    public List<EndLevelData> listOfEndLevelData = new List<EndLevelData>();
     //HQ status
     public List<string> listOfHqSprites = new List<string>();
     public List<string> listOfHqRenown = new List<string>();

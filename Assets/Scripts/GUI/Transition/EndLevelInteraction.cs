@@ -16,7 +16,8 @@ public class EndLevelInteraction : MonoBehaviour
     public Image medal;
     public Image assessmentBackground;
     public TextMeshProUGUI assessmentText;
-    public GenericTooltipUI tooltip;
+    public GenericTooltipUI tooltipPortrait;
+    public GenericTooltipUI tooltipMedal;
 
 
     public void Awake()
@@ -27,5 +28,7 @@ public class EndLevelInteraction : MonoBehaviour
         Debug.Assert(medal != null, "Invalid medal (Null)");
         Debug.Assert(assessmentBackground != null, "Invalid statBackground (Null)");
         Debug.Assert(assessmentText != null, "Invalid statText (Null)");
+        Debug.Assert(tooltipPortrait != null, "Invalid tooltipPortrait (Null)");
+        Debug.Assert(tooltipMedal != null, "Invalid tooltipMedal (Null)");
     }
 }

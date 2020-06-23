@@ -58110,7 +58110,12 @@ Prefab:
         type: 2}
       propertyPath: m_TargetGraphic
       value: 
-      objectReference: {fileID: 837910169}
+      objectReference: {fileID: 1685551786}
+    - target: {fileID: 114652320604000822, guid: 1e4f0c2befdb31a4096d5b12f630938f,
+        type: 2}
+      propertyPath: m_Transition
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e4f0c2befdb31a4096d5b12f630938f, type: 2}
   m_IsPrefabAsset: 0
@@ -61363,6 +61368,12 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1644049504691518, guid: e5632702ac51afd41a1ea9d46f5baed8,
     type: 2}
   m_PrefabInternal: {fileID: 1683960232}
+--- !u!114 &1685551786 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114851705593894626, guid: 1e4f0c2befdb31a4096d5b12f630938f,
+    type: 2}
+  m_PrefabInternal: {fileID: 1595645118}
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &1687142324 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1543082515241738, guid: 662dab0c178262e4da6ad8cc4ea86c4b,

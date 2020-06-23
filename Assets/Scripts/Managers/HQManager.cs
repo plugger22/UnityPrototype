@@ -36,7 +36,7 @@ public class HQManager : MonoBehaviour
     [Tooltip("Weighting for second criteria (number of stars * weighting")]
     [Range(1, 5)] public int factorSecond = 2;
     [Tooltip("Weighting for third criteria (number of stars * weighting")]
-    [Range(1, 5)] public int factorThird = 3;
+    [Range(1, 5)] public int factorThird = 1;
 
     [Header("MetaGame")]
     [Tooltip("Chance of an HQ actor suffering a random event that effects their renown")]
@@ -1561,7 +1561,6 @@ public class HQManager : MonoBehaviour
             int times = 0;
             int count = 0;
             string factorOne, factorTwo, factorThree;
-            string posTooltip = "<pos=75%>";
             StringBuilder builder = new StringBuilder();
             builder.AppendFormat("{0}<align=\"center\"><b>{1}</b></align>{2}{3}{4}", colourAlert, GetHqTitle(actorHQ), colourEnd, "\n", "\n");
             switch (actorHQ)
@@ -1626,10 +1625,9 @@ public class HQManager : MonoBehaviour
                     overall = GetOverall(tally);
                     data.renown = overall * factorBoss;
                     data.medal = (EndlLevelMedal)overall;
-                    data.tooltip.header = string.Format("{0}{1}{2}<size=120%>{3}</size>{4}{5}Renown {6}{7}{8}", actor.actorName, "\n", colourAlert, GetHqTitle(actorHQ), colourEnd,
-                        "\n", colourNeutral, actor.Renown, colourEnd);
-                    data.tooltip.main = GetEndLevelHqMainTooltip(actorHQ, factorOne, factorTwo, factorThree, posTooltip);
-                    data.tooltip.details = string.Format("{0}Overall{1}{2} Renown per Star{3}{4}{5}{6}", colourAlert, colourEnd, "\n", posTooltip, colourNeutral, factorBoss, colourEnd);
+                    //tooltips
+                    data.tooltipPortrait = GetEndLevelPortraitTooltip(actor, data.renown, factorOne, factorTwo, factorThree);
+                    data.tooltipMedal = GetEndLevelMedalTooltip(data.medal);
                     break;
                 case ActorHQ.SubBoss1:
                     factorOne = "Targets";
@@ -1671,10 +1669,9 @@ public class HQManager : MonoBehaviour
                     overall = GetOverall(tally);
                     data.renown = overall * factorSubBoss1;
                     data.medal = (EndlLevelMedal)overall;
-                    data.tooltip.header = string.Format("{0}{1}{2}<size=120%>{3}</size>{4}{5}Renown {6}{7}{8}", actor.actorName, "\n", colourAlert, GetHqTitle(actorHQ), colourEnd,
-                        "\n", colourNeutral, actor.Renown, colourEnd);
-                    data.tooltip.main = GetEndLevelHqMainTooltip(actorHQ, factorOne, factorTwo, factorThree, posTooltip);
-                    data.tooltip.details = string.Format("{0}Overall{1}{2} Renown per Star{3}{4}{5}{6}", colourAlert, colourEnd, "\n", posTooltip, colourNeutral, factorSubBoss1, colourEnd);
+                    //tooltips
+                    data.tooltipPortrait = GetEndLevelPortraitTooltip(actor, data.renown, factorOne, factorTwo, factorThree);
+                    data.tooltipMedal = GetEndLevelMedalTooltip(data.medal);
                     break;
                 case ActorHQ.SubBoss2:
                     factorOne = "District Crisis";
@@ -1716,10 +1713,9 @@ public class HQManager : MonoBehaviour
                     overall = GetOverall(tally);
                     data.renown = overall * factorSubBoss2;
                     data.medal = (EndlLevelMedal)overall;
-                    data.tooltip.header = string.Format("{0}{1}{2}<size=120%>{3}</size>{4}{5}Renown {6}{7}{8}", actor.actorName, "\n", colourAlert, GetHqTitle(actorHQ), colourEnd,
-                        "\n", colourNeutral, actor.Renown, colourEnd);
-                    data.tooltip.main = GetEndLevelHqMainTooltip(actorHQ, factorOne, factorTwo, factorThree, posTooltip);
-                    data.tooltip.details = string.Format("{0}Overall{1}{2} Renown per Star{3}{4}{5}{6}", colourAlert, colourEnd, "\n", posTooltip, colourNeutral, factorSubBoss2, colourEnd);
+                    //tooltips
+                    data.tooltipPortrait = GetEndLevelPortraitTooltip(actor, data.renown, factorOne, factorTwo, factorThree);
+                    data.tooltipMedal = GetEndLevelMedalTooltip(data.medal);
                     break;
                 case ActorHQ.SubBoss3:
                     factorOne = "Reviews";
@@ -1762,10 +1758,9 @@ public class HQManager : MonoBehaviour
                     overall = GetOverall(tally);
                     data.renown = overall * factorSubBoss3;
                     data.medal = (EndlLevelMedal)overall;
-                    data.tooltip.header = string.Format("{0}{1}{2}<size=120%>{3}</size>{4}{5}Renown {6}{7}{8}", actor.actorName, "\n", colourAlert, GetHqTitle(actorHQ), colourEnd,
-                        "\n", colourNeutral, actor.Renown, colourEnd);
-                    data.tooltip.main = GetEndLevelHqMainTooltip(actorHQ, factorOne, factorTwo, factorThree, posTooltip);
-                    data.tooltip.details = string.Format("{0}Overall{1}{2} Renown per Star{3}{4}{5}{6}", colourAlert, colourEnd, "\n", posTooltip, colourNeutral, factorSubBoss3, colourEnd);
+                    //tooltips
+                    data.tooltipPortrait = GetEndLevelPortraitTooltip(actor, data.renown, factorOne, factorTwo, factorThree);
+                    data.tooltipMedal = GetEndLevelMedalTooltip(data.medal);
                     break;
                 default: Debug.LogWarningFormat("Unrecognised actorHQ \"{0}\"", actorHQ); break;
             }
@@ -1881,6 +1876,77 @@ public class HQManager : MonoBehaviour
         return num;
     }
 
+
+    private TooltipData GetEndLevelPortraitTooltip(Actor actor, int renown, string factorOne, string factorTwo, string factorThree)
+    {
+        TooltipData data = new TooltipData();
+        int factor = 0;
+        string pos = "<pos=70%>";
+        //header
+        data.header = string.Format("{0}{1}{2}<size=120%>{3}</size>{4}{5}Grants {6}{7}{8} Renown", actor.actorName, "\n", colourAlert, GetHqTitle(actor.statusHQ), colourEnd,
+                      "\n", colourNeutral, renown, colourEnd);
+        //main
+        StringBuilder builder = new StringBuilder();
+        switch (actor.statusHQ)
+        {
+            case ActorHQ.Boss:
+                factor = factorBoss;
+                builder.AppendFormat("{0}Weighting{1}{2}", colourAlert, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}", colourNormal, factorOne, colourEnd, pos, colourNeutral, factorFirst, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}", colourNormal, factorTwo, colourEnd, pos, colourNeutral, factorSecond, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, factorThree, colourEnd, pos, colourNeutral, factorThird, colourEnd);
+                break;
+            case ActorHQ.SubBoss1:
+                factor = factorSubBoss1;
+                builder.AppendFormat("{0}Weighting{1}{2}", colourAlert, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}", colourNormal, factorOne, colourEnd, pos, colourNeutral, factorFirst, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}", colourNormal, factorTwo, colourEnd, pos, colourNeutral, factorSecond, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, factorThree, colourEnd, pos, colourNeutral, factorThird, colourEnd);
+                break;
+            case ActorHQ.SubBoss2:
+                factor = factorSubBoss2;
+                builder.AppendFormat("{0}Weighting{1}{2}", colourAlert, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}", colourNormal, factorOne, colourEnd, pos, colourNeutral, factorFirst, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}", colourNormal, factorTwo, colourEnd, pos, colourNeutral, factorSecond, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, factorThree, colourEnd, pos, colourNeutral, factorThird, colourEnd);
+                break;
+            case ActorHQ.SubBoss3:
+                factor = factorSubBoss3;
+                builder.AppendFormat("{0}Weighting{1}{2}", colourAlert, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}", colourNormal, factorOne, colourEnd, pos, colourNeutral, factorFirst, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}", colourNormal, factorTwo, colourEnd, pos, colourNeutral, factorSecond, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, factorThree, colourEnd, pos, colourNeutral, factorThird, colourEnd);
+                break;
+        }
+        data.main = builder.ToString();
+        //details
+        data.details = string.Format("{0}Overall{1}{2} Renown per Star{3}{4}{5}{6}", colourAlert, colourEnd, "\n", pos, colourNeutral, factor, colourEnd);
+        return data;
+    }
+
+
+    private TooltipData GetEndLevelMedalTooltip(EndlLevelMedal medal)
+    {
+        TooltipData data = new TooltipData();
+
+        return data;
+    }
+
+    /*/// <summary>
+    /// subMethod that returns tooltip.Header for relevant HQ hierarchy actor for endLevel 'Assessment' page in TransitionUI
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="renownGranted"></param>
+    /// <returns></returns>
+    private string GetEndLevelHqHeaderTooltip(Actor actor, int renownGranted)
+    {
+        return string.Format("{0}{1}{2}<size=120%>{3}</size>{4}{5}Grants {6}{7}{8} Renown", actor.actorName, "\n", colourAlert, GetHqTitle(actor.statusHQ), colourEnd,
+                          "\n", colourNeutral, renownGranted, colourEnd);
+    }
+
+    private string GetEndLevelHqDetailsTooltip(string posTooltip)
+    { return string.Format("{0}Overall{1}{2} Renown per Star{3}{4}{5}{6}", colourAlert, colourEnd, "\n", posTooltip, colourNeutral, factorBoss, colourEnd); }
+
     /// <summary>
     /// subMethod that returns tooltip.Main data for relevant HQ hierarchy actor for endLevel 'Assessment' page in TransitionUI
     /// </summary>
@@ -1920,7 +1986,7 @@ public class HQManager : MonoBehaviour
                 break;
         }
         return builder.ToString();
-    }
+    }*/
 
 
 

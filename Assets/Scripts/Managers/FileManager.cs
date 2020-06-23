@@ -459,6 +459,9 @@ public class FileManager : MonoBehaviour
         TransitionInfoData info = GameManager.i.metaScript.GetTransitionInfoData();
         if (info != null)
         {
+            //End Level
+            write.metaGameData.objectiveStatus = info.objectiveStatus;
+            write.metaGameData.listOfEndLevelData = info.listOfEndLevelData;
             //HQ status
             write.metaGameData.listOfHqRenown = info.listOfHqRenown;
             write.metaGameData.listOfHqTitles = info.listOfHqTitles;
@@ -2112,6 +2115,12 @@ public class FileManager : MonoBehaviour
         // - - - TransitionInfoData
         //
         TransitionInfoData info = new TransitionInfoData();
+
+        #region End Level
+        //End Level
+        info.objectiveStatus = read.metaGameData.objectiveStatus;
+        info.listOfEndLevelData = read.metaGameData.listOfEndLevelData;
+        #endregion
 
         #region HQ Status
         //Hq -> standard lists

@@ -302,6 +302,20 @@ public class HelpManager : MonoBehaviour
             "Each {6}Overall{7} star from the most senior member is worth {8}4x more renown{9} than a star from the most junior member", 
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
+        //Objective Overview
+        data = new HelpData();
+        data.tag = "transitionEnd_4";
+        data.header = "Overview";
+        data.text = string.Format("{0}Completing{1} Objectives is how you gain the {2}greatest renown{3}. They are the first criteria of the most senior HQ member and are, as a consequence, worth the most",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Objective pop-up
+        data = new HelpData();
+        data.tag = "transitionEnd_5";
+        data.header = "Assessment";
+        data.text = string.Format("All Objectives are {0}weighted the same{1}. Having close to {2}100% completion{3} of all objectives is the equivalent of a {4}3 star{5} assessment",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
         #endregion
 
         #region Hq Status

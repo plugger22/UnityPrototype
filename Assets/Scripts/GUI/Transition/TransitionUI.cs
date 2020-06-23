@@ -585,9 +585,12 @@ public class TransitionUI : MonoBehaviour
                 arrayOfEndLevelOptions[i].hqRenown.text = "";
                 arrayOfEndLevelOptions[i].medal.sprite = null;
                 arrayOfEndLevelOptions[i].assessmentText.text = "";
-                arrayOfEndLevelOptions[i].tooltip.tooltipHeader = "";
-                arrayOfEndLevelOptions[i].tooltip.tooltipMain = "";
-                arrayOfEndLevelOptions[i].tooltip.tooltipDetails = "";
+                arrayOfEndLevelOptions[i].tooltipPortrait.tooltipHeader = "";
+                arrayOfEndLevelOptions[i].tooltipPortrait.tooltipMain = "";
+                arrayOfEndLevelOptions[i].tooltipPortrait.tooltipDetails = "";
+                arrayOfEndLevelOptions[i].tooltipMedal.tooltipHeader = "";
+                arrayOfEndLevelOptions[i].tooltipMedal.tooltipMain = "";
+                arrayOfEndLevelOptions[i].tooltipMedal.tooltipDetails = "";
             }
             endLevelBackground.gameObject.SetActive(true);
             for (int i = 0; i < arrayOfEndLevelOptions.Length; i++)
@@ -622,11 +625,16 @@ public class TransitionUI : MonoBehaviour
                         }
                         //stat text
                         option.assessmentText.text = endData.assessmentText;
-                        //tooltip
-                        option.tooltip.tooltipHeader = endData.tooltip.header;
-                        option.tooltip.tooltipMain = endData.tooltip.main;
-                        option.tooltip.tooltipDetails = endData.tooltip.details;
-                        option.tooltip.x_offset = 50;
+                        //tooltip Portrait
+                        option.tooltipPortrait.tooltipHeader = endData.tooltipPortrait.header;
+                        option.tooltipPortrait.tooltipMain = endData.tooltipPortrait.main;
+                        option.tooltipPortrait.tooltipDetails = endData.tooltipPortrait.details;
+                        option.tooltipPortrait.x_offset = 50;
+                        //tooltip Medal
+                        option.tooltipMedal.tooltipHeader = endData.tooltipMedal.header;
+                        option.tooltipMedal.tooltipMain = endData.tooltipMedal.main;
+                        option.tooltipMedal.tooltipDetails = endData.tooltipMedal.details;
+                        option.tooltipMedal.x_offset = 50;
                     }
                     else { Debug.LogWarningFormat("Invalid EndLevelData (Null) for listOfEndLevelData[{0}]", i); }
                 }
@@ -650,7 +658,8 @@ public class TransitionUI : MonoBehaviour
             tooltipEndRenown.tooltipHeader = string.Format("{0}Player Renown{1}", colourAlert, colourEnd);
             tooltipEndRenown.tooltipMain = builder.ToString();
             tooltipEndRenown.tooltipDetails = string.Format("{0}Total Renown{1}{2}{3}{4}{5}", colourNormal, colourEnd, posRenown, colourNeutral, renownTotal, colourEnd);
-            tooltipEndRenown.x_offset = 0;
+            tooltipEndRenown.x_offset = -350;
+            tooltipEndRenown.y_offset = -50;
             //renown -> update player for renown granted by HQ and update renown display
             renownText.text = renownTotal.ToString();
             GameManager.i.playerScript.Renown = renownTotal;
@@ -883,7 +892,7 @@ public class TransitionUI : MonoBehaviour
         {
             case ModalTransitionSubState.EndLevel:
                 buttonInteractionSpecial.SetButton(EventType.TransitionObjectives);
-                buttonSpecialText.text = "Objectives";
+                buttonSpecialText.text = "OBJECTIVES";
                 buttonSpecial.gameObject.SetActive(true);
                 buttonBack.gameObject.SetActive(false);
                 buttonContinue.gameObject.SetActive(true);
@@ -1189,7 +1198,8 @@ public class TransitionUI : MonoBehaviour
         details.sprite = GameManager.i.guiScript.infoSprite;
         details.modalLevel = 2;
         details.modalState = ModalSubState.Transition;
-        details.help0 = "test0";
+        details.help0 = "transitionEnd_4";
+        details.help1 = "transitionEnd_5";
         //open outcome windown (will open MetaGameUI via triggerEvent once closed
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "TransitionUI.cs -> ExecuteObjectives");
     }
