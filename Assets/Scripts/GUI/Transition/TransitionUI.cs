@@ -111,6 +111,9 @@ public class TransitionUI : MonoBehaviour
     //collection
     private EndLevelInteraction[] arrayOfEndLevelOptions;
 
+    //assorted
+    private TooltipData specialTooltipEndLevel;
+
     #endregion
 
     #region HQ Status
@@ -152,7 +155,7 @@ public class TransitionUI : MonoBehaviour
 
     //assorted
     private TooltipData renownTooltip;
-    private TooltipData specialTooltip;
+    private TooltipData specialTooltipHQ;
 
     //fast access
     private Sprite vacantActorSprite;
@@ -610,17 +613,15 @@ public class TransitionUI : MonoBehaviour
                         //medal
                         switch (endData.medal)
                         {
-                            case EndlLevelMedal.Gold:
-                            case EndlLevelMedal.Silver:
-                            case EndlLevelMedal.Bronze:
-                                option.medal.sprite = GameManager.i.guiScript.medalSprite;
-                                break;
+                            case EndlLevelMedal.Gold: option.medal.sprite = GameManager.i.guiScript.medalGoldSprite; break;
+                            case EndlLevelMedal.Silver: option.medal.sprite = GameManager.i.guiScript.medalSilverSprite; break;
+                            case EndlLevelMedal.Bronze: option.medal.sprite = GameManager.i.guiScript.medalBronzeSprite; break;
                             case EndlLevelMedal.DeadDuck:
-                                option.medal.sprite = GameManager.i.guiScript.failureSprite;
+                                option.medal.sprite = GameManager.i.guiScript.medalDuckSprite;
                                 break;
                             default:
                                 Debug.LogWarningFormat("Unrecognised endData.medal \"{0}\"", endData.medal);
-                                option.medal.sprite = GameManager.i.guiScript.failureSprite;
+                                option.medal.sprite = GameManager.i.guiScript.medalDuckSprite;
                                 break;
                         }
                         //stat text
@@ -663,6 +664,13 @@ public class TransitionUI : MonoBehaviour
             //renown -> update player for renown granted by HQ and update renown display
             renownText.text = renownTotal.ToString();
             GameManager.i.playerScript.Renown = renownTotal;
+            //special tooltip
+            specialTooltipEndLevel = new TooltipData()
+            {
+                header = string.Format("{0}Objectives{1}", colourCancel, colourEnd),
+                main = string.Format("Shows Objectives and your {0}degree of completion{1} for each Objective", colourNeutral, colourEnd),
+                details = string.Format("{0}Click to View{1}", colourAlert, colourEnd)
+            };
             #endregion
 
             #region HQ Status
@@ -751,7 +759,7 @@ public class TransitionUI : MonoBehaviour
 
             //special button tooltip
             int count = transitionInfoData.listOfHqEvents.Count;
-            specialTooltip = new TooltipData()
+            specialTooltipHQ = new TooltipData()
             {
                 header = string.Format("{0}HQ Events{1}", colourCancel, colourEnd),
                 main = string.Format("There {0} {1}{2}{3} event{4}", count != 1 ? "are" : "is only", colourNeutral, count, colourEnd, count != 1 ? "s" : ""),
@@ -798,7 +806,7 @@ public class TransitionUI : MonoBehaviour
     private void InitialiseTooltips()
     {
         int x_offset = -50;
-        int y_offset = 50;
+        int y_offset = 75;
         //Special Button
         tooltipSpecial.x_offset = x_offset;
         tooltipSpecial.y_offset = y_offset;
@@ -897,6 +905,10 @@ public class TransitionUI : MonoBehaviour
                 buttonBack.gameObject.SetActive(false);
                 buttonContinue.gameObject.SetActive(true);
                 buttonExit.gameObject.SetActive(false);
+                //special button tooltip (Objectives)
+                tooltipSpecial.tooltipHeader = specialTooltipEndLevel.header;
+                tooltipSpecial.tooltipMain = specialTooltipEndLevel.main;
+                tooltipSpecial.tooltipDetails = specialTooltipEndLevel.details;
                 break;
             case ModalTransitionSubState.HQ:
                 buttonInteractionSpecial.SetButton(EventType.TransitionHqEvents);
@@ -905,6 +917,10 @@ public class TransitionUI : MonoBehaviour
                 buttonBack.gameObject.SetActive(true);
                 buttonContinue.gameObject.SetActive(true);
                 buttonExit.gameObject.SetActive(false);
+                //special button tooltip (HQ events)
+                tooltipSpecial.tooltipHeader = specialTooltipHQ.header;
+                tooltipSpecial.tooltipMain = specialTooltipHQ.main;
+                tooltipSpecial.tooltipDetails = specialTooltipHQ.details;
                 break;
             case ModalTransitionSubState.PlayerStatus:
                 buttonInteractionSpecial.SetButton(EventType.None);
@@ -1055,10 +1071,10 @@ public class TransitionUI : MonoBehaviour
         {
             case ModalTransitionSubState.EndLevel:
                 newState = ModalTransitionSubState.HQ;
-                //special button tooltip (HQ events)
-                tooltipSpecial.tooltipHeader = specialTooltip.header;
-                tooltipSpecial.tooltipMain = specialTooltip.main;
-                tooltipSpecial.tooltipDetails = specialTooltip.details;
+                /*//special button tooltip (HQ events)
+                tooltipSpecial.tooltipHeader = specialTooltipHQ.header;
+                tooltipSpecial.tooltipMain = specialTooltipHQ.main;
+                tooltipSpecial.tooltipDetails = specialTooltipHQ.details;*/
                 break;
             case ModalTransitionSubState.HQ:
                 newState = ModalTransitionSubState.PlayerStatus;
@@ -1109,13 +1125,17 @@ public class TransitionUI : MonoBehaviour
             case ModalTransitionSubState.HQ:
                 ClearSpecialButtonTooltip();
                 newState = ModalTransitionSubState.EndLevel;
+                /*//special button tooltip (Objectives)
+                tooltipSpecial.tooltipHeader = specialTooltipEndLevel.header;
+                tooltipSpecial.tooltipMain = specialTooltipEndLevel.main;
+                tooltipSpecial.tooltipDetails = specialTooltipEndLevel.details;*/
                 break;
             case ModalTransitionSubState.PlayerStatus:
                 newState = ModalTransitionSubState.HQ;
-                //special button tooltip (HQ events)
-                tooltipSpecial.tooltipHeader = specialTooltip.header;
-                tooltipSpecial.tooltipMain = specialTooltip.main;
-                tooltipSpecial.tooltipDetails = specialTooltip.details;
+                /*//special button tooltip (HQ events)
+                tooltipSpecial.tooltipHeader = specialTooltipHQ.header;
+                tooltipSpecial.tooltipMain = specialTooltipHQ.main;
+                tooltipSpecial.tooltipDetails = specialTooltipHQ.details;*/
                 break;
             case ModalTransitionSubState.BriefingOne:
                 newState = ModalTransitionSubState.PlayerStatus;

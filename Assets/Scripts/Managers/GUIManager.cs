@@ -157,10 +157,14 @@ public class GUIManager : MonoBehaviour
     public Sprite friendSprite;
     [Tooltip("Sprite for an Enemy relationship")]
     public Sprite enemySprite;
-    [Tooltip("Sprite for medal (placeholder prior to implementing full medal system")]
-    public Sprite medalSprite;
-    [Tooltip("Sprite used for failure (placeholder)")]
-    public Sprite failureSprite;
+    [Tooltip("Sprite for Gold medal")]
+    public Sprite medalGoldSprite;
+    [Tooltip("Sprite for Silver medal")]
+    public Sprite medalSilverSprite;
+    [Tooltip("Sprite for Bronze medal")]
+    public Sprite medalBronzeSprite;
+    [Tooltip("Sprite used for Dead Duck Award")]
+    public Sprite medalDuckSprite;
 
 
     [Header("Priorities")]
@@ -331,12 +335,14 @@ public class GUIManager : MonoBehaviour
         Debug.Assert(topicReviewSprite != null, "Invalid topicReviewSprite (Null)");
         Debug.Assert(friendSprite != null, "Invalid friendSprite (Null)");
         Debug.Assert(enemySprite != null, "Invalid enemySprite (Null)");
-        Debug.Assert(medalSprite != null, "Invalid medalSprite (Null)");
-        Debug.Assert(failureSprite != null, "Invalid failureSprite (Null)");
         Debug.Assert(moodStar0 != null, "Invalid moodStar0 (Null)");
         Debug.Assert(moodStar1 != null, "Invalid moodStar1 (Null)");
         Debug.Assert(moodStar2 != null, "Invalid moodStar2 (Null)");
         Debug.Assert(moodStar3 != null, "Invalid moodStar3 (Null)");
+        Debug.Assert(medalGoldSprite != null, "Invalid medalGoldSprite (Null)");
+        Debug.Assert(medalSilverSprite != null, "Invalid medalSilverSprite (Null)");
+        Debug.Assert(medalBronzeSprite != null, "Invalid medalBronzeSprite (Null)");
+        Debug.Assert(medalDuckSprite != null, "Invalid medalDuckSprite (Null)");
 
     }
 

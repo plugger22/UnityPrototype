@@ -1928,7 +1928,31 @@ public class HQManager : MonoBehaviour
     private TooltipData GetEndLevelMedalTooltip(EndlLevelMedal medal)
     {
         TooltipData data = new TooltipData();
-
+        switch(medal)
+        {
+            case EndlLevelMedal.Gold:
+                data.header = string.Format("{0}<size=120%>Gold Medal</size>{1}", colourAlert, colourEnd);
+                data.main = string.Format("Your performance has been<br>{0}<size=120%>Outstanding</size>{1}", colourGood, colourEnd);
+                data.details = string.Format("Requires {0}3{1} stars", colourNeutral, colourEnd);
+                break;
+            case EndlLevelMedal.Silver:
+                data.header = string.Format("{0}<size=120%>Silver Medal</size>{1}", colourAlert, colourEnd);
+                data.main = string.Format("Your performance has been<br>{0}<size=120%>Solid</size>{1}", colourGood, colourEnd);
+                data.details = string.Format("Requires {0}2{1} stars", colourNeutral, colourEnd);
+                break;
+            case EndlLevelMedal.Bronze:
+                data.header = string.Format("{0}<size=120%>Bronze Medal</size>{1}", colourAlert, colourEnd);
+                data.main = string.Format("Your performance has been<br>{0}<size=120%>{1}</size>{2}", colourNeutral, Random.Range(0, 100) < 50 ? "Barely Passable" : "Lacking", colourEnd);
+                data.details = string.Format("Requires {0}1{1} star", colourNeutral, colourEnd);
+                break;
+            case EndlLevelMedal.DeadDuck:
+                data.header = string.Format("{0}<size=120%>Dead Duck Award</size>{1}", colourAlert, colourEnd);
+                data.main = string.Format("What the h*ll went wrong? This is a<br>{0}<size=120%>Disgrace</size>{1}", colourBad, colourEnd);
+                data.details = string.Format("Awarded for {0}0{1} stars", colourNeutral, colourEnd);
+                break;
+            default: Debug.LogWarningFormat("Unrecognised medal \"{0}\"", medal); break;
+            
+        }
         return data;
     }
 
