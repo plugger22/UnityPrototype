@@ -53,3 +53,45 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 4611 -> Tuesday, 23 June 2020 4:10 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 14682 -> Wednesday, 24 June 2020 10:32 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 55743 -> Wednesday, 24 June 2020 11:10 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 45958 -> Wednesday, 24 June 2020 11:26 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 44350 -> Wednesday, 24 June 2020 11:34 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 6080 -> Wednesday, 24 June 2020 2:46 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 41687 -> Wednesday, 24 June 2020 4:29 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 62175 -> Wednesday, 24 June 2020 4:47 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 27364 -> Wednesday, 24 June 2020 4:58 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 19077 -> Wednesday, 24 June 2020 5:01 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 22747 -> Wednesday, 24 June 2020 5:02 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 63220 -> Wednesday, 24 June 2020 5:49 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TransitionUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/Transition/TransitionUI.cs:444)
+	TransitionUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/Transition/TransitionUI.cs:227)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:826)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:881)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:389)
+	
+Dev seed 28370 -> Wednesday, 24 June 2020 5:53 PM
+City seed 5678 -> London, United Kingdom

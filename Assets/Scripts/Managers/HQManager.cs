@@ -1947,7 +1947,9 @@ public class HQManager : MonoBehaviour
                 break;
             case EndlLevelMedal.DeadDuck:
                 data.header = string.Format("{0}<size=120%>Dead Duck Award</size>{1}", colourAlert, colourEnd);
-                data.main = string.Format("What the h*ll went wrong? This is a<br>{0}<size=120%>Disgrace</size>{1}", colourBad, colourEnd);
+                if (Random.Range(0, 100) < 50)
+                { data.main = string.Format("What the h*ll went wrong? This is a<br>{0}<size=120%>Disgrace</size>{1}", colourBad, colourEnd);}
+                else { data.main = string.Format("How could this happen? This is an<br>{0}<size=120%>Embarrassment</size>{1}", colourBad, colourEnd); }
                 data.details = string.Format("Awarded for {0}0{1} stars", colourNeutral, colourEnd);
                 break;
             default: Debug.LogWarningFormat("Unrecognised medal \"{0}\"", medal); break;
@@ -1956,64 +1958,7 @@ public class HQManager : MonoBehaviour
         return data;
     }
 
-    /*/// <summary>
-    /// subMethod that returns tooltip.Header for relevant HQ hierarchy actor for endLevel 'Assessment' page in TransitionUI
-    /// </summary>
-    /// <param name="actor"></param>
-    /// <param name="renownGranted"></param>
-    /// <returns></returns>
-    private string GetEndLevelHqHeaderTooltip(Actor actor, int renownGranted)
-    {
-        return string.Format("{0}{1}{2}<size=120%>{3}</size>{4}{5}Grants {6}{7}{8} Renown", actor.actorName, "\n", colourAlert, GetHqTitle(actor.statusHQ), colourEnd,
-                          "\n", colourNeutral, renownGranted, colourEnd);
-    }
-
-    private string GetEndLevelHqDetailsTooltip(string posTooltip)
-    { return string.Format("{0}Overall{1}{2} Renown per Star{3}{4}{5}{6}", colourAlert, colourEnd, "\n", posTooltip, colourNeutral, factorBoss, colourEnd); }
-
-    /// <summary>
-    /// subMethod that returns tooltip.Main data for relevant HQ hierarchy actor for endLevel 'Assessment' page in TransitionUI
-    /// </summary>
-    /// <param name="actorHQ"></param>
-    /// <param name="factorOne"></param>
-    /// <param name="factorTwo"></param>
-    /// <param name="factorThree"></param>
-    /// <returns></returns>
-    private string GetEndLevelHqMainTooltip(ActorHQ actorHQ, string factorOne, string factorTwo, string factorThree, string pos)
-    {
-        StringBuilder builder = new StringBuilder();
-        switch (actorHQ)
-        {
-            case ActorHQ.Boss:
-                builder.AppendFormat("{0}Weighting{1}{2}", colourAlert, colourEnd, "\n");
-                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}", colourNormal, factorOne, colourEnd, pos, colourNeutral, factorFirst, colourEnd, "\n");
-                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}", colourNormal, factorTwo, colourEnd, pos, colourNeutral, factorSecond, colourEnd, "\n");
-                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, factorThree, colourEnd, pos, colourNeutral, factorThird, colourEnd);
-                break;
-            case ActorHQ.SubBoss1:
-                builder.AppendFormat("{0}Weighting{1}{2}", colourAlert, colourEnd, "\n");
-                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}", colourNormal, factorOne, colourEnd, pos, colourNeutral, factorFirst, colourEnd, "\n");
-                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}", colourNormal, factorTwo, colourEnd, pos, colourNeutral, factorSecond, colourEnd, "\n");
-                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, factorThree, colourEnd, pos, colourNeutral, factorThird, colourEnd);
-                break;
-            case ActorHQ.SubBoss2:
-                builder.AppendFormat("{0}Weighting{1}{2}", colourAlert, colourEnd, "\n");
-                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}", colourNormal, factorOne, colourEnd, pos, colourNeutral, factorFirst, colourEnd, "\n");
-                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}", colourNormal, factorTwo, colourEnd, pos, colourNeutral, factorSecond, colourEnd, "\n");
-                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, factorThree, colourEnd, pos, colourNeutral, factorThird, colourEnd);
-                break;
-            case ActorHQ.SubBoss3:
-                builder.AppendFormat("{0}Weighting{1}{2}", colourAlert, colourEnd, "\n");
-                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}", colourNormal, factorOne, colourEnd, pos, colourNeutral, factorFirst, colourEnd, "\n");
-                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}", colourNormal, factorTwo, colourEnd, pos, colourNeutral, factorSecond, colourEnd, "\n");
-                builder.AppendFormat("{0}{1}{2}{3}{4}{5}{6}", colourNormal, factorThree, colourEnd, pos, colourNeutral, factorThird, colourEnd);
-                break;
-        }
-        return builder.ToString();
-    }*/
-
-
-
+    
 
 
     //new methods above here

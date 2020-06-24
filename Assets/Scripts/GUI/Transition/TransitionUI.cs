@@ -170,6 +170,7 @@ public class TransitionUI : MonoBehaviour
     public Image playerStatusBackground;
     public Image playerImage;
     public Image playerTextBackground;
+    public Image playerBar;
     public TextMeshProUGUI playerText;
     public TextMeshProUGUI playerImageText;
 
@@ -180,7 +181,11 @@ public class TransitionUI : MonoBehaviour
     [Header("BriefingOne")]
     public Canvas briefingOneCanvas;
     public Image briefingOneBackground;
-
+    public Image briefingOneImage;
+    public Image briefingOneTextBackground;
+    public Image briefingOneBar;
+    public TextMeshProUGUI briefingOneText;
+    public TextMeshProUGUI briefingOneImageText;
     #endregion
 
     #region Briefing Two
@@ -188,6 +193,11 @@ public class TransitionUI : MonoBehaviour
     [Header("BriefingTwo")]
     public Canvas briefingTwoCanvas;
     public Image briefingTwoBackground;
+    public Image briefingTwoImage;
+    public Image briefingTwoTextBackground;
+    public Image briefingTwoBar;
+    public TextMeshProUGUI briefingTwoText;
+    public TextMeshProUGUI briefingTwoImageText;
     #endregion
 
 
@@ -257,21 +267,6 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(tooltipSpecial != null, "Invalid tooltipSpecial (Null)");
         Debug.Assert(helpMain != null, "Invalid helpMain (Null)");
         Debug.Assert(helpPage != null, "Invalid helpPage (Null)");
-        //end level
-        Debug.Assert(endLevelCanvas != null, "Invalid endLevelCanvas (Null)");
-        Debug.Assert(endLevelBackground != null, "Invalid endLevelBackground (Null)");
-        //hq
-        Debug.Assert(hqCanvas != null, "Invalid hqCanvas (Null)");
-        Debug.Assert(hqBackground != null, "Invalid hqBackground (Null)");
-        //playerStatus
-        Debug.Assert(playerStatusCanvas != null, "Invalid playerStatusCanvas (Null)");
-        Debug.Assert(playerStatusBackground != null, "Invalid playerStatusBackground (Null)");
-        //BriefingOne
-        Debug.Assert(briefingOneCanvas != null, "Invalid briefingOneCanvas (Null)");
-        Debug.Assert(briefingOneBackground != null, "Invalid briefingOneBackground (Null)");
-        //BriefingTwo
-        Debug.Assert(briefingTwoCanvas != null, "Invalid briefingTwoCanvas (Null)");
-        Debug.Assert(briefingTwoBackground != null, "Invalid briefingTwoBackground (Null)");
         //Button events
         buttonInteractionSpecial = buttonSpecial.GetComponent<ButtonInteraction>();
         buttonInteractionBack = buttonBack.GetComponent<ButtonInteraction>();
@@ -347,6 +342,7 @@ public class TransitionUI : MonoBehaviour
         //
         // - - - HQ Status
         //
+        Debug.Assert(hqCanvas != null, "Invalid hqCanvas (Null)");
         Debug.Assert(hqBackground != null, "Invalid hqBackground (Null)");
         Debug.Assert(hierarchyBackground != null, "Invalid hierarchyBackground (Null)");
         Debug.Assert(workerBackground != null, "Invalid workerBackground (Null)");
@@ -430,24 +426,59 @@ public class TransitionUI : MonoBehaviour
         #endregion
 
         #region Player Status
+        //
+        // - - - Player Status
+        //
         Debug.Assert(playerStatusCanvas != null, "Invalid playerStatusCanvas (Null)");
         Debug.Assert(playerStatusBackground != null, "Invalid playerStatusBackground (Null)");
         Debug.Assert(playerImage != null, "Invalid playerImage (Null)");
         Debug.Assert(playerTextBackground != null, "Invalid playerTextBackground (Null)");
         Debug.Assert(playerText != null, "Invalid playerText (Null)");
+        Debug.Assert(playerBar != null, "Invalid playerBar (Null)");
         //background color (transitionHqBackground / 100% alpha
         playerStatusBackground.gameObject.SetActive(true);
         colorBackground.a = 0.50f;
         playerTextBackground.color = colorBackground;
         playerImageText.text = GameManager.i.playerScript.PlayerName;
+        playerImageText.color = colorHeader;
+        colorBackground.a = 0.75f;
+        playerBar.color = colorBackground;
         #endregion
 
         #region Briefing One
-
+        //
+        // - - - Briefing One
+        //
+        Debug.Assert(briefingOneCanvas != null, "Invalid briefingOneCanvas (Null)");
+        Debug.Assert(briefingOneBackground != null, "Invalid briefingOneBackground (Null)");
+        Debug.Assert(briefingOneTextBackground != null, "Invalid briefingOneTextBackground (Null)");
+        Debug.Assert(briefingOneText != null, "Invalid briefingOneText (Null)");
+        Debug.Assert(briefingOneImageText != null, "Invalid briefingOneImageText (Null)");
+        Debug.Assert(briefingOneBar != null, "Invalid briefingOneBar (Null)");
+        //background color (transitionHqBackground / 100% alpha
+        briefingOneBackground.gameObject.SetActive(true);
+        colorBackground.a = 0.50f;
+        briefingOneTextBackground.color = colorBackground;
+        colorBackground.a = 0.75f;
+        briefingOneBar.color = colorBackground;
         #endregion
 
         #region Briefing Two
-
+        //
+        // - - - BriefingTwo
+        //
+        Debug.Assert(briefingTwoCanvas != null, "Invalid briefingTwoCanvas (Null)");
+        Debug.Assert(briefingTwoBackground != null, "Invalid briefingTwoBackground (Null)");
+        Debug.Assert(briefingTwoTextBackground != null, "Invalid briefingTwoTextBackground (Null)");
+        Debug.Assert(briefingTwoText != null, "Invalid briefingTwoText (Null)");
+        Debug.Assert(briefingTwoImageText != null, "Invalid briefingTwoImageText (Null)");
+        Debug.Assert(briefingTwoBar != null, "Invalid briefingTwoBar (Null)");
+        //background color (transitionHqBackground / 100% alpha
+        briefingTwoBackground.gameObject.SetActive(true);
+        colorBackground.a = 0.50f;
+        briefingTwoTextBackground.color = colorBackground;
+        colorBackground.a = 0.75f;
+        briefingTwoBar.color = colorBackground;
         #endregion
     }
     #endregion
@@ -782,6 +813,9 @@ public class TransitionUI : MonoBehaviour
             #endregion
 
             #region Player Status
+            //
+            // - - - Player Status
+            //
             playerTextBackground.gameObject.SetActive(true);
             playerImage.sprite = GameManager.i.playerScript.sprite;
             playerText.gameObject.SetActive(true);
@@ -789,13 +823,29 @@ public class TransitionUI : MonoBehaviour
             playerText.text = transitionInfoData.playerStatus;
             #endregion
 
-            #region Briefing One
-
+            #region Briefing One and Two
+            //
+            // - - - Briefing One and Two
+            //
+            Actor actor = GameManager.i.dataScript.GetHqHierarchyActor(ActorHQ.Boss);
+            if (actor != null)
+            {
+                briefingOneImage.sprite = actor.sprite;
+                briefingOneImageText.text = string.Format("{0}{1}{2}<size=120%>{3}</size>{4}", actor.actorName, "\n", colourHeader, GameManager.i.hqScript.GetHqTitle(actor.statusHQ), colourEnd);
+                briefingTwoImage.sprite = actor.sprite;
+                briefingTwoImageText.text = string.Format("{0}{1}{2}<size=120%>{3}</size>{4}", actor.actorName, "\n", colourHeader, GameManager.i.hqScript.GetHqTitle(actor.statusHQ), colourEnd);
+            }
+            else { Debug.LogError("Invalid actorHQ.Boss (Null)"); }
+            briefingOneTextBackground.gameObject.SetActive(true);
+            briefingTwoTextBackground.gameObject.SetActive(true);
+            briefingOneText.gameObject.SetActive(true);
+            briefingTwoText.gameObject.SetActive(true);
+            //assign text
+            briefingOneText.text = transitionInfoData.briefingOne;
+            briefingTwoText.text = transitionInfoData.briefingTwo;
             #endregion
 
-            #region Briefing Two
 
-            #endregion
         }
         else { Debug.LogError("Invalid transitionInfoData (Null)"); }
     }
@@ -958,8 +1008,8 @@ public class TransitionUI : MonoBehaviour
             case ModalTransitionSubState.EndLevel: transitionHeader.text = string.Format("{0}Mission Review{1}", colourHeader, colourEnd); break;
             case ModalTransitionSubState.HQ: transitionHeader.text = string.Format("{0}HQ Status{1}", colourHeader, colourEnd); break;
             case ModalTransitionSubState.PlayerStatus: transitionHeader.text = string.Format("{0}Current Status{1}", colourHeader, colourEnd); break;
-            case ModalTransitionSubState.BriefingOne: transitionHeader.text = string.Format("{0}Briefing One{1}", colourHeader, colourEnd); break;
-            case ModalTransitionSubState.BriefingTwo: transitionHeader.text = string.Format("{0}Briefing Two{1}", colourHeader, colourEnd); break;
+            case ModalTransitionSubState.BriefingOne: transitionHeader.text = string.Format("{0}Next Mission{1}", colourHeader, colourEnd); break;
+            case ModalTransitionSubState.BriefingTwo: transitionHeader.text = string.Format("{0}Objectives{1}", colourHeader, colourEnd); break;
             default: Debug.LogWarningFormat("Unrecognised ModalTransitionState \"{0}\"", GameManager.i.inputScript.ModalTransitionState); break;
         }
     }

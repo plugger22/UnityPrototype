@@ -1002,7 +1002,7 @@ public class MetaManager : MonoBehaviour
         //error checks
         Debug.AssertFormat(transitionInfoData.listOfHqSprites.Count == count, "Mismatch on listOfHqSprites.Count (has {0} records, should be {1})", transitionInfoData.listOfHqSprites.Count, count);
         Debug.AssertFormat(transitionInfoData.listOfHqTitles.Count == count, "Mismatch on listOfHqTitles.Count (has {0} records, should be {1})", transitionInfoData.listOfHqTitles.Count, count);
-        Debug.AssertFormat(transitionInfoData.listOfHqRenown.Count == count, "Mismatch on listOfHqCompatibility.Count (has {0} records, should be {1})", 
+        Debug.AssertFormat(transitionInfoData.listOfHqRenown.Count == count, "Mismatch on listOfHqCompatibility.Count (has {0} records, should be {1})",
             transitionInfoData.listOfHqRenown.Count, count);
         Debug.AssertFormat(transitionInfoData.listOfHqTooltips.Count == count, "Mismatch on listOfHqTootips.Count (has {0} records, should be {1})", transitionInfoData.listOfHqTooltips.Count, count);
         //
@@ -1061,7 +1061,10 @@ public class MetaManager : MonoBehaviour
     /// </summary>
     private void InitialiseBriefingOne()
     {
-
+        string briefingText = GameManager.i.actorScript.GetBriefingOne();
+        if (string.IsNullOrEmpty(briefingText) == false)
+        { transitionInfoData.briefingOne = briefingText; }
+        else { Debug.LogError("Invalid briefingText (Null or Empty)"); }
     }
 
     /// <summary>
@@ -1069,7 +1072,10 @@ public class MetaManager : MonoBehaviour
     /// </summary>
     private void InitialiseBriefingTwo()
     {
-
+        string briefingText = GameManager.i.actorScript.GetBriefingTwo();
+        if (string.IsNullOrEmpty(briefingText) == false)
+        { transitionInfoData.briefingTwo = briefingText; }
+        else { Debug.LogError("Invalid briefingText (Null or Empty)"); }
     }
 
     //

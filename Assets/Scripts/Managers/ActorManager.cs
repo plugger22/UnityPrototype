@@ -9877,6 +9877,86 @@ public class ActorManager : MonoBehaviour
         return builder.ToString();
     }
 
+
+    /// <summary>
+    /// Generates a composite, formatted string ready for display in BriefingOne page in TransitionUI
+    /// </summary>
+    /// <returns></returns>
+    public string GetBriefingOne()
+    {
+        string size = "<size=140%>";
+        StringBuilder builder = new StringBuilder();
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
+        //special colour to match page header
+        string colourHeader = colourNeutral;
+        Color color = GameManager.i.guiScript.colourTransitionHeader;
+        colourHeader = string.Format("<color=#{0}>", ColorUtility.ToHtmlStringRGB(color));
+        //
+        // - - - Resistance Player
+        //
+        if (playerSide.level == 2)
+        {
+            //city
+            builder.AppendFormat("{0}{1}City</size>{2}{3}", colourHeader, size, colourEnd, "\n");
+            builder.AppendFormat("This is test text{0}{1}", "\n", "\n");
+            //Resistance Movement
+            builder.AppendFormat("{0}{1}Resistance Movement</size>{2}{3}", colourHeader, size, colourEnd, "\n");
+            builder.AppendFormat("This is test text{0}{1}", "\n", "\n");
+            //Mayor
+            builder.AppendFormat("{0}{1}Mayor</size>{2}{3}", colourHeader, size, colourEnd, "\n");
+            builder.AppendFormat("This is test text{0}{1}", "\n", "\n");
+            //NPC
+            builder.AppendFormat("{0}{1}Persons of Interest</size>{2}{3}", colourHeader, size, colourEnd, "\n");
+            builder.AppendFormat("This is test text{0}{1}", "\n", "\n");
+            //Threats
+            builder.AppendFormat("{0}{1}Threats</size>{2}{3}", colourHeader, size, colourEnd, "\n");
+            builder.AppendFormat("This is test text{0}{1}", "\n", "\n");
+            //Objectives
+            builder.AppendFormat("{0}{1}Objectives</size>{2}{3}", colourHeader, size, colourEnd, "\n");
+            builder.AppendFormat("This is test text{0}{1}", "\n", "\n");
+        }
+        else
+        {
+            //
+            // - - - Authority Player  -> TO DO
+            //
+
+        }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Generates a composite, formatted string ready for display in BriefingTwo page in TransitionUI
+    /// </summary>
+    /// <returns></returns>
+    public string GetBriefingTwo()
+    {
+        string size = "<size=140%>";
+        StringBuilder builder = new StringBuilder();
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
+        //special colour to match page header
+        string colourHeader = colourNeutral;
+        Color color = GameManager.i.guiScript.colourTransitionHeader;
+        colourHeader = string.Format("<color=#{0}>", ColorUtility.ToHtmlStringRGB(color));
+        //
+        // - - - Resistance Player
+        //
+        if (playerSide.level == 2)
+        {
+            //Objectives
+            builder.AppendFormat("{0}{1}Objectives</size>{2}{3}", colourHeader, size, colourEnd, "\n");
+            builder.AppendFormat("This is test text{0}{1}", "\n", "\n");
+        }
+        else
+        {
+            //
+            // - - - Authority Player  -> TO DO
+            //
+
+        }
+        return builder.ToString();
+    }
+
     //
     // - - - Relations
     //

@@ -1169,11 +1169,11 @@ namespace packageAPI
         public List<EndLevelData> listOfEndLevelData = new List<EndLevelData>();
         #endregion
 
+        #region HQ Status
         //
         // - - - HQ Status
         //
         //NOTE: indexes of all relevant lists refer to the same actor
-        #region HQ Status
         public List <Sprite> listOfHqSprites = new List<Sprite> ();
         public List<string> listOfHqRenown = new List<string>();
         public List<string> listOfHqTitles = new List<string>();
@@ -1196,14 +1196,14 @@ namespace packageAPI
         //
         // - - - BriefingOne
         //
-
+        public string briefingOne;
         #endregion
 
         #region Briefing Two
         //
         // - - - BriefingTwo
         //
-
+        public string briefingTwo;
         #endregion
 
         /// <summary>
@@ -1240,6 +1240,14 @@ namespace packageAPI
                 #region Player Status
                 playerStatus = data.playerStatus;
                 #endregion
+
+                #region Briefing One
+                briefingOne = data.briefingOne;
+                #endregion
+
+                #region Briefing Two
+                briefingTwo = data.briefingTwo;
+                #endregion
             }
             else { Debug.LogError("Invalid transitionInfoData parameter (Null)"); }
         }
@@ -1275,11 +1283,11 @@ namespace packageAPI
             #endregion
 
             #region Briefing One
-
+            briefingOne = "";
             #endregion
 
             #region Briefing Two
-
+            briefingTwo = "";
             #endregion
         }
 
