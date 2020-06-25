@@ -1,115 +1,27 @@
 
-Dev seed 13134 -> Tuesday, 23 June 2020 11:32 AM
+Dev seed 6975 -> Thursday, 25 June 2020 4:21 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 15868 -> Tuesday, 23 June 2020 11:39 AM
+Dev seed 7188 -> Thursday, 25 June 2020 4:26 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 8828 -> Tuesday, 23 June 2020 11:47 AM
+Dev seed 64044 -> Thursday, 25 June 2020 4:31 PM
 City seed 5678 -> London, United Kingdom
-
-Dev seed 41445 -> Tuesday, 23 June 2020 11:57 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 50081 -> Tuesday, 23 June 2020 11:58 AM
-City seed 5678 -> London, United Kingdom
-City seed 5678 -> London, United Kingdom
-City seed 765 -> New York, America
-
-Dev seed 20681 -> Tuesday, 23 June 2020 12:00 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 29158 -> Tuesday, 23 June 2020 12:01 PM
-City seed 5678 -> London, United Kingdom
-City seed 765 -> New York, America
-City seed 5678 -> London, United Kingdom
-
-Dev seed 54516 -> Tuesday, 23 June 2020 12:38 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 57250 -> Tuesday, 23 June 2020 12:42 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 1164 -> Tuesday, 23 June 2020 12:46 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 22361 -> Tuesday, 23 June 2020 2:42 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 19540 -> Tuesday, 23 June 2020 3:17 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 19551 -> Tuesday, 23 June 2020 3:19 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 54118 -> Tuesday, 23 June 2020 3:54 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 61585 -> Tuesday, 23 June 2020 3:57 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 53510 -> Tuesday, 23 June 2020 4:04 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 4611 -> Tuesday, 23 June 2020 4:10 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 14682 -> Wednesday, 24 June 2020 10:32 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 55743 -> Wednesday, 24 June 2020 11:10 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 45958 -> Wednesday, 24 June 2020 11:26 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 44350 -> Wednesday, 24 June 2020 11:34 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 6080 -> Wednesday, 24 June 2020 2:46 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 41687 -> Wednesday, 24 June 2020 4:29 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 62175 -> Wednesday, 24 June 2020 4:47 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 27364 -> Wednesday, 24 June 2020 4:58 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 19077 -> Wednesday, 24 June 2020 5:01 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 22747 -> Wednesday, 24 June 2020 5:02 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 63220 -> Wednesday, 24 June 2020 5:49 PM
-City seed 5678 -> London, United Kingdom
-ASSERT NullReferenceException: Object reference not set to an instance of an object
-TransitionUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/Transition/TransitionUI.cs:444)
-	TransitionUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/Transition/TransitionUI.cs:227)
-	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:826)
-	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:881)
-	GameManager.Start () (at Assets/Scripts/GameManager.cs:389)
+ASSERT FormatException: Input string was not in a correct format.
+System.Text.StringBuilder.FormatError () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Text.StringBuilder.AppendFormat (System.String format, System.Object[] args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	ActorManager.GetBriefingTwo (Mission mission) (at Assets/Scripts/Managers/ActorManager.cs:9962)
+	MetaManager.InitialiseBriefingTwo (Mission mission) (at Assets/Scripts/Managers/MetaManager.cs:1078)
+	MetaManager.ProcessMetaGame () (at Assets/Scripts/Managers/MetaManager.cs:140)
+	ControlManager.ProcessMetaGame () (at Assets/Scripts/Managers/ControlManager.cs:242)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:90)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ControlManager.ProcessEndLevel () (at Assets/Scripts/Managers/ControlManager.cs:222)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:87)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:253)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:421)
 	
-Dev seed 28370 -> Wednesday, 24 June 2020 5:53 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 31121 -> Thursday, 25 June 2020 10:15 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 55167 -> Thursday, 25 June 2020 12:24 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 55660 -> Thursday, 25 June 2020 12:28 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 17663 -> Thursday, 25 June 2020 12:29 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 19901 -> Thursday, 25 June 2020 12:32 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 13847 -> Thursday, 25 June 2020 12:33 PM
+Dev seed 22908 -> Thursday, 25 June 2020 4:32 PM
 City seed 5678 -> London, United Kingdom

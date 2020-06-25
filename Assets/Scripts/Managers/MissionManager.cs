@@ -178,6 +178,41 @@ public class MissionManager : MonoBehaviour
     }
 
     /// <summary>
+    /// returns the next mission in the sequence for the specified side. Returns null if a problem
+    /// </summary>
+    /// <returns></returns>
+    public Mission GetNextMission(GlobalSide side)
+    {
+        Mission mission = null;
+        int scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex();
+        if (scenarioIndex < GameManager.i.campaignScript.GetMaxScenarioIndex())
+        {
+            scenarioIndex++;
+            switch (side.level)
+            {
+                case 1:
+                    //Authority
+                    mission = GameManager.i.campaignScript.GetScenario(scenarioIndex).missionAuthority;
+                    break;
+                case 2:
+                    //Resistance
+                    mission = GameManager.i.campaignScript.GetScenario(scenarioIndex).missionResistance;
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised side \"{0}\"", side.name); break;
+            }
+        }
+        else { Debug.LogWarningFormat("Invalid scenarioIndex \"{0}\" (should be < Max Scenario Index {1})", scenarioIndex, GameManager.i.campaignScript.GetMaxScenarioIndex()); }
+        if (mission == null)
+        { Debug.LogWarningFormat("Invalid mission (Null) for side \"{0}\"", side.name); }
+        return mission;
+    }
+
+
+    //
+    // - - - Npc
+    //
+
+    /// <summary>
     /// Initialise Npc (if present)
     /// </summary>
     private void InitialiseNpc()

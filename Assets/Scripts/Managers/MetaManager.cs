@@ -3,7 +3,6 @@ using modalAPI;
 using packageAPI;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 
 /// <summary>
@@ -130,12 +129,16 @@ public class MetaManager : MonoBehaviour
         GameManager.i.orgScript.ProcessMetaOrgs();
         GameManager.i.playerScript.ProcessMetaPlayer();
         //Transition data
+        Mission mission = GameManager.i.missionScript.GetNextMission(playerSide);
         transitionInfoData.Reset();
         InitialiseEndLevel();
         InitialiseHQ();
         InitialisePlayerStatus();
-        InitialiseBriefingOne();
-        InitialiseBriefingTwo();
+        if (mission != null)
+        {
+            InitialiseBriefingOne(mission);
+            InitialiseBriefingTwo(mission);
+        }
         //needs to AFTER InitialiseEndLevel (relies on level stats)
         GameManager.i.statScript.ProcessMetaStatistics();
         //Player metaGame Options choice
@@ -1059,9 +1062,9 @@ public class MetaManager : MonoBehaviour
     /// <summary>
     /// populate BriefingOne part of transitionInfoData package
     /// </summary>
-    private void InitialiseBriefingOne()
+    private void InitialiseBriefingOne(Mission mission)
     {
-        string briefingText = GameManager.i.actorScript.GetBriefingOne();
+        string briefingText = GameManager.i.actorScript.GetBriefingOne(mission);
         if (string.IsNullOrEmpty(briefingText) == false)
         { transitionInfoData.briefingOne = briefingText; }
         else { Debug.LogError("Invalid briefingText (Null or Empty)"); }
@@ -1070,9 +1073,9 @@ public class MetaManager : MonoBehaviour
     /// <summary>
     /// populate BriefingTwo part of transitionInfoData package
     /// </summary>
-    private void InitialiseBriefingTwo()
+    private void InitialiseBriefingTwo(Mission mission)
     {
-        string briefingText = GameManager.i.actorScript.GetBriefingTwo();
+        string briefingText = GameManager.i.actorScript.GetBriefingTwo(mission);
         if (string.IsNullOrEmpty(briefingText) == false)
         { transitionInfoData.briefingTwo = briefingText; }
         else { Debug.LogError("Invalid briefingText (Null or Empty)"); }

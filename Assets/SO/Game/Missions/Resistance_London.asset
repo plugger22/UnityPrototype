@@ -9,12 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f34838f8a6e0c34389da63668a03d07, type: 3}
-  m_Name: Resistance_Disruption
+  m_Name: Resistance_London
   m_EditorClassIdentifier: 
   descriptor: Sow chaos throughout city
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
-  briefing: 
-  devNotes: Test mission
+  devNotes: London mission - story reference 'Lon01'
   listOfObjectives:
   - {fileID: 11400000, guid: da26300d7cc8ec34aa0459017fdc2992, type: 2}
   - {fileID: 11400000, guid: fc96d47689aa62240870c0871b31107f, type: 2}
@@ -39,3 +38,24 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9f16e63d837fd86418dfcb3cfb999a92, type: 2}
   - {fileID: 11400000, guid: 7424e5f517352b044b708f594b64db62, type: 2}
   npc: {fileID: 11400000, guid: 6ac91bfc87439ec4abb6d51393dfbf41, type: 2}
+  briefingCity: There are major issues with the cities transport grid. Rolling strikes,
+    ruthless crackdowns, a charismatic crime lord and a religious cult are all in
+    the mix. Expect disruptions.
+  briefingResistance: We are weak on the ground here. There is a need to make a splash.
+    To raise our profile and generae support where we can. We are expecting big things
+    of you.
+  briefingMayor: Mayor Julius is one to watch. A competent administrator with a nasty
+    streak who isn't afraid to crack down on dissent.
+  briefingNpc: We believe that a courier, carrying a significant amount of money,
+    will be transiting through London while you are there. Intercept if possible.
+  briefingThreat: We aren't sure exactly what countermeasures the Authority will have
+    in place but you can expect a meaningful response once you begin rattling their
+    cage.
+  briefingObjOne: Assassinate a key city businessman. Trevor Terror is the mastermind
+    of Cork Inc. that is responsible for the massacre of families several years ago
+    in order to facilitate a development
+  briefingObjTwo: Make contact with the White Rabbit and use their local knowledge
+    to establish a Resistance cell in the heart of the city
+  briefingObjThree: Find out what you can about Silverstone Corporation. Rumour has
+    it that they are doing illegal research on behalf of the Authority into gene tagging
+    of innocent citizens.

@@ -9882,43 +9882,50 @@ public class ActorManager : MonoBehaviour
     /// Generates a composite, formatted string ready for display in BriefingOne page in TransitionUI
     /// </summary>
     /// <returns></returns>
-    public string GetBriefingOne()
+    public string GetBriefingOne(Mission mission)
     {
-        string size = "<size=140%>";
         StringBuilder builder = new StringBuilder();
-        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
-        //special colour to match page header
-        string colourHeader = colourNeutral;
-        Color color = GameManager.i.guiScript.colourTransitionHeader;
-        colourHeader = string.Format("<color=#{0}>", ColorUtility.ToHtmlStringRGB(color));
-        //
-        // - - - Resistance Player
-        //
-        if (playerSide.level == 2)
+        if (mission != null)
         {
-            //city
-            builder.AppendFormat("{0}{1}City</size>{2}{3}", colourHeader, size, colourEnd, "\n");
-            builder.AppendFormat("This is test text{0}{1}", "\n", "\n");
-            //Resistance Movement
-            builder.AppendFormat("{0}{1}Resistance Movement</size>{2}{3}", colourHeader, size, colourEnd, "\n");
-            builder.AppendFormat("This is test text{0}{1}", "\n", "\n");
-            //Mayor
-            builder.AppendFormat("{0}{1}Mayor</size>{2}{3}", colourHeader, size, colourEnd, "\n");
-            builder.AppendFormat("This is test text{0}{1}", "\n", "\n");
-            //NPC
-            builder.AppendFormat("{0}{1}Persons of Interest</size>{2}{3}", colourHeader, size, colourEnd, "\n");
-            builder.AppendFormat("This is test text{0}{1}", "\n", "\n");
-            //Threats
-            builder.AppendFormat("{0}{1}Threats</size>{2}{3}", colourHeader, size, colourEnd, "\n");
-            builder.AppendFormat("This is test text{0}{1}", "\n", "\n");
-        }
-        else
-        {
+            string size = "<size=140%>";
+            GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
+            //special colour to match page header
+            string colourHeader = colourNeutral;
+            Color color = GameManager.i.guiScript.colourTransitionHeader;
+            colourHeader = string.Format("<color=#{0}>", ColorUtility.ToHtmlStringRGB(color));
             //
-            // - - - Authority Player  -> TO DO
+            // - - - Resistance Player
             //
-
+            if (playerSide.level == 2)
+            {
+                //city
+                builder.AppendFormat("{0}{1}City</size>{2}{3}", colourHeader, size, colourEnd, "\n");
+                builder.Append(GetBriefingNotes(mission.briefingCity, "City"));
+                builder.AppendLine(); builder.AppendLine();
+                //Resistance Movement
+                builder.AppendFormat("{0}{1}Resistance Movement</size>{2}{3}", colourHeader, size, colourEnd, "\n");
+                builder.Append(GetBriefingNotes(mission.briefingResistance, "Resistance"));
+                builder.AppendLine(); builder.AppendLine();
+                //Mayor
+                builder.AppendFormat("{0}{1}Mayor</size>{2}{3}", colourHeader, size, colourEnd, "\n");
+                builder.Append(GetBriefingNotes(mission.briefingMayor, "Mayor"));
+                builder.AppendLine(); builder.AppendLine();
+                //NPC
+                builder.AppendFormat("{0}{1}Persons of Interest</size>{2}{3}", colourHeader, size, colourEnd, "\n");
+                builder.Append(GetBriefingNotes(mission.briefingNpc, "Npc"));
+                builder.AppendLine(); builder.AppendLine();
+                //Threats
+                builder.AppendFormat("{0}{1}Threats</size>{2}{3}", colourHeader, size, colourEnd, "\n");
+                builder.Append(GetBriefingNotes(mission.briefingThreat, "Threat"));
+            }
+            else
+            {
+                //
+                // - - - Authority Player  -> TO DO
+                //
+            }
         }
+        else { Debug.LogError("Invalid mission (Null)"); }
         return builder.ToString();
     }
 
@@ -9926,32 +9933,97 @@ public class ActorManager : MonoBehaviour
     /// Generates a composite, formatted string ready for display in BriefingTwo page in TransitionUI
     /// </summary>
     /// <returns></returns>
-    public string GetBriefingTwo()
+    public string GetBriefingTwo(Mission mission)
     {
-        string size = "<size=140%>";
         StringBuilder builder = new StringBuilder();
-        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
-        //special colour to match page header
-        string colourHeader = colourNeutral;
-        Color color = GameManager.i.guiScript.colourTransitionHeader;
-        colourHeader = string.Format("<color=#{0}>", ColorUtility.ToHtmlStringRGB(color));
-        //
-        // - - - Resistance Player
-        //
-        if (playerSide.level == 2)
+        if (mission != null)
         {
-            //Objectives
-            builder.AppendFormat("{0}{1}Objectives</size>{2}{3}", colourHeader, size, colourEnd, "\n");
-            builder.Append("This is test text");
+            string size = "<size=140%>";
+            GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
+            //special colour to match page header
+            string colourHeader = colourNeutral;
+            Color color = GameManager.i.guiScript.colourTransitionHeader;
+            colourHeader = string.Format("<color=#{0}>", ColorUtility.ToHtmlStringRGB(color));
+            //
+            // - - - Resistance Player
+            //
+            if (playerSide.level == 2)
+            {
+                List<Objective> listOfObjectives = mission.listOfObjectives;
+                if (listOfObjectives != null)
+                {
+                    int count = listOfObjectives.Count;
+                    if (count > 0)
+                    {
+                        //Objectives -> First
+                        Objective objective = listOfObjectives[0];
+                        if (objective != null)
+                        {
+                            builder.AppendFormat("{0}{1}Objective One</size>{2}{3}", colourHeader, size, colourEnd, "\n");
+                            builder.AppendFormat("{0}{1}<size=115%>{2}</size>{3}{4}{5}", "\n", colourAlert, objective.tag, colourEnd, "\n", "\n");
+                            builder.Append(GetBriefingNotes(mission.briefingObjOne, "Objective One"));
+                            builder.AppendLine(); builder.AppendLine();
+                        }
+                        else { Debug.LogError("Invalid Objective (Null) for mission.listOfObjectives[0]"); }
+                        //Objectives -> Second
+                        if (count > 1)
+                        {
+                            objective = listOfObjectives[1];
+                            if (objective != null)
+                            {
+                                builder.AppendFormat("{0}{1}Objective Two</size>{2}{3}", colourHeader, size, colourEnd, "\n");
+                                builder.AppendFormat("{0}{1}<size=115%>{2}</size>{3}{4}{5}", "\n", colourAlert, objective.tag, colourEnd, "\n", "\n");
+                                builder.Append(GetBriefingNotes(mission.briefingObjTwo, "Objective Two"));
+                                builder.AppendLine(); builder.AppendLine();
+                            }
+                            else { Debug.LogError("Invalid Objective (Null) for mission.listOfObjectives[1]"); }
+                        }
+                        //Objectives -> Third
+                        if (count > 2)
+                        {
+                            objective = listOfObjectives[2];
+                            if (objective != null)
+                            {
+                                builder.AppendFormat("{0}{1}Objective Three</size>{2}{3}", colourHeader, size, colourEnd, "\n");
+                                builder.AppendFormat("{0}{1}<size=115%>{2}</size>{3}{4}{5}", "\n", colourAlert, objective.tag, colourEnd, "\n", "\n");
+                                builder.Append(GetBriefingNotes(mission.briefingObjThree, "Objective Three"));
+                            }
+                            else { Debug.LogError("Invalid Objective (Null) for mission.listOfObjectives[2]"); }
+                        }
+                    }
+                    else { Debug.LogError("Invalid listOfObjectives (Empty)"); }
+                }
+                else { Debug.LogError("Invalid listOfObjectives (Null)"); }
+            }
+            else
+            {
+                //
+                // - - - Authority Player  -> TO DO
+                //
+
+            }
         }
+        else { Debug.LogError("Invalid mission (Null)"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// returns formatted briefing notes. 'debugName' is name of briefing notes, eg. "City" , for debug purposes
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="debugName"></param>
+    /// <returns></returns>
+    private string GetBriefingNotes(string text, string debugName)
+    {
+        string briefingNotes = "";
+        if (string.IsNullOrEmpty(text) == false)
+        { briefingNotes = string.Format("{0}{1}", "\n", text); }
         else
         {
-            //
-            // - - - Authority Player  -> TO DO
-            //
-
+            Debug.LogWarningFormat("Invalid {0} (Null)", debugName);
+            briefingNotes = string.Format("{0}Unavailable. Information has been compromised{1}{2}{3}", colourBad, colourEnd, "\n", "\n");
         }
-        return builder.ToString();
+        return briefingNotes;
     }
 
     //
