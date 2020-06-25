@@ -95,3 +95,6 @@ TransitionUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/Transition/Tran
 	
 Dev seed 28370 -> Wednesday, 24 June 2020 5:53 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 31121 -> Thursday, 25 June 2020 10:15 AM
+City seed 5678 -> London, United Kingdom

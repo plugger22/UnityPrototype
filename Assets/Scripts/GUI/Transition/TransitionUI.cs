@@ -170,7 +170,8 @@ public class TransitionUI : MonoBehaviour
     public Image playerStatusBackground;
     public Image playerImage;
     public Image playerTextBackground;
-    public Image playerBar;
+    public Image playerBarLeft;
+    public Image playerBarRight;
     public TextMeshProUGUI playerText;
     public TextMeshProUGUI playerImageText;
 
@@ -183,7 +184,8 @@ public class TransitionUI : MonoBehaviour
     public Image briefingOneBackground;
     public Image briefingOneImage;
     public Image briefingOneTextBackground;
-    public Image briefingOneBar;
+    public Image briefingOneBarLeft;
+    public Image briefingOneBarRight;
     public TextMeshProUGUI briefingOneText;
     public TextMeshProUGUI briefingOneImageText;
     #endregion
@@ -195,7 +197,8 @@ public class TransitionUI : MonoBehaviour
     public Image briefingTwoBackground;
     public Image briefingTwoImage;
     public Image briefingTwoTextBackground;
-    public Image briefingTwoBar;
+    public Image briefingTwoBarLeft;
+    public Image briefingTwoBarRight;
     public TextMeshProUGUI briefingTwoText;
     public TextMeshProUGUI briefingTwoImageText;
     #endregion
@@ -434,7 +437,8 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(playerImage != null, "Invalid playerImage (Null)");
         Debug.Assert(playerTextBackground != null, "Invalid playerTextBackground (Null)");
         Debug.Assert(playerText != null, "Invalid playerText (Null)");
-        Debug.Assert(playerBar != null, "Invalid playerBar (Null)");
+        Debug.Assert(playerBarLeft != null, "Invalid playerBarLeft (Null)");
+        Debug.Assert(playerBarRight != null, "Invalid playerBarRight (Null)");
         //background color (transitionHqBackground / 100% alpha
         playerStatusBackground.gameObject.SetActive(true);
         colorBackground.a = 0.50f;
@@ -442,7 +446,8 @@ public class TransitionUI : MonoBehaviour
         playerImageText.text = GameManager.i.playerScript.PlayerName;
         playerImageText.color = colorHeader;
         colorBackground.a = 0.75f;
-        playerBar.color = colorBackground;
+        playerBarLeft.color = colorBackground;
+        playerBarRight.color = colorBackground;
         #endregion
 
         #region Briefing One
@@ -454,13 +459,15 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(briefingOneTextBackground != null, "Invalid briefingOneTextBackground (Null)");
         Debug.Assert(briefingOneText != null, "Invalid briefingOneText (Null)");
         Debug.Assert(briefingOneImageText != null, "Invalid briefingOneImageText (Null)");
-        Debug.Assert(briefingOneBar != null, "Invalid briefingOneBar (Null)");
+        Debug.Assert(briefingOneBarLeft != null, "Invalid briefingOneBarLeft (Null)");
+        Debug.Assert(briefingOneBarRight != null, "Invalid briefingOneBarRight (Null)");
         //background color (transitionHqBackground / 100% alpha
         briefingOneBackground.gameObject.SetActive(true);
         colorBackground.a = 0.50f;
         briefingOneTextBackground.color = colorBackground;
         colorBackground.a = 0.75f;
-        briefingOneBar.color = colorBackground;
+        briefingOneBarLeft.color = colorBackground;
+        briefingOneBarRight.color = colorBackground;
         #endregion
 
         #region Briefing Two
@@ -472,13 +479,15 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(briefingTwoTextBackground != null, "Invalid briefingTwoTextBackground (Null)");
         Debug.Assert(briefingTwoText != null, "Invalid briefingTwoText (Null)");
         Debug.Assert(briefingTwoImageText != null, "Invalid briefingTwoImageText (Null)");
-        Debug.Assert(briefingTwoBar != null, "Invalid briefingTwoBar (Null)");
+        Debug.Assert(briefingTwoBarLeft != null, "Invalid briefingTwoBarLeft (Null)");
+        Debug.Assert(briefingTwoBarRight != null, "Invalid briefingTwoBarRight (Null)");
         //background color (transitionHqBackground / 100% alpha
         briefingTwoBackground.gameObject.SetActive(true);
         colorBackground.a = 0.50f;
         briefingTwoTextBackground.color = colorBackground;
         colorBackground.a = 0.75f;
-        briefingTwoBar.color = colorBackground;
+        briefingTwoBarLeft.color = colorBackground;
+        briefingTwoBarRight.color = colorBackground;
         #endregion
     }
     #endregion
