@@ -9911,9 +9911,6 @@ public class ActorManager : MonoBehaviour
             //Threats
             builder.AppendFormat("{0}{1}Threats</size>{2}{3}", colourHeader, size, colourEnd, "\n");
             builder.AppendFormat("This is test text{0}{1}", "\n", "\n");
-            //Objectives
-            builder.AppendFormat("{0}{1}Objectives</size>{2}{3}", colourHeader, size, colourEnd, "\n");
-            builder.AppendFormat("This is test text{0}{1}", "\n", "\n");
         }
         else
         {
@@ -9945,7 +9942,7 @@ public class ActorManager : MonoBehaviour
         {
             //Objectives
             builder.AppendFormat("{0}{1}Objectives</size>{2}{3}", colourHeader, size, colourEnd, "\n");
-            builder.AppendFormat("This is test text{0}{1}", "\n", "\n");
+            builder.Append("This is test text");
         }
         else
         {
