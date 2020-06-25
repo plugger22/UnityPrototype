@@ -10017,7 +10017,7 @@ public class ActorManager : MonoBehaviour
     {
         string briefingNotes = "";
         if (string.IsNullOrEmpty(text) == false)
-        { briefingNotes = string.Format("{0}{1}", "\n", text); }
+        { briefingNotes = string.Format("{0}", text); }
         else
         {
             Debug.LogWarningFormat("Invalid {0} (Null)", debugName);
