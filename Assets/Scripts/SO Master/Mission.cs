@@ -13,8 +13,6 @@ public class Mission : ScriptableObject
     public string descriptor;
     [Tooltip("Which side is the mission for")]
     public GlobalSide side;
-    [Tooltip("Player briefing")]
-    [TextArea] public string briefing;
     [TextArea] public string devNotes;
 
     [Header("Objectives")]
@@ -58,6 +56,24 @@ public class Mission : ScriptableObject
     [Header("Npc")]
     [Tooltip("Npc (max one) who has a walk on role for this mission. Can be ignored")]
     public Npc npc;
+
+    [Header("Briefing")]
+    [Tooltip("City briefing")]
+    [TextArea] public string briefingCity;
+    [Tooltip("Resistance briefing")]
+    [TextArea] public string briefingResistance;
+    [Tooltip("Mayor briefing")]
+    [TextArea] public string briefingMayor;
+    [Tooltip("Npc briefing")]
+    [TextArea] public string briefingNpc;
+    [Tooltip("Threat briefing")]
+    [TextArea] public string briefingThreat;
+    [Tooltip("Objective One briefing")]
+    [TextArea] public string briefingObjOne;
+    [Tooltip("Objective Two briefing")]
+    [TextArea] public string briefingObjTwo;
+    [Tooltip("Objective Three briefing")]
+    [TextArea] public string briefingObjThree;
 
 
     public void OnEnable()
