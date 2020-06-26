@@ -879,8 +879,8 @@ public class TransitionUI : MonoBehaviour
         listOfEndLevelHelp = GameManager.i.helpScript.GetHelpData("transitionEnd_0", "transitionEnd_1", "transitionEnd_2", "transitionEnd_3");
         listOfHqHelp = GameManager.i.helpScript.GetHelpData("transitionHq_3", "transitionHq_4", "transitionHq_5", "transitionHq_6");
         listOfPlayerStatusHelp = GameManager.i.helpScript.GetHelpData("transitionPlayer_0", "transitionPlayer_1");
-        listOfBriefingOneHelp = GameManager.i.helpScript.GetHelpData("test0");
-        listOfBriefingTwoHelp = GameManager.i.helpScript.GetHelpData("test0");
+        listOfBriefingOneHelp = GameManager.i.helpScript.GetHelpData("transitionOne_0");
+        listOfBriefingTwoHelp = GameManager.i.helpScript.GetHelpData("transitionTwo_0");
         //main help button -> default
         listOfMainHelp = GameManager.i.helpScript.GetHelpData("transitionMain_0");
         if (listOfMainHelp != null)

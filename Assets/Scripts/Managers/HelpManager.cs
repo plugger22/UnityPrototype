@@ -392,6 +392,31 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
+        #region Briefing One
+        //
+        // - - - Briefing One
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "transitionOne_0";
+        data.header = "Briefing";
+        data.text = string.Format("HQ won't send you in blind. They have prepared a short dossier of {0}key information{1} to enable you to hit the ground running", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
+        #region Briefing Two
+        //
+        // - - - Briefing Two
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "transitionTwo_0";
+        data.header = "Objectives";
+        data.text = string.Format("HQ have specific {0}requirements{1} for what they would like you to {2}achieve{3}. Wild men or women who do their own thing {4}aren't welcome{5} in the Resistance", 
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
         #endregion
 
         #region MetaGame UI

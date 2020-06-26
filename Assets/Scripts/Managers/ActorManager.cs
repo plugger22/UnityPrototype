@@ -9939,6 +9939,7 @@ public class ActorManager : MonoBehaviour
         if (mission != null)
         {
             string size = "<size=140%>";
+            string height = "<line-height=125%>";
             GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
             //special colour to match page header
             string colourHeader = colourNeutral;
@@ -9959,8 +9960,8 @@ public class ActorManager : MonoBehaviour
                         Objective objective = listOfObjectives[0];
                         if (objective != null)
                         {
-                            builder.AppendFormat("{0}{1}{2}</size>{3}{4}", colourHeader, size, objective.tag, colourEnd, "\n");
-                            builder.Append(GetBriefingNotes(mission.briefingObjOne, "Objective One"));
+                            builder.AppendFormat("{0}{1}{2}</size>{3}{4}{5}", colourHeader, size, objective.tag, colourEnd, height,"\n");
+                            builder.AppendFormat("{0}</line-height>", GetBriefingNotes(mission.briefingObjOne, "Objective One"));
                             builder.AppendLine(); builder.AppendLine();
                         }
                         else { Debug.LogError("Invalid Objective (Null) for mission.listOfObjectives[0]"); }
