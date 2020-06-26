@@ -151,6 +151,11 @@ public class ActorManager : MonoBehaviour
 
     private bool isMetaGame;                                                    //toggles MetaGame related [Tst] messages according to setting in TestManager.cs
 
+    //briefing display tags
+    private string briefingSize = "<size=140%>";
+    private string briefingHeightOpen = "<line-height=125%>";
+    private string briefingHeightClose = "<line-height=100%>";
+
     //fast access fields
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
@@ -9756,7 +9761,6 @@ public class ActorManager : MonoBehaviour
     public string GetPlayerCurrentStatus()
     {
         int count;
-        string size = "<size=140%>";
         StringBuilder builder = new StringBuilder();
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         //special colour to match page header
@@ -9769,10 +9773,10 @@ public class ActorManager : MonoBehaviour
         if (playerSide.level == 2)
         {
             //Innocence
-            builder.AppendFormat("{0}{1}Innocence</size>{2}{3}", colourHeader, size, colourEnd, "\n");
+            builder.AppendFormat("{0}{1}Innocence</size>{2}{3}{4}{5}", colourHeader, briefingSize, colourEnd, briefingHeightOpen,  "\n", briefingHeightClose);
             builder.AppendFormat("{0} Authority views you as a {1}{2}", GameManager.i.guiScript.GetNormalStars(3), GameManager.i.playerScript.GetInnocenceDescriptor(ColourType.salmonText), "\n");
             //Conditions
-            builder.AppendFormat("{0}{1}{2}Conditions</size>{3}{4}", "\n", colourHeader, size, colourEnd, "\n");
+            builder.AppendFormat("{0}{1}{2}Conditions</size>{3}{4}{5}{6}", "\n", colourHeader, briefingSize, colourEnd, briefingHeightOpen, "\n", briefingHeightClose);
             List<Condition> listOfConditions = GameManager.i.playerScript.GetListOfConditions(GameManager.i.sideScript.PlayerSide);
             if (listOfConditions != null)
             {
@@ -9795,7 +9799,7 @@ public class ActorManager : MonoBehaviour
                 builder.AppendFormat("You aren't currently inflicted with any Conditions{0}", "\n");
             }
             //Investigations
-            builder.AppendFormat("{0}{1}{2}Investigations</size>{3}{4}", "\n", colourHeader, size, colourEnd, "\n");
+            builder.AppendFormat("{0}{1}{2}Investigations</size>{3}{4}{5}{6}", "\n", colourHeader, briefingSize, colourEnd, briefingHeightOpen, "\n", briefingHeightClose);
             List<Investigation> listOfInvestigations = GameManager.i.playerScript.GetListOfInvestigations();
             if (listOfInvestigations != null)
             {
@@ -9821,7 +9825,7 @@ public class ActorManager : MonoBehaviour
                 builder.AppendFormat("There are currently NO ongoing Investigations into your conduct{0}", "\n");
             }
             //Secrets
-            builder.AppendFormat("{0}{1}{2}Secrets</size>{3}{4}", "\n", colourHeader, size, colourEnd, "\n");
+            builder.AppendFormat("{0}{1}{2}Secrets</size>{3}{4}{5}{6}", "\n", colourHeader, briefingSize, colourEnd, briefingHeightOpen, "\n", briefingHeightClose);
             List<Secret> listOfSecrets = GameManager.i.playerScript.GetListOfSecrets();
             if (listOfSecrets != null)
             {
@@ -9844,7 +9848,7 @@ public class ActorManager : MonoBehaviour
                 builder.AppendFormat("You don't currently have any skeletons in your cupboard{0}", "\n");
             }
             //Organisations
-            builder.AppendFormat("{0}{1}{2}Illegal Organisations</size>{3}{4}", "\n", colourHeader, size, colourEnd, "\n");
+            builder.AppendFormat("{0}{1}{2}Illegal Organisations</size>{3}{4}{5}{6}", "\n", colourHeader, briefingSize, colourEnd, briefingHeightOpen, "\n", briefingHeightClose);
             List<Organisation> listOfOrganisations = GameManager.i.metaScript.GetListOfMetaOrganisations();
             if (listOfOrganisations != null)
             {
@@ -9887,7 +9891,6 @@ public class ActorManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         if (mission != null)
         {
-            string size = "<size=140%>";
             GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
             //special colour to match page header
             string colourHeader = colourNeutral;
@@ -9899,23 +9902,23 @@ public class ActorManager : MonoBehaviour
             if (playerSide.level == 2)
             {
                 //city
-                builder.AppendFormat("{0}{1}City</size>{2}{3}", colourHeader, size, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}City</size>{2}{3}{4}{5}", colourHeader, briefingSize, colourEnd, briefingHeightOpen, "\n", briefingHeightClose);
                 builder.Append(GetBriefingNotes(mission.briefingCity, "City"));
                 builder.AppendLine(); builder.AppendLine();
                 //Resistance Movement
-                builder.AppendFormat("{0}{1}Resistance Movement</size>{2}{3}", colourHeader, size, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}Resistance Movement</size>{2}{3}{4}{5}", colourHeader, briefingSize, colourEnd, briefingHeightOpen, "\n", briefingHeightClose);
                 builder.Append(GetBriefingNotes(mission.briefingResistance, "Resistance"));
                 builder.AppendLine(); builder.AppendLine();
                 //Mayor
-                builder.AppendFormat("{0}{1}Mayor</size>{2}{3}", colourHeader, size, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}Mayor</size>{2}{3}{4}{5}", colourHeader, briefingSize, colourEnd, briefingHeightOpen, "\n", briefingHeightClose);
                 builder.Append(GetBriefingNotes(mission.briefingMayor, "Mayor"));
                 builder.AppendLine(); builder.AppendLine();
                 //NPC
-                builder.AppendFormat("{0}{1}Persons of Interest</size>{2}{3}", colourHeader, size, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}Persons of Interest</size>{2}{3}{4}{5}", colourHeader, briefingSize, colourEnd, briefingHeightOpen, "\n", briefingHeightClose);
                 builder.Append(GetBriefingNotes(mission.briefingNpc, "Npc"));
                 builder.AppendLine(); builder.AppendLine();
                 //Threats
-                builder.AppendFormat("{0}{1}Threats</size>{2}{3}", colourHeader, size, colourEnd, "\n");
+                builder.AppendFormat("{0}{1}Threats</size>{2}{3}{4}{5}", colourHeader, briefingSize, colourEnd, briefingHeightOpen, "\n", briefingHeightClose);
                 builder.Append(GetBriefingNotes(mission.briefingThreat, "Threat"));
             }
             else
@@ -9938,8 +9941,6 @@ public class ActorManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         if (mission != null)
         {
-            string size = "<size=140%>";
-            string height = "<line-height=125%>";
             GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
             //special colour to match page header
             string colourHeader = colourNeutral;
@@ -9960,9 +9961,9 @@ public class ActorManager : MonoBehaviour
                         Objective objective = listOfObjectives[0];
                         if (objective != null)
                         {
-                            builder.AppendFormat("{0}{1}{2}</size>{3}{4}{5}", colourHeader, size, objective.tag, colourEnd, height,"\n");
-                            builder.AppendFormat("{0}</line-height>", GetBriefingNotes(mission.briefingObjOne, "Objective One"));
-                            builder.AppendLine(); builder.AppendLine();
+                            builder.AppendFormat("{0}{1}{2}</size>{3}{4}{5}{6}", colourHeader, briefingSize, objective.tag, colourEnd, briefingHeightOpen,"\n", briefingHeightClose);
+                            builder.Append(GetBriefingNotes(mission.briefingObjOne, "Objective One"));
+                            builder.AppendLine(); builder.AppendLine(); builder.AppendLine();
                         }
                         else { Debug.LogError("Invalid Objective (Null) for mission.listOfObjectives[0]"); }
                         //Objectives -> Second
@@ -9971,9 +9972,9 @@ public class ActorManager : MonoBehaviour
                             objective = listOfObjectives[1];
                             if (objective != null)
                             {
-                                builder.AppendFormat("{0}{1}{2}</size>{3}{4}", colourHeader, size, objective.tag, colourEnd, "\n");
+                                builder.AppendFormat("{0}{1}{2}</size>{3}{4}{5}{6}", colourHeader, briefingSize, objective.tag, colourEnd, briefingHeightOpen, "\n", briefingHeightClose);
                                 builder.Append(GetBriefingNotes(mission.briefingObjTwo, "Objective Two"));
-                                builder.AppendLine(); builder.AppendLine();
+                                builder.AppendLine(); builder.AppendLine(); builder.AppendLine();
                             }
                             else { Debug.LogError("Invalid Objective (Null) for mission.listOfObjectives[1]"); }
                         }
@@ -9983,7 +9984,7 @@ public class ActorManager : MonoBehaviour
                             objective = listOfObjectives[2];
                             if (objective != null)
                             {
-                                builder.AppendFormat("{0}{1}{2}</size>{3}{4}", colourHeader, size, objective.tag, colourEnd, "\n");
+                                builder.AppendFormat("{0}{1}{2}</size>{3}{4}{5}{6}", colourHeader, briefingSize, objective.tag, colourEnd, briefingHeightOpen, "\n", briefingHeightClose);
                                 builder.Append(GetBriefingNotes(mission.briefingObjThree, "Objective Three"));
                             }
                             else { Debug.LogError("Invalid Objective (Null) for mission.listOfObjectives[2]"); }
