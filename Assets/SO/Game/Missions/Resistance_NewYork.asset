@@ -36,24 +36,25 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dc46705a5f1694746b570557cf8c0b78, type: 2}
   - {fileID: 11400000, guid: f06dede69d3430e468030d796787a9ae, type: 2}
   npc: {fileID: 11400000, guid: 0731c322af99e7c46bbe7efa6f2c94ff, type: 2}
-  briefingCity: There are major issues with the cities transport grid. Rolling strikes,
-    ruthless crackdowns, a charismatic crime lord and a religious cult are all in
-    the mix. Expect disruptions</b>.
+  briefingCity: There are major issues with the cities [transport network]. Rolling
+    strikes, ruthless crackdowns, a charismatic crime lord and a religious cult are
+    all in the mix. Expect [disruptions].
   briefingResistance: We are weak on the ground here. There is a need to make a splash.
     To raise our profile and generae support where we can. We are expecting big things
     of you.
-  briefingMayor: Mayor Scholmo is one to watch. A competent administrator with a nasty
-    streak who isn't afraid to crack down on dissent.
-  briefingNpc: We believe that a courier, carrying a significant amount of money,
+  briefingMayor: '[Mayor Scholmo] is one to watch. A competent administrator with
+    a nasty streak who isn''t afraid to crack down on dissent.'
+  briefingNpc: We believe that a [courier], carrying a significant amount of [money],
     will be transiting through London while you are there. Intercept if possible.
   briefingThreat: We aren't sure exactly what countermeasures the Authority will have
-    in place but you can expect a meaningful response once you begin rattling their
+    in place but you can expect a [meaningful response] once you begin rattling their
     cage.
-  briefingObjOne: Assassinate a key city businessman. Trevor Terror is the mastermind
-    of Cork Inc. that is responsible for the massacre of families several years ago
-    in order to facilitate a development
-  briefingObjTwo: Make contact with the White Rabbit and use their local knowledge
+  briefingObjOne: Assassinate a key city businessman. [Trevor Terror] is the mastermind
+    of [Cork Inc.] that is responsible for the massacre of families several years
+    ago in order to facilitate a development<br><br>Feel free to use whatever means
+    necessary to take this individual out.
+  briefingObjTwo: Make contact with the [White Rabbit] and use their local knowledge
     to establish a Resistance cell in the heart of the city
-  briefingObjThree: Find out what you can about <b>Silverstone Corporation</b>. Rumour
+  briefingObjThree: Find out what you can about [Silverstone Corporation]. Rumour
     has it that they are doing illegal research on behalf of the Authority into gene
     tagging of innocent citizens.

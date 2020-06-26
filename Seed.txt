@@ -1,30 +1,22 @@
 
-Dev seed 6975 -> Thursday, 25 June 2020 4:21 PM
+
+Dev seed 39442 -> Friday, 26 June 2020 10:11 AM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 7188 -> Thursday, 25 June 2020 4:26 PM
+Dev seed 12121 -> Friday, 26 June 2020 10:22 AM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 64044 -> Thursday, 25 June 2020 4:31 PM
-City seed 5678 -> London, United Kingdom
-ASSERT FormatException: Input string was not in a correct format.
-System.Text.StringBuilder.FormatError () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
-	System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
-	System.Text.StringBuilder.AppendFormat (System.String format, System.Object[] args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
-	ActorManager.GetBriefingTwo (Mission mission) (at Assets/Scripts/Managers/ActorManager.cs:9962)
-	MetaManager.InitialiseBriefingTwo (Mission mission) (at Assets/Scripts/Managers/MetaManager.cs:1078)
-	MetaManager.ProcessMetaGame () (at Assets/Scripts/Managers/MetaManager.cs:140)
-	ControlManager.ProcessMetaGame () (at Assets/Scripts/Managers/ControlManager.cs:242)
-	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:90)
-	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
-	ControlManager.ProcessEndLevel () (at Assets/Scripts/Managers/ControlManager.cs:222)
-	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:87)
-	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
-	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:253)
-	GameManager.Update () (at Assets/Scripts/GameManager.cs:421)
-	
-Dev seed 22908 -> Thursday, 25 June 2020 4:32 PM
+Dev seed 21804 -> Friday, 26 June 2020 10:29 AM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 39734 -> Thursday, 25 June 2020 5:23 PM
+Dev seed 4786 -> Friday, 26 June 2020 10:30 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 40518 -> Friday, 26 June 2020 10:37 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 60655 -> Friday, 26 June 2020 10:59 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 3781 -> Friday, 26 June 2020 11:02 AM
 City seed 5678 -> London, United Kingdom

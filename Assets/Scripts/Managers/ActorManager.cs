@@ -9959,8 +9959,7 @@ public class ActorManager : MonoBehaviour
                         Objective objective = listOfObjectives[0];
                         if (objective != null)
                         {
-                            builder.AppendFormat("{0}{1}Objective One</size>{2}{3}", colourHeader, size, colourEnd, "\n");
-                            builder.AppendFormat("{0}{1}<size=115%>{2}</size>{3}{4}{5}", "\n", colourAlert, objective.tag, colourEnd, "\n", "\n");
+                            builder.AppendFormat("{0}{1}{2}</size>{3}{4}", colourHeader, size, objective.tag, colourEnd, "\n");
                             builder.Append(GetBriefingNotes(mission.briefingObjOne, "Objective One"));
                             builder.AppendLine(); builder.AppendLine();
                         }
@@ -9971,8 +9970,7 @@ public class ActorManager : MonoBehaviour
                             objective = listOfObjectives[1];
                             if (objective != null)
                             {
-                                builder.AppendFormat("{0}{1}Objective Two</size>{2}{3}", colourHeader, size, colourEnd, "\n");
-                                builder.AppendFormat("{0}{1}<size=115%>{2}</size>{3}{4}{5}", "\n", colourAlert, objective.tag, colourEnd, "\n", "\n");
+                                builder.AppendFormat("{0}{1}{2}</size>{3}{4}", colourHeader, size, objective.tag, colourEnd, "\n");
                                 builder.Append(GetBriefingNotes(mission.briefingObjTwo, "Objective Two"));
                                 builder.AppendLine(); builder.AppendLine();
                             }
@@ -9984,8 +9982,7 @@ public class ActorManager : MonoBehaviour
                             objective = listOfObjectives[2];
                             if (objective != null)
                             {
-                                builder.AppendFormat("{0}{1}Objective Three</size>{2}{3}", colourHeader, size, colourEnd, "\n");
-                                builder.AppendFormat("{0}{1}<size=115%>{2}</size>{3}{4}{5}", "\n", colourAlert, objective.tag, colourEnd, "\n", "\n");
+                                builder.AppendFormat("{0}{1}{2}</size>{3}{4}", colourHeader, size, objective.tag, colourEnd, "\n");
                                 builder.Append(GetBriefingNotes(mission.briefingObjThree, "Objective Three"));
                             }
                             else { Debug.LogError("Invalid Objective (Null) for mission.listOfObjectives[2]"); }
@@ -10009,6 +10006,7 @@ public class ActorManager : MonoBehaviour
 
     /// <summary>
     /// returns formatted briefing notes. 'debugName' is name of briefing notes, eg. "City" , for debug purposes
+    /// Replaces any string enclosed in "[...]" with colourAlert / colourEnd tags
     /// </summary>
     /// <param name="text"></param>
     /// <param name="debugName"></param>
@@ -10017,7 +10015,15 @@ public class ActorManager : MonoBehaviour
     {
         string briefingNotes = "";
         if (string.IsNullOrEmpty(text) == false)
-        { briefingNotes = string.Format("{0}", text); }
+        {
+            if (text.Contains("[") == true)
+            {
+                //replace any tags
+                string tempNotes = text.Replace("[", colourAlert);
+                briefingNotes = tempNotes.Replace("]", colourEnd);
+            }
+            else { briefingNotes = text; }
+        }
         else
         {
             Debug.LogWarningFormat("Invalid {0} (Null)", debugName);

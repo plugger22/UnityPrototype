@@ -58,22 +58,22 @@ public class Mission : ScriptableObject
     public Npc npc;
 
     [Header("Briefing")]
-    [Tooltip("City briefing")]
+    [Tooltip("City briefing. Any text enclosed in '[...]' tags will be shown with colourAlert")]
     [TextArea] public string briefingCity;
-    [Tooltip("Resistance briefing")]
+    [Tooltip("Resistance briefing. Any text enclosed in '[...]' tags will be shown with colourAlert")]
     [TextArea] public string briefingResistance;
-    [Tooltip("Mayor briefing")]
+    [Tooltip("Mayor briefing. Any text enclosed in '[...]' tags will be shown with colourAlert")]
     [TextArea] public string briefingMayor;
-    [Tooltip("Npc briefing")]
+    [Tooltip("Npc briefing. Any text enclosed in '[...]' tags will be shown with colourAlert")]
     [TextArea] public string briefingNpc;
-    [Tooltip("Threat briefing")]
+    [Tooltip("Threat briefing. Any text enclosed in '[...]' tags will be shown with colourAlert")]
     [TextArea] public string briefingThreat;
-    [Tooltip("Objective One briefing")]
-    [TextArea] public string briefingObjOne;
-    [Tooltip("Objective Two briefing")]
-    [TextArea] public string briefingObjTwo;
-    [Tooltip("Objective Three briefing")]
-    [TextArea] public string briefingObjThree;
+    [Tooltip("Objective One briefing. Any text enclosed in '[...]' tags will be shown with colourAlert. Use'<br>' for line breaks")]
+    [TextArea(5, 8)] public string briefingObjOne;
+    [Tooltip("Objective Two briefing. Any text enclosed in '[...]' tags will be shown with colourAlert. Use'<br>' for line breaks")]
+    [TextArea(5, 8)] public string briefingObjTwo;
+    [Tooltip("Objective Three briefing. Any text enclosed in '[...]' tags will be shown with colourAlert. Use'<br>' for line breaks")]
+    [TextArea(5, 8)] public string briefingObjThree;
 
 
     public void OnEnable()
