@@ -8,7 +8,11 @@ public enum ToolEventType
 {
     None,
     //Adventure Generator
-    OpenAdventureUI
+    OpenAdventureUI,
+    CloseAdventureUI,
+    OpenNewAdventure,
+    CloseNewAdventure,
+    CreateTheme,
 }
 
 /// <summary>
