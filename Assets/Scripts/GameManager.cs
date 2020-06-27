@@ -109,7 +109,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public TopicUI topicDisplayScript;                //Topic UI
     [HideInInspector] public PopUpDynamic popUpDynamicScript;           //PopUpDynamic
     [HideInInspector] public PopUpFixed popUpFixedScript;               //PopUpFixed
-    #endregion
+#endregion
 
 
     #region Variables

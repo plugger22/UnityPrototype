@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using modalAPI;
 using UnityEngine.UI;
 
+
 /// <summary>
 /// Generic class to attach to UI buttons such as 'Cancel' or 'Confirm'. You need to set the event type and whether the event returns a Parameter (int)
 /// </summary>
@@ -42,3 +43,4 @@ public class ButtonInteraction : MonoBehaviour, IPointerClickHandler
         }
     }
 }
+

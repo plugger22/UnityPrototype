@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: 114183753687402266}
   - component: {fileID: 114309057188216108}
   - component: {fileID: 114912672506915200}
+  - component: {fileID: 114079522176207682}
   m_Layer: 0
   m_Name: Game_Manager
   m_TagString: Untagged
@@ -228,6 +229,17 @@ MonoBehaviour:
   status: 0
   inactiveStatus: 0
   isBreakdown: 0
+--- !u!114 &114079522176207682
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1289370855557188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e3b8b6fd2f79b9459cdecd7b13f083f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114160796570192384
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5192,6 +5204,7 @@ MonoBehaviour:
   topicDisplayScript: {fileID: 0}
   popUpDynamicScript: {fileID: 0}
   popUpFixedScript: {fileID: 0}
+  toolScript: {fileID: 0}
   seedDev: 0
   autoRunTurns: 20
   isPerformanceLog: 1
