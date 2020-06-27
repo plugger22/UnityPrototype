@@ -16,8 +16,7 @@ public class AdventureUI : MonoBehaviour
     public Canvas newAdventureCanvas;
 
     //Story that is current
-    [Tooltip("Need a base SO here to clone off")]
-    public Story story;
+
 
     //static reference
     private static AdventureUI adventureUI;
