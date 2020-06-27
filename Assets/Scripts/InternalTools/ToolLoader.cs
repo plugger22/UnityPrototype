@@ -9,13 +9,15 @@ using UnityEngine;
 public class ToolLoader : MonoBehaviour
 {
 
-    public GameObject toolManager;
     public GameObject toolEvents;
+    public GameObject toolManager;
 
 
     // Use this for initialization
     void Awake()
     {
+        Debug.Assert(toolEvents != null, "Invalid toolEvents (Null)");
+        Debug.Assert(toolManager != null, "Invalid toolManager (Null)");
         //Check if a ToolEvents has already been assigned to static variable toolEvents.instance or if it's still null
         if (ToolEvents.i == null)
         {

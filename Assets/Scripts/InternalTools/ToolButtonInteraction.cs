@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// buttonInteraction equivalent for internal tools
 /// </summary>
-public class ToolButtonInteraction : MonoBehaviour
+public class ToolButtonInteraction : MonoBehaviour, IPointerClickHandler
 {
 
     private ToolEventType eventType = ToolEventType.None;               //The  event that is triggered when the button is clicked (get component in code and call SetButton)

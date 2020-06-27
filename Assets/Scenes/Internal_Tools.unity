@@ -1411,13 +1411,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &65713015
-AudioListener:
+--- !u!114 &65713015
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 65713014}
-  m_Enabled: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e45b0171ac2d74f469a25ab39927fb7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toolEvents: {fileID: 1999307899353844, guid: e7e75a04af40d3241b14447a87391a5c, type: 2}
+  toolManager: {fileID: 1442030075232148, guid: aaaa60d0ba6489f4da6e1538ebfe0442,
+    type: 2}
 --- !u!20 &65713016
 Camera:
   m_ObjectHideFlags: 0
@@ -14571,7 +14578,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -18428,7 +18435,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1424454143}
-  - component: {fileID: 1424454144}
   m_Layer: 0
   m_Name: gameHandler
   m_TagString: Untagged
@@ -18450,20 +18456,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1424454144
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1424454142}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e45b0171ac2d74f469a25ab39927fb7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toolManager: {fileID: 1442030075232148, guid: aaaa60d0ba6489f4da6e1538ebfe0442,
-    type: 2}
-  toolEvents: {fileID: 1999307899353844, guid: e7e75a04af40d3241b14447a87391a5c, type: 2}
 --- !u!1 &1439110674
 GameObject:
   m_ObjectHideFlags: 0

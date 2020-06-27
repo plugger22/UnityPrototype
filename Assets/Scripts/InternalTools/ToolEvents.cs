@@ -7,7 +7,7 @@ using UnityEngine;
 public enum ToolEventType
 {
     None,
-    //Main Menu
+    //Adventure Generator
     OpenAdventureUI
 }
 
@@ -28,12 +28,16 @@ public class ToolEvents : MonoBehaviour
     {
         //check if instance already exists
         if (i == null)
-        { i = this; }
+        {
+            i = this;
+            /*Debug.LogFormat("[Tst] ToolEvents has been instantiated{0}", "\n");*/
+        }
         //if instance already exists and it's not this
         else if (i != this)
         {
             //Then destroy this in order to reinforce the singleton pattern (can only ever be one instance of toolEvents)
             Destroy(gameObject);
+            Debug.LogWarning("Can only be one instance of ToolEvents");
         }
     }
 

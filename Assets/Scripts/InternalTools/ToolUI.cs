@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 #if (UNITY_EDITOR)
 
@@ -45,10 +43,24 @@ public class ToolUI : MonoBehaviour
         adventureInteraction.SetButton(ToolEventType.OpenAdventureUI);
         //turn on
         menuCanvas.gameObject.SetActive(true);
-
     }
 
 
+    /// <summary>
+    /// Open main menu
+    /// </summary>
+    public void OpenMainMenu()
+    {
+        menuCanvas.gameObject.SetActive(true);
+    }
+
+    /// <summary>
+    /// close main menu
+    /// </summary>
+    public void CloseMainMenu()
+    {
+        menuCanvas.gameObject.SetActive(false);
+    }
 
     //new methods above here
 }

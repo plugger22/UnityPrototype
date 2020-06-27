@@ -30,6 +30,7 @@ public class AdventureUI : MonoBehaviour
         return adventureUI;
     }
 
+
     /// <summary>
     /// Initialisation
     /// </summary>
@@ -44,8 +45,10 @@ public class AdventureUI : MonoBehaviour
         masterCanvas.gameObject.SetActive(true);
         newAdventureCanvas.gameObject.SetActive(false);
         //listeners
-        ToolEvents.i.AddListener(ToolEventType.OpenAdventureUI, OnEvent, "ToolManager");
+        ToolEvents.i.AddListener(ToolEventType.OpenAdventureUI, OnEvent, "AdventureUI");
     }
+
+    
 
     /// <summary>
     /// handles events
@@ -71,6 +74,7 @@ public class AdventureUI : MonoBehaviour
     private void SetAdventureUI()
     {
         //turn on
+        ToolManager.i.toolUIScript.CloseMainMenu();
         adventureCanvas.gameObject.SetActive(true);
     }
 
