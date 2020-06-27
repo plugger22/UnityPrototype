@@ -16,7 +16,8 @@ public class AdventureUI : MonoBehaviour
     public Canvas newAdventureCanvas;
 
     //Story that is current
-    private Story story;
+    [Tooltip("Need a base SO here to clone off")]
+    public Story story;
 
     //static reference
     private static AdventureUI adventureUI;
@@ -93,6 +94,7 @@ public class AdventureUI : MonoBehaviour
         exitInteraction.SetButton(ToolEventType.CloseAdventureUI);
         newAdventureInteraction.SetButton(ToolEventType.OpenNewAdventure);
         returnNewInteraction.SetButton(ToolEventType.CloseNewAdventure);
+        themeInteraction.SetButton(ToolEventType.CreateTheme);
         //listeners
         ToolEvents.i.AddListener(ToolEventType.OpenAdventureUI, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.CloseAdventureUI, OnEvent, "AdventureUI");
@@ -160,6 +162,7 @@ public class AdventureUI : MonoBehaviour
     /// </summary>
     private void OpenNewAdventure()
     {
+        story = Instantiate(story);
         newAdventureCanvas.gameObject.SetActive(true);
         masterCanvas.gameObject.SetActive(false);
     }
