@@ -1415,7 +1415,6 @@ GameObject:
   m_Component:
   - component: {fileID: 65713017}
   - component: {fileID: 65713016}
-  - component: {fileID: 65713015}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1423,20 +1422,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &65713015
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 65713014}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e45b0171ac2d74f469a25ab39927fb7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toolEvents: {fileID: 1999307899353844, guid: e7e75a04af40d3241b14447a87391a5c, type: 2}
-  toolManager: {fileID: 1442030075232148, guid: aaaa60d0ba6489f4da6e1538ebfe0442,
-    type: 2}
 --- !u!20 &65713016
 Camera:
   m_ObjectHideFlags: 0
@@ -6880,7 +6865,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: Adventue
+  m_text: Adventure
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6948,7 +6933,7 @@ MonoBehaviour:
   m_margin: {x: 15, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 471348470}
-    characterCount: 8
+    characterCount: 9
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
@@ -18543,6 +18528,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1424454143}
+  - component: {fileID: 1424454144}
   m_Layer: 0
   m_Name: gameHandler
   m_TagString: Untagged
@@ -18564,6 +18550,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1424454144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1424454142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e45b0171ac2d74f469a25ab39927fb7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toolEvents: {fileID: 1999307899353844, guid: e7e75a04af40d3241b14447a87391a5c, type: 2}
+  toolManager: {fileID: 1442030075232148, guid: aaaa60d0ba6489f4da6e1538ebfe0442,
+    type: 2}
 --- !u!1 &1439110674
 GameObject:
   m_ObjectHideFlags: 0
@@ -25143,6 +25143,11 @@ MonoBehaviour:
   exitInteraction: {fileID: 1345066518}
   themeInteraction: {fileID: 311645747}
   returnNewInteraction: {fileID: 100015222}
+  theme1: {fileID: 8929459}
+  theme2: {fileID: 1828465730}
+  theme3: {fileID: 34170781}
+  theme4: {fileID: 1158913562}
+  theme5: {fileID: 1198266970}
 --- !u!114 &2089595703
 MonoBehaviour:
   m_ObjectHideFlags: 0

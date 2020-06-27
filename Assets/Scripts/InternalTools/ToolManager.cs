@@ -57,6 +57,7 @@ public class ToolManager : MonoBehaviour
     {
         toolUIScript.Initialise();
         adventureUIScript.Initialise();
+        adventureScript.Initialise();
     }
 
 

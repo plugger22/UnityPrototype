@@ -54,6 +54,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   adventureScript: {fileID: 0}
   adventureUIScript: {fileID: 0}
+  toolUIScript: {fileID: 0}
 --- !u!114 &114742990141811574
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -65,3 +66,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b93f37fb7366f6478f88d888ec02328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  listOfAllThemeTypes:
+  - {fileID: 11400000, guid: dea95c7e56766474db3bef6db555e5cb, type: 2}
+  - {fileID: 11400000, guid: 935b16711108c0f428b9c6a96abb6a3a, type: 2}
+  - {fileID: 11400000, guid: 3fdfb820731c3354b911fa1220d45543, type: 2}
+  - {fileID: 11400000, guid: 56992707fceddb845a9f50bdec7f624e, type: 2}
+  - {fileID: 11400000, guid: 5f26bfce576292d4096e7fd43538e962, type: 2}
