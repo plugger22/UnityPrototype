@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+
 
 
 #if (UNITY_EDITOR)
@@ -50,6 +50,7 @@ public class ToolManager : MonoBehaviour
     }
     #endregion
 
+    #region InitialiseAll
     /// <summary>
     /// Sequenced Initialisation
     /// </summary>
@@ -59,17 +60,13 @@ public class ToolManager : MonoBehaviour
         adventureUIScript.Initialise();
         adventureScript.Initialise();
     }
+    #endregion
 
 
 
 
 
 
-
-
-
-    //new scripts above here
 }
-
-
 #endif
+

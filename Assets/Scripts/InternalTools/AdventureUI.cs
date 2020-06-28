@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
+using toolsAPI;
 using UnityEngine;
 
 #if (UNITY_EDITOR)
@@ -16,7 +16,7 @@ public class AdventureUI : MonoBehaviour
     public Canvas newAdventureCanvas;
 
     //Story that is current
-
+    public Story story;
 
     //static reference
     private static AdventureUI adventureUI;
@@ -35,7 +35,8 @@ public class AdventureUI : MonoBehaviour
     #endregion
 
     #region New Adventure
-    public ToolButtonInteraction themeInteraction;
+    public ToolButtonInteraction saveInteraction;
+    public ToolButtonInteraction turningPointInteraction;
     public ToolButtonInteraction returnNewInteraction;
 
     public TextMeshProUGUI theme1;
@@ -78,7 +79,8 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(addPlotLineInteraction != null, "Invalid addPlotLineInteraction (Null)");
         Debug.Assert(removePlotLineInteraction != null, "Invalid removePlotLineInteraction (Null)");
         Debug.Assert(exitInteraction != null, "Invalid ExitInteraction (Null)");
-        Debug.Assert(themeInteraction != null, "Invalid themeInteraction (Null)");
+        Debug.Assert(saveInteraction != null, "Invalid themeInteraction (Null)");
+        Debug.Assert(turningPointInteraction != null, "Invalid turnPointInteraction (Null)");
         Debug.Assert(returnNewInteraction != null, "Invalid returnNewInteraction (Null)");
         Debug.Assert(theme1 != null, "Invalid theme1 (Null)");
         Debug.Assert(theme2 != null, "Invalid theme2 (Null)");
@@ -93,16 +95,18 @@ public class AdventureUI : MonoBehaviour
         exitInteraction.SetButton(ToolEventType.CloseAdventureUI);
         newAdventureInteraction.SetButton(ToolEventType.OpenNewAdventure);
         returnNewInteraction.SetButton(ToolEventType.CloseNewAdventure);
-        themeInteraction.SetButton(ToolEventType.CreateTheme);
+        turningPointInteraction.SetButton(ToolEventType.CreateTurningPoint);
+        saveInteraction.SetButton(ToolEventType.SaveAdventure);
         //listeners
         ToolEvents.i.AddListener(ToolEventType.OpenAdventureUI, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.CloseAdventureUI, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.OpenNewAdventure, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.CloseNewAdventure, OnEvent, "AdventureUI");
-        ToolEvents.i.AddListener(ToolEventType.CreateTheme, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.SaveAdventure, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.CreateTurningPoint, OnEvent, "AdventureUI");
     }
 
-    
+
 
     /// <summary>
     /// handles events
@@ -127,8 +131,11 @@ public class AdventureUI : MonoBehaviour
             case ToolEventType.CloseNewAdventure:
                 CloseNewAdventure();
                 break;
-            case ToolEventType.CreateTheme:
-                CreateTheme();
+            case ToolEventType.CreateTurningPoint:
+                CreateTurningPoint();
+                break;
+            case ToolEventType.SaveAdventure:
+                SaveAdventure();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -161,9 +168,14 @@ public class AdventureUI : MonoBehaviour
     /// </summary>
     private void OpenNewAdventure()
     {
-        story = Instantiate(story);
+        //create new story if none present
+        if (story == null)
+        { story = new Story(); }
+        //toggle canvases on/off
         newAdventureCanvas.gameObject.SetActive(true);
         masterCanvas.gameObject.SetActive(false);
+        //theme
+        CreateTheme();
     }
 
     /// <summary>
@@ -188,52 +200,65 @@ public class AdventureUI : MonoBehaviour
                 for (int i = 0; i < listOfThemes.Count; i++)
                 {
                     ThemeType themeType = listOfThemes[i];
-                    if (themeType != null)
-                    {
-                        switch (i)
-                        {
-                            case 0:
-                                story.theme.arrayOfThemes[0] = themeType;
-                                story.theme.arrayOfThemes[1] = themeType;
-                                story.theme.arrayOfThemes[2] = themeType;
-                                story.theme.arrayOfThemes[3] = themeType;
-                                //ui
-                                theme1.text = themeType.tag;
-                                break;
-                            case 1:
-                                story.theme.arrayOfThemes[4] = themeType;
-                                story.theme.arrayOfThemes[5] = themeType;
-                                story.theme.arrayOfThemes[6] = themeType;
-                                //ui
-                                theme2.text = themeType.tag;
-                                break;
-                            case 2:
-                                story.theme.arrayOfThemes[7] = themeType;
-                                story.theme.arrayOfThemes[8] = themeType;
-                                //ui
-                                theme3.text = themeType.tag;
-                                break;
-                            case 3:
-                                story.theme.arrayOfThemes[9] = themeType;
-                                //ui
-                                theme4.text = themeType.tag;
-                                break;
-                            case 4:
-                                story.theme.arrayOfThemes[10] = themeType;
-                                //ui
-                                theme5.text = themeType.tag;
-                                break;
-                            default: Debug.LogWarningFormat("Unrecognised index \"{0}\" for listOfThemes", i); break;
-                        }
 
+                    switch (i)
+                    {
+                        case 0:
+                            story.theme.arrayOfThemes[0] = themeType;
+                            story.theme.arrayOfThemes[1] = themeType;
+                            story.theme.arrayOfThemes[2] = themeType;
+                            story.theme.arrayOfThemes[3] = themeType;
+                            //ui
+                            theme1.text = string.Format("1  {0}", themeType);
+                            break;
+                        case 1:
+                            story.theme.arrayOfThemes[4] = themeType;
+                            story.theme.arrayOfThemes[5] = themeType;
+                            story.theme.arrayOfThemes[6] = themeType;
+                            //ui
+                            theme2.text = string.Format("2  {0}", themeType);
+                            break;
+                        case 2:
+                            story.theme.arrayOfThemes[7] = themeType;
+                            story.theme.arrayOfThemes[8] = themeType;
+                            //ui
+                            theme3.text = string.Format("3  {0}", themeType);
+                            break;
+                        case 3:
+                            story.theme.arrayOfThemes[9] = themeType;
+                            //ui
+                            theme4.text = string.Format("4  {0}", themeType);
+                            break;
+                        case 4:
+                            story.theme.arrayOfThemes[10] = themeType;
+                            //ui
+                            theme5.text = string.Format("5  {0}", themeType);
+                            break;
+                        default: Debug.LogWarningFormat("Unrecognised index \"{0}\" for listOfThemes", i); break;
                     }
-                    else { Debug.LogErrorFormat("Invalid themeType (Null) for listOfThemes[{0}]", i); }
                 }
             }
             else { Debug.LogErrorFormat("Invalid count for listOfThemes (are {0}, should be {1})", listOfThemes.Count, 5); }
         }
         else { Debug.LogError("Invalid listOfThemes (Null)"); }
     }
+
+    /// <summary>
+    /// Create New Turning Points for Adventure
+    /// </summary>
+    private void CreateTurningPoint()
+    {
+
+    }
+
+    /// <summary>
+    /// Save Adventure (base data)
+    /// </summary>
+    private void SaveAdventure()
+    {
+
+    }
+
 
     //new scripts above here
 }

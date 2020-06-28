@@ -12,7 +12,9 @@ public enum ToolEventType
     CloseAdventureUI,
     OpenNewAdventure,
     CloseNewAdventure,
-    CreateTheme,
+    CreateTurningPoint,
+    SaveAdventure
+
 }
 
 /// <summary>

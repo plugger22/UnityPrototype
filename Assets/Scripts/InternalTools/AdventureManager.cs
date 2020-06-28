@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using toolsAPI;
+using Random = System.Random;
 
 #if (UNITY_EDITOR)
 /// <summary>
@@ -24,28 +26,25 @@ public class AdventureManager : MonoBehaviour
     public List<ThemeType> GetThemes()
     {
         List<ThemeType> listOfThemes = new List<ThemeType>();
-        List<ThemeType> listOfStandard = new List<ThemeType>(listOfAllThemeTypes);
-        if (listOfStandard != null)
+        //populate list with all available theme types
+        for (int i = 0; i < (int)ThemeType.Count; i++)
+        { listOfThemes.Add((ThemeType)i); }
+        //shuffle
+        Random random = new Random();
+        int n = listOfThemes.Count;
+        ThemeType value;
+        for (int i = listOfThemes.Count - 1; i > 1; i--)
         {
-            int count = listOfStandard.Count;
-            int index;
-            while (listOfStandard.Count > 0)
-            {
-                //randomly select themes from list until none left
-                index = Random.Range(0, count);
-                ThemeType theme = listOfStandard[index];
-                if (theme != null)
-                {
-                    listOfThemes.Add(theme);
-                    listOfStandard.RemoveAt(index);
-                }
-                else { Debug.LogErrorFormat("Invalid themeType (Null) for listOfStandard[{0}]", index); }
-            };
+            int rnd = random.Next(i + 1);
+            value = listOfThemes[rnd];
+            listOfThemes[rnd] = listOfThemes[i];
+            listOfThemes[i] = value;
         }
-        else { Debug.LogError("Invalid listStandard (Null)"); }
         return listOfThemes;
     }
 
+
+    //new methods above here
 }
 
 #endif
