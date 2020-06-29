@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using toolsAPI;
 using System;
+using System.Linq;
 
 /// <summary>
 /// Data Manager class
@@ -44,6 +45,21 @@ public class ToolDataManager : MonoBehaviour
         else
         { Debug.LogError("Invalid story (Null)"); }
         return false;
+    }
+
+    /// <summary>
+    /// returns first record in dictOfStories (not in sorted order so could be anything). Returns null if a problem or none found
+    /// </summary>
+    /// <returns></returns>
+    public Story GetFirstStoryInDict()
+    {
+        Story story = null;
+        if (dictOfStories.Count > 0)
+        {
+            story = dictOfStories.Values.First();
+        }
+        else { Debug.LogWarning("No records in dictOfStories -> ALERT"); }
+        return story;
     }
 
     //new methods above here

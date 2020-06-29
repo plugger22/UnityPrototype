@@ -14,7 +14,9 @@ public enum ToolEventType
     CloseNewAdventure,
     CreateTurningPoint,
     SaveAdventureToDict,
-    SaveDictToFile
+    SaveToolsToFile,
+    LoadToolsFromFile,
+    DeleteToolsFile
 }
 
 /// <summary>

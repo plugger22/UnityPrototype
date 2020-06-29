@@ -16,7 +16,7 @@ public class AdventureManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Get a list of themeTypes in priority order (index 0 onwards). Should be five ThemeTypes in list with index 0 being the first priority and index 3/4 being the last
+    /// Get a list of randomly sorted themeTypes in priority order (index 0 onwards). Should be five ThemeTypes in list with index 0 being the first priority and index 3/4 being the last
     /// </summary>
     /// <returns></returns>
     public List<ThemeType> GetThemes()

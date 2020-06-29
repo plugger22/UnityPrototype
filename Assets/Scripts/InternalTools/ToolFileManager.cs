@@ -58,7 +58,6 @@ public class ToolFileManager : MonoBehaviour
         write = new SaveTools();
         //Sequentially write data
         WriteStories();
-
     }
     #endregion
 
@@ -105,7 +104,7 @@ public class ToolFileManager : MonoBehaviour
                 //create new file
                 try { File.WriteAllText(filenameTools, jsonWrite); }
                 catch (Exception e) { Debug.LogErrorFormat("Failed to write TEXT FROM FILE, error \"{0}\"", e.Message); }
-                Debug.LogFormat("[Fil] FileManager.cs -> SaveToolsToFile: GAME SAVED to \"{0}\"{1}", filenameTools, "\n");
+                Debug.LogFormat("[Fil] FileManager.cs -> SaveToolsToFile: ToolData SAVED to \"{0}\"{1}", filenameTools, "\n");
 
             }
             else { Debug.LogError("Invalid fileName (Null or Empty)"); }
@@ -114,8 +113,91 @@ public class ToolFileManager : MonoBehaviour
     }
     #endregion
 
+    #region ReadToolsFromFile
+    /// <summary>
+    /// read tools method. Returns true if successful, false otherwise
+    /// </summary>
+    public bool ReadToolsFromFile()
+    {
+        bool isSuccess = false;
+        if (string.IsNullOrEmpty(filenameTools) == false)
+        {
+            if (File.Exists(filenameTools) == true)
+            {
 
+                //read data from File
+                try { jsonRead = File.ReadAllText(filenameTools); }
+                catch (Exception e) { Debug.LogErrorFormat("Failed to read TEXT FROM FILE, error \"{0}\"", e.Message); }
+                isSuccess = true;
+                if (isSuccess == true)
+                {
+                    //read to Save file
+                    try
+                    {
+                        read = JsonUtility.FromJson<SaveTools>(jsonRead);
+                        Debug.LogFormat("[Fil] FileManager.cs -> ReadToolsFromFile: GAME LOADED from \"{0}\"{1}", filenameTools, "\n");
+                        return true;
+                    }
+                    catch (Exception e)
+                    { Debug.LogErrorFormat("Failed to read Json, error \"{0}\"", e.Message); }
+                }
+            }
+            else { Debug.LogWarningFormat("File \"{0}\" not found", filenameTools); }
+        }
+        else { Debug.LogError("Invalid filename (Null or Empty)"); }
+        return false;
+    }
+    #endregion
 
+    #region ReadToolData
+    /// <summary>
+    /// load tool data back into toolDataManager.cs
+    /// </summary>
+    public void ReadToolData()
+    {
+        if (read != null)
+        {
+            ReadStories();
+        }
+        else { Debug.LogError("Invalid read (Null)"); }
+    }
+
+    #endregion
+
+    #region ReadStories
+    /// <summary>
+    /// Read saved data back into dictOfStories
+    /// </summary>
+    private void ReadStories()
+    {
+        if (read.toolData.listOfStories != null)
+        {
+            for (int i = 0; i < read.toolData.listOfStories.Count; i++)
+            {
+                Story story = read.toolData.listOfStories[i];
+                if (story != null)
+                { ToolManager.i.toolDataScript.AddStory(story); }
+                else { Debug.LogErrorFormat("Invalid story (Null) for listOfStories[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid toolData.listOfStories (Null)"); }
+    }
+
+    #endregion
+
+    #region DeleteToolsFile
+    /// <summary>
+    /// Deletes file
+    /// </summary>
+    public void DeleteToolsFile()
+    {
+        if (File.Exists(filenameTools) == true)
+        {
+            File.Delete(filenameTools);
+            Debug.LogFormat("[Fil] FileManager.cs -> DeleteToolsFile: file at \"{0}\" DELETED{1}", filenameTools, "\n");
+        }
+    }
+    #endregion
 
     //new methods above here
 }

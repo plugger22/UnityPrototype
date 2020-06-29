@@ -29,7 +29,7 @@ namespace toolsAPI
         public string date;
         public int numTurningPoints;
         //subClasses
-        public ThemeData theme;
+        public ThemeData theme = new ThemeData();
     }
 
     /// <summary>
