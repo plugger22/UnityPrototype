@@ -74,6 +74,7 @@ public class AdventureUI : MonoBehaviour
     public TMP_InputField newDate;
     #endregion
 
+    #region static Instance
     /// <summary>
     /// provide a static reference to AdventureUI that can be accessed from any script
     /// </summary>
@@ -88,6 +89,7 @@ public class AdventureUI : MonoBehaviour
         }
         return adventureUI;
     }
+    #endregion
 
     #region Initialise
     /// <summary>
@@ -323,8 +325,8 @@ public class AdventureUI : MonoBehaviour
         //theme
         CreateTheme();
         //auto fill date
-        DateTime date = DateTime.Now;
-        newDate.text = date.ToString("d MMM yy", CultureInfo.CreateSpecificCulture("en-US"));
+        newDate.text = GetCurrentDateString();
+        storyNew.date = GetCurrentDateString();
     }
 
     /// <summary>
@@ -335,7 +337,6 @@ public class AdventureUI : MonoBehaviour
         //toggle canvases
         masterCanvas.gameObject.SetActive(true);
         newAdventureCanvas.gameObject.SetActive(false);
-
     }
 
 
@@ -380,13 +381,13 @@ public class AdventureUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Clears out adventure data (excluding Theme data which stays as is)
+    /// Clears out adventure data (excludes date and regenerates a new set of themes)
     /// </summary>
     private void ClearNewAdventure()
     {
         storyNew.tag = "";
         storyNew.notes = "";
-        storyNew.date = "";
+        CreateTheme();
         RedrawNewAdventurePage();
     }
 
@@ -403,12 +404,12 @@ public class AdventureUI : MonoBehaviour
             //save only if viable data present
             if (string.IsNullOrEmpty(storyNew.tag) == false)
             {
-                //Add story to dictionary if not already present
-                if (ToolManager.i.toolDataScript.CheckStoryExists(storyNew) == false)
-                {
-                    ToolManager.i.toolDataScript.AddStory(storyNew);
-                    Debug.LogFormat("[Tol] AdventureUI.cs -> SaveAdventure: StoryNew \"{0}\" saved to dictionary{1}", storyNew.tag, "\n");
-                }
+                //data validate date string
+                if (string.IsNullOrEmpty(storyNew.date) == true)
+                { storyNew.date = GetCurrentDateString(); }
+                //add story to dict, overwrite existing data if already present
+                ToolManager.i.toolDataScript.AddStory(storyNew);
+                Debug.LogFormat("[Tol] AdventureUI.cs -> SaveAdventure: StoryNew \"{0}\" saved to dictionary{1}", storyNew.tag, "\n");
             }
             else { Debug.LogWarning("Invalid storyNew.tag (Null or Empty). Story not saved to Dictionary"); }
         }
@@ -467,6 +468,17 @@ public class AdventureUI : MonoBehaviour
         themeNew4.text = storyNew.theme.GetThemePriority(4).ToString();
         themeNew5.text = storyNew.theme.GetThemePriority(5).ToString();
     }
+
+    /// <summary>
+    /// returns date string with current date in format '29 Jun 20'
+    /// </summary>
+    /// <returns></returns>
+    private string GetCurrentDateString()
+    {
+        DateTime date = DateTime.Now;
+        return date.ToString("d MMM yy", CultureInfo.CreateSpecificCulture("en-US"));
+    }
+
     #endregion
 
     //new scripts above here

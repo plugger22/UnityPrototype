@@ -1,9 +1,8 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
-using toolsAPI;
-using System;
 using System.Linq;
+using toolsAPI;
+using UnityEngine;
 
 /// <summary>
 /// Data Manager class
@@ -24,18 +23,32 @@ public class ToolDataManager : MonoBehaviour
     { dictOfStories.Clear(); }
 
     /// <summary>
-    /// Add story to dict
+    /// Add story to dict. If already present will override with new data
     /// </summary>
     /// <param name="story"></param>
     public void AddStory(Story story)
     {
-        //create a new story to add to dict (stops issues with reference being deleted in UI)
-        Story storyAdd = new Story(story);
-        try { dictOfStories.Add(storyAdd.tag, storyAdd); }
-        catch(ArgumentNullException)
-        { Debug.LogError("Invalid story (Null)"); }
-        catch(ArgumentException)
-        { Debug.LogErrorFormat("Duplicate entry exists for story \"{0}\"", story.tag); }
+        if (story != null)
+        {
+            //create a new story to add to dict (stops issues with reference being deleted in UI)
+            Story storyAdd = new Story(story);
+            if (dictOfStories.ContainsKey(storyAdd.tag) == false)
+            {
+                //not present, add new entry
+                try { dictOfStories.Add(storyAdd.tag, storyAdd); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid story (Null)"); }
+                catch (ArgumentException)
+                { Debug.LogErrorFormat("Duplicate entry exists for story \"{0}\"", storyAdd.tag); }
+            }
+            else
+            {
+                //exists -> over write with new data
+                dictOfStories[storyAdd.tag] = storyAdd;
+                Debug.LogWarningFormat("Duplicate entry exists for story \"{0}\", data Overriden -> Info Only", storyAdd.tag);
+            }
+        }
+        else { Debug.LogError("Invalid story (Null)"); }
     }
 
     /// <summary>
