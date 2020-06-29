@@ -13,12 +13,15 @@ public class ToolDataManager : MonoBehaviour
 
     public Dictionary<string, Story> dictOfStories = new Dictionary<string, Story>();
 
-    /// <summary>
-    /// return story dictionary
-    /// </summary>
-    /// <returns></returns>
+    //
+    // - - - Stories
+    //
+
     public Dictionary<string, Story> GetDictOfStories()
     { return dictOfStories; }
+
+    public void ClearDictOfStories()
+    { dictOfStories.Clear(); }
 
     /// <summary>
     /// Add story to dict
@@ -26,7 +29,9 @@ public class ToolDataManager : MonoBehaviour
     /// <param name="story"></param>
     public void AddStory(Story story)
     {
-        try { dictOfStories.Add(story.tag, story); }
+        //create a new story to add to dict (stops issues with reference being deleted in UI)
+        Story storyAdd = new Story(story);
+        try { dictOfStories.Add(storyAdd.tag, storyAdd); }
         catch(ArgumentNullException)
         { Debug.LogError("Invalid story (Null)"); }
         catch(ArgumentException)
@@ -45,6 +50,33 @@ public class ToolDataManager : MonoBehaviour
         else
         { Debug.LogError("Invalid story (Null)"); }
         return false;
+    }
+
+    /// <summary>
+    /// Sets stories in dict for a load/save operation. Existing data deleted prior to new data input
+    /// </summary>
+    /// <param name="listOfStories"></param>
+    public void SetStories(List<Story> listOfStories)
+    {
+        int counter = 0;
+        if (listOfStories != null)
+        {
+            dictOfStories.Clear();
+            for (int i = 0; i < listOfStories.Count; i++)
+            {
+                Story story = listOfStories[i];
+                if (story != null)
+                {
+                    if (string.IsNullOrEmpty(story.tag) == false)
+                    { AddStory(story); counter++; }
+                    else { Debug.LogWarningFormat("Invalid story.tag (Null or Empty) for listOfStories[{0}]", i); }
+                }
+                else { Debug.LogWarningFormat("Invalid story (Null) for listOfStories[{0}]", i); }
+            }
+            Debug.LogFormat("[Tst] ToolDataManager.cs -> SetStories: listOfStories has {0} records, {1} have been loaded into Dict{2}", listOfStories.Count, counter, "\n");
+        }
+        else { Debug.LogError("Invalid listOfStories (Null)"); }
+
     }
 
     /// <summary>

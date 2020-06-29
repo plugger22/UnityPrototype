@@ -16,7 +16,9 @@ public enum ToolEventType
     SaveAdventureToDict,
     SaveToolsToFile,
     LoadToolsFromFile,
-    DeleteToolsFile
+    DeleteToolsFile,
+    ClearAdventureDictionary,
+    ClearNewAdventure
 }
 
 /// <summary>

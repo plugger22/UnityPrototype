@@ -169,19 +169,8 @@ public class ToolFileManager : MonoBehaviour
     /// Read saved data back into dictOfStories
     /// </summary>
     private void ReadStories()
-    {
-        if (read.toolData.listOfStories != null)
-        {
-            for (int i = 0; i < read.toolData.listOfStories.Count; i++)
-            {
-                Story story = read.toolData.listOfStories[i];
-                if (story != null)
-                { ToolManager.i.toolDataScript.AddStory(story); }
-                else { Debug.LogErrorFormat("Invalid story (Null) for listOfStories[{0}]", i); }
-            }
-        }
-        else { Debug.LogError("Invalid toolData.listOfStories (Null)"); }
-    }
+    { ToolManager.i.toolDataScript.SetStories(read.toolData.listOfStories); }
+
 
     #endregion
 

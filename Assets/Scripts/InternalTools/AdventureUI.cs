@@ -13,20 +13,27 @@ using UnityEngine;
 /// </summary>
 public class AdventureUI : MonoBehaviour
 {
-    #region Main
+    #region Overall
+    //
+    // - - - Overall
+    //
+    [Header("Overall")]
     public Canvas adventureCanvas;
     public Canvas masterCanvas;
     public Canvas newAdventureCanvas;
 
     //Story that is current
-    public Story storyMain;
-    public Story storyNew;
+    [HideInInspector] public Story storyMain;
+    [HideInInspector] public Story storyNew;
 
     //static reference
     private static AdventureUI adventureUI;
     #endregion
 
     #region Main
+    //
+    // - - - Main
+    //
     [Header("Main")]
     public ToolButtonInteraction newAdventureInteraction;
     public ToolButtonInteraction saveToFileInteraction;
@@ -34,8 +41,8 @@ public class AdventureUI : MonoBehaviour
     public ToolButtonInteraction editAdventureInteraction;
     public ToolButtonInteraction deleteFileInteraction;
     public ToolButtonInteraction removeAdventureInteraction;
+    public ToolButtonInteraction clearDictionaryInteraction;
     public ToolButtonInteraction showListsInteraction;
-    public ToolButtonInteraction removePlotLineInteraction;
     public ToolButtonInteraction exitInteraction;
 
     public TextMeshProUGUI themeMain1;
@@ -53,6 +60,7 @@ public class AdventureUI : MonoBehaviour
     [Header("New Adventure")]
     public ToolButtonInteraction saveNewInteraction;
     public ToolButtonInteraction turningPointNewInteraction;
+    public ToolButtonInteraction clearNewInteraction;
     public ToolButtonInteraction returnNewInteraction;
 
     public TextMeshProUGUI themeNew1;
@@ -61,9 +69,9 @@ public class AdventureUI : MonoBehaviour
     public TextMeshProUGUI themeNew4;
     public TextMeshProUGUI themeNew5;
 
-    public TextMeshProUGUI adventureTag;
-    public TextMeshProUGUI adventureNotes;
-    public TextMeshProUGUI adventureDate;
+    public TMP_InputField newTag;
+    public TMP_InputField newNotes;
+    public TMP_InputField newDate;
     #endregion
 
     /// <summary>
@@ -81,7 +89,7 @@ public class AdventureUI : MonoBehaviour
         return adventureUI;
     }
 
-
+    #region Initialise
     /// <summary>
     /// Initialisation
     /// </summary>
@@ -98,11 +106,12 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(removeAdventureInteraction != null, "Invalid removeAdventureInteraction (Null)");
         Debug.Assert(showListsInteraction != null, "Invalid showListInteraction (Null)");
         Debug.Assert(deleteFileInteraction != null, "Invalid deleteFileInteraction (Null)");
-        Debug.Assert(removePlotLineInteraction != null, "Invalid removePlotLineInteraction (Null)");
+        Debug.Assert(clearDictionaryInteraction != null, "Invalid clearDictionaryInteraction (Null)");
         Debug.Assert(exitInteraction != null, "Invalid ExitInteraction (Null)");
         Debug.Assert(saveNewInteraction != null, "Invalid themeInteraction (Null)");
         Debug.Assert(turningPointNewInteraction != null, "Invalid turnPointInteraction (Null)");
         Debug.Assert(returnNewInteraction != null, "Invalid returnNewInteraction (Null)");
+        Debug.Assert(clearNewInteraction != null, "Invalid clearNewInteraction (Null)");
         //main
         Debug.Assert(themeMain1 != null, "Invalid theme1 (Null)");
         Debug.Assert(themeMain2 != null, "Invalid theme2 (Null)");
@@ -118,9 +127,9 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(themeNew3 != null, "Invalid theme3 (Null)");
         Debug.Assert(themeNew4 != null, "Invalid theme4 (Null)");
         Debug.Assert(themeNew5 != null, "Invalid theme5 (Null)");
-        Debug.Assert(adventureTag != null, "Invalid adventureTag (Null)");
-        Debug.Assert(adventureNotes != null, "Invalid adventureNotes (Null)");
-        Debug.Assert(adventureDate != null, "Invalid adventureDate (Null)");
+        Debug.Assert(newTag != null, "Invalid adventureTag (Null)");
+        Debug.Assert(newNotes != null, "Invalid adventureNotes (Null)");
+        Debug.Assert(newDate != null, "Invalid adventureDate (Null)");
         //switch off
         adventureCanvas.gameObject.SetActive(false);
         masterCanvas.gameObject.SetActive(true);
@@ -134,6 +143,8 @@ public class AdventureUI : MonoBehaviour
         saveToFileInteraction.SetButton(ToolEventType.SaveToolsToFile);
         loadFromFileInteraction.SetButton(ToolEventType.LoadToolsFromFile);
         deleteFileInteraction.SetButton(ToolEventType.DeleteToolsFile);
+        clearDictionaryInteraction.SetButton(ToolEventType.ClearAdventureDictionary);
+        clearNewInteraction.SetButton(ToolEventType.ClearNewAdventure);
 
         //listeners
         ToolEvents.i.AddListener(ToolEventType.OpenAdventureUI, OnEvent, "AdventureUI");
@@ -145,10 +156,12 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.CloseNewAdventure, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.SaveAdventureToDict, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.CreateTurningPoint, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.ClearAdventureDictionary, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.ClearNewAdventure, OnEvent, "AdventureUI");
     }
+    #endregion
 
-
-
+    #region Events
     /// <summary>
     /// handles events
     /// </summary>
@@ -187,11 +200,23 @@ public class AdventureUI : MonoBehaviour
             case ToolEventType.DeleteToolsFile:
                 DeleteFile();
                 break;
+            case ToolEventType.ClearAdventureDictionary:
+                ClearDictionary();
+                break;
+            case ToolEventType.ClearNewAdventure:
+                ClearNewAdventure();
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
         }
     }
+    #endregion
+
+    #region AdventureMain
+    //
+    // - - - Adventure Main
+    //
 
     /// <summary>
     /// open
@@ -201,8 +226,8 @@ public class AdventureUI : MonoBehaviour
         //turn on
         ToolManager.i.toolUIScript.CloseMainMenu();
         adventureCanvas.gameObject.SetActive(true);
-        //reset storyNew
-        storyNew = new Story();
+        //redraw page
+        RedrawMainAdventurePage();
         //load data from dictionary automatically
         LoadAdventures();
     }
@@ -217,6 +242,70 @@ public class AdventureUI : MonoBehaviour
         adventureCanvas.gameObject.SetActive(false);
     }
 
+
+    /// <summary>
+    /// Write tool data to file
+    /// </summary>
+    private void SaveToFile()
+    {
+        ToolManager.i.toolFileScript.WriteToolData();
+        ToolManager.i.toolFileScript.SaveToolsToFile();
+
+    }
+
+    /// <summary>
+    /// Load tool data from file (done automatically upon loading AdventureMaster)
+    /// </summary>
+    private void LoadFromFile()
+    {
+        LoadAdventures();
+    }
+
+    /// <summary>
+    /// Delete tools file
+    /// </summary>
+    private void DeleteFile()
+    {
+        ToolManager.i.toolFileScript.DeleteToolsFile();
+        if (storyMain != null)
+        { storyMain.Reset(); }
+        RedrawMainAdventurePage(true);
+    }
+
+    //subMethod to handle loading adventures and populating main screen with data from first record in dictionary
+    private void LoadAdventures()
+    {
+        //read data from file
+        if (ToolManager.i.toolFileScript.ReadToolsFromFile() == true)
+        {
+            //load data into game
+            ToolManager.i.toolFileScript.ReadToolData();
+            //load up first story in dict
+            storyMain = ToolManager.i.toolDataScript.GetFirstStoryInDict();
+            if (storyMain != null)
+            {
+                //populate data onscreen
+                RedrawMainAdventurePage();
+            }
+            else { Debug.LogWarning("Invalid story (Null) from firstStoryInDict"); }
+        }
+    }
+
+    /// <summary>
+    /// Empty out dictOfStories
+    /// </summary>
+    private void ClearDictionary()
+    {
+        ToolManager.i.toolDataScript.ClearDictOfStories();
+        Debug.LogFormat("[Tol] AdventureUI.cs -> ClearDictionary: dictOfStories EMPTIED{0}", "\n");
+    }
+    #endregion
+
+    #region New Adventure
+    //
+    // - - - New Adventure
+    //
+
     /// <summary>
     /// open new adventure page
     /// </summary>
@@ -225,14 +314,17 @@ public class AdventureUI : MonoBehaviour
         //create new story if none present
         if (storyNew == null)
         { storyNew = new Story(); }
+        else { storyNew.Reset(); }
         //toggle canvases on/off
         newAdventureCanvas.gameObject.SetActive(true);
         masterCanvas.gameObject.SetActive(false);
+        //redraw page
+        RedrawNewAdventurePage();
         //theme
         CreateTheme();
         //auto fill date
         DateTime date = DateTime.Now;
-        adventureDate.text = date.ToString("d MMM yy", CultureInfo.CreateSpecificCulture("en-US"));
+        newDate.text = date.ToString("d MMM yy", CultureInfo.CreateSpecificCulture("en-US"));
     }
 
     /// <summary>
@@ -240,21 +332,12 @@ public class AdventureUI : MonoBehaviour
     /// </summary>
     private void CloseNewAdventure()
     {
-        //reset StoryNew
-        storyNew = new Story();
-        adventureTag.text = "";
-        adventureNotes.text = "";
-        adventureDate.text = "";
-        themeNew1.text = "";
-        themeNew2.text = "";
-        themeNew3.text = "";
-        themeNew4.text = "";
-        themeNew5.text = "";
         //toggle canvases
         masterCanvas.gameObject.SetActive(true);
         newAdventureCanvas.gameObject.SetActive(false);
 
     }
+
 
     /// <summary>
     /// Create a new theme, overwrites any existing theme
@@ -297,79 +380,94 @@ public class AdventureUI : MonoBehaviour
     }
 
     /// <summary>
+    /// Clears out adventure data (excluding Theme data which stays as is)
+    /// </summary>
+    private void ClearNewAdventure()
+    {
+        storyNew.tag = "";
+        storyNew.notes = "";
+        storyNew.date = "";
+        RedrawNewAdventurePage();
+    }
+
+    /// <summary>
     /// Save Adventure (base data)
     /// </summary>
     private void SaveAdventureToDict()
     {
         if (storyNew != null)
         {
-            //update data
-            storyNew.tag = adventureTag.text;
-            storyNew.date = adventureDate.text;
-            storyNew.notes = adventureNotes.text;
-            //Add story to dictionary if not already present
-            if (ToolManager.i.toolDataScript.CheckStoryExists(storyNew) == false)
+            storyNew.tag = newTag.text;
+            storyNew.notes = newNotes.text;
+            storyNew.date = newDate.text;
+            //save only if viable data present
+            if (string.IsNullOrEmpty(storyNew.tag) == false)
             {
-                ToolManager.i.toolDataScript.AddStory(storyNew);
-                Debug.LogFormat("[Tol] AdventureUI.cs -> SaveAdventure: StoryNew \"{0}\" saved to dictionary{1}", storyNew.tag, "\n");
+                //Add story to dictionary if not already present
+                if (ToolManager.i.toolDataScript.CheckStoryExists(storyNew) == false)
+                {
+                    ToolManager.i.toolDataScript.AddStory(storyNew);
+                    Debug.LogFormat("[Tol] AdventureUI.cs -> SaveAdventure: StoryNew \"{0}\" saved to dictionary{1}", storyNew.tag, "\n");
+                }
             }
+            else { Debug.LogWarning("Invalid storyNew.tag (Null or Empty). Story not saved to Dictionary"); }
         }
         else { Debug.LogError("Invalid storyNew (Null)"); }
     }
 
-    /// <summary>
-    /// Write tool data to file
-    /// </summary>
-    private void SaveToFile()
-    {
-        ToolManager.i.toolFileScript.WriteToolData();
-        ToolManager.i.toolFileScript.SaveToolsToFile();
 
-    }
 
-    /// <summary>
-    /// Load tool data from file (done automatically upon loading AdventureMaster)
-    /// </summary>
-    private void LoadFromFile()
-    {
-        LoadAdventures();
-    }
+    #endregion
+
+    #region Utilities
+    //
+    // - - - Utilities
+    //
 
     /// <summary>
-    /// Delete tools file
+    /// Update data for Main Adventure page
     /// </summary>
-    private void DeleteFile()
+    private void RedrawMainAdventurePage(bool isDefault = false)
     {
-        ToolManager.i.toolFileScript.DeleteToolsFile();
-    }
-
-    //subMethod to handle loading adventures and populating main screen with data from first record in dictionary
-    private void LoadAdventures()
-    {
-        //read data from file
-        if (ToolManager.i.toolFileScript.ReadToolsFromFile() == true)
+        if (isDefault == false)
         {
-            //load data into game
-            ToolManager.i.toolFileScript.ReadToolData();
-            //load up first story in dict
-            storyMain = ToolManager.i.toolDataScript.GetFirstStoryInDict();
-            if (storyMain != null)
-            {
-                //populate data onscreen
-                mainTag.text = storyMain.tag;
-                mainDate.text = storyMain.date;
-                mainNotes.text = storyMain.notes;
-                themeMain1.text = storyMain.theme.arrayOfThemes[0].ToString();
-                themeMain2.text = storyMain.theme.arrayOfThemes[4].ToString();
-                themeMain3.text = storyMain.theme.arrayOfThemes[7].ToString();
-                themeMain4.text = storyMain.theme.arrayOfThemes[9].ToString();
-                themeMain5.text = storyMain.theme.arrayOfThemes[10].ToString();
-            }
-            else { Debug.LogWarning("Invalid story (Null) from firstStoryInDict"); }
+            mainTag.text = storyMain.tag;
+            mainNotes.text = storyMain.notes;
+            mainDate.text = storyMain.date;
+            themeMain1.text = storyMain.theme.GetThemePriority(1).ToString();
+            themeMain2.text = storyMain.theme.GetThemePriority(2).ToString();
+            themeMain3.text = storyMain.theme.GetThemePriority(3).ToString();
+            themeMain4.text = storyMain.theme.GetThemePriority(4).ToString();
+            themeMain5.text = storyMain.theme.GetThemePriority(5).ToString();
+        }
+        else
+        {
+            mainTag.text = "";
+            mainNotes.text = "";
+            mainDate.text = "";
+            themeMain1.text = "";
+            themeMain2.text = "";
+            themeMain3.text = "";
+            themeMain4.text = "";
+            themeMain5.text = "";
         }
     }
 
-
+    /// <summary>
+    /// Update data for New Adventure page
+    /// </summary>
+    private void RedrawNewAdventurePage()
+    {
+        newTag.text = storyNew.tag;
+        newNotes.text = storyNew.notes;
+        newDate.text = storyNew.date;
+        themeNew1.text = storyNew.theme.GetThemePriority(1).ToString();
+        themeNew2.text = storyNew.theme.GetThemePriority(2).ToString();
+        themeNew3.text = storyNew.theme.GetThemePriority(3).ToString();
+        themeNew4.text = storyNew.theme.GetThemePriority(4).ToString();
+        themeNew5.text = storyNew.theme.GetThemePriority(5).ToString();
+    }
+    #endregion
 
     //new scripts above here
 }
