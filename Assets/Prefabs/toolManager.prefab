@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4687157622112172}
   - component: {fileID: 114162246166887608}
   - component: {fileID: 114742990141811574}
+  - component: {fileID: 114392733616830400}
+  - component: {fileID: 114805727387746334}
   m_Layer: 0
   m_Name: toolManager
   m_TagString: Untagged
@@ -53,8 +55,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   adventureScript: {fileID: 0}
+  toolDataScript: {fileID: 0}
   adventureUIScript: {fileID: 0}
   toolUIScript: {fileID: 0}
+--- !u!114 &114392733616830400
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1442030075232148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73a792080afdb104abd0a99da598083a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114742990141811574
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -66,9 +80,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b93f37fb7366f6478f88d888ec02328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  listOfAllThemeTypes:
-  - {fileID: 11400000, guid: dea95c7e56766474db3bef6db555e5cb, type: 2}
-  - {fileID: 11400000, guid: 935b16711108c0f428b9c6a96abb6a3a, type: 2}
-  - {fileID: 11400000, guid: 3fdfb820731c3354b911fa1220d45543, type: 2}
-  - {fileID: 11400000, guid: 56992707fceddb845a9f50bdec7f624e, type: 2}
-  - {fileID: 11400000, guid: 5f26bfce576292d4096e7fd43538e962, type: 2}
+--- !u!114 &114805727387746334
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1442030075232148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e063cb7aa0596984f9dfc2ecce0e7bd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

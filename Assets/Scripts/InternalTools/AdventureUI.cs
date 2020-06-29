@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using TMPro;
 using toolsAPI;
 using UnityEngine;
@@ -23,9 +25,11 @@ public class AdventureUI : MonoBehaviour
     #endregion
 
     #region Master
+    [Header("Master")]
     public ToolButtonInteraction newAdventureInteraction;
     public ToolButtonInteraction loadAdventureInteraction;
-    public ToolButtonInteraction saveAdventureInteraction;
+    public ToolButtonInteraction saveToFileInteraction;
+    public ToolButtonInteraction editAdventureInteraction;
     public ToolButtonInteraction removeAdventureInteraction;
     public ToolButtonInteraction showListsInteraction;
     public ToolButtonInteraction addPlotLineInteraction;
@@ -35,8 +39,9 @@ public class AdventureUI : MonoBehaviour
     #endregion
 
     #region New Adventure
-    public ToolButtonInteraction saveInteraction;
-    public ToolButtonInteraction turningPointInteraction;
+    [Header("New Adventure")]
+    public ToolButtonInteraction saveNewInteraction;
+    public ToolButtonInteraction turningPointNewInteraction;
     public ToolButtonInteraction returnNewInteraction;
 
     public TextMeshProUGUI theme1;
@@ -44,6 +49,10 @@ public class AdventureUI : MonoBehaviour
     public TextMeshProUGUI theme3;
     public TextMeshProUGUI theme4;
     public TextMeshProUGUI theme5;
+
+    public TextMeshProUGUI adventureTag;
+    public TextMeshProUGUI adventureNotes;
+    public TextMeshProUGUI adventureDate;
     #endregion
 
     /// <summary>
@@ -73,20 +82,24 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(newAdventureCanvas != null, "Invalid newAdventureCanvas (Null)");
         Debug.Assert(newAdventureInteraction != null, "Invalid newAdventureInteraction (Null)");
         Debug.Assert(loadAdventureInteraction != null, "Invalid loadAdventureInteraction (Null)");
-        Debug.Assert(saveAdventureInteraction != null, "Invalid saveAdventureInteraction (Null)");
+        Debug.Assert(saveToFileInteraction != null, "Invalid saveAdventureInteraction (Null)");
+        Debug.Assert(editAdventureInteraction != null, "Invalid editAdventureInteraction (Null)");
         Debug.Assert(removeAdventureInteraction != null, "Invalid removeAdventureInteraction (Null)");
         Debug.Assert(showListsInteraction != null, "Invalid showListInteraction (Null)");
         Debug.Assert(addPlotLineInteraction != null, "Invalid addPlotLineInteraction (Null)");
         Debug.Assert(removePlotLineInteraction != null, "Invalid removePlotLineInteraction (Null)");
         Debug.Assert(exitInteraction != null, "Invalid ExitInteraction (Null)");
-        Debug.Assert(saveInteraction != null, "Invalid themeInteraction (Null)");
-        Debug.Assert(turningPointInteraction != null, "Invalid turnPointInteraction (Null)");
+        Debug.Assert(saveNewInteraction != null, "Invalid themeInteraction (Null)");
+        Debug.Assert(turningPointNewInteraction != null, "Invalid turnPointInteraction (Null)");
         Debug.Assert(returnNewInteraction != null, "Invalid returnNewInteraction (Null)");
         Debug.Assert(theme1 != null, "Invalid theme1 (Null)");
         Debug.Assert(theme2 != null, "Invalid theme2 (Null)");
         Debug.Assert(theme3 != null, "Invalid theme3 (Null)");
         Debug.Assert(theme4 != null, "Invalid theme4 (Null)");
         Debug.Assert(theme5 != null, "Invalid theme5 (Null)");
+        Debug.Assert(adventureTag != null, "Invalid adventureTag (Null)");
+        Debug.Assert(adventureNotes != null, "Invalid adventureNotes (Null)");
+        Debug.Assert(adventureDate != null, "Invalid adventureDate (Null)");
         //switch off
         adventureCanvas.gameObject.SetActive(false);
         masterCanvas.gameObject.SetActive(true);
@@ -95,14 +108,16 @@ public class AdventureUI : MonoBehaviour
         exitInteraction.SetButton(ToolEventType.CloseAdventureUI);
         newAdventureInteraction.SetButton(ToolEventType.OpenNewAdventure);
         returnNewInteraction.SetButton(ToolEventType.CloseNewAdventure);
-        turningPointInteraction.SetButton(ToolEventType.CreateTurningPoint);
-        saveInteraction.SetButton(ToolEventType.SaveAdventure);
+        turningPointNewInteraction.SetButton(ToolEventType.CreateTurningPoint);
+        saveNewInteraction.SetButton(ToolEventType.SaveAdventureToDict);
+        saveToFileInteraction.SetButton(ToolEventType.SaveDictToFile);
         //listeners
         ToolEvents.i.AddListener(ToolEventType.OpenAdventureUI, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.CloseAdventureUI, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.OpenNewAdventure, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.SaveDictToFile, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.CloseNewAdventure, OnEvent, "AdventureUI");
-        ToolEvents.i.AddListener(ToolEventType.SaveAdventure, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.SaveAdventureToDict, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.CreateTurningPoint, OnEvent, "AdventureUI");
     }
 
@@ -134,8 +149,11 @@ public class AdventureUI : MonoBehaviour
             case ToolEventType.CreateTurningPoint:
                 CreateTurningPoint();
                 break;
-            case ToolEventType.SaveAdventure:
-                SaveAdventure();
+            case ToolEventType.SaveAdventureToDict:
+                SaveAdventureToDict();
+                break;
+            case ToolEventType.SaveDictToFile:
+                SaveToFile();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -176,6 +194,9 @@ public class AdventureUI : MonoBehaviour
         masterCanvas.gameObject.SetActive(false);
         //theme
         CreateTheme();
+        //auto fill date
+        DateTime date = DateTime.Now;
+        adventureDate.text = date.ToString("d MMM yy", CultureInfo.CreateSpecificCulture("en-US"));
     }
 
     /// <summary>
@@ -200,7 +221,8 @@ public class AdventureUI : MonoBehaviour
                 for (int i = 0; i < listOfThemes.Count; i++)
                 {
                     ThemeType themeType = listOfThemes[i];
-
+                    //array
+                    story.theme.arrayOfThemes[i] = themeType;
                     switch (i)
                     {
                         case 0:
@@ -254,9 +276,32 @@ public class AdventureUI : MonoBehaviour
     /// <summary>
     /// Save Adventure (base data)
     /// </summary>
-    private void SaveAdventure()
+    private void SaveAdventureToDict()
     {
+        if (story != null)
+        {
+            //update data
+            story.tag = adventureTag.text;
+            story.date = adventureDate.text;
+            story.notes = adventureNotes.text;
+            //Add story to dictionary if not already present
+            if (ToolManager.i.toolDataScript.CheckStoryExists(story) == false)
+            {
+                ToolManager.i.toolDataScript.AddStory(story);
+                Debug.LogFormat("[Tol] AdventureUI.cs -> SaveAdventure: Story \"{0}\" saved to dictionary{1}", story.tag, "\n");
+            }
+        }
+        else { Debug.LogError("Invalid story (Null)"); }
+    }
 
+    /// <summary>
+    /// Write dictOfStories to file
+    /// </summary>
+    private void SaveToFile()
+    {
+        ToolManager.i.toolFileScript.WriteToolData();
+        ToolManager.i.toolFileScript.SaveToolsToFile();
+        Debug.LogFormat("[Tol] AdventureUI.cs -> SaveToFile: dictOfStories SAVED TO FILE{0}", "\n");
     }
 
 

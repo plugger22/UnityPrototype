@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using toolsAPI;
 
 
 
@@ -9,10 +10,18 @@ using UnityEngine;
 /// </summary>
 public class ToolManager : MonoBehaviour
 {
+    #region Variables
+
+    public Dictionary<string, Story> dictOfStories = new Dictionary<string, Story>();
+
+    #endregion
+
     #region Components
     public static ToolManager i = null;                                 //static instance of toolManager which allows it to be accessed by any other script
 
     [HideInInspector] public AdventureManager adventureScript;
+    [HideInInspector] public ToolDataManager toolDataScript;
+    [HideInInspector] public ToolFileManager toolFileScript;
     //GUI
     [HideInInspector] public AdventureUI adventureUIScript;
     [HideInInspector] public ToolUI toolUIScript;
@@ -32,13 +41,16 @@ public class ToolManager : MonoBehaviour
         }
         //components
         adventureScript = GetComponent<AdventureManager>();
+        toolDataScript = GetComponent<ToolDataManager>();
+        toolFileScript = GetComponent<ToolFileManager>();
         //gui
         adventureUIScript = AdventureUI.Instance();
         toolUIScript = ToolUI.Instance();
         //error Check
-        Debug.Assert(adventureScript != null, "Invalid adventureScript");
-        Debug.Assert(adventureUIScript != null, "Invalid adventureUIScript");
-        Debug.Assert(toolUIScript != null, "Invalid toolUIScript");
+        Debug.Assert(adventureScript != null, "Invalid adventureScript (Null)");
+        Debug.Assert(toolDataScript != null, "Invalid toolDataScript (Null)");
+        Debug.Assert(adventureUIScript != null, "Invalid adventureUIScript (Null)");
+        Debug.Assert(toolUIScript != null, "Invalid toolUIScript (Null)");
 
     }
     #endregion
@@ -57,6 +69,7 @@ public class ToolManager : MonoBehaviour
     private void InitialiseAll()
     {
         toolUIScript.Initialise();
+        toolFileScript.Initialise();
         adventureUIScript.Initialise();
         adventureScript.Initialise();
     }

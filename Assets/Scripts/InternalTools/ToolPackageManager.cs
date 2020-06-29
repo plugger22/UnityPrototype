@@ -12,7 +12,7 @@ namespace toolsAPI
 
     public enum ThemeType { Action, Tension, Social, Mystery, Personal, Count}
 
-
+    
 
     //
     // - - - Data Packages
@@ -24,7 +24,7 @@ namespace toolsAPI
     [System.Serializable]
     public class Story
     {
-        public string tag;
+        public string tag;              //stored in dict under this name (use as a reference)
         public string notes;
         public string date;
         public int numTurningPoints;

@@ -9,14 +9,10 @@ using Random = System.Random;
 /// </summary>
 public class AdventureManager : MonoBehaviour
 {
-    [Tooltip("Contains one of each themeType. Used to generate a theme list")]
-    public List<ThemeType> listOfAllThemeTypes;
-
 
     public void Initialise()
     {
-        Debug.Assert(listOfAllThemeTypes != null, "Invalid listOfAllThemeTypes (Null)");
-        Debug.AssertFormat(listOfAllThemeTypes.Count == 5, "Invalid count for listOfAllThemeTypes (is {0}, should be {1}", listOfAllThemeTypes.Count, 5);
+
     }
 
     /// <summary>
