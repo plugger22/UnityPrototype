@@ -11,7 +11,16 @@ using toolsAPI;
 public class ToolManager : MonoBehaviour
 {
     #region Variables
+    //
+    // - - - Variables
+    //
+    private float mouseWheelInput;                      //used for detecting mouse wheel input in the Update method
+    #endregion
 
+    #region Collections
+    //
+    // - - - Collections
+    //
     public Dictionary<string, Story> dictOfStories = new Dictionary<string, Story>();
 
     #endregion
@@ -22,6 +31,7 @@ public class ToolManager : MonoBehaviour
     [HideInInspector] public AdventureManager adventureScript;
     [HideInInspector] public ToolDataManager toolDataScript;
     [HideInInspector] public ToolFileManager toolFileScript;
+    [HideInInspector] public ToolInput toolInputScript;
     //GUI
     [HideInInspector] public AdventureUI adventureUIScript;
     [HideInInspector] public ToolUI toolUIScript;
@@ -43,6 +53,7 @@ public class ToolManager : MonoBehaviour
         adventureScript = GetComponent<AdventureManager>();
         toolDataScript = GetComponent<ToolDataManager>();
         toolFileScript = GetComponent<ToolFileManager>();
+        toolInputScript = GetComponent<ToolInput>();
         //gui
         adventureUIScript = AdventureUI.Instance();
         toolUIScript = ToolUI.Instance();
@@ -51,7 +62,7 @@ public class ToolManager : MonoBehaviour
         Debug.Assert(toolDataScript != null, "Invalid toolDataScript (Null)");
         Debug.Assert(adventureUIScript != null, "Invalid adventureUIScript (Null)");
         Debug.Assert(toolUIScript != null, "Invalid toolUIScript (Null)");
-
+        Debug.Assert(toolInputScript != null, "Invalid toolInputScript (Null)");
     }
     #endregion
 
@@ -72,6 +83,24 @@ public class ToolManager : MonoBehaviour
         toolFileScript.Initialise();
         adventureUIScript.Initialise();
         adventureScript.Initialise();
+    }
+    #endregion
+
+    #region Update
+    /// <summary>
+    /// Only update in the entire code base -> handles redraws and input
+    /// </summary>
+    private void Update()
+    {
+        mouseWheelInput = 0;
+        //get any mouse wheel input (restricts max value) and pass as a parameter as Input.anyKeyDown won't pick up mouse wheel input)
+        mouseWheelInput += Input.GetAxis("Mouse ScrollWheel");
+
+        //Handle Game Input
+        if (mouseWheelInput != 0)
+        { toolInputScript.ProcessMouseWheelInput(mouseWheelInput); }
+        else if (Input.anyKeyDown == true)
+        { toolInputScript.ProcessKeyInput(); }
     }
     #endregion
 

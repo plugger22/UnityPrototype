@@ -44,6 +44,8 @@ public class ToolUI : MonoBehaviour
         adventureInteraction.SetButton(ToolEventType.OpenAdventureUI);
         //turn on
         menuCanvas.gameObject.SetActive(true);
+        //set Modal State
+        ToolManager.i.toolInputScript.SetModalState(ToolModal.Menu);
     }
 
 

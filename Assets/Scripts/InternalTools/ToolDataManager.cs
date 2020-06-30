@@ -107,5 +107,12 @@ public class ToolDataManager : MonoBehaviour
         return story;
     }
 
+    /// <summary>
+    /// returns a list of stories derived from the dictOfStories
+    /// </summary>
+    /// <returns></returns>
+    public List<Story> GetListOfStories()
+    { return dictOfStories.Values.ToList(); }
+
     //new methods above here
 }

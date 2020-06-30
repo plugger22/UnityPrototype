@@ -11,7 +11,9 @@ namespace toolsAPI
     // - - - Enums
     //
 
+    public enum ToolModal { Menu, Main, New }
     public enum ThemeType { Action, Tension, Social, Mystery, Personal, Count}
+
 
     
 

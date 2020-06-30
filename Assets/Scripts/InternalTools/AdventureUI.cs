@@ -26,6 +26,11 @@ public class AdventureUI : MonoBehaviour
     [HideInInspector] public Story storyMain;
     [HideInInspector] public Story storyNew;
 
+    //Navigation
+    private int mainNavCounter;
+    private int mainNavLimit;
+    private List<Story> listOfStories;
+
     //static reference
     private static AdventureUI adventureUI;
     #endregion
@@ -160,6 +165,8 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.CreateTurningPoint, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.ClearAdventureDictionary, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.ClearNewAdventure, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.NextAdventure, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.PreviousAdventure, OnEvent, "AdventureUI");
     }
     #endregion
 
@@ -208,6 +215,12 @@ public class AdventureUI : MonoBehaviour
             case ToolEventType.ClearNewAdventure:
                 ClearNewAdventure();
                 break;
+            case ToolEventType.NextAdventure:
+                NextAdventure();
+                break;
+            case ToolEventType.PreviousAdventure:
+                PreviousAdventure();
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
@@ -232,6 +245,10 @@ public class AdventureUI : MonoBehaviour
         RedrawMainAdventurePage();
         //load data from dictionary automatically
         LoadAdventures();
+        //Navigation
+        GetListOfStories();
+        //set Modal State
+        ToolManager.i.toolInputScript.SetModalState(ToolModal.Main);
     }
 
 
@@ -242,6 +259,8 @@ public class AdventureUI : MonoBehaviour
     {
         ToolManager.i.toolUIScript.OpenMainMenu();
         adventureCanvas.gameObject.SetActive(false);
+        //set Modal State
+        ToolManager.i.toolInputScript.SetModalState(ToolModal.Menu);
     }
 
 
@@ -301,6 +320,24 @@ public class AdventureUI : MonoBehaviour
         ToolManager.i.toolDataScript.ClearDictOfStories();
         Debug.LogFormat("[Tol] AdventureUI.cs -> ClearDictionary: dictOfStories EMPTIED{0}", "\n");
     }
+
+    /// <summary>
+    /// Show next adventure in list
+    /// </summary>
+    private void NextAdventure()
+    {
+
+    }
+
+    /// <summary>
+    /// Show previous adventure in list
+    /// </summary>
+    private void PreviousAdventure()
+    {
+
+    }
+
+
     #endregion
 
     #region New Adventure
@@ -327,6 +364,8 @@ public class AdventureUI : MonoBehaviour
         //auto fill date
         newDate.text = GetCurrentDateString();
         storyNew.date = GetCurrentDateString();
+        //set Modal State
+        ToolManager.i.toolInputScript.SetModalState(ToolModal.New);
     }
 
     /// <summary>
@@ -337,6 +376,8 @@ public class AdventureUI : MonoBehaviour
         //toggle canvases
         masterCanvas.gameObject.SetActive(true);
         newAdventureCanvas.gameObject.SetActive(false);
+        //set Modal State
+        ToolManager.i.toolInputScript.SetModalState(ToolModal.Main);
     }
 
 
@@ -410,6 +451,8 @@ public class AdventureUI : MonoBehaviour
                 //add story to dict, overwrite existing data if already present
                 ToolManager.i.toolDataScript.AddStory(storyNew);
                 Debug.LogFormat("[Tol] AdventureUI.cs -> SaveAdventure: StoryNew \"{0}\" saved to dictionary{1}", storyNew.tag, "\n");
+                //update navigation
+                GetListOfStories();
             }
             else { Debug.LogWarning("Invalid storyNew.tag (Null or Empty). Story not saved to Dictionary"); }
         }
@@ -477,6 +520,22 @@ public class AdventureUI : MonoBehaviour
     {
         DateTime date = DateTime.Now;
         return date.ToString("d MMM yy", CultureInfo.CreateSpecificCulture("en-US"));
+    }
+
+    /// <summary>
+    /// Generate list used for navigation
+    /// </summary>
+    private void GetListOfStories()
+    {
+        //Generate navigation list
+        listOfStories = ToolManager.i.toolDataScript.GetListOfStories();
+        if (listOfStories == null) { Debug.LogError("Invalid listOfStories (Null)"); }
+        else
+        {
+            //update navigation counters
+            mainNavCounter = 0;
+            mainNavLimit = listOfStories.Count;
+        }
     }
 
     #endregion
