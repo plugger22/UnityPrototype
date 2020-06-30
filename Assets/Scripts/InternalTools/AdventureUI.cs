@@ -21,6 +21,7 @@ public class AdventureUI : MonoBehaviour
     public Canvas adventureCanvas;
     public Canvas masterCanvas;
     public Canvas newAdventureCanvas;
+    public Canvas listsCanvas;
 
     //Story that is current
     [HideInInspector] public Story storyMain;
@@ -77,6 +78,22 @@ public class AdventureUI : MonoBehaviour
     public TMP_InputField newTag;
     public TMP_InputField newNotes;
     public TMP_InputField newDate;
+
+    //collections
+    public TMP_InputField[] arrayOfNewPlotLines;
+    public TMP_InputField[] arrayOfNewCharacters;
+    #endregion
+
+    #region Lists
+    [Header("Lists")]
+    public ToolButtonInteraction returnListsInteraction;
+    public TextMeshProUGUI listAdventureName;
+    //collections
+    public ToolButtonInteraction[] arrayOfPlotLineInteractions;
+    public ToolButtonInteraction[] arrayOfCharacterInteractions;
+    public TextMeshProUGUI[] arrayOfPlotLineTexts;
+    public TextMeshProUGUI[] arrayOfCharacterTexts;
+
     #endregion
 
     #region static Instance
@@ -106,6 +123,7 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(adventureCanvas != null, "Invalid adventureCanvas (Null)");
         Debug.Assert(masterCanvas != null, "Invalid masterCanvas (Null)");
         Debug.Assert(newAdventureCanvas != null, "Invalid newAdventureCanvas (Null)");
+        Debug.Assert(listsCanvas != null, "Invalid listsCanvas (Null)");
         Debug.Assert(newAdventureInteraction != null, "Invalid newAdventureInteraction (Null)");
         Debug.Assert(saveToFileInteraction != null, "Invalid saveAdventureInteraction (Null)");
         Debug.Assert(loadFromFileInteraction != null, "Invalid loadAdventureInteraction (Null)");
@@ -137,10 +155,23 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(newTag != null, "Invalid adventureTag (Null)");
         Debug.Assert(newNotes != null, "Invalid adventureNotes (Null)");
         Debug.Assert(newDate != null, "Invalid adventureDate (Null)");
+        for (int i = 0; i < arrayOfNewPlotLines.Length; i++)
+        {
+            if (arrayOfNewPlotLines[i] == null) { Debug.LogErrorFormat("Invalid arrayOfNewPlotLines[{0}] (Null)", i); }
+            if (arrayOfNewCharacters[i] == null) { Debug.LogErrorFormat("Invalid arrayOfNewCharacters[{0}] (Null)", i); }
+        }
+        //lists
+        Debug.Assert(returnListsInteraction != null, "Invalid returnListsInteraction (Null)");
+        Debug.Assert(listAdventureName != null, "Invalid listAdventureName (Null)");
+        Debug.AssertFormat(arrayOfPlotLineInteractions.Length == 25, "Invalid arrayOfPlotLineInteractions.Length (should be 25, is {0})", arrayOfPlotLineInteractions.Length);
+        Debug.AssertFormat(arrayOfCharacterInteractions.Length == 25, "Invalid arrayOfCharacterInteractions.Length (should be 25, is {0})", arrayOfCharacterInteractions.Length);
+        Debug.AssertFormat(arrayOfPlotLineTexts.Length == 25, "Invalid arrayOfPlotLineTexts.Length (should be 25, is {0})", arrayOfPlotLineTexts.Length);
+        Debug.AssertFormat(arrayOfCharacterTexts.Length == 25, "Invalid arrayOfCharacterTexts.Length (should be 25, is {0})", arrayOfCharacterTexts.Length);
         //switch off
         adventureCanvas.gameObject.SetActive(false);
         masterCanvas.gameObject.SetActive(true);
         newAdventureCanvas.gameObject.SetActive(false);
+        listsCanvas.gameObject.SetActive(false);
         //assign button events
         exitInteraction.SetButton(ToolEventType.CloseAdventureUI);
         newAdventureInteraction.SetButton(ToolEventType.OpenNewAdventure);
@@ -152,6 +183,14 @@ public class AdventureUI : MonoBehaviour
         deleteFileInteraction.SetButton(ToolEventType.DeleteToolsFile);
         clearDictionaryInteraction.SetButton(ToolEventType.ClearAdventureDictionary);
         clearNewInteraction.SetButton(ToolEventType.ClearNewAdventure);
+        showListsInteraction.SetButton(ToolEventType.OpenAdventureLists);
+        returnListsInteraction.SetButton(ToolEventType.CloseAdventureLists);
+        //list buttonInteractions
+        for (int i = 0; i < arrayOfPlotLineInteractions.Length; i++)
+        {
+            arrayOfPlotLineInteractions[i].SetButton(ToolEventType.ShowPlotLineDetails, i);
+            arrayOfCharacterInteractions[i].SetButton(ToolEventType.ShowCharacterDetails, i);
+        }
 
         //listeners
         ToolEvents.i.AddListener(ToolEventType.OpenAdventureUI, OnEvent, "AdventureUI");
@@ -167,6 +206,10 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.ClearNewAdventure, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.NextAdventure, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.PreviousAdventure, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.OpenAdventureLists, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.CloseAdventureLists, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.ShowPlotLineDetails, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.ShowCharacterDetails, OnEvent, "AdventureUI");
     }
     #endregion
 
@@ -220,6 +263,18 @@ public class AdventureUI : MonoBehaviour
                 break;
             case ToolEventType.PreviousAdventure:
                 PreviousAdventure();
+                break;
+            case ToolEventType.OpenAdventureLists:
+                OpenLists();
+                break;
+            case ToolEventType.CloseAdventureLists:
+                CloseLists();
+                break;
+            case ToolEventType.ShowPlotLineDetails:
+                ShowPlotLineDetails((int)Param);
+                break;
+            case ToolEventType.ShowCharacterDetails:
+                ShowCharacterDetails((int)Param);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -447,6 +502,12 @@ public class AdventureUI : MonoBehaviour
             storyNew.tag = newTag.text;
             storyNew.notes = newNotes.text;
             storyNew.date = newDate.text;
+            //plotlines
+            for (int i = 0; i < arrayOfNewPlotLines.Length; i++)
+            {
+                if (string.IsNullOrEmpty(arrayOfNewPlotLines[i].text) == false) { storyNew.lists.arrayOfPlotLines[i].tag = arrayOfNewPlotLines[i].text; }
+                if (string.IsNullOrEmpty(arrayOfNewCharacters[i].text) == false) { storyNew.lists.arrayOfCharacters[i].tag = arrayOfNewCharacters[i].text; }
+            }
             //save only if viable data present
             if (string.IsNullOrEmpty(storyNew.tag) == false)
             {
@@ -467,6 +528,60 @@ public class AdventureUI : MonoBehaviour
 
 
     #endregion
+
+    #region Lists
+    //
+    // - - - Lists
+    //
+
+    /// <summary>
+    /// Open lists of Plotlines and Characters page
+    /// </summary>
+    private void OpenLists()
+    {
+        //toggle canvases on/off
+        listsCanvas.gameObject.SetActive(true);
+        masterCanvas.gameObject.SetActive(false);
+        //populate lists
+        UpdateLists();
+        //adventure name
+        listAdventureName.text = string.Format("{0} {1}", storyMain.tag, storyMain.date);
+        //set Modal State
+        ToolManager.i.toolInputScript.SetModalState(ToolModal.Lists);
+    }
+
+    /// <summary>
+    /// close lists of PlotLines and Characters
+    /// </summary>
+    private void CloseLists()
+    {
+        //toggle canvases on/off
+        listsCanvas.gameObject.SetActive(false);
+        masterCanvas.gameObject.SetActive(true);
+        //set Modal State
+        ToolManager.i.toolInputScript.SetModalState(ToolModal.Main);
+    }
+
+    /// <summary>
+    /// Show details of specific plotline
+    /// </summary>
+    /// <param name="plotLine"></param>
+    private void ShowPlotLineDetails(int index)
+    {
+
+    }
+
+    /// <summary>
+    /// Show details of specific character
+    /// </summary>
+    /// <param name="index"></param>
+    private void ShowCharacterDetails(int index)
+    {
+
+    }
+
+    #endregion
+
 
     #region Utilities
     //
@@ -555,6 +670,52 @@ public class AdventureUI : MonoBehaviour
             RedrawMainAdventurePage();
         }
         else { Debug.LogWarningFormat("Invalid story (Null) from listOfStories[{0}]", mainNavCounter); }
+    }
+
+    /// <summary>
+    /// update lists of Plotlines and Characters
+    /// </summary>
+    private void UpdateLists()
+    {
+        for (int i = 0; i < arrayOfPlotLineTexts.Length; i++)
+        {
+            //Plotlines
+            PlotLine plotLine = storyMain.lists.arrayOfPlotLines[i];
+            if (plotLine != null)
+            {
+                switch (plotLine.status)
+                {
+                    case StoryStatus.Data:
+                        arrayOfPlotLineTexts[i].text = plotLine.tag;
+                        break;
+                    case StoryStatus.Logical:
+                        arrayOfPlotLineTexts[i].text = "Choose Most Logical";
+                        break;
+                    case StoryStatus.New:
+                        arrayOfPlotLineTexts[i].text = "New Plotline";
+                        break;
+                }
+            }
+            else { Debug.LogErrorFormat("Invalid plotLine (Null) for storyMain.lists.arrayOfPlotLines[{0}]", i); }
+            //Characters
+            Character character = storyMain.lists.arrayOfCharacters[i];
+            if (character != null)
+            {
+                switch (character.status)
+                {
+                    case StoryStatus.Data:
+                        arrayOfCharacterTexts[i].text = character.tag;
+                        break;
+                    case StoryStatus.Logical:
+                        arrayOfCharacterTexts[i].text = "Most Logical";
+                        break;
+                    case StoryStatus.New:
+                        arrayOfCharacterTexts[i].text = "New Character";
+                        break;
+                }
+            }
+            else { Debug.LogErrorFormat("Invalid character (Null) for storyMain.lists.arrayOfCharacters[{0}]", i); }
+        }
     }
 
     #endregion

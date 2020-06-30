@@ -21,8 +21,12 @@ public enum ToolEventType
     //Adventure New
     CloseNewAdventure,
     SaveAdventureToDict,
-    ClearNewAdventure
-
+    ClearNewAdventure,
+    //Lists
+    OpenAdventureLists,
+    CloseAdventureLists,
+    ShowPlotLineDetails,
+    ShowCharacterDetails
 
 }
 

@@ -9,7 +9,7 @@ namespace toolsAPI
     // - - - Enums
     //
 
-    public enum ToolModal { Menu, Main, New }
+    public enum ToolModal { Menu, Main, New, Lists }
     public enum ThemeType { Action, Tension, Social, Mystery, Personal, Count }
     public enum StoryStatus { New, Logical, Data}
 
@@ -19,6 +19,7 @@ namespace toolsAPI
     // - - - Data Packages
     //
 
+    #region Story Master
     /// <summary>
     /// Master story class
     /// </summary>
@@ -64,6 +65,7 @@ namespace toolsAPI
             lists.Reset();
         }
     }
+    #endregion
 
     #region ThemeData
     /// <summary>
@@ -124,6 +126,7 @@ namespace toolsAPI
         public Character[] arrayOfCharacters;
         private int size = 25;
 
+        #region Default Constructor (create lists)
         /// <summary>
         /// default constructor
         /// </summary>
@@ -204,6 +207,7 @@ namespace toolsAPI
                 }
             }
         }
+        #endregion
 
         /// <summary>
         /// Copy constructor
