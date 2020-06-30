@@ -134,6 +134,39 @@ namespace toolsAPI
         {
             arrayOfPlotLines = new PlotLine[size];
             arrayOfCharacters = new Character[size];
+            PopulateLists();
+        }
+        #endregion
+
+        /// <summary>
+        /// Copy constructor
+        /// </summary>
+        /// <param name="data"></param>
+        public StoryList(StoryList data)
+        {
+            //initialise if need be (don't need data as will be copied over)
+            if (arrayOfPlotLines == null) { arrayOfPlotLines = new PlotLine[size]; }
+            if (arrayOfCharacters == null) { arrayOfCharacters = new Character[size]; }
+            //copy data
+            data.arrayOfPlotLines.CopyTo(arrayOfPlotLines, 0);
+            data.arrayOfCharacters.CopyTo(arrayOfCharacters, 0);
+        }
+
+        /// <summary>
+        /// Reset arrays
+        /// </summary>
+        public void Reset()
+        {
+            /*Array.Clear(arrayOfPlotLines, 0, arrayOfPlotLines.Length);
+            Array.Clear(arrayOfCharacters, 0, arrayOfCharacters.Length);*/
+            PopulateLists();
+        }
+
+        /// <summary>
+        /// Populate lists with default data
+        /// </summary>
+        private void PopulateLists()
+        {
             //populate arrays
             for (int i = 0; i < size; i++)
             {
@@ -206,30 +239,6 @@ namespace toolsAPI
                     default: Debug.LogWarningFormat("Unrecognised counter \"{0}\" for Characters", i); break;
                 }
             }
-        }
-        #endregion
-
-        /// <summary>
-        /// Copy constructor
-        /// </summary>
-        /// <param name="data"></param>
-        public StoryList(StoryList data)
-        {
-            //initialise if need be (don't need data as will be copied over)
-            if (arrayOfPlotLines == null) { arrayOfPlotLines = new PlotLine[size]; }
-            if (arrayOfCharacters == null) { arrayOfCharacters = new Character[size]; }
-            //copy data
-            data.arrayOfPlotLines.CopyTo(arrayOfPlotLines, 0);
-            data.arrayOfCharacters.CopyTo(arrayOfCharacters, 0);
-        }
-
-        /// <summary>
-        /// Reset arrays
-        /// </summary>
-        public void Reset()
-        {
-            Array.Clear(arrayOfPlotLines, 0, arrayOfPlotLines.Length);
-            Array.Clear(arrayOfCharacters, 0, arrayOfCharacters.Length);
         }
     }
     #endregion

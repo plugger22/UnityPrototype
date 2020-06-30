@@ -58,6 +58,8 @@ MonoBehaviour:
   adventureScript: {fileID: 0}
   toolDataScript: {fileID: 0}
   toolFileScript: {fileID: 0}
+  toolInputScript: {fileID: 0}
+  colourScript: {fileID: 0}
   adventureUIScript: {fileID: 0}
   toolUIScript: {fileID: 0}
 --- !u!114 &114181834597934474

@@ -7,6 +7,8 @@ using UnityEngine;
 public enum ToolEventType
 {
     None,
+    //Tools
+    QuitTools,
     //Adventure Main
     OpenAdventureUI,
     CloseAdventureUI,
@@ -26,7 +28,9 @@ public enum ToolEventType
     OpenAdventureLists,
     CloseAdventureLists,
     ShowPlotLineDetails,
-    ShowCharacterDetails
+    ShowCharacterDetails,
+    NextLists,
+    PreviousLists
 
 }
 

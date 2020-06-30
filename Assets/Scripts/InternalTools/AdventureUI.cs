@@ -210,6 +210,8 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.CloseAdventureLists, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.ShowPlotLineDetails, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.ShowCharacterDetails, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.NextLists, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.PreviousLists, OnEvent, "AdventureUI");
     }
     #endregion
 
@@ -276,6 +278,12 @@ public class AdventureUI : MonoBehaviour
             case ToolEventType.ShowCharacterDetails:
                 ShowCharacterDetails((int)Param);
                 break;
+            case ToolEventType.NextLists:
+                NextLists();
+                break;
+            case ToolEventType.PreviousLists:
+                PreviousLists();
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
@@ -294,7 +302,7 @@ public class AdventureUI : MonoBehaviour
     private void OpenAdventureUI()
     {
         //turn on
-        ToolManager.i.toolUIScript.CloseMainMenu();
+        ToolManager.i.toolUIScript.CloseTools();
         adventureCanvas.gameObject.SetActive(true);
         //redraw page
         RedrawMainAdventurePage();
@@ -314,7 +322,7 @@ public class AdventureUI : MonoBehaviour
     /// </summary>
     private void CloseAdventureUI()
     {
-        ToolManager.i.toolUIScript.OpenMainMenu();
+        ToolManager.i.toolUIScript.OpenTools();
         adventureCanvas.gameObject.SetActive(false);
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.Menu);
@@ -505,8 +513,16 @@ public class AdventureUI : MonoBehaviour
             //plotlines
             for (int i = 0; i < arrayOfNewPlotLines.Length; i++)
             {
-                if (string.IsNullOrEmpty(arrayOfNewPlotLines[i].text) == false) { storyNew.lists.arrayOfPlotLines[i].tag = arrayOfNewPlotLines[i].text; }
-                if (string.IsNullOrEmpty(arrayOfNewCharacters[i].text) == false) { storyNew.lists.arrayOfCharacters[i].tag = arrayOfNewCharacters[i].text; }
+                if (string.IsNullOrEmpty(arrayOfNewPlotLines[i].text) == false)
+                {
+                    storyNew.lists.arrayOfPlotLines[i].tag = arrayOfNewPlotLines[i].text;
+                    storyNew.lists.arrayOfPlotLines[i].status = StoryStatus.Data;
+                }
+                if (string.IsNullOrEmpty(arrayOfNewCharacters[i].text) == false)
+                {
+                    storyNew.lists.arrayOfCharacters[i].tag = arrayOfNewCharacters[i].text;
+                    storyNew.lists.arrayOfCharacters[i].status = StoryStatus.Data;
+                }
             }
             //save only if viable data present
             if (string.IsNullOrEmpty(storyNew.tag) == false)
@@ -543,9 +559,7 @@ public class AdventureUI : MonoBehaviour
         listsCanvas.gameObject.SetActive(true);
         masterCanvas.gameObject.SetActive(false);
         //populate lists
-        UpdateLists();
-        //adventure name
-        listAdventureName.text = string.Format("{0} {1}", storyMain.tag, storyMain.date);
+        DisplayLists();
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.Lists);
     }
@@ -580,8 +594,33 @@ public class AdventureUI : MonoBehaviour
 
     }
 
-    #endregion
+    /// <summary>
+    /// Show lists for the next adventure in the list
+    /// </summary>
+    private void NextLists()
+    {
+        mainNavCounter++;
+        //rollover check
+        if (mainNavCounter == mainNavLimit)
+        { mainNavCounter = 0; }
+        //show lists
+        DisplayLists();
+    }
 
+    /// <summary>
+    /// Show lists for the previous adventure in the list
+    /// </summary>
+    private void PreviousLists()
+    {
+        mainNavCounter--;
+        //rollover check
+        if (mainNavCounter < 0)
+        { mainNavCounter = mainNavLimit - 1; }
+        //show story
+        DisplayLists();
+    }
+
+    #endregion
 
     #region Utilities
     //
@@ -673,50 +712,59 @@ public class AdventureUI : MonoBehaviour
     }
 
     /// <summary>
-    /// update lists of Plotlines and Characters
+    /// Display lists of Plotlines and Characters on Lists Page
     /// </summary>
-    private void UpdateLists()
+    private void DisplayLists()
     {
-        for (int i = 0; i < arrayOfPlotLineTexts.Length; i++)
+        storyMain = listOfStories[mainNavCounter];
+        if (storyMain != null)
         {
-            //Plotlines
-            PlotLine plotLine = storyMain.lists.arrayOfPlotLines[i];
-            if (plotLine != null)
+            //adventure name
+            listAdventureName.text = string.Format("{0} {1}", storyMain.tag, storyMain.date);
+            string fade = "<alpha=#88>";
+            for (int i = 0; i < arrayOfPlotLineTexts.Length; i++)
             {
-                switch (plotLine.status)
+                //Plotlines
+                PlotLine plotLine = storyMain.lists.arrayOfPlotLines[i];
+                if (plotLine != null)
                 {
-                    case StoryStatus.Data:
-                        arrayOfPlotLineTexts[i].text = plotLine.tag;
-                        break;
-                    case StoryStatus.Logical:
-                        arrayOfPlotLineTexts[i].text = "Choose Most Logical";
-                        break;
-                    case StoryStatus.New:
-                        arrayOfPlotLineTexts[i].text = "New Plotline";
-                        break;
+                    switch (plotLine.status)
+                    {
+                        case StoryStatus.Data:
+                            arrayOfPlotLineTexts[i].text = plotLine.tag;
+                            break;
+                        case StoryStatus.Logical:
+                            arrayOfPlotLineTexts[i].text = string.Format("{0}Choose Most Logical", fade);
+                            break;
+                        case StoryStatus.New:
+                            arrayOfPlotLineTexts[i].text = string.Format("{0}New Plotline", fade);
+                            break;
+                    }
                 }
-            }
-            else { Debug.LogErrorFormat("Invalid plotLine (Null) for storyMain.lists.arrayOfPlotLines[{0}]", i); }
-            //Characters
-            Character character = storyMain.lists.arrayOfCharacters[i];
-            if (character != null)
-            {
-                switch (character.status)
+                else { Debug.LogErrorFormat("Invalid plotLine (Null) for storyMain.lists.arrayOfPlotLines[{0}]", i); }
+                //Characters
+                Character character = storyMain.lists.arrayOfCharacters[i];
+                if (character != null)
                 {
-                    case StoryStatus.Data:
-                        arrayOfCharacterTexts[i].text = character.tag;
-                        break;
-                    case StoryStatus.Logical:
-                        arrayOfCharacterTexts[i].text = "Most Logical";
-                        break;
-                    case StoryStatus.New:
-                        arrayOfCharacterTexts[i].text = "New Character";
-                        break;
+                    switch (character.status)
+                    {
+                        case StoryStatus.Data:
+                            arrayOfCharacterTexts[i].text = character.tag;
+                            break;
+                        case StoryStatus.Logical:
+                            arrayOfCharacterTexts[i].text = string.Format("{0}Most Logical", fade);
+                            break;
+                        case StoryStatus.New:
+                            arrayOfCharacterTexts[i].text = string.Format("{0}New Character", fade);
+                            break;
+                    }
                 }
+                else { Debug.LogErrorFormat("Invalid character (Null) for storyMain.lists.arrayOfCharacters[{0}]", i); }
             }
-            else { Debug.LogErrorFormat("Invalid character (Null) for storyMain.lists.arrayOfCharacters[{0}]", i); }
         }
+        else { Debug.LogErrorFormat("Invalid storyMain (Null) for listOfStories[{0}]", mainNavCounter); }
     }
+
 
     #endregion
 
