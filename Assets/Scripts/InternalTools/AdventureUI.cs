@@ -247,6 +247,8 @@ public class AdventureUI : MonoBehaviour
         LoadAdventures();
         //Navigation
         GetListOfStories();
+        //load up first story
+        DisplayStoryMain();
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.Main);
     }
@@ -301,14 +303,6 @@ public class AdventureUI : MonoBehaviour
         {
             //load data into game
             ToolManager.i.toolFileScript.ReadToolData();
-            //load up first story in dict
-            storyMain = ToolManager.i.toolDataScript.GetFirstStoryInDict();
-            if (storyMain != null)
-            {
-                //populate data onscreen
-                RedrawMainAdventurePage();
-            }
-            else { Debug.LogWarning("Invalid story (Null) from firstStoryInDict"); }
         }
     }
 
@@ -326,7 +320,13 @@ public class AdventureUI : MonoBehaviour
     /// </summary>
     private void NextAdventure()
     {
-
+        mainNavCounter++;
+        //rollover check
+        if (mainNavCounter == mainNavLimit)
+        { mainNavCounter = 0; }
+        //show story
+        DisplayStoryMain();
+        
     }
 
     /// <summary>
@@ -334,7 +334,12 @@ public class AdventureUI : MonoBehaviour
     /// </summary>
     private void PreviousAdventure()
     {
-
+        mainNavCounter--;
+        //rollover check
+        if (mainNavCounter < 0)
+        { mainNavCounter = mainNavLimit - 1; }
+        //show story
+        DisplayStoryMain();
     }
 
 
@@ -536,6 +541,20 @@ public class AdventureUI : MonoBehaviour
             mainNavCounter = 0;
             mainNavLimit = listOfStories.Count;
         }
+    }
+
+    /// <summary>
+    /// displays a story on Main Adventure page
+    /// </summary>
+    private void DisplayStoryMain()
+    {
+        storyMain = listOfStories[mainNavCounter];
+        if (storyMain != null)
+        {
+            //populate data onscreen
+            RedrawMainAdventurePage();
+        }
+        else { Debug.LogWarningFormat("Invalid story (Null) from listOfStories[{0}]", mainNavCounter); }
     }
 
     #endregion
