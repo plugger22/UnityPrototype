@@ -238,6 +238,7 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.NextLists, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.PreviousLists, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.EditListItem, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.SaveListDetails, OnEvent, "AdventureUI");
     }
     #endregion
 
@@ -346,6 +347,7 @@ public class AdventureUI : MonoBehaviour
         DisplayStoryMain();
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.Main);
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Read);
     }
 
 
@@ -594,6 +596,7 @@ public class AdventureUI : MonoBehaviour
         DisplayLists();
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.Lists);
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Read);
         //toggle off input fields
         ToggleListFields(false);
         listItemStatus = ListItemStatus.None;
@@ -611,6 +614,7 @@ public class AdventureUI : MonoBehaviour
         DisplayStoryMain();
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.Main);
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Read);
     }
 
     /// <summary>
@@ -621,6 +625,7 @@ public class AdventureUI : MonoBehaviour
     {
         ToggleListFields(false);
         DisplayListItem(index, true);
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Read);
     }
 
     /// <summary>
@@ -631,6 +636,7 @@ public class AdventureUI : MonoBehaviour
     {
         ToggleListFields(false);
         DisplayListItem(index, false);
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Read);
     }
 
 
@@ -641,6 +647,7 @@ public class AdventureUI : MonoBehaviour
     {
         ToggleListFields(true);
         SetListInputFields();
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Edit);
     }
 
 
@@ -649,7 +656,10 @@ public class AdventureUI : MonoBehaviour
     /// </summary>
     private void SaveListDetails()
     {
+        SaveListInput();
         ToggleListFields(false);
+        DisplayLists();
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Read);
     }
 
     /// <summary>
@@ -911,6 +921,49 @@ public class AdventureUI : MonoBehaviour
                     listNameInput.text = character.tag;
                     listCreatedInput.text = character.dataCreated;
                     listMeInput.text = character.dataMe;
+                }
+                else { Debug.LogErrorFormat("Invalid character (Null) for arrayOfCharacters[{0}]", currentListIndex); }
+                break;
+            default: Debug.LogWarningFormat("Unrecognised listItemStatus \"{0}\"", listItemStatus); break;
+        }
+    }
+
+    /// <summary>
+    /// Save input data (PlotLine or Character after Editing)
+    /// </summary>
+    private void SaveListInput()
+    {
+        switch (listItemStatus)
+        {
+            case ListItemStatus.PlotLine:
+                PlotLine plotLine = storyMain.lists.arrayOfPlotLines[currentListIndex];
+                if (plotLine != null)
+                {
+                    //name must be valid in order to store data
+                    if (String.IsNullOrEmpty(listNameInput.text) == false)
+                    {
+                        plotLine.tag = listNameInput.text;
+                        plotLine.dataCreated = listCreatedInput.text;
+                        plotLine.dataMe = listMeInput.text;
+                        plotLine.status = StoryStatus.Data;
+                    }
+                    else { Debug.LogWarning("Invalid plotLine.tag (Null or Empty) -> Data NOT SAVED"); }
+                }
+                else { Debug.LogErrorFormat("Invalid plotLine (Null) for arrayOfPlotLines[{0}]", currentListIndex); }
+                break;
+            case ListItemStatus.Character:
+                Character character = storyMain.lists.arrayOfCharacters[currentListIndex];
+                if (character != null)
+                {
+                    //name must be valid in order to store data
+                    if (string.IsNullOrEmpty(listNameInput.text) == false)
+                    {
+                        character.tag = listNameInput.text;
+                        character.dataCreated = listCreatedInput.text;
+                        character.dataMe = listMeInput.text;
+                        character.status = StoryStatus.Data;
+                    }
+                    else { Debug.LogWarning("Invalid character.tag (Null or Empty) -> Data NOT SAVED"); }
                 }
                 else { Debug.LogErrorFormat("Invalid character (Null) for arrayOfCharacters[{0}]", currentListIndex); }
                 break;

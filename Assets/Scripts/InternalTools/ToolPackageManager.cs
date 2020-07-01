@@ -10,6 +10,7 @@ namespace toolsAPI
     //
 
     public enum ToolModal { Menu, Main, New, Lists }
+    public enum ToolModalType { Read, Edit}
     public enum ThemeType { Action, Tension, Social, Mystery, Personal, Count }
     public enum StoryStatus { New, Logical, Data}
     public enum ListItemStatus { None, PlotLine, Character}    //what's currently selected on the Aventure/list page

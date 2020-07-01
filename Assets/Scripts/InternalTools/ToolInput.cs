@@ -9,6 +9,7 @@ public class ToolInput : MonoBehaviour
 {
 
     private ToolModal _modalState;
+    private ToolModalType _modalType;
 
     #region properties
     //needs to be updated whenever changed
@@ -21,12 +22,28 @@ public class ToolInput : MonoBehaviour
             Debug.LogFormat("[Inp] ToolInput: ModalState now {0}{1}", _modalState, "\n");
         }
     }
+
+    /// <summary>
+    /// Any ToolModal can be in one of these possible subStates
+    /// </summary>
+    public ToolModalType ModalType
+    {
+        get { return _modalType; }
+        private set
+        {
+            _modalType = value;
+            Debug.LogFormat("[Inp] ToolInput: ModalType now {0}{1}", _modalType, "\n");
+        }
+    }
     #endregion
 
     #region SetModalState
 
     public void SetModalState(ToolModal state)
     { _modalState = state; }
+
+    public void SetModalType(ToolModalType modalType)
+    { _modalType = modalType; }
 
     #endregion
 
@@ -41,28 +58,42 @@ public class ToolInput : MonoBehaviour
         switch (_modalState)
         {
             case ToolModal.Main:
-                if (Input.GetButtonDown("Horizontal"))
                 {
-                    //right / left arrows
-                    x_axis = Input.GetAxisRaw("Horizontal");
-                    if (x_axis > 0)
-                    { ToolEvents.i.PostNotification(ToolEventType.NextAdventure, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal"); }
-                    else if (x_axis < 0)
-                    { ToolEvents.i.PostNotification(ToolEventType.PreviousAdventure, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal"); }
+                    switch (_modalType)
+                    {
+                        case ToolModalType.Read:
+                            if (Input.GetButtonDown("Horizontal"))
+                            {
+                                //right / left arrows
+                                x_axis = Input.GetAxisRaw("Horizontal");
+                                if (x_axis > 0)
+                                { ToolEvents.i.PostNotification(ToolEventType.NextAdventure, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal"); }
+                                else if (x_axis < 0)
+                                { ToolEvents.i.PostNotification(ToolEventType.PreviousAdventure, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal"); }
+                            }
+                            break;
+                    }
                 }
                 break;
             case ToolModal.New:
 
                 break;
             case ToolModal.Lists:
-                if (Input.GetButtonDown("Horizontal"))
                 {
-                    //right / left arrows
-                    x_axis = Input.GetAxisRaw("Horizontal");
-                    if (x_axis > 0)
-                    { ToolEvents.i.PostNotification(ToolEventType.NextLists, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal"); }
-                    else if (x_axis < 0)
-                    { ToolEvents.i.PostNotification(ToolEventType.PreviousLists, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal"); }
+                    switch (_modalType)
+                    {
+                        case ToolModalType.Read:
+                            if (Input.GetButtonDown("Horizontal"))
+                            {
+                                //right / left arrows
+                                x_axis = Input.GetAxisRaw("Horizontal");
+                                if (x_axis > 0)
+                                { ToolEvents.i.PostNotification(ToolEventType.NextLists, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal"); }
+                                else if (x_axis < 0)
+                                { ToolEvents.i.PostNotification(ToolEventType.PreviousLists, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal"); }
+                            }
+                            break;
+                    }
                 }
                 break;
         }

@@ -6934,6 +6934,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1836605966777368, guid: 6488b4374b9ac6046936fb0585108cca, type: 2}
+      propertyPath: m_Name
+      value: option1
+      objectReference: {fileID: 0}
     - target: {fileID: 114991719782261012, guid: 6488b4374b9ac6046936fb0585108cca,
         type: 2}
       propertyPath: m_havePropertiesChanged
@@ -6944,23 +6948,20 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1836605966777368, guid: 6488b4374b9ac6046936fb0585108cca, type: 2}
-      propertyPath: m_Name
-      value: option1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114991719782261012, guid: 6488b4374b9ac6046936fb0585108cca,
+    - target: {fileID: 224676796181768114, guid: 6488b4374b9ac6046936fb0585108cca,
         type: 2}
-      propertyPath: m_text
-      value: Character sample Text
+      propertyPath: m_LocalScale.x
+      value: 0.99999565
       objectReference: {fileID: 0}
-    - target: {fileID: 114991719782261012, guid: 6488b4374b9ac6046936fb0585108cca,
+    - target: {fileID: 224676796181768114, guid: 6488b4374b9ac6046936fb0585108cca,
         type: 2}
-      propertyPath: m_textInfo.characterCount
-      value: 21
+      propertyPath: m_LocalScale.y
+      value: 0.99999565
       objectReference: {fileID: 0}
-    - target: {fileID: 1779306172955206, guid: 6488b4374b9ac6046936fb0585108cca, type: 2}
-      propertyPath: m_Name
-      value: Text1
+    - target: {fileID: 224676796181768114, guid: 6488b4374b9ac6046936fb0585108cca,
+        type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0.99999565
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6488b4374b9ac6046936fb0585108cca, type: 2}
@@ -11865,6 +11866,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1836605966777368, guid: 6488b4374b9ac6046936fb0585108cca, type: 2}
+      propertyPath: m_Name
+      value: option22
+      objectReference: {fileID: 0}
     - target: {fileID: 114991719782261012, guid: 6488b4374b9ac6046936fb0585108cca,
         type: 2}
       propertyPath: m_havePropertiesChanged
@@ -11874,29 +11879,6 @@ Prefab:
         type: 2}
       propertyPath: m_isInputParsingRequired
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224676796181768114, guid: 6488b4374b9ac6046936fb0585108cca,
-        type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.99999565
-      objectReference: {fileID: 0}
-    - target: {fileID: 224676796181768114, guid: 6488b4374b9ac6046936fb0585108cca,
-        type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.99999565
-      objectReference: {fileID: 0}
-    - target: {fileID: 224676796181768114, guid: 6488b4374b9ac6046936fb0585108cca,
-        type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.99999565
-      objectReference: {fileID: 0}
-    - target: {fileID: 1836605966777368, guid: 6488b4374b9ac6046936fb0585108cca, type: 2}
-      propertyPath: m_Name
-      value: option22
-      objectReference: {fileID: 0}
-    - target: {fileID: 1779306172955206, guid: 6488b4374b9ac6046936fb0585108cca, type: 2}
-      propertyPath: m_Name
-      value: Text22
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6488b4374b9ac6046936fb0585108cca, type: 2}
@@ -17854,7 +17836,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 0
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_firstOverflowCharacterIndex: -1
@@ -20538,7 +20520,7 @@ MonoBehaviour:
   m_InputType: 0
   m_AsteriskChar: 42
   m_KeyboardType: 0
-  m_LineType: 0
+  m_LineType: 2
   m_HideMobileInput: 0
   m_CharacterValidation: 0
   m_RegexValue: 
@@ -22443,6 +22425,21 @@ Prefab:
         type: 2}
       propertyPath: m_isInputParsingRequired
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224676796181768114, guid: 6488b4374b9ac6046936fb0585108cca,
+        type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 224676796181768114, guid: 6488b4374b9ac6046936fb0585108cca,
+        type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.99999565
+      objectReference: {fileID: 0}
+    - target: {fileID: 224676796181768114, guid: 6488b4374b9ac6046936fb0585108cca,
+        type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0.99999565
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6488b4374b9ac6046936fb0585108cca, type: 2}
@@ -26317,7 +26314,7 @@ MonoBehaviour:
   m_InputType: 0
   m_AsteriskChar: 42
   m_KeyboardType: 0
-  m_LineType: 0
+  m_LineType: 2
   m_HideMobileInput: 0
   m_CharacterValidation: 0
   m_RegexValue: 
@@ -27667,7 +27664,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 0
+  m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_firstOverflowCharacterIndex: -1
