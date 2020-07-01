@@ -12,6 +12,7 @@ namespace toolsAPI
     public enum ToolModal { Menu, Main, New, Lists }
     public enum ThemeType { Action, Tension, Social, Mystery, Personal, Count }
     public enum StoryStatus { New, Logical, Data}
+    public enum ListItemStatus { None, PlotLine, Character}    //what's currently selected on the Aventure/list page
 
 
 
@@ -251,6 +252,8 @@ namespace toolsAPI
     public class PlotLine
     {
         public string tag;
+        public string dataCreated;                          //generated data
+        public string dataMe;                               //my interpretation
         public StoryStatus status;
     }
     #endregion
@@ -263,6 +266,8 @@ namespace toolsAPI
     public class Character
     {
         public string tag;
+        public string dataCreated;                          //generated data
+        public string dataMe;                               //my interpretation
         public StoryStatus status;
     }
     #endregion

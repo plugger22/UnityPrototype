@@ -87,12 +87,25 @@ public class AdventureUI : MonoBehaviour
     #region Lists
     [Header("Lists")]
     public ToolButtonInteraction returnListsInteraction;
+    public ToolButtonInteraction listEditInteraction;
+    public ToolButtonInteraction listSaveInteraction;
     public TextMeshProUGUI listAdventureName;
+    public TextMeshProUGUI listAdventureDate;
+    public TextMeshProUGUI listName;
+    public TextMeshProUGUI listDataCreated;
+    public TextMeshProUGUI listDataMe;
+    public TMP_InputField listNameInput;
+    public TMP_InputField listCreatedInput;
+    public TMP_InputField listMeInput;
     //collections
     public ToolButtonInteraction[] arrayOfPlotLineInteractions;
     public ToolButtonInteraction[] arrayOfCharacterInteractions;
     public TextMeshProUGUI[] arrayOfPlotLineTexts;
     public TextMeshProUGUI[] arrayOfCharacterTexts;
+    //private
+    private int maxListIndex;
+    private int currentListIndex;
+    private ListItemStatus listItemStatus;
 
     #endregion
 
@@ -162,11 +175,21 @@ public class AdventureUI : MonoBehaviour
         }
         //lists
         Debug.Assert(returnListsInteraction != null, "Invalid returnListsInteraction (Null)");
+        Debug.Assert(listEditInteraction != null, "Invalid listEditInteraction (Null)");
+        Debug.Assert(listSaveInteraction != null, "Invalid listSaveInteraction (Null)");
         Debug.Assert(listAdventureName != null, "Invalid listAdventureName (Null)");
+        Debug.Assert(listAdventureDate != null, "Invalid listAdventureDate (Null)");
+        Debug.Assert(listName != null, "Invalid listName (Null)");
+        Debug.Assert(listDataCreated != null, "Invalid listDataCreated (Null)");
+        Debug.Assert(listDataMe != null, "Invalid listDataMe (Null)");
+        Debug.Assert(listNameInput != null, "Invalid listNameInput (Null)");
+        Debug.Assert(listCreatedInput != null, "Invalid listCreatedInput (Null)");
+        Debug.Assert(listMeInput != null, "Invalid listMeInput (Null)");
         Debug.AssertFormat(arrayOfPlotLineInteractions.Length == 25, "Invalid arrayOfPlotLineInteractions.Length (should be 25, is {0})", arrayOfPlotLineInteractions.Length);
         Debug.AssertFormat(arrayOfCharacterInteractions.Length == 25, "Invalid arrayOfCharacterInteractions.Length (should be 25, is {0})", arrayOfCharacterInteractions.Length);
         Debug.AssertFormat(arrayOfPlotLineTexts.Length == 25, "Invalid arrayOfPlotLineTexts.Length (should be 25, is {0})", arrayOfPlotLineTexts.Length);
         Debug.AssertFormat(arrayOfCharacterTexts.Length == 25, "Invalid arrayOfCharacterTexts.Length (should be 25, is {0})", arrayOfCharacterTexts.Length);
+        maxListIndex = arrayOfPlotLineInteractions.Length;
         //switch off
         adventureCanvas.gameObject.SetActive(false);
         masterCanvas.gameObject.SetActive(true);
@@ -185,6 +208,8 @@ public class AdventureUI : MonoBehaviour
         clearNewInteraction.SetButton(ToolEventType.ClearNewAdventure);
         showListsInteraction.SetButton(ToolEventType.OpenAdventureLists);
         returnListsInteraction.SetButton(ToolEventType.CloseAdventureLists);
+        listEditInteraction.SetButton(ToolEventType.EditListItem);
+        listSaveInteraction.SetButton(ToolEventType.SaveListDetails);
         //list buttonInteractions
         for (int i = 0; i < arrayOfPlotLineInteractions.Length; i++)
         {
@@ -212,6 +237,7 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.ShowCharacterDetails, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.NextLists, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.PreviousLists, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.EditListItem, OnEvent, "AdventureUI");
     }
     #endregion
 
@@ -283,6 +309,12 @@ public class AdventureUI : MonoBehaviour
                 break;
             case ToolEventType.PreviousLists:
                 PreviousLists();
+                break;
+            case ToolEventType.EditListItem:
+                EditListItem();
+                break;
+            case ToolEventType.SaveListDetails:
+                SaveListDetails();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -389,7 +421,7 @@ public class AdventureUI : MonoBehaviour
         { mainNavCounter = 0; }
         //show story
         DisplayStoryMain();
-        
+
     }
 
     /// <summary>
@@ -562,6 +594,9 @@ public class AdventureUI : MonoBehaviour
         DisplayLists();
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.Lists);
+        //toggle off input fields
+        ToggleListFields(false);
+        listItemStatus = ListItemStatus.None;
     }
 
     /// <summary>
@@ -572,6 +607,8 @@ public class AdventureUI : MonoBehaviour
         //toggle canvases on/off
         listsCanvas.gameObject.SetActive(false);
         masterCanvas.gameObject.SetActive(true);
+        //update adventure display to stay in synch
+        DisplayStoryMain();
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.Main);
     }
@@ -582,7 +619,8 @@ public class AdventureUI : MonoBehaviour
     /// <param name="plotLine"></param>
     private void ShowPlotLineDetails(int index)
     {
-
+        ToggleListFields(false);
+        DisplayListItem(index, true);
     }
 
     /// <summary>
@@ -591,7 +629,27 @@ public class AdventureUI : MonoBehaviour
     /// <param name="index"></param>
     private void ShowCharacterDetails(int index)
     {
+        ToggleListFields(false);
+        DisplayListItem(index, false);
+    }
 
+
+    /// <summary>
+    /// Edit a list character entry
+    /// </summary>
+    private void EditListItem()
+    {
+        ToggleListFields(true);
+        SetListInputFields();
+    }
+
+
+    /// <summary>
+    /// Save an edited PlotLine or Character
+    /// </summary>
+    private void SaveListDetails()
+    {
+        ToggleListFields(false);
     }
 
     /// <summary>
@@ -642,6 +700,7 @@ public class AdventureUI : MonoBehaviour
             themeMain3.text = storyMain.theme.GetThemePriority(3).ToString();
             themeMain4.text = storyMain.theme.GetThemePriority(4).ToString();
             themeMain5.text = storyMain.theme.GetThemePriority(5).ToString();
+
         }
         else
         {
@@ -669,6 +728,12 @@ public class AdventureUI : MonoBehaviour
         themeNew3.text = storyNew.theme.GetThemePriority(3).ToString();
         themeNew4.text = storyNew.theme.GetThemePriority(4).ToString();
         themeNew5.text = storyNew.theme.GetThemePriority(5).ToString();
+        //zero out seed plotlines and characters regardless
+        for (int i = 0; i < arrayOfNewPlotLines.Length; i++)
+        {
+            arrayOfNewPlotLines[i].text = "";
+            arrayOfNewCharacters[i].text = "";
+        }
     }
 
     /// <summary>
@@ -719,8 +784,14 @@ public class AdventureUI : MonoBehaviour
         storyMain = listOfStories[mainNavCounter];
         if (storyMain != null)
         {
-            //adventure name
-            listAdventureName.text = string.Format("{0} {1}", storyMain.tag, storyMain.date);
+            //adventure name and date
+            listAdventureName.text = storyMain.tag;
+            listAdventureDate.text = storyMain.date;
+            //default data for list item details
+            listName.text = "";
+            listDataCreated.text = "";
+            listDataMe.text = "";
+            //display lists
             string fade = "<alpha=#88>";
             for (int i = 0; i < arrayOfPlotLineTexts.Length; i++)
             {
@@ -765,6 +836,117 @@ public class AdventureUI : MonoBehaviour
         else { Debug.LogErrorFormat("Invalid storyMain (Null) for listOfStories[{0}]", mainNavCounter); }
     }
 
+    /// <summary>
+    /// Displays a list item details on RHS list panel, either a plotLine or a character depending on 'isPlotLine
+    /// </summary>
+    /// <param name="isPlotLine"></param>
+    private void DisplayListItem(int index, bool isPlotLine)
+    {
+        if (index >= 0 && index < maxListIndex)
+        {
+            currentListIndex = index;
+            if (isPlotLine == true)
+            {
+                //Plotline
+                listItemStatus = ListItemStatus.PlotLine;
+                PlotLine plotLine = storyMain.lists.arrayOfPlotLines[index];
+                if (plotLine != null)
+                {
+                    switch (plotLine.status)
+                    {
+                        case StoryStatus.Data: listName.text = plotLine.tag; break;
+                        case StoryStatus.Logical: listName.text = "Most Logical"; break;
+                        case StoryStatus.New: listName.text = "New Plotline"; break;
+                        default: Debug.LogWarningFormat("Unrecognised plotLine.status \"{0}\"", plotLine.status); break;
+                    }
+                    listDataCreated.text = plotLine.dataCreated;
+                    listDataMe.text = plotLine.dataMe;
+                }
+                else { Debug.LogErrorFormat("Invalid plotLine (Null) for arrayOfPlotLines[{0}]", index); }
+            }
+            else
+            {
+                //Character
+                listItemStatus = ListItemStatus.Character;
+                Character character = storyMain.lists.arrayOfCharacters[index];
+                if (character != null)
+                {
+                    switch (character.status)
+                    {
+                        case StoryStatus.Data: listName.text = character.tag; break;
+                        case StoryStatus.Logical: listName.text = "Most Logical"; break;
+                        case StoryStatus.New: listName.text = "New Character"; break;
+                        default: Debug.LogWarningFormat("Unrecognised character.status \"{0}\"", character.status); break;
+                    }
+                    listDataCreated.text = character.dataCreated;
+                    listDataMe.text = character.dataMe;
+                }
+                else { Debug.LogErrorFormat("Invalid character (Null) for arrayOfCharacters[{0}]", index); }
+            }
+        }
+        else { Debug.LogWarningFormat("Invalid index \"{0}\" (should be between 0 and {1})", index, maxListIndex); }
+    }
+
+    /// <summary>
+    /// When switching to edit mode, any existing data is displayed in the list page RHS input fields
+    /// </summary>
+    private void SetListInputFields()
+    {
+        switch (listItemStatus)
+        {
+            case ListItemStatus.PlotLine:
+                PlotLine plotLine = storyMain.lists.arrayOfPlotLines[currentListIndex];
+                if (plotLine != null)
+                {
+                    listNameInput.text = plotLine.tag;
+                    listCreatedInput.text = plotLine.dataCreated;
+                    listMeInput.text = plotLine.dataMe;
+                }
+                else { Debug.LogErrorFormat("Invalid plotLine (Null) for arrayOfPlotLines[{0}]", currentListIndex); }
+                break;
+            case ListItemStatus.Character:
+                Character character = storyMain.lists.arrayOfCharacters[currentListIndex];
+                if (character != null)
+                {
+                    listNameInput.text = character.tag;
+                    listCreatedInput.text = character.dataCreated;
+                    listMeInput.text = character.dataMe;
+                }
+                else { Debug.LogErrorFormat("Invalid character (Null) for arrayOfCharacters[{0}]", currentListIndex); }
+                break;
+            default: Debug.LogWarningFormat("Unrecognised listItemStatus \"{0}\"", listItemStatus); break;
+        }
+    }
+
+    /// <summary>
+    /// Toggles fields on/off for List page RHS
+    /// </summary>
+    /// <param name="isInput"></param>
+    private void ToggleListFields(bool isInput)
+    {
+        if (isInput == true)
+        {
+            //toggle normal fields off
+            listName.gameObject.SetActive(false);
+            listDataCreated.gameObject.SetActive(false);
+            listDataMe.gameObject.SetActive(false);
+            //toggle input On
+            listNameInput.gameObject.SetActive(true);
+            listCreatedInput.gameObject.SetActive(true);
+            listMeInput.gameObject.SetActive(true);
+        }
+        else
+        {
+            //toggle normal fields on
+            listName.gameObject.SetActive(true);
+            listDataCreated.gameObject.SetActive(true);
+            listDataMe.gameObject.SetActive(true);
+            //toggle input off
+            listNameInput.gameObject.SetActive(false);
+            listCreatedInput.gameObject.SetActive(false);
+            listMeInput.gameObject.SetActive(false);
+        }
+    }
 
     #endregion
 

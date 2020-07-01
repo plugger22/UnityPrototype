@@ -30,7 +30,9 @@ public enum ToolEventType
     ShowPlotLineDetails,
     ShowCharacterDetails,
     NextLists,
-    PreviousLists
+    PreviousLists,
+    EditListItem,
+    SaveListDetails
 
 }
 
