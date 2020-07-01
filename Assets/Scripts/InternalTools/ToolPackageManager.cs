@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 #if(UNITY_EDITOR)
@@ -10,10 +11,10 @@ namespace toolsAPI
     //
 
     public enum ToolModal { Menu, Main, New, Lists }
-    public enum ToolModalType { Read, Edit}
+    public enum ToolModalType { Read, Edit }
     public enum ThemeType { Action, Tension, Social, Mystery, Personal, Count }
-    public enum StoryStatus { New, Logical, Data}
-    public enum ListItemStatus { None, PlotLine, Character}    //what's currently selected on the Aventure/list page
+    public enum StoryStatus { New, Logical, Data }
+    public enum ListItemStatus { None, PlotLine, Character }    //what's currently selected on the Aventure/list page
 
 
 
@@ -35,7 +36,11 @@ namespace toolsAPI
         //subClasses
         public ThemeData theme = new ThemeData();
         public StoryList lists = new StoryList();
+        //Collections
+        public List<PlotLine> listOfPlotLines = new List<PlotLine>();
+        public List<Character> listOfCharacters = new List<Character>();
 
+        #region Story Methods
         /// <summary>
         /// default constructor
         /// </summary>
@@ -66,6 +71,7 @@ namespace toolsAPI
             theme.Reset();
             lists.Reset();
         }
+        #endregion
     }
     #endregion
 
@@ -81,6 +87,7 @@ namespace toolsAPI
 
         public ThemeData() { }
 
+        #region Theme Methods
         /// <summary>
         /// Copy constructor
         /// </summary>
@@ -114,6 +121,7 @@ namespace toolsAPI
             }
             return themeType;
         }
+        #endregion
     }
     #endregion
 
@@ -124,21 +132,21 @@ namespace toolsAPI
     [System.Serializable]
     public class StoryList
     {
-        public PlotLine[] arrayOfPlotLines;
-        public Character[] arrayOfCharacters;
+        public ListItem[] arrayOfPlotLines;
+        public ListItem[] arrayOfCharacters;
         private int size = 25;
 
-        #region Default Constructor (create lists)
+        #region StoryList Methods
         /// <summary>
         /// default constructor
         /// </summary>
         public StoryList()
         {
-            arrayOfPlotLines = new PlotLine[size];
-            arrayOfCharacters = new Character[size];
+            arrayOfPlotLines = new ListItem[size];
+            arrayOfCharacters = new ListItem[size];
             PopulateLists();
         }
-        #endregion
+
 
         /// <summary>
         /// Copy constructor
@@ -147,8 +155,8 @@ namespace toolsAPI
         public StoryList(StoryList data)
         {
             //initialise if need be (don't need data as will be copied over)
-            if (arrayOfPlotLines == null) { arrayOfPlotLines = new PlotLine[size]; }
-            if (arrayOfCharacters == null) { arrayOfCharacters = new Character[size]; }
+            if (arrayOfPlotLines == null) { arrayOfPlotLines = new ListItem[size]; }
+            if (arrayOfCharacters == null) { arrayOfCharacters = new ListItem[size]; }
             //copy data
             data.arrayOfPlotLines.CopyTo(arrayOfPlotLines, 0);
             data.arrayOfCharacters.CopyTo(arrayOfCharacters, 0);
@@ -194,7 +202,7 @@ namespace toolsAPI
                     case 22:
                     case 23:
                     case 24:
-                        arrayOfPlotLines[i] = new PlotLine() { tag = "", status = StoryStatus.Logical };
+                        arrayOfPlotLines[i] = new ListItem() { tag = "", status = StoryStatus.Logical };
                         break;
                     case 1:
                     case 5:
@@ -202,7 +210,7 @@ namespace toolsAPI
                     case 13:
                     case 17:
                     case 21:
-                        arrayOfPlotLines[i] = new PlotLine() { tag = "", status = StoryStatus.New };
+                        arrayOfPlotLines[i] = new ListItem() { tag = "", status = StoryStatus.New };
                         break;
                     default: Debug.LogWarningFormat("Unrecognised counter \"{0}\" for Plotlines", i); break;
                 }
@@ -222,7 +230,7 @@ namespace toolsAPI
                     case 16:
                     case 20:
                     case 24:
-                        arrayOfCharacters[i] = new Character() { tag = "", status = StoryStatus.New };
+                        arrayOfCharacters[i] = new ListItem() { tag = "", status = StoryStatus.New };
                         break;
                     case 3:
                     case 7:
@@ -236,12 +244,13 @@ namespace toolsAPI
                     case 21:
                     case 22:
                     case 23:
-                        arrayOfCharacters[i] = new Character() { tag = "", status = StoryStatus.Logical };
+                        arrayOfCharacters[i] = new ListItem() { tag = "", status = StoryStatus.Logical };
                         break;
                     default: Debug.LogWarningFormat("Unrecognised counter \"{0}\" for Characters", i); break;
                 }
             }
         }
+        #endregion
     }
     #endregion
 
@@ -255,7 +264,6 @@ namespace toolsAPI
         public string tag;
         public string dataCreated;                          //generated data
         public string dataMe;                               //my interpretation
-        public StoryStatus status;
     }
     #endregion
 
@@ -269,6 +277,17 @@ namespace toolsAPI
         public string tag;
         public string dataCreated;                          //generated data
         public string dataMe;                               //my interpretation
+    }
+    #endregion
+
+    #region ListItem
+    /// <summary>
+    /// List Item (PlotLines and Character references that inhabit lists)
+    /// </summary>
+    [System.Serializable]
+    public class ListItem
+    {
+        public string tag;                                  //name (tag) of PlotLine or Character
         public StoryStatus status;
     }
     #endregion

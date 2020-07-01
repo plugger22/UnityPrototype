@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using TMPro;
 using toolsAPI;
 using UnityEngine;
@@ -23,9 +24,13 @@ public class AdventureUI : MonoBehaviour
     public Canvas newAdventureCanvas;
     public Canvas listsCanvas;
 
-    //Story that is current
-    [HideInInspector] public Story storyMain;
-    [HideInInspector] public Story storyNew;
+    //Stories
+    private Story storyMain;
+    private Story storyNew;
+
+    //Temporary Dictionaries
+    Dictionary<string, PlotLine> dictOfPlotLines = new Dictionary<string, PlotLine>();
+    Dictionary<string, Character> dictOfCharacters = new Dictionary<string, Character>();
 
     //Navigation
     private int mainNavCounter;
@@ -323,6 +328,7 @@ public class AdventureUI : MonoBehaviour
         }
     }
     #endregion
+
 
     #region AdventureMain
     //
@@ -690,6 +696,36 @@ public class AdventureUI : MonoBehaviour
 
     #endregion
 
+    #region Dictionary Methods
+
+    /// <summary>
+    /// Returns plotline based on tag, null if a problem or not found
+    /// </summary>
+    /// <param name="tag"></param>
+    /// <returns></returns>
+    private PlotLine GetPlotLine(string tag)
+    {
+        if (dictOfPlotLines.ContainsKey(tag) == true)
+        { return dictOfPlotLines[tag]; }
+        else { Debug.LogWarningFormat("tag \"{0}\" not found in dictOfPlotlines", tag); }
+        return null;
+    }
+
+    /// <summary>
+    /// Returns character based on tag, null if a problem or not found
+    /// </summary>
+    /// <param name="tag"></param>
+    /// <returns></returns>
+    private Character GetCharacter(string tag)
+    {
+        if (dictOfCharacters.ContainsKey(tag) == true)
+        { return dictOfCharacters[tag]; }
+        else { Debug.LogWarningFormat("tag \"{0}\" not found in dictOfCharacters", tag); }
+        return null;
+    }
+
+    #endregion
+
     #region Utilities
     //
     // - - - Utilities
@@ -780,6 +816,9 @@ public class AdventureUI : MonoBehaviour
         storyMain = listOfStories[mainNavCounter];
         if (storyMain != null)
         {
+            //initialise quick access Dictionaries
+            dictOfPlotLines.Clear();
+            dictOfCharacters.Clear();
             //populate data onscreen
             RedrawMainAdventurePage();
         }
@@ -794,6 +833,9 @@ public class AdventureUI : MonoBehaviour
         storyMain = listOfStories[mainNavCounter];
         if (storyMain != null)
         {
+            //populate temp dictionaries
+            dictOfPlotLines = storyMain.listOfPlotLines.ToDictionary(k => k.tag);
+            dictOfCharacters = storyMain.listOfCharacters.ToDictionary(k => k.tag);
             //adventure name and date
             listAdventureName.text = storyMain.tag;
             listAdventureDate.text = storyMain.date;
@@ -806,13 +848,13 @@ public class AdventureUI : MonoBehaviour
             for (int i = 0; i < arrayOfPlotLineTexts.Length; i++)
             {
                 //Plotlines
-                PlotLine plotLine = storyMain.lists.arrayOfPlotLines[i];
-                if (plotLine != null)
+                ListItem item = storyMain.lists.arrayOfPlotLines[i];
+                if (item != null)
                 {
-                    switch (plotLine.status)
+                    switch (item.status)
                     {
                         case StoryStatus.Data:
-                            arrayOfPlotLineTexts[i].text = plotLine.tag;
+                            arrayOfPlotLineTexts[i].text = item.tag;
                             break;
                         case StoryStatus.Logical:
                             arrayOfPlotLineTexts[i].text = string.Format("{0}Choose Most Logical", fade);
@@ -822,15 +864,15 @@ public class AdventureUI : MonoBehaviour
                             break;
                     }
                 }
-                else { Debug.LogErrorFormat("Invalid plotLine (Null) for storyMain.lists.arrayOfPlotLines[{0}]", i); }
+                else { Debug.LogErrorFormat("Invalid ListItem (Null) for storyMain.lists.arrayOfPlotLines[{0}]", i); }
                 //Characters
-                Character character = storyMain.lists.arrayOfCharacters[i];
-                if (character != null)
+                item = storyMain.lists.arrayOfCharacters[i];
+                if (item != null)
                 {
-                    switch (character.status)
+                    switch (item.status)
                     {
                         case StoryStatus.Data:
-                            arrayOfCharacterTexts[i].text = character.tag;
+                            arrayOfCharacterTexts[i].text = item.tag;
                             break;
                         case StoryStatus.Logical:
                             arrayOfCharacterTexts[i].text = string.Format("{0}Most Logical", fade);
@@ -859,18 +901,23 @@ public class AdventureUI : MonoBehaviour
             {
                 //Plotline
                 listItemStatus = ListItemStatus.PlotLine;
-                PlotLine plotLine = storyMain.lists.arrayOfPlotLines[index];
-                if (plotLine != null)
+                ListItem item = storyMain.lists.arrayOfPlotLines[index];
+                if (item != null)
                 {
-                    switch (plotLine.status)
+                    PlotLine plotLine = GetPlotLine(item.tag);
+                    if (plotLine != null)
                     {
-                        case StoryStatus.Data: listName.text = plotLine.tag; break;
-                        case StoryStatus.Logical: listName.text = "Most Logical"; break;
-                        case StoryStatus.New: listName.text = "New Plotline"; break;
-                        default: Debug.LogWarningFormat("Unrecognised plotLine.status \"{0}\"", plotLine.status); break;
+                        switch (item.status)
+                        {
+                            case StoryStatus.Data: listName.text = plotLine.tag; break;
+                            case StoryStatus.Logical: listName.text = "Most Logical"; break;
+                            case StoryStatus.New: listName.text = "New Plotline"; break;
+                            default: Debug.LogWarningFormat("Unrecognised plotLine.status \"{0}\"", item.status); break;
+                        }
+                        listDataCreated.text = plotLine.dataCreated;
+                        listDataMe.text = plotLine.dataMe;
                     }
-                    listDataCreated.text = plotLine.dataCreated;
-                    listDataMe.text = plotLine.dataMe;
+                    else { Debug.LogErrorFormat("Invalid plotLine (Null) for ListItem.tag \"{0}\"", item.tag); }
                 }
                 else { Debug.LogErrorFormat("Invalid plotLine (Null) for arrayOfPlotLines[{0}]", index); }
             }
@@ -878,20 +925,25 @@ public class AdventureUI : MonoBehaviour
             {
                 //Character
                 listItemStatus = ListItemStatus.Character;
-                Character character = storyMain.lists.arrayOfCharacters[index];
-                if (character != null)
+                ListItem item = storyMain.lists.arrayOfCharacters[index];
+                if (item != null)
                 {
-                    switch (character.status)
+                    Character character = GetCharacter(item.tag);
+                    if (character != null)
                     {
-                        case StoryStatus.Data: listName.text = character.tag; break;
-                        case StoryStatus.Logical: listName.text = "Most Logical"; break;
-                        case StoryStatus.New: listName.text = "New Character"; break;
-                        default: Debug.LogWarningFormat("Unrecognised character.status \"{0}\"", character.status); break;
+                        switch (item.status)
+                        {
+                            case StoryStatus.Data: listName.text = character.tag; break;
+                            case StoryStatus.Logical: listName.text = "Most Logical"; break;
+                            case StoryStatus.New: listName.text = "New Character"; break;
+                            default: Debug.LogWarningFormat("Unrecognised character.status \"{0}\"", item.status); break;
+                        }
+                        listDataCreated.text = character.dataCreated;
+                        listDataMe.text = character.dataMe;
                     }
-                    listDataCreated.text = character.dataCreated;
-                    listDataMe.text = character.dataMe;
+                    else { Debug.LogErrorFormat("Invalid character (Null) for ListItem.tag \"{0}\"", item.tag); }
                 }
-                else { Debug.LogErrorFormat("Invalid character (Null) for arrayOfCharacters[{0}]", index); }
+                else { Debug.LogErrorFormat("Invalid ListItem (Null) for arrayOfCharacters[{0}]", index); }
             }
         }
         else { Debug.LogWarningFormat("Invalid index \"{0}\" (should be between 0 and {1})", index, maxListIndex); }
@@ -905,22 +957,32 @@ public class AdventureUI : MonoBehaviour
         switch (listItemStatus)
         {
             case ListItemStatus.PlotLine:
-                PlotLine plotLine = storyMain.lists.arrayOfPlotLines[currentListIndex];
-                if (plotLine != null)
+                ListItem item = storyMain.lists.arrayOfPlotLines[currentListIndex];
+                if (item != null)
                 {
-                    listNameInput.text = plotLine.tag;
-                    listCreatedInput.text = plotLine.dataCreated;
-                    listMeInput.text = plotLine.dataMe;
+                    PlotLine plotLine = GetPlotLine(item.tag);
+                    if (plotLine != null)
+                    {
+                        listNameInput.text = plotLine.tag;
+                        listCreatedInput.text = plotLine.dataCreated;
+                        listMeInput.text = plotLine.dataMe;
+                    }
+                    else { Debug.LogErrorFormat("Invalid plotLine (Null) for ListItem.tag \"{0}\"", item.tag); }
                 }
-                else { Debug.LogErrorFormat("Invalid plotLine (Null) for arrayOfPlotLines[{0}]", currentListIndex); }
+                else { Debug.LogErrorFormat("Invalid ListItem (Null) for arrayOfPlotLines[{0}]", currentListIndex); }
                 break;
             case ListItemStatus.Character:
-                Character character = storyMain.lists.arrayOfCharacters[currentListIndex];
-                if (character != null)
+                item = storyMain.lists.arrayOfCharacters[currentListIndex];
+                if (item != null)
                 {
-                    listNameInput.text = character.tag;
-                    listCreatedInput.text = character.dataCreated;
-                    listMeInput.text = character.dataMe;
+                    Character character = GetCharacter(item.tag);
+                    if (character != null)
+                    {
+                        listNameInput.text = character.tag;
+                        listCreatedInput.text = character.dataCreated;
+                        listMeInput.text = character.dataMe;
+                    }
+                    else { Debug.LogErrorFormat("Invalid character (Null) for ListItem.tag \"{0}\"", item.tag); }
                 }
                 else { Debug.LogErrorFormat("Invalid character (Null) for arrayOfCharacters[{0}]", currentListIndex); }
                 break;
