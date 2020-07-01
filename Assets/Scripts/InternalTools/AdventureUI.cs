@@ -551,13 +551,13 @@ public class AdventureUI : MonoBehaviour
             {
                 if (string.IsNullOrEmpty(arrayOfNewPlotLines[i].text) == false)
                 {
-                    storyNew.lists.arrayOfPlotLines[i].tag = arrayOfNewPlotLines[i].text;
-                    storyNew.lists.arrayOfPlotLines[i].status = StoryStatus.Data;
+                    storyNew.arrays.arrayOfPlotLines[i].tag = arrayOfNewPlotLines[i].text;
+                    storyNew.arrays.arrayOfPlotLines[i].status = StoryStatus.Data;
                 }
                 if (string.IsNullOrEmpty(arrayOfNewCharacters[i].text) == false)
                 {
-                    storyNew.lists.arrayOfCharacters[i].tag = arrayOfNewCharacters[i].text;
-                    storyNew.lists.arrayOfCharacters[i].status = StoryStatus.Data;
+                    storyNew.arrays.arrayOfCharacters[i].tag = arrayOfNewCharacters[i].text;
+                    storyNew.arrays.arrayOfCharacters[i].status = StoryStatus.Data;
                 }
             }
             //save only if viable data present
@@ -829,8 +829,8 @@ public class AdventureUI : MonoBehaviour
             //populate temp dictionaries
             dictOfPlotLines.Clear();
             dictOfCharacters.Clear();
-            dictOfPlotLines = storyMain.listOfPlotLines.ToDictionary(k => k.tag);
-            dictOfCharacters = storyMain.listOfCharacters.ToDictionary(k => k.tag);
+            dictOfPlotLines = storyMain.lists.listOfPlotLines.ToDictionary(k => k.tag);
+            dictOfCharacters = storyMain.lists.listOfCharacters.ToDictionary(k => k.tag);
             //adventure name and date
             listAdventureName.text = storyMain.tag;
             listAdventureDate.text = storyMain.date;
@@ -843,7 +843,7 @@ public class AdventureUI : MonoBehaviour
             for (int i = 0; i < arrayOfPlotLineTexts.Length; i++)
             {
                 //Plotlines
-                ListItem item = storyMain.lists.arrayOfPlotLines[i];
+                ListItem item = storyMain.arrays.arrayOfPlotLines[i];
                 if (item != null)
                 {
                     switch (item.status)
@@ -861,7 +861,7 @@ public class AdventureUI : MonoBehaviour
                 }
                 else { Debug.LogErrorFormat("Invalid ListItem (Null) for storyMain.lists.arrayOfPlotLines[{0}]", i); }
                 //Characters
-                item = storyMain.lists.arrayOfCharacters[i];
+                item = storyMain.arrays.arrayOfCharacters[i];
                 if (item != null)
                 {
                     switch (item.status)
@@ -896,7 +896,7 @@ public class AdventureUI : MonoBehaviour
             {
                 //Plotline
                 listItemStatus = ListItemStatus.PlotLine;
-                ListItem item = storyMain.lists.arrayOfPlotLines[index];
+                ListItem item = storyMain.arrays.arrayOfPlotLines[index];
                 if (item != null)
                 {
                     PlotLine plotLine = GetPlotLine(item.tag);
@@ -920,7 +920,7 @@ public class AdventureUI : MonoBehaviour
             {
                 //Character
                 listItemStatus = ListItemStatus.Character;
-                ListItem item = storyMain.lists.arrayOfCharacters[index];
+                ListItem item = storyMain.arrays.arrayOfCharacters[index];
                 if (item != null)
                 {
                     Character character = GetCharacter(item.tag);
@@ -952,7 +952,7 @@ public class AdventureUI : MonoBehaviour
         switch (listItemStatus)
         {
             case ListItemStatus.PlotLine:
-                ListItem item = storyMain.lists.arrayOfPlotLines[currentListIndex];
+                ListItem item = storyMain.arrays.arrayOfPlotLines[currentListIndex];
                 if (item != null)
                 {
                     PlotLine plotLine = GetPlotLine(item.tag);
@@ -966,7 +966,7 @@ public class AdventureUI : MonoBehaviour
                 else { Debug.LogErrorFormat("Invalid ListItem (Null) for arrayOfPlotLines[{0}]", currentListIndex); }
                 break;
             case ListItemStatus.Character:
-                item = storyMain.lists.arrayOfCharacters[currentListIndex];
+                item = storyMain.arrays.arrayOfCharacters[currentListIndex];
                 if (item != null)
                 {
                     Character character = GetCharacter(item.tag);
@@ -991,7 +991,7 @@ public class AdventureUI : MonoBehaviour
         switch (listItemStatus)
         {
             case ListItemStatus.PlotLine:
-                ListItem item = storyMain.lists.arrayOfPlotLines[currentListIndex];
+                ListItem item = storyMain.arrays.arrayOfPlotLines[currentListIndex];
                 if (item != null)
                 {
                     //can't change name of Plotline
@@ -1002,8 +1002,8 @@ public class AdventureUI : MonoBehaviour
                         plotLine.dataCreated = listCreatedInput.text;
                         plotLine.dataMe = listMeInput.text;
                         //update list
-                        storyMain.listOfPlotLines.Clear();
-                        storyMain.listOfPlotLines.AddRange(dictOfPlotLines.Values.ToList());
+                        storyMain.lists.listOfPlotLines.Clear();
+                        storyMain.lists.listOfPlotLines.AddRange(dictOfPlotLines.Values.ToList());
                     }
                     else
                     {
@@ -1013,7 +1013,7 @@ public class AdventureUI : MonoBehaviour
                 else { Debug.LogErrorFormat("Invalid plotLine (Null) for arrayOfPlotLines[{0}]", currentListIndex); }
                 break;
             case ListItemStatus.Character:
-                item = storyMain.lists.arrayOfCharacters[currentListIndex];
+                item = storyMain.arrays.arrayOfCharacters[currentListIndex];
                 if (item != null)
                 {
                     //can't change name of Character
@@ -1024,8 +1024,8 @@ public class AdventureUI : MonoBehaviour
                         character.dataCreated = listCreatedInput.text;
                         character.dataMe = listMeInput.text;
                         //update list
-                        storyMain.listOfCharacters.Clear();
-                        storyMain.listOfCharacters.AddRange(dictOfCharacters.Values.ToList());
+                        storyMain.lists.listOfCharacters.Clear();
+                        storyMain.lists.listOfCharacters.AddRange(dictOfCharacters.Values.ToList());
                     }
                     else { Debug.LogErrorFormat("Invalid character (Null) for item.tag \"{0}\"", item.tag); }
                 }

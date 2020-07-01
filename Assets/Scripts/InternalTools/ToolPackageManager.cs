@@ -35,10 +35,8 @@ namespace toolsAPI
         public int numTurningPoints;
         //subClasses
         public ThemeData theme = new ThemeData();
-        public StoryList arrays = new StoryList();
-        //Collections
-        public List<PlotLine> listOfPlotLines = new List<PlotLine>();
-        public List<Character> listOfCharacters = new List<Character>();
+        public StoryArrays arrays = new StoryArrays();
+        public StoryLists lists = new StoryLists();
 
         #region Story Methods
         /// <summary>
@@ -57,7 +55,8 @@ namespace toolsAPI
             notes = story.notes;
             date = story.date;
             theme = new ThemeData(story.theme);
-            lists = new StoryList(story.lists);
+            arrays = new StoryArrays(story.arrays);
+            lists = new StoryLists(story.lists);
         }
 
         /// <summary>
@@ -69,6 +68,7 @@ namespace toolsAPI
             notes = "";
             date = "";
             theme.Reset();
+            arrays.Reset();
             lists.Reset();
         }
         #endregion
@@ -125,22 +125,22 @@ namespace toolsAPI
     }
     #endregion
 
-    #region StoryList
+    #region StoryArrays
     /// <summary>
-    /// Lists of Plotlines and Characters
+    /// Arrays of Plotlines and Characters (ListItem arrays)
     /// </summary>
     [System.Serializable]
-    public class StoryLis
+    public class StoryArrays
     {
         public ListItem[] arrayOfPlotLines;
         public ListItem[] arrayOfCharacters;
         private int size = 25;
 
-        #region StoryList Methods
+        #region StoryArray Methods
         /// <summary>
         /// default constructor
         /// </summary>
-        public StoryList()
+        public StoryArrays()
         {
             arrayOfPlotLines = new ListItem[size];
             arrayOfCharacters = new ListItem[size];
@@ -152,7 +152,7 @@ namespace toolsAPI
         /// Copy constructor
         /// </summary>
         /// <param name="data"></param>
-        public StoryList(StoryList data)
+        public StoryArrays(StoryArrays data)
         {
             //initialise if need be (don't need data as will be copied over)
             if (arrayOfPlotLines == null) { arrayOfPlotLines = new ListItem[size]; }
@@ -253,6 +253,49 @@ namespace toolsAPI
         #endregion
     }
     #endregion
+
+    #region StoryLists
+    /// <summary>
+    /// Lists of PlotLines and Characters
+    /// </summary>
+    [System.Serializable]
+    public class StoryLists
+    {
+        public List<PlotLine> listOfPlotLines = new List<PlotLine>();
+        public List<Character> listOfCharacters = new List<Character>();
+
+        #region StoryLists Methods
+
+        /// <summary>
+        /// default constructor
+        /// </summary>
+        public StoryLists() { }
+
+        /// <summary>
+        /// Copy constructor
+        /// </summary>
+        /// <param name="data"></param>
+        public StoryLists(StoryLists data)
+        {
+            listOfPlotLines.Clear();
+            listOfCharacters.Clear();
+            listOfPlotLines.AddRange(data.listOfPlotLines);
+            listOfCharacters.AddRange(data.listOfCharacters);
+        }
+
+        /// <summary>
+        /// Reset
+        /// </summary>
+        public void Reset()
+        {
+            listOfPlotLines.Clear();
+            listOfCharacters.Clear();
+        }
+        #endregion
+
+    }
+    #endregion
+
 
     #region PlotLine
     /// <summary>
