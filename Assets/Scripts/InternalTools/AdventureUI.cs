@@ -343,8 +343,6 @@ public class AdventureUI : MonoBehaviour
         //turn on
         ToolManager.i.toolUIScript.CloseTools();
         adventureCanvas.gameObject.SetActive(true);
-        //redraw page
-        RedrawMainAdventurePage();
         //load data from dictionary automatically
         LoadAdventures();
         //Navigation
@@ -998,36 +996,38 @@ public class AdventureUI : MonoBehaviour
         switch (listItemStatus)
         {
             case ListItemStatus.PlotLine:
-                PlotLine plotLine = storyMain.lists.arrayOfPlotLines[currentListIndex];
-                if (plotLine != null)
+                ListItem item = storyMain.lists.arrayOfPlotLines[currentListIndex];
+                if (item != null)
                 {
-                    //name must be valid in order to store data
-                    if (String.IsNullOrEmpty(listNameInput.text) == false)
+                    //can't change name of Plotline
+                    item.status = StoryStatus.Data;
+                    PlotLine plotLine = GetPlotLine(item.tag);
+                    if (plotLine != null)
                     {
                         plotLine.tag = listNameInput.text;
                         plotLine.dataCreated = listCreatedInput.text;
                         plotLine.dataMe = listMeInput.text;
-                        plotLine.status = StoryStatus.Data;
                     }
-                    else { Debug.LogWarning("Invalid plotLine.tag (Null or Empty) -> Data NOT SAVED"); }
+                    else { Debug.LogErrorFormat("Invalid plotLine (Null) for item.tag \"{0}\"", item.tag); }
                 }
                 else { Debug.LogErrorFormat("Invalid plotLine (Null) for arrayOfPlotLines[{0}]", currentListIndex); }
                 break;
             case ListItemStatus.Character:
-                Character character = storyMain.lists.arrayOfCharacters[currentListIndex];
-                if (character != null)
+                item = storyMain.lists.arrayOfCharacters[currentListIndex];
+                if (item != null)
                 {
-                    //name must be valid in order to store data
-                    if (string.IsNullOrEmpty(listNameInput.text) == false)
+                    //can't change name of Character
+                    item.status = StoryStatus.Data;
+                    Character character = GetCharacter(item.tag);
+                    if (character != null)
                     {
                         character.tag = listNameInput.text;
                         character.dataCreated = listCreatedInput.text;
                         character.dataMe = listMeInput.text;
-                        character.status = StoryStatus.Data;
                     }
-                    else { Debug.LogWarning("Invalid character.tag (Null or Empty) -> Data NOT SAVED"); }
+                    else { Debug.LogErrorFormat("Invalid character (Null) for item.tag \"{0}\"", item.tag); }
                 }
-                else { Debug.LogErrorFormat("Invalid character (Null) for arrayOfCharacters[{0}]", currentListIndex); }
+                else { Debug.LogErrorFormat("Invalid item (Null) for arrayOfCharacters[{0}]", currentListIndex); }
                 break;
             default: Debug.LogWarningFormat("Unrecognised listItemStatus \"{0}\"", listItemStatus); break;
         }
