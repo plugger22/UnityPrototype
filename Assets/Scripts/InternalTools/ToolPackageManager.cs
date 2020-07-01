@@ -35,7 +35,7 @@ namespace toolsAPI
         public int numTurningPoints;
         //subClasses
         public ThemeData theme = new ThemeData();
-        public StoryList lists = new StoryList();
+        public StoryList arrays = new StoryList();
         //Collections
         public List<PlotLine> listOfPlotLines = new List<PlotLine>();
         public List<Character> listOfCharacters = new List<Character>();
@@ -130,7 +130,7 @@ namespace toolsAPI
     /// Lists of Plotlines and Characters
     /// </summary>
     [System.Serializable]
-    public class StoryList
+    public class StoryLis
     {
         public ListItem[] arrayOfPlotLines;
         public ListItem[] arrayOfCharacters;
