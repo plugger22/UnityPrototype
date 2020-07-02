@@ -129,9 +129,21 @@ public class ToolDataManager : MonoBehaviour
     public Dictionary<string, MetaPlotpoint> GetDictOfMetaPlotpoints()
     { return dictOfMetaPlotpoints; }
 
-
     public string[,] GetPlotpointLookup()
     { return arrayOfPlotpointLookup; }
+
+    /// <summary>
+    /// Add Plotpoint
+    /// </summary>
+    /// <param name="plot"></param>
+    public void AddPlotpoint(Plotpoint plot)
+    {
+        try { dictOfPlotpoints.Add(plot.refTag, plot); }
+        catch (ArgumentNullException)
+        { Debug.LogError("Invalid plotpoint (Null)"); }
+        catch (ArgumentException)
+        { Debug.LogWarningFormat("Duplicate plotPoint exists in dict for \"{0}\"", plot.refTag); }
+    }
 
     //new methods above here
 }

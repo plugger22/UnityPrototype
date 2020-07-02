@@ -1317,7 +1317,7 @@ public class ToolDetails : MonoBehaviour
                 listTension = new List<int>(){69,70},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listPersonal = new List<int>(){63},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
                 details = ""
@@ -2322,15 +2322,11 @@ public class ToolDetails : MonoBehaviour
             },
         };
 
-        Dictionary<string, Plotpoint> dictOfPlotpoints = ToolManager.i.toolDataScript.GetDictOfPlotpoints();
-        if (dictOfPlotpoints != null)
-        {
+
             Debug.LogFormat("[Tst] ToolDetails -> InitialisePlotpoints: There are {0} records in the listOfPlotponts{1}", listOfPlotpoints.Count, "\n");
             //convert list to dictionary
-            dictOfPlotpoints = listOfPlotpoints.ToDictionary(k => k.refTag);
-            Debug.LogFormat("[Tst] ToolDetails -> InitialisePlotpoints: There are {0} records in the dictOfPlotponts{1}", dictOfPlotpoints.Count, "\n");
-        }
-        else { Debug.LogError("Invalid dictOfPlotpoints (Null)"); }
+            for (int i = 0; i < listOfPlotpoints.Count; i++)
+            { ToolManager.i.toolDataScript.AddPlotpoint(listOfPlotpoints[i]); }
     }
     #endregion
 
@@ -2408,11 +2404,79 @@ public class ToolDetails : MonoBehaviour
         if (arrayOfPlotpointLookup != null)
         {
             //default values first
-            for (int inner = 0; inner < arrayOfPlotpointLookup.Length; inner++)
+            for (int inner = 0; inner < arrayOfPlotpointLookup.GetUpperBound(0) + 1; inner++)
             {
                 for (int outer = 0; outer < (int)ThemeType.Count; outer++)
                 {
+                    /*Debug.LogFormat("[Tst] ToolDetails.cs -> InitialisePlotpointLookup: inner {0}, outer {1}{2}", inner, outer, "\n");*/
                     arrayOfPlotpointLookup[inner, outer] = "";
+                }
+            }
+            //populate array with data from dictOfPlotpoints
+            int index;
+            Dictionary<string, Plotpoint> dictOfPlotpoints = ToolManager.i.toolDataScript.GetDictOfPlotpoints();
+            if (dictOfPlotpoints != null)
+            {
+                foreach(var plot in dictOfPlotpoints)
+                {
+                    //action
+                    if (plot.Value.listAction.Count > 0)
+                    {
+                        for (int i = 0; i < plot.Value.listAction.Count; i++)
+                        {
+                            index = plot.Value.listAction[i] - 1;
+                            arrayOfPlotpointLookup[index, (int)ThemeType.Action] = plot.Value.refTag;
+                        }
+                    }
+                    //tension
+                    if (plot.Value.listTension.Count > 0)
+                    {
+                        for (int i = 0; i < plot.Value.listTension.Count; i++)
+                        {
+                            index = plot.Value.listTension[i] - 1;
+                            arrayOfPlotpointLookup[index, (int)ThemeType.Tension] = plot.Value.refTag;
+                        }
+                    }
+                    //mystery
+                    if (plot.Value.listMystery.Count > 0)
+                    {
+                        for (int i = 0; i < plot.Value.listMystery.Count; i++)
+                        {
+                            index = plot.Value.listMystery[i] - 1;
+                            arrayOfPlotpointLookup[index, (int)ThemeType.Mystery] = plot.Value.refTag;
+                        }
+                    }
+                    //social
+                    if (plot.Value.listSocial.Count > 0)
+                    {
+                        for (int i = 0; i < plot.Value.listSocial.Count; i++)
+                        {
+                            index = plot.Value.listSocial[i] - 1;
+                            arrayOfPlotpointLookup[index, (int)ThemeType.Social] = plot.Value.refTag;
+                        }
+                    }
+                    //personal
+                    if (plot.Value.listPersonal.Count > 0)
+                    {
+                        for (int i = 0; i < plot.Value.listPersonal.Count; i++)
+                        {
+                            index = plot.Value.listPersonal[i] - 1;
+                            arrayOfPlotpointLookup[index, (int)ThemeType.Personal] = plot.Value.refTag;
+                        }
+                    }
+                }
+            }
+            else { Debug.LogError("Invalid dictOfPlotpoints (Null)"); }
+            //data validation
+            string test;
+            for (int inner = 0; inner < arrayOfPlotpointLookup.GetUpperBound(0) + 1; inner++)
+            {
+                for (int outer = 0; outer < (int)ThemeType.Count; outer++)
+                {
+                    /*Debug.LogFormat("[Tst] ToolDetails.cs -> InitialisePlotpointLookup: inner {0}, outer {1}{2}", inner, outer, "\n");*/
+                    test = arrayOfPlotpointLookup[inner, outer];
+                    if (test.Length == 0)
+                    { Debug.LogWarningFormat("Invalid string (Empty) for arrayOfPlotpointLookup[{0},{1}]", inner, outer); }
                 }
             }
         }
