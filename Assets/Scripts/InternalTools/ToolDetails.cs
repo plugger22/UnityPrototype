@@ -17,6 +17,8 @@ public class ToolDetails : MonoBehaviour
         InitialisePlotpoints();
     }
 
+
+    #region InitialisePlotpoints
     /// <summary>
     /// Plotpoints initialisation
     /// </summary>
@@ -28,22 +30,22 @@ public class ToolDetails : MonoBehaviour
             {
                 tag = "Conclusion",
                 refTag = "Conclusion",
-                listAction = new List<int>(){},
-                listTension = new List<int>(){},
-                listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listAction = new List<int>(){1,2,3,4,5,6,7,8},
+                listTension = new List<int>(){1,2,3,4,5,6,7,8},
+                listMystery = new List<int>(){1,2,3,4,5,6,7,8},
+                listSocial = new List<int>(){1,2,3,4,5,6,7,8},
+                listPersonal = new List<int>(){1,2,3,4,5,6,7,8},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
             new Plotpoint(){
                 tag = "None",
                 refTag = "None",
-                listAction = new List<int>(){},
-                listTension = new List<int>(){},
-                listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listAction = new List<int>(){9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24},
+                listTension = new List<int>(){9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24},
+                listMystery = new List<int>(){9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24},
+                listSocial = new List<int>(){9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24},
+                listPersonal = new List<int>(){9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
@@ -51,8 +53,8 @@ public class ToolDetails : MonoBehaviour
                 tag = "Into the Unknown",
                 refTag = "IntoTheUnknown",
                 listAction = new List<int>(){},
-                listTension = new List<int>(){},
-                listMystery = new List<int>(){},
+                listTension = new List<int>(){25,26},
+                listMystery = new List<int>(){25,26},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
@@ -61,7 +63,7 @@ public class ToolDetails : MonoBehaviour
             new Plotpoint(){
                 tag = "A Character is attacked in a Non-Lethal way",
                 refTag = "AttackedNonLethal",
-                listAction = new List<int>(){},
+                listAction = new List<int>(){25,26},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
@@ -73,7 +75,7 @@ public class ToolDetails : MonoBehaviour
                 tag = "A needed Resource runs out",
                 refTag = "ResourceRunsOut",
                 listAction = new List<int>(){},
-                listTension = new List<int>(){},
+                listTension = new List<int>(){27},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
@@ -85,7 +87,7 @@ public class ToolDetails : MonoBehaviour
                 refTag = "UsefulInfoUnknown",
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
-                listMystery = new List<int>(){},
+                listMystery = new List<int>(){27,28},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
@@ -95,7 +97,7 @@ public class ToolDetails : MonoBehaviour
                 tag = "Impending Doom",
                 refTag = "ImpendingDoom",
                 listAction = new List<int>(){},
-                listTension = new List<int>(){},
+                listTension = new List<int>(){28},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
@@ -108,7 +110,7 @@ public class ToolDetails : MonoBehaviour
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
+                listSocial = new List<int>(){25,26},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
@@ -120,7 +122,7 @@ public class ToolDetails : MonoBehaviour
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listPersonal = new List<int>(){25,26},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
@@ -128,13 +130,15 @@ public class ToolDetails : MonoBehaviour
                 tag = "A Motive Free Crime",
                 refTag = "MotiveFreeCrime",
                 listAction = new List<int>(){},
-                listTension = new List<int>(){},
-                listMystery = new List<int>(){},
+                listTension = new List<int>(){29},
+                listMystery = new List<int>(){29,30},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
+             
+            // - - -
 
             new Plotpoint(){
                 tag = "Collateral Damage",
@@ -2180,8 +2184,7 @@ public class ToolDetails : MonoBehaviour
             Debug.LogFormat("[Tst] ToolDetails -> InitialisePlotpoints: There are {0} records in the dictOfPlotponts{1}", dictOfPlotpoints.Count, "\n");
         }
         else { Debug.LogError("Invalid dictOfPlotpoints (Null)"); }
-
-
     }
+    #endregion
 
 }
