@@ -17,14 +17,6 @@ public class ToolManager : MonoBehaviour
     private float mouseWheelInput;                      //used for detecting mouse wheel input in the Update method
     #endregion
 
-    #region Collections
-    //
-    // - - - Collections
-    //
-    public Dictionary<string, Story> dictOfStories = new Dictionary<string, Story>();
-
-    #endregion
-
     #region Components
     public static ToolManager i = null;                                 //static instance of toolManager which allows it to be accessed by any other script
 
@@ -32,6 +24,7 @@ public class ToolManager : MonoBehaviour
     [HideInInspector] public ToolDataManager toolDataScript;
     [HideInInspector] public ToolFileManager toolFileScript;
     [HideInInspector] public ToolInput toolInputScript;
+    [HideInInspector] public ToolDetails toolDetailScript;
     //GUI
     [HideInInspector] public AdventureUI adventureUIScript;
     [HideInInspector] public ToolUI toolUIScript;
@@ -54,6 +47,7 @@ public class ToolManager : MonoBehaviour
         toolDataScript = GetComponent<ToolDataManager>();
         toolFileScript = GetComponent<ToolFileManager>();
         toolInputScript = GetComponent<ToolInput>();
+        toolDetailScript = GetComponent<ToolDetails>();
         //gui
         adventureUIScript = AdventureUI.Instance();
         toolUIScript = ToolUI.Instance();
@@ -63,6 +57,7 @@ public class ToolManager : MonoBehaviour
         Debug.Assert(adventureUIScript != null, "Invalid adventureUIScript (Null)");
         Debug.Assert(toolUIScript != null, "Invalid toolUIScript (Null)");
         Debug.Assert(toolInputScript != null, "Invalid toolInputScript (Null)");
+        Debug.Assert(toolDetailScript != null, "Invalid toolDetailScript (Null)");
     }
     #endregion
 
@@ -81,6 +76,7 @@ public class ToolManager : MonoBehaviour
     {
         toolUIScript.Initialise();
         toolFileScript.Initialise();
+        toolDetailScript.Initialise();
         adventureUIScript.Initialise();
         adventureScript.Initialise();
     }
@@ -103,7 +99,6 @@ public class ToolManager : MonoBehaviour
         { toolInputScript.ProcessKeyInput(); }
     }
     #endregion
-
 
 
 

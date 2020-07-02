@@ -10,7 +10,8 @@ using UnityEngine;
 public class ToolDataManager : MonoBehaviour
 {
 
-    public Dictionary<string, Story> dictOfStories = new Dictionary<string, Story>();
+    private Dictionary<string, Story> dictOfStories = new Dictionary<string, Story>();
+    private Dictionary<string, Plotpoint> dictOfPlotpoints = new Dictionary<string, Plotpoint>();
 
     //
     // - - - Stories
@@ -113,6 +114,13 @@ public class ToolDataManager : MonoBehaviour
     /// <returns></returns>
     public List<Story> GetListOfStories()
     { return dictOfStories.Values.ToList(); }
+
+    //
+    // - - - Plotpoints
+    //
+
+    public Dictionary<string, Plotpoint> GetDictOfPlotpoints()
+    { return dictOfPlotpoints; }
 
     //new methods above here
 }

@@ -15,6 +15,7 @@ namespace toolsAPI
     public enum ThemeType { Action, Tension, Social, Mystery, Personal, Count }
     public enum StoryStatus { New, Logical, Data }
     public enum ListItemStatus { None, PlotLine, Character }    //what's currently selected on the Aventure/list page
+    public enum PlotpointType { Normal }
 
 
 
@@ -299,7 +300,7 @@ namespace toolsAPI
 
     #region PlotLine
     /// <summary>
-    /// Plotline class (Story.cs)
+    /// Plotline class (Story.cs) A plotline is an ongoing Theme running through the adventure
     /// </summary>
     [System.Serializable]
     public class PlotLine
@@ -335,5 +336,18 @@ namespace toolsAPI
     }
     #endregion
 
+    #region Plotpoint
+    /// <summary>
+    /// Individual Plotpoint (a Turning Point scene is made up of multiple plotpoints)
+    /// </summary>
+    [System.Serializable]
+    public class Plotpoint
+    {
+        public string tag;
+        public string details;
+        public PlotpointType type;
+    }
+
+    #endregion
 }
 #endif
