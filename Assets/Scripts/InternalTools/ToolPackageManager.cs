@@ -12,7 +12,7 @@ namespace toolsAPI
 
     public enum ToolModal { Menu, Main, New, Lists }
     public enum ToolModalType { Read, Edit }
-    public enum ThemeType { Action, Tension, Social, Mystery, Personal, Count }
+    public enum ThemeType { Action, Tension, Mystery, Social, Personal, Count }   //NOTE: Order matters (ToolDetails.cs)
     public enum StoryStatus { New, Logical, Data }
     public enum ListItemStatus { None, PlotLine, Character }    //what's currently selected on the Aventure/list page
     public enum PlotpointType { Normal }
@@ -339,14 +339,20 @@ namespace toolsAPI
     #region Plotpoint
     /// <summary>
     /// Individual Plotpoint (a Turning Point scene is made up of multiple plotpoints)
+    /// NOTE: Not Serializable (only the refTag is saved elsewhere as a key to the dictOfPlotLines that is hardcoded and loaded at start
     /// </summary>
-    [System.Serializable]
     public class Plotpoint
     {
-        public string refTag;                      //single string reference tag used for dictionaries, lookup tables, etc
+        public string refTag;                       //single string reference tag used for dictionaries, lookup tables, etc
         public string tag;
         public string details;
         public PlotpointType type;
+        public int numberOfCharacters;              //number of characters involved
+        public List<int> listAction;                //die roll numbers, leave list empty for none
+        public List<int> listTension;
+        public List<int> listMystery;
+        public List<int> listSocial;
+        public List<int> listPersonal;
     }
 
     #endregion
