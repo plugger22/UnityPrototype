@@ -14,6 +14,9 @@ public class ToolDataManager : MonoBehaviour
     private Dictionary<string, Plotpoint> dictOfPlotpoints = new Dictionary<string, Plotpoint>();
     private Dictionary<string, MetaPlotpoint> dictOfMetaPlotpoints = new Dictionary<string, MetaPlotpoint>();
 
+    //lookup tables
+    private string[,] arrayOfPlotpointLookup = new string[100, (int)ThemeType.Count];
+
     //
     // - - - Stories
     //
@@ -125,6 +128,10 @@ public class ToolDataManager : MonoBehaviour
 
     public Dictionary<string, MetaPlotpoint> GetDictOfMetaPlotpoints()
     { return dictOfMetaPlotpoints; }
+
+
+    public string[,] GetPlotpointLookup()
+    { return arrayOfPlotpointLookup; }
 
     //new methods above here
 }

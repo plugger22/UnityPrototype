@@ -16,6 +16,7 @@ public class ToolDetails : MonoBehaviour
     {
         InitialisePlotpoints();
         InitialiseMetaPlotpoints();
+        InitialisePlotpointLookup();
     }
 
 
@@ -37,7 +38,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){1,2,3,4,5,6,7,8},
                 listPersonal = new List<int>(){1,2,3,4,5,6,7,8},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "None",
@@ -48,7 +50,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24},
                 listPersonal = new List<int>(){9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Into the Unknown",
@@ -59,7 +62,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A Character is attacked in a Non-Lethal way",
@@ -70,7 +74,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A needed Resource runs out",
@@ -81,7 +86,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Useful Information from an Uknown Source",
@@ -92,7 +98,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Impending Doom",
@@ -103,7 +110,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Outcast",
@@ -114,7 +122,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){25,26},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Persuasion",
@@ -125,7 +134,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){25,26},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A Motive Free Crime",
@@ -136,7 +146,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
              
             // - - -
@@ -150,7 +161,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Shady Places",
@@ -161,7 +173,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A Character is Attacked in a Lethal Way",
@@ -172,7 +185,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Do it, or Else",
@@ -183,7 +197,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){27},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Remote Location",
@@ -194,7 +209,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Ambush",
@@ -205,7 +221,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Sold",
@@ -216,7 +233,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){27,28},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Catastrophe",
@@ -227,7 +245,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Grisly Tone",
@@ -238,7 +257,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Character has a Clever Idea",
@@ -249,7 +269,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
 
             // - - -
@@ -263,7 +284,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Retaliation",
@@ -274,7 +296,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){29,30},
                 listPersonal = new List<int>(){28},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A Character Disappears",
@@ -285,7 +308,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Hunted",
@@ -296,7 +320,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A High Energy Gathering",
@@ -307,7 +332,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){31},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A Rare or Unique Social Gathering",
@@ -318,7 +344,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){32},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Bad Decision",
@@ -329,7 +356,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){29},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "This isn't Working",
@@ -340,7 +368,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Distraction",
@@ -351,7 +380,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
 
             // - - - 
@@ -365,7 +395,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){30,31},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "An Organisation",
@@ -376,7 +407,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){33,34},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Wanted by the Law",
@@ -387,7 +419,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){32,33},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A Resource Disappears",
@@ -398,7 +431,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "It's Your Duty",
@@ -409,7 +443,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){34,35},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Fortuitous Find",
@@ -420,7 +455,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Character Connection Severed",
@@ -431,7 +467,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){36,37},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "All is Revealed",
@@ -442,7 +479,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Humiliation",
@@ -453,7 +491,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){38},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
 
             // - - -
@@ -467,7 +506,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){35},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Useful Information From a Known Source",
@@ -478,7 +518,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Cryptic Information From a Known Source",
@@ -489,7 +530,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Lie Discovered",
@@ -500,7 +542,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A Character is Attacked to Abduct",
@@ -511,7 +554,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Something Exotic",
@@ -522,7 +566,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Immediately",
@@ -533,7 +578,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Fame",
@@ -544,7 +590,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){36},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
 
             // - - -
@@ -558,7 +605,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Betrayal",
@@ -569,7 +617,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){39,40},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A Crime is Committed",
@@ -580,7 +629,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A Character is Incapacitated",
@@ -591,7 +641,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){41,42},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "It's a Secret",
@@ -602,7 +653,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Something Lost has been Found",
@@ -613,7 +665,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Scapegoat",
@@ -624,7 +677,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){37},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Nowhere to Run",
@@ -635,7 +689,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "At Night",
@@ -646,7 +701,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "The Observer",
@@ -657,7 +713,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){38},
                 listPersonal = new List<int>(){43},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
 
             // - - -
@@ -671,7 +728,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A Secret Weapon",
@@ -682,7 +740,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Heavily Guarded",
@@ -693,7 +752,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Rescue",
@@ -704,7 +764,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Liar!",
@@ -715,7 +776,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){39},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Home Sweet Home",
@@ -726,7 +788,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){44,45},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A Character Acts out of Character",
@@ -737,7 +800,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Headquarters",
@@ -748,7 +812,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){40,41},
                 listPersonal = new List<int>(){46},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Physical Contest of Skills",
@@ -759,7 +824,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Dead",
@@ -770,7 +836,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
 
             // - - -
@@ -784,7 +851,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){42,43},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Light Urban Setting",
@@ -795,7 +863,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){44,45},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Mystery Solved",
@@ -806,7 +875,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A Work Related Gathering",
@@ -817,7 +887,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){46,47},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Family Matters",
@@ -828,7 +899,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){47,48},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Secret Information Leaked",
@@ -839,7 +911,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Suspicion",
@@ -850,7 +923,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){48},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Lose Lose",
@@ -861,7 +935,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A Figure From the Past",
@@ -872,7 +947,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){49},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
 
             // - - -
@@ -886,7 +962,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Out in the Open",
@@ -897,7 +974,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Evidence",
@@ -908,7 +986,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A Character is Diminished",
@@ -919,7 +998,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){50,51},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "The Plot Thickens",
@@ -930,7 +1010,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Enemies",
@@ -941,7 +1022,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){49},
                 listPersonal = new List<int>(){52,53},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Dubious Rationale",
@@ -952,7 +1034,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Menacing Tone",
@@ -963,7 +1046,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A Crucial Life Support System Begins to Fail",
@@ -974,7 +1058,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Dense Urban Setting",
@@ -985,7 +1070,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){50,51},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
 
             // - - - 
@@ -999,7 +1085,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){54},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Victory",
@@ -1010,7 +1097,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Taking Chances",
@@ -1021,7 +1109,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A Group is in Trouble",
@@ -1032,7 +1121,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){52,53},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Sole Survivor",
@@ -1043,7 +1133,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Token Response",
@@ -1054,7 +1145,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){54},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Cryptic Information From an Unknown Source",
@@ -1065,7 +1157,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A Common Thread",
@@ -1076,7 +1169,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
 
             // - - -
@@ -1090,7 +1184,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Stuck",
@@ -1101,7 +1196,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "At your Mercy",
@@ -1112,7 +1208,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){55,56},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Stop That",
@@ -1123,7 +1220,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Not their Master",
@@ -1134,7 +1232,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){55},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Fall From Power",
@@ -1145,7 +1244,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){57,58},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Help is Offered, For a Price",
@@ -1156,7 +1256,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){59,60},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Public Location",
@@ -1167,7 +1268,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){56,57},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
 
             // - - -
@@ -1181,7 +1283,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){58,59},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Prized Possession",
@@ -1192,7 +1295,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){61,62},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Saviour",
@@ -1203,7 +1307,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){60,61},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Disarmed",
@@ -1214,7 +1319,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "The Secret To The Power",
@@ -1225,7 +1331,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Hidden Agenda",
@@ -1236,7 +1343,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Defend or Not to Defend",
@@ -1247,7 +1355,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Crash",
@@ -1258,7 +1367,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
 
             // - - - 
@@ -1272,7 +1382,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){62,63},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Government",
@@ -1283,7 +1394,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){64,65},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Physical Barrier to Overcome",
@@ -1294,7 +1406,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Injustice",
@@ -1305,7 +1418,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){66,67},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Quiet Catastrophe",
@@ -1316,7 +1430,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "An Object of Unknown Use is Found",
@@ -1327,7 +1442,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "It's all about You",
@@ -1338,7 +1454,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){64,65},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A Celebration",
@@ -1349,7 +1466,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){68,69},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Standoff",
@@ -1360,7 +1478,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){70},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Double Down",
@@ -1371,7 +1490,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
 
             // - - -
@@ -1385,7 +1505,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Character Connection",
@@ -1396,7 +1517,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){66,67},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Religion",
@@ -1407,7 +1529,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){71},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Innocence",
@@ -1418,7 +1541,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){72},
                 listPersonal = new List<int>(){68},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Clear the Record",
@@ -1429,7 +1553,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Willing to Talk",
@@ -1440,7 +1565,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){69,70},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Theft",
@@ -1451,7 +1577,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Character Harm",
@@ -1462,7 +1589,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){71,72},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
 
             // - - -
@@ -1476,7 +1604,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Followed",
@@ -1487,7 +1616,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Framed",
@@ -1498,7 +1628,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){73},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Preparation",
@@ -1509,7 +1640,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){73,74},
                 listPersonal = new List<int>(){74,75},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "An Improbable Crime",
@@ -1520,7 +1652,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Friend Focus",
@@ -1531,7 +1664,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){76},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Untouchable",
@@ -1542,7 +1676,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){77},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Bribe",
@@ -1553,7 +1688,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){78},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Dealing with a Calamity",
@@ -1564,7 +1700,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Sudden Cessation",
@@ -1575,7 +1712,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
 
             // - - -
@@ -1589,7 +1727,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A Meeting of Minds",
@@ -1600,7 +1739,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){75},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Time Limit",
@@ -1611,7 +1751,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "The Hidden Hand",
@@ -1622,7 +1763,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A Needed Resource is Running Short",
@@ -1633,7 +1775,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Organisations in Conflict",
@@ -1644,7 +1787,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){76},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Bad News",
@@ -1655,7 +1799,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Character Assistance",
@@ -1666,7 +1811,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){79,80},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Asking for Help",
@@ -1677,7 +1823,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){81,82},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
 
             // - - -
@@ -1691,7 +1838,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Abandoned",
@@ -1702,7 +1850,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Find it Or Else",
@@ -1724,7 +1873,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Powerful Person",
@@ -1735,7 +1885,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){77},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Creepy Tone",
@@ -1746,7 +1897,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Welcome to the Plot",
@@ -1757,7 +1909,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){83},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Travel Setting",
@@ -1768,7 +1921,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){78},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
 
             // - - -
@@ -1782,7 +1936,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){79},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "An Old Deal",
@@ -1793,7 +1948,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){80},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A New Enemy",
@@ -1804,7 +1960,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Alliance",
@@ -1815,7 +1972,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){81,82},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Power over Others",
@@ -1826,7 +1984,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){83,84},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A Mysterious New Person",
@@ -1837,7 +1996,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Frenetic Activity",
@@ -1848,7 +2008,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Rural Setting",
@@ -1859,7 +2020,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){85},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
 
             // - - -
@@ -1873,7 +2035,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){84},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Someone is Where they Should Not Be",
@@ -1884,7 +2047,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Sneaky Barrier",
@@ -1895,7 +2059,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Corruption",
@@ -1906,7 +2071,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){86,87},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Vulnerability Exploited",
@@ -1917,7 +2083,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "The Promise of Reward",
@@ -1928,7 +2095,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){85,86},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Fraud",
@@ -1939,7 +2107,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
 
             // - - -
@@ -1953,7 +2122,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){88,89},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Just Cause Gone Awry",
@@ -1964,7 +2134,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){90},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Expert Knowledge",
@@ -1975,7 +2146,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){87},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A Moment of Peace",
@@ -1986,7 +2158,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "A Focus on the Mundane",
@@ -1997,7 +2170,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){88,89},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Run Away!",
@@ -2008,7 +2182,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){90,91},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Beat You To It",
@@ -2019,7 +2194,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Confrontation",
@@ -2030,7 +2206,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){91},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
 
             // - - -
@@ -2044,7 +2221,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){92,93},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Social Tension Set to Boiling",
@@ -2055,7 +2233,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){94},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Protector",
@@ -2066,7 +2245,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){92,93},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Crescendo",
@@ -2077,7 +2257,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Destroy the Thing",
@@ -2088,7 +2269,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Conspiracy Theory",
@@ -2099,7 +2281,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Servant",
@@ -2110,7 +2293,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){95},
                 listPersonal = new List<int>(){94,95},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "An Opposing Story",
@@ -2121,7 +2305,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
             new Plotpoint(){
                 tag = "Meta",
@@ -2132,7 +2317,8 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){96, 97, 98, 99, 100},
                 listPersonal = new List<int>(){96, 97, 98, 99, 100},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = ""
             },
         };
 
@@ -2161,36 +2347,43 @@ public class ToolDetails : MonoBehaviour
                 tag = "Character Exits the Adventure",
                 refTag = "CharExits",
                 listToRoll = new List<int>(){1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18},
+                details = ""
             },
             new MetaPlotpoint(){
                 tag = "Character Returns",
                 refTag = "CharReturns",
                 listToRoll = new List<int>(){19,20,21,22,23,24,25,26,27},
+                details = ""
             },
             new MetaPlotpoint(){
                 tag = "Character Steps Up",
                 refTag = "CharStepsUp",
                 listToRoll = new List<int>(){28,29,30,31,32,33,34,35,36},
+                details = ""
             },
             new MetaPlotpoint(){
                 tag = "Character Steps Down",
                 refTag = "CharStepsDown",
                 listToRoll = new List<int>(){37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55},
+                details = ""
             },
             new MetaPlotpoint(){
                 tag = "Character Downgrade",
                 refTag = "CharDowngrade",
                 listToRoll = new List<int>(){56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73},
+                details = ""
             },
             new MetaPlotpoint(){
                 tag = "Character Upgrade",
                 refTag = "CharUpgrade",
                 listToRoll = new List<int>(){74,75,76,77,78,79,80,81,82},
+                details = ""
             },
             new MetaPlotpoint(){
                 tag = "Plotline Combo",
                 refTag = "PlotlineCombo",
                 listToRoll = new List<int>(){83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100},
+                details = ""
             }
         };
         Dictionary<string, MetaPlotpoint> dictOfMetaPlotpoints = ToolManager.i.toolDataScript.GetDictOfMetaPlotpoints();
@@ -2205,6 +2398,27 @@ public class ToolDetails : MonoBehaviour
     }
     #endregion
 
+    #region InitialisePlotpointLookup
+    /// <summary>
+    /// Initialise arrayOfPlotpointLookup table
+    /// </summary>
+    private void InitialisePlotpointLookup()
+    {
+        string[,] arrayOfPlotpointLookup = ToolManager.i.toolDataScript.GetPlotpointLookup();
+        if (arrayOfPlotpointLookup != null)
+        {
+            //default values first
+            for (int inner = 0; inner < arrayOfPlotpointLookup.Length; inner++)
+            {
+                for (int outer = 0; outer < (int)ThemeType.Count; outer++)
+                {
+                    arrayOfPlotpointLookup[inner, outer] = "";
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfPlotpointLookup (Null)"); }
+    }
+    #endregion
 
     //new methods above here
 }
