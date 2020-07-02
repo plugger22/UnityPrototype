@@ -343,6 +343,7 @@ namespace toolsAPI
     [System.Serializable]
     public class Plotpoint
     {
+        public string refTag;                      //single string reference tag used for dictionaries, lookup tables, etc
         public string tag;
         public string details;
         public PlotpointType type;
