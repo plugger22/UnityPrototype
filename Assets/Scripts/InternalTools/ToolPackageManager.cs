@@ -354,7 +354,20 @@ namespace toolsAPI
         public List<int> listSocial;
         public List<int> listPersonal;
     }
+    #endregion
 
+    #region MetaPlotpoint
+    /// <summary>
+    /// Meta Plotpoint (a Turning Point scene is made up of multiple plotpoints)
+    /// NOTE: Not Serializable (only the refTag is saved elsewhere as a key to the dictOfPlotLines that is hardcoded and loaded at start
+    /// </summary>
+    public class MetaPlotpoint
+    {
+        public string refTag;                       //single string reference tag used for dictionaries, lookup tables, etc
+        public string tag;
+        public string details;
+        public List<int> listToRoll;                //die roll numbers, leave list empty for none
+    }
     #endregion
 }
 #endif

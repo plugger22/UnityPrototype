@@ -15,6 +15,7 @@ public class ToolDetails : MonoBehaviour
     public void Initialise()
     {
         InitialisePlotpoints();
+        InitialiseMetaPlotpoints();
     }
 
 
@@ -1177,7 +1178,7 @@ public class ToolDetails : MonoBehaviour
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
+                listSocial = new List<int>(){58,59},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
@@ -1189,7 +1190,7 @@ public class ToolDetails : MonoBehaviour
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listPersonal = new List<int>(){61,62},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
@@ -1199,7 +1200,7 @@ public class ToolDetails : MonoBehaviour
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
+                listSocial = new List<int>(){60,61},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
@@ -1208,7 +1209,7 @@ public class ToolDetails : MonoBehaviour
                 tag = "Disarmed",
                 refTag = "Disarmed",
                 listAction = new List<int>(){},
-                listTension = new List<int>(){},
+                listTension = new List<int>(){69,70},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
@@ -1220,7 +1221,7 @@ public class ToolDetails : MonoBehaviour
                 refTag = "SecretPower",
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
-                listMystery = new List<int>(){},
+                listMystery = new List<int>(){71,72},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
@@ -1231,7 +1232,7 @@ public class ToolDetails : MonoBehaviour
                 refTag = "HiddenAgenda",
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
-                listMystery = new List<int>(){},
+                listMystery = new List<int>(){73,74},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
@@ -1240,7 +1241,7 @@ public class ToolDetails : MonoBehaviour
             new Plotpoint(){
                 tag = "Defend or Not to Defend",
                 refTag = "DefendOrNot",
-                listAction = new List<int>(){},
+                listAction = new List<int>(){64,65},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
@@ -1251,7 +1252,7 @@ public class ToolDetails : MonoBehaviour
             new Plotpoint(){
                 tag = "Crash",
                 refTag = "Crash",
-                listAction = new List<int>(){},
+                listAction = new List<int>(){66,67},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
@@ -1260,13 +1261,15 @@ public class ToolDetails : MonoBehaviour
                 type = PlotpointType.Normal
             },
 
+            // - - - 
+
             new Plotpoint(){
                 tag = "Reinforcements",
                 refTag = "Reinforcements",
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
+                listSocial = new List<int>(){62,63},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
@@ -1277,7 +1280,7 @@ public class ToolDetails : MonoBehaviour
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
+                listSocial = new List<int>(){64,65},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
@@ -1285,7 +1288,7 @@ public class ToolDetails : MonoBehaviour
             new Plotpoint(){
                 tag = "Physical Barrier to Overcome",
                 refTag = "PhysicalBarrier",
-                listAction = new List<int>(){},
+                listAction = new List<int>(){68,69},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
@@ -1299,7 +1302,7 @@ public class ToolDetails : MonoBehaviour
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
+                listSocial = new List<int>(){66,67},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
@@ -1308,7 +1311,7 @@ public class ToolDetails : MonoBehaviour
                 tag = "Quiet Catastrophe",
                 refTag = "QuietCatastrophe",
                 listAction = new List<int>(){},
-                listTension = new List<int>(){},
+                listTension = new List<int>(){71},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
@@ -1320,7 +1323,7 @@ public class ToolDetails : MonoBehaviour
                 refTag = "ObjectUnknown",
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
-                listMystery = new List<int>(){},
+                listMystery = new List<int>(){75},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
@@ -1333,7 +1336,7 @@ public class ToolDetails : MonoBehaviour
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listPersonal = new List<int>(){64,65},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
@@ -1343,7 +1346,7 @@ public class ToolDetails : MonoBehaviour
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
+                listSocial = new List<int>(){68,69},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
@@ -1352,9 +1355,9 @@ public class ToolDetails : MonoBehaviour
                 tag = "Standoff",
                 refTag = "Standoff",
                 listAction = new List<int>(){},
-                listTension = new List<int>(){},
+                listTension = new List<int>(){72},
                 listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
+                listSocial = new List<int>(){70},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
@@ -1362,7 +1365,7 @@ public class ToolDetails : MonoBehaviour
             new Plotpoint(){
                 tag = "Double Down",
                 refTag = "DoubleDown",
-                listAction = new List<int>(){},
+                listAction = new List<int>(){70,71},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
@@ -1371,11 +1374,13 @@ public class ToolDetails : MonoBehaviour
                 type = PlotpointType.Normal
             },
 
+            // - - -
+
             new Plotpoint(){
                 tag = "Hidden Threat",
                 refTag = "HiddenThreat",
                 listAction = new List<int>(){},
-                listTension = new List<int>(){},
+                listTension = new List<int>(){73},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
@@ -1389,7 +1394,7 @@ public class ToolDetails : MonoBehaviour
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listPersonal = new List<int>(){66,67},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
@@ -1399,7 +1404,7 @@ public class ToolDetails : MonoBehaviour
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
+                listSocial = new List<int>(){71},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
@@ -1410,8 +1415,8 @@ public class ToolDetails : MonoBehaviour
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listSocial = new List<int>(){72},
+                listPersonal = new List<int>(){68},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
@@ -1420,7 +1425,7 @@ public class ToolDetails : MonoBehaviour
                 refTag = "ClearRecord",
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
-                listMystery = new List<int>(){},
+                listMystery = new List<int>(){76},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
@@ -1433,14 +1438,14 @@ public class ToolDetails : MonoBehaviour
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listPersonal = new List<int>(){69,70},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
             new Plotpoint(){
                 tag = "Theft",
                 refTag = "Theft",
-                listAction = new List<int>(){},
+                listAction = new List<int>(){72,73},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
@@ -1455,16 +1460,18 @@ public class ToolDetails : MonoBehaviour
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listPersonal = new List<int>(){71,72},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
+
+            // - - -
 
             new Plotpoint(){
                 tag = "A Need to Hide",
                 refTag = "NeedToHide",
                 listAction = new List<int>(){},
-                listTension = new List<int>(){},
+                listTension = new List<int>(){74,75},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
@@ -1475,7 +1482,7 @@ public class ToolDetails : MonoBehaviour
                 tag = "Followed",
                 refTag = "Followed",
                 listAction = new List<int>(){},
-                listTension = new List<int>(){},
+                listTension = new List<int>(){76,77},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
@@ -1487,9 +1494,9 @@ public class ToolDetails : MonoBehaviour
                 refTag = "Framed",
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
-                listMystery = new List<int>(){},
+                listMystery = new List<int>(){77},
                 listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listPersonal = new List<int>(){73},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
@@ -1499,8 +1506,8 @@ public class ToolDetails : MonoBehaviour
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listSocial = new List<int>(){73,74},
+                listPersonal = new List<int>(){74,75},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
@@ -1509,7 +1516,7 @@ public class ToolDetails : MonoBehaviour
                 refTag = "ImprobableCrime",
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
-                listMystery = new List<int>(){},
+                listMystery = new List<int>(){78},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
@@ -1522,7 +1529,7 @@ public class ToolDetails : MonoBehaviour
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listPersonal = new List<int>(){76},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
@@ -1533,7 +1540,7 @@ public class ToolDetails : MonoBehaviour
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listPersonal = new List<int>(){77},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
@@ -1544,14 +1551,14 @@ public class ToolDetails : MonoBehaviour
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listPersonal = new List<int>(){78},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
             new Plotpoint(){
                 tag = "Dealing with a Calamity",
                 refTag = "Calamity",
-                listAction = new List<int>(){},
+                listAction = new List<int>(){74,75},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
@@ -1562,7 +1569,7 @@ public class ToolDetails : MonoBehaviour
             new Plotpoint(){
                 tag = "Sudden Cessation",
                 refTag = "SuddenCessation",
-                listAction = new List<int>(){},
+                listAction = new List<int>(){76,77},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
@@ -1571,11 +1578,13 @@ public class ToolDetails : MonoBehaviour
                 type = PlotpointType.Normal
             },
 
+            // - - -
+
             new Plotpoint(){
                 tag = "It's a Trap!",
                 refTag = "ItIsATrap",
                 listAction = new List<int>(){},
-                listTension = new List<int>(){},
+                listTension = new List<int>(){78,79},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
@@ -1588,7 +1597,7 @@ public class ToolDetails : MonoBehaviour
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
+                listSocial = new List<int>(){75},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
@@ -1597,7 +1606,7 @@ public class ToolDetails : MonoBehaviour
                 tag = "Time Limit",
                 refTag = "TimeLimit",
                 listAction = new List<int>(){},
-                listTension = new List<int>(){},
+                listTension = new List<int>(){80,81},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
@@ -1609,7 +1618,7 @@ public class ToolDetails : MonoBehaviour
                 refTag = "HiddenHand",
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
-                listMystery = new List<int>(){},
+                listMystery = new List<int>(){79,80},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
@@ -1619,7 +1628,7 @@ public class ToolDetails : MonoBehaviour
                 tag = "A Needed Resource is Running Short",
                 refTag = "NeededResource",
                 listAction = new List<int>(){},
-                listTension = new List<int>(){},
+                listTension = new List<int>(){82,83},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
@@ -1632,7 +1641,7 @@ public class ToolDetails : MonoBehaviour
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
+                listSocial = new List<int>(){76},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
@@ -1641,7 +1650,7 @@ public class ToolDetails : MonoBehaviour
                 tag = "Bad News",
                 refTag = "Bad News",
                 listAction = new List<int>(){},
-                listTension = new List<int>(){},
+                listTension = new List<int>(){84,85},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
@@ -1655,7 +1664,7 @@ public class ToolDetails : MonoBehaviour
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listPersonal = new List<int>(){79,80},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
@@ -1666,16 +1675,18 @@ public class ToolDetails : MonoBehaviour
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listPersonal = new List<int>(){81,82},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
+
+            // - - -
 
             new Plotpoint(){
                 tag = "Hunker Down",
                 refTag = "HunkerDown",
                 listAction = new List<int>(){},
-                listTension = new List<int>(){},
+                listTension = new List<int>(){86},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
@@ -1686,7 +1697,7 @@ public class ToolDetails : MonoBehaviour
                 tag = "Abandoned",
                 refTag = "Abandoned",
                 listAction = new List<int>(){},
-                listTension = new List<int>(){},
+                listTension = new List<int>(){87,88},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
@@ -1698,7 +1709,7 @@ public class ToolDetails : MonoBehaviour
                 refTag = "FindItOrElse",
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
-                listMystery = new List<int>(){},
+                listMystery = new List<int>(){81,82},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
@@ -1707,8 +1718,8 @@ public class ToolDetails : MonoBehaviour
             new Plotpoint(){
                 tag = "Used Against Them",
                 refTag = "UsedAgainstThem",
-                listAction = new List<int>(){},
-                listTension = new List<int>(){},
+                listAction = new List<int>(){78},
+                listTension = new List<int>(){89},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
@@ -1721,7 +1732,7 @@ public class ToolDetails : MonoBehaviour
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
+                listSocial = new List<int>(){77},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
@@ -1730,7 +1741,7 @@ public class ToolDetails : MonoBehaviour
                 tag = "Creepy Tone",
                 refTag = "CreepyTone",
                 listAction = new List<int>(){},
-                listTension = new List<int>(){},
+                listTension = new List<int>(){90,91},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
@@ -1744,21 +1755,23 @@ public class ToolDetails : MonoBehaviour
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listPersonal = new List<int>(){83},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
             new Plotpoint(){
                 tag = "Travel Setting",
                 refTag = "TravelSetting",
-                listAction = new List<int>(){},
-                listTension = new List<int>(){},
-                listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
+                listAction = new List<int>(){79},
+                listTension = new List<int>(){92},
+                listMystery = new List<int>(){83},
+                listSocial = new List<int>(){78},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
+
+            // - - -
 
             new Plotpoint(){
                 tag = "Escort Duty",
@@ -1766,7 +1779,7 @@ public class ToolDetails : MonoBehaviour
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
+                listSocial = new List<int>(){79},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
@@ -1776,8 +1789,8 @@ public class ToolDetails : MonoBehaviour
                 refTag = "OldDeal",
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
-                listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
+                listMystery = new List<int>(){84},
+                listSocial = new List<int>(){80},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
@@ -1786,7 +1799,7 @@ public class ToolDetails : MonoBehaviour
                 tag = "A New Enemy",
                 refTag = "NewEnemy",
                 listAction = new List<int>(){},
-                listTension = new List<int>(){},
+                listTension = new List<int>(){93},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
@@ -1799,7 +1812,7 @@ public class ToolDetails : MonoBehaviour
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
+                listSocial = new List<int>(){81,82},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
@@ -1810,7 +1823,7 @@ public class ToolDetails : MonoBehaviour
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
+                listSocial = new List<int>(){83,84},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
@@ -1820,7 +1833,7 @@ public class ToolDetails : MonoBehaviour
                 refTag = " MysteriousPerson",
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
-                listMystery = new List<int>(){},
+                listMystery = new List<int>(){85},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
@@ -1829,7 +1842,7 @@ public class ToolDetails : MonoBehaviour
             new Plotpoint(){
                 tag = "Frenetic Activity",
                 refTag = "FreneticActivity",
-                listAction = new List<int>(){},
+                listAction = new List<int>(){80,81},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
@@ -1841,13 +1854,15 @@ public class ToolDetails : MonoBehaviour
                 tag = "Rural Setting",
                 refTag = "RuralSetting",
                 listAction = new List<int>(){},
-                listTension = new List<int>(){},
-                listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
+                listTension = new List<int>(){94},
+                listMystery = new List<int>(){86},
+                listSocial = new List<int>(){85},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
+
+            // - - -
 
             new Plotpoint(){
                 tag = "Likable",
@@ -1856,7 +1871,7 @@ public class ToolDetails : MonoBehaviour
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listPersonal = new List<int>(){84},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
@@ -1865,7 +1880,7 @@ public class ToolDetails : MonoBehaviour
                 refTag = "ShouldNotBe",
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
-                listMystery = new List<int>(){},
+                listMystery = new List<int>(){87,88},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
@@ -1874,7 +1889,7 @@ public class ToolDetails : MonoBehaviour
             new Plotpoint(){
                 tag = "Sneaky Barrier",
                 refTag = "SneakyBarrier",
-                listAction = new List<int>(){},
+                listAction = new List<int>(){82,83},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
@@ -1888,7 +1903,7 @@ public class ToolDetails : MonoBehaviour
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
+                listSocial = new List<int>(){86,87},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
@@ -1897,8 +1912,8 @@ public class ToolDetails : MonoBehaviour
                 tag = "Vulnerability Exploited",
                 refTag = "VulnerableExploit",
                 listAction = new List<int>(){},
-                listTension = new List<int>(){},
-                listMystery = new List<int>(){},
+                listTension = new List<int>(){95},
+                listMystery = new List<int>(){89},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
@@ -1911,7 +1926,7 @@ public class ToolDetails : MonoBehaviour
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listPersonal = new List<int>(){85,86},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
@@ -1920,12 +1935,14 @@ public class ToolDetails : MonoBehaviour
                 refTag = "Fraud",
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
-                listMystery = new List<int>(){},
+                listMystery = new List<int>(){90,91},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
+
+            // - - -
 
             new Plotpoint(){
                 tag = "It's Business",
@@ -1933,7 +1950,7 @@ public class ToolDetails : MonoBehaviour
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
+                listSocial = new List<int>(){88,89},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
@@ -1944,7 +1961,7 @@ public class ToolDetails : MonoBehaviour
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
+                listSocial = new List<int>(){90},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
@@ -1956,14 +1973,14 @@ public class ToolDetails : MonoBehaviour
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listPersonal = new List<int>(){87},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
             new Plotpoint(){
                 tag = "A Moment of Peace",
                 refTag = "MomentOfPeace",
-                listAction = new List<int>(){},
+                listAction = new List<int>(){84,85},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
@@ -1978,7 +1995,7 @@ public class ToolDetails : MonoBehaviour
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listPersonal = new List<int>(){88,89},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
@@ -1989,16 +2006,16 @@ public class ToolDetails : MonoBehaviour
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listPersonal = new List<int>(){90,91},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
             new Plotpoint(){
                 tag = "Beat You To It",
                 refTag = "BeatYouToIt",
-                listAction = new List<int>(){},
+                listAction = new List<int>(){86,87},
                 listTension = new List<int>(){},
-                listMystery = new List<int>(){},
+                listMystery = new List<int>(){92,93},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
@@ -2007,14 +2024,16 @@ public class ToolDetails : MonoBehaviour
             new Plotpoint(){
                 tag = "Confrontation",
                 refTag = "Confrontation",
-                listAction = new List<int>(){},
+                listAction = new List<int>(){88,89},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
+                listSocial = new List<int>(){91},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
+
+            // - - -
 
             new Plotpoint(){
                 tag = "Argument",
@@ -2022,7 +2041,7 @@ public class ToolDetails : MonoBehaviour
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
+                listSocial = new List<int>(){92,93},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
@@ -2033,7 +2052,7 @@ public class ToolDetails : MonoBehaviour
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
+                listSocial = new List<int>(){94},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
@@ -2041,18 +2060,18 @@ public class ToolDetails : MonoBehaviour
             new Plotpoint(){
                 tag = "Protector",
                 refTag = "Protector",
-                listAction = new List<int>(){},
+                listAction = new List<int>(){90,91},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listPersonal = new List<int>(){92,93},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
             new Plotpoint(){
                 tag = "Crescendo",
                 refTag = "Crescendo",
-                listAction = new List<int>(){},
+                listAction = new List<int>(){92,93},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
@@ -2063,7 +2082,7 @@ public class ToolDetails : MonoBehaviour
             new Plotpoint(){
                 tag = "Destroy the Thing",
                 refTag = "DestroyThing",
-                listAction = new List<int>(){},
+                listAction = new List<int>(){94,95},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
@@ -2076,7 +2095,7 @@ public class ToolDetails : MonoBehaviour
                 refTag = "ConspiracyTheory",
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
-                listMystery = new List<int>(){},
+                listMystery = new List<int>(){94},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
@@ -2088,8 +2107,8 @@ public class ToolDetails : MonoBehaviour
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
                 listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listSocial = new List<int>(){95},
+                listPersonal = new List<int>(){94,95},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
@@ -2098,7 +2117,7 @@ public class ToolDetails : MonoBehaviour
                 refTag = "OpposingStory",
                 listAction = new List<int>(){},
                 listTension = new List<int>(){},
-                listMystery = new List<int>(){},
+                listMystery = new List<int>(){95},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
@@ -2107,92 +2126,14 @@ public class ToolDetails : MonoBehaviour
             new Plotpoint(){
                 tag = "Meta",
                 refTag = "Meta",
-                listAction = new List<int>(){},
-                listTension = new List<int>(){},
-                listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
+                listAction = new List<int>(){96, 97, 98, 99, 100},
+                listTension = new List<int>(){96, 97, 98, 99, 100},
+                listMystery = new List<int>(){96, 97, 98, 99, 100},
+                listSocial = new List<int>(){96, 97, 98, 99, 100},
+                listPersonal = new List<int>(){96, 97, 98, 99, 100},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal
             },
-
-            new Plotpoint(){
-                tag = "Character Exits the Adventure",
-                refTag = "CharExits",
-                listAction = new List<int>(){},
-                listTension = new List<int>(){},
-                listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
-                numberOfCharacters = 0,
-                type = PlotpointType.Normal
-            },
-            new Plotpoint(){
-                tag = "Character Returns",
-                refTag = "CharReturns",
-                listAction = new List<int>(){},
-                listTension = new List<int>(){},
-                listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
-                numberOfCharacters = 0,
-                type = PlotpointType.Normal
-            },
-            new Plotpoint(){
-                tag = "Character Steps Up",
-                refTag = "CharStepsUp",
-                listAction = new List<int>(){},
-                listTension = new List<int>(){},
-                listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
-                numberOfCharacters = 0,
-                type = PlotpointType.Normal
-            },
-            new Plotpoint(){
-                tag = "Character Steps Down",
-                refTag = "CharStepsDown",
-                listAction = new List<int>(){},
-                listTension = new List<int>(){},
-                listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
-                numberOfCharacters = 0,
-                type = PlotpointType.Normal
-            },
-            new Plotpoint(){
-                tag = "Character Downgrade",
-                refTag = "CharDowngrade",
-                listAction = new List<int>(){},
-                listTension = new List<int>(){},
-                listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
-                numberOfCharacters = 0,
-                type = PlotpointType.Normal
-            },
-            new Plotpoint(){
-                tag = "Character Upgrade",
-                refTag = "CharUpgrade",
-                listAction = new List<int>(){},
-                listTension = new List<int>(){},
-                listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
-                numberOfCharacters = 0,
-                type = PlotpointType.Normal
-            },
-            new Plotpoint(){
-                tag = "Plotline Combo",
-                refTag = "PlotlineCombo",
-                listAction = new List<int>(){},
-                listTension = new List<int>(){},
-                listMystery = new List<int>(){},
-                listSocial = new List<int>(){},
-                listPersonal = new List<int>(){},
-                numberOfCharacters = 0,
-                type = PlotpointType.Normal
-            }
         };
 
         Dictionary<string, Plotpoint> dictOfPlotpoints = ToolManager.i.toolDataScript.GetDictOfPlotpoints();
@@ -2207,4 +2148,63 @@ public class ToolDetails : MonoBehaviour
     }
     #endregion
 
+
+    #region InitialiseMetaPlotpoints
+    /// <summary>
+    /// MetaPlotpoints initialisation
+    /// </summary>
+    private void InitialiseMetaPlotpoints()
+    {
+        List<MetaPlotpoint> listOfMetaPlotpoints = new List<MetaPlotpoint>()
+        {
+                new MetaPlotpoint(){
+                tag = "Character Exits the Adventure",
+                refTag = "CharExits",
+                listToRoll = new List<int>(){1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18},
+            },
+            new MetaPlotpoint(){
+                tag = "Character Returns",
+                refTag = "CharReturns",
+                listToRoll = new List<int>(){19,20,21,22,23,24,25,26,27},
+            },
+            new MetaPlotpoint(){
+                tag = "Character Steps Up",
+                refTag = "CharStepsUp",
+                listToRoll = new List<int>(){28,29,30,31,32,33,34,35,36},
+            },
+            new MetaPlotpoint(){
+                tag = "Character Steps Down",
+                refTag = "CharStepsDown",
+                listToRoll = new List<int>(){37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55},
+            },
+            new MetaPlotpoint(){
+                tag = "Character Downgrade",
+                refTag = "CharDowngrade",
+                listToRoll = new List<int>(){56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73},
+            },
+            new MetaPlotpoint(){
+                tag = "Character Upgrade",
+                refTag = "CharUpgrade",
+                listToRoll = new List<int>(){74,75,76,77,78,79,80,81,82},
+            },
+            new MetaPlotpoint(){
+                tag = "Plotline Combo",
+                refTag = "PlotlineCombo",
+                listToRoll = new List<int>(){83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100},
+            }
+        };
+        Dictionary<string, MetaPlotpoint> dictOfMetaPlotpoints = ToolManager.i.toolDataScript.GetDictOfMetaPlotpoints();
+        if (dictOfMetaPlotpoints != null)
+        {
+            Debug.LogFormat("[Tst] ToolDetails -> InitialiseMetaPlotpoints: There are {0} records in the listOfMetaPlotponts{1}", listOfMetaPlotpoints.Count, "\n");
+            //convert list to dictionary
+            dictOfMetaPlotpoints = listOfMetaPlotpoints.ToDictionary(k => k.refTag);
+            Debug.LogFormat("[Tst] ToolDetails -> InitialiseMetaPlotpoints: There are {0} records in the dictOfMetaPlotponts{1}", dictOfMetaPlotpoints.Count, "\n");
+        }
+        else { Debug.LogError("Invalid dictOfMetaPlotpoints (Null)"); }
+    }
+    #endregion
+
+
+    //new methods above here
 }

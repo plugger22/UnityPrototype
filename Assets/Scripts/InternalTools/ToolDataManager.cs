@@ -12,6 +12,7 @@ public class ToolDataManager : MonoBehaviour
 
     private Dictionary<string, Story> dictOfStories = new Dictionary<string, Story>();
     private Dictionary<string, Plotpoint> dictOfPlotpoints = new Dictionary<string, Plotpoint>();
+    private Dictionary<string, MetaPlotpoint> dictOfMetaPlotpoints = new Dictionary<string, MetaPlotpoint>();
 
     //
     // - - - Stories
@@ -121,6 +122,9 @@ public class ToolDataManager : MonoBehaviour
 
     public Dictionary<string, Plotpoint> GetDictOfPlotpoints()
     { return dictOfPlotpoints; }
+
+    public Dictionary<string, MetaPlotpoint> GetDictOfMetaPlotpoints()
+    { return dictOfMetaPlotpoints; }
 
     //new methods above here
 }
