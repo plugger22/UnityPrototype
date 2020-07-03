@@ -1858,7 +1858,8 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "This Turning Point involves a trap of some kind. This can be a physical trap, such as adventurers falling prey to a pit in a hallway, " +
+                "to other kinds of traps, such as the summons to the peace negotiation was really just a ruse to get the leader in sights for an assassination."
             },
             new Plotpoint(){
                 tag = "A Meeting of Minds",
@@ -1870,7 +1871,7 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "This Turning Point involves two Characters coming together for a discussion of importance"
             },
             new Plotpoint(){
                 tag = "Time Limit",
@@ -1882,7 +1883,10 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "A task must be accomplished within a certain amount of time or a Character will suffer consequences. " +
+                "The time limit does not need to expire within this Turning Point and could extend beyond it further into the Adventure, " +
+                "but it should terminate within this Adventure to give the Characters a reason to accomplish the task. Failure to accomplish " +
+                "the task should be significant. For instance, if a cure to a toxin isn’t found within a day, the prince will die."
             },
             new Plotpoint(){
                 tag = "The Hidden Hand",
@@ -1894,7 +1898,9 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "Whatever is happening in this Turning Point it is clear that it was caused on purpose by someone of unknown identity. " +
+                "For instance, if a Character is ambushed by bandits, the bandit leader may make a mysterious reference to their “benefactor” " +
+                "having paid for the attack. Or, an engine failure on a ship may be found to have been caused by obvious tampering."
             },
             new Plotpoint(){
                 tag = "A Needed Resource is Running Short",
@@ -1906,7 +1912,8 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "A resource a Character needs is running low and will need to be replenished. This causes problems for the Character. " +
+                "For instance, a starship’s warp engine functions on crystals that are running out."
             },
             new Plotpoint(){
                 tag = "Organisations in Conflict",
@@ -1918,7 +1925,8 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "This Turning Point involves two or more organizations that are at odds with each other. For instance, " +
+                "two rival mafia organizations may be trying to capture a master counterfeiter to use for their own purposes."
             },
             new Plotpoint(){
                 tag = "Bad News",
@@ -1930,7 +1938,9 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "Something negative that happens in this Turning Point doesn’t happen directly in the Turning Point but is delivered " +
+                "in the form of information. The event happened remotely, and a Character is learning of it.For instance, " +
+                "Characters may learn their allies lost a crucial battle elsewhere."
             },
             new Plotpoint(){
                 tag = "Character Assistance",
@@ -1942,7 +1952,8 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){79,80},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "A Character assists another Character in some way. This assistance can be anything from coming to their aid in " +
+                "battle to giving them a shoulder to cry on."
             },
             new Plotpoint(){
                 tag = "Asking for Help",
@@ -1954,7 +1965,7 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){81,82},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "A Character approaches another Character to ask for help."
             },
 
             // - - -
@@ -1969,7 +1980,9 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "This Turning Point involves a Character needing to fortify a place of refuge. For instance, a baron must shore " +
+                "up his castle defenses against an impending attack, or a generator must be fueled up to increase a force field’s power " +
+                "before a meteor storm rains down on the planet surface."
             },
             new Plotpoint(){
                 tag = "Abandoned",
@@ -1981,7 +1994,8 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "Something needs to be abandoned or has been abandoned already in this Turning Point. For instance, a heavily damaged " +
+                "starship is going to explode in two hours and must be evacuated. Or, a Character comes upon an empty village in a forest."
             },
             new Plotpoint(){
                 tag = "Find it Or Else",
@@ -1992,7 +2006,11 @@ public class ToolDetails : MonoBehaviour
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
-                type = PlotpointType.Normal
+                type = PlotpointType.Normal,
+                details = "Something needs to be found in this Turning Point to help resolve the Plotline. The act of finding the thing could " +
+                "take place in this Turning Point, or a Character learns of the need to find something. The thing to be found can be just about " +
+                "anything, from an object such as a magic ring to open a portal, to a special person like the lone witness to a crime that proves " +
+                "an accused person is innocent"
             },
             new Plotpoint(){
                 tag = "Used Against Them",
@@ -2004,7 +2022,9 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "A resource owned or aligned with one Character is somehow turned against them in this Turning Point. For instance, a small " +
+                "starship is being pursued by three massive battle cruisers. By skillful piloting, the smaller ship causes the larger ships to collide " +
+                "with each other, using their size against them.Or, a wizard may command a powerful golem, but another wizard casts a spell to make the golem attack its master."
             },
             new Plotpoint(){
                 tag = "Powerful Person",
@@ -2016,7 +2036,9 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "This Turning Point involves a powerful person. The Character’s power can be of any nature, from a physically powerful warrior to a government " +
+                "figure with a lot of influence. Invoke a Character. If the Character is powerful, then that is the powerful person. If they are not, then the powerful " +
+                "person is someone associated with that Character in some way"
             },
             new Plotpoint(){
                 tag = "Creepy Tone",
@@ -2028,7 +2050,7 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "This Turning Point involves a creepy tone, such as a dark and forbidding place or a Character who is extremely menacing in a disturbing way."
             },
             new Plotpoint(){
                 tag = "Welcome to the Plot",
@@ -2040,7 +2062,8 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){83},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "A Character learns that they are connected to this Plotline somehow in a personal way. Maybe it involves something from their " +
+                "past or someone in their life. For instance, a detective may discover that the crime syndicate he is trying to take down is run by his long lost brother."
             },
             new Plotpoint(){
                 tag = "Travel Setting",
@@ -2052,7 +2075,7 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "This Turning Point takes place in a traveling vehicle. For instance, a ship at sea, a train, a ship hurtling through space, etc."
             },
 
             // - - -
@@ -2067,7 +2090,8 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "A Character must escort another Character somewhere. For instance, this could be a bodyguard transporting a high " +
+                "powered executive to a remote location, or a band of warriors trying to get a princess through a valley full of monsters."
             },
             new Plotpoint(){
                 tag = "An Old Deal",
@@ -2079,7 +2103,9 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "This Turning Point involves an agreement made long ago, probably even before this Adventure began. For instance, " +
+                "occult investigators researching a mysterious death discover that the deceased person sold his soul to a demon ten years " +
+                "ago, and they suspect the death is the demon having come to collect."
             },
             new Plotpoint(){
                 tag = "A New Enemy",
@@ -2091,7 +2117,9 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "This Turning Point presents a new threat to a Character. It is a threat that may or may not be directly related to " +
+                "any Plotlines but must be dealt with all the same. For instance, explorers deep under the earth are moving through an ancient " +
+                "ruin to find their lost comrade when they are beset upon by dinosaurs who nest in the area. This results automatically in a New Character."
             },
             new Plotpoint(){
                 tag = "Alliance",
@@ -2103,7 +2131,9 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "One group offers to ally with another. This may be a surprise alliance, such as an enemy wanting to join with another enemy " +
+                "to take on a common foe, or it could be something less dramatic, such as the FBI offering to assist local law enforcement in solving a " +
+                "crime. The “groups” in question can be formal organizations or something looser, such as groups of individuals."
             },
             new Plotpoint(){
                 tag = "Power over Others",
@@ -2115,7 +2145,9 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "A Character has power over other Characters in some way, shape, or form in this Turning Point. This power puts the Character in " +
+                "a commanding position in regards to the others. For instance, the lord of a land demands all the peasants pay high taxes or else his men will " +
+                "oppress them. Or, the producer of an anti-toxin for a disease that an entire village has demands they give him whatever he wants in order to receive the medicine"
             },
             new Plotpoint(){
                 tag = "A Mysterious New Person",
@@ -2127,7 +2159,8 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "This Turning Point automatically Invokes a New Character, added to the List, whose identity or purpose is not fully known. " +
+                "Maybe they are a shadowy visitor at a meeting, or someone who seems to have authority over someone else."
             },
             new Plotpoint(){
                 tag = "Frenetic Activity",
@@ -2139,7 +2172,8 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "This Turning Point involves action coming fast and furious at a Character. It should be a rapid fire succession of action, " +
+                "for instance a series of attackers, an out of control boat rocketing down a rapids approaching peril after peril, running a gauntlet of some kind through a series of traps, etc"
             },
             new Plotpoint(){
                 tag = "Rural Setting",
@@ -2151,7 +2185,7 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "This Turning Point involves a rural setting, such as out in the country or at a farm."
             },
 
             // - - -
@@ -2166,7 +2200,9 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){84},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "This Turning Point involves a Character who is very likable to another Character. Whoever it is, " +
+                "it should be someone who generates sympathy. The Character’s likability should be strong enough to motivate the other Character’s actions. " +
+                "For instance, a jaded cop thought he has seen it all, but a kidnapped girl kindles in him a desire to save her and redeem himself."
             },
             new Plotpoint(){
                 tag = "Someone is Where they Should Not Be",
@@ -2178,7 +2214,8 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "A Character is at a location where they should not normally be. For instance, an ally is seen at the headquarters of an enemy, " +
+                "a wealthy socialite is found meeting with a mafia boss at a restaurant, etc."
             },
             new Plotpoint(){
                 tag = "Sneaky Barrier",
@@ -2190,7 +2227,9 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "A barrier needs to be overcome through stealth or dexterity. For instance, a monster lives in a cave that is only " +
+                "accessible by climbing a high, treacherous cliffside. Or, there are too many ninjas guarding the villain to fight your way " +
+                "through, but you can slip past them unseen if you are skilled enough."
             },
             new Plotpoint(){
                 tag = "Corruption",
@@ -2202,7 +2241,8 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "This Turning Point involves corruption of a social apparatus of some kind. For instance, a police officer on the take " +
+                "from the mob, or the villain of the Adventure turns out to be a local bureaucrat using his position to give smugglers access to a dock at night."
             },
             new Plotpoint(){
                 tag = "Vulnerability Exploited",
@@ -2214,7 +2254,9 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "This Turning Point involves a vulnerability of some kind being exploited by a Character. For instance, someone knowing of another’s " +
+                "crime and blackmailing them, Characters learning of a starbase’s secret vulnerability that allows it to be destroyed, etc. This Turning Point " +
+                "can either involve learning about the vulnerability or actively exploiting it."
             },
             new Plotpoint(){
                 tag = "The Promise of Reward",
@@ -2226,7 +2268,9 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){85,86},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "This Turning Point involves a Character faced with a substantial reward for their participation. For instance, maybe a village " +
+                "is willing to give a group of adventurers everything they have if they fight off a band of marauding goblins.The reward should be for " +
+                "doing something that is considered legitimate or good."
             },
             new Plotpoint(){
                 tag = "Fraud",
@@ -2238,7 +2282,9 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "A Character is a fraud. Whatever it is they are presenting themselves as, or whatever story they have told of themselves, is false. This result " +
+                "differs from Hidden Agenda, where in Hidden Agenda the Character may legitimately have both motives in mind, whereas in Fraud the image or story they are " +
+                "presenting is completely fake. For instance, the prince claiming he is the rightful ruler of a kingdom is actually a shapeshifting doppelgänger assuming the role."
             },
 
             // - - -
@@ -2253,7 +2299,8 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "This Turning Point involves business or commerce in some way. It can either be a business transaction, or a business is involved in the Turning Point. " +
+                "For instance, a corporation hires a super hero to protect an important shipment, or a book of antiquity containing a needed spell has to be purchased from an auction house."
             },
             new Plotpoint(){
                 tag = "Just Cause Gone Awry",
@@ -2265,7 +2312,8 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "This Turning Point involves something that began as a just cause but has spiraled into something unjust. For instance, " +
+                "a hero takes down a group of orcs terrorizing a town, saving the people, but now the hero has installed himself as the overlord of the town and is demanding tribute."
             },
             new Plotpoint(){
                 tag = "Expert Knowledge",
@@ -2277,7 +2325,8 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){87},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "This Turning Point involves a Character who has very specific and specialized knowledge or skills that come into play during the Turning Point. " +
+                "For instance, only the genius of Dr. Rayder can figure out the intricacies of the alien device, or it’s discovered that a killer is murdering people with his knowledge of exotic poisons."
             },
             new Plotpoint(){
                 tag = "A Moment of Peace",
@@ -2289,7 +2338,8 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "Whatever else is going on in this Turning Point, it should overall be a peaceful time for a Character. " +
+                "For instance, there is a lull in the war where the combatants have a chance to enjoy a drink together and relax before they must fight again."
             },
             new Plotpoint(){
                 tag = "A Focus on the Mundane",
@@ -2301,7 +2351,8 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){88,89},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "This Turning Point involves a focus on something mundane and ordinary, such as a person’s living room or a meal. " +
+                "This mundane thing may be coupled with something extraordinary in the Turning Point. For instance, a Character is killed when his nightly dinner is poisoned, or a family portrait is found to be a cursed item."
             },
             new Plotpoint(){
                 tag = "Run Away!",
@@ -2313,7 +2364,8 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){90,91},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "A Character flees or has fled. The actual flight may occur in this Turning Point or it may be learned of. " +
+                "For instance, a Character runs screaming as a horrible monster appears on the scene, or, a Character who disappeared earlier in the Adventure is learned to have left town fearing for his life."
             },
             new Plotpoint(){
                 tag = "Beat You To It",
@@ -2325,7 +2377,8 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "Whatever is happening in this Turning Point that involves arriving at a location for some purpose, " +
+                "a Character discovers that someone else has arrived before them.For instance, a Character goes to the morgue to check out a clue and learns that another investigator already showed up and took the body."
             },
             new Plotpoint(){
                 tag = "Confrontation",
@@ -2337,7 +2390,8 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "This Turning Point involves Characters meeting in a confrontation that may turn physical if things don’t go well. " +
+                "For instance, a Character meets the leader of a street gang to get information, but the gang is notoriously twitchy and violent."
             },
 
             // - - -
@@ -2352,7 +2406,7 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "A disagreement between two Characters leads to a conflict in this Turning Point."
             },
             new Plotpoint(){
                 tag = "Social Tension Set to Boiling",
@@ -2364,7 +2418,9 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "An element of extreme social tension is near the breaking point. This Turning Point involves some aspect of that, " +
+                "such as an event that increases the tension or an event that is a result of the tension. For instance, two nations at the brink of war have a " +
+                "border skirmish as pressure rises among soldiers."
             },
             new Plotpoint(){
                 tag = "Protector",
@@ -2376,7 +2432,8 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){92,93},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "A Character must protect someone or something in this Turning Point. If this is an Action Plot Point, " +
+                "the Character must actively protect in this Turning Point from a threat. If it is a Personal Plot Point, then the Character receives the protection duty in this Turning Point."
             },
             new Plotpoint(){
                 tag = "Crescendo",
@@ -2388,7 +2445,9 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "A series of events that has taken place in this Adventure culminates in this Turning Point. " +
+                "If this is early in the Adventure or in this Plotline, then instead the Adventure or Plotline gets off to a fiery start. For instance, " +
+                "Characters following clues to track a cult finally discover their lair, resulting in a mass battle.Or, a Plotline about retrieving a stolen gem begins with a very elaborate theft"
             },
             new Plotpoint(){
                 tag = "Destroy the Thing",
@@ -2400,7 +2459,8 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "A Character must destroy or try to destroy something in this Turning Point. " +
+                "Maybe a party of dungeon delvers reaches the heart of the cavern where they must break a mystic seal."
             },
             new Plotpoint(){
                 tag = "Conspiracy Theory",
@@ -2412,7 +2472,10 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "A Character believes in a scenario that explains a problem in this Adventure. " +
+                "The Character may be right or wrong, but the theory may cause action on the part of the Character. " +
+                "For instance, a group is holed up in a mall during a zombie apocalypse. One Character believes it’s just a disease, " +
+                "so they encourage the others not to shoot the zombies."
             },
             new Plotpoint(){
                 tag = "Servant",
@@ -2424,7 +2487,7 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){94,95},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = " This Turning Point involves a servant or proxy of another Character. Invoke a Character for the servant to represent."
             },
             new Plotpoint(){
                 tag = "An Opposing Story",
@@ -2436,7 +2499,9 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "A Character learns of an alternate version of something they already know about from this Adventure. For instance, " +
+                "while investigating a starship that had been waylaid by aliens, Characters discover a crewmember who claims the attackers " +
+                "were members of a rival guild and not aliens."
             },
             new Plotpoint(){
                 tag = "Meta",
@@ -2448,7 +2513,8 @@ public class ToolDetails : MonoBehaviour
                 listPersonal = new List<int>(){96, 97, 98, 99, 100},
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
-                details = ""
+                details = "This is a special Plot Point category with Plot Points that change the Characters List or combine Plotlines. Go to the Meta " +
+                "Plot Points Table and roll 1d100 on it for your Plot Point."
             },
         };
 
@@ -2473,43 +2539,66 @@ public class ToolDetails : MonoBehaviour
                 tag = "Character Exits the Adventure",
                 refTag = "CharExits",
                 listToRoll = new List<int>(){1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18},
-                details = ""
+                details = "A Character, who is not a Player Character, is removed from the Characters List completely. Cross out all references to that " +
+                "Character on the Characters List. If there are no nonPlayer Characters, then re-roll for another Meta Plot Point.This change can be reflected " +
+                "in the activity in this Turning Point or not.For instance, you may explain the Character being removed from the Adventure by having that " +
+                "Character die in the Turning Point.Or, you simply remove them from the Characters List and decide that their involvement in the Adventure " +
+                "is over.If, when rolling on the Characters List to determine who this Character is, you roll a Player Character or “New Character”, " +
+                "then consider it a result of “Choose The Most Logical Character”."
             },
             new MetaPlotpoint(){
                 tag = "Character Returns",
                 refTag = "CharReturns",
                 listToRoll = new List<int>(){19,20,21,22,23,24,25,26,27},
-                details = ""
+                details = "A Character who previously had been removed from the Adventure returns. Write that Character back into the Characters List with a " +
+                "single listing. If there are no Characters to return, then treat this as a “New Character” result and use this Plot Point to introduce a new " +
+                "Character into the Turning Point. If there is more than one Character who can return, then choose the most logical Character to return. " +
+                "This change can be reflected in the activity in this Turning Point or not." 
             },
             new MetaPlotpoint(){
                 tag = "Character Steps Up",
                 refTag = "CharStepsUp",
                 listToRoll = new List<int>(){28,29,30,31,32,33,34,35,36},
-                details = ""
+                details = "A Character becomes more important, gaining another slot on the Characters List even if it pushes them past 3 slots.When you roll on the " +
+                "Characters List to see who the Character is, treat a result of “New Character” as “Choose The Most Logical Character”. " +
+                "This change can be reflected in the activity in this Turning Point or not."
             },
             new MetaPlotpoint(){
                 tag = "Character Steps Down",
                 refTag = "CharStepsDown",
                 listToRoll = new List<int>(){37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55},
-                details = ""
+                details = "A Character becomes less important, remove them from one slot on the Characters List even if it removes them completely from the List. " +
+                "If this would remove a Player Character completely from the List, or if when rolling for the Character you get a result of “New Character”, " +
+                "then treat this as a result of “Choose The Most Logical Character”. If there is no possible Character to choose without removing a Player Character " +
+                "completely from the List, then roll again on the Meta Plot Points Table.This change can be reflected in the activity in this Turning Point or not"
             },
             new MetaPlotpoint(){
                 tag = "Character Downgrade",
                 refTag = "CharDowngrade",
                 listToRoll = new List<int>(){56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73},
-                details = ""
+                details = "A Character becomes less important, remove them from two slots on the Characters List even if it removes them completely from the List. " +
+                "If this would remove a Player Character completely from the List, or if when rolling for the Character you get a result of “New Character”, then " +
+                "treat this as a result of “Choose The Most Logical Character”. If there is no possible Character to choose without removing a Player Character " +
+                "completely from the List, then roll again on the Meta Plot Points Table.This change can be reflected in the activity in this Turning Point or not."
             },
             new MetaPlotpoint(){
                 tag = "Character Upgrade",
                 refTag = "CharUpgrade",
                 listToRoll = new List<int>(){74,75,76,77,78,79,80,81,82},
-                details = ""
+                details = "A Character becomes more important, gaining 2 slots on the Characters List even if it pushes them past 3 slots.When you roll on the Characters " +
+                "List to see who the Character is, treat a result of “New Character” as “Choose The Most Logical Character”. This change can be reflected in the activity " +
+                "in this Turning Point or not."
             },
             new MetaPlotpoint(){
                 tag = "Plotline Combo",
                 refTag = "PlotlineCombo",
                 listToRoll = new List<int>(){83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100},
-                details = ""
+                details = "This Turning Point is about more than one Plotline at the same time. Roll again on the Plotlines List and add that Plotline to this Turning Point " +
+                "along with the original Plotline rolled. If when rolling for an additional Plotline you roll the same Plotline already in use for this Turning Point, " +
+                "then treat the result as a “Choose The Most Logical Plotline”. If there are no other Plotlines to choose from, then create a new Plotline as the " +
+                "additional Plotline.If a Conclusion is rolled as a Plot Point during this Turning Point, apply it to the Plotline that seems most appropriate. " +
+                "If another Conclusion is rolled, continue to apply them to the additional Plotlines in this Turning Point if you can. It is possible with repeated " +
+                "results of “Plotline Combo” to have more than two Plotlines combined in this way."
             }
         };
         Dictionary<string, MetaPlotpoint> dictOfMetaPlotpoints = ToolManager.i.toolDataScript.GetDictOfMetaPlotpoints();
