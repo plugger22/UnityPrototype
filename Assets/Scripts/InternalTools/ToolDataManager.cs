@@ -15,8 +15,19 @@ public class ToolDataManager : MonoBehaviour
     private Dictionary<string, MetaPlotpoint> dictOfMetaPlotpoints = new Dictionary<string, MetaPlotpoint>();
 
     //lookup tables
-    private string[,] arrayOfPlotpointLookup = new string[100, (int)ThemeType.Count];
-    private string[] arrayOfMetaPlotpointLookup = new string[100];
+    private string[,] arrayOfPlotpointLookup;
+    private string[] arrayOfMetaPlotpointLookup;
+    private string[] arrayOfIndentityLookup;
+    private string[] arrayOfDescriptorsLookup;
+
+    public ToolDataManager()
+    {
+        //initialise collections
+        arrayOfPlotpointLookup = new string[100, (int)ThemeType.Count];
+        arrayOfMetaPlotpointLookup = new string[100];
+        arrayOfIndentityLookup = new string[100];
+        arrayOfDescriptorsLookup = new string[100];
+    }
 
     //
     // - - - Stories
@@ -136,6 +147,12 @@ public class ToolDataManager : MonoBehaviour
     public string[] GetMetaPlotpointLookup()
     { return arrayOfMetaPlotpointLookup; }
 
+    public string[] GetArrayOfCharacterIdentity()
+    { return arrayOfIndentityLookup; }
+
+    public string[] GetArrayOfCharacterDescriptors()
+    { return arrayOfDescriptorsLookup; }
+
     /// <summary>
     /// Add Plotpoint
     /// </summary>
@@ -161,6 +178,15 @@ public class ToolDataManager : MonoBehaviour
         catch (ArgumentException)
         { Debug.LogWarningFormat("Duplicate MetaPlotpoint exists in dict for \"{0}\"", meta.refTag); }
     }
+
+    /*public void SetArrayOfCharacterIdentity(CharacterIdentity[] arrayOfIdentity)
+    {
+        if (arrayOfIdentity != null)
+        {
+
+        }
+        else { Debug.LogError("Invalid arrayOfIdentity (Null)"); }
+    }*/
 
     //new methods above here
 }

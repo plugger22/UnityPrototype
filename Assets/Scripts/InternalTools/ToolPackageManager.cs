@@ -369,5 +369,30 @@ namespace toolsAPI
         public List<int> listToRoll;                //die roll numbers, leave list empty for none
     }
     #endregion
+
+    #region CharacterIndentity
+    /// <summary>
+    /// Character identity
+    /// </summary>
+    public class CharacterIdentity
+    {
+        public string tag;
+        public List<int> listToRoll;
+        public bool isRollAgain;                  //if true then roll twice
+    }
+    #endregion
+
+    #region CharacterDescriptor
+    /// <summary>
+    /// Character Descriptor
+    /// </summary>
+    public class CharacterDescriptor
+    {
+        public string tag;
+        public List<int> listToRoll;
+        public bool isRollAgain;                  //if true then roll twice
+    }
+    #endregion
+
 }
 #endif

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using toolsAPI;
 using UnityEngine;
 
@@ -18,8 +17,8 @@ public class ToolDetails : MonoBehaviour
         InitialiseMetaPlotpoints();
         InitialisePlotpointLookup();
         InitialiseMetaPlotpointLookup();
+        InitialiseCharacterIdentity();
     }
-
 
     #region InitialisePlotpoints
     /// <summary>
@@ -2525,7 +2524,6 @@ public class ToolDetails : MonoBehaviour
     }
     #endregion
 
-
     #region InitialiseMetaPlotpoints
     /// <summary>
     /// MetaPlotpoints initialisation
@@ -2621,15 +2619,6 @@ public class ToolDetails : MonoBehaviour
         string[,] arrayOfPlotpointLookup = ToolManager.i.toolDataScript.GetPlotpointLookup();
         if (arrayOfPlotpointLookup != null)
         {
-            //default values first
-            for (int inner = 0; inner < arrayOfPlotpointLookup.GetUpperBound(0) + 1; inner++)
-            {
-                for (int outer = 0; outer < (int)ThemeType.Count; outer++)
-                {
-                    /*Debug.LogFormat("[Tst] ToolDetails.cs -> InitialisePlotpointLookup: inner {0}, outer {1}{2}", inner, outer, "\n");*/
-                    arrayOfPlotpointLookup[inner, outer] = "";
-                }
-            }
             //populate array with data from dictOfPlotpoints
             int index;
             Dictionary<string, Plotpoint> dictOfPlotpoints = ToolManager.i.toolDataScript.GetDictOfPlotpoints();
@@ -2687,16 +2676,18 @@ public class ToolDetails : MonoBehaviour
             else { Debug.LogError("Invalid dictOfPlotpoints (Null)"); }
             //data validation
             string test;
+            int counter = 0;
             for (int inner = 0; inner < arrayOfPlotpointLookup.GetUpperBound(0) + 1; inner++)
             {
                 for (int outer = 0; outer < (int)ThemeType.Count; outer++)
                 {
-                    /*Debug.LogFormat("[Tst] ToolDetails.cs -> InitialisePlotpointLookup: inner {0}, outer {1}{2}", inner, outer, "\n");*/
                     test = arrayOfPlotpointLookup[inner, outer];
-                    if (test.Length == 0)
+                    if (string.IsNullOrEmpty(test) == true)
                     { Debug.LogWarningFormat("Invalid string (Empty) for arrayOfPlotpointLookup[{0},{1}]", inner, outer); }
+                    else { counter++; }
                 }
             }
+            Debug.LogFormat("[Tst] ToolDetails.cs -> InitialisePlotpointLookup: arrayOfPlotPointLookup has {0} records{1}", counter, "\n");
         }
         else { Debug.LogError("Invalid arrayOfPlotpointLookup (Null)"); }
     }
@@ -2711,11 +2702,6 @@ public class ToolDetails : MonoBehaviour
         string[] arrayOfMetaPlotpointLookup = ToolManager.i.toolDataScript.GetMetaPlotpointLookup();
         if (arrayOfMetaPlotpointLookup != null)
         {
-            //default values first
-            for (int i = 0; i < arrayOfMetaPlotpointLookup.Length; i++)
-            {
-                arrayOfMetaPlotpointLookup[i] = "";
-            }
             //populate array with data from dictOfPlotpoints
             int index;
             Dictionary<string, MetaPlotpoint> dictOfMetaPlotpoints = ToolManager.i.toolDataScript.GetDictOfMetaPlotpoints();
@@ -2737,17 +2723,427 @@ public class ToolDetails : MonoBehaviour
             else { Debug.LogError("Invalid dictOfMetaPlotpoints (Null)"); }
             //data validation
             string test;
-                for (int i = 0; i < arrayOfMetaPlotpointLookup.Length; i++)
-                {
-                    test = arrayOfMetaPlotpointLookup[i];
-                    if (test.Length == 0)
-                    { Debug.LogWarningFormat("Invalid string (Empty) for arrayOfMetaPlotpointLookup[{0}]", i); }
-                }
+            int counter = 0;
+            for (int i = 0; i < arrayOfMetaPlotpointLookup.Length; i++)
+            {
+                test = arrayOfMetaPlotpointLookup[i];
+                if (string.IsNullOrEmpty(test) == true)
+                { Debug.LogWarningFormat("Invalid string (Empty) for arrayOfMetaPlotpointLookup[{0}]", i); }
+                else { counter++; }
+            }
+            Debug.LogFormat("[Tst] ToolDetails.cs -> InitialiseMetaPlotpointLookup: arrayOfMetaPlotPointLookup has {0} records{1}", counter, "\n");
         }
         else { Debug.LogError("Invalid arrayOfMetaPlotpointLookup (Null)"); }
     }
     #endregion
 
+    #region InitialiseCharacterIndentity
+    /// <summary>
+    /// Character Identity Initialisation
+    /// </summary>
+    private void InitialiseCharacterIdentity()
+    {
+        List<CharacterIdentity> listOfCharacterIdentity = new List<CharacterIdentity>() {
+            new CharacterIdentity() {
+                tag = "RollAgain",
+                listToRoll = new List<int> {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33},
+                isRollAgain = true
+            },
+            new CharacterIdentity() {
+                tag = "Warrior",
+                listToRoll = new List<int> {34},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Healer",
+                listToRoll = new List<int> {35},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Protector",
+                listToRoll = new List<int> {36},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Assistant",
+                listToRoll = new List<int> {37},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Dependant",
+                listToRoll = new List<int> {38},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Ruler",
+                listToRoll = new List<int> {39},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Administrator",
+                listToRoll = new List<int> {40},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Victim",
+                listToRoll = new List<int> {41},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Scholar",
+                listToRoll = new List<int> {42},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Expert",
+                listToRoll = new List<int> {43},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Elite",
+                listToRoll = new List<int> {44},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Investigator",
+                listToRoll = new List<int> {45},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Criminal",
+                listToRoll = new List<int> {46},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Supporter",
+                listToRoll = new List<int> {47},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Helpless",
+                listToRoll = new List<int> {48},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Outsider",
+                listToRoll = new List<int> {49},
+                isRollAgain = false
+            },
+
+            // - - - 
+
+            new CharacterIdentity() {
+                tag = "Mediator",
+                listToRoll = new List<int> {50},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Entertainer",
+                listToRoll = new List<int> {51},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Socialite",
+                listToRoll = new List<int> {52},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Athlete",
+                listToRoll = new List<int> {53},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Performer",
+                listToRoll = new List<int> {54},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Representative",
+                listToRoll = new List<int> {55},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Merchant",
+                listToRoll = new List<int> {56},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Trader",
+                listToRoll = new List<int> {57},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Creator",
+                listToRoll = new List<int> {58},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Artist",
+                listToRoll = new List<int> {59},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Servant",
+                listToRoll = new List<int> {60},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Laborer",
+                listToRoll = new List<int> {61},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Religious",
+                listToRoll = new List<int> {62},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Hunter",
+                listToRoll = new List<int> {63},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Leader",
+                listToRoll = new List<int> {64},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Fighter",
+                listToRoll = new List<int> {65},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Crafter",
+                listToRoll = new List<int> {66},
+                isRollAgain = false
+            },
+
+            // - - -
+            
+            new CharacterIdentity() {
+                tag = "Thief",
+                listToRoll = new List<int> {67},
+                isRollAgain = false
+            },
+
+            new CharacterIdentity() {
+                tag = "Radical",
+                listToRoll = new List<int> {68},
+                isRollAgain = false
+            },
+
+            new CharacterIdentity() {
+                tag = "Executive",
+                listToRoll = new List<int> {69},
+                isRollAgain = false
+            },
+
+            new CharacterIdentity() {
+                tag = "Thug",
+                listToRoll = new List<int> {70},
+                isRollAgain = false
+            },
+
+            new CharacterIdentity() {
+                tag = "Guard",
+                listToRoll = new List<int> {71},
+                isRollAgain = false
+            },
+
+            new CharacterIdentity() {
+                tag = "Guardian",
+                listToRoll = new List<int> {72},
+                isRollAgain = false
+            },
+
+            new CharacterIdentity() {
+                tag = "Explorer",
+                listToRoll = new List<int> {73},
+                isRollAgain = false
+            },
+
+            new CharacterIdentity() {
+                tag = "Hero",
+                listToRoll = new List<int> {74},
+                isRollAgain = false
+            },
+
+            new CharacterIdentity() {
+                tag = "Villain",
+                listToRoll = new List<int> {75},
+                isRollAgain = false
+            },
+
+            new CharacterIdentity() {
+                tag = "Deceiver",
+                listToRoll = new List<int> {76},
+                isRollAgain = false
+            },
+
+            new CharacterIdentity() {
+                tag = "Engineer",
+                listToRoll = new List<int> {77},
+                isRollAgain = false
+            },
+
+            new CharacterIdentity() {
+                tag = "Scout",
+                listToRoll = new List<int> {78},
+                isRollAgain = false
+            },
+
+            new CharacterIdentity() {
+                tag = "Fixer",
+                listToRoll = new List<int> {79},
+                isRollAgain = false
+            },
+
+            new CharacterIdentity() {
+                tag = "Wanderer",
+                listToRoll = new List<int> {80},
+                isRollAgain = false
+            },
+
+            new CharacterIdentity() {
+                tag = "Subverter",
+                listToRoll = new List<int> {81},
+                isRollAgain = false
+            },
+
+            new CharacterIdentity() {
+                tag = "Soldier",
+                listToRoll = new List<int> {82},
+                isRollAgain = false
+            },
+
+            new CharacterIdentity() {
+                tag = "Law Enforcement",
+                listToRoll = new List<int> {83},
+                isRollAgain = false
+            },
+
+            // - - -
+
+            new CharacterIdentity() {
+                tag = "Scientist",
+                listToRoll = new List<int> {84},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Gatherer",
+                listToRoll = new List<int> {85},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Foreigner",
+                listToRoll = new List<int> {86},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Survivor",
+                listToRoll = new List<int> {87},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Gambler",
+                listToRoll = new List<int> {88},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Rogue",
+                listToRoll = new List<int> {89},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Farmer",
+                listToRoll = new List<int> {90},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Killer",
+                listToRoll = new List<int> {91},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Professional",
+                listToRoll = new List<int> {92},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Driver/Pilot",
+                listToRoll = new List<int> {93},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Student",
+                listToRoll = new List<int> {94},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Organiser",
+                listToRoll = new List<int> {95},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Deliverer",
+                listToRoll = new List<int> {96},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Lackey",
+                listToRoll = new List<int> {97},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Teacher",
+                listToRoll = new List<int> {98},
+                isRollAgain = false
+            },
+            new CharacterIdentity() {
+                tag = "Exotic",
+                listToRoll = new List<int> {99, 100},
+                isRollAgain = false
+            }
+        };
+
+        string[] arrayOfIdentity = ToolManager.i.toolDataScript.GetArrayOfCharacterIdentity();
+        if (arrayOfIdentity != null)
+        {
+            int count;
+            int index;
+            //populate array
+            for (int i = 0; i < listOfCharacterIdentity.Count; i++)
+            {
+                CharacterIdentity identity = listOfCharacterIdentity[i];
+                if (identity != null)
+                {
+                    count = identity.listToRoll.Count;
+                    if (count > 0)
+                    {
+                        for (int j = 0; j < count; j++)
+                        {
+                            index = identity.listToRoll[j] - 1;
+                            arrayOfIdentity[index] = identity.tag;
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid count (Zero) for characterIdentity \"{0}\"", identity.tag); }
+                }
+                else { Debug.LogWarningFormat("Invalid characterIndentity (Null) for listOfCharacterIdentity[{0}]", "\n"); }
+            }
+            //data validation
+            count = 0;
+            for (int i = 0; i < arrayOfIdentity.Length; i++)
+            {
+                if (string.IsNullOrEmpty(arrayOfIdentity[i]) == true)
+                { Debug.LogWarningFormat("Invalid characterIdentity.tag (Null or Empty) for arrayOfIdentity[{0}]", i); }
+                else { count++; }
+            }
+            Debug.LogFormat("[Tst] ToolDetails.cs -> InitialiseCharacterIndentity: arrayOfIdentity has {0} records{1}", count, "\n");
+        }
+        else { Debug.LogError("Invalid arrayOfIdentity (Null)"); }
+
+    }
+    #endregion
 
     //new methods above here
 }
