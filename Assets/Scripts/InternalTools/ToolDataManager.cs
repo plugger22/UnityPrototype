@@ -16,6 +16,7 @@ public class ToolDataManager : MonoBehaviour
 
     //lookup tables
     private string[,] arrayOfPlotpointLookup = new string[100, (int)ThemeType.Count];
+    private string[] arrayOfMetaPlotpointLookup = new string[100];
 
     //
     // - - - Stories
@@ -132,6 +133,9 @@ public class ToolDataManager : MonoBehaviour
     public string[,] GetPlotpointLookup()
     { return arrayOfPlotpointLookup; }
 
+    public string[] GetMetaPlotpointLookup()
+    { return arrayOfMetaPlotpointLookup; }
+
     /// <summary>
     /// Add Plotpoint
     /// </summary>
@@ -142,7 +146,20 @@ public class ToolDataManager : MonoBehaviour
         catch (ArgumentNullException)
         { Debug.LogError("Invalid plotpoint (Null)"); }
         catch (ArgumentException)
-        { Debug.LogWarningFormat("Duplicate plotPoint exists in dict for \"{0}\"", plot.refTag); }
+        { Debug.LogWarningFormat("Duplicate Plotpoint exists in dict for \"{0}\"", plot.refTag); }
+    }
+
+    /// <summary>
+    /// Add MetaPlotpoint
+    /// </summary>
+    /// <param name="meta"></param>
+    public void AddMetaPlotpoint(MetaPlotpoint meta)
+    {
+        try { dictOfMetaPlotpoints.Add(meta.refTag, meta); }
+        catch (ArgumentNullException)
+        { Debug.LogError("Invalid MetaPlotpoint (Null)"); }
+        catch (ArgumentException)
+        { Debug.LogWarningFormat("Duplicate MetaPlotpoint exists in dict for \"{0}\"", meta.refTag); }
     }
 
     //new methods above here

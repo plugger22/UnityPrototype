@@ -17,6 +17,7 @@ public class ToolDetails : MonoBehaviour
         InitialisePlotpoints();
         InitialiseMetaPlotpoints();
         InitialisePlotpointLookup();
+        InitialiseMetaPlotpointLookup();
     }
 
 
@@ -1246,7 +1247,7 @@ public class ToolDetails : MonoBehaviour
                 numberOfCharacters = 0,
                 type = PlotpointType.Normal,
                 details = "It is learned that events that appeared to be unrelated have a commonality after all. For instance, a rash of crimes has beset the city, " +
-                "from car jackings to break ins.It turns out the culprits all work as security guards in the same building." 
+                "from car jackings to break ins.It turns out the culprits all work as security guards in the same building."
             },
 
             // - - -
@@ -2517,12 +2518,10 @@ public class ToolDetails : MonoBehaviour
                 "Plot Points Table and roll 1d100 on it for your Plot Point."
             },
         };
-
-
-            Debug.LogFormat("[Tst] ToolDetails -> InitialisePlotpoints: There are {0} records in the listOfPlotponts{1}", listOfPlotpoints.Count, "\n");
-            //convert list to dictionary
-            for (int i = 0; i < listOfPlotpoints.Count; i++)
-            { ToolManager.i.toolDataScript.AddPlotpoint(listOfPlotpoints[i]); }
+        Debug.LogFormat("[Tst] ToolDetails -> InitialisePlotpoints: There are {0} records in the listOfPlotponts{1}", listOfPlotpoints.Count, "\n");
+        //convert list to dictionary
+        for (int i = 0; i < listOfPlotpoints.Count; i++)
+        { ToolManager.i.toolDataScript.AddPlotpoint(listOfPlotpoints[i]); }
     }
     #endregion
 
@@ -2553,7 +2552,7 @@ public class ToolDetails : MonoBehaviour
                 details = "A Character who previously had been removed from the Adventure returns. Write that Character back into the Characters List with a " +
                 "single listing. If there are no Characters to return, then treat this as a “New Character” result and use this Plot Point to introduce a new " +
                 "Character into the Turning Point. If there is more than one Character who can return, then choose the most logical Character to return. " +
-                "This change can be reflected in the activity in this Turning Point or not." 
+                "This change can be reflected in the activity in this Turning Point or not."
             },
             new MetaPlotpoint(){
                 tag = "Character Steps Up",
@@ -2606,8 +2605,8 @@ public class ToolDetails : MonoBehaviour
         {
             Debug.LogFormat("[Tst] ToolDetails -> InitialiseMetaPlotpoints: There are {0} records in the listOfMetaPlotponts{1}", listOfMetaPlotpoints.Count, "\n");
             //convert list to dictionary
-            dictOfMetaPlotpoints = listOfMetaPlotpoints.ToDictionary(k => k.refTag);
-            Debug.LogFormat("[Tst] ToolDetails -> InitialiseMetaPlotpoints: There are {0} records in the dictOfMetaPlotponts{1}", dictOfMetaPlotpoints.Count, "\n");
+            for (int i = 0; i < listOfMetaPlotpoints.Count; i++)
+            { ToolManager.i.toolDataScript.AddMetaPlotpoint(listOfMetaPlotpoints[i]); }
         }
         else { Debug.LogError("Invalid dictOfMetaPlotpoints (Null)"); }
     }
@@ -2636,7 +2635,7 @@ public class ToolDetails : MonoBehaviour
             Dictionary<string, Plotpoint> dictOfPlotpoints = ToolManager.i.toolDataScript.GetDictOfPlotpoints();
             if (dictOfPlotpoints != null)
             {
-                foreach(var plot in dictOfPlotpoints)
+                foreach (var plot in dictOfPlotpoints)
                 {
                     //action
                     if (plot.Value.listAction.Count > 0)
@@ -2702,6 +2701,53 @@ public class ToolDetails : MonoBehaviour
         else { Debug.LogError("Invalid arrayOfPlotpointLookup (Null)"); }
     }
     #endregion
+
+    #region InitialiseMetaPlotpointLookup
+    /// <summary>
+    /// Initialise arrayOfMetaPlotpointLookup table
+    /// </summary>
+    private void InitialiseMetaPlotpointLookup()
+    {
+        string[] arrayOfMetaPlotpointLookup = ToolManager.i.toolDataScript.GetMetaPlotpointLookup();
+        if (arrayOfMetaPlotpointLookup != null)
+        {
+            //default values first
+            for (int i = 0; i < arrayOfMetaPlotpointLookup.Length; i++)
+            {
+                arrayOfMetaPlotpointLookup[i] = "";
+            }
+            //populate array with data from dictOfPlotpoints
+            int index;
+            Dictionary<string, MetaPlotpoint> dictOfMetaPlotpoints = ToolManager.i.toolDataScript.GetDictOfMetaPlotpoints();
+            if (dictOfMetaPlotpoints != null)
+            {
+                foreach (var meta in dictOfMetaPlotpoints)
+                {
+                    //input data
+                    if (meta.Value.listToRoll.Count > 0)
+                    {
+                        for (int i = 0; i < meta.Value.listToRoll.Count; i++)
+                        {
+                            index = meta.Value.listToRoll[i] - 1;
+                            arrayOfMetaPlotpointLookup[index] = meta.Value.refTag;
+                        }
+                    }
+                }
+            }
+            else { Debug.LogError("Invalid dictOfMetaPlotpoints (Null)"); }
+            //data validation
+            string test;
+                for (int i = 0; i < arrayOfMetaPlotpointLookup.Length; i++)
+                {
+                    test = arrayOfMetaPlotpointLookup[i];
+                    if (test.Length == 0)
+                    { Debug.LogWarningFormat("Invalid string (Empty) for arrayOfMetaPlotpointLookup[{0}]", i); }
+                }
+        }
+        else { Debug.LogError("Invalid arrayOfMetaPlotpointLookup (Null)"); }
+    }
+    #endregion
+
 
     //new methods above here
 }
