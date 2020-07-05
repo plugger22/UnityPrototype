@@ -17,6 +17,7 @@ public class ToolDetails : MonoBehaviour
         InitialiseMetaPlotpoints();
         InitialisePlotpointLookup();
         InitialiseMetaPlotpointLookup();
+        InitialiseCharacterSpecial();
         InitialiseCharacterIdentity();
         InitialiseCharacterDescriptors();
     }
@@ -2617,7 +2618,7 @@ public class ToolDetails : MonoBehaviour
     /// </summary>
     private void InitialisePlotpointLookup()
     {
-        string[,] arrayOfPlotpointLookup = ToolManager.i.toolDataScript.GetPlotpointLookup();
+        Plotpoint[,] arrayOfPlotpointLookup = ToolManager.i.toolDataScript.GetPlotpointLookup();
         if (arrayOfPlotpointLookup != null)
         {
             //populate array with data from dictOfPlotpoints
@@ -2633,7 +2634,7 @@ public class ToolDetails : MonoBehaviour
                         for (int i = 0; i < plot.Value.listAction.Count; i++)
                         {
                             index = plot.Value.listAction[i] - 1;
-                            arrayOfPlotpointLookup[index, (int)ThemeType.Action] = plot.Value.refTag;
+                            arrayOfPlotpointLookup[index, (int)ThemeType.Action] = plot.Value;
                         }
                     }
                     //tension
@@ -2642,7 +2643,7 @@ public class ToolDetails : MonoBehaviour
                         for (int i = 0; i < plot.Value.listTension.Count; i++)
                         {
                             index = plot.Value.listTension[i] - 1;
-                            arrayOfPlotpointLookup[index, (int)ThemeType.Tension] = plot.Value.refTag;
+                            arrayOfPlotpointLookup[index, (int)ThemeType.Tension] = plot.Value;
                         }
                     }
                     //mystery
@@ -2651,7 +2652,7 @@ public class ToolDetails : MonoBehaviour
                         for (int i = 0; i < plot.Value.listMystery.Count; i++)
                         {
                             index = plot.Value.listMystery[i] - 1;
-                            arrayOfPlotpointLookup[index, (int)ThemeType.Mystery] = plot.Value.refTag;
+                            arrayOfPlotpointLookup[index, (int)ThemeType.Mystery] = plot.Value;
                         }
                     }
                     //social
@@ -2660,7 +2661,7 @@ public class ToolDetails : MonoBehaviour
                         for (int i = 0; i < plot.Value.listSocial.Count; i++)
                         {
                             index = plot.Value.listSocial[i] - 1;
-                            arrayOfPlotpointLookup[index, (int)ThemeType.Social] = plot.Value.refTag;
+                            arrayOfPlotpointLookup[index, (int)ThemeType.Social] = plot.Value;
                         }
                     }
                     //personal
@@ -2669,22 +2670,22 @@ public class ToolDetails : MonoBehaviour
                         for (int i = 0; i < plot.Value.listPersonal.Count; i++)
                         {
                             index = plot.Value.listPersonal[i] - 1;
-                            arrayOfPlotpointLookup[index, (int)ThemeType.Personal] = plot.Value.refTag;
+                            arrayOfPlotpointLookup[index, (int)ThemeType.Personal] = plot.Value;
                         }
                     }
                 }
             }
             else { Debug.LogError("Invalid dictOfPlotpoints (Null)"); }
             //data validation
-            string test;
+            Plotpoint test;
             int counter = 0;
             for (int inner = 0; inner < arrayOfPlotpointLookup.GetUpperBound(0) + 1; inner++)
             {
                 for (int outer = 0; outer < (int)ThemeType.Count; outer++)
                 {
                     test = arrayOfPlotpointLookup[inner, outer];
-                    if (string.IsNullOrEmpty(test) == true)
-                    { Debug.LogWarningFormat("Invalid string (Empty) for arrayOfPlotpointLookup[{0},{1}]", inner, outer); }
+                    if (test == null)
+                    { Debug.LogWarningFormat("Invalid Plotpoint (Null) for arrayOfPlotpointLookup[{0},{1}]", inner, outer); }
                     else { counter++; }
                 }
             }
@@ -2700,7 +2701,7 @@ public class ToolDetails : MonoBehaviour
     /// </summary>
     private void InitialiseMetaPlotpointLookup()
     {
-        string[] arrayOfMetaPlotpointLookup = ToolManager.i.toolDataScript.GetMetaPlotpointLookup();
+        MetaPlotpoint[] arrayOfMetaPlotpointLookup = ToolManager.i.toolDataScript.GetMetaPlotpointLookup();
         if (arrayOfMetaPlotpointLookup != null)
         {
             //populate array with data from dictOfPlotpoints
@@ -2716,25 +2717,119 @@ public class ToolDetails : MonoBehaviour
                         for (int i = 0; i < meta.Value.listToRoll.Count; i++)
                         {
                             index = meta.Value.listToRoll[i] - 1;
-                            arrayOfMetaPlotpointLookup[index] = meta.Value.refTag;
+                            arrayOfMetaPlotpointLookup[index] = meta.Value;
                         }
                     }
                 }
             }
             else { Debug.LogError("Invalid dictOfMetaPlotpoints (Null)"); }
             //data validation
-            string test;
+            MetaPlotpoint test;
             int counter = 0;
             for (int i = 0; i < arrayOfMetaPlotpointLookup.Length; i++)
             {
                 test = arrayOfMetaPlotpointLookup[i];
-                if (string.IsNullOrEmpty(test) == true)
-                { Debug.LogWarningFormat("Invalid string (Empty) for arrayOfMetaPlotpointLookup[{0}]", i); }
+                if (test == null)
+                { Debug.LogWarningFormat("Invalid MetaPlotpoint (Null) for arrayOfMetaPlotpointLookup[{0}]", i); }
                 else { counter++; }
             }
             Debug.LogFormat("[Tst] ToolDetails.cs -> InitialiseMetaPlotpointLookup: arrayOfMetaPlotPointLookup has {0} records{1}", counter, "\n");
         }
         else { Debug.LogError("Invalid arrayOfMetaPlotpointLookup (Null)"); }
+    }
+    #endregion
+
+    #region InitaliseCharacterSpecial
+    /// <summary>
+    /// Initialise Character Special Trait
+    /// </summary>
+    private void InitialiseCharacterSpecial()
+    {
+        List<CharacterSpecial> listOfCharacterSpecial = new List<CharacterSpecial>()
+        {
+            new CharacterSpecial() {
+                tag = "The Character is an Individual",
+                listToRoll = new List<int> {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50},
+                details = "The Character is an individual, as opposed to an organization or object."
+            },
+            new CharacterSpecial() {
+                tag = "The Character is an Organisation",
+                listToRoll = new List<int> {51,52,53,54,55,56,57},
+                details = "This Character is not a specific individual, but an organization or community. General members of this organization are considered part of the Character as a community"
+            },
+            new CharacterSpecial() {
+                tag = "The Character is an Object",
+                listToRoll = new List<int> {58,59,60,61,62,63,64},
+                details = "This Character is something other than a typical, living individual or group organization. The Character is an object of some kind that could also be " +
+                "considered a Character unto itself. Examples might include a spaceship that is old and temperamental, or a city teeming with culture"
+            },
+            new CharacterSpecial() {
+                tag = "The Character is Connected to this Plotline",
+                listToRoll = new List<int> {65,66,67,68,69,70,71},
+                details = "This Character enters the Adventure somehow connected with the Plotline of this Turning Point."
+            },
+            new CharacterSpecial() {
+                tag = "The Character is NOT Connected to this Plotline",
+                listToRoll = new List<int> {72,73,74,75,76,77,78},
+                details = "This Character enters the Adventure not connected to this Turning Point’s Plotline. The Character may become part of the Plotline in the course of this " +
+                "Turning Point, but does not start off that way. Examples include bystanders to the main events of a Turning Point or people outside the events of the " +
+                "Plotline who get drawn into the Adventure."
+            },
+            new CharacterSpecial() {
+                tag = "The Character Assists in Resolving this Plotline",
+                listToRoll = new List<int> {79,80,81,82,83,84,85},
+                details = "This Character is someone who can help resolve the current Plotline in some way, likely serving as an aid to the Player Characters"
+            },
+            new CharacterSpecial() {
+                tag = "The Character Hinders Resolving this Plotline",
+                listToRoll = new List<int> {86,87,88,89,90,91,92},
+                details = "This Character gets in the way of resolving the current Plotline in some way, likely serving as a complication to the Player Characters"
+            },
+            new CharacterSpecial() {
+                tag = "The Character is Connected to an Existing Character",
+                listToRoll = new List<int> {93,94,95,96,97,98,99,100},
+                details = "This Character has some relationship to another, existing Character in this Adventure. Roll on the Characters List to see who. " +
+                "A result of New Character is changed to Choose The Most Logical Character. The connection can be anything, from the two Characters are related, " +
+                "they know each other, they were former friends, they both work in the same occupation or belong to the same organization, they look or act similarly, " +
+                "they have similar skills or equipment, etc. The connection can be as close or as distant as you like."
+            },
+        };
+        CharacterSpecial[] arrayOfSpecial = ToolManager.i.toolDataScript.GetArrayOfCharacterSpecial();
+        if (arrayOfSpecial != null)
+        {
+            int count;
+            int index;
+            //populate array
+            for (int i = 0; i < listOfCharacterSpecial.Count; i++)
+            {
+                CharacterSpecial special = listOfCharacterSpecial[i];
+                if (special != null)
+                {
+                    count = special.listToRoll.Count;
+                    if (count > 0)
+                    {
+                        for (int j = 0; j < count; j++)
+                        {
+                            index = special.listToRoll[j] - 1;
+                            arrayOfSpecial[index] = special;
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid count (Zero) for characterSpecial \"{0}\"", special.tag); }
+                }
+                else { Debug.LogWarningFormat("Invalid characterSpecial (Null) for listOfCharacterSpecial[{0}]", "\n"); }
+            }
+            //data validation
+            count = 0;
+            for (int i = 0; i < arrayOfSpecial.Length; i++)
+            {
+                if (arrayOfSpecial[i] == null)
+                { Debug.LogWarningFormat("Invalid characterSpecial (Null) for arrayOfSpecial[{0}]", i); }
+                else { count++; }
+            }
+            Debug.LogFormat("[Tst] ToolDetails.cs -> InitialiseCharacterSpecial: arrayOfSpecial has {0} records{1}", count, "\n");
+        }
+        else { Debug.LogError("Invalid arrayOfSpecial (Null)"); }
+
     }
     #endregion
 
@@ -3107,7 +3202,7 @@ public class ToolDetails : MonoBehaviour
             }
         };
 
-        string[] arrayOfIdentity = ToolManager.i.toolDataScript.GetArrayOfCharacterIdentity();
+        CharacterIdentity[] arrayOfIdentity = ToolManager.i.toolDataScript.GetArrayOfCharacterIdentity();
         if (arrayOfIdentity != null)
         {
             int count;
@@ -3124,7 +3219,7 @@ public class ToolDetails : MonoBehaviour
                         for (int j = 0; j < count; j++)
                         {
                             index = identity.listToRoll[j] - 1;
-                            arrayOfIdentity[index] = identity.tag;
+                            arrayOfIdentity[index] = identity;
                         }
                     }
                     else { Debug.LogWarningFormat("Invalid count (Zero) for characterIdentity \"{0}\"", identity.tag); }
@@ -3135,8 +3230,8 @@ public class ToolDetails : MonoBehaviour
             count = 0;
             for (int i = 0; i < arrayOfIdentity.Length; i++)
             {
-                if (string.IsNullOrEmpty(arrayOfIdentity[i]) == true)
-                { Debug.LogWarningFormat("Invalid characterIdentity.tag (Null or Empty) for arrayOfIdentity[{0}]", i); }
+                if (arrayOfIdentity[i] == null)
+                { Debug.LogWarningFormat("Invalid characterIdentity (Null) for arrayOfIdentity[{0}]", i); }
                 else { count++; }
             }
             Debug.LogFormat("[Tst] ToolDetails.cs -> InitialiseCharacterIndentity: arrayOfIdentity has {0} records{1}", count, "\n");

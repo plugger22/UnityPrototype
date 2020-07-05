@@ -12,7 +12,7 @@ public class AdventureManager : MonoBehaviour
 
     public void Initialise()
     {
-        DebugTestCharacterDescriptors();
+        DebugTestCharacter();
     }
 
     /// <summary>
@@ -47,18 +47,30 @@ public class AdventureManager : MonoBehaviour
     /// <summary>
     /// generate ten instance of character descriptors for testing purposes
     /// </summary>
-    private void DebugTestCharacterDescriptors()
+    private void DebugTestCharacter()
     {
-        string descriptors;
+        string identity, descriptor;
         List<string> tempList = new List<string>();
-        Debug.LogFormat("[Tst] AdventureManager.cs -> DebugTestCharacterDescriptors: - - - - - - -{0}", "\n");
-        for (int i = 0; i < 20; i++)
+        Debug.LogFormat("[Tst] AdventureManager.cs -> DebugTestCharacter: - - - - - - -{0}", "\n");
+        for (int i = 0; i < 10; i++)
         {
-            tempList = ToolManager.i.toolDataScript.GetCharacterDescriptors();
-            descriptors = "";
-            for (int j = 0; j < tempList.Count; j++)
-            { descriptors = string.Format("{0}{1}", descriptors.Length > 0 ? descriptors + ", " : "", tempList[j]);  }
-            Debug.LogFormat("[Tst] Test {0}: Descriptors -> {1}{2}", i, descriptors, "\n");
+            identity = descriptor = "";
+            //special
+            CharacterSpecial special = ToolManager.i.toolDataScript.GetCharacterSpecial();
+            if (special != null)
+            {
+                //identity
+                tempList = ToolManager.i.toolDataScript.GetCharacterIdentity();
+                for (int j = 0; j < tempList.Count; j++)
+                { identity = string.Format("{0}{1}", identity.Length > 0 ? identity + ", " : "", tempList[j]); }
+                //descriptor
+                tempList = ToolManager.i.toolDataScript.GetCharacterDescriptors();
+                for (int j = 0; j < tempList.Count; j++)
+                { descriptor = string.Format("{0}{1}", descriptor.Length > 0 ? descriptor + ", " : "", tempList[j]); }
+                //output
+                Debug.LogFormat("[Tst] Test {0}: {1} -> {2} -> {3}", i, special.tag, identity, descriptor, "\n");
+            }
+            else { Debug.LogWarning("Invalid CharacterSpecial (Null)"); }
         }
     }
 

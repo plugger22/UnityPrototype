@@ -15,18 +15,21 @@ public class ToolDataManager : MonoBehaviour
     private Dictionary<string, MetaPlotpoint> dictOfMetaPlotpoints = new Dictionary<string, MetaPlotpoint>();
 
     //lookup tables
-    private string[,] arrayOfPlotpointLookup;
-    private string[] arrayOfMetaPlotpointLookup;
-    private string[] arrayOfIndentityLookup;
+    private Plotpoint[,] arrayOfPlotpointLookup;
+    private MetaPlotpoint[] arrayOfMetaPlotpointLookup;
+    private CharacterIdentity[] arrayOfIdentityLookup;
     private CharacterDescriptor[] arrayOfDescriptorsLookup;
+    private CharacterSpecial[] arrayOfSpecialLookup;
 
     public ToolDataManager()
     {
+        int size = 100;
         //initialise collections
-        arrayOfPlotpointLookup = new string[100, (int)ThemeType.Count];
-        arrayOfMetaPlotpointLookup = new string[100];
-        arrayOfIndentityLookup = new string[100];
-        arrayOfDescriptorsLookup = new CharacterDescriptor[100];
+        arrayOfPlotpointLookup = new Plotpoint[size, (int)ThemeType.Count];
+        arrayOfMetaPlotpointLookup = new MetaPlotpoint[size];
+        arrayOfIdentityLookup = new CharacterIdentity[size];
+        arrayOfDescriptorsLookup = new CharacterDescriptor[size];
+        arrayOfSpecialLookup = new CharacterSpecial[size];
     }
 
     #region Stories
@@ -144,10 +147,10 @@ public class ToolDataManager : MonoBehaviour
     public Dictionary<string, MetaPlotpoint> GetDictOfMetaPlotpoints()
     { return dictOfMetaPlotpoints; }
 
-    public string[,] GetPlotpointLookup()
+    public Plotpoint[,] GetPlotpointLookup()
     { return arrayOfPlotpointLookup; }
 
-    public string[] GetMetaPlotpointLookup()
+    public MetaPlotpoint[] GetMetaPlotpointLookup()
     { return arrayOfMetaPlotpointLookup; }
     
 
@@ -183,14 +186,57 @@ public class ToolDataManager : MonoBehaviour
     // - - - Characters
     //
 
-    public string[] GetArrayOfCharacterIdentity()
-    { return arrayOfIndentityLookup; }
+    public CharacterSpecial[] GetArrayOfCharacterSpecial()
+    { return arrayOfSpecialLookup; }
+
+    public CharacterIdentity[] GetArrayOfCharacterIdentity()
+    { return arrayOfIdentityLookup; }
 
     public CharacterDescriptor[] GetArrayOfCharacterDescriptors()
     { return arrayOfDescriptorsLookup; }
 
     /// <summary>
+    /// Get random CharacterSpecial. Returns null if a problem
+    /// </summary>
+    /// <returns></returns>
+    public CharacterSpecial GetCharacterSpecial()
+    {
+        int rnd = UnityEngine.Random.Range(0, 100);
+        return arrayOfSpecialLookup[rnd];
+    }
+
+
+    /// <summary>
     /// Get a list Of character Identity (typically only one but could be two). Returns Empty list if a problem
+    /// </summary>
+    /// <returns></returns>
+    public List<string> GetCharacterIdentity()
+    {
+        List<string> listOfIdentity = new List<string>();
+        int rnd = UnityEngine.Random.Range(0, 100);
+        CharacterIdentity identity = arrayOfIdentityLookup[rnd];
+        //check roll again
+        if (identity.isRollAgain == true)
+        {
+            int counter = 0;
+            do
+            {
+                rnd = UnityEngine.Random.Range(0, 100);
+                identity = arrayOfIdentityLookup[rnd];
+                if (identity.isRollAgain == false)
+                {
+                    listOfIdentity.Add(identity.tag);
+                    counter++;
+                }
+            }
+            while (counter < 2);
+        }
+        else { listOfIdentity.Add(identity.tag); }
+        return listOfIdentity;
+    }
+
+    /// <summary>
+    /// Get a list Of character Descriptors (typically only one but could be two). Returns Empty list if a problem
     /// </summary>
     /// <returns></returns>
     public List<string> GetCharacterDescriptors()

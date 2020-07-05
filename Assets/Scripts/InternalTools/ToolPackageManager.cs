@@ -394,5 +394,16 @@ namespace toolsAPI
     }
     #endregion
 
+    #region CharacterSpecial
+    /// <summary>
+    /// Character Special Trait
+    /// </summary>
+    public class CharacterSpecial
+    {
+        public string tag;
+        public List<int> listToRoll;
+        public string details;
+    }
+    #endregion
 }
 #endif
