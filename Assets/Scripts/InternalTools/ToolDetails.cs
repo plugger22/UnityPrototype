@@ -3564,7 +3564,7 @@ public class ToolDetails : MonoBehaviour
             },
         };
 
-        string[] arrayOfDescriptor = ToolManager.i.toolDataScript.GetArrayOfCharacterDescriptors();
+        CharacterDescriptor[] arrayOfDescriptor = ToolManager.i.toolDataScript.GetArrayOfCharacterDescriptors();
         if (arrayOfDescriptor != null)
         {
             int count;
@@ -3581,7 +3581,7 @@ public class ToolDetails : MonoBehaviour
                         for (int j = 0; j < count; j++)
                         {
                             index = descriptor.listToRoll[j] - 1;
-                            arrayOfDescriptor[index] = descriptor.tag;
+                            arrayOfDescriptor[index] = descriptor;
                         }
                     }
                     else { Debug.LogWarningFormat("Invalid count (Zero) for characterDescriptor \"{0}\"", descriptor.tag); }
@@ -3592,8 +3592,8 @@ public class ToolDetails : MonoBehaviour
             count = 0;
             for (int i = 0; i < arrayOfDescriptor.Length; i++)
             {
-                if (string.IsNullOrEmpty(arrayOfDescriptor[i]) == true)
-                { Debug.LogWarningFormat("Invalid characterDescriptor.tag (Null or Empty) for arrayOfDescriptor[{0}]", i); }
+                if (arrayOfDescriptor[i] == null)
+                { Debug.LogWarningFormat("Invalid characterDescriptor (Null) for arrayOfDescriptor[{0}]", i); }
                 else { count++; }
             }
             Debug.LogFormat("[Tst] ToolDetails.cs -> InitialiseCharacterDescriptors: arrayOfDescriptor has {0} records{1}", count, "\n");

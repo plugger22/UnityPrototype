@@ -12,7 +12,7 @@ public class AdventureManager : MonoBehaviour
 
     public void Initialise()
     {
-
+        DebugTestCharacterDescriptors();
     }
 
     /// <summary>
@@ -37,6 +37,29 @@ public class AdventureManager : MonoBehaviour
             listOfThemes[i] = value;
         }
         return listOfThemes;
+    }
+
+
+    //
+    // - - - Debug
+    //
+
+    /// <summary>
+    /// generate ten instance of character descriptors for testing purposes
+    /// </summary>
+    private void DebugTestCharacterDescriptors()
+    {
+        string descriptors;
+        List<string> tempList = new List<string>();
+        Debug.LogFormat("[Tst] AdventureManager.cs -> DebugTestCharacterDescriptors: - - - - - - -{0}", "\n");
+        for (int i = 0; i < 20; i++)
+        {
+            tempList = ToolManager.i.toolDataScript.GetCharacterDescriptors();
+            descriptors = "";
+            for (int j = 0; j < tempList.Count; j++)
+            { descriptors = string.Format("{0}{1}", descriptors.Length > 0 ? descriptors + ", " : "", tempList[j]);  }
+            Debug.LogFormat("[Tst] Test {0}: Descriptors -> {1}{2}", i, descriptors, "\n");
+        }
     }
 
 

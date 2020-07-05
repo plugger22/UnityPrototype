@@ -18,7 +18,7 @@ public class ToolDataManager : MonoBehaviour
     private string[,] arrayOfPlotpointLookup;
     private string[] arrayOfMetaPlotpointLookup;
     private string[] arrayOfIndentityLookup;
-    private string[] arrayOfDescriptorsLookup;
+    private CharacterDescriptor[] arrayOfDescriptorsLookup;
 
     public ToolDataManager()
     {
@@ -26,9 +26,10 @@ public class ToolDataManager : MonoBehaviour
         arrayOfPlotpointLookup = new string[100, (int)ThemeType.Count];
         arrayOfMetaPlotpointLookup = new string[100];
         arrayOfIndentityLookup = new string[100];
-        arrayOfDescriptorsLookup = new string[100];
+        arrayOfDescriptorsLookup = new CharacterDescriptor[100];
     }
 
+    #region Stories
     //
     // - - - Stories
     //
@@ -130,7 +131,9 @@ public class ToolDataManager : MonoBehaviour
     /// <returns></returns>
     public List<Story> GetListOfStories()
     { return dictOfStories.Values.ToList(); }
+    #endregion
 
+    #region Plotpoints
     //
     // - - - Plotpoints
     //
@@ -146,12 +149,7 @@ public class ToolDataManager : MonoBehaviour
 
     public string[] GetMetaPlotpointLookup()
     { return arrayOfMetaPlotpointLookup; }
-
-    public string[] GetArrayOfCharacterIdentity()
-    { return arrayOfIndentityLookup; }
-
-    public string[] GetArrayOfCharacterDescriptors()
-    { return arrayOfDescriptorsLookup; }
+    
 
     /// <summary>
     /// Add Plotpoint
@@ -178,15 +176,49 @@ public class ToolDataManager : MonoBehaviour
         catch (ArgumentException)
         { Debug.LogWarningFormat("Duplicate MetaPlotpoint exists in dict for \"{0}\"", meta.refTag); }
     }
+    #endregion
 
-    /*public void SetArrayOfCharacterIdentity(CharacterIdentity[] arrayOfIdentity)
+    #region Characters
+    //
+    // - - - Characters
+    //
+
+    public string[] GetArrayOfCharacterIdentity()
+    { return arrayOfIndentityLookup; }
+
+    public CharacterDescriptor[] GetArrayOfCharacterDescriptors()
+    { return arrayOfDescriptorsLookup; }
+
+    /// <summary>
+    /// Get a list Of character Identity (typically only one but could be two). Returns Empty list if a problem
+    /// </summary>
+    /// <returns></returns>
+    public List<string> GetCharacterDescriptors()
     {
-        if (arrayOfIdentity != null)
+        List<string> listOfDescriptors = new List<string>();
+        int rnd = UnityEngine.Random.Range(0, 100);
+        CharacterDescriptor descriptor = arrayOfDescriptorsLookup[rnd];
+        //check roll again
+        if (descriptor.isRollAgain == true)
         {
-
+            int counter = 0;
+            do
+            {
+                rnd = UnityEngine.Random.Range(0, 100);
+                descriptor = arrayOfDescriptorsLookup[rnd];
+                if (descriptor.isRollAgain == false)
+                {
+                    listOfDescriptors.Add(descriptor.tag);
+                    counter++;
+                }
+            }
+            while (counter < 2);
         }
-        else { Debug.LogError("Invalid arrayOfIdentity (Null)"); }
-    }*/
+        else { listOfDescriptors.Add(descriptor.tag); }
+        return listOfDescriptors;
+    }
+
+    #endregion
 
     //new methods above here
 }
