@@ -18,6 +18,7 @@ public class ToolDetails : MonoBehaviour
         InitialisePlotpointLookup();
         InitialiseMetaPlotpointLookup();
         InitialiseCharacterIdentity();
+        InitialiseCharacterDescriptors();
     }
 
     #region InitialisePlotpoints
@@ -3144,6 +3145,463 @@ public class ToolDetails : MonoBehaviour
 
     }
     #endregion
+
+    #region InitialiseCharacterDescriptors
+    /// <summary>
+    /// Character descriptor Initialisation
+    /// </summary>
+    private void InitialiseCharacterDescriptors()
+    {
+        List<CharacterDescriptor> listOfCharacterDescriptor = new List<CharacterDescriptor>() {
+            new CharacterDescriptor() {
+                tag = "RollAgain",
+                listToRoll = new List<int> {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21},
+                isRollAgain = true
+            },
+            new CharacterDescriptor() {
+                tag = "Ugly",
+                listToRoll = new List<int> {22},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Beautiful",
+                listToRoll = new List<int> {23},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Foul",
+                listToRoll = new List<int> {24},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Sweet",
+                listToRoll = new List<int> {25},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Unusual",
+                listToRoll = new List<int> {26},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Common",
+                listToRoll = new List<int> {27},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Intelligent",
+                listToRoll = new List<int> {28},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Ignorant",
+                listToRoll = new List<int> {29},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Educated",
+                listToRoll = new List<int> {30},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Skilled",
+                listToRoll = new List<int> {31},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Trained",
+                listToRoll = new List<int> {32},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Rude",
+                listToRoll = new List<int> {33},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Polite",
+                listToRoll = new List<int> {34},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Fancy",
+                listToRoll = new List<int> {35},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Rough",
+                listToRoll = new List<int> {36},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Dirty",
+                listToRoll = new List<int> {37},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Clean",
+                listToRoll = new List<int> {38},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Wealthy",
+                listToRoll = new List<int> {39},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Poor",
+                listToRoll = new List<int> {40},
+                isRollAgain = false
+            },
+
+            // - - -
+
+            new CharacterDescriptor() {
+                tag = "Small",
+                listToRoll = new List<int> {41},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Large",
+                listToRoll = new List<int> {42},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Quiet",
+                listToRoll = new List<int> {43},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Loud",
+                listToRoll = new List<int> {44},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Fast",
+                listToRoll = new List<int> {45},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Slow",
+                listToRoll = new List<int> {46},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Exotic",
+                listToRoll = new List<int> {47},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Uniformed",
+                listToRoll = new List<int> {48},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Interesting",
+                listToRoll = new List<int> {49},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Colourful",
+                listToRoll = new List<int> {50},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Informative",
+                listToRoll = new List<int> {51},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Dangerous",
+                listToRoll = new List<int> {52},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Inept",
+                listToRoll = new List<int> {53},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Clumsy",
+                listToRoll = new List<int> {54},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Capable",
+                listToRoll = new List<int> {55},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Intrusive",
+                listToRoll = new List<int> {56},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Respectful",
+                listToRoll = new List<int> {57},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Primitive",
+                listToRoll = new List<int> {58},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Sophisticated",
+                listToRoll = new List<int> {59},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Elegant",
+                listToRoll = new List<int> {60},
+                isRollAgain = false
+            },
+
+            // - - -
+
+            new CharacterDescriptor() {
+                tag = "Armed",
+                listToRoll = new List<int> {61},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Different",
+                listToRoll = new List<int> {62},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Young",
+                listToRoll = new List<int> {63},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Old",
+                listToRoll = new List<int> {64},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Difficult",
+                listToRoll = new List<int> {65},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Helpful",
+                listToRoll = new List<int> {66},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Harmful",
+                listToRoll = new List<int> {67},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Disciplined",
+                listToRoll = new List<int> {68},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Erratic",
+                listToRoll = new List<int> {69},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Wild",
+                listToRoll = new List<int> {70},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Crazy",
+                listToRoll = new List<int> {71},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Commanding",
+                listToRoll = new List<int> {72},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Meek",
+                listToRoll = new List<int> {73},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Humorous",
+                listToRoll = new List<int> {74},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Frightened",
+                listToRoll = new List<int> {75},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Brave",
+                listToRoll = new List<int> {76},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Strong",
+                listToRoll = new List<int> {77},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Weak",
+                listToRoll = new List<int> {78},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Impulsive",
+                listToRoll = new List<int> {79},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Strategic",
+                listToRoll = new List<int> {80},
+                isRollAgain = false
+            },
+
+            // - - - 
+
+            new CharacterDescriptor() {
+                tag = "Naive",
+                listToRoll = new List<int> {81},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Confident",
+                listToRoll = new List<int> {82},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Surprising",
+                listToRoll = new List<int> {83},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Passive",
+                listToRoll = new List<int> {84},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Bold",
+                listToRoll = new List<int> {85},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Careless",
+                listToRoll = new List<int> {86},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Cautious",
+                listToRoll = new List<int> {87},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Sneaky",
+                listToRoll = new List<int> {88},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Intimidating",
+                listToRoll = new List<int> {89},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Powerful",
+                listToRoll = new List<int> {90},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Powerless",
+                listToRoll = new List<int> {91},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Hurt",
+                listToRoll = new List<int> {92},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Rough",
+                listToRoll = new List<int> {93},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Gentle",
+                listToRoll = new List<int> {94},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Caring",
+                listToRoll = new List<int> {95},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Principled",
+                listToRoll = new List<int> {96},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Arrogant",
+                listToRoll = new List<int> {97},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Curious",
+                listToRoll = new List<int> {98},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Supportive",
+                listToRoll = new List<int> {99},
+                isRollAgain = false
+            },
+            new CharacterDescriptor() {
+                tag = "Heroic",
+                listToRoll = new List<int> {100},
+                isRollAgain = false
+            },
+        };
+
+        string[] arrayOfDescriptor = ToolManager.i.toolDataScript.GetArrayOfCharacterDescriptors();
+        if (arrayOfDescriptor != null)
+        {
+            int count;
+            int index;
+            //populate array
+            for (int i = 0; i < listOfCharacterDescriptor.Count; i++)
+            {
+                CharacterDescriptor descriptor = listOfCharacterDescriptor[i];
+                if (descriptor != null)
+                {
+                    count = descriptor.listToRoll.Count;
+                    if (count > 0)
+                    {
+                        for (int j = 0; j < count; j++)
+                        {
+                            index = descriptor.listToRoll[j] - 1;
+                            arrayOfDescriptor[index] = descriptor.tag;
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid count (Zero) for characterDescriptor \"{0}\"", descriptor.tag); }
+                }
+                else { Debug.LogWarningFormat("Invalid characterDescriptor (Null) for listOfCharacterDescriptor[{0}]", "\n"); }
+            }
+            //data validation
+            count = 0;
+            for (int i = 0; i < arrayOfDescriptor.Length; i++)
+            {
+                if (string.IsNullOrEmpty(arrayOfDescriptor[i]) == true)
+                { Debug.LogWarningFormat("Invalid characterDescriptor.tag (Null or Empty) for arrayOfDescriptor[{0}]", i); }
+                else { count++; }
+            }
+            Debug.LogFormat("[Tst] ToolDetails.cs -> InitialiseCharacterDescriptors: arrayOfDescriptor has {0} records{1}", count, "\n");
+        }
+        else { Debug.LogError("Invalid arrayOfDescriptor (Null)"); }
+    }
+#endregion
+
 
     //new methods above here
 }
