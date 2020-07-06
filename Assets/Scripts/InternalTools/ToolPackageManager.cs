@@ -15,7 +15,8 @@ namespace toolsAPI
     public enum ThemeType { Action, Tension, Mystery, Social, Personal, Count }   //NOTE: Order matters (ToolDetails.cs)
     public enum StoryStatus { New, Logical, Data }
     public enum ListItemStatus { None, PlotLine, Character }    //what's currently selected on the Aventure/list page
-    public enum PlotpointType { Normal }
+    public enum PlotPointType { Normal }
+    public enum TurningPointType { None, New, Development, Conclusion}
 
 
 
@@ -30,13 +31,15 @@ namespace toolsAPI
     [System.Serializable]
     public class Story
     {
-        public string tag;              //stored in dict under this name (use as a reference)
+        public string tag;                  //stored in dict under this name (use as a reference)
         public string notes;
         public string date;
-        public int numTurningPoints;
+        public int numTurningPoints;        //current active turning points (max cap 5)
+        public bool isConcluded;            //if true no more turning points can be added, story is complete
         //subClasses
         public ThemeData theme = new ThemeData();
         public StoryArrays arrays = new StoryArrays();
+        public TurningPoint[] arrayOfTurningPoints = new TurningPoint[5];
         public StoryLists lists = new StoryLists();
 
         #region Story Methods
@@ -44,7 +47,11 @@ namespace toolsAPI
         /// default constructor
         /// </summary>
         public Story()
-        { }
+        {
+            //initialise turning Point array with blank turning points
+            for (int i = 0; i < arrayOfTurningPoints.Length; i++)
+            { arrayOfTurningPoints[i] = new TurningPoint(); }
+        }
 
         /// <summary>
         /// Copy Constructor
@@ -57,7 +64,9 @@ namespace toolsAPI
             date = story.date;
             theme = new ThemeData(story.theme);
             arrays = new StoryArrays(story.arrays);
-            lists = new StoryLists(story.lists);
+            for (int i = 0; i < arrayOfTurningPoints.Length; i++)
+            { arrayOfTurningPoints[i] = story.arrayOfTurningPoints[i]; }
+            /*lists = new StoryLists(story.lists);*/
         }
 
         /// <summary>
@@ -68,8 +77,11 @@ namespace toolsAPI
             tag = "";
             notes = "";
             date = "";
+            isConcluded = false;
             theme.Reset();
             arrays.Reset();
+            for (int i = 0; i < arrayOfTurningPoints.Length; i++)
+            { arrayOfTurningPoints[i].Reset(); }
             lists.Reset();
         }
         #endregion
@@ -292,11 +304,72 @@ namespace toolsAPI
             listOfPlotLines.Clear();
             listOfCharacters.Clear();
         }
+        
         #endregion
-
     }
     #endregion
 
+    #region TurningPoint
+    /// <summary>
+    /// A story can have up to 5 turningPoints with each having up to 5 plotpoints
+    /// </summary>
+    [System.Serializable]
+    public class TurningPoint
+    {
+        public string refTag;
+        public string tag;
+        public string notes;
+        public TurningPointType type;
+        public bool isConcluded;                                    //if true then Turning point is complete and no more plotpoints can be generated
+        public PlotDetails[] arrayOfDetails = new PlotDetails[5];
+
+        public TurningPoint()
+        {
+            //initialise arrayOfDetails with blanks
+            for (int i = 0; i < arrayOfDetails.Length; i++)
+            { arrayOfDetails[i] = new PlotDetails(); }
+        }
+
+
+        public void Reset()
+        {
+            refTag = "";
+            tag = "";
+            notes = "";
+            type = TurningPointType.None;
+            isConcluded = false;
+            for (int i = 0; i < arrayOfDetails.Length; i++)
+            { arrayOfDetails[i].Reset(); }
+        }
+    }
+    #endregion
+
+    #region PlotDetails
+    /// <summary>
+    /// Each turning point consists of up to five PlotDetails which are all relevant details combined
+    /// </summary>
+    [System.Serializable]
+    public class PlotDetails
+    {
+        public bool isActive;                   //quick check to see if active plotpoint
+        public string turningPoint;             //turningPoint.refTag
+        public string plotPoint;                //plotPoint.refTag
+        public Character character1;
+        public Character character2;
+        public string notes;
+
+
+        public void Reset()
+        {
+            isActive = false;
+            turningPoint = "";
+            plotPoint = "";
+            notes = "";
+            character1 = null;
+            character2 = null;           
+        }
+    }
+    #endregion
 
     #region PlotLine
     /// <summary>
@@ -318,6 +391,7 @@ namespace toolsAPI
     [System.Serializable]
     public class Character
     {
+        public string refTag;
         public string tag;
         public string dataCreated;                          //generated data
         public string dataMe;                               //my interpretation
@@ -346,7 +420,7 @@ namespace toolsAPI
         public string refTag;                       //single string reference tag used for dictionaries, lookup tables, etc
         public string tag;
         public string details;
-        public PlotpointType type;
+        public PlotPointType type;
         public int numberOfCharacters;              //number of characters involved
         public List<int> listAction;                //die roll numbers, leave list empty for none
         public List<int> listTension;

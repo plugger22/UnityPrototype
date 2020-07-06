@@ -79,6 +79,8 @@ public class AdventureUI : MonoBehaviour
     public ToolButtonInteraction clearNewInteraction;
     public ToolButtonInteraction returnNewInteraction;
 
+    public Button turningPointButton;
+
     public TextMeshProUGUI themeNew1;
     public TextMeshProUGUI themeNew2;
     public TextMeshProUGUI themeNew3;
@@ -100,6 +102,22 @@ public class AdventureUI : MonoBehaviour
     public ToolButtonInteraction clearTurnInteraction;
     public ToolButtonInteraction saveTurnInteraction;
     public ToolButtonInteraction exitTurnInteraction;
+
+    public Button turnPlotpointButton;
+    public Button turnSaveButton;
+
+    public TextMeshProUGUI turnAdventureName;
+    public TextMeshProUGUI turnAdventureDate;
+    public TextMeshProUGUI turnName;
+    public TextMeshProUGUI turnNumber;
+
+    public TextMeshProUGUI turnPlotPoint;
+    public TextMeshProUGUI turnPlotLine2;
+    public TextMeshProUGUI turnCharacter1;
+    public TextMeshProUGUI turnCharacter2;
+    public TextMeshProUGUI turnData0;
+    public TextMeshProUGUI turnData1;
+    public TextMeshProUGUI turnData2;
 
     #endregion
 
@@ -180,6 +198,7 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(turningPointNewInteraction != null, "Invalid turnPointInteraction (Null)");
         Debug.Assert(returnNewInteraction != null, "Invalid returnNewInteraction (Null)");
         Debug.Assert(clearNewInteraction != null, "Invalid clearNewInteraction (Null)");
+        Debug.Assert(turningPointButton != null, "Invalid turningPointButton (Null)");
         Debug.Assert(themeNew1 != null, "Invalid theme1 (Null)");
         Debug.Assert(themeNew2 != null, "Invalid theme2 (Null)");
         Debug.Assert(themeNew3 != null, "Invalid theme3 (Null)");
@@ -198,6 +217,19 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(clearTurnInteraction != null, "Invalid clearTurnInteraction");
         Debug.Assert(saveTurnInteraction != null, "Invalid saveTurnInteraction");
         Debug.Assert(exitTurnInteraction != null, "Invalid exitTurnInteraction");
+        Debug.Assert(turnAdventureName != null, "Invalid turnAdventureName (Null)");
+        Debug.Assert(turnAdventureDate != null, "Invalid turnAdventureData (Null)");
+        Debug.Assert(turnPlotpointButton != null, "Invalid turnPlotpointButton (Null)");
+        Debug.Assert(turnSaveButton != null, "Invalid turnSaveButton (Null)");
+        Debug.Assert(turnName != null, "Invalid turnName (Null)");
+        Debug.Assert(turnNumber != null, "Invalid turnNumber (Null)");
+        Debug.Assert(turnPlotPoint != null, "Invalid turnPlotPoint (Null)");
+        Debug.Assert(turnPlotLine2 != null, "Invalid turnPlotLine2 (Null)");
+        Debug.Assert(turnCharacter1 != null, "Invalid turnCharacter1 (Null)");
+        Debug.Assert(turnCharacter2 != null, "Invalid turnCharacter2 (Null)");
+        Debug.Assert(turnData0 != null, "Invalid turnData0 (Null)");
+        Debug.Assert(turnData1 != null, "Invalid turnData1 (Null)");
+        Debug.Assert(turnData2 != null, "Invalid turnData2 (Null)");
         //lists
         Debug.Assert(returnListsInteraction != null, "Invalid returnListsInteraction (Null)");
         Debug.Assert(listEditInteraction != null, "Invalid listEditInteraction (Null)");
@@ -233,6 +265,7 @@ public class AdventureUI : MonoBehaviour
         turningPointNewInteraction.SetButton(ToolEventType.CreateTurningPoint);
         saveNewInteraction.SetButton(ToolEventType.SaveAdventureToDict);
         clearNewInteraction.SetButton(ToolEventType.ClearNewAdventure);
+        
         //turningPoint buttonInteractions
         plotTurnInteraction.SetButton(ToolEventType.CreatePlotpoint);
         clearTurnInteraction.SetButton(ToolEventType.ClearTurningPoint);
@@ -512,6 +545,8 @@ public class AdventureUI : MonoBehaviour
         masterCanvas.gameObject.SetActive(false);
         //redraw page
         RedrawNewAdventurePage();
+        //switch of Turning Point button (until Adventure is SAVED)
+        turningPointButton.gameObject.SetActive(false);
         //theme
         CreateTheme();
         //auto fill date
@@ -572,18 +607,7 @@ public class AdventureUI : MonoBehaviour
         else { Debug.LogError("Invalid listOfThemes (Null)"); }
     }
 
-    /// <summary>
-    /// Create New Turning Points for Adventure
-    /// </summary>
-    private void CreateTurningPoint()
-    {
-        //toggle canvases
-        turningPointCanvas.gameObject.SetActive(true);
-        newAdventureCanvas.gameObject.SetActive(false);
 
-        //set modal state
-        ToolManager.i.toolInputScript.SetModalState(ToolModal.TurningPoint);
-    }
 
     /// <summary>
     /// Clears out adventure data (excludes date and regenerates a new set of themes)
@@ -660,6 +684,8 @@ public class AdventureUI : MonoBehaviour
                 Debug.LogFormat("[Tol] AdventureUI.cs -> SaveAdventure: StoryNew \"{0}\" saved to dictionary{1}", storyNew.tag, "\n");
                 //update navigation
                 GetListOfStories();
+                //switch on turningPoint button
+                turningPointButton.gameObject.SetActive(true);
             }
             else { Debug.LogWarning("Invalid storyNew.tag (Null or Empty). Story not saved to Dictionary"); }
         }
@@ -676,33 +702,56 @@ public class AdventureUI : MonoBehaviour
     //
 
     /// <summary>
-    /// open new adventure page
+    /// Create New Turning Points for Adventure
     /// </summary>
-    private void OpenTurningPoint()
+    private void CreateTurningPoint()
     {
-        //create new story if none present
-        if (storyNew != null)
-        {
-            //toggle canvases on/off
-            turningPointCanvas.gameObject.SetActive(true);
-            newAdventureCanvas.gameObject.SetActive(false);
-            //redraw page
-            RedrawTurningPointPage();
+        //toggle canvases
+        turningPointCanvas.gameObject.SetActive(true);
+        newAdventureCanvas.gameObject.SetActive(false);
+        //redraw page
+        RedrawTurningPointPage();
+        //Adventure and date data
+        turnAdventureName.text = storyNew.tag;
+        turnAdventureDate.text = storyNew.date;
+            
 
-            //Adventure and date data
-
-            //Generate Plotpoint and associated items
-
-            //set Modal State
-            ToolManager.i.toolInputScript.SetModalState(ToolModal.TurningPoint);
-        }
-        else { Debug.LogError("Invalid storyNew (Null)"); }
+        //set modal state
+        ToolManager.i.toolInputScript.SetModalState(ToolModal.TurningPoint);
     }
 
-
+    /// <summary>
+    /// New Plotpoint
+    /// </summary>
     private void CreatePlotpoint()
     {
+        //check story hasn't been concluded
+        if (storyNew.isConcluded == false)
+        {
+            //find next empty slot in array
+            int index = -1;
+            for (int i = 0; i < storyNew.arrayOfTurningPoints.Length; i++)
+            {
+                if (storyNew.arrayOfTurningPoints[i].type == TurningPointType.None)
+                {
+                    index = i;
+                    break;
+                }
+            }
+            if (index > -1)
+            {
 
+            }
+            else
+            {
+                Debug.LogWarning("Story has no blank Turning Points available");
+                storyNew.isConcluded = true;
+
+                //disable plotLine button
+
+            }
+        }
+        else { Debug.LogWarning("Story has been concluded -> Info only"); }
     }
 
 
@@ -726,9 +775,6 @@ public class AdventureUI : MonoBehaviour
         newAdventureCanvas.gameObject.SetActive(true);
         turningPointCanvas.gameObject.SetActive(false);
         
-        //save button on main screen
-        if (isSaveNeeded == true)
-        { saveButton.gameObject.SetActive(true); }
         
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.New);

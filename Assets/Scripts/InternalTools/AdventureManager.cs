@@ -12,7 +12,7 @@ public class AdventureManager : MonoBehaviour
 
     public void Initialise()
     {
-        DebugTestCharacter();
+        /*DebugTestCharacter();*/
     }
 
     /// <summary>
