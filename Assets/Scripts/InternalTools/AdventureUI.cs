@@ -6,6 +6,7 @@ using TMPro;
 using toolsAPI;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 
 #if (UNITY_EDITOR)
@@ -37,6 +38,7 @@ public class AdventureUI : MonoBehaviour
     //Navigation
     private int mainNavCounter;
     private int mainNavLimit;
+    private int turningPointIndex;
     private bool isSaveNeeded;
     private List<Story> listOfStories;
 
@@ -740,15 +742,22 @@ public class AdventureUI : MonoBehaviour
             }
             if (index > -1)
             {
+                turningPointIndex = index;
+                //Generate new Plotpoint
+                int rnd = Random.Range(0, 10);
+                int priority = ToolManager.i.adventureScript.GetThemePriority();
+                ThemeType themeType = storyNew.theme.GetThemeType(priority);
+                Plotpoint plotPoint = ToolManager.i.toolDataScript.GetPlotpoint(themeType);
 
+                turnPlotPoint.text = plotPoint.tag;
+                turnData0.text = plotPoint.details;
             }
             else
             {
                 Debug.LogWarning("Story has no blank Turning Points available");
                 storyNew.isConcluded = true;
-
                 //disable plotLine button
-
+                turnPlotpointButton.gameObject.SetActive(false);
             }
         }
         else { Debug.LogWarning("Story has been concluded -> Info only"); }
@@ -991,11 +1000,11 @@ public class AdventureUI : MonoBehaviour
             mainTag.text = storyMain.tag;
             mainNotes.text = storyMain.notes;
             mainDate.text = storyMain.date;
-            themeMain1.text = storyMain.theme.GetThemePriority(1).ToString();
-            themeMain2.text = storyMain.theme.GetThemePriority(2).ToString();
-            themeMain3.text = storyMain.theme.GetThemePriority(3).ToString();
-            themeMain4.text = storyMain.theme.GetThemePriority(4).ToString();
-            themeMain5.text = storyMain.theme.GetThemePriority(5).ToString();
+            themeMain1.text = storyMain.theme.GetThemeType(1).ToString();
+            themeMain2.text = storyMain.theme.GetThemeType(2).ToString();
+            themeMain3.text = storyMain.theme.GetThemeType(3).ToString();
+            themeMain4.text = storyMain.theme.GetThemeType(4).ToString();
+            themeMain5.text = storyMain.theme.GetThemeType(5).ToString();
 
         }
         else
@@ -1019,11 +1028,11 @@ public class AdventureUI : MonoBehaviour
         newTag.text = storyNew.tag;
         newNotes.text = storyNew.notes;
         newDate.text = storyNew.date;
-        themeNew1.text = storyNew.theme.GetThemePriority(1).ToString();
-        themeNew2.text = storyNew.theme.GetThemePriority(2).ToString();
-        themeNew3.text = storyNew.theme.GetThemePriority(3).ToString();
-        themeNew4.text = storyNew.theme.GetThemePriority(4).ToString();
-        themeNew5.text = storyNew.theme.GetThemePriority(5).ToString();
+        themeNew1.text = storyNew.theme.GetThemeType(1).ToString();
+        themeNew2.text = storyNew.theme.GetThemeType(2).ToString();
+        themeNew3.text = storyNew.theme.GetThemeType(3).ToString();
+        themeNew4.text = storyNew.theme.GetThemeType(4).ToString();
+        themeNew5.text = storyNew.theme.GetThemeType(5).ToString();
         //zero out seed plotlines and characters regardless
         for (int i = 0; i < arrayOfNewPlotLines.Length; i++)
         {

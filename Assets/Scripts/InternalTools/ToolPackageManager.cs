@@ -120,7 +120,7 @@ namespace toolsAPI
         /// </summary>
         /// <param name="priority"></param>
         /// <returns></returns>
-        public ThemeType GetThemePriority(int priority)
+        public ThemeType GetThemeType(int priority)
         {
             ThemeType themeType = new ThemeType();
             switch (priority)

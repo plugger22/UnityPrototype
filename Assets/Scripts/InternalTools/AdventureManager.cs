@@ -39,6 +39,37 @@ public class AdventureManager : MonoBehaviour
         return listOfThemes;
     }
 
+    /// <summary>
+    /// returns a randomly generated Theme priority (1 to 5) used for accessing the required theme for a plotpoint. Returns -1 if a problem
+    /// </summary>
+    /// <returns></returns>
+    public int GetThemePriority()
+    {
+        int priority = -1;
+        Random random = new Random();
+        int rnd= random.Next(0, 10);
+        switch (rnd)
+        {
+            case 0:
+            case 1:
+            case 2:
+            case 3: priority = 1; break;
+            case 4:
+            case 5:
+            case 6: priority = 2; break;
+            case 7:
+            case 8: priority = 3; break;
+            case 9:
+                //50/50 chance of priority 4 or 5
+                rnd = random.Next(0, 10);
+                if (rnd < 5) { priority = 4; }
+                else { priority = 5; }
+                break;
+            default: Debug.LogWarningFormat("Unrecognised random \"{0}\"", random); break;
+        }
+        return priority;
+    }
+
 
     //
     // - - - Debug

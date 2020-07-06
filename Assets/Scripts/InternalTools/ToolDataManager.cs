@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using toolsAPI;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// Data Manager class
@@ -179,6 +180,19 @@ public class ToolDataManager : MonoBehaviour
         catch (ArgumentException)
         { Debug.LogWarningFormat("Duplicate MetaPlotpoint exists in dict for \"{0}\"", meta.refTag); }
     }
+
+    /// <summary>
+    /// returns a random plotpoint, null if a problem
+    /// </summary>
+    /// <returns></returns>
+    public Plotpoint GetPlotpoint(ThemeType theme)
+    {
+        Plotpoint plotPoint = null;
+        int rnd = Random.Range(0, 100);
+        plotPoint = arrayOfPlotpointLookup[rnd, (int)theme];
+        return plotPoint;
+    }
+
     #endregion
 
     #region Characters
