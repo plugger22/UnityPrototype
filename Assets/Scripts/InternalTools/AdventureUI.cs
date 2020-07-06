@@ -23,6 +23,7 @@ public class AdventureUI : MonoBehaviour
     public Canvas adventureCanvas;
     public Canvas masterCanvas;
     public Canvas newAdventureCanvas;
+    public Canvas turningPointCanvas;
     public Canvas listsCanvas;
 
     //Stories
@@ -93,6 +94,15 @@ public class AdventureUI : MonoBehaviour
     public TMP_InputField[] arrayOfNewCharacters;
     #endregion
 
+    #region TurningPoint
+    [Header("Turning Point")]
+    public ToolButtonInteraction plotTurnInteraction;
+    public ToolButtonInteraction clearTurnInteraction;
+    public ToolButtonInteraction saveTurnInteraction;
+    public ToolButtonInteraction exitTurnInteraction;
+
+    #endregion
+
     #region Lists
     [Header("Lists")]
     public ToolButtonInteraction returnListsInteraction;
@@ -144,7 +154,9 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(adventureCanvas != null, "Invalid adventureCanvas (Null)");
         Debug.Assert(masterCanvas != null, "Invalid masterCanvas (Null)");
         Debug.Assert(newAdventureCanvas != null, "Invalid newAdventureCanvas (Null)");
+        Debug.Assert(turningPointCanvas != null, "Invalid turningPointCanvas (Null)");
         Debug.Assert(listsCanvas != null, "Invalid listsCanvas (Null)");
+        //main buttons
         Debug.Assert(newAdventureInteraction != null, "Invalid newAdventureInteraction (Null)");
         Debug.Assert(saveToFileInteraction != null, "Invalid saveAdventureInteraction (Null)");
         Debug.Assert(loadFromFileInteraction != null, "Invalid loadAdventureInteraction (Null)");
@@ -154,11 +166,6 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(deleteFileInteraction != null, "Invalid deleteFileInteraction (Null)");
         Debug.Assert(clearDictionaryInteraction != null, "Invalid clearDictionaryInteraction (Null)");
         Debug.Assert(exitInteraction != null, "Invalid ExitInteraction (Null)");
-        Debug.Assert(saveNewInteraction != null, "Invalid themeInteraction (Null)");
-        Debug.Assert(turningPointNewInteraction != null, "Invalid turnPointInteraction (Null)");
-        Debug.Assert(returnNewInteraction != null, "Invalid returnNewInteraction (Null)");
-        Debug.Assert(clearNewInteraction != null, "Invalid clearNewInteraction (Null)");
-        //main
         Debug.Assert(themeMain1 != null, "Invalid theme1 (Null)");
         Debug.Assert(themeMain2 != null, "Invalid theme2 (Null)");
         Debug.Assert(themeMain3 != null, "Invalid theme3 (Null)");
@@ -169,6 +176,10 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(mainDate != null, "Invalid mainDate (Null)");
         Debug.Assert(saveButton != null, "Invalid saveButton (Null)");
         //new adventure
+        Debug.Assert(saveNewInteraction != null, "Invalid themeInteraction (Null)");
+        Debug.Assert(turningPointNewInteraction != null, "Invalid turnPointInteraction (Null)");
+        Debug.Assert(returnNewInteraction != null, "Invalid returnNewInteraction (Null)");
+        Debug.Assert(clearNewInteraction != null, "Invalid clearNewInteraction (Null)");
         Debug.Assert(themeNew1 != null, "Invalid theme1 (Null)");
         Debug.Assert(themeNew2 != null, "Invalid theme2 (Null)");
         Debug.Assert(themeNew3 != null, "Invalid theme3 (Null)");
@@ -182,6 +193,11 @@ public class AdventureUI : MonoBehaviour
             if (arrayOfNewPlotLines[i] == null) { Debug.LogErrorFormat("Invalid arrayOfNewPlotLines[{0}] (Null)", i); }
             if (arrayOfNewCharacters[i] == null) { Debug.LogErrorFormat("Invalid arrayOfNewCharacters[{0}] (Null)", i); }
         }
+        //turning Points
+        Debug.Assert(plotTurnInteraction != null, "Invalid plotTurnInteraction");
+        Debug.Assert(clearTurnInteraction != null, "Invalid clearTurnInteraction");
+        Debug.Assert(saveTurnInteraction != null, "Invalid saveTurnInteraction");
+        Debug.Assert(exitTurnInteraction != null, "Invalid exitTurnInteraction");
         //lists
         Debug.Assert(returnListsInteraction != null, "Invalid returnListsInteraction (Null)");
         Debug.Assert(listEditInteraction != null, "Invalid listEditInteraction (Null)");
@@ -202,23 +218,30 @@ public class AdventureUI : MonoBehaviour
         adventureCanvas.gameObject.SetActive(false);
         masterCanvas.gameObject.SetActive(true);
         newAdventureCanvas.gameObject.SetActive(false);
+        turningPointCanvas.gameObject.SetActive(false);
         listsCanvas.gameObject.SetActive(false);
-        //assign button events
+        //main buttonInteractions
         exitInteraction.SetButton(ToolEventType.CloseAdventureUI);
         newAdventureInteraction.SetButton(ToolEventType.OpenNewAdventure);
-        returnNewInteraction.SetButton(ToolEventType.CloseNewAdventure);
-        turningPointNewInteraction.SetButton(ToolEventType.CreateTurningPoint);
-        saveNewInteraction.SetButton(ToolEventType.SaveAdventureToDict);
         saveToFileInteraction.SetButton(ToolEventType.SaveToolsToFile);
         loadFromFileInteraction.SetButton(ToolEventType.LoadToolsFromFile);
         deleteFileInteraction.SetButton(ToolEventType.DeleteToolsFile);
         clearDictionaryInteraction.SetButton(ToolEventType.ClearAdventureDictionary);
-        clearNewInteraction.SetButton(ToolEventType.ClearNewAdventure);
         showListsInteraction.SetButton(ToolEventType.OpenAdventureLists);
+        //new buttonInteractions
+        returnNewInteraction.SetButton(ToolEventType.CloseNewAdventure);
+        turningPointNewInteraction.SetButton(ToolEventType.CreateTurningPoint);
+        saveNewInteraction.SetButton(ToolEventType.SaveAdventureToDict);
+        clearNewInteraction.SetButton(ToolEventType.ClearNewAdventure);
+        //turningPoint buttonInteractions
+        plotTurnInteraction.SetButton(ToolEventType.CreatePlotpoint);
+        clearTurnInteraction.SetButton(ToolEventType.ClearTurningPoint);
+        saveTurnInteraction.SetButton(ToolEventType.SaveTurningPoint);
+        exitTurnInteraction.SetButton(ToolEventType.CloseTurningPoint);
+        //list buttonInteractions
         returnListsInteraction.SetButton(ToolEventType.CloseAdventureLists);
         listEditInteraction.SetButton(ToolEventType.EditListItem);
         listSaveInteraction.SetButton(ToolEventType.SaveListDetails);
-        //list buttonInteractions
         for (int i = 0; i < arrayOfPlotLineInteractions.Length; i++)
         {
             arrayOfPlotLineInteractions[i].SetButton(ToolEventType.ShowPlotLineDetails, i);
@@ -240,6 +263,7 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.NextAdventure, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.PreviousAdventure, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.OpenAdventureLists, OnEvent, "AdventureUI");
+
         ToolEvents.i.AddListener(ToolEventType.CloseAdventureLists, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.ShowPlotLineDetails, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.ShowCharacterDetails, OnEvent, "AdventureUI");
@@ -247,6 +271,11 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.PreviousLists, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.EditListItem, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.SaveListDetails, OnEvent, "AdventureUI");
+        
+        ToolEvents.i.AddListener(ToolEventType.CreatePlotpoint, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.ClearTurningPoint, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.SaveTurningPoint, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.CloseTurningPoint, OnEvent, "AdventureUI");
     }
     #endregion
 
@@ -325,13 +354,24 @@ public class AdventureUI : MonoBehaviour
             case ToolEventType.SaveListDetails:
                 SaveListDetails();
                 break;
+            case ToolEventType.CreatePlotpoint:
+                CreatePlotpoint();
+                break;
+            case ToolEventType.ClearTurningPoint:
+                ClearTurningPoint();
+                break;
+            case ToolEventType.SaveTurningPoint:
+                SaveTurningPoint();
+                break;
+            case ToolEventType.CloseTurningPoint:
+                CloseTurningPoint();
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
         }
     }
     #endregion
-
 
     #region Main Adventure
     //
@@ -537,7 +577,12 @@ public class AdventureUI : MonoBehaviour
     /// </summary>
     private void CreateTurningPoint()
     {
+        //toggle canvases
+        turningPointCanvas.gameObject.SetActive(true);
+        newAdventureCanvas.gameObject.SetActive(false);
 
+        //set modal state
+        ToolManager.i.toolInputScript.SetModalState(ToolModal.TurningPoint);
     }
 
     /// <summary>
@@ -622,6 +667,78 @@ public class AdventureUI : MonoBehaviour
     }
 
 
+
+    #endregion
+
+    #region Turning Point
+    //
+    // - - - Turning Point
+    //
+
+    /// <summary>
+    /// open new adventure page
+    /// </summary>
+    private void OpenTurningPoint()
+    {
+        //create new story if none present
+        if (storyNew != null)
+        {
+            //toggle canvases on/off
+            turningPointCanvas.gameObject.SetActive(true);
+            newAdventureCanvas.gameObject.SetActive(false);
+            //redraw page
+            RedrawTurningPointPage();
+
+            //Adventure and date data
+
+            //Generate Plotpoint and associated items
+
+            //set Modal State
+            ToolManager.i.toolInputScript.SetModalState(ToolModal.TurningPoint);
+        }
+        else { Debug.LogError("Invalid storyNew (Null)"); }
+    }
+
+
+    private void CreatePlotpoint()
+    {
+
+    }
+
+
+    private void ClearTurningPoint()
+    {
+
+    }
+
+
+    private void SaveTurningPoint()
+    {
+
+    }
+
+    /// <summary>
+    /// close turningPoint page and return to New Adventure page
+    /// </summary>
+    private void CloseTurningPoint()
+    {
+        //toggle canvases
+        newAdventureCanvas.gameObject.SetActive(true);
+        turningPointCanvas.gameObject.SetActive(false);
+        
+        //save button on main screen
+        if (isSaveNeeded == true)
+        { saveButton.gameObject.SetActive(true); }
+        
+        //set Modal State
+        ToolManager.i.toolInputScript.SetModalState(ToolModal.New);
+    }
+
+
+    private void RedrawTurningPointPage()
+    {
+
+    }
 
     #endregion
 

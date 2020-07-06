@@ -10,7 +10,7 @@ namespace toolsAPI
     // - - - Enums
     //
 
-    public enum ToolModal { Menu, Main, New, Lists }
+    public enum ToolModal { Menu, Main, New, TurningPoint, Lists }
     public enum ToolModalType { Read, Edit }
     public enum ThemeType { Action, Tension, Mystery, Social, Personal, Count }   //NOTE: Order matters (ToolDetails.cs)
     public enum StoryStatus { New, Logical, Data }

@@ -24,6 +24,12 @@ public enum ToolEventType
     CloseNewAdventure,
     SaveAdventureToDict,
     ClearNewAdventure,
+    //Turning Point
+    CloseTurningPoint,
+    OpenTurningPoint,
+    CreatePlotpoint,
+    SaveTurningPoint,
+    ClearTurningPoint,
     //Lists
     OpenAdventureLists,
     CloseAdventureLists,
