@@ -354,6 +354,7 @@ namespace toolsAPI
         public bool isActive;                   //quick check to see if active plotpoint
         public string turningPoint;             //turningPoint.refTag
         public string plotPoint;                //plotPoint.refTag
+        public string plotPointNotes;
         public Character character1;
         public Character character2;
         public string notes;
@@ -364,6 +365,7 @@ namespace toolsAPI
             isActive = false;
             turningPoint = "";
             plotPoint = "";
+            plotPointNotes = "";
             notes = "";
             character1 = null;
             character2 = null;           

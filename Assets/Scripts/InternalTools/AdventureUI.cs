@@ -121,6 +121,17 @@ public class AdventureUI : MonoBehaviour
     public TextMeshProUGUI turnData0;
     public TextMeshProUGUI turnData1;
     public TextMeshProUGUI turnData2;
+    public TextMeshProUGUI turnPlotpointNotes;
+
+    public TextMeshProUGUI[] arrayOfTurnPlotpoints; 
+    public TextMeshProUGUI[] arrayOfTurnCharacters;
+
+    public TMP_InputField turnNameInput;
+    public TMP_InputField turnData1Input;
+    public TMP_InputField turnData2Input;
+    public TMP_InputField turnPlotNotesInput;
+
+    private string[] arrayOfPlotpointNotes = new string[5];
 
     #endregion
 
@@ -233,6 +244,15 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(turnData0 != null, "Invalid turnData0 (Null)");
         Debug.Assert(turnData1 != null, "Invalid turnData1 (Null)");
         Debug.Assert(turnData2 != null, "Invalid turnData2 (Null)");
+        Debug.Assert(arrayOfTurnPlotpoints != null, "Invalid arrayOfTurnPlotpoints (Null)");
+        Debug.Assert(arrayOfTurnCharacters != null, "Invalid arrayOfTurnCharacters (Null)");
+        Debug.Assert(arrayOfTurnPlotpoints.Length == 5, "Invalid arrayOfTurnPlotPoints (should be 5 records, exactly)");
+        Debug.Assert(arrayOfTurnCharacters.Length == 5, "Invalid arrayOfTurnCharacters (should be 5 records, exactly)");
+        Debug.Assert(turnNameInput != null, "Invalid turnNameInput (Null)");
+        Debug.Assert(turnData1Input != null, "Invalid turnData1Input (Null)");
+        Debug.Assert(turnData2Input != null, "Invalid turnData12nput (Null)");
+        Debug.Assert(turnPlotNotesInput != null, "Invalid turnPlotNotesInput (Null)");
+        Debug.Assert(turnPlotpointNotes != null, "Invalid turnPlotpointNotes (Null)");
         //lists
         Debug.Assert(returnListsInteraction != null, "Invalid returnListsInteraction (Null)");
         Debug.Assert(listEditInteraction != null, "Invalid listEditInteraction (Null)");
@@ -718,7 +738,9 @@ public class AdventureUI : MonoBehaviour
         turnAdventureName.text = storyNew.tag;
         //indexes
         plotPointIndex = 0;
-
+        //toggle fields
+        turnNameInput.gameObject.SetActive(true);
+        ToggleTurningPointFields(false);
         //set modal state
         ToolManager.i.toolInputScript.SetModalState(ToolModal.TurningPoint);
     }
@@ -743,17 +765,26 @@ public class AdventureUI : MonoBehaviour
             }
             if (index > -1)
             {
-                if (plotPointIndex < 4)
+                if (plotPointIndex < 5)
                 {
+                    //save previous notes (except for first instance as there are no notes to save)
+                    if (index > 0)
+                    { arrayOfPlotpointNotes[index - 1] = turnPlotNotesInput.text; }
+                    //new plotPoint
                     turningPointIndex = index;
                     //Generate new Plotpoint
-                    int rnd = Random.Range(0, 10);
                     int priority = ToolManager.i.adventureScript.GetThemePriority();
                     ThemeType themeType = storyNew.theme.GetThemeType(priority);
                     Plotpoint plotPoint = ToolManager.i.toolDataScript.GetPlotpoint(themeType);
-
+                    //update texts
                     turnPlotPoint.text = plotPoint.tag;
                     turnData0.text = plotPoint.details;
+                    arrayOfTurnPlotpoints[plotPointIndex].text = plotPoint.tag;
+                    //notes default
+
+                    //toggle fields
+                    ToggleTurningPointFields(true);
+                    //increment index
                     plotPointIndex++;
                 }
                 else { Debug.LogWarning("There are already five plotponts -> Info only"); }
@@ -780,13 +811,24 @@ public class AdventureUI : MonoBehaviour
         {
             Debug.LogWarning("Invalid plotPointIndex (sub Zero)");
             plotPointIndex = 0;
-        }
+        }        
+        //clear out plotPoint
+        arrayOfTurnPlotpoints[plotPointIndex].text = plotPointIndex.ToString();
+        arrayOfPlotpointNotes[plotPointIndex] = "";
+        //clear out texts
+        turnPlotPoint.text = "";
+        turnData0.text = "";
+        turnData1Input.text = "";
+        turnData2Input.text = "";
+        turnPlotNotesInput.text = "";
+        ToggleTurningPointFields(false);
     }
 
 
     private void SaveTurningPoint()
     {
-
+        //Save last set of notes prior to saving
+        arrayOfPlotpointNotes[plotPointIndex] = turnPlotNotesInput.text;
     }
 
     /// <summary>
@@ -1341,6 +1383,32 @@ public class AdventureUI : MonoBehaviour
             //toggle input off
             listCreatedInput.gameObject.SetActive(false);
             listMeInput.gameObject.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// toggles data display or data input for TurningPage plotpoint and character fields
+    /// </summary>
+    /// <param name="isInput"></param>
+    private void ToggleTurningPointFields(bool isInput)
+    {
+        if (isInput == true)
+        {
+            turnData1.gameObject.SetActive(false);
+            turnData2.gameObject.SetActive(false);
+            turnPlotpointNotes.gameObject.SetActive(false);
+            turnData1Input.gameObject.SetActive(true);
+            turnData2Input.gameObject.SetActive(true);
+            turnPlotNotesInput.gameObject.SetActive(true);
+        }
+        else
+        {
+            turnData1.gameObject.SetActive(true);
+            turnData2.gameObject.SetActive(true);
+            turnPlotpointNotes.gameObject.SetActive(true);
+            turnData1Input.gameObject.SetActive(false);
+            turnData2Input.gameObject.SetActive(false);
+            turnPlotNotesInput.gameObject.SetActive(false);
         }
     }
 
