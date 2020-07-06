@@ -39,6 +39,7 @@ public class AdventureUI : MonoBehaviour
     private int mainNavCounter;
     private int mainNavLimit;
     private int turningPointIndex;
+    private int plotPointIndex;
     private bool isSaveNeeded;
     private List<Story> listOfStories;
 
@@ -715,8 +716,8 @@ public class AdventureUI : MonoBehaviour
         RedrawTurningPointPage();
         //Adventure and date data
         turnAdventureName.text = storyNew.tag;
-        turnAdventureDate.text = storyNew.date;
-            
+        //indexes
+        plotPointIndex = 0;
 
         //set modal state
         ToolManager.i.toolInputScript.SetModalState(ToolModal.TurningPoint);
@@ -742,15 +743,20 @@ public class AdventureUI : MonoBehaviour
             }
             if (index > -1)
             {
-                turningPointIndex = index;
-                //Generate new Plotpoint
-                int rnd = Random.Range(0, 10);
-                int priority = ToolManager.i.adventureScript.GetThemePriority();
-                ThemeType themeType = storyNew.theme.GetThemeType(priority);
-                Plotpoint plotPoint = ToolManager.i.toolDataScript.GetPlotpoint(themeType);
+                if (plotPointIndex < 4)
+                {
+                    turningPointIndex = index;
+                    //Generate new Plotpoint
+                    int rnd = Random.Range(0, 10);
+                    int priority = ToolManager.i.adventureScript.GetThemePriority();
+                    ThemeType themeType = storyNew.theme.GetThemeType(priority);
+                    Plotpoint plotPoint = ToolManager.i.toolDataScript.GetPlotpoint(themeType);
 
-                turnPlotPoint.text = plotPoint.tag;
-                turnData0.text = plotPoint.details;
+                    turnPlotPoint.text = plotPoint.tag;
+                    turnData0.text = plotPoint.details;
+                    plotPointIndex++;
+                }
+                else { Debug.LogWarning("There are already five plotponts -> Info only"); }
             }
             else
             {
@@ -763,10 +769,18 @@ public class AdventureUI : MonoBehaviour
         else { Debug.LogWarning("Story has been concluded -> Info only"); }
     }
 
-
+    /// <summary>
+    /// Clear out current plotPoint
+    /// </summary>
     private void ClearTurningPoint()
     {
-
+        //plotPoint index back one
+        plotPointIndex--;
+        if (plotPointIndex < 0)
+        {
+            Debug.LogWarning("Invalid plotPointIndex (sub Zero)");
+            plotPointIndex = 0;
+        }
     }
 
 
