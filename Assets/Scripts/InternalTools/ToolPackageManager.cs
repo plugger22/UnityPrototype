@@ -152,6 +152,7 @@ namespace toolsAPI
         private int size = 25;
 
         #region StoryArray Methods
+
         /// <summary>
         /// default constructor
         /// </summary>
@@ -403,8 +404,39 @@ namespace toolsAPI
             return plotLine;
         }
 
+        /// <summary>
+        /// Add character to listOfCharacters
+        /// </summary>
+        /// <param name="character"></param>
+        public void AddCharacterToList(Character character)
+        {
+            if (character != null)
+            {
+                //check not already in list
+                if (listOfCharacters.Exists(x => x.refTag.Equals(character.refTag, StringComparison.Ordinal)) == false)
+                { listOfCharacters.Add(character); }
+                else { Debug.LogWarningFormat("Character refTag \"{0}\" alread present in list", character.refTag); }
+            }
+            else { Debug.LogError("Invalid character (Null)"); }
+        }
 
-        
+        /// <summary>
+        /// Add PlotLine to listOfPlotLines
+        /// </summary>
+        /// <param name="plotLine"></param>
+        public void AddPlotLineToList(PlotLine plotLine)
+        {
+            if (plotLine != null)
+            {
+                //check not already in list
+                if (listOfPlotLines.Exists(x => x.refTag.Equals(plotLine.refTag, StringComparison.Ordinal)) == false)
+                { listOfPlotLines.Add(plotLine); }
+                else { Debug.LogWarningFormat("Plotline refTag \"{0}\" alread present in list", plotLine.refTag); }
+            }
+            else { Debug.LogError("Invalid plotLine (Null)"); }
+        }
+
+
         #endregion
     }
     #endregion

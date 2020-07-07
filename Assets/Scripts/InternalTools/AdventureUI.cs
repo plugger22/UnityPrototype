@@ -131,12 +131,12 @@ public class AdventureUI : MonoBehaviour
     public TMP_InputField turnData2Input;
     public TMP_InputField turnPlotNotesInput;
 
-    private Text turnData1Text;
+    /*private Text turnData1Text;
     private Text turnData2Text;
-    private Text turnPlotNotesText;
+    private Text turnPlotNotesText;*/
 
     private string[] arrayOfPlotpointNotes = new string[5];
-    
+    private TurningPoint turningPoint;
 
     #endregion
 
@@ -424,7 +424,7 @@ public class AdventureUI : MonoBehaviour
                 SaveListDetails();
                 break;
             case ToolEventType.CreatePlotpoint:
-                CreatePlotpoint();
+                NewPlotpoint();
                 break;
             case ToolEventType.ClearTurningPoint:
                 ClearTurningPoint();
@@ -761,7 +761,7 @@ public class AdventureUI : MonoBehaviour
     /// <summary>
     /// New Plotpoint
     /// </summary>
-    private void CreatePlotpoint()
+    private void NewPlotpoint()
     {
         //check story hasn't been concluded
         if (storyNew.isConcluded == false)
@@ -780,11 +780,14 @@ public class AdventureUI : MonoBehaviour
             {
                 if (plotPointIndex < 5)
                 {
+                    //zero out relevant fields
+                    ResetPlotPoint();
                     //save previous notes (except for first instance as there are no notes to save)
                     if (index > 0)
                     { arrayOfPlotpointNotes[index - 1] = turnPlotNotesInput.text; }
-                    //new plotPoint
+                    //new TurningPoint
                     turningPointIndex = index;
+                    turningPoint = new TurningPoint();
                     //Generate new Plotpoint
                     int priority = ToolManager.i.adventureScript.GetThemePriority();
                     ThemeType themeType = storyNew.theme.GetThemeType(priority);
@@ -855,14 +858,22 @@ public class AdventureUI : MonoBehaviour
             default: Debug.LogWarningFormat("Unrecognised numOfCharacters \"{0}\"", numOfCharacters); break;
         }
         //populate fields and add to lists and arrays
+        string characters = "";
         if (character1 != null)
         {
+            turnCharacter1.text = character1.tag;
             turnData1Input.text = string.Format("{0}{1}- - -{2}{3}", character1.dataCreated, "\n", "\n", character1.dataMe);
+            characters = character1.tag;
         }
         if (character2 != null)
         {
+            turnCharacter2.text = character2.tag;
             turnData2Input.text = string.Format("{0}{1}- - -{2}{3}", character2.dataCreated, "\n", "\n", character2.dataMe);
+            characters = string.Format("{0} / {1}", characters, character2.tag);
         }
+        //add to turning point list of characters (next to plotpoint)
+        if (characters.Length > 0)
+        { arrayOfTurnCharacters[plotPointIndex].text = characters; }
     }
 
     /// <summary>
@@ -885,7 +896,12 @@ public class AdventureUI : MonoBehaviour
             case StoryStatus.New:
                 character = ToolManager.i.adventureScript.GetNewCharacter();
                 if (character != null)
-                { storyNew.arrays.AddCharacterToArray(new ListItem() { tag = character.refTag, status = StoryStatus.Data }); }
+                {
+                    //add character to array and list
+                    storyNew.arrays.AddCharacterToArray(new ListItem() { tag = character.refTag, status = StoryStatus.Data });
+                    storyNew.lists.AddCharacterToList(character);
+                }
+                else { Debug.LogWarning("Invalid character (Null), NOT added to arrayOfCharacters, or listOfCharacters"); }
                 break;
             default: Debug.LogWarningFormat("Unrecognised item.status \"[0}\"", item.status); break;
         }
@@ -899,13 +915,10 @@ public class AdventureUI : MonoBehaviour
     {
         //clear out plotPoint
         arrayOfTurnPlotpoints[plotPointIndex].text = plotPointIndex.ToString();
+        arrayOfTurnCharacters[plotPointIndex].text = plotPointIndex.ToString();
         arrayOfPlotpointNotes[plotPointIndex] = "";
         //clear out texts
-        turnPlotPoint.text = "";
-        turnData0.text = "";
-        turnData1Input.text = "";
-        turnData2Input.text = "";
-        turnPlotNotesInput.text = "";
+        ResetPlotPoint();
         ToggleTurningPointFields(false);
         //plotPoint index back one
         plotPointIndex--;
@@ -924,7 +937,12 @@ public class AdventureUI : MonoBehaviour
 
         //SAVE
 
-        //clear out all existing details (maybe...)
+
+        //Populate data (to do)
+
+        storyNew.arrayOfTurningPoints[turningPointIndex] = turningPoint;
+
+        //clear out all existing details (to do)
     }
 
     /// <summary>
@@ -1510,6 +1528,21 @@ public class AdventureUI : MonoBehaviour
             turnData2Input.gameObject.SetActive(false);
             turnPlotNotesInput.gameObject.SetActive(false);
         }
+    }
+
+    /// <summary>
+    /// Resets all relevant fields related to a Plotpoint and characters
+    /// </summary>
+    private void ResetPlotPoint()
+    {
+        turnPlotPoint.text = "";
+        turnPlotLine2.text = "";
+        turnData0.text = "";
+        turnCharacter1.text = "";
+        turnCharacter2.text = "";
+        turnData1Input.text = "";
+        turnData2Input.text = "";
+        turnPlotNotesInput.text = "";
     }
 
     #endregion
