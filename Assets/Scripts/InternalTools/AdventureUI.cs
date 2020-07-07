@@ -103,10 +103,12 @@ public class AdventureUI : MonoBehaviour
     [Header("Turning Point")]
     public ToolButtonInteraction plotTurnInteraction;
     public ToolButtonInteraction clearTurnInteraction;
+    public ToolButtonInteraction preSaveTurnInteraction;
     public ToolButtonInteraction saveTurnInteraction;
     public ToolButtonInteraction exitTurnInteraction;
 
     public Button turnPlotpointButton;
+    public Button turnPreSaveButton;
     public Button turnSaveButton;
 
     public TextMeshProUGUI turnAdventureName;
@@ -234,11 +236,13 @@ public class AdventureUI : MonoBehaviour
         //turning Points
         Debug.Assert(plotTurnInteraction != null, "Invalid plotTurnInteraction");
         Debug.Assert(clearTurnInteraction != null, "Invalid clearTurnInteraction");
+        Debug.Assert(preSaveTurnInteraction != null, "Invalid preSaveTurnInteraction");
         Debug.Assert(saveTurnInteraction != null, "Invalid saveTurnInteraction");
         Debug.Assert(exitTurnInteraction != null, "Invalid exitTurnInteraction");
         Debug.Assert(turnAdventureName != null, "Invalid turnAdventureName (Null)");
         Debug.Assert(turnAdventureDate != null, "Invalid turnAdventureData (Null)");
         Debug.Assert(turnPlotpointButton != null, "Invalid turnPlotpointButton (Null)");
+        Debug.Assert(turnPreSaveButton != null, "Invalid turnPreSaveButton (Null)");
         Debug.Assert(turnSaveButton != null, "Invalid turnSaveButton (Null)");
         Debug.Assert(turnName != null, "Invalid turnName (Null)");
         Debug.Assert(turnNumber != null, "Invalid turnNumber (Null)");
@@ -343,6 +347,7 @@ public class AdventureUI : MonoBehaviour
         
         ToolEvents.i.AddListener(ToolEventType.CreatePlotpoint, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.ClearTurningPoint, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.PreSaveTurningPoint, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.SaveTurningPoint, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.CloseTurningPoint, OnEvent, "AdventureUI");
     }
@@ -373,7 +378,7 @@ public class AdventureUI : MonoBehaviour
                 CloseNewAdventure();
                 break;
             case ToolEventType.CreateTurningPoint:
-                CreateTurningPoint();
+                NewTurningPoint();
                 break;
             case ToolEventType.SaveAdventureToDict:
                 SaveAdventureToDict();
@@ -428,6 +433,9 @@ public class AdventureUI : MonoBehaviour
                 break;
             case ToolEventType.ClearTurningPoint:
                 ClearTurningPoint();
+                break;
+            case ToolEventType.PreSaveTurningPoint:
+                PreSaveTurningPoint();
                 break;
             case ToolEventType.SaveTurningPoint:
                 SaveTurningPoint();
@@ -740,7 +748,7 @@ public class AdventureUI : MonoBehaviour
     /// <summary>
     /// Create New Turning Points for Adventure
     /// </summary>
-    private void CreateTurningPoint()
+    private void NewTurningPoint()
     {
         //toggle canvases
         turningPointCanvas.gameObject.SetActive(true);
@@ -752,8 +760,10 @@ public class AdventureUI : MonoBehaviour
         //indexes
         plotPointIndex = 0;
         //toggle fields
-        turnNameInput.gameObject.SetActive(true);
-        ToggleTurningPointFields(false);
+        turnNameInput.gameObject.SetActive(false);
+        ToggleTurningPointFields(true, 0);
+        //new Turning point
+        turningPoint = new TurningPoint() { type = TurningPointType.New };
         //set modal state
         ToolManager.i.toolInputScript.SetModalState(ToolModal.TurningPoint);
     }
@@ -785,9 +795,8 @@ public class AdventureUI : MonoBehaviour
                     //save previous notes (except for first instance as there are no notes to save)
                     if (index > 0)
                     { arrayOfPlotpointNotes[index - 1] = turnPlotNotesInput.text; }
-                    //new TurningPoint
+                    // TurningPoint
                     turningPointIndex = index;
-                    turningPoint = new TurningPoint();
                     //Generate new Plotpoint
                     int priority = ToolManager.i.adventureScript.GetThemePriority();
                     ThemeType themeType = storyNew.theme.GetThemeType(priority);
@@ -934,7 +943,9 @@ public class AdventureUI : MonoBehaviour
     {
         //Save last set of notes prior to saving
         arrayOfPlotpointNotes[plotPointIndex] = turnPlotNotesInput.text;
-
+        //toggle fields
+        turnNameInput.gameObject.SetActive(true);
+        ToggleTurningPointFields(false);
         //SAVE
 
 

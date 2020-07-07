@@ -9375,7 +9375,7 @@ GameObject:
   - component: {fileID: 359815398}
   - component: {fileID: 359815397}
   m_Layer: 5
-  m_Name: ExitButton (4)
+  m_Name: SaveButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9397,8 +9397,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -200}
-  m_SizeDelta: {x: 200, y: 40}
+  m_AnchoredPosition: {x: 100, y: -220}
+  m_SizeDelta: {x: 200, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &359815397
 MonoBehaviour:
@@ -9430,8 +9430,8 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.0509078, g: 0.5233, b: 0.9811321, a: 1}
-    m_HighlightedColor: {r: 0.011764706, g: 0.64705884, b: 0.9607843, a: 1}
+    m_NormalColor: {r: 0.9529412, g: 0.99215686, b: 0.41568628, a: 1}
+    m_HighlightedColor: {r: 0.43529412, g: 0.43529412, b: 0.43529412, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -11968,7 +11968,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.000061035156, y: 0}
-  m_SizeDelta: {x: 200, y: 40}
+  m_SizeDelta: {x: 180, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &456710448
 MonoBehaviour:
@@ -11989,7 +11989,11 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 
+  m_text: 'Name Turning Point
+
+    then
+
+    SAVE'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
@@ -11998,8 +12002,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4283060723
+  m_fontColor: {r: 0.9529412, g: 0.31764707, b: 0.2901961, a: 1}
   m_enableVertexGradient: 0
   m_fontColorGradient:
     topLeft: {r: 1, g: 1, b: 1, a: 1}
@@ -12016,7 +12020,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 20
+  m_fontSize: 18.75
   m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -12057,13 +12061,13 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 456710448}
-    characterCount: 0
+    characterCount: 28
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 0
+    spaceCount: 4
+    wordCount: 5
     linkCount: 0
-    lineCount: 0
-    pageCount: 0
+    lineCount: 3
+    pageCount: 1
     materialCount: 1
   m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
@@ -28056,7 +28060,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -260}
+  m_AnchoredPosition: {x: 100, y: -300}
   m_SizeDelta: {x: 200, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1243377530
@@ -43344,7 +43348,7 @@ GameObject:
   - component: {fileID: 2056158655}
   - component: {fileID: 2056158654}
   m_Layer: 5
-  m_Name: SaveButton
+  m_Name: PreSaveButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44525,10 +44529,12 @@ MonoBehaviour:
   - {fileID: 1527271512}
   plotTurnInteraction: {fileID: 1226750040}
   clearTurnInteraction: {fileID: 323551789}
-  saveTurnInteraction: {fileID: 2056158654}
+  preSaveTurnInteraction: {fileID: 2056158654}
+  saveTurnInteraction: {fileID: 359815397}
   exitTurnInteraction: {fileID: 1243377530}
   turnPlotpointButton: {fileID: 1226750041}
-  turnSaveButton: {fileID: 2056158655}
+  turnPreSaveButton: {fileID: 2056158655}
+  turnSaveButton: {fileID: 359815398}
   turnAdventureName: {fileID: 2124053017}
   turnAdventureDate: {fileID: 424112497}
   turnName: {fileID: 2146379099}

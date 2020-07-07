@@ -28,6 +28,7 @@ public enum ToolEventType
     CloseTurningPoint,
     OpenTurningPoint,
     CreatePlotpoint,
+    PreSaveTurningPoint,
     SaveTurningPoint,
     ClearTurningPoint,
     //Lists
