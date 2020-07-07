@@ -829,6 +829,10 @@ public class AdventureUI : MonoBehaviour
     {
         //Save last set of notes prior to saving
         arrayOfPlotpointNotes[plotPointIndex] = turnPlotNotesInput.text;
+
+        //SAVE
+
+        //clear out all existing details (maybe...)
     }
 
     /// <summary>

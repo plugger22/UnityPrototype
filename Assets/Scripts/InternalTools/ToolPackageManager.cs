@@ -15,7 +15,8 @@ namespace toolsAPI
     public enum ThemeType { Action, Tension, Mystery, Social, Personal, Count }   //NOTE: Order matters (ToolDetails.cs)
     public enum StoryStatus { New, Logical, Data }
     public enum ListItemStatus { None, PlotLine, Character }    //what's currently selected on the Aventure/list page
-    public enum PlotPointType { Normal }
+    public enum PlotPointType { Normal, Conclusion, None, RemoveCharacter, NewCharacter, Meta }
+    public enum MetaAction { CharacterExits, CharacterReturns, CharacterUpgrade, CharacterDowngrade, CharacterStepsUp, CharacterStepsDown, PlotLineCombo}
     public enum TurningPointType { None, New, Development, Conclusion}
 
 
@@ -442,6 +443,7 @@ namespace toolsAPI
         public string refTag;                       //single string reference tag used for dictionaries, lookup tables, etc
         public string tag;
         public string details;
+        public MetaAction action;
         public List<int> listToRoll;                //die roll numbers, leave list empty for none
     }
     #endregion
