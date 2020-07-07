@@ -10,9 +10,20 @@ using Random = System.Random;
 public class AdventureManager : MonoBehaviour
 {
 
+    [Header("Names for Characters")]
+    [Tooltip("Male first name textlist")]
+    public TextList nameMaleFirst;
+    [Tooltip("Female first name textlist")]
+    public TextList nameFemaleFirst;
+    [Tooltip("Last name textlist")]
+    public TextList nameLast;
+
     public void Initialise()
     {
         /*DebugTestCharacter();*/
+        Debug.Assert(nameMaleFirst != null, "Invalid nameMaleFirst (Null)");
+        Debug.Assert(nameFemaleFirst != null, "Invalid nameFemaleFirst (Null)");
+        Debug.Assert(nameLast != null, "Invalid nameLast (Null)");
     }
 
     /// <summary>
@@ -71,6 +82,44 @@ public class AdventureManager : MonoBehaviour
     }
 
 
+
+
+    /// <summary>
+    /// returns a new character
+    /// </summary>
+    /// <returns></returns>
+    public Character GetNewCharacter()
+    {
+        Character character = new Character();
+        string identity, descriptor, name, refTag;
+        List<string> tempList = new List<string>();
+        identity = descriptor = name = "";
+        //special
+        CharacterSpecial special = ToolManager.i.toolDataScript.GetCharacterSpecial();
+        if (special != null)
+        {
+            //identity
+            tempList = ToolManager.i.toolDataScript.GetCharacterIdentity();
+            for (int j = 0; j < tempList.Count; j++)
+            { identity = string.Format("{0}{1}", identity.Length > 0 ? identity + ", " : "", tempList[j]); }
+            //descriptor
+            tempList = ToolManager.i.toolDataScript.GetCharacterDescriptors();
+            for (int j = 0; j < tempList.Count; j++)
+            { descriptor = string.Format("{0}{1}", descriptor.Length > 0 ? descriptor + ", " : "", tempList[j]); }
+            //name
+            Random random = new Random();
+            int rnd = random.Next(0, 100);
+            name = string.Format("{0} {1}", rnd < 50 ? nameMaleFirst.GetRandomRecord() : nameMaleFirst.GetRandomRecord(), nameLast.GetRandomRecord());
+            refTag = name.Replace(" ", "");
+            //bring together
+            character.dataCreated = string.Format("{0} -> {1} -> {2} -> {3}", name, special.tag, identity, descriptor);
+            character.tag = name;
+            character.refTag = refTag;           
+        }
+        else { Debug.LogWarning("Invalid CharacterSpecial (Null)"); }
+        return character; 
+    }
+
     //
     // - - - Debug
     //
@@ -104,7 +153,6 @@ public class AdventureManager : MonoBehaviour
             else { Debug.LogWarning("Invalid CharacterSpecial (Null)"); }
         }
     }
-
 
     //new methods above here
 }

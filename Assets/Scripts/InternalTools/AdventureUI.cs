@@ -131,7 +131,12 @@ public class AdventureUI : MonoBehaviour
     public TMP_InputField turnData2Input;
     public TMP_InputField turnPlotNotesInput;
 
+    private Text turnData1Text;
+    private Text turnData2Text;
+    private Text turnPlotNotesText;
+
     private string[] arrayOfPlotpointNotes = new string[5];
+    
 
     #endregion
 
@@ -253,6 +258,14 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(turnData2Input != null, "Invalid turnData12nput (Null)");
         Debug.Assert(turnPlotNotesInput != null, "Invalid turnPlotNotesInput (Null)");
         Debug.Assert(turnPlotpointNotes != null, "Invalid turnPlotpointNotes (Null)");
+
+        /*turnData1Text = turnData1Input.placeholder.GetComponent<Text>();
+        turnData2Text = turnData2Input.placeholder.GetComponent<Text>();
+        turnPlotNotesText = turnPlotNotesInput.placeholder.GetComponent<Text>();
+        Debug.Assert(turnData1Text != null, "Invalid turnData1Text (Null)");
+        Debug.Assert(turnData2Text != null, "Invalid turnData2Text (Null)");
+        Debug.Assert(turnPlotNotesText != null, "Invalid turnPlotNotesText (Null)");*/
+        
         //lists
         Debug.Assert(returnListsInteraction != null, "Invalid returnListsInteraction (Null)");
         Debug.Assert(listEditInteraction != null, "Invalid listEditInteraction (Null)");
@@ -780,10 +793,29 @@ public class AdventureUI : MonoBehaviour
                     turnPlotPoint.text = plotPoint.tag;
                     turnData0.text = plotPoint.details;
                     arrayOfTurnPlotpoints[plotPointIndex].text = plotPoint.tag;
-                    //notes default
+                    //Plotpoint type
+                    switch (plotPoint.type)
+                    {
+                        case PlotPointType.Normal:
+                            GetCharacters(plotPoint.numberOfCharacters);
+                            break;
+                        case PlotPointType.Conclusion:
+
+                            break;
+                        case PlotPointType.None:
+
+                            break;
+                        case PlotPointType.NewCharacter:
+
+                            break;
+                        case PlotPointType.RemoveCharacter:
+
+                            break;
+                        default: Debug.LogWarningFormat("Unrecognised plotPoint.type \"{0}\"", plotPoint.type); break;
+                    }
 
                     //toggle fields
-                    ToggleTurningPointFields(true);
+                    ToggleTurningPointFields(true, plotPoint.numberOfCharacters);
                     //increment index
                     plotPointIndex++;
                 }
@@ -801,17 +833,70 @@ public class AdventureUI : MonoBehaviour
     }
 
     /// <summary>
+    /// Get characters for the plotline (0 to 3)
+    /// </summary>
+    /// <param name="numOfCharacters"></param>
+    private void GetCharacters(int numOfCharacters)
+    {
+        Character character1 = null;
+        Character character2 = null;
+        switch (numOfCharacters)
+        {
+            case 0:
+                //do nothing
+                break;
+            case 1:
+                character1 = GetIndividualCharacter();
+                break;
+            case 2:
+                character1 = GetIndividualCharacter();
+                character2 = GetIndividualCharacter();
+                break;
+            default: Debug.LogWarningFormat("Unrecognised numOfCharacters \"{0}\"", numOfCharacters); break;
+        }
+        //populate fields and add to lists and arrays
+        if (character1 != null)
+        {
+            turnData1Input.text = string.Format("{0}{1}- - -{2}{3}", character1.dataCreated, "\n", "\n", character1.dataMe);
+        }
+        if (character2 != null)
+        {
+            turnData2Input.text = string.Format("{0}{1}- - -{2}{3}", character2.dataCreated, "\n", "\n", character2.dataMe);
+        }
+    }
+
+    /// <summary>
+    /// Sub method of GetCharacters. Returns null if a problem
+    /// </summary>
+    /// <returns></returns>
+    private Character GetIndividualCharacter()
+    {
+        Character character = null;
+        ListItem item = storyNew.arrays.GetCharacterFromArray();
+        switch (item.status)
+        {
+            case StoryStatus.Data:
+                character = storyNew.lists.GetCharacterFromList(item.tag);
+                break;
+            case StoryStatus.Logical:
+                //DEBUG -> Placeholder
+                character = ToolManager.i.adventureScript.GetNewCharacter();
+                break;
+            case StoryStatus.New:
+                character = ToolManager.i.adventureScript.GetNewCharacter();
+                if (character != null)
+                { storyNew.arrays.AddCharacterToArray(new ListItem() { tag = character.refTag, status = StoryStatus.Data }); }
+                break;
+            default: Debug.LogWarningFormat("Unrecognised item.status \"[0}\"", item.status); break;
+        }
+        return character;
+    }
+
+    /// <summary>
     /// Clear out current plotPoint
     /// </summary>
     private void ClearTurningPoint()
     {
-        //plotPoint index back one
-        plotPointIndex--;
-        if (plotPointIndex < 0)
-        {
-            Debug.LogWarning("Invalid plotPointIndex (sub Zero)");
-            plotPointIndex = 0;
-        }        
         //clear out plotPoint
         arrayOfTurnPlotpoints[plotPointIndex].text = plotPointIndex.ToString();
         arrayOfPlotpointNotes[plotPointIndex] = "";
@@ -822,6 +907,13 @@ public class AdventureUI : MonoBehaviour
         turnData2Input.text = "";
         turnPlotNotesInput.text = "";
         ToggleTurningPointFields(false);
+        //plotPoint index back one
+        plotPointIndex--;
+        if (plotPointIndex < 0)
+        {
+            Debug.LogWarning("Invalid plotPointIndex (sub Zero)");
+            plotPointIndex = 0;
+        }        
     }
 
 
@@ -1365,7 +1457,7 @@ public class AdventureUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Toggles fields on/off for List page RHS
+    /// Toggles fields on/off for List page RHS. 
     /// </summary>
     /// <param name="isInput"></param>
     private void ToggleListFields(bool isInput)
@@ -1391,18 +1483,22 @@ public class AdventureUI : MonoBehaviour
     }
 
     /// <summary>
-    /// toggles data display or data input for TurningPage plotpoint and character fields
+    /// toggles data display or data input for TurningPage plotpoint and character fields. If isInput true then numOfCharacters param is used to toggle the appropriate fields
     /// </summary>
     /// <param name="isInput"></param>
-    private void ToggleTurningPointFields(bool isInput)
+    private void ToggleTurningPointFields(bool isInput, int numOfCharacters = -1)
     {
         if (isInput == true)
         {
+            if (numOfCharacters == -1)
+            { Debug.LogError("Invalid numOfCharacters (-1), should be between 0 and 2"); }
             turnData1.gameObject.SetActive(false);
             turnData2.gameObject.SetActive(false);
             turnPlotpointNotes.gameObject.SetActive(false);
-            turnData1Input.gameObject.SetActive(true);
-            turnData2Input.gameObject.SetActive(true);
+            if (numOfCharacters > 0)
+            { turnData1Input.gameObject.SetActive(true); }
+            if (numOfCharacters > 1)
+            { turnData2Input.gameObject.SetActive(true); }
             turnPlotNotesInput.gameObject.SetActive(true);
         }
         else

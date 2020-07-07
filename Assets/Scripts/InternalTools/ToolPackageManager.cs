@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-#if(UNITY_EDITOR)
+#if (UNITY_EDITOR)
 namespace toolsAPI
 {
 
@@ -187,6 +188,70 @@ namespace toolsAPI
         }
 
         /// <summary>
+        /// get a plotLine ListItem from array. Returns null if a problem
+        /// </summary>
+        /// <returns></returns>
+        public ListItem GetPlotLineFromArray()
+        {
+            ListItem item = null;
+            int rnd = Random.Range(0, 25);
+            item = arrayOfPlotLines[rnd];
+            return item;
+        }
+
+        /// <summary>
+        /// get a character ListItem from array. Returns null if a problem.
+        /// </summary>
+        /// <returns></returns>
+        public ListItem GetCharacterFromArray()
+        {
+            ListItem item = null;
+            int rnd = Random.Range(0, 25);
+            item = arrayOfCharacters[rnd];
+            return item;
+        }
+
+        /// <summary>
+        /// Adds a new character to the next vacant, non-DATA slot in the array
+        /// </summary>
+        /// <param name="newItem"></param>
+        public void AddCharacterToArray(ListItem newItem)
+        {
+            if (newItem != null)
+            {
+                for (int i = 0; i < arrayOfCharacters.Length; i++)
+                {
+                    if (arrayOfCharacters[i].status != StoryStatus.Data)
+                    {
+                        arrayOfCharacters[i] = newItem;
+                        Debug.LogFormat("StoryArrays.cs -> AddCharacterToArray: {0}, {1} ADDED to arrayOfCharacters{2}", newItem.tag, newItem.status, "\n");
+                    }
+                }
+            }
+            else { Debug.LogError("Invalid newItem (Null)"); }
+        }
+
+        /// <summary>
+        /// Adds a new PlotLine to the next vacant, non-DATA slot in the array
+        /// </summary>
+        /// <param name="newItem"></param>
+        public void AddPlotLineToArray(ListItem newItem)
+        {
+            if (newItem != null)
+            {
+                for (int i = 0; i < arrayOfPlotLines.Length; i++)
+                {
+                    if (arrayOfPlotLines[i].status != StoryStatus.Data)
+                    {
+                        arrayOfPlotLines[i] = newItem;
+                        Debug.LogFormat("StoryArrays.cs -> AddPlotLineToArray: {0}, {1} ADDED to arrayOfPlotLines{2}", newItem.tag, newItem.status, "\n");
+                    }
+                }
+            }
+            else { Debug.LogError("Invalid newItem (Null)"); }
+        }
+
+        /// <summary>
         /// Populate lists with default data
         /// </summary>
         private void PopulateLists()
@@ -277,6 +342,7 @@ namespace toolsAPI
     {
         public List<PlotLine> listOfPlotLines = new List<PlotLine>();
         public List<Character> listOfCharacters = new List<Character>();
+        public List<Character> listOfRemovedCharacters = new List<Character>();
 
         #region StoryLists Methods
 
@@ -293,8 +359,10 @@ namespace toolsAPI
         {
             listOfPlotLines.Clear();
             listOfCharacters.Clear();
+            listOfRemovedCharacters.Clear();
             listOfPlotLines.AddRange(data.listOfPlotLines);
             listOfCharacters.AddRange(data.listOfCharacters);
+            listOfRemovedCharacters.AddRange(data.listOfRemovedCharacters);
         }
 
         /// <summary>
@@ -304,7 +372,38 @@ namespace toolsAPI
         {
             listOfPlotLines.Clear();
             listOfCharacters.Clear();
+            listOfRemovedCharacters.Clear();
         }
+
+        /// <summary>
+        /// Returns specific Character from list (based on array refTag), null if not found
+        /// </summary>
+        /// <param name="charRef"></param>
+        /// <returns></returns>
+        public Character GetCharacterFromList(string charRef)
+        {
+            Character character = null;
+            if (string.IsNullOrEmpty(charRef) == false)
+            { character = listOfCharacters.Find(x => x.refTag.Equals(charRef, StringComparison.Ordinal)); }
+            else { Debug.LogError("Invalid charRef (Null or Empty)"); }
+            return character;
+        }
+
+        /// <summary>
+        /// Returns specific Plotline from list (base on array refTag), null if not found
+        /// </summary>
+        /// <param name="plotRef"></param>
+        /// <returns></returns>
+        public PlotLine GetPlotLineFromList(string plotRef)
+        {
+            PlotLine plotLine = null;
+            if (string.IsNullOrEmpty(plotRef) == false)
+            { plotLine = listOfPlotLines.Find(x => x.refTag.Equals(plotRef, StringComparison.Ordinal)); }
+            else { Debug.LogError("Invalid plotRef (Null or Empty)"); }
+            return plotLine;
+        }
+
+
         
         #endregion
     }
@@ -381,6 +480,7 @@ namespace toolsAPI
     [System.Serializable]
     public class PlotLine
     {
+        public string refTag;                               //plotLine name with no spaces (auto generated)
         public string tag;
         public string dataCreated;                          //generated data
         public string dataMe;                               //my interpretation

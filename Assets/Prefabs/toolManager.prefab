@@ -107,6 +107,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b93f37fb7366f6478f88d888ec02328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameMaleFirst: {fileID: 11400000, guid: 1b89a161504ccdf4c95e808d4929370d, type: 2}
+  nameFemaleFirst: {fileID: 11400000, guid: b7c3926a637ccda4880a3268a808df17, type: 2}
+  nameLast: {fileID: 11400000, guid: c446b43b6116aa34a9fbf47950e5d156, type: 2}
 --- !u!114 &114805727387746334
 MonoBehaviour:
   m_ObjectHideFlags: 1
