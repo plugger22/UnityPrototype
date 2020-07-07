@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -17,8 +18,8 @@ namespace toolsAPI
     public enum StoryStatus { New, Logical, Data }
     public enum ListItemStatus { None, PlotLine, Character }    //what's currently selected on the Aventure/list page
     public enum PlotPointType { Normal, Conclusion, None, RemoveCharacter, NewCharacter, Meta }
-    public enum MetaAction { CharacterExits, CharacterReturns, CharacterUpgrade, CharacterDowngrade, CharacterStepsUp, CharacterStepsDown, PlotLineCombo}
-    public enum TurningPointType { None, New, Development, Conclusion}
+    public enum MetaAction { CharacterExits, CharacterReturns, CharacterUpgrade, CharacterDowngrade, CharacterStepsUp, CharacterStepsDown, PlotLineCombo }
+    public enum TurningPointType { None, New, Development, Conclusion }
 
 
 
@@ -213,10 +214,10 @@ namespace toolsAPI
         }
 
         /// <summary>
-        /// Adds a new character to the next vacant, non-DATA slot in the array
+        /// Adds a new character to the next vacant, non-DATA slot in the array. Returns true if successful
         /// </summary>
         /// <param name="newItem"></param>
-        public void AddCharacterToArray(ListItem newItem)
+        public bool AddCharacterToArray(ListItem newItem)
         {
             if (newItem != null)
             {
@@ -224,19 +225,31 @@ namespace toolsAPI
                 {
                     if (arrayOfCharacters[i].status != StoryStatus.Data)
                     {
-                        arrayOfCharacters[i] = newItem;
-                        Debug.LogFormat("StoryArrays.cs -> AddCharacterToArray: {0}, {1} ADDED to arrayOfCharacters{2}", newItem.tag, newItem.status, "\n");
+                        //check how many are already present
+                        int count = arrayOfCharacters.Select(x => x.tag.Equals(newItem.tag, StringComparison.Ordinal)).Count();
+                        if (count < 3)
+                        {
+                            arrayOfCharacters[i] = newItem;
+                            Debug.LogFormat("[Tst] StoryArrays.cs -> AddCharacterToArray: {0}, {1} ADDED to arrayOfCharacters{2}", newItem.tag, newItem.status, "\n");
+                            return true;
+                        }
+                        else
+                        {
+                            Debug.LogFormat("[Tst] StoryArrays.cs -> AddCharacterToArray:{0}, {1} NOT added to arrayOfCharacters (has {2} of identical already){3}",
+                                newItem.tag, newItem.status, count, "\n");
+                        }
                     }
                 }
             }
             else { Debug.LogError("Invalid newItem (Null)"); }
+            return false;
         }
 
         /// <summary>
-        /// Adds a new PlotLine to the next vacant, non-DATA slot in the array
+        /// Adds a new PlotLine to the next vacant, non-DATA slot in the array. Returns true if successful
         /// </summary>
         /// <param name="newItem"></param>
-        public void AddPlotLineToArray(ListItem newItem)
+        public bool AddPlotLineToArray(ListItem newItem)
         {
             if (newItem != null)
             {
@@ -244,12 +257,24 @@ namespace toolsAPI
                 {
                     if (arrayOfPlotLines[i].status != StoryStatus.Data)
                     {
-                        arrayOfPlotLines[i] = newItem;
-                        Debug.LogFormat("StoryArrays.cs -> AddPlotLineToArray: {0}, {1} ADDED to arrayOfPlotLines{2}", newItem.tag, newItem.status, "\n");
+                        //check how many are already present
+                        int count = arrayOfPlotLines.Select(x => x.tag.Equals(newItem.tag, StringComparison.Ordinal)).Count();
+                        if (count < 3)
+                        {
+                            arrayOfPlotLines[i] = newItem;
+                            Debug.LogFormat("[Tst] StoryArrays.cs -> AddPlotLineToArray: {0}, {1} ADDED to arrayOfPlotLines{2}", newItem.tag, newItem.status, "\n");
+                            return true;
+                        }
+                        else
+                        {
+                            Debug.LogFormat("[Tst] StoryArrays.cs -> AddPlotLineToArray:{0}, {1} NOT added to arrayOfPlotLines (has {2} of identical already){3}",
+                                newItem.tag, newItem.status, count, "\n");
+                        }
                     }
                 }
             }
             else { Debug.LogError("Invalid newItem (Null)"); }
+            return false;
         }
 
         /// <summary>
@@ -500,7 +525,7 @@ namespace toolsAPI
             plotPointNotes = "";
             notes = "";
             character1 = null;
-            character2 = null;           
+            character2 = null;
         }
     }
     #endregion
