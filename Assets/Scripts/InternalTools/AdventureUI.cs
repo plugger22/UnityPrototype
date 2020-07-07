@@ -303,6 +303,7 @@ public class AdventureUI : MonoBehaviour
         //new buttonInteractions
         returnNewInteraction.SetButton(ToolEventType.CloseNewAdventure);
         turningPointNewInteraction.SetButton(ToolEventType.CreateTurningPoint);
+        preSaveTurnInteraction.SetButton(ToolEventType.PreSaveTurningPoint);
         saveNewInteraction.SetButton(ToolEventType.SaveAdventureToDict);
         clearNewInteraction.SetButton(ToolEventType.ClearNewAdventure);
         
@@ -762,6 +763,9 @@ public class AdventureUI : MonoBehaviour
         //toggle fields
         turnNameInput.gameObject.SetActive(false);
         ToggleTurningPointFields(true, 0);
+        //toggle save buttons
+        turnPreSaveButton.gameObject.SetActive(false);
+        turnSaveButton.gameObject.SetActive(false);
         //new Turning point
         turningPoint = new TurningPoint() { type = TurningPointType.New };
         //set modal state
@@ -823,6 +827,9 @@ public class AdventureUI : MonoBehaviour
                         case PlotPointType.RemoveCharacter:
 
                             break;
+                        case PlotPointType.Meta:
+
+                            break;
                         default: Debug.LogWarningFormat("Unrecognised plotPoint.type \"{0}\"", plotPoint.type); break;
                     }
 
@@ -830,6 +837,13 @@ public class AdventureUI : MonoBehaviour
                     ToggleTurningPointFields(true, plotPoint.numberOfCharacters);
                     //increment index
                     plotPointIndex++;
+                    //End of turning point
+                    if (plotPointIndex >= 5 || turningPoint.type == TurningPointType.Conclusion)
+                    {
+                        //toggle save buttons
+                        turnPreSaveButton.gameObject.SetActive(true);
+                        turnSaveButton.gameObject.SetActive(false);
+                    }
                 }
                 else { Debug.LogWarning("There are already five plotponts -> Info only"); }
             }
@@ -938,22 +952,34 @@ public class AdventureUI : MonoBehaviour
         }        
     }
 
-
-    private void SaveTurningPoint()
+    //Pre Save operations and activate Save Button
+    private void PreSaveTurningPoint()
     {
         //Save last set of notes prior to saving
-        arrayOfPlotpointNotes[plotPointIndex] = turnPlotNotesInput.text;
+        arrayOfPlotpointNotes[plotPointIndex - 1] = turnPlotNotesInput.text;
         //toggle fields
         turnNameInput.gameObject.SetActive(true);
         ToggleTurningPointFields(false);
-        //SAVE
+        //toggle save buttons
+        turnPreSaveButton.gameObject.SetActive(false);
+        turnSaveButton.gameObject.SetActive(true);
 
+        
+
+
+
+        //clear out all existing details (to do)
+    }
+
+    /// <summary>
+    /// Save turning point to StoryNew
+    /// </summary>
+    private void SaveTurningPoint()
+    {
 
         //Populate data (to do)
 
         storyNew.arrayOfTurningPoints[turningPointIndex] = turningPoint;
-
-        //clear out all existing details (to do)
     }
 
     /// <summary>
