@@ -298,7 +298,7 @@ public class ToolDetails : MonoBehaviour
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
-                numberOfCharacters = 0,
+                numberOfCharacters = 1,
                 type = PlotPointType.Normal,
                 details = "This Turning Point involves a time limit where, at the end of it, something will get away. For instance, a ship carrying a magic artifact is " +
                 "about to leave the dock and a Character has to fight their way through a pack of armed goons to board the ship before it sets sail."
