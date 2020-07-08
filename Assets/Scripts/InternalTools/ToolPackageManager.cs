@@ -35,6 +35,7 @@ namespace toolsAPI
     [System.Serializable]
     public class Story
     {
+        public string refTag;
         public string tag;                  //stored in dict under this name (use as a reference)
         public string notes;
         public string date;
@@ -63,6 +64,7 @@ namespace toolsAPI
         /// <param name="copy"></param>
         public Story(Story copy)
         {
+            refTag = copy.refTag;
             tag = copy.tag;
             notes = copy.notes;
             date = copy.date;
@@ -79,6 +81,7 @@ namespace toolsAPI
         /// </summary>
         public void Reset()
         {
+            refTag = "";
             tag = "";
             notes = "";
             date = "";

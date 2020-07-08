@@ -54,25 +54,25 @@ public class ToolDataManager : MonoBehaviour
         {
             //create a new story to add to dict (stops issues with reference being deleted in UI)
             Story storyAdd = new Story(story);
-            if (dictOfStories.ContainsKey(storyAdd.tag) == false)
+            if (dictOfStories.ContainsKey(storyAdd.refTag) == false)
             {
                 //not present, add new entry
-                try { dictOfStories.Add(storyAdd.tag, storyAdd); }
+                try { dictOfStories.Add(storyAdd.refTag, storyAdd); }
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid story (Null)"); }
                 catch (ArgumentException)
-                { Debug.LogErrorFormat("Duplicate entry exists for story \"{0}\"", storyAdd.tag); }
+                { Debug.LogErrorFormat("Duplicate entry exists for story \"{0}\"", storyAdd.refTag); }
             }
             else
             {
                 //already exists -> delete existing entry
-                dictOfStories.Remove(storyAdd.tag);
+                dictOfStories.Remove(storyAdd.refTag);
                 //create new entry
-                try { dictOfStories.Add(storyAdd.tag, storyAdd); }
+                try { dictOfStories.Add(storyAdd.refTag, storyAdd); }
                 catch (ArgumentNullException)
                 { Debug.LogError("Invalid story (Null) (after deleting original)"); }
                 catch (ArgumentException)
-                { Debug.LogErrorFormat("Duplicate entry exists for story \"{0}\" (after deleting original)", storyAdd.tag); }
+                { Debug.LogErrorFormat("Duplicate entry exists for story \"{0}\" (after deleting original)", storyAdd.refTag); }
             }
         }
         else { Debug.LogError("Invalid story (Null)"); }
@@ -86,7 +86,7 @@ public class ToolDataManager : MonoBehaviour
     public bool CheckStoryExists(Story story)
     {
         if (story != null)
-        { return dictOfStories.ContainsKey(story.tag); }
+        { return dictOfStories.ContainsKey(story.refTag); }
         else
         { Debug.LogError("Invalid story (Null)"); }
         return false;
@@ -107,9 +107,9 @@ public class ToolDataManager : MonoBehaviour
                 Story story = listOfStories[i];
                 if (story != null)
                 {
-                    if (string.IsNullOrEmpty(story.tag) == false)
+                    if (string.IsNullOrEmpty(story.refTag) == false)
                     { AddStory(story); counter++; }
-                    else { Debug.LogWarningFormat("Invalid story.tag (Null or Empty) for listOfStories[{0}]", i); }
+                    else { Debug.LogWarningFormat("Invalid story.refTag (Null or Empty) for listOfStories[{0}]", i); }
                 }
                 else { Debug.LogWarningFormat("Invalid story (Null) for listOfStories[{0}]", i); }
             }
@@ -119,7 +119,7 @@ public class ToolDataManager : MonoBehaviour
 
     }
 
-    /// <summary>
+    /*/// <summary>
     /// returns first record in dictOfStories (not in sorted order so could be anything). Returns null if a problem or none found
     /// </summary>
     /// <returns></returns>
@@ -132,7 +132,7 @@ public class ToolDataManager : MonoBehaviour
         }
         else { Debug.LogWarning("No records in dictOfStories -> ALERT"); }
         return story;
-    }
+    }*/
 
     /// <summary>
     /// returns a list of stories derived from the dictOfStories

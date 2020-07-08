@@ -575,6 +575,7 @@ public class AdventureUI : MonoBehaviour
     #endregion
 
     #region New Adventure
+
     //
     // - - - New Adventure
     //
@@ -622,6 +623,8 @@ public class AdventureUI : MonoBehaviour
         { saveButton.gameObject.SetActive(true); }
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.Main);
+        //copy storyNew across to storyMain
+        storyMain = new Story(storyNew);
     }
 
 
@@ -734,9 +737,11 @@ public class AdventureUI : MonoBehaviour
                 //data validate date string
                 if (string.IsNullOrEmpty(storyNew.date) == true)
                 { storyNew.date = GetCurrentDateString(); }
+                //refTag
+                storyNew.refTag = storyNew.tag.Replace(" ", "");
                 //add story to dict, overwrite existing data if already present
                 ToolManager.i.toolDataScript.AddStory(storyNew);
-                Debug.LogFormat("[Tol] AdventureUI.cs -> SaveAdventure: StoryNew \"{0}\" saved to dictionary{1}", storyNew.tag, "\n");
+                Debug.LogFormat("[Tol] AdventureUI.cs -> SaveAdventure: StoryNew \"{0}\" saved to dictionary{1}", storyNew.refTag, "\n");
                 //trigger main save to file button
                 isSaveNeeded = true;
                 //update navigation
@@ -795,6 +800,12 @@ public class AdventureUI : MonoBehaviour
         //need to save previous data before generating new
         if (plotPointIndex > 0)
         {
+            //update characters
+            if (character1 != null)
+            { character1.dataMe = turnData1Input.text; }
+            if (character2 != null)
+            { character2.dataMe = turnData2Input.text; }
+            //Create and Save PlotDetails
             PlotDetails details = new PlotDetails()
             {
                 isActive = false,
@@ -931,7 +942,8 @@ public class AdventureUI : MonoBehaviour
                 if (string.IsNullOrEmpty(character1.dataMe) == true)
                 { turnCharacter1Input.text = character1.tag; }
                 else { turnCharacter1.text = character1.tag; }
-                turnData1Input.text = string.Format("{0}{1}- - -{2}{3}", character1.dataCreated, "\n", "\n", character1.dataMe);
+                turnData1.text = character1.dataCreated;
+                turnData1Input.text = character1.dataMe;
                 characters = character1.tag;
             }
             if (character2 != null)
@@ -939,7 +951,8 @@ public class AdventureUI : MonoBehaviour
                 if (string.IsNullOrEmpty(character2.dataMe) == true)
                 { turnCharacter2Input.text = character2.tag; }
                 else { turnCharacter2.text = character2.tag; }
-                turnData2Input.text = string.Format("{0}{1}- - -{2}{3}", character2.dataCreated, "\n", "\n", character2.dataMe);
+                turnData2.text = character2.dataCreated;
+                turnData2Input.text = character2.dataMe;
                 characters = string.Format("{0} / {1}", characters, character2.tag);
             }
         }
@@ -1020,6 +1033,11 @@ public class AdventureUI : MonoBehaviour
     /// </summary>
     private void PreSaveTurningPoint()
     {
+        //update characters
+        if (character1 != null)
+        { character1.dataMe = turnData1Input.text; }
+        if (character2 != null)
+        { character2.dataMe = turnData2Input.text; }
         // - - - Save last lot of details
         PlotDetails details = new PlotDetails()
         {
@@ -1140,6 +1158,8 @@ public class AdventureUI : MonoBehaviour
         turnCharacter2.text = "";
         turnData1.text = "";
         turnData2.text = "";
+        turnData1Input.text = "";
+        turnData2Input.text = "";
         turnPlotpointNotes.text = "";
         for (int i = 0; i < arrayOfTurnPlotpoints.Length; i++)
         {
@@ -1287,26 +1307,26 @@ public class AdventureUI : MonoBehaviour
     /// <summary>
     /// Returns plotline based on tag, null if a problem or not found
     /// </summary>
-    /// <param name="tag"></param>
+    /// <param name="refTag"></param>
     /// <returns></returns>
-    private PlotLine GetPlotLine(string tag)
+    private PlotLine GetPlotLine(string refTag)
     {
-        if (dictOfPlotLines.ContainsKey(tag) == true)
-        { return dictOfPlotLines[tag]; }
-        else { Debug.LogWarningFormat("tag \"{0}\" not found in dictOfPlotlines", tag); }
+        if (dictOfPlotLines.ContainsKey(refTag) == true)
+        { return dictOfPlotLines[refTag]; }
+        else { Debug.LogWarningFormat("tag \"{0}\" not found in dictOfPlotlines", refTag); }
         return null;
     }
 
     /// <summary>
     /// Returns character based on tag, null if a problem or not found
     /// </summary>
-    /// <param name="tag"></param>
+    /// <param name="refTag"></param>
     /// <returns></returns>
-    private Character GetCharacter(string tag)
+    private Character GetCharacter(string refTag)
     {
-        if (dictOfCharacters.ContainsKey(tag) == true)
-        { return dictOfCharacters[tag]; }
-        else { Debug.LogWarningFormat("tag \"{0}\" not found in dictOfCharacters", tag); }
+        if (dictOfCharacters.ContainsKey(refTag) == true)
+        { return dictOfCharacters[refTag]; }
+        else { Debug.LogWarningFormat("tag \"{0}\" not found in dictOfCharacters", refTag); }
         return null;
     }
 
@@ -1317,7 +1337,7 @@ public class AdventureUI : MonoBehaviour
     private void AddPlotLine(PlotLine plotLine)
     {
         try
-        { dictOfPlotLines.Add(plotLine.tag, plotLine); }
+        { dictOfPlotLines.Add(plotLine.refTag, plotLine); }
         catch (ArgumentNullException)
         { Debug.LogError("Invalid plotLine (Null)"); }
         catch (ArgumentException)
@@ -1331,7 +1351,7 @@ public class AdventureUI : MonoBehaviour
     private void AddCharacter(Character character)
     {
         try
-        { dictOfCharacters.Add(character.tag, character); }
+        { dictOfCharacters.Add(character.refTag, character); }
         catch (ArgumentNullException)
         { Debug.LogError("Invalid character (Null)"); }
         catch (ArgumentException)
@@ -1452,8 +1472,8 @@ public class AdventureUI : MonoBehaviour
                 //populate temp dictionaries
                 dictOfPlotLines.Clear();
                 dictOfCharacters.Clear();
-                dictOfPlotLines = storyMain.lists.listOfPlotLines.ToDictionary(k => k.tag);
-                dictOfCharacters = storyMain.lists.listOfCharacters.ToDictionary(k => k.tag);
+                dictOfPlotLines = storyMain.lists.listOfPlotLines.ToDictionary(k => k.refTag);
+                dictOfCharacters = storyMain.lists.listOfCharacters.ToDictionary(k => k.refTag);
                 //adventure name and date
                 listAdventureName.text = storyMain.tag;
                 listAdventureDate.text = storyMain.date;
@@ -1691,12 +1711,15 @@ public class AdventureUI : MonoBehaviour
     /// <param name="isInput"></param>
     private void ToggleTurningPointFields(bool isInput, int numOfCharacters = -1)
     {
+        //do regardless
+        turnData1.gameObject.SetActive(true);
+        turnData2.gameObject.SetActive(true);
+        //Input
         if (isInput == true)
         {
             if (numOfCharacters == -1)
             { Debug.LogError("Invalid numOfCharacters (-1), should be between 0 and 2"); }
-            turnData1.gameObject.SetActive(false);
-            turnData2.gameObject.SetActive(false);
+
             turnPlotpointNotes.gameObject.SetActive(false);
             if (numOfCharacters > 0)
             {
@@ -1712,8 +1735,7 @@ public class AdventureUI : MonoBehaviour
         }
         else
         {
-            turnData1.gameObject.SetActive(true);
-            turnData2.gameObject.SetActive(true);
+            //no input
             turnPlotpointNotes.gameObject.SetActive(true);
             turnCharacter1Input.gameObject.SetActive(false);
             turnCharacter2Input.gameObject.SetActive(false);

@@ -169,7 +169,7 @@ public class ToolFileManager : MonoBehaviour
     /// Read saved data back into dictOfStories
     /// </summary>
     private void ReadStories()
-    { /*ToolManager.i.toolDataScript.SetStories(read.toolData.listOfStories);*/ }
+    { ToolManager.i.toolDataScript.SetStories(read.toolData.listOfStories); }
 
 
     #endregion
