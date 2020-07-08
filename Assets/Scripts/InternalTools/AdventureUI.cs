@@ -30,7 +30,7 @@ public class AdventureUI : MonoBehaviour
     private Story storyMain;
     private Story storyNew;
 
-    //Temporary Dictionaries -> Used for Lists (populated when Lists page is open from StoryMain)
+    //Temporary Dictionaries -> Used for Lists (populated when Lists page is open from StoryMain) and New Adventure seeding
     Dictionary<string, PlotLine> dictOfPlotLines = new Dictionary<string, PlotLine>();
     Dictionary<string, Character> dictOfCharacters = new Dictionary<string, Character>();
 
@@ -97,6 +97,8 @@ public class AdventureUI : MonoBehaviour
     //collections
     public TMP_InputField[] arrayOfNewPlotLines;
     public TMP_InputField[] arrayOfNewCharacters;
+
+    private bool isNewAdventureSave;                    //true if saving new adventure details, false if saving Turning points
     #endregion
 
     #region TurningPoint
@@ -593,6 +595,8 @@ public class AdventureUI : MonoBehaviour
         RedrawNewAdventurePage();
         //switch of Turning Point button (until Adventure is SAVED)
         newTurningButton.gameObject.SetActive(false);
+        //set flag
+        isNewAdventureSave = true;
         //theme
         CreateTheme();
         //auto fill date
@@ -681,44 +685,48 @@ public class AdventureUI : MonoBehaviour
             storyNew.date = newDate.text;
             int counterPlotLine = 0;
             int counterCharacter = 0;
-            //arrays
-            for (int i = 0; i < arrayOfNewPlotLines.Length; i++)
+            //Only new adventure details to save
+            if (isNewAdventureSave == true)
             {
-                //valid name
-                if (string.IsNullOrEmpty(arrayOfNewPlotLines[i].text) == false)
+                //arrays
+                for (int i = 0; i < arrayOfNewPlotLines.Length; i++)
+                {
+                    //valid name
+                    if (string.IsNullOrEmpty(arrayOfNewPlotLines[i].text) == false)
+                    {
+                        //plotlines
+                        storyNew.arrays.arrayOfPlotLines[i].tag = arrayOfNewPlotLines[i].text;
+                        storyNew.arrays.arrayOfPlotLines[i].status = StoryStatus.Data;
+                        counterPlotLine++;
+                        //add to list
+                        PlotLine plotLine = new PlotLine() { tag = arrayOfNewPlotLines[i].text };
+                        AddPlotLine(plotLine);
+                    }
+                    //valid name
+                    if (string.IsNullOrEmpty(arrayOfNewCharacters[i].text) == false)
+                    {
+                        //characters
+                        storyNew.arrays.arrayOfCharacters[i].tag = arrayOfNewCharacters[i].text;
+                        storyNew.arrays.arrayOfCharacters[i].status = StoryStatus.Data;
+                        counterCharacter++;
+                        //add to list
+                        Character character = new Character() { tag = arrayOfNewCharacters[i].text };
+                        AddCharacter(character);
+                    }
+                }
+                //lists
+                if (counterPlotLine > 0)
                 {
                     //plotlines
-                    storyNew.arrays.arrayOfPlotLines[i].tag = arrayOfNewPlotLines[i].text;
-                    storyNew.arrays.arrayOfPlotLines[i].status = StoryStatus.Data;
-                    counterPlotLine++;
-                    //add to list
-                    PlotLine plotLine = new PlotLine() { tag = arrayOfNewPlotLines[i].text };
-                    AddPlotLine(plotLine);
+                    storyNew.lists.listOfPlotLines.Clear();
+                    storyNew.lists.listOfPlotLines.AddRange(dictOfPlotLines.Values.ToList());
                 }
-                //valid name
-                if (string.IsNullOrEmpty(arrayOfNewCharacters[i].text) == false)
+                if (counterCharacter > 0)
                 {
                     //characters
-                    storyNew.arrays.arrayOfCharacters[i].tag = arrayOfNewCharacters[i].text;
-                    storyNew.arrays.arrayOfCharacters[i].status = StoryStatus.Data;
-                    counterCharacter++;
-                    //add to list
-                    Character character = new Character() { tag = arrayOfNewCharacters[i].text };
-                    AddCharacter(character);
+                    storyNew.lists.listOfCharacters.Clear();
+                    storyNew.lists.listOfCharacters.AddRange(dictOfCharacters.Values.ToList());
                 }
-            }
-            //lists
-            if (counterPlotLine > 0)
-            {
-                //plotlines
-                storyNew.lists.listOfPlotLines.Clear();
-                storyNew.lists.listOfPlotLines.AddRange(dictOfPlotLines.Values.ToList());
-            }
-            if (counterCharacter > 0)
-            {
-                //characters
-                storyNew.lists.listOfCharacters.Clear();
-                storyNew.lists.listOfCharacters.AddRange(dictOfCharacters.Values.ToList());
             }
             //save only if viable data present
             if (string.IsNullOrEmpty(storyNew.tag) == false)
@@ -1098,13 +1106,15 @@ public class AdventureUI : MonoBehaviour
             newSaveButton.gameObject.SetActive(false);
             newTurningButton.gameObject.SetActive(true);
         }
-
+        //set flag for new Adventure save to not mess up Turning points
+        isNewAdventureSave = false;
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.New);
     }
 
     #endregion
 
+    #region RedrawTurningPoint
     /// <summary>
     /// Set up for new Plotpoint
     /// </summary>
@@ -1138,6 +1148,7 @@ public class AdventureUI : MonoBehaviour
             arrayOfPlotpointNotes[i] = "";
         }
     }
+    #endregion
 
     #endregion
 

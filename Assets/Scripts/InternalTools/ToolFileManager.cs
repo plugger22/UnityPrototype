@@ -18,12 +18,12 @@ public class SaveTools
 
 #region SaveToolData
 /// <summary>
-/// Save all tools data
+/// Save all tools data. StorySave is a custom class to get around nested lists in ToolPackageManager.cs
 /// </summary>
 [System.Serializable]
 public class SaveToolData
 {
-    public List<Story> listOfStories = new List<Story>();
+    public List<StorySave> listOfStories = new List<StorySave>();
 }
 #endregion
 
@@ -73,7 +73,7 @@ public class ToolFileManager : MonoBehaviour
             foreach (var story in dictOfStories)
             {
                 if (story.Value != null)
-                { write.toolData.listOfStories.Add(story.Value); }
+                { write.toolData.listOfStories.Add(new StorySave(story.Value)); }
                 else { Debug.LogErrorFormat("Invalid story (Null) for \"{0}\"", story.Key); }
             }
         }
@@ -169,7 +169,7 @@ public class ToolFileManager : MonoBehaviour
     /// Read saved data back into dictOfStories
     /// </summary>
     private void ReadStories()
-    { ToolManager.i.toolDataScript.SetStories(read.toolData.listOfStories); }
+    { /*ToolManager.i.toolDataScript.SetStories(read.toolData.listOfStories);*/ }
 
 
     #endregion
@@ -187,6 +187,7 @@ public class ToolFileManager : MonoBehaviour
         }
     }
     #endregion
+
 
     //new methods above here
 }
