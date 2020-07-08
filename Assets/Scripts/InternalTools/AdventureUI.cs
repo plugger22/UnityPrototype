@@ -796,7 +796,8 @@ public class AdventureUI : MonoBehaviour
     private void NewPlotpoint()
     {
         // - - - Pre Admin
-
+        turnData1.text = "";
+        turnData2.text = "";
         //need to save previous data before generating new
         if (plotPointIndex > 0)
         {
