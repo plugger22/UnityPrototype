@@ -643,7 +643,7 @@ public class ToolDetails : MonoBehaviour
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
-                numberOfCharacters = 0,
+                numberOfCharacters = 2,
                 type = PlotPointType.Normal,
                 details = "This Turning Point involves a chase, where one Character is pursuing another"
             },

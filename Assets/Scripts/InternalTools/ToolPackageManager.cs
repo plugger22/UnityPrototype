@@ -59,16 +59,16 @@ namespace toolsAPI
         /// <summary>
         /// Copy Constructor
         /// </summary>
-        /// <param name="story"></param>
-        public Story(Story story)
+        /// <param name="copy"></param>
+        public Story(Story copy)
         {
-            tag = story.tag;
-            notes = story.notes;
-            date = story.date;
-            theme = new ThemeData(story.theme);
-            arrays = new StoryArrays(story.arrays);
+            tag = copy.tag;
+            notes = copy.notes;
+            date = copy.date;
+            theme = new ThemeData(copy.theme);
+            arrays = new StoryArrays(copy.arrays);
             for (int i = 0; i < arrayOfTurningPoints.Length; i++)
-            { arrayOfTurningPoints[i] = story.arrayOfTurningPoints[i]; }
+            { arrayOfTurningPoints[i] = copy.arrayOfTurningPoints[i]; }
             /*lists = new StoryLists(story.lists);*/
         }
 
@@ -226,7 +226,7 @@ namespace toolsAPI
                     if (arrayOfCharacters[i].status != StoryStatus.Data)
                     {
                         //check how many are already present
-                        int count = arrayOfCharacters.Select(x => x.tag.Equals(newItem.tag, StringComparison.Ordinal)).Count();
+                        int count = arrayOfCharacters.Where(x => x.tag.Equals(newItem.tag, StringComparison.Ordinal)).Count();
                         if (count < 3)
                         {
                             arrayOfCharacters[i] = newItem;
@@ -258,7 +258,7 @@ namespace toolsAPI
                     if (arrayOfPlotLines[i].status != StoryStatus.Data)
                     {
                         //check how many are already present
-                        int count = arrayOfPlotLines.Select(x => x.tag.Equals(newItem.tag, StringComparison.Ordinal)).Count();
+                        int count = arrayOfPlotLines.Where(x => x.tag.Equals(newItem.tag, StringComparison.Ordinal)).Count();
                         if (count < 3)
                         {
                             arrayOfPlotLines[i] = newItem;
@@ -439,8 +439,11 @@ namespace toolsAPI
             {
                 //check not already in list
                 if (listOfCharacters.Exists(x => x.refTag.Equals(character.refTag, StringComparison.Ordinal)) == false)
-                { listOfCharacters.Add(character); }
-                else { Debug.LogWarningFormat("Character refTag \"{0}\" alread present in list", character.refTag); }
+                {
+                    listOfCharacters.Add(character);
+                    Debug.LogFormat("[Tst] StoryLists.cs -> AddCharacterToList: \"{0}\", refTag {1} Added to List{2}", character.tag, character.refTag, "\n");
+                }
+                else { Debug.LogWarningFormat("Character refTag \"{0}\" alread present in list -> Info Only", character.refTag); }
             }
             else { Debug.LogError("Invalid character (Null)"); }
         }
@@ -480,6 +483,10 @@ namespace toolsAPI
         public bool isConcluded;                                    //if true then Turning point is complete and no more plotpoints can be generated
         public PlotDetails[] arrayOfDetails = new PlotDetails[5];
 
+        #region TurnPoint Methods
+        /// <summary>
+        /// default constructor
+        /// </summary>
         public TurningPoint()
         {
             //initialise arrayOfDetails with blanks
@@ -487,7 +494,24 @@ namespace toolsAPI
             { arrayOfDetails[i] = new PlotDetails(); }
         }
 
+        /// <summary>
+        /// Copy constructor
+        /// </summary>
+        /// <param name="copy"></param>
+        public TurningPoint(TurningPoint copy)
+        {
+            refTag = copy.refTag;
+            tag = copy.tag;
+            notes = copy.notes;
+            type = copy.type;
+            isConcluded = copy.isConcluded;
+            for (int i = 0; i < arrayOfDetails.Length; i++)
+            { arrayOfDetails[i] = copy.arrayOfDetails[i]; }
+        }
 
+        /// <summary>
+        /// Reset
+        /// </summary>
         public void Reset()
         {
             refTag = "";
@@ -498,6 +522,7 @@ namespace toolsAPI
             for (int i = 0; i < arrayOfDetails.Length; i++)
             { arrayOfDetails[i].Reset(); }
         }
+        #endregion
     }
     #endregion
 
@@ -509,24 +534,42 @@ namespace toolsAPI
     public class PlotDetails
     {
         public bool isActive;                   //quick check to see if active plotpoint
-        public string turningPoint;             //turningPoint.refTag
         public string plotPoint;                //plotPoint.refTag
-        public string plotPointNotes;
+        public string notes;                    //notes for plotpoint
         public Character character1;
         public Character character2;
-        public string notes;
 
+        #region PlotDetails Methods
+        /// <summary>
+        /// default constructor
+        /// </summary>
+        public PlotDetails() {}
 
+        /// <summary>
+        /// Copy constructor
+        /// </summary>
+        /// <param name="copy"></param>
+        public PlotDetails(PlotDetails copy)
+        {
+            isActive = copy.isActive;
+            plotPoint = copy.plotPoint;
+            notes = copy.notes;
+            character1 = copy.character1;
+            character2 = copy.character2;
+        }
+
+        /// <summary>
+        /// Reset
+        /// </summary>
         public void Reset()
         {
             isActive = false;
-            turningPoint = "";
             plotPoint = "";
-            plotPointNotes = "";
             notes = "";
             character1 = null;
             character2 = null;
         }
+        #endregion
     }
     #endregion
 
@@ -555,6 +598,23 @@ namespace toolsAPI
         public string tag;
         public string dataCreated;                          //generated data
         public string dataMe;                               //my interpretation
+
+        /// <summary>
+        /// default constructor
+        /// </summary>
+        public Character() {}
+
+        /// <summary>
+        /// copy constructor
+        /// </summary>
+        /// <param name="copy"></param>
+        public Character(Character copy)
+        {
+            refTag = copy.refTag;
+            tag = copy.tag;
+            dataCreated = copy.dataCreated;
+            dataMe = copy.dataMe;
+        }
     }
     #endregion
 

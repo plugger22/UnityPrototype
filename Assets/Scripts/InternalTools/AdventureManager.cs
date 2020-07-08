@@ -85,7 +85,7 @@ public class AdventureManager : MonoBehaviour
 
 
     /// <summary>
-    /// returns a new character
+    /// returns a new character (no saving, just data collection)
     /// </summary>
     /// <returns></returns>
     public Character GetNewCharacter()
@@ -114,7 +114,8 @@ public class AdventureManager : MonoBehaviour
             //bring together
             character.dataCreated = string.Format("{0} -> {1} -> {2} -> {3}", name, special.tag, identity, descriptor);
             character.tag = name;
-            character.refTag = refTag;           
+            character.refTag = refTag;
+            Debug.LogFormat("[Tst] AdventureManager.cs -> GetNewCharacter: \"{0}\", refTag {1} CREATED{2}", character.tag, character.refTag, "\n");
         }
         else { Debug.LogWarning("Invalid CharacterSpecial (Null)"); }
         return character; 
