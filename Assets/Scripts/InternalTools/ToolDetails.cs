@@ -613,7 +613,7 @@ public class ToolDetails : MonoBehaviour
                 listMystery = new List<int>(){},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
-                numberOfCharacters = 0,
+                numberOfCharacters = 1,
                 type = PlotPointType.Normal,
                 details = "Immediate action is required in this Turning Point, whatever is going on. For instance, if this Turning Point involves engine failure on a starship, " +
                 "the Character doesn’t have days to resolve the issue, he may only have an hour. Whatever is going on, it requires immediate action."

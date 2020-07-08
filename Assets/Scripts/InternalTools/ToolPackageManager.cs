@@ -66,11 +66,12 @@ namespace toolsAPI
             tag = copy.tag;
             notes = copy.notes;
             date = copy.date;
+            numTurningPoints = copy.numTurningPoints;
             theme = new ThemeData(copy.theme);
             arrays = new StoryArrays(copy.arrays);
             for (int i = 0; i < arrayOfTurningPoints.Length; i++)
             { arrayOfTurningPoints[i] = copy.arrayOfTurningPoints[i]; }
-            /*lists = new StoryLists(story.lists);*/
+            lists = new StoryLists(copy.lists);
         }
 
         /// <summary>
@@ -702,52 +703,6 @@ namespace toolsAPI
     }
     #endregion
 
-    #region StorySave
-    /// <summary>
-    /// Takes story.cs and converts all lists to arrays for a save friendly format (can't serialise a listOfStories with each having embedded lists. Works with arrays though)
-    /// </summary>
-    [System.Serializable]
-    public class StorySave
-    {
-        public string tag;                  //stored in dict under this name (use as a reference)
-        public string notes;
-        public string date;
-        public int numTurningPoints;        //current active turning points (max cap 5)
-        public bool isConcluded;            //if true no more turning points can be added, story is complete
-        //subClasses
-        public ThemeData theme = new ThemeData();
-        public StoryArrays arrays = new StoryArrays();
-        public TurningPoint[] arrayOfTurningPoints = new TurningPoint[5];
-        //story lists converted to arrays
-        public PlotLine[] arrayOfPlotLines;
-        public Character[] arrayOfCharacters;
-        public Character[] arrayOfRemovedCharacters;
-
-        /// <summary>
-        /// default constructor
-        /// </summary>
-        public StorySave() { }
-
-        /// <summary>
-        /// Story conversion constructor
-        /// </summary>
-        /// <param name="story"></param>
-        public StorySave(Story story)
-        {
-            tag = story.tag;
-            notes = story.notes;
-            date = story.date;
-            numTurningPoints = story.numTurningPoints;
-            isConcluded = story.isConcluded;
-            theme = story.theme;
-            arrays = story.arrays;
-            arrayOfTurningPoints = story.arrayOfTurningPoints;
-            arrayOfPlotLines = story.lists.listOfPlotLines.ToArray();
-            arrayOfCharacters = story.lists.listOfCharacters.ToArray();
-            arrayOfRemovedCharacters = story.lists.listOfRemovedCharacters.ToArray();
-        }
-    }
-    #endregion
 
     
 

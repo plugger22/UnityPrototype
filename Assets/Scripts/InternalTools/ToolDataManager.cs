@@ -65,10 +65,14 @@ public class ToolDataManager : MonoBehaviour
             }
             else
             {
-                //exists -> over write with new data
-                
-                dictOfStories[storyAdd.tag] = storyAdd;
-                Debug.LogWarningFormat("Duplicate entry exists for story \"{0}\", data Overriden -> Info Only", storyAdd.tag);
+                //already exists -> delete existing entry
+                dictOfStories.Remove(storyAdd.tag);
+                //create new entry
+                try { dictOfStories.Add(storyAdd.tag, storyAdd); }
+                catch (ArgumentNullException)
+                { Debug.LogError("Invalid story (Null) (after deleting original)"); }
+                catch (ArgumentException)
+                { Debug.LogErrorFormat("Duplicate entry exists for story \"{0}\" (after deleting original)", storyAdd.tag); }
             }
         }
         else { Debug.LogError("Invalid story (Null)"); }
