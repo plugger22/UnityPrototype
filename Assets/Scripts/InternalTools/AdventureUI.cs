@@ -142,10 +142,11 @@ public class AdventureUI : MonoBehaviour
     private string[] arrayOfPlotpointNotes = new string[5];
 
     private TurningPoint turningPoint;                  //current turning point on screen
+    private PlotLine plotLine;                          //current PlotLine
     private Plotpoint plotPoint;                        //current Plotpoint
     private Character character1;                       //current Plotpoint character1 (if any)
     private Character character2;                       //current Plotpoint character2 (if any)
-    private bool isTurningPointSaved;                    //true if data has been saved
+    private bool isTurningPointSaved;                   //true if data has been saved
 
     #endregion
 
@@ -750,6 +751,8 @@ public class AdventureUI : MonoBehaviour
                 newTurningButton.gameObject.SetActive(true);
                 //switch off save button
                 newSaveButton.gameObject.SetActive(false);
+                //open turningPoint page
+                NewTurningPoint();
             }
             else { Debug.LogWarning("Invalid storyNew.tag (Null or Empty). Story not saved to Dictionary"); }
         }
@@ -782,8 +785,12 @@ public class AdventureUI : MonoBehaviour
         turnAdventureName.text = storyNew.tag;
         //indexes
         plotPointIndex = 0;
-        //new Turning point
-        turningPoint = new TurningPoint() { type = TurningPointType.New };
+        //start of Story -> new Turning point and Plotline
+        if (turningPointIndex == 0)
+        {
+            turningPoint = new TurningPoint() { type = TurningPointType.New };
+            plotLine = new PlotLine() { };
+        }
         //set modal state
         ToolManager.i.toolInputScript.SetModalState(ToolModal.TurningPoint);
     }
@@ -1069,37 +1076,47 @@ public class AdventureUI : MonoBehaviour
     /// </summary>
     private void SaveTurningPoint()
     {
-        //must have a name
+        //must have a name for TurningPoint
         if (string.IsNullOrEmpty(turnNameInput.text) == false)
         {
-            //Populate data (to do)
-            turningPoint.tag = turnNameInput.text;
-            turningPoint.refTag = turnNameInput.text.Replace(" ", "");
-
-            //TO DO -> notes / type / isConcluded
-
-            //TO DO -> Save PlotLine, generate new
-
-            //SAVE
-            storyNew.arrayOfTurningPoints[turningPointIndex] = turningPoint;
-            isTurningPointSaved = true;
-            //update indexes
-            turningPointIndex++;
-            plotPointIndex = 0;
-            //exit or next turningPoint
-            if (turningPointIndex < 5 && storyNew.isConcluded == false)
+            //must have Notes for PlotLine (bottom of screen)
+            if (string.IsNullOrEmpty(turnPlotNotesInput.text) == false)
             {
-                //Redraw ready for next turning point
-                RedrawTurningPointPage();
+                //Populate data (to do)
+                turningPoint.tag = turnNameInput.text;
+                turningPoint.refTag = turnNameInput.text.Replace(" ", "");
+                turningPoint.notes = turnPlotNotesInput.text;
+                //TO DO -> notes / type / isConcluded
+                plotLine.tag = turnNameInput.text;
+                plotLine.refTag = turnNameInput.text.Replace(" ", "");
+                //add plotLine notes
+                plotLine.listOfNotes.Add(turnPlotNotesInput.text);
+                //TO DO -> Save PlotLine
+                storyNew.arrays.AddPlotLineToArray(new ListItem() { tag = plotLine.refTag, status = StoryStatus.Data });
+                storyNew.lists.AddPlotLineToList(plotLine);
+                //SAVE
+                storyNew.arrayOfTurningPoints[turningPointIndex] = turningPoint;
+                isTurningPointSaved = true;
+                //update indexes
+                turningPointIndex++;
+                plotPointIndex = 0;
+                //exit or next turningPoint
+                if (turningPointIndex < 5 && storyNew.isConcluded == false)
+                {
+                    //Redraw ready for next turning point
+                    RedrawTurningPointPage();
+                    //TO DO -> Generate new PlotLine / turningPoint
+                }
+                else
+                {
+                    //story concluded -> exit
+                    Debug.LogFormat("[Tst] AdventureUI.cs -> SaveTurningPoint: Story is CONCLUDED{0}", "\n");
+                    CloseTurningPoint();
+                }
+                //switch off save button
+                turnSaveButton.gameObject.SetActive(false);
             }
-            else
-            {
-                //story concluded -> exit
-                Debug.LogFormat("[Tst] AdventureUI.cs -> SaveTurningPoint: Story is CONCLUDED{0}", "\n");
-                CloseTurningPoint();
-            }
-            //switch off save button
-            turnSaveButton.gameObject.SetActive(false);
+            else { Debug.LogWarning("Turning Point doesn't have any PlotLine Notes, can't be saved"); }
         }
         else { Debug.LogWarning("Turning Point doesn't have a name, can't be Saved"); }
     }
@@ -1715,6 +1732,7 @@ public class AdventureUI : MonoBehaviour
         //do regardless
         turnData1.gameObject.SetActive(true);
         turnData2.gameObject.SetActive(true);
+        turnPlotNotesInput.gameObject.SetActive(true);
         //Input
         if (isInput == true)
         {
@@ -1732,7 +1750,6 @@ public class AdventureUI : MonoBehaviour
                 turnCharacter2Input.gameObject.SetActive(true);
                 turnData2Input.gameObject.SetActive(true);
             }
-            turnPlotNotesInput.gameObject.SetActive(true);
         }
         else
         {
@@ -1742,7 +1759,6 @@ public class AdventureUI : MonoBehaviour
             turnCharacter2Input.gameObject.SetActive(false);
             turnData1Input.gameObject.SetActive(false);
             turnData2Input.gameObject.SetActive(false);
-            turnPlotNotesInput.gameObject.SetActive(false);
         }
     }
 

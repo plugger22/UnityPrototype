@@ -463,8 +463,11 @@ namespace toolsAPI
             {
                 //check not already in list
                 if (listOfPlotLines.Exists(x => x.refTag.Equals(plotLine.refTag, StringComparison.Ordinal)) == false)
-                { listOfPlotLines.Add(plotLine); }
-                else { Debug.LogWarningFormat("Plotline refTag \"{0}\" alread present in list", plotLine.refTag); }
+                {
+                    listOfPlotLines.Add(plotLine);
+                    Debug.LogFormat("[Tst] StoryLists.cs -> AddPlotLineToList: \"{0}\", refTag {1} Added to List{2}", plotLine.tag, plotLine.refTag, "\n");
+                }
+                else { Debug.LogWarningFormat("Plotline refTag \"{0}\" already present in list -> Info Only", plotLine.refTag); }
             }
             else { Debug.LogError("Invalid plotLine (Null)"); }
         }
@@ -476,15 +479,15 @@ namespace toolsAPI
 
     #region TurningPoint
     /// <summary>
-    /// A story can have up to 5 turningPoints with each having up to 5 plotpoints
+    /// A story can have up to 5 turningPoints with each having up to 5 plotpoints, Turningpoints are just numbered scenes whereas PlotLines are the named elements
     /// </summary>
     [System.Serializable]
     public class TurningPoint
     {
-        public string refTag;
-        public string tag;
-        public string notes;
-        public TurningPointType type;
+        public string refTag;                                       //PlotLine refTag
+        public string tag;                                          //PlotLine tag
+        public string notes;                                        //notes for the plotLine specific to this TurningPoint
+        public TurningPointType type;                               //last in the series? (maxCap of 5 if not concluded before)
         public bool isConcluded;                                    //if true then Turning point is complete and no more plotpoints can be generated
         public PlotDetails[] arrayOfDetails = new PlotDetails[5];
 
@@ -589,6 +592,31 @@ namespace toolsAPI
         public string tag;
         public string dataCreated;                          //generated data
         public string dataMe;                               //my interpretation
+        public List<string> listOfNotes;                    //One entry for each instance of the PlotLine, eg. if 3 turning points refer to this plotLine then 3 sets of notes
+
+        #region PlotLine methods
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public PlotLine()
+        {
+            refTag = "";
+            tag = "";
+            listOfNotes = new List<string>();
+        }
+
+        /// <summary>
+        /// Copy constructor
+        /// </summary>
+        /// <param name="copy"></param>
+        public PlotLine(PlotLine copy)
+        {
+            refTag = copy.refTag;
+            tag = copy.tag;
+            listOfNotes.Clear();
+            listOfNotes.AddRange(copy.listOfNotes);
+        }
+        #endregion
     }
     #endregion
 
