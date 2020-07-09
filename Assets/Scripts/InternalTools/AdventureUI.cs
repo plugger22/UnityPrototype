@@ -135,6 +135,7 @@ public class AdventureUI : MonoBehaviour
     public TMP_InputField turnNameInput;
     public TMP_InputField turnCharacter1Input;
     public TMP_InputField turnCharacter2Input;
+    public TMP_InputField turnData0Input;
     public TMP_InputField turnData1Input;
     public TMP_InputField turnData2Input;
     public TMP_InputField turnPlotNotesInput;
@@ -268,6 +269,7 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(turnNameInput != null, "Invalid turnNameInput (Null)");
         Debug.Assert(turnCharacter1Input != null, "Invalid turnCharacter1Input (Null)");
         Debug.Assert(turnCharacter2Input != null, "Invalid turnCharacter2Input (Null)");
+        Debug.Assert(turnData0Input != null, "Invalid turnData0Input (Null)");
         Debug.Assert(turnData1Input != null, "Invalid turnData1Input (Null)");
         Debug.Assert(turnData2Input != null, "Invalid turnData12nput (Null)");
         Debug.Assert(turnPlotNotesInput != null, "Invalid turnPlotNotesInput (Null)");
@@ -751,8 +753,9 @@ public class AdventureUI : MonoBehaviour
                 newTurningButton.gameObject.SetActive(true);
                 //switch off save button
                 newSaveButton.gameObject.SetActive(false);
-                //open turningPoint page
-                NewTurningPoint();
+                //open turningPoint page if story not yet concluded
+                if (storyNew.isConcluded == false)
+                { NewTurningPoint(); }
             }
             else { Debug.LogWarning("Invalid storyNew.tag (Null or Empty). Story not saved to Dictionary"); }
         }
@@ -785,11 +788,34 @@ public class AdventureUI : MonoBehaviour
         turnAdventureName.text = storyNew.tag;
         //indexes
         plotPointIndex = 0;
-        //start of Story -> new Turning point and Plotline
-        if (turningPointIndex == 0)
+        //find next empty slot in arrayOfTurningPoints
+        int index = -1;
+        for (int i = 0; i < storyNew.arrayOfTurningPoints.Length; i++)
         {
-            turningPoint = new TurningPoint() { type = TurningPointType.New };
-            plotLine = new PlotLine() { };
+            if (storyNew.arrayOfTurningPoints[i].type == TurningPointType.None)
+            {
+                index = i;
+                break;
+            }
+        }
+        if (turningPointIndex > -1)
+        {
+            // TurningPoint
+            turningPointIndex = index;
+
+            //start of Story -> new Turning point and Plotline
+            if (turningPointIndex == 0)
+            {
+                turningPoint = new TurningPoint() { type = TurningPointType.New };
+                plotLine = new PlotLine() { };
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Story has no blank Turning Points available, storNew.isConcluded set TRUE");
+            storyNew.isConcluded = true;
+            //disable plotLine button
+            turnPlotpointButton.gameObject.SetActive(false);
         }
         //set modal state
         ToolManager.i.toolInputScript.SetModalState(ToolModal.TurningPoint);
@@ -810,9 +836,15 @@ public class AdventureUI : MonoBehaviour
         {
             //update characters
             if (character1 != null)
-            { character1.dataMe = turnData1Input.text; }
+            {
+                if (string.IsNullOrEmpty(turnData1Input.text) == false)
+                { character1.listOfNotes.Add(turnData1Input.text); }
+            }
             if (character2 != null)
-            { character2.dataMe = turnData2Input.text; }
+            {
+                if (string.IsNullOrEmpty(turnData2Input.text) == false)
+                { character2.listOfNotes.Add(turnData2Input.text); }
+            }
             //Create and Save PlotDetails
             PlotDetails details = new PlotDetails()
             {
@@ -830,88 +862,62 @@ public class AdventureUI : MonoBehaviour
         //reset global characters
         character1 = null;
         character2 = null;
-
-        // - - - New Plotline
-
-        //check story hasn't been concluded
-        if (storyNew.isConcluded == false)
+        //
+        // - - - New PlotPoint
+        //
+        if (plotPointIndex < 5)
         {
-            //find next empty slot in array
-            int index = -1;
-            for (int i = 0; i < storyNew.arrayOfTurningPoints.Length; i++)
+            //zero out relevant fields
+            ResetPlotPoint();
+            //save previous notes (except for first instance as there are no notes to save)
+            if (turningPointIndex > 0)
+            { arrayOfPlotpointNotes[turningPointIndex - 1] = turnPlotNotesInput.text; }
+
+            //Generate new Plotpoint
+            int priority = ToolManager.i.adventureScript.GetThemePriority();
+            ThemeType themeType = storyNew.theme.GetThemeType(priority);
+            plotPoint = ToolManager.i.toolDataScript.GetPlotpoint(themeType);
+            //update texts
+            turnPlotPoint.text = plotPoint.tag;
+            turnData0.text = plotPoint.details;
+            arrayOfTurnPlotpoints[plotPointIndex].text = plotPoint.tag;
+            //Plotpoint type
+            switch (plotPoint.type)
             {
-                if (storyNew.arrayOfTurningPoints[i].type == TurningPointType.None)
-                {
-                    index = i;
+                case PlotPointType.Normal:
+                    GetCharacters(plotPoint.numberOfCharacters);
                     break;
-                }
+                case PlotPointType.Conclusion:
+
+                    break;
+                case PlotPointType.None:
+
+                    break;
+                case PlotPointType.NewCharacter:
+
+                    break;
+                case PlotPointType.RemoveCharacter:
+
+                    break;
+                case PlotPointType.Meta:
+
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised plotPoint.type \"{0}\"", plotPoint.type); break;
             }
-            if (index > -1)
+
+            //toggle fields
+            ToggleTurningPointFields(true, plotPoint.numberOfCharacters);
+            //increment index
+            plotPointIndex++;
+            //End of turning point
+            if (plotPointIndex >= 5 || turningPoint.type == TurningPointType.Conclusion)
             {
-                if (plotPointIndex < 5)
-                {
-                    //zero out relevant fields
-                    ResetPlotPoint();
-                    //save previous notes (except for first instance as there are no notes to save)
-                    if (index > 0)
-                    { arrayOfPlotpointNotes[index - 1] = turnPlotNotesInput.text; }
-                    // TurningPoint
-                    turningPointIndex = index;
-                    //Generate new Plotpoint
-                    int priority = ToolManager.i.adventureScript.GetThemePriority();
-                    ThemeType themeType = storyNew.theme.GetThemeType(priority);
-                    plotPoint = ToolManager.i.toolDataScript.GetPlotpoint(themeType);
-                    //update texts
-                    turnPlotPoint.text = plotPoint.tag;
-                    turnData0.text = plotPoint.details;
-                    arrayOfTurnPlotpoints[plotPointIndex].text = plotPoint.tag;
-                    //Plotpoint type
-                    switch (plotPoint.type)
-                    {
-                        case PlotPointType.Normal:
-                            GetCharacters(plotPoint.numberOfCharacters);
-                            break;
-                        case PlotPointType.Conclusion:
-
-                            break;
-                        case PlotPointType.None:
-
-                            break;
-                        case PlotPointType.NewCharacter:
-
-                            break;
-                        case PlotPointType.RemoveCharacter:
-
-                            break;
-                        case PlotPointType.Meta:
-
-                            break;
-                        default: Debug.LogWarningFormat("Unrecognised plotPoint.type \"{0}\"", plotPoint.type); break;
-                    }
-
-                    //toggle fields
-                    ToggleTurningPointFields(true, plotPoint.numberOfCharacters);
-                    //increment index
-                    plotPointIndex++;
-                    //End of turning point
-                    if (plotPointIndex >= 5 || turningPoint.type == TurningPointType.Conclusion)
-                    {
-                        //toggle save buttons
-                        turnPreSaveButton.gameObject.SetActive(true);
-                        turnSaveButton.gameObject.SetActive(false);
-                    }
-                }
-                else { Debug.LogWarning("There are already five plotponts -> Info only"); }
-            }
-            else
-            {
-                Debug.LogWarning("Story has no blank Turning Points available");
-                storyNew.isConcluded = true;
-                //disable plotLine button
-                turnPlotpointButton.gameObject.SetActive(false);
+                //toggle save buttons
+                turnPreSaveButton.gameObject.SetActive(true);
+                turnSaveButton.gameObject.SetActive(false);
             }
         }
-        else { Debug.LogWarning("Story has been concluded -> Info only"); }
+        else { Debug.LogWarning("There are already five plotponts -> Info only"); }
     }
     #endregion
 
@@ -947,20 +953,20 @@ public class AdventureUI : MonoBehaviour
             if (character1 != null)
             {
                 //read or write field depending on whether already has data
-                if (string.IsNullOrEmpty(character1.dataMe) == true)
+                if (character1.listOfNotes.Count == 0)
                 { turnCharacter1Input.text = character1.tag; }
                 else { turnCharacter1.text = character1.tag; }
                 turnData1.text = character1.dataCreated;
-                turnData1Input.text = character1.dataMe;
+                turnData1Input.text = "";
                 characters = character1.tag;
             }
             if (character2 != null)
             {
-                if (string.IsNullOrEmpty(character2.dataMe) == true)
+                if (character2.listOfNotes.Count == 0)
                 { turnCharacter2Input.text = character2.tag; }
                 else { turnCharacter2.text = character2.tag; }
                 turnData2.text = character2.dataCreated;
-                turnData2Input.text = character2.dataMe;
+                turnData2Input.text = "";
                 characters = string.Format("{0} / {1}", characters, character2.tag);
             }
         }
@@ -1043,9 +1049,15 @@ public class AdventureUI : MonoBehaviour
     {
         //update characters
         if (character1 != null)
-        { character1.dataMe = turnData1Input.text; }
+        {
+            if (string.IsNullOrEmpty(turnData1Input.text) == false)
+            { character1.listOfNotes.Add(turnData1Input.text); }
+        }
         if (character2 != null)
-        { character2.dataMe = turnData2Input.text; }
+        {
+            if (string.IsNullOrEmpty(turnData2Input.text) == false)
+            { character2.listOfNotes.Add(turnData2Input.text); }
+        }
         // - - - Save last lot of details
         PlotDetails details = new PlotDetails()
         {
@@ -1063,9 +1075,23 @@ public class AdventureUI : MonoBehaviour
         // - - - reset global characters
         character1 = null;
         character2 = null;
+        //blank out character data
+        ResetPlotPoint();
+        if (turningPoint.type == TurningPointType.New)
+        {
+            turnName.gameObject.SetActive(false);
+            turnNameInput.gameObject.SetActive(true);
+            turnNameInput.text = "";
+        }
+        else
+        {
+            turnName.gameObject.SetActive(true);
+            turnNameInput.gameObject.SetActive(false);
+        }
+
         // - - - toggle fields
-        turnNameInput.gameObject.SetActive(true);
         ToggleTurningPointFields(false);
+        turnData0Input.gameObject.SetActive(true);
         //toggle save buttons
         turnPreSaveButton.gameObject.SetActive(false);
         turnSaveButton.gameObject.SetActive(true);
@@ -1080,23 +1106,26 @@ public class AdventureUI : MonoBehaviour
         if (string.IsNullOrEmpty(turnNameInput.text) == false)
         {
             //must have Notes for PlotLine (bottom of screen)
-            if (string.IsNullOrEmpty(turnPlotNotesInput.text) == false)
+            if (string.IsNullOrEmpty(turnData0Input.text) == false)
             {
                 //Populate data (to do)
                 turningPoint.tag = turnNameInput.text;
                 turningPoint.refTag = turnNameInput.text.Replace(" ", "");
-                turningPoint.notes = turnPlotNotesInput.text;
+                turningPoint.notes = turnData0Input.text;
+                turningPoint.isConcluded = true;
                 //TO DO -> notes / type / isConcluded
                 plotLine.tag = turnNameInput.text;
                 plotLine.refTag = turnNameInput.text.Replace(" ", "");
                 //add plotLine notes
-                plotLine.listOfNotes.Add(turnPlotNotesInput.text);
+                plotLine.listOfNotes.Add(turnData0Input.text);
                 //TO DO -> Save PlotLine
                 storyNew.arrays.AddPlotLineToArray(new ListItem() { tag = plotLine.refTag, status = StoryStatus.Data });
                 storyNew.lists.AddPlotLineToList(plotLine);
                 //SAVE
                 storyNew.arrayOfTurningPoints[turningPointIndex] = turningPoint;
                 isTurningPointSaved = true;
+                //clear out notes field
+                turnData0Input.text = "";
                 //update indexes
                 turningPointIndex++;
                 plotPointIndex = 0;
@@ -1106,6 +1135,12 @@ public class AdventureUI : MonoBehaviour
                     //Redraw ready for next turning point
                     RedrawTurningPointPage();
                     //TO DO -> Generate new PlotLine / turningPoint
+                    ListItem item = storyNew.arrays.GetPlotLineFromArray();
+                    if (item != null)
+                    {
+                        plotLine = ll
+                    }
+                    else { Debug.LogError("Invalid ListItem (Null) for new PlotLine"); }
                 }
                 else
                 {
@@ -1121,6 +1156,8 @@ public class AdventureUI : MonoBehaviour
         else { Debug.LogWarning("Turning Point doesn't have a name, can't be Saved"); }
     }
     #endregion
+
+
 
     #region Close
     /// <summary>
@@ -1383,6 +1420,8 @@ public class AdventureUI : MonoBehaviour
     // - - - Utilities
     //
 
+    #region Main and New Adventure Utilities
+
     /// <summary>
     /// Update data for Main Adventure page
     /// </summary>
@@ -1476,6 +1515,9 @@ public class AdventureUI : MonoBehaviour
             else { Debug.LogWarningFormat("Invalid story (Null) from listOfStories[{0}]", mainNavCounter); }
         }
     }
+    #endregion
+
+    #region List Utilities
 
     /// <summary>
     /// Display lists of Plotlines and Characters on Lists Page
@@ -1571,8 +1613,8 @@ public class AdventureUI : MonoBehaviour
                             case StoryStatus.New: listName.text = "New Plotline"; break;
                             default: Debug.LogWarningFormat("Unrecognised plotLine.status \"{0}\"", item.status); break;
                         }
-                        listDataCreated.text = plotLine.dataCreated;
-                        listDataMe.text = plotLine.dataMe;
+                        listDataCreated.text = "";
+                        listDataMe.text = plotLine.GetNotes();
                     }
                     else { Debug.LogErrorFormat("Invalid plotLine (Null) for ListItem.tag \"{0}\"", item.tag); }
                 }
@@ -1596,7 +1638,7 @@ public class AdventureUI : MonoBehaviour
                             default: Debug.LogWarningFormat("Unrecognised character.status \"{0}\"", item.status); break;
                         }
                         listDataCreated.text = character.dataCreated;
-                        listDataMe.text = character.dataMe;
+                        listDataMe.text = character.GetNotes();
                     }
                     else { Debug.LogErrorFormat("Invalid character (Null) for ListItem.tag \"{0}\"", item.tag); }
                 }
@@ -1620,8 +1662,8 @@ public class AdventureUI : MonoBehaviour
                     PlotLine plotLine = GetPlotLine(item.tag);
                     if (plotLine != null)
                     {
-                        listCreatedInput.text = plotLine.dataCreated;
-                        listMeInput.text = plotLine.dataMe;
+                        listCreatedInput.text = "";
+                        listDataMe.text = plotLine.GetNotes();
                     }
                     else { Debug.LogErrorFormat("Invalid plotLine (Null) for ListItem.tag \"{0}\"", item.tag); }
                 }
@@ -1635,7 +1677,7 @@ public class AdventureUI : MonoBehaviour
                     if (character != null)
                     {
                         listCreatedInput.text = character.dataCreated;
-                        listMeInput.text = character.dataMe;
+                        listMeInput.text = "";
                     }
                     else { Debug.LogErrorFormat("Invalid character (Null) for ListItem.tag \"{0}\"", item.tag); }
                 }
@@ -1661,8 +1703,8 @@ public class AdventureUI : MonoBehaviour
                     PlotLine plotLine = GetPlotLine(item.tag);
                     if (plotLine != null)
                     {
-                        plotLine.dataCreated = listCreatedInput.text;
-                        plotLine.dataMe = listMeInput.text;
+                        if (string.IsNullOrEmpty(listCreatedInput.text) == false)
+                        { plotLine.listOfNotes.Add(listCreatedInput.text); }
                         //update list
                         storyMain.lists.listOfPlotLines.Clear();
                         storyMain.lists.listOfPlotLines.AddRange(dictOfPlotLines.Values.ToList());
@@ -1684,7 +1726,8 @@ public class AdventureUI : MonoBehaviour
                     if (character != null)
                     {
                         character.dataCreated = listCreatedInput.text;
-                        character.dataMe = listMeInput.text;
+                        if (string.IsNullOrEmpty(listMeInput.text) == false)
+                        { character.listOfNotes.Add(listMeInput.text); }
                         //update list
                         storyMain.lists.listOfCharacters.Clear();
                         storyMain.lists.listOfCharacters.AddRange(dictOfCharacters.Values.ToList());
@@ -1703,25 +1746,56 @@ public class AdventureUI : MonoBehaviour
     /// <param name="isInput"></param>
     private void ToggleListFields(bool isInput)
     {
-        if (isInput == true)
+        switch (listItemStatus)
         {
-            //toggle normal fields off
-            listDataCreated.gameObject.SetActive(false);
-            listDataMe.gameObject.SetActive(false);
-            //toggle input On
-            listCreatedInput.gameObject.SetActive(true);
-            listMeInput.gameObject.SetActive(true);
-        }
-        else
-        {
-            //toggle normal fields on
-            listDataCreated.gameObject.SetActive(true);
-            listDataMe.gameObject.SetActive(true);
-            //toggle input off
-            listCreatedInput.gameObject.SetActive(false);
-            listMeInput.gameObject.SetActive(false);
+            case ListItemStatus.Character:
+                //character has two input fields
+                if (isInput == true)
+                {
+                    //toggle normal fields off
+                    listDataCreated.gameObject.SetActive(false);
+                    listDataMe.gameObject.SetActive(false);
+                    //toggle input On
+                    listCreatedInput.gameObject.SetActive(true);
+                    listMeInput.gameObject.SetActive(true);
+                }
+                else
+                {
+                    //toggle normal fields on
+                    listDataCreated.gameObject.SetActive(true);
+                    listDataMe.gameObject.SetActive(true);
+                    //toggle input off
+                    listCreatedInput.gameObject.SetActive(false);
+                    listMeInput.gameObject.SetActive(false);
+                }
+                break;
+            case ListItemStatus.PlotLine:
+                //Plotline only has one input field
+                if (isInput == true)
+                {
+                    //toggle normal fields off
+                    listDataCreated.gameObject.SetActive(false);
+                    listDataMe.gameObject.SetActive(true);
+                    //toggle input On
+                    listCreatedInput.gameObject.SetActive(true);
+                    listMeInput.gameObject.SetActive(false);
+                }
+                else
+                {
+                    //toggle normal fields on
+                    listDataCreated.gameObject.SetActive(true);
+                    listDataMe.gameObject.SetActive(true);
+                    //toggle input off
+                    listCreatedInput.gameObject.SetActive(false);
+                    listMeInput.gameObject.SetActive(false);
+                }
+                break;
         }
     }
+
+    #endregion
+
+    #region TurningPoint Utilities
 
     /// <summary>
     /// toggles data display or data input for TurningPage plotpoint and character fields. If isInput true then numOfCharacters param is used to toggle the appropriate fields
@@ -1732,19 +1806,22 @@ public class AdventureUI : MonoBehaviour
         //do regardless
         turnData1.gameObject.SetActive(true);
         turnData2.gameObject.SetActive(true);
-        turnPlotNotesInput.gameObject.SetActive(true);
+        turnData0Input.gameObject.SetActive(false);
         //Input
         if (isInput == true)
         {
             if (numOfCharacters == -1)
             { Debug.LogError("Invalid numOfCharacters (-1), should be between 0 and 2"); }
-
+            //always
             turnPlotpointNotes.gameObject.SetActive(false);
+            turnPlotNotesInput.gameObject.SetActive(true);
+            //at least one character
             if (numOfCharacters > 0)
             {
                 turnCharacter1Input.gameObject.SetActive(true);
                 turnData1Input.gameObject.SetActive(true);
             }
+            //two characters
             if (numOfCharacters > 1)
             {
                 turnCharacter2Input.gameObject.SetActive(true);
@@ -1759,6 +1836,7 @@ public class AdventureUI : MonoBehaviour
             turnCharacter2Input.gameObject.SetActive(false);
             turnData1Input.gameObject.SetActive(false);
             turnData2Input.gameObject.SetActive(false);
+            turnPlotNotesInput.gameObject.SetActive(false);
         }
     }
 
@@ -1778,6 +1856,8 @@ public class AdventureUI : MonoBehaviour
         turnData2Input.text = "";
         turnPlotNotesInput.text = "";
     }
+
+    #endregion
 
     #endregion
 

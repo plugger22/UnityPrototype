@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -590,8 +591,6 @@ namespace toolsAPI
     {
         public string refTag;                               //plotLine name with no spaces (auto generated)
         public string tag;
-        public string dataCreated;                          //generated data
-        public string dataMe;                               //my interpretation
         public List<string> listOfNotes;                    //One entry for each instance of the PlotLine, eg. if 3 turning points refer to this plotLine then 3 sets of notes
 
         #region PlotLine methods
@@ -616,6 +615,33 @@ namespace toolsAPI
             listOfNotes.Clear();
             listOfNotes.AddRange(copy.listOfNotes);
         }
+
+        /// <summary>
+        /// returns listOfNotes in a single string
+        /// </summary>
+        /// <returns></returns>
+        public string GetNotes()
+        {
+            string notes = "";
+            int count = listOfNotes.Count;
+            if (count > 1)
+            {
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < count; i++)
+                {
+                    if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
+                    builder.Append(listOfNotes[i]);
+                }
+                notes = builder.ToString();
+            }
+            else
+            {
+                if (count > 0)
+                { notes = listOfNotes[0]; }
+            }
+            return notes;
+        }
+
         #endregion
     }
     #endregion
@@ -630,12 +656,15 @@ namespace toolsAPI
         public string refTag;
         public string tag;
         public string dataCreated;                          //generated data
-        public string dataMe;                               //my interpretation
+        public List<string> listOfNotes;
+
+        #region Character Methods
 
         /// <summary>
         /// default constructor
         /// </summary>
-        public Character() {}
+        public Character()
+        { listOfNotes = new List<string>(); }
 
         /// <summary>
         /// copy constructor
@@ -646,8 +675,36 @@ namespace toolsAPI
             refTag = copy.refTag;
             tag = copy.tag;
             dataCreated = copy.dataCreated;
-            dataMe = copy.dataMe;
+            listOfNotes.Clear();
+            listOfNotes.AddRange(copy.listOfNotes);
         }
+
+        /// <summary>
+        /// returns listOfNotes in a single string
+        /// </summary>
+        /// <returns></returns>
+        public string GetNotes()
+        {
+            string notes = "";
+            int count = listOfNotes.Count;
+            if (count > 1)
+            {
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < count; i++)
+                {
+                    if (builder.Length > 0) { builder.AppendLine(); builder.AppendLine(); }
+                    builder.Append(listOfNotes[i]);
+                }
+                notes = builder.ToString();
+            }
+            else
+            {
+                if (count > 0)
+                { notes = listOfNotes[0]; }
+            }
+            return notes;
+        }
+        #endregion
     }
     #endregion
 
