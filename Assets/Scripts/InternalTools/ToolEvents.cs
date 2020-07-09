@@ -24,6 +24,8 @@ public enum ToolEventType
     CloseNewAdventure,
     SaveAdventureToDict,
     ClearNewAdventure,
+    NewSummaryUpArrow,
+    NewSummaryDownArrow,
     //Turning Point
     CloseTurningPoint,
     OpenTurningPoint,

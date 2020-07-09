@@ -10,6 +10,7 @@ public class ToolInput : MonoBehaviour
 
     private ToolModal _modalState;
     private ToolModalType _modalType;
+    private ToolModalSubNew _modalSubNew;
 
     #region properties
     //needs to be updated whenever changed
@@ -45,6 +46,9 @@ public class ToolInput : MonoBehaviour
     public void SetModalType(ToolModalType modalType)
     { _modalType = modalType; }
 
+    public void SetModalSubNew(ToolModalSubNew modalType)
+    { _modalSubNew = modalType; }
+
     #endregion
 
     #region ProcessKeyInput
@@ -53,7 +57,7 @@ public class ToolInput : MonoBehaviour
     /// </summary>
     public void ProcessKeyInput()
     {
-        float x_axis;
+        float x_axis, y_axis;
 
         switch (_modalState)
         {
@@ -76,7 +80,23 @@ public class ToolInput : MonoBehaviour
                 }
                 break;
             case ToolModal.New:
+                switch (_modalSubNew)
+                {
+                    case ToolModalSubNew.New:
+                        break;
+                    case ToolModalSubNew.Summary:
+                        if (Input.GetButtonDown("Vertical"))
+                        {
+                            //right / left arrows
+                            y_axis = Input.GetAxisRaw("Vertical");
+                            if (y_axis > 0)
+                            { ToolEvents.i.PostNotification(ToolEventType.NewSummaryUpArrow, this, null, "ToolInput.cs -> ProcessKeyInput Vertical UP"); }
+                            else if (y_axis < 0)
+                            { ToolEvents.i.PostNotification(ToolEventType.NewSummaryDownArrow, this, null, "ToolInput.cs -> ProcessKeyInput Vertical DOWN"); }
+                        }
+                        break;
 
+                }
                 break;
             case ToolModal.Lists:
                 {
@@ -88,9 +108,9 @@ public class ToolInput : MonoBehaviour
                                 //right / left arrows
                                 x_axis = Input.GetAxisRaw("Horizontal");
                                 if (x_axis > 0)
-                                { ToolEvents.i.PostNotification(ToolEventType.NextLists, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal"); }
+                                { ToolEvents.i.PostNotification(ToolEventType.NextLists, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal RIGHT"); }
                                 else if (x_axis < 0)
-                                { ToolEvents.i.PostNotification(ToolEventType.PreviousLists, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal"); }
+                                { ToolEvents.i.PostNotification(ToolEventType.PreviousLists, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal LEFT"); }
                             }
                             break;
                     }

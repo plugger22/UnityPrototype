@@ -94,11 +94,21 @@ public class AdventureUI : MonoBehaviour
     public TMP_InputField newNotes;
     public TMP_InputField newDate;
 
+    public Image NewNormalPanel;
+    public Image NewSummaryPanel;
+
+    //Summary
+    public TextMeshProUGUI newTurningPointNotes;
+
     //collections
     public TMP_InputField[] arrayOfNewPlotLines;
     public TMP_InputField[] arrayOfNewCharacters;
+    public TextMeshProUGUI[] arrayOfNewTurningPoints;
+
+    private string[] arrayOfNewTurningPointNotes = new string[5];
 
     private bool isNewAdventureSave;                    //true if saving new adventure details, false if saving Turning points
+    private int newSummaryIndex;                        //controls arrow up and down for turning points in summary panel
     #endregion
 
     #region TurningPoint
@@ -238,11 +248,16 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(newTag != null, "Invalid adventureTag (Null)");
         Debug.Assert(newNotes != null, "Invalid adventureNotes (Null)");
         Debug.Assert(newDate != null, "Invalid adventureDate (Null)");
+        Debug.Assert(NewNormalPanel != null, "Invalid newNormalPanel (Null)");
+        Debug.Assert(NewSummaryPanel != null, "Invalid newSummaryPanel (Null)");
+        Debug.Assert(newTurningPointNotes != null, "Invalid newTurningPointNotes (Null)");
         for (int i = 0; i < arrayOfNewPlotLines.Length; i++)
         {
             if (arrayOfNewPlotLines[i] == null) { Debug.LogErrorFormat("Invalid arrayOfNewPlotLines[{0}] (Null)", i); }
             if (arrayOfNewCharacters[i] == null) { Debug.LogErrorFormat("Invalid arrayOfNewCharacters[{0}] (Null)", i); }
         }
+        for (int i = 0; i < 5; i++)
+        { if (arrayOfNewTurningPoints[i] == null) { Debug.LogErrorFormat("Invalid arrayOfNewTurningPoints[{0}] (Null)", i); } }
         //turning Points
         Debug.Assert(plotTurnInteraction != null, "Invalid plotTurnInteraction");
         Debug.Assert(clearTurnInteraction != null, "Invalid clearTurnInteraction");
@@ -342,8 +357,10 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.ClearNewAdventure, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.NextAdventure, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.PreviousAdventure, OnEvent, "AdventureUI");
-        ToolEvents.i.AddListener(ToolEventType.OpenAdventureLists, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.NewSummaryUpArrow, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.NewSummaryDownArrow, OnEvent, "AdventureUI");
 
+        ToolEvents.i.AddListener(ToolEventType.OpenAdventureLists, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.CloseAdventureLists, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.ShowPlotLineDetails, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.ShowCharacterDetails, OnEvent, "AdventureUI");
@@ -410,6 +427,12 @@ public class AdventureUI : MonoBehaviour
                 break;
             case ToolEventType.PreviousAdventure:
                 PreviousAdventure();
+                break;
+            case ToolEventType.NewSummaryUpArrow:
+                NewSummaryUpArrow();
+                break;
+            case ToolEventType.NewSummaryDownArrow:
+                NewSummaryDownArrow();
                 break;
             case ToolEventType.OpenAdventureLists:
                 OpenLists();
@@ -584,7 +607,7 @@ public class AdventureUI : MonoBehaviour
     //
 
     /// <summary>
-    /// open new adventure page
+    /// open new adventure page (used only from Main page, NOT from TurningPoint page as it'd reset stuff that shouldn't be reset)
     /// </summary>
     private void OpenNewAdventure()
     {
@@ -595,6 +618,9 @@ public class AdventureUI : MonoBehaviour
         //toggle canvases on/off
         newAdventureCanvas.gameObject.SetActive(true);
         masterCanvas.gameObject.SetActive(false);
+        //zero turningPointIndex (it's a new adventure)
+        turningPointIndex = 0;
+        newSummaryIndex = 0;
         //redraw page
         RedrawNewAdventurePage();
         //switch of Turning Point button (until Adventure is SAVED)
@@ -762,6 +788,29 @@ public class AdventureUI : MonoBehaviour
         else { Debug.LogError("Invalid storyNew (Null)"); }
     }
 
+    /// <summary>
+    /// Up arrow moves one up in turningPoint summary display
+    /// </summary>
+    private void NewSummaryUpArrow()
+    {
+        //roll over
+        if (newSummaryIndex == 0)
+        { newSummaryIndex = 4; }
+        else { newSummaryIndex--; }
+        DisplayNewSummary(newSummaryIndex);
+    }
+
+    /// <summary>
+    /// down arrow moves one down in turningPoint summary display
+    /// </summary>
+    private void NewSummaryDownArrow()
+    {
+        //roll over
+        if (newSummaryIndex == 4)
+        { newSummaryIndex = 0; }
+        else { newSummaryIndex++; }
+        DisplayNewSummary(newSummaryIndex);
+    }
 
 
     #endregion
@@ -788,7 +837,7 @@ public class AdventureUI : MonoBehaviour
         turnAdventureName.text = storyNew.tag;
         //indexes
         plotPointIndex = 0;
-        //find next empty slot in arrayOfTurningPoints
+        //find next empty slot in arrayOfTurningPoints 
         int index = -1;
         for (int i = 0; i < storyNew.arrayOfTurningPoints.Length; i++)
         {
@@ -1108,9 +1157,12 @@ public class AdventureUI : MonoBehaviour
             //must have Notes for PlotLine (bottom of screen)
             if (string.IsNullOrEmpty(turnData0Input.text) == false)
             {
-                //Populate data (to do)
-                turningPoint.tag = turnNameInput.text;
-                turningPoint.refTag = turnNameInput.text.Replace(" ", "");
+                //New turning point, need tag/refTag
+                if (turningPoint.type == TurningPointType.New)
+                {
+                    turningPoint.tag = turnNameInput.text;
+                    turningPoint.refTag = turnNameInput.text.Replace(" ", "");
+                }
                 turningPoint.notes = turnData0Input.text;
                 turningPoint.isConcluded = true;
                 //TO DO -> notes / type / isConcluded
@@ -1138,7 +1190,42 @@ public class AdventureUI : MonoBehaviour
                     ListItem item = storyNew.arrays.GetPlotLineFromArray();
                     if (item != null)
                     {
-                        plotLine = ll
+                        switch (item.status)
+                        {
+
+                            case StoryStatus.Data:
+                                plotLine = storyNew.lists.GetPlotLineFromList(item.tag);
+                                if (plotLine != null)
+                                {
+                                    //development turning point
+                                    turningPoint = new TurningPoint()
+                                    {
+                                        refTag = plotLine.refTag,
+                                        tag = plotLine.tag,
+                                        notes = "",
+                                        type = TurningPointType.Development,
+                                        isConcluded = false
+                                    };
+                                }
+                                else { Debug.LogError("Invalid plotLine (Null)"); }
+                                break;
+
+                            case StoryStatus.Logical:                               //DEBUG -> TO DO
+                            case StoryStatus.New:
+                                plotLine = new PlotLine();
+                                //new turning point
+                                turningPoint = new TurningPoint()
+                                {
+                                    refTag = "",
+                                    tag = "",
+                                    notes = "",
+                                    type = TurningPointType.New,
+                                    isConcluded = false
+                                };
+                                break;
+                            default: Debug.LogWarningFormat("Unrecognised item.status \"{0}\"", item.status); break;
+                        }
+
                     }
                     else { Debug.LogError("Invalid ListItem (Null) for new PlotLine"); }
                 }
@@ -1156,8 +1243,6 @@ public class AdventureUI : MonoBehaviour
         else { Debug.LogWarning("Turning Point doesn't have a name, can't be Saved"); }
     }
     #endregion
-
-
 
     #region Close
     /// <summary>
@@ -1181,6 +1266,8 @@ public class AdventureUI : MonoBehaviour
         }
         //set flag for new Adventure save to not mess up Turning points
         isNewAdventureSave = false;
+        //reset New Adventure page
+        RedrawNewAdventurePage();
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.New);
     }
@@ -1420,8 +1507,7 @@ public class AdventureUI : MonoBehaviour
     // - - - Utilities
     //
 
-    #region Main and New Adventure Utilities
-
+    #region Main Utilities
     /// <summary>
     /// Update data for Main Adventure page
     /// </summary>
@@ -1452,11 +1538,36 @@ public class AdventureUI : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// displays a story on Main Adventure page
+    /// </summary>
+    private void DisplayStoryMain()
+    {
+        if (listOfStories.Count > 0)
+        {
+            storyMain = listOfStories[mainNavCounter];
+            if (storyMain != null)
+            {
+                //populate data onscreen
+                RedrawMainAdventurePage();
+            }
+            else { Debug.LogWarningFormat("Invalid story (Null) from listOfStories[{0}]", mainNavCounter); }
+        }
+    }
+    #endregion
+
+    #region New Adventure Utilities
+
     /// <summary>
     /// Update data for New Adventure page
     /// </summary>
     private void RedrawNewAdventurePage()
     {
+        //set modalSubNew
+        if (turningPointIndex == 0) { ToolManager.i.toolInputScript.SetModalSubNew(ToolModalSubNew.New); }
+        else { ToolManager.i.toolInputScript.SetModalSubNew(ToolModalSubNew.Summary); }
+        //set display state
         newTag.text = storyNew.tag;
         newNotes.text = storyNew.notes;
         newDate.text = storyNew.date;
@@ -1465,12 +1576,59 @@ public class AdventureUI : MonoBehaviour
         themeNew3.text = storyNew.theme.GetThemeType(3).ToString();
         themeNew4.text = storyNew.theme.GetThemeType(4).ToString();
         themeNew5.text = storyNew.theme.GetThemeType(5).ToString();
-        //zero out seed plotlines and characters regardless
-        for (int i = 0; i < arrayOfNewPlotLines.Length; i++)
+        if (turningPointIndex == 0)
         {
-            arrayOfNewPlotLines[i].text = "";
-            arrayOfNewCharacters[i].text = "";
+            NewNormalPanel.gameObject.SetActive(true);
+            NewSummaryPanel.gameObject.SetActive(false);
+            //zero out seed plotlines and characters regardless
+            for (int i = 0; i < arrayOfNewPlotLines.Length; i++)
+            {
+                arrayOfNewPlotLines[i].text = "";
+                arrayOfNewCharacters[i].text = "";
+            }
         }
+        else
+        {
+            //summary panel
+            NewNormalPanel.gameObject.SetActive(false);
+            NewSummaryPanel.gameObject.SetActive(true);
+            //populate summary panel
+            DisplayNewSummary(newSummaryIndex);
+
+        }
+    }
+
+    /// <summary>
+    /// Populates Summary Panel on new adventure screen. Index refers to currently selected TurningPoint (index values -> 0 to 4)
+    /// </summary>
+    private void DisplayNewSummary(int index)
+    {
+        if (index > 4 || index < 0) { Debug.LogWarningFormat("Invalid index \"[0}\" (should be between 0 and 4)", index); }
+        index = Mathf.Clamp(index, 0, 4);
+        //populate panel
+        for (int i = 0; i < storyNew.arrayOfTurningPoints.Length; i++)
+        {
+            TurningPoint turningPoint = storyNew.arrayOfTurningPoints[i];
+            if (turningPoint.type != TurningPointType.None)
+            {
+                //valid turningPoint (current index in yellow)
+                if (i == newSummaryIndex)
+                { arrayOfNewTurningPoints[i].text = string.Format("<color=\"yellow\">{0} {1}", i + 1, turningPoint.tag); }
+                else
+                { arrayOfNewTurningPoints[i].text = string.Format("<color=\"white\">{0} {1}", i + 1, turningPoint.tag); }
+                arrayOfNewTurningPointNotes[i] = turningPoint.notes;
+            }
+            else
+            {
+                //empty turning point
+                if (i == newSummaryIndex)
+                { arrayOfNewTurningPoints[i].text = string.Format("<color=\"yellow\">{0}", i + 1); }
+                else { arrayOfNewTurningPoints[i].text = string.Format("<color=\"white\">{0}", i + 1); }
+                arrayOfNewTurningPointNotes[i] = "";
+            }
+        }
+        //set  note
+        newTurningPointNotes.text = arrayOfNewTurningPointNotes[index];
     }
 
     /// <summary>
@@ -1499,22 +1657,7 @@ public class AdventureUI : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// displays a story on Main Adventure page
-    /// </summary>
-    private void DisplayStoryMain()
-    {
-        if (listOfStories.Count > 0)
-        {
-            storyMain = listOfStories[mainNavCounter];
-            if (storyMain != null)
-            {
-                //populate data onscreen
-                RedrawMainAdventurePage();
-            }
-            else { Debug.LogWarningFormat("Invalid story (Null) from listOfStories[{0}]", mainNavCounter); }
-        }
-    }
+
     #endregion
 
     #region List Utilities

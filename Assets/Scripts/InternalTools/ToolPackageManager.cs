@@ -15,6 +15,7 @@ namespace toolsAPI
 
     public enum ToolModal { Menu, Main, New, TurningPoint, Lists }
     public enum ToolModalType { Read, Edit }
+    public enum ToolModalSubNew { New, Summary}                                        //new adventure sub state
     public enum ThemeType { Action, Tension, Mystery, Social, Personal, Count }   //NOTE: Order matters (ToolDetails.cs)
     public enum StoryStatus { New, Logical, Data }
     public enum ListItemStatus { None, PlotLine, Character }    //what's currently selected on the Aventure/list page
@@ -498,6 +499,7 @@ namespace toolsAPI
         /// </summary>
         public TurningPoint()
         {
+            type = TurningPointType.None;
             //initialise arrayOfDetails with blanks
             for (int i = 0; i < arrayOfDetails.Length; i++)
             { arrayOfDetails[i] = new PlotDetails(); }
