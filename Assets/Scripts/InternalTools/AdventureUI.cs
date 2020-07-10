@@ -194,6 +194,9 @@ public class AdventureUI : MonoBehaviour
     public TMP_Dropdown dropInput;
     public ToolButtonInteraction dropConfirmInteraction;
 
+    private int dropDownInputInt;
+    private string dropDownInputString;
+
     #endregion
 
     #region static Instance
@@ -1119,6 +1122,9 @@ public class AdventureUI : MonoBehaviour
             {
                 InitialiseDropDownInput(listOfCharacters.Select(x => x.tag).ToList(), "Choose Most Logical Character");
                 OpenDropDownInput();
+                //wait for input
+                if (dropDownInputInt > -1)
+                { character = listOfCharacters[dropDownInputInt]; }
             }
             else
             {
@@ -1524,13 +1530,16 @@ public class AdventureUI : MonoBehaviour
     /// </summary>
     private void InitialiseDropDownInput(List<string> listOfOptions, string header)
     {
+        //reset input fields to defaults
+        dropDownInputInt = -1;
+        dropDownInputString = "";
         //set options
         if (listOfOptions != null)
         {
             dropInput.options.Clear();
             for (int i = 0; i < listOfOptions.Count; i++)
             {
-                dropInput.options.Add(new TMP_Dropdown.OptionData() { text = listOfOptions[i] }); 
+                dropInput.options.Add(new TMP_Dropdown.OptionData() { text = listOfOptions[i] });
             }
         }
         else { Debug.LogError("Invalid listOfOptions (Null)"); }
@@ -1555,7 +1564,10 @@ public class AdventureUI : MonoBehaviour
     private void DropDownItemSelected()
     {
         int index = dropInput.value;
-        dropHeader.text = dropInput.options[index].text;
+        //set input values
+        dropDownInputInt = index;
+        dropDownInputString = dropInput.options[index].text;
+        Debug.LogFormat("[Tst] AdventureUI.cs -> DropDownItemSelected: \"{0}\", index {1} SELECTED{2}", dropDownInputString, dropDownInputInt, "\n");
     }
 
     #endregion
