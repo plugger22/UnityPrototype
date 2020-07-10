@@ -423,6 +423,20 @@ namespace toolsAPI
         }
 
         /// <summary>
+        /// Returns specific Character based on list index (used for DropDown input)
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public Character GetCharacterFromList(int index)
+        {
+            Character character = null;
+            if (index > -1 && index < listOfCharacters.Count)
+            character = listOfCharacters[index];
+            else { Debug.LogErrorFormat("Invalid index \"{0}\" (must be between 0 and {1})", index, listOfCharacters.Count); }
+            return character;
+        }
+
+        /// <summary>
         /// Returns specific Plotline from list (base on array refTag), null if not found
         /// </summary>
         /// <param name="plotRef"></param>

@@ -42,6 +42,7 @@ public class AdventureUI : MonoBehaviour
     private int turningPointIndex;
     private int plotPointIndex;
     private bool isSaveNeeded;
+    private bool waitUntilDone;                             //used for dropDownInput
     private List<Story> listOfStories;
 
     //static reference
@@ -1019,6 +1020,7 @@ public class AdventureUI : MonoBehaviour
     /// <param name="numOfCharacters"></param>
     private void GetCharacters(int numOfCharacters)
     {
+        waitUntilDone = false;
         switch (numOfCharacters)
         {
             case 0:
@@ -1033,8 +1035,23 @@ public class AdventureUI : MonoBehaviour
                 break;
             default: Debug.LogWarningFormat("Unrecognised numOfCharacters \"{0}\"", numOfCharacters); break;
         }
+        //Wait for dropDown input if required
+        StartCoroutine("ProceedWithCharacters");
+    }
+
+    IEnumerator ProceedWithCharacters()
+    {
+        yield return new WaitUntil(() => waitUntilDone == true);
+        UpdateCharacterData();
+    }
+
+    /// <summary>
+    /// Populates character data
+    /// </summary>
+    private void UpdateCharacterData()
+    {         
         //populate fields and add to lists and arrays
-        string characters = "";
+        string characters = "";       
         //no characters involved
         if (character1 == null && character2 == null)
         { ToggleTurningPointFields(false); }
@@ -1063,7 +1080,12 @@ public class AdventureUI : MonoBehaviour
         }
         //add to turning point list of characters (next to plotpoint)
         if (characters.Length > 0)
-        { arrayOfTurnCharacters[plotPointIndex].text = characters; }
+        {
+            if (plotPointIndex > -1 && plotPointIndex < arrayOfTurnCharacters.Length)
+            { arrayOfTurnCharacters[plotPointIndex].text = characters; }
+            else { Debug.LogWarningFormat("Invalid plotPointIndex \"{0}\" (should be between 0 and {1})", plotPointIndex, arrayOfTurnCharacters.Length); }
+        }
+
     }
 
     /// <summary>
@@ -1078,13 +1100,17 @@ public class AdventureUI : MonoBehaviour
         {
             case StoryStatus.Data:
                 character = storyNew.lists.GetCharacterFromList(item.tag);
+                waitUntilDone = true;
                 break;
             case StoryStatus.Logical:
-                character = GetDropDownCharacter();
+                GetDropDownCharacter();
+                if (dropDownInputInt > -1)
+                { character = storyNew.lists.GetCharacterFromList(dropDownInputInt); }
                 Debug.LogFormat("[Tst] AdventureUI.cs -> GetIndividualCharacter: MOST LOGICAL \"{0}\" selected{1}", character != null ? character.tag : "Unknown", "\n");
                 break;
             case StoryStatus.New:
                 character = GetNewCharacter();
+                waitUntilDone = true;
                 break;
             default: Debug.LogWarningFormat("Unrecognised item.status \"[0}\"", item.status); break;
         }
@@ -1123,9 +1149,6 @@ public class AdventureUI : MonoBehaviour
             {
                 InitialiseDropDownInput(listOfCharacters.Select(x => x.tag).ToList(), "Choose Most Logical Character");
                 StartCoroutine("WaitForDropDownInput");
-                //wait for input
-                if (dropDownInputInt > -1)
-                { character = listOfCharacters[dropDownInputInt]; }
             }
             else
             {
@@ -1560,6 +1583,7 @@ public class AdventureUI : MonoBehaviour
         dropDownCanvas.gameObject.SetActive(true);
         dropInput.onValueChanged.AddListener(delegate { DropDownItemSelected(); });
         yield return new WaitUntil(() => dropDownInputInt > -1);
+        waitUntilDone = true;
     }
 
     /// <summary>
