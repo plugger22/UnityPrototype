@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -1121,7 +1122,7 @@ public class AdventureUI : MonoBehaviour
             if (listOfCharacters.Count > 0)
             {
                 InitialiseDropDownInput(listOfCharacters.Select(x => x.tag).ToList(), "Choose Most Logical Character");
-                OpenDropDownInput();
+                StartCoroutine("WaitForDropDownInput");
                 //wait for input
                 if (dropDownInputInt > -1)
                 { character = listOfCharacters[dropDownInputInt]; }
@@ -1549,13 +1550,16 @@ public class AdventureUI : MonoBehaviour
         else { Debug.LogError("Invalid header (Null or Empty)"); }
     }
 
+
     /// <summary>
-    /// Initialise pop-up DropDownInput
+    /// wait for input from drop down pop-up
     /// </summary>
-    private void OpenDropDownInput()
+    /// <returns></returns>
+    IEnumerator WaitForDropDownInput()
     {
         dropDownCanvas.gameObject.SetActive(true);
         dropInput.onValueChanged.AddListener(delegate { DropDownItemSelected(); });
+        yield return new WaitUntil(() => dropDownInputInt > -1);
     }
 
     /// <summary>
