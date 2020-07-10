@@ -25,6 +25,7 @@ public class AdventureUI : MonoBehaviour
     public Canvas newAdventureCanvas;
     public Canvas turningPointCanvas;
     public Canvas listsCanvas;
+    public Canvas dropDownCanvas;
 
     //Stories
     private Story storyMain;
@@ -185,6 +186,16 @@ public class AdventureUI : MonoBehaviour
 
     #endregion
 
+    #region DropDown
+    /// <summary>
+    /// drop down input gui elements
+    /// </summary>
+    public TextMeshProUGUI dropHeader;
+    public TMP_Dropdown dropInput;
+    public ToolButtonInteraction dropConfirmInteraction;
+
+    #endregion
+
     #region static Instance
     /// <summary>
     /// provide a static reference to AdventureUI that can be accessed from any script
@@ -202,18 +213,21 @@ public class AdventureUI : MonoBehaviour
     }
     #endregion
 
+    // - - - Methods
+
     #region Initialise
     /// <summary>
     /// Initialisation
     /// </summary>
     public void Initialise()
     {
-        //error check
+        //canvases
         Debug.Assert(adventureCanvas != null, "Invalid adventureCanvas (Null)");
         Debug.Assert(masterCanvas != null, "Invalid masterCanvas (Null)");
         Debug.Assert(newAdventureCanvas != null, "Invalid newAdventureCanvas (Null)");
         Debug.Assert(turningPointCanvas != null, "Invalid turningPointCanvas (Null)");
         Debug.Assert(listsCanvas != null, "Invalid listsCanvas (Null)");
+        Debug.Assert(dropDownCanvas != null, "Invalid dropDownCanvas (Null");
         //main buttons
         Debug.Assert(newAdventureInteraction != null, "Invalid newAdventureInteraction (Null)");
         Debug.Assert(saveToFileInteraction != null, "Invalid saveAdventureInteraction (Null)");
@@ -307,12 +321,17 @@ public class AdventureUI : MonoBehaviour
         Debug.AssertFormat(arrayOfPlotLineTexts.Length == 25, "Invalid arrayOfPlotLineTexts.Length (should be 25, is {0})", arrayOfPlotLineTexts.Length);
         Debug.AssertFormat(arrayOfCharacterTexts.Length == 25, "Invalid arrayOfCharacterTexts.Length (should be 25, is {0})", arrayOfCharacterTexts.Length);
         maxListIndex = arrayOfPlotLineInteractions.Length;
+        //DropDown
+        Debug.Assert(dropHeader != null, "Invalid dropHeader (Null)");
+        Debug.Assert(dropInput != null, "Invalid dropInput (Null)");
+        Debug.Assert(dropConfirmInteraction != null, "Invalid dropConfirmInteraction (Null)");
         //switch off
         adventureCanvas.gameObject.SetActive(false);
         masterCanvas.gameObject.SetActive(true);
         newAdventureCanvas.gameObject.SetActive(false);
         turningPointCanvas.gameObject.SetActive(false);
         listsCanvas.gameObject.SetActive(false);
+        dropDownCanvas.gameObject.SetActive(false);
         //main buttonInteractions
         exitInteraction.SetButton(ToolEventType.CloseAdventureUI);
         newAdventureInteraction.SetButton(ToolEventType.OpenNewAdventure);
@@ -327,7 +346,6 @@ public class AdventureUI : MonoBehaviour
         preSaveTurnInteraction.SetButton(ToolEventType.PreSaveTurningPoint);
         saveNewInteraction.SetButton(ToolEventType.SaveAdventureToDict);
         clearNewInteraction.SetButton(ToolEventType.ClearNewAdventure);
-
         //turningPoint buttonInteractions
         plotTurnInteraction.SetButton(ToolEventType.CreatePlotpoint);
         clearTurnInteraction.SetButton(ToolEventType.ClearTurningPoint);
@@ -342,7 +360,19 @@ public class AdventureUI : MonoBehaviour
             arrayOfPlotLineInteractions[i].SetButton(ToolEventType.ShowPlotLineDetails, i);
             arrayOfCharacterInteractions[i].SetButton(ToolEventType.ShowCharacterDetails, i);
         }
+        //dropDown button Interactions
+        dropConfirmInteraction.SetButton(ToolEventType.CloseDropDown);
+        //event listeners
+        InitialiseEvents();
+    }
+    #endregion
 
+    #region InitaliseEvents
+    /// <summary>
+    /// Initialise all event listeners
+    /// </summary>
+    private void InitialiseEvents()
+    {
         //listeners
         ToolEvents.i.AddListener(ToolEventType.OpenAdventureUI, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.CloseAdventureUI, OnEvent, "AdventureUI");
@@ -374,6 +404,8 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.PreSaveTurningPoint, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.SaveTurningPoint, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.CloseTurningPoint, OnEvent, "AdventureUI");
+
+        ToolEvents.i.AddListener(ToolEventType.CloseDropDown, OnEvent, "AdventureUI");
     }
     #endregion
 
@@ -472,6 +504,9 @@ public class AdventureUI : MonoBehaviour
                 break;
             case ToolEventType.CloseTurningPoint:
                 CloseTurningPoint();
+                break;
+            case ToolEventType.CloseDropDown:
+                CloseDropDownInput();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -717,6 +752,7 @@ public class AdventureUI : MonoBehaviour
             storyNew.date = newDate.text;
             int counterPlotLine = 0;
             int counterCharacter = 0;
+            string refTagNew;
             //Only new adventure details to save
             if (isNewAdventureSave == true)
             {
@@ -726,23 +762,25 @@ public class AdventureUI : MonoBehaviour
                     //valid name
                     if (string.IsNullOrEmpty(arrayOfNewPlotLines[i].text) == false)
                     {
+                        refTagNew = arrayOfNewPlotLines[i].text;
                         //plotlines
-                        storyNew.arrays.arrayOfPlotLines[i].tag = arrayOfNewPlotLines[i].text;
+                        storyNew.arrays.arrayOfPlotLines[i].tag = refTagNew;
                         storyNew.arrays.arrayOfPlotLines[i].status = StoryStatus.Data;
                         counterPlotLine++;
                         //add to list
-                        PlotLine plotLine = new PlotLine() { tag = arrayOfNewPlotLines[i].text };
+                        PlotLine plotLine = new PlotLine() { tag = arrayOfNewPlotLines[i].text, refTag = refTagNew, listOfNotes = new List<string>() { "Seed PlotLine" } };
                         AddPlotLine(plotLine);
                     }
                     //valid name
                     if (string.IsNullOrEmpty(arrayOfNewCharacters[i].text) == false)
                     {
+                        refTagNew = arrayOfNewCharacters[i].text.Replace(" ", "");
                         //characters
-                        storyNew.arrays.arrayOfCharacters[i].tag = arrayOfNewCharacters[i].text;
+                        storyNew.arrays.arrayOfCharacters[i].tag = refTagNew;
                         storyNew.arrays.arrayOfCharacters[i].status = StoryStatus.Data;
                         counterCharacter++;
                         //add to list
-                        Character character = new Character() { tag = arrayOfNewCharacters[i].text };
+                        Character character = new Character() { tag = arrayOfNewCharacters[i].text, refTag = refTagNew, dataCreated = "Seed Character" };
                         AddCharacter(character);
                     }
                 }
@@ -1038,26 +1076,61 @@ public class AdventureUI : MonoBehaviour
                 character = storyNew.lists.GetCharacterFromList(item.tag);
                 break;
             case StoryStatus.Logical:
-
-                Debug.LogFormat("[Tst] AdventureUI.cs -> GetIndividualCharacter: MOST LOGICAL Character (Not implemented){0}", "\n");
-
-                //TO DO
-
+                character = GetDropDownCharacter();
+                Debug.LogFormat("[Tst] AdventureUI.cs -> GetIndividualCharacter: MOST LOGICAL \"{0}\" selected{1}", character != null ? character.tag : "Unknown", "\n");
                 break;
             case StoryStatus.New:
-                character = ToolManager.i.adventureScript.GetNewCharacter();
-                if (character != null)
-                {
-                    //add character to array and list
-                    storyNew.arrays.AddCharacterToArray(new ListItem() { tag = character.refTag, status = StoryStatus.Data });
-                    storyNew.lists.AddCharacterToList(character);
-                }
-                else { Debug.LogWarning("Invalid character (Null), NOT added to arrayOfCharacters, or listOfCharacters"); }
+                character = GetNewCharacter();
                 break;
             default: Debug.LogWarningFormat("Unrecognised item.status \"[0}\"", item.status); break;
         }
         return character;
     }
+
+    /// <summary>
+    /// Returs a newly generated character, returns null if a problem
+    /// </summary>
+    /// <returns></returns>
+    private Character GetNewCharacter()
+    {
+        Character character = null;
+        character = ToolManager.i.adventureScript.GetNewCharacter();
+        if (character != null)
+        {
+            //add character to array and list
+            storyNew.arrays.AddCharacterToArray(new ListItem() { tag = character.refTag, status = StoryStatus.Data });
+            storyNew.lists.AddCharacterToList(character);
+        }
+        else { Debug.LogWarning("Invalid character (Null), NOT added to arrayOfCharacters, or listOfCharacters"); }
+        return character;
+    }
+
+    /// <summary>
+    /// Obtains a character from a drop down list of existing characters
+    /// </summary>
+    /// <returns></returns>
+    private Character GetDropDownCharacter()
+    {
+        Character character = null;
+        List<Character> listOfCharacters = storyNew.lists.listOfCharacters;
+        if (listOfCharacters != null)
+        {
+            if (listOfCharacters.Count > 0)
+            {
+                InitialiseDropDownInput(listOfCharacters.Select(x => x.tag).ToList(), "Choose Most Logical Character");
+                OpenDropDownInput();
+            }
+            else
+            {
+                //non-available, default to a new character
+                Debug.LogFormat("[Tst] AdventureUI.cs -> GetDropDownCharacter: storyNew.listOfCharacters is EMPTY. Created a new Character instead{0}", "\n");
+                character = GetNewCharacter();
+            }
+        }
+        else { Debug.LogError("Invalid storyNew.listOfCharacters (Null)"); }
+        return character;
+    }
+
     #endregion
 
     #region ClearPlotpoint
@@ -1443,6 +1516,57 @@ public class AdventureUI : MonoBehaviour
     }
 
     #endregion
+
+    #region DropDown Methods
+
+    /// <summary>
+    /// Sets up drop down input prior
+    /// </summary>
+    private void InitialiseDropDownInput(List<string> listOfOptions, string header)
+    {
+        //set options
+        if (listOfOptions != null)
+        {
+            dropInput.options.Clear();
+            for (int i = 0; i < listOfOptions.Count; i++)
+            {
+                dropInput.options.Add(new TMP_Dropdown.OptionData() { text = listOfOptions[i] }); 
+            }
+        }
+        else { Debug.LogError("Invalid listOfOptions (Null)"); }
+        //set header
+        if (string.IsNullOrEmpty(header) == false)
+        { dropHeader.text = header; }
+        else { Debug.LogError("Invalid header (Null or Empty)"); }
+    }
+
+    /// <summary>
+    /// Initialise pop-up DropDownInput
+    /// </summary>
+    private void OpenDropDownInput()
+    {
+        dropDownCanvas.gameObject.SetActive(true);
+        dropInput.onValueChanged.AddListener(delegate { DropDownItemSelected(); });
+    }
+
+    /// <summary>
+    /// Gets option selected from dropDown pick list
+    /// </summary>
+    private void DropDownItemSelected()
+    {
+        int index = dropInput.value;
+        dropHeader.text = dropInput.options[index].text;
+    }
+
+    #endregion
+
+    /// <summary>
+    /// Confirm button clicked, drop down input pop-up closed
+    /// </summary>
+    private void CloseDropDownInput()
+    {
+        dropDownCanvas.gameObject.SetActive(false);
+    }
 
     #region Dictionary Methods
 

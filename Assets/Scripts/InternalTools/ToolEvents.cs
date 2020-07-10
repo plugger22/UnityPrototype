@@ -41,7 +41,9 @@ public enum ToolEventType
     NextLists,
     PreviousLists,
     EditListItem,
-    SaveListDetails
+    SaveListDetails,
+    //DropDown
+    CloseDropDown
 
 }
 
