@@ -1009,6 +1009,7 @@ public class AdventureUI : MonoBehaviour
             //non character related plotpoints
             if (isPlotpointAdminDone == false)
             {
+                UpdateCharacterData();
                 //toggle fields
                 ToggleTurningPointFields(true, plotPoint.numberOfCharacters);
                 //increment index
@@ -1065,6 +1066,8 @@ public class AdventureUI : MonoBehaviour
     IEnumerator GetMostLogicalCharacters()
     {
         isWaitUntilDone = true;
+        //prevents doubling up on NewPlotpoint admin
+        isPlotpointAdminDone = true;
         //character1 
         if (isChar1MostLogical == true)
         {
@@ -1092,8 +1095,7 @@ public class AdventureUI : MonoBehaviour
             turnPreSaveButton.gameObject.SetActive(true);
             turnSaveButton.gameObject.SetActive(false);
         }
-        //set admin flag true to prevent doubling up in NewPlotpoint
-        isPlotpointAdminDone = true;
+      
     }
 
 
@@ -1201,7 +1203,8 @@ public class AdventureUI : MonoBehaviour
         {
             if (listOfCharacters.Count > 0)
             {
-                InitialiseDropDownInput(listOfCharacters.Select(x => x.tag).ToList(), "Choose Most Logical Character");
+                string header = string.Format("Choose Most Logical Character{0}{1}<color=\"blue\">{2}</color>{3}{4}<size=80%>{5}</size>", "\n", "\n", plotPoint.tag, "\n", "\n", plotPoint.details);
+                InitialiseDropDownInput(listOfCharacters.Select(x => x.tag).ToList(), header);
                 coroutineDropDown = WaitForDropDownInput(isCharacter1);
                 StartCoroutine(coroutineDropDown);
             }
@@ -1627,7 +1630,8 @@ public class AdventureUI : MonoBehaviour
         { dropHeader.text = header; }
         else { Debug.LogError("Invalid header (Null or Empty)"); }
         //set index to 0
-        dropInput.value = 0;
+        dropInput.value = -1;
+        
     }
     #endregion
 
