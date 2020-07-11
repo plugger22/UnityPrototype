@@ -563,6 +563,7 @@ namespace toolsAPI
         public string notes;                    //notes for plotpoint
         public Character character1;
         public Character character2;
+        public PlotPointType type;
 
         #region PlotDetails Methods
         /// <summary>
@@ -581,6 +582,7 @@ namespace toolsAPI
             notes = copy.notes;
             character1 = copy.character1;
             character2 = copy.character2;
+            type = copy.type;
         }
 
         /// <summary>
@@ -593,6 +595,7 @@ namespace toolsAPI
             notes = "";
             character1 = null;
             character2 = null;
+            type = PlotPointType.None;
         }
         #endregion
     }

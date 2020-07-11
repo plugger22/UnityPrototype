@@ -954,7 +954,8 @@ public class AdventureUI : MonoBehaviour
                 plotPoint = plotPoint.tag,
                 notes = turnPlotNotesInput.text,
                 character1 = character1,
-                character2 = character2
+                character2 = character2,
+                type = plotPoint.type
             };
             turningPoint.arrayOfDetails[plotPointIndex - 1] = details;
 
@@ -1028,6 +1029,8 @@ public class AdventureUI : MonoBehaviour
     #endregion
 
     #region Character Methods
+
+    #region GetCharacters
     /// <summary>
     /// Get characters for the plotline (0 to 3)
     /// </summary>
@@ -1058,7 +1061,9 @@ public class AdventureUI : MonoBehaviour
         coroutineCharacter = GetMostLogicalCharacters();
         StartCoroutine(coroutineCharacter);
     }
+    #endregion
 
+    #region coroutine GetMostLogicalCharacter
     /// <summary>
     /// coroutine for getting Most Logical Character from drop down lists
     /// </summary>
@@ -1097,7 +1102,7 @@ public class AdventureUI : MonoBehaviour
         }
       
     }
-
+    #endregion
 
     #region UpdateCharacterData
     /// <summary>
@@ -1191,6 +1196,7 @@ public class AdventureUI : MonoBehaviour
     }
     #endregion
 
+    #region GetDropDownCharacter
     /// <summary>
     /// Obtains a character from a drop down list of existing characters
     /// </summary>
@@ -1203,7 +1209,15 @@ public class AdventureUI : MonoBehaviour
         {
             if (listOfCharacters.Count > 0)
             {
-                string header = string.Format("Choose Most Logical Character{0}{1}<color=\"blue\">{2}</color>{3}{4}<size=80%>{5}</size>", "\n", "\n", plotPoint.tag, "\n", "\n", plotPoint.details);
+                string header = "Unknown";
+                if (isCharacter1)
+                { header = string.Format("Choose Most Logical Character{0}{1}<color=\"blue\">{2}</color>{3}{4}<size=80%>{5}</size>", "\n", "\n", plotPoint.tag, "\n", "\n", plotPoint.details); }
+                else
+                {
+                    //character2 -> show character1
+                    header = string.Format("Choose Most Logical Character (<color=\"blue\">{0}{1}{2}{3}</color>{4}{5}<size=80%>{6}</size>", 
+                        character1.tag, "\n", "\n", plotPoint.tag, "\n", "\n", plotPoint.details);
+                }
                 InitialiseDropDownInput(listOfCharacters.Select(x => x.tag).ToList(), header);
                 coroutineDropDown = WaitForDropDownInput(isCharacter1);
                 StartCoroutine(coroutineDropDown);
@@ -1217,6 +1231,7 @@ public class AdventureUI : MonoBehaviour
         }
         else { Debug.LogError("Invalid storyNew.listOfCharacters (Null)"); }
     }
+    #endregion
 
     #endregion
 
@@ -1236,6 +1251,28 @@ public class AdventureUI : MonoBehaviour
             if (arrayOfTurnCharacters[index].text.Length > 1)
             { arrayOfTurnCharacters[index].text = plotPointIndex.ToString(); }
             arrayOfPlotpointNotes[index] = "";
+            //handle special cases that need to revert
+            PlotDetails details = turningPoint.arrayOfDetails[index];
+            if (details != null)
+            {
+                switch (details.type)
+                {
+                    case PlotPointType.Conclusion:
+                        turningPoint.isConcluded = false;
+                        break;
+
+                        //TO DO
+
+                }
+                //check for characters
+                if (details.character1 != null)
+                { TidyUpCharacter(details.character1); }
+                if (details.character2 != null)
+                { TidyUpCharacter(details.character2); }
+                    //clear out plotPointDetails
+                    turningPoint.arrayOfDetails[index].Reset();
+            }
+            else { Debug.LogWarningFormat("Invalid plotDetails (Null) for turningPoint.arrayOfDetails[{0}]", index); }
             //clear out texts
             ResetPlotPoint();
             ToggleTurningPointFields(false);
@@ -1247,6 +1284,16 @@ public class AdventureUI : MonoBehaviour
                 plotPointIndex = 0;
             }
         }
+    }
+
+    /// <summary>
+    /// Remove character from storyNew.arrayOfCharacters/listOfCharacters where appropriate for a cleared Plotpoint
+    /// </summary>
+    /// <param name="character"></param>
+    private void TidyUpCharacter(Character character)
+    {
+        //array -> remove last entry of character, reset array entry back to default value
+        //list -> remove from list if zero entries remaining in array
     }
     #endregion
 
@@ -1274,7 +1321,8 @@ public class AdventureUI : MonoBehaviour
             plotPoint = plotPoint.tag,
             notes = turnPlotNotesInput.text,
             character1 = character1,
-            character2 = character2
+            character2 = character2,
+            type = plotPoint.type
         };
         turningPoint.arrayOfDetails[plotPointIndex - 1] = details;
         Debug.LogFormat("[Tst] AdventureUI.cs -> NewPlotPoint: \"{0}\" {1} / {2} SAVED to arrayOfDetails{3}", plotPoint.tag,
@@ -1671,8 +1719,6 @@ public class AdventureUI : MonoBehaviour
         Debug.LogFormat("[Tst] AdventureUI.cs -> DropDownItemSelected: \"{0}\", index {1} SELECTED{2}", dropDownInputString, dropDownInputInt, "\n");
     }
 
-    #endregion
-
     /// <summary>
     /// Confirm button clicked, drop down input pop-up closed
     /// </summary>
@@ -1681,6 +1727,7 @@ public class AdventureUI : MonoBehaviour
         isWaitUntilDone = true;
         dropDownCanvas.gameObject.SetActive(false);
     }
+    #endregion
 
     #region Dictionary Methods
 
