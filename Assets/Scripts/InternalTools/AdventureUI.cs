@@ -1156,7 +1156,7 @@ public class AdventureUI : MonoBehaviour
     private Character GetIndividualCharacter(bool isCharacter1)
     {
         Character character = null;
-        ListItem item = storyNew.arrays.GetCharacterFromArray();
+        ListItem item = storyNew.arrays.GetRandomCharacterFromArray();
         switch (item.status)
         {
             case StoryStatus.Data:
@@ -1293,7 +1293,22 @@ public class AdventureUI : MonoBehaviour
     private void TidyUpCharacter(Character character)
     {
         //array -> remove last entry of character, reset array entry back to default value
-        //list -> remove from list if zero entries remaining in array
+        for (int i = storyNew.arrays.arrayOfCharacters.Length - 1; i >= 0; i--)
+        {
+            ListItem item = storyNew.arrays.arrayOfCharacters[i];
+            if (item.status == StoryStatus.Data)
+            {
+                if (item.tag.Equals(character.refTag, StringComparison.Ordinal) == true)
+                {
+                    //found last entry of character in array. Replace entry with default value
+                    storyNew.arrays.SetCharacterArrayItemToDefault(i);
+                    break;
+                }
+            }
+        }
+        //list -> if no more records of character in array then character is redundant and needs to be removed from listOfCharacters
+        if (Array.Exists(storyNew.arrays.arrayOfCharacters, x => x.tag.Equals(character.refTag, StringComparison.Ordinal)) == false)
+        { storyNew.lists.RemoveCharacterFromList(character);  }
     }
     #endregion
 
@@ -1395,7 +1410,7 @@ public class AdventureUI : MonoBehaviour
                     //Redraw ready for next turning point
                     RedrawTurningPointPage();
                     //TO DO -> Generate new PlotLine / turningPoint
-                    ListItem item = storyNew.arrays.GetPlotLineFromArray();
+                    ListItem item = storyNew.arrays.GetRandomPlotLineFromArray();
                     if (item != null)
                     {
                         switch (item.status)
@@ -1520,6 +1535,83 @@ public class AdventureUI : MonoBehaviour
     }
     #endregion
 
+    #endregion
+
+    #region DropDown Methods
+
+    #region InitialiseDropDownInput
+    /// <summary>
+    /// Sets up drop down input prior
+    /// </summary>
+    private void InitialiseDropDownInput(List<string> listOfOptions, string header)
+    {
+        //reset input fields to defaults
+        dropDownInputInt = -1;
+        dropDownInputString = "";
+        //set options
+        if (listOfOptions != null)
+        {
+            dropInput.options.Clear();
+            for (int i = 0; i < listOfOptions.Count; i++)
+            {
+                dropInput.options.Add(new TMP_Dropdown.OptionData() { text = listOfOptions[i] });
+            }
+        }
+        else { Debug.LogError("Invalid listOfOptions (Null)"); }
+        //set header
+        if (string.IsNullOrEmpty(header) == false)
+        { dropHeader.text = header; }
+        else { Debug.LogError("Invalid header (Null or Empty)"); }
+        //set index to 0
+        dropInput.value = -1;
+
+    }
+    #endregion
+
+    /// <summary>
+    /// wait for input from drop down pop-up
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator WaitForDropDownInput(bool isCharacter1)
+    {
+        dropDownCanvas.gameObject.SetActive(true);
+
+        yield return new WaitUntil(() => isWaitUntilDone == true);
+        if (dropDownInputInt > -1)
+        {
+            if (isCharacter1 == true)
+            {
+                character1 = storyNew.lists.GetCharacterFromList(dropDownInputInt);
+                Debug.LogFormat("[Tst] AdventureUI.cs -> GetIndividualCharacter: MOST LOGICAL Character1 \"{0}\" selected{1}", character1 != null ? character1.tag : "Unknown", "\n");
+            }
+            else
+            {
+                character2 = storyNew.lists.GetCharacterFromList(dropDownInputInt);
+                Debug.LogFormat("[Tst] AdventureUI.cs -> GetIndividualCharacter: MOST LOGICAL Character2 \"{0}\" selected{1}", character2 != null ? character2.tag : "Unknown", "\n");
+            }
+        }
+    }
+
+    /// <summary>
+    /// Gets option selected from dropDown pick list
+    /// </summary>
+    private void DropDownItemSelected()
+    {
+        int index = dropInput.value;
+        //set input values
+        dropDownInputInt = index;
+        dropDownInputString = dropInput.options[index].text;
+        Debug.LogFormat("[Tst] AdventureUI.cs -> DropDownItemSelected: \"{0}\", index {1} SELECTED{2}", dropDownInputString, dropDownInputInt, "\n");
+    }
+
+    /// <summary>
+    /// Confirm button clicked, drop down input pop-up closed
+    /// </summary>
+    private void CloseDropDownInput()
+    {
+        isWaitUntilDone = true;
+        dropDownCanvas.gameObject.SetActive(false);
+    }
     #endregion
 
     #region Lists
@@ -1650,83 +1742,6 @@ public class AdventureUI : MonoBehaviour
         DisplayLists();
     }
 
-    #endregion
-
-    #region DropDown Methods
-
-    #region InitialiseDropDownInput
-    /// <summary>
-    /// Sets up drop down input prior
-    /// </summary>
-    private void InitialiseDropDownInput(List<string> listOfOptions, string header)
-    {
-        //reset input fields to defaults
-        dropDownInputInt = -1;
-        dropDownInputString = "";
-        //set options
-        if (listOfOptions != null)
-        {
-            dropInput.options.Clear();
-            for (int i = 0; i < listOfOptions.Count; i++)
-            {
-                dropInput.options.Add(new TMP_Dropdown.OptionData() { text = listOfOptions[i] });
-            }
-        }
-        else { Debug.LogError("Invalid listOfOptions (Null)"); }
-        //set header
-        if (string.IsNullOrEmpty(header) == false)
-        { dropHeader.text = header; }
-        else { Debug.LogError("Invalid header (Null or Empty)"); }
-        //set index to 0
-        dropInput.value = -1;
-        
-    }
-    #endregion
-
-    /// <summary>
-    /// wait for input from drop down pop-up
-    /// </summary>
-    /// <returns></returns>
-    IEnumerator WaitForDropDownInput(bool isCharacter1)
-    {
-        dropDownCanvas.gameObject.SetActive(true);
-
-        yield return new WaitUntil(() => isWaitUntilDone == true);
-        if (dropDownInputInt > -1)
-        {
-            if (isCharacter1 == true)
-            {
-                character1 = storyNew.lists.GetCharacterFromList(dropDownInputInt);
-                Debug.LogFormat("[Tst] AdventureUI.cs -> GetIndividualCharacter: MOST LOGICAL Character1 \"{0}\" selected{1}", character1 != null ? character1.tag : "Unknown", "\n");
-            }
-            else
-            {
-                character2 = storyNew.lists.GetCharacterFromList(dropDownInputInt);
-                Debug.LogFormat("[Tst] AdventureUI.cs -> GetIndividualCharacter: MOST LOGICAL Character2 \"{0}\" selected{1}", character2 != null ? character2.tag : "Unknown", "\n");
-            }
-        }
-    }
-
-    /// <summary>
-    /// Gets option selected from dropDown pick list
-    /// </summary>
-    private void DropDownItemSelected()
-    {
-        int index = dropInput.value;
-        //set input values
-        dropDownInputInt = index;
-        dropDownInputString = dropInput.options[index].text;
-        Debug.LogFormat("[Tst] AdventureUI.cs -> DropDownItemSelected: \"{0}\", index {1} SELECTED{2}", dropDownInputString, dropDownInputInt, "\n");
-    }
-
-    /// <summary>
-    /// Confirm button clicked, drop down input pop-up closed
-    /// </summary>
-    private void CloseDropDownInput()
-    {
-        isWaitUntilDone = true;
-        dropDownCanvas.gameObject.SetActive(false);
-    }
     #endregion
 
     #region Dictionary Methods

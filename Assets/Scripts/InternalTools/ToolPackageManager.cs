@@ -168,7 +168,7 @@ namespace toolsAPI
         {
             arrayOfPlotLines = new ListItem[size];
             arrayOfCharacters = new ListItem[size];
-            PopulateLists();
+            PopulateArrays();
         }
 
 
@@ -193,14 +193,14 @@ namespace toolsAPI
         {
             /*Array.Clear(arrayOfPlotLines, 0, arrayOfPlotLines.Length);
             Array.Clear(arrayOfCharacters, 0, arrayOfCharacters.Length);*/
-            PopulateLists();
+            PopulateArrays();
         }
 
         /// <summary>
-        /// get a plotLine ListItem from array. Returns null if a problem
+        /// get a Random plotLine ListItem from array. Returns null if a problem
         /// </summary>
         /// <returns></returns>
-        public ListItem GetPlotLineFromArray()
+        public ListItem GetRandomPlotLineFromArray()
         {
             ListItem item = null;
             int rnd = Random.Range(0, 25);
@@ -209,10 +209,10 @@ namespace toolsAPI
         }
 
         /// <summary>
-        /// get a character ListItem from array. Returns null if a problem.
+        /// get a Random character ListItem from array. Returns null if a problem.
         /// </summary>
         /// <returns></returns>
-        public ListItem GetCharacterFromArray()
+        public ListItem GetRandomCharacterFromArray()
         {
             ListItem item = null;
             int rnd = Random.Range(0, 25);
@@ -287,7 +287,7 @@ namespace toolsAPI
         /// <summary>
         /// Populate lists with default data
         /// </summary>
-        private void PopulateLists()
+        private void PopulateArrays()
         {
             //populate arrays
             for (int i = 0; i < size; i++)
@@ -362,6 +362,48 @@ namespace toolsAPI
                 }
             }
         }
+
+        /// <summary>
+        /// resets the specific index entry in the arrayOfCharacters back to it's default status (eg. New or Logical)
+        /// </summary>
+        /// <param name="index"></param>
+        public void SetCharacterArrayItemToDefault(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                case 1:
+                case 2:
+                case 4:
+                case 5:
+                case 6:
+                case 8:
+                case 9:
+                case 10:
+                case 12:
+                case 16:
+                case 20:
+                case 24:
+                    arrayOfCharacters[index] = new ListItem() { tag = "", status = StoryStatus.New };
+                    break;
+                case 3:
+                case 7:
+                case 11:
+                case 13:
+                case 14:
+                case 15:
+                case 17:
+                case 18:
+                case 19:
+                case 21:
+                case 22:
+                case 23:
+                    arrayOfCharacters[index] = new ListItem() { tag = "", status = StoryStatus.Logical };
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised counter \"{0}\" for Characters", index); break;
+            }
+        }
+
         #endregion
     }
     #endregion
@@ -463,6 +505,9 @@ namespace toolsAPI
                 {
                     listOfCharacters.Add(character);
                     Debug.LogFormat("[Tst] StoryLists.cs -> AddCharacterToList: \"{0}\", refTag {1} Added to List{2}", character.tag, character.refTag, "\n");
+                    Debug.LogFormat("[Tst] StoryLists.cs -> AddCharacterToList: listOfCharacters - - -{0}", "\n");
+                    for (int i = 0; i < listOfCharacters.Count; i++)
+                    { Debug.LogFormat("[Tst] StoryLists.cs -> AddCharacterToList: index {0} -> \"{1}\"{2}", i, listOfCharacters[i].tag, "\n"); }
                 }
                 else { Debug.LogWarningFormat("Character refTag \"{0}\" alread present in list -> Info Only", character.refTag); }
             }
@@ -486,6 +531,35 @@ namespace toolsAPI
                 else { Debug.LogWarningFormat("Plotline refTag \"{0}\" already present in list -> Info Only", plotLine.refTag); }
             }
             else { Debug.LogError("Invalid plotLine (Null)"); }
+        }
+
+        /// <summary>
+        /// Remove a characer from list
+        /// </summary>
+        /// <param name="character"></param>
+        public void RemoveCharacterFromList(Character character)
+        {
+            if (character != null)
+            {
+                //should be exactly one entry on list
+                int count = listOfCharacters.Where(x => x.refTag.Equals(character.refTag, StringComparison.Ordinal)).Count();
+                if (count > 1)
+                {
+                    //remove entry from list
+                    for (int i = listOfCharacters.Count - 1; i >= 0; i--)
+                    {
+                        if (listOfCharacters[i].refTag.Equals(character.refTag, StringComparison.Ordinal) == true)
+                        { listOfCharacters.RemoveAt(i); }
+                    }
+                    Debug.LogFormat("[Tst] StoryList.cs -> RemoveCharacterFromList: {0} record{1} of \"{2}\" have been REMOVED from listOfCharacters{3}", count, count != 1 ? "s" : "", character.tag, "\n");
+                    Debug.LogFormat("[Tst] StoryLists.cs -> RemoveCharacterFromList: listOfCharacters - - -{0}", "\n");
+                    for (int i = 0; i < listOfCharacters.Count; i++)
+                    { Debug.LogFormat("[Tst] StoryLists.cs -> RemoveCharacterFromList: index {0} -> \"{1}\"{2}", i, listOfCharacters[i].tag, "\n"); }
+                }
+                else { Debug.LogWarningFormat("There are no instances of \"{0}\" in listOfCharacters (should be exactly One)", character.tag); }
+                
+            }
+            else { Debug.LogError("Invalid character (Null)"); }
         }
 
 
