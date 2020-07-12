@@ -169,6 +169,7 @@ public class AdventureUI : MonoBehaviour
     private bool isPlotpointAdminDone;                  //used for character plotpoints (admin via coroutine) and non-character plotpoints (admin via NewPlotpoint)
     private bool isTurningPointSaved;                   //true if data has been saved
     private bool isSavePlotPoint;                       //true if plotpoint needs to be saved at start of NewPlotPoint (normal). Would be false in case of ClearPlotPoint
+    private int numberOfClears;                         //tracks number of times 'Clear' has been clicked. Reset by NewPlotPoint. Needed to correctly access character data for clearing
 
     #endregion
 
@@ -970,8 +971,9 @@ public class AdventureUI : MonoBehaviour
         //reset global characters
         character1 = null;
         character2 = null;
-        //set save flag
+        //set flags
         isSavePlotPoint = true;
+        numberOfClears = 0;
         //
         // - - - New PlotPoint
         //
@@ -987,6 +989,7 @@ public class AdventureUI : MonoBehaviour
             int priority = ToolManager.i.adventureScript.GetThemePriority();
             ThemeType themeType = storyNew.theme.GetThemeType(priority);
             plotPoint = new Plotpoint(ToolManager.i.toolDataScript.GetPlotpoint(themeType));
+            Debug.LogFormat("[Tst] AdventureUI.cs -> NewPlotPoint: NEW PLOTPOINT \"{0}\", plotPointIndex {1}{2}", plotPoint.tag, plotPointIndex, "\n");
             //update texts
             turnPlotPoint.text = plotPoint.tag;
             turnData0.text = plotPoint.details;
@@ -1285,6 +1288,7 @@ public class AdventureUI : MonoBehaviour
     private void ClearPlotpoint()
     {
         int index = plotPointIndex - 1;
+        Debug.LogFormat("[Tst] AdventureUI.cs -> ClearPlotpoint: index {0} (plotPointIndex {1}, numberOfClears {2}){3}", index, plotPointIndex, numberOfClears, "\n");
         //error check for Clear button being pressed with plotPointIndex 0 (no plotPoints present)
         if (index > -1)
         {
@@ -1295,7 +1299,6 @@ public class AdventureUI : MonoBehaviour
             { arrayOfTurnCharacters[index].text = plotPointIndex.ToString(); }
             arrayOfPlotpointNotes[index] = "";
             //handle special cases that need to revert
-
             switch (plotPoint.type)
             {
                 case PlotPointType.Conclusion:
@@ -1305,11 +1308,26 @@ public class AdventureUI : MonoBehaviour
                     //TO DO
 
             }
-            //check for characters (note they haven't been saved yet, not until NewPlotPoint is run, so accessing turnigPoint.arrayOfDetails isn't going to work)
-            if (character1 != null)
-            { TidyUpCharacter(character1); }
-            if (character2 != null)
-            { TidyUpCharacter(character2); }
+            if (numberOfClears == 0)
+            {
+                //check for characters (note they haven't been saved yet, not until NewPlotPoint is run, so accessing turnigPoint.arrayOfDetails isn't going to work)
+                if (character1 != null)
+                { TidyUpCharacter(character1); }
+                if (character2 != null)
+                { TidyUpCharacter(character2); }
+            }
+            else
+            {
+                PlotDetails details = turningPoint.arrayOfDetails[index];
+                if (details != null)
+                {
+                    if (details.character1 != null)
+                    { TidyUpCharacter(details.character1); }
+                    if (details.character2 != null)
+                    { TidyUpCharacter(details.character2); }
+                }
+                else { Debug.LogErrorFormat("Invalid PlotDetails (Null) for turningPoint.arrayOfDetails[{0}]", index); }
+            }
             //clear out plotPointDetails
             turningPoint.arrayOfDetails[index].Reset();
             //reset characters
@@ -1329,7 +1347,8 @@ public class AdventureUI : MonoBehaviour
             }
             //clear save flag to prevent data being saved at next instance of NewPlotPoint
             isSavePlotPoint = false;
-            
+            //increment counter (gets reset by NewPlotPoint each time)
+            numberOfClears++;
         }
     }
 
