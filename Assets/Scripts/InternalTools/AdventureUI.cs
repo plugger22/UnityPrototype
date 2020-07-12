@@ -145,8 +145,8 @@ public class AdventureUI : MonoBehaviour
     public TextMeshProUGUI turnData2;
     public TextMeshProUGUI turnPlotpointNotes;
 
-    public TextMeshProUGUI[] arrayOfTurnPlotpoints;
-    public TextMeshProUGUI[] arrayOfTurnCharacters;
+    public TextMeshProUGUI[] arrayOfTurnPlotpoints;             //handles display data (plotpoints)
+    public TextMeshProUGUI[] arrayOfTurnCharacters;             //handles display data (characters)
 
     public TMP_InputField turnNameInput;
     public TMP_InputField turnCharacter1Input;
@@ -1245,7 +1245,7 @@ public class AdventureUI : MonoBehaviour
         //error check for Clear button being pressed with plotPointIndex 0 (no plotPoints present)
         if (index > -1)
         {
-            //clear out plotPoint
+            //clear out plotPoint and character displays
             if (arrayOfTurnPlotpoints[index].text.Length > 1)
             { arrayOfTurnPlotpoints[index].text = plotPointIndex.ToString(); }
             if (arrayOfTurnCharacters[index].text.Length > 1)
