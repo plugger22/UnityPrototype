@@ -165,9 +165,10 @@ public class AdventureUI : MonoBehaviour
     private Character character2;                       //current Plotpoint character2 (if any)
     private bool isChar1MostLogical;
     private bool isChar2MostLogical;
-    private bool isWaitUntilDone;                             //used for dropDownInput
-    private bool isPlotpointAdminDone;                        //used for character plotpoints (admin via coroutine) and non-character plotpoints (admin via NewPlotpoint)
+    private bool isWaitUntilDone;                       //used for dropDownInput
+    private bool isPlotpointAdminDone;                  //used for character plotpoints (admin via coroutine) and non-character plotpoints (admin via NewPlotpoint)
     private bool isTurningPointSaved;                   //true if data has been saved
+    private bool isSavePlotPoint;                       //true if plotpoint needs to be saved at start of NewPlotPoint (normal). Would be false in case of ClearPlotPoint
 
     #endregion
 
@@ -909,6 +910,7 @@ public class AdventureUI : MonoBehaviour
             {
                 turningPoint = new TurningPoint() { type = TurningPointType.New };
                 plotLine = new PlotLine() { };
+                storyNew.lists.DebugShowCharacterList();
             }
         }
         else
@@ -947,24 +949,29 @@ public class AdventureUI : MonoBehaviour
                 if (string.IsNullOrEmpty(turnData2Input.text) == false)
                 { character2.listOfNotes.Add(turnData2Input.text); }
             }
-            //Create and Save PlotDetails
-            PlotDetails details = new PlotDetails()
+            //save if flag true (normal). Would be false if ClearPlotPoint has run in the meantime
+            if (isSavePlotPoint == true)
             {
-                isActive = false,
-                plotPoint = plotPoint.tag,
-                notes = turnPlotNotesInput.text,
-                character1 = character1,
-                character2 = character2,
-                type = plotPoint.type
-            };
-            turningPoint.arrayOfDetails[plotPointIndex - 1] = details;
-
+                //Create and Save PlotDetails
+                PlotDetails details = new PlotDetails()
+                {
+                    isActive = false,
+                    plotPoint = plotPoint.tag,
+                    notes = turnPlotNotesInput.text,
+                    character1 = character1,
+                    character2 = character2,
+                    type = plotPoint.type
+                };
+                turningPoint.arrayOfDetails[plotPointIndex - 1] = details;
+            }
             Debug.LogFormat("[Tst] AdventureUI.cs -> NewPlotPoint: \"{0}\" {1} / {2} SAVED to arrayOfDetails{3}", plotPoint.tag,
                 character1 != null ? character1.tag : "Nobody", character2 != null ? character2.tag : "Nobody", "\n");
         }
         //reset global characters
         character1 = null;
         character2 = null;
+        //set save flag
+        isSavePlotPoint = true;
         //
         // - - - New PlotPoint
         //
@@ -979,7 +986,7 @@ public class AdventureUI : MonoBehaviour
             //Generate new Plotpoint
             int priority = ToolManager.i.adventureScript.GetThemePriority();
             ThemeType themeType = storyNew.theme.GetThemeType(priority);
-            plotPoint = ToolManager.i.toolDataScript.GetPlotpoint(themeType);
+            plotPoint = new Plotpoint(ToolManager.i.toolDataScript.GetPlotpoint(themeType));
             //update texts
             turnPlotPoint.text = plotPoint.tag;
             turnData0.text = plotPoint.details;
@@ -1100,7 +1107,7 @@ public class AdventureUI : MonoBehaviour
             turnPreSaveButton.gameObject.SetActive(true);
             turnSaveButton.gameObject.SetActive(false);
         }
-      
+
     }
     #endregion
 
@@ -1109,9 +1116,9 @@ public class AdventureUI : MonoBehaviour
     /// Populates character data
     /// </summary>
     private void UpdateCharacterData()
-    {         
+    {
         //populate fields and add to lists and arrays
-        string characters = "";       
+        string characters = "";
         //no characters involved
         if (character1 == null && character2 == null)
         { ToggleTurningPointFields(false); }
@@ -1160,14 +1167,34 @@ public class AdventureUI : MonoBehaviour
         switch (item.status)
         {
             case StoryStatus.Data:
-                character = storyNew.lists.GetCharacterFromList(item.tag);
+                Debug.LogFormat("[Tst] AdventureUI.cs -> GetIndividualCharacter: EXISTING character{0}{1}", isCharacter1 == true ? "1" : "2", "\n");
+                //must be at least one entry in arrayOfCharacters in order to get an existing character
+                if (storyNew.arrays.CheckDataItemsInArray() > 0)
+                { character = GetExistingCharacter(item.tag); }
+                else { character = GetNewCharacter(); }
                 break;
             case StoryStatus.Logical:
-                //don't get characters, instead set flags for coroutine to deal with later
-                if (isCharacter1 == true) { isChar1MostLogical = true; }
-                else { isChar2MostLogical = true; }
+                Debug.LogFormat("[Tst] AdventureUI.cs -> GetIndividualCharacter: MOST LOGICAL character{0}{1}", isCharacter1 == true ? "1" : "2", "\n");
+                //must be at least one entry in arrayOfCharacters in order to get most logical
+                int count = storyNew.arrays.CheckDataItemsInArray();
+                if (count > 0)
+                {
+                    //don't get characters, instead set flags for coroutine to deal with later
+                    if (isCharacter1 == true)
+                    { isChar1MostLogical = true; }
+                    else
+                    {
+                        //if there are two characters needed and only two entries in arrayOfCharacters, second character is automatically a new character to avoid a possible duplication for character1 & 2
+                        if (count > 2)
+                        { isChar2MostLogical = true; }
+                        else
+                        { character = GetNewCharacter(); }
+                    }
+                }
+                else { character = GetNewCharacter(); }
                 break;
             case StoryStatus.New:
+                Debug.LogFormat("[Tst] AdventureUI.cs -> GetIndividualCharacter: NEW Character{0}{1}", isCharacter1 == true ? "1" : "2", "\n");
                 character = GetNewCharacter();
                 break;
             default: Debug.LogWarningFormat("Unrecognised item.status \"[0}\"", item.status); break;
@@ -1178,7 +1205,7 @@ public class AdventureUI : MonoBehaviour
 
     #region GetNewCharacter
     /// <summary>
-    /// Returs a newly generated character, returns null if a problem
+    /// Returns a newly generated character, returns null if a problem
     /// </summary>
     /// <returns></returns>
     private Character GetNewCharacter()
@@ -1196,6 +1223,21 @@ public class AdventureUI : MonoBehaviour
     }
     #endregion
 
+    #region GetExistingCharacter
+    /// <summary>
+    /// Returns an existing character, returns null if a problem 
+    /// </summary>
+    /// <param name="refTag"></param>
+    /// <returns></returns>
+    private Character GetExistingCharacter(string refTag)
+    {
+        Character character = storyNew.lists.GetCharacterFromList(refTag);
+        //add character to array
+        storyNew.arrays.AddCharacterToArray(new ListItem() { tag = character.refTag, status = StoryStatus.Data });
+        return character;
+    }
+    #endregion
+
     #region GetDropDownCharacter
     /// <summary>
     /// Obtains a character from a drop down list of existing characters
@@ -1203,7 +1245,6 @@ public class AdventureUI : MonoBehaviour
     /// <returns></returns>
     private void GetDropDownCharacter(bool isCharacter1)
     {
-        Character character = null;
         List<Character> listOfCharacters = storyNew.lists.listOfCharacters;
         if (listOfCharacters != null)
         {
@@ -1215,7 +1256,7 @@ public class AdventureUI : MonoBehaviour
                 else
                 {
                     //character2 -> show character1
-                    header = string.Format("Choose Most Logical Character (<color=\"blue\">{0}{1}{2}{3}</color>{4}{5}<size=80%>{6}</size>", 
+                    header = string.Format("Choose Most Logical Character (<color=\"blue\">{0}){1}{2}{3}</color>{4}{5}<size=80%>{6}</size>",
                         character1.tag, "\n", "\n", plotPoint.tag, "\n", "\n", plotPoint.details);
                 }
                 InitialiseDropDownInput(listOfCharacters.Select(x => x.tag).ToList(), header);
@@ -1226,7 +1267,9 @@ public class AdventureUI : MonoBehaviour
             {
                 //non-available, default to a new character
                 Debug.LogFormat("[Tst] AdventureUI.cs -> GetDropDownCharacter: storyNew.listOfCharacters is EMPTY. Created a new Character instead{0}", "\n");
-                character = GetNewCharacter();
+                if (isCharacter1 == true)
+                { character1 = GetNewCharacter(); }
+                else { character2 = GetNewCharacter(); }
             }
         }
         else { Debug.LogError("Invalid storyNew.listOfCharacters (Null)"); }
@@ -1252,27 +1295,28 @@ public class AdventureUI : MonoBehaviour
             { arrayOfTurnCharacters[index].text = plotPointIndex.ToString(); }
             arrayOfPlotpointNotes[index] = "";
             //handle special cases that need to revert
-            PlotDetails details = turningPoint.arrayOfDetails[index];
-            if (details != null)
+
+            switch (plotPoint.type)
             {
-                switch (details.type)
-                {
-                    case PlotPointType.Conclusion:
-                        turningPoint.isConcluded = false;
-                        break;
+                case PlotPointType.Conclusion:
+                    turningPoint.isConcluded = false;
+                    break;
 
-                        //TO DO
+                    //TO DO
 
-                }
-                //check for characters
-                if (details.character1 != null)
-                { TidyUpCharacter(details.character1); }
-                if (details.character2 != null)
-                { TidyUpCharacter(details.character2); }
-                    //clear out plotPointDetails
-                    turningPoint.arrayOfDetails[index].Reset();
             }
-            else { Debug.LogWarningFormat("Invalid plotDetails (Null) for turningPoint.arrayOfDetails[{0}]", index); }
+            //check for characters (note they haven't been saved yet, not until NewPlotPoint is run, so accessing turnigPoint.arrayOfDetails isn't going to work)
+            if (character1 != null)
+            { TidyUpCharacter(character1); }
+            if (character2 != null)
+            { TidyUpCharacter(character2); }
+            //clear out plotPointDetails
+            turningPoint.arrayOfDetails[index].Reset();
+            //reset characters
+            character1 = null;
+            character2 = null;
+            //reset data in plotPoint to prevent it being displayed after NewPlotPoint (won't be saved due to flag below but will still be present in fields and display routines will show it)
+            plotPoint.Reset();
             //clear out texts
             ResetPlotPoint();
             ToggleTurningPointFields(false);
@@ -1283,6 +1327,9 @@ public class AdventureUI : MonoBehaviour
                 Debug.LogWarning("Invalid plotPointIndex (sub Zero)");
                 plotPointIndex = 0;
             }
+            //clear save flag to prevent data being saved at next instance of NewPlotPoint
+            isSavePlotPoint = false;
+            
         }
     }
 
@@ -1308,7 +1355,7 @@ public class AdventureUI : MonoBehaviour
         }
         //list -> if no more records of character in array then character is redundant and needs to be removed from listOfCharacters
         if (Array.Exists(storyNew.arrays.arrayOfCharacters, x => x.tag.Equals(character.refTag, StringComparison.Ordinal)) == false)
-        { storyNew.lists.RemoveCharacterFromList(character);  }
+        { storyNew.lists.RemoveCharacterFromList(character); }
     }
     #endregion
 
@@ -1473,6 +1520,7 @@ public class AdventureUI : MonoBehaviour
     /// </summary>
     private void CloseTurningPoint()
     {
+        storyNew.lists.DebugShowCharacterList();
         //toggle canvases
         newAdventureCanvas.gameObject.SetActive(true);
         turningPointCanvas.gameObject.SetActive(false);
@@ -1582,11 +1630,13 @@ public class AdventureUI : MonoBehaviour
             if (isCharacter1 == true)
             {
                 character1 = storyNew.lists.GetCharacterFromList(dropDownInputInt);
+                storyNew.arrays.AddCharacterToArray(new ListItem() { tag = character1.refTag, status = StoryStatus.Data });
                 Debug.LogFormat("[Tst] AdventureUI.cs -> GetIndividualCharacter: MOST LOGICAL Character1 \"{0}\" selected{1}", character1 != null ? character1.tag : "Unknown", "\n");
             }
             else
             {
                 character2 = storyNew.lists.GetCharacterFromList(dropDownInputInt);
+                storyNew.arrays.AddCharacterToArray(new ListItem() { tag = character2.refTag, status = StoryStatus.Data });
                 Debug.LogFormat("[Tst] AdventureUI.cs -> GetIndividualCharacter: MOST LOGICAL Character2 \"{0}\" selected{1}", character2 != null ? character2.tag : "Unknown", "\n");
             }
         }
@@ -2295,6 +2345,8 @@ public class AdventureUI : MonoBehaviour
         turnCharacter2.text = "Character 2";
         turnCharacter1Input.text = "";
         turnCharacter2Input.text = "";
+        turnData1.text = "";
+        turnData2.text = "";
         turnData1Input.text = "";
         turnData2Input.text = "";
         turnPlotNotesInput.text = "";

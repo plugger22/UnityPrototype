@@ -15,7 +15,7 @@ namespace toolsAPI
 
     public enum ToolModal { Menu, Main, New, TurningPoint, Lists }
     public enum ToolModalType { Read, Edit }
-    public enum ToolModalSubNew { New, Summary}                                        //new adventure sub state
+    public enum ToolModalSubNew { New, Summary }                                        //new adventure sub state
     public enum ThemeType { Action, Tension, Mystery, Social, Personal, Count }   //NOTE: Order matters (ToolDetails.cs)
     public enum StoryStatus { New, Logical, Data }
     public enum ListItemStatus { None, PlotLine, Character }    //what's currently selected on the Aventure/list page
@@ -221,6 +221,24 @@ namespace toolsAPI
         }
 
         /// <summary>
+        /// returns number of active data entries (listItem.status = Data, listItem.tag != null or MT)
+        /// </summary>
+        /// <returns></returns>
+        public int CheckDataItemsInArray()
+        {
+            int count = 0;
+            for (int i = 0; i < arrayOfCharacters.Length; i++)
+            {
+                if (arrayOfCharacters[i].status == StoryStatus.Data)
+                {
+                    if (string.IsNullOrEmpty(arrayOfCharacters[i].tag) == false)
+                    { count++; }
+                }
+            }
+            return count;
+        }
+
+        /// <summary>
         /// Adds a new character to the next vacant, non-DATA slot in the array. Returns true if successful
         /// </summary>
         /// <param name="newItem"></param>
@@ -237,7 +255,13 @@ namespace toolsAPI
                         if (count < 3)
                         {
                             arrayOfCharacters[i] = newItem;
-                            Debug.LogFormat("[Tst] StoryArrays.cs -> AddCharacterToArray: {0}, {1} ADDED to arrayOfCharacters{2}", newItem.tag, newItem.status, "\n");
+                            Debug.LogFormat("[Tst] StoryArrays.cs -> AddCharacterToArray: {0}, {1} ADDED to arrayOfCharacters (count now {2}){3}", newItem.tag, newItem.status, count + 1, "\n");
+                            Debug.LogFormat("[Tst] StoryArrays.cs -> arrayOfCharacters - - - {0}", "\n");
+                            for (int j = 0; j < arrayOfCharacters.Length; j++)
+                            {
+                                if (arrayOfCharacters[j].status == StoryStatus.Data)
+                                { Debug.LogFormat("[Tst] -> index {0} -> \"{1}\"{2}", j, arrayOfCharacters[j].tag, "\n"); }
+                            }
                             return true;
                         }
                         else
@@ -247,6 +271,7 @@ namespace toolsAPI
                         }
                     }
                 }
+
             }
             else { Debug.LogError("Invalid newItem (Null)"); }
             return false;
@@ -473,7 +498,7 @@ namespace toolsAPI
         {
             Character character = null;
             if (index > -1 && index < listOfCharacters.Count)
-            character = listOfCharacters[index];
+                character = listOfCharacters[index];
             else { Debug.LogErrorFormat("Invalid index \"{0}\" (must be between 0 and {1})", index, listOfCharacters.Count); }
             return character;
         }
@@ -542,24 +567,34 @@ namespace toolsAPI
             if (character != null)
             {
                 //should be exactly one entry on list
-                int count = listOfCharacters.Where(x => x.refTag.Equals(character.refTag, StringComparison.Ordinal)).Count();
-                if (count > 1)
+                int counter = 0;
+                //remove entry from list
+                for (int i = listOfCharacters.Count - 1; i >= 0; i--)
                 {
-                    //remove entry from list
-                    for (int i = listOfCharacters.Count - 1; i >= 0; i--)
+                    if (listOfCharacters[i].refTag.Equals(character.refTag, StringComparison.Ordinal) == true)
                     {
-                        if (listOfCharacters[i].refTag.Equals(character.refTag, StringComparison.Ordinal) == true)
-                        { listOfCharacters.RemoveAt(i); }
+                        listOfCharacters.RemoveAt(i);
+                        counter++;
                     }
-                    Debug.LogFormat("[Tst] StoryList.cs -> RemoveCharacterFromList: {0} record{1} of \"{2}\" have been REMOVED from listOfCharacters{3}", count, count != 1 ? "s" : "", character.tag, "\n");
-                    Debug.LogFormat("[Tst] StoryLists.cs -> RemoveCharacterFromList: listOfCharacters - - -{0}", "\n");
-                    for (int i = 0; i < listOfCharacters.Count; i++)
-                    { Debug.LogFormat("[Tst] StoryLists.cs -> RemoveCharacterFromList: index {0} -> \"{1}\"{2}", i, listOfCharacters[i].tag, "\n"); }
                 }
-                else { Debug.LogWarningFormat("There are no instances of \"{0}\" in listOfCharacters (should be exactly One)", character.tag); }
-                
+                Debug.LogFormat("[Tst] StoryList.cs -> RemoveCharacterFromList: {0} record{1} of \"{2}\" have been REMOVED from listOfCharacters{3}", counter, counter != 1 ? "s" : "", character.tag, "\n");
+                Debug.LogFormat("[Tst] StoryLists.cs -> RemoveCharacterFromList: listOfCharacters - - -{0}", "\n");
+                for (int i = 0; i < listOfCharacters.Count; i++)
+                { Debug.LogFormat("[Tst] StoryLists.cs -> RemoveCharacterFromList: index {0} -> \"{1}\"{2}", i, listOfCharacters[i].tag, "\n"); }
+                if (counter == 0)
+                { Debug.LogWarning("Invalid counter (Zero) should be at least one"); }
             }
             else { Debug.LogError("Invalid character (Null)"); }
+        }
+
+        /// <summary>
+        /// Debug method to display listOfCharacters
+        /// </summary>
+        public void DebugShowCharacterList()
+        {
+            Debug.LogFormat("[Tst] StoryLists.cs -> listOfCharacters - - -{0}", "\n");
+            for (int i = 0; i < listOfCharacters.Count; i++)
+            { Debug.LogFormat("[Tst] StoryLists.cs -> index {0} -> \"{1}\"{2}", i, listOfCharacters[i].tag, "\n"); }
         }
 
 
@@ -643,7 +678,7 @@ namespace toolsAPI
         /// <summary>
         /// default constructor
         /// </summary>
-        public PlotDetails() {}
+        public PlotDetails() { }
 
         /// <summary>
         /// Copy constructor
@@ -830,6 +865,43 @@ namespace toolsAPI
         public List<int> listMystery;
         public List<int> listSocial;
         public List<int> listPersonal;
+
+        /// <summary>
+        /// default constructor
+        /// </summary>
+        public Plotpoint() { }
+
+        /// <summary>
+        /// Copy constructor
+        /// </summary>
+        /// <param name="copy"></param>
+        public Plotpoint(Plotpoint copy)
+        {
+            refTag = copy.refTag;
+            tag = copy.tag;
+            details = copy.details;
+            type = copy.type;
+            numberOfCharacters = copy.numberOfCharacters;
+            listAction = new List<int>(copy.listAction);
+            listAction = new List<int>(copy.listTension);
+            listAction = new List<int>(copy.listMystery);
+            listAction = new List<int>(copy.listSocial);
+            listAction = new List<int>(copy.listPersonal);
+        }
+
+        /// <summary>
+        /// Reset
+        /// </summary>
+        public void Reset()
+        {
+            refTag = "";
+            tag = "";
+            details = "";
+            type = PlotPointType.None;
+            numberOfCharacters = 0;
+        }
+
+
     }
     #endregion
 
@@ -885,7 +957,7 @@ namespace toolsAPI
     #endregion
 
 
-    
+
 
 }
 #endif
