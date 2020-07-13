@@ -1583,7 +1583,7 @@ public class AdventureUI : MonoBehaviour
                 {
                     //Redraw ready for next turning point
                     RedrawTurningPointPage();
-                    //TO DO -> Generate new PlotLine / turningPoint
+                    //Generate new PlotLine / turningPoint
                     ListItem item = storyNew.arrays.GetRandomPlotLineFromArray();
                     if (item != null)
                     {
@@ -1604,13 +1604,14 @@ public class AdventureUI : MonoBehaviour
                                         /*isConcluded = false*/
                                     };
                                 }
-                                else { Debug.LogError("Invalid plotLine (Null)"); }
+                                else
+                                { Debug.LogErrorFormat("Invalid plotLine (Null) for \"{0}\"", item.tag);  }
                                 break;
 
                             case StoryStatus.Logical:                               //DEBUG -> TO DO
                             case StoryStatus.New:
+                                //new plotLine and turning point
                                 plotLine = new PlotLine();
-                                //new turning point
                                 turningPoint = new TurningPoint()
                                 {
                                     refTag = "",
@@ -1679,7 +1680,24 @@ public class AdventureUI : MonoBehaviour
     /// <param name="refTag"></param>
     private void RemovePlotLine(string refTag)
     {
+        //remove from list
         storyNew.lists.RemovePlotLineFromList(refTag);
+        //replace in array with default values
+        int counter = 0;
+        for (int i = 0; i < storyNew.arrays.arrayOfPlotLines.Length; i++)
+        {
+            ListItem item = storyNew.arrays.arrayOfPlotLines[i];
+            if (item != null)
+            {
+                if (item.tag.Equals(refTag, StringComparison.Ordinal) == true)
+                {
+                    storyNew.arrays.SetPlotLineArrayItemToDefault(i);
+                    counter++;
+                }
+            }
+            else { Debug.LogErrorFormat("Invalid ListItem (Null) in storyNew.arrays.arrayOfPlotLines[{0}]", i); }
+        }
+        Debug.LogFormat("[Tst] AdventureUI.cs -> RemovePlotLine: \"{0}\" plotLine replaced with default values in arrayOfPlotlines {1} times{2}", refTag, counter, "\n");
     }
 
     #endregion

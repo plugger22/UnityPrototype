@@ -161,7 +161,6 @@ namespace toolsAPI
         private int size = 25;
 
         #region StoryArray Methods
-
         /// <summary>
         /// default constructor
         /// </summary>
@@ -310,6 +309,8 @@ namespace toolsAPI
             return false;
         }
 
+
+
         /// <summary>
         /// Populate lists with default data
         /// </summary>
@@ -427,6 +428,47 @@ namespace toolsAPI
                     arrayOfCharacters[index] = new ListItem() { tag = "", status = StoryStatus.Logical };
                     break;
                 default: Debug.LogWarningFormat("Unrecognised counter \"{0}\" for Characters", index); break;
+            }
+        }
+
+        /// <summary>
+        /// resets the specific index entry in the arrayOfPlotLines back to it's default status (eg. New or Logical)
+        /// </summary>
+        /// <param name="index"></param>
+        public void SetPlotLineArrayItemToDefault(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                case 2:
+                case 3:
+                case 4:
+                case 6:
+                case 7:
+                case 8:
+                case 10:
+                case 11:
+                case 12:
+                case 14:
+                case 15:
+                case 16:
+                case 18:
+                case 19:
+                case 20:
+                case 22:
+                case 23:
+                case 24:
+                    arrayOfPlotLines[index] = new ListItem() { tag = "", status = StoryStatus.Logical };
+                    break;
+                case 1:
+                case 5:
+                case 9:
+                case 13:
+                case 17:
+                case 21:
+                    arrayOfPlotLines[index] = new ListItem() { tag = "", status = StoryStatus.New };
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised counter \"{0}\" for Plotlines", index); break;
             }
         }
 
@@ -609,14 +651,17 @@ namespace toolsAPI
                 //should be exactly one entry on list
                 int counter = 0;
                 //remove entry from list
-                for (int i = listOfPlotLines.Count - 1; i >= 0; i--)
+                counter = listOfPlotLines.RemoveAll(x => refTag.Equals(refTag, StringComparison.Ordinal) == true);
+
+                /*for (int i = listOfPlotLines.Count - 1; i >= 0; i--)
                 {
                     if (listOfPlotLines[i].refTag.Equals(refTag, StringComparison.Ordinal) == true)
                     {
                         listOfPlotLines.RemoveAt(i);
                         counter++;
                     }
-                }
+                }*/
+
                 Debug.LogFormat("[Tst] StoryList.cs -> RemovePlotLineFromList: {0} record{1} of \"{2}\" have been REMOVED from listOfPlotLines{3}", counter, counter != 1 ? "s" : "", refTag, "\n");
                 Debug.LogFormat("[Tst] StoryLists.cs -> listOfPlotLines - - -{0}", "\n");
                 for (int i = 0; i < listOfPlotLines.Count; i++)
