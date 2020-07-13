@@ -598,6 +598,34 @@ namespace toolsAPI
             { Debug.LogFormat("[Tst] StoryLists.cs -> index {0} -> \"{1}\"{2}", i, listOfCharacters[i].tag, "\n"); }
         }
 
+        /// <summary>
+        /// Remove a Plotline from list (has been concluded)
+        /// </summary>
+        /// <param name="plotLine"></param>
+        public void RemovePlotLineFromList(string refTag)
+        {
+            if (string.IsNullOrEmpty(refTag) == false)
+            {
+                //should be exactly one entry on list
+                int counter = 0;
+                //remove entry from list
+                for (int i = listOfPlotLines.Count - 1; i >= 0; i--)
+                {
+                    if (listOfPlotLines[i].refTag.Equals(refTag, StringComparison.Ordinal) == true)
+                    {
+                        listOfPlotLines.RemoveAt(i);
+                        counter++;
+                    }
+                }
+                Debug.LogFormat("[Tst] StoryList.cs -> RemovePlotLineFromList: {0} record{1} of \"{2}\" have been REMOVED from listOfPlotLines{3}", counter, counter != 1 ? "s" : "", refTag, "\n");
+                Debug.LogFormat("[Tst] StoryLists.cs -> listOfPlotLines - - -{0}", "\n");
+                for (int i = 0; i < listOfPlotLines.Count; i++)
+                { Debug.LogFormat("[Tst] StoryLists.cs -> index {0} -> \"{1}\"{2}", i, listOfPlotLines[i].tag, "\n"); }
+                if (counter == 0)
+                { Debug.LogWarning("Invalid counter (Zero) should be at least one"); }
+            }
+            else { Debug.LogError("Invalid plotLine refTag (Null or Empty)"); }
+        }
 
         #endregion
     }

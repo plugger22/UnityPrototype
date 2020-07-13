@@ -1079,6 +1079,22 @@ public class AdventureUI : MonoBehaviour
                         Debug.LogFormat("[Tst] AdventureUI.cs -> GetPlotPoint: Conclusion plotPoint CHANGED to \"{0}\" (numConcluded {1}, numNone {2}){3}", plotPoint.tag, numConcluded, numNone, "\n");
                     }
                 }
+                else if (turningPoint.type == TurningPointType.New)
+                {
+                    //can't have any conclusion plotpoints in a new Turning point
+                    if (numNone > 3)
+                    {
+                        //maxCap reached already on 'None'
+                        GetReplacementPlotPoint(themeType);
+                        Debug.LogFormat("[Tst] AdventureUI.cs -> GetPlotPoint: Conclusion plotPoint CHANGED (new TurningPoint) to \"{0}\" (numConcluded {1}, numNone {2}){3}", plotPoint.tag, numConcluded, numNone, "\n");
+                    }
+                    else
+                    {
+                        //change into 'None'
+                        plotPoint = new Plotpoint(plotPointNone);
+                        Debug.LogFormat("[Tst] AdventureUI.cs -> GetPlotPoint: Conclusion plotPoint CHANGED to None (new TurningPoint){0}", "\n");
+                    }
+                }
                 break;
             case PlotPointType.None:
                 //max of 3 none in a plotline OR 2 none plus 1 conclusion
@@ -1556,9 +1572,12 @@ public class AdventureUI : MonoBehaviour
                 //update indexes
                 turningPointIndex++;
                 plotPointIndex = 0;
-                //isConcluded (maxCap of 5 turning points per story)
+                //story isConcluded (maxCap of 5 turning points per story)
                 if (turningPointIndex == 5)
                 { storyNew.isConcluded = true; }
+                //check if turningPoint concluded
+                if (turningPoint.CheckNumberOfPlotPointType(PlotPointType.Conclusion) > 0)
+                { RemovePlotLine(turningPoint.refTag); }
                 //exit or next turningPoint
                 if (turningPointIndex < 5 && storyNew.isConcluded == false)
                 {
@@ -1653,6 +1672,18 @@ public class AdventureUI : MonoBehaviour
 
     #endregion
 
+    #region PlotLine Methods...
+    /// <summary>
+    /// Plotline concluded, remove from list and array
+    /// </summary>
+    /// <param name="refTag"></param>
+    private void RemovePlotLine(string refTag)
+    {
+        storyNew.lists.RemovePlotLineFromList(refTag);
+    }
+
+    #endregion
+
     #region RedrawTurningPoint
     /// <summary>
     /// Set up for new Plotpoint
@@ -1693,7 +1724,7 @@ public class AdventureUI : MonoBehaviour
 
     #endregion
 
-    #region DropDown Methods...
+    #region Drop Down
 
     #region InitialiseDropDownInput
     /// <summary>
