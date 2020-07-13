@@ -295,6 +295,12 @@ namespace toolsAPI
                         {
                             arrayOfPlotLines[i] = newItem;
                             Debug.LogFormat("[Tst] StoryArrays.cs -> AddPlotLineToArray: {0}, {1} ADDED to arrayOfPlotLines{2}", newItem.tag, newItem.status, "\n");
+                            Debug.LogFormat("[Tst] StoryArrays.cs -> arrayOfPlotLines - - - {0}", "\n");
+                            for (int j = 0; j < arrayOfPlotLines.Length; j++)
+                            {
+                                if (arrayOfPlotLines[j].status == StoryStatus.Data)
+                                { Debug.LogFormat("[Tst] -> index {0} -> \"{1}\"{2}", j, arrayOfPlotLines[j].tag, "\n"); }
+                            }
                             return true;
                         }
                         else

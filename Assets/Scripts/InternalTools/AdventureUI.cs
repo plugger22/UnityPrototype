@@ -901,8 +901,6 @@ public class AdventureUI : MonoBehaviour
         newAdventureCanvas.gameObject.SetActive(false);
         //reset save flag
         isTurningPointSaved = false;
-        //redraw page
-        RedrawTurningPointPage();
         //Adventure 
         turnAdventureName.text = storyNew.tag;
         //indexes
@@ -937,6 +935,8 @@ public class AdventureUI : MonoBehaviour
             //disable plotLine button
             turnPlotpointButton.gameObject.SetActive(false);
         }
+        //redraw page
+        RedrawTurningPointPage();
         //set modal state
         ToolManager.i.toolInputScript.SetModalState(ToolModal.TurningPoint);
     }
@@ -1541,22 +1541,21 @@ public class AdventureUI : MonoBehaviour
     /// </summary>
     private void SaveTurningPoint()
     {
+        if (turningPoint.type == TurningPointType.New)
+        {
+            turningPoint.tag = turnNameInput.text;
+            turningPoint.refTag = turnNameInput.text.Replace(" ", "");
+        }
         //must have a name for TurningPoint
-        if (string.IsNullOrEmpty(turnNameInput.text) == false)
+        if (string.IsNullOrEmpty(turningPoint.tag) == false)
         {
             //must have Notes for PlotLine (bottom of screen)
             if (string.IsNullOrEmpty(turnData0Input.text) == false)
             {
-                //New turning point, need tag/refTag
-                if (turningPoint.type == TurningPointType.New)
-                {
-                    turningPoint.tag = turnNameInput.text;
-                    turningPoint.refTag = turnNameInput.text.Replace(" ", "");
-                }
                 turningPoint.notes = turnData0Input.text;
                 //tags
-                plotLine.tag = turnNameInput.text;
-                plotLine.refTag = turnNameInput.text.Replace(" ", "");
+                plotLine.tag = turningPoint.tag;
+                plotLine.refTag = turningPoint.refTag;
                 //add plotLine notes
                 plotLine.listOfNotes.Add(turnData0Input.text);
                 //Save PlotLine
@@ -1574,8 +1573,11 @@ public class AdventureUI : MonoBehaviour
                 if (turningPointIndex == 5)
                 { storyNew.isConcluded = true; }
                 //check if turningPoint concluded
-                if (turningPoint.CheckNumberOfPlotPointType(PlotPointType.Conclusion) > 0)
-                { RemovePlotLine(turningPoint.refTag); }
+                if (turningPoint.type == TurningPointType.Development)
+                {
+                    if (turningPoint.CheckNumberOfPlotPointType(PlotPointType.Conclusion) > 0)
+                    { RemovePlotLine(turningPoint.refTag); }
+                }
                 //exit or next turningPoint
                 if (turningPointIndex < 5 && storyNew.isConcluded == false)
                 {
@@ -1748,9 +1750,19 @@ public class AdventureUI : MonoBehaviour
         //Header
         turnHeader.text = string.Format("Turning Point {0}", turningPointIndex + 1);
         //toggle fields
-        turnName.gameObject.SetActive(false);
-        turnNameInput.gameObject.SetActive(false);
-        turnNameImage.gameObject.SetActive(false);
+        if (turningPoint.type == TurningPointType.New)
+        {
+            turnName.gameObject.SetActive(false);
+            turnNameInput.gameObject.SetActive(false);
+            turnNameImage.gameObject.SetActive(false);
+        }
+        else
+        {
+            turnName.gameObject.SetActive(true);
+            turnNameImage.gameObject.SetActive(true);
+            turnNameInput.gameObject.SetActive(false);
+            turnName.text = turningPoint.tag;
+        }
         turnPlotLineImage.gameObject.SetActive(false);
         turnPlotLine2.gameObject.SetActive(false);
         ToggleTurningPointFields(false);
@@ -1847,6 +1859,13 @@ public class AdventureUI : MonoBehaviour
         {
             plotLine = new PlotLine(storyNew.lists.GetPlotLineFromList(dropDownInputInt));
             storyNew.arrays.AddPlotLineToArray(new ListItem() { tag = plotLine.refTag, status = StoryStatus.Data });
+            turningPoint = new TurningPoint()
+            {
+                refTag = plotLine.refTag,
+                tag = plotLine.tag,
+                notes = "",
+                type = TurningPointType.Development
+            };
         }
     }
 
