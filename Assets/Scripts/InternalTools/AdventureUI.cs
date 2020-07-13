@@ -794,7 +794,7 @@ public class AdventureUI : MonoBehaviour
                     //valid name
                     if (string.IsNullOrEmpty(arrayOfNewPlotLines[i].text) == false)
                     {
-                        refTagNew = arrayOfNewPlotLines[i].text;
+                        refTagNew = arrayOfNewPlotLines[i].text.Replace(" ", "");
                         //plotlines
                         storyNew.arrays.arrayOfPlotLines[i].tag = refTagNew;
                         storyNew.arrays.arrayOfPlotLines[i].status = StoryStatus.Data;
@@ -1530,6 +1530,7 @@ public class AdventureUI : MonoBehaviour
 
         // - - - toggle fields
         ToggleTurningPointFields(false);
+        turnPlotPoint.gameObject.SetActive(false);
         turnData0Input.gameObject.SetActive(true);
         //toggle save buttons
         turnPreSaveButton.gameObject.SetActive(false);
@@ -1581,15 +1582,13 @@ public class AdventureUI : MonoBehaviour
                 //exit or next turningPoint
                 if (turningPointIndex < 5 && storyNew.isConcluded == false)
                 {
-                    //Redraw ready for next turning point
-                    RedrawTurningPointPage();
                     //Generate new PlotLine / turningPoint
                     ListItem item = storyNew.arrays.GetRandomPlotLineFromArray();
+                    Debug.LogFormat("[Tst] AdventureUI.cs -> SaveTurningPoint: ListItem tag \"{0}\", status {1}{2}", item.tag, item.status, "\n");
                     if (item != null)
                     {
                         switch (item.status)
                         {
-
                             case StoryStatus.Data:
                                 plotLine = new PlotLine(storyNew.lists.GetPlotLineFromList(item.tag));
                                 if (plotLine != null)
@@ -1625,7 +1624,8 @@ public class AdventureUI : MonoBehaviour
                                 break;
                             default: Debug.LogWarningFormat("Unrecognised item.status \"{0}\"", item.status); break;
                         }
-
+                        //Redraw ready for next turning point
+                        RedrawTurningPointPage();
                     }
                     else { Debug.LogError("Invalid ListItem (Null) for new PlotLine"); }
                 }
@@ -1727,6 +1727,7 @@ public class AdventureUI : MonoBehaviour
             Debug.LogFormat("[Tst] AdventureUI.cs -> GetMostLogicalPlotLine: NEW PlotLine instead of Most Logical (listOfPlotLines is Empty) {0}", "\n");
         }
         yield return new WaitUntil(() => isWaitUntilDone == true);
+        RedrawTurningPointPage();
     }
 
     /// <summary>
@@ -1853,6 +1854,7 @@ public class AdventureUI : MonoBehaviour
     /// <returns></returns>
     IEnumerator WaitForDropDownPlotLineInput()
     {
+        isWaitUntilDone = false;
         dropDownCanvas.gameObject.SetActive(true);
         yield return new WaitUntil(() => isWaitUntilDone == true);
         if (dropDownInputInt > -1)
