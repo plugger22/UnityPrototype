@@ -943,6 +943,8 @@ public class AdventureUI : MonoBehaviour
     #endregion
 
     #region NewPlotpoint...
+
+    #region NewPlotpoint
     /// <summary>
     /// New Plotpoint
     /// </summary>
@@ -1029,7 +1031,7 @@ public class AdventureUI : MonoBehaviour
                     { Debug.LogFormat("[Tst] AdventureUI.cs -> RemoveCharacter: Not possible to remove a character (listOfCharacters Empty?){0}", "\n"); }
                     break;
                 case PlotPointType.Meta:
-
+                    GetMetaPlotPoint();
                     break;
                 case PlotPointType.Conclusion:
                 case PlotPointType.None:
@@ -1056,7 +1058,9 @@ public class AdventureUI : MonoBehaviour
         }
         else { Debug.LogWarning("There are already five plotponts -> Info only"); }
     }
+    #endregion
 
+    #region GetPlotPoint
     /// <summary>
     /// returns a new plotPoint. Handles all None/Conclusion cases
     /// </summary>
@@ -1130,7 +1134,9 @@ public class AdventureUI : MonoBehaviour
         Debug.LogFormat("[Tst] AdventureUI.cs -> NewPlotPoint: NEW Plotpoint \"{0}\", plotPointIndex {1}{2}", plotPoint.tag, plotPointIndex, "\n");
         return plotPoint;
     }
+    #endregion
 
+    #region GetReplacementPlotPoint
     /// <summary>
     /// subMethod that generates a replacement plotPoint for GetPlotPoint when a 'None' or 'Conclusion' needs to be swapped out
     /// </summary>
@@ -1145,6 +1151,52 @@ public class AdventureUI : MonoBehaviour
         }
         while (isDone == false);
     }
+    #endregion
+
+    #region GetMetaPlotPoint
+    /// <summary>
+    /// Handles all Meta plotPoint matters
+    /// </summary>
+    private void GetMetaPlotPoint()
+    {
+        MetaPlotpoint metaPlotpoint = ToolManager.i.toolDataScript.GetRandomMetaPlotpoint();
+        if (metaPlotpoint != null)
+        {
+            //pass over data to plotPoint (it's a new instance so it won't affect the original with the core data)
+            plotPoint.details = metaPlotpoint.details;
+            plotPoint.tag = metaPlotpoint.tag;
+            plotPoint.refTag = metaPlotpoint.refTag;
+
+            //resolve action
+            switch (metaPlotpoint.action)
+            {
+                case MetaAction.CharacterExits:
+                    
+                    break;
+                case MetaAction.CharacterReturns:
+
+                    break;
+                case MetaAction.CharacterUpgrade:
+
+                    break;
+                case MetaAction.CharacterDowngrade:
+
+                    break;
+                case MetaAction.CharacterStepsUp:
+
+                    break;
+                case MetaAction.CharacterStepsDown:
+
+                    break;
+                case MetaAction.PlotLineCombo:
+
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised metaPlotpoint.action \"{0}\"", metaPlotpoint.action); break;
+            }
+        }
+        else { Debug.LogError("Invalid metaPlotpoint (Null)"); }
+    }
+    #endregion
 
     #endregion
 

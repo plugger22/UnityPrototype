@@ -706,10 +706,16 @@ namespace toolsAPI
                 {
                     if (listOfCharacters[i].refTag.Equals(character.refTag, StringComparison.Ordinal) == true)
                     {
+                        //remove
                         listOfCharacters.RemoveAt(i);
+                        //add to listOfRemoved
+                        listOfRemovedCharacters.Add(character);
+                        //keep tabs on how many instances have been removed (should only be one)
                         counter++;
                     }
                 }
+                if (counter > 1)
+                { Debug.LogWarningFormat("Invalid result from RemoveCharacterFromList -> {0} records removed (should only have been 1} from listOfCharacters", counter); }
                 Debug.LogFormat("[Tst] StoryList.cs -> RemoveCharacterFromList: {0} record{1} of \"{2}\" have been REMOVED from listOfCharacters{3}", counter, counter != 1 ? "s" : "", character.tag, "\n");
                 Debug.LogFormat("[Tst] StoryLists.cs -> RemoveCharacterFromList: listOfCharacters - - -{0}", "\n");
                 for (int i = 0; i < listOfCharacters.Count; i++)
@@ -718,6 +724,25 @@ namespace toolsAPI
                 { Debug.LogWarning("Invalid counter (Zero) should be at least one"); }
             }
             else { Debug.LogError("Invalid character (Null)"); }
+        }
+
+        /// <summary>
+        /// returns a random character from the list of those who have been removed from the story previously. Null if none available or a problem
+        /// </summary>
+        /// <returns></returns>
+        public Character GetRandomRemovedCharacter()
+        {
+            Character character = null;
+            int count = listOfRemovedCharacters.Count;
+            int index;
+            if (count > 0)
+            {
+                index = Random.Range(0, count);
+                character = listOfRemovedCharacters[index];
+                //remove entry from listOfRemovedCharacters
+                listOfRemovedCharacters.RemoveAt(index);
+            }
+            return character;
         }
 
         /// <summary>

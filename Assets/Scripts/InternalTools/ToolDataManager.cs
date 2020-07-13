@@ -187,6 +187,13 @@ public class ToolDataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// returns a random Metaplotpoint, null if a problem
+    /// </summary>
+    /// <returns></returns>
+    public MetaPlotpoint GetRandomMetaPlotpoint()
+    { return arrayOfMetaPlotpointLookup[Random.Range(0, 100)]; }
+
+    /// <summary>
     /// returns a random plotpoint, null if a problem
     /// </summary>
     /// <returns></returns>
