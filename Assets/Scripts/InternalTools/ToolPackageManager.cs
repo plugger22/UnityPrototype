@@ -239,6 +239,27 @@ namespace toolsAPI
         }
 
         /// <summary>
+        /// returns true if arrayOfCharacters has at least one non-DATA type slot available
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckSpaceInCharacterArray()
+        {
+            //Reverse loop as empty records will most likely be towards end
+            for (int i = arrayOfCharacters.Length - 1; i >= 0; i--)
+            {
+                ListItem item = arrayOfCharacters[i];
+                if (item != null)
+                {
+                    //exit on first instance
+                    if (item.status != StoryStatus.Data)
+                    { return true; }
+                }
+                else { Debug.LogWarningFormat("Invalid item (Null) for arrayOfCharacters[{0}]", i); }
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Adds a new character to the next vacant, non-DATA slot in the array. Returns true if successful
         /// </summary>
         /// <param name="newItem"></param>
@@ -276,6 +297,40 @@ namespace toolsAPI
             else { Debug.LogError("Invalid newItem (Null)"); }
             return false;
         }
+
+        /// <summary>
+        /// Remove all instances of a specific character from array
+        /// </summary>
+        /// <param name="refTag"></param>
+        public void RemoveCharacterFromArray(string refTag)
+        {
+            for (int i = arrayOfCharacters.Length - 1;  i >= 0; i--)
+            {
+                ListItem item = arrayOfCharacters[i];
+                if (item != null)
+                {
+                    if (item.status == StoryStatus.Data)
+                    {
+                        if (item.tag.Equals(refTag, StringComparison.Ordinal) == true)
+                        {
+                            //replace character record with default record
+                            SetCharacterArrayItemToDefault(i);
+                        }
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid item (Null) for arrayOfCharacters[{0}]", i); }
+            }
+            //show list (debugging)
+            Debug.LogFormat("[Tst] StoryArrays.cs -> arrayOfCharacters - - - {0}", "\n");
+            for (int j = 0; j < arrayOfCharacters.Length; j++)
+            {
+                if (arrayOfCharacters[j].status == StoryStatus.Data)
+                { Debug.LogFormat("[Tst] -> index {0} -> \"{1}\"{2}", j, arrayOfCharacters[j].tag, "\n"); }
+            }
+        }
+
+
+
 
         /// <summary>
         /// Adds a new PlotLine to the next vacant, non-DATA slot in the array. Returns true if successful
@@ -494,7 +549,6 @@ namespace toolsAPI
         public List<Character> listOfRemovedCharacters = new List<Character>();
 
         #region StoryLists Methods
-
         /// <summary>
         /// default constructor
         /// </summary>
@@ -549,6 +603,22 @@ namespace toolsAPI
             if (index > -1 && index < listOfCharacters.Count)
                 character = listOfCharacters[index];
             else { Debug.LogErrorFormat("Invalid index \"{0}\" (must be between 0 and {1})", index, listOfCharacters.Count); }
+            return character;
+        }
+
+        /// <summary>
+        /// Returns a random character from listOfCharacters, null if none or a problem
+        /// </summary>
+        /// <returns></returns>
+        public Character GetRandomCharacterFromList()
+        {
+            Character character = null;
+            int count = listOfCharacters.Count;
+            if (count > 0)
+            {
+                int rnd = Random.Range(0, count);
+                character = listOfCharacters[rnd];
+            }
             return character;
         }
 
@@ -616,7 +686,7 @@ namespace toolsAPI
                     listOfPlotLines.Add(plotLine);
                     Debug.LogFormat("[Tst] StoryLists.cs -> AddPlotLineToList: \"{0}\", refTag {1} Added to List{2}", plotLine.tag, plotLine.refTag, "\n");
                 }
-                else { Debug.LogWarningFormat("Plotline refTag \"{0}\" already present in list -> Info Only", plotLine.refTag); }
+                else { Debug.LogFormat("[Tst] StoryLists.cs -> AddPlotLineToList: Plotline refTag \"{0}\" already present in list{1}", plotLine.refTag, "\n"); }
             }
             else { Debug.LogError("Invalid plotLine (Null)"); }
         }
@@ -671,16 +741,7 @@ namespace toolsAPI
                 //should be exactly one entry on list
                 int counter = 0;
                 //remove entry from list
-                counter = listOfPlotLines.RemoveAll(x => refTag.Equals(refTag, StringComparison.Ordinal) == true);
-
-                /*for (int i = listOfPlotLines.Count - 1; i >= 0; i--)
-                {
-                    if (listOfPlotLines[i].refTag.Equals(refTag, StringComparison.Ordinal) == true)
-                    {
-                        listOfPlotLines.RemoveAt(i);
-                        counter++;
-                    }
-                }*/
+                counter = listOfPlotLines.RemoveAll(x => x.refTag.Equals(refTag, StringComparison.Ordinal) == true);
 
                 Debug.LogFormat("[Tst] StoryList.cs -> RemovePlotLineFromList: {0} record{1} of \"{2}\" have been REMOVED from listOfPlotLines{3}", counter, counter != 1 ? "s" : "", refTag, "\n");
                 Debug.LogFormat("[Tst] StoryLists.cs -> listOfPlotLines - - -{0}", "\n");

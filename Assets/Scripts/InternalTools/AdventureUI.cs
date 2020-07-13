@@ -1014,10 +1014,19 @@ public class AdventureUI : MonoBehaviour
                     GetCharacters(plotPoint.numberOfCharacters);
                     break;
                 case PlotPointType.NewCharacter:
-
+                    Debug.LogFormat("[Tst] AdventureUI.cs -> NewPlotpoint: NewCharacter to be Generated{0}", "\n");
+                    character1 = GetNewCharacter();
                     break;
                 case PlotPointType.RemoveCharacter:
-
+                    Character character = storyNew.lists.GetRandomCharacterFromList();
+                    if (character != null)
+                    {
+                        storyNew.lists.RemoveCharacterFromList(character);
+                        storyNew.arrays.RemoveCharacterFromArray(character.refTag);
+                        Debug.LogFormat("[Tst] AdventureUI.cs -> NewPlotpoint: \"{0}\" REMOVED{1}", character.tag, "\n");
+                    }
+                    else
+                    { Debug.LogFormat("[Tst] AdventureUI.cs -> RemoveCharacter: Not possible to remove a character (listOfCharacters Empty?){0}", "\n"); }
                     break;
                 case PlotPointType.Meta:
 
@@ -1083,7 +1092,7 @@ public class AdventureUI : MonoBehaviour
                 else if (turningPoint.type == TurningPointType.New)
                 {
                     //can't have any conclusion plotpoints in a new Turning point
-                    if (numNone > 3)
+                    if (numNone >= 3)
                     {
                         //maxCap reached already on 'None'
                         GetReplacementPlotPoint(themeType);
@@ -1309,20 +1318,25 @@ public class AdventureUI : MonoBehaviour
 
     #region GetNewCharacter
     /// <summary>
-    /// Returns a newly generated character, returns null if a problem
+    /// Returns a newly generated character, returns null if a problem, eg. no space remaining in array
     /// </summary>
     /// <returns></returns>
     private Character GetNewCharacter()
     {
         Character character = null;
-        character = ToolManager.i.adventureScript.GetNewCharacter();
-        if (character != null)
+        //check there is space for another character
+        if (storyNew.arrays.CheckSpaceInCharacterArray() == true)
         {
-            //add character to array and list
-            storyNew.arrays.AddCharacterToArray(new ListItem() { tag = character.refTag, status = StoryStatus.Data });
-            storyNew.lists.AddCharacterToList(character);
+            character = ToolManager.i.adventureScript.GetNewCharacter();
+            if (character != null)
+            {
+                //add character to array and list
+                storyNew.arrays.AddCharacterToArray(new ListItem() { tag = character.refTag, status = StoryStatus.Data });
+                storyNew.lists.AddCharacterToList(character);
+            }
+            else { Debug.LogWarning("Invalid character (Null), NOT added to arrayOfCharacters, or listOfCharacters"); }
         }
-        else { Debug.LogWarning("Invalid character (Null), NOT added to arrayOfCharacters, or listOfCharacters"); }
+        else { Debug.LogWarning("Invalid New Character (No non-DATA slots remaining in arrayOfCharacters)"); }
         return character;
     }
     #endregion
@@ -1530,7 +1544,7 @@ public class AdventureUI : MonoBehaviour
 
         // - - - toggle fields
         ToggleTurningPointFields(false);
-        turnPlotPoint.gameObject.SetActive(false);
+        /*turnPlotPoint.gameObject.SetActive(false);*/
         turnData0Input.gameObject.SetActive(true);
         //toggle save buttons
         turnPreSaveButton.gameObject.SetActive(false);
@@ -1868,6 +1882,7 @@ public class AdventureUI : MonoBehaviour
                 notes = "",
                 type = TurningPointType.Development
             };
+            Debug.LogFormat("[Tst] AdventureUI.cs -> WaitForDropDownPlotLineInput: MOST LOGICAL plotLine \"{0}\"{1}", plotLine.tag, "\n");
         }
     }
 
