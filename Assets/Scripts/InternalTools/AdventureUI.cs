@@ -47,6 +47,7 @@ public class AdventureUI : MonoBehaviour
     //coroutines
     private IEnumerator coroutineCharacter;
     private IEnumerator coroutineDropDown;
+    private IEnumerator coroutinePlotLine;
 
     //static reference
     private static AdventureUI adventureUI;
@@ -1363,7 +1364,7 @@ public class AdventureUI : MonoBehaviour
                         character1.tag, "\n", "\n", plotPoint.tag, "\n", "\n", plotPoint.details);
                 }
                 InitialiseDropDownInput(listOfCharacters.Select(x => x.tag).ToList(), header);
-                coroutineDropDown = WaitForDropDownInput(isCharacter1);
+                coroutineDropDown = WaitForDropDownCharacterInput(isCharacter1);
                 StartCoroutine(coroutineDropDown);
             }
             else
@@ -1553,9 +1554,6 @@ public class AdventureUI : MonoBehaviour
                     turningPoint.refTag = turnNameInput.text.Replace(" ", "");
                 }
                 turningPoint.notes = turnData0Input.text;
-
-                /*turningPoint.isConcluded = true;*/
-
                 //tags
                 plotLine.tag = turnNameInput.text;
                 plotLine.refTag = turnNameInput.text.Replace(" ", "");
@@ -1591,7 +1589,7 @@ public class AdventureUI : MonoBehaviour
                         {
 
                             case StoryStatus.Data:
-                                plotLine = storyNew.lists.GetPlotLineFromList(item.tag);
+                                plotLine = new PlotLine(storyNew.lists.GetPlotLineFromList(item.tag));
                                 if (plotLine != null)
                                 {
                                     //development turning point
@@ -1601,14 +1599,16 @@ public class AdventureUI : MonoBehaviour
                                         tag = plotLine.tag,
                                         notes = "",
                                         type = TurningPointType.Development
-                                        /*isConcluded = false*/
                                     };
+                                    Debug.LogFormat("[Tst] AdventureUI.cs -> SaveTurningPoint: EXISTING PlotLine  \"{0}\"{1}", plotLine.tag, "\n");
                                 }
                                 else
                                 { Debug.LogErrorFormat("Invalid plotLine (Null) for \"{0}\"", item.tag);  }
                                 break;
-
-                            case StoryStatus.Logical:                               //DEBUG -> TO DO
+                            case StoryStatus.Logical:
+                                coroutinePlotLine = GetMostLogicalPlotLine();
+                                StartCoroutine(coroutinePlotLine);
+                                break;
                             case StoryStatus.New:
                                 //new plotLine and turning point
                                 plotLine = new PlotLine();
@@ -1618,8 +1618,8 @@ public class AdventureUI : MonoBehaviour
                                     tag = "",
                                     notes = "",
                                     type = TurningPointType.New
-                                    /*isConcluded = false*/
                                 };
+                                Debug.LogFormat("[Tst] AdventureUI.cs -> SaveTurningPoint: NEW PlotLine {0}", "\n");
                                 break;
                             default: Debug.LogWarningFormat("Unrecognised item.status \"{0}\"", item.status); break;
                         }
@@ -1700,6 +1700,43 @@ public class AdventureUI : MonoBehaviour
         Debug.LogFormat("[Tst] AdventureUI.cs -> RemovePlotLine: \"{0}\" plotLine replaced with default values in arrayOfPlotlines {1} times{2}", refTag, counter, "\n");
     }
 
+    /// <summary>
+    /// coroutine for getting the most logical Plotline from dropdown lists
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator GetMostLogicalPlotLine()
+    {
+        isWaitUntilDone = false;
+        //check at least one item in listOfPlotLines
+        if (storyNew.lists.listOfPlotLines.Count > 0)
+        { GetDropDownPlotLine(); }
+        else
+        {
+            //default to a New plotline 
+            plotLine = new PlotLine();
+            turningPoint = new TurningPoint()
+            {
+                refTag = "",
+                tag = "",
+                notes = "",
+                type = TurningPointType.New
+            };
+            isWaitUntilDone = true;
+            Debug.LogFormat("[Tst] AdventureUI.cs -> GetMostLogicalPlotLine: NEW PlotLine instead of Most Logical (listOfPlotLines is Empty) {0}", "\n");
+        }
+        yield return new WaitUntil(() => isWaitUntilDone == true);
+    }
+
+    /// <summary>
+    /// Obtain a plotLine from a dropdown list of existing plotlines
+    /// </summary>
+    private void GetDropDownPlotLine()
+    {
+        InitialiseDropDownInput(storyNew.lists.listOfPlotLines.Select(x => x.tag).ToList(), "<color=\"blue\">Select Most Logical PlotLine");
+        coroutineDropDown = WaitForDropDownPlotLineInput();
+        StartCoroutine(coroutineDropDown);
+    }
+
     #endregion
 
     #region RedrawTurningPoint
@@ -1777,10 +1814,9 @@ public class AdventureUI : MonoBehaviour
     /// wait for input from drop down pop-up
     /// </summary>
     /// <returns></returns>
-    IEnumerator WaitForDropDownInput(bool isCharacter1)
+    IEnumerator WaitForDropDownCharacterInput(bool isCharacter1)
     {
         dropDownCanvas.gameObject.SetActive(true);
-
         yield return new WaitUntil(() => isWaitUntilDone == true);
         if (dropDownInputInt > -1)
         {
@@ -1796,6 +1832,21 @@ public class AdventureUI : MonoBehaviour
                 storyNew.arrays.AddCharacterToArray(new ListItem() { tag = character2.refTag, status = StoryStatus.Data });
                 Debug.LogFormat("[Tst] AdventureUI.cs -> GetIndividualCharacter: MOST LOGICAL Character2 \"{0}\" selected{1}", character2 != null ? character2.tag : "Unknown", "\n");
             }
+        }
+    }
+
+    /// <summary>
+    /// wait for input from drop down pop-up
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator WaitForDropDownPlotLineInput()
+    {
+        dropDownCanvas.gameObject.SetActive(true);
+        yield return new WaitUntil(() => isWaitUntilDone == true);
+        if (dropDownInputInt > -1)
+        {
+            plotLine = new PlotLine(storyNew.lists.GetPlotLineFromList(dropDownInputInt));
+            storyNew.arrays.AddPlotLineToArray(new ListItem() { tag = plotLine.refTag, status = StoryStatus.Data });
         }
     }
 

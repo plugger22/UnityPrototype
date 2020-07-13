@@ -561,6 +561,20 @@ namespace toolsAPI
         }
 
         /// <summary>
+        /// Returns specific PlotLine based on list index (used for DropDown input)
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public PlotLine GetPlotLineFromList(int index)
+        {
+            PlotLine plotLine = null;
+            if (index > -1 && index < listOfPlotLines.Count)
+                plotLine = listOfPlotLines[index];
+            else { Debug.LogErrorFormat("Invalid index \"{0}\" (must be between 0 and {1})", index, listOfPlotLines.Count); }
+            return plotLine;
+        }
+
+        /// <summary>
         /// Add character to listOfCharacters
         /// </summary>
         /// <param name="character"></param>
@@ -687,7 +701,6 @@ namespace toolsAPI
         public string tag;                                          //PlotLine tag
         public string notes;                                        //notes for the plotLine specific to this TurningPoint
         public TurningPointType type;                               //last in the series? (maxCap of 5 if not concluded before)
-        /*public bool isConcluded;                                    //if true then Turning point is complete and no more plotpoints can be generated*/
         public PlotDetails[] arrayOfDetails = new PlotDetails[5];
 
         #region TurnPoint Methods
@@ -712,7 +725,6 @@ namespace toolsAPI
             tag = copy.tag;
             notes = copy.notes;
             type = copy.type;
-            /*isConcluded = copy.isConcluded;*/
             for (int i = 0; i < arrayOfDetails.Length; i++)
             { arrayOfDetails[i] = copy.arrayOfDetails[i]; }
         }
@@ -726,7 +738,6 @@ namespace toolsAPI
             tag = "";
             notes = "";
             type = TurningPointType.None;
-            /*isConcluded = false;*/
             for (int i = 0; i < arrayOfDetails.Length; i++)
             { arrayOfDetails[i].Reset(); }
         }
@@ -800,9 +811,9 @@ namespace toolsAPI
     [System.Serializable]
     public class PlotLine
     {
-        public string refTag;                               //plotLine name with no spaces (auto generated)
+        public string refTag;                                                   //plotLine name with no spaces (auto generated)
         public string tag;
-        public List<string> listOfNotes;                    //One entry for each instance of the PlotLine, eg. if 3 turning points refer to this plotLine then 3 sets of notes
+        public List<string> listOfNotes = new List<string>();                    //One entry for each instance of the PlotLine, eg. if 3 turning points refer to this plotLine then 3 sets of notes
 
         #region PlotLine methods
         /// <summary>
@@ -812,7 +823,6 @@ namespace toolsAPI
         {
             refTag = "";
             tag = "";
-            listOfNotes = new List<string>();
         }
 
         /// <summary>
