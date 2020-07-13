@@ -161,6 +161,7 @@ public class AdventureUI : MonoBehaviour
     private TurningPoint turningPoint;                  //current turning point on screen
     private PlotLine plotLine;                          //current PlotLine
     private Plotpoint plotPoint;                        //current Plotpoint
+    private Plotpoint plotPointNone;                    //'None' plotPoint for reference
     private Character character1;                       //current Plotpoint character1 (if any)
     private Character character2;                       //current Plotpoint character2 (if any)
     private bool isChar1MostLogical;
@@ -319,6 +320,7 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(turnPlotpointNotes != null, "Invalid turnPlotpointNotes (Null)");
         Debug.Assert(turnNameImage != null, "Invalid turnNameImage (Null)");
         Debug.Assert(turnPlotLine2 != null, "Invalid turnPlotLine2 (Null)");
+
         //lists
         Debug.Assert(returnListsInteraction != null, "Invalid returnListsInteraction (Null)");
         Debug.Assert(listEditInteraction != null, "Invalid listEditInteraction (Null)");
@@ -378,7 +380,8 @@ public class AdventureUI : MonoBehaviour
         dropConfirmInteraction.SetButton(ToolEventType.CloseDropDown);
         //delegate for dropDown
         dropInput.onValueChanged.AddListener(delegate { DropDownItemSelected(); });
-        //event listeners
+        //Initialise Other
+        InitialiseFastAccess();
         InitialiseEvents();
     }
     #endregion
@@ -422,6 +425,18 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.CloseTurningPoint, OnEvent, "AdventureUI");
 
         ToolEvents.i.AddListener(ToolEventType.CloseDropDown, OnEvent, "AdventureUI");
+    }
+    #endregion
+
+    #region InitialiseFastAccess
+    /// <summary>
+    /// Initialise all fast access
+    /// </summary>
+    private void InitialiseFastAccess()
+    {
+        //TurningPoint
+        plotPointNone = ToolManager.i.toolDataScript.GetPlotpoint("None");
+        Debug.Assert(plotPointNone != null, "Invalid plotPointNone (Null)");
     }
     #endregion
 
@@ -926,7 +941,7 @@ public class AdventureUI : MonoBehaviour
     }
     #endregion
 
-    #region NewPlotpoint
+    #region NewPlotpoint...
     /// <summary>
     /// New Plotpoint
     /// </summary>
@@ -986,25 +1001,16 @@ public class AdventureUI : MonoBehaviour
             { arrayOfPlotpointNotes[turningPointIndex - 1] = turnPlotNotesInput.text; }
 
             //Generate new Plotpoint
-            int priority = ToolManager.i.adventureScript.GetThemePriority();
-            ThemeType themeType = storyNew.theme.GetThemeType(priority);
-            plotPoint = new Plotpoint(ToolManager.i.toolDataScript.GetPlotpoint(themeType));
-            Debug.LogFormat("[Tst] AdventureUI.cs -> NewPlotPoint: NEW PLOTPOINT \"{0}\", plotPointIndex {1}{2}", plotPoint.tag, plotPointIndex, "\n");
+            GetPlotPoint();
             //update texts
             turnPlotPoint.text = plotPoint.tag;
             turnData0.text = plotPoint.details;
             arrayOfTurnPlotpoints[plotPointIndex].text = plotPoint.tag;
-            //Plotpoint type
+            //Plotpoint handler
             switch (plotPoint.type)
             {
                 case PlotPointType.Normal:
                     GetCharacters(plotPoint.numberOfCharacters);
-                    break;
-                case PlotPointType.Conclusion:
-
-                    break;
-                case PlotPointType.None:
-
                     break;
                 case PlotPointType.NewCharacter:
 
@@ -1014,6 +1020,10 @@ public class AdventureUI : MonoBehaviour
                     break;
                 case PlotPointType.Meta:
 
+                    break;
+                case PlotPointType.Conclusion:
+                case PlotPointType.None:
+                    //do nothing -> already handled by GetPlotPoint
                     break;
                 default: Debug.LogWarningFormat("Unrecognised plotPoint.type \"{0}\"", plotPoint.type); break;
             }
@@ -1036,9 +1046,83 @@ public class AdventureUI : MonoBehaviour
         }
         else { Debug.LogWarning("There are already five plotponts -> Info only"); }
     }
+
+    /// <summary>
+    /// returns a new plotPoint. Handles all None/Conclusion cases
+    /// </summary>
+    /// <returns></returns>
+    private Plotpoint GetPlotPoint()
+    {
+        int numNone, numConcluded;
+        int priority = ToolManager.i.adventureScript.GetThemePriority();
+        ThemeType themeType = storyNew.theme.GetThemeType(priority);
+        plotPoint = new Plotpoint(ToolManager.i.toolDataScript.GetRandomPlotpoint(themeType));
+        //get numbers already present
+        numNone = turningPoint.CheckNumberOfPlotPointType(PlotPointType.None);
+        numConcluded = turningPoint.CheckNumberOfPlotPointType(PlotPointType.Conclusion);
+        //special cases
+        switch (plotPoint.type)
+        {
+            case PlotPointType.Conclusion:
+                if (numConcluded > 0)
+                {
+                    //can only have one Conclusion. Change any more into 'None'
+                    if (numNone < 2)
+                    {
+                        plotPoint = new Plotpoint(plotPointNone);
+                        Debug.LogFormat("[Tst] AdventureUI.cs -> GetPlotPoint: Conclusion plotPoint CHANGED to None (max 1 allowed in TurningPoint){0}", "\n");
+                    }
+                    else
+                    {
+                        //max 2 none and 1 conclusion allowed -> need a new plotpoint
+                        GetReplacementPlotPoint(themeType);
+                        Debug.LogFormat("[Tst] AdventureUI.cs -> GetPlotPoint: Conclusion plotPoint CHANGED to \"{0}\" (numConcluded {1}, numNone {2}){3}", plotPoint.tag, numConcluded, numNone, "\n");
+                    }
+                }
+                break;
+            case PlotPointType.None:
+                //max of 3 none in a plotline OR 2 none plus 1 conclusion
+                if (numNone < 3)
+                {
+                    if (numNone == 2 && numConcluded == 1)
+                    {
+                        GetReplacementPlotPoint(themeType);
+                        Debug.LogFormat("[Tst] AdventureUI.cs -> GetPlotPoint: None plotPoint CHANGED to \"{0}\" (numConcluded {1}, numNone {2}){3}", plotPoint.tag, numConcluded, numNone, "\n");
+                    }
+                }
+                else
+                {
+                    //max 3 none allowed
+                    if (numNone == 3)
+                    {
+                        GetReplacementPlotPoint(themeType);
+                        Debug.LogFormat("[Tst] AdventureUI.cs -> GetPlotPoint: None plotPoint CHANGED to \"{0}\" (numConcluded {1}, numNone {2}){3}", plotPoint.tag, numConcluded, numNone, "\n");
+                    }
+                }
+                break;
+        }
+        Debug.LogFormat("[Tst] AdventureUI.cs -> NewPlotPoint: NEW Plotpoint \"{0}\", plotPointIndex {1}{2}", plotPoint.tag, plotPointIndex, "\n");
+        return plotPoint;
+    }
+
+    /// <summary>
+    /// subMethod that generates a replacement plotPoint for GetPlotPoint when a 'None' or 'Conclusion' needs to be swapped out
+    /// </summary>
+    private void GetReplacementPlotPoint(ThemeType themeType)
+    {
+        bool isDone = false;
+        do
+        {
+            plotPoint = new Plotpoint(ToolManager.i.toolDataScript.GetRandomPlotpoint(themeType));
+            if (plotPoint.type != PlotPointType.Conclusion && plotPoint.type != PlotPointType.None)
+            { isDone = true; }
+        }
+        while (isDone == false);
+    }
+
     #endregion
 
-    #region Character Methods
+    #region Character Methods...
 
     #region GetCharacters
     /// <summary>
@@ -1281,7 +1365,7 @@ public class AdventureUI : MonoBehaviour
 
     #endregion
 
-    #region ClearPlotpoint
+    #region ClearPlotpoint...
     /// <summary>
     /// Clear out current plotPoint
     /// </summary>
@@ -1302,7 +1386,7 @@ public class AdventureUI : MonoBehaviour
             switch (plotPoint.type)
             {
                 case PlotPointType.Conclusion:
-                    turningPoint.isConcluded = false;
+                    /*turningPoint.isConcluded = false;*/
                     break;
 
                     //TO DO
@@ -1378,7 +1462,7 @@ public class AdventureUI : MonoBehaviour
     }
     #endregion
 
-    #region Save Methods
+    #region Save Methods...
     /// <summary>
     /// Pre Save operations and activate Save Button
     /// </summary>
@@ -1453,13 +1537,15 @@ public class AdventureUI : MonoBehaviour
                     turningPoint.refTag = turnNameInput.text.Replace(" ", "");
                 }
                 turningPoint.notes = turnData0Input.text;
-                turningPoint.isConcluded = true;
-                //TO DO -> notes / type / isConcluded
+
+                /*turningPoint.isConcluded = true;*/
+
+                //tags
                 plotLine.tag = turnNameInput.text;
                 plotLine.refTag = turnNameInput.text.Replace(" ", "");
                 //add plotLine notes
                 plotLine.listOfNotes.Add(turnData0Input.text);
-                //TO DO -> Save PlotLine
+                //Save PlotLine
                 storyNew.arrays.AddPlotLineToArray(new ListItem() { tag = plotLine.refTag, status = StoryStatus.Data });
                 storyNew.lists.AddPlotLineToList(plotLine);
                 //SAVE
@@ -1470,6 +1556,9 @@ public class AdventureUI : MonoBehaviour
                 //update indexes
                 turningPointIndex++;
                 plotPointIndex = 0;
+                //isConcluded (maxCap of 5 turning points per story)
+                if (turningPointIndex == 5)
+                { storyNew.isConcluded = true; }
                 //exit or next turningPoint
                 if (turningPointIndex < 5 && storyNew.isConcluded == false)
                 {
@@ -1492,8 +1581,8 @@ public class AdventureUI : MonoBehaviour
                                         refTag = plotLine.refTag,
                                         tag = plotLine.tag,
                                         notes = "",
-                                        type = TurningPointType.Development,
-                                        isConcluded = false
+                                        type = TurningPointType.Development
+                                        /*isConcluded = false*/
                                     };
                                 }
                                 else { Debug.LogError("Invalid plotLine (Null)"); }
@@ -1508,8 +1597,8 @@ public class AdventureUI : MonoBehaviour
                                     refTag = "",
                                     tag = "",
                                     notes = "",
-                                    type = TurningPointType.New,
-                                    isConcluded = false
+                                    type = TurningPointType.New
+                                    /*isConcluded = false*/
                                 };
                                 break;
                             default: Debug.LogWarningFormat("Unrecognised item.status \"{0}\"", item.status); break;
@@ -1604,7 +1693,7 @@ public class AdventureUI : MonoBehaviour
 
     #endregion
 
-    #region DropDown Methods
+    #region DropDown Methods...
 
     #region InitialiseDropDownInput
     /// <summary>

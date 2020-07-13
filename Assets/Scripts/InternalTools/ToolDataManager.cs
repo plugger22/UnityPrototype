@@ -12,7 +12,7 @@ public class ToolDataManager : MonoBehaviour
 {
 
     private Dictionary<string, Story> dictOfStories = new Dictionary<string, Story>();
-    private Dictionary<string, Plotpoint> dictOfPlotpoints = new Dictionary<string, Plotpoint>();
+    private Dictionary<string, Plotpoint> dictOfPlotpoints = new Dictionary<string, Plotpoint>();                       //key -> refTag, value -> Plotpoint
     private Dictionary<string, MetaPlotpoint> dictOfMetaPlotpoints = new Dictionary<string, MetaPlotpoint>();
 
     //lookup tables
@@ -190,12 +190,24 @@ public class ToolDataManager : MonoBehaviour
     /// returns a random plotpoint, null if a problem
     /// </summary>
     /// <returns></returns>
-    public Plotpoint GetPlotpoint(ThemeType theme)
+    public Plotpoint GetRandomPlotpoint(ThemeType theme)
     {
         Plotpoint plotPoint = null;
         int rnd = Random.Range(0, 100);
         plotPoint = arrayOfPlotpointLookup[rnd, (int)theme];
         return plotPoint;
+    }
+
+    /// <summary>
+    /// Get a plotpoint from dictionary. Returns null if not found
+    /// </summary>
+    /// <param name="refTag"></param>
+    /// <returns></returns>
+    public Plotpoint GetPlotpoint(string refTag)
+    {
+        if (dictOfPlotpoints.ContainsKey(refTag) == true)
+        { return dictOfPlotpoints[refTag]; }
+        return null;
     }
 
     #endregion

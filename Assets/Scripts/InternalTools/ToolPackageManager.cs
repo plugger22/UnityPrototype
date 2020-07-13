@@ -22,6 +22,7 @@ namespace toolsAPI
     public enum PlotPointType { Normal, Conclusion, None, RemoveCharacter, NewCharacter, Meta }
     public enum MetaAction { CharacterExits, CharacterReturns, CharacterUpgrade, CharacterDowngrade, CharacterStepsUp, CharacterStepsDown, PlotLineCombo }
     public enum TurningPointType { None, New, Development, Conclusion }
+    public enum CharacterSex { None, Male, Female }
 
 
 
@@ -613,7 +614,7 @@ namespace toolsAPI
         public string tag;                                          //PlotLine tag
         public string notes;                                        //notes for the plotLine specific to this TurningPoint
         public TurningPointType type;                               //last in the series? (maxCap of 5 if not concluded before)
-        public bool isConcluded;                                    //if true then Turning point is complete and no more plotpoints can be generated
+        /*public bool isConcluded;                                    //if true then Turning point is complete and no more plotpoints can be generated*/
         public PlotDetails[] arrayOfDetails = new PlotDetails[5];
 
         #region TurnPoint Methods
@@ -638,7 +639,7 @@ namespace toolsAPI
             tag = copy.tag;
             notes = copy.notes;
             type = copy.type;
-            isConcluded = copy.isConcluded;
+            /*isConcluded = copy.isConcluded;*/
             for (int i = 0; i < arrayOfDetails.Length; i++)
             { arrayOfDetails[i] = copy.arrayOfDetails[i]; }
         }
@@ -652,10 +653,19 @@ namespace toolsAPI
             tag = "";
             notes = "";
             type = TurningPointType.None;
-            isConcluded = false;
+            /*isConcluded = false;*/
             for (int i = 0; i < arrayOfDetails.Length; i++)
             { arrayOfDetails[i].Reset(); }
         }
+
+        /// <summary>
+        /// returns number of specified plotPointtype, eg. 'None' in the current turningPoint.arrayOfDetails
+        /// </summary>
+        /// <param name="plotPointType"></param>
+        /// <returns></returns>
+        public int CheckNumberOfPlotPointType(PlotPointType plotPointType)
+        { return arrayOfDetails.Where(x => x.type == plotPointType).Count(); }
+
         #endregion
     }
     #endregion
@@ -784,6 +794,7 @@ namespace toolsAPI
         public string refTag;
         public string tag;
         public string dataCreated;                          //generated data
+        public CharacterSex sex;
         public List<string> listOfNotes;
 
         #region Character Methods
@@ -805,6 +816,7 @@ namespace toolsAPI
             dataCreated = copy.dataCreated;
             listOfNotes.Clear();
             listOfNotes.AddRange(copy.listOfNotes);
+            sex = copy.sex;
         }
 
         /// <summary>

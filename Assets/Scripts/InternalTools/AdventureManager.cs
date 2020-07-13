@@ -91,7 +91,7 @@ public class AdventureManager : MonoBehaviour
     public Character GetNewCharacter()
     {
         Character character = new Character();
-        string identity, descriptor, name, refTag;
+        string identity, descriptor, name, refTag, firstName;
         List<string> tempList = new List<string>();
         identity = descriptor = name = "";
         //special
@@ -109,10 +109,20 @@ public class AdventureManager : MonoBehaviour
             //name
             Random random = new Random();
             int rnd = random.Next(0, 100);
-            name = string.Format("{0} {1}", rnd < 50 ? nameMaleFirst.GetRandomRecord() : nameMaleFirst.GetRandomRecord(), nameLast.GetRandomRecord());
+            if (rnd < 50)
+            {
+                character.sex = CharacterSex.Male;
+                firstName = nameMaleFirst.GetRandomRecord();
+            }
+            else
+            {
+                character.sex = CharacterSex.Female;
+                firstName = nameFemaleFirst.GetRandomRecord();
+            }
+            name = string.Format("{0} {1}",  firstName, nameLast.GetRandomRecord());
             refTag = name.Replace(" ", "");
             //bring together
-            character.dataCreated = string.Format("{0} -> {1} -> {2} -> {3}", name, special.tag, identity, descriptor);
+            character.dataCreated = string.Format("{0} -> {1} -> {2} -> {3} -> {4}", name, character.sex, special.tag, identity, descriptor);
             character.tag = name;
             character.refTag = refTag;
             Debug.LogFormat("[Tst] AdventureManager.cs -> GetNewCharacter: \"{0}\", refTag {1} CREATED{2}", character.tag, character.refTag, "\n");
