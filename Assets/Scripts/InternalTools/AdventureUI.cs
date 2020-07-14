@@ -935,7 +935,6 @@ public class AdventureUI : MonoBehaviour
         RedrawTurningPointPage();
         //set modal state
         ToolManager.i.toolInputScript.SetModalState(ToolModal.TurningPoint);
-        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Edit);
         //debug
         storyNew.lists.DebugShowCharacterList();
         storyNew.lists.DebugShowPlotLineList();
@@ -950,7 +949,6 @@ public class AdventureUI : MonoBehaviour
     /// </summary>
     private void NewPlotpoint()
     {
-        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Edit);
         // - - - Pre Admin
         turnData1.text = "";
         turnData2.text = "";
@@ -1341,7 +1339,6 @@ public class AdventureUI : MonoBehaviour
     /// <returns></returns>
     IEnumerator GetMostLogicalCharacters()
     {
-        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Input);
         isWaitUntilDone = true;
         //prevents doubling up on NewPlotpoint admin
         isPlotpointAdminDone = true;
@@ -1874,7 +1871,6 @@ public class AdventureUI : MonoBehaviour
     /// <returns></returns>
     IEnumerator GetMostLogicalPlotLine()
     {
-        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Input);
         isWaitUntilDone = false;
         //check at least one item in listOfPlotLines
         if (storyNew.lists.listOfPlotLines.Count > 0)
@@ -2055,7 +2051,6 @@ public class AdventureUI : MonoBehaviour
     {
         isWaitUntilDone = true;
         dropDownCanvas.gameObject.SetActive(false);
-        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Edit);
     }
     #endregion
 
