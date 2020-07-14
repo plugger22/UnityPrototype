@@ -119,21 +119,6 @@ public class ToolDataManager : MonoBehaviour
 
     }
 
-    /*/// <summary>
-    /// returns first record in dictOfStories (not in sorted order so could be anything). Returns null if a problem or none found
-    /// </summary>
-    /// <returns></returns>
-    public Story GetFirstStoryInDict()
-    {
-        Story story = null;
-        if (dictOfStories.Count > 0)
-        {
-            story = dictOfStories.Values.First();
-        }
-        else { Debug.LogWarning("No records in dictOfStories -> ALERT"); }
-        return story;
-    }*/
-
     /// <summary>
     /// returns a list of stories derived from the dictOfStories
     /// </summary>
@@ -200,7 +185,12 @@ public class ToolDataManager : MonoBehaviour
     public Plotpoint GetRandomPlotpoint(ThemeType theme)
     {
         Plotpoint plotPoint = null;
+
         int rnd = Random.Range(0, 100);
+
+        //debug only for testing MetaGames
+        if (Random.Range(0, 100) < 50) { rnd = 99; }
+
         plotPoint = arrayOfPlotpointLookup[rnd, (int)theme];
         return plotPoint;
     }

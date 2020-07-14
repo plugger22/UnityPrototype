@@ -1005,10 +1005,6 @@ public class AdventureUI : MonoBehaviour
 
             //Generate new Plotpoint
             GetPlotPoint();
-            //update texts
-            turnPlotPoint.text = plotPoint.tag;
-            turnData0.text = plotPoint.details;
-            arrayOfTurnPlotpoints[plotPointIndex].text = plotPoint.tag;
             //Plotpoint handler
             switch (plotPoint.type)
             {
@@ -1039,6 +1035,10 @@ public class AdventureUI : MonoBehaviour
                     break;
                 default: Debug.LogWarningFormat("Unrecognised plotPoint.type \"{0}\"", plotPoint.type); break;
             }
+            //update texts
+            turnPlotPoint.text = plotPoint.tag;
+            turnData0.text = plotPoint.details;
+            arrayOfTurnPlotpoints[plotPointIndex].text = plotPoint.tag;
             //non character related plotpoints
             if (isPlotpointAdminDone == false)
             {
@@ -1162,6 +1162,7 @@ public class AdventureUI : MonoBehaviour
         MetaPlotpoint metaPlotpoint = ToolManager.i.toolDataScript.GetRandomMetaPlotpoint();
         if (metaPlotpoint != null)
         {
+            Debug.LogFormat("[Tst] AdventureUI.cs -> GetMetaPlotPoint: META \"{0}\", {1}{2}", metaPlotpoint.tag, metaPlotpoint.action, "\n");
             //pass over data to plotPoint (it's a new instance so it won't affect the original with the core data)
             plotPoint.details = metaPlotpoint.details;
             plotPoint.refTag = metaPlotpoint.refTag;
