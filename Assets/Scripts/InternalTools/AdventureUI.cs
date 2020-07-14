@@ -1164,17 +1164,48 @@ public class AdventureUI : MonoBehaviour
         {
             //pass over data to plotPoint (it's a new instance so it won't affect the original with the core data)
             plotPoint.details = metaPlotpoint.details;
-            plotPoint.tag = metaPlotpoint.tag;
             plotPoint.refTag = metaPlotpoint.refTag;
-
+            plotPoint.type = PlotPointType.Normal;
             //resolve action
             switch (metaPlotpoint.action)
             {
                 case MetaAction.CharacterExits:
-                    
+                    //remove a random character
+                    Character character = storyNew.lists.GetRandomCharacterFromList();
+                    if (character != null)
+                    {
+                        storyNew.lists.RemoveCharacterFromList(character);
+                        plotPoint.tag = string.Format("{0} Exits", character.tag);
+                    }
+                    else
+                    {
+                        //there are no characters in list -> default plotPoint (one I made up)
+                        plotPoint.tag = "There's Something Out There";
+                        plotPoint.numberOfCharacters = 0;
+                        plotPoint.details = "An Unknown character is in the background, circling around, waiting for an opportunity to act but mysteriously disappears before doing so";
+                    }
                     break;
                 case MetaAction.CharacterReturns:
-
+                    //previously removed/exited character returns to adventure
+                    character1 = storyNew.lists.GetRandomRemovedCharacter();
+                    if (character1 != null)
+                    {
+                        //add character back into story
+                        storyNew.lists.AddCharacterToList(character1);
+                        storyNew.arrays.AddCharacterToArray(new ListItem() { tag = character1.refTag, status = StoryStatus.Data });
+                        plotPoint.tag = string.Format("{0} returns", character1.tag);
+                    }
+                    else
+                    {
+                        //there are no characters on Removed list -> default plotPoint (one I made up)
+                        character1 = storyNew.lists.GetRandomCharacterFromList();
+                        if (character1 != null)
+                        {
+                            plotPoint.tag = "Something almost happened";
+                            plotPoint.numberOfCharacters = 1;
+                            plotPoint.details = "A character ALMOST had something very bad happen from their past but it, luckily, didn't come to pass";
+                        }
+                    }
                     break;
                 case MetaAction.CharacterUpgrade:
 
@@ -1670,7 +1701,7 @@ public class AdventureUI : MonoBehaviour
                                     Debug.LogFormat("[Tst] AdventureUI.cs -> SaveTurningPoint: EXISTING PlotLine  \"{0}\"{1}", plotLine.tag, "\n");
                                 }
                                 else
-                                { Debug.LogErrorFormat("Invalid plotLine (Null) for \"{0}\"", item.tag);  }
+                                { Debug.LogErrorFormat("Invalid plotLine (Null) for \"{0}\"", item.tag); }
                                 break;
                             case StoryStatus.Logical:
                                 coroutinePlotLine = GetMostLogicalPlotLine();

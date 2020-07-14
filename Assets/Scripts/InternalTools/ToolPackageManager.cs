@@ -277,12 +277,7 @@ namespace toolsAPI
                         {
                             arrayOfCharacters[i] = newItem;
                             Debug.LogFormat("[Tst] StoryArrays.cs -> AddCharacterToArray: {0}, {1} ADDED to arrayOfCharacters (count now {2}){3}", newItem.tag, newItem.status, count + 1, "\n");
-                            Debug.LogFormat("[Tst] StoryArrays.cs -> arrayOfCharacters - - - {0}", "\n");
-                            for (int j = 0; j < arrayOfCharacters.Length; j++)
-                            {
-                                if (arrayOfCharacters[j].status == StoryStatus.Data)
-                                { Debug.LogFormat("[Tst] -> index {0} -> \"{1}\"{2}", j, arrayOfCharacters[j].tag, "\n"); }
-                            }
+                            DebugShowCharacterArray();
                             return true;
                         }
                         else
@@ -321,16 +316,8 @@ namespace toolsAPI
                 else { Debug.LogWarningFormat("Invalid item (Null) for arrayOfCharacters[{0}]", i); }
             }
             //show list (debugging)
-            Debug.LogFormat("[Tst] StoryArrays.cs -> arrayOfCharacters - - - {0}", "\n");
-            for (int j = 0; j < arrayOfCharacters.Length; j++)
-            {
-                if (arrayOfCharacters[j].status == StoryStatus.Data)
-                { Debug.LogFormat("[Tst] -> index {0} -> \"{1}\"{2}", j, arrayOfCharacters[j].tag, "\n"); }
-            }
+            DebugShowCharacterArray();
         }
-
-
-
 
         /// <summary>
         /// Adds a new PlotLine to the next vacant, non-DATA slot in the array. Returns true if successful
@@ -350,12 +337,7 @@ namespace toolsAPI
                         {
                             arrayOfPlotLines[i] = newItem;
                             Debug.LogFormat("[Tst] StoryArrays.cs -> AddPlotLineToArray: {0}, {1} ADDED to arrayOfPlotLines{2}", newItem.tag, newItem.status, "\n");
-                            Debug.LogFormat("[Tst] StoryArrays.cs -> arrayOfPlotLines - - - {0}", "\n");
-                            for (int j = 0; j < arrayOfPlotLines.Length; j++)
-                            {
-                                if (arrayOfPlotLines[j].status == StoryStatus.Data)
-                                { Debug.LogFormat("[Tst] -> index {0} -> \"{1}\"{2}", j, arrayOfPlotLines[j].tag, "\n"); }
-                            }
+                            DebugShowPlotLineArray();
                             return true;
                         }
                         else
@@ -533,6 +515,50 @@ namespace toolsAPI
             }
         }
 
+        //
+        // - - - Debug Methods
+        //
+
+        /// <summary>
+        /// Debug display of CharacterArray
+        /// </summary>
+        public void DebugShowCharacterArray()
+        {
+            Debug.LogFormat("[Tst] - - - StoryArrays.cs -> arrayOfCharacters - - - {0}", "\n");
+            int counter = 0;
+            for (int j = 0; j < arrayOfCharacters.Length; j++)
+            {
+                if (arrayOfCharacters[j].status == StoryStatus.Data)
+                {
+                    Debug.LogFormat("[Tst] index {0} -> \"{1}\"{2}", j, arrayOfCharacters[j].tag, "\n");
+                    counter++;
+                }
+            }
+            if (counter == 0)
+            { Debug.LogFormat("[Tst] No DATA records present{0}", "\n"); }
+            Debug.LogFormat("[Tst] - - - {0}", "\n");
+        }
+
+        /// <summary>
+        /// Debug display of PlotLineArray
+        /// </summary>
+        public void DebugShowPlotLineArray()
+        {
+            Debug.LogFormat("[Tst] - - - StoryArrays.cs -> arrayOfPlotLines - - - {0}", "\n");
+            int counter = 0;
+            for (int j = 0; j < arrayOfPlotLines.Length; j++)
+            {
+                if (arrayOfPlotLines[j].status == StoryStatus.Data)
+                {
+                    Debug.LogFormat("[Tst] index {0} -> \"{1}\"{2}", j, arrayOfPlotLines[j].tag, "\n");
+                    counter++;
+                }
+            }
+            if (counter == 0)
+            { Debug.LogFormat("[Tst] No DATA records present{0}", "\n"); }
+            Debug.LogFormat("[Tst] - - - {0}", "\n");
+        }
+
         #endregion
     }
     #endregion
@@ -663,9 +689,7 @@ namespace toolsAPI
                 {
                     listOfCharacters.Add(character);
                     Debug.LogFormat("[Tst] StoryLists.cs -> AddCharacterToList: \"{0}\", refTag {1} Added to List{2}", character.tag, character.refTag, "\n");
-                    Debug.LogFormat("[Tst] StoryLists.cs -> AddCharacterToList: listOfCharacters - - -{0}", "\n");
-                    for (int i = 0; i < listOfCharacters.Count; i++)
-                    { Debug.LogFormat("[Tst] StoryLists.cs -> AddCharacterToList: index {0} -> \"{1}\"{2}", i, listOfCharacters[i].tag, "\n"); }
+                    DebugShowCharacterList();
                 }
                 else { Debug.LogWarningFormat("Character refTag \"{0}\" alread present in list -> Info Only", character.refTag); }
             }
@@ -716,12 +740,13 @@ namespace toolsAPI
                 }
                 if (counter > 1)
                 { Debug.LogWarningFormat("Invalid result from RemoveCharacterFromList -> {0} records removed (should only have been 1} from listOfCharacters", counter); }
-                Debug.LogFormat("[Tst] StoryList.cs -> RemoveCharacterFromList: {0} record{1} of \"{2}\" have been REMOVED from listOfCharacters{3}", counter, counter != 1 ? "s" : "", character.tag, "\n");
-                Debug.LogFormat("[Tst] StoryLists.cs -> RemoveCharacterFromList: listOfCharacters - - -{0}", "\n");
-                for (int i = 0; i < listOfCharacters.Count; i++)
-                { Debug.LogFormat("[Tst] StoryLists.cs -> RemoveCharacterFromList: index {0} -> \"{1}\"{2}", i, listOfCharacters[i].tag, "\n"); }
                 if (counter == 0)
                 { Debug.LogWarning("Invalid counter (Zero) should be at least one"); }
+
+                Debug.LogFormat("[Tst] StoryList.cs -> RemoveCharacterFromList: {0} record{1} of \"{2}\" have been REMOVED from listOfCharacters{3}", counter, counter != 1 ? "s" : "", character.tag, "\n");
+
+                DebugShowCharacterList();
+                DebugShowRemovedCharactersList();
             }
             else { Debug.LogError("Invalid character (Null)"); }
         }
@@ -741,19 +766,12 @@ namespace toolsAPI
                 character = listOfRemovedCharacters[index];
                 //remove entry from listOfRemovedCharacters
                 listOfRemovedCharacters.RemoveAt(index);
+                Debug.LogFormat("[Tst] StoryLists.cs -> GetRandomRemovedCharacter: \"{0}\" obtained from listOfRemovedCharacters (removed from list){1}", character.tag, "\n");
+                DebugShowRemovedCharactersList();
             }
             return character;
         }
 
-        /// <summary>
-        /// Debug method to display listOfCharacters
-        /// </summary>
-        public void DebugShowCharacterList()
-        {
-            Debug.LogFormat("[Tst] StoryLists.cs -> listOfCharacters - - -{0}", "\n");
-            for (int i = 0; i < listOfCharacters.Count; i++)
-            { Debug.LogFormat("[Tst] StoryLists.cs -> index {0} -> \"{1}\"{2}", i, listOfCharacters[i].tag, "\n"); }
-        }
 
         /// <summary>
         /// Remove a Plotline from list (has been concluded)
@@ -767,16 +785,67 @@ namespace toolsAPI
                 int counter = 0;
                 //remove entry from list
                 counter = listOfPlotLines.RemoveAll(x => x.refTag.Equals(refTag, StringComparison.Ordinal) == true);
-
+                //Admin
                 Debug.LogFormat("[Tst] StoryList.cs -> RemovePlotLineFromList: {0} record{1} of \"{2}\" have been REMOVED from listOfPlotLines{3}", counter, counter != 1 ? "s" : "", refTag, "\n");
-                Debug.LogFormat("[Tst] StoryLists.cs -> listOfPlotLines - - -{0}", "\n");
-                for (int i = 0; i < listOfPlotLines.Count; i++)
-                { Debug.LogFormat("[Tst] StoryLists.cs -> index {0} -> \"{1}\"{2}", i, listOfPlotLines[i].tag, "\n"); }
                 if (counter == 0)
                 { Debug.LogWarning("Invalid counter (Zero) should be at least one"); }
+                DebugShowPlotLineList();
             }
             else { Debug.LogError("Invalid plotLine refTag (Null or Empty)"); }
         }
+
+        //
+        // - - - Debug Methods
+        //
+
+        /// <summary>
+        /// Debug method to display listOfCharacters
+        /// </summary>
+        public void DebugShowCharacterList()
+        {
+            Debug.LogFormat("[Tst] - - - StoryLists.cs -> listOfCharacters - - -{0}", "\n");
+            int count = listOfCharacters.Count;
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                { Debug.LogFormat("[Tst] index {0} -> \"{1}\"{2}", i, listOfCharacters[i].tag, "\n"); }
+            }
+            else { Debug.LogFormat("[Tst] No Records present{0}", "\n"); }
+            Debug.LogFormat("[Tst] - - -{0}", "\n");
+        }
+
+        /// <summary>
+        /// Debug method to display listOfPlotLines
+        /// </summary>
+        public void DebugShowPlotLineList()
+        {
+            Debug.LogFormat("[Tst] - - - StoryLists.cs -> listOfPlotLines - - -{0}", "\n");
+            int count = listOfPlotLines.Count;
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                { Debug.LogFormat("[Tst] index {0} -> \"{1}\"{2}", i, listOfPlotLines[i].tag, "\n"); }
+            }
+            else { Debug.LogFormat("[Tst] No Records present{0}", "\n"); }
+            Debug.LogFormat("[Tst] - - -{0}", "\n");
+        }
+
+        /// <summary>
+        /// Debug method to display listOfRemovedCharacters
+        /// </summary>
+        public void DebugShowRemovedCharactersList()
+        {
+            Debug.LogFormat("[Tst] - - - StoryLists.cs -> listOfRemovedCharacters - - -{0}", "\n");
+            int count = listOfRemovedCharacters.Count;
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                { Debug.LogFormat("[Tst] index {0} -> \"{1}\"{2}", i, listOfRemovedCharacters[i].tag, "\n"); }
+            }
+            else { Debug.LogFormat("[Tst] No Records present{0}", "\n"); }
+            Debug.LogFormat("[Tst] - - -{0}", "\n");
+        }
+
 
         #endregion
     }
