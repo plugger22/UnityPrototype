@@ -14,7 +14,7 @@ namespace toolsAPI
     //
 
     public enum ToolModal { Menu, Main, New, TurningPoint, Lists }
-    public enum ToolModalType { Read, Edit }
+    public enum ToolModalType { Read, Edit, Input }
     public enum ToolModalSubNew { New, Summary }                                        //new adventure sub state
     public enum ThemeType { Action, Tension, Mystery, Social, Personal, Count }   //NOTE: Order matters (ToolDetails.cs)
     public enum StoryStatus { New, Logical, Data }
@@ -623,7 +623,7 @@ namespace toolsAPI
                 }
             }
             if (counter == 0)
-            { Debug.LogFormat("[Tst] No DATA records present{0}", "\n"); }
+            { Debug.LogFormat("[Tst] - No DATA records present{0}", "\n"); }
             Debug.LogFormat("[Tst] - - - {0}", "\n");
         }
 
@@ -643,7 +643,7 @@ namespace toolsAPI
                 }
             }
             if (counter == 0)
-            { Debug.LogFormat("[Tst] No DATA records present{0}", "\n"); }
+            { Debug.LogFormat("[Tst] - No DATA records present{0}", "\n"); }
             Debug.LogFormat("[Tst] - - - {0}", "\n");
         }
 
@@ -775,7 +775,7 @@ namespace toolsAPI
             int count = listOfPlotLines.Count;
             //must be at least two records
             int failSafe = 0;
-            if (count > 1)
+            if (count > 0)
             {
                 //keep picking until you get a non-exclusion plotLine
                 do
@@ -924,7 +924,7 @@ namespace toolsAPI
                 for (int i = 0; i < count; i++)
                 { Debug.LogFormat("[Tst] index {0} -> \"{1}\"{2}", i, listOfCharacters[i].tag, "\n"); }
             }
-            else { Debug.LogFormat("[Tst] No Records present{0}", "\n"); }
+            else { Debug.LogFormat("[Tst] - No Records present{0}", "\n"); }
             Debug.LogFormat("[Tst] - - -{0}", "\n");
         }
 
@@ -940,7 +940,7 @@ namespace toolsAPI
                 for (int i = 0; i < count; i++)
                 { Debug.LogFormat("[Tst] index {0} -> \"{1}\"{2}", i, listOfPlotLines[i].tag, "\n"); }
             }
-            else { Debug.LogFormat("[Tst] No Records present{0}", "\n"); }
+            else { Debug.LogFormat("[Tst] - No Records present{0}", "\n"); }
             Debug.LogFormat("[Tst] - - -{0}", "\n");
         }
 
@@ -956,7 +956,7 @@ namespace toolsAPI
                 for (int i = 0; i < count; i++)
                 { Debug.LogFormat("[Tst] index {0} -> \"{1}\"{2}", i, listOfRemovedCharacters[i].tag, "\n"); }
             }
-            else { Debug.LogFormat("[Tst] No Records present{0}", "\n"); }
+            else { Debug.LogFormat("[Tst] - No Records present{0}", "\n"); }
             Debug.LogFormat("[Tst] - - -{0}", "\n");
         }
 

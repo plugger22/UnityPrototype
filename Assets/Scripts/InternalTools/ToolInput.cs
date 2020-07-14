@@ -116,6 +116,20 @@ public class ToolInput : MonoBehaviour
                     }
                 }
                 break;
+            case ToolModal.TurningPoint:
+                {
+                    switch (_modalType)
+                    {
+                        case ToolModalType.Read:
+                        case ToolModalType.Edit:
+                        case ToolModalType.Input:
+                            //SpaceBar for new Plotpoint 
+                            if (Input.GetButton("Multipurpose") == true)
+                            { ToolEvents.i.PostNotification(ToolEventType.CreatePlotpoint, this, null, "ToolInput.cs -> ProcessKeyInput SPACEBAR"); }
+                            break;
+                    }
+                }
+                break;
         }
     }
     #endregion

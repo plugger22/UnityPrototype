@@ -131,14 +131,12 @@ public class AdventureUI : MonoBehaviour
     public Button turnSaveButton;
 
     public Image turnNameImage;                 //background panel for turning point name
-    public Image turnPlotLineImage;             //background panel for plotLine2 name
 
     public TextMeshProUGUI turnHeader;
     public TextMeshProUGUI turnAdventureName;
     public TextMeshProUGUI turnName;
 
     public TextMeshProUGUI turnPlotPoint;
-    public TextMeshProUGUI turnPlotLine2;
     public TextMeshProUGUI turnCharacter1;
     public TextMeshProUGUI turnCharacter2;
     public TextMeshProUGUI turnData0;
@@ -301,7 +299,6 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(turnName != null, "Invalid turnName (Null)");
         Debug.Assert(turnHeader != null, "Invalid turnHeader (Null)");
         Debug.Assert(turnPlotPoint != null, "Invalid turnPlotPoint (Null)");
-        Debug.Assert(turnPlotLine2 != null, "Invalid turnPlotLine2 (Null)");
         Debug.Assert(turnCharacter1 != null, "Invalid turnCharacter1 (Null)");
         Debug.Assert(turnCharacter2 != null, "Invalid turnCharacter2 (Null)");
         Debug.Assert(turnData0 != null, "Invalid turnData0 (Null)");
@@ -320,7 +317,6 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(turnPlotNotesInput != null, "Invalid turnPlotNotesInput (Null)");
         Debug.Assert(turnPlotpointNotes != null, "Invalid turnPlotpointNotes (Null)");
         Debug.Assert(turnNameImage != null, "Invalid turnNameImage (Null)");
-        Debug.Assert(turnPlotLine2 != null, "Invalid turnPlotLine2 (Null)");
 
         //lists
         Debug.Assert(returnListsInteraction != null, "Invalid returnListsInteraction (Null)");
@@ -896,6 +892,7 @@ public class AdventureUI : MonoBehaviour
     /// </summary>
     private void NewTurningPoint()
     {
+        Debug.LogFormat("[Tst] AdventureUI.cs -> NewTurningPoint: {0} - - - - - - - - - - - - - - {1}", turningPointIndex + 1, "\n");
         //toggle canvases
         turningPointCanvas.gameObject.SetActive(true);
         newAdventureCanvas.gameObject.SetActive(false);
@@ -925,7 +922,6 @@ public class AdventureUI : MonoBehaviour
             {
                 turningPoint = new TurningPoint() { type = TurningPointType.New };
                 plotLine = new PlotLine() { };
-                storyNew.lists.DebugShowCharacterList();
             }
         }
         else
@@ -939,6 +935,10 @@ public class AdventureUI : MonoBehaviour
         RedrawTurningPointPage();
         //set modal state
         ToolManager.i.toolInputScript.SetModalState(ToolModal.TurningPoint);
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Edit);
+        //debug
+        storyNew.lists.DebugShowCharacterList();
+        storyNew.lists.DebugShowPlotLineList();
     }
     #endregion
 
@@ -950,6 +950,7 @@ public class AdventureUI : MonoBehaviour
     /// </summary>
     private void NewPlotpoint()
     {
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Edit);
         // - - - Pre Admin
         turnData1.text = "";
         turnData2.text = "";
@@ -1048,7 +1049,7 @@ public class AdventureUI : MonoBehaviour
                 //increment index
                 plotPointIndex++;
                 //End of turning point
-                if (plotPointIndex >= 5 || turningPoint.type == TurningPointType.Conclusion)
+                if (plotPointIndex >= 5 /* || turningPoint.type == TurningPointType.Conclusion*/)
                 {
                     //toggle save buttons
                     turnPreSaveButton.gameObject.SetActive(true);
@@ -1164,7 +1165,6 @@ public class AdventureUI : MonoBehaviour
         {
             Debug.LogFormat("[Tst] AdventureUI.cs -> GetMetaPlotPoint: META \"{0}\", {1}{2}", metaPlotpoint.tag, metaPlotpoint.action, "\n");
             //pass over data to plotPoint (it's a new instance so it won't affect the original with the core data)
-            plotPoint.details = metaPlotpoint.details;
             plotPoint.refTag = metaPlotpoint.refTag;
             plotPoint.numberOfCharacters = 0;
             plotPoint.type = PlotPointType.Normal;
@@ -1178,7 +1178,9 @@ public class AdventureUI : MonoBehaviour
                     if (character != null)
                     {
                         storyNew.lists.RemoveCharacterFromList(character);
-                        plotPoint.tag = string.Format("{0} Exits", character.tag);
+                        storyNew.arrays.RemoveCharacterFromArray(character.refTag);
+                        plotPoint.tag = string.Format("[Meta] {0} Exits", character.tag);
+                        plotPoint.details = "A character exits the Story";
                     }
                     else
                     {
@@ -1195,7 +1197,8 @@ public class AdventureUI : MonoBehaviour
                         //add character back into story
                         storyNew.lists.AddCharacterToList(character);
                         storyNew.arrays.AddCharacterToArray(new ListItem() { tag = character.refTag, status = StoryStatus.Data });
-                        plotPoint.tag = string.Format("{0} returns", character.tag);
+                        plotPoint.tag = string.Format("[Meta] {0} returns", character.tag);
+                        plotPoint.details = "A character, who previously left, has returned to the story";
                     }
                     else
                     {
@@ -1210,7 +1213,7 @@ public class AdventureUI : MonoBehaviour
                     if (character != null)
                     {
                         storyNew.arrays.UpgradeCharacter(new ListItem() { tag = character.tag, status = StoryStatus.Data }, 2);
-                        plotPoint.tag = string.Format("{0} Upgraded", character.tag);
+                        plotPoint.tag = string.Format("[Meta] {0} Upgraded", character.tag);
                         plotPoint.details = "A character has been upgraded (up to two extra slots in array ignoring the maxCap) in importance";
                     }
                     else
@@ -1227,8 +1230,8 @@ public class AdventureUI : MonoBehaviour
                     {
                         storyNew.arrays.DowngradeCharacter(character.refTag, 2);
                         if (storyNew.arrays.CheckCharacterInArray(character.refTag) == 0)
-                        { storyNew.arrays.RemoveCharacterFromArray(character.refTag); }
-                        plotPoint.tag = string.Format("{0} Downgraded", character.tag);
+                        { storyNew.lists.RemoveCharacterFromList(character); }
+                        plotPoint.tag = string.Format("[Meta] {0} Downgraded", character.tag);
                         plotPoint.details = "A character has been downgraded in importance (loses up to 2 slots in array, removed from adventure if no more slots remaining)";
                     }
                     else
@@ -1244,7 +1247,7 @@ public class AdventureUI : MonoBehaviour
                     if (character != null)
                     {
                         storyNew.arrays.UpgradeCharacter(new ListItem() { tag = character.tag, status = StoryStatus.Data }, 1);
-                        plotPoint.tag = string.Format("{0} Steps Up", character.tag);
+                        plotPoint.tag = string.Format("[Meta] {0} Steps Up", character.tag);
                         plotPoint.details = "A character Steps Up (gain an extra slots in array ignoring the maxCap) and becomes more important";
                     }
                     else
@@ -1261,8 +1264,8 @@ public class AdventureUI : MonoBehaviour
                     {
                         storyNew.arrays.DowngradeCharacter(character.refTag, 1);
                         if (storyNew.arrays.CheckCharacterInArray(character.refTag) == 0)
-                        { storyNew.arrays.RemoveCharacterFromArray(character.refTag); }
-                        plotPoint.tag = string.Format("{0} Steps Down", character.tag);
+                        { storyNew.lists.RemoveCharacterFromList(character); }
+                        plotPoint.tag = string.Format("[Meta] {0} Steps Down", character.tag);
                         plotPoint.details = "A character Steps Down in importance (loses up a slot in array, removed from adventure if no more slots remaining)";
                     }
                     else
@@ -1277,7 +1280,7 @@ public class AdventureUI : MonoBehaviour
                     PlotLine plotLineOther = storyNew.lists.GetRandomPlotLine(plotLine.refTag);
                     if (plotLineOther != null)
                     {
-                        plotPoint.tag = string.Format("[Combined] {0}", plotLineOther.tag);
+                        plotPoint.tag = string.Format("[PlotLine] {0}", plotLineOther.tag);
                         plotPoint.details = "The turning point intertwines with an existing PlotLine in some manner";
                     }
                     else
@@ -1338,6 +1341,7 @@ public class AdventureUI : MonoBehaviour
     /// <returns></returns>
     IEnumerator GetMostLogicalCharacters()
     {
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Input);
         isWaitUntilDone = true;
         //prevents doubling up on NewPlotpoint admin
         isPlotpointAdminDone = true;
@@ -1362,7 +1366,7 @@ public class AdventureUI : MonoBehaviour
         //increment index
         plotPointIndex++;
         //End of turning point
-        if (plotPointIndex >= 5 || turningPoint.type == TurningPointType.Conclusion)
+        if (plotPointIndex >= 5 /*|| turningPoint.type == TurningPointType.Conclusion*/)
         {
             //toggle save buttons
             turnPreSaveButton.gameObject.SetActive(true);
@@ -1870,6 +1874,7 @@ public class AdventureUI : MonoBehaviour
     /// <returns></returns>
     IEnumerator GetMostLogicalPlotLine()
     {
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Input);
         isWaitUntilDone = false;
         //check at least one item in listOfPlotLines
         if (storyNew.lists.listOfPlotLines.Count > 0)
@@ -1926,15 +1931,12 @@ public class AdventureUI : MonoBehaviour
             turnNameInput.gameObject.SetActive(false);
             turnName.text = turningPoint.tag;
         }
-        turnPlotLineImage.gameObject.SetActive(false);
-        turnPlotLine2.gameObject.SetActive(false);
         ToggleTurningPointFields(false);
         //toggle save buttons
         turnPreSaveButton.gameObject.SetActive(false);
         turnSaveButton.gameObject.SetActive(false);
         //clear out fields
         turnPlotPoint.text = "";
-        turnPlotLine2.text = "";
         turnData0.text = "";
         turnCharacter1.text = "";
         turnCharacter2.text = "";
@@ -2053,6 +2055,7 @@ public class AdventureUI : MonoBehaviour
     {
         isWaitUntilDone = true;
         dropDownCanvas.gameObject.SetActive(false);
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Edit);
     }
     #endregion
 
@@ -2731,7 +2734,6 @@ public class AdventureUI : MonoBehaviour
     private void ResetPlotPoint()
     {
         turnPlotPoint.text = "";
-        turnPlotLine2.text = "";
         turnData0.text = "Plotpoint Notes";
         turnCharacter1.text = "Character 1";
         turnCharacter2.text = "Character 2";

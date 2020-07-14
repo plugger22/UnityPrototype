@@ -189,7 +189,7 @@ public class ToolDataManager : MonoBehaviour
         int rnd = Random.Range(0, 100);
 
         //debug only for testing MetaGames
-        if (Random.Range(0, 100) < 50) { rnd = 99; }
+        if (Random.Range(0, 100) < 25) { rnd = 99; }
 
         plotPoint = arrayOfPlotpointLookup[rnd, (int)theme];
         return plotPoint;
