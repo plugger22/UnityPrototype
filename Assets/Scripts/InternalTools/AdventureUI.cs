@@ -1165,13 +1165,15 @@ public class AdventureUI : MonoBehaviour
             //pass over data to plotPoint (it's a new instance so it won't affect the original with the core data)
             plotPoint.details = metaPlotpoint.details;
             plotPoint.refTag = metaPlotpoint.refTag;
+            plotPoint.numberOfCharacters = 0;
             plotPoint.type = PlotPointType.Normal;
+            Character character = null;
             //resolve action
             switch (metaPlotpoint.action)
             {
                 case MetaAction.CharacterExits:
                     //remove a random character
-                    Character character = storyNew.lists.GetRandomCharacterFromList();
+                    character = storyNew.lists.GetRandomCharacterFromList();
                     if (character != null)
                     {
                         storyNew.lists.RemoveCharacterFromList(character);
@@ -1181,46 +1183,108 @@ public class AdventureUI : MonoBehaviour
                     {
                         //there are no characters in list -> default plotPoint (one I made up)
                         plotPoint.tag = "There's Something Out There";
-                        plotPoint.numberOfCharacters = 0;
                         plotPoint.details = "An Unknown character is in the background, circling around, waiting for an opportunity to act but mysteriously disappears before doing so";
                     }
                     break;
                 case MetaAction.CharacterReturns:
                     //previously removed/exited character returns to adventure
-                    character1 = storyNew.lists.GetRandomRemovedCharacter();
-                    if (character1 != null)
+                    character = storyNew.lists.GetRandomRemovedCharacter();
+                    if (character != null)
                     {
                         //add character back into story
-                        storyNew.lists.AddCharacterToList(character1);
-                        storyNew.arrays.AddCharacterToArray(new ListItem() { tag = character1.refTag, status = StoryStatus.Data });
-                        plotPoint.tag = string.Format("{0} returns", character1.tag);
+                        storyNew.lists.AddCharacterToList(character);
+                        storyNew.arrays.AddCharacterToArray(new ListItem() { tag = character.refTag, status = StoryStatus.Data });
+                        plotPoint.tag = string.Format("{0} returns", character.tag);
                     }
                     else
                     {
                         //there are no characters on Removed list -> default plotPoint (one I made up)
-                        character1 = storyNew.lists.GetRandomCharacterFromList();
-                        if (character1 != null)
-                        {
-                            plotPoint.tag = "Something almost happened";
-                            plotPoint.numberOfCharacters = 1;
-                            plotPoint.details = "A character ALMOST had something very bad happen from their past but it, luckily, didn't come to pass";
-                        }
+                        plotPoint.tag = "Something unusual happens";
+                        plotPoint.details = "A twist in the tale, something out of Left Field";
                     }
                     break;
                 case MetaAction.CharacterUpgrade:
-
+                    //character gains 2 extra slots, if available, ignoring maxCap
+                    character = storyNew.lists.GetRandomCharacterFromList();
+                    if (character != null)
+                    {
+                        storyNew.arrays.UpgradeCharacter(new ListItem() { tag = character.tag, status = StoryStatus.Data }, 2);
+                        plotPoint.tag = string.Format("{0} Upgraded", character.tag);
+                        plotPoint.details = "A character has been upgraded (up to two extra slots in array ignoring the maxCap) in importance";
+                    }
+                    else
+                    {
+                        //no character available -> default plotPoint (one I made up)
+                        plotPoint.tag = "Something unusual happens";
+                        plotPoint.details = "A twist in the tale, something out of Left Field";
+                    }
                     break;
                 case MetaAction.CharacterDowngrade:
-
+                    //character loses 2 slots in arrayOfcharacter, and if doing so, leaves array, is removed from list and adventure
+                    character = storyNew.lists.GetRandomCharacterFromList();
+                    if (character != null)
+                    {
+                        storyNew.arrays.DowngradeCharacter(character.refTag, 2);
+                        if (storyNew.arrays.CheckCharacterInArray(character.refTag) == 0)
+                        { storyNew.arrays.RemoveCharacterFromArray(character.refTag); }
+                        plotPoint.tag = string.Format("{0} Downgraded", character.tag);
+                        plotPoint.details = "A character has been downgraded in importance (loses up to 2 slots in array, removed from adventure if no more slots remaining)";
+                    }
+                    else
+                    {
+                        //no character available -> default plotPoint (one I made up)
+                        plotPoint.tag = "Something unusual happens";
+                        plotPoint.details = "A twist in the tale, something out of Left Field";
+                    }
                     break;
                 case MetaAction.CharacterStepsUp:
-
+                    //character gains 1 extra slot, if available, ignoring maxCap
+                    character = storyNew.lists.GetRandomCharacterFromList();
+                    if (character != null)
+                    {
+                        storyNew.arrays.UpgradeCharacter(new ListItem() { tag = character.tag, status = StoryStatus.Data }, 1);
+                        plotPoint.tag = string.Format("{0} Steps Up", character.tag);
+                        plotPoint.details = "A character Steps Up (gain an extra slots in array ignoring the maxCap) and becomes more important";
+                    }
+                    else
+                    {
+                        //no character available -> default plotPoint (one I made up)
+                        plotPoint.tag = "Something unusual happens";
+                        plotPoint.details = "A twist in the tale, something out of Left Field";
+                    }
                     break;
                 case MetaAction.CharacterStepsDown:
-
+                    //character loses a slot in arrayOfcharacter, and if doing so, leaves array, is removed from list and adventure
+                    character = storyNew.lists.GetRandomCharacterFromList();
+                    if (character != null)
+                    {
+                        storyNew.arrays.DowngradeCharacter(character.refTag, 1);
+                        if (storyNew.arrays.CheckCharacterInArray(character.refTag) == 0)
+                        { storyNew.arrays.RemoveCharacterFromArray(character.refTag); }
+                        plotPoint.tag = string.Format("{0} Steps Down", character.tag);
+                        plotPoint.details = "A character Steps Down in importance (loses up a slot in array, removed from adventure if no more slots remaining)";
+                    }
+                    else
+                    {
+                        //no character available -> default plotPoint (one I made up)
+                        plotPoint.tag = "Something unusual happens";
+                        plotPoint.details = "A twist in the tale, something out of Left Field";
+                    }
                     break;
                 case MetaAction.PlotLineCombo:
-
+                    //Combines with another plotline
+                    PlotLine plotLineOther = storyNew.lists.GetRandomPlotLine(plotLine.refTag);
+                    if (plotLineOther != null)
+                    {
+                        plotPoint.tag = string.Format("[Combined] {0}", plotLineOther.tag);
+                        plotPoint.details = "The turning point intertwines with an existing PlotLine in some manner";
+                    }
+                    else
+                    {
+                        //no plotLine available -> default plotPoint (one I made up)
+                        plotPoint.tag = "Something unusual happens";
+                        plotPoint.details = "A twist in the tale, something out of Left Field";
+                    }
                     break;
                 default: Debug.LogWarningFormat("Unrecognised metaPlotpoint.action \"{0}\"", metaPlotpoint.action); break;
             }

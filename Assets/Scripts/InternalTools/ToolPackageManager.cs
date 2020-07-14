@@ -161,6 +161,7 @@ namespace toolsAPI
         private int size = 25;
 
         #region StoryArray Methods
+
         /// <summary>
         /// default constructor
         /// </summary>
@@ -239,6 +240,19 @@ namespace toolsAPI
         }
 
         /// <summary>
+        /// returns number of records present in array of a character (refTag), zero if none
+        /// </summary>
+        /// <param name="refTag"></param>
+        /// <returns></returns>
+        public int CheckCharacterInArray(string refTag)
+        {
+            if (string.IsNullOrEmpty(refTag) == false)
+            { return arrayOfCharacters.Where(x => x.tag.Equals(refTag, StringComparison.Ordinal) == true).Count(); }
+            else { Debug.LogError("Invalid refTag (Null or Empty)"); }
+            return 0;
+        }
+
+        /// <summary>
         /// returns true if arrayOfCharacters has at least one non-DATA type slot available
         /// </summary>
         /// <returns></returns>
@@ -294,29 +308,103 @@ namespace toolsAPI
         }
 
         /// <summary>
+        /// An existing character gains 'x' extra slots in array ignoring maxCap, if the slots are available 
+        /// </summary>
+        /// <param name="newItem"></param>
+        /// <returns></returns>
+        public bool UpgradeCharacter(ListItem newItem, int numOfSlots)
+        {
+            if (newItem != null)
+            {
+                int counter = 0;
+                int count = arrayOfCharacters.Where(x => x.tag.Equals(newItem.tag, StringComparison.Ordinal) == true).Count();
+                for (int i = 0; i < arrayOfCharacters.Length; i++)
+                {
+                    if (arrayOfCharacters[i].status != StoryStatus.Data)
+                    {
+                        arrayOfCharacters[i] = newItem;
+                        Debug.LogFormat("[Tst] StoryArrays.cs -> AddCharacterToArray: {0}, {1} ADDED to arrayOfCharacters (count now {2}){3}", newItem.tag, newItem.status, count + 1, "\n");
+                        counter++;
+                        if (counter >= numOfSlots)
+                        {
+                            DebugShowCharacterArray();
+                            return true;
+                        }
+                    }
+                }
+            }
+            else { Debug.LogError("Invalid newItem (Null)"); }
+            return false;
+        }
+
+        /// <summary>
+        /// An existing character loses 'x' extra slots in array
+        /// </summary>
+        /// <param name="newItem"></param>
+        /// <returns></returns>
+        public bool DowngradeCharacter(string refTag, int numOfSlots)
+        {
+            if (string.IsNullOrEmpty(refTag) == false)
+            {
+                int counter = 0;
+                int count = arrayOfCharacters.Where(x => x.tag.Equals(refTag, StringComparison.Ordinal) == true).Count();
+                for (int i = 0; i < arrayOfCharacters.Length; i++)
+                {
+                    ListItem item = arrayOfCharacters[i];
+                    if (item != null)
+                    {
+                        if (item.status == StoryStatus.Data)
+                        {
+                            if (item.tag.Equals(refTag, StringComparison.Ordinal) == true)
+                            {
+                                //replace character record with default record
+                                SetCharacterArrayItemToDefault(i);
+                                //check if continue
+                                counter++;
+                                Debug.LogFormat("[Tst] StoryArrays.cs -> DowngradeCharacter: \"{0}\" removed from arrayOfCharacters (count now {1}){2}", refTag, count - counter, "\n");
+                                if (counter >= numOfSlots)
+                                {
+                                    DebugShowCharacterArray();
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                    else { Debug.LogErrorFormat("Invalid ListItem (Null) for arrayOfCharacters[{0}]", i); }
+                }
+            }
+            else { Debug.LogError("Invalid refTag (Null or Empty)"); }
+            return false;
+        }
+
+        /// <summary>
         /// Remove all instances of a specific character from array
         /// </summary>
         /// <param name="refTag"></param>
         public void RemoveCharacterFromArray(string refTag)
         {
-            for (int i = arrayOfCharacters.Length - 1;  i >= 0; i--)
+            if (string.IsNullOrEmpty(refTag) == false)
             {
-                ListItem item = arrayOfCharacters[i];
-                if (item != null)
+                for (int i = arrayOfCharacters.Length - 1; i >= 0; i--)
                 {
-                    if (item.status == StoryStatus.Data)
+                    ListItem item = arrayOfCharacters[i];
+                    if (item != null)
                     {
-                        if (item.tag.Equals(refTag, StringComparison.Ordinal) == true)
+                        if (item.status == StoryStatus.Data)
                         {
-                            //replace character record with default record
-                            SetCharacterArrayItemToDefault(i);
+                            if (item.tag.Equals(refTag, StringComparison.Ordinal) == true)
+                            {
+                                //replace character record with default record
+                                SetCharacterArrayItemToDefault(i);
+                            }
                         }
                     }
+                    else { Debug.LogWarningFormat("Invalid item (Null) for arrayOfCharacters[{0}]", i); }
                 }
-                else { Debug.LogWarningFormat("Invalid item (Null) for arrayOfCharacters[{0}]", i); }
+                //show list (debugging)
+                DebugShowCharacterArray();
             }
-            //show list (debugging)
-            DebugShowCharacterArray();
+            else { Debug.LogError("Invalid refTag (Null or Empty)"); }
         }
 
         /// <summary>
@@ -673,6 +761,32 @@ namespace toolsAPI
             if (index > -1 && index < listOfPlotLines.Count)
                 plotLine = listOfPlotLines[index];
             else { Debug.LogErrorFormat("Invalid index \"{0}\" (must be between 0 and {1})", index, listOfPlotLines.Count); }
+            return plotLine;
+        }
+
+        /// <summary>
+        /// Returns a random plotLine from list but NOT the specified exclusionRefTag plotLine provided (if any). Returns null if none present, or suitable
+        /// </summary>
+        /// <param name="exclusionRefTag"></param>
+        /// <returns></returns>
+        public PlotLine GetRandomPlotLine(string exclusionRefTag = "")
+        {
+            PlotLine plotLine = null;
+            int count = listOfPlotLines.Count;
+            //must be at least two records
+            int failSafe = 0;
+            if (count > 1)
+            {
+                //keep picking until you get a non-exclusion plotLine
+                do
+                {
+                    plotLine = listOfPlotLines[Random.Range(0, count)];
+                    failSafe++;
+                    if (failSafe > 20)
+                    { break; }
+                }
+                while (plotLine.refTag.Equals(exclusionRefTag, StringComparison.Ordinal) == true);
+            }
             return plotLine;
         }
 
