@@ -86,18 +86,22 @@ public class AdventureUI : MonoBehaviour
     //Summary
     public TextMeshProUGUI mainTurningPointNotes;
     public TextMeshProUGUI mainInstructions;
-    public TextMeshProUGUI[] arrayOfMainTurningPoints;
 
     //Details
-    public TextMeshProUGUI[] arrayOfMainPlotPoints;
-    public TextMeshProUGUI[] arrayOfMainCharacters;
     public TextMeshProUGUI mainTurnNumber;
     public TextMeshProUGUI mainTurnName;
     public TextMeshProUGUI mainTurnNotes;
 
+    //Arrays
+    public TextMeshProUGUI[] arrayOfMainTurningPoints;
+    public TextMeshProUGUI[] arrayOfMainPlotPoints;
+    public TextMeshProUGUI[] arrayOfMainCharacters;
+    public Toggle[] arrayOfToggles;                      //should be 3 entries, new / development / conclusion, in that order
+
     //Summary -> private
     private string[] arrayOfMainTurningPointNotes = new string[5];
     private int mainSummaryIndex;                        //controls arrow up and down for turning points in summary panel
+    private int mainDetailsIndex;                        //controls arrow up and down for plotPoints in details panel
 
     //Details -> private
 
@@ -296,6 +300,8 @@ public class AdventureUI : MonoBehaviour
             if (arrayOfMainPlotPoints[i] == null) { Debug.LogErrorFormat("Invalid arrayOfMainPlotPoints[{0}] (Null)", i); }
             if (arrayOfMainCharacters[i] == null) { Debug.LogErrorFormat("Invalid arrayOfMainCharacters[{0}] (Null)", i); }
         }
+        for (int i = 0; i < 3; i++)
+        { if (arrayOfToggles[i] == null) { Debug.LogErrorFormat("Invalid arrayOfToggles[{0}] (Null)"); } }
         //new adventure
         Debug.Assert(saveNewInteraction != null, "Invalid themeInteraction (Null)");
         Debug.Assert(turningPointNewInteraction != null, "Invalid turnPointInteraction (Null)");
@@ -442,6 +448,8 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.MainSummaryDownArrow, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.OpenMainDetails, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.CloseMainDetails, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.MainDetailsUpArrow, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.MainDetailsDownArrow, OnEvent, "AdventureUI");
 
         ToolEvents.i.AddListener(ToolEventType.OpenAdventureLists, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.CloseAdventureLists, OnEvent, "AdventureUI");
@@ -538,6 +546,12 @@ public class AdventureUI : MonoBehaviour
                 break;
             case ToolEventType.CloseMainDetails:
                 CloseMainDetails();
+                break;
+            case ToolEventType.MainDetailsUpArrow:
+                MainDetailsUpArrow();
+                break;
+            case ToolEventType.MainDetailsDownArrow:
+                MainDetailsDownArrow();
                 break;
             case ToolEventType.NewSummaryUpArrow:
                 NewSummaryUpArrow();
@@ -743,6 +757,30 @@ public class AdventureUI : MonoBehaviour
     }
 
     /// <summary>
+    /// Up arrow moves one up in turningPoint details display
+    /// </summary>
+    private void MainDetailsUpArrow()
+    {
+        //roll over
+        if (mainDetailsIndex == 0)
+        { mainDetailsIndex = 4; }
+        else { mainDetailsIndex--; }
+        DisplayMainDetails(mainSummaryIndex, mainDetailsIndex);
+    }
+
+    /// <summary>
+    /// down arrow moves one down in turningPoint details display
+    /// </summary>
+    private void MainDetailsDownArrow()
+    {
+        //roll over
+        if (mainDetailsIndex == 4)
+        { mainDetailsIndex = 0; }
+        else { mainDetailsIndex++; }
+        DisplayMainDetails(mainSummaryIndex, mainDetailsIndex);
+    }
+
+    /// <summary>
     /// View details of a particular TurningPoint
     /// </summary>
     private void OpenMainDetails()
@@ -752,10 +790,12 @@ public class AdventureUI : MonoBehaviour
         MainTurnPanel.gameObject.SetActive(true);
         //change ModalType
         ToolManager.i.toolInputScript.SetModalType(ToolModalType.Details);
+        //index
+        mainDetailsIndex = 0;
         //call after setting modalType
         SetMainInstructions();
         //populate page
-        DisplayMainDetails(mainSummaryIndex);
+        DisplayMainDetails(mainSummaryIndex, mainDetailsIndex, true);
     }
 
     /// <summary>
@@ -1093,7 +1133,7 @@ public class AdventureUI : MonoBehaviour
                 PlotDetails details = new PlotDetails()
                 {
                     isActive = false,
-                    plotPoint = plotPoint.tag,
+                    plotPoint = plotPoint.refTag,
                     notes = turnPlotNotesInput.text,
                     character1 = character1,
                     character2 = character2,
@@ -1869,7 +1909,7 @@ public class AdventureUI : MonoBehaviour
                         turningPoint.type = TurningPointType.Conclusion;
                         //remove plotLine
                         RemovePlotLine(turningPoint.refTag);
-                    }                  
+                    }
                 }
                 //exit or next turningPoint
                 if (turningPointIndex < 5 && storyNew.isConcluded == false)
@@ -2432,31 +2472,79 @@ public class AdventureUI : MonoBehaviour
     /// <summary>
     /// Displays turning point details page
     /// </summary>
-    /// <param name="index"></param>
-    private void DisplayMainDetails(int index)
+    /// <param name="summaryIndex"></param>
+    private void DisplayMainDetails(int summaryIndex, int detailsIndex, bool isFirstOpened = false)
     {
         string characters;
-        TurningPoint turningPoint = storyMain.arrayOfTurningPoints[index];
+        TurningPoint turningPoint = storyMain.arrayOfTurningPoints[summaryIndex];
         if (turningPoint != null)
         {
-            mainTurnNumber.text = string.Format("{0}", index + 1);
+            mainTurnNumber.text = string.Format("{0}", summaryIndex + 1);
             mainTurnName.text = turningPoint.tag;
-            mainTurnNotes.text = turningPoint.notes;
+            //toggles
+            switch (turningPoint.type)
+            {
+                case TurningPointType.New:
+                    arrayOfToggles[0].isOn = true;
+                    arrayOfToggles[1].isOn = false;
+                    arrayOfToggles[2].isOn = false;
+                    break;
+                case TurningPointType.Development:
+                    arrayOfToggles[0].isOn = false;
+                    arrayOfToggles[1].isOn = true;
+                    arrayOfToggles[2].isOn = false;
+                    break;
+                case TurningPointType.Conclusion:
+                    arrayOfToggles[0].isOn = false;
+                    arrayOfToggles[1].isOn = false;
+                    arrayOfToggles[2].isOn = true;
+                    break;
+                case TurningPointType.None:
+                    arrayOfToggles[0].isOn = false;
+                    arrayOfToggles[1].isOn = false;
+                    arrayOfToggles[2].isOn = false;
+                    break;
+            }
+            //NOTE: When first, notes are for the Turning Point as a whole (In Yellow). Once you use arrow keys Up and Down it reverts to PlotPoint notes (normal colour)
+            if (isFirstOpened == true)
+            { mainTurnNotes.text = string.Format("<color=\"yellow\">[TurningPoint] <color=\"white\">{0}", turningPoint.notes.Length > 0 ? turningPoint.notes : "None"); }
+            else
+            { mainTurnNotes.text = string.Format("[Plotpoint] {0}", turningPoint.arrayOfDetails[detailsIndex].notes.Length > 0 ? turningPoint.arrayOfDetails[detailsIndex].notes : "None" ); }
             //plotpoints and characters
             for (int i = 0; i < turningPoint.arrayOfDetails.Length; i++)
             {
-                //plotpoints
-                Plotpoint plotPoint = ToolManager.i.toolDataScript.GetPlotpoint(turningPoint.arrayOfDetails[i].plotPoint);
+                //plotpoints - - -
+
+                //DEBUG (plotPoints currently in file are tags not refTags
+                string plotString = turningPoint.arrayOfDetails[i].plotPoint;
+                Plotpoint plotPoint = ToolManager.i.toolDataScript.GetPlotpointFromTag(plotString);
+
+                /*Plotpoint plotPoint = ToolManager.i.toolDataScript.GetPlotpoint(turningPoint.arrayOfDetails[i].plotPoint);*/
                 if (plotPoint != null)
-                { arrayOfMainPlotPoints[i].text = plotPoint.tag; }
-                else { arrayOfMainPlotPoints[i].text = "UNKNOWN"; }
-                //characters
-                characters = "None";
-                if (turningPoint.arrayOfDetails[i].character1 != null)
-                { characters = character1.tag; }
-                if (turningPoint.arrayOfDetails[i].character2 != null)
-                { characters = string.Format("{0}/{1}", characters, character1.tag); }
-                arrayOfMainCharacters[i].text = characters;
+                {
+                    if (detailsIndex == i)
+                    { arrayOfMainPlotPoints[i].text = string.Format("<color=\"yellow\">{0}", plotPoint.tag); }
+                    else { arrayOfMainPlotPoints[i].text = plotPoint.tag; }
+                }
+                else
+                {
+                    if (detailsIndex == i)
+                    { arrayOfMainPlotPoints[i].text = string.Format("<color=\"yellow\">{0}", turningPoint.arrayOfDetails[i].plotPoint); }
+                    else { arrayOfMainPlotPoints[i].text = turningPoint.arrayOfDetails[i].plotPoint; }
+                }
+                //characters - - -
+                characters = (i + 1).ToString();
+                //character1
+                if (turningPoint.arrayOfDetails[i].character1 != null && string.IsNullOrEmpty(turningPoint.arrayOfDetails[i].character1.tag) == false)
+                {
+                    characters = turningPoint.arrayOfDetails[i].character1.tag;
+                    //character2
+                    if (turningPoint.arrayOfDetails[i].character2 != null && string.IsNullOrEmpty(turningPoint.arrayOfDetails[i].character2.tag) == false)
+                    { characters = string.Format("{0} / {1}", characters, turningPoint.arrayOfDetails[i].character2.tag); }
+                }
+                if (detailsIndex == i)
+                { arrayOfMainCharacters[i].text = string.Format("<color=\"yellow\">{0}", characters); }
+                else { arrayOfMainCharacters[i].text = characters; }
             }
         }
         else { Debug.LogWarningFormat("Invalid turningPoint (Null) for storyMain.arrayOfTurningPoints[{0}]", mainSummaryIndex); }
@@ -2500,7 +2588,7 @@ public class AdventureUI : MonoBehaviour
     /// </summary>
     private void SetMainInstructions()
     {
-        switch(ToolManager.i.toolInputScript.ModalType)
+        switch (ToolManager.i.toolInputScript.ModalType)
         {
             case ToolModalType.Read:
                 mainInstructions.text = "LEFT and RIGHT ARROWS<br>to browse Adventures";

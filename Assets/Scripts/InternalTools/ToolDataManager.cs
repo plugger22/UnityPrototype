@@ -202,6 +202,22 @@ public class ToolDataManager : MonoBehaviour
         return null;
     }
 
+
+    /// <summary>
+    /// Debug method to get a plotpoint from dictionary using tag instead of refTag (way more inefficient). Returns null if not found
+    /// </summary>
+    /// <param name="refTag"></param>
+    /// <returns></returns>
+    public Plotpoint GetPlotpointFromTag(string tag)
+    {
+        var values = dictOfPlotpoints.Where(item => item.Value.tag.Equals(tag, StringComparison.Ordinal) == true).Select(item => item.Value);
+        List<Plotpoint> listOfPlotpoints = values.ToList();
+        if (listOfPlotpoints.Count > 0)
+        { return listOfPlotpoints[0]; }
+        return null;
+                    
+    }
+
     #endregion
 
     #region Characters

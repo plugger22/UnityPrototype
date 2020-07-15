@@ -77,7 +77,7 @@ public class ToolInput : MonoBehaviour
                             }
                             else if (Input.GetButtonDown("Vertical"))
                             {
-                                //right / left arrows
+                                //up / down arrows
                                 y_axis = Input.GetAxisRaw("Vertical");
                                 if (y_axis > 0)
                                 { ToolEvents.i.PostNotification(ToolEventType.MainSummaryUpArrow, this, null, "ToolInput.cs -> ProcessKeyInput Vertical UP"); }
@@ -95,6 +95,15 @@ public class ToolInput : MonoBehaviour
                             {
                                 //ESC pressed, exit main details page and return to summary view
                                 ToolEvents.i.PostNotification(ToolEventType.CloseMainDetails, this, null, "ToolInput.cs -> ProcessKeyInput ESC");
+                            }
+                            else if (Input.GetButtonDown("Vertical"))
+                            {
+                                //up / down arrows
+                                y_axis = Input.GetAxisRaw("Vertical");
+                                if (y_axis > 0)
+                                { ToolEvents.i.PostNotification(ToolEventType.MainDetailsUpArrow, this, null, "ToolInput.cs -> ProcessKeyInput Vertical UP"); }
+                                else if (y_axis < 0)
+                                { ToolEvents.i.PostNotification(ToolEventType.MainDetailsDownArrow, this, null, "ToolInput.cs -> ProcessKeyInput Vertical DOWN"); }
                             }
                             break;
                     }

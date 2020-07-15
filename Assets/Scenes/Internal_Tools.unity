@@ -11593,7 +11593,7 @@ GameObject:
   - component: {fileID: 373840397}
   - component: {fileID: 373840398}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: ToggleNew
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14351,7 +14351,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: -30}
-  m_SizeDelta: {x: 240, y: 40}
+  m_SizeDelta: {x: 390, y: 40}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &479210226
 MonoBehaviour:
@@ -18811,7 +18811,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 255, y: -5}
+  m_AnchoredPosition: {x: 410, y: -5}
   m_SizeDelta: {x: 130, y: 90}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &649807462
@@ -24177,7 +24177,7 @@ GameObject:
   - component: {fileID: 889587583}
   - component: {fileID: 889587584}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: ToggleConclusion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25223,7 +25223,7 @@ GameObject:
   - component: {fileID: 926165185}
   - component: {fileID: 926165186}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: ToggleDevelopment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44565,8 +44565,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 399.99997, y: -30}
-  m_SizeDelta: {x: 390, y: 40}
+  m_AnchoredPosition: {x: 580, y: -30}
+  m_SizeDelta: {x: 200, y: 40}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1778834878
 MonoBehaviour:
@@ -51537,6 +51537,10 @@ MonoBehaviour:
   - {fileID: 1853327699}
   - {fileID: 99490844}
   - {fileID: 204733455}
+  arrayOfToggles:
+  - {fileID: 373840398}
+  - {fileID: 926165186}
+  - {fileID: 889587584}
   mainTurnNumber: {fileID: 1883879671}
   mainTurnName: {fileID: 8643096}
   mainTurnNotes: {fileID: 242376611}

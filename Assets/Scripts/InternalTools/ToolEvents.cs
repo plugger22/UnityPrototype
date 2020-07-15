@@ -24,6 +24,8 @@ public enum ToolEventType
     CloseMainDetails,
     MainSummaryUpArrow,
     MainSummaryDownArrow,
+    MainDetailsUpArrow,
+    MainDetailsDownArrow,
     //Adventure New
     CloseNewAdventure,
     SaveAdventureToDict,
