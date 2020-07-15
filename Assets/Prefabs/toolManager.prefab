@@ -108,6 +108,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameSet: {fileID: 11400000, guid: 854ab7ac874cecd418818e40bda1e9bf, type: 2}
+  arrayOfNameSets:
+  - {fileID: 11400000, guid: 195743710f6a69f47acd502168cd250c, type: 2}
+  - {fileID: 11400000, guid: 56b7e91ac8e6f3d449828205cc0d2f2a, type: 2}
+  - {fileID: 11400000, guid: 854ab7ac874cecd418818e40bda1e9bf, type: 2}
+  - {fileID: 11400000, guid: 544bfb4bf9f66cb48869c829e7173599, type: 2}
+  - {fileID: 11400000, guid: f935e371ffa59e745bad0891ea7997dd, type: 2}
 --- !u!114 &114805727387746334
 MonoBehaviour:
   m_ObjectHideFlags: 1

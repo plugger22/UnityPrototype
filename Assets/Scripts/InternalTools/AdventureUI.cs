@@ -48,6 +48,7 @@ public class AdventureUI : MonoBehaviour
     private IEnumerator coroutineCharacter;
     private IEnumerator coroutineDropDown;
     private IEnumerator coroutinePlotLine;
+    private IEnumerator coroutineNameSet;
 
     //static reference
     private static AdventureUI adventureUI;
@@ -117,6 +118,7 @@ public class AdventureUI : MonoBehaviour
     public ToolButtonInteraction turningPointNewInteraction;
     public ToolButtonInteraction clearNewInteraction;
     public ToolButtonInteraction returnNewInteraction;
+    public ToolButtonInteraction nameSetInteraction;
 
     public Button newTurningButton;
     public Button newSaveButton;
@@ -315,6 +317,7 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(turningPointNewInteraction != null, "Invalid turnPointInteraction (Null)");
         Debug.Assert(returnNewInteraction != null, "Invalid returnNewInteraction (Null)");
         Debug.Assert(clearNewInteraction != null, "Invalid clearNewInteraction (Null)");
+        Debug.Assert(nameSetInteraction != null, "Invalid nameSetInteraction (Null)");
         Debug.Assert(newTurningButton != null, "Invalid turningPointButton (Null)");
         Debug.Assert(newSaveButton != null, "Invalid newSaveButton (Null)");
         Debug.Assert(themeNew1 != null, "Invalid theme1 (Null)");
@@ -444,6 +447,7 @@ public class AdventureUI : MonoBehaviour
         preSaveTurnInteraction.SetButton(ToolEventType.PreSaveTurningPoint);
         saveNewInteraction.SetButton(ToolEventType.SaveAdventureToDict);
         clearNewInteraction.SetButton(ToolEventType.ClearNewAdventure);
+        nameSetInteraction.SetButton(ToolEventType.NewNameSet);
         //turningPoint buttonInteractions
         plotTurnInteraction.SetButton(ToolEventType.CreatePlotpoint);
         clearTurnInteraction.SetButton(ToolEventType.ClearTurningPoint);
@@ -575,6 +579,9 @@ public class AdventureUI : MonoBehaviour
                 break;
             case ToolEventType.SaveAdventure:
                 SaveAdventure();
+                break;
+            case ToolEventType.NewNameSet:
+                GetNewNameSet();
                 break;
             case ToolEventType.NextAdventure:
                 NextAdventure();
@@ -1148,6 +1155,47 @@ public class AdventureUI : MonoBehaviour
         { newSummaryIndex = 0; }
         else { newSummaryIndex++; }
         DisplayNewSummary(newSummaryIndex);
+    }
+
+    /// <summary>
+    /// Choose a nameset from a drop down list to be used for New Adventures
+    /// </summary>
+    private void GetNewNameSet()
+    {
+        coroutineNameSet = GetDropDownNameSet();
+        StartCoroutine(coroutineNameSet);
+    }
+
+    /// <summary>
+    /// handles drop down input for NameSets
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator GetDropDownNameSet()
+    {
+        isWaitUntilDone = false;
+        //initiliase drop down list
+        NameSet[] arrayOfNameSets = ToolManager.i.adventureScript.GetArrayOfNameSets();
+        if (arrayOfNameSets != null)
+        {
+            int count = arrayOfNameSets.Length;
+            if (count > 0)
+            {
+                //get a list of nameSet names
+                List<string> listOfNameSets = new List<string>();
+                for (int i = 0; i < count; i++)
+                { listOfNameSets.Add(arrayOfNameSets[i].name); }
+                //initialise dropDown
+                InitialiseDropDownInput(listOfNameSets, "Select a NameSet to use");
+                coroutineDropDown = WaitForDropDownNameSetInput();
+                StartCoroutine(coroutineDropDown);
+
+            }
+            else { Debug.LogError("Invalid arrayOfNameSets (Empty)"); }
+        }
+        else { Debug.LogError("Invalid arrayOfNameSets (Null)"); }
+        yield return new WaitUntil(() => isWaitUntilDone == true);
+        //post input processing
+
     }
 
 
@@ -2301,7 +2349,7 @@ public class AdventureUI : MonoBehaviour
     /// <returns></returns>
     IEnumerator WaitForDropDownPlotLineInput()
     {
-        isWaitUntilDone = false;
+        /*isWaitUntilDone = false;*/
         dropDownCanvas.gameObject.SetActive(true);
         yield return new WaitUntil(() => isWaitUntilDone == true);
         if (dropDownInputInt > -1)
@@ -2317,6 +2365,19 @@ public class AdventureUI : MonoBehaviour
             };
             Debug.LogFormat("[Tst] AdventureUI.cs -> WaitForDropDownPlotLineInput: MOST LOGICAL plotLine \"{0}\"{1}", plotLine.tag, "\n");
         }
+    }
+
+    /// <summary>
+    /// Wait for input from drop down pop-up
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator WaitForDropDownNameSetInput()
+    {
+        dropDownCanvas.gameObject.SetActive(true);
+        yield return new WaitUntil(() => isWaitUntilDone == true);
+        if (dropDownInputInt > -1)
+        { ToolManager.i.adventureScript.SetNameSet(dropDownInputInt); }
+        Debug.LogFormat("[Tst] AdventureUI.cs -> WaitForDropDownNameSetInput: Selected NameSet \"{0}\"{1}", dropDownInputString, "\n");
     }
 
     /// <summary>

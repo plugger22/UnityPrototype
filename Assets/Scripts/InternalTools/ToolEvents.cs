@@ -36,6 +36,7 @@ public enum ToolEventType
     ClearNewAdventure,
     NewSummaryUpArrow,
     NewSummaryDownArrow,
+    NewNameSet,
     //Turning Point
     CloseTurningPoint,
     OpenTurningPoint,

@@ -9,27 +9,20 @@ using Random = System.Random;
 /// </summary>
 public class AdventureManager : MonoBehaviour
 {
+    [Header("Names")]
+    [Tooltip("A New Adventure can select from any of the Namesets provided here")]
+    public NameSet[] arrayOfNameSets;
 
-    [Header("Names for Characters")]
-    /*[Tooltip("Male first name textlist")]
-    public TextList nameMaleFirst;
-    [Tooltip("Female first name textlist")]
-    public TextList nameFemaleFirst;
-    [Tooltip("Last name textlist")]
-    public TextList nameLast;*/
-
-    [Tooltip("NameSet to be used")]
-    public NameSet nameSet;
-
-
+    private NameSet nameSet;
 
     public void Initialise()
     {
-        /*DebugTestCharacter();
-        Debug.Assert(nameMaleFirst != null, "Invalid nameMaleFirst (Null)");
-        Debug.Assert(nameFemaleFirst != null, "Invalid nameFemaleFirst (Null)");
-        Debug.Assert(nameLast != null, "Invalid nameLast (Null)");*/
-        Debug.Assert(nameSet != null, "Invalid nameSet (Null)");
+        Debug.Assert(arrayOfNameSets.Length > 0, "Invalid arrayOfNameSets (Empty)");
+        for (int i = 0; i < arrayOfNameSets.Length; i++)
+        {
+            if (arrayOfNameSets[i] == null)
+            { Debug.LogErrorFormat("Invalid nameSet (Null) for arrayOfNameSets[{0}]", i); }
+        }
     }
 
     /// <summary>
@@ -135,6 +128,31 @@ public class AdventureManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid CharacterSpecial (Null)"); }
         return character; 
+    }
+
+    //
+    // - - - NameSets
+    //
+
+    /// <summary>
+    /// Get arrayOfNameSets
+    /// </summary>
+    /// <returns></returns>
+    public NameSet[] GetArrayOfNameSets()
+    { return arrayOfNameSets; }
+
+    /// <summary>
+    /// Called from AdventureUI.cs and determines which nameSet will be used
+    /// </summary>
+    /// <param name="index"></param>
+    public void SetNameSet(int index)
+    {
+        if (index > -1 && index < arrayOfNameSets.Length)
+        {
+            nameSet = arrayOfNameSets[index];
+            Debug.LogFormat("[Tst] AdventureManager.cs -> SetNameSet: \"{0}\" NAMESET now in use{1}", nameSet.name, "\n");
+        }
+        else { Debug.LogErrorFormat("Invalid index \"{0}\" (should be between 0 and {1})", arrayOfNameSets.Length); }
     }
 
     //
