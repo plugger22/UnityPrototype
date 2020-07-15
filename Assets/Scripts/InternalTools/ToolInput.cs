@@ -75,7 +75,17 @@ public class ToolInput : MonoBehaviour
                                 else if (x_axis < 0)
                                 { ToolEvents.i.PostNotification(ToolEventType.PreviousAdventure, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal"); }
                             }
+                            if (Input.GetButtonDown("Vertical"))
+                            {
+                                //right / left arrows
+                                y_axis = Input.GetAxisRaw("Vertical");
+                                if (y_axis > 0)
+                                { ToolEvents.i.PostNotification(ToolEventType.MainSummaryUpArrow, this, null, "ToolInput.cs -> ProcessKeyInput Vertical UP"); }
+                                else if (y_axis < 0)
+                                { ToolEvents.i.PostNotification(ToolEventType.MainSummaryDownArrow, this, null, "ToolInput.cs -> ProcessKeyInput Vertical DOWN"); }
+                            }
                             break;
+
                     }
                 }
                 break;
@@ -95,7 +105,6 @@ public class ToolInput : MonoBehaviour
                             { ToolEvents.i.PostNotification(ToolEventType.NewSummaryDownArrow, this, null, "ToolInput.cs -> ProcessKeyInput Vertical DOWN"); }
                         }
                         break;
-
                 }
                 break;
             case ToolModal.Lists:

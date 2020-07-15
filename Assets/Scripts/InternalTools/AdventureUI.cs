@@ -79,6 +79,16 @@ public class AdventureUI : MonoBehaviour
     public TextMeshProUGUI mainTag;
     public TextMeshProUGUI mainDate;
     public TextMeshProUGUI mainNotes;
+
+    public Image MainTurnPanel;
+    public Image MainSummaryPanel;
+
+    //Summary
+    public TextMeshProUGUI mainTurningPointNotes;
+    public TextMeshProUGUI[] arrayOfMainTurningPoints;
+
+    private string[] arrayOfMainTurningPointNotes = new string[5];
+    private int mainSummaryIndex;                        //controls arrow up and down for turning points in summary panel
     #endregion
 
     #region New Adventure
@@ -261,6 +271,11 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(mainNotes != null, "Invalid mainNotes (Null)");
         Debug.Assert(mainDate != null, "Invalid mainDate (Null)");
         Debug.Assert(saveButton != null, "Invalid saveButton (Null)");
+        Debug.Assert(MainTurnPanel != null, "Invalid mainTurnPanel (Null)");
+        Debug.Assert(MainSummaryPanel != null, "Invalid mainSummaryPanel (Null)");
+        Debug.Assert(mainTurningPointNotes != null, "Invalid mainTurningPointNotes (Null)");
+        for (int i = 0; i < 5; i++)
+        { if (arrayOfMainTurningPoints[i] == null) { Debug.LogErrorFormat("Invalid arrayOfMainTurningPoints[{0}] (Null)", i); } }
         //new adventure
         Debug.Assert(saveNewInteraction != null, "Invalid themeInteraction (Null)");
         Debug.Assert(turningPointNewInteraction != null, "Invalid turnPointInteraction (Null)");
@@ -403,8 +418,8 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.ClearNewAdventure, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.NextAdventure, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.PreviousAdventure, OnEvent, "AdventureUI");
-        ToolEvents.i.AddListener(ToolEventType.NewSummaryUpArrow, OnEvent, "AdventureUI");
-        ToolEvents.i.AddListener(ToolEventType.NewSummaryDownArrow, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.MainSummaryUpArrow, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.MainSummaryDownArrow, OnEvent, "AdventureUI");
 
         ToolEvents.i.AddListener(ToolEventType.OpenAdventureLists, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.CloseAdventureLists, OnEvent, "AdventureUI");
@@ -414,6 +429,8 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.PreviousLists, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.EditListItem, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.SaveListDetails, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.NewSummaryUpArrow, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.NewSummaryDownArrow, OnEvent, "AdventureUI");
 
         ToolEvents.i.AddListener(ToolEventType.CreatePlotpoint, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.ClearTurningPoint, OnEvent, "AdventureUI");
@@ -488,6 +505,12 @@ public class AdventureUI : MonoBehaviour
             case ToolEventType.PreviousAdventure:
                 PreviousAdventure();
                 break;
+            case ToolEventType.MainSummaryUpArrow:
+                MainSummaryUpArrow();
+                break;
+            case ToolEventType.MainSummaryDownArrow:
+                MainSummaryDownArrow();
+                break;
             case ToolEventType.NewSummaryUpArrow:
                 NewSummaryUpArrow();
                 break;
@@ -556,6 +579,9 @@ public class AdventureUI : MonoBehaviour
         //turn on
         ToolManager.i.toolUIScript.CloseTools();
         adventureCanvas.gameObject.SetActive(true);
+        //panels
+        MainTurnPanel.gameObject.SetActive(false);    //redudant at present
+        MainSummaryPanel.gameObject.SetActive(true);
         //load data from dictionary automatically
         LoadAdventures();
         //Navigation
@@ -564,6 +590,8 @@ public class AdventureUI : MonoBehaviour
         DisplayStoryMain();
         //disable Save button
         saveButton.gameObject.SetActive(false);
+        //up and down arrow index
+        mainSummaryIndex = 0;
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.Main);
         ToolManager.i.toolInputScript.SetModalType(ToolModalType.Read);
@@ -658,6 +686,30 @@ public class AdventureUI : MonoBehaviour
         { mainNavCounter = mainNavLimit - 1; }
         //show story
         DisplayStoryMain();
+    }
+
+    /// <summary>
+    /// Up arrow moves one up in turningPoint summary display
+    /// </summary>
+    private void MainSummaryUpArrow()
+    {
+        //roll over
+        if (mainSummaryIndex == 0)
+        { mainSummaryIndex = 4; }
+        else { mainSummaryIndex--; }
+        DisplayMainSummary(mainSummaryIndex);
+    }
+
+    /// <summary>
+    /// down arrow moves one down in turningPoint summary display
+    /// </summary>
+    private void MainSummaryDownArrow()
+    {
+        //roll over
+        if (mainSummaryIndex == 4)
+        { mainSummaryIndex = 0; }
+        else { mainSummaryIndex++; }
+        DisplayMainSummary(mainSummaryIndex);
     }
 
 
@@ -2295,6 +2347,8 @@ public class AdventureUI : MonoBehaviour
             themeMain4.text = "";
             themeMain5.text = "";
         }
+        //populate summary panel
+        DisplayMainSummary(newSummaryIndex);
     }
 
 
@@ -2314,6 +2368,40 @@ public class AdventureUI : MonoBehaviour
             else { Debug.LogWarningFormat("Invalid story (Null) from listOfStories[{0}]", mainNavCounter); }
         }
     }
+
+    /// <summary>
+    /// Populates Summary Panel on main adventure screen. Index refers to currently selected TurningPoint (index values -> 0 to 4)
+    /// </summary>
+    private void DisplayMainSummary(int index)
+    {
+        if (index > 4 || index < 0) { Debug.LogWarningFormat("Invalid index \"[0}\" (should be between 0 and 4)", index); }
+        index = Mathf.Clamp(index, 0, 4);
+        //populate panel
+        for (int i = 0; i < storyMain.arrayOfTurningPoints.Length; i++)
+        {
+            TurningPoint turningPoint = storyMain.arrayOfTurningPoints[i];
+            if (turningPoint.type != TurningPointType.None)
+            {
+                //valid turningPoint (current index in yellow)
+                if (i == mainSummaryIndex)
+                { arrayOfMainTurningPoints[i].text = string.Format("<color=\"yellow\">{0} {1}", i + 1, turningPoint.tag); }
+                else
+                { arrayOfMainTurningPoints[i].text = string.Format("<color=\"white\">{0} {1}", i + 1, turningPoint.tag); }
+                arrayOfMainTurningPointNotes[i] = turningPoint.notes;
+            }
+            else
+            {
+                //empty turning point
+                if (i == mainSummaryIndex)
+                { arrayOfMainTurningPoints[i].text = string.Format("<color=\"yellow\">{0}", i + 1); }
+                else { arrayOfMainTurningPoints[i].text = string.Format("<color=\"white\">{0}", i + 1); }
+                arrayOfMainTurningPointNotes[i] = "";
+            }
+        }
+        //set  note
+        mainTurningPointNotes.text = arrayOfMainTurningPointNotes[index];
+    }
+
     #endregion
 
     #region New Adventure Utilities

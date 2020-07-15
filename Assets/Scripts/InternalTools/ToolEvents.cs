@@ -20,6 +20,8 @@ public enum ToolEventType
     ClearAdventureDictionary,
     NextAdventure,
     PreviousAdventure,
+    MainSummaryUpArrow,
+    MainSummaryDownArrow,
     //Adventure New
     CloseNewAdventure,
     SaveAdventureToDict,
