@@ -85,10 +85,22 @@ public class AdventureUI : MonoBehaviour
 
     //Summary
     public TextMeshProUGUI mainTurningPointNotes;
+    public TextMeshProUGUI mainInstructions;
     public TextMeshProUGUI[] arrayOfMainTurningPoints;
 
+    //Details
+    public TextMeshProUGUI[] arrayOfMainPlotPoints;
+    public TextMeshProUGUI[] arrayOfMainCharacters;
+    public TextMeshProUGUI mainTurnNumber;
+    public TextMeshProUGUI mainTurnName;
+    public TextMeshProUGUI mainTurnNotes;
+
+    //Summary -> private
     private string[] arrayOfMainTurningPointNotes = new string[5];
     private int mainSummaryIndex;                        //controls arrow up and down for turning points in summary panel
+
+    //Details -> private
+
     #endregion
 
     #region New Adventure
@@ -274,8 +286,16 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(MainTurnPanel != null, "Invalid mainTurnPanel (Null)");
         Debug.Assert(MainSummaryPanel != null, "Invalid mainSummaryPanel (Null)");
         Debug.Assert(mainTurningPointNotes != null, "Invalid mainTurningPointNotes (Null)");
+        Debug.Assert(mainInstructions != null, "Invalid mainInstructions (Null)");
+        Debug.Assert(mainTurnNumber != null, "Invalid mainTurnNumber (Null)");
+        Debug.Assert(mainTurnName != null, "Invalid mainTurnName (Null)");
+        Debug.Assert(mainTurnNotes != null, "Invalid mainTurnNotes (Null)");
         for (int i = 0; i < 5; i++)
-        { if (arrayOfMainTurningPoints[i] == null) { Debug.LogErrorFormat("Invalid arrayOfMainTurningPoints[{0}] (Null)", i); } }
+        {
+            if (arrayOfMainTurningPoints[i] == null) { Debug.LogErrorFormat("Invalid arrayOfMainTurningPoints[{0}] (Null)", i); }
+            if (arrayOfMainPlotPoints[i] == null) { Debug.LogErrorFormat("Invalid arrayOfMainPlotPoints[{0}] (Null)", i); }
+            if (arrayOfMainCharacters[i] == null) { Debug.LogErrorFormat("Invalid arrayOfMainCharacters[{0}] (Null)", i); }
+        }
         //new adventure
         Debug.Assert(saveNewInteraction != null, "Invalid themeInteraction (Null)");
         Debug.Assert(turningPointNewInteraction != null, "Invalid turnPointInteraction (Null)");
@@ -420,6 +440,8 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.PreviousAdventure, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.MainSummaryUpArrow, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.MainSummaryDownArrow, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.OpenMainDetails, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.CloseMainDetails, OnEvent, "AdventureUI");
 
         ToolEvents.i.AddListener(ToolEventType.OpenAdventureLists, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.CloseAdventureLists, OnEvent, "AdventureUI");
@@ -511,6 +533,12 @@ public class AdventureUI : MonoBehaviour
             case ToolEventType.MainSummaryDownArrow:
                 MainSummaryDownArrow();
                 break;
+            case ToolEventType.OpenMainDetails:
+                OpenMainDetails();
+                break;
+            case ToolEventType.CloseMainDetails:
+                CloseMainDetails();
+                break;
             case ToolEventType.NewSummaryUpArrow:
                 NewSummaryUpArrow();
                 break;
@@ -595,6 +623,8 @@ public class AdventureUI : MonoBehaviour
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.Main);
         ToolManager.i.toolInputScript.SetModalType(ToolModalType.Read);
+        //call after setting modalType
+        SetMainInstructions();
     }
 
 
@@ -710,6 +740,36 @@ public class AdventureUI : MonoBehaviour
         { mainSummaryIndex = 0; }
         else { mainSummaryIndex++; }
         DisplayMainSummary(mainSummaryIndex);
+    }
+
+    /// <summary>
+    /// View details of a particular TurningPoint
+    /// </summary>
+    private void OpenMainDetails()
+    {
+        //toggle panels
+        MainSummaryPanel.gameObject.SetActive(false);
+        MainTurnPanel.gameObject.SetActive(true);
+        //change ModalType
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Details);
+        //call after setting modalType
+        SetMainInstructions();
+        //populate page
+        DisplayMainDetails(mainSummaryIndex);
+    }
+
+    /// <summary>
+    /// close TurningPoint details page and go back to summary
+    /// </summary>
+    private void CloseMainDetails()
+    {
+        //toggle panels
+        MainTurnPanel.gameObject.SetActive(false);
+        MainSummaryPanel.gameObject.SetActive(true);
+        //change ModalType
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Read);
+        //call after setting modalType
+        SetMainInstructions();
     }
 
 
@@ -2370,6 +2430,39 @@ public class AdventureUI : MonoBehaviour
     }
 
     /// <summary>
+    /// Displays turning point details page
+    /// </summary>
+    /// <param name="index"></param>
+    private void DisplayMainDetails(int index)
+    {
+        string characters;
+        TurningPoint turningPoint = storyMain.arrayOfTurningPoints[index];
+        if (turningPoint != null)
+        {
+            mainTurnNumber.text = string.Format("{0}", index + 1);
+            mainTurnName.text = turningPoint.tag;
+            mainTurnNotes.text = turningPoint.notes;
+            //plotpoints and characters
+            for (int i = 0; i < turningPoint.arrayOfDetails.Length; i++)
+            {
+                //plotpoints
+                Plotpoint plotPoint = ToolManager.i.toolDataScript.GetPlotpoint(turningPoint.arrayOfDetails[i].plotPoint);
+                if (plotPoint != null)
+                { arrayOfMainPlotPoints[i].text = plotPoint.tag; }
+                else { arrayOfMainPlotPoints[i].text = "UNKNOWN"; }
+                //characters
+                characters = "None";
+                if (turningPoint.arrayOfDetails[i].character1 != null)
+                { characters = character1.tag; }
+                if (turningPoint.arrayOfDetails[i].character2 != null)
+                { characters = string.Format("{0}/{1}", characters, character1.tag); }
+                arrayOfMainCharacters[i].text = characters;
+            }
+        }
+        else { Debug.LogWarningFormat("Invalid turningPoint (Null) for storyMain.arrayOfTurningPoints[{0}]", mainSummaryIndex); }
+    }
+
+    /// <summary>
     /// Populates Summary Panel on main adventure screen. Index refers to currently selected TurningPoint (index values -> 0 to 4)
     /// </summary>
     private void DisplayMainSummary(int index)
@@ -2400,6 +2493,22 @@ public class AdventureUI : MonoBehaviour
         }
         //set  note
         mainTurningPointNotes.text = arrayOfMainTurningPointNotes[index];
+    }
+
+    /// <summary>
+    /// Sets instruction text at page bottom according to currently set ModalType (so call AFTER you've changed modal type)
+    /// </summary>
+    private void SetMainInstructions()
+    {
+        switch(ToolManager.i.toolInputScript.ModalType)
+        {
+            case ToolModalType.Read:
+                mainInstructions.text = "LEFT and RIGHT ARROWS<br>to browse Adventures";
+                break;
+            case ToolModalType.Details:
+                mainInstructions.text = "ESC to Return";
+                break;
+        }
     }
 
     #endregion
