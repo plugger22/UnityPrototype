@@ -62,13 +62,16 @@ public class AdventureUI : MonoBehaviour
     public ToolButtonInteraction saveToFileInteraction;
     public ToolButtonInteraction loadFromFileInteraction;
     public ToolButtonInteraction editAdventureInteraction;
+    public ToolButtonInteraction saveAdventureInteraction;
     public ToolButtonInteraction deleteFileInteraction;
     public ToolButtonInteraction removeAdventureInteraction;
     public ToolButtonInteraction clearDictionaryInteraction;
     public ToolButtonInteraction showListsInteraction;
     public ToolButtonInteraction exitInteraction;
 
-    public Button saveButton;
+    public Button saveFileButton;
+    public Button editStoryButton;
+    public Button saveStoryButton;
 
     public TextMeshProUGUI themeMain1;
     public TextMeshProUGUI themeMain2;
@@ -79,6 +82,7 @@ public class AdventureUI : MonoBehaviour
     public TextMeshProUGUI mainTag;
     public TextMeshProUGUI mainDate;
     public TextMeshProUGUI mainNotes;
+    public TMP_InputField mainNotesInput;
 
     public Image MainTurnPanel;
     public Image MainSummaryPanel;
@@ -273,6 +277,7 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(saveToFileInteraction != null, "Invalid saveAdventureInteraction (Null)");
         Debug.Assert(loadFromFileInteraction != null, "Invalid loadAdventureInteraction (Null)");
         Debug.Assert(editAdventureInteraction != null, "Invalid editAdventureInteraction (Null)");
+        Debug.Assert(saveAdventureInteraction != null, "Invalid saveAdventureInteraction (Null)");
         Debug.Assert(removeAdventureInteraction != null, "Invalid removeAdventureInteraction (Null)");
         Debug.Assert(showListsInteraction != null, "Invalid showListInteraction (Null)");
         Debug.Assert(deleteFileInteraction != null, "Invalid deleteFileInteraction (Null)");
@@ -286,7 +291,9 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(mainTag != null, "Invalid mainTag (Null)");
         Debug.Assert(mainNotes != null, "Invalid mainNotes (Null)");
         Debug.Assert(mainDate != null, "Invalid mainDate (Null)");
-        Debug.Assert(saveButton != null, "Invalid saveButton (Null)");
+        Debug.Assert(saveFileButton != null, "Invalid saveButton (Null)");
+        Debug.Assert(saveStoryButton != null, "Invalid saveStoryButton (Null)");
+        Debug.Assert(editStoryButton != null, "Invalid editStoryButton (Null)");
         Debug.Assert(MainTurnPanel != null, "Invalid mainTurnPanel (Null)");
         Debug.Assert(MainSummaryPanel != null, "Invalid mainSummaryPanel (Null)");
         Debug.Assert(mainTurningPointNotes != null, "Invalid mainTurningPointNotes (Null)");
@@ -294,6 +301,7 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(mainTurnNumber != null, "Invalid mainTurnNumber (Null)");
         Debug.Assert(mainTurnName != null, "Invalid mainTurnName (Null)");
         Debug.Assert(mainTurnNotes != null, "Invalid mainTurnNotes (Null)");
+        Debug.Assert(mainNotesInput != null, "Invalid mainNotesInput (Null)");
         for (int i = 0; i < 5; i++)
         {
             if (arrayOfMainTurningPoints[i] == null) { Debug.LogErrorFormat("Invalid arrayOfMainTurningPoints[{0}] (Null)", i); }
@@ -358,7 +366,6 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(turnPlotNotesInput != null, "Invalid turnPlotNotesInput (Null)");
         Debug.Assert(turnPlotpointNotes != null, "Invalid turnPlotpointNotes (Null)");
         Debug.Assert(turnNameImage != null, "Invalid turnNameImage (Null)");
-
         //lists
         Debug.Assert(returnListsInteraction != null, "Invalid returnListsInteraction (Null)");
         Debug.Assert(listEditInteraction != null, "Invalid listEditInteraction (Null)");
@@ -379,13 +386,48 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(dropHeader != null, "Invalid dropHeader (Null)");
         Debug.Assert(dropInput != null, "Invalid dropInput (Null)");
         Debug.Assert(dropConfirmInteraction != null, "Invalid dropConfirmInteraction (Null)");
-        //switch off
+        //Initialise Other
+        InitialiseDropDown();
+        InitialiseCanvases();
+        InitialiseButtonInteractions();
+        InitialiseFastAccess();
+        InitialiseEvents();
+    }
+    #endregion
+
+    #region InitialiseDropDown
+    /// <summary>
+    /// Initialise dropDown input
+    /// </summary>
+    private void InitialiseDropDown()
+    {        //dropDown button Interactions
+        dropConfirmInteraction.SetButton(ToolEventType.CloseDropDown);
+        //delegate for dropDown
+        dropInput.onValueChanged.AddListener(delegate { DropDownItemSelected(); });
+    }
+    #endregion
+
+    #region InitialiseCanvases
+    /// <summary>
+    /// Initialise all Canvases
+    /// </summary>
+    private void InitialiseCanvases()
+    {
         adventureCanvas.gameObject.SetActive(false);
         masterCanvas.gameObject.SetActive(true);
         newAdventureCanvas.gameObject.SetActive(false);
         turningPointCanvas.gameObject.SetActive(false);
         listsCanvas.gameObject.SetActive(false);
         dropDownCanvas.gameObject.SetActive(false);
+    }
+    #endregion
+
+    #region InitialiseButtonInteractions
+    /// <summary>
+    /// Button Interactions
+    /// </summary>
+    private void InitialiseButtonInteractions()
+    {
         //main buttonInteractions
         exitInteraction.SetButton(ToolEventType.CloseAdventureUI);
         newAdventureInteraction.SetButton(ToolEventType.OpenNewAdventure);
@@ -394,6 +436,8 @@ public class AdventureUI : MonoBehaviour
         deleteFileInteraction.SetButton(ToolEventType.DeleteToolsFile);
         clearDictionaryInteraction.SetButton(ToolEventType.ClearAdventureDictionary);
         showListsInteraction.SetButton(ToolEventType.OpenAdventureLists);
+        editAdventureInteraction.SetButton(ToolEventType.EditAdventure);
+        saveAdventureInteraction.SetButton(ToolEventType.SaveAdventure);
         //new buttonInteractions
         returnNewInteraction.SetButton(ToolEventType.CloseNewAdventure);
         turningPointNewInteraction.SetButton(ToolEventType.CreateTurningPoint);
@@ -414,13 +458,6 @@ public class AdventureUI : MonoBehaviour
             arrayOfPlotLineInteractions[i].SetButton(ToolEventType.ShowPlotLineDetails, i);
             arrayOfCharacterInteractions[i].SetButton(ToolEventType.ShowCharacterDetails, i);
         }
-        //dropDown button Interactions
-        dropConfirmInteraction.SetButton(ToolEventType.CloseDropDown);
-        //delegate for dropDown
-        dropInput.onValueChanged.AddListener(delegate { DropDownItemSelected(); });
-        //Initialise Other
-        InitialiseFastAccess();
-        InitialiseEvents();
     }
     #endregion
 
@@ -442,6 +479,8 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.CreateTurningPoint, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.ClearAdventureDictionary, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.ClearNewAdventure, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.EditAdventure, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.SaveAdventure, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.NextAdventure, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.PreviousAdventure, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.MainSummaryUpArrow, OnEvent, "AdventureUI");
@@ -530,6 +569,12 @@ public class AdventureUI : MonoBehaviour
                 break;
             case ToolEventType.ClearNewAdventure:
                 ClearNewAdventure();
+                break;
+            case ToolEventType.EditAdventure:
+                EditAdventure();
+                break;
+            case ToolEventType.SaveAdventure:
+                SaveAdventure();
                 break;
             case ToolEventType.NextAdventure:
                 NextAdventure();
@@ -637,9 +682,12 @@ public class AdventureUI : MonoBehaviour
         //Navigation
         GetListOfStories();
         //load up first story
+        DisplayStoryNotes(false);
         DisplayStoryMain();
-        //disable Save button
-        saveButton.gameObject.SetActive(false);
+        //disable Save buttons
+        saveFileButton.gameObject.SetActive(false);
+        saveStoryButton.gameObject.SetActive(false);
+        editStoryButton.gameObject.SetActive(true);
         //up and down arrow index
         mainSummaryIndex = 0;
         //set Modal State
@@ -671,7 +719,7 @@ public class AdventureUI : MonoBehaviour
         ToolManager.i.toolFileScript.SaveToolsToFile();
         //disable button, reset flag
         isSaveNeeded = false;
-        saveButton.gameObject.SetActive(false);
+        saveFileButton.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -711,6 +759,41 @@ public class AdventureUI : MonoBehaviour
     {
         ToolManager.i.toolDataScript.ClearDictOfStories();
         Debug.LogFormat("[Tol] AdventureUI.cs -> ClearDictionary: dictOfStories EMPTIED{0}", "\n");
+    }
+
+    /// <summary>
+    /// Edit story Notes
+    /// </summary>
+    private void EditAdventure()
+    {
+        //change modalType to disable arrow keys, etc.
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Input);
+        DisplayStoryNotes(true);
+        //toggle buttons
+        editStoryButton.gameObject.SetActive(false);
+        saveStoryButton.gameObject.SetActive(true);
+    }
+
+    /// <summary>
+    /// Save recently edited story Notes
+    /// </summary>
+    private void SaveAdventure()
+    {
+        DisplayStoryNotes(false);
+        //toggle buttons
+        editStoryButton.gameObject.SetActive(true);
+        saveStoryButton.gameObject.SetActive(false);
+        //copy input
+        storyMain.notes = mainNotesInput.text;
+        //update onscreen notes
+        mainNotes.text = storyMain.notes;
+        //restore normal modal type
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Read);
+        //add story to dict, overwrite existing data if already present
+        ToolManager.i.toolDataScript.AddStory(storyMain);
+        Debug.LogFormat("[Tol] AdventureUI.cs -> SaveAdventure: StoryMain \"{0}\" saved to dictionary{1}", storyMain.refTag, "\n");
+        //toggle main save to file button
+        saveFileButton.gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -846,7 +929,6 @@ public class AdventureUI : MonoBehaviour
         SetMainInstructions();
     }
 
-
     #endregion
 
     #region New Adventure
@@ -898,7 +980,7 @@ public class AdventureUI : MonoBehaviour
         newAdventureCanvas.gameObject.SetActive(false);
         //save button on main screen
         if (isSaveNeeded == true)
-        { saveButton.gameObject.SetActive(true); }
+        { saveFileButton.gameObject.SetActive(true); }
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.Main);
         //copy storyNew across to storyMain
@@ -2294,7 +2376,7 @@ public class AdventureUI : MonoBehaviour
         DisplayStoryMain();
         //save button on main screen
         if (isSaveNeeded == true)
-        { saveButton.gameObject.SetActive(true); }
+        { saveFileButton.gameObject.SetActive(true); }
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.Main);
         ToolManager.i.toolInputScript.SetModalType(ToolModalType.Read);
@@ -2500,6 +2582,27 @@ public class AdventureUI : MonoBehaviour
                 RedrawMainAdventurePage();
             }
             else { Debug.LogWarningFormat("Invalid story (Null) from listOfStories[{0}]", mainNavCounter); }
+        }
+    }
+
+    /// <summary>
+    /// Toggle Story Notes (input or read)
+    /// </summary>
+    /// <param name="isInput"></param>
+    private void DisplayStoryNotes(bool isInput)
+    {
+        if (isInput == true)
+        {
+            //Edit input
+            mainNotesInput.gameObject.SetActive(true);
+            mainNotesInput.text = storyMain.notes;
+            mainNotes.gameObject.SetActive(false);
+        }
+        else
+        {
+            //Read only
+            mainNotesInput.gameObject.SetActive(false);
+            mainNotes.gameObject.SetActive(true);
         }
     }
 

@@ -115,6 +115,7 @@ public class ToolInput : MonoBehaviour
                                 { ToolEvents.i.PostNotification(ToolEventType.MainDetailsDownArrow, this, null, "ToolInput.cs -> ProcessKeyInput Vertical DOWN"); }
                             }
                             break;
+                            
                     }
                 }
                 break;

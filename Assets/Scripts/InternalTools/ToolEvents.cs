@@ -18,6 +18,8 @@ public enum ToolEventType
     LoadToolsFromFile,
     DeleteToolsFile,
     ClearAdventureDictionary,
+    EditAdventure,
+    SaveAdventure,
     NextAdventure,
     PreviousAdventure,
     OpenMainDetails,
