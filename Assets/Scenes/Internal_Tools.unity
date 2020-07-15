@@ -606,7 +606,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: -0.000045776367, y: 0}
-  m_SizeDelta: {x: 240, y: 40}
+  m_SizeDelta: {x: 390, y: 40}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &8643096
 MonoBehaviour:
@@ -694,7 +694,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 15, y: 0, z: 0, w: 0}
+  m_margin: {x: 15, y: 0, z: 15, w: 0}
   m_textInfo:
     textComponent: {fileID: 8643096}
     characterCount: 6
@@ -11637,9 +11637,9 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_NormalColor: {r: 0.990566, g: 0.9672036, b: 0.9672036, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_PressedColor: {r: 0.9622642, g: 0.94864726, b: 0.94864726, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -35321,7 +35321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.39215687}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -51519,6 +51519,9 @@ MonoBehaviour:
   MainSummaryPanel: {fileID: 349968594}
   mainTurningPointNotes: {fileID: 1879331381}
   mainInstructions: {fileID: 112678001}
+  mainTurnNumber: {fileID: 1883879671}
+  mainTurnName: {fileID: 8643096}
+  mainTurnNotes: {fileID: 242376611}
   arrayOfMainTurningPoints:
   - {fileID: 1517603908}
   - {fileID: 1504824930}
@@ -51541,9 +51544,6 @@ MonoBehaviour:
   - {fileID: 373840398}
   - {fileID: 926165186}
   - {fileID: 889587584}
-  mainTurnNumber: {fileID: 1883879671}
-  mainTurnName: {fileID: 8643096}
-  mainTurnNotes: {fileID: 242376611}
   saveNewInteraction: {fileID: 311645747}
   turningPointNewInteraction: {fileID: 1552310805}
   clearNewInteraction: {fileID: 369352992}

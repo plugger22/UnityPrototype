@@ -450,6 +450,8 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.CloseMainDetails, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.MainDetailsUpArrow, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.MainDetailsDownArrow, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.MainDetailsRightArrow, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.MainDetailsLeftArrow, OnEvent, "AdventureUI");
 
         ToolEvents.i.AddListener(ToolEventType.OpenAdventureLists, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.CloseAdventureLists, OnEvent, "AdventureUI");
@@ -552,6 +554,12 @@ public class AdventureUI : MonoBehaviour
                 break;
             case ToolEventType.MainDetailsDownArrow:
                 MainDetailsDownArrow();
+                break;
+            case ToolEventType.MainDetailsRightArrow:
+                MainDetailsRightArrow();
+                break;
+            case ToolEventType.MainDetailsLeftArrow:
+                MainDetailsLeftArrow();
                 break;
             case ToolEventType.NewSummaryUpArrow:
                 NewSummaryUpArrow();
@@ -757,7 +765,7 @@ public class AdventureUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Up arrow moves one up in turningPoint details display
+    /// Up arrow moves one up one plotline in turningPoint details display
     /// </summary>
     private void MainDetailsUpArrow()
     {
@@ -769,7 +777,7 @@ public class AdventureUI : MonoBehaviour
     }
 
     /// <summary>
-    /// down arrow moves one down in turningPoint details display
+    /// down arrow moves one down one plotline in turningPoint details display
     /// </summary>
     private void MainDetailsDownArrow()
     {
@@ -778,6 +786,32 @@ public class AdventureUI : MonoBehaviour
         { mainDetailsIndex = 0; }
         else { mainDetailsIndex++; }
         DisplayMainDetails(mainSummaryIndex, mainDetailsIndex);
+    }
+
+    /// <summary>
+    /// right arrow switches to next turningPoint in StoryMain
+    /// </summary>
+    private void MainDetailsRightArrow()
+    {
+        //roll over
+        if (mainSummaryIndex == 4)
+        { mainSummaryIndex = 0; }
+        else { mainSummaryIndex++; }
+        mainDetailsIndex = 0;
+        DisplayMainDetails(mainSummaryIndex, mainDetailsIndex, true);
+    }
+
+    /// <summary>
+    /// left arrow switches to previous turningPoint in StoryMain
+    /// </summary>
+    private void MainDetailsLeftArrow()
+    {
+        //roll over
+        if (mainSummaryIndex == 0)
+        { mainSummaryIndex = 4; }
+        else { mainSummaryIndex--; }
+        mainDetailsIndex = 0;
+        DisplayMainDetails(mainSummaryIndex, mainDetailsIndex, true);
     }
 
     /// <summary>

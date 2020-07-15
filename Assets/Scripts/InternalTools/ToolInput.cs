@@ -71,9 +71,9 @@ public class ToolInput : MonoBehaviour
                                 //right / left arrows
                                 x_axis = Input.GetAxisRaw("Horizontal");
                                 if (x_axis > 0)
-                                { ToolEvents.i.PostNotification(ToolEventType.NextAdventure, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal"); }
+                                { ToolEvents.i.PostNotification(ToolEventType.NextAdventure, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal RIGHT"); }
                                 else if (x_axis < 0)
-                                { ToolEvents.i.PostNotification(ToolEventType.PreviousAdventure, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal"); }
+                                { ToolEvents.i.PostNotification(ToolEventType.PreviousAdventure, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal LEFT"); }
                             }
                             else if (Input.GetButtonDown("Vertical"))
                             {
@@ -95,6 +95,15 @@ public class ToolInput : MonoBehaviour
                             {
                                 //ESC pressed, exit main details page and return to summary view
                                 ToolEvents.i.PostNotification(ToolEventType.CloseMainDetails, this, null, "ToolInput.cs -> ProcessKeyInput ESC");
+                            }
+                            else if (Input.GetButtonDown("Horizontal"))
+                            {
+                                //right / left arrows
+                                x_axis = Input.GetAxisRaw("Horizontal");
+                                if (x_axis > 0)
+                                { ToolEvents.i.PostNotification(ToolEventType.MainDetailsRightArrow, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal RIGHT"); }
+                                else if (x_axis < 0)
+                                { ToolEvents.i.PostNotification(ToolEventType.MainDetailsLeftArrow, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal LEFT"); }
                             }
                             else if (Input.GetButtonDown("Vertical"))
                             {
