@@ -14,7 +14,7 @@ namespace toolsAPI
     //
 
     public enum ToolModal { Menu, Main, New, TurningPoint, Lists }
-    public enum ToolModalType { Read, Edit, Input }
+    public enum ToolModalType { Read, Edit, Input, Process }
     public enum ToolModalSubNew { New, Summary }                                        //new adventure sub state
     public enum ThemeType { Action, Tension, Mystery, Social, Personal, Count }   //NOTE: Order matters (ToolDetails.cs)
     public enum StoryStatus { New, Logical, Data }

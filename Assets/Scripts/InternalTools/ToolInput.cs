@@ -120,8 +120,6 @@ public class ToolInput : MonoBehaviour
                 {
                     switch (_modalType)
                     {
-                        case ToolModalType.Read:
-                        case ToolModalType.Edit:
                         case ToolModalType.Input:
                             //SpaceBar for new Plotpoint 
                             if (Input.GetButton("Multipurpose") == true)

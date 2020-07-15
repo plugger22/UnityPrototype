@@ -11,19 +11,25 @@ public class AdventureManager : MonoBehaviour
 {
 
     [Header("Names for Characters")]
-    [Tooltip("Male first name textlist")]
+    /*[Tooltip("Male first name textlist")]
     public TextList nameMaleFirst;
     [Tooltip("Female first name textlist")]
     public TextList nameFemaleFirst;
     [Tooltip("Last name textlist")]
-    public TextList nameLast;
+    public TextList nameLast;*/
+
+    [Tooltip("NameSet to be used")]
+    public NameSet nameSet;
+
+
 
     public void Initialise()
     {
-        /*DebugTestCharacter();*/
+        /*DebugTestCharacter();
         Debug.Assert(nameMaleFirst != null, "Invalid nameMaleFirst (Null)");
         Debug.Assert(nameFemaleFirst != null, "Invalid nameFemaleFirst (Null)");
-        Debug.Assert(nameLast != null, "Invalid nameLast (Null)");
+        Debug.Assert(nameLast != null, "Invalid nameLast (Null)");*/
+        Debug.Assert(nameSet != null, "Invalid nameSet (Null)");
     }
 
     /// <summary>
@@ -112,14 +118,14 @@ public class AdventureManager : MonoBehaviour
             if (rnd < 50)
             {
                 character.sex = CharacterSex.Male;
-                firstName = nameMaleFirst.GetRandomRecord();
+                firstName = nameSet.firstMaleNames.GetRandomRecord();
             }
             else
             {
                 character.sex = CharacterSex.Female;
-                firstName = nameFemaleFirst.GetRandomRecord();
+                firstName = nameSet.firstFemaleNames.GetRandomRecord();
             }
-            name = string.Format("{0} {1}",  firstName, nameLast.GetRandomRecord());
+            name = string.Format("{0} {1}",  firstName, nameSet.lastNames.GetRandomRecord());
             refTag = name.Replace(" ", "");
             //bring together
             character.dataCreated = string.Format("{0} -> {1} -> {2} -> {3} -> {4}", name, character.sex, special.tag, identity, descriptor);

@@ -834,6 +834,10 @@ public class AdventureUI : MonoBehaviour
                 { storyNew.date = GetCurrentDateString(); }
                 //refTag
                 storyNew.refTag = storyNew.tag.Replace(" ", "");
+                //number of turningPoints
+                storyNew.numTurningPoints = storyNew.arrayOfTurningPoints.Where(x => x.type != TurningPointType.None).Count();
+                if (storyNew.numTurningPoints == 5)
+                { storyNew.isConcluded = true; }
                 //add story to dict, overwrite existing data if already present
                 ToolManager.i.toolDataScript.AddStory(storyNew);
                 Debug.LogFormat("[Tol] AdventureUI.cs -> SaveAdventure: StoryNew \"{0}\" saved to dictionary{1}", storyNew.refTag, "\n");
@@ -938,6 +942,8 @@ public class AdventureUI : MonoBehaviour
         //debug
         storyNew.lists.DebugShowCharacterList();
         storyNew.lists.DebugShowPlotLineList();
+        //ready for New Plotpoint (spacebar input)
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Input);
     }
     #endregion
 
@@ -949,6 +955,7 @@ public class AdventureUI : MonoBehaviour
     /// </summary>
     private void NewPlotpoint()
     {
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Process);
         // - - - Pre Admin
         turnData1.text = "";
         turnData2.text = "";
@@ -1047,13 +1054,15 @@ public class AdventureUI : MonoBehaviour
                 //increment index
                 plotPointIndex++;
                 //End of turning point
-                if (plotPointIndex >= 5 /* || turningPoint.type == TurningPointType.Conclusion*/)
+                if (plotPointIndex >= 5)
                 {
                     //toggle save buttons
                     turnPreSaveButton.gameObject.SetActive(true);
                     turnSaveButton.gameObject.SetActive(false);
                 }
             }
+            //ready for new Plotpoint (spacebar input)
+            ToolManager.i.toolInputScript.SetModalType(ToolModalType.Input);
         }
         else { Debug.LogWarning("There are already five plotponts -> Info only"); }
     }
@@ -1363,13 +1372,14 @@ public class AdventureUI : MonoBehaviour
         //increment index
         plotPointIndex++;
         //End of turning point
-        if (plotPointIndex >= 5 /*|| turningPoint.type == TurningPointType.Conclusion*/)
+        if (plotPointIndex >= 5)
         {
             //toggle save buttons
             turnPreSaveButton.gameObject.SetActive(true);
             turnSaveButton.gameObject.SetActive(false);
         }
-
+        //ready for next plotPoint (spacebar input)
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Input);
     }
     #endregion
 
@@ -1648,6 +1658,8 @@ public class AdventureUI : MonoBehaviour
     /// </summary>
     private void PreSaveTurningPoint()
     {
+        //prevent spaceBar causing issues
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Process);
         //update characters
         if (character1 != null)
         {
@@ -1670,7 +1682,7 @@ public class AdventureUI : MonoBehaviour
             type = plotPoint.type
         };
         turningPoint.arrayOfDetails[plotPointIndex - 1] = details;
-        Debug.LogFormat("[Tst] AdventureUI.cs -> NewPlotPoint: \"{0}\" {1} / {2} SAVED to arrayOfDetails{3}", plotPoint.tag,
+        Debug.LogFormat("[Tst] AdventureUI.cs -> PreSaveTurningPoint: \"{0}\" {1} / {2} SAVED to arrayOfDetails{3}", plotPoint.tag,
             character1 != null ? character1.tag : "Nobody", character2 != null ? character2.tag : "Nobody", "\n");
         //Save last set of notes
         arrayOfPlotpointNotes[plotPointIndex - 1] = turnPlotNotesInput.text;
@@ -1690,7 +1702,6 @@ public class AdventureUI : MonoBehaviour
             turnName.gameObject.SetActive(true);
             turnNameInput.gameObject.SetActive(false);
         }
-
         // - - - toggle fields
         ToggleTurningPointFields(false);
         /*turnPlotPoint.gameObject.SetActive(false);*/
@@ -1728,6 +1739,7 @@ public class AdventureUI : MonoBehaviour
                 //SAVE
                 storyNew.arrayOfTurningPoints[turningPointIndex] = turningPoint;
                 isTurningPointSaved = true;
+                Debug.LogFormat("[Tst] AdventureUI.cs -> SaveTurningPoint: turningPoint \"{0}\" SAVED{1}", turningPoint.tag, "\n");
                 //clear out notes field
                 turnData0Input.text = "";
                 //update indexes
@@ -1740,14 +1752,19 @@ public class AdventureUI : MonoBehaviour
                 if (turningPoint.type == TurningPointType.Development)
                 {
                     if (turningPoint.CheckNumberOfPlotPointType(PlotPointType.Conclusion) > 0)
-                    { RemovePlotLine(turningPoint.refTag); }
+                    {
+                        //set turningPPoint to concluded
+                        turningPoint.type = TurningPointType.Conclusion;
+                        //remove plotLine
+                        RemovePlotLine(turningPoint.refTag);
+                    }                  
                 }
                 //exit or next turningPoint
                 if (turningPointIndex < 5 && storyNew.isConcluded == false)
                 {
                     //Generate new PlotLine / turningPoint
                     ListItem item = storyNew.arrays.GetRandomPlotLineFromArray();
-                    Debug.LogFormat("[Tst] AdventureUI.cs -> SaveTurningPoint: ListItem tag \"{0}\", status {1}{2}", item.tag, item.status, "\n");
+                    Debug.LogFormat("[Tst] AdventureUI.cs -> SaveTurningPoint: ListItem tag \"{0}\", status {1} (New PlotLine){2}", item.tag, item.status, "\n");
                     if (item != null)
                     {
                         switch (item.status)
@@ -1800,6 +1817,8 @@ public class AdventureUI : MonoBehaviour
                 }
                 //switch off save button
                 turnSaveButton.gameObject.SetActive(false);
+                //ready for new Plotpoint (spacebar input)
+                ToolManager.i.toolInputScript.SetModalType(ToolModalType.Input);
             }
             else { Debug.LogWarning("Turning Point doesn't have any PlotLine Notes, can't be saved"); }
         }

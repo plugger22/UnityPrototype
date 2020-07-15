@@ -185,12 +185,7 @@ public class ToolDataManager : MonoBehaviour
     public Plotpoint GetRandomPlotpoint(ThemeType theme)
     {
         Plotpoint plotPoint = null;
-
         int rnd = Random.Range(0, 100);
-
-        //debug only for testing MetaGames
-        if (Random.Range(0, 100) < 25) { rnd = 99; }
-
         plotPoint = arrayOfPlotpointLookup[rnd, (int)theme];
         return plotPoint;
     }
