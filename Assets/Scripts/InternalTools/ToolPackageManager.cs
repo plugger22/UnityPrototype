@@ -20,6 +20,7 @@ namespace toolsAPI
     public enum StoryStatus { New, Logical, Data }
     public enum ListItemStatus { None, PlotLine, Character }    //what's currently selected on the Aventure/list page
     public enum PlotPointType { Normal, Conclusion, None, RemoveCharacter, NewCharacter, Meta }
+    public enum SpecialType { None, Organisation, OrgOrChar, Object }    //OrgOrChar -> 50/50 chance of either (plotPoints)
     public enum MetaAction { CharacterExits, CharacterReturns, CharacterUpgrade, CharacterDowngrade, CharacterStepsUp, CharacterStepsDown, PlotLineCombo }
     public enum TurningPointType { None, New, Development, Conclusion }
     public enum CharacterSex { None, Male, Female }
@@ -1168,6 +1169,7 @@ namespace toolsAPI
         public string tag;
         public string dataCreated;                          //generated data
         public CharacterSex sex;
+        public SpecialType special;                         //none (normal Character)/Organisation/Object related
         public List<string> listOfNotes;
 
         #region Character Methods
@@ -1190,6 +1192,7 @@ namespace toolsAPI
             listOfNotes.Clear();
             listOfNotes.AddRange(copy.listOfNotes);
             sex = copy.sex;
+            special = copy.special;
         }
 
         /// <summary>
@@ -1244,6 +1247,7 @@ namespace toolsAPI
         public string tag;
         public string details;
         public PlotPointType type;
+        public SpecialType special;                 //none/organisation/object related
         public int numberOfCharacters;              //number of characters involved
         public List<int> listAction;                //die roll numbers, leave list empty for none
         public List<int> listTension;
@@ -1266,6 +1270,7 @@ namespace toolsAPI
             tag = copy.tag;
             details = copy.details;
             type = copy.type;
+            special = copy.special;
             numberOfCharacters = copy.numberOfCharacters;
             listAction = new List<int>(copy.listAction);
             listAction = new List<int>(copy.listTension);
@@ -1283,6 +1288,7 @@ namespace toolsAPI
             tag = "";
             details = "";
             type = PlotPointType.None;
+            special = SpecialType.None;
             numberOfCharacters = 0;
         }
 
@@ -1336,12 +1342,21 @@ namespace toolsAPI
     public class CharacterSpecial
     {
         public string tag;
+        public SpecialType special;             //none (normal character) / Organisation / Object
         public List<int> listToRoll;
         public string details;
     }
     #endregion
 
-
+    #region OrganisationDescriptor
+    /// <summary>
+    /// Organisation Descriptor
+    /// </summary>
+    public class OrganisationDescriptor
+    {
+        public string tag;
+    }
+    #endregion
 
 
 }

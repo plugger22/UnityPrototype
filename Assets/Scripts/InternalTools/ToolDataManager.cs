@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using toolsAPI;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -21,6 +22,11 @@ public class ToolDataManager : MonoBehaviour
     private CharacterIdentity[] arrayOfIdentityLookup;
     private CharacterDescriptor[] arrayOfDescriptorsLookup;
     private CharacterSpecial[] arrayOfSpecialLookup;
+
+    private List<OrganisationDescriptor> listOfOrganisationType = new List<OrganisationDescriptor>();
+    private List<OrganisationDescriptor> listOfOrganisationOrigin = new List<OrganisationDescriptor>();
+    private List<OrganisationDescriptor> listOfOrganisationLeadership = new List<OrganisationDescriptor>();
+    private List<OrganisationDescriptor> listOfOrganisationMotivation = new List<OrganisationDescriptor>();
 
     public ToolDataManager()
     {
@@ -143,7 +149,7 @@ public class ToolDataManager : MonoBehaviour
 
     public MetaPlotpoint[] GetMetaPlotpointLookup()
     { return arrayOfMetaPlotpointLookup; }
-    
+
 
     /// <summary>
     /// Add Plotpoint
@@ -215,7 +221,7 @@ public class ToolDataManager : MonoBehaviour
         if (listOfPlotpoints.Count > 0)
         { return listOfPlotpoints[0]; }
         return null;
-                    
+
     }
 
     #endregion
@@ -301,6 +307,83 @@ public class ToolDataManager : MonoBehaviour
         }
         else { listOfDescriptors.Add(descriptor.tag); }
         return listOfDescriptors;
+    }
+
+    #endregion
+
+    #region Organisations
+    //
+    // - - - Organisations
+    //
+
+    /// <summary>
+    /// Return a string listing all of an organisations qualities
+    /// </summary>
+    /// <returns></returns>
+    public string GetOrganisationQualities()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("Type: {0}{1}", listOfOrganisationType[Random.Range(0, listOfOrganisationType.Count)], "\n");
+        builder.AppendFormat("Origin: {0}{1}", listOfOrganisationOrigin[Random.Range(0, listOfOrganisationOrigin.Count)], "\n");
+        builder.AppendFormat("Leadership: {0}{1}", listOfOrganisationLeadership[Random.Range(0, listOfOrganisationLeadership.Count)], "\n");
+        builder.AppendFormat("Motivation: {0}{1}", listOfOrganisationMotivation[Random.Range(0, listOfOrganisationMotivation.Count)], "\n");
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Populate listOfOrganisationType
+    /// </summary>
+    /// <param name="tempList"></param>
+    public void SetListOfOrganisationType(List<OrganisationDescriptor> tempList)
+    {
+        if (tempList != null)
+        {
+            listOfOrganisationType.Clear();
+            listOfOrganisationType.AddRange(tempList);
+        }
+        else { Debug.LogError("Invalid tempList (Null)"); }
+    }
+
+    /// <summary>
+    /// Populate listOfOrganisationOrigin
+    /// </summary>
+    /// <param name="tempList"></param>
+    public void SetListOfOrganisationOrigin(List<OrganisationDescriptor> tempList)
+    {
+        if (tempList != null)
+        {
+            listOfOrganisationOrigin.Clear();
+            listOfOrganisationOrigin.AddRange(tempList);
+        }
+        else { Debug.LogError("Invalid tempList (Null)"); }
+    }
+
+    /// <summary>
+    /// Populate listOfOrganisationLeadership
+    /// </summary>
+    /// <param name="tempList"></param>
+    public void SetListOfOrganisationLeadership(List<OrganisationDescriptor> tempList)
+    {
+        if (tempList != null)
+        {
+            listOfOrganisationLeadership.Clear();
+            listOfOrganisationLeadership.AddRange(tempList);
+        }
+        else { Debug.LogError("Invalid tempList (Null)"); }
+    }
+
+    /// <summary>
+    /// Populate listOfOrganisationMotivation
+    /// </summary>
+    /// <param name="tempList"></param>
+    public void SetListOfOrganisationMotivation(List<OrganisationDescriptor> tempList)
+    {
+        if (tempList != null)
+        {
+            listOfOrganisationMotivation.Clear();
+            listOfOrganisationMotivation.AddRange(tempList);
+        }
+        else { Debug.LogError("Invalid tempList (Null)"); }
     }
 
     #endregion

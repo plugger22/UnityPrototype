@@ -91,7 +91,7 @@ public class AdventureManager : MonoBehaviour
 
 
 
-
+    #region Characters
     /// <summary>
     /// returns a new character (no saving, just data collection)
     /// </summary>
@@ -138,7 +138,9 @@ public class AdventureManager : MonoBehaviour
         else { Debug.LogWarning("Invalid CharacterSpecial (Null)"); }
         return character; 
     }
+    #endregion
 
+    #region NameSets
     //
     // - - - NameSets
     //
@@ -170,7 +172,9 @@ public class AdventureManager : MonoBehaviour
     /// <returns></returns>
     public string GetNameSetInUse()
     { return nameSet != null ? string.Format("{0} names", nameSet.name) : "No NameSet Selected"; }
+    #endregion
 
+    #region File Ops
     //
     // - - - Supplementary File Ops
     //
@@ -324,7 +328,9 @@ public class AdventureManager : MonoBehaviour
         else { Debug.LogError("Invalid dictOfStories (Null)"); }
         return builderMain.ToString();
     }
+    #endregion
 
+    #region Debug Methods
     //
     // - - - Debug
     //
@@ -358,6 +364,7 @@ public class AdventureManager : MonoBehaviour
             else { Debug.LogWarning("Invalid CharacterSpecial (Null)"); }
         }
     }
+    #endregion
 
     //new methods above here
 }
