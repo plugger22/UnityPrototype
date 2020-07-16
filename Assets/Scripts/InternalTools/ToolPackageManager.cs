@@ -662,6 +662,7 @@ namespace toolsAPI
     public class StoryLists
     {
         public List<PlotLine> listOfPlotLines = new List<PlotLine>();
+        public List<PlotLine> listOfRemovedPlotLines = new List<PlotLine>();
         public List<Character> listOfCharacters = new List<Character>();
         public List<Character> listOfRemovedCharacters = new List<Character>();
 
@@ -680,9 +681,11 @@ namespace toolsAPI
             listOfPlotLines.Clear();
             listOfCharacters.Clear();
             listOfRemovedCharacters.Clear();
+            listOfRemovedPlotLines.Clear();
             listOfPlotLines.AddRange(data.listOfPlotLines);
             listOfCharacters.AddRange(data.listOfCharacters);
             listOfRemovedCharacters.AddRange(data.listOfRemovedCharacters);
+            listOfRemovedPlotLines.AddRange(data.listOfRemovedPlotLines);
         }
 
         /// <summary>
@@ -693,6 +696,7 @@ namespace toolsAPI
             listOfPlotLines.Clear();
             listOfCharacters.Clear();
             listOfRemovedCharacters.Clear();
+            listOfRemovedPlotLines.Clear();
         }
 
         /// <summary>
@@ -900,6 +904,14 @@ namespace toolsAPI
             {
                 //should be exactly one entry on list
                 int counter = 0;
+                //add to listOfRemovedPlotLines (Do BEFORE removal)
+                PlotLine plotLine = GetPlotLineFromList(refTag);
+                if (plotLine != null)
+                {
+                    listOfRemovedPlotLines.Add(plotLine);
+                    Debug.LogFormat("[Tst] StoryLists.cs -> RemovePlotLineFromList: \"{0}\" added to listOfRemovedPlotLines{1}", plotLine.tag, "\n");
+                }
+                else { Debug.LogWarningFormat("Invalid plotLine (Null) for refTag \"{0}\"", refTag); }
                 //remove entry from list
                 counter = listOfPlotLines.RemoveAll(x => x.refTag.Equals(refTag, StringComparison.Ordinal) == true);
                 //Admin

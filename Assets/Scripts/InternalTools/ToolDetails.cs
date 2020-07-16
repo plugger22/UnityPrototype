@@ -2758,45 +2758,45 @@ public class ToolDetails : MonoBehaviour
         List<CharacterSpecial> listOfCharacterSpecial = new List<CharacterSpecial>()
         {
             new CharacterSpecial() {
-                tag = "The Character is an Individual",
+                tag = "Individual",
                 listToRoll = new List<int> {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50},
                 details = "The Character is an individual, as opposed to an organization or object."
             },
             new CharacterSpecial() {
-                tag = "The Character is an Organisation",
+                tag = "Organisation",
                 listToRoll = new List<int> {51,52,53,54,55,56,57},
                 details = "This Character is not a specific individual, but an organization or community. General members of this organization are considered part of the Character as a community"
             },
             new CharacterSpecial() {
-                tag = "The Character is an Object",
+                tag = "Object",
                 listToRoll = new List<int> {58,59,60,61,62,63,64},
                 details = "This Character is something other than a typical, living individual or group organization. The Character is an object of some kind that could also be " +
                 "considered a Character unto itself. Examples might include a spaceship that is old and temperamental, or a city teeming with culture"
             },
             new CharacterSpecial() {
-                tag = "The Character is Connected to this Plotline",
+                tag = "Connected",
                 listToRoll = new List<int> {65,66,67,68,69,70,71},
                 details = "This Character enters the Adventure somehow connected with the Plotline of this Turning Point."
             },
             new CharacterSpecial() {
-                tag = "The Character is NOT Connected to this Plotline",
+                tag = "NOT Connected",
                 listToRoll = new List<int> {72,73,74,75,76,77,78},
                 details = "This Character enters the Adventure not connected to this Turning Point’s Plotline. The Character may become part of the Plotline in the course of this " +
                 "Turning Point, but does not start off that way. Examples include bystanders to the main events of a Turning Point or people outside the events of the " +
                 "Plotline who get drawn into the Adventure."
             },
             new CharacterSpecial() {
-                tag = "The Character Assists in Resolving this Plotline",
+                tag = "Assists Resolution",
                 listToRoll = new List<int> {79,80,81,82,83,84,85},
                 details = "This Character is someone who can help resolve the current Plotline in some way, likely serving as an aid to the Player Characters"
             },
             new CharacterSpecial() {
-                tag = "The Character Hinders Resolving this Plotline",
+                tag = "Hinders Resolution",
                 listToRoll = new List<int> {86,87,88,89,90,91,92},
                 details = "This Character gets in the way of resolving the current Plotline in some way, likely serving as a complication to the Player Characters"
             },
             new CharacterSpecial() {
-                tag = "The Character is Connected to an Existing Character",
+                tag = "Connected to Another",
                 listToRoll = new List<int> {93,94,95,96,97,98,99,100},
                 details = "This Character has some relationship to another, existing Character in this Adventure. Roll on the Characters List to see who. " +
                 "A result of New Character is changed to Choose The Most Logical Character. The connection can be anything, from the two Characters are related, " +

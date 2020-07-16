@@ -130,7 +130,7 @@ public class AdventureManager : MonoBehaviour
             name = string.Format("{0} {1}",  firstName, nameSet.lastNames.GetRandomRecord());
             refTag = name.Replace(" ", "");
             //bring together
-            character.dataCreated = string.Format("{0} -> {1} -> {2} -> {3} -> {4}", name, character.sex, special.tag, identity, descriptor);
+            character.dataCreated = string.Format("{0} -> {1} -> {2} -> {3}", character.sex, special.tag, identity, descriptor);
             character.tag = name;
             character.refTag = refTag;
             Debug.LogFormat("[Tst] AdventureManager.cs -> GetNewCharacter: \"{0}\", refTag {1} CREATED{2}", character.tag, character.refTag, "\n");
@@ -185,6 +185,8 @@ public class AdventureManager : MonoBehaviour
         Dictionary<string, Story> dictOfStories = ToolManager.i.toolDataScript.GetDictOfStories();
         if (dictOfStories != null)
         {
+            int count;
+            string characters;
             foreach(var story in dictOfStories)
             {
                 //create an individual story builder
@@ -193,10 +195,126 @@ public class AdventureManager : MonoBehaviour
                 builderStory.AppendFormat("- - - [NewAdventure]{0}", "\n");
                 builderStory.AppendFormat("Name: {0}{1}", story.Value.tag, "\n");
                 builderStory.AppendFormat("Date: {0}{1}", story.Value.date, "\n");
-                builderStory.AppendFormat("NameSet: {0}{1}{2}", story.Value.nameSet, "\n", "\n");
-                builderStory.AppendFormat("{0}{1}{2}", story.Value.notes, "\n", "\n");
-
-
+                builderStory.AppendFormat("NameSet: {0}{1}", story.Value.nameSet, "\n");
+                builderStory.AppendFormat("Theme: {0} / {1} / {2} / {3} / {4}{5}{6}", story.Value.theme.GetThemeType(1), story.Value.theme.GetThemeType(2), story.Value.theme.GetThemeType(3), 
+                    story.Value.theme.GetThemeType(4), story.Value.theme.GetThemeType(5), "\n", "\n");
+                builderStory.AppendFormat("{0}{1}", story.Value.notes, "\n");
+                //Turning Point summary
+                for (int i = 0; i < story.Value.arrayOfTurningPoints.Length; i++)
+                {
+                    TurningPoint turningPoint = story.Value.arrayOfTurningPoints[i];
+                    builderStory.AppendFormat("{0}TurningPoint {1}: {2}{3}", "\n", i, turningPoint.tag, "\n");
+                    builderStory.AppendFormat("Notes: {0}{1}", turningPoint.notes, "\n");
+                    //summary
+                    builderStory.AppendFormat("{0}TurningPoint {1} Summary{2}", "\n", i, "\n");
+                    for (int j = 0; j < turningPoint.arrayOfDetails.Length; j++)
+                    {
+                        PlotDetails details = turningPoint.arrayOfDetails[j];
+                        characters = "";
+                        characters = string.Format("{0}{1}", details.character1.tag.Length > 0 ? " -> " + details.character1.tag : "", details.character2.tag.Length > 0 ? " / " + details.character2.tag : "");
+                        builderStory.AppendFormat("{0} {1} {2}{3}", j, details.plotPoint, characters, "\n");
+                    }
+                }
+                //lists -> Active Plotline
+                builderStory.AppendFormat("{0}- Active PlotLines{1}", "\n", "\n");
+                count = story.Value.lists.listOfPlotLines.Count;
+                if (count > 0)
+                {
+                    for (int i = 0; i < count; i++)
+                    { builderStory.AppendFormat("{0}{1}", story.Value.lists.listOfPlotLines[i].tag, "\n"); }
+                }
+                else { builderStory.AppendFormat("No active PlotLines remaining{0}{1}", "\n", "\n"); }
+                //lists -> Removed Plotline
+                builderStory.AppendFormat("{0}- Removed PlotLines{1}", "\n", "\n");
+                count = story.Value.lists.listOfRemovedPlotLines.Count;
+                if (count > 0)
+                {
+                    for (int i = 0; i < count; i++)
+                    { builderStory.AppendFormat("{0}{1}", story.Value.lists.listOfRemovedPlotLines[i].tag, "\n"); }
+                }
+                else { builderStory.AppendFormat("No plotLines have been Removed{0}{1}", "\n", "\n"); }
+                //lists -> Characters
+                builderStory.AppendFormat("{0}- Active Characters{1}", "\n", "\n");
+                count = story.Value.lists.listOfCharacters.Count;
+                if (count > 0)
+                {
+                    for (int i = 0; i < count; i++)
+                    { builderStory.AppendFormat("{0} -> {1}{2}", story.Value.lists.listOfCharacters[i].tag, story.Value.lists.listOfCharacters[i].dataCreated, "\n"); }
+                }
+                else { builderStory.AppendFormat("No active Characters remaining{0}{1}", "\n", "\n"); }
+                //lists -> RemovedCharacters
+                builderStory.AppendFormat("{0}- Removed Characters{1}", "\n", "\n");
+                count = story.Value.lists.listOfRemovedCharacters.Count;
+                if (count > 0)
+                {
+                    for (int i = 0; i < count; i++)
+                    { builderStory.AppendFormat("{0} -> {1}{2}", story.Value.lists.listOfRemovedCharacters[i].tag, story.Value.lists.listOfCharacters[i].dataCreated, "\n"); }
+                }
+                else { builderStory.AppendFormat("No characters have been removed{0}{1}", "\n", "\n"); }
+                //Characters in detail -> Active Characters
+                builderStory.AppendFormat("{0}- Active Characters in Detail{1}", "\n", "\n");
+                count = story.Value.lists.listOfCharacters.Count;
+                if (count > 0)
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        Character character = story.Value.lists.listOfCharacters[i];
+                        builderStory.AppendFormat("{0}{1}", character.tag, "\n");
+                        builderStory.AppendFormat("  {0}{1}", character.dataCreated, "\n");
+                        //notes
+                        for (int j = 0; j < character.listOfNotes.Count; j++)
+                        { builderStory.AppendFormat("Note: {0}{1}", character.listOfNotes[j], "\n"); }
+                    }
+                }
+                else { builderStory.AppendFormat("No active Characters remaining{0}{1}", "\n", "\n"); }
+                //Characters in detail -> Removed Characters
+                builderStory.AppendFormat("{0}- Removed Characters in Detail{1}", "\n", "\n");
+                count = story.Value.lists.listOfRemovedCharacters.Count;
+                if (count > 0)
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        Character character = story.Value.lists.listOfRemovedCharacters[i];
+                        builderStory.AppendFormat("{0}{1}", character.tag, "\n");
+                        builderStory.AppendFormat("  {0}{1}", character.dataCreated, "\n");
+                        //notes
+                        for (int j = 0; j < character.listOfNotes.Count; j++)
+                        { builderStory.AppendFormat("Note: {0}{1}", character.listOfNotes[j], "\n"); }
+                    }
+                }
+                else { builderStory.AppendFormat("No characters have been removed{0}{1}", "\n", "\n"); }
+                //PlotLines in detail -> Active
+                builderStory.AppendFormat("{0}- Active PlotLines in Detail{1}", "\n", "\n");
+                count = story.Value.lists.listOfPlotLines.Count;
+                if (count > 0)
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        PlotLine plotLine = story.Value.lists.listOfPlotLines[i];
+                        builderStory.AppendFormat("{0}{1}", plotLine.tag, "\n");
+                        //notes
+                        for (int j = 0; j < plotLine.listOfNotes.Count; j++)
+                        { builderStory.AppendFormat("Note: {0}{1}", plotLine.listOfNotes[j], "\n"); }
+                        builderStory.AppendLine();
+                    }
+                }
+                else { builderStory.AppendFormat("No active plotLines remaining{0}{1}", "\n", "\n"); }
+                //PlotLines in detail -> Removed
+                builderStory.AppendFormat("- Removed PlotLines in Detail{0}", "\n");
+                count = story.Value.lists.listOfRemovedPlotLines.Count;
+                if (count > 0)
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        PlotLine plotLine = story.Value.lists.listOfRemovedPlotLines[i];
+                        builderStory.AppendFormat("{0}{1}", plotLine.tag, "\n");
+                        //notes
+                        for (int j = 0; j < plotLine.listOfNotes.Count; j++)
+                        { builderStory.AppendFormat("Note: {0}{1}", plotLine.listOfNotes[j], "\n"); }
+                        builderStory.AppendLine();
+                    }
+                }
+                else { builderStory.AppendFormat("No plotLines have been removed{0}{1}", "\n", "\n"); }
                 //add story to main builder
                 builderMain.Append(builderStory);
                 builderMain.AppendLine();
