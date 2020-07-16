@@ -42,6 +42,7 @@ namespace toolsAPI
         public string tag;                  //stored in dict under this name (use as a reference)
         public string notes;
         public string date;
+        public string nameSet;              //nameSet in use for this turning point
         public int numTurningPoints;        //current active turning points (max cap 5)
         public bool isConcluded;            //if true no more turning points can be added, story is complete
         //subClasses
@@ -71,6 +72,7 @@ namespace toolsAPI
             tag = copy.tag;
             notes = copy.notes;
             date = copy.date;
+            nameSet = copy.nameSet;
             numTurningPoints = copy.numTurningPoints;
             theme = new ThemeData(copy.theme);
             arrays = new StoryArrays(copy.arrays);
@@ -88,6 +90,7 @@ namespace toolsAPI
             tag = "";
             notes = "";
             date = "";
+            nameSet = "";
             isConcluded = false;
             theme.Reset();
             arrays.Reset();

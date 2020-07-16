@@ -16,6 +16,8 @@ using UnityEngine.UI;
 /// </summary>
 public class AdventureUI : MonoBehaviour
 {
+    // - - - Globals
+
     #region Overall
     //
     // - - - Overall
@@ -67,6 +69,7 @@ public class AdventureUI : MonoBehaviour
     public ToolButtonInteraction deleteFileInteraction;
     public ToolButtonInteraction removeAdventureInteraction;
     public ToolButtonInteraction clearDictionaryInteraction;
+    public ToolButtonInteraction exportDictionaryInteraction;
     public ToolButtonInteraction showListsInteraction;
     public ToolButtonInteraction exitInteraction;
 
@@ -128,6 +131,7 @@ public class AdventureUI : MonoBehaviour
     public TextMeshProUGUI themeNew3;
     public TextMeshProUGUI themeNew4;
     public TextMeshProUGUI themeNew5;
+    public TextMeshProUGUI newNameSetHeader;
 
     public TMP_InputField newTag;
     public TMP_InputField newNotes;
@@ -165,6 +169,7 @@ public class AdventureUI : MonoBehaviour
     public Image turnNameImage;                 //background panel for turning point name
 
     public TextMeshProUGUI turnHeader;
+    public TextMeshProUGUI turnNameSetHeader;
     public TextMeshProUGUI turnAdventureName;
     public TextMeshProUGUI turnName;
 
@@ -284,6 +289,7 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(showListsInteraction != null, "Invalid showListInteraction (Null)");
         Debug.Assert(deleteFileInteraction != null, "Invalid deleteFileInteraction (Null)");
         Debug.Assert(clearDictionaryInteraction != null, "Invalid clearDictionaryInteraction (Null)");
+        Debug.Assert(exportDictionaryInteraction != null, "Invalid exportDictionaryInteraction (Null)");
         Debug.Assert(exitInteraction != null, "Invalid ExitInteraction (Null)");
         Debug.Assert(themeMain1 != null, "Invalid theme1 (Null)");
         Debug.Assert(themeMain2 != null, "Invalid theme2 (Null)");
@@ -325,6 +331,7 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(themeNew3 != null, "Invalid theme3 (Null)");
         Debug.Assert(themeNew4 != null, "Invalid theme4 (Null)");
         Debug.Assert(themeNew5 != null, "Invalid theme5 (Null)");
+        Debug.Assert(newNameSetHeader != null, "Invalid newNameSetHeader (Null)");
         Debug.Assert(newTag != null, "Invalid adventureTag (Null)");
         Debug.Assert(newNotes != null, "Invalid adventureNotes (Null)");
         Debug.Assert(newDate != null, "Invalid adventureDate (Null)");
@@ -350,6 +357,7 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(turnSaveButton != null, "Invalid turnSaveButton (Null)");
         Debug.Assert(turnName != null, "Invalid turnName (Null)");
         Debug.Assert(turnHeader != null, "Invalid turnHeader (Null)");
+        Debug.Assert(turnNameSetHeader != null, "Invalid turnNameSetHeader (Null)");
         Debug.Assert(turnPlotPoint != null, "Invalid turnPlotPoint (Null)");
         Debug.Assert(turnCharacter1 != null, "Invalid turnCharacter1 (Null)");
         Debug.Assert(turnCharacter2 != null, "Invalid turnCharacter2 (Null)");
@@ -389,8 +397,9 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(dropHeader != null, "Invalid dropHeader (Null)");
         Debug.Assert(dropInput != null, "Invalid dropInput (Null)");
         Debug.Assert(dropConfirmInteraction != null, "Invalid dropConfirmInteraction (Null)");
+
         //Initialise Other
-        InitialiseDropDown();
+        InitialiseDelegates();
         InitialiseCanvases();
         InitialiseButtonInteractions();
         InitialiseFastAccess();
@@ -398,15 +407,18 @@ public class AdventureUI : MonoBehaviour
     }
     #endregion
 
-    #region InitialiseDropDown
+    #region InitialiseDelegates
     /// <summary>
-    /// Initialise dropDown input
+    /// Initialise various delegates for input and dropDown fields
     /// </summary>
-    private void InitialiseDropDown()
-    {        //dropDown button Interactions
+    private void InitialiseDelegates()
+    {        
+        //dropDown button Interactions
         dropConfirmInteraction.SetButton(ToolEventType.CloseDropDown);
         //delegate for dropDown
         dropInput.onValueChanged.AddListener(delegate { DropDownItemSelected(); });
+        //delegate for New Story Name
+        newTag.onValueChanged.AddListener(delegate { NewStoryNameInput(); });
     }
     #endregion
 
@@ -437,7 +449,8 @@ public class AdventureUI : MonoBehaviour
         saveToFileInteraction.SetButton(ToolEventType.SaveToolsToFile);
         loadFromFileInteraction.SetButton(ToolEventType.LoadToolsFromFile);
         deleteFileInteraction.SetButton(ToolEventType.DeleteToolsFile);
-        clearDictionaryInteraction.SetButton(ToolEventType.ClearAdventureDictionary);
+        clearDictionaryInteraction.SetButton(ToolEventType.ClearStoryDictionary);
+        exportDictionaryInteraction.SetButton(ToolEventType.ExportStoryDictionary);
         showListsInteraction.SetButton(ToolEventType.OpenAdventureLists);
         editAdventureInteraction.SetButton(ToolEventType.EditAdventure);
         saveAdventureInteraction.SetButton(ToolEventType.SaveAdventure);
@@ -481,10 +494,12 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.CloseNewAdventure, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.SaveAdventureToDict, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.CreateTurningPoint, OnEvent, "AdventureUI");
-        ToolEvents.i.AddListener(ToolEventType.ClearAdventureDictionary, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.ClearStoryDictionary, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.ExportStoryDictionary, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.ClearNewAdventure, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.EditAdventure, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.SaveAdventure, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.NewNameSet, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.NextAdventure, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.PreviousAdventure, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.MainSummaryUpArrow, OnEvent, "AdventureUI");
@@ -568,8 +583,11 @@ public class AdventureUI : MonoBehaviour
             case ToolEventType.DeleteToolsFile:
                 DeleteFile();
                 break;
-            case ToolEventType.ClearAdventureDictionary:
+            case ToolEventType.ClearStoryDictionary:
                 ClearDictionary();
+                break;
+            case ToolEventType.ExportStoryDictionary:
+                ExportDictionary();
                 break;
             case ToolEventType.ClearNewAdventure:
                 ClearNewAdventure();
@@ -667,6 +685,8 @@ public class AdventureUI : MonoBehaviour
         }
     }
     #endregion
+
+    // - - - Modules
 
     #region Main Adventure
     //
@@ -766,6 +786,15 @@ public class AdventureUI : MonoBehaviour
     {
         ToolManager.i.toolDataScript.ClearDictOfStories();
         Debug.LogFormat("[Tol] AdventureUI.cs -> ClearDictionary: dictOfStories EMPTIED{0}", "\n");
+    }
+
+    /// <summary>
+    /// Export dictOfStories into a text file dataDump suitable for the Keep (write only, no ability to read this file back in)
+    /// </summary>
+    private void ExportDictionary()
+    {
+        ToolManager.i.toolFileScript.ExportToolData();
+        ToolManager.i.toolFileScript.SaveExportToFile();
     }
 
     /// <summary>
@@ -953,6 +982,8 @@ public class AdventureUI : MonoBehaviour
         if (storyNew == null)
         { storyNew = new Story(); }
         else { storyNew.Reset(); }
+        //storyNew nameset
+        storyNew.nameSet = ToolManager.i.adventureScript.GetNameSetInUse();
         //toggle canvases on/off
         newAdventureCanvas.gameObject.SetActive(true);
         masterCanvas.gameObject.SetActive(false);
@@ -961,8 +992,9 @@ public class AdventureUI : MonoBehaviour
         newSummaryIndex = 0;
         //redraw page
         RedrawNewAdventurePage();
-        //switch of Turning Point button (until Adventure is SAVED)
+        //toggle buttons
         newTurningButton.gameObject.SetActive(false);
+        newSaveButton.gameObject.SetActive(false);
         //set flag
         isNewAdventureSave = true;
         //theme
@@ -970,6 +1002,8 @@ public class AdventureUI : MonoBehaviour
         //auto fill date
         newDate.text = GetCurrentDateString();
         storyNew.date = GetCurrentDateString();
+        //nameSet currently in use
+        newNameSetHeader.text = ToolManager.i.adventureScript.GetNameSetInUse();
         //clear temp dict's
         dictOfPlotLines.Clear();
         dictOfCharacters.Clear();
@@ -994,6 +1028,11 @@ public class AdventureUI : MonoBehaviour
         storyMain = new Story(storyNew);
     }
 
+    /// <summary>
+    /// Delegate assigned to newTag (new story Name) that triggers on change to active save button
+    /// </summary>
+    private void NewStoryNameInput()
+    { newSaveButton.gameObject.SetActive(true); }
 
     /// <summary>
     /// Create a new theme, overwrites any existing theme
@@ -1040,9 +1079,10 @@ public class AdventureUI : MonoBehaviour
         RedrawNewAdventurePage();
         //toggle key buttons
         newTurningButton.gameObject.SetActive(false);
-        newSaveButton.gameObject.SetActive(true);
+        /*newSaveButton.gameObject.SetActive(true);*/
     }
 
+    #region SaveAdventureToDict
     /// <summary>
     /// Save Adventure (base data) -> Saves storyNew to ToolDataManager.cs dictOfStories
     /// </summary>
@@ -1132,6 +1172,7 @@ public class AdventureUI : MonoBehaviour
         }
         else { Debug.LogError("Invalid storyNew (Null)"); }
     }
+    #endregion
 
     /// <summary>
     /// Up arrow moves one up in turningPoint summary display
@@ -1188,14 +1229,11 @@ public class AdventureUI : MonoBehaviour
                 InitialiseDropDownInput(listOfNameSets, "Select a NameSet to use");
                 coroutineDropDown = WaitForDropDownNameSetInput();
                 StartCoroutine(coroutineDropDown);
-
             }
             else { Debug.LogError("Invalid arrayOfNameSets (Empty)"); }
         }
         else { Debug.LogError("Invalid arrayOfNameSets (Null)"); }
         yield return new WaitUntil(() => isWaitUntilDone == true);
-        //post input processing
-
     }
 
 
@@ -1220,6 +1258,8 @@ public class AdventureUI : MonoBehaviour
         isTurningPointSaved = false;
         //Adventure 
         turnAdventureName.text = storyNew.tag;
+        //nameSet currently in use
+        turnNameSetHeader.text = ToolManager.i.adventureScript.GetNameSetInUse();
         //indexes
         plotPointIndex = 0;
         //find next empty slot in arrayOfTurningPoints 
@@ -2312,12 +2352,13 @@ public class AdventureUI : MonoBehaviour
         if (string.IsNullOrEmpty(header) == false)
         { dropHeader.text = header; }
         else { Debug.LogError("Invalid header (Null or Empty)"); }
-        //set index to 0
+        //set index
         dropInput.value = -1;
 
     }
     #endregion
 
+    #region WaitFor Methods...
     /// <summary>
     /// wait for input from drop down pop-up
     /// </summary>
@@ -2376,9 +2417,17 @@ public class AdventureUI : MonoBehaviour
         dropDownCanvas.gameObject.SetActive(true);
         yield return new WaitUntil(() => isWaitUntilDone == true);
         if (dropDownInputInt > -1)
-        { ToolManager.i.adventureScript.SetNameSet(dropDownInputInt); }
+        {
+            //change currently used nameSet to Input choice
+            ToolManager.i.adventureScript.SetNameSet(dropDownInputInt);
+            //update screen header
+            newNameSetHeader.text = ToolManager.i.adventureScript.GetNameSetInUse();
+            //update storyNew
+            storyNew.nameSet = ToolManager.i.adventureScript.GetNameSetInUse();
+        }
         Debug.LogFormat("[Tst] AdventureUI.cs -> WaitForDropDownNameSetInput: Selected NameSet \"{0}\"{1}", dropDownInputString, "\n");
     }
+    #endregion
 
     /// <summary>
     /// Gets option selected from dropDown pick list
@@ -2531,6 +2580,8 @@ public class AdventureUI : MonoBehaviour
     }
 
     #endregion
+
+    // - - - Assorted
 
     #region Dictionary Methods
 

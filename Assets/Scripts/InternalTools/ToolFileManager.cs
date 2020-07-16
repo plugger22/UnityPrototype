@@ -32,10 +32,13 @@ public class SaveToolData
 /// </summary>
 public class ToolFileManager : MonoBehaviour
 {
-    private static readonly string SAVE_FILE = "toolfile.json";
-    private SaveTools write;
-    private SaveTools read;
+    private static readonly string JSON_FILE = "toolfile.json";
+    private static readonly string TEXT_FILE = "exportfile.json";
+    private SaveTools writeJSON;
+    private SaveTools readJSON;
+    private string writeTEXT;
     private string filenameTools;
+    private string filenameExport;
     private string jsonWrite;
     private string jsonRead;
 
@@ -45,9 +48,12 @@ public class ToolFileManager : MonoBehaviour
     /// </summary>
     public void Initialise()
     {
-        filenameTools = Path.Combine(Application.persistentDataPath, SAVE_FILE);
+        filenameTools = Path.Combine(Application.persistentDataPath, JSON_FILE);
+        filenameExport = Path.Combine(Application.persistentDataPath, TEXT_FILE);
     }
     #endregion
+
+    // - - - JSON File
 
     #region Write Tool Data
     /// <summary>
@@ -55,7 +61,7 @@ public class ToolFileManager : MonoBehaviour
     /// </summary>
     public void WriteToolData()
     {
-        write = new SaveTools();
+        writeJSON = new SaveTools();
         //Sequentially write data
         WriteStories();
     }
@@ -73,7 +79,7 @@ public class ToolFileManager : MonoBehaviour
             foreach (var story in dictOfStories)
             {
                 if (story.Value != null)
-                { write.toolData.listOfStories.Add(story.Value); }
+                { writeJSON.toolData.listOfStories.Add(story.Value); }
                 else { Debug.LogErrorFormat("Invalid story (Null) for \"{0}\"", story.Key); }
             }
         }
@@ -87,12 +93,12 @@ public class ToolFileManager : MonoBehaviour
     /// </summary>
     public void SaveToolsToFile()
     {
-        if (write != null)
+        if (writeJSON != null)
         {
             if (string.IsNullOrEmpty(filenameTools) == false)
             {
                 //convert to Json (NOTE: second, optional, parameter gives pretty output for debugging purposes)
-                jsonWrite = JsonUtility.ToJson(write, true);
+                jsonWrite = JsonUtility.ToJson(writeJSON, true);
 
                 //file present? If so delete
                 if (File.Exists(filenameTools) == true)
@@ -134,7 +140,7 @@ public class ToolFileManager : MonoBehaviour
                     //read to Save file
                     try
                     {
-                        read = JsonUtility.FromJson<SaveTools>(jsonRead);
+                        readJSON = JsonUtility.FromJson<SaveTools>(jsonRead);
                         Debug.LogFormat("[Fil] FileManager.cs -> ReadToolsFromFile: GAME LOADED from \"{0}\"{1}", filenameTools, "\n");
                         return true;
                     }
@@ -155,7 +161,7 @@ public class ToolFileManager : MonoBehaviour
     /// </summary>
     public void ReadToolData()
     {
-        if (read != null)
+        if (readJSON != null)
         {
             ReadStories();
         }
@@ -169,7 +175,7 @@ public class ToolFileManager : MonoBehaviour
     /// Read saved data back into dictOfStories
     /// </summary>
     private void ReadStories()
-    { ToolManager.i.toolDataScript.SetStories(read.toolData.listOfStories); }
+    { ToolManager.i.toolDataScript.SetStories(readJSON.toolData.listOfStories); }
 
 
     #endregion
@@ -188,6 +194,40 @@ public class ToolFileManager : MonoBehaviour
     }
     #endregion
 
+    // - - - Export File (Write only -> text -> dataDump)
+
+    #region ExportToolData
+    /// <summary>
+    /// Take in-game data and convert to dataDamp export format suitable for a cut and paste into the Keep
+    /// </summary>
+    public void ExportToolData()
+    {
+        writeTEXT = ToolManager.i.adventureScript.CreateExportDataDump();
+    }
+    #endregion
+
+    #region SaveExportToFile
+    /// <summary>
+    /// write export dataDump to file
+    /// </summary>
+    public void SaveExportToFile()
+    {
+        if (writeTEXT != null)
+        {
+            //file present? If so delete
+            if (File.Exists(filenameExport) == true)
+            {
+                try { File.Delete(filenameExport); }
+                catch (Exception e) { Debug.LogErrorFormat("Failed to DELETE FILE, error \"{0}\"", e.Message); }
+            }
+            //create new file
+            try { File.WriteAllText(filenameExport, writeTEXT); }
+            catch (Exception e) { Debug.LogErrorFormat("Failed to write TEXT FROM FILE, error \"{0}\"", e.Message); }
+            Debug.LogFormat("[Fil] FileManager.cs -> SaveExportToFile: ExportData SAVED to \"{0}\"{1}", filenameExport, "\n");
+        }
+        else { Debug.LogError("Invalid writeTEXT (Null)"); }
+    }
+    #endregion
 
     //new methods above here
 }
