@@ -412,13 +412,17 @@ public class AdventureUI : MonoBehaviour
     /// Initialise various delegates for input and dropDown fields
     /// </summary>
     private void InitialiseDelegates()
-    {        
-        //dropDown button Interactions
-        dropConfirmInteraction.SetButton(ToolEventType.CloseDropDown);
+    {
         //delegate for dropDown
         dropInput.onValueChanged.AddListener(delegate { DropDownItemSelected(); });
         //delegate for New Story Name
         newTag.onValueChanged.AddListener(delegate { NewStoryNameInput(); });
+        //delegates for character1 name input
+        turnCharacter1Input.onSelect.AddListener(delegate { TurnCharacter1Select(); });
+        turnCharacter1Input.onDeselect.AddListener(delegate { TurnCharacter1Deselect(); });
+        //delegates for character2 name input
+        turnCharacter2Input.onSelect.AddListener(delegate { TurnCharacter2Select(); });
+        turnCharacter2Input.onDeselect.AddListener(delegate { TurnCharacter2Deselect(); });
     }
     #endregion
 
@@ -466,6 +470,8 @@ public class AdventureUI : MonoBehaviour
         clearTurnInteraction.SetButton(ToolEventType.ClearTurningPoint);
         saveTurnInteraction.SetButton(ToolEventType.SaveTurningPoint);
         exitTurnInteraction.SetButton(ToolEventType.CloseTurningPoint);
+        //dropDown button Interactions
+        dropConfirmInteraction.SetButton(ToolEventType.CloseDropDown);
         //list buttonInteractions
         returnListsInteraction.SetButton(ToolEventType.CloseAdventureLists);
         listEditInteraction.SetButton(ToolEventType.EditListItem);
@@ -1375,18 +1381,25 @@ public class AdventureUI : MonoBehaviour
                     break;
                 case PlotPointType.NewCharacter:
                     Debug.LogFormat("[Tst] AdventureUI.cs -> NewPlotpoint: NewCharacter to be Generated{0}", "\n");
-                    character1 = GetNewCharacter();
+                    character1 = GetNewCharacter(plotPoint.special);
                     break;
                 case PlotPointType.RemoveCharacter:
-                    Character character = storyNew.lists.GetRandomCharacterFromList();
-                    if (character != null)
+                    if (storyNew.lists.CheckIfAnyCharactersOnList() == true)
                     {
-                        storyNew.lists.RemoveCharacterFromList(character);
-                        storyNew.arrays.RemoveCharacterFromArray(character.refTag);
-                        Debug.LogFormat("[Tst] AdventureUI.cs -> NewPlotpoint: \"{0}\" REMOVED{1}", character.tag, "\n");
+                        Character character = storyNew.lists.GetRandomCharacterFromList();
+                        if (character != null)
+                        {
+                            storyNew.lists.RemoveCharacterFromList(character);
+                            storyNew.arrays.RemoveCharacterFromArray(character.refTag);
+                            Debug.LogFormat("[Tst] AdventureUI.cs -> NewPlotpoint: \"{0}\" REMOVED{1}", character.tag, "\n");
+                        }
+                        else
+                        { Debug.LogFormat("[Tst] AdventureUI.cs -> RemoveCharacter: Not possible (Null character){0}", "\n"); }
                     }
                     else
-                    { Debug.LogFormat("[Tst] AdventureUI.cs -> RemoveCharacter: Not possible to remove a character (listOfCharacters Empty?){0}", "\n"); }
+                    {
+
+                    }
                     break;
                 case PlotPointType.Meta:
                     GetMetaPlotPoint();
@@ -1441,6 +1454,16 @@ public class AdventureUI : MonoBehaviour
         //special cases
         switch (plotPoint.type)
         {
+            case PlotPointType.RemoveCharacter:
+                //check if there is a character to remove
+                if (storyNew.lists.CheckIfAnyCharactersOnList() == false)
+                {
+                    //no characters to remove, try again (avoiding another RemoveCharacter, None, or Conclusion)
+                    do
+                    { GetReplacementPlotPoint(themeType); }
+                    while (plotPoint.type != PlotPointType.RemoveCharacter);
+                }
+                break;
             case PlotPointType.Conclusion:
                 if (numConcluded > 0)
                 {
@@ -1799,7 +1822,7 @@ public class AdventureUI : MonoBehaviour
                 //must be at least one entry in arrayOfCharacters in order to get an existing character
                 if (storyNew.arrays.CheckDataItemsInArray() > 0)
                 { character = GetExistingCharacter(item.tag); }
-                else { character = GetNewCharacter(); }
+                else { character = GetNewCharacter(SpecialType.None); }
                 break;
             case StoryStatus.Logical:
                 Debug.LogFormat("[Tst] AdventureUI.cs -> GetIndividualCharacter: MOST LOGICAL character{0}{1}", isCharacter1 == true ? "1" : "2", "\n");
@@ -1816,14 +1839,14 @@ public class AdventureUI : MonoBehaviour
                         if (count > 2)
                         { isChar2MostLogical = true; }
                         else
-                        { character = GetNewCharacter(); }
+                        { character = GetNewCharacter(SpecialType.None); }
                     }
                 }
-                else { character = GetNewCharacter(); }
+                else { character = GetNewCharacter(SpecialType.None); }
                 break;
             case StoryStatus.New:
                 Debug.LogFormat("[Tst] AdventureUI.cs -> GetIndividualCharacter: NEW Character{0}{1}", isCharacter1 == true ? "1" : "2", "\n");
-                character = GetNewCharacter();
+                character = GetNewCharacter(SpecialType.None);
                 break;
             default: Debug.LogWarningFormat("Unrecognised item.status \"[0}\"", item.status); break;
         }
@@ -1836,13 +1859,33 @@ public class AdventureUI : MonoBehaviour
     /// Returns a newly generated character, returns null if a problem, eg. no space remaining in array
     /// </summary>
     /// <returns></returns>
-    private Character GetNewCharacter()
+    private Character GetNewCharacter(SpecialType special)
     {
         Character character = null;
         //check there is space for another character
         if (storyNew.arrays.CheckSpaceInCharacterArray() == true)
         {
-            character = ToolManager.i.adventureScript.GetNewCharacter();
+            switch (special)
+            {
+                case SpecialType.None:
+                    character = ToolManager.i.adventureScript.GetNewCharacter();
+                    break;
+                case SpecialType.Organisation:
+                    character = ToolManager.i.adventureScript.GetNewOrganisation();
+                    break;
+                case SpecialType.OrgOrChar:
+                    // 50/50 chance of either
+                    if (UnityEngine.Random.Range(0, 100) < 50)
+                    { character = ToolManager.i.adventureScript.GetNewCharacter(); }
+                    else { character = ToolManager.i.adventureScript.GetNewOrganisation(); }
+                    break;
+                case SpecialType.Object:
+                    //TO DO -> placeholder
+                    character = ToolManager.i.adventureScript.GetNewObject();
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised specialType \"{0}\"", special); break;
+            }
+
             if (character != null)
             {
                 //add character to array and list
@@ -1901,8 +1944,8 @@ public class AdventureUI : MonoBehaviour
                 //non-available, default to a new character
                 Debug.LogFormat("[Tst] AdventureUI.cs -> GetDropDownCharacter: storyNew.listOfCharacters is EMPTY. Created a new Character instead{0}", "\n");
                 if (isCharacter1 == true)
-                { character1 = GetNewCharacter(); }
-                else { character2 = GetNewCharacter(); }
+                { character1 = GetNewCharacter(SpecialType.None); }
+                else { character2 = GetNewCharacter(SpecialType.None); }
             }
         }
         else { Debug.LogError("Invalid storyNew.listOfCharacters (Null)"); }
@@ -2323,6 +2366,64 @@ public class AdventureUI : MonoBehaviour
             arrayOfPlotpointNotes[i] = "";
         }
     }
+    #endregion
+
+    #region Delegates
+    
+    /// <summary>
+    /// Character1 name OnSelect
+    /// </summary>
+    private void TurnCharacter1Select()
+    {
+        //swap mode to avoid space bar input generating a new plotPoint
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Edit);
+    }
+
+    /// <summary>
+    /// Character1 name OnDeselect
+    /// </summary>
+    private void TurnCharacter1Deselect()
+    {
+        character1.tag = turnCharacter1Input.text;
+        character1.refTag = turnCharacter1Input.text.Replace(" ", "");
+        UpdateArrayOfCharacters();
+        //ready for New Plotpoint (spacebar input)
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Input);
+    }
+
+    /// <summary>
+    /// Character2 name OnSelect
+    /// </summary>
+    private void TurnCharacter2Select()
+    {
+        //swap mode to avoid space bar input generating a new plotPoint
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Edit);
+    }
+
+    /// <summary>
+    /// Character2 name OnDeselect
+    /// </summary>
+    private void TurnCharacter2Deselect()
+    {
+        character2.tag = turnCharacter2Input.text;
+        character2.refTag = turnCharacter2Input.text.Replace(" ", "");
+        UpdateArrayOfCharacters();
+        //ready for New Plotpoint (spacebar input)
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Input);
+    }
+
+    /// <summary>
+    /// subMethod for character delegates to redo arrayOfTurnCharacters to reflect any changes in character names
+    /// </summary>
+    private void UpdateArrayOfCharacters()
+    {
+        string characters = character1.tag;
+        if (character2 != null && character2.tag.Length > 0)
+        { characters = string.Format("{0} / {1}", characters, character2.tag); }
+        //index - 1 as has already been incremented
+        arrayOfTurnCharacters[plotPointIndex - 1].text = characters;
+    }
+
     #endregion
 
     #endregion
@@ -2758,7 +2859,7 @@ public class AdventureUI : MonoBehaviour
             if (isFirstOpened == true)
             { mainTurnNotes.text = string.Format("<color=\"yellow\">[TurningPoint] <color=\"white\">{0}", turningPoint.notes.Length > 0 ? turningPoint.notes : "None"); }
             else
-            { mainTurnNotes.text = string.Format("[Plotpoint] {0}", turningPoint.arrayOfDetails[detailsIndex].notes.Length > 0 ? turningPoint.arrayOfDetails[detailsIndex].notes : "None" ); }
+            { mainTurnNotes.text = string.Format("[Plotpoint] {0}", turningPoint.arrayOfDetails[detailsIndex].notes.Length > 0 ? turningPoint.arrayOfDetails[detailsIndex].notes : "None"); }
             //plotpoints and characters
             for (int i = 0; i < turningPoint.arrayOfDetails.Length; i++)
             {

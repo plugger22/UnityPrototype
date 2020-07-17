@@ -3961,16 +3961,16 @@ public class ToolDetails : MonoBehaviour
     {
         List<OrganisationDescriptor> listOfOrganisationLeadership = new List<OrganisationDescriptor>()
         {
-            new OrganisationDescriptor(){ tag = "A higher power, perceived or real"},
-            new OrganisationDescriptor(){ tag = "Dictatorial Individual"},
-            new OrganisationDescriptor(){ tag = "Elites (small group)"},
-            new OrganisationDescriptor(){ tag = "Council (elected or self-appointed)"},
-            new OrganisationDescriptor(){ tag = "Democracy (voted in)"},
+            new OrganisationDescriptor(){ tag = "A higher power"},  //percieved or real
+            new OrganisationDescriptor(){ tag = "Dictatorship"},
+            new OrganisationDescriptor(){ tag = "Elites"},          //a small group
+            new OrganisationDescriptor(){ tag = "Council"},         //elected or self appointed
+            new OrganisationDescriptor(){ tag = "Democracy"},
             new OrganisationDescriptor(){ tag = "Hierarchical"},
             new OrganisationDescriptor(){ tag = "Hereditary"},
-            new OrganisationDescriptor(){ tag = "Charismatic Individual"},
-            new OrganisationDescriptor(){ tag = "Artificial Intelligence"},
-            new OrganisationDescriptor(){ tag = "Mysterious (Nobody knows)"},
+            new OrganisationDescriptor(){ tag = "Guru"},            //charismatic individual
+            new OrganisationDescriptor(){ tag = "AI"},              //artificial intelligence
+            new OrganisationDescriptor(){ tag = "Mysterious"},
         };
         ToolManager.i.toolDataScript.SetListOfOrganisationLeadership(listOfOrganisationLeadership);
     }

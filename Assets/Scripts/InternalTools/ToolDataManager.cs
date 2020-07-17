@@ -316,19 +316,17 @@ public class ToolDataManager : MonoBehaviour
     // - - - Organisations
     //
 
-    /// <summary>
-    /// Return a string listing all of an organisations qualities
-    /// </summary>
-    /// <returns></returns>
-    public string GetOrganisationQualities()
-    {
-        StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("Type: {0}{1}", listOfOrganisationType[Random.Range(0, listOfOrganisationType.Count)], "\n");
-        builder.AppendFormat("Origin: {0}{1}", listOfOrganisationOrigin[Random.Range(0, listOfOrganisationOrigin.Count)], "\n");
-        builder.AppendFormat("Leadership: {0}{1}", listOfOrganisationLeadership[Random.Range(0, listOfOrganisationLeadership.Count)], "\n");
-        builder.AppendFormat("Motivation: {0}{1}", listOfOrganisationMotivation[Random.Range(0, listOfOrganisationMotivation.Count)], "\n");
-        return builder.ToString();
-    }
+    public string GetRandomOrganisationType()
+    { return listOfOrganisationType[Random.Range(0, listOfOrganisationType.Count)].tag; }
+
+    public string GetRandomOrganisationOrigin()
+    { return listOfOrganisationOrigin[Random.Range(0, listOfOrganisationOrigin.Count)].tag; }
+
+    public string GetRandomOrganisationLeadership()
+    { return listOfOrganisationLeadership[Random.Range(0, listOfOrganisationLeadership.Count)].tag; }
+
+    public string GetRandomOrganisationMotivation()
+    { return listOfOrganisationMotivation[Random.Range(0, listOfOrganisationMotivation.Count)].tag; }
 
     /// <summary>
     /// Populate listOfOrganisationType

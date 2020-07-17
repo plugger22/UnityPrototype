@@ -157,7 +157,7 @@ public class ToolInput : MonoBehaviour
                 break;
             case ToolModal.TurningPoint:
                 {
-                    /*
+                    
                     switch (_modalType)
                     {
                         case ToolModalType.Input:
@@ -166,7 +166,7 @@ public class ToolInput : MonoBehaviour
                             { ToolEvents.i.PostNotification(ToolEventType.CreatePlotpoint, this, null, "ToolInput.cs -> ProcessKeyInput SPACEBAR"); }
                             break;
                     }
-                    */
+                    
                 }
                 break;
         }

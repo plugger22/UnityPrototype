@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
-using toolsAPI;
-using Random = System.Random;
 using System.Text;
+using toolsAPI;
+using UnityEngine;
+using Random = System.Random;
 
 #if (UNITY_EDITOR)
 /// <summary>
@@ -13,7 +13,7 @@ public class AdventureManager : MonoBehaviour
     [Header("Names")]
     [Tooltip("A New Adventure can select from any of the Namesets provided here")]
     public NameSet[] arrayOfNameSets;
-    
+
     private NameSet nameSet;                    //nameSet currently in use (default set in Initialise to be arrayOfNameSets[index 0]
 
     /// <summary>
@@ -34,6 +34,7 @@ public class AdventureManager : MonoBehaviour
         else { Debug.LogError("Invalid arrayOfNameSets (Empty)"); }
     }
 
+    #region Themes
     /// <summary>
     /// Get a list of randomly sorted themeTypes in priority order (index 0 onwards). Should be five ThemeTypes in list with index 0 being the first priority and index 3/4 being the last
     /// </summary>
@@ -66,7 +67,7 @@ public class AdventureManager : MonoBehaviour
     {
         int priority = -1;
         Random random = new Random();
-        int rnd= random.Next(0, 10);
+        int rnd = random.Next(0, 10);
         switch (rnd)
         {
             case 0:
@@ -89,7 +90,7 @@ public class AdventureManager : MonoBehaviour
         return priority;
     }
 
-
+    #endregion
 
     #region Characters
     /// <summary>
@@ -98,46 +99,130 @@ public class AdventureManager : MonoBehaviour
     /// <returns></returns>
     public Character GetNewCharacter()
     {
-        Character character = new Character();
+        Character character = null;
+        Random random = new Random();
+        //special
+        CharacterSpecial specialCharacter = ToolManager.i.toolDataScript.GetCharacterSpecial();
+        if (specialCharacter != null)
+        {
+            switch (specialCharacter.special)
+            {
+                case SpecialType.None:
+                    character = GetNewPerson();
+                    break;
+                case SpecialType.Organisation:
+                    character = GetNewOrganisation();
+                    break;
+                case SpecialType.Object:
+                    character = GetNewObject();
+                    break;
+                case SpecialType.OrgOrChar:
+                    // 50/50 chance of either
+                    if (random.Next(0, 100) < 50)
+                    { character = GetNewPerson(); }
+                    else { character = GetNewOrganisation(); }
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised specialType \"{0}\"", specialCharacter.special); break;
+            }
+
+        }
+        else { Debug.LogWarning("Invalid CharacterSpecial (Null)"); }
+        return character;
+    }
+    #endregion
+
+    /// <summary>
+    /// Returns a new Character (actual person versus an Object or Organisation)
+    /// </summary>
+    /// <returns></returns>
+    public Character GetNewPerson()
+    {
+        Character character = new Character() { special = SpecialType.None };
         string identity, descriptor, name, refTag, firstName;
         List<string> tempList = new List<string>();
         identity = descriptor = name = "";
-        //special
-        CharacterSpecial special = ToolManager.i.toolDataScript.GetCharacterSpecial();
-        if (special != null)
+        //Character -> identity
+        tempList = ToolManager.i.toolDataScript.GetCharacterIdentity();
+        for (int j = 0; j < tempList.Count; j++)
+        { identity = string.Format("{0}{1}", identity.Length > 0 ? identity + ", " : "", tempList[j]); }
+        //Character -> descriptor
+        tempList = ToolManager.i.toolDataScript.GetCharacterDescriptors();
+        for (int j = 0; j < tempList.Count; j++)
+        { descriptor = string.Format("{0}{1}", descriptor.Length > 0 ? descriptor + ", " : "", tempList[j]); }
+        //Character -> name (50/50 male/female)
+        Random random = new Random();
+        int rnd = random.Next(0, 100);
+        if (rnd < 50)
         {
-            //identity
-            tempList = ToolManager.i.toolDataScript.GetCharacterIdentity();
-            for (int j = 0; j < tempList.Count; j++)
-            { identity = string.Format("{0}{1}", identity.Length > 0 ? identity + ", " : "", tempList[j]); }
-            //descriptor
-            tempList = ToolManager.i.toolDataScript.GetCharacterDescriptors();
-            for (int j = 0; j < tempList.Count; j++)
-            { descriptor = string.Format("{0}{1}", descriptor.Length > 0 ? descriptor + ", " : "", tempList[j]); }
-            //name
-            Random random = new Random();
-            int rnd = random.Next(0, 100);
-            if (rnd < 50)
-            {
-                character.sex = CharacterSex.Male;
-                firstName = nameSet.firstMaleNames.GetRandomRecord();
-            }
-            else
-            {
-                character.sex = CharacterSex.Female;
-                firstName = nameSet.firstFemaleNames.GetRandomRecord();
-            }
-            name = string.Format("{0} {1}",  firstName, nameSet.lastNames.GetRandomRecord());
-            refTag = name.Replace(" ", "");
-            //bring together
-            character.dataCreated = string.Format("{0} -> {1} -> {2} -> {3}", character.sex, special.tag, identity, descriptor);
-            character.tag = name;
-            character.refTag = refTag;
-            Debug.LogFormat("[Tst] AdventureManager.cs -> GetNewCharacter: \"{0}\", refTag {1} CREATED{2}", character.tag, character.refTag, "\n");
+            character.sex = CharacterSex.Male;
+            firstName = nameSet.firstMaleNames.GetRandomRecord();
         }
-        else { Debug.LogWarning("Invalid CharacterSpecial (Null)"); }
-        return character; 
+        else
+        {
+            character.sex = CharacterSex.Female;
+            firstName = nameSet.firstFemaleNames.GetRandomRecord();
+        }
+        name = string.Format("{0} {1}", firstName, nameSet.lastNames.GetRandomRecord());
+        refTag = name.Replace(" ", "");
+        //bring together
+        character.dataCreated = string.Format("{0} -> {1} -> {2}", character.sex, identity, descriptor);
+        character.tag = name;
+        character.refTag = refTag;
+        Debug.LogFormat("[Tst] AdventureManager.cs -> GetNewCharacter: \"{0}\", refTag {1} CREATED{2}", character.tag, character.refTag, "\n");
+        return character;
     }
+
+    #region Organisations
+    //
+    // - - - Organisations
+    //
+
+    /// <summary>
+    /// returns a character (Organisations are represented as characters with specialType.enum set to 'Organisation').
+    /// </summary>
+    /// <returns></returns>
+    public Character GetNewOrganisation()
+    {
+        Character character = new Character() { special = SpecialType.Organisation };
+        StringBuilder builder = new StringBuilder();
+        builder.Append(ToolManager.i.toolDataScript.GetRandomOrganisationType());
+        builder.AppendFormat(" -> O -> {0}", ToolManager.i.toolDataScript.GetRandomOrganisationOrigin());
+        builder.AppendFormat(" -> L -> {0}", ToolManager.i.toolDataScript.GetRandomOrganisationLeadership());
+        builder.AppendFormat(" -> M -> {0}", ToolManager.i.toolDataScript.GetRandomOrganisationMotivation());
+
+        string name = string.Format("ORG {0}", nameSet.lastNames.GetRandomRecord());
+
+        //bring together
+        character.dataCreated = builder.ToString();
+        character.tag = name;
+        character.refTag = name.Replace(" ", "");
+        Debug.LogFormat("[Tst] AdventureManager.cs -> GetNewOrganisation: \"{0}\", refTag {1} CREATED{2}", character.tag, character.refTag, "\n");
+        return character;
+    }
+
+    #endregion
+
+    #region Objects
+    //
+    // - - - Objects
+    //
+
+    /// <summary>
+    /// returns a character (Objects are represented as Characters with specialType.enum set to 'Object')
+    /// </summary>
+    /// <returns></returns>
+    public Character GetNewObject()
+    {
+        Character character = new Character() { special = SpecialType.Object };
+        string name = string.Format("OBJECT {0}", nameSet.lastNames.GetRandomRecord());
+        //bring together
+        character.tag = name;
+        character.refTag = name.Replace(" ", "");
+        Debug.LogFormat("[Tst] AdventureManager.cs -> GetNewObject: \"{0}\", refTag {1} CREATED{2}", character.tag, character.refTag, "\n");
+        return character;
+    }
+
+
     #endregion
 
     #region NameSets
@@ -191,7 +276,7 @@ public class AdventureManager : MonoBehaviour
         {
             int count;
             string characters;
-            foreach(var story in dictOfStories)
+            foreach (var story in dictOfStories)
             {
                 //create an individual story builder
                 StringBuilder builderStory = new StringBuilder();
@@ -200,7 +285,7 @@ public class AdventureManager : MonoBehaviour
                 builderStory.AppendFormat("Name: {0}{1}", story.Value.tag, "\n");
                 builderStory.AppendFormat("Date: {0}{1}", story.Value.date, "\n");
                 builderStory.AppendFormat("NameSet: {0}{1}", story.Value.nameSet, "\n");
-                builderStory.AppendFormat("Theme: {0} / {1} / {2} / {3} / {4}{5}{6}", story.Value.theme.GetThemeType(1), story.Value.theme.GetThemeType(2), story.Value.theme.GetThemeType(3), 
+                builderStory.AppendFormat("Theme: {0} / {1} / {2} / {3} / {4}{5}{6}", story.Value.theme.GetThemeType(1), story.Value.theme.GetThemeType(2), story.Value.theme.GetThemeType(3),
                     story.Value.theme.GetThemeType(4), story.Value.theme.GetThemeType(5), "\n", "\n");
                 builderStory.AppendFormat("{0}{1}", story.Value.notes, "\n");
                 //Turning Point summary

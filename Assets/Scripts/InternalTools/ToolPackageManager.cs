@@ -701,6 +701,13 @@ namespace toolsAPI
         }
 
         /// <summary>
+        /// Returns true if any characters on list, false otherwise
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckIfAnyCharactersOnList()
+        { return listOfCharacters.Count > 0 ? true : false; }
+
+        /// <summary>
         /// Returns specific Character from list (based on array refTag), null if not found
         /// </summary>
         /// <param name="charRef"></param>
