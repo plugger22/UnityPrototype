@@ -29,6 +29,8 @@ public class ToolDataManager : MonoBehaviour
     private List<OrganisationDescriptor> listOfOrganisationMotivation = new List<OrganisationDescriptor>();
     private List<OrganisationDescriptor> listOfOrganisationMethod = new List<OrganisationDescriptor>();
     private List<OrganisationDescriptor> listOfOrganisationStrength = new List<OrganisationDescriptor>();
+    private List<OrganisationDescriptor> listOfOrganisationWeakness = new List<OrganisationDescriptor>();
+    private List<OrganisationDescriptor> listOfOrganisationObstacle = new List<OrganisationDescriptor>();
 
     public ToolDataManager()
     {
@@ -334,7 +336,13 @@ public class ToolDataManager : MonoBehaviour
     { return listOfOrganisationMethod[Random.Range(0, listOfOrganisationMethod.Count)].tag; }
 
     public string GetRandomOrganisationStrength()
-    { return listOfOrganisationMethod[Random.Range(0, listOfOrganisationStrength.Count)].tag; }
+    { return listOfOrganisationStrength[Random.Range(0, listOfOrganisationStrength.Count)].tag; }
+
+    public string GetRandomOrganisationWeakness()
+    { return listOfOrganisationWeakness[Random.Range(0, listOfOrganisationWeakness.Count)].tag; }
+
+    public string GetRandomOrganisationObstacle()
+    { return listOfOrganisationObstacle[Random.Range(0, listOfOrganisationObstacle.Count)].tag; }
 
     /// <summary>
     /// Populate listOfOrganisationType
@@ -416,6 +424,34 @@ public class ToolDataManager : MonoBehaviour
         {
             listOfOrganisationStrength.Clear();
             listOfOrganisationStrength.AddRange(tempList);
+        }
+        else { Debug.LogError("Invalid tempList (Null)"); }
+    }
+
+    /// <summary>
+    /// Populate listOfOrganisationWeakness
+    /// </summary>
+    /// <param name="tempList"></param>
+    public void SetListOfOrganisationWeakness(List<OrganisationDescriptor> tempList)
+    {
+        if (tempList != null)
+        {
+            listOfOrganisationWeakness.Clear();
+            listOfOrganisationWeakness.AddRange(tempList);
+        }
+        else { Debug.LogError("Invalid tempList (Null)"); }
+    }
+
+    /// <summary>
+    /// Populate listOfOrganisationObstacle
+    /// </summary>
+    /// <param name="tempList"></param>
+    public void SetListOfOrganisationObstacle(List<OrganisationDescriptor> tempList)
+    {
+        if (tempList != null)
+        {
+            listOfOrganisationObstacle.Clear();
+            listOfOrganisationObstacle.AddRange(tempList);
         }
         else { Debug.LogError("Invalid tempList (Null)"); }
     }

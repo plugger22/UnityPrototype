@@ -25,6 +25,9 @@ public class ToolDetails : MonoBehaviour
         InitialiseOrganisationOrigin();
         InitialiseOrganisationLeadership();
         InitialiseOrganisationMotivation();
+        InitialiseOrganisationStrength();
+        InitialiseOrganisationWeakness();
+        InitialiseOrganisationObstacle();
     }
 
     #region InitialisePlotpoints
@@ -4052,6 +4055,52 @@ public class ToolDetails : MonoBehaviour
             new OrganisationDescriptor(){ tag = "Reputation"},              //Have a strong reputation (honesty/fear/relentless/etc..
         };
         ToolManager.i.toolDataScript.SetListOfOrganisationOrigin(listOfOrganisationStrength);
+    }
+    #endregion
+
+    #region InitialiseOrganisationWeakness
+    /// <summary>
+    /// Organisation weakness
+    /// </summary>
+    private void InitialiseOrganisationWeakness()
+    {
+        List<OrganisationDescriptor> listOfOrganisationWeakness = new List<OrganisationDescriptor>()
+        {
+            new OrganisationDescriptor(){ tag = "Ticking Clock"},           //running out of time
+            new OrganisationDescriptor(){ tag = "Skill Shortage"},          //need more or specific people
+            new OrganisationDescriptor(){ tag = "Resource Shortage"},       //need more of a specific resource
+            new OrganisationDescriptor(){ tag = "Spanner in the Works"},    //something unexpected has gone wrong, or not gone to plan
+            new OrganisationDescriptor(){ tag = "Arousing Suspicion"},      //there is increasing suspicion of the organisation by the outside world
+            new OrganisationDescriptor(){ tag = "Fifth Element"},           //leaks, traitors, spies, informants are white anting the organisation
+            new OrganisationDescriptor(){ tag = "Internal Dissension"},     //disputed leadership, faction conflicts, no agreement on direction
+            new OrganisationDescriptor(){ tag = "Poor Morale"},             //poor internal morale
+            new OrganisationDescriptor(){ tag = "Poor Management"},
+            new OrganisationDescriptor(){ tag = "Poor Communication"},
+        };
+        ToolManager.i.toolDataScript.SetListOfOrganisationWeakness(listOfOrganisationWeakness);
+    }
+    #endregion
+
+    #region InitialiseOrganisationObstacle
+    /// <summary>
+    /// Organisation obstacle preventing them from achieving their goal
+    /// </summary>
+    private void InitialiseOrganisationObstacle()
+    {
+        List<OrganisationDescriptor> listOfOrganisationObstacle = new List<OrganisationDescriptor>()
+        {
+            new OrganisationDescriptor(){ tag = "Direct Competition"},      //another org wants the same thing
+            new OrganisationDescriptor(){ tag = "Direct Opposition"},       //another org is actively trying to stop them (but doesn't want the same thing)
+            new OrganisationDescriptor(){ tag = "Accidental"},              //another org is accidentally interfering and working against them
+            new OrganisationDescriptor(){ tag = "Environmental"},           //Something in the enviroment is disrupting them severely (disaster, ongoing effect, etc)
+            new OrganisationDescriptor(){ tag = "Political"},               //There is a significant political obstacle
+            new OrganisationDescriptor(){ tag = "Vulnerability"},           //Another person or organisation is exploiting their/a weakness for their own purposes
+            new OrganisationDescriptor(){ tag = "Financial"},               //There is a significant financial obstacle to overcome
+            new OrganisationDescriptor(){ tag = "Committment"},             //A web pf/single alliance/committment/conflicted loyalties is inhibiting them from eaching their goal
+            new OrganisationDescriptor(){ tag = "Distractions"},            //They are constantly getting sidetracked fromt their goal
+            new OrganisationDescriptor(){ tag = "Unseen"},                  //An unseen and unknown force/org/individual is actively hindering the organisation
+        };
+        ToolManager.i.toolDataScript.SetListOfOrganisationObstacle(listOfOrganisationObstacle);
     }
     #endregion
 
