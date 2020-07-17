@@ -3969,7 +3969,7 @@ public class ToolDetails : MonoBehaviour
             new OrganisationDescriptor(){ tag = "Hierarchical"},
             new OrganisationDescriptor(){ tag = "Hereditary"},
             new OrganisationDescriptor(){ tag = "Guru"},            //charismatic individual
-            new OrganisationDescriptor(){ tag = "AI"},              //artificial intelligence
+            new OrganisationDescriptor(){ tag = "A.I"},              //artificial intelligence
             new OrganisationDescriptor(){ tag = "Mysterious"},
         };
         ToolManager.i.toolDataScript.SetListOfOrganisationLeadership(listOfOrganisationLeadership);
@@ -4006,6 +4006,52 @@ public class ToolDetails : MonoBehaviour
             new OrganisationDescriptor(){ tag = "Redemption"},
         };
         ToolManager.i.toolDataScript.SetListOfOrganisationMotivation(listOfOrganisationMotivation);
+    }
+    #endregion
+
+    #region InitialiseOrganisationMethod
+    /// <summary>
+    /// Organisation Methodology / Persuasion
+    /// </summary>
+    private void InitialiseOrganisationMethod()
+    {
+        List<OrganisationDescriptor> listOfOrganisationMethod = new List<OrganisationDescriptor>()
+        {
+            new OrganisationDescriptor(){ tag = "Legal"},                   //Within the legal framework of the current culture or society
+            new OrganisationDescriptor(){ tag = "Overt Violence"},          //overt violence; war, raids, ceremonial or gladiatorial combat
+            new OrganisationDescriptor(){ tag = "Hidden Violence"},         //assassinations, secret raids
+            new OrganisationDescriptor(){ tag = "Bribery"},                 //bribery and corruption
+            new OrganisationDescriptor(){ tag = "Disharmony"},              //sow distrust and disharmony through backdoor diplomacy
+            new OrganisationDescriptor(){ tag = "Manipulation"},            //manipulation or leverage using secret information
+            new OrganisationDescriptor(){ tag = "Consensus"},               //negotiate a joint consensus position
+            new OrganisationDescriptor(){ tag = "Third Parties"},           //hide behind third parties which are used to achieve their aims, never directly intervene
+            new OrganisationDescriptor(){ tag = "PsyOps"},                  //uses all available tools to sway opinions by fair means or foul
+            new OrganisationDescriptor(){ tag = "Long View"},               //takes the long view and is willing to take short term setbacks in pursuit of long term goals
+        };
+        ToolManager.i.toolDataScript.SetListOfOrganisationMethod(listOfOrganisationMethod);
+    }
+    #endregion
+
+    #region InitialiseOrganisationStrength
+    /// <summary>
+    /// Organisation Strength
+    /// </summary>
+    private void InitialiseOrganisationStrength()
+    {
+        List<OrganisationDescriptor> listOfOrganisationStrength = new List<OrganisationDescriptor>()
+        {
+            new OrganisationDescriptor(){ tag = "Decisive"},                //Act decisively with no hesitation when an opportunity presents itself
+            new OrganisationDescriptor(){ tag = "Planners"},                //Meticulous Planning that accounts for all possibilities and outcomes
+            new OrganisationDescriptor(){ tag = "Decentralised"},           //A network of associates, hard to shut down
+            new OrganisationDescriptor(){ tag = "Allies"},                  //have supportive and powerful allies
+            new OrganisationDescriptor(){ tag = "Resources"},               //have access to valuable resources above and beyond what would be normally expected
+            new OrganisationDescriptor(){ tag = "Fanatical"},               //Will stop at nothing to achieve their goals
+            new OrganisationDescriptor(){ tag = "Efficient"},               //Highly efficient at whatever they do
+            new OrganisationDescriptor(){ tag = "Adaptable"},               //Fast on their feet, can adapt to changing circumstances with ease
+            new OrganisationDescriptor(){ tag = "Connections"},             //Have powerful connections that they can draw on
+            new OrganisationDescriptor(){ tag = "Reputation"},              //Have a strong reputation (honesty/fear/relentless/etc..
+        };
+        ToolManager.i.toolDataScript.SetListOfOrganisationOrigin(listOfOrganisationStrength);
     }
     #endregion
 

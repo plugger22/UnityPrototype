@@ -423,6 +423,16 @@ public class AdventureUI : MonoBehaviour
         //delegates for character2 name input
         turnCharacter2Input.onSelect.AddListener(delegate { TurnCharacter2Select(); });
         turnCharacter2Input.onDeselect.AddListener(delegate { TurnCharacter2Deselect(); });
+        //delegates for data 0/1/2 input
+        turnData0Input.onSelect.AddListener(delegate { TurnData0Select(); });
+        turnData0Input.onDeselect.AddListener(delegate { TurnData0Select(); });
+        turnData1Input.onSelect.AddListener(delegate { TurnData1Select(); });
+        turnData1Input.onDeselect.AddListener(delegate { TurnData1Select(); });
+        turnData2Input.onSelect.AddListener(delegate { TurnData2Select(); });
+        turnData2Input.onDeselect.AddListener(delegate { TurnData2Select(); });
+        //delegates for turnPlotPointNotes
+        turnPlotNotesInput.onSelect.AddListener(delegate { TurnPlotNotesSelect(); });
+        turnPlotNotesInput.onDeselect.AddListener(delegate { TurnPlotNotesDeselect(); });
     }
     #endregion
 
@@ -2411,6 +2421,54 @@ public class AdventureUI : MonoBehaviour
         //ready for New Plotpoint (spacebar input)
         ToolManager.i.toolInputScript.SetModalType(ToolModalType.Input);
     }
+
+    /// <summary>
+    /// Data0 name OnSelect
+    /// </summary>
+    private void TurnData0Select()
+    { ToolManager.i.toolInputScript.SetModalType(ToolModalType.Edit); }
+
+    /// <summary>
+    /// Data0 name OnDeselect
+    /// </summary>
+    private void TurnData0Deselect()
+    { ToolManager.i.toolInputScript.SetModalType(ToolModalType.Input); }
+
+    /// <summary>
+    /// Data1 name OnSelect
+    /// </summary>
+    private void TurnData1Select()
+    { ToolManager.i.toolInputScript.SetModalType(ToolModalType.Edit); }
+
+    /// <summary>
+    /// Data1 name OnDeselect
+    /// </summary>
+    private void TurnData1Deselect()
+    { ToolManager.i.toolInputScript.SetModalType(ToolModalType.Input); }
+
+    /// <summary>
+    /// Data2 name OnSelect
+    /// </summary>
+    private void TurnData2Select()
+    { ToolManager.i.toolInputScript.SetModalType(ToolModalType.Edit); }
+
+    /// <summary>
+    /// Data2 name OnDeselect
+    /// </summary>
+    private void TurnData2Deselect()
+    { ToolManager.i.toolInputScript.SetModalType(ToolModalType.Input); }
+
+    /// <summary>
+    /// Plotpoint Notes OnSelect
+    /// </summary>
+    private void TurnPlotNotesSelect()
+    { ToolManager.i.toolInputScript.SetModalType(ToolModalType.Edit); }
+
+    /// <summary>
+    /// Plotpoint Notes name OnDeselect
+    /// </summary>
+    private void TurnPlotNotesDeselect()
+    { ToolManager.i.toolInputScript.SetModalType(ToolModalType.Input); }
 
     /// <summary>
     /// subMethod for character delegates to redo arrayOfTurnCharacters to reflect any changes in character names

@@ -27,6 +27,8 @@ public class ToolDataManager : MonoBehaviour
     private List<OrganisationDescriptor> listOfOrganisationOrigin = new List<OrganisationDescriptor>();
     private List<OrganisationDescriptor> listOfOrganisationLeadership = new List<OrganisationDescriptor>();
     private List<OrganisationDescriptor> listOfOrganisationMotivation = new List<OrganisationDescriptor>();
+    private List<OrganisationDescriptor> listOfOrganisationMethod = new List<OrganisationDescriptor>();
+    private List<OrganisationDescriptor> listOfOrganisationStrength = new List<OrganisationDescriptor>();
 
     public ToolDataManager()
     {
@@ -328,6 +330,12 @@ public class ToolDataManager : MonoBehaviour
     public string GetRandomOrganisationMotivation()
     { return listOfOrganisationMotivation[Random.Range(0, listOfOrganisationMotivation.Count)].tag; }
 
+    public string GetRandomOrganisationMethod()
+    { return listOfOrganisationMethod[Random.Range(0, listOfOrganisationMethod.Count)].tag; }
+
+    public string GetRandomOrganisationStrength()
+    { return listOfOrganisationMethod[Random.Range(0, listOfOrganisationStrength.Count)].tag; }
+
     /// <summary>
     /// Populate listOfOrganisationType
     /// </summary>
@@ -380,6 +388,34 @@ public class ToolDataManager : MonoBehaviour
         {
             listOfOrganisationMotivation.Clear();
             listOfOrganisationMotivation.AddRange(tempList);
+        }
+        else { Debug.LogError("Invalid tempList (Null)"); }
+    }
+
+    /// <summary>
+    /// Populate listOfOrganisationMethod
+    /// </summary>
+    /// <param name="tempList"></param>
+    public void SetListOfOrganisationMethod(List<OrganisationDescriptor> tempList)
+    {
+        if (tempList != null)
+        {
+            listOfOrganisationMethod.Clear();
+            listOfOrganisationMethod.AddRange(tempList);
+        }
+        else { Debug.LogError("Invalid tempList (Null)"); }
+    }
+
+    /// <summary>
+    /// Populate listOfOrganisationStrength
+    /// </summary>
+    /// <param name="tempList"></param>
+    public void SetListOfOrganisationStrength(List<OrganisationDescriptor> tempList)
+    {
+        if (tempList != null)
+        {
+            listOfOrganisationStrength.Clear();
+            listOfOrganisationStrength.AddRange(tempList);
         }
         else { Debug.LogError("Invalid tempList (Null)"); }
     }

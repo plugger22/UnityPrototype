@@ -189,6 +189,8 @@ public class AdventureManager : MonoBehaviour
         builder.AppendFormat(" -> O -> {0}", ToolManager.i.toolDataScript.GetRandomOrganisationOrigin());
         builder.AppendFormat(" -> L -> {0}", ToolManager.i.toolDataScript.GetRandomOrganisationLeadership());
         builder.AppendFormat(" -> M -> {0}", ToolManager.i.toolDataScript.GetRandomOrganisationMotivation());
+        builder.AppendFormat(" -> M -> {0}", ToolManager.i.toolDataScript.GetRandomOrganisationMethod());
+        builder.AppendFormat(" -> S -> {0}", ToolManager.i.toolDataScript.GetRandomOrganisationStrength());
 
         string name = string.Format("ORG {0}", nameSet.lastNames.GetRandomRecord());
 
