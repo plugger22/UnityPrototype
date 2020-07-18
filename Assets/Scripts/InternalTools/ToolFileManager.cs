@@ -33,12 +33,15 @@ public class SaveToolData
 public class ToolFileManager : MonoBehaviour
 {
     private static readonly string JSON_FILE = "toolfile.json";
-    private static readonly string TEXT_FILE = "exportfile.json";
+    private static readonly string TEXT_FILE = "exportfile.txt";
+    private static readonly string ORG_FILE = "orgfile.txt";
+
     private SaveTools writeJSON;
     private SaveTools readJSON;
     private string writeTEXT;
     private string filenameTools;
     private string filenameExport;
+    private string filenameOrgExport;
     private string jsonWrite;
     private string jsonRead;
 
@@ -50,6 +53,7 @@ public class ToolFileManager : MonoBehaviour
     {
         filenameTools = Path.Combine(Application.persistentDataPath, JSON_FILE);
         filenameExport = Path.Combine(Application.persistentDataPath, TEXT_FILE);
+        filenameOrgExport = Path.Combine(Application.persistentDataPath, ORG_FILE);
     }
     #endregion
 
@@ -224,6 +228,41 @@ public class ToolFileManager : MonoBehaviour
             try { File.WriteAllText(filenameExport, writeTEXT); }
             catch (Exception e) { Debug.LogErrorFormat("Failed to write TEXT FROM FILE, error \"{0}\"", e.Message); }
             Debug.LogFormat("[Fil] FileManager.cs -> SaveExportToFile: ExportData SAVED to \"{0}\"{1}", filenameExport, "\n");
+        }
+        else { Debug.LogError("Invalid writeTEXT (Null)"); }
+    }
+    #endregion
+
+    // - - - Organisation File (Write only -> text -> 'x' number of Orgs)
+
+    #region ExportOrgData
+    /// <summary>
+    /// Take in-game Org data and convert to dataDamp export format suitable for a cut and paste into the Keep
+    /// </summary>
+    public void ExportOrgData()
+    {
+        writeTEXT = ToolManager.i.adventureScript.GetExportOrganisations(10);
+    }
+    #endregion
+
+    #region SaveOrgExportToFile
+    /// <summary>
+    /// write export dataDump to file
+    /// </summary>
+    public void SaveOrgExportToFile()
+    {
+        if (writeTEXT != null)
+        {
+            //file present? If so delete
+            if (File.Exists(filenameOrgExport) == true)
+            {
+                try { File.Delete(filenameOrgExport); }
+                catch (Exception e) { Debug.LogErrorFormat("Failed to DELETE FILE, error \"{0}\"", e.Message); }
+            }
+            //create new file
+            try { File.WriteAllText(filenameOrgExport, writeTEXT); }
+            catch (Exception e) { Debug.LogErrorFormat("Failed to write TEXT FROM FILE, error \"{0}\"", e.Message); }
+            Debug.LogFormat("[Fil] FileManager.cs -> SaveOrgExportToFile: OrgExportData SAVED to \"{0}\"{1}", filenameExport, "\n");
         }
         else { Debug.LogError("Invalid writeTEXT (Null)"); }
     }

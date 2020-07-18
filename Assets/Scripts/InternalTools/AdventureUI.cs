@@ -70,6 +70,7 @@ public class AdventureUI : MonoBehaviour
     public ToolButtonInteraction removeAdventureInteraction;
     public ToolButtonInteraction clearDictionaryInteraction;
     public ToolButtonInteraction exportDictionaryInteraction;
+    public ToolButtonInteraction exportOrgsInteraction;
     public ToolButtonInteraction showListsInteraction;
     public ToolButtonInteraction exitInteraction;
 
@@ -290,6 +291,7 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(deleteFileInteraction != null, "Invalid deleteFileInteraction (Null)");
         Debug.Assert(clearDictionaryInteraction != null, "Invalid clearDictionaryInteraction (Null)");
         Debug.Assert(exportDictionaryInteraction != null, "Invalid exportDictionaryInteraction (Null)");
+        Debug.Assert(exportOrgsInteraction != null, "Invalid exportOrgsInteraction (Null)");
         Debug.Assert(exitInteraction != null, "Invalid ExitInteraction (Null)");
         Debug.Assert(themeMain1 != null, "Invalid theme1 (Null)");
         Debug.Assert(themeMain2 != null, "Invalid theme2 (Null)");
@@ -465,6 +467,7 @@ public class AdventureUI : MonoBehaviour
         deleteFileInteraction.SetButton(ToolEventType.DeleteToolsFile);
         clearDictionaryInteraction.SetButton(ToolEventType.ClearStoryDictionary);
         exportDictionaryInteraction.SetButton(ToolEventType.ExportStoryDictionary);
+        exportOrgsInteraction.SetButton(ToolEventType.ExportOrgs);
         showListsInteraction.SetButton(ToolEventType.OpenAdventureLists);
         editAdventureInteraction.SetButton(ToolEventType.EditAdventure);
         saveAdventureInteraction.SetButton(ToolEventType.SaveAdventure);
@@ -512,6 +515,7 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.CreateTurningPoint, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.ClearStoryDictionary, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.ExportStoryDictionary, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.ExportOrgs, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.ClearNewAdventure, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.EditAdventure, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.SaveAdventure, OnEvent, "AdventureUI");
@@ -604,6 +608,9 @@ public class AdventureUI : MonoBehaviour
                 break;
             case ToolEventType.ExportStoryDictionary:
                 ExportDictionary();
+                break;
+            case ToolEventType.ExportOrgs:
+                ExportOrgs();
                 break;
             case ToolEventType.ClearNewAdventure:
                 ClearNewAdventure();
@@ -811,6 +818,15 @@ public class AdventureUI : MonoBehaviour
     {
         ToolManager.i.toolFileScript.ExportToolData();
         ToolManager.i.toolFileScript.SaveExportToFile();
+    }
+
+    /// <summary>
+    /// Export 10 proc-generated org specs to a file
+    /// </summary>
+    private void ExportOrgs()
+    {
+        ToolManager.i.toolFileScript.ExportOrgData();
+        ToolManager.i.toolFileScript.SaveOrgExportToFile();
     }
 
     /// <summary>

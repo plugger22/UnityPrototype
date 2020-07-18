@@ -19,6 +19,7 @@ public enum ToolEventType
     DeleteToolsFile,
     ClearStoryDictionary,
     ExportStoryDictionary,
+    ExportOrgs,
     EditAdventure,
     SaveAdventure,
     NextAdventure,

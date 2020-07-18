@@ -205,6 +205,31 @@ public class AdventureManager : MonoBehaviour
         return character;
     }
 
+    /// <summary>
+    /// Returns a string with a full breakdown 'x' number of Orgs ready for export to a file
+    /// </summary>
+    /// <returns></returns>
+    public string GetExportOrganisations(int numOfOrgs)
+    {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < numOfOrgs; i++)
+        {
+            //Generate an Organisation
+            builder.AppendFormat("{0}- - -{1}", "\n", "\n");
+            builder.AppendFormat("Type -> {0}{1}", ToolManager.i.toolDataScript.GetRandomOrganisationType(), "\n");
+            builder.AppendFormat("Origin -> {0}{1}", ToolManager.i.toolDataScript.GetRandomOrganisationOrigin(), "\n");
+            builder.AppendFormat("History -> {0}{1}", ToolManager.i.toolDataScript.GetRandomOrganisationHistory(), "\n");
+            builder.AppendFormat("Leadership -> {0}{1}", ToolManager.i.toolDataScript.GetRandomOrganisationLeadership(), "\n");
+            builder.AppendFormat("Motivation -> {0}{1}", ToolManager.i.toolDataScript.GetRandomOrganisationMotivation(), "\n");
+            builder.AppendFormat("Method -> {0}{1}", ToolManager.i.toolDataScript.GetRandomOrganisationMethod(), "\n");
+            builder.AppendFormat("Strength -> {0}{1}", ToolManager.i.toolDataScript.GetRandomOrganisationStrength(), "\n");
+            builder.AppendFormat("Weakness -> {0}{1}", ToolManager.i.toolDataScript.GetRandomOrganisationWeakness(), "\n");
+            builder.AppendFormat("Obstacle -> {0}{1}", ToolManager.i.toolDataScript.GetRandomOrganisationObstacle(), "\n");
+        }
+
+        return builder.ToString();
+    }
+
     #endregion
 
     #region Objects
