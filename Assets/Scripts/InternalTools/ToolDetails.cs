@@ -23,8 +23,10 @@ public class ToolDetails : MonoBehaviour
         //organisations
         InitialiseOrganisationType();
         InitialiseOrganisationOrigin();
+        InitialiseOrganisationHistory();
         InitialiseOrganisationLeadership();
         InitialiseOrganisationMotivation();
+        InitialiseOrganisationMethod();
         InitialiseOrganisationStrength();
         InitialiseOrganisationWeakness();
         InitialiseOrganisationObstacle();
@@ -3955,7 +3957,39 @@ public class ToolDetails : MonoBehaviour
     }
     #endregion
 
-    
+    #region InitialiseOrganisationHistory
+    /// <summary>
+    /// Organisation History -> Major turning point
+    /// </summary>
+    private void InitialiseOrganisationHistory()
+    {
+        List<OrganisationDescriptor> listOfOrganisationHistory = new List<OrganisationDescriptor>()
+        {
+            new OrganisationDescriptor(){ tag = "Accomplishment"},  //Org completed one of it's previous goals
+            new OrganisationDescriptor(){ tag = "Allies"},          //Org gained trust and support of another org or important figure
+            new OrganisationDescriptor(){ tag = "Betrayal"},        //Org suffered badly when betrayed. Members seek to avenge this event
+            new OrganisationDescriptor(){ tag = "Changing Of the Guard"},   //Change in important leadership (natural/unnatural) which caused a change in direction
+            new OrganisationDescriptor(){ tag = "Coup"},            //A new leader took power. This has hardened the survivors and solidified the method of choosing new leadership (to prevent another coup or to secure power)
+            new OrganisationDescriptor(){ tag = "Dark Days"},       //Org survived a period when nothing went its way. This sobering event was transformational for the org moving forward
+            new OrganisationDescriptor(){ tag = "Decline"},         //Org lost power/influence/prestige over a long time period fostering a strong sense of regaining these things and restoring the glory days of old
+            new OrganisationDescriptor(){ tag = "Enemies"},         //The Org's greateness is defined by the quality of it's enemies. This new enemy has become a point of pride for the Org's membership
+            new OrganisationDescriptor(){ tag = "Foolishness"},     //The Org tries to remember and avoid a particularly stupid action in it's past
+            new OrganisationDescriptor(){ tag = "Golden Age"},      //Org experienced a period of greateness, a highwater mark that inspires it's current membership
+            new OrganisationDescriptor(){ tag = "Great Leader"},    //Org reveres a past leader as the paragon of all it stands for. Members hope for another leader of a similar calibre
+            new OrganisationDescriptor(){ tag = "Growth"},          //Org has experienced growth by a slow and steady expansion over a long period of time
+            new OrganisationDescriptor(){ tag = "Prophecy"},        //Org has received information that informs it's expectations about future events (not necessarily a religious turning point, eg. could be an astute analysis)
+            new OrganisationDescriptor(){ tag = "Persecuted"},      //Org has endured mistreatment or violence against it, or strongly identifies with another group who has done so
+            new OrganisationDescriptor(){ tag = "Rise From the Ashes"}, //Org was shutdown/disbanded/destroyed at some point, yet managed to renew itself, rising from the ruins convincing members of org's near-immortality
+            new OrganisationDescriptor(){ tag = "Respected"},       //Org has received accolades from other orgs or individuals from who it harbours great respect
+            new OrganisationDescriptor(){ tag = "Revolt"},          //Org's members at some point overthrew the leadership replacing them with their own. This served to forge strong links between leaders and members
+            new OrganisationDescriptor(){ tag = "Rivals"},          //Rivalry with a counterpoint, perhaps not overtly, drives the current members to excel, motivating them to outperform the other and prove their superiority
+            new OrganisationDescriptor(){ tag = "Triumphant"},      //Org experienced a spectacular success, far beyond their expectations. This shining moment has become a cornerstone of the organisation's pride
+            new OrganisationDescriptor(){ tag = "Victory"}          //Everybody wants to be on the winning side. The Org has consistently been so in the past.
+        };
+        ToolManager.i.toolDataScript.SetListOfOrganisationHistory(listOfOrganisationHistory);
+    }
+    #endregion
+
     #region InitialiseOrganisationLeadership
     /// <summary>
     /// Organisation Leadership
@@ -4029,7 +4063,7 @@ public class ToolDetails : MonoBehaviour
             new OrganisationDescriptor(){ tag = "Consensus"},               //negotiate a joint consensus position
             new OrganisationDescriptor(){ tag = "Third Parties"},           //hide behind third parties which are used to achieve their aims, never directly intervene
             new OrganisationDescriptor(){ tag = "PsyOps"},                  //uses all available tools to sway opinions by fair means or foul
-            new OrganisationDescriptor(){ tag = "Long View"},               //takes the long view and is willing to take short term setbacks in pursuit of long term goals
+            new OrganisationDescriptor(){ tag = "Long View"}               //takes the long view and is willing to take short term setbacks in pursuit of long term goals
         };
         ToolManager.i.toolDataScript.SetListOfOrganisationMethod(listOfOrganisationMethod);
     }
@@ -4054,7 +4088,7 @@ public class ToolDetails : MonoBehaviour
             new OrganisationDescriptor(){ tag = "Connections"},             //Have powerful connections that they can draw on
             new OrganisationDescriptor(){ tag = "Reputation"},              //Have a strong reputation (honesty/fear/relentless/etc..
         };
-        ToolManager.i.toolDataScript.SetListOfOrganisationOrigin(listOfOrganisationStrength);
+        ToolManager.i.toolDataScript.SetListOfOrganisationStrength(listOfOrganisationStrength);
     }
     #endregion
 
@@ -4103,6 +4137,7 @@ public class ToolDetails : MonoBehaviour
         ToolManager.i.toolDataScript.SetListOfOrganisationObstacle(listOfOrganisationObstacle);
     }
     #endregion
+
 
     /*
     #region InitialiseOrganisationOrigin

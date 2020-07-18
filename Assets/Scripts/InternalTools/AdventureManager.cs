@@ -185,8 +185,9 @@ public class AdventureManager : MonoBehaviour
     {
         Character character = new Character() { special = SpecialType.Organisation };
         StringBuilder builder = new StringBuilder();
-        builder.Append(ToolManager.i.toolDataScript.GetRandomOrganisationType());
+        builder.AppendFormat("T -> {0}", ToolManager.i.toolDataScript.GetRandomOrganisationType());
         builder.AppendFormat(" -> O -> {0}", ToolManager.i.toolDataScript.GetRandomOrganisationOrigin());
+        builder.AppendFormat(" -> H -> {0}", ToolManager.i.toolDataScript.GetRandomOrganisationHistory());
         builder.AppendFormat(" -> L -> {0}", ToolManager.i.toolDataScript.GetRandomOrganisationLeadership());
         builder.AppendFormat(" -> M -> {0}", ToolManager.i.toolDataScript.GetRandomOrganisationMotivation());
         builder.AppendFormat(" -> M -> {0}", ToolManager.i.toolDataScript.GetRandomOrganisationMethod());

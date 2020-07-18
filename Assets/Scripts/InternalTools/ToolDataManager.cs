@@ -25,6 +25,7 @@ public class ToolDataManager : MonoBehaviour
 
     private List<OrganisationDescriptor> listOfOrganisationType = new List<OrganisationDescriptor>();
     private List<OrganisationDescriptor> listOfOrganisationOrigin = new List<OrganisationDescriptor>();
+    private List<OrganisationDescriptor> listOfOrganisationHistory = new List<OrganisationDescriptor>();
     private List<OrganisationDescriptor> listOfOrganisationLeadership = new List<OrganisationDescriptor>();
     private List<OrganisationDescriptor> listOfOrganisationMotivation = new List<OrganisationDescriptor>();
     private List<OrganisationDescriptor> listOfOrganisationMethod = new List<OrganisationDescriptor>();
@@ -326,6 +327,9 @@ public class ToolDataManager : MonoBehaviour
     public string GetRandomOrganisationOrigin()
     { return listOfOrganisationOrigin[Random.Range(0, listOfOrganisationOrigin.Count)].tag; }
 
+    public string GetRandomOrganisationHistory()
+    { return listOfOrganisationHistory[Random.Range(0, listOfOrganisationHistory.Count)].tag; }
+
     public string GetRandomOrganisationLeadership()
     { return listOfOrganisationLeadership[Random.Range(0, listOfOrganisationLeadership.Count)].tag; }
 
@@ -368,6 +372,20 @@ public class ToolDataManager : MonoBehaviour
         {
             listOfOrganisationOrigin.Clear();
             listOfOrganisationOrigin.AddRange(tempList);
+        }
+        else { Debug.LogError("Invalid tempList (Null)"); }
+    }
+
+    /// <summary>
+    /// Populate listOfOrganisationHistory
+    /// </summary>
+    /// <param name="tempList"></param>
+    public void SetListOfOrganisationHistory(List<OrganisationDescriptor> tempList)
+    {
+        if (tempList != null)
+        {
+            listOfOrganisationHistory.Clear();
+            listOfOrganisationHistory.AddRange(tempList);
         }
         else { Debug.LogError("Invalid tempList (Null)"); }
     }

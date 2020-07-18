@@ -1390,6 +1390,7 @@ public class AdventureUI : MonoBehaviour
                     GetCharacters(plotPoint.numberOfCharacters);
                     break;
                 case PlotPointType.NewCharacter:
+
                     Debug.LogFormat("[Tst] AdventureUI.cs -> NewPlotpoint: NewCharacter to be Generated{0}", "\n");
                     character1 = GetNewCharacter(plotPoint.special);
                     break;
@@ -1563,7 +1564,6 @@ public class AdventureUI : MonoBehaviour
             //pass over data to plotPoint (it's a new instance so it won't affect the original with the core data)
             plotPoint.refTag = metaPlotpoint.refTag;
             plotPoint.numberOfCharacters = 0;
-            plotPoint.type = PlotPointType.Normal;
             Character character = null;
             //resolve action
             switch (metaPlotpoint.action)
@@ -1966,73 +1966,71 @@ public class AdventureUI : MonoBehaviour
 
     #region ClearPlotpoint...
     /// <summary>
-    /// Clear out current plotPoint
+    /// Clear out current plotPoint. 
+    /// NOTE -> can only clear those wiht plotPointType 'None' or 'Normal' (redoing all the complicated stuff otherwise involves a lot of code)
     /// </summary>
     private void ClearPlotpoint()
     {
-        int index = plotPointIndex - 1;
-        Debug.LogFormat("[Tst] AdventureUI.cs -> ClearPlotpoint: index {0} (plotPointIndex {1}, numberOfClears {2}){3}", index, plotPointIndex, numberOfClears, "\n");
-        //error check for Clear button being pressed with plotPointIndex 0 (no plotPoints present)
-        if (index > -1)
+        if (plotPoint.type == PlotPointType.None || plotPoint.type == PlotPointType.Normal)
         {
-            //clear out plotPoint and character displays
-            if (arrayOfTurnPlotpoints[index].text.Length > 1)
-            { arrayOfTurnPlotpoints[index].text = plotPointIndex.ToString(); }
-            if (arrayOfTurnCharacters[index].text.Length > 1)
-            { arrayOfTurnCharacters[index].text = plotPointIndex.ToString(); }
-            arrayOfPlotpointNotes[index] = "";
-            //handle special cases that need to revert
-            switch (plotPoint.type)
+        int index = plotPointIndex - 1;
+            Debug.LogFormat("[Tst] AdventureUI.cs -> ClearPlotpoint: index {0} (plotPointIndex {1}, numberOfClears {2}){3}", index, plotPointIndex, numberOfClears, "\n");
+            //error check for Clear button being pressed with plotPointIndex 0 (no plotPoints present)
+            if (index > -1)
             {
-                case PlotPointType.Conclusion:
-                    /*turningPoint.isConcluded = false;*/
-                    break;
-
-                    //TO DO
-
-            }
-            if (numberOfClears == 0)
-            {
-                //check for characters (note they haven't been saved yet, not until NewPlotPoint is run, so accessing turnigPoint.arrayOfDetails isn't going to work)
-                if (character1 != null)
-                { TidyUpCharacter(character1); }
-                if (character2 != null)
-                { TidyUpCharacter(character2); }
-            }
-            else
-            {
-                PlotDetails details = turningPoint.arrayOfDetails[index];
-                if (details != null)
+                //clear out plotPoint and character displays
+                if (arrayOfTurnPlotpoints[index].text.Length > 1)
+                { arrayOfTurnPlotpoints[index].text = plotPointIndex.ToString(); }
+                if (arrayOfTurnCharacters[index].text.Length > 1)
+                { arrayOfTurnCharacters[index].text = plotPointIndex.ToString(); }
+                arrayOfPlotpointNotes[index] = "";
+                if (numberOfClears == 0)
                 {
-                    if (details.character1 != null)
-                    { TidyUpCharacter(details.character1); }
-                    if (details.character2 != null)
-                    { TidyUpCharacter(details.character2); }
+                    //check for characters (note they haven't been saved yet, not until NewPlotPoint is run, so accessing turnigPoint.arrayOfDetails isn't going to work)
+                    if (character1 != null)
+                    { TidyUpCharacter(character1); }
+                    if (character2 != null)
+                    { TidyUpCharacter(character2); }
                 }
-                else { Debug.LogErrorFormat("Invalid PlotDetails (Null) for turningPoint.arrayOfDetails[{0}]", index); }
+                else
+                {
+                    PlotDetails details = turningPoint.arrayOfDetails[index];
+                    if (details != null)
+                    {
+                        if (details.character1 != null)
+                        { TidyUpCharacter(details.character1); }
+                        if (details.character2 != null)
+                        { TidyUpCharacter(details.character2); }
+                    }
+                    else { Debug.LogErrorFormat("Invalid PlotDetails (Null) for turningPoint.arrayOfDetails[{0}]", index); }
+                }
+                //clear out plotPointDetails
+                turningPoint.arrayOfDetails[index].Reset();
+                //reset characters
+                character1 = null;
+                character2 = null;
+                //reset data in plotPoint to prevent it being displayed after NewPlotPoint (won't be saved due to flag below but will still be present in fields and display routines will show it)
+                plotPoint.Reset();
+                //clear out texts
+                ResetPlotPoint();
+                ToggleTurningPointFields(false);
+                //plotPoint index back one
+                plotPointIndex--;
+                if (plotPointIndex < 0)
+                {
+                    Debug.LogWarning("Invalid plotPointIndex (sub Zero)");
+                    plotPointIndex = 0;
+                }
+                //update plotLine in case of multiple clears so current plotPoint will be correct for the type check at the start
+                plotPoint.tag = turningPoint.arrayOfDetails[plotPointIndex - 1].plotPoint;
+                plotPoint.type = turningPoint.arrayOfDetails[plotPointIndex - 1].type;
+                //clear save flag to prevent data being saved at next instance of NewPlotPoint
+                isSavePlotPoint = false;
+                //increment counter (gets reset by NewPlotPoint each time)
+                numberOfClears++;
             }
-            //clear out plotPointDetails
-            turningPoint.arrayOfDetails[index].Reset();
-            //reset characters
-            character1 = null;
-            character2 = null;
-            //reset data in plotPoint to prevent it being displayed after NewPlotPoint (won't be saved due to flag below but will still be present in fields and display routines will show it)
-            plotPoint.Reset();
-            //clear out texts
-            ResetPlotPoint();
-            ToggleTurningPointFields(false);
-            //plotPoint index back one
-            plotPointIndex--;
-            if (plotPointIndex < 0)
-            {
-                Debug.LogWarning("Invalid plotPointIndex (sub Zero)");
-                plotPointIndex = 0;
-            }
-            //clear save flag to prevent data being saved at next instance of NewPlotPoint
-            isSavePlotPoint = false;
-            //increment counter (gets reset by NewPlotPoint each time)
-            numberOfClears++;
         }
+        else { Debug.LogWarningFormat("Can't clear plotPoint \"{0}\", type {1} ('None' or 'Normal' only) -> Info only", plotPoint.tag, plotPoint.type); }
     }
 
     /// <summary>
