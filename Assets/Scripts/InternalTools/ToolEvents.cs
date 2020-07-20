@@ -20,6 +20,7 @@ public enum ToolEventType
     ClearStoryDictionary,
     ExportStoryDictionary,
     ExportOrgs,
+    OpenConstants,
     EditAdventure,
     SaveAdventure,
     NextAdventure,
@@ -56,7 +57,9 @@ public enum ToolEventType
     EditListItem,
     SaveListDetails,
     //DropDown
-    CloseDropDown
+    CloseDropDown,
+    //Constants
+    CloseConstants,
 
 }
 

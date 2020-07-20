@@ -12,9 +12,10 @@ using Random = UnityEngine.Random;
 public class ToolDataManager : MonoBehaviour
 {
 
-    private Dictionary<string, Story> dictOfStories = new Dictionary<string, Story>();
-    private Dictionary<string, Plotpoint> dictOfPlotpoints = new Dictionary<string, Plotpoint>();                       //key -> refTag, value -> Plotpoint
-    private Dictionary<string, MetaPlotpoint> dictOfMetaPlotpoints = new Dictionary<string, MetaPlotpoint>();
+    private Dictionary<string, Story> dictOfStories = new Dictionary<string, Story>();                                                  //key -> refTag, value -> Story
+    private Dictionary<string, Plotpoint> dictOfPlotpoints = new Dictionary<string, Plotpoint>();                                       //key -> refTag, value -> Plotpoint
+    private Dictionary<string, MetaPlotpoint> dictOfMetaPlotpoints = new Dictionary<string, MetaPlotpoint>();                           //key -> refTag, value -> MetaPlotpoint   
+    private Dictionary<string, ConstantPlotpoint> dictOfConstantPlotpoints = new Dictionary<string, ConstantPlotpoint>();               //key -> refTag, value -> ConstantPlotpoint
 
     //lookup tables
     private Plotpoint[,] arrayOfPlotpointLookup;
@@ -149,6 +150,9 @@ public class ToolDataManager : MonoBehaviour
     public Dictionary<string, MetaPlotpoint> GetDictOfMetaPlotpoints()
     { return dictOfMetaPlotpoints; }
 
+    public Dictionary<string, ConstantPlotpoint> GetDictOfConstantPlotpoints()
+    { return dictOfConstantPlotpoints; }
+
     public Plotpoint[,] GetPlotpointLookup()
     { return arrayOfPlotpointLookup; }
 
@@ -180,6 +184,19 @@ public class ToolDataManager : MonoBehaviour
         { Debug.LogError("Invalid MetaPlotpoint (Null)"); }
         catch (ArgumentException)
         { Debug.LogWarningFormat("Duplicate MetaPlotpoint exists in dict for \"{0}\"", meta.refTag); }
+    }
+
+    /// <summary>
+    /// Add ConstantPlotpoint
+    /// </summary>
+    /// <param name="constant"></param>
+    public void AddConstantPlotpoint(ConstantPlotpoint constant)
+    {
+        try { dictOfConstantPlotpoints.Add(constant.refTag, constant); }
+        catch (ArgumentNullException)
+        { Debug.LogError("Invalid ConstantPlotpoint (Null)"); }
+        catch (ArgumentException)
+        { Debug.LogWarningFormat("Duplicate ConstantPlotpoint exists in dict for \"{0}\"", constant.refTag); }
     }
 
     /// <summary>

@@ -13,15 +13,17 @@ namespace toolsAPI
     // - - - Enums
     //
 
-    public enum ToolModal { Menu, Main, New, TurningPoint, Lists }
+    public enum ToolModal { Menu, Main, New, TurningPoint, Lists, Constants }
     public enum ToolModalType { Read, Edit, Input, Process, Details }
     public enum ToolModalSubNew { New, Summary }                                        //new adventure sub state
     public enum ThemeType { Action, Tension, Mystery, Social, Personal, Count }   //NOTE: Order matters (ToolDetails.cs)
     public enum StoryStatus { New, Logical, Data }
     public enum ListItemStatus { None, PlotLine, Character }    //what's currently selected on the Aventure/list page
-    public enum PlotPointType { Normal, Conclusion, None, RemoveCharacter, NewCharacter, Meta }
+    public enum PlotPointType { Normal, Conclusion, None, RemoveCharacter, NewCharacter, Meta, Constant }
     public enum SpecialType { None, Organisation, OrgOrChar, Object }    //OrgOrChar -> 50/50 chance of either (plotPoints)
     public enum MetaAction { CharacterExits, CharacterReturns, CharacterUpgrade, CharacterDowngrade, CharacterStepsUp, CharacterStepsDown, PlotLineCombo }
+    public enum ConstantScope { Campaign, Game }
+    public enum ConstantDistribution { Low, Medium, High}                //can't use ConstantFrequency as it's a keyword
     public enum TurningPointType { None, New, Development, Conclusion }
     public enum CharacterSex { None, Male, Female }
 
@@ -1262,6 +1264,7 @@ namespace toolsAPI
         public List<int> listSocial;
         public List<int> listPersonal;
 
+        #region PlotPoint Methods
         /// <summary>
         /// default constructor
         /// </summary>
@@ -1298,8 +1301,7 @@ namespace toolsAPI
             special = SpecialType.None;
             numberOfCharacters = 0;
         }
-
-
+        #endregion
     }
     #endregion
 
@@ -1315,6 +1317,18 @@ namespace toolsAPI
         public string details;
         public MetaAction action;
         public List<int> listToRoll;                //die roll numbers, leave list empty for none
+    }
+    #endregion
+
+    #region ConstantPlotpoint
+
+    public class ConstantPlotpoint
+    {
+        public string refTag;                       //single string reference tag used for dictionaries, lookup tables, etc
+        public string tag;
+        public string details;
+        public ConstantScope scope;
+        public ConstantDistribution frequency;
     }
     #endregion
 

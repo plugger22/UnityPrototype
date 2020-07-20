@@ -29,6 +29,7 @@ public class AdventureUI : MonoBehaviour
     public Canvas turningPointCanvas;
     public Canvas listsCanvas;
     public Canvas dropDownCanvas;
+    public Canvas constantsCanvas;
 
     //Stories
     private Story storyMain;
@@ -72,6 +73,7 @@ public class AdventureUI : MonoBehaviour
     public ToolButtonInteraction exportDictionaryInteraction;
     public ToolButtonInteraction exportOrgsInteraction;
     public ToolButtonInteraction showListsInteraction;
+    public ToolButtonInteraction constantsInteraction;
     public ToolButtonInteraction exitInteraction;
 
     public Button saveFileButton;
@@ -248,6 +250,12 @@ public class AdventureUI : MonoBehaviour
 
     #endregion
 
+    #region Constants
+    [Header("Constants")]
+    public ToolButtonInteraction constantsExitInteraction;
+
+    #endregion
+
     #region static Instance
     /// <summary>
     /// provide a static reference to AdventureUI that can be accessed from any script
@@ -280,6 +288,7 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(turningPointCanvas != null, "Invalid turningPointCanvas (Null)");
         Debug.Assert(listsCanvas != null, "Invalid listsCanvas (Null)");
         Debug.Assert(dropDownCanvas != null, "Invalid dropDownCanvas (Null");
+        Debug.Assert(constantsCanvas != null, "Invalid constantsCanvas (Null)");
         //main buttons
         Debug.Assert(newAdventureInteraction != null, "Invalid newAdventureInteraction (Null)");
         Debug.Assert(saveToFileInteraction != null, "Invalid saveAdventureInteraction (Null)");
@@ -292,6 +301,7 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(clearDictionaryInteraction != null, "Invalid clearDictionaryInteraction (Null)");
         Debug.Assert(exportDictionaryInteraction != null, "Invalid exportDictionaryInteraction (Null)");
         Debug.Assert(exportOrgsInteraction != null, "Invalid exportOrgsInteraction (Null)");
+        Debug.Assert(constantsInteraction != null, "Invalid constantsInteraction (Null)");
         Debug.Assert(exitInteraction != null, "Invalid ExitInteraction (Null)");
         Debug.Assert(themeMain1 != null, "Invalid theme1 (Null)");
         Debug.Assert(themeMain2 != null, "Invalid theme2 (Null)");
@@ -450,6 +460,7 @@ public class AdventureUI : MonoBehaviour
         turningPointCanvas.gameObject.SetActive(false);
         listsCanvas.gameObject.SetActive(false);
         dropDownCanvas.gameObject.SetActive(false);
+        constantsCanvas.gameObject.SetActive(false);
     }
     #endregion
 
@@ -468,6 +479,7 @@ public class AdventureUI : MonoBehaviour
         clearDictionaryInteraction.SetButton(ToolEventType.ClearStoryDictionary);
         exportDictionaryInteraction.SetButton(ToolEventType.ExportStoryDictionary);
         exportOrgsInteraction.SetButton(ToolEventType.ExportOrgs);
+        constantsInteraction.SetButton(ToolEventType.OpenConstants);
         showListsInteraction.SetButton(ToolEventType.OpenAdventureLists);
         editAdventureInteraction.SetButton(ToolEventType.EditAdventure);
         saveAdventureInteraction.SetButton(ToolEventType.SaveAdventure);
@@ -494,10 +506,12 @@ public class AdventureUI : MonoBehaviour
             arrayOfPlotLineInteractions[i].SetButton(ToolEventType.ShowPlotLineDetails, i);
             arrayOfCharacterInteractions[i].SetButton(ToolEventType.ShowCharacterDetails, i);
         }
+        //constants
+        constantsExitInteraction.SetButton(ToolEventType.CloseConstants);
     }
     #endregion
 
-    #region InitaliseEvents
+    #region InitaliseEventListeners
     /// <summary>
     /// Initialise all event listeners
     /// </summary>
@@ -516,6 +530,7 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.ClearStoryDictionary, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.ExportStoryDictionary, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.ExportOrgs, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.OpenConstants, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.ClearNewAdventure, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.EditAdventure, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.SaveAdventure, OnEvent, "AdventureUI");
@@ -549,6 +564,8 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.CloseTurningPoint, OnEvent, "AdventureUI");
 
         ToolEvents.i.AddListener(ToolEventType.CloseDropDown, OnEvent, "AdventureUI");
+
+        ToolEvents.i.AddListener(ToolEventType.CloseConstants, OnEvent, "AdventureUI");
     }
     #endregion
 
@@ -611,6 +628,9 @@ public class AdventureUI : MonoBehaviour
                 break;
             case ToolEventType.ExportOrgs:
                 ExportOrgs();
+                break;
+            case ToolEventType.OpenConstants:
+                OpenConstants();
                 break;
             case ToolEventType.ClearNewAdventure:
                 ClearNewAdventure();
@@ -701,6 +721,9 @@ public class AdventureUI : MonoBehaviour
                 break;
             case ToolEventType.CloseDropDown:
                 CloseDropDownInput();
+                break;
+            case ToolEventType.CloseConstants:
+                CloseConstants();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -827,6 +850,17 @@ public class AdventureUI : MonoBehaviour
     {
         ToolManager.i.toolFileScript.ExportOrgData();
         ToolManager.i.toolFileScript.SaveOrgExportToFile();
+    }
+
+    /// <summary>
+    /// Open constants page (campaign and game scope constant plotlines and characters)
+    /// </summary>
+    private void OpenConstants()
+    {
+        masterCanvas.gameObject.SetActive(false);
+        constantsCanvas.gameObject.SetActive(true);
+        //set Modal State
+        ToolManager.i.toolInputScript.SetModalState(ToolModal.Constants);
     }
 
     /// <summary>
@@ -2750,6 +2784,24 @@ public class AdventureUI : MonoBehaviour
         { mainNavCounter = mainNavLimit - 1; }
         //show story
         DisplayLists();
+    }
+
+    #endregion
+
+    #region Constants
+    //
+    // - - - Constants
+    //
+
+    /// <summary>
+    /// Close constants screen and return to
+    /// </summary>
+    private void CloseConstants()
+    {
+        constantsCanvas.gameObject.SetActive(false);
+        masterCanvas.gameObject.SetActive(true);
+        //set Modal State
+        ToolManager.i.toolInputScript.SetModalState(ToolModal.Main);
     }
 
     #endregion
