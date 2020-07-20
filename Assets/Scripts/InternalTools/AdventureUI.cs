@@ -107,7 +107,7 @@ public class AdventureUI : MonoBehaviour
     public TextMeshProUGUI[] arrayOfMainTurningPoints;
     public TextMeshProUGUI[] arrayOfMainPlotPoints;
     public TextMeshProUGUI[] arrayOfMainCharacters;
-    public Toggle[] arrayOfToggles;                      //should be 3 entries, new / development / conclusion, in that order
+    public Toggle[] arrayOfMainToggles;                      //should be 3 entries, new / development / conclusion, in that order
 
     //Summary -> private
     private string[] arrayOfMainTurningPointNotes = new string[5];
@@ -254,8 +254,18 @@ public class AdventureUI : MonoBehaviour
     [Header("Constants")]
     public ToolButtonInteraction constantsExitInteraction;
 
+    public Button saveToDictButton;
+    public Button saveToFileButton;
+
+    public TMP_InputField constantTextSmallInput;
+    public TMP_InputField constantTextLargeInput;
+
     public TextMeshProUGUI[] arrayOfGameSummary;
     public TextMeshProUGUI[] arrayOfCampaignSummary;
+
+    public Toggle[] arrayOfConstantScopeToggles;                    //should be 2 entries in enum.ConstantScope order
+    public Toggle[] arrayOfConstantTypeToggles;                     //should be 4 entries in enum.ConstantSummaryType order
+    public Toggle[] arrayOfConstantFrequencyToggles;                //should be 3 entries in enum.ConstantDistribution order
 
     #endregion
 
@@ -332,7 +342,7 @@ public class AdventureUI : MonoBehaviour
             if (arrayOfMainCharacters[i] == null) { Debug.LogErrorFormat("Invalid arrayOfMainCharacters[{0}] (Null)", i); }
         }
         for (int i = 0; i < 3; i++)
-        { if (arrayOfToggles[i] == null) { Debug.LogErrorFormat("Invalid arrayOfToggles[{0}] (Null)"); } }
+        { if (arrayOfMainToggles[i] == null) { Debug.LogErrorFormat("Invalid arrayOfToggles[{0}] (Null)"); } }
         //new adventure
         Debug.Assert(saveNewInteraction != null, "Invalid themeInteraction (Null)");
         Debug.Assert(turningPointNewInteraction != null, "Invalid turnPointInteraction (Null)");
@@ -412,7 +422,22 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(dropHeader != null, "Invalid dropHeader (Null)");
         Debug.Assert(dropInput != null, "Invalid dropInput (Null)");
         Debug.Assert(dropConfirmInteraction != null, "Invalid dropConfirmInteraction (Null)");
-
+        //Constants
+        for (int i = 0; i < arrayOfGameSummary.Length; i++)
+        {
+            if (arrayOfGameSummary[i] == null) { Debug.LogErrorFormat("Invalid arrayOfGameSummary[{0}] (Null)"); }
+            if (arrayOfCampaignSummary[i] == null) { Debug.LogErrorFormat("Invalid arrayOfCampaignSummary[{0}] (Null)"); }
+        }
+        for (int i = 0; i < 2; i++)
+        { if (arrayOfConstantScopeToggles[i] == null) { Debug.LogErrorFormat("Invalid arrayOfConstantScope[{0}]"); } }
+        for (int i = 0; i < 4; i++)
+        { if (arrayOfConstantTypeToggles[i] == null) { Debug.LogErrorFormat("Invalid arrayOfConstantType[{0}]"); } }
+        for (int i = 0; i < 3; i++)
+        { if (arrayOfConstantFrequencyToggles[i] == null) { Debug.LogErrorFormat("Invalid arrayOfConstantFrequency[{0}]"); } }
+        Debug.Assert(constantTextSmallInput != null, "Invalid constantTextSmallInput (Null)");
+        Debug.Assert(constantTextLargeInput != null, "Invalid constantTextLargeInput (Null)");
+        Debug.Assert(saveToDictButton != null, "Invalid saveToDictButton (Null)");
+        Debug.Assert(saveToFileButton != null, "Invalid saveToFileButton (Null)");
         //Initialise Other
         InitialiseDelegates();
         InitialiseCanvases();
@@ -448,6 +473,10 @@ public class AdventureUI : MonoBehaviour
         //delegates for turnPlotPointNotes
         turnPlotNotesInput.onSelect.AddListener(delegate { TurnPlotNotesSelect(); });
         turnPlotNotesInput.onDeselect.AddListener(delegate { TurnPlotNotesDeselect(); });
+        //delegates for constants textInputs
+        constantTextSmallInput.onValueChanged.AddListener(delegate { ConstantTextInputDetected(); });
+        constantTextLargeInput.onValueChanged.AddListener(delegate { ConstantTextInputDetected(); });
+
     }
     #endregion
 
@@ -737,7 +766,7 @@ public class AdventureUI : MonoBehaviour
 
     // - - - Modules
 
-    #region Main Adventure
+    #region Main
     //
     // - - - Adventure Main
     //
@@ -2803,8 +2832,12 @@ public class AdventureUI : MonoBehaviour
     /// </summary>
     private void InitialiseConstants()
     {
-        arrayOfGameSummary = new TextMeshProUGUI[(int)ConstantSummaryType.Count];
-        arrayOfCampaignSummary = new TextMeshProUGUI[(int)ConstantSummaryType.Count];
+        //toggle both save buttons Off
+        saveToDictButton.gameObject.SetActive(false);
+        saveToFileButton.gameObject.SetActive(false);
+        //display summaries
+        UpdateConstantSummaries();
+        ToggleCheckBoxesOff();
     }
 
     /// <summary>
@@ -2814,9 +2847,21 @@ public class AdventureUI : MonoBehaviour
     {
         constantsCanvas.gameObject.SetActive(false);
         masterCanvas.gameObject.SetActive(true);
+
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.Main);
     }
+
+    /// <summary>
+    /// delegate -> Input detected on either textSmall or Large (item name or notes)
+    /// </summary>
+    private void ConstantTextInputDetected()
+    {
+        //activate saveToDict button
+        saveToDictButton.gameObject.SetActive(true);
+    }
+
+
 
     #endregion
 
@@ -2973,24 +3018,24 @@ public class AdventureUI : MonoBehaviour
             switch (turningPoint.type)
             {
                 case TurningPointType.New:
-                    arrayOfToggles[0].isOn = true;
-                    arrayOfToggles[1].isOn = false;
-                    arrayOfToggles[2].isOn = false;
+                    arrayOfMainToggles[0].isOn = true;
+                    arrayOfMainToggles[1].isOn = false;
+                    arrayOfMainToggles[2].isOn = false;
                     break;
                 case TurningPointType.Development:
-                    arrayOfToggles[0].isOn = false;
-                    arrayOfToggles[1].isOn = true;
-                    arrayOfToggles[2].isOn = false;
+                    arrayOfMainToggles[0].isOn = false;
+                    arrayOfMainToggles[1].isOn = true;
+                    arrayOfMainToggles[2].isOn = false;
                     break;
                 case TurningPointType.Conclusion:
-                    arrayOfToggles[0].isOn = false;
-                    arrayOfToggles[1].isOn = false;
-                    arrayOfToggles[2].isOn = true;
+                    arrayOfMainToggles[0].isOn = false;
+                    arrayOfMainToggles[1].isOn = false;
+                    arrayOfMainToggles[2].isOn = true;
                     break;
                 case TurningPointType.None:
-                    arrayOfToggles[0].isOn = false;
-                    arrayOfToggles[1].isOn = false;
-                    arrayOfToggles[2].isOn = false;
+                    arrayOfMainToggles[0].isOn = false;
+                    arrayOfMainToggles[1].isOn = false;
+                    arrayOfMainToggles[2].isOn = false;
                     break;
             }
             //NOTE: When first, notes are for the Turning Point as a whole (In Yellow). Once you use arrow keys Up and Down it reverts to PlotPoint notes (normal colour)
@@ -3531,6 +3576,66 @@ public class AdventureUI : MonoBehaviour
         turnData1Input.text = "";
         turnData2Input.text = "";
         turnPlotNotesInput.text = "";
+    }
+
+    #endregion
+
+    #region Constants Utilities
+    /// <summary>
+    /// Calculates and displayed updated info for game and campaign summaries
+    /// </summary>
+    private void UpdateConstantSummaries()
+    {
+        Dictionary<string, ConstantPlotpoint> dictOfConstants = ToolManager.i.toolDataScript.GetDictOfConstantPlotpoints();
+        if (dictOfConstants != null)
+        {
+            int count = dictOfConstants.Count;
+            if (count > 0)
+            {
+                //split into two collections
+                var gameScope = dictOfConstants.Where(x => x.Value.scope == ConstantScope.Game);
+                var campaignScope = dictOfConstants.Where(x => x.Value.scope == ConstantScope.Campaign);
+                //Plotpoints
+                arrayOfGameSummary[(int)ConstantSummaryType.Plotpoint].text = gameScope.Where(x => x.Value.type == ConstantSummaryType.Plotpoint).Count().ToString();
+                arrayOfCampaignSummary[(int)ConstantSummaryType.Plotpoint].text = campaignScope.Where(x => x.Value.type == ConstantSummaryType.Plotpoint).Count().ToString();
+                //Characters
+                arrayOfGameSummary[(int)ConstantSummaryType.Character].text = gameScope.Where(x => x.Value.type == ConstantSummaryType.Character).Count().ToString();
+                arrayOfCampaignSummary[(int)ConstantSummaryType.Character].text = campaignScope.Where(x => x.Value.type == ConstantSummaryType.Character).Count().ToString();
+                //Organisations
+                arrayOfGameSummary[(int)ConstantSummaryType.Organisation].text = gameScope.Where(x => x.Value.type == ConstantSummaryType.Organisation).Count().ToString();
+                arrayOfCampaignSummary[(int)ConstantSummaryType.Organisation].text = campaignScope.Where(x => x.Value.type == ConstantSummaryType.Organisation).Count().ToString();
+                //Objects
+                arrayOfGameSummary[(int)ConstantSummaryType.Object].text = gameScope.Where(x => x.Value.type == ConstantSummaryType.Object).Count().ToString();
+                arrayOfCampaignSummary[(int)ConstantSummaryType.Object].text = campaignScope.Where(x => x.Value.type == ConstantSummaryType.Object).Count().ToString();
+                //totals
+                arrayOfGameSummary[(int)ConstantSummaryType.Total].text = gameScope.Count().ToString();
+                arrayOfCampaignSummary[(int)ConstantSummaryType.Total].text = campaignScope.Count().ToString();
+            }
+            else
+            {
+                //no records, assign zero values to all
+                for (int i = 0; i < arrayOfGameSummary.Length; i++)
+                {
+                    arrayOfGameSummary[i].text = "0";
+                    arrayOfCampaignSummary[i].text = "0";
+                }
+            }
+           
+        }
+        else { Debug.LogError("Invalid dictOfConstants (Null)"); }
+    }
+
+    /// <summary>
+    /// Toggle all checkboxes Off
+    /// </summary>
+    private void ToggleCheckBoxesOff()
+    {
+        for (int i = 0; i < arrayOfConstantScopeToggles.Length; i++)
+        { arrayOfConstantScopeToggles[i].isOn = false; }
+        for (int i = 0; i < arrayOfConstantTypeToggles.Length; i++)
+        { arrayOfConstantTypeToggles[i].isOn = false; }
+        for (int i = 0; i < arrayOfConstantFrequencyToggles.Length; i++)
+        { arrayOfConstantFrequencyToggles[i].isOn = false; }
     }
 
     #endregion

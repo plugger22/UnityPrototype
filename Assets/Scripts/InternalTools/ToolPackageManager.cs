@@ -24,7 +24,7 @@ namespace toolsAPI
     public enum MetaAction { CharacterExits, CharacterReturns, CharacterUpgrade, CharacterDowngrade, CharacterStepsUp, CharacterStepsDown, PlotLineCombo }
     public enum ConstantScope { Campaign, Game }
     public enum ConstantDistribution { Low, Medium, High}                //can't use ConstantFrequency as it's a keyword
-    public enum ConstantSummaryType { Plotpoints, Characters, Organisations, Objects, Total, Count}     //NOTE: Order matters
+    public enum ConstantSummaryType { Plotpoint, Character, Organisation, Object, Total, Count}     //NOTE: Order matters
     public enum TurningPointType { None, New, Development, Conclusion }
     public enum CharacterSex { None, Male, Female }
 
@@ -1318,11 +1318,32 @@ namespace toolsAPI
         public string details;
         public MetaAction action;
         public List<int> listToRoll;                //die roll numbers, leave list empty for none
+
+
+        /// <summary>
+        /// default constructor
+        /// </summary>
+        public MetaPlotpoint() {}
+
+        /// <summary>
+        /// copy constructor
+        /// </summary>
+        /// <param name="copy"></param>
+        public MetaPlotpoint(MetaPlotpoint copy)
+        {
+            refTag = copy.refTag;
+            tag = copy.tag;
+            details = copy.details;
+            action = copy.action;
+            listToRoll = new List<int>(copy.listToRoll);
+        }
     }
     #endregion
 
     #region ConstantPlotpoint
-
+    /// <summary>
+    /// Game and Campaign constants (I input them, plotLines, characters, organisations and objects that carry through the game and individual campaigns)
+    /// </summary>
     public class ConstantPlotpoint
     {
         public string refTag;                       //single string reference tag used for dictionaries, lookup tables, etc
@@ -1330,6 +1351,26 @@ namespace toolsAPI
         public string details;
         public ConstantScope scope;
         public ConstantDistribution frequency;
+        public ConstantSummaryType type;
+
+        /// <summary>
+        /// default constructor
+        /// </summary>
+        public ConstantPlotpoint() { }
+
+        /// <summary>
+        /// copy constructor
+        /// </summary>
+        /// <param name="copy"></param>
+        public ConstantPlotpoint(ConstantPlotpoint copy)
+        {
+            refTag = copy.refTag;
+            tag = copy.tag;
+            details = copy.details;
+            scope = copy.scope;
+            frequency = copy.frequency;
+            type = copy.type;
+        }
     }
     #endregion
 
