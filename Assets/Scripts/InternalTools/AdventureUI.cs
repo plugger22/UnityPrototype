@@ -254,6 +254,9 @@ public class AdventureUI : MonoBehaviour
     [Header("Constants")]
     public ToolButtonInteraction constantsExitInteraction;
 
+    public TextMeshProUGUI[] arrayOfGameSummary;
+    public TextMeshProUGUI[] arrayOfCampaignSummary;
+
     #endregion
 
     #region static Instance
@@ -861,6 +864,8 @@ public class AdventureUI : MonoBehaviour
         constantsCanvas.gameObject.SetActive(true);
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.Constants);
+        //Initialise page
+        InitialiseConstants();
     }
 
     /// <summary>
@@ -2792,6 +2797,15 @@ public class AdventureUI : MonoBehaviour
     //
     // - - - Constants
     //
+
+    /// <summary>
+    /// Initialise constants page upon opening
+    /// </summary>
+    private void InitialiseConstants()
+    {
+        arrayOfGameSummary = new TextMeshProUGUI[(int)ConstantSummaryType.Count];
+        arrayOfCampaignSummary = new TextMeshProUGUI[(int)ConstantSummaryType.Count];
+    }
 
     /// <summary>
     /// Close constants screen and return to

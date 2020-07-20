@@ -24,6 +24,7 @@ namespace toolsAPI
     public enum MetaAction { CharacterExits, CharacterReturns, CharacterUpgrade, CharacterDowngrade, CharacterStepsUp, CharacterStepsDown, PlotLineCombo }
     public enum ConstantScope { Campaign, Game }
     public enum ConstantDistribution { Low, Medium, High}                //can't use ConstantFrequency as it's a keyword
+    public enum ConstantSummaryType { Plotpoints, Characters, Organisations, Objects, Total, Count}     //NOTE: Order matters
     public enum TurningPointType { None, New, Development, Conclusion }
     public enum CharacterSex { None, Male, Female }
 
