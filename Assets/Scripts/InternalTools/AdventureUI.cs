@@ -2927,6 +2927,7 @@ public class AdventureUI : MonoBehaviour
 
     }
 
+    #region SaveToDictConstants
     /// <summary>
     /// save a ConstantPlotpoint to dictOfConstants. NOTE: this data will be lost if you don't SaveToFile before exiting
     /// </summary>
@@ -2997,6 +2998,9 @@ public class AdventureUI : MonoBehaviour
                         constantTextLargeInput.text = "";
                         //update summaries
                         UpdateConstantSummaries();
+                        //activate SaveToFile button and deactivate SaveToDict
+                        saveToFileButton.gameObject.SetActive(true);
+                        saveToDictButton.gameObject.SetActive(false);
                     }
                 }
                 else { Debug.LogWarning("Can't save to dict as invalid Frequency (none checked)"); }
@@ -3005,6 +3009,7 @@ public class AdventureUI : MonoBehaviour
         }
         else { Debug.LogWarning("Can't save to dict as Invalid Scope (none checked)"); }
     }
+    #endregion
 
 
     private void SaveToFileConstants()

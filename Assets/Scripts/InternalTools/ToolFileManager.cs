@@ -24,8 +24,10 @@ public class SaveTools
 public class SaveToolData
 {
     public List<Story> listOfStories = new List<Story>();
+    public List<ConstantPlotpoint> listOfConstantPlotPoints = new List<ConstantPlotpoint>();
 }
 #endregion
+
 
 /// <summary>
 /// handles all file save/load functionality. Doubles up as Save.cs and FileManager.cs equivalents
@@ -68,6 +70,7 @@ public class ToolFileManager : MonoBehaviour
         writeJSON = new SaveTools();
         //Sequentially write data
         WriteStories();
+        WriteConstantPlotpoints();
     }
     #endregion
 
@@ -88,6 +91,26 @@ public class ToolFileManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfStories (Null)"); }
+    }
+    #endregion
+
+    #region WriteConstantPlotpoints
+    /// <summary>
+    /// write dictOfConstantPlotpoints to file
+    /// </summary>
+    private void WriteConstantPlotpoints()
+    {
+        Dictionary<string, ConstantPlotpoint> dictOfConstantPlotpoints = ToolManager.i.toolDataScript.GetDictOfConstantPlotpoints();
+        if (dictOfConstantPlotpoints != null)
+        {
+            foreach (var plotpoint in dictOfConstantPlotpoints)
+            {
+                if (plotpoint.Value != null)
+                { writeJSON.toolData.listOfConstantPlotPoints.Add(plotpoint.Value); }
+                else { Debug.LogErrorFormat("Invalid constantPlotpoint (Null) for \"{0}\"", plotpoint.Key); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfConstantPlotpoints (Null)"); }
     }
     #endregion
 
@@ -168,6 +191,7 @@ public class ToolFileManager : MonoBehaviour
         if (readJSON != null)
         {
             ReadStories();
+            ReadConstantPlotpoints();
         }
         else { Debug.LogError("Invalid read (Null)"); }
     }
@@ -180,8 +204,14 @@ public class ToolFileManager : MonoBehaviour
     /// </summary>
     private void ReadStories()
     { ToolManager.i.toolDataScript.SetStories(readJSON.toolData.listOfStories); }
+    #endregion
 
-
+    #region ReadConstantPlotpoints
+    /// <summary>
+    /// Read saved data back into dictOfConstantPlotpoints
+    /// </summary>
+    private void ReadConstantPlotpoints()
+    { ToolManager.i.toolDataScript.SetConstantPlotpoints(readJSON.toolData.listOfConstantPlotPoints); }
     #endregion
 
     #region DeleteToolsFile

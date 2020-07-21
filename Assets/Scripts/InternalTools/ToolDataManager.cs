@@ -128,7 +128,6 @@ public class ToolDataManager : MonoBehaviour
             Debug.LogFormat("[Tst] ToolDataManager.cs -> SetStories: listOfStories has {0} records, {1} have been loaded into Dict{2}", listOfStories.Count, counter, "\n");
         }
         else { Debug.LogError("Invalid listOfStories (Null)"); }
-
     }
 
     /// <summary>
@@ -248,6 +247,32 @@ public class ToolDataManager : MonoBehaviour
         { return listOfPlotpoints[0]; }
         return null;
 
+    }
+
+    /// <summary>
+    /// Sets constantPlotpoints in dict for a load/save operation. Existing data deleted prior to new data input
+    /// </summary>
+    /// <param name="listOfStories"></param>
+    public void SetConstantPlotpoints(List<ConstantPlotpoint> listOfConstants)
+    {
+        int counter = 0;
+        if (listOfConstants != null)
+        {
+            dictOfConstantPlotpoints.Clear();
+            for (int i = 0; i < listOfConstants.Count; i++)
+            {
+                ConstantPlotpoint constantPlotpoint = listOfConstants[i];
+                if (constantPlotpoint != null)
+                {
+                    if (string.IsNullOrEmpty(constantPlotpoint.refTag) == false)
+                    { AddConstantPlotpoint(constantPlotpoint); counter++; }
+                    else { Debug.LogWarningFormat("Invalid constantPlotpoint.refTag (Null or Empty) for listOfConstants[{0}]", i); }
+                }
+                else { Debug.LogWarningFormat("Invalid constantPlotpoint (Null) for listOfConstants[{0}]", i); }
+            }
+            Debug.LogFormat("[Tst] ToolDataManager.cs -> SetConstantPlotpoints: listOfConstantPlotpoints has {0} records, {1} have been loaded into Dict{2}", listOfConstants.Count, counter, "\n");
+        }
+        else { Debug.LogError("Invalid listOfConstants (Null)"); }
     }
 
     #endregion
