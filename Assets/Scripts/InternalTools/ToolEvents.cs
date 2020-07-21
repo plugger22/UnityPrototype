@@ -60,6 +60,12 @@ public enum ToolEventType
     CloseDropDown,
     //Constants
     CloseConstants,
+    InputConstants,
+    EditConstants,
+    ViewConstants,
+    ClearConstants,
+    SaveToDictConstants,
+    SaveToFileConstants
 
 }
 

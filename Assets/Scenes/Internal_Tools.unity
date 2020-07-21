@@ -4185,12 +4185,12 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 16
+  m_fontSize: 14
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 12
-  m_fontSizeMax: 16
+  m_fontSizeMax: 14
   m_fontStyle: 0
   m_textAlignment: 257
   m_isAlignmentEnumConverted: 1
@@ -27650,12 +27650,12 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 16
+  m_fontSize: 14
   m_fontSizeBase: 16
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 12
-  m_fontSizeMax: 20
+  m_fontSizeMax: 14
   m_fontStyle: 1
   m_textAlignment: 513
   m_isAlignmentEnumConverted: 1
@@ -42280,12 +42280,12 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 16
+  m_fontSize: 14
   m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 12
-  m_fontSizeMax: 16
+  m_fontSizeMax: 14
   m_fontStyle: 1
   m_textAlignment: 257
   m_isAlignmentEnumConverted: 1
@@ -67593,7 +67593,13 @@ MonoBehaviour:
   dropHeader: {fileID: 1968300075}
   dropInput: {fileID: 1175891624}
   dropConfirmInteraction: {fileID: 41001202}
-  constantsExitInteraction: {fileID: 2086261271}
+  constantExitInteraction: {fileID: 2086261271}
+  constantSaveToDictInteraction: {fileID: 802146808}
+  constantSaveToFileInteraction: {fileID: 1468357718}
+  constantInputInteraction: {fileID: 1418757126}
+  constantEditInteraction: {fileID: 1541225835}
+  constantViewInteraction: {fileID: 1550570673}
+  constantClearInteraction: {fileID: 1134064809}
   saveToDictButton: {fileID: 802146809}
   saveToFileButton: {fileID: 1468357719}
   constantTextSmallInput: {fileID: 1138216838}

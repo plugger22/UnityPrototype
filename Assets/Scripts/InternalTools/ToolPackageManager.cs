@@ -22,8 +22,8 @@ namespace toolsAPI
     public enum PlotPointType { Normal, Conclusion, None, RemoveCharacter, NewCharacter, Meta, Constant }
     public enum SpecialType { None, Organisation, OrgOrChar, Object }    //OrgOrChar -> 50/50 chance of either (plotPoints)
     public enum MetaAction { CharacterExits, CharacterReturns, CharacterUpgrade, CharacterDowngrade, CharacterStepsUp, CharacterStepsDown, PlotLineCombo }
-    public enum ConstantScope { Campaign, Game }
-    public enum ConstantDistribution { Low, Medium, High}                //can't use ConstantFrequency as it's a keyword
+    public enum ConstantScope { Game, Campaign }                        //NOTE: Order matters
+    public enum ConstantDistribution { Low, Medium, High}                //can't use ConstantFrequency as it's a keyword, NOTE: Order matters
     public enum ConstantSummaryType { Plotpoint, Character, Organisation, Object, Total, Count}     //NOTE: Order matters
     public enum TurningPointType { None, New, Development, Conclusion }
     public enum CharacterSex { None, Male, Female }

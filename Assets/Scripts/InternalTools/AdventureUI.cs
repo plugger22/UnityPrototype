@@ -252,7 +252,13 @@ public class AdventureUI : MonoBehaviour
 
     #region Constants
     [Header("Constants")]
-    public ToolButtonInteraction constantsExitInteraction;
+    public ToolButtonInteraction constantExitInteraction;
+    public ToolButtonInteraction constantSaveToDictInteraction;
+    public ToolButtonInteraction constantSaveToFileInteraction;
+    public ToolButtonInteraction constantInputInteraction;
+    public ToolButtonInteraction constantEditInteraction;
+    public ToolButtonInteraction constantViewInteraction;
+    public ToolButtonInteraction constantClearInteraction;
 
     public Button saveToDictButton;
     public Button saveToFileButton;
@@ -423,6 +429,12 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(dropInput != null, "Invalid dropInput (Null)");
         Debug.Assert(dropConfirmInteraction != null, "Invalid dropConfirmInteraction (Null)");
         //Constants
+        Debug.Assert(constantSaveToDictInteraction != null, "Invalid constantSaveToDictInteraction (Null)");
+        Debug.Assert(constantSaveToFileInteraction != null, "Invalid constantSaveToFileInteraction (Null)");
+        Debug.Assert(constantInputInteraction != null, "Invalid constantInputInteraction (Null)");
+        Debug.Assert(constantEditInteraction != null, "Invalid constantEditInteraction (Null)");
+        Debug.Assert(constantViewInteraction != null, "Invalid constantViewInteraction (Null)");
+        Debug.Assert(constantClearInteraction != null, "Invalid constantClearInteraction (Null)");
         for (int i = 0; i < arrayOfGameSummary.Length; i++)
         {
             if (arrayOfGameSummary[i] == null) { Debug.LogErrorFormat("Invalid arrayOfGameSummary[{0}] (Null)"); }
@@ -539,7 +551,13 @@ public class AdventureUI : MonoBehaviour
             arrayOfCharacterInteractions[i].SetButton(ToolEventType.ShowCharacterDetails, i);
         }
         //constants
-        constantsExitInteraction.SetButton(ToolEventType.CloseConstants);
+        constantExitInteraction.SetButton(ToolEventType.CloseConstants);
+        constantInputInteraction.SetButton(ToolEventType.InputConstants);
+        constantEditInteraction.SetButton(ToolEventType.EditConstants);
+        constantViewInteraction.SetButton(ToolEventType.ViewConstants);
+        constantClearInteraction.SetButton(ToolEventType.ClearConstants);
+        constantSaveToDictInteraction.SetButton(ToolEventType.SaveToDictConstants);
+        constantSaveToFileInteraction.SetButton(ToolEventType.SaveToFileConstants);
     }
     #endregion
 
@@ -598,6 +616,12 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.CloseDropDown, OnEvent, "AdventureUI");
 
         ToolEvents.i.AddListener(ToolEventType.CloseConstants, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.InputConstants, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.EditConstants, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.ViewConstants, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.ClearConstants, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.SaveToDictConstants, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.SaveToFileConstants, OnEvent, "AdventureUI");
     }
     #endregion
 
@@ -756,6 +780,24 @@ public class AdventureUI : MonoBehaviour
                 break;
             case ToolEventType.CloseConstants:
                 CloseConstants();
+                break;
+            case ToolEventType.InputConstants:
+                InputConstants();
+                break;
+            case ToolEventType.ViewConstants:
+                ViewConstants();
+                break;
+            case ToolEventType.EditConstants:
+                EditConstants();
+                break;
+            case ToolEventType.ClearConstants:
+                ClearConstants();
+                break;
+            case ToolEventType.SaveToDictConstants:
+                SaveToDictConstants();
+                break;
+            case ToolEventType.SaveToFileConstants:
+                SaveToFileConstants();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -2057,7 +2099,7 @@ public class AdventureUI : MonoBehaviour
     {
         if (plotPoint.type == PlotPointType.None || plotPoint.type == PlotPointType.Normal)
         {
-        int index = plotPointIndex - 1;
+            int index = plotPointIndex - 1;
             Debug.LogFormat("[Tst] AdventureUI.cs -> ClearPlotpoint: index {0} (plotPointIndex {1}, numberOfClears {2}){3}", index, plotPointIndex, numberOfClears, "\n");
             //error check for Clear button being pressed with plotPointIndex 0 (no plotPoints present)
             if (index > -1)
@@ -2461,7 +2503,7 @@ public class AdventureUI : MonoBehaviour
     #endregion
 
     #region Delegates
-    
+
     /// <summary>
     /// Character1 name OnSelect
     /// </summary>
@@ -2837,7 +2879,7 @@ public class AdventureUI : MonoBehaviour
         saveToFileButton.gameObject.SetActive(false);
         //display summaries
         UpdateConstantSummaries();
-        ToggleCheckBoxesOff();
+        ToggleConstantCheckBoxesOff();
     }
 
     /// <summary>
@@ -2862,6 +2904,113 @@ public class AdventureUI : MonoBehaviour
     }
 
 
+    private void InputConstants()
+    {
+
+    }
+
+
+    private void ViewConstants()
+    {
+
+    }
+
+
+    private void EditConstants()
+    {
+
+    }
+
+
+    private void ClearConstants()
+    {
+
+    }
+
+    /// <summary>
+    /// save a ConstantPlotpoint to dictOfConstants. NOTE: this data will be lost if you don't SaveToFile before exiting
+    /// </summary>
+    private void SaveToDictConstants()
+    {
+        bool isProceed = true;
+        //assign some values (irrelevant as not used but needed for code integrity)
+        ConstantScope scopeActual = ConstantScope.Campaign;
+        ConstantSummaryType typeActual = ConstantSummaryType.Character;
+        ConstantDistribution frequencyActual = ConstantDistribution.High;
+        //check all data is present -> Scope
+        isProceed = false;
+        for (int i = 0; i < arrayOfConstantScopeToggles.Length; i++)
+        {
+            if (arrayOfConstantScopeToggles[i].isOn == true)
+            {
+                scopeActual = (ConstantScope)i;
+                isProceed = true;
+                break;
+            }
+        }
+        if (isProceed == true)
+        {
+            //Type
+            isProceed = false;
+            for (int i = 0; i < arrayOfConstantTypeToggles.Length; i++)
+            {
+                if (arrayOfConstantTypeToggles[i].isOn == true)
+                {
+                    typeActual = (ConstantSummaryType)i;
+                    isProceed = true;
+                    break;
+                }
+            }
+            if (isProceed == true)
+            {
+                //Frequency
+                isProceed = false;
+                for (int i = 0; i < arrayOfConstantFrequencyToggles.Length; i++)
+                {
+                    if (arrayOfConstantFrequencyToggles[i].isOn == true)
+                    {
+                        frequencyActual = (ConstantDistribution)i;
+                        isProceed = true;
+                        break;
+                    }
+                }
+                if (isProceed == true)
+                {
+                    //input texts
+                    if (constantTextSmallInput.text.Length > 0 && constantTextLargeInput.text.Length > 0)
+                    {
+                        //save record
+                        ConstantPlotpoint constantPlotpoint = new ConstantPlotpoint()
+                        {
+                            tag = constantTextSmallInput.text,
+                            refTag = constantTextSmallInput.text.Replace(" ", ""),
+                            details = constantTextLargeInput.text,
+                            scope = scopeActual,
+                            type = typeActual,
+                            frequency = frequencyActual
+                        };
+                        //save to dict
+                        ToolManager.i.toolDataScript.AddConstantPlotpoint(constantPlotpoint);
+                        //clear fields ready for next record
+                        ToggleConstantCheckBoxesOff();
+                        constantTextSmallInput.text = "";
+                        constantTextLargeInput.text = "";
+                        //update summaries
+                        UpdateConstantSummaries();
+                    }
+                }
+                else { Debug.LogWarning("Can't save to dict as invalid Frequency (none checked)"); }
+            }
+            else { Debug.LogWarning("Can't save to dict as invalid Type (none checked)"); }
+        }
+        else { Debug.LogWarning("Can't save to dict as Invalid Scope (none checked)"); }
+    }
+
+
+    private void SaveToFileConstants()
+    {
+
+    }
 
     #endregion
 
@@ -3620,7 +3769,7 @@ public class AdventureUI : MonoBehaviour
                     arrayOfCampaignSummary[i].text = "0";
                 }
             }
-           
+
         }
         else { Debug.LogError("Invalid dictOfConstants (Null)"); }
     }
@@ -3628,7 +3777,7 @@ public class AdventureUI : MonoBehaviour
     /// <summary>
     /// Toggle all checkboxes Off
     /// </summary>
-    private void ToggleCheckBoxesOff()
+    private void ToggleConstantCheckBoxesOff()
     {
         for (int i = 0; i < arrayOfConstantScopeToggles.Length; i++)
         { arrayOfConstantScopeToggles[i].isOn = false; }
