@@ -44,7 +44,7 @@ public class AdventureUI : MonoBehaviour
     private int mainNavLimit;
     private int turningPointIndex;
     private int plotPointIndex;
-    private bool isSaveNeeded;
+    private bool isSaveNeeded;                              //activates saveToFile button
     private List<Story> listOfStories;
 
     //coroutines
@@ -254,14 +254,12 @@ public class AdventureUI : MonoBehaviour
     [Header("Constants")]
     public ToolButtonInteraction constantExitInteraction;
     public ToolButtonInteraction constantSaveToDictInteraction;
-    public ToolButtonInteraction constantSaveToFileInteraction;
     public ToolButtonInteraction constantInputInteraction;
     public ToolButtonInteraction constantEditInteraction;
     public ToolButtonInteraction constantViewInteraction;
     public ToolButtonInteraction constantClearInteraction;
 
     public Button saveToDictButton;
-    public Button saveToFileButton;
 
     public TMP_InputField constantTextSmallInput;
     public TMP_InputField constantTextLargeInput;
@@ -430,7 +428,6 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(dropConfirmInteraction != null, "Invalid dropConfirmInteraction (Null)");
         //Constants
         Debug.Assert(constantSaveToDictInteraction != null, "Invalid constantSaveToDictInteraction (Null)");
-        Debug.Assert(constantSaveToFileInteraction != null, "Invalid constantSaveToFileInteraction (Null)");
         Debug.Assert(constantInputInteraction != null, "Invalid constantInputInteraction (Null)");
         Debug.Assert(constantEditInteraction != null, "Invalid constantEditInteraction (Null)");
         Debug.Assert(constantViewInteraction != null, "Invalid constantViewInteraction (Null)");
@@ -449,7 +446,6 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(constantTextSmallInput != null, "Invalid constantTextSmallInput (Null)");
         Debug.Assert(constantTextLargeInput != null, "Invalid constantTextLargeInput (Null)");
         Debug.Assert(saveToDictButton != null, "Invalid saveToDictButton (Null)");
-        Debug.Assert(saveToFileButton != null, "Invalid saveToFileButton (Null)");
         //Initialise Other
         InitialiseDelegates();
         InitialiseCanvases();
@@ -557,7 +553,6 @@ public class AdventureUI : MonoBehaviour
         constantViewInteraction.SetButton(ToolEventType.ViewConstants);
         constantClearInteraction.SetButton(ToolEventType.ClearConstants);
         constantSaveToDictInteraction.SetButton(ToolEventType.SaveToDictConstants);
-        constantSaveToFileInteraction.SetButton(ToolEventType.SaveToFileConstants);
     }
     #endregion
 
@@ -621,7 +616,6 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.ViewConstants, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.ClearConstants, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.SaveToDictConstants, OnEvent, "AdventureUI");
-        ToolEvents.i.AddListener(ToolEventType.SaveToFileConstants, OnEvent, "AdventureUI");
     }
     #endregion
 
@@ -795,9 +789,6 @@ public class AdventureUI : MonoBehaviour
                 break;
             case ToolEventType.SaveToDictConstants:
                 SaveToDictConstants();
-                break;
-            case ToolEventType.SaveToFileConstants:
-                SaveToFileConstants();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -2874,12 +2865,12 @@ public class AdventureUI : MonoBehaviour
     /// </summary>
     private void InitialiseConstants()
     {
-        //toggle both save buttons Off
+        //toggle save button Off
         saveToDictButton.gameObject.SetActive(false);
-        saveToFileButton.gameObject.SetActive(false);
         //display summaries
         UpdateConstantSummaries();
         ToggleConstantCheckBoxesOff();
+        ToggleConstantTextInputs(true);
     }
 
     /// <summary>
@@ -2889,7 +2880,9 @@ public class AdventureUI : MonoBehaviour
     {
         constantsCanvas.gameObject.SetActive(false);
         masterCanvas.gameObject.SetActive(true);
-
+        //check if saveToFile button should be on
+        if (isSaveNeeded == true)
+        { saveFileButton.gameObject.SetActive(true); }
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.Main);
     }
@@ -2906,13 +2899,14 @@ public class AdventureUI : MonoBehaviour
 
     private void InputConstants()
     {
-
+        ToggleConstantTextInputs(true);
     }
 
 
     private void ViewConstants()
     {
-
+        //turn off text inputs
+        ToggleConstantTextInputs(false);
     }
 
 
@@ -2998,9 +2992,9 @@ public class AdventureUI : MonoBehaviour
                         constantTextLargeInput.text = "";
                         //update summaries
                         UpdateConstantSummaries();
-                        //activate SaveToFile button and deactivate SaveToDict
-                        saveToFileButton.gameObject.SetActive(true);
+                        //activate SaveToFile button (main page) and deactivate SaveToDict
                         saveToDictButton.gameObject.SetActive(false);
+                        isSaveNeeded = true;
                     }
                 }
                 else { Debug.LogWarning("Can't save to dict as invalid Frequency (none checked)"); }
@@ -3011,11 +3005,6 @@ public class AdventureUI : MonoBehaviour
     }
     #endregion
 
-
-    private void SaveToFileConstants()
-    {
-
-    }
 
     #endregion
 
@@ -3790,6 +3779,24 @@ public class AdventureUI : MonoBehaviour
         { arrayOfConstantTypeToggles[i].isOn = false; }
         for (int i = 0; i < arrayOfConstantFrequencyToggles.Length; i++)
         { arrayOfConstantFrequencyToggles[i].isOn = false; }
+    }
+
+    /// <summary>
+    /// Toggles large and small text input fields on/off
+    /// </summary>
+    /// <param name="isInput"></param>
+    private void ToggleConstantTextInputs(bool isInput)
+    {
+        if (isInput == true)
+        {
+            constantTextSmallInput.gameObject.SetActive(true);
+            constantTextLargeInput.gameObject.SetActive(true);
+        }
+        else
+        {
+            constantTextSmallInput.gameObject.SetActive(false);
+            constantTextLargeInput.gameObject.SetActive(false);
+        }
     }
 
     #endregion

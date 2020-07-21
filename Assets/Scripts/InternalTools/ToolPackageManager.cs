@@ -1344,6 +1344,7 @@ namespace toolsAPI
     /// <summary>
     /// Game and Campaign constants (I input them, plotLines, characters, organisations and objects that carry through the game and individual campaigns)
     /// </summary>
+    [System.Serializable]
     public class ConstantPlotpoint
     {
         public string refTag;                       //single string reference tag used for dictionaries, lookup tables, etc

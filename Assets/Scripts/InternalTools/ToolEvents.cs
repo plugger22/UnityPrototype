@@ -64,8 +64,7 @@ public enum ToolEventType
     EditConstants,
     ViewConstants,
     ClearConstants,
-    SaveToDictConstants,
-    SaveToFileConstants
+    SaveToDictConstants
 
 }
 

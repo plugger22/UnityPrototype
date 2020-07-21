@@ -194,7 +194,7 @@ public class ToolDataManager : MonoBehaviour
         try
         {
             dictOfConstantPlotpoints.Add(constant.refTag, constant);
-            Debug.LogFormat("[Tst] ToolDataManager.cs -> AddConstantPlotpoint: \"{0}\", {1} -> {2} -> {3} saved to dictOfConstantPlotPoints{4}", constant.tag, constant.scope, constant.type, constant.frequency, "\n");
+            Debug.LogFormat("[Tst] ToolDataManager.cs -> AddConstantPlotpoint: \"{0}\" -> {1} -> {2} -> {3} saved to dictOfConstantPlotPoints{4}", constant.tag, constant.scope, constant.type, constant.frequency, "\n");
         }
         catch (ArgumentNullException)
         { Debug.LogError("Invalid ConstantPlotpoint (Null)"); }
