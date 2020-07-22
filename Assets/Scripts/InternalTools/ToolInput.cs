@@ -169,6 +169,28 @@ public class ToolInput : MonoBehaviour
                     
                 }
                 break;
+            case ToolModal.Constants:
+                {
+                    switch (_modalType)
+                    {
+                        case ToolModalType.Input:
+
+                            break;
+                        case ToolModalType.Edit:
+
+                            break;
+                        case ToolModalType.Read:
+                            //right / left arrows
+                            x_axis = Input.GetAxisRaw("Horizontal");
+                            if (x_axis > 0)
+                            { ToolEvents.i.PostNotification(ToolEventType.NextConstant, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal RIGHT"); }
+                            else if (x_axis < 0)
+                            { ToolEvents.i.PostNotification(ToolEventType.PreviousConstant, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal LEFT"); }
+                            break;
+
+                    }
+                    break;
+                }
         }
     }
     #endregion

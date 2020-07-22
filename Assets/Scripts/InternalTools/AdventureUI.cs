@@ -44,8 +44,11 @@ public class AdventureUI : MonoBehaviour
     private int mainNavLimit;
     private int turningPointIndex;
     private int plotPointIndex;
+    private int constantIndex;                              //listOfConstantPlotpoints index
+    private int constantLimit;                              //listOfConstantPlotpoints.Count
     private bool isSaveNeeded;                              //activates saveToFile button
     private List<Story> listOfStories;
+    private List<ConstantPlotpoint> listOfConstantPlotpoints;
 
     //coroutines
     private IEnumerator coroutineCharacter;
@@ -261,6 +264,10 @@ public class AdventureUI : MonoBehaviour
 
     public Button saveToDictButton;
 
+    public TextMeshProUGUI constantTextSmall;
+    public TextMeshProUGUI constantTextLarge;
+    public TextMeshProUGUI constantInstructionText;
+
     public TMP_InputField constantTextSmallInput;
     public TMP_InputField constantTextLargeInput;
 
@@ -432,6 +439,9 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(constantEditInteraction != null, "Invalid constantEditInteraction (Null)");
         Debug.Assert(constantViewInteraction != null, "Invalid constantViewInteraction (Null)");
         Debug.Assert(constantClearInteraction != null, "Invalid constantClearInteraction (Null)");
+        Debug.Assert(constantTextSmall != null, "Invalid constantTextSmall (Null)");
+        Debug.Assert(constantTextLarge != null, "Invalid constantTextLarge (Null)");
+        Debug.Assert(constantInstructionText != null, "Invalid constantInstructionText (Null)");
         for (int i = 0; i < arrayOfGameSummary.Length; i++)
         {
             if (arrayOfGameSummary[i] == null) { Debug.LogErrorFormat("Invalid arrayOfGameSummary[{0}] (Null)"); }
@@ -615,6 +625,8 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.EditConstants, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.ViewConstants, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.ClearConstants, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.NextConstant, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.PreviousConstant, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.SaveToDictConstants, OnEvent, "AdventureUI");
     }
     #endregion
@@ -789,6 +801,12 @@ public class AdventureUI : MonoBehaviour
                 break;
             case ToolEventType.SaveToDictConstants:
                 SaveToDictConstants();
+                break;
+            case ToolEventType.NextConstant:
+                NextConstant();
+                break;
+            case ToolEventType.PreviousConstant:
+                PreviousConstant();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -2871,6 +2889,11 @@ public class AdventureUI : MonoBehaviour
         UpdateConstantSummaries();
         ToggleConstantCheckBoxesOff();
         ToggleConstantTextInputs(true);
+        //initialise list
+        InitialiseListOfConstantPlotpoints();
+        //set Modal Type
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Input);
+        SetConstantInstructionText();
     }
 
     /// <summary>
@@ -2896,29 +2919,82 @@ public class AdventureUI : MonoBehaviour
         saveToDictButton.gameObject.SetActive(true);
     }
 
-
+    /// <summary>
+    /// Switch to input mode
+    /// </summary>
     private void InputConstants()
     {
+        //turn on input fields
         ToggleConstantTextInputs(true);
+        //clear out input fields
+        ClearConstantInputFields();
+        //set Modal Type
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Input);
+        SetConstantInstructionText();
     }
 
-
+    /// <summary>
+    /// View contents of dictOfConstantPlotpoints
+    /// </summary>
     private void ViewConstants()
     {
+        //set Modal Type
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Read);
         //turn off text inputs
         ToggleConstantTextInputs(false);
+        //show first record, if present
+        DisplayConstantPlotpoint();
+        SetConstantInstructionText();
     }
 
-
+    /// <summary>
+    /// switch to Edit mode for currently displayed record. Valid in Read mode only
+    /// </summary>
     private void EditConstants()
     {
-
+        if (ToolManager.i.toolInputScript.ModalType == ToolModalType.Read)
+        {
+            //turn on input fields
+            ToggleConstantTextInputs(true);
+            //set Modal Type
+            ToolManager.i.toolInputScript.SetModalType(ToolModalType.Edit);
+            SetConstantInstructionText();
+        }
     }
 
-
+    /// <summary>
+    /// clear out currently displayed record. Valid in Input or Edit modes only
+    /// </summary>
     private void ClearConstants()
     {
+        if (ToolManager.i.toolInputScript.ModalType == ToolModalType.Edit || ToolManager.i.toolInputScript.ModalType == ToolModalType.Input)
+        { ClearConstantInputFields(); }
+    }
 
+    /// <summary>
+    /// View next constantPlotPoint (working forward through listOfConstantPlotpoints)
+    /// </summary>
+    private void NextConstant()
+    {
+        constantIndex++;
+        //rollover check
+        if (constantIndex == constantLimit)
+        { constantIndex = 0; }
+        //show story
+        DisplayConstantPlotpoint();
+    }
+
+    /// <summary>
+    /// View previous constantPlotpoint (working back through listOfConstantPlotpoints
+    /// </summary>
+    private void PreviousConstant()
+    {
+        constantIndex--;
+        //rollover check
+        if (constantIndex < 0)
+        { constantIndex = constantLimit - 1; }
+        //show story
+        DisplayConstantPlotpoint();
     }
 
     #region SaveToDictConstants
@@ -2992,6 +3068,8 @@ public class AdventureUI : MonoBehaviour
                         constantTextLargeInput.text = "";
                         //update summaries
                         UpdateConstantSummaries();
+                        //update list
+                        InitialiseListOfConstantPlotpoints();
                         //activate SaveToFile button (main page) and deactivate SaveToDict
                         saveToDictButton.gameObject.SetActive(false);
                         isSaveNeeded = true;
@@ -3774,7 +3852,11 @@ public class AdventureUI : MonoBehaviour
     private void ToggleConstantCheckBoxesOff()
     {
         for (int i = 0; i < arrayOfConstantScopeToggles.Length; i++)
-        { arrayOfConstantScopeToggles[i].isOn = false; }
+        {
+            arrayOfConstantScopeToggles[i].isOn = false;
+            TextMeshProUGUI textTemp = arrayOfConstantScopeToggles[i].GetComponent<TextMeshProUGUI>();
+            textTemp.text = string.Format("<color=\"yellow\">{0}", textTemp.text);
+        }
         for (int i = 0; i < arrayOfConstantTypeToggles.Length; i++)
         { arrayOfConstantTypeToggles[i].isOn = false; }
         for (int i = 0; i < arrayOfConstantFrequencyToggles.Length; i++)
@@ -3796,6 +3878,76 @@ public class AdventureUI : MonoBehaviour
         {
             constantTextSmallInput.gameObject.SetActive(false);
             constantTextLargeInput.gameObject.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// Clear out constant input fields
+    /// </summary>
+    private void ClearConstantInputFields()
+    {
+        constantTextSmallInput.text = "";
+        constantTextLargeInput.text = "";
+    }
+
+    /// <summary>
+    /// Initialise listOfConstantPlotpoints with data from dictOfConstantPlotpoints
+    /// </summary>
+    private void InitialiseListOfConstantPlotpoints()
+    {
+        Dictionary<string, ConstantPlotpoint> dictOfConstantPlotpoints = ToolManager.i.toolDataScript.GetDictOfConstantPlotpoints();
+        if (dictOfConstantPlotpoints != null)
+        {
+            listOfConstantPlotpoints = dictOfConstantPlotpoints.Values.ToList();
+            constantIndex = 0;
+            constantLimit = listOfConstantPlotpoints.Count;
+        }
+        else { Debug.LogError("Invalid dictOfConstantPlotpoints (Null)"); }
+    }
+
+    /// <summary>
+    /// displays current record in listOfConstantPlotpoints[constantIndex]. Valid only in Read or Edit mode
+    /// </summary>
+    private void DisplayConstantPlotpoint()
+    {
+        if (ToolManager.i.toolInputScript.ModalType == ToolModalType.Edit || ToolManager.i.toolInputScript.ModalType == ToolModalType.Read)
+        {
+            //check at least one record
+            if (listOfConstantPlotpoints.Count > 0)
+            {
+                ConstantPlotpoint plotPoint = listOfConstantPlotpoints[constantIndex];
+                if (plotPoint != null)
+                {
+                    //display data
+                    constantTextSmall.text = plotPoint.tag;
+                    constantTextLarge.text = plotPoint.details;
+                    //set all checkpoints OFF
+                    ToggleConstantCheckBoxesOff();
+                    arrayOfConstantScopeToggles[(int)plotPoint.scope].isOn = true;
+                    arrayOfConstantTypeToggles[(int)plotPoint.type].isOn = true;
+                    arrayOfConstantFrequencyToggles[(int)plotPoint.frequency].isOn = true;
+                }
+                else { Debug.LogErrorFormat("Invalid constantPlotpoint (Null) for listOfConstantPlotpoints[{0}]", constantIndex); }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Sets instruction text according to the current mode
+    /// </summary>
+    private void SetConstantInstructionText()
+    {
+        switch (ToolManager.i.toolInputScript.ModalType)
+        {
+            case ToolModalType.Input:
+                constantInstructionText.text = "Click SAVE TO DICT to save Input<br>Once all input complete, return to MAIN PAGE and click SAVE TO FILE";
+                break;
+            case ToolModalType.Edit:
+                constantInstructionText.text = "Click SAVE TO DICT to save Input<br>Once all input complete, return to MAIN PAGE and click SAVE TO FILE";
+                break;
+            case ToolModalType.Read:
+                constantInstructionText.text = "LEFT and RIGHT Arrows to navigate records";
+                break;
         }
     }
 
