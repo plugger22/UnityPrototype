@@ -56,6 +56,10 @@ public class AdventureUI : MonoBehaviour
     private IEnumerator coroutinePlotLine;
     private IEnumerator coroutineNameSet;
 
+    //colours
+    private Color32 colourYellow = new Color32(243, 253, 106, 255);
+    private Color32 colourWhite = new Color32(255, 255, 255, 255);
+
     //static reference
     private static AdventureUI adventureUI;
     #endregion
@@ -278,6 +282,10 @@ public class AdventureUI : MonoBehaviour
     public Toggle[] arrayOfConstantTypeToggles;                     //should be 4 entries in enum.ConstantSummaryType order
     public Toggle[] arrayOfConstantFrequencyToggles;                //should be 3 entries in enum.ConstantDistribution order
 
+    public TextMeshProUGUI[] arrayOfConstantScopeTexts;
+    public TextMeshProUGUI[] arrayOfConstantTypeTexts;
+    public TextMeshProUGUI[] arrayOfConstantFrequencyTexts;
+
     #endregion
 
     #region static Instance
@@ -448,11 +456,20 @@ public class AdventureUI : MonoBehaviour
             if (arrayOfCampaignSummary[i] == null) { Debug.LogErrorFormat("Invalid arrayOfCampaignSummary[{0}] (Null)"); }
         }
         for (int i = 0; i < 2; i++)
-        { if (arrayOfConstantScopeToggles[i] == null) { Debug.LogErrorFormat("Invalid arrayOfConstantScope[{0}]"); } }
+        {
+            if (arrayOfConstantScopeToggles[i] == null) { Debug.LogErrorFormat("Invalid arrayOfConstantScopeToggles[{0}] (Null)"); }
+            if (arrayOfConstantScopeTexts[i] == null) { Debug.LogErrorFormat("Invalid arrayOfConstantScopeTexts[{0}] (Null)"); }
+        }
         for (int i = 0; i < 4; i++)
-        { if (arrayOfConstantTypeToggles[i] == null) { Debug.LogErrorFormat("Invalid arrayOfConstantType[{0}]"); } }
+        {
+            if (arrayOfConstantTypeToggles[i] == null) { Debug.LogErrorFormat("Invalid arrayOfConstantTypeToggles[{0}] (Null)"); }
+            if (arrayOfConstantTypeTexts[i] == null) { Debug.LogErrorFormat("Invalid arrayOfConstantTypeTexts[{0}] (Null)"); }
+        }
         for (int i = 0; i < 3; i++)
-        { if (arrayOfConstantFrequencyToggles[i] == null) { Debug.LogErrorFormat("Invalid arrayOfConstantFrequency[{0}]"); } }
+        {
+            if (arrayOfConstantFrequencyToggles[i] == null) { Debug.LogErrorFormat("Invalid arrayOfConstantFrequency[{0}] (Null)"); }
+            if (arrayOfConstantFrequencyTexts[i] == null) { Debug.LogErrorFormat("Invalid arrayOfConstantFrequencyTexts[{0}] (Null)"); }
+        }
         Debug.Assert(constantTextSmallInput != null, "Invalid constantTextSmallInput (Null)");
         Debug.Assert(constantTextLargeInput != null, "Invalid constantTextLargeInput (Null)");
         Debug.Assert(saveToDictButton != null, "Invalid saveToDictButton (Null)");
@@ -3073,6 +3090,9 @@ public class AdventureUI : MonoBehaviour
                         //activate SaveToFile button (main page) and deactivate SaveToDict
                         saveToDictButton.gameObject.SetActive(false);
                         isSaveNeeded = true;
+                        //log
+                        Debug.LogFormat("[Tst] AdventureUI.cs -> SaveToDict: \"{0}\" -> {1} -> {2} -> {3} saved to dictOfConstantPlotPoints{4}", constantPlotpoint.tag, constantPlotpoint.scope, 
+                            constantPlotpoint.type, constantPlotpoint.frequency, "\n");
                     }
                 }
                 else { Debug.LogWarning("Can't save to dict as invalid Frequency (none checked)"); }
@@ -3854,13 +3874,18 @@ public class AdventureUI : MonoBehaviour
         for (int i = 0; i < arrayOfConstantScopeToggles.Length; i++)
         {
             arrayOfConstantScopeToggles[i].isOn = false;
-            TextMeshProUGUI textTemp = arrayOfConstantScopeToggles[i].GetComponent<TextMeshProUGUI>();
-            textTemp.text = string.Format("<color=\"yellow\">{0}", textTemp.text);
+            arrayOfConstantScopeTexts[i].color = colourWhite;
         }
         for (int i = 0; i < arrayOfConstantTypeToggles.Length; i++)
-        { arrayOfConstantTypeToggles[i].isOn = false; }
+        {
+            arrayOfConstantTypeToggles[i].isOn = false;
+            arrayOfConstantTypeTexts[i].color = colourWhite;
+        }
         for (int i = 0; i < arrayOfConstantFrequencyToggles.Length; i++)
-        { arrayOfConstantFrequencyToggles[i].isOn = false; }
+        {
+            arrayOfConstantFrequencyToggles[i].isOn = false;
+            arrayOfConstantFrequencyTexts[i].color = colourWhite;
+        }
     }
 
     /// <summary>
@@ -3918,14 +3943,24 @@ public class AdventureUI : MonoBehaviour
                 ConstantPlotpoint plotPoint = listOfConstantPlotpoints[constantIndex];
                 if (plotPoint != null)
                 {
+                    int index;
                     //display data
                     constantTextSmall.text = plotPoint.tag;
                     constantTextLarge.text = plotPoint.details;
                     //set all checkpoints OFF
                     ToggleConstantCheckBoxesOff();
-                    arrayOfConstantScopeToggles[(int)plotPoint.scope].isOn = true;
-                    arrayOfConstantTypeToggles[(int)plotPoint.type].isOn = true;
-                    arrayOfConstantFrequencyToggles[(int)plotPoint.frequency].isOn = true;
+                    //scope
+                    index = (int)plotPoint.scope;
+                    arrayOfConstantScopeToggles[index].isOn = true;
+                    arrayOfConstantScopeTexts[index].color = colourYellow;
+                    //type
+                    index = (int)plotPoint.type;
+                    arrayOfConstantTypeToggles[index].isOn = true;
+                    arrayOfConstantTypeTexts[index].color = colourYellow;
+                    //frequency
+                    index = (int)plotPoint.frequency;
+                    arrayOfConstantFrequencyToggles[index].isOn = true;
+                    arrayOfConstantFrequencyTexts[index].color = colourYellow;
                 }
                 else { Debug.LogErrorFormat("Invalid constantPlotpoint (Null) for listOfConstantPlotpoints[{0}]", constantIndex); }
             }
