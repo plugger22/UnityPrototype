@@ -263,10 +263,14 @@ public class AdventureUI : MonoBehaviour
     public ToolButtonInteraction constantSaveToDictInteraction;
     public ToolButtonInteraction constantInputInteraction;
     public ToolButtonInteraction constantEditInteraction;
+    public ToolButtonInteraction constantFilterInteraction;
+    public ToolButtonInteraction constantViewFilterInteraction;
     public ToolButtonInteraction constantViewInteraction;
     public ToolButtonInteraction constantClearInteraction;
 
-    public Button saveToDictButton;
+    public Button saveToDictConstantButton;
+    public Button viewFilterConstantButton;
+    public Button filterConstantButton;
 
     public TextMeshProUGUI constantTextSmall;
     public TextMeshProUGUI constantTextLarge;
@@ -446,10 +450,12 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(constantInputInteraction != null, "Invalid constantInputInteraction (Null)");
         Debug.Assert(constantEditInteraction != null, "Invalid constantEditInteraction (Null)");
         Debug.Assert(constantViewInteraction != null, "Invalid constantViewInteraction (Null)");
+        Debug.Assert(constantViewFilterInteraction != null, "Invalid constantViewFilterInteraction (Null)");
         Debug.Assert(constantClearInteraction != null, "Invalid constantClearInteraction (Null)");
         Debug.Assert(constantTextSmall != null, "Invalid constantTextSmall (Null)");
         Debug.Assert(constantTextLarge != null, "Invalid constantTextLarge (Null)");
         Debug.Assert(constantInstructionText != null, "Invalid constantInstructionText (Null)");
+
         for (int i = 0; i < arrayOfGameSummary.Length; i++)
         {
             if (arrayOfGameSummary[i] == null) { Debug.LogErrorFormat("Invalid arrayOfGameSummary[{0}] (Null)"); }
@@ -472,7 +478,9 @@ public class AdventureUI : MonoBehaviour
         }
         Debug.Assert(constantTextSmallInput != null, "Invalid constantTextSmallInput (Null)");
         Debug.Assert(constantTextLargeInput != null, "Invalid constantTextLargeInput (Null)");
-        Debug.Assert(saveToDictButton != null, "Invalid saveToDictButton (Null)");
+        Debug.Assert(saveToDictConstantButton != null, "Invalid saveToDictButton (Null)");
+        Debug.Assert(viewFilterConstantButton != null, "Invalid viewFilterButton (Null)");
+        Debug.Assert(filterConstantButton != null, "Invalid filterButton (Null)");
         //Initialise Other
         InitialiseDelegates();
         InitialiseCanvases();
@@ -511,7 +519,15 @@ public class AdventureUI : MonoBehaviour
         //delegates for constants textInputs
         constantTextSmallInput.onValueChanged.AddListener(delegate { ConstantTextInputDetected(); });
         constantTextLargeInput.onValueChanged.AddListener(delegate { ConstantTextInputDetected(); });
-
+        //constant checkboxes -> scope
+        for (int i = 0; i < arrayOfConstantScopeToggles.Length; i++)
+        { arrayOfConstantScopeToggles[i].onValueChanged.AddListener(delegate { ChangeCheckBoxScopeColour(); }); }
+        //constant checkboxes -> type
+        for (int i = 0; i < arrayOfConstantTypeToggles.Length; i++)
+        { arrayOfConstantTypeToggles[i].onValueChanged.AddListener(delegate { ChangeCheckBoxTypeColour(); }); }
+        //constant checkboxes -> Frequency
+        for (int i = 0; i < arrayOfConstantFrequencyToggles.Length; i++)
+        { arrayOfConstantFrequencyToggles[i].onValueChanged.AddListener(delegate { ChangeCheckBoxFrequencyColour(); }); }
     }
     #endregion
 
@@ -577,7 +593,9 @@ public class AdventureUI : MonoBehaviour
         constantExitInteraction.SetButton(ToolEventType.CloseConstants);
         constantInputInteraction.SetButton(ToolEventType.InputConstants);
         constantEditInteraction.SetButton(ToolEventType.EditConstants);
+        constantFilterInteraction.SetButton(ToolEventType.FilterConstants);
         constantViewInteraction.SetButton(ToolEventType.ViewConstants);
+        constantViewFilterInteraction.SetButton(ToolEventType.ViewFilterConstants);
         constantClearInteraction.SetButton(ToolEventType.ClearConstants);
         constantSaveToDictInteraction.SetButton(ToolEventType.SaveToDictConstants);
     }
@@ -641,6 +659,8 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.InputConstants, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.EditConstants, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.ViewConstants, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.FilterConstants, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.ViewFilterConstants, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.ClearConstants, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.NextConstant, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.PreviousConstant, OnEvent, "AdventureUI");
@@ -812,6 +832,12 @@ public class AdventureUI : MonoBehaviour
                 break;
             case ToolEventType.EditConstants:
                 EditConstants();
+                break;
+            case ToolEventType.FilterConstants:
+                FilterConstants();
+                break;
+            case ToolEventType.ViewFilterConstants:
+                ViewFilterConstants();
                 break;
             case ToolEventType.ClearConstants:
                 ClearConstants();
@@ -2901,10 +2927,11 @@ public class AdventureUI : MonoBehaviour
     private void InitialiseConstants()
     {
         //toggle save button Off
-        saveToDictButton.gameObject.SetActive(false);
+        saveToDictConstantButton.gameObject.SetActive(false);
+        viewFilterConstantButton.gameObject.SetActive(false);
         //display summaries
         UpdateConstantSummaries();
-        ToggleConstantCheckBoxesOff();
+        SetConstantCheckboxesOff();
         ToggleConstantTextInputs(true);
         //initialise list
         InitialiseListOfConstantPlotpoints();
@@ -2933,7 +2960,7 @@ public class AdventureUI : MonoBehaviour
     private void ConstantTextInputDetected()
     {
         //activate saveToDict button
-        saveToDictButton.gameObject.SetActive(true);
+        saveToDictConstantButton.gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -2941,6 +2968,8 @@ public class AdventureUI : MonoBehaviour
     /// </summary>
     private void InputConstants()
     {
+        //enable checkboxes
+        ToggleConstantCheckboxes(true);
         //turn on input fields
         ToggleConstantTextInputs(true);
         //clear out input fields
@@ -2951,10 +2980,14 @@ public class AdventureUI : MonoBehaviour
     }
 
     /// <summary>
-    /// View contents of dictOfConstantPlotpoints
+    /// View contents of dictOfConstantPlotpoints -> ALL records
     /// </summary>
     private void ViewConstants()
     {
+        //initialise list
+        InitialiseListOfConstantPlotpoints();
+        //disable checkboxes
+        ToggleConstantCheckboxes(false);
         //set Modal Type
         ToolManager.i.toolInputScript.SetModalType(ToolModalType.Read);
         //turn off text inputs
@@ -2965,17 +2998,58 @@ public class AdventureUI : MonoBehaviour
     }
 
     /// <summary>
+    /// Filter to create a subSet of constantPlotpoints to view. Clears out checkboxes and screen and activates ViewFilter button 
+    /// </summary>
+    private void FilterConstants()
+    {
+        //clear out input fields
+        ClearConstantInputFields();
+        //toggle fields off
+        ToggleConstantTextInputs(false);
+        //enable checkboxes
+        ToggleConstantCheckboxes(true);
+        //set Modal Type
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Process);
+        //activate viewfilter button
+        viewFilterConstantButton.gameObject.SetActive(true);
+        //deactivate filter button
+        filterConstantButton.gameObject.SetActive(false);
+        //instruction text
+        SetConstantInstructionText();
+    }
+
+    /// <summary>
+    /// View plotpoints according to the current settings on the Scope and Type checkboxes
+    /// </summary>
+    private void ViewFilterConstants()
+    {
+        //set filter
+        InitialiseListOfConstantPlotpoints(true);
+        Debug.LogFormat("[Tst] AdventureUI.cs -> ViewFilterConstants: There are {0} filtered records{1}", listOfConstantPlotpoints.Count, "\n");
+        //show first record, if present
+        DisplayConstantPlotpoint();
+        //toggle buttons
+        viewFilterConstantButton.gameObject.SetActive(false);
+        filterConstantButton.gameObject.SetActive(true);
+    }
+
+    /// <summary>
     /// switch to Edit mode for currently displayed record. Valid in Read mode only
     /// </summary>
     private void EditConstants()
     {
         if (ToolManager.i.toolInputScript.ModalType == ToolModalType.Read)
         {
+            //enable checkboxes
+            ToggleConstantCheckboxes(true);
             //turn on input fields
             ToggleConstantTextInputs(true);
             //set Modal Type
             ToolManager.i.toolInputScript.SetModalType(ToolModalType.Edit);
+            //instruction text
             SetConstantInstructionText();
+            //display current record
+            DisplayConstantPlotpoint();
         }
     }
 
@@ -2985,7 +3059,15 @@ public class AdventureUI : MonoBehaviour
     private void ClearConstants()
     {
         if (ToolManager.i.toolInputScript.ModalType == ToolModalType.Edit || ToolManager.i.toolInputScript.ModalType == ToolModalType.Input)
-        { ClearConstantInputFields(); }
+        {
+            ClearConstantInputFields();
+            SetConstantCheckboxesOff();
+            if (ToolManager.i.toolInputScript.ModalType == ToolModalType.Edit)
+            {
+                //activate saveToDict button that needs to be pressed in order to save changes
+                saveToDictConstantButton.gameObject.SetActive(true);
+            }
+        }
     }
 
     /// <summary>
@@ -3013,6 +3095,50 @@ public class AdventureUI : MonoBehaviour
         //show story
         DisplayConstantPlotpoint();
     }
+
+    #region delegates
+    /// <summary>
+    /// delegate to change colour of checkbox (Scope) when selected/deselected
+    /// </summary>
+    private void ChangeCheckBoxScopeColour()
+    {
+        //change all to white except if selected (yellow)
+        for (int i = 0; i < arrayOfConstantScopeTexts.Length; i++)
+        {
+            if (arrayOfConstantScopeToggles[i].isOn == true)
+            { arrayOfConstantScopeTexts[i].color = colourYellow; }
+            else { arrayOfConstantScopeTexts[i].color = colourWhite; }
+        }
+    }
+
+    /// <summary>
+    /// delegate to change colour of checkbox (Type) when selected/deselected
+    /// </summary>
+    private void ChangeCheckBoxTypeColour()
+    {
+        //change all to white except if selected (yellow)
+        for (int i = 0; i < arrayOfConstantTypeTexts.Length; i++)
+        {
+            if (arrayOfConstantTypeToggles[i].isOn == true)
+            { arrayOfConstantTypeTexts[i].color = colourYellow; }
+            else { arrayOfConstantTypeTexts[i].color = colourWhite; }
+        }
+    }
+
+    /// <summary>
+    /// delegate to change colour of checkbox (Frequency) when selected/deselected
+    /// </summary>
+    private void ChangeCheckBoxFrequencyColour()
+    {
+        //change all to white except if selected (yellow)
+        for (int i = 0; i < arrayOfConstantFrequencyTexts.Length; i++)
+        {
+            if (arrayOfConstantFrequencyToggles[i].isOn == true)
+            { arrayOfConstantFrequencyTexts[i].color = colourYellow; }
+            else { arrayOfConstantFrequencyTexts[i].color = colourWhite; }
+        }
+    }
+    #endregion
 
     #region SaveToDictConstants
     /// <summary>
@@ -3080,7 +3206,7 @@ public class AdventureUI : MonoBehaviour
                         //save to dict
                         ToolManager.i.toolDataScript.AddConstantPlotpoint(constantPlotpoint);
                         //clear fields ready for next record
-                        ToggleConstantCheckBoxesOff();
+                        SetConstantCheckboxesOff();
                         constantTextSmallInput.text = "";
                         constantTextLargeInput.text = "";
                         //update summaries
@@ -3088,10 +3214,10 @@ public class AdventureUI : MonoBehaviour
                         //update list
                         InitialiseListOfConstantPlotpoints();
                         //activate SaveToFile button (main page) and deactivate SaveToDict
-                        saveToDictButton.gameObject.SetActive(false);
+                        saveToDictConstantButton.gameObject.SetActive(false);
                         isSaveNeeded = true;
                         //log
-                        Debug.LogFormat("[Tst] AdventureUI.cs -> SaveToDict: \"{0}\" -> {1} -> {2} -> {3} saved to dictOfConstantPlotPoints{4}", constantPlotpoint.tag, constantPlotpoint.scope, 
+                        Debug.LogFormat("[Tst] AdventureUI.cs -> SaveToDict: \"{0}\" -> {1} -> {2} -> {3} saved to dictOfConstantPlotPoints{4}", constantPlotpoint.tag, constantPlotpoint.scope,
                             constantPlotpoint.type, constantPlotpoint.frequency, "\n");
                     }
                 }
@@ -3867,9 +3993,9 @@ public class AdventureUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Toggle all checkboxes Off
+    /// Sets all checkboxes to Off (doesn't change enable/disable status, just blanks all checkboxes and sets labels to white colour)
     /// </summary>
-    private void ToggleConstantCheckBoxesOff()
+    private void SetConstantCheckboxesOff()
     {
         for (int i = 0; i < arrayOfConstantScopeToggles.Length; i++)
         {
@@ -3887,6 +4013,36 @@ public class AdventureUI : MonoBehaviour
             arrayOfConstantFrequencyTexts[i].color = colourWhite;
         }
     }
+
+    /// <summary>
+    /// Toggles constant checkboxes interactable true/false
+    /// </summary>
+    /// <param name="isOn"></param>
+    private void ToggleConstantCheckboxes(bool isOn)
+    {
+        if (isOn == true)
+        {
+            //activate checkboxes
+            for (int i = 0; i < arrayOfConstantScopeToggles.Length; i++)
+            { arrayOfConstantScopeToggles[i].interactable = true; }
+            for (int i = 0; i < arrayOfConstantTypeToggles.Length; i++)
+            { arrayOfConstantTypeToggles[i].interactable = true; }
+            for (int i = 0; i < arrayOfConstantFrequencyToggles.Length; i++)
+            { arrayOfConstantFrequencyToggles[i].interactable = true; }
+        }
+        else
+        {
+            //disable checkboxes
+            for (int i = 0; i < arrayOfConstantScopeToggles.Length; i++)
+            { arrayOfConstantScopeToggles[i].interactable = false; }
+            for (int i = 0; i < arrayOfConstantTypeToggles.Length; i++)
+            { arrayOfConstantTypeToggles[i].interactable = false; }
+            for (int i = 0; i < arrayOfConstantFrequencyToggles.Length; i++)
+            { arrayOfConstantFrequencyToggles[i].interactable = false; }
+        }
+    }
+
+
 
     /// <summary>
     /// Toggles large and small text input fields on/off
@@ -3916,14 +4072,52 @@ public class AdventureUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Initialise listOfConstantPlotpoints with data from dictOfConstantPlotpoints
+    /// Initialise listOfConstantPlotpoints with data from dictOfConstantPlotpoints. If 'isFilteredList' true then list will be filtered according to Scope and Type settings
     /// </summary>
-    private void InitialiseListOfConstantPlotpoints()
+    private void InitialiseListOfConstantPlotpoints(bool isFilteredList = false)
     {
         Dictionary<string, ConstantPlotpoint> dictOfConstantPlotpoints = ToolManager.i.toolDataScript.GetDictOfConstantPlotpoints();
         if (dictOfConstantPlotpoints != null)
         {
-            listOfConstantPlotpoints = dictOfConstantPlotpoints.Values.ToList();
+            if (isFilteredList == false)
+            {
+                //show All records
+                listOfConstantPlotpoints = dictOfConstantPlotpoints.Values.ToList();
+            }
+            else
+            {
+                //filtered list
+                int scopeFilter = -1;
+                int typeFilter = -1;
+                //Get Scope filter (if any)
+                for (int i = 0; i < arrayOfConstantScopeToggles.Length; i++)
+                {
+                    if (arrayOfConstantScopeToggles[i].isOn == true)
+                    {
+                        scopeFilter = i;
+                        break;
+                    }
+                }
+                //Get Type filter (if any)
+                for (int i = 0; i < arrayOfConstantTypeToggles.Length; i++)
+                {
+                    if (arrayOfConstantTypeToggles[i].isOn == true)
+                    {
+                        typeFilter = i;
+                        break;
+                    }
+                }
+                //Get ConstantplotPoints
+                var selection = dictOfConstantPlotpoints.Values;
+                //scope filter
+                if (scopeFilter > -1)
+                { listOfConstantPlotpoints = selection.Where(x => x.scope == (ConstantScope)scopeFilter).ToList(); }
+                else { Debug.LogWarningFormat("Invalid scopeFilter \"{0}\"", scopeFilter); }
+                //type filter
+                if (typeFilter > -1)
+                { listOfConstantPlotpoints = listOfConstantPlotpoints.Where(x => x.type == (ConstantSummaryType)typeFilter).ToList(); }
+                else { Debug.LogWarningFormat("Invalid typeFilter \"{0}\"", typeFilter); }
+            }
             constantIndex = 0;
             constantLimit = listOfConstantPlotpoints.Count;
         }
@@ -3935,7 +4129,8 @@ public class AdventureUI : MonoBehaviour
     /// </summary>
     private void DisplayConstantPlotpoint()
     {
-        if (ToolManager.i.toolInputScript.ModalType == ToolModalType.Edit || ToolManager.i.toolInputScript.ModalType == ToolModalType.Read)
+        ToolModalType modalType = ToolManager.i.toolInputScript.ModalType;
+        if (modalType == ToolModalType.Edit || modalType == ToolModalType.Read || modalType == ToolModalType.Process )
         {
             //check at least one record
             if (listOfConstantPlotpoints.Count > 0)
@@ -3945,10 +4140,21 @@ public class AdventureUI : MonoBehaviour
                 {
                     int index;
                     //display data
-                    constantTextSmall.text = plotPoint.tag;
-                    constantTextLarge.text = plotPoint.details;
+                    switch (modalType)
+                    {
+                        case ToolModalType.Edit:
+                            constantTextSmallInput.text = plotPoint.tag;
+                            constantTextLargeInput.text = plotPoint.details;
+                            break;
+                        case ToolModalType.Process:
+                        case ToolModalType.Read:
+                            constantTextSmall.text = plotPoint.tag;
+                            constantTextLarge.text = plotPoint.details;
+                            break;
+                        default: Debug.LogWarningFormat("Unrecognised modalType \"{0}\"", modalType); break;
+                    }
                     //set all checkpoints OFF
-                    ToggleConstantCheckBoxesOff();
+                    SetConstantCheckboxesOff();
                     //scope
                     index = (int)plotPoint.scope;
                     arrayOfConstantScopeToggles[index].isOn = true;
@@ -3963,6 +4169,12 @@ public class AdventureUI : MonoBehaviour
                     arrayOfConstantFrequencyTexts[index].color = colourYellow;
                 }
                 else { Debug.LogErrorFormat("Invalid constantPlotpoint (Null) for listOfConstantPlotpoints[{0}]", constantIndex); }
+            }
+            else
+            {
+                //no records, clear out fields
+                constantTextSmall.text = "";
+                constantTextLarge.text = "";
             }
         }
     }
@@ -3981,7 +4193,11 @@ public class AdventureUI : MonoBehaviour
                 constantInstructionText.text = "Click SAVE TO DICT to save Input<br>Once all input complete, return to MAIN PAGE and click SAVE TO FILE";
                 break;
             case ToolModalType.Read:
-                constantInstructionText.text = "LEFT and RIGHT Arrows to navigate records";
+                constantInstructionText.text = "ALL records are selected<br>LEFT and RIGHT Arrows to navigate records";
+                break;
+            case ToolModalType.Process:
+                //filter
+                constantInstructionText.text = "Filter with SCOPE and TYPE checkboxes<br>Then click FILTER VIEW and use LEFT and RIGHT Arrows to view selection";
                 break;
         }
     }

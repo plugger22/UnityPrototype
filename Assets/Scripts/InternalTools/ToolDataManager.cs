@@ -186,7 +186,7 @@ public class ToolDataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Add ConstantPlotpoint
+    /// Add ConstantPlotpoint, overrides existing data in case of duplicates
     /// </summary>
     /// <param name="constant"></param>
     public void AddConstantPlotpoint(ConstantPlotpoint constant)
@@ -196,7 +196,11 @@ public class ToolDataManager : MonoBehaviour
         catch (ArgumentNullException)
         { Debug.LogError("Invalid ConstantPlotpoint (Null)"); }
         catch (ArgumentException)
-        { Debug.LogWarningFormat("Duplicate ConstantPlotpoint exists in dict for \"{0}\"", constant.refTag); }
+        {
+            //exists, override data
+            dictOfConstantPlotpoints[constant.refTag] = constant;
+            Debug.LogFormat("[Tst] ToolDataManager.cs -> AddConstantPlotpoint: Existing data overriden in dict for \"{0}\"", constant.refTag);
+        }
     }
 
     /// <summary>

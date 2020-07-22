@@ -174,13 +174,12 @@ public class ToolInput : MonoBehaviour
                     switch (_modalType)
                     {
                         case ToolModalType.Input:
-
                             break;
                         case ToolModalType.Edit:
-
                             break;
+                        case ToolModalType.Process:
                         case ToolModalType.Read:
-                            //right / left arrows
+                            //right / left arrows -> NOTE: Process mode is for View Filtered selection
                             x_axis = Input.GetAxisRaw("Horizontal");
                             if (x_axis > 0)
                             { ToolEvents.i.PostNotification(ToolEventType.NextConstant, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal RIGHT"); }

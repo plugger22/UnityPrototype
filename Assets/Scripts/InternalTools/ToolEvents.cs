@@ -63,6 +63,8 @@ public enum ToolEventType
     InputConstants,
     EditConstants,
     ViewConstants,
+    FilterConstants,
+    ViewFilterConstants,
     ClearConstants,
     SaveToDictConstants,
     NextConstant,
