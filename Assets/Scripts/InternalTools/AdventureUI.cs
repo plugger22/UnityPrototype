@@ -1560,7 +1560,7 @@ public class AdventureUI : MonoBehaviour
             { arrayOfPlotpointNotes[turningPointIndex - 1] = turnPlotNotesInput.text; }
 
             //Generate new Plotpoint
-            GetPlotPoint();
+            plotPoint = GetPlotPoint();
             //Plotpoint handler
             switch (plotPoint.type)
             {
@@ -1568,7 +1568,6 @@ public class AdventureUI : MonoBehaviour
                     GetCharacters(plotPoint.numberOfCharacters);
                     break;
                 case PlotPointType.NewCharacter:
-
                     Debug.LogFormat("[Tst] AdventureUI.cs -> NewPlotpoint: NewCharacter to be Generated{0}", "\n");
                     character1 = GetNewCharacter(plotPoint.special);
                     break;
@@ -1586,9 +1585,7 @@ public class AdventureUI : MonoBehaviour
                         { Debug.LogFormat("[Tst] AdventureUI.cs -> RemoveCharacter: Not possible (Null character){0}", "\n"); }
                     }
                     else
-                    {
-
-                    }
+                    { Debug.LogFormat("[Tst] AdventureUI.cs -> RemoveCharacter: Not possible (No characters present){0}", "\n"); }
                     break;
                 case PlotPointType.Meta:
                     GetMetaPlotPoint();
@@ -1633,79 +1630,95 @@ public class AdventureUI : MonoBehaviour
     /// <returns></returns>
     private Plotpoint GetPlotPoint()
     {
-        int numNone, numConcluded;
-        int priority = ToolManager.i.adventureScript.GetThemePriority();
-        ThemeType themeType = storyNew.theme.GetThemeType(priority);
-        plotPoint = new Plotpoint(ToolManager.i.toolDataScript.GetRandomPlotpoint(themeType));
-        //get numbers already present
-        numNone = turningPoint.CheckNumberOfPlotPointType(PlotPointType.None);
-        numConcluded = turningPoint.CheckNumberOfPlotPointType(PlotPointType.Conclusion);
-        //special cases
-        switch (plotPoint.type)
+        Plotpoint plotPoint = null;
+        //chance of a constant plotpoint 
+        if (UnityEngine.Random.Range(0, 100) < ToolManager.i.adventureScript.chanceOfConstantPlotpoint)
         {
-            case PlotPointType.RemoveCharacter:
-                //check if there is a character to remove
-                if (storyNew.lists.CheckIfAnyCharactersOnList() == false)
-                {
-                    //no characters to remove, try again (avoiding another RemoveCharacter, None, or Conclusion)
-                    do
-                    { GetReplacementPlotPoint(themeType); }
-                    while (plotPoint.type != PlotPointType.RemoveCharacter);
-                }
-                break;
-            case PlotPointType.Conclusion:
-                if (numConcluded > 0)
-                {
-                    //can only have one Conclusion. Change any more into 'None'
-                    if (numNone < 2)
+            //will return null if none found
+            ConstantPlotpoint constantplotPoint = ToolManager.i.toolDataScript.GetRandomConstantPlotpoint();
+            if (constantplotPoint != null)
+            {
+                //convert to a normal plotPoint
+                plotPoint = new Plotpoint() { tag = string.Format("[Con] {0}", constantplotPoint.tag), refTag = constantplotPoint.refTag, details = constantplotPoint.details };
+            }
+        }
+        if (plotPoint == null)
+        {
+            //Generate plotpoint normally -> failed constant roll or no suitable constant plotPoint available
+            int numNone, numConcluded;
+            int priority = ToolManager.i.adventureScript.GetThemePriority();
+            ThemeType themeType = storyNew.theme.GetThemeType(priority);
+            plotPoint = new Plotpoint(ToolManager.i.toolDataScript.GetRandomPlotpoint(themeType));
+            //get numbers already present
+            numNone = turningPoint.CheckNumberOfPlotPointType(PlotPointType.None);
+            numConcluded = turningPoint.CheckNumberOfPlotPointType(PlotPointType.Conclusion);
+            //special cases
+            switch (plotPoint.type)
+            {
+                case PlotPointType.RemoveCharacter:
+                    //check if there is a character to remove
+                    if (storyNew.lists.CheckIfAnyCharactersOnList() == false)
                     {
-                        plotPoint = new Plotpoint(plotPointNone);
-                        Debug.LogFormat("[Tst] AdventureUI.cs -> GetPlotPoint: Conclusion plotPoint CHANGED to None (max 1 allowed in TurningPoint){0}", "\n");
+                        //no characters to remove, try again (avoiding another RemoveCharacter, None, or Conclusion)
+                        do
+                        { GetReplacementPlotPoint(themeType); }
+                        while (plotPoint.type != PlotPointType.RemoveCharacter);
+                    }
+                    break;
+                case PlotPointType.Conclusion:
+                    if (numConcluded > 0)
+                    {
+                        //can only have one Conclusion. Change any more into 'None'
+                        if (numNone < 2)
+                        {
+                            plotPoint = new Plotpoint(plotPointNone);
+                            Debug.LogFormat("[Tst] AdventureUI.cs -> GetPlotPoint: Conclusion plotPoint CHANGED to None (max 1 allowed in TurningPoint){0}", "\n");
+                        }
+                        else
+                        {
+                            //max 2 none and 1 conclusion allowed -> need a new plotpoint
+                            GetReplacementPlotPoint(themeType);
+                            Debug.LogFormat("[Tst] AdventureUI.cs -> GetPlotPoint: Conclusion plotPoint CHANGED to \"{0}\" (numConcluded {1}, numNone {2}){3}", plotPoint.tag, numConcluded, numNone, "\n");
+                        }
+                    }
+                    else if (turningPoint.type == TurningPointType.New)
+                    {
+                        //can't have any conclusion plotpoints in a new Turning point
+                        if (numNone >= 3)
+                        {
+                            //maxCap reached already on 'None'
+                            GetReplacementPlotPoint(themeType);
+                            Debug.LogFormat("[Tst] AdventureUI.cs -> GetPlotPoint: Conclusion plotPoint CHANGED (new TurningPoint) to \"{0}\" (numConcluded {1}, numNone {2}){3}", plotPoint.tag, numConcluded, numNone, "\n");
+                        }
+                        else
+                        {
+                            //change into 'None'
+                            plotPoint = new Plotpoint(plotPointNone);
+                            Debug.LogFormat("[Tst] AdventureUI.cs -> GetPlotPoint: Conclusion plotPoint CHANGED to None (new TurningPoint){0}", "\n");
+                        }
+                    }
+                    break;
+                case PlotPointType.None:
+                    //max of 3 none in a plotline OR 2 none plus 1 conclusion
+                    if (numNone < 3)
+                    {
+                        if (numNone == 2 && numConcluded == 1)
+                        {
+                            GetReplacementPlotPoint(themeType);
+                            Debug.LogFormat("[Tst] AdventureUI.cs -> GetPlotPoint: None plotPoint CHANGED to \"{0}\" (numConcluded {1}, numNone {2}){3}", plotPoint.tag, numConcluded, numNone, "\n");
+                        }
                     }
                     else
                     {
-                        //max 2 none and 1 conclusion allowed -> need a new plotpoint
-                        GetReplacementPlotPoint(themeType);
-                        Debug.LogFormat("[Tst] AdventureUI.cs -> GetPlotPoint: Conclusion plotPoint CHANGED to \"{0}\" (numConcluded {1}, numNone {2}){3}", plotPoint.tag, numConcluded, numNone, "\n");
+                        //max 3 none allowed
+                        if (numNone == 3)
+                        {
+                            GetReplacementPlotPoint(themeType);
+                            Debug.LogFormat("[Tst] AdventureUI.cs -> GetPlotPoint: None plotPoint CHANGED to \"{0}\" (numConcluded {1}, numNone {2}){3}", plotPoint.tag, numConcluded, numNone, "\n");
+                        }
                     }
-                }
-                else if (turningPoint.type == TurningPointType.New)
-                {
-                    //can't have any conclusion plotpoints in a new Turning point
-                    if (numNone >= 3)
-                    {
-                        //maxCap reached already on 'None'
-                        GetReplacementPlotPoint(themeType);
-                        Debug.LogFormat("[Tst] AdventureUI.cs -> GetPlotPoint: Conclusion plotPoint CHANGED (new TurningPoint) to \"{0}\" (numConcluded {1}, numNone {2}){3}", plotPoint.tag, numConcluded, numNone, "\n");
-                    }
-                    else
-                    {
-                        //change into 'None'
-                        plotPoint = new Plotpoint(plotPointNone);
-                        Debug.LogFormat("[Tst] AdventureUI.cs -> GetPlotPoint: Conclusion plotPoint CHANGED to None (new TurningPoint){0}", "\n");
-                    }
-                }
-                break;
-            case PlotPointType.None:
-                //max of 3 none in a plotline OR 2 none plus 1 conclusion
-                if (numNone < 3)
-                {
-                    if (numNone == 2 && numConcluded == 1)
-                    {
-                        GetReplacementPlotPoint(themeType);
-                        Debug.LogFormat("[Tst] AdventureUI.cs -> GetPlotPoint: None plotPoint CHANGED to \"{0}\" (numConcluded {1}, numNone {2}){3}", plotPoint.tag, numConcluded, numNone, "\n");
-                    }
-                }
-                else
-                {
-                    //max 3 none allowed
-                    if (numNone == 3)
-                    {
-                        GetReplacementPlotPoint(themeType);
-                        Debug.LogFormat("[Tst] AdventureUI.cs -> GetPlotPoint: None plotPoint CHANGED to \"{0}\" (numConcluded {1}, numNone {2}){3}", plotPoint.tag, numConcluded, numNone, "\n");
-                    }
-                }
-                break;
+                    break;
+            }
         }
         Debug.LogFormat("[Tst] AdventureUI.cs -> NewPlotPoint: NEW Plotpoint \"{0}\", plotPointIndex {1}{2}", plotPoint.tag, plotPointIndex, "\n");
         return plotPoint;
@@ -2053,34 +2066,50 @@ public class AdventureUI : MonoBehaviour
         //check there is space for another character
         if (storyNew.arrays.CheckSpaceInCharacterArray() == true)
         {
-            switch (special)
+            //check if a constant character (could be a character, object or organisation
+            if (UnityEngine.Random.Range(0, 100) < ToolManager.i.adventureScript.chanceOfConstantCharacter)
             {
-                case SpecialType.None:
-                    character = ToolManager.i.adventureScript.GetNewCharacter();
-                    break;
-                case SpecialType.Organisation:
-                    character = ToolManager.i.adventureScript.GetNewOrganisation();
-                    break;
-                case SpecialType.OrgOrChar:
-                    // 50/50 chance of either
-                    if (UnityEngine.Random.Range(0, 100) < 50)
-                    { character = ToolManager.i.adventureScript.GetNewCharacter(); }
-                    else { character = ToolManager.i.adventureScript.GetNewOrganisation(); }
-                    break;
-                case SpecialType.Object:
-                    //TO DO -> placeholder
-                    character = ToolManager.i.adventureScript.GetNewObject();
-                    break;
-                default: Debug.LogWarningFormat("Unrecognised specialType \"{0}\"", special); break;
+                ConstantPlotpoint constantCharacter = ToolManager.i.toolDataScript.GetRandomConstantCharacter();
+                if (constantCharacter != null)
+                {
+                    character = new Character() { tag = string.Format("[Con] {0}", constantCharacter.tag), refTag = constantCharacter.refTag, dataCreated = constantCharacter.details };
+                    if (constantCharacter.type == ConstantSummaryType.Organisation) { character.special = SpecialType.Organisation; }
+                    else if (constantCharacter.type == ConstantSummaryType.Object) { character.special = SpecialType.Object; }
+                    else { character.special = SpecialType.None; }
+                }
             }
+            //Normal character generation -> constant either failed roll or no suitable characters available
+            if (character == null)
+            {
+                switch (special)
+                {
+                    case SpecialType.None:
+                        character = ToolManager.i.adventureScript.GetNewCharacter();
+                        break;
+                    case SpecialType.Organisation:
+                        character = ToolManager.i.adventureScript.GetNewOrganisation();
+                        break;
+                    case SpecialType.OrgOrChar:
+                        // 50/50 chance of either
+                        if (UnityEngine.Random.Range(0, 100) < 50)
+                        { character = ToolManager.i.adventureScript.GetNewCharacter(); }
+                        else { character = ToolManager.i.adventureScript.GetNewOrganisation(); }
+                        break;
+                    case SpecialType.Object:
+                        //TO DO -> placeholder
+                        character = ToolManager.i.adventureScript.GetNewObject();
+                        break;
+                    default: Debug.LogWarningFormat("Unrecognised specialType \"{0}\"", special); break;
+                }
 
-            if (character != null)
-            {
-                //add character to array and list
-                storyNew.arrays.AddCharacterToArray(new ListItem() { tag = character.refTag, status = StoryStatus.Data });
-                storyNew.lists.AddCharacterToList(character);
+                if (character != null)
+                {
+                    //add character to array and list
+                    storyNew.arrays.AddCharacterToArray(new ListItem() { tag = character.refTag, status = StoryStatus.Data });
+                    storyNew.lists.AddCharacterToList(character);
+                }
+                else { Debug.LogWarning("Invalid character (Null), NOT added to arrayOfCharacters, or listOfCharacters"); }
             }
-            else { Debug.LogWarning("Invalid character (Null), NOT added to arrayOfCharacters, or listOfCharacters"); }
         }
         else { Debug.LogWarning("Invalid New Character (No non-DATA slots remaining in arrayOfCharacters)"); }
         return character;
@@ -3217,7 +3246,7 @@ public class AdventureUI : MonoBehaviour
                         saveToDictConstantButton.gameObject.SetActive(false);
                         isSaveNeeded = true;
                         //log
-                        Debug.LogFormat("[Tst] AdventureUI.cs -> SaveToDict: \"{0}\" -> {1} -> {2} -> {3} saved to dictOfConstantPlotPoints{4}", constantPlotpoint.tag, constantPlotpoint.scope,
+                        Debug.LogFormat("[Tol] AdventureUI.cs -> SaveToDict: \"{0}\" -> {1} -> {2} -> {3} saved to dictOfConstantPlotPoints{4}", constantPlotpoint.tag, constantPlotpoint.scope,
                             constantPlotpoint.type, constantPlotpoint.frequency, "\n");
                     }
                 }
@@ -4130,7 +4159,7 @@ public class AdventureUI : MonoBehaviour
     private void DisplayConstantPlotpoint()
     {
         ToolModalType modalType = ToolManager.i.toolInputScript.ModalType;
-        if (modalType == ToolModalType.Edit || modalType == ToolModalType.Read || modalType == ToolModalType.Process )
+        if (modalType == ToolModalType.Edit || modalType == ToolModalType.Read || modalType == ToolModalType.Process)
         {
             //check at least one record
             if (listOfConstantPlotpoints.Count > 0)

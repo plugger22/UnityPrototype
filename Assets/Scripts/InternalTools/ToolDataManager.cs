@@ -204,6 +204,88 @@ public class ToolDataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// returns a random constant plotpoint from a frequency based random selection pool. Could be either game or campaign scope. Returns null if none present or a problem
+    /// </summary>
+    public ConstantPlotpoint GetRandomConstantPlotpoint()
+    {
+        ConstantPlotpoint constantPlotpoint = null;
+        var selection = dictOfConstantPlotpoints.Values.Where(x => x.type == ConstantSummaryType.Plotpoint).ToList();
+        if (selection.Count > 0)
+        {
+            List<ConstantPlotpoint> listOfPool = new List<ConstantPlotpoint>();
+            for (int i = 0; i < selection.Count; i++)
+            {
+                ConstantPlotpoint constantSelection = selection[i];
+                if (constantSelection != null)
+                {
+                    //add entries to the pool based on frequency
+                    switch (selection[i].frequency)
+                    {
+                        case ConstantDistribution.High:
+                            listOfPool.Add(constantSelection);
+                            listOfPool.Add(constantSelection);
+                            listOfPool.Add(constantSelection);
+                            break;
+                        case ConstantDistribution.Medium:
+                            listOfPool.Add(constantSelection);
+                            listOfPool.Add(constantSelection);
+                            break;
+                        case ConstantDistribution.Low:
+                            listOfPool.Add(constantSelection);
+                            break;
+
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid constantSelection (Null) for selection[{0}]", i); }
+            }
+            //randomly select from the pool
+            constantPlotpoint = listOfPool[Random.Range(0, listOfPool.Count)];
+        }
+        return constantPlotpoint;
+    }
+
+    /// <summary>
+    /// returns a random constant character/object/organisation from a frequency based random selection pool. Could be either game or campaign scope. Returns null if none present or a problem
+    /// </summary>
+    public ConstantPlotpoint GetRandomConstantCharacter()
+    {
+        ConstantPlotpoint constantCharacter = null;
+        var selection = dictOfConstantPlotpoints.Values.Where(x => x.type != ConstantSummaryType.Plotpoint).ToList();
+        if (selection.Count > 0)
+        {
+            List<ConstantPlotpoint> listOfPool = new List<ConstantPlotpoint>();
+            for (int i = 0; i < selection.Count; i++)
+            {
+                ConstantPlotpoint constantSelection = selection[i];
+                if (constantSelection != null)
+                {
+                    //add entries to the pool based on frequency
+                    switch (selection[i].frequency)
+                    {
+                        case ConstantDistribution.High:
+                            listOfPool.Add(constantSelection);
+                            listOfPool.Add(constantSelection);
+                            listOfPool.Add(constantSelection);
+                            break;
+                        case ConstantDistribution.Medium:
+                            listOfPool.Add(constantSelection);
+                            listOfPool.Add(constantSelection);
+                            break;
+                        case ConstantDistribution.Low:
+                            listOfPool.Add(constantSelection);
+                            break;
+
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid constantSelection (Null) for selection[{0}]", i); }
+            }
+            //randomly select from the pool
+            constantCharacter = listOfPool[Random.Range(0, listOfPool.Count)];
+        }
+        return constantCharacter;
+    }
+
+    /// <summary>
     /// returns a random Metaplotpoint, null if a problem
     /// </summary>
     /// <returns></returns>

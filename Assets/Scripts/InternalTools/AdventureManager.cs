@@ -11,9 +11,10 @@ using Random = System.Random;
 public class AdventureManager : MonoBehaviour
 {
     [Header("Constants")]
-    [Tooltip("% Chance of a constant plotpoint/character/organisation/object replacing normal/meta item")]
-    [Range(0, 20)] public int chanceOfConstant = 10;
-
+    [Tooltip("% Chance of a constant plotpoint replacing normal/meta item")]
+    [Range(0, 20)] public int chanceOfConstantPlotpoint = 10;
+    [Tooltip("% Chance of a constant character replacing a new Character (which could be a character, organisation or object")]
+    [Range(0, 20)] public int chanceOfConstantCharacter = 5;
 
     [Header("Names")]
     [Tooltip("A New Adventure can select from any of the Namesets provided here")]
