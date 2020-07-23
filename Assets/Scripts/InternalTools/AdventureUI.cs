@@ -263,6 +263,8 @@ public class AdventureUI : MonoBehaviour
     public ToolButtonInteraction constantSaveToDictInteraction;
     public ToolButtonInteraction constantInputInteraction;
     public ToolButtonInteraction constantEditInteraction;
+    public ToolButtonInteraction constantDeleteInteraction;
+    public ToolButtonInteraction constantDeleteCampaignInteraction;
     public ToolButtonInteraction constantFilterInteraction;
     public ToolButtonInteraction constantViewFilterInteraction;
     public ToolButtonInteraction constantViewInteraction;
@@ -270,6 +272,8 @@ public class AdventureUI : MonoBehaviour
 
     public Button saveToDictConstantButton;
     public Button viewFilterConstantButton;
+    public Button deleteConstantButton;
+    public Button deleteCampaignConstantButton;
     public Button filterConstantButton;
 
     public TextMeshProUGUI constantTextSmall;
@@ -449,6 +453,8 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(constantSaveToDictInteraction != null, "Invalid constantSaveToDictInteraction (Null)");
         Debug.Assert(constantInputInteraction != null, "Invalid constantInputInteraction (Null)");
         Debug.Assert(constantEditInteraction != null, "Invalid constantEditInteraction (Null)");
+        Debug.Assert(constantDeleteInteraction != null, "Invalid constantDeleteInteraction (Null)");
+        Debug.Assert(constantDeleteCampaignInteraction != null, "Invalid constantDeleteCampaignInteraction (Null)");
         Debug.Assert(constantViewInteraction != null, "Invalid constantViewInteraction (Null)");
         Debug.Assert(constantViewFilterInteraction != null, "Invalid constantViewFilterInteraction (Null)");
         Debug.Assert(constantClearInteraction != null, "Invalid constantClearInteraction (Null)");
@@ -481,6 +487,8 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(saveToDictConstantButton != null, "Invalid saveToDictButton (Null)");
         Debug.Assert(viewFilterConstantButton != null, "Invalid viewFilterButton (Null)");
         Debug.Assert(filterConstantButton != null, "Invalid filterButton (Null)");
+        Debug.Assert(deleteConstantButton != null, "Invalid deleteConstantButton (Null)");
+        Debug.Assert(deleteCampaignConstantButton != null, "Invalid deleteConstantButton (Null)");
         //Initialise Other
         InitialiseDelegates();
         InitialiseCanvases();
@@ -594,6 +602,8 @@ public class AdventureUI : MonoBehaviour
         constantInputInteraction.SetButton(ToolEventType.InputConstants);
         constantEditInteraction.SetButton(ToolEventType.EditConstants);
         constantFilterInteraction.SetButton(ToolEventType.FilterConstants);
+        constantDeleteInteraction.SetButton(ToolEventType.DeleteConstants);
+        constantDeleteCampaignInteraction.SetButton(ToolEventType.DeleteCampaignConstants);
         constantViewInteraction.SetButton(ToolEventType.ViewConstants);
         constantViewFilterInteraction.SetButton(ToolEventType.ViewFilterConstants);
         constantClearInteraction.SetButton(ToolEventType.ClearConstants);
@@ -665,6 +675,8 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.NextConstant, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.PreviousConstant, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.SaveToDictConstants, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.DeleteConstants, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.DeleteCampaignConstants, OnEvent, "AdventureUI");
     }
     #endregion
 
@@ -835,6 +847,12 @@ public class AdventureUI : MonoBehaviour
                 break;
             case ToolEventType.FilterConstants:
                 FilterConstants();
+                break;
+            case ToolEventType.DeleteConstants:
+                DeleteConstants();
+                break;
+            case ToolEventType.DeleteCampaignConstants:
+                DeleteCampaignConstants();
                 break;
             case ToolEventType.ViewFilterConstants:
                 ViewFilterConstants();
@@ -1664,6 +1682,17 @@ public class AdventureUI : MonoBehaviour
                         { GetReplacementPlotPoint(themeType); }
                         while (plotPoint.type != PlotPointType.RemoveCharacter);
                     }
+                    else
+                    {
+                        //remove a random character
+                        Character character = storyNew.lists.GetRandomCharacterFromList();
+                        if (character != null)
+                        {
+                            storyNew.lists.RemoveCharacterFromList(character);
+                            storyNew.arrays.RemoveCharacterFromArray(character.refTag);
+                            Debug.LogFormat("[Tst] AdventureUI.cs -> GetPlotPoint: \"{0}\" removed{1}", character.tag, "\n");
+                        }
+                    }
                     break;
                 case PlotPointType.Conclusion:
                     if (numConcluded > 0)
@@ -2096,7 +2125,6 @@ public class AdventureUI : MonoBehaviour
                         else { character = ToolManager.i.adventureScript.GetNewOrganisation(); }
                         break;
                     case SpecialType.Object:
-                        //TO DO -> placeholder
                         character = ToolManager.i.adventureScript.GetNewObject();
                         break;
                     default: Debug.LogWarningFormat("Unrecognised specialType \"{0}\"", special); break;
@@ -2958,6 +2986,8 @@ public class AdventureUI : MonoBehaviour
         //toggle save button Off
         saveToDictConstantButton.gameObject.SetActive(false);
         viewFilterConstantButton.gameObject.SetActive(false);
+        deleteConstantButton.gameObject.SetActive(false);
+        deleteCampaignConstantButton.gameObject.SetActive(false);
         //display summaries
         UpdateConstantSummaries();
         SetConstantCheckboxesOff();
@@ -3006,6 +3036,9 @@ public class AdventureUI : MonoBehaviour
         //set Modal Type
         ToolManager.i.toolInputScript.SetModalType(ToolModalType.Input);
         SetConstantInstructionText();
+        //toggle delete button
+        deleteConstantButton.gameObject.SetActive(false);
+        deleteCampaignConstantButton.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -3019,11 +3052,70 @@ public class AdventureUI : MonoBehaviour
         ToggleConstantCheckboxes(false);
         //set Modal Type
         ToolManager.i.toolInputScript.SetModalType(ToolModalType.Read);
+        //toggle delete button
+        deleteConstantButton.gameObject.SetActive(true);
+        deleteCampaignConstantButton.gameObject.SetActive(true);
         //turn off text inputs
         ToggleConstantTextInputs(false);
         //show first record, if present
         DisplayConstantPlotpoint();
         SetConstantInstructionText();
+    }
+
+    /// <summary>
+    /// Deletes currently constant from dictionary (need to go to main page and press 'SaveToFile' to lock in changes). Valid in Read mode only
+    /// </summary>
+    private void DeleteConstants()
+    {
+        //read mode only
+        if (ToolManager.i.toolInputScript.ModalType == ToolModalType.Read)
+        {
+            //must be at least one record
+            if (listOfConstantPlotpoints.Count > 0)
+            {
+                string constantTag = listOfConstantPlotpoints[constantIndex].tag;
+                //delete record
+                if (ToolManager.i.toolDataScript.RemoveConstantPlotpoint(listOfConstantPlotpoints[constantIndex]) == true)
+                {
+                    Debug.LogFormat("[Tol] AdventureUI.cs -> DeleteConstants: \"{0}\" removed from dictionary{1}", constantTag, "\n");
+                    //re-initialise list
+                    InitialiseListOfConstantPlotpoints();
+                    //update summaries
+                    UpdateConstantSummaries();
+                    //display
+                    SetConstantCheckboxesOff();
+                    constantTextSmall.text = "";
+                    constantTextLarge.text = "";
+                    //activate SaveToFile button on main page (needed to lock in changes)
+                    isSaveNeeded = true;
+                }
+            }
+            else { Debug.LogWarning("Can't delete constantPlotpoint as none present -> Info only"); }
+        }
+    }
+
+    /// <summary>
+    /// deletes all campaign scope constants in dictionary (clear out ready for next campaign) .Need to go to main page and press 'SaveToFile' to lock in changes. Valid only in Red mode.
+    /// </summary>
+    private void DeleteCampaignConstants()
+    {
+        //read mode only
+        if (ToolManager.i.toolInputScript.ModalType == ToolModalType.Read)
+        {
+            int numRemoved = ToolManager.i.toolDataScript.RemoveCampaignConstants();
+            if (numRemoved > 0)
+            {
+                Debug.LogFormat("[Tol] AdventureUI.cs -> DeleteCampaignConstants: {0} record{1} removed from dictOfConstantPlotpoints{2}", numRemoved, numRemoved != 1 ? "s" : "", "\n");
+                //re-initialise list
+                InitialiseListOfConstantPlotpoints();
+                //update summaries
+                UpdateConstantSummaries();
+                //display list from start
+                DisplayConstantPlotpoint();
+                //activate SaveToFile button on main page (needed to lock in changes)
+                isSaveNeeded = true;
+            }
+        }
     }
 
     /// <summary>
@@ -3043,6 +3135,9 @@ public class AdventureUI : MonoBehaviour
         viewFilterConstantButton.gameObject.SetActive(true);
         //deactivate filter button
         filterConstantButton.gameObject.SetActive(false);
+        //toggle delete button
+        deleteConstantButton.gameObject.SetActive(false);
+        deleteCampaignConstantButton.gameObject.SetActive(false);
         //instruction text
         SetConstantInstructionText();
     }
@@ -3079,6 +3174,9 @@ public class AdventureUI : MonoBehaviour
             SetConstantInstructionText();
             //display current record
             DisplayConstantPlotpoint();
+            //toggle delete button
+            deleteConstantButton.gameObject.SetActive(false);
+            deleteCampaignConstantButton.gameObject.SetActive(false);
         }
     }
 

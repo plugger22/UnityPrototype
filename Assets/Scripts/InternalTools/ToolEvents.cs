@@ -67,6 +67,8 @@ public enum ToolEventType
     ViewFilterConstants,
     ClearConstants,
     SaveToDictConstants,
+    DeleteConstants,
+    DeleteCampaignConstants,
     NextConstant,
     PreviousConstant
 

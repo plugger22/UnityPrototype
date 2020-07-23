@@ -204,6 +204,39 @@ public class ToolDataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// deletes specified record from dictOfConstantPlotpoints and returns true if successful, false if not
+    /// </summary>
+    /// <param name="constant"></param>
+    /// <returns></returns>
+    public bool RemoveConstantPlotpoint(ConstantPlotpoint constant)
+    {
+        if (dictOfConstantPlotpoints.ContainsKey(constant.refTag) == true)
+        { return dictOfConstantPlotpoints.Remove(constant.refTag); }
+        return false;
+    }
+
+
+    /// <summary>
+    /// Removes all constants in dictionary with 'Campaign' scope. Returns number of records removed, 0 if none
+    /// </summary>
+    /// <returns></returns>
+    public int RemoveCampaignConstants()
+    {
+        int numRemoved = 0;
+        int count = dictOfConstantPlotpoints.Count;
+        //place all non-campaign scope constants in a list
+        List<ConstantPlotpoint> tempList = dictOfConstantPlotpoints.Values.Where(x => x.scope == ConstantScope.Game).ToList();
+        //clear out dictionary
+        dictOfConstantPlotpoints.Clear();
+        //repopulate from list
+        for (int i = 0; i < tempList.Count; i++)
+        { AddConstantPlotpoint(tempList[i]); }
+        //calculate how many removed
+        numRemoved = count - tempList.Count;
+        return numRemoved;
+    }
+
+    /// <summary>
     /// returns a random constant plotpoint from a frequency based random selection pool. Could be either game or campaign scope. Returns null if none present or a problem
     /// </summary>
     public ConstantPlotpoint GetRandomConstantPlotpoint()

@@ -962,7 +962,7 @@ public class ToolDetails : MonoBehaviour
                 listMystery = new List<int>(){54},
                 listSocial = new List<int>(){},
                 listPersonal = new List<int>(){},
-                numberOfCharacters = 1,
+                numberOfCharacters = 0,        //needs to be zero, character removal handled by GetPlotPoint
                 type = PlotPointType.RemoveCharacter,
                 special = SpecialType.None,
                 details = "A Character is dead. This can either be expected or unexpected, but whatever the circumstances, this Turning Point involves a dead Character."
