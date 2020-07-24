@@ -16,6 +16,10 @@ public class AdventureManager : MonoBehaviour
     [Tooltip("% Chance of a constant character replacing a new Character (which could be a character, organisation or object")]
     [Range(0, 20)] public int chanceOfConstantCharacter = 5;
 
+    [Header("Export Orgs")]
+    [Tooltip("How many organisation profiles to export")]
+    [Range(1, 100)] public int numOfOrgProfiles = 50;
+
     [Header("Names")]
     [Tooltip("A New Adventure can select from any of the Namesets provided here")]
     public NameSet[] arrayOfNameSets;
@@ -212,13 +216,13 @@ public class AdventureManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns a string with a full breakdown 'x' number of Orgs ready for export to a file
+    /// Returns a string with a full breakdown 'x' number of Orgs (global -> numOfOrgProfiles) ready for export to a file
     /// </summary>
     /// <returns></returns>
-    public string GetExportOrganisations(int numOfOrgs)
+    public string GetExportOrganisations()
     {
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < numOfOrgs; i++)
+        for (int i = 0; i < numOfOrgProfiles; i++)
         {
             //Generate an Organisation
             builder.AppendFormat("{0}- - -{1}", "\n", "\n");

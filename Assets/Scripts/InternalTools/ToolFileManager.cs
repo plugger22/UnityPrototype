@@ -271,7 +271,7 @@ public class ToolFileManager : MonoBehaviour
     /// </summary>
     public void ExportOrgData()
     {
-        writeTEXT = ToolManager.i.adventureScript.GetExportOrganisations(10);
+        writeTEXT = ToolManager.i.adventureScript.GetExportOrganisations();
     }
     #endregion
 
