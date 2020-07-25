@@ -3945,7 +3945,7 @@ public class ToolDetails : MonoBehaviour
             new OrganisationDescriptor(){ tag = "Ancient"},
             new OrganisationDescriptor(){ tag = "New or Recent"},
             new OrganisationDescriptor(){ tag = "Local"},
-            new OrganisationDescriptor(){ tag = "Foriegn"},
+            new OrganisationDescriptor(){ tag = "Foreign"},
             new OrganisationDescriptor(){ tag = "Alliance"},
             new OrganisationDescriptor(){ tag = "Splinter Group"},
             new OrganisationDescriptor(){ tag = "Revolt"},
