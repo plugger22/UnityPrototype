@@ -2851,6 +2851,8 @@ public class AdventureUI : MonoBehaviour
     private void DropDownItemSelected()
     {
         int index = dropInput.value;
+        //fail safe check, if button clicked and nothing selected, choose default option
+        if (index < 0) { index = 0; }
         //set input values
         dropDownInputInt = index;
         dropDownInputString = dropInput.options[index].text;
@@ -3111,8 +3113,9 @@ public class AdventureUI : MonoBehaviour
                     SetConstantCheckboxesOff();
                     constantTextSmall.text = "";
                     constantTextLarge.text = "";
-                    //activate SaveToFile button on main page (needed to lock in changes)
-                    isSaveNeeded = true;
+                    //activate SaveToFile button
+                    saveToFileConstantButton.gameObject.SetActive(true);
+                   
                 }
             }
             else { Debug.LogWarning("Can't delete constantPlotpoint as none present -> Info only"); }
@@ -3137,8 +3140,8 @@ public class AdventureUI : MonoBehaviour
                 UpdateConstantSummaries();
                 //display list from start
                 DisplayConstantPlotpoint();
-                //activate SaveToFile button on main page (needed to lock in changes)
-                isSaveNeeded = true;
+                //activate SaveToFile button
+                saveToFileConstantButton.gameObject.SetActive(true);
             }
         }
     }

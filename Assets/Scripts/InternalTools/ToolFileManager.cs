@@ -59,7 +59,7 @@ public class ToolFileManager : MonoBehaviour
     private static readonly string JSON_FILE = "toolfile.json";
     private static readonly string TEXT_FILE = "exportfile.txt";
     private static readonly string ORG_FILE = "orgfile.txt";
-    private static readonly string CON_FILE = "constantsfile.txt";
+    private static readonly string CON_FILE = "constantsfile.json";
 
     private SaveTools writeToolsJSON;
     private SaveTools readToolsJSON;
@@ -211,7 +211,6 @@ public class ToolFileManager : MonoBehaviour
     { ToolManager.i.toolDataScript.SetStories(readToolsJSON.toolData.listOfStories); }
     #endregion
 
-
     #region DeleteToolsFile
     /// <summary>
     /// Deletes file
@@ -226,7 +225,9 @@ public class ToolFileManager : MonoBehaviour
     }
     #endregion
 
+    //
     // - - - Export File (Write only -> text -> dataDump)
+    //
 
     #region ExportToolData
     /// <summary>
@@ -261,7 +262,9 @@ public class ToolFileManager : MonoBehaviour
     }
     #endregion
 
+    //
     // - - - Organisation File (Write only -> text -> 'x' number of Orgs)
+    //
 
     #region ExportOrgData
     /// <summary>
