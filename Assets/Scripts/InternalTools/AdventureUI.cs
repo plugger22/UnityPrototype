@@ -261,6 +261,8 @@ public class AdventureUI : MonoBehaviour
     [Header("Constants")]
     public ToolButtonInteraction constantExitInteraction;
     public ToolButtonInteraction constantSaveToDictInteraction;
+    public ToolButtonInteraction constantSaveToFileInteraction;
+
     public ToolButtonInteraction constantInputInteraction;
     public ToolButtonInteraction constantEditInteraction;
     public ToolButtonInteraction constantDeleteInteraction;
@@ -271,6 +273,7 @@ public class AdventureUI : MonoBehaviour
     public ToolButtonInteraction constantClearInteraction;
 
     public Button saveToDictConstantButton;
+    public Button saveToFileConstantButton;
     public Button viewFilterConstantButton;
     public Button deleteConstantButton;
     public Button deleteCampaignConstantButton;
@@ -451,6 +454,7 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(dropConfirmInteraction != null, "Invalid dropConfirmInteraction (Null)");
         //Constants
         Debug.Assert(constantSaveToDictInteraction != null, "Invalid constantSaveToDictInteraction (Null)");
+        Debug.Assert(constantSaveToFileInteraction != null, "Invalid constantSaveToFileInteraction (Null)");
         Debug.Assert(constantInputInteraction != null, "Invalid constantInputInteraction (Null)");
         Debug.Assert(constantEditInteraction != null, "Invalid constantEditInteraction (Null)");
         Debug.Assert(constantDeleteInteraction != null, "Invalid constantDeleteInteraction (Null)");
@@ -485,6 +489,7 @@ public class AdventureUI : MonoBehaviour
         Debug.Assert(constantTextSmallInput != null, "Invalid constantTextSmallInput (Null)");
         Debug.Assert(constantTextLargeInput != null, "Invalid constantTextLargeInput (Null)");
         Debug.Assert(saveToDictConstantButton != null, "Invalid saveToDictButton (Null)");
+        Debug.Assert(saveToFileConstantButton != null, "Invalid saveToDictButton (Null)");
         Debug.Assert(viewFilterConstantButton != null, "Invalid viewFilterButton (Null)");
         Debug.Assert(filterConstantButton != null, "Invalid filterButton (Null)");
         Debug.Assert(deleteConstantButton != null, "Invalid deleteConstantButton (Null)");
@@ -608,6 +613,7 @@ public class AdventureUI : MonoBehaviour
         constantViewFilterInteraction.SetButton(ToolEventType.ViewFilterConstants);
         constantClearInteraction.SetButton(ToolEventType.ClearConstants);
         constantSaveToDictInteraction.SetButton(ToolEventType.SaveToDictConstants);
+        constantSaveToFileInteraction.SetButton(ToolEventType.SaveToFileConstants);
     }
     #endregion
 
@@ -675,6 +681,7 @@ public class AdventureUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.NextConstant, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.PreviousConstant, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.SaveToDictConstants, OnEvent, "AdventureUI");
+        ToolEvents.i.AddListener(ToolEventType.SaveToFileConstants, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.DeleteConstants, OnEvent, "AdventureUI");
         ToolEvents.i.AddListener(ToolEventType.DeleteCampaignConstants, OnEvent, "AdventureUI");
     }
@@ -863,6 +870,9 @@ public class AdventureUI : MonoBehaviour
             case ToolEventType.SaveToDictConstants:
                 SaveToDictConstants();
                 break;
+            case ToolEventType.SaveToFileConstants:
+                SaveToFileConstants();
+                break;
             case ToolEventType.NextConstant:
                 NextConstant();
                 break;
@@ -896,6 +906,7 @@ public class AdventureUI : MonoBehaviour
         MainSummaryPanel.gameObject.SetActive(true);
         //load data from dictionary automatically
         LoadAdventures();
+        LoadConstants();
         //Navigation
         GetListOfStories();
         //load up first story
@@ -966,6 +977,19 @@ public class AdventureUI : MonoBehaviour
         {
             //load data into game
             ToolManager.i.toolFileScript.ReadToolData();
+        }
+    }
+
+    /// <summary>
+    /// subMethod to handle loading constants
+    /// </summary>
+    private void LoadConstants()
+    {
+        //read data from file
+        if (ToolManager.i.toolFileScript.ReadConstantsFromFile() == true)
+        {
+            //load data into game
+            ToolManager.i.toolFileScript.ReadConstantsData();
         }
     }
 
@@ -2983,8 +3007,9 @@ public class AdventureUI : MonoBehaviour
     /// </summary>
     private void InitialiseConstants()
     {
-        //toggle save button Off
+        //toggle buttons Off
         saveToDictConstantButton.gameObject.SetActive(false);
+        saveToFileConstantButton.gameObject.SetActive(false);
         viewFilterConstantButton.gameObject.SetActive(false);
         deleteConstantButton.gameObject.SetActive(false);
         deleteCampaignConstantButton.gameObject.SetActive(false);
@@ -3226,13 +3251,12 @@ public class AdventureUI : MonoBehaviour
     /// <summary>
     /// Write constant data to file
     /// </summary>
-    private void SaveConstantsToFile()
+    private void SaveToFileConstants()
     {
         ToolManager.i.toolFileScript.WriteConstantsData();
         ToolManager.i.toolFileScript.SaveConstantsToFile();
-        //disable button, reset flag
-        isSaveNeeded = false;
-        saveFileButton.gameObject.SetActive(false);
+        //disable button
+        saveToFileConstantButton.gameObject.SetActive(false);
     }
 
 
@@ -3355,7 +3379,7 @@ public class AdventureUI : MonoBehaviour
                         InitialiseListOfConstantPlotpoints();
                         //activate SaveToFile button (main page) and deactivate SaveToDict
                         saveToDictConstantButton.gameObject.SetActive(false);
-                        isSaveNeeded = true;
+                        saveToFileConstantButton.gameObject.SetActive(true);
                         //log
                         Debug.LogFormat("[Tol] AdventureUI.cs -> SaveToDict: \"{0}\" -> {1} -> {2} -> {3} saved to dictOfConstantPlotPoints{4}", constantPlotpoint.tag, constantPlotpoint.scope,
                             constantPlotpoint.type, constantPlotpoint.frequency, "\n");

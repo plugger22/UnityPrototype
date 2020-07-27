@@ -42,6 +42,7 @@ public class SaveConstants
 /// <summary>
 /// Save all constants data (plotpoints in this instance could refer to characters, objects or Organisations as well as plotPoints)
 /// </summary>
+[System.Serializable]
 public class SaveConstantsData
 {
     public List<ConstantPlotpoint> listOfConstantPlotPoints = new List<ConstantPlotpoint>();
@@ -295,7 +296,9 @@ public class ToolFileManager : MonoBehaviour
     }
     #endregion
 
+    //
     // - - - Constants File (read and write)
+    //
 
     #region Write Constants Data
     /// <summary>
@@ -358,6 +361,42 @@ public class ToolFileManager : MonoBehaviour
             else { Debug.LogError("Invalid fileName (Null or Empty)"); }
         }
         else { Debug.LogError("Invalid saveData (Null)"); }
+    }
+    #endregion
+
+    #region ReadConstantsFromFile
+    /// <summary>
+    /// read constants method. Returns true if successful, false otherwise
+    /// </summary>
+    public bool ReadConstantsFromFile()
+    {
+        bool isSuccess = false;
+        if (string.IsNullOrEmpty(filenameConstants) == false)
+        {
+            if (File.Exists(filenameConstants) == true)
+            {
+
+                //read data from File
+                try { jsonRead = File.ReadAllText(filenameConstants); }
+                catch (Exception e) { Debug.LogErrorFormat("Failed to read TEXT FROM FILE, error \"{0}\"", e.Message); }
+                isSuccess = true;
+                if (isSuccess == true)
+                {
+                    //read to Save file
+                    try
+                    {
+                        readConstantsJSON = JsonUtility.FromJson<SaveConstants>(jsonRead);
+                        Debug.LogFormat("[Fil] FileManager.cs -> ReadConstantsFromFile: GAME LOADED from \"{0}\"{1}", filenameConstants, "\n");
+                        return true;
+                    }
+                    catch (Exception e)
+                    { Debug.LogErrorFormat("Failed to read Json, error \"{0}\"", e.Message); }
+                }
+            }
+            else { Debug.LogWarningFormat("File \"{0}\" not found", filenameConstants); }
+        }
+        else { Debug.LogError("Invalid filename (Null or Empty)"); }
+        return false;
     }
     #endregion
 
