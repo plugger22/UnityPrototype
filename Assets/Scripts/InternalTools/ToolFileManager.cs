@@ -24,8 +24,29 @@ public class SaveTools
 public class SaveToolData
 {
     public List<Story> listOfStories = new List<Story>();
+
+}
+#endregion
+
+#region SaveConstants
+/// <summary>
+/// Save.cs equivalent
+/// </summary>
+public class SaveConstants
+{
+    public SaveConstantsData constantsData = new SaveConstantsData();
+}
+#endregion
+
+#region SaveConstantsData
+/// <summary>
+/// Save all constants data (plotpoints in this instance could refer to characters, objects or Organisations as well as plotPoints)
+/// </summary>
+public class SaveConstantsData
+{
     public List<ConstantPlotpoint> listOfConstantPlotPoints = new List<ConstantPlotpoint>();
 }
+
 #endregion
 
 
@@ -37,13 +58,17 @@ public class ToolFileManager : MonoBehaviour
     private static readonly string JSON_FILE = "toolfile.json";
     private static readonly string TEXT_FILE = "exportfile.txt";
     private static readonly string ORG_FILE = "orgfile.txt";
+    private static readonly string CON_FILE = "constantsfile.txt";
 
-    private SaveTools writeJSON;
-    private SaveTools readJSON;
+    private SaveTools writeToolsJSON;
+    private SaveTools readToolsJSON;
+    private SaveConstants writeConstantsJSON;
+    private SaveConstants readConstantsJSON;
     private string writeTEXT;
     private string filenameTools;
     private string filenameExport;
     private string filenameOrgExport;
+    private string filenameConstants;
     private string jsonWrite;
     private string jsonRead;
 
@@ -56,6 +81,7 @@ public class ToolFileManager : MonoBehaviour
         filenameTools = Path.Combine(Application.persistentDataPath, JSON_FILE);
         filenameExport = Path.Combine(Application.persistentDataPath, TEXT_FILE);
         filenameOrgExport = Path.Combine(Application.persistentDataPath, ORG_FILE);
+        filenameConstants = Path.Combine(Application.persistentDataPath, CON_FILE);
     }
     #endregion
 
@@ -67,10 +93,9 @@ public class ToolFileManager : MonoBehaviour
     /// </summary>
     public void WriteToolData()
     {
-        writeJSON = new SaveTools();
+        writeToolsJSON = new SaveTools();
         //Sequentially write data
         WriteStories();
-        WriteConstantPlotpoints();
     }
     #endregion
 
@@ -86,31 +111,11 @@ public class ToolFileManager : MonoBehaviour
             foreach (var story in dictOfStories)
             {
                 if (story.Value != null)
-                { writeJSON.toolData.listOfStories.Add(story.Value); }
+                { writeToolsJSON.toolData.listOfStories.Add(story.Value); }
                 else { Debug.LogErrorFormat("Invalid story (Null) for \"{0}\"", story.Key); }
             }
         }
         else { Debug.LogError("Invalid dictOfStories (Null)"); }
-    }
-    #endregion
-
-    #region WriteConstantPlotpoints
-    /// <summary>
-    /// write dictOfConstantPlotpoints to file
-    /// </summary>
-    private void WriteConstantPlotpoints()
-    {
-        Dictionary<string, ConstantPlotpoint> dictOfConstantPlotpoints = ToolManager.i.toolDataScript.GetDictOfConstantPlotpoints();
-        if (dictOfConstantPlotpoints != null)
-        {
-            foreach (var plotpoint in dictOfConstantPlotpoints)
-            {
-                if (plotpoint.Value != null)
-                { writeJSON.toolData.listOfConstantPlotPoints.Add(plotpoint.Value); }
-                else { Debug.LogErrorFormat("Invalid constantPlotpoint (Null) for \"{0}\"", plotpoint.Key); }
-            }
-        }
-        else { Debug.LogError("Invalid dictOfConstantPlotpoints (Null)"); }
     }
     #endregion
 
@@ -120,12 +125,12 @@ public class ToolFileManager : MonoBehaviour
     /// </summary>
     public void SaveToolsToFile()
     {
-        if (writeJSON != null)
+        if (writeToolsJSON != null)
         {
             if (string.IsNullOrEmpty(filenameTools) == false)
             {
                 //convert to Json (NOTE: second, optional, parameter gives pretty output for debugging purposes)
-                jsonWrite = JsonUtility.ToJson(writeJSON, true);
+                jsonWrite = JsonUtility.ToJson(writeToolsJSON, true);
 
                 //file present? If so delete
                 if (File.Exists(filenameTools) == true)
@@ -167,7 +172,7 @@ public class ToolFileManager : MonoBehaviour
                     //read to Save file
                     try
                     {
-                        readJSON = JsonUtility.FromJson<SaveTools>(jsonRead);
+                        readToolsJSON = JsonUtility.FromJson<SaveTools>(jsonRead);
                         Debug.LogFormat("[Fil] FileManager.cs -> ReadToolsFromFile: GAME LOADED from \"{0}\"{1}", filenameTools, "\n");
                         return true;
                     }
@@ -188,10 +193,9 @@ public class ToolFileManager : MonoBehaviour
     /// </summary>
     public void ReadToolData()
     {
-        if (readJSON != null)
+        if (readToolsJSON != null)
         {
             ReadStories();
-            ReadConstantPlotpoints();
         }
         else { Debug.LogError("Invalid read (Null)"); }
     }
@@ -203,16 +207,9 @@ public class ToolFileManager : MonoBehaviour
     /// Read saved data back into dictOfStories
     /// </summary>
     private void ReadStories()
-    { ToolManager.i.toolDataScript.SetStories(readJSON.toolData.listOfStories); }
+    { ToolManager.i.toolDataScript.SetStories(readToolsJSON.toolData.listOfStories); }
     #endregion
 
-    #region ReadConstantPlotpoints
-    /// <summary>
-    /// Read saved data back into dictOfConstantPlotpoints
-    /// </summary>
-    private void ReadConstantPlotpoints()
-    { ToolManager.i.toolDataScript.SetConstantPlotpoints(readJSON.toolData.listOfConstantPlotPoints); }
-    #endregion
 
     #region DeleteToolsFile
     /// <summary>
@@ -297,6 +294,96 @@ public class ToolFileManager : MonoBehaviour
         else { Debug.LogError("Invalid writeTEXT (Null)"); }
     }
     #endregion
+
+    // - - - Constants File (read and write)
+
+    #region Write Constants Data
+    /// <summary>
+    /// copy inGame data to saveData
+    /// </summary>
+    public void WriteConstantsData()
+    {
+        writeConstantsJSON = new SaveConstants();
+        //Sequentially write data
+        WriteConstantPlotpoints();
+    }
+    #endregion
+
+    #region WriteConstantPlotpoints
+    /// <summary>
+    /// write dictOfConstantPlotpoints to file
+    /// </summary>
+    private void WriteConstantPlotpoints()
+    {
+        Dictionary<string, ConstantPlotpoint> dictOfConstantPlotpoints = ToolManager.i.toolDataScript.GetDictOfConstantPlotpoints();
+        if (dictOfConstantPlotpoints != null)
+        {
+            foreach (var plotpoint in dictOfConstantPlotpoints)
+            {
+                if (plotpoint.Value != null)
+                { writeConstantsJSON.constantsData.listOfConstantPlotPoints.Add(plotpoint.Value); }
+                else { Debug.LogErrorFormat("Invalid constantPlotpoint (Null) for \"{0}\"", plotpoint.Key); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfConstantPlotpoints (Null)"); }
+    }
+    #endregion
+
+    #region SaveConstantsToFile
+    /// <summary>
+    /// Save constants method
+    /// </summary>
+    public void SaveConstantsToFile()
+    {
+        if (writeConstantsJSON != null)
+        {
+            if (string.IsNullOrEmpty(filenameConstants) == false)
+            {
+                //convert to Json (NOTE: second, optional, parameter gives pretty output for debugging purposes)
+                jsonWrite = JsonUtility.ToJson(writeConstantsJSON, true);
+
+                //file present? If so delete
+                if (File.Exists(filenameConstants) == true)
+                {
+                    try { File.Delete(filenameConstants); }
+                    catch (Exception e) { Debug.LogErrorFormat("Failed to DELETE FILE, error \"{0}\"", e.Message); }
+                }
+
+                //create new file
+                try { File.WriteAllText(filenameConstants, jsonWrite); }
+                catch (Exception e) { Debug.LogErrorFormat("Failed to write TEXT FROM FILE, error \"{0}\"", e.Message); }
+                Debug.LogFormat("[Fil] FileManager.cs -> SaveConstantsToFile: ConstantData SAVED to \"{0}\"{1}", filenameConstants, "\n");
+
+            }
+            else { Debug.LogError("Invalid fileName (Null or Empty)"); }
+        }
+        else { Debug.LogError("Invalid saveData (Null)"); }
+    }
+    #endregion
+
+    #region ReadConstantsData
+    /// <summary>
+    /// load constants data back into toolDataManager.cs
+    /// </summary>
+    public void ReadConstantsData()
+    {
+        if (readConstantsJSON != null)
+        {
+            ReadConstantsPlotpoints();
+        }
+        else { Debug.LogError("Invalid read (Null)"); }
+    }
+
+    #endregion
+
+    #region ReadConstantsPlotpoints
+    /// <summary>
+    /// Read saved data back into dictOfConstantPlotpoints
+    /// </summary>
+    private void ReadConstantsPlotpoints()
+    { ToolManager.i.toolDataScript.SetConstantPlotpoints(readConstantsJSON.constantsData.listOfConstantPlotPoints); }
+    #endregion
+
 
     //new methods above here
 }

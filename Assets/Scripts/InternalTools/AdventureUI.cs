@@ -3223,6 +3223,19 @@ public class AdventureUI : MonoBehaviour
         DisplayConstantPlotpoint();
     }
 
+    /// <summary>
+    /// Write constant data to file
+    /// </summary>
+    private void SaveConstantsToFile()
+    {
+        ToolManager.i.toolFileScript.WriteConstantsData();
+        ToolManager.i.toolFileScript.SaveConstantsToFile();
+        //disable button, reset flag
+        isSaveNeeded = false;
+        saveFileButton.gameObject.SetActive(false);
+    }
+
+
     #region delegates
     /// <summary>
     /// delegate to change colour of checkbox (Scope) when selected/deselected
