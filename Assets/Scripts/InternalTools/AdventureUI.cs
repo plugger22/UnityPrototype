@@ -908,7 +908,7 @@ public class AdventureUI : MonoBehaviour
         LoadAdventures();
         LoadConstants();
         //Navigation
-        GetListOfStories();
+        UpdateListOfStories();
         //load up first story
         DisplayStoryNotes(false);
         DisplayStoryMain();
@@ -948,6 +948,8 @@ public class AdventureUI : MonoBehaviour
         //disable button, reset flag
         isSaveNeeded = false;
         saveFileButton.gameObject.SetActive(false);
+        //update stories
+        UpdateListOfStories();
     }
 
     /// <summary>
@@ -1395,7 +1397,7 @@ public class AdventureUI : MonoBehaviour
                 //trigger main save to file button
                 isSaveNeeded = true;
                 //update navigation
-                GetListOfStories();
+                UpdateListOfStories();
                 //switch on turningPoint button
                 newTurningButton.gameObject.SetActive(true);
                 //switch off save button
@@ -2032,19 +2034,25 @@ public class AdventureUI : MonoBehaviour
             //At least one character involved
             if (character1 != null)
             {
-                //read or write field depending on whether already has data
+                /*//read or write field depending on whether already has data
                 if (character1.listOfNotes.Count == 0)
                 { turnCharacter1Input.text = character1.tag; }
-                else { turnCharacter1.text = character1.tag; }
+                else { turnCharacter1.text = character1.tag; }*/
+
+                turnCharacter1.text = character1.tag;
+                turnCharacter1Input.text = character1.tag;
                 turnData1.text = character1.dataCreated;
                 turnData1Input.text = "";
                 characters = character1.tag;
             }
             if (character2 != null)
             {
-                if (character2.listOfNotes.Count == 0)
+                /*if (character2.listOfNotes.Count == 0)
                 { turnCharacter2Input.text = character2.tag; }
-                else { turnCharacter2.text = character2.tag; }
+                else { turnCharacter2.text = character2.tag; }*/
+
+                turnCharacter2.text = character2.tag;
+                turnCharacter2Input.text = character2.tag;
                 turnData2.text = character2.dataCreated;
                 turnData2Input.text = "";
                 characters = string.Format("{0} / {1}", characters, character2.tag);
@@ -3755,7 +3763,7 @@ public class AdventureUI : MonoBehaviour
     /// <summary>
     /// Generate list used for navigation
     /// </summary>
-    private void GetListOfStories()
+    private void UpdateListOfStories()
     {
         //Generate navigation list
         listOfStories = ToolManager.i.toolDataScript.GetListOfStories();
