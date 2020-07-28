@@ -340,7 +340,20 @@ public class AdventureManager : MonoBehaviour
                     {
                         PlotDetails details = turningPoint.arrayOfDetails[j];
                         characters = "";
-                        characters = string.Format("{0}{1}", details.character1.tag.Length > 0 ? " -> " + details.character1.tag : "", details.character2.tag.Length > 0 ? " / " + details.character2.tag : "");
+                        //only character1 present
+                        if (details.character1.tag != null && details.character2.tag == null)
+                        { characters = string.Format("{0}", details.character1.tag.Length > 0 ? " -> " + details.character1.tag : ""); }
+                        //both present
+                        else if (details.character1.tag != null && details.character2.tag != null)
+                        { characters = string.Format("{0}{1}", details.character1.tag.Length > 0 ? " -> " + details.character1.tag : "", details.character2.tag.Length > 0 ? " / " + details.character2.tag : ""); }
+                        //neither present -> do nothing
+                        else if (details.character1.tag == null && details.character2.tag == null) { }
+                        //character1 null and character2 present -> Error condition as shouldn't happen
+                        else
+                        {
+                            Debug.LogWarningFormat("Invalid characters ->  character1.tag {0}, character2.tag {1}, for plotPoint {2}", details.character1.tag == null ? "Null" : "O.K",
+                           details.character2.tag == null ? "Null" : "O.K", details.plotPoint);
+                        }
                         builderStory.AppendFormat("{0} {1} {2}{3}", j, details.plotPoint, characters, "\n");
                     }
                 }

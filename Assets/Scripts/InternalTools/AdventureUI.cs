@@ -950,6 +950,7 @@ public class AdventureUI : MonoBehaviour
         saveFileButton.gameObject.SetActive(false);
         //update stories
         UpdateListOfStories();
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Read);
     }
 
     /// <summary>
