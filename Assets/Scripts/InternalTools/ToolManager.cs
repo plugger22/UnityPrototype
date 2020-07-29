@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using toolsAPI;
+using UnityEngine.SceneManagement;
+using System;
 
 
 
@@ -15,6 +17,8 @@ public class ToolManager : MonoBehaviour
     // - - - Variables
     //
     private float mouseWheelInput;                      //used for detecting mouse wheel input in the Update method
+    private Scene scene;
+
     #endregion
 
     #region Components
@@ -33,38 +37,47 @@ public class ToolManager : MonoBehaviour
     #region Awake
     private void Awake()
     {
-        //check if instance already exists
-        if (i == null)
-        { i = this; }
-        //if instance already exists and it's not this
-        else if (i != this)
+        scene = SceneManager.GetActiveScene();
+        //only run if Internal tools scene
+        if (scene.name.Equals("Internal_Tools", StringComparison.Ordinal) == true)
         {
-            //Then destroy this in order to reinforce the singleton pattern (can only ever be one instance of toolManager)
-            Destroy(gameObject);
+            //check if instance already exists
+            if (i == null)
+            { i = this; }
+            //if instance already exists and it's not this
+            else if (i != this)
+            {
+                //Then destroy this in order to reinforce the singleton pattern (can only ever be one instance of toolManager)
+                Destroy(gameObject);
+            }
+            //components
+            adventureScript = GetComponent<AdventureManager>();
+            toolDataScript = GetComponent<ToolDataManager>();
+            toolFileScript = GetComponent<ToolFileManager>();
+            toolInputScript = GetComponent<ToolInput>();
+            toolDetailScript = GetComponent<ToolDetails>();
+            //gui
+            adventureUIScript = AdventureUI.Instance();
+            toolUIScript = ToolUI.Instance();
+            //error Check
+            Debug.Assert(adventureScript != null, "Invalid adventureScript (Null)");
+            Debug.Assert(toolDataScript != null, "Invalid toolDataScript (Null)");
+            Debug.Assert(adventureUIScript != null, "Invalid adventureUIScript (Null)");
+            Debug.Assert(toolUIScript != null, "Invalid toolUIScript (Null)");
+            Debug.Assert(toolInputScript != null, "Invalid toolInputScript (Null)");
+            Debug.Assert(toolDetailScript != null, "Invalid toolDetailScript (Null)");
         }
-        //components
-        adventureScript = GetComponent<AdventureManager>();
-        toolDataScript = GetComponent<ToolDataManager>();
-        toolFileScript = GetComponent<ToolFileManager>();
-        toolInputScript = GetComponent<ToolInput>();
-        toolDetailScript = GetComponent<ToolDetails>();
-        //gui
-        adventureUIScript = AdventureUI.Instance();
-        toolUIScript = ToolUI.Instance();
-        //error Check
-        Debug.Assert(adventureScript != null, "Invalid adventureScript (Null)");
-        Debug.Assert(toolDataScript != null, "Invalid toolDataScript (Null)");
-        Debug.Assert(adventureUIScript != null, "Invalid adventureUIScript (Null)");
-        Debug.Assert(toolUIScript != null, "Invalid toolUIScript (Null)");
-        Debug.Assert(toolInputScript != null, "Invalid toolInputScript (Null)");
-        Debug.Assert(toolDetailScript != null, "Invalid toolDetailScript (Null)");
     }
     #endregion
 
     #region Start
     public void Start()
     {
-        InitialiseAll();
+        //only run if internal tools scene
+        if (scene.name.Equals("Internal_Tools", StringComparison.Ordinal) == true)
+        {
+            InitialiseAll();
+        }
     }
     #endregion
 
@@ -88,15 +101,19 @@ public class ToolManager : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        mouseWheelInput = 0;
-        //get any mouse wheel input (restricts max value) and pass as a parameter as Input.anyKeyDown won't pick up mouse wheel input)
-        mouseWheelInput += Input.GetAxis("Mouse ScrollWheel");
+        //only run if internal tools scene
+        if (scene.name.Equals("Internal_Tools", StringComparison.Ordinal) == true)
+        {
+            mouseWheelInput = 0;
+            //get any mouse wheel input (restricts max value) and pass as a parameter as Input.anyKeyDown won't pick up mouse wheel input)
+            mouseWheelInput += Input.GetAxis("Mouse ScrollWheel");
 
-        //Handle Game Input
-        if (mouseWheelInput != 0)
-        { toolInputScript.ProcessMouseWheelInput(mouseWheelInput); }
-        else if (Input.anyKeyDown == true)
-        { toolInputScript.ProcessKeyInput(); }
+            //Handle Game Input
+            if (mouseWheelInput != 0)
+            { toolInputScript.ProcessMouseWheelInput(mouseWheelInput); }
+            else if (Input.anyKeyDown == true)
+            { toolInputScript.ProcessKeyInput(); }
+        }
     }
     #endregion
 

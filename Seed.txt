@@ -56,3 +56,50 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 7399 -> Saturday, 27 June 2020 9:28 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 34290 -> Thursday, 30 July 2020 9:02 AM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ToolManager.InitialiseAll () (at Assets/Scripts/InternalTools/ToolManager.cs:77)
+	ToolManager.Start () (at Assets/Scripts/InternalTools/ToolManager.cs:67)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ToolManager.Update () (at Assets/Scripts/InternalTools/ToolManager.cs:99)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ToolManager.Update () (at Assets/Scripts/InternalTools/ToolManager.cs:99)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ToolManager.Update () (at Assets/Scripts/InternalTools/ToolManager.cs:99)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ToolManager.Update () (at Assets/Scripts/InternalTools/ToolManager.cs:99)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ToolManager.Update () (at Assets/Scripts/InternalTools/ToolManager.cs:99)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ToolManager.Update () (at Assets/Scripts/InternalTools/ToolManager.cs:99)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ToolManager.Update () (at Assets/Scripts/InternalTools/ToolManager.cs:99)
+	
+Dev seed 23398 -> Thursday, 30 July 2020 9:12 AM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ToolManager.InitialiseAll () (at Assets/Scripts/InternalTools/ToolManager.cs:77)
+	ToolManager.Start () (at Assets/Scripts/InternalTools/ToolManager.cs:67)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ToolManager.Update () (at Assets/Scripts/InternalTools/ToolManager.cs:99)
+	
+Dev seed 60606 -> Thursday, 30 July 2020 9:15 AM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ToolManager.InitialiseAll () (at Assets/Scripts/InternalTools/ToolManager.cs:77)
+	ToolManager.Start () (at Assets/Scripts/InternalTools/ToolManager.cs:67)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ToolManager.Update () (at Assets/Scripts/InternalTools/ToolManager.cs:99)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ToolManager.Update () (at Assets/Scripts/InternalTools/ToolManager.cs:99)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ToolManager.Update () (at Assets/Scripts/InternalTools/ToolManager.cs:99)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ToolManager.Update () (at Assets/Scripts/InternalTools/ToolManager.cs:99)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ToolManager.Update () (at Assets/Scripts/InternalTools/ToolManager.cs:99)
+	
+Dev seed 18595 -> Thursday, 30 July 2020 9:36 AM
+City seed 5678 -> London, United Kingdom

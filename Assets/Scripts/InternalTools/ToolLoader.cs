@@ -29,7 +29,7 @@ public class ToolLoader : MonoBehaviour
         {
             //create GameManager instance from prefab
             Instantiate(toolManager);
-        }
+        }        
     }
 
 }

@@ -3667,7 +3667,7 @@ public class AdventureUI : MonoBehaviour
         switch (ToolManager.i.toolInputScript.ModalType)
         {
             case ToolModalType.Read:
-                mainInstructions.text = "LEFT and RIGHT ARROWS<br>to browse Adventures";
+                mainInstructions.text = "LEFT and RIGHT ARROWS to browse Adventures";
                 break;
             case ToolModalType.Details:
                 mainInstructions.text = "ESC to Return";
