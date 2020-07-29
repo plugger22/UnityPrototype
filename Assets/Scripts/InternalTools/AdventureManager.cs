@@ -321,7 +321,7 @@ public class AdventureManager : MonoBehaviour
                 //create an individual story builder
                 StringBuilder builderStory = new StringBuilder();
                 //Story Details
-                builderStory.AppendFormat("- - - [NewAdventure]{0}", "\n");
+                builderStory.AppendFormat("- - - NewAdventure{0}", "\n");
                 builderStory.AppendFormat("Name: {0}{1}", story.Value.tag, "\n");
                 builderStory.AppendFormat("Date: {0}{1}", story.Value.date, "\n");
                 builderStory.AppendFormat("NameSet: {0}{1}", story.Value.nameSet, "\n");
@@ -332,7 +332,7 @@ public class AdventureManager : MonoBehaviour
                 for (int i = 0; i < story.Value.arrayOfTurningPoints.Length; i++)
                 {
                     TurningPoint turningPoint = story.Value.arrayOfTurningPoints[i];
-                    builderStory.AppendFormat("{0}TurningPoint {1}: {2}{3}", "\n", i, turningPoint.tag, "\n");
+                    builderStory.AppendFormat("{0}TurningPoint {1}: {2}{3}{4}", "\n", i, turningPoint.tag, "\n", "\n");
                     builderStory.AppendFormat("Notes: {0}{1}", turningPoint.notes, "\n");
                     //summary
                     builderStory.AppendFormat("{0}TurningPoint {1} Summary{2}", "\n", i, "\n");
@@ -354,7 +354,9 @@ public class AdventureManager : MonoBehaviour
                             Debug.LogWarningFormat("Invalid characters ->  character1.tag {0}, character2.tag {1}, for plotPoint {2}", details.character1.tag == null ? "Null" : "O.K",
                            details.character2.tag == null ? "Null" : "O.K", details.plotPoint);
                         }
-                        builderStory.AppendFormat("{0} {1} {2}{3}", j, details.plotPoint, characters, "\n");
+                        builderStory.AppendFormat("[{0} {1}] {2}{3}", j, details.plotPoint, characters, "\n");
+                        if (details.notes != null && details.notes.Length > 0)
+                        { builderStory.AppendFormat("{0}~{1}~{2}{3}", "\n", details.notes, "\n", "\n"); }
                     }
                 }
                 //lists -> Active Plotline
