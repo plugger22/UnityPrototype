@@ -458,6 +458,7 @@ public class TopicManager : MonoBehaviour
 
     #endregion
 
+    #region OnEvent
     /// <summary>
     /// Event handler
     /// </summary>
@@ -480,8 +481,7 @@ public class TopicManager : MonoBehaviour
                 break;
         }
     }
-
-
+    #endregion
 
     #region SetColours
     /// <summary>
@@ -508,7 +508,7 @@ public class TopicManager : MonoBehaviour
 
     #endregion
 
-    #region Session Start
+    #region Session Start...
     //
     // - - - Session Start - - -
     //
@@ -1064,7 +1064,7 @@ public class TopicManager : MonoBehaviour
 
     #endregion
 
-    #region Select Topic
+    #region Select Topic...
     //
     //  - - - Select Topic - - -
     //   
@@ -1798,7 +1798,7 @@ public class TopicManager : MonoBehaviour
 
     #endregion
 
-    #region Dynamic Topics
+    #region Dynamic Topics...
     //
     // - - - Select Dynamic Topics
     //
@@ -2929,7 +2929,7 @@ public class TopicManager : MonoBehaviour
 
     #endregion
 
-    #region ProcessTopic
+    #region ProcessTopic...
     //
     // - - - Process Topic - - - 
     //
@@ -4021,7 +4021,7 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
-    #region  Criteria Checks
+    #region  Criteria Checks...
     //
     // - - - Criteria Checks - - -
     //
@@ -4326,7 +4326,7 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
-    #region Utilities
+    #region Utilities...
     //
     // - - - Utilities - - -
     //
@@ -6938,7 +6938,7 @@ public class TopicManager : MonoBehaviour
 
     #endregion
 
-    #region Meta Methods
+    #region Meta Methods...
     //
     // - - - MetaManager - - -
     //
@@ -6970,7 +6970,7 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
-    #region Debug Methods
+    #region Debug Methods...
     //
     // - - - Debug - - -
     //
