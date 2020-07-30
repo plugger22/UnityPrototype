@@ -8,7 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "StoryModule / StoryModule")]
 public class StoryModule : ScriptableObject
 {
-    /*[Header("Core Data")]
+    [Header("Core Data")]
     [Tooltip("All story modules within this Story.SO are for the following side")]
     public GlobalSide side;
 
@@ -23,8 +23,8 @@ public class StoryModule : ScriptableObject
 
     public void OnEnable()
     {
-        Debug.AssertFormat(side != null, "Invalid side (Null) for {0}", this.name);
+        Debug.AssertFormat(side != null, "Invalid side (Null) for {0}", name);
     }
 
-    */
+    
 }

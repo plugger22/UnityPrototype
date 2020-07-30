@@ -22,6 +22,10 @@ public class Campaign : ScriptableObject
     [Tooltip("A list of all scenarios that make up the campaign. NOTE: Scenarios are played in order from top (index 0) to bottom")]
     public List<Scenario> listOfScenarios = new List<Scenario>();
 
+    [Header("Story Module")]
+    [Tooltip("Module that holds all possible stories for the campaign and all related data")]
+    public StoryModule story;
+
     [Header("Campaign Topic Pools")]
     [Tooltip("Topic pool of decisions for campaign story line Alpha")]
     public TopicPool campaignAlphaPool;
@@ -124,6 +128,7 @@ public class Campaign : ScriptableObject
         Debug.AssertFormat(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or Empty) for {0}", name);
         Debug.AssertFormat(listOfScenarios.Count > 0, "Invalid listOfScenarios (Empty) for {0}", name);
         Debug.AssertFormat(side != null, "Invalid side (Null) for {0}", name);
+        Debug.AssertFormat(story != null, "Invalid storyModule (Null) for {0}, name");
         //Asserts for Resistance side only (Debug measure -> remove once Authority is active)
         if (side.level == 2)
         {
