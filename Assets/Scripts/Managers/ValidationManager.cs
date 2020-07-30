@@ -184,7 +184,7 @@ public class ValidationManager : MonoBehaviour
     /// </summary>
     private void SubInitialiseTopicTypes()
     {
-        //subType checks -> Campaign
+        /*//subType checks -> Campaign
         if (campaignType != null)
         {
             //alpha
@@ -209,8 +209,9 @@ public class ValidationManager : MonoBehaviour
             }
             else { Debug.LogError("Invalid campaignCharlieSubType (Null)"); }
         }
-        else { Debug.LogError("Invalid campaignType (Null)"); }
-        //subType checks -> Family
+        else { Debug.LogError("Invalid campaignType (Null)"); }*/
+
+        /*//subType checks -> Family
         if (familyType != null)
         {
             //alpha
@@ -235,11 +236,12 @@ public class ValidationManager : MonoBehaviour
             }
             else { Debug.LogError("Invalid familyCharlieSubType (Null)"); }
         }
-        else { Debug.LogError("Invalid familyType (Null)"); }
+        else { Debug.LogError("Invalid familyType (Null)"); }*/
+
         //subType checks -> authority
         if (authorityType != null)
         {
-            //authorityCampaign
+            /*//authorityCampaign
             if (authorityCampaignSubType != null)
             {
                 if (authorityType.listOfSubTypes.Exists(x => x.name.Equals(authorityCampaignSubType.name, StringComparison.Ordinal)) == false)
@@ -258,7 +260,8 @@ public class ValidationManager : MonoBehaviour
                       authorityGeneralSubType.name, authorityType.name, "\n");
                 }
             }
-            else { Debug.LogError("Invalid authorityGeneralSubType (Null)"); }
+            else { Debug.LogError("Invalid authorityGeneralSubType (Null)"); }*/
+
             //authorityTeam
             if (authorityTeamSubType != null)
             {
@@ -271,7 +274,8 @@ public class ValidationManager : MonoBehaviour
             else { Debug.LogError("Invalid authorityTeamSubType (Null)"); }
         }
         else { Debug.LogError("Invalid authorityType (Null)"); }
-        //subType checks -> Resistance
+
+        /*//subType checks -> Resistance
         if (resistanceType != null)
         {
             //resistanceCampaign
@@ -295,7 +299,8 @@ public class ValidationManager : MonoBehaviour
             }
             else { Debug.LogError("Invalid resistanceCampaignType (Null)"); }
         }
-        else { Debug.LogError("Invalid resistanceType (Null)"); }
+        else { Debug.LogError("Invalid resistanceType (Null)"); }*/
+
         //subType checks -> City
         if (cityType != null)
         {
@@ -1248,40 +1253,6 @@ public class ValidationManager : MonoBehaviour
                     Campaign campaign = arrayOfCampaigns[i];
                     if (campaign != null)
                     {
-                        /*//campaign Alpha Pool
-                        if (campaign.storyAlphaPool != null)
-                        {
-                            //check pool (correct topicType / topicSubType / topics correct side)
-                            CheckCampaignPool(campaign, campaign.storyAlphaPool, campaignAlphaSubType);
-                        }
-                        //campaign Bravo Pool
-                        if (campaign.storyBravoPool != null)
-                        { CheckCampaignPool(campaign, campaign.storyBravoPool, campaignBravoSubType); }
-                        //campaign Charlie Pool
-                        if (campaign.storyCharliePool != null)
-                        { CheckCampaignPool(campaign, campaign.storyCharliePool, campaignCharlieSubType); }
-                        //family Alpha Pool
-                        if (campaign.familyAlphaPool != null)
-                        { CheckCampaignPool(campaign, campaign.familyAlphaPool, familyAlphaSubType); }
-                        //family Bravo Pool
-                        if (campaign.familyBravoPool != null)
-                        { CheckCampaignPool(campaign, campaign.familyBravoPool, familyBravoSubType); }
-                        //family Charlie Pool
-                        if (campaign.familyCharliePool != null)
-                        { CheckCampaignPool(campaign, campaign.familyCharliePool, familyCharlieSubType); }
-                        //Authority Campaign Pool
-                        if (campaign.authorityCampaignPool != null)
-                        { CheckCampaignPool(campaign, campaign.authorityCampaignPool, authorityCampaignSubType); }
-                        //Resistance Campaign Pool
-                        if (campaign.resistanceCampaignPool != null)
-                        { CheckCampaignPool(campaign, campaign.resistanceCampaignPool, resistanceCampaignSubType); }
-                        //Authority General Pool
-                        if (campaign.authorityGeneralPool != null)
-                        { CheckCampaignPool(campaign, campaign.authorityGeneralPool, authorityGeneralSubType); }
-                        //Resistance General Pool
-                        if (campaign.resistanceGeneralPool != null)
-                        { CheckCampaignPool(campaign, campaign.resistanceGeneralPool, resistanceGeneralSubType); }*/
-
                         //Authority Team Pool
                         if (campaign.teamPool != null)
                         { CheckCampaignPool(campaign, campaign.teamPool, authorityTeamSubType); }

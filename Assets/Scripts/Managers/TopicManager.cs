@@ -1550,13 +1550,6 @@ public class TopicManager : MonoBehaviour
                 switch (turnTopicSubType.name)
                 {
                     //Standard topics
-                    case "CampaignAlpha":
-                    case "CampaignBravo":
-                    case "CampaignCharlie":
-                    case "AuthorityCampaign":
-                    case "AuthorityGeneral":
-                    case "ResistanceCampaign":
-                    case "ResistanceGeneral":
                     case "HQSub":
                         //two hq actors selected at random, internal politics
                         listOfPotentialTopics = GetHQSubTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
@@ -1564,13 +1557,6 @@ public class TopicManager : MonoBehaviour
                     case "CaptureSub":
                         //based on random 50/50 roll
                         listOfPotentialTopics = GetCaptureTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
-                        break;
-                    case "FamilyAlpha":
-                    case "FamilyBravo":
-                    case "FamilyCharlie":
-                        //based on PlayerMood
-                        group = GetGroupMood(GameManager.i.playerScript.GetMood());
-                        listOfPotentialTopics = GetTopicGroup(listOfSubTypeTopics, group, turnTopicSubType.name);
                         break;
                     //Dynamic topic
                     case "CitySub":
@@ -6461,11 +6447,7 @@ public class TopicManager : MonoBehaviour
                     break;
                 case "Authority":
                     break;
-                case "Resistance":
-                    break;
                 case "City":
-                    break;
-                case "Family":
                     break;
                 case "HQ":
                     turnSprite = GameManager.i.hqScript.GetHqMainSpirte();

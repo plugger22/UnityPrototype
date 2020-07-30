@@ -15,8 +15,6 @@ MonoBehaviour:
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   minIntervalFactor: 0
   listOfSubTypes:
-  - {fileID: 11400000, guid: f12b3093e69850642b238f44b9a32cfb, type: 2}
-  - {fileID: 11400000, guid: 83fe2b4b05975b44c957bbc678cf3b67, type: 2}
   - {fileID: 11400000, guid: f31933caa1d5f614aa34b3f124cdf649, type: 2}
   side: {fileID: 11400000, guid: bb86b913ff5927e499a6ca498217210c, type: 2}
   listOfCriteria:

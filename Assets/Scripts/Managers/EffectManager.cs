@@ -1383,23 +1383,14 @@ public class EffectManager : MonoBehaviour
                                             case "TopicActor":
                                                 isValid = GameManager.i.topicScript.CheckTopicsAvailable(GameManager.i.validateScript.actorType, turn);
                                                 break;
-                                            case "TopicCampaign":
-                                                isValid = GameManager.i.topicScript.CheckTopicsAvailable(GameManager.i.validateScript.campaignType, turn);
-                                                break;
                                             case "TopicCity":
                                                 isValid = GameManager.i.topicScript.CheckTopicsAvailable(GameManager.i.validateScript.cityType, turn);
-                                                break;
-                                            case "TopicFamily":
-                                                isValid = GameManager.i.topicScript.CheckTopicsAvailable(GameManager.i.validateScript.familyType, turn);
                                                 break;
                                             case "TopicHQ":
                                                 isValid = GameManager.i.topicScript.CheckTopicsAvailable(GameManager.i.validateScript.hqType, turn);
                                                 break;
                                             case "TopicCapture":
                                                 isValid = GameManager.i.topicScript.CheckTopicsAvailable(GameManager.i.validateScript.captureType, turn);
-                                                break;
-                                            case "TopicRebel":
-                                                isValid = GameManager.i.topicScript.CheckTopicsAvailable(GameManager.i.validateScript.resistanceType, turn);
                                                 break;
                                             case "TopicAuthority":
                                                 isValid = GameManager.i.topicScript.CheckTopicsAvailable(GameManager.i.validateScript.authorityType, turn);

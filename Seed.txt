@@ -153,3 +153,91 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:880)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
 	
+Dev seed 21772 -> Thursday, 30 July 2020 3:19 PM
+WARNING [Val] ValidateSO: MISMATCH on TopicType, array 10, assets 8 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicType[]) (at Assets/Scripts/Managers/ValidationManager.cs:1896)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1817)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:380)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ValidationManager+<ValidateSOGeneric>c__AnonStorey3`1[T].<>m__0 (T element) (at Assets/Scripts/Managers/ValidationManager.cs:1906)
+	System.Array.FindIndex[T] (T[] array, System.Int32 startIndex, System.Int32 count, System.Predicate`1[T] match) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Array.FindIndex[T] (T[] array, System.Predicate`1[T] match) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Array.Exists[T] (T[] array, System.Predicate`1[T] match) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	ValidationManager.ValidateSOGeneric[T] (T[] arraySO) (at Assets/Scripts/Managers/ValidationManager.cs:1906)
+	ValidationManager.ValidateSO (gameAPI.GameState state) (at Assets/Scripts/Managers/ValidationManager.cs:1817)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:826)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:380)
+	
+Dev seed 30301 -> Thursday, 30 July 2020 3:26 PM
+WARNING [Val] ValidateSO: MISMATCH on TopicType, array 10, assets 8 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicType[]) (at Assets/Scripts/Managers/ValidationManager.cs:1896)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1817)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:380)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ValidationManager+<ValidateSOGeneric>c__AnonStorey3`1[T].<>m__0 (T element) (at Assets/Scripts/Managers/ValidationManager.cs:1906)
+	System.Array.FindIndex[T] (T[] array, System.Int32 startIndex, System.Int32 count, System.Predicate`1[T] match) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Array.FindIndex[T] (T[] array, System.Predicate`1[T] match) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Array.Exists[T] (T[] array, System.Predicate`1[T] match) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	ValidationManager.ValidateSOGeneric[T] (T[] arraySO) (at Assets/Scripts/Managers/ValidationManager.cs:1906)
+	ValidationManager.ValidateSO (gameAPI.GameState state) (at Assets/Scripts/Managers/ValidationManager.cs:1817)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:826)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:380)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GUIManager.CheckIsBlocked (System.Int32 level) (at Assets/Scripts/Managers/GUIManager.cs:507)
+	WidgetBarLeftMouseUI.OnPointerEnter (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:36)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerEnterHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:22)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GUIManager.CheckIsBlocked (System.Int32 level) (at Assets/Scripts/Managers/GUIManager.cs:507)
+	WidgetBarLeftMouseUI.OnPointerExit (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:58)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerExitHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:29)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 61169 -> Thursday, 30 July 2020 3:37 PM
+WARNING [Val] ValidateSO: MISMATCH on TopicPool, array 58, assets 50 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicPool[]) (at Assets/Scripts/Managers/ValidationManager.cs:1896)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1825)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:380)
+	City seed 5678 -> London, United Kingdom
+ERROR Invalid familyType (Null)
+UnityEngine.Debug:LogError(Object)
+	ValidationManager:SubInitialiseTopicTypes() (at Assets/Scripts/Managers/ValidationManager.cs:238)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:139)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:882)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	ERROR Invalid authorityCampaignSubType (Null)
+UnityEngine.Debug:LogError(Object)
+	ValidationManager:SubInitialiseTopicTypes() (at Assets/Scripts/Managers/ValidationManager.cs:251)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:139)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:882)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	ERROR Invalid authorityGeneralSubType (Null)
+UnityEngine.Debug:LogError(Object)
+	ValidationManager:SubInitialiseTopicTypes() (at Assets/Scripts/Managers/ValidationManager.cs:261)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:139)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:882)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	ERROR Invalid resistanceType (Null)
+UnityEngine.Debug:LogError(Object)
+	ValidationManager:SubInitialiseTopicTypes() (at Assets/Scripts/Managers/ValidationManager.cs:298)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:139)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:882)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	
+Dev seed 63789 -> Thursday, 30 July 2020 3:47 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 33256 -> Thursday, 30 July 2020 4:02 PM
+City seed 5678 -> London, United Kingdom

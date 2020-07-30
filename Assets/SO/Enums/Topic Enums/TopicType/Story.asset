@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e51190899335214ab0e132de86b521e, type: 3}
-  m_Name: Campaign
+  m_Name: Story
   m_EditorClassIdentifier: 
   tag: Campaign
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}

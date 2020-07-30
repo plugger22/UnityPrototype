@@ -114,12 +114,8 @@ public class LoadManager : MonoBehaviour
     public TopicOption[] arrayOfOptionsActorMatch;
     public TopicOption[] arrayOfOptionsActorGear;
     public TopicOption[] arrayOfOptionsActorPolitics;
-    public TopicOption[] arrayOfOptionsAuthorityCampaign;
-    public TopicOption[] arrayOfOptionsAuthorityGeneral;
     public TopicOption[] arrayOfOptionsAuthorityTeams;
-    public TopicOption[] arrayOfOptionsCampaign;
     public TopicOption[] arrayOfOptionsCity;
-    public TopicOption[] arrayOfOptionsFamily;
     public TopicOption[] arrayOfOptionsHQ;
     public TopicOption[] arrayOfOptionsCapture;
     public TopicOption[] arrayOfOptionsPlayerConditions;
@@ -127,8 +123,6 @@ public class LoadManager : MonoBehaviour
     public TopicOption[] arrayOfOptionsPlayerGeneral;
     public TopicOption[] arrayOfOptionsPlayerGear;
     public TopicOption[] arrayOfOptionsPlayerStats;
-    public TopicOption[] arrayOfOptionsResistanceCampaign;
-    public TopicOption[] arrayOfOptionsResistanceGeneral;
     public TopicOption[] arrayOfOptionsOrgCure;
     public TopicOption[] arrayOfOptionsOrgContract;
     public TopicOption[] arrayOfOptionsOrgHQ;
@@ -267,12 +261,8 @@ public class LoadManager : MonoBehaviour
         listOfOptions.AddRange(arrayOfOptionsActorMatch);
         listOfOptions.AddRange(arrayOfOptionsActorGear);
         listOfOptions.AddRange(arrayOfOptionsActorPolitics);
-        listOfOptions.AddRange(arrayOfOptionsAuthorityCampaign);
-        listOfOptions.AddRange(arrayOfOptionsAuthorityGeneral);
         listOfOptions.AddRange(arrayOfOptionsAuthorityTeams);
-        listOfOptions.AddRange(arrayOfOptionsCampaign);
         listOfOptions.AddRange(arrayOfOptionsCity);
-        listOfOptions.AddRange(arrayOfOptionsFamily);
         listOfOptions.AddRange(arrayOfOptionsHQ);
         listOfOptions.AddRange(arrayOfOptionsCapture);
         listOfOptions.AddRange(arrayOfOptionsPlayerConditions);
@@ -280,8 +270,6 @@ public class LoadManager : MonoBehaviour
         listOfOptions.AddRange(arrayOfOptionsPlayerGeneral);
         listOfOptions.AddRange(arrayOfOptionsPlayerStats);
         listOfOptions.AddRange(arrayOfOptionsPlayerGear);
-        listOfOptions.AddRange(arrayOfOptionsResistanceCampaign);
-        listOfOptions.AddRange(arrayOfOptionsResistanceGeneral);
         listOfOptions.AddRange(arrayOfOptionsOrgCure);
         listOfOptions.AddRange(arrayOfOptionsOrgContract);
         listOfOptions.AddRange(arrayOfOptionsOrgHQ);
