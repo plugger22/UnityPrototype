@@ -1249,18 +1249,19 @@ public class ValidationManager : MonoBehaviour
                     if (campaign != null)
                     {
                         //campaign Alpha Pool
-                        if (campaign.campaignAlphaPool != null)
+                        if (campaign.storyAlphaPool != null)
                         {
                             //check pool (correct topicType / topicSubType / topics correct side)
-                            CheckCampaignPool(campaign, campaign.campaignAlphaPool, campaignAlphaSubType);
+                            CheckCampaignPool(campaign, campaign.storyAlphaPool, campaignAlphaSubType);
                         }
                         //campaign Bravo Pool
-                        if (campaign.campaignBravoPool != null)
-                        { CheckCampaignPool(campaign, campaign.campaignBravoPool, campaignBravoSubType); }
+                        if (campaign.storyBravoPool != null)
+                        { CheckCampaignPool(campaign, campaign.storyBravoPool, campaignBravoSubType); }
                         //campaign Charlie Pool
-                        if (campaign.campaignCharliePool != null)
-                        { CheckCampaignPool(campaign, campaign.campaignCharliePool, campaignCharlieSubType); }
-                        //family Alpha Pool
+                        if (campaign.storyCharliePool != null)
+                        { CheckCampaignPool(campaign, campaign.storyCharliePool, campaignCharlieSubType); }
+
+                        /*//family Alpha Pool
                         if (campaign.familyAlphaPool != null)
                         { CheckCampaignPool(campaign, campaign.familyAlphaPool, familyAlphaSubType); }
                         //family Bravo Pool
@@ -1283,7 +1284,8 @@ public class ValidationManager : MonoBehaviour
                         { CheckCampaignPool(campaign, campaign.teamPool, authorityTeamSubType); }
                         //Resistance General Pool
                         if (campaign.resistanceGeneralPool != null)
-                        { CheckCampaignPool(campaign, campaign.resistanceGeneralPool, resistanceGeneralSubType); }
+                        { CheckCampaignPool(campaign, campaign.resistanceGeneralPool, resistanceGeneralSubType); }*/
+
                         //HQ Pool
                         if (campaign.hqPool != null)
                         { CheckCampaignPool(campaign, campaign.hqPool, hqSubType); }

@@ -175,6 +175,11 @@ public class TopicManager : MonoBehaviour
     [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
     public TopicSubSubType teamSpider;
 
+    //Story Module topic Pools
+    [HideInInspector] public TopicPool storyAlphaPool;
+    [HideInInspector] public TopicPool storyBetaPool;
+    [HideInInspector] public TopicPool storyCharliePool;
+
     //type of topic
     private TopicGlobal topicGlobal;        //what type of topic is being generated, eg. Decision, Review, etc.
     private int reviewCountdown;            //counts down review interval, set to reviewPeriod after each Review
@@ -688,7 +693,8 @@ public class TopicManager : MonoBehaviour
                                                             isValid = true;
                                                         }
                                                         break;
-                                                    case "AuthorityCampaign":
+                                                    
+                                                    /*case "AuthorityCampaign":
                                                         if (campaign.authorityCampaignPool != null)
                                                         {
                                                             //any subSubTypes present?
@@ -752,43 +758,44 @@ public class TopicManager : MonoBehaviour
                                                             SetTopicDynamicData(campaign.resistanceGeneralPool.listOfTopics);
                                                             isValid = true;
                                                         }
-                                                        break;
-                                                    case "CampaignAlpha":
-                                                        if (campaign.campaignAlphaPool != null)
+                                                        break;*/
+
+                                                    case "StoryAlpha":
+                                                        if (campaign.storyAlphaPool != null)
                                                         {
                                                             //any subSubTypes present?
-                                                            if (campaign.campaignAlphaPool.listOfSubSubTypePools.Count > 0)
-                                                            { LoadSubSubTypePools(campaign.campaignAlphaPool, campaign.side); }
+                                                            if (campaign.storyAlphaPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.storyAlphaPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.campaignAlphaPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.storyAlphaPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
-                                                            SetTopicDynamicData(campaign.campaignAlphaPool.listOfTopics);
+                                                            SetTopicDynamicData(campaign.storyAlphaPool.listOfTopics);
                                                             isValid = true;
                                                         }
                                                         break;
-                                                    case "CampaignBravo":
-                                                        if (campaign.campaignBravoPool != null)
+                                                    case "StoryBravo":
+                                                        if (campaign.storyBravoPool != null)
                                                         {
                                                             //any subSubTypes present?
-                                                            if (campaign.campaignBravoPool.listOfSubSubTypePools.Count > 0)
-                                                            { LoadSubSubTypePools(campaign.campaignBravoPool, campaign.side); }
+                                                            if (campaign.storyBravoPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.storyBravoPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.campaignBravoPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.storyBravoPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
-                                                            SetTopicDynamicData(campaign.campaignBravoPool.listOfTopics);
+                                                            SetTopicDynamicData(campaign.storyBravoPool.listOfTopics);
                                                             isValid = true;
                                                         }
                                                         break;
-                                                    case "CampaignCharlie":
-                                                        if (campaign.campaignCharliePool != null)
+                                                    case "StoryCharlie":
+                                                        if (campaign.storyCharliePool != null)
                                                         {
                                                             //any subSubTypes present?
-                                                            if (campaign.campaignCharliePool.listOfSubSubTypePools.Count > 0)
-                                                            { LoadSubSubTypePools(campaign.campaignCharliePool, campaign.side); }
+                                                            if (campaign.storyCharliePool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(campaign.storyCharliePool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.campaignCharliePool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, campaign.storyCharliePool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
-                                                            SetTopicDynamicData(campaign.campaignCharliePool.listOfTopics);
+                                                            SetTopicDynamicData(campaign.storyCharliePool.listOfTopics);
                                                             isValid = true;
                                                         }
                                                         break;
@@ -829,7 +836,7 @@ public class TopicManager : MonoBehaviour
                                                         }
                                                         break;
                                                         
-                                                    case "FamilyAlpha":
+                                                    /*case "FamilyAlpha":
                                                         if (campaign.familyAlphaPool != null)
                                                         {
                                                             //any subSubTypes present?
@@ -867,7 +874,8 @@ public class TopicManager : MonoBehaviour
                                                             SetTopicDynamicData(campaign.familyCharliePool.listOfTopics);
                                                             isValid = true;
                                                         }
-                                                        break;
+                                                        break;*/
+
                                                     case "HQSub":
                                                         if (campaign.hqPool != null)
                                                         {

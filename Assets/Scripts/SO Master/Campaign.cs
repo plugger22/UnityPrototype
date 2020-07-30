@@ -26,12 +26,12 @@ public class Campaign : ScriptableObject
     [Tooltip("Module that holds all possible stories for the campaign and all related data")]
     public StoryModule story;
 
-    [Header("Campaign Topic Pools")]
-    [Tooltip("Topic pool of decisions for campaign story line Alpha")]
+    /*[Header("Campaign Topic Pools")]
+    [Tooltip("Topic pool of decisions for Story line Alpha")]
     public TopicPool campaignAlphaPool;
-    [Tooltip("Topic pool of decisions for campaign story line Bravo")]
+    [Tooltip("Topic pool of decisions for Story line Bravo")]
     public TopicPool campaignBravoPool;
-    [Tooltip("Topic pool of decisions for campaign story line Charlie")]
+    [Tooltip("Topic pool of decisions for Story line Charlie")]
     public TopicPool campaignCharliePool;
 
     [Header("Family Topic Pools")]
@@ -40,21 +40,21 @@ public class Campaign : ScriptableObject
     [Tooltip("Topic pool of decisions for family story line Bravo")]
     public TopicPool familyBravoPool;
     [Tooltip("Topic pool of decisions for family story line Charlie")]
-    public TopicPool familyCharliePool;
+    public TopicPool familyCharliePool;*/
 
-    [Header("Authority Topic Pools")]
+    /*[Header("Authority Topic Pools")]
     [Tooltip("Topic pool of campaign specific Authority decisions")]
     public TopicPool authorityCampaignPool;
     [Tooltip("Topic pool of general Authority decisions")]
     public TopicPool authorityGeneralPool;
     [Tooltip("Topic pool for Authority Team decisions")]
-    public TopicPool teamPool;
+    public TopicPool teamPool;*/
 
-    [Header("Resistance General Topic Pools")]
+    /*[Header("Resistance General Topic Pools")]
     [Tooltip("Topic pool of campaign specific Resistance decisions")]
     public TopicPool resistanceCampaignPool;
     [Tooltip("Topic pool of general Resistance decisions")]
-    public TopicPool resistanceGeneralPool;
+    public TopicPool resistanceGeneralPool;*/
 
     [Header("Actor Topic Pools")]
     [Tooltip("Topic pool for Actor Contact decisions")]
@@ -132,7 +132,7 @@ public class Campaign : ScriptableObject
         //Asserts for Resistance side only (Debug measure -> remove once Authority is active)
         if (side.level == 2)
         {
-            Debug.Assert(campaignAlphaPool != null, "Invalid campaignAlphaPool (Null)");
+            /*Debug.Assert(campaignAlphaPool != null, "Invalid campaignAlphaPool (Null)");
             Debug.Assert(campaignBravoPool != null, "Invalid campaignBravoPool (Null)");
             Debug.Assert(campaignCharliePool != null, "Invalid campaignCharliePool (Null)");
 
@@ -141,7 +141,7 @@ public class Campaign : ScriptableObject
             Debug.Assert(familyCharliePool != null, "Invalid familyCharliePool (Null)");
 
             Debug.Assert(resistanceCampaignPool != null, "Invalid resistanceCampaignPool (Null)");
-            Debug.Assert(resistanceGeneralPool != null, "Invalid resistanceGeneralPool (Null)");
+            Debug.Assert(resistanceGeneralPool != null, "Invalid resistanceGeneralPool (Null)");*/
 
             Debug.Assert(actorContactPool != null, "Invalid actorContactPool (Null)");
             Debug.Assert(actorDistrictPool != null, "Invalid actorDistrictPool (Null)");
