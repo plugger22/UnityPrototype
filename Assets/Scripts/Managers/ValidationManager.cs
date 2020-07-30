@@ -14,39 +14,13 @@ using UnityEngine;
 public class ValidationManager : MonoBehaviour
 {
     [Header("Campaign.SO Pool Criteria")]
-    [Tooltip("TopicType for Campaign.SO pool (used to run validation checks to ensure the correct pool is used)")]
-    public TopicType campaignType;
-    [Tooltip("TopicSubType for Campaign.SO pool (used to run validation checks to ensure the correct pool is used)")]
-    public TopicSubType campaignAlphaSubType;
-    [Tooltip("TopicSubType for Campaign.SO pool (used to run validation checks to ensure the correct pool is used)")]
-    public TopicSubType campaignBravoSubType;
-    [Tooltip("TopicSubType for Campaign.SO pool (used to run validation checks to ensure the correct pool is used)")]
-    public TopicSubType campaignCharlieSubType;
-    [Tooltip("TopicType for Campaign.SO pool (used to run validation checks to ensure the correct pool is used)")]
-
-    public TopicType familyType;
-    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
-    public TopicSubType familyAlphaSubType;
-    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
-    public TopicSubType familyBravoSubType;
-    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
-    public TopicSubType familyCharlieSubType;
+    [Tooltip("TopicType for Story -> different to the rest but needed to be here for EffectManager.cs -> CheckCriteria")]
+    public TopicType storyType;
 
     [Tooltip("TopicType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
     public TopicType authorityType;
     [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
-    public TopicSubType authorityCampaignSubType;
-    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
-    public TopicSubType authorityGeneralSubType;
-    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
     public TopicSubType authorityTeamSubType;
-
-    [Tooltip("TopicType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
-    public TopicType resistanceType;
-    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
-    public TopicSubType resistanceCampaignSubType;
-    [Tooltip("TopicSubType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
-    public TopicSubType resistanceGeneralSubType;
 
     [Tooltip("TopicType for Campaign.SO  pool (used to run validation checks to ensure the correct pool is used)")]
     public TopicType hqType;

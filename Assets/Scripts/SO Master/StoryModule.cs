@@ -13,12 +13,12 @@ public class StoryModule : ScriptableObject
     public GlobalSide side;
 
     [Header("Story Modules")]
-    [Tooltip("Place all campaign related story Modules here")]
+    [Tooltip("Place all campaign related story Modules here -> TopicSubType.StoryAlpha")]
     public List<TopicPool> listOfCampaignStories;
-    [Tooltip("Place all Resistance/Authority related story Modules here")]
-    public List<TopicPool> listOfHqStories;
-    [Tooltip("Place all family related story Modules here")]
+    [Tooltip("Place all family related story Modules here -> TopicSubType.StoryBravo")]
     public List<TopicPool> listOfFamilyStories;
+    [Tooltip("Place all Resistance/Authority related story Modules here -> TopicSubType.StoryCharlie")]
+    public List<TopicPool> listOfHqStories;
 
 
     public void OnEnable()

@@ -12,6 +12,12 @@ MonoBehaviour:
   m_Name: StoryModRes0
   m_EditorClassIdentifier: 
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
-  listOfCampaignStories: []
-  listOfHqStories: []
-  listOfFamilyStories: []
+  listOfCampaignStories:
+  - {fileID: 11400000, guid: aa2093c06107d86498b16e2205555b68, type: 2}
+  - {fileID: 11400000, guid: 41913f810f38de54a99fa06d99df0b6d, type: 2}
+  - {fileID: 11400000, guid: 4cb4f833cda49a14e85037a3f75b7a94, type: 2}
+  listOfHqStories:
+  - {fileID: 11400000, guid: d40c883331c8e5c44b8dc80b3a772399, type: 2}
+  listOfFamilyStories:
+  - {fileID: 11400000, guid: 15d3d285c373f774eaf6e263890e5fc7, type: 2}
+  - {fileID: 11400000, guid: e43144eec11486140b29ef695d829874, type: 2}

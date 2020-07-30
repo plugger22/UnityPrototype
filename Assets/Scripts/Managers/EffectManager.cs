@@ -1386,6 +1386,9 @@ public class EffectManager : MonoBehaviour
                                             case "TopicCity":
                                                 isValid = GameManager.i.topicScript.CheckTopicsAvailable(GameManager.i.validateScript.cityType, turn);
                                                 break;
+                                            case "TopicStory":
+                                                isValid = GameManager.i.topicScript.CheckTopicsAvailable(GameManager.i.validateScript.storyType, turn);
+                                                break;
                                             case "TopicHQ":
                                                 isValid = GameManager.i.topicScript.CheckTopicsAvailable(GameManager.i.validateScript.hqType, turn);
                                                 break;
