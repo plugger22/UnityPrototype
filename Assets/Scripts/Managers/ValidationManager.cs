@@ -1248,7 +1248,7 @@ public class ValidationManager : MonoBehaviour
                     Campaign campaign = arrayOfCampaigns[i];
                     if (campaign != null)
                     {
-                        //campaign Alpha Pool
+                        /*//campaign Alpha Pool
                         if (campaign.storyAlphaPool != null)
                         {
                             //check pool (correct topicType / topicSubType / topics correct side)
@@ -1260,8 +1260,7 @@ public class ValidationManager : MonoBehaviour
                         //campaign Charlie Pool
                         if (campaign.storyCharliePool != null)
                         { CheckCampaignPool(campaign, campaign.storyCharliePool, campaignCharlieSubType); }
-
-                        /*//family Alpha Pool
+                        //family Alpha Pool
                         if (campaign.familyAlphaPool != null)
                         { CheckCampaignPool(campaign, campaign.familyAlphaPool, familyAlphaSubType); }
                         //family Bravo Pool
@@ -1279,13 +1278,13 @@ public class ValidationManager : MonoBehaviour
                         //Authority General Pool
                         if (campaign.authorityGeneralPool != null)
                         { CheckCampaignPool(campaign, campaign.authorityGeneralPool, authorityGeneralSubType); }
-                        //Authority Team Pool
-                        if (campaign.teamPool != null)
-                        { CheckCampaignPool(campaign, campaign.teamPool, authorityTeamSubType); }
                         //Resistance General Pool
                         if (campaign.resistanceGeneralPool != null)
                         { CheckCampaignPool(campaign, campaign.resistanceGeneralPool, resistanceGeneralSubType); }*/
 
+                        //Authority Team Pool
+                        if (campaign.teamPool != null)
+                        { CheckCampaignPool(campaign, campaign.teamPool, authorityTeamSubType); }
                         //HQ Pool
                         if (campaign.hqPool != null)
                         { CheckCampaignPool(campaign, campaign.hqPool, hqSubType); }

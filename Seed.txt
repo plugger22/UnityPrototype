@@ -109,3 +109,47 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 53534 -> Thursday, 30 July 2020 12:47 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 57699 -> Thursday, 30 July 2020 3:11 PM
+City seed 5678 -> London, United Kingdom
+WARNING Unrecognised topicSubType "FamilyAlpha" for topicType "Family"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:UpdateTopicPools() (at Assets/Scripts/Managers/TopicManager.cs:971)
+	TopicManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/TopicManager.cs:375)
+	TopicManager:Initialise(GameState) (at Assets/Scripts/Managers/TopicManager.cs:273)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:880)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	WARNING Unrecognised topicSubType "FamilyBravo" for topicType "Family"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:UpdateTopicPools() (at Assets/Scripts/Managers/TopicManager.cs:971)
+	TopicManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/TopicManager.cs:375)
+	TopicManager:Initialise(GameState) (at Assets/Scripts/Managers/TopicManager.cs:273)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:880)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	WARNING Unrecognised topicSubType "FamilyCharlie" for topicType "Family"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:UpdateTopicPools() (at Assets/Scripts/Managers/TopicManager.cs:971)
+	TopicManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/TopicManager.cs:375)
+	TopicManager:Initialise(GameState) (at Assets/Scripts/Managers/TopicManager.cs:273)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:880)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	WARNING Unrecognised topicSubType "ResistanceGeneral" for topicType "Resistance"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:UpdateTopicPools() (at Assets/Scripts/Managers/TopicManager.cs:971)
+	TopicManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/TopicManager.cs:375)
+	TopicManager:Initialise(GameState) (at Assets/Scripts/Managers/TopicManager.cs:273)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:880)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	WARNING Unrecognised topicSubType "ResistanceCampaign" for topicType "Resistance"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:UpdateTopicPools() (at Assets/Scripts/Managers/TopicManager.cs:971)
+	TopicManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/TopicManager.cs:375)
+	TopicManager:Initialise(GameState) (at Assets/Scripts/Managers/TopicManager.cs:273)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:880)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	
