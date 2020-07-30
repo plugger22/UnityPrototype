@@ -128,6 +128,12 @@ public class LoadManager : MonoBehaviour
     public TopicOption[] arrayOfOptionsOrgHQ;
     public TopicOption[] arrayOfOptionsOrgEmergency;
     public TopicOption[] arrayOfOptionsOrgInfo;
+    public TopicOption[] arrayOfOptionsStoryBrother;
+    public TopicOption[] arrayOfOptionsStoryDrugs;
+    public TopicOption[] arrayOfOptionsStoryImperator;
+    public TopicOption[] arrayOfOptionsStoryLunaHub;
+    public TopicOption[] arrayOfOptionsStoryParents;
+    public TopicOption[] arrayOfOptionsStoryPurplePig;
 
     [Header("Targets")]
     public Target[] arrayOfTargetsGeneric;
@@ -275,6 +281,12 @@ public class LoadManager : MonoBehaviour
         listOfOptions.AddRange(arrayOfOptionsOrgHQ);
         listOfOptions.AddRange(arrayOfOptionsOrgEmergency);
         listOfOptions.AddRange(arrayOfOptionsOrgInfo);
+        listOfOptions.AddRange(arrayOfOptionsStoryBrother);
+        listOfOptions.AddRange(arrayOfOptionsStoryDrugs);
+        listOfOptions.AddRange(arrayOfOptionsStoryImperator);
+        listOfOptions.AddRange(arrayOfOptionsStoryLunaHub);
+        listOfOptions.AddRange(arrayOfOptionsStoryParents);
+        listOfOptions.AddRange(arrayOfOptionsStoryPurplePig);
         arrayOfTopicOptions = listOfOptions.ToArray();
         //
         // - - - MetaOptions (consolidate arrays)
