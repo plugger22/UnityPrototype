@@ -877,3 +877,748 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 54533 -> Friday, 31 July 2020 2:56 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 21026 -> Friday, 31 July 2020 3:35 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 32102 -> Friday, 31 July 2020 3:39 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 26764 -> Friday, 31 July 2020 3:40 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 48034 -> Friday, 31 July 2020 3:47 PM
+City seed 5678 -> London, United Kingdom
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+CampaignManager.DebugDisplayCampaignData () (at Assets/Scripts/Managers/CampaignManager.cs:556)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1598)
+	
+Dev seed 25022 -> Friday, 31 July 2020 3:51 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 29198 -> Friday, 31 July 2020 4:29 PM
+City seed 5678 -> London, United Kingdom
+City seed 5678 -> London, United Kingdom
+
+Dev seed 36996 -> Friday, 31 July 2020 4:31 PM
+City seed 5678 -> London, United Kingdom

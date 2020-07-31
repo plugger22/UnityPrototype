@@ -174,10 +174,12 @@ public class TopicManager : MonoBehaviour
     [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
     public TopicSubSubType teamSpider;
 
+    #region Save Data Compatible
     //Story Module topic Pools
     [HideInInspector] public TopicPool storyAlphaPool;
     [HideInInspector] public TopicPool storyBravoPool;
     [HideInInspector] public TopicPool storyCharliePool;
+    #endregion
 
     //type of topic
     private TopicGlobal topicGlobal;        //what type of topic is being generated, eg. Decision, Review, etc.

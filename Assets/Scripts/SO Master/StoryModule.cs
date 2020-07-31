@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,5 +27,43 @@ public class StoryModule : ScriptableObject
         Debug.AssertFormat(side != null, "Invalid side (Null) for {0}", name);
     }
 
-    
+    /// <summary>
+    /// returns Topic Pool from listOfCampaignStories based on input topicPool.name. Returns null if not found
+    /// </summary>
+    /// <param name="poolName"></param>
+    /// <returns></returns>
+    public TopicPool GetCampaignTopicPool(string poolName)
+    {
+        if (string.IsNullOrEmpty(poolName) == false)
+        { return listOfCampaignStories.Find(x => x.name.Equals(poolName, StringComparison.Ordinal) == true); }
+        else { Debug.LogWarning("Invalid poolName (Null or Empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// returns Topic Pool from listOfFamilyStories based on input topicPool.name. Returns null if not found
+    /// </summary>
+    /// <param name="poolName"></param>
+    /// <returns></returns>
+    public TopicPool GetFamilyTopicPool(string poolName)
+    {
+        if (string.IsNullOrEmpty(poolName) == false)
+        { return listOfFamilyStories.Find(x => x.name.Equals(poolName, StringComparison.Ordinal) == true); }
+        else { Debug.LogWarning("Invalid poolName (Null or Empty)"); }
+        return null;
+    }
+
+    /// <summary>
+    /// returns Topic Pool from listOfHqStories based on input topicPool.name. Returns null if not found
+    /// </summary>
+    /// <param name="poolName"></param>
+    /// <returns></returns>
+    public TopicPool GetHqTopicPool(string poolName)
+    {
+        if (string.IsNullOrEmpty(poolName) == false)
+        { return listOfHqStories.Find(x => x.name.Equals(poolName, StringComparison.Ordinal) == true); }
+        else { Debug.LogWarning("Invalid poolName (Null or Empty)"); }
+        return null;
+    }
+
 }

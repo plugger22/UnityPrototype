@@ -1665,6 +1665,14 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void WriteTopicData()
     {
+        //story modules
+        if (GameManager.i.topicScript.storyAlphaPool != null)
+        { write.topicData.storyAlpha = GameManager.i.topicScript.storyAlphaPool.name; }
+        if (GameManager.i.topicScript.storyBravoPool != null)
+        { write.topicData.storyBravo = GameManager.i.topicScript.storyBravoPool.name; }
+        if (GameManager.i.topicScript.storyCharliePool != null)
+        { write.topicData.storyCharlie = GameManager.i.topicScript.storyCharliePool.name; }
+        //topics
         Dictionary<string, Topic> dictOfTopics = GameManager.i.dataScript.GetDictOfTopics();
         if (dictOfTopics != null)
         {
@@ -3714,6 +3722,27 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void ReadTopicData()
     {
+        //storyModules
+        Campaign campaign = GameManager.i.campaignScript.campaign;
+        if (campaign != null)
+        {
+            //alpha -> Campaign
+            if (string.IsNullOrEmpty(read.topicData.storyAlpha) == false)
+            { GameManager.i.topicScript.storyAlphaPool = campaign.story.GetCampaignTopicPool(read.topicData.storyAlpha); }
+            else { GameManager.i.topicScript.storyAlphaPool = null; }
+            //bravo -> Family
+            if (string.IsNullOrEmpty(read.topicData.storyBravo) == false)
+            { GameManager.i.topicScript.storyBravoPool = campaign.story.GetFamilyTopicPool(read.topicData.storyBravo); }
+            else { GameManager.i.topicScript.storyBravoPool = null; }
+            //charlie -> Resistance/Authority
+            if (string.IsNullOrEmpty(read.topicData.storyCharlie) == false)
+            { GameManager.i.topicScript.storyCharliePool = campaign.story.GetHqTopicPool(read.topicData.storyCharlie); }
+            else { GameManager.i.topicScript.storyCharliePool = null; }
+        }
+        else { Debug.LogError("Invalid campaign (Null)"); }
+        //
+        // - - - Topics
+        //
         //reset topics (isCurrent to False) prior to loading changes
         GameManager.i.dataScript.ResetTopics();
         //read in dynamic data

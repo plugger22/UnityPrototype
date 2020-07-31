@@ -550,7 +550,11 @@ public class CampaignManager : MonoBehaviour
         org = campaign.orgInfo;
         if (org != null)
         { builder.AppendFormat(" orgInfo: {0}, rep {1}, free {2}, isContact {3}{4}", org.tag, org.GetReputation(), org.GetFreedom(), org.isContact, "\n"); }
-
+        //story modules
+        builder.AppendFormat("{0} Story Modules{1}", "\n", "\n");
+        builder.AppendFormat(" storyAlpha (Campaign): {0}{1}", GameManager.i.topicScript.storyAlphaPool != null ? GameManager.i.topicScript.storyAlphaPool.tag : "None", "\n");
+        builder.AppendFormat(" storyBravo (Family): {0}{1}", GameManager.i.topicScript.storyBravoPool != null ? GameManager.i.topicScript.storyBravoPool.tag : "None", "\n");
+        builder.AppendFormat(" storyCharlie (Hq): {0}{1}", GameManager.i.topicScript.storyCharliePool != null ? GameManager.i.topicScript.storyCharliePool.tag : "None", "\n");
         return builder.ToString();
     }
 

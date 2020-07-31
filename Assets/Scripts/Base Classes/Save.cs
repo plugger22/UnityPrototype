@@ -468,6 +468,9 @@ public class SaveGearData
 [System.Serializable]
 public class SaveTopicData
 {
+    public string storyAlpha;
+    public string storyBravo;
+    public string storyCharlie;
     public List<SaveTopic> listOfTopics = new List<SaveTopic>();
 }
 #endregion
