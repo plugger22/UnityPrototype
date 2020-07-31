@@ -532,8 +532,49 @@ public class TopicManager : MonoBehaviour
             StoryModule story = campaign.story;
             if (story != null)
             {
+                int count;
                 //DEBUG / Placeholder -> randomly selects story modules to be used (should be player choice in new game set-up)
-
+                if (story.listOfCampaignStories != null)
+                {
+                    count = story.listOfCampaignStories.Count;
+                    if (count > 0)
+                    {
+                        storyAlphaPool = story.listOfCampaignStories[Random.Range(0, count)];
+                        if (storyAlphaPool == null)
+                        { Debug.LogError("Invalid storyAlphaPool (Null)"); }
+                        else { Debug.LogFormat("[Cam] TopicManager.cs -> GetStoryTopicPool: storyAlphaPool \"{0}\"{1}", storyAlphaPool.tag, "\n"); }
+                    }
+                    else { Debug.LogWarning("Invalid story.listOfCampaignStories (Empty)"); }
+                }
+                else { Debug.LogWarning("Invalid storyModule.listOfCampaignStories (Null)"); }
+                //Bravo
+                if (story.listOfFamilyStories != null)
+                {
+                    count = story.listOfFamilyStories.Count;
+                    if (count > 0)
+                    {
+                        storyBravoPool = story.listOfFamilyStories[Random.Range(0, count)];
+                        if (storyBravoPool == null)
+                        { Debug.LogError("Invalid storyBravoPool (Null)"); }
+                        else { Debug.LogFormat("[Cam] TopicManager.cs -> GetStoryTopicPool: storyBravoPool \"{0}\"{1}", storyBravoPool.tag, "\n"); }
+                    }
+                    else { Debug.LogWarning("Invalid story.listOfFamilyStories (Empty)"); }
+                }
+                else { Debug.LogWarning("Invalid storyModule.listOfFamilyStories (Null)"); }
+                //Charlie
+                if (story.listOfHqStories != null)
+                {
+                    count = story.listOfHqStories.Count;
+                    if (count > 0)
+                    {
+                        storyCharliePool = story.listOfHqStories[Random.Range(0, count)];
+                        if (storyCharliePool == null)
+                        { Debug.LogError("Invalid storyCharliePool (Null)"); }
+                        else { Debug.LogFormat("[Cam] TopicManager.cs -> GetStoryTopicPool: storyCharliePool \"{0}\"{1}", storyCharliePool.tag, "\n"); }
+                    }
+                    else { Debug.LogWarning("Invalid story.listOfHqStories (Empty)"); }
+                }
+                else { Debug.LogWarning("Invalid storyModule.listOfHqStories (Null)"); }
             }
             else { Debug.LogError("Invalid storyModule (Null)"); }
         }
@@ -716,7 +757,6 @@ public class TopicManager : MonoBehaviour
                                                             isValid = true;
                                                         }
                                                         break;
-
                                                     case "AuthorityTeam":
                                                         if (campaign.teamPool != null)
                                                         {
@@ -730,7 +770,6 @@ public class TopicManager : MonoBehaviour
                                                             isValid = true;
                                                         }
                                                         break;
-
                                                     case "StoryAlpha":
                                                         if (storyAlphaPool != null)
                                                         {
@@ -1650,6 +1689,12 @@ public class TopicManager : MonoBehaviour
                     case "OrgInfo":
                         //based on your Reputation with Organisation
                         listOfPotentialTopics = GetOrgInfoTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
+                        break;
+                    case "StoryAlpha":
+                    case "StoryBravo":
+                    case "StoryCharlie":
+                        //based on playerMood
+                        listOfPotentialTopics = GetPlayerConditionTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     default:
                         Debug.LogWarningFormat("Unrecognised topicSubType \"{0}\" for topic \"{1}\"", turnTopicSubType.name, turnTopic.name);

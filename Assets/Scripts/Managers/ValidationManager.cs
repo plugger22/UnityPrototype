@@ -2840,6 +2840,9 @@ public class ValidationManager : MonoBehaviour
                             { Debug.LogFormat("{0}, topic \"{1}\", Invalid listOfBuddyTopics Count (is {2}, should be Zero){3}", tag, topic.name, topic.listOfBuddyTopics.Count, "\n"); }
                         }
                     }
+                    
+                    /*   DEBUG -> Temporarily switched OFF while developed story module topics
+                     
                     //Campaign scope
                     else if (topic.subType.scope.name.Equals(campaignScopeName, StringComparison.Ordinal) == true)
                     {
@@ -2914,6 +2917,8 @@ public class ValidationManager : MonoBehaviour
 
                     }
                     else { Debug.LogFormat("{0}, topic \"{1}\", Invalid subType.scope.name \"{2}\"{3}", tag, topic.name, topic.subType.scope.name, "\n"); }
+
+                    */
                 }
             }
         }

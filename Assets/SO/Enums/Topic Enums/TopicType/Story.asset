@@ -20,6 +20,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cbe3debfe6a42e74bba2c4c8929ec971, type: 2}
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   listOfCriteria:
-  - {fileID: 11400000, guid: 6f78dac5d7e54b942bdf43ad58ab63b7, type: 2}
-  isDisabled: 1
+  - {fileID: 11400000, guid: 37dbc21d6c2985e4caec1585eee818b6, type: 2}
+  isDisabled: 0
   minInterval: 0

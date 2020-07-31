@@ -253,3 +253,627 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 16179 -> Friday, 31 July 2020 11:32 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 35723 -> Friday, 31 July 2020 2:25 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 28768 -> Friday, 31 July 2020 2:32 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.DebugDisplayCriteria () (at Assets/Scripts/Managers/TopicManager.cs:7151)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1670)
+	
+Dev seed 50547 -> Friday, 31 July 2020 2:36 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 18116 -> Friday, 31 July 2020 2:46 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 43967 -> Friday, 31 July 2020 2:48 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 21117 -> Friday, 31 July 2020 2:49 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.GetTopic (GlobalSide playerSide) (at Assets/Scripts/Managers/TopicManager.cs:1694)
+	TopicManager.SelectTopic (GlobalSide playerSide) (at Assets/Scripts/Managers/TopicManager.cs:1126)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:334)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:251)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:393)
+	
+Dev seed 30394 -> Friday, 31 July 2020 2:52 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 54533 -> Friday, 31 July 2020 2:56 PM
+City seed 5678 -> London, United Kingdom

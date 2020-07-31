@@ -64,9 +64,9 @@ public class TransitionUI : MonoBehaviour
     private ModalTransitionSubState state;
 
     //colours
-    string colourDefault;
+    /*string colourDefault;
+    string colourGrey;*/
     string colourNeutral;
-    string colourGrey;
     string colourAlert;
     string colourNormal;
     /*string colourGood;
@@ -572,9 +572,9 @@ public class TransitionUI : MonoBehaviour
     /// </summary>
     public void SetColours()
     {
-        colourDefault = GameManager.i.colourScript.GetColour(ColourType.whiteText);
+        /*colourDefault = GameManager.i.colourScript.GetColour(ColourType.whiteText);
+        colourGrey = GameManager.i.colourScript.GetColour(ColourType.greyText);*/
         colourNeutral = GameManager.i.colourScript.GetColour(ColourType.neutralText);
-        colourGrey = GameManager.i.colourScript.GetColour(ColourType.greyText);
         colourAlert = GameManager.i.colourScript.GetColour(ColourType.salmonText);
         colourNormal = GameManager.i.colourScript.GetColour(ColourType.normalText);
         /*colourGood = GameManager.instance.colourScript.GetColour(ColourType.goodText);
