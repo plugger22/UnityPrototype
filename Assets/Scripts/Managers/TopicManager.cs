@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 /// <summary>
@@ -362,6 +361,8 @@ public class TopicManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid listOfTopicTypes (Null)"); }
+        //sort out story Modules
+        GetStoryTopicPools();
     }
     #endregion
 
@@ -517,6 +518,28 @@ public class TopicManager : MonoBehaviour
     //
     // - - - Session Start - - -
     //
+
+    #region GetStoryTopicPools
+    /// <summary>
+    /// Pulls selected topic pools from Campaign.SO -> StoryModule and populates the three story module variables in TopicManager.cs with them prior to processing
+    /// </summary>
+    private void GetStoryTopicPools()
+    {
+        //get current campaign
+        Campaign campaign = GameManager.i.campaignScript.campaign;
+        if (campaign != null)
+        {
+            StoryModule story = campaign.story;
+            if (story != null)
+            {
+                //DEBUG / Placeholder -> randomly selects story modules to be used (should be player choice in new game set-up)
+
+            }
+            else { Debug.LogError("Invalid storyModule (Null)"); }
+        }
+        else { Debug.LogError("Invalid campaign (Null)"); }
+    }
+    #endregion
 
     #region UpdateTopicPools
     /// <summary>
@@ -1956,8 +1979,8 @@ public class TopicManager : MonoBehaviour
                             listOfSelection.Add(actorTemp);
                             if (isTestLog)
                             {
-                                    Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: {0}, {1}, actorID {2} has a valid SubSubType \"{3}\"{4}", actorTemp.actorName, actorTemp.arc.name,
-                                  actorTemp.actorID, turnTopicSubSubType.name, "\n");
+                                Debug.LogFormat("[Tst] TopicManager.cs -> GetActorDistrictTopics: {0}, {1}, actorID {2} has a valid SubSubType \"{3}\"{4}", actorTemp.actorName, actorTemp.arc.name,
+                              actorTemp.actorID, turnTopicSubSubType.name, "\n");
                             }
                         }
                         else
@@ -2160,7 +2183,7 @@ public class TopicManager : MonoBehaviour
         {
             //group depends on player mood
             group = GetGroupMood(GameManager.i.playerScript.GetMood());
-            
+
             //if no entries use entire list by default
             listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName, turnTopicSubSubType.name);
 
@@ -2295,7 +2318,7 @@ public class TopicManager : MonoBehaviour
                 listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
             }
             else
-            { Debug.LogWarningFormat("Invalid tagActorID \"{0}\", PlayerStats topic cancelled", tagActorID);  }
+            { Debug.LogWarningFormat("Invalid tagActorID \"{0}\", PlayerStats topic cancelled", tagActorID); }
         }
         else
         { Debug.LogWarning("Invalid listOfActors (Empty), PlayerStats topic cancelled"); }
@@ -2398,7 +2421,7 @@ public class TopicManager : MonoBehaviour
                 listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
             }
             else
-            { Debug.LogWarningFormat("Invalid tagActorID \"{0}\", PlayerStats topic cancelled", tagActorID);  }
+            { Debug.LogWarningFormat("Invalid tagActorID \"{0}\", PlayerStats topic cancelled", tagActorID); }
         }
         else
         { Debug.LogWarning("Invalid listOfActors (Empty), PlayerStats topic cancelled"); }
@@ -2903,8 +2926,8 @@ public class TopicManager : MonoBehaviour
         if (turnTopic != null)
         {
             //Data used for reverting back to normally selected topic if Debug topic doesn't fire
-            bool tagHqActorsOriginalValue = tagHqActors; 
-            string topicNormal = turnTopic.name; 
+            bool tagHqActorsOriginalValue = tagHqActors;
+            string topicNormal = turnTopic.name;
             string subTypeNormal = turnTopicSubType.name;
             //data package
             TopicUIData data = new TopicUIData();
