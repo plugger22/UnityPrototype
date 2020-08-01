@@ -379,6 +379,7 @@ public class TopicManager : MonoBehaviour
         GameManager.i.dataScript.ResetTopics();
         //establish which TopicTypes are valid for the level. Initialise profile and status data.
         UpdateTopicPools();
+        SetStoryGroupFlags();
     }
     #endregion
 
@@ -1045,6 +1046,25 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
+    #region SetStoryGroupFlags
+    /// <summary>
+    /// Set isStoryAlpha/Bravo/CharlieGood flags at start of each level
+    /// </summary>
+    private void SetStoryGroupFlags()
+    {
+        //done on a random basis at present but could be changed to something else
+        if (Random.Range(0, 100) < 50) { isStoryAlphaGood = true; }
+        else { isStoryAlphaGood = false; }
+        if (Random.Range(0, 100) < 50) { isStoryBravoGood = true; }
+        else { isStoryBravoGood = false; }
+        if (Random.Range(0, 100) < 50) { isStoryCharlieGood = true; }
+        else { isStoryCharlieGood = false; }
+        Debug.LogFormat("[Top] TopicManager.cs -> SetStoryGroupFlags: isStoryAlphaGood set {0}{1}", isStoryAlphaGood, "\n");
+        Debug.LogFormat("[Top] TopicManager.cs -> SetStoryGroupFlags: isStoryBravoGood set {0}{1}", isStoryBravoGood, "\n");
+        Debug.LogFormat("[Top] TopicManager.cs -> SetStoryGroupFlags: isStoryCharlieGood set {0}{1}", isStoryCharlieGood, "\n");
+    }
+    #endregion
+
     #endregion
 
     #region Select Topic...
@@ -1696,10 +1716,16 @@ public class TopicManager : MonoBehaviour
                         listOfPotentialTopics = GetOrgInfoTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "StoryAlpha":
+                        //based on isStoryAlphaGood flag
+                        listOfPotentialTopics = GetStoryAlphaTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
+                        break;
                     case "StoryBravo":
+                        //based on isStoryBravoGood flag
+                        listOfPotentialTopics = GetStoryBravoTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
+                        break;
                     case "StoryCharlie":
-                        //based on playerMood
-                        listOfPotentialTopics = GetPlayerConditionTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
+                        //based on isStoryCharlieGood flag
+                        listOfPotentialTopics = GetStoryCharlieTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     default:
                         Debug.LogWarningFormat("Unrecognised topicSubType \"{0}\" for topic \"{1}\"", turnTopicSubType.name, turnTopic.name);
@@ -2803,6 +2829,72 @@ public class TopicManager : MonoBehaviour
         }
         else
         { Debug.LogWarning("Invalid campaign.orgInfo (Null)"); }
+        return listOfTopics;
+    }
+    #endregion
+
+    #region GetStoryAlphaTopics
+    /// <summary>
+    /// subType storyAlpha selected based on story flags. Returns a list of suitable live topics. Returns empty if none found.
+    /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
+    /// </summary>
+    /// <param name="listOfSubTypeTopics"></param>
+    /// <param name="playerSide"></param>
+    /// <param name="subTypeName"></param>
+    /// <returns></returns>
+    private List<Topic> GetStoryAlphaTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
+    {
+        GroupType group = GroupType.Neutral;
+        List<Topic> listOfTopics = new List<Topic>();
+        //group based on story flag
+        if (isStoryAlphaGood == true) { group = GroupType.Good; }
+        else { group = GroupType.Bad; }
+        //if no entries then returns empty list and a warning
+        listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
+        return listOfTopics;
+    }
+    #endregion
+
+    #region GetStoryBravoTopics
+    /// <summary>
+    /// subType storyBravo selected based on story flags. Returns a list of suitable live topics. Returns empty if none found.
+    /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
+    /// </summary>
+    /// <param name="listOfSubTypeTopics"></param>
+    /// <param name="playerSide"></param>
+    /// <param name="subTypeName"></param>
+    /// <returns></returns>
+    private List<Topic> GetStoryBravoTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
+    {
+        GroupType group = GroupType.Neutral;
+        List<Topic> listOfTopics = new List<Topic>();
+        //group based on story flag
+        if (isStoryBravoGood == true) { group = GroupType.Good; }
+        else { group = GroupType.Bad; }
+        //if no entries then returns empty list and a warning
+        listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
+        return listOfTopics;
+    }
+    #endregion
+
+    #region GetStoryCharlieTopics
+    /// <summary>
+    /// subType storyCharlie selected based on story flags. Returns a list of suitable live topics. Returns empty if none found.
+    /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
+    /// </summary>
+    /// <param name="listOfSubTypeTopics"></param>
+    /// <param name="playerSide"></param>
+    /// <param name="subTypeName"></param>
+    /// <returns></returns>
+    private List<Topic> GetStoryCharlieTopics(List<Topic> listOfSubTypeTopics, GlobalSide playerSide, string subTypeName = "Unknown")
+    {
+        GroupType group = GroupType.Neutral;
+        List<Topic> listOfTopics = new List<Topic>();
+        //group based on story flag
+        if (isStoryCharlieGood == true) { group = GroupType.Good; }
+        else { group = GroupType.Bad; }
+        //if no entries then returns empty list and a warning
+        listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
         return listOfTopics;
     }
     #endregion
@@ -4541,7 +4633,10 @@ public class TopicManager : MonoBehaviour
                 {
                     if (isTestLog)
                     { Debug.LogFormat("[Tst] TopicManager.cs -> GetTopicGroup: No topics found for \"{0}\", group \"{1}\", All topics used{2}", subTypeName, group, "\n"); }
-                    listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live).ToList());
+                    //exclude story types from this, if none found then return empty list
+                    if (turnTopicType.name.Equals("Story", StringComparison.Ordinal) == false)
+                    { listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live).ToList()); }
+                    else { Debug.LogWarningFormat("No valid story topic found for topicType.{0}, topicSubType.{1}", turnTopic.name, turnTopicSubType.name); }
                 }
                 else
                 {
