@@ -12,7 +12,7 @@ public class LoadManager : MonoBehaviour
 {
 
     #region Arrays
-    [Header("Initialise Start Enums")]
+    [Header("Initialise Start")]
     public GlobalMeta[] arrayOfGlobalMeta;
     public GlobalChance[] arrayOfGlobalChance;
     public GlobalType[] arrayOfGlobalType;
@@ -44,6 +44,7 @@ public class LoadManager : MonoBehaviour
     public OrgType[] arrayOfOrgTypes;
     public HqPosition[] arrayOfHqPositions;
     public CaptureTool[] arrayOfCaptureTools;
+    public StoryModule[] arrayOfStoryModules;
 
     [Header("InitialiseStart")]
     public Condition[] arrayOfConditions;
@@ -173,6 +174,7 @@ public class LoadManager : MonoBehaviour
     public Mission[] arrayOfMissions;
     public Scenario[] arrayOfScenarios;
     public Campaign[] arrayOfCampaigns;
+
 
     //Consolidated arrays
     //NOTE: consolidation needs to happen in InitialiseStart for sequencing reasons
@@ -931,6 +933,13 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfNodeDatapoints has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No NodeDatapoints present"); }
+        //
+        // - - - Story Modules (not stored in a collection)
+        //
+        numArray = arrayOfStoryModules.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfStoryModules has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No StoryModules present"); }
     }
     #endregion
 
@@ -2036,6 +2045,7 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numArray == numDict, string.Format("Mismatch in Campaign count, array {0}, dict {1}", numArray, numDict));
         }
         else { Debug.LogError("Invalid dictOfCampaigns (Null) -> Import failed"); }
+
     }
 
     #endregion

@@ -1825,7 +1825,7 @@ public class ValidationManager : MonoBehaviour
         //Organisation
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfOrganisations);
         //OrgTypes
-        ValidateSOGeneric<OrgType>(GameManager.i.loadScript.arrayOfOrgTypes);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfOrgTypes);
         //Mayor
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfMayors);
         //DecisionAI
@@ -1833,22 +1833,23 @@ public class ValidationManager : MonoBehaviour
         //Mission
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfMissions);
         //TextList
-        ValidateSOGeneric<TextList>(GameManager.i.loadScript.arrayOfTextLists);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTextLists);
         //Target
-        ValidateSOGeneric<Target>(GameManager.i.loadScript.arrayOfTargets);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTargets);
         //VIP
-        ValidateSOGeneric<Npc>(GameManager.i.loadScript.arrayOfNpcs);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfNpcs);
         //VIP Nodes
-        ValidateSOGeneric<NpcNode>(GameManager.i.loadScript.arrayOfNpcNodes);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfNpcNodes);
         //VIP Actions
-        ValidateSOGeneric<NpcAction>(GameManager.i.loadScript.arrayOfNpcActions);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfNpcActions);
         //HqPositions
-        ValidateSOGeneric<HqPosition>(GameManager.i.loadScript.arrayOfHqPositions);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfHqPositions);
         //CaptureTools
-        ValidateSOGeneric<CaptureTool>(GameManager.i.loadScript.arrayOfCaptureTools);
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfCaptureTools);
         //MetaOptions
-        ValidateSOGeneric<MetaOption>(GameManager.i.loadScript.arrayOfMetaOptions);
-
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfMetaOptions);
+        //StoryModules
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfStoryModules);
     }
     #endregion
 
@@ -1948,6 +1949,7 @@ public class ValidationManager : MonoBehaviour
             CheckMainInfoData(prefix, highestTurn);
             CheckContactData(prefix, highestContactID, highestNodeID, highestActorID, highestTurn, playerSide);
             CheckPlayerData(prefix);
+            CheckStoryModuleData(prefix);
             CheckTopicData(prefix);
             CheckTraitData(prefix);
             CheckTextListData(prefix);
@@ -2796,6 +2798,79 @@ public class ValidationManager : MonoBehaviour
         CheckList(GameManager.i.playerScript.GetListOfSecrets(), "listOfSecrets", tag);
         CheckList(GameManager.i.playerScript.GetListOfMoodHistory(), "listOfModdHistory", tag);
 
+    }
+    #endregion
+
+    #region CheckStoryModuleData
+    /// <summary>
+    /// Integrity check all topic pools within storyModules
+    /// </summary>
+    private void CheckStoryModuleData(string prefix)
+    {
+        string tag = string.Format("{0}{1}", prefix, "CheckStoryModuleData: ");
+        StoryModule[] arrayOfStoryModules = GameManager.i.loadScript.arrayOfStoryModules;
+        if (arrayOfStoryModules != null)
+        {
+            int count = arrayOfStoryModules.Length;
+            if (count > 0)
+            {
+                for (int index = 0; index < count; index++)
+                {
+                    StoryModule story = arrayOfStoryModules[index];
+                    if (story != null)
+                    {
+                        //story Alpha -> Campaign
+                        for (int i = 0; i < story.listOfCampaignStories.Count; i++)
+                        {
+                            TopicPool pool = story.listOfCampaignStories[i];
+                            if (pool != null)
+                            {
+                                //check topicType is correct
+                                if (pool.type.name.Equals("Story", StringComparison.Ordinal) == false)
+                                { Debug.LogFormat("{0} Invalid topicType \"{0}\" (should be Story) for topicPool \"{1}\" in {2}.listOfCampaignStories[{3}]{4}", tag, pool.type.name, pool.name, i, "\n"); }
+                                //check topicSubType is correct
+                                if (pool.subType.name.Equals("StoryAlpha", StringComparison.Ordinal) == false)
+                                { Debug.LogFormat("{0} Invalid topicSubType \"{1}\" (should be StoryAlpha) for topicPool \"{2}\" in {3}.listOfCampaignStories[{4}]{5}", tag, pool.subType.name, pool.name, story.name, i, "\n"); }
+                            }
+                            else { Debug.LogFormat("{0} Invalid topicPool (Null) for {1}.listOfCampaignStories[{2}]{3}", tag, story.name, i, "\n"); }
+                        }
+                        //story Bravo -> Family
+                        for (int i = 0; i < story.listOfFamilyStories.Count; i++)
+                        {
+                            TopicPool pool = story.listOfFamilyStories[i];
+                            if (pool != null)
+                            {
+                                //check topicType is correct
+                                if (pool.type.name.Equals("Story", StringComparison.Ordinal) == false)
+                                { Debug.LogFormat("{0} Invalid topicType \"{0}\" (should be Story) for topicPool \"{1}\" in {2}.listOfFamilyStories[{3}]{4}", tag, pool.type.name, pool.name, i, "\n"); }
+                                //check topicSubType is correct
+                                if (pool.subType.name.Equals("StoryBravo", StringComparison.Ordinal) == false)
+                                { Debug.LogFormat("{0} Invalid topicSubType \"{1}\" (should be StoryBravo) for topicPool \"{2}\" in {3}.listOfFamilyStories[{4}]{5}", tag, pool.subType.name, pool.name, story.name, i, "\n"); }
+                            }
+                            else { Debug.LogFormat("{0} Invalid topicPool (Null) for {1}.listOfFamilyStories[{2}]{3}", tag, story.name, i, "\n"); }
+                        }
+                        //story Charlie -> Authority/Resistance
+                        for (int i = 0; i < story.listOfHqStories.Count; i++)
+                        {
+                            TopicPool pool = story.listOfHqStories[i];
+                            if (pool != null)
+                            {
+                                //check topicType is correct
+                                if (pool.type.name.Equals("Story", StringComparison.Ordinal) == false)
+                                { Debug.LogFormat("{0} Invalid topicType \"{0}\" (should be Story) for topicPool \"{1}\" in {2}.listOfHqStories[{3}]{4}", tag, pool.type.name, pool.name, i, "\n"); }
+                                //check topicSubType is correct
+                                if (pool.subType.name.Equals("StoryCharlie", StringComparison.Ordinal) == false)
+                                { Debug.LogFormat("{0} Invalid topicSubType \"{1}\" (should be StoryCharlie) for topicPool \"{2}\" in {3}.listOfHqStories[{4}]{5}", tag, pool.subType.name, pool.name, story.name, i, "\n"); }
+                            }
+                            else { Debug.LogFormat("{0} Invalid topicPool (Null) for {1}.listOfHqStories[{2}]{3}", tag, story.name, i, "\n"); }
+                        }
+                    }
+                    else { Debug.LogFormat("{0} Invalid storyModule (Null) for arrayOfStoryModules[{1}]{2}", tag, index, "\n"); }
+                }
+            }
+            else { Debug.LogError("Invalid arrayOfStoryModules (Empty)"); }
+        }
+        else { Debug.LogError("Invalid arrayOfStoryModules (Null)"); }
     }
     #endregion
 

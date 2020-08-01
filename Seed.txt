@@ -1622,3 +1622,35 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 36996 -> Friday, 31 July 2020 4:31 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 6486 -> Friday, 31 July 2020 8:29 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 4095 -> Saturday, 1 August 2020 11:25 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 13116 -> Saturday, 1 August 2020 11:46 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 6408 -> Saturday, 1 August 2020 11:47 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 35431 -> Saturday, 1 August 2020 11:51 AM
+City seed 5678 -> London, United Kingdom
+ASSERT FormatException: Index (zero based) must be greater than or equal to zero and less than the size of the argument list.
+System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.String.FormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.String.Format (System.String format, System.Object[] args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	UnityEngine.DebugLogHandler.LogFormat (UnityEngine.LogType logType, UnityEngine.Object context, System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Logger/DebugLogHandler.cs:9)
+	UnityEngine.Logger.LogFormat (UnityEngine.LogType logType, System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Logger/Logger.cs:113)
+	UnityEngine.Debug.LogFormat (System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Debug.bindings.cs:108)
+	ValidationManager.CheckStoryModuleData (System.String prefix) (at Assets/Scripts/Managers/ValidationManager.cs:2833)
+	ValidationManager.ExecuteIntegrityCheck () (at Assets/Scripts/Managers/ValidationManager.cs:1952)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:270)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:393)
+	
+Dev seed 33101 -> Saturday, 1 August 2020 11:53 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 28769 -> Saturday, 1 August 2020 12:11 PM
+City seed 5678 -> London, United Kingdom
