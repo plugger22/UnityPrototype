@@ -179,6 +179,9 @@ public class TopicManager : MonoBehaviour
     [HideInInspector] public TopicPool storyAlphaPool;
     [HideInInspector] public TopicPool storyBravoPool;
     [HideInInspector] public TopicPool storyCharliePool;
+    [HideInInspector] public bool isStoryAlphaGood;             //determines topicGroupType.storyAlpha is good (true) or bad (false)
+    [HideInInspector] public bool isStoryBravoGood;
+    [HideInInspector] public bool isStoryCharlieGood;
     #endregion
 
     //type of topic
@@ -7389,6 +7392,27 @@ public class TopicManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid topictypeData (Null)"); }
         return false;
+    }
+
+    /// <summary>
+    /// displays all relevant story data (storyAlpha/Bravo/Charlie)
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayStoryData()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("- Story Data{0}{1}", "\n", "\n");
+        //story modules
+        builder.AppendFormat(" Story Modules{1}", "\n");
+        builder.AppendFormat(" storyAlpha (Campaign): {0}{1}", storyAlphaPool != null ? storyAlphaPool.tag : "None", "\n");
+        builder.AppendFormat(" storyBravo (Family): {0}{1}", storyBravoPool != null ? storyBravoPool.tag : "None", "\n");
+        builder.AppendFormat(" storyCharlie (Hq): {0}{1}", storyCharliePool != null ? storyCharliePool.tag : "None", "\n");
+        //group flags
+        builder.AppendFormat("{0} Group Flags{1}", "\n", "\n");
+        builder.AppendFormat(" isStoryAlphaGood: {0}{1}", isStoryAlphaGood, "\n");
+        builder.AppendFormat(" isStoryBravoGood: {0}{1}", isStoryBravoGood, "\n");
+        builder.AppendFormat(" isStoryCharlieGood: {0}{1}", isStoryCharlieGood, "\n");
+        return builder.ToString();
     }
 
     #endregion

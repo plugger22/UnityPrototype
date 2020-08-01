@@ -74,7 +74,6 @@ public class SaveCampaignData
 {
     public string campaignName;
     public int scenarioIndex;
-    public int[] arrayOfStoryStatus;
     public int commendations;
     public int blackMarks;
     public int investigationBlackMarks;
@@ -471,6 +470,9 @@ public class SaveTopicData
     public string storyAlpha;
     public string storyBravo;
     public string storyCharlie;
+    public bool isStoryAlphaGood;
+    public bool isStoryBravoGood;
+    public bool isStoryCharlieGood;
     public List<SaveTopic> listOfTopics = new List<SaveTopic>();
 }
 #endregion

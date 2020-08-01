@@ -22,8 +22,6 @@ public class CampaignManager : MonoBehaviour
 
 
     #region Save Data Compatible
-    //master flags used to progress Story elements
-    [HideInInspector] public int[] arrayOfStoryStatus;
     private int scenarioIndex;                   //list index of current scenario, eg. '0' for first in the list at start of the campaign
     [HideInInspector] public Campaign campaign;
     [HideInInspector] public Scenario scenario;
@@ -35,8 +33,6 @@ public class CampaignManager : MonoBehaviour
     public void InitialiseGame(GameState state)
     {
         Debug.Assert(campaign != null, "Invalid campaign (Null)");
-        //collections
-        arrayOfStoryStatus = new int[numOfFlags];
         Debug.LogFormat("[Cam] CampaignManager.cs -> Initialise: There are {0} scenarios in the \"{1}\" campaign{2}", campaign.listOfScenarios.Count, campaign.tag, "\n");
     }
 
@@ -218,7 +214,6 @@ public class CampaignManager : MonoBehaviour
     public void Reset()
     {
         scenarioIndex = 0;
-        Array.Clear(arrayOfStoryStatus, 0, arrayOfStoryStatus.Length);
         commendations = 0;
         blackmarks = 0;
         investigationBlackmarks = 1;
@@ -285,8 +280,6 @@ public class CampaignManager : MonoBehaviour
     public int GetMaxScenarioIndex()
     { return campaign.listOfScenarios.Count - 1; }
 
-    public int[] GetArrayOfStoryStatus()
-    { return arrayOfStoryStatus; }
 
     /// <summary>
     /// Sets the current scenario and the scenario index according to the supplied parameter
@@ -300,23 +293,6 @@ public class CampaignManager : MonoBehaviour
         { Debug.LogErrorFormat("Invalid scenario (Null) for scenarioIndex {0}", index); }
     }
 
-    /// <summary>
-    /// assign data from a save game storyArray. Overwrites existing data.
-    /// </summary>
-    /// <param name="storyArray"></param>
-    public void SetArrayOfStoryStatus(int[] storyArray)
-    {
-        if (storyArray != null)
-        {
-            //clear existing array
-            Array.Clear(arrayOfStoryStatus, 0, arrayOfStoryStatus.Length);
-            //check both are same length
-            Debug.AssertFormat(storyArray.Length == arrayOfStoryStatus.Length, "Mismatch on size of storyArray {0} and arrayOfStoryStatus {1} (should be the same)", storyArray.Length, arrayOfStoryStatus.Length);
-            //copy data across
-            Array.Copy(storyArray, arrayOfStoryStatus, storyArray.Length);
-        }
-        else { Debug.LogError("Invalid storyArray parameter (Null)"); }
-    }
 
     /// <summary>
     /// sets mission from loaded save data
@@ -527,12 +503,6 @@ public class CampaignManager : MonoBehaviour
         builder.AppendFormat(" Level WinReason: {0}{1}", GameManager.i.turnScript.winReasonLevel, "\n");
         builder.AppendFormat(" Campaign WinState: {0}{1}", GameManager.i.turnScript.winStateCampaign, "\n");
         builder.AppendFormat(" Campaign WinReason: {0}{1}", GameManager.i.turnScript.winReasonCampaign, "\n");
-        //story Status array
-        builder.AppendFormat("{0} ArrayOfStoryStatus{1}", "\n", "\n");
-        /*for (int i = 0; i < arrayOfStoryStatus.Length; i++)
-        { builder.AppendFormat(" {0} status: {1}{2}", i, arrayOfStoryStatus[i], "\n"); }*/
-        count = 0;
-        Array.ForEach(arrayOfStoryStatus, status => builder.AppendFormat(" {0} status: {1}{2}", count++, status, "\n"));
         //organisations
         builder.AppendFormat("{0} Organisations{1}", "\n", "\n");
         Organisation org = campaign.orgCure;
@@ -550,11 +520,6 @@ public class CampaignManager : MonoBehaviour
         org = campaign.orgInfo;
         if (org != null)
         { builder.AppendFormat(" orgInfo: {0}, rep {1}, free {2}, isContact {3}{4}", org.tag, org.GetReputation(), org.GetFreedom(), org.isContact, "\n"); }
-        //story modules
-        builder.AppendFormat("{0} Story Modules{1}", "\n", "\n");
-        builder.AppendFormat(" storyAlpha (Campaign): {0}{1}", GameManager.i.topicScript.storyAlphaPool != null ? GameManager.i.topicScript.storyAlphaPool.tag : "None", "\n");
-        builder.AppendFormat(" storyBravo (Family): {0}{1}", GameManager.i.topicScript.storyBravoPool != null ? GameManager.i.topicScript.storyBravoPool.tag : "None", "\n");
-        builder.AppendFormat(" storyCharlie (Hq): {0}{1}", GameManager.i.topicScript.storyCharliePool != null ? GameManager.i.topicScript.storyCharliePool.tag : "None", "\n");
         return builder.ToString();
     }
 

@@ -489,8 +489,12 @@ public class DebugGUI : MonoBehaviour
 
             //twentyNinth button
             modifier = 27;
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * modifier + button_height * modifier, button_width, button_height), ""))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * modifier + button_height * modifier, button_width, button_height), "Story Data"))
             {
+                Debug.Log("[Dbg] Button -> Story Data");
+                if (debugDisplay != 109)
+                { debugDisplay = 109; }
+                else { debugDisplay = 0; }
             }
 
             //
@@ -1959,6 +1963,12 @@ public class DebugGUI : MonoBehaviour
                     case 108:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.dataScript.DebugDisplayGearDict();
+                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 750), analysis, customBackground);
+                        break;
+                    //Story DataDisplay
+                    case 109:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.i.topicScript.DebugDisplayStoryData();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 750), analysis, customBackground);
                         break;
                 }

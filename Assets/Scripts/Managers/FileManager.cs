@@ -284,7 +284,6 @@ public class FileManager : MonoBehaviour
     {
         write.campaignData.campaignName = GameManager.i.campaignScript.campaign.name;
         write.campaignData.scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex();
-        write.campaignData.arrayOfStoryStatus = GameManager.i.campaignScript.GetArrayOfStoryStatus();
         write.campaignData.commendations = GameManager.i.campaignScript.GetCommendations();
         write.campaignData.blackMarks = GameManager.i.campaignScript.GetBlackmarks();
         write.campaignData.investigationBlackMarks = GameManager.i.campaignScript.GetInvestigationBlackmarks();
@@ -1672,6 +1671,10 @@ public class FileManager : MonoBehaviour
         { write.topicData.storyBravo = GameManager.i.topicScript.storyBravoPool.name; }
         if (GameManager.i.topicScript.storyCharliePool != null)
         { write.topicData.storyCharlie = GameManager.i.topicScript.storyCharliePool.name; }
+        //group type flags
+        write.topicData.isStoryAlphaGood = GameManager.i.topicScript.isStoryAlphaGood;
+        write.topicData.isStoryBravoGood = GameManager.i.topicScript.isStoryBravoGood;
+        write.topicData.isStoryCharlieGood = GameManager.i.topicScript.isStoryCharlieGood;
         //topics
         Dictionary<string, Topic> dictOfTopics = GameManager.i.dataScript.GetDictOfTopics();
         if (dictOfTopics != null)
@@ -1962,8 +1965,6 @@ public class FileManager : MonoBehaviour
         else { Debug.LogErrorFormat("Invalid campaign (Null) for campaign {0}", read.campaignData.campaignName); }
         //scenario
         GameManager.i.campaignScript.SetScenario(read.campaignData.scenarioIndex);
-        //arrayOfStoryStatus
-        GameManager.i.campaignScript.SetArrayOfStoryStatus(read.campaignData.arrayOfStoryStatus);
         //mission
         GameManager.i.campaignScript.SetMission();
         //campaign status
@@ -3740,6 +3741,10 @@ public class FileManager : MonoBehaviour
             else { GameManager.i.topicScript.storyCharliePool = null; }
         }
         else { Debug.LogError("Invalid campaign (Null)"); }
+        //group type flags
+        GameManager.i.topicScript.isStoryAlphaGood = read.topicData.isStoryAlphaGood;
+        GameManager.i.topicScript.isStoryBravoGood = read.topicData.isStoryBravoGood;
+        GameManager.i.topicScript.isStoryCharlieGood = read.topicData.isStoryCharlieGood;
         //
         // - - - Topics
         //
