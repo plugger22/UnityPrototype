@@ -7498,7 +7498,7 @@ public class TopicManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- Story Data{0}{1}", "\n", "\n");
         //story modules
-        builder.AppendFormat(" Story Modules{1}", "\n");
+        builder.AppendFormat(" Story Modules{0}", "\n");
         builder.AppendFormat(" storyAlpha (Campaign): {0}{1}", storyAlphaPool != null ? storyAlphaPool.tag : "None", "\n");
         builder.AppendFormat(" storyBravo (Family): {0}{1}", storyBravoPool != null ? storyBravoPool.tag : "None", "\n");
         builder.AppendFormat(" storyCharlie (Hq): {0}{1}", storyCharliePool != null ? storyCharliePool.tag : "None", "\n");
