@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: storyLunaHub3
+  m_EditorClassIdentifier: 
+  tag: ss
+  text: Unknown
+  designNotes: storyLunaHub3
+  type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
+  subType: {fileID: 11400000, guid: bdf3a8a85780b674f81d87a4766c3b61, type: 2}
+  subSubType: {fileID: 0}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics: []
+  listOfBuddyTopics:
+  - {fileID: 11400000, guid: fb14e9307f25b8742b7d94cef1dec9e2, type: 2}
+  - {fileID: 11400000}
+  linkedIndex: 1
+  profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
+  listOfCriteria: []
+  listOfIgnoreEffects: []
+  listOfOptions:
+  - {fileID: 11400000, guid: fdce3f25e3c6f2040a688418eb6c0399, type: 2}
+  - {fileID: 11400000, guid: 8db6fbcd4c376824dbc6f3c4a887bfa2, type: 2}
+  - {fileID: 11400000, guid: e9ff8634614030347973ad11f7cdb277, type: 2}
+  - {fileID: 11400000, guid: 1d09a612a029ed940aebb800ba048f31, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  status: 0
+  isCurrent: 0
+  timerStart: 0
+  timerRepeat: 0
+  timerWindow: 0
+  turnsDormant: 0
+  turnsActive: 0
+  turnsLive: 0
+  turnsDone: 0

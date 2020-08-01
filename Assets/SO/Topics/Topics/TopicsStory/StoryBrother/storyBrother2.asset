@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: storyBrother2
+  m_EditorClassIdentifier: 
+  tag: ss
+  text: Unknown
+  designNotes: storyBrother2
+  type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
+  subType: {fileID: 11400000, guid: 9c0b06df8df43f641b72a6ea311f55a1, type: 2}
+  subSubType: {fileID: 0}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics:
+  - {fileID: 0}
+  listOfBuddyTopics:
+  - {fileID: 11400000}
+  - {fileID: 11400000, guid: d9ed9a7ab095a4046981a6ff4b90bdee, type: 2}
+  linkedIndex: 1
+  profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
+  listOfCriteria: []
+  listOfIgnoreEffects: []
+  listOfOptions:
+  - {fileID: 11400000, guid: 6878b8051eedaa74c8ffb8077a0fd096, type: 2}
+  - {fileID: 11400000, guid: e0d58b79f3f675b47aa5560a61193fb1, type: 2}
+  - {fileID: 11400000, guid: 4ee7bd0dbadb0f64bbadbc5f0fa0328a, type: 2}
+  - {fileID: 11400000, guid: 1abb3b8b76ac6994b91ecd5110785491, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  status: 2
+  isCurrent: 0
+  timerStart: 0
+  timerRepeat: 0
+  timerWindow: 0
+  turnsDormant: 0
+  turnsActive: 0
+  turnsLive: 19
+  turnsDone: 0
