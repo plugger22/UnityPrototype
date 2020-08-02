@@ -41,7 +41,7 @@ public class Topic : ScriptableObject
     [Header("Linked Indexes")]
     [Tooltip("The position of the topic in the linked sequence (for Level) where 0 is the start. Multiple topics can have the same linkedIndex (e.g, Buddy topics). Default -1 indicates not part of a linked sequence")]
     public int linkedIndex = -1;
-    [Tooltip("Specifies the level that the topic is current. Campaign topics in the same pool, with the same levelIndex (0 to 4), play out in their linked index sequence. Default -1 for anything other than Campaign scope")]
+    [Tooltip("Specifies the level that the topic applies to. Campaign topics, with the same levelIndex (0 to Max, usually 4), play out in their linked index sequence. Default -1 for any other than Campaign scope")]
     public int levelIndex = -1;
 
     [Header("Profile")]

@@ -4307,3 +4307,41 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 31584 -> Sunday, 2 August 2020 4:49 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 57696 -> Sunday, 2 August 2020 5:50 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 50891 -> Sunday, 2 August 2020 5:51 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38079 -> Sunday, 2 August 2020 5:53 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 53851 -> Sunday, 2 August 2020 5:54 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 23007 -> Sunday, 2 August 2020 5:58 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38856 -> Sunday, 2 August 2020 6:00 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.GetTopicGroup (System.Collections.Generic.List`1[T] inputList, gameAPI.GroupType group, System.String subTypeName, System.String subSubTypeName) (at Assets/Scripts/Managers/TopicManager.cs:4648)
+	TopicManager.GetStoryCharlieTopics (System.Collections.Generic.List`1[T] listOfSubTypeTopics, GlobalSide playerSide, System.String subTypeName) (at Assets/Scripts/Managers/TopicManager.cs:2906)
+	TopicManager.GetTopic (GlobalSide playerSide) (at Assets/Scripts/Managers/TopicManager.cs:1737)
+	TopicManager.SelectTopic (GlobalSide playerSide) (at Assets/Scripts/Managers/TopicManager.cs:1160)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:334)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:251)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:393)
+	
+Dev seed 5896 -> Sunday, 2 August 2020 6:01 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 60228 -> Sunday, 2 August 2020 6:03 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 32253 -> Sunday, 2 August 2020 6:04 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 17172 -> Sunday, 2 August 2020 6:05 PM
+City seed 5678 -> London, United Kingdom

@@ -1950,7 +1950,7 @@ public class ValidationManager : MonoBehaviour
             CheckContactData(prefix, highestContactID, highestNodeID, highestActorID, highestTurn, playerSide);
             CheckPlayerData(prefix);
             CheckStoryModuleData(prefix);
-            CheckTopicData(prefix);
+            CheckTopicData(prefix, highestScenario);
             CheckTraitData(prefix);
             CheckTextListData(prefix);
             CheckRelationsData(prefix);
@@ -2879,7 +2879,7 @@ public class ValidationManager : MonoBehaviour
     /// Integrity check of all relevant dynamic Topic data
     /// </summary>
     /// <param name="prefix"></param>
-    private void CheckTopicData(string prefix)
+    private void CheckTopicData(string prefix, int highestScenarioIndex)
     {
         int index;
         string tag = string.Format("{0}{1}", prefix, "CheckTopicData: ");
@@ -2987,7 +2987,45 @@ public class ValidationManager : MonoBehaviour
                                 }
                             }
                         }
-
+                        //level index
+                        if (topic.levelIndex < 0 || topic.levelIndex > highestScenarioIndex)
+                        { Debug.LogFormat("{0}, topic \"{1}\", invalid levelIndex {2} (should be between 0 and {3}){4}", tag, topic.name, topic.levelIndex, highestScenarioIndex, "\n"); }
+                        //check linked topics have same levelIndex
+                        if (topic.listOfLinkedTopics != null)
+                        {
+                            if (topic.listOfLinkedTopics.Count > 0)
+                            {
+                                index = topic.levelIndex;
+                                for (int i = 0; i < topic.listOfLinkedTopics.Count; i++)
+                                {
+                                    Topic linkedTopic = topic.listOfLinkedTopics[i];
+                                    if (linkedTopic != null)
+                                    {
+                                        if (linkedTopic.levelIndex != index)
+                                        { Debug.LogFormat("{0}, topic \"{1}\", in listOfLinkedTopics has Invalid levelIndex (is {2}, should be {3}){4}", tag, linkedTopic.name, linkedTopic.levelIndex, topic.levelIndex, "\n"); }
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid topic (Null) in listOfLinkedTopics for \"{0}\"", linkedTopic.name); }
+                                }
+                            }
+                        }
+                        //check buddy topics have same levelIndex
+                        if (topic.listOfBuddyTopics != null)
+                        {
+                            if (topic.listOfBuddyTopics.Count > 0)
+                            {
+                                index = topic.levelIndex;
+                                for (int i = 0; i < topic.listOfBuddyTopics.Count; i++)
+                                {
+                                    Topic buddyTopic = topic.listOfBuddyTopics[i];
+                                    if (buddyTopic != null)
+                                    {
+                                        if (buddyTopic.levelIndex != index)
+                                        { Debug.LogFormat("{0}, topic \"{1}\", in listOfBuddyTopics has Invalid levelIndex (is {2}, should be {3}){4}", tag, buddyTopic.name, buddyTopic.levelIndex, topic.levelIndex, "\n"); }
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid topic (Null) in listOfBuddyTopics for \"{0}\"", buddyTopic.name); }
+                                }
+                            }
+                        }
                     }
                     else { Debug.LogFormat("{0}, topic \"{1}\", Invalid subType.scope.name \"{2}\"{3}", tag, topic.name, topic.subType.scope.name, "\n"); }
                 }
