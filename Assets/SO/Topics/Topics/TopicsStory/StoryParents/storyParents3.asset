@@ -25,6 +25,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 018d848ab824ee847ba069414a586906, type: 2}
   - {fileID: 11400000}
   linkedIndex: 1
+  levelIndex: 0
   profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
   listOfCriteria: []
   listOfIgnoreEffects: []

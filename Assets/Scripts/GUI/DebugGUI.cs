@@ -56,6 +56,7 @@ public class DebugGUI : MonoBehaviour
     private int actorToggle = 0;
     private int topicToggle = 0;
     private int secretToggle = 0;
+    private int storyToggle = 0;
     private int hqToggle = 0;
     private int analyseToggle = 0;
     private int statisticsToggle = 0;
@@ -492,9 +493,12 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * modifier + button_height * modifier, button_width, button_height), "Story Data"))
             {
                 Debug.Log("[Dbg] Button -> Story Data");
-                if (debugDisplay != 109)
-                { debugDisplay = 109; }
-                else { debugDisplay = 0; }
+                switch (storyToggle)
+                {
+                    case 0: debugDisplay = 109; storyToggle = 1; break;
+                    case 1: debugDisplay = 110; storyToggle = 2; break;
+                    case 2: debugDisplay = 0; storyToggle = 0; break;
+                }
             }
 
             //
@@ -1965,11 +1969,17 @@ public class DebugGUI : MonoBehaviour
                         analysis = GameManager.i.dataScript.DebugDisplayGearDict();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 750), analysis, customBackground);
                         break;
-                    //Story DataDisplay
+                    //Story Data Display
                     case 109:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.topicScript.DebugDisplayStoryData();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 750), analysis, customBackground);
+                        break;
+                    //Story Topic Display
+                    case 110:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.i.topicScript.DebugDisplayStoryTopics();
+                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 800), analysis, customBackground);
                         break;
                 }
             }

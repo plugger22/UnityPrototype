@@ -613,7 +613,7 @@ public class SaveGUIData
 #endregion
 
 
-#region SO's
+#region SO's ...
 //
 // - - - SO's - - -
 //
@@ -666,7 +666,7 @@ public class SaveGear
 public class SaveTopic
 {
     public string topicName;
-    public gameAPI.Status status;
+    public Status status;
     public int timerStart;
     public int timerRepeat;
     public int timerWindow;
@@ -680,7 +680,7 @@ public class SaveTopic
 #endregion
 
 
-#region Base Classes
+#region Base Classes ...
 //
 // - - - Base Classes - - -
 //
@@ -988,7 +988,7 @@ public class SaveMetaData
 #endregion
 
 
-#region SubClasses
+#region SubClasses ...
 /// <summary>
 /// MainInfoData subclass
 /// </summary>
@@ -1039,7 +1039,7 @@ public class SaveInfoPipeLineInfo
 #endregion 
 
 
-#region List Wrappers
+#region List Wrappers ...
 //
 // - - - List Wrappers (for nested Lists)
 //

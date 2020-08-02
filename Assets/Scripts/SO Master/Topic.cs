@@ -32,15 +32,17 @@ public class Topic : ScriptableObject
     [Tooltip("Which side (or 'Both') does this apply to?")]
     public GlobalSide side;
 
-    [Header("Linked Topic")]
+    [Header("Linked Lists")]
     [Tooltip("Once topic Live and resolved, the specified topics in the list (must be in same TopicPool) will switch from Done to Dormant (and activate as per it's profile). Ignore if not relevant")]
     public List<Topic> listOfLinkedTopics;
     [Tooltip("Any topics with the same linkedIndex, eg. All equivalent topics to the current one that could have been chosen but weren't. INCLUDE CURRENT TOPIC")]
     public List<Topic> listOfBuddyTopics;
 
-    [Header("Link In the Chain")]
-    [Tooltip("The position of the topic in the linked sequence where 0 is the start. Note that multiple topics can have the same linkedIndex (e.g, Buddy topics). Default -1 indicates not part of a linked sequence")]
+    [Header("Linked Indexes")]
+    [Tooltip("The position of the topic in the linked sequence (for Level) where 0 is the start. Multiple topics can have the same linkedIndex (e.g, Buddy topics). Default -1 indicates not part of a linked sequence")]
     public int linkedIndex = -1;
+    [Tooltip("Specifies the level that the topic is current. Campaign topics in the same pool, with the same levelIndex (0 to 4), play out in their linked index sequence. Default -1 for anything other than Campaign scope")]
+    public int levelIndex = -1;
 
     [Header("Profile")]
     [Tooltip("Profile with timer and repeat data")]

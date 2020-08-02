@@ -366,7 +366,7 @@ public class TopicManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid listOfTopicTypes (Null)"); }
-        //sort out story Modules
+        //obtain relevant story Modules
         GetStoryTopicPools();
     }
     #endregion
@@ -979,7 +979,7 @@ public class TopicManager : MonoBehaviour
     /// <param name="listOfTopics"></param>
     private void SetTopicDynamicData(List<Topic> listOfTopics)
     {
-        bool isFirstScenario = GameManager.i.campaignScript.CheckIsFirstScenario();
+        int scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex();
         //Review topics
         reviewCountdown = reviewPeriod;
         reviewActivationMiss = false;
@@ -1014,13 +1014,16 @@ public class TopicManager : MonoBehaviour
                             //isCurrent (all topics set to false prior to changes by SubInitialiseLevelStart
                             topic.isCurrent = true;
                         }
+                        //Campaign Scope
                         else if (topic.subType.scope.name.Equals(campaignScopeName, StringComparison.Ordinal) == true)
                         {
-                            //LINKED -> need to initialise linked sequence and have first pair status started normally 
-                            if (isFirstScenario == true)
+                            //check correct scenario
+                            if (topic.levelIndex == scenarioIndex)
                             {
+                                //check first link in sequence
                                 if (topic.linkedIndex == 0)
                                 {
+                                    //initialise
                                     if (topic.timerStart == 0)
                                     { topic.status = Status.Active; }
                                     else { topic.status = Status.Dormant; }
@@ -1029,10 +1032,16 @@ public class TopicManager : MonoBehaviour
                                 }
                                 else
                                 {
-                                    //set all none start campaign topics to 'Done' (but only right at the start as save/load game data will take over from there)
-                                    topic.status = Status.Done;
+                                    //level topic in sequence but not the first
+                                    topic.status = Status.Dormant;
                                     topic.isCurrent = false;
                                 }
+                            }
+                            else
+                            {
+                                //different level/scenario, not relevant
+                                topic.status = Status.Done;
+                                topic.isCurrent = false;
                             }
                         }
                         else { Debug.LogWarningFormat("Invalid topic.subType.scope.name \"{0}\", status not set", topic.subType.scope.name); }
@@ -7509,6 +7518,51 @@ public class TopicManager : MonoBehaviour
         builder.AppendFormat(" isStoryCharlieGood: {0}{1}", isStoryCharlieGood, "\n");
         return builder.ToString();
     }
+
+    /// <summary>
+    /// displays vital stats of all topics within the three story module pools
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayStoryTopics()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("- Story Topics{0}{1}", "\n", "\n");
+        //Alpha
+        builder.AppendFormat(" Alpha Pool (Campaign) -> \"{0}\"{1}", storyAlphaPool.tag, "\n");
+        builder.Append(DebugProcessStoryPool(storyAlphaPool));
+        //Bravo
+        builder.AppendFormat("{0} Bravo Pool (Campaign) -> \"{1}\"{2}", "\n", storyBravoPool.tag, "\n");
+        builder.Append(DebugProcessStoryPool(storyBravoPool));
+        //Charlie
+        builder.AppendFormat("{0} Charlie Pool (Campaign) -> \"{1}\"{2}", "\n", storyCharliePool.tag, "\n");
+        builder.Append(DebugProcessStoryPool(storyCharliePool));
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// SubMethod for DebugDisplayStoryTopics to process individual topic pools
+    /// </summary>
+    /// <param name="pool"></param>
+    /// <returns></returns>
+    private string DebugProcessStoryPool(TopicPool pool)
+    {
+        int count;
+        StringBuilder builder = new StringBuilder();
+        count = pool.listOfTopics.Count;
+        if (count > 0)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                Topic topic = pool.listOfTopics[i];
+                if (topic != null)
+                { builder.AppendFormat(" {0}: Link {1}, Lvl {2}, {3}, Current {4}, {5}{6}", topic.name, topic.linkedIndex, topic.levelIndex, topic.status, topic.isCurrent, topic.group.name, "\n"); }
+                else { Debug.LogErrorFormat("Invalid topic (Null) in {0}.listOfTopics[{1}]", pool.name, i); }
+            }
+        }
+        else { builder.AppendFormat(" No topics in Pool{0}", "\n"); }
+        return builder.ToString();
+    }
+
 
     #endregion
 

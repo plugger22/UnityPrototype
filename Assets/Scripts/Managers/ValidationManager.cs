@@ -2915,9 +2915,7 @@ public class ValidationManager : MonoBehaviour
                             { Debug.LogFormat("{0}, topic \"{1}\", Invalid listOfBuddyTopics Count (is {2}, should be Zero){3}", tag, topic.name, topic.listOfBuddyTopics.Count, "\n"); }
                         }
                     }
-                    
-                    /*   DEBUG -> Temporarily switched OFF while developed story module topics
-                     
+
                     //Campaign scope
                     else if (topic.subType.scope.name.Equals(campaignScopeName, StringComparison.Ordinal) == true)
                     {
@@ -2941,11 +2939,11 @@ public class ValidationManager : MonoBehaviour
                             if (topic.listOfBuddyTopics.Count == 0)
                             { Debug.LogFormat("{0}, topic \"{1}\", Invalid listOfBuddyTopics Count (is {2}, should be > 0){3}", tag, topic.name, topic.listOfBuddyTopics.Count, "\n"); }
                             //check for nulls
-                            CheckList<Topic>(topic.listOfBuddyTopics, "listOfBuddyTopics", topic.name);
+                            CheckList(topic.listOfBuddyTopics, string.Format("{0}.listOfBuddyTopics", topic.name), tag);
                             //check for duplicates
                             List<string> tempList = topic.listOfBuddyTopics.Select(x => x.name).ToList();
                             if (tempList != null)
-                            { CheckListForDuplicates<string>(tempList, "Topic", topic.name, "listOfBuddyTopics"); }
+                            { CheckListForDuplicates(tempList, "Topic", topic.name, "listOfBuddyTopics"); }
                             else { Debug.LogWarningFormat("Invalid tempList (Null) from {0}.listOfBuddyTopics", topic.name); }
                             //check topic is present in buddy list
                             if (topic.listOfBuddyTopics.Exists(x => x.name.Equals(topic.name)) == false)
@@ -2969,11 +2967,11 @@ public class ValidationManager : MonoBehaviour
                             if (topic.listOfLinkedTopics.Count > 0)
                             {
                                 //check for nulls
-                                CheckList<Topic>(topic.listOfLinkedTopics, "listOfLinkedTopics", topic.name);
+                                CheckList(topic.listOfLinkedTopics, string.Format("{0}.listOfLinkedTopics", topic.name), tag);
                                 //check for duplicates
                                 List<string> tempList = topic.listOfLinkedTopics.Select(x => x.name).ToList();
                                 if (tempList != null)
-                                { CheckListForDuplicates<string>(tempList, "Topic", topic.name, "listOfLinkedTopics"); }
+                                { CheckListForDuplicates(tempList, "Topic", topic.name, "listOfLinkedTopics"); }
                                 else { Debug.LogWarningFormat("Invalid tempList (Null) from {0}.listOfLinkedTopics", topic.name); }
                                 //should all have the same linkedIndex and it should be one more than the topic's linkedIndex
                                 index += 1;
@@ -2992,8 +2990,6 @@ public class ValidationManager : MonoBehaviour
 
                     }
                     else { Debug.LogFormat("{0}, topic \"{1}\", Invalid subType.scope.name \"{2}\"{3}", tag, topic.name, topic.subType.scope.name, "\n"); }
-
-                    */
                 }
             }
         }
@@ -3367,7 +3363,7 @@ public class ValidationManager : MonoBehaviour
 
     /// <summary>
     /// Check a standalone (not enscapsulated within a class) list for null and check all entries in list for null (optional, default true)
-    /// expectedCount used if you expect the list to have 'x' amount of records. Ignore otherwise.
+    /// expectedCount used if you expect the list to have 'x' amount of records. Ignore otherwise
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="list"></param>

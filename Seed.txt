@@ -4259,3 +4259,51 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 62640 -> Saturday, 1 August 2020 8:39 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 10731 -> Sunday, 2 August 2020 3:43 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ValidationManager.<CheckTopicData>m__16 (Topic x) (at Assets/Scripts/Managers/ValidationManager.cs:2971)
+	System.Linq.Enumerable+SelectListIterator`2[TSource,TResult].ToList () (at <839a3cb835c04d14aeb58d83bb7bc4bd>:0)
+	System.Linq.Enumerable.ToList[TSource] (System.Collections.Generic.IEnumerable`1[T] source) (at <839a3cb835c04d14aeb58d83bb7bc4bd>:0)
+	ValidationManager.CheckTopicData (System.String prefix) (at Assets/Scripts/Managers/ValidationManager.cs:2971)
+	ValidationManager.ExecuteIntegrityCheck () (at Assets/Scripts/Managers/ValidationManager.cs:1953)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:270)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:393)
+	
+Dev seed 33936 -> Sunday, 2 August 2020 3:52 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10035 -> Sunday, 2 August 2020 3:53 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ValidationManager.<CheckTopicData>m__16 (Topic x) (at Assets/Scripts/Managers/ValidationManager.cs:2972)
+	System.Linq.Enumerable+SelectListIterator`2[TSource,TResult].ToList () (at <839a3cb835c04d14aeb58d83bb7bc4bd>:0)
+	System.Linq.Enumerable.ToList[TSource] (System.Collections.Generic.IEnumerable`1[T] source) (at <839a3cb835c04d14aeb58d83bb7bc4bd>:0)
+	ValidationManager.CheckTopicData (System.String prefix) (at Assets/Scripts/Managers/ValidationManager.cs:2972)
+	ValidationManager.ExecuteIntegrityCheck () (at Assets/Scripts/Managers/ValidationManager.cs:1953)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:270)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:393)
+	
+Dev seed 12552 -> Sunday, 2 August 2020 3:59 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ValidationManager.<CheckTopicData>m__16 (Topic x) (at Assets/Scripts/Managers/ValidationManager.cs:2972)
+	System.Linq.Enumerable+SelectListIterator`2[TSource,TResult].ToList () (at <839a3cb835c04d14aeb58d83bb7bc4bd>:0)
+	System.Linq.Enumerable.ToList[TSource] (System.Collections.Generic.IEnumerable`1[T] source) (at <839a3cb835c04d14aeb58d83bb7bc4bd>:0)
+	ValidationManager.CheckTopicData (System.String prefix) (at Assets/Scripts/Managers/ValidationManager.cs:2972)
+	ValidationManager.ExecuteIntegrityCheck () (at Assets/Scripts/Managers/ValidationManager.cs:1953)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:270)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:393)
+	
+Dev seed 25349 -> Sunday, 2 August 2020 4:00 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 37502 -> Sunday, 2 August 2020 4:38 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 33185 -> Sunday, 2 August 2020 4:42 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31584 -> Sunday, 2 August 2020 4:49 PM
+City seed 5678 -> London, United Kingdom
