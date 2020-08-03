@@ -4939,7 +4939,7 @@ public class EffectManager : MonoBehaviour
                 TopicOption option = GameManager.i.dataScript.GetTopicOption(dataInput.dataName);
                 if (option != null)
                 {
-                    effectResolve.topText = string.Format("{0}{1}{2}", colourAlert, option.storyHeader, colourEnd);
+                    /*effectResolve.topText = string.Format("{0}{1}{2}", colourAlert, option.storyHeader, colourEnd);*/
                     effectResolve.bottomText = string.Format("{0}{1}{2}", colourNormal, option.storyInfo, colourEnd);
                 }
                 else { Debug.LogWarningFormat("Invalid topicOption (Null) for \"{0}\"", dataInput.dataName); }
