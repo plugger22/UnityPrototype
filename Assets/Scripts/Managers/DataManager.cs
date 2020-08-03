@@ -8589,6 +8589,23 @@ public class DataManager : MonoBehaviour
     public List<TopicType> GetListOfTopicTypesLevel()
     { return listOfTopicTypesLevel; }
 
+    /// <summary>
+    /// returns topicOption based on name of option, Null if not found
+    /// </summary>
+    /// <param name="optionName"></param>
+    /// <returns></returns>
+    public TopicOption GetTopicOption(string optionName)
+    {
+        TopicOption option = null;
+        if (string.IsNullOrEmpty(optionName) == false)
+        {
+            if (dictOfTopicOptions.ContainsKey(optionName) == true)
+            { option = dictOfTopicOptions[optionName]; }
+        }
+        else { Debug.LogWarning("Invalid optionName (Null or Empty)"); }
+        return option;
+    }
+
 
     /// <summary>
     /// Get topicType data for specified topicType. Returns Null if not found

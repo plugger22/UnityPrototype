@@ -57,7 +57,9 @@ public class TopicOption : ScriptableObject
     [TextArea] public string news;
 
     [Header("Story Effects")]
-    [Tooltip("Output for a story Option effect, ignore otherwise")]
+    [Tooltip("Output (top text) for a story Option effect, ignore otherwise")]
+    public string storyHeader;
+    [Tooltip("Output (bottom text) for a story Option effect, ignore otherwise")]
     [TextArea] public string storyInfo;
     [Tooltip("Output for a story Target effect, ignore otherwise")]
     public Target storyTarget;
