@@ -1341,6 +1341,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7fe93a0efd35e1c4cadb198e68060fb6, type: 2}
   - {fileID: 11400000, guid: a633223d0440a2d4f966187c2a130607, type: 2}
   - {fileID: 11400000, guid: 94cc9e99e7321d949b96d027ea6b8031, type: 2}
+  - {fileID: 11400000, guid: ce351fc932eba924da11f9124df734c8, type: 2}
+  - {fileID: 11400000, guid: 9ffb133a69f0e37469339e1fdae6a2d9, type: 2}
   arrayOfContactTypes:
   - {fileID: 11400000, guid: e83571238ceb3544f8ef9d46cb18cbc3, type: 2}
   - {fileID: 11400000, guid: 88efaf6304c9e364c8719f9c954d687d, type: 2}
@@ -2131,6 +2133,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0ee4f0206c8002b45899ab8f0cde1a2b, type: 2}
   - {fileID: 11400000, guid: 17b4c2e23387dde4992411cd06aece41, type: 2}
   - {fileID: 11400000, guid: 27c88b91ba6a5bc41bc6c673560dbb0a, type: 2}
+  - {fileID: 11400000, guid: 305af0aacc470e14cb866b7f4142ead1, type: 2}
+  - {fileID: 11400000, guid: e5a3c5de445544146b76c2f015614b8b, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}

@@ -4290,6 +4290,10 @@ public class EffectManager : MonoBehaviour
                         //Target
                         effectResolve = ResolveTopicTargetEffect(effect, dataInput, data);
                         break;
+                    case 'S':
+                        //Story
+                        effectResolve = ResolveTopicStoryEffect(effect, dataInput, data);
+                        break;
                     default: Debug.LogWarningFormat("Unrecognised key \"{0}\" for effect {1}", key, effect.name); break;
                 }
             }
@@ -4907,6 +4911,36 @@ public class EffectManager : MonoBehaviour
                         break;
                     default: Debug.LogWarningFormat("Unrecognised operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
                 }
+                break;
+            default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
+        }
+        return effectResolve;
+    }
+
+    /// <summary>
+    /// private subMethod for ResolveTopicData that handles all topic Story effects. Returns an EffectDataResolve data package in all cases (default data if a problem)
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="dataInput"></param>
+    /// <param name="dataTopic"></param>
+    /// <returns></returns>
+    private EffectDataResolve ResolveTopicStoryEffect(Effect effect, EffectDataInput dataInput, TopicEffectData dataTopic)
+    {
+        //data package to return to the calling methods
+        EffectDataResolve effectResolve = new EffectDataResolve();
+        //default data
+        effectResolve.topText = "Unknown effect";
+        effectResolve.bottomText = "Unknown effect";
+        effectResolve.isError = false;
+        switch (effect.outcome.name)
+        {
+            case "StoryInfo":
+                //story info dump
+
+                break;
+            case "StoryTarget":
+                //story target activated
+
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }

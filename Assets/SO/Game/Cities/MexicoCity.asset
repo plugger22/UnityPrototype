@@ -20,6 +20,8 @@ MonoBehaviour:
   harbourDistrict: 
   districtNames: {fileID: 11400000, guid: b43cbfe86c95be04396264b8043c4696, type: 2}
   iconName: Angel of Independence
-  isTestOff: 1
+  cityPoolResistance: {fileID: 11400000, guid: 499d11e15bceaff4ebf4400fddc32237, type: 2}
+  cityPoolAuthority: {fileID: 11400000, guid: d19d7870e5c903346b181c8414ce242d, type: 2}
+  isTestOff: 0
   mayor: {fileID: 11400000, guid: 603cd93ccd903aa4f9ae2a4be6c581b3, type: 2}
   faction: {fileID: 0}

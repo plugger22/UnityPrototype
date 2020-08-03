@@ -56,6 +56,12 @@ public class TopicOption : ScriptableObject
     [Tooltip("Self contained new snippet that reflects Player's choice of this option. Can include tags. Optional")]
     [TextArea] public string news;
 
+    [Header("Story Effects")]
+    [Tooltip("Output for a story Option effect, ignore otherwise")]
+    [TextArea] public string storyInfo;
+    [Tooltip("Output for a story Target effect, ignore otherwise")]
+    public Target storyTarget;
+
     [HideInInspector] public string tooltipHeader;              //tag
     [HideInInspector] public string tooltipMain;                //derived from effects (good / bad)
     [HideInInspector] public string tooltipDetails;             //derived from mood Effect

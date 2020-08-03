@@ -3454,6 +3454,7 @@ public class TopicManager : MonoBehaviour
                 dataInput.originText = string.Format("Event {0}\'{1}\', {2}{3}", colourAlert, turnTopic.tag, turnOption.tag, colourEnd);
                 dataInput.side = GameManager.i.sideScript.PlayerSide;
                 dataInput.data = Convert.ToInt32(turnOption.isIgnoreMood);
+                dataInput.dataName = turnOption.name;
                 //use Player node as default placeholder (actual tagNodeID is used) except in special case of player captured
                 Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
                 //special case of PlayerGeneral topics (where each option refers to a different OnMap actor)
