@@ -3863,6 +3863,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e0617009e84443c4588d0f3c417393e9, type: 2}
   - {fileID: 11400000, guid: 3f5fc5ab3d43a6444b3047cac10f3402, type: 2}
   - {fileID: 11400000, guid: 931e19efb2302b247b658b59ca91b4cf, type: 2}
+  - {fileID: 11400000, guid: 0b04472666f8fc648833265a5027da36, type: 2}
   arrayOfCampaigns:
   - {fileID: 11400000, guid: 8a6c37e55ea44964f8f00f2f602b6463, type: 2}
   - {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}

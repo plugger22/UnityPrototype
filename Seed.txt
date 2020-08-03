@@ -4345,3 +4345,18 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 17172 -> Sunday, 2 August 2020 6:05 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 52965 -> Monday, 3 August 2020 9:37 AM
+WARNING [Val] ValidateSO: MISMATCH on Scenario, array 8, assets 9 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Scenario[]) (at Assets/Scripts/Managers/ValidationManager.cs:1876)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1768)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:380)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 22132 -> Monday, 3 August 2020 9:38 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 64598 -> Monday, 3 August 2020 9:40 AM
+City seed 5678 -> London, United Kingdom
