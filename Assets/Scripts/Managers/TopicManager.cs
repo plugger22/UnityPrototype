@@ -299,6 +299,9 @@ public class TopicManager : MonoBehaviour
     #region Initialisation SubMethods
 
     #region SubInitialiseStartUp
+    /// <summary>
+    /// Initialise Start Up
+    /// </summary>
     private void SubInitialiseStartUp()
     {
         //[Tst] debug logging on/off
@@ -6648,6 +6651,16 @@ public class TopicManager : MonoBehaviour
                 case "City":
                     break;
                 case "Story":
+                    TopicItem topicItem = turnTopic.topicItem;
+                    if (topicItem != null)
+                    {
+                        turnSprite = topicItem.sprite;
+                        //tagspriteName?
+                        data.imageTooltipHeader = topicItem.tag;
+                        data.imageTooltipMain = topicItem.descriptor;
+                    }
+                    else { Debug.LogWarningFormat("Invalid topicItem (Null) for turnTopic \"{0}\"", turnTopic.name); }
+                    break;
                 case "HQ":
                     turnSprite = GameManager.i.hqScript.GetHqMainSpirte();
                     tagSpriteName = GameManager.i.sideScript.PlayerSide.name;

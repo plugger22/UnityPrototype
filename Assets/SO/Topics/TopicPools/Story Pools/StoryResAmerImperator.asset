@@ -9,16 +9,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ad0b7d89b5a3e9409f7af04bc84f3c3, type: 3}
-  m_Name: StoryParents
+  m_Name: StoryResAmerImperator
   m_EditorClassIdentifier: 
-  tag: Mum and Dad
+  tag: The Imperator
   descriptor: 
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
-  subType: {fileID: 11400000, guid: 9c0b06df8df43f641b72a6ea311f55a1, type: 2}
+  subType: {fileID: 11400000, guid: bdf3a8a85780b674f81d87a4766c3b61, type: 2}
   subSubType: {fileID: 0}
   listOfTopics:
-  - {fileID: 11400000, guid: 924d965e3534ff243be40a4d7665e40e, type: 2}
-  - {fileID: 11400000, guid: 69433f712edbc71489d6a825cca4ccf3, type: 2}
-  - {fileID: 11400000, guid: 018d848ab824ee847ba069414a586906, type: 2}
-  - {fileID: 11400000, guid: d3a99528dce03cc428e669f03cf3a62c, type: 2}
+  - {fileID: 11400000, guid: 54ae01b2d97f79644a7aa068fb2529f0, type: 2}
+  - {fileID: 11400000, guid: 97583dd89e1bff24a80f11e4c8afc406, type: 2}
+  - {fileID: 11400000, guid: bab0ec98b78ed7449a0d2aaa6c016bd1, type: 2}
+  - {fileID: 11400000, guid: 9c8263d1861c1e740a4550b5cce86f27, type: 2}
   listOfSubSubTypePools: []

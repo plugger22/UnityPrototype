@@ -9,16 +9,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ad0b7d89b5a3e9409f7af04bc84f3c3, type: 3}
-  m_Name: StoryDrugs
+  m_Name: StoryResAmerPurplePig
   m_EditorClassIdentifier: 
-  tag: Cartel Connections
+  tag: The Cult of the Purple Pig
   descriptor: 
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
-  subType: {fileID: 11400000, guid: cbe3debfe6a42e74bba2c4c8929ec971, type: 2}
+  subType: {fileID: 11400000, guid: bdf3a8a85780b674f81d87a4766c3b61, type: 2}
   subSubType: {fileID: 0}
   listOfTopics:
-  - {fileID: 11400000, guid: 78d07e818fef52846b411584d411c214, type: 2}
-  - {fileID: 11400000, guid: 3c74627e4eeae264998670ee178dc88e, type: 2}
-  - {fileID: 11400000, guid: fcfc091247189f0419077f3ddf84e4df, type: 2}
-  - {fileID: 11400000, guid: cbafd1c4ecb287c4eaa29d7adb8c2139, type: 2}
+  - {fileID: 11400000, guid: 89ba3307fb5704444b208314fa2d4163, type: 2}
+  - {fileID: 11400000, guid: 11519607c2babf44ba086a3707ddafa8, type: 2}
+  - {fileID: 11400000, guid: a3a931349cd6f9f40a87eaf8c77739bd, type: 2}
+  - {fileID: 11400000, guid: c9a02304144ad214da089569db924081, type: 2}
   listOfSubSubTypePools: []

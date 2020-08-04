@@ -963,6 +963,7 @@ public class LoadManager : MonoBehaviour
                             int count = storyData.listOfTopicItems.Count;
                             if (count > 0)
                             {
+                                //different number of topicItems than StoryData in array
                                 counter += count;
                                 for (int j = 0; j < count; j++)
                                 {
@@ -987,7 +988,7 @@ public class LoadManager : MonoBehaviour
             numDict = dictOfTopicItems.Count;
             Debug.LogFormat("[Loa] InitialiseStart -> dictOfTopicItems has {0} entries{1}", numDict, "\n");
             Debug.Assert(numDict > 0, "No TopicItems in dictOfTopicItems");
-            Debug.Assert(numArray == numDict, string.Format("Mismatch on TopicItem count, array {0}, dict {1}", numArray, numDict));
+            Debug.Assert(counter == numDict, string.Format("Mismatch on TopicItem count, array {0}, dict {1}", counter, numDict));
         }
         else { Debug.LogError("Invalid dictOfTopicItems (Null) -> Import failed"); }
     }

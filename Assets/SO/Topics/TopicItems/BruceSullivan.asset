@@ -15,3 +15,4 @@ MonoBehaviour:
   tag: Bruce "Sullie' Sullivan
   descriptor: Chief Pilot for the Americon Resistance HQ. Repected as a competent
     and confident operator with good people skills
+  pool: {fileID: 11400000, guid: d40c883331c8e5c44b8dc80b3a772399, type: 2}
