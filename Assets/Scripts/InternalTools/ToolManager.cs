@@ -101,18 +101,22 @@ public class ToolManager : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        //only run if internal tools scene
-        if (scene.name.Equals("Internal_Tools", StringComparison.Ordinal) == true)
+        //only run if there is a valid scene (and it's internal tools)
+        if (scene.isLoaded == true)
         {
-            mouseWheelInput = 0;
-            //get any mouse wheel input (restricts max value) and pass as a parameter as Input.anyKeyDown won't pick up mouse wheel input)
-            mouseWheelInput += Input.GetAxis("Mouse ScrollWheel");
+            //only run if internal tools scene
+            if (scene.name.Equals("Internal_Tools", StringComparison.Ordinal) == true)
+            {
+                mouseWheelInput = 0;
+                //get any mouse wheel input (restricts max value) and pass as a parameter as Input.anyKeyDown won't pick up mouse wheel input)
+                mouseWheelInput += Input.GetAxis("Mouse ScrollWheel");
 
-            //Handle Game Input
-            if (mouseWheelInput != 0)
-            { toolInputScript.ProcessMouseWheelInput(mouseWheelInput); }
-            else if (Input.anyKeyDown == true)
-            { toolInputScript.ProcessKeyInput(); }
+                //Handle Game Input
+                if (mouseWheelInput != 0)
+                { toolInputScript.ProcessMouseWheelInput(mouseWheelInput); }
+                else if (Input.anyKeyDown == true)
+                { toolInputScript.ProcessKeyInput(); }
+            }
         }
     }
     #endregion

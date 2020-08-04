@@ -26,14 +26,14 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: Normally I don't deal with little people like you but I've been asked to take
-    care of this so here I am. Shoulders back, head high, Buster!
+  news: 
   storyHeader: 
-  storyInfo: 
+  storyInfo: Normally I don't deal with little people like you but I've been asked
+    to take care of this so here I am. Shoulders back, head high, Buster!
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Uncertain</color>
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Are you Authorised to discuss this?</color>
   optionNumber: 1

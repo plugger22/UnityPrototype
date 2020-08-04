@@ -26,14 +26,14 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: Well, I like the look of you. I can see something of myself in your eyes.
-    Eclipse Corp also happen to be jamming us from here.
+  news: 
   storyHeader: 
-  storyInfo: 
+  storyInfo: Well, I like the look of you. I can see something of myself in your eyes.
+    Eclipse Corp also happen to be jamming us from here.
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Unsure</color>
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Why are you asking me?</color>
   optionNumber: 3

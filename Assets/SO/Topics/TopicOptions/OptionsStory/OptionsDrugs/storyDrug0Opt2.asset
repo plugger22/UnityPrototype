@@ -26,14 +26,14 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: Sure is. Top, A1, priority. There's a big pow wow of all the Resistance heads
-    soon and communications are vital.
-  storyHeader: Drug Lord goes Missing
-  storyInfo: Javier Mendez, Cartel drug lord, has mysteriously vanished
+  news: 
+  storyHeader: 
+  storyInfo: Sure is. Top, A1, priority. There's a big pow wow of all the Resistance
+    heads soon and communications are vital.
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Important</color>
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>This is a top of agenda matter, right?</color>
   optionNumber: 2

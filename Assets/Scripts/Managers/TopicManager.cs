@@ -5449,7 +5449,9 @@ public class TopicManager : MonoBehaviour
                     break;
                 case 'H':
                     //HQ
-
+                    break;
+                case 'S':
+                    //Story
                     break;
                 case 'N':
                     //Node
@@ -6515,7 +6517,7 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}{1}{2}", colourCheckText, tag, colourEnd); }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, tag, colourEnd); }
                             else { Debug.LogWarningFormat("Unrecognised tag \"{0}\" in \"{1}\"", tag, text); }
                         }
                         break;
@@ -6637,6 +6639,7 @@ public class TopicManager : MonoBehaviour
                     break;
                 case "City":
                     break;
+                case "Story":
                 case "HQ":
                     turnSprite = GameManager.i.hqScript.GetHqMainSpirte();
                     tagSpriteName = GameManager.i.sideScript.PlayerSide.name;

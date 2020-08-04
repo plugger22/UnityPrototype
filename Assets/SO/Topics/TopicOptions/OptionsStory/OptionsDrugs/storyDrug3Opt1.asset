@@ -29,12 +29,12 @@ MonoBehaviour:
   news: 
   storyHeader: 
   storyInfo: Yes they will. That's why you are going to do this and not me. But they
-    can't chase a ghost, can they? Don't get caught, don't get your ugly face on camera
-    and you'll be O.K. Maybe.
+    can't chase a ghost, can they? Don't get your ugly face on camera and you'll be
+    O.K. Maybe.
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Worried</color>
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Won't Eclipse Corp come after me?</color>
   optionNumber: 1

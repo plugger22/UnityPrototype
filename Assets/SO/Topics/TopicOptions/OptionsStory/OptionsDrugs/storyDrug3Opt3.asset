@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 3 Opt 3
   tag: Puzzled
-  text: There's something funny about your hair...
+  text: Your hair looks strange ...
   topic: {fileID: 11400000, guid: cbafd1c4ecb287c4eaa29d7adb8c2139, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

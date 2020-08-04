@@ -26,14 +26,14 @@ MonoBehaviour:
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: Tanyia Bell, Americon Reistance HQ. An important person is all you need to
-    know. Unlike yourself. Your job is to do exactly as I tell you, understood?
+  news: 
   storyHeader: 
-  storyInfo: 
+  storyInfo: Tanyia Bell, Americon Reistance HQ. An important person is all you need
+    to know. Unlike yourself. Your job is to do exactly as I tell you, understood?
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Confused</color>
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>And you are....?</color>
   optionNumber: 2

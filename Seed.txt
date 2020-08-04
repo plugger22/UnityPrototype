@@ -4372,3 +4372,134 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 11132 -> Tuesday, 4 August 2020 11:30 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 20589 -> Tuesday, 4 August 2020 12:24 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 42256 -> Tuesday, 4 August 2020 12:27 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 4477 -> Tuesday, 4 August 2020 12:29 PM
+City seed 5678 -> London, United Kingdom
+WARNING Unrecognised effect.name first character "S" for effect "S_StoryInfo"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetEffectPrefix(Effect) (at Assets/Scripts/Managers/TopicManager.cs:5460)
+	TopicManager:GetGoodEffects(List`1, String, StringBuilder) (at Assets/Scripts/Managers/TopicManager.cs:5182)
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:5098)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:3241)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:3044)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:344)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Unrecognised effect.name first character "S" for effect "S_StoryInfo"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetEffectPrefix(Effect) (at Assets/Scripts/Managers/TopicManager.cs:5460)
+	TopicManager:GetGoodEffects(List`1, String, StringBuilder) (at Assets/Scripts/Managers/TopicManager.cs:5182)
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:5098)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:3241)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:3044)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:344)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Unrecognised effect.name first character "S" for effect "S_StoryInfo"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetEffectPrefix(Effect) (at Assets/Scripts/Managers/TopicManager.cs:5460)
+	TopicManager:GetGoodEffects(List`1, String, StringBuilder) (at Assets/Scripts/Managers/TopicManager.cs:5182)
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:5098)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:3241)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:3044)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:344)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Unrecognised effect.name first character "S" for effect "S_StoryInfo"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetEffectPrefix(Effect) (at Assets/Scripts/Managers/TopicManager.cs:5460)
+	TopicManager:GetGoodEffects(List`1, String, StringBuilder) (at Assets/Scripts/Managers/TopicManager.cs:5182)
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:5098)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:3241)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:3044)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:344)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Unrecognised turnTopicType "Story"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseSprite(TopicUIData) (at Assets/Scripts/Managers/TopicManager.cs:6770)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:3260)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:3044)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:344)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid data.sprite (Null or Empty) for topic "storyDrugs1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:409)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:330)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:943)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:908)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:853)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid sprite (Null)
+UnityEngine.Debug:LogWarning(Object)
+	MessageManager:TopicDecision(TopicMessageData) (at Assets/Scripts/Managers/MessageManager.cs:4582)
+	TopicManager:UpdateTopicAdmin() (at Assets/Scripts/Managers/TopicManager.cs:3944)
+	TopicManager:ProcessTopicAdmin() (at Assets/Scripts/Managers/TopicManager.cs:3844)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3553)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:656)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 39945 -> Tuesday, 4 August 2020 12:38 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid data.sprite (Null or Empty) for topic "storyDrugs1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicUI:SetTopicDisplay(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:409)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:330)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:943)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:908)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:853)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid sprite (Null)
+UnityEngine.Debug:LogWarning(Object)
+	MessageManager:TopicDecision(TopicMessageData) (at Assets/Scripts/Managers/MessageManager.cs:4582)
+	TopicManager:UpdateTopicAdmin() (at Assets/Scripts/Managers/TopicManager.cs:3944)
+	TopicManager:ProcessTopicAdmin() (at Assets/Scripts/Managers/TopicManager.cs:3844)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3553)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:656)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 37967 -> Tuesday, 4 August 2020 12:39 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 34665 -> Tuesday, 4 August 2020 12:44 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 4838 -> Tuesday, 4 August 2020 12:48 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10569 -> Tuesday, 4 August 2020 12:49 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 63855 -> Tuesday, 4 August 2020 12:53 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 39980 -> Tuesday, 4 August 2020 12:56 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 45458 -> Tuesday, 4 August 2020 12:58 PM
+City seed 5678 -> London, United Kingdom
