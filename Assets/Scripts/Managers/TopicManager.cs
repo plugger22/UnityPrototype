@@ -6656,7 +6656,7 @@ public class TopicManager : MonoBehaviour
                     {
                         turnSprite = topicItem.sprite;
                         //tagspriteName?
-                        data.imageTooltipHeader = topicItem.tag;
+                        data.imageTooltipHeader = string.Format("{0}{1}{2}", colourNeutral, topicItem.tag, colourEnd);
                         data.imageTooltipMain = topicItem.descriptor;
                     }
                     else { Debug.LogWarningFormat("Invalid topicItem (Null) for turnTopic \"{0}\"", turnTopic.name); }
