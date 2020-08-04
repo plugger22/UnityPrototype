@@ -12,23 +12,28 @@ MonoBehaviour:
   m_Name: storyDrug2Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 2 Opt 1
-  tag: ii
-  text: 
+  tag: Concerned
+  text: Won't Eclipse kick back?
   topic: {fileID: 11400000, guid: fcfc091247189f0419077f3ddf84e4df, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
-  isIgnoredByHQ: 0
+  isIgnoredByHQ: 1
   isIgnoreStress: 0
-  isIgnoreMood: 0
+  isIgnoreMood: 1
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 305af0aacc470e14cb866b7f4142ead1, type: 2}
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
+  storyHeader: 
+  storyInfo: Well, they might. They are a powerful, vindictive, MegaCorp who don't
+    take kindly to those who oppose them. Probably best not to get caught.
+  storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

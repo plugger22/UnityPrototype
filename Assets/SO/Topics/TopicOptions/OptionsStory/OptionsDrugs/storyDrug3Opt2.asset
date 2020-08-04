@@ -12,23 +12,29 @@ MonoBehaviour:
   m_Name: storyDrug3Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 3 Opt 2
-  tag: ii
-  text: 
+  tag: Attracted
+  text: Could we find time for dinner?
   topic: {fileID: 11400000, guid: cbafd1c4ecb287c4eaa29d7adb8c2139, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
-  isIgnoredByHQ: 0
+  isIgnoredByHQ: 1
   isIgnoreStress: 0
-  isIgnoreMood: 0
+  isIgnoreMood: 1
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 305af0aacc470e14cb866b7f4142ead1, type: 2}
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
+  storyHeader: 
+  storyInfo: Are you hitting on me, you little worm? Am I the type of person who would
+    consider sleeping with an insignificant nobody with a brain the size of a peanut?
+    Is it Be Kind To The Doomed day?
+  storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

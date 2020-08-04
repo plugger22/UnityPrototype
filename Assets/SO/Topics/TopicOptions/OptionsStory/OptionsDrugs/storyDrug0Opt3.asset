@@ -12,23 +12,28 @@ MonoBehaviour:
   m_Name: storyDrug0Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 0 Opt 3
-  tag: ii
-  text: 
+  tag: Unsure
+  text: Why are you asking me?
   topic: {fileID: 11400000, guid: 78d07e818fef52846b411584d411c214, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
-  isIgnoredByHQ: 0
+  isIgnoredByHQ: 1
   isIgnoreStress: 0
-  isIgnoreMood: 0
+  isIgnoreMood: 1
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 305af0aacc470e14cb866b7f4142ead1, type: 2}
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: Well, I like the look of you. I can see something of myself in your eyes.
+    Eclipse Corp also happen to be jamming us from here.
+  storyHeader: 
+  storyInfo: 
+  storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

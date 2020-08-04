@@ -12,23 +12,28 @@ MonoBehaviour:
   m_Name: storyDrug0Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 0 Opt 2
-  tag: ii
-  text: 
+  tag: Important
+  text: This is a top of agenda matter, right?
   topic: {fileID: 11400000, guid: 78d07e818fef52846b411584d411c214, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
-  isIgnoredByHQ: 0
+  isIgnoredByHQ: 1
   isIgnoreStress: 0
-  isIgnoreMood: 0
+  isIgnoreMood: 1
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 305af0aacc470e14cb866b7f4142ead1, type: 2}
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: Sure is. Top, A1, priority. There's a big pow wow of all the Resistance heads
+    soon and communications are vital.
+  storyHeader: Drug Lord goes Missing
+  storyInfo: Javier Mendez, Cartel drug lord, has mysteriously vanished
+  storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

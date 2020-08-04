@@ -12,23 +12,27 @@ MonoBehaviour:
   m_Name: storyDrug1Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 1 Opt 0
-  tag: ii
-  text: 
+  tag: Clarify
+  text: The Jamming is bad because...?
   topic: {fileID: 11400000, guid: 3c74627e4eeae264998670ee178dc88e, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
-  isIgnoredByHQ: 0
+  isIgnoredByHQ: 1
   isIgnoreStress: 0
-  isIgnoreMood: 0
+  isIgnoreMood: 1
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 305af0aacc470e14cb866b7f4142ead1, type: 2}
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
-  news: 
+  news: Because I damn well said it was bad, that's why. Are you questioning my judgement?
+  storyHeader: 
+  storyInfo: 
+  storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 3
+  optionNumber: 0

@@ -12,23 +12,29 @@ MonoBehaviour:
   m_Name: storyDrug3Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 3 Opt 1
-  tag: ii
-  text: 
+  tag: Worried
+  text: Won't Eclipse Corp come after me?
   topic: {fileID: 11400000, guid: cbafd1c4ecb287c4eaa29d7adb8c2139, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
-  isIgnoredByHQ: 0
+  isIgnoredByHQ: 1
   isIgnoreStress: 0
-  isIgnoreMood: 0
+  isIgnoreMood: 1
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 305af0aacc470e14cb866b7f4142ead1, type: 2}
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
+  storyHeader: 
+  storyInfo: Yes they will. That's why you are going to do this and not me. But they
+    can't chase a ghost, can they? Don't get caught, don't get your ugly face on camera
+    and you'll be O.K. Maybe.
+  storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

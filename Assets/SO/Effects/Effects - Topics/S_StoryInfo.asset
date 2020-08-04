@@ -18,7 +18,7 @@ MonoBehaviour:
   topicApply: {fileID: 0}
   outcome: {fileID: 11400000, guid: ce351fc932eba924da11f9124df734c8, type: 2}
   operand: {fileID: 0}
-  typeOfEffect: {fileID: 11400000, guid: 380e537dc49c19f45b5cc1994050122f, type: 2}
+  typeOfEffect: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   duration: {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
   value: 0
   ignoreEffect: 0

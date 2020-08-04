@@ -12,23 +12,28 @@ MonoBehaviour:
   m_Name: storyDrug2Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 2 Opt 3
-  tag: ii
-  text: 
+  tag: Envious
+  text: What's it like being Head Pilot?
   topic: {fileID: 11400000, guid: fcfc091247189f0419077f3ddf84e4df, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
-  isIgnoredByHQ: 0
+  isIgnoredByHQ: 1
   isIgnoreStress: 0
-  isIgnoreMood: 0
+  isIgnoreMood: 1
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 305af0aacc470e14cb866b7f4142ead1, type: 2}
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
+  storyHeader: 
+  storyInfo: Have to say that it's a buzz. It's all 'go there, fast and low'. I get
+    so excited that, on any given day, I've taken three cold showers before breakfast
+  storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

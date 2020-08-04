@@ -11,8 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyDrugs2
   m_EditorClassIdentifier: 
-  tag: ss
-  text: Unknown
+  tag: Eclipse Corporation
+  text: '[Eclipse Corp] appear to be behind it. They are upset about us investigating
+    the recent massacre on Luna Hub. We''ll be helpless if we can''t stop the jamming.
+    I''m at my wit''s end.'
   designNotes: storyDrugs2
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
   subType: {fileID: 11400000, guid: cbe3debfe6a42e74bba2c4c8929ec971, type: 2}
