@@ -539,47 +539,55 @@ public class TopicManager : MonoBehaviour
             StoryModule story = campaign.story;
             if (story != null)
             {
-                int count;
                 //DEBUG / Placeholder -> randomly selects story modules to be used (should be player choice in new game set-up)
                 if (story.listOfCampaignStories != null)
                 {
-                    count = story.listOfCampaignStories.Count;
-                    if (count > 0)
+                    if (story.listOfCampaignStories.Count > 0)
                     {
-                        storyAlphaPool = story.listOfCampaignStories[Random.Range(0, count)];
-                        if (storyAlphaPool == null)
-                        { Debug.LogError("Invalid storyAlphaPool (Null)"); }
-                        else { Debug.LogFormat("[Cam] TopicManager.cs -> GetStoryTopicPool: storyAlphaPool \"{0}\"{1}", storyAlphaPool.tag, "\n"); }
+                        StoryData storyData = story.GetRandomCampaignStoryData();
+                        if (storyData != null)
+                        {
+                            storyAlphaPool = storyData.pool;
+                            if (storyAlphaPool == null)
+                            { Debug.LogError("Invalid storyAlphaPool (Null)"); }
+                            else { Debug.LogFormat("[Cam] TopicManager.cs -> GetStoryTopicPool: storyAlphaPool \"{0}\"{1}", storyAlphaPool.tag, "\n"); }
+                        }
+                        else { Debug.LogWarning("Invalid storyData (Null) for storyAlpha Campaign topics"); }
                     }
-                    else { Debug.LogWarning("Invalid story.listOfCampaignStories (Empty)"); }
                 }
                 else { Debug.LogWarning("Invalid storyModule.listOfCampaignStories (Null)"); }
                 //Bravo
                 if (story.listOfFamilyStories != null)
                 {
-                    count = story.listOfFamilyStories.Count;
-                    if (count > 0)
+                    if (story.listOfFamilyStories.Count > 0)
                     {
-                        storyBravoPool = story.listOfFamilyStories[Random.Range(0, count)];
-                        if (storyBravoPool == null)
-                        { Debug.LogError("Invalid storyBravoPool (Null)"); }
-                        else { Debug.LogFormat("[Cam] TopicManager.cs -> GetStoryTopicPool: storyBravoPool \"{0}\"{1}", storyBravoPool.tag, "\n"); }
+                        StoryData storyData = story.GetRandomFamilyStoryData();
+                        if (storyData != null)
+                        {
+                            storyBravoPool = storyData.pool;
+                            if (storyBravoPool == null)
+                            { Debug.LogError("Invalid storyBravoPool (Null)"); }
+                            else { Debug.LogFormat("[Cam] TopicManager.cs -> GetStoryTopicPool: storyBravoPool \"{0}\"{1}", storyBravoPool.tag, "\n"); }
+                        }
+                        else { Debug.LogWarning("Invalid storyData (Null) for storyBravo Family topics"); }
                     }
-                    else { Debug.LogWarning("Invalid story.listOfFamilyStories (Empty)"); }
                 }
                 else { Debug.LogWarning("Invalid storyModule.listOfFamilyStories (Null)"); }
                 //Charlie
                 if (story.listOfHqStories != null)
                 {
-                    count = story.listOfHqStories.Count;
-                    if (count > 0)
+                    if (story.listOfHqStories.Count > 0)
                     {
-                        storyCharliePool = story.listOfHqStories[Random.Range(0, count)];
-                        if (storyCharliePool == null)
-                        { Debug.LogError("Invalid storyCharliePool (Null)"); }
-                        else { Debug.LogFormat("[Cam] TopicManager.cs -> GetStoryTopicPool: storyCharliePool \"{0}\"{1}", storyCharliePool.tag, "\n"); }
+                        StoryData storyData = story.GetRandomHqStoryData();
+                        if (storyData != null)
+                        {
+                            storyCharliePool = storyData.pool;
+                            if (storyCharliePool == null)
+                            { Debug.LogError("Invalid storyCharliePool (Null)"); }
+                            else { Debug.LogFormat("[Cam] TopicManager.cs -> GetStoryTopicPool: storyCharliePool \"{0}\"{1}", storyCharliePool.tag, "\n"); }
+                        }
+                        else { Debug.LogWarning("Invalid storyData (Null) for storyCharlie Hq topics"); }
                     }
-                    else { Debug.LogWarning("Invalid story.listOfHqStories (Empty)"); }
                 }
                 else { Debug.LogWarning("Invalid storyModule.listOfHqStories (Null)"); }
             }

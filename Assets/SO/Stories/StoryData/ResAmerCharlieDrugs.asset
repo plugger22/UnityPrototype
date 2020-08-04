@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa80f9c0e88549340b9da7ad712ba31c, type: 3}
+  m_Name: ResAmerCharlieDrugs
+  m_EditorClassIdentifier: 
+  designNotes: Americon Charlie -> Resistance and Drugs
+  pool: {fileID: 11400000, guid: d40c883331c8e5c44b8dc80b3a772399, type: 2}
+  listOfTopicItems:
+  - {fileID: 11400000, guid: 2e6d0fdcecfe3bf41b25acc43c7bce7d, type: 2}
+  - {fileID: 11400000, guid: 2e2ce29c7b61139488a5a4546df9fd77, type: 2}

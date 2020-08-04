@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fd7af3a7dc189e41923a6aa964593ad, type: 3}
+  m_Name: BruceSullivan
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: 96332a55984d94b48ba0d03d94b64c9b, type: 3}
+  tag: Bruce "Sullie' Sullivan
+  descriptor: Chief Pilot for the Americon Resistance HQ. Repected as a competent
+    and confident operator with good people skills

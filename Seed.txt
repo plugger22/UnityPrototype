@@ -4503,3 +4503,63 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 45458 -> Tuesday, 4 August 2020 12:58 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 6850 -> Tuesday, 4 August 2020 4:34 PM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid storyAlphaPool (Null)
+UnityEngine.Debug:LogError(Object)
+	TopicManager:GetStoryTopicPools() (at Assets/Scripts/Managers/TopicManager.cs:551)
+	TopicManager:SubInitialiseStartUp() (at Assets/Scripts/Managers/TopicManager.cs:371)
+	TopicManager:Initialise(GameState) (at Assets/Scripts/Managers/TopicManager.cs:277)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:880)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	ERROR Invalid storyBravoPool (Null)
+UnityEngine.Debug:LogError(Object)
+	TopicManager:GetStoryTopicPools() (at Assets/Scripts/Managers/TopicManager.cs:565)
+	TopicManager:SubInitialiseStartUp() (at Assets/Scripts/Managers/TopicManager.cs:371)
+	TopicManager:Initialise(GameState) (at Assets/Scripts/Managers/TopicManager.cs:277)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:880)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	ERROR Invalid storyCharliePool (Null)
+UnityEngine.Debug:LogError(Object)
+	TopicManager:GetStoryTopicPools() (at Assets/Scripts/Managers/TopicManager.cs:579)
+	TopicManager:SubInitialiseStartUp() (at Assets/Scripts/Managers/TopicManager.cs:371)
+	TopicManager:Initialise(GameState) (at Assets/Scripts/Managers/TopicManager.cs:277)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:880)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	
+Dev seed 25628 -> Tuesday, 4 August 2020 4:37 PM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid storyAlphaPool (Null)
+UnityEngine.Debug:LogError(Object)
+	TopicManager:GetStoryTopicPools() (at Assets/Scripts/Managers/TopicManager.cs:551)
+	TopicManager:SubInitialiseStartUp() (at Assets/Scripts/Managers/TopicManager.cs:371)
+	TopicManager:Initialise(GameState) (at Assets/Scripts/Managers/TopicManager.cs:277)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:880)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	ERROR Invalid storyBravoPool (Null)
+UnityEngine.Debug:LogError(Object)
+	TopicManager:GetStoryTopicPools() (at Assets/Scripts/Managers/TopicManager.cs:565)
+	TopicManager:SubInitialiseStartUp() (at Assets/Scripts/Managers/TopicManager.cs:371)
+	TopicManager:Initialise(GameState) (at Assets/Scripts/Managers/TopicManager.cs:277)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:880)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	ERROR Invalid storyCharliePool (Null)
+UnityEngine.Debug:LogError(Object)
+	TopicManager:GetStoryTopicPools() (at Assets/Scripts/Managers/TopicManager.cs:579)
+	TopicManager:SubInitialiseStartUp() (at Assets/Scripts/Managers/TopicManager.cs:371)
+	TopicManager:Initialise(GameState) (at Assets/Scripts/Managers/TopicManager.cs:277)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:880)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:389)
+	
+Dev seed 64374 -> Tuesday, 4 August 2020 4:38 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 21690 -> Tuesday, 4 August 2020 4:52 PM
+City seed 5678 -> London, United Kingdom

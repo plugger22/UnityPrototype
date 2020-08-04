@@ -1504,7 +1504,7 @@ public class ValidationManager : MonoBehaviour
         if (arrayOfCampaigns != null)
         {
             //Check organisations are the correct type
-            foreach(Campaign campaign in arrayOfCampaigns)
+            foreach (Campaign campaign in arrayOfCampaigns)
             {
                 //cure
                 if (campaign.orgCure != null)
@@ -1633,7 +1633,7 @@ public class ValidationManager : MonoBehaviour
         Dictionary<string, MetaOption> dictOfMetaOptions = GameManager.i.dataScript.GetDictOfMetaOptions();
         if (dictOfMetaOptions != null)
         {
-            foreach(var meta in dictOfMetaOptions)
+            foreach (var meta in dictOfMetaOptions)
             {
                 if (meta.Value != null)
                 {
@@ -1676,8 +1676,10 @@ public class ValidationManager : MonoBehaviour
                         if (meta.Value.isAlways == true)
                         {
                             if (string.IsNullOrEmpty(meta.Value.textInactive) == true)
-                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: Invalid textInactive (must be present if isAlways true and Criteria presnt) for " +
-                                "metaOption \"{0}\"{1}", meta.Value.name, "\n"); }
+                            {
+                                Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: Invalid textInactive (must be present if isAlways true and Criteria presnt) for " +
+                                  "metaOption \"{0}\"{1}", meta.Value.name, "\n");
+                            }
                         }
                     }
                     //check isRenownGain isn't a Recommended option
@@ -1685,7 +1687,7 @@ public class ValidationManager : MonoBehaviour
                     { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: isRenownGain TRUE and isRecommended TRUE (not allowed) for metaOption \"{0}\"{1}", meta.Value.name, "\n"); }
                 }
                 else { Debug.LogWarningFormat("Invalid metaOption (Null) in dictOfMetaOptions for \"{0}\"", meta.Key); }
-            } 
+            }
         }
         else { Debug.LogError("Invalid dictOfMetaOptions (Null)"); }
     }
@@ -2822,47 +2824,64 @@ public class ValidationManager : MonoBehaviour
                         //story Alpha -> Campaign
                         for (int i = 0; i < story.listOfCampaignStories.Count; i++)
                         {
-                            TopicPool pool = story.listOfCampaignStories[i];
-                            if (pool != null)
+                            StoryData storyData = story.listOfCampaignStories[i];
+                            if (storyData != null)
                             {
-                                //check topicType is correct
-                                if (pool.type.name.Equals("Story", StringComparison.Ordinal) == false)
-                                { Debug.LogFormat("{0} Invalid topicType \"{0}\" (should be Story) for topicPool \"{1}\" in {2}.listOfCampaignStories[{3}]{4}", tag, pool.type.name, pool.name, i, "\n"); }
-                                //check topicSubType is correct
-                                if (pool.subType.name.Equals("StoryAlpha", StringComparison.Ordinal) == false)
-                                { Debug.LogFormat("{0} Invalid topicSubType \"{1}\" (should be StoryAlpha) for topicPool \"{2}\" in {3}.listOfCampaignStories[{4}]{5}", tag, pool.subType.name, pool.name, story.name, i, "\n"); }
+                                TopicPool pool = storyData.pool;
+                                if (pool != null)
+                                {
+                                    //check topicType is correct
+                                    if (pool.type.name.Equals("Story", StringComparison.Ordinal) == false)
+                                    { Debug.LogFormat("{0} Invalid topicType \"{0}\" (should be Story) for topicPool \"{1}\" in {2}.listOfCampaignStories[{3}]{4}", tag, pool.type.name, pool.name, i, "\n"); }
+                                    //check topicSubType is correct
+                                    if (pool.subType.name.Equals("StoryAlpha", StringComparison.Ordinal) == false)
+                                    {
+                                        Debug.LogFormat("{0} Invalid topicSubType \"{1}\" (should be StoryAlpha) for topicPool \"{2}\" in {3}.listOfCampaignStories[{4}]{5}", tag, pool.subType.name, pool.name, story.name, i, "\n");
+                                    }
+                                }
+                                else { Debug.LogFormat("{0} Invalid topicPool (Null) for {1}.{2}{3}", tag, story.name, storyData.name, "\n"); }
                             }
-                            else { Debug.LogFormat("{0} Invalid topicPool (Null) for {1}.listOfCampaignStories[{2}]{3}", tag, story.name, i, "\n"); }
+                            else { Debug.LogFormat("{0} Invalid storyData (Null) for {1}.listOfCampaignStories[{2}]{3}", tag, story.name, i, "\n"); }
                         }
                         //story Bravo -> Family
                         for (int i = 0; i < story.listOfFamilyStories.Count; i++)
                         {
-                            TopicPool pool = story.listOfFamilyStories[i];
-                            if (pool != null)
+                            StoryData storyData = story.listOfFamilyStories[i];
+                            if (storyData != null)
                             {
-                                //check topicType is correct
-                                if (pool.type.name.Equals("Story", StringComparison.Ordinal) == false)
-                                { Debug.LogFormat("{0} Invalid topicType \"{0}\" (should be Story) for topicPool \"{1}\" in {2}.listOfFamilyStories[{3}]{4}", tag, pool.type.name, pool.name, i, "\n"); }
-                                //check topicSubType is correct
-                                if (pool.subType.name.Equals("StoryBravo", StringComparison.Ordinal) == false)
-                                { Debug.LogFormat("{0} Invalid topicSubType \"{1}\" (should be StoryBravo) for topicPool \"{2}\" in {3}.listOfFamilyStories[{4}]{5}", tag, pool.subType.name, pool.name, story.name, i, "\n"); }
+                                TopicPool pool = storyData.pool;
+                                if (pool != null)
+                                {
+                                    //check topicType is correct
+                                    if (pool.type.name.Equals("Story", StringComparison.Ordinal) == false)
+                                    { Debug.LogFormat("{0} Invalid topicType \"{0}\" (should be Story) for topicPool \"{1}\" in {2}.listOfFamilyStories[{3}]{4}", tag, pool.type.name, pool.name, i, "\n"); }
+                                    //check topicSubType is correct
+                                    if (pool.subType.name.Equals("StoryBravo", StringComparison.Ordinal) == false)
+                                    { Debug.LogFormat("{0} Invalid topicSubType \"{1}\" (should be StoryBravo) for topicPool \"{2}\" in {3}.listOfFamilyStories[{4}]{5}", tag, pool.subType.name, pool.name, story.name, i, "\n"); }
+                                }
+                                else { Debug.LogFormat("{0} Invalid topicPool (Null) for {1}.{2}{3}", tag, story.name, storyData.name, "\n"); }
                             }
-                            else { Debug.LogFormat("{0} Invalid topicPool (Null) for {1}.listOfFamilyStories[{2}]{3}", tag, story.name, i, "\n"); }
+                            else { Debug.LogFormat("{0} Invalid storyData (Null) for {1}.listOfFamilyStories[{2}]{3}", tag, story.name, i, "\n"); }
                         }
                         //story Charlie -> Authority/Resistance
                         for (int i = 0; i < story.listOfHqStories.Count; i++)
                         {
-                            TopicPool pool = story.listOfHqStories[i];
-                            if (pool != null)
+                            StoryData storyData = story.listOfHqStories[i];
+                            if (storyData != null)
                             {
-                                //check topicType is correct
-                                if (pool.type.name.Equals("Story", StringComparison.Ordinal) == false)
-                                { Debug.LogFormat("{0} Invalid topicType \"{0}\" (should be Story) for topicPool \"{1}\" in {2}.listOfHqStories[{3}]{4}", tag, pool.type.name, pool.name, i, "\n"); }
-                                //check topicSubType is correct
-                                if (pool.subType.name.Equals("StoryCharlie", StringComparison.Ordinal) == false)
-                                { Debug.LogFormat("{0} Invalid topicSubType \"{1}\" (should be StoryCharlie) for topicPool \"{2}\" in {3}.listOfHqStories[{4}]{5}", tag, pool.subType.name, pool.name, story.name, i, "\n"); }
+                                TopicPool pool = storyData.pool;
+                                if (pool != null)
+                                {
+                                    //check topicType is correct
+                                    if (pool.type.name.Equals("Story", StringComparison.Ordinal) == false)
+                                    { Debug.LogFormat("{0} Invalid topicType \"{0}\" (should be Story) for topicPool \"{1}\" in {2}.listOfHqStories[{3}]{4}", tag, pool.type.name, pool.name, i, "\n"); }
+                                    //check topicSubType is correct
+                                    if (pool.subType.name.Equals("StoryCharlie", StringComparison.Ordinal) == false)
+                                    { Debug.LogFormat("{0} Invalid topicSubType \"{1}\" (should be StoryCharlie) for topicPool \"{2}\" in {3}.listOfHqStories[{4}]{5}", tag, pool.subType.name, pool.name, story.name, i, "\n"); }
+                                }
+                                else { Debug.LogFormat("{0} Invalid topicPool (Null) for {1}.{2}{3}", tag, story.name, storyData.name, "\n"); }
                             }
-                            else { Debug.LogFormat("{0} Invalid topicPool (Null) for {1}.listOfHqStories[{2}]{3}", tag, story.name, i, "\n"); }
+                            else { Debug.LogFormat("{0} Invalid storyData (Null) for {1}.listOfHqStories[{2}]{3}", tag, story.name, i, "\n"); }
                         }
                     }
                     else { Debug.LogFormat("{0} Invalid storyModule (Null) for arrayOfStoryModules[{1}]{2}", tag, index, "\n"); }
