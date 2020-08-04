@@ -1483,6 +1483,13 @@ MonoBehaviour:
   arrayOfStoryModules:
   - {fileID: 11400000, guid: 4a3d16d5f29b52a48b74192c0bbd80d2, type: 2}
   - {fileID: 11400000, guid: 47b8784802e99f3418be87e7e59e34a2, type: 2}
+  arrayOfStoryData:
+  - {fileID: 11400000, guid: 84c1f765e992bc042ab1175b2b7fd9ad, type: 2}
+  - {fileID: 11400000, guid: 598b4a284bd388e45840f26c708a40b7, type: 2}
+  - {fileID: 11400000, guid: d3cf84ac114de8f459287936865a58f3, type: 2}
+  - {fileID: 11400000, guid: ea96f1cea39c38842b78e5b9729bec3c, type: 2}
+  - {fileID: 11400000, guid: 8228697ce0df2ef488e3cac23fef3557, type: 2}
+  - {fileID: 11400000, guid: 47f56aa60531194459cb2f11432aecfc, type: 2}
   arrayOfConditions:
   - {fileID: 11400000, guid: 404616d01297a7549a6d1e8d51025471, type: 2}
   - {fileID: 11400000, guid: 611afd3256c0b4344838897e41a45a0d, type: 2}

@@ -45,6 +45,7 @@ public class LoadManager : MonoBehaviour
     public HqPosition[] arrayOfHqPositions;
     public CaptureTool[] arrayOfCaptureTools;
     public StoryModule[] arrayOfStoryModules;
+    public StoryData[] arrayOfStoryData;
 
     [Header("InitialiseStart")]
     public Condition[] arrayOfConditions;
@@ -174,6 +175,7 @@ public class LoadManager : MonoBehaviour
     public Mission[] arrayOfMissions;
     public Scenario[] arrayOfScenarios;
     public Campaign[] arrayOfCampaigns;
+    
 
 
     //Consolidated arrays
@@ -925,7 +927,7 @@ public class LoadManager : MonoBehaviour
             Debug.Assert(numDict > 0, "No SecretTypes in dictOfSecretTypes");
             Debug.Assert(numArray == numDict, string.Format("Mismatch on SecretType count, array {0}, dict {1}", numArray, numDict));
         }
-        else { Debug.LogError("Invalid dictOfecretTypes (Null) -> Import failed"); }
+        else { Debug.LogError("Invalid dictOfSecretTypes (Null) -> Import failed"); }
         //
         // - - - Node Datapoints - - -
         //
@@ -940,6 +942,54 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfStoryModules has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No StoryModules present"); }
+        //
+        // - - - Story Data - - -
+        //
+        //place all Topic items in StoryData objects in dictOfTopicItems
+        Dictionary<string, TopicItem> dictOfTopicItems = GameManager.i.dataScript.GetDictOfTopicItems();
+        if (dictOfTopicItems != null)
+        {
+            counter = 0;
+            numArray = arrayOfStoryData.Length;
+            if (numArray > 0)
+            {
+                for (int i = 0; i < numArray; i++)
+                {
+                    StoryData storyData = arrayOfStoryData[i];
+                    if (storyData != null)
+                    {
+                        if (storyData.listOfTopicItems != null)
+                        {
+                            int count = storyData.listOfTopicItems.Count;
+                            if (count > 0)
+                            {
+                                counter += count;
+                                for (int j = 0; j < count; j++)
+                                {
+
+                                    TopicItem topicItem = storyData.listOfTopicItems[j];
+                                    if (topicItem != null)
+                                    {
+                                        //add TopicItem to dictionary
+                                        try
+                                        { dictOfTopicItems.Add(topicItem.name, topicItem); }
+                                        catch (ArgumentException)
+                                        { Debug.LogErrorFormat("Invalid TopicItem (duplicate) \"{0}\"", topicItem.name); }
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid topicItem (Null) for {0}.listOfTopicItems[{1}]", storyData.name, j); }
+                                }
+                            }
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid storyData (Null) for arrayOfStoryData[{0}]"); }
+                }
+            }
+            numDict = dictOfTopicItems.Count;
+            Debug.LogFormat("[Loa] InitialiseStart -> dictOfTopicItems has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict > 0, "No TopicItems in dictOfTopicItems");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch on TopicItem count, array {0}, dict {1}", numArray, numDict));
+        }
+        else { Debug.LogError("Invalid dictOfTopicItems (Null) -> Import failed"); }
     }
     #endregion
 

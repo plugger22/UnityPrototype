@@ -27,8 +27,7 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyHeader: 
-  storyInfo: Tanyia Bell, Americon Reistance HQ. An important person is all you need
+  storyInfo: Tanyia Bell, Americon Resistance HQ. An important person is all you need
     to know. Unlike yourself. Your job is to do exactly as I tell you, understood?
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>

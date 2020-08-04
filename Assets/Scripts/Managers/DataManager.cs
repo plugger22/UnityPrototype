@@ -253,6 +253,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, Topic> dictOfTopics = new Dictionary<string, Topic>();                           //Key -> topic.name, Value -> Topic
     private Dictionary<string, TopicSubType> dictOfTopicSubTypes = new Dictionary<string, TopicSubType>();      //Key -> topicSubType.name, Value -> TopicSubType
     private Dictionary<string, TopicOption> dictOfTopicOptions = new Dictionary<string, TopicOption>();         //Key -> topicOption.name, Value -> TopicOption 
+    private Dictionary<string, TopicItem> dictOfTopicItems = new Dictionary<string, TopicItem>();               //Key -> TopicItem.name, Value -> TopicItem
     private Dictionary<string, List<Topic>> dictOfTopicPools = new Dictionary<string, List<Topic>>();           //Key -> topicSubType.name, Value -> List<Topics) of subType valid for level
     private Dictionary<int, HistoryTopic> dictOfTopicHistory = new Dictionary<int, HistoryTopic>();             //Key -> turn #, Value -> TopicHistory
     private Dictionary<string, TextList> dictOfTextLists = new Dictionary<string, TextList>();                  //Key -> textList name, Value -> TextList
@@ -8577,6 +8578,9 @@ public class DataManager : MonoBehaviour
     public Dictionary<string, List<Topic>> GetDictOfTopicPools()
     { return dictOfTopicPools; }
 
+    public Dictionary<string, TopicItem> GetDictOfTopicItems()
+    { return dictOfTopicItems; }
+
     public Dictionary<string, TopicOption> GetDictOfTopicOptions()
     { return dictOfTopicOptions; }
 
@@ -9674,6 +9678,9 @@ public class DataManager : MonoBehaviour
 
         return builder.ToString();
     }
+
+
+
 
     //new methods above here
 }
