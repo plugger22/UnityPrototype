@@ -15,6 +15,7 @@ using Random = UnityEngine.Random;
 /// </summary>
 public class TopicManager : MonoBehaviour
 {
+    #region public variables
     [Header("Main")]
     [Tooltip("Minimum number of turns before topicType/SubTypes can be chosen again")]
     [Range(0, 10)] public int minIntervalGlobal = 2;
@@ -174,17 +175,24 @@ public class TopicManager : MonoBehaviour
     public TopicSubSubType teamProbe;
     [Tooltip("Used to avoid having to hard code the TopicSubSubType.SO names")]
     public TopicSubSubType teamSpider;
+    #endregion
 
     #region Save Data Compatible
     //Story Module topic Pools
-    [HideInInspector] public TopicPool storyAlphaPool;
+    [HideInInspector] public TopicPool pool;
     [HideInInspector] public TopicPool storyBravoPool;
     [HideInInspector] public TopicPool storyCharliePool;
-    [HideInInspector] public bool isStoryAlphaGood;             //determines topicGroupType.storyAlpha is good (true) or bad (false)
+
+    [HideInInspector] public bool isStoryAlphaGood;                 //determines topicGroupType.storyAlpha is good (true) or bad (false)
     [HideInInspector] public bool isStoryBravoGood;
     [HideInInspector] public bool isStoryCharlieGood;
+
+    [HideInInspector] public int indexCurrent;             //current linked index for story Alpha sequence of linked topics within the level
+    [HideInInspector] public int storyBravoCurrentIndex;             //current linked index for story Bravo sequence of linked topics within the level
+    [HideInInspector] public int storyCharlieCurrentIndex;           //current linked index for story Charlie sequence of linked topics within the level
     #endregion
 
+    #region private variables
     //type of topic
     private TopicGlobal topicGlobal;        //what type of topic is being generated, eg. Decision, Review, etc.
     private int reviewCountdown;            //counts down review interval, set to reviewPeriod after each Review
@@ -262,7 +270,7 @@ public class TopicManager : MonoBehaviour
     private string colourCancel;
     private string colourGrey;
     private string colourEnd;
-
+    #endregion
 
     /// <summary>
     /// Initialisation
@@ -284,10 +292,11 @@ public class TopicManager : MonoBehaviour
             case GameState.LoadAtStart:
                 SubInitialiseFastAccess();
                 SubInitialiseStartUp();
+                SubInitialiseStoryTopics();
                 SubInitialiseEvents();
                 break;
             case GameState.LoadGame:
-                //do nothing
+                SubInitialiseStoryTopics();
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised GameState \"{0}\" (Initialise)", GameManager.i.inputScript.GameState);
@@ -384,6 +393,17 @@ public class TopicManager : MonoBehaviour
         //establish which TopicTypes are valid for the level. Initialise profile and status data.
         UpdateTopicPools();
         SetStoryGroupFlags();
+    }
+    #endregion
+
+    #region SubInitialiseStoryTopics
+    /// <summary>
+    /// Configures story Topics to be in the correct place within the story sequence on loading
+    /// NOTE: Needs to be AFTER SubInitialiseStartUp in Initialisation sequence
+    /// </summary>
+    private void SubInitialiseStoryTopics()
+    {
+        SetStoryPoolsOnLoad();
     }
     #endregion
 
@@ -550,10 +570,10 @@ public class TopicManager : MonoBehaviour
                         StoryData storyData = story.GetRandomCampaignStoryData();
                         if (storyData != null)
                         {
-                            storyAlphaPool = storyData.pool;
-                            if (storyAlphaPool == null)
+                            pool = storyData.pool;
+                            if (pool == null)
                             { Debug.LogError("Invalid storyAlphaPool (Null)"); }
-                            else { Debug.LogFormat("[Cam] TopicManager.cs -> GetStoryTopicPool: storyAlphaPool \"{0}\"{1}", storyAlphaPool.tag, "\n"); }
+                            else { Debug.LogFormat("[Cam] TopicManager.cs -> GetStoryTopicPool: storyAlphaPool \"{0}\"{1}", pool.tag, "\n"); }
                         }
                         else { Debug.LogWarning("Invalid storyData (Null) for storyAlpha Campaign topics"); }
                     }
@@ -789,15 +809,15 @@ public class TopicManager : MonoBehaviour
                                                         }
                                                         break;
                                                     case "StoryAlpha":
-                                                        if (storyAlphaPool != null)
+                                                        if (pool != null)
                                                         {
                                                             //any subSubTypes present?
-                                                            if (storyAlphaPool.listOfSubSubTypePools.Count > 0)
-                                                            { LoadSubSubTypePools(storyAlphaPool, campaign.side); }
+                                                            if (pool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(pool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, storyAlphaPool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, pool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
-                                                            SetTopicDynamicData(storyAlphaPool.listOfTopics);
+                                                            SetTopicDynamicData(pool.listOfTopics);
                                                             isValid = true;
                                                         }
                                                         break;
@@ -1085,6 +1105,73 @@ public class TopicManager : MonoBehaviour
         Debug.LogFormat("[Top] TopicManager.cs -> SetStoryGroupFlags: isStoryCharlieGood set {0}{1}", isStoryCharlieGood, "\n");
     }
     #endregion
+
+    #region SetStoryPoolsOnLoad
+    /// <summary>
+    /// Runs through all story topic pools (campaign scope) and configures topics (status and isCurrent) so that the sequence will resume at the correct place once a save is loaded
+    /// </summary>
+    public void SetStoryPoolsOnLoad()
+    {
+        int levelIndex = GameManager.i.campaignScript.GetScenarioIndex();
+        ProcessStoryTopicPool(pool, indexCurrent, levelIndex);
+        ProcessStoryTopicPool(storyBravoPool, storyBravoCurrentIndex, levelIndex);
+        ProcessStoryTopicPool(storyCharliePool, storyCharlieCurrentIndex, levelIndex);
+    }
+
+    /// <summary>
+    /// Submethod for SetStoryPoolsOnLoad which handles processing
+    /// </summary>
+    /// <param name="pool"></param>
+    /// <param name="indexCurrent"></param>
+    private void ProcessStoryTopicPool(TopicPool pool, int indexCurrent, int levelIndex)
+    {
+        if (this.pool != null)
+        {
+            for (int i = 0; i < this.pool.listOfTopics.Count; i++)
+            {
+                Topic topic = this.pool.listOfTopics[i];
+                if (topic != null)
+                {
+                    //check topic applies to this level
+                    if (topic.levelIndex == levelIndex)
+                    {
+                        if (topic.linkedIndex == indexCurrent)
+                        {
+                            //activate topic
+                            topic.status = Status.Active;
+                            topic.isCurrent = true;
+                        }
+                        else
+                        {
+                            if (topic.linkedIndex > indexCurrent)
+                            {
+                                //yet to do topic
+                                topic.status = Status.Dormant;
+                                topic.isCurrent = false;
+                            }
+                            else
+                            {
+                                //already done topic (linkedIndex < currentIndex)
+                                topic.status = Status.Done;
+                                topic.isCurrent = false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //different level, shut down topic
+                        topic.status = Status.Done;
+                        topic.isCurrent = false;
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid topic (Null) for storyAlphaPool.listOfTopics[{0}]", i); }
+            }
+        }
+    }
+
+    #endregion
+
+    
 
     #endregion
 
@@ -3990,6 +4077,30 @@ public class TopicManager : MonoBehaviour
             //LINKED topic
             if (turnTopic.linkedIndex > -1)
             {
+                //increment relevant story index (used for save/load restoring correct place in storing sequence)
+                int indexChecker = 0;
+                if (turnTopicType.name.Equals("Story", StringComparison.Ordinal) == true)
+                {
+                    switch (turnTopicSubType.name)
+                    {
+                        case "StoryAlpha":
+                            indexCurrent++;
+                            Debug.LogFormat("[Top] TopicManager.cs -> UpdateTopicStatus: storyAlphaCurrentIndex now {0}{1}", indexCurrent, "\n");
+                            indexChecker = indexCurrent;
+                            break;
+                        case "StoryBravo":
+                            storyBravoCurrentIndex++;
+                            Debug.LogFormat("[Top] TopicManager.cs -> UpdateTopicStatus: storyBravoCurrentIndex now {0}{1}", storyBravoCurrentIndex, "\n");
+                            indexChecker = storyBravoCurrentIndex;
+                            break;
+                        case "StoryCharlie":
+                            storyCharlieCurrentIndex++;
+                            Debug.LogFormat("[Top] TopicManager.cs -> UpdateTopicStatus: storyCharlieCurrentIndex now {0}{1}", storyCharlieCurrentIndex, "\n");
+                            indexChecker = storyCharlieCurrentIndex;
+                            break;
+                        default: Debug.LogWarningFormat("Unrecognised turnTopicSubType \"{0}\"", turnTopicSubType.name); break;
+                    }
+                }
                 //next topics in chain
                 if (turnTopic.listOfLinkedTopics.Count > 0)
                 {
@@ -4000,6 +4111,9 @@ public class TopicManager : MonoBehaviour
                         topic.isCurrent = true;
                         if (isTestLog)
                         { Debug.LogFormat("[Tst] TopicManager.cs -> UpdateTopicTypeData: LINKED topic \"{0}\" set to Status.Dormant{1}", topic.name, "\n"); }
+                        //index check
+                        if (indexChecker != topic.linkedIndex)
+                        { Debug.LogWarningFormat("Mismatch on Indexex, topic \"{0}\" linkedIndex {1} (should be {2})", topic.name, topic.linkedIndex, indexChecker); }
                     }
                 }
                 //negate any buddy topics (current link in the chain) that weren't selected (only one topic in the each link in the chain can be selected)
@@ -7545,7 +7659,7 @@ public class TopicManager : MonoBehaviour
         builder.AppendFormat("- Story Data{0}{1}", "\n", "\n");
         //story modules
         builder.AppendFormat(" Story Modules{0}", "\n");
-        builder.AppendFormat(" storyAlpha (Campaign): {0}{1}", storyAlphaPool != null ? storyAlphaPool.tag : "None", "\n");
+        builder.AppendFormat(" storyAlpha (Campaign): {0}{1}", pool != null ? pool.tag : "None", "\n");
         builder.AppendFormat(" storyBravo (Family): {0}{1}", storyBravoPool != null ? storyBravoPool.tag : "None", "\n");
         builder.AppendFormat(" storyCharlie (Hq): {0}{1}", storyCharliePool != null ? storyCharliePool.tag : "None", "\n");
         //group flags
@@ -7553,6 +7667,11 @@ public class TopicManager : MonoBehaviour
         builder.AppendFormat(" isStoryAlphaGood: {0}{1}", isStoryAlphaGood, "\n");
         builder.AppendFormat(" isStoryBravoGood: {0}{1}", isStoryBravoGood, "\n");
         builder.AppendFormat(" isStoryCharlieGood: {0}{1}", isStoryCharlieGood, "\n");
+        //indexes
+        builder.AppendFormat(" {0} Indexes{1}", "\n", "\n");
+        builder.AppendFormat(" storyAlphaCurrentIndex: {0}{1}", indexCurrent, "\n");
+        builder.AppendFormat(" storyBravoCurrentIndex: {0}{1}", storyBravoCurrentIndex, "\n");
+        builder.AppendFormat(" storyCharlieCurrentIndex: {0}{1}", storyCharlieCurrentIndex, "\n");
         return builder.ToString();
     }
 
@@ -7565,8 +7684,8 @@ public class TopicManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- Story Topics{0}{1}", "\n", "\n");
         //Alpha
-        builder.AppendFormat(" Alpha Pool (Campaign) -> \"{0}\"{1}", storyAlphaPool.tag, "\n");
-        builder.Append(DebugProcessStoryPool(storyAlphaPool));
+        builder.AppendFormat(" Alpha Pool (Campaign) -> \"{0}\"{1}", pool.tag, "\n");
+        builder.Append(DebugProcessStoryPool(pool));
         //Bravo
         builder.AppendFormat("{0} Bravo Pool (Campaign) -> \"{1}\"{2}", "\n", storyBravoPool.tag, "\n");
         builder.Append(DebugProcessStoryPool(storyBravoPool));

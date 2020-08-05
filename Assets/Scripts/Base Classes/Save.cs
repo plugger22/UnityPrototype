@@ -473,6 +473,9 @@ public class SaveTopicData
     public bool isStoryAlphaGood;
     public bool isStoryBravoGood;
     public bool isStoryCharlieGood;
+    public int storyAlphaCurrentIndex;
+    public int storyBravoCurrentIndex;
+    public int storyCharlieCurrentIndex;
     public List<SaveTopic> listOfTopics = new List<SaveTopic>();
 }
 #endregion

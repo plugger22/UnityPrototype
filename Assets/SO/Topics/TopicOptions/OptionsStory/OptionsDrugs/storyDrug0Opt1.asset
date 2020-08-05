@@ -27,9 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyHeader: 
   storyInfo: Ground hover, jet,  low orbital, spaceFreight. If it flies I can turn
-    it into an Eagle or a Turkey. Of course I'd have to give the Turkey a mask if
+    it into an Eagle or a Turkey. Of course I'd have to give the Turkey a suit if
     we were out there on the Frontier.
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Interested</color>

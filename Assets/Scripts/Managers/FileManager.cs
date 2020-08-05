@@ -1665,8 +1665,8 @@ public class FileManager : MonoBehaviour
     private void WriteTopicData()
     {
         //story modules
-        if (GameManager.i.topicScript.storyAlphaPool != null)
-        { write.topicData.storyAlpha = GameManager.i.topicScript.storyAlphaPool.name; }
+        if (GameManager.i.topicScript.pool != null)
+        { write.topicData.storyAlpha = GameManager.i.topicScript.pool.name; }
         if (GameManager.i.topicScript.storyBravoPool != null)
         { write.topicData.storyBravo = GameManager.i.topicScript.storyBravoPool.name; }
         if (GameManager.i.topicScript.storyCharliePool != null)
@@ -1675,6 +1675,10 @@ public class FileManager : MonoBehaviour
         write.topicData.isStoryAlphaGood = GameManager.i.topicScript.isStoryAlphaGood;
         write.topicData.isStoryBravoGood = GameManager.i.topicScript.isStoryBravoGood;
         write.topicData.isStoryCharlieGood = GameManager.i.topicScript.isStoryCharlieGood;
+        //indexes
+        write.topicData.storyAlphaCurrentIndex = GameManager.i.topicScript.indexCurrent;
+        write.topicData.storyBravoCurrentIndex = GameManager.i.topicScript.storyBravoCurrentIndex;
+        write.topicData.storyCharlieCurrentIndex = GameManager.i.topicScript.storyCharlieCurrentIndex;
         //topics
         Dictionary<string, Topic> dictOfTopics = GameManager.i.dataScript.GetDictOfTopics();
         if (dictOfTopics != null)
@@ -3729,8 +3733,8 @@ public class FileManager : MonoBehaviour
         {
             //alpha -> Campaign
             if (string.IsNullOrEmpty(read.topicData.storyAlpha) == false)
-            { GameManager.i.topicScript.storyAlphaPool = campaign.story.GetCampaignTopicPool(read.topicData.storyAlpha); }
-            else { GameManager.i.topicScript.storyAlphaPool = null; }
+            { GameManager.i.topicScript.pool = campaign.story.GetCampaignTopicPool(read.topicData.storyAlpha); }
+            else { GameManager.i.topicScript.pool = null; }
             //bravo -> Family
             if (string.IsNullOrEmpty(read.topicData.storyBravo) == false)
             { GameManager.i.topicScript.storyBravoPool = campaign.story.GetFamilyTopicPool(read.topicData.storyBravo); }
@@ -3745,6 +3749,10 @@ public class FileManager : MonoBehaviour
         GameManager.i.topicScript.isStoryAlphaGood = read.topicData.isStoryAlphaGood;
         GameManager.i.topicScript.isStoryBravoGood = read.topicData.isStoryBravoGood;
         GameManager.i.topicScript.isStoryCharlieGood = read.topicData.isStoryCharlieGood;
+        //indexes
+        GameManager.i.topicScript.indexCurrent = read.topicData.storyAlphaCurrentIndex;
+        GameManager.i.topicScript.storyBravoCurrentIndex = read.topicData.storyBravoCurrentIndex;
+        GameManager.i.topicScript.storyCharlieCurrentIndex = read.topicData.storyCharlieCurrentIndex;
         //
         // - - - Topics
         //
