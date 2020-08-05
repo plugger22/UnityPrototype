@@ -92,6 +92,7 @@ public class TopBarUI : MonoBehaviour
                 SubInitialiseSessionStart();
                 break;
             case GameState.LoadGame:
+                //do nothing
                 break;
             case GameState.FollowOnInitialisation:
                 SubInitialiseUpdateTopBar();
@@ -133,6 +134,18 @@ public class TopBarUI : MonoBehaviour
 
     #region SubInitialiseSessionStart
     private void SubInitialiseSessionStart()
+    {
+        InitialiseComponents();
+        //Tooltips
+        InitialiseTooltips();
+    }
+    #endregion
+
+    #region InitialiseComponents
+    /// <summary>
+    /// private subMethod to Initialise UI components
+    /// </summary>
+    private void InitialiseComponents()
     {
         colourIconDormant = GameManager.i.guiScript.colourIconDormant;
         colourIconActiveGood = GameManager.i.guiScript.colourIconActiveGood;
@@ -185,9 +198,6 @@ public class TopBarUI : MonoBehaviour
         conflicts.textIcon.text = GameManager.i.guiScript.conflictChar.ToString();
         blackmail.textIcon.text = GameManager.i.guiScript.blackmailChar.ToString();
         doom.textIcon.text = GameManager.i.guiScript.doomChar.ToString();
-        //Tooltips
-        InitialiseTooltips();
-
     }
     #endregion
 
@@ -234,6 +244,13 @@ public class TopBarUI : MonoBehaviour
     /// </summary>
     public void LoadSavedData()
     {
+        /*//need to initialise gui components if load at start (sequence issues)
+        if (GameManager.i.inputScript.GameState == GameState.LoadAtStart)
+        {
+            InitialiseComponents();
+            InitialiseTooltips();
+        }*/
+        //update individual elements
         UpdateCommendations(commendationData);
         UpdateBlackmarks(blackmarkData);
         UpdateInvestigations(investigationData);

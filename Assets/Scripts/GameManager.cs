@@ -145,7 +145,7 @@ public class GameManager : MonoBehaviour
 
     private Random.State devState;                                                  //used to restore seedDev random sequence after any interlude, eg. level generation with a unique seed
     private long totalTime;                                                         //used for Performance monitoring on start up
-    private float mouseWheelInput;                                                    //used for detecting mouse wheel input in the Update method
+    private float mouseWheelInput;                                                  //used for detecting mouse wheel input in the Update method
     [HideInInspector] public bool isSession;                                        //true once InitialiseNewLevel has been run at least once (for Load game functionality to detect if loading prior to any initialisation)
 
     private List<StartMethod> listOfGlobalMethods = new List<StartMethod>();        //start game global methods
@@ -784,7 +784,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
 
-    #region Performance Monitoring or not
+    #region Initialise Methods, Performance Monitoring or not
     /// <summary>
     /// Initialise a start list of methods (without performance monitoring)
     /// </summary>
@@ -799,7 +799,7 @@ public class GameManager : MonoBehaviour
                 if (method.handler != null)
                 {
                     method.handler(state);
-                    Debug.LogFormat("[Per] GameManager.cs -> InitialiseMethods: {0}, {1}{2}", method.className, method.handler.Method.Name, "\n");
+                    Debug.LogFormat("[Per] GameManager.cs -> InitialiseMethods: {0}, {1}, state {2}{3}", method.className, method.handler.Method.Name, state, "\n");
                 }
                 else { Debug.LogErrorFormat("Invalid startMethod handler for {0}", method.className); }
             }
@@ -815,22 +815,21 @@ public class GameManager : MonoBehaviour
         //run each method via delegates in their preset order
         if (listOfMethods != null)
         {
-            GameState state = GameManager.i.inputScript.GameState;
+            GameState state = inputScript.GameState;
             //start timer tally to get an overall performance time
-            GameManager.i.testScript.TimerTallyStart();
+            testScript.TimerTallyStart();
             foreach (StartMethod method in listOfMethods)
             {
                 if (method.handler != null)
                 {
-                    GameManager.i.testScript.StartTimer();
+                    testScript.StartTimer();
                     method.handler(state);
                     long elapsed = testScript.StopTimer();
-                    Debug.LogFormat("[Per] {0} -> {1}: {2} ms{3}", method.className, method.handler.Method.Name, elapsed, "\n");
+                    Debug.LogFormat("[Per] {0} -> {1}: {2} ms, state {3}{4}", method.className, method.handler.Method.Name, elapsed, state, "\n");
                 }
                 else { Debug.LogErrorFormat("Invalid startMethod handler for {0}", method.className); }
             }
             totalTime += testScript.TimerTallyStop();
-            /**/
         }
         else { Debug.LogError("Invalid listOfMethods (Null)"); }
     }
@@ -841,7 +840,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
 
-    #region InitialiseMenu
+    #region InitialiseMainMenu
     /// <summary>
     /// Initialise Main Menu
     /// </summary>
@@ -945,6 +944,11 @@ public class GameManager : MonoBehaviour
             InitialiseMethods(listOfLevelMethods);
             InitialiseMethods(listOfDebugMethods);
             InitialiseMethods(listOfConditionalMethods);
+
+            //load up UI elements for a load at Start session
+            if (inputScript.GameState == GameState.LoadAtStart)
+            { InitialiseMethods(listOfUIMethods); }
+
             //set session flag
             isSession = true;
         }

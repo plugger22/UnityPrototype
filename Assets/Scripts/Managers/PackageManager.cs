@@ -562,7 +562,7 @@ namespace packageAPI
     /// <summary>
     /// history of the selected topics (one per turn max)
     /// </summary>
-    [System.Serializable]
+    [Serializable]
     public class HistoryTopic
     {
         public int turn;
@@ -576,7 +576,7 @@ namespace packageAPI
     /// <summary>
     /// history of major actor and player events. NOTE: turn, city  and cityTag are handled automatically by the constructor, you only need to add text
     /// </summary>
-    [System.Serializable]
+    [Serializable]
     public class HistoryActor
     {
         public int turn;
@@ -588,16 +588,20 @@ namespace packageAPI
 
         public HistoryActor()
         {
-            turn = GameManager.i.turnScript.Turn;
-            city = GameManager.i.campaignScript.scenario.city.name;
-            cityTag = GameManager.i.campaignScript.scenario.city.tag;
+            //bypass if load at start
+            if (GameManager.i.inputScript.GameState != GameState.LoadAtStart)
+            {
+                turn = GameManager.i.turnScript.Turn;
+                city = GameManager.i.campaignScript.scenario.city.name;
+                cityTag = GameManager.i.campaignScript.scenario.city.tag;
+            }
         }
     }
 
     /// <summary>
     /// History of a level (once completed)
     /// </summary>
-    [System.Serializable]
+    [Serializable]
     public class HistoryLevel
     {
         //base data

@@ -27,9 +27,7 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyHeader: 
-  storyInfo: Are you hitting on me, you little worm? Am I the type of person who would
-    consider sleeping with an insignificant nobody with a brain the size of a peanut?
+  storyInfo: Are you hitting on me, you little worm? Is it Be Nice To The Doomed Day?
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Attracted</color>
   tooltipMain: <color=#98FB98> Information gained</color>

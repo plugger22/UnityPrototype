@@ -27,9 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyHeader: 
   storyInfo: Normally I don't deal with little people like you but I've been asked
-    to take care of this so here I am. Shoulders back, head high, Buster!
+    to take care of this so here I am. Shoulders back, head high, eyes forward!
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Uncertain</color>
   tooltipMain: <color=#98FB98> Information gained</color>

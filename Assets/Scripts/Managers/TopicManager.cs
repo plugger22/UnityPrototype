@@ -3556,8 +3556,10 @@ public class TopicManager : MonoBehaviour
                 GameManager.i.dataScript.AddNewsItem(item);
                 Debug.LogFormat("[Top] {0}{1}", newsSnippet, "\n");
             }
-            //outcome dialogue
-            SetTopicOutcome(builderTop, builderBottom);
+            //outcome dialogue -> For Story topics use topic Sprite, otherwise just the info sprite
+            if (turnTopicType.name.Equals("Story", StringComparison.Ordinal) == true)
+            { SetTopicOutcome(builderTop, builderBottom, turnSprite); }
+            else { SetTopicOutcome(builderTop, builderBottom); }
             //message outcome
             tagOutcome = builderBottom.ToString();
             //tidy up
@@ -6655,8 +6657,8 @@ public class TopicManager : MonoBehaviour
                     if (topicItem != null)
                     {
                         turnSprite = topicItem.sprite;
-                        //tagspriteName?
-                        data.imageTooltipHeader = string.Format("{0}{1}{2}", colourNeutral, topicItem.tag, colourEnd);
+                        tagSpriteName = topicItem.name; //NOTE: topicItem.name NOT sprite.name (allows topicItems to use main portraits as dupes if required)
+                        data.imageTooltipHeader = string.Format("{0}<size=115%>{1}</size>{2}", colourNeutral, topicItem.tag, colourEnd);
                         data.imageTooltipMain = topicItem.descriptor;
                     }
                     else { Debug.LogWarningFormat("Invalid topicItem (Null) for turnTopic \"{0}\"", turnTopic.name); }

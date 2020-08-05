@@ -4591,3 +4591,891 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 13803 -> Tuesday, 4 August 2020 8:40 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 43321 -> Wednesday, 5 August 2020 9:03 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 48781 -> Wednesday, 5 August 2020 9:06 AM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid spriteName (Null or Empty) for ""
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:GetSprite(String) (at Assets/Scripts/Managers/DataManager.cs:8367)
+	FileManager:TransferMainInfoData(SaveMainInfo, MainInfoData) (at Assets/Scripts/Managers/FileManager.cs:4167)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:3024)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:212)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid spriteName (Null or Empty) for ""
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:GetSprite(String) (at Assets/Scripts/Managers/DataManager.cs:8367)
+	FileManager:TransferMainInfoData(SaveMainInfo, MainInfoData) (at Assets/Scripts/Managers/FileManager.cs:4167)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:3044)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:212)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 22951 -> Wednesday, 5 August 2020 9:08 AM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfActors (Empty), PlayerStats topic cancelled
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:GetPlayerStatsTopics(List`1, GlobalSide, String) (at Assets/Scripts/Managers/TopicManager.cs:2421)
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1709)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1172)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:334)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid listOfTopics (EMPTY) for topicSubType "PlayerStats" -> INFO Only
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1807)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1172)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:334)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid listOfActors (Empty), PlayerStats topic cancelled
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:GetPlayerStatsTopics(List`1, GlobalSide, String) (at Assets/Scripts/Managers/TopicManager.cs:2421)
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1709)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1172)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:334)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid listOfTopics (EMPTY) for topicSubType "PlayerStats" -> INFO Only
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1807)
+	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1172)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:334)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:421)
+	
+Dev seed 18823 -> Wednesday, 5 August 2020 9:15 AM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid spriteName (Null or Empty) for ""
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:GetSprite(String) (at Assets/Scripts/Managers/DataManager.cs:8367)
+	FileManager:TransferMainInfoData(SaveMainInfo, MainInfoData) (at Assets/Scripts/Managers/FileManager.cs:4167)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:3024)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:212)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid spriteName (Null or Empty) for ""
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:GetSprite(String) (at Assets/Scripts/Managers/DataManager.cs:8367)
+	FileManager:TransferMainInfoData(SaveMainInfo, MainInfoData) (at Assets/Scripts/Managers/FileManager.cs:4167)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:3044)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:212)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 32893 -> Wednesday, 5 August 2020 9:56 AM
+ERROR Duplicate sprite name "portrait_10" for listOfSprites[59]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	LoadManager:InitialiseEarly(GameState) (at Assets/Scripts/Managers/LoadManager.cs:1314)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:380)
+	ERROR Duplicate sprite name "portrait_14" for listOfSprites[63]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	LoadManager:InitialiseEarly(GameState) (at Assets/Scripts/Managers/LoadManager.cs:1314)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:826)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:380)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 16767 -> Wednesday, 5 August 2020 9:59 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38794 -> Wednesday, 5 August 2020 10:03 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 34986 -> Wednesday, 5 August 2020 10:40 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 57606 -> Wednesday, 5 August 2020 10:41 AM
+City seed 5678 -> London, United Kingdom
+City seed 5678 -> London, United Kingdom
+
+Dev seed 30260 -> Wednesday, 5 August 2020 10:43 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 33613 -> Wednesday, 5 August 2020 10:43 AM
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopBarUI.UpdateCommendationsTooltip (System.Int32 value) (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:613)
+	TopBarUI.UpdateCommendations (System.Int32 value) (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:301)
+	TopBarUI.LoadSavedData () (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:237)
+	FileManager.UpdateGUI (GlobalSide side) (at Assets/Scripts/Managers/FileManager.cs:4134)
+	FileManager.LoadSaveData () (at Assets/Scripts/Managers/FileManager.cs:233)
+	ControlManager.ProcessLoadGame (gameAPI.GameState state) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu.<InitialiseMainMenu>m__2 () (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.Events.InvokableCall.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent.cs:166)
+	UnityEngine.Events.UnityEvent.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent_0.cs:58)
+	UnityEngine.UI.Button.Press () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:36)
+	UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:45)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopBarUI.UpdateConflictTooltip (System.Int32 value) (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:707)
+	TopBarUI.UpdateConflicts (System.Int32 value) (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:467)
+	ActorManager.CheckActiveResistanceActorsHuman () (at Assets/Scripts/Managers/ActorManager.cs:6204)
+	ActorManager.StartTurnLate () (at Assets/Scripts/Managers/ActorManager.cs:494)
+	ActorManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ActorManager.cs:446)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	TurnManager.StartTurnLate () (at Assets/Scripts/Managers/TurnManager.cs:537)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:326)
+	TurnManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:421)
+	
+Dev seed 5143 -> Wednesday, 5 August 2020 10:50 AM
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+packageAPI.HistoryActor..ctor () (at Assets/Scripts/Managers/PackageManager.cs:592)
+	UnityEngine.JsonUtility:FromJson(String)
+	FileManager:ReadSaveData() (at Assets/Scripts/Managers/FileManager.cs:181)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:369)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopBarUI.UpdateCommendationsTooltip (System.Int32 value) (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:613)
+	TopBarUI.UpdateCommendations (System.Int32 value) (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:301)
+	TopBarUI.LoadSavedData () (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:237)
+	FileManager.UpdateGUI (GlobalSide side) (at Assets/Scripts/Managers/FileManager.cs:4134)
+	FileManager.LoadSaveData () (at Assets/Scripts/Managers/FileManager.cs:233)
+	ControlManager.ProcessLoadGame (gameAPI.GameState state) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu.<InitialiseMainMenu>m__2 () (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.Events.InvokableCall.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent.cs:166)
+	UnityEngine.Events.UnityEvent.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent_0.cs:58)
+	UnityEngine.UI.Button.Press () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:36)
+	UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:45)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 60980 -> Wednesday, 5 August 2020 10:53 AM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopBarUI.UpdateCommendationsTooltip (System.Int32 value) (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:613)
+	TopBarUI.UpdateCommendations (System.Int32 value) (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:301)
+	TopBarUI.LoadSavedData () (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:237)
+	FileManager.UpdateGUI (GlobalSide side) (at Assets/Scripts/Managers/FileManager.cs:4134)
+	FileManager.LoadSaveData () (at Assets/Scripts/Managers/FileManager.cs:233)
+	ControlManager.ProcessLoadGame (gameAPI.GameState state) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu.<InitialiseMainMenu>m__2 () (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.Events.InvokableCall.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent.cs:166)
+	UnityEngine.Events.UnityEvent.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent_0.cs:58)
+	UnityEngine.UI.Button.Press () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:36)
+	UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:45)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopBarUI.UpdateConflictTooltip (System.Int32 value) (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:707)
+	TopBarUI.UpdateConflicts (System.Int32 value) (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:467)
+	ActorManager.CheckActiveResistanceActorsHuman () (at Assets/Scripts/Managers/ActorManager.cs:6204)
+	ActorManager.StartTurnLate () (at Assets/Scripts/Managers/ActorManager.cs:494)
+	ActorManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ActorManager.cs:446)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	TurnManager.StartTurnLate () (at Assets/Scripts/Managers/TurnManager.cs:537)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:326)
+	TurnManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:421)
+	
+Dev seed 48523 -> Wednesday, 5 August 2020 10:55 AM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopBarUI.UpdateCommendationsTooltip (System.Int32 value) (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:613)
+	TopBarUI.UpdateCommendations (System.Int32 value) (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:301)
+	TopBarUI.LoadSavedData () (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:237)
+	FileManager.UpdateGUI (GlobalSide side) (at Assets/Scripts/Managers/FileManager.cs:4134)
+	FileManager.LoadSaveData () (at Assets/Scripts/Managers/FileManager.cs:233)
+	ControlManager.ProcessLoadGame (gameAPI.GameState state) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu.<InitialiseMainMenu>m__2 () (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.Events.InvokableCall.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent.cs:166)
+	UnityEngine.Events.UnityEvent.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent_0.cs:58)
+	UnityEngine.UI.Button.Press () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:36)
+	UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:45)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 15155 -> Wednesday, 5 August 2020 11:14 AM
+City seed 5678 -> London, United Kingdom
+WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "MainInfoOpen"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:311)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:956)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:933)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipNode.SetTooltip (packageAPI.NodeTooltipData data) (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:410)
+	Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:554)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "MainInfoOpenInterim"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:311)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:443)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Duplicate secret already in list, secret SecretResP4
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	gameAPI.Actor:AddSecret(Secret) (at Assets/Scripts/Base Classes/Actor.cs:922)
+	ActorManager:ProcessSecrets(Actor, List`1, Int32, Boolean) (at Assets/Scripts/Managers/ActorManager.cs:6865)
+	ActorManager:CheckActiveResistanceActorsHuman() (at Assets/Scripts/Managers/ActorManager.cs:6109)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:494)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:446)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:537)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:326)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:421)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PopUpFixed.SetData (gameAPI.PopUpPosition popPos, System.String textToDisplay) (at Assets/Scripts/GUI/PopUps/PopUpFixed.cs:280)
+	PopUpFixed.SetData (System.Int32 actorSlotID, System.String textToDisplay) (at Assets/Scripts/GUI/PopUps/PopUpFixed.cs:309)
+	ActorManager.ProcessSecrets (gameAPI.Actor actor, System.Collections.Generic.List`1[T] listOfSecrets, System.Int32 chance, System.Boolean isPlayer) (at Assets/Scripts/Managers/ActorManager.cs:6869)
+	ActorManager.CheckActiveResistanceActorsHuman () (at Assets/Scripts/Managers/ActorManager.cs:6109)
+	ActorManager.StartTurnLate () (at Assets/Scripts/Managers/ActorManager.cs:494)
+	ActorManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ActorManager.cs:446)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	TurnManager.StartTurnLate () (at Assets/Scripts/Managers/TurnManager.cs:537)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:326)
+	TurnManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:421)
+	
+Dev seed 11510 -> Wednesday, 5 August 2020 11:17 AM
+City seed 5678 -> London, United Kingdom
+City seed 5678 -> London, United Kingdom
+
+Dev seed 28728 -> Wednesday, 5 August 2020 11:21 AM
+City seed 5678 -> London, United Kingdom
+City seed 5678 -> London, United Kingdom
+
+Dev seed 56753 -> Wednesday, 5 August 2020 11:24 AM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicUI.SetTopicDisplay (packageAPI.TopicUIData data) (at Assets/Scripts/GUI/TopicUI.cs:386)
+	TopicUI.ActivateTopicDisplay () (at Assets/Scripts/GUI/TopicUI.cs:330)
+	GUIManager.InitialiseTopic () (at Assets/Scripts/Managers/GUIManager.cs:943)
+	GUIManager+<Topic>c__Iterator2.MoveNext () (at Assets/Scripts/Managers/GUIManager.cs:908)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:853)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 11764 -> Wednesday, 5 August 2020 11:46 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 54413 -> Wednesday, 5 August 2020 11:51 AM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopBarUI.UpdateCommendationsTooltip (System.Int32 value) (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:629)
+	TopBarUI.UpdateCommendations (System.Int32 value) (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:317)
+	TopBarUI.LoadSavedData () (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:253)
+	FileManager.UpdateGUI (GlobalSide side) (at Assets/Scripts/Managers/FileManager.cs:4134)
+	FileManager.LoadSaveData () (at Assets/Scripts/Managers/FileManager.cs:233)
+	ControlManager.ProcessLoadGame (gameAPI.GameState state) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu.<InitialiseMainMenu>m__2 () (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.Events.InvokableCall.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent.cs:166)
+	UnityEngine.Events.UnityEvent.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent_0.cs:58)
+	UnityEngine.UI.Button.Press () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:36)
+	UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:45)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 41665 -> Wednesday, 5 August 2020 11:53 AM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopBarUI.UpdateCommendationsTooltip (System.Int32 value) (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:630)
+	TopBarUI.UpdateCommendations (System.Int32 value) (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:318)
+	TopBarUI.LoadSavedData () (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:254)
+	FileManager.UpdateGUI (GlobalSide side) (at Assets/Scripts/Managers/FileManager.cs:4134)
+	FileManager.LoadSaveData () (at Assets/Scripts/Managers/FileManager.cs:233)
+	ControlManager.ProcessLoadGame (gameAPI.GameState state) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu.<InitialiseMainMenu>m__2 () (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.Events.InvokableCall.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent.cs:166)
+	UnityEngine.Events.UnityEvent.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent_0.cs:58)
+	UnityEngine.UI.Button.Press () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:36)
+	UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:45)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 46597 -> Wednesday, 5 August 2020 11:57 AM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopBarUI.UpdateCommendationsTooltip (System.Int32 value) (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:630)
+	TopBarUI.UpdateCommendations (System.Int32 value) (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:318)
+	TopBarUI.LoadSavedData () (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:254)
+	FileManager.UpdateGUI (GlobalSide side) (at Assets/Scripts/Managers/FileManager.cs:4134)
+	FileManager.LoadSaveData () (at Assets/Scripts/Managers/FileManager.cs:233)
+	ControlManager.ProcessLoadGame (gameAPI.GameState state) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu.<InitialiseMainMenu>m__2 () (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.Events.InvokableCall.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent.cs:166)
+	UnityEngine.Events.UnityEvent.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent_0.cs:58)
+	UnityEngine.UI.Button.Press () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:36)
+	UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:45)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 10233 -> Wednesday, 5 August 2020 12:01 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopBarUI.UpdateCommendationsTooltip (System.Int32 value) (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:630)
+	TopBarUI.UpdateCommendations (System.Int32 value) (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:318)
+	TopBarUI.LoadSavedData () (at Assets/Scripts/GUI/TopBar/TopBarUI.cs:254)
+	FileManager.UpdateGUI (GlobalSide side) (at Assets/Scripts/Managers/FileManager.cs:4134)
+	FileManager.LoadSaveData () (at Assets/Scripts/Managers/FileManager.cs:233)
+	ControlManager.ProcessLoadGame (gameAPI.GameState state) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu.<InitialiseMainMenu>m__2 () (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.Events.InvokableCall.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent.cs:166)
+	UnityEngine.Events.UnityEvent.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent_0.cs:58)
+	UnityEngine.UI.Button.Press () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:36)
+	UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:45)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 53163 -> Wednesday, 5 August 2020 12:02 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 26354 -> Wednesday, 5 August 2020 12:03 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 6533 -> Wednesday, 5 August 2020 12:04 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 43494 -> Wednesday, 5 August 2020 12:05 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 23597 -> Wednesday, 5 August 2020 12:07 PM
+City seed 5678 -> London, United Kingdom
+City seed 5678 -> London, United Kingdom
+
+Dev seed 3049 -> Wednesday, 5 August 2020 12:19 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 26681 -> Wednesday, 5 August 2020 12:25 PM
+City seed 5678 -> London, United Kingdom
