@@ -7182,17 +7182,19 @@ public class TopicManager : MonoBehaviour
 
     #region SetStoryFlag
     /// <summary>
-    /// Sets story flag to specified value. Note if 'scenarioIndex' left at default -1 then the CURRENT scenario index is automatically used
+    /// Sets story flag to specified value. 'flagNumber' is 0 to 4.
     /// </summary>
     /// <param name="storyType"></param>
     /// <param name="value"></param>
     /// <param name="scenarioIndex"></param>
-    public void SetStoryFlag(StoryType storyType, int value, int scenarioIndex = -1)
+    public void SetStoryFlag(StoryType storyType, int flagNumber, int value)
     {
-        if (scenarioIndex == -1)
-        { scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex(); }
-        arrayOfStoryFlags[(int)storyType, scenarioIndex] = value;
-        Debug.LogFormat("[Sto] TopicManager.cs -> SetStoryFlag: story Flag [{0}, {1}] now {2}{3}", storyType, scenarioIndex, value, "\n");
+        if (flagNumber < 5 && flagNumber > -1)
+        {
+            arrayOfStoryFlags[(int)storyType, flagNumber] = value;
+            Debug.LogFormat("[Sto] TopicManager.cs -> SetStoryFlag: story Flag [{0}, {1}] now {2}{3}", storyType, flagNumber, value, "\n");
+        }
+        else { Debug.LogErrorFormat("Invalid flagNumber \"{0}\" (should be 0 to 4)", flagNumber); }
     }
     #endregion
 

@@ -971,8 +971,8 @@ namespace packageAPI
     public class TopicEffectData
     {
         public int actorID;
-        public int actorOtherID;           //other actor in a dual actor effect, eg. relationship
-        public bool isHqActors;            //if true, actors are from HQ, default false
+        public int actorOtherID;            //other actor in a dual actor effect, eg. relationship
+        public bool isHqActors;             //if true, actors are from HQ, default false
         public int nodeID;
         public int teamID;
         public int contactID;
@@ -980,7 +980,8 @@ namespace packageAPI
         public string orgName;              //name of organisation, not tag, eg. Blue Angel Cult
         public string investigationRef;     //reference name of investigation
         public string gearName;             //name of gear, not tag
-        public ActorRelationship relation;   //used for ActorTopic relationships
+        public ActorRelationship relation;  //used for ActorTopic relationships
+        public StoryType storyType;         //used for Story topics, can ignore
     }
 
     /// <summary>

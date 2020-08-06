@@ -5005,6 +5005,22 @@ public class EffectManager : MonoBehaviour
                 //story target activated
 
                 break;
+            //sets story flags (current level)
+            case "StoryFlagZero":
+                GameManager.i.topicScript.SetStoryFlag(dataTopic.storyType, 0, dataInput.data);
+                break;
+            case "StoryFlagOne":
+                GameManager.i.topicScript.SetStoryFlag(dataTopic.storyType, 1, dataInput.data);
+                break;
+            case "StoryFlagTwo":
+                GameManager.i.topicScript.SetStoryFlag(dataTopic.storyType, 2, dataInput.data);
+                break;
+            case "StoryFlagThree":
+                GameManager.i.topicScript.SetStoryFlag(dataTopic.storyType, 3, dataInput.data);
+                break;
+            case "StoryFlagFour":
+                GameManager.i.topicScript.SetStoryFlag(dataTopic.storyType, 4, dataInput.data);
+                break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }
         return effectResolve;
