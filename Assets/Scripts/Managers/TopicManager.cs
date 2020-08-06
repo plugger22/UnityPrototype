@@ -179,7 +179,7 @@ public class TopicManager : MonoBehaviour
 
     #region Save Data Compatible
     //Story Module topic Pools
-    [HideInInspector] public TopicPool pool;
+    [HideInInspector] public TopicPool storyAlphaPool;
     [HideInInspector] public TopicPool storyBravoPool;
     [HideInInspector] public TopicPool storyCharliePool;
 
@@ -187,9 +187,11 @@ public class TopicManager : MonoBehaviour
     [HideInInspector] public bool isStoryBravoGood;
     [HideInInspector] public bool isStoryCharlieGood;
 
-    [HideInInspector] public int indexCurrent;             //current linked index for story Alpha sequence of linked topics within the level
+    [HideInInspector] public int storyAlphaCurrentIndex;             //current linked index for story Alpha sequence of linked topics within the level
     [HideInInspector] public int storyBravoCurrentIndex;             //current linked index for story Bravo sequence of linked topics within the level
     [HideInInspector] public int storyCharlieCurrentIndex;           //current linked index for story Charlie sequence of linked topics within the level
+
+    [HideInInspector] public int[,] arrayOfStoryFlags;
     #endregion
 
     #region private variables
@@ -313,6 +315,8 @@ public class TopicManager : MonoBehaviour
     /// </summary>
     private void SubInitialiseStartUp()
     {
+        //collections
+        arrayOfStoryFlags = new int[(int)StoryType.Count, GameManager.i.campaignScript.GetMaxScenarioIndex() + 1];
         //[Tst] debug logging on/off
         isTestLog = GameManager.i.testScript.isTopicManager;
         //debug topic pool
@@ -570,10 +574,10 @@ public class TopicManager : MonoBehaviour
                         StoryData storyData = story.GetRandomCampaignStoryData();
                         if (storyData != null)
                         {
-                            pool = storyData.pool;
-                            if (pool == null)
+                            storyAlphaPool = storyData.pool;
+                            if (storyAlphaPool == null)
                             { Debug.LogError("Invalid storyAlphaPool (Null)"); }
-                            else { Debug.LogFormat("[Cam] TopicManager.cs -> GetStoryTopicPool: storyAlphaPool \"{0}\"{1}", pool.tag, "\n"); }
+                            else { Debug.LogFormat("[Sto] TopicManager.cs -> GetStoryTopicPool: storyAlphaPool \"{0}\"{1}", storyAlphaPool.tag, "\n"); }
                         }
                         else { Debug.LogWarning("Invalid storyData (Null) for storyAlpha Campaign topics"); }
                     }
@@ -590,7 +594,7 @@ public class TopicManager : MonoBehaviour
                             storyBravoPool = storyData.pool;
                             if (storyBravoPool == null)
                             { Debug.LogError("Invalid storyBravoPool (Null)"); }
-                            else { Debug.LogFormat("[Cam] TopicManager.cs -> GetStoryTopicPool: storyBravoPool \"{0}\"{1}", storyBravoPool.tag, "\n"); }
+                            else { Debug.LogFormat("[Sto] TopicManager.cs -> GetStoryTopicPool: storyBravoPool \"{0}\"{1}", storyBravoPool.tag, "\n"); }
                         }
                         else { Debug.LogWarning("Invalid storyData (Null) for storyBravo Family topics"); }
                     }
@@ -607,7 +611,7 @@ public class TopicManager : MonoBehaviour
                             storyCharliePool = storyData.pool;
                             if (storyCharliePool == null)
                             { Debug.LogError("Invalid storyCharliePool (Null)"); }
-                            else { Debug.LogFormat("[Cam] TopicManager.cs -> GetStoryTopicPool: storyCharliePool \"{0}\"{1}", storyCharliePool.tag, "\n"); }
+                            else { Debug.LogFormat("[Sto] TopicManager.cs -> GetStoryTopicPool: storyCharliePool \"{0}\"{1}", storyCharliePool.tag, "\n"); }
                         }
                         else { Debug.LogWarning("Invalid storyData (Null) for storyCharlie Hq topics"); }
                     }
@@ -809,15 +813,15 @@ public class TopicManager : MonoBehaviour
                                                         }
                                                         break;
                                                     case "StoryAlpha":
-                                                        if (pool != null)
+                                                        if (storyAlphaPool != null)
                                                         {
                                                             //any subSubTypes present?
-                                                            if (pool.listOfSubSubTypePools.Count > 0)
-                                                            { LoadSubSubTypePools(pool, campaign.side); }
+                                                            if (storyAlphaPool.listOfSubSubTypePools.Count > 0)
+                                                            { LoadSubSubTypePools(storyAlphaPool, campaign.side); }
                                                             //populate dictionary
-                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, pool.listOfTopics);
+                                                            GameManager.i.dataScript.AddListOfTopicsToPool(subTypeName, storyAlphaPool.listOfTopics);
                                                             AddTopicTypeToList(listOfTopicTypesLevel, topicType);
-                                                            SetTopicDynamicData(pool.listOfTopics);
+                                                            SetTopicDynamicData(storyAlphaPool.listOfTopics);
                                                             isValid = true;
                                                         }
                                                         break;
@@ -1100,9 +1104,9 @@ public class TopicManager : MonoBehaviour
         else { isStoryBravoGood = false; }
         if (Random.Range(0, 100) < 50) { isStoryCharlieGood = true; }
         else { isStoryCharlieGood = false; }
-        Debug.LogFormat("[Top] TopicManager.cs -> SetStoryGroupFlags: isStoryAlphaGood set {0}{1}", isStoryAlphaGood, "\n");
-        Debug.LogFormat("[Top] TopicManager.cs -> SetStoryGroupFlags: isStoryBravoGood set {0}{1}", isStoryBravoGood, "\n");
-        Debug.LogFormat("[Top] TopicManager.cs -> SetStoryGroupFlags: isStoryCharlieGood set {0}{1}", isStoryCharlieGood, "\n");
+        Debug.LogFormat("[Sto] TopicManager.cs -> SetStoryGroupFlags: isStoryAlphaGood set {0}{1}", isStoryAlphaGood, "\n");
+        Debug.LogFormat("[Sto] TopicManager.cs -> SetStoryGroupFlags: isStoryBravoGood set {0}{1}", isStoryBravoGood, "\n");
+        Debug.LogFormat("[Sto] TopicManager.cs -> SetStoryGroupFlags: isStoryCharlieGood set {0}{1}", isStoryCharlieGood, "\n");
     }
     #endregion
 
@@ -1113,7 +1117,7 @@ public class TopicManager : MonoBehaviour
     public void SetStoryPoolsOnLoad()
     {
         int levelIndex = GameManager.i.campaignScript.GetScenarioIndex();
-        ProcessStoryTopicPool(pool, indexCurrent, levelIndex);
+        ProcessStoryTopicPool(storyAlphaPool, storyAlphaCurrentIndex, levelIndex);
         ProcessStoryTopicPool(storyBravoPool, storyBravoCurrentIndex, levelIndex);
         ProcessStoryTopicPool(storyCharliePool, storyCharlieCurrentIndex, levelIndex);
     }
@@ -1125,11 +1129,11 @@ public class TopicManager : MonoBehaviour
     /// <param name="indexCurrent"></param>
     private void ProcessStoryTopicPool(TopicPool pool, int indexCurrent, int levelIndex)
     {
-        if (this.pool != null)
+        if (pool != null)
         {
-            for (int i = 0; i < this.pool.listOfTopics.Count; i++)
+            for (int i = 0; i < pool.listOfTopics.Count; i++)
             {
-                Topic topic = this.pool.listOfTopics[i];
+                Topic topic = pool.listOfTopics[i];
                 if (topic != null)
                 {
                     //check topic applies to this level
@@ -1169,9 +1173,7 @@ public class TopicManager : MonoBehaviour
         }
     }
 
-    #endregion
-
-    
+    #endregion   
 
     #endregion
 
@@ -4084,18 +4086,18 @@ public class TopicManager : MonoBehaviour
                     switch (turnTopicSubType.name)
                     {
                         case "StoryAlpha":
-                            indexCurrent++;
-                            Debug.LogFormat("[Top] TopicManager.cs -> UpdateTopicStatus: storyAlphaCurrentIndex now {0}{1}", indexCurrent, "\n");
-                            indexChecker = indexCurrent;
+                            storyAlphaCurrentIndex++;
+                            Debug.LogFormat("[Sto] TopicManager.cs -> UpdateTopicStatus: storyAlphaCurrentIndex now {0}{1}", storyAlphaCurrentIndex, "\n");
+                            indexChecker = storyAlphaCurrentIndex;
                             break;
                         case "StoryBravo":
                             storyBravoCurrentIndex++;
-                            Debug.LogFormat("[Top] TopicManager.cs -> UpdateTopicStatus: storyBravoCurrentIndex now {0}{1}", storyBravoCurrentIndex, "\n");
+                            Debug.LogFormat("[Sto] TopicManager.cs -> UpdateTopicStatus: storyBravoCurrentIndex now {0}{1}", storyBravoCurrentIndex, "\n");
                             indexChecker = storyBravoCurrentIndex;
                             break;
                         case "StoryCharlie":
                             storyCharlieCurrentIndex++;
-                            Debug.LogFormat("[Top] TopicManager.cs -> UpdateTopicStatus: storyCharlieCurrentIndex now {0}{1}", storyCharlieCurrentIndex, "\n");
+                            Debug.LogFormat("[Sto] TopicManager.cs -> UpdateTopicStatus: storyCharlieCurrentIndex now {0}{1}", storyCharlieCurrentIndex, "\n");
                             indexChecker = storyCharlieCurrentIndex;
                             break;
                         default: Debug.LogWarningFormat("Unrecognised turnTopicSubType \"{0}\"", turnTopicSubType.name); break;
@@ -4241,26 +4243,42 @@ public class TopicManager : MonoBehaviour
     private bool CheckTopicCriteria(Topic topic)
     {
         bool isCheck = false;
+        StoryType storyType = StoryType.None;
         //topic criteria must pass checks
         if (topic.listOfCriteria != null && topic.listOfCriteria.Count > 0)
         {
-            //special case of Organisation subTypes, need an name for EffectManager.cs -> CheckCriteria
-            if (topic.type.name.Equals("Organisation", StringComparison.Ordinal) == true)
+            //special cases
+            switch (topic.type.name)
             {
-                switch (topic.subType.name)
-                {
-                    case "OrgCure": tagOrgName = GameManager.i.campaignScript.campaign.orgCure.name; break;
-                    case "OrgContract": tagOrgName = GameManager.i.campaignScript.campaign.orgContract.name; break;
-                    case "OrgHQ": tagOrgName = GameManager.i.campaignScript.campaign.orgHQ.name; break;
-                    case "OrgEmergency": tagOrgName = GameManager.i.campaignScript.campaign.orgEmergency.name; break;
-                    case "OrgInfo": tagOrgName = GameManager.i.campaignScript.campaign.orgInfo.name; break;
-                    default: Debug.LogWarningFormat("Unrecognised subType.name \"{0}\"", topic.subType.name); break;
-                }
+                case "Organisation":
+                    //Organisation subTypes, need an name for EffectManager.cs -> CheckCriteria
+                    switch (topic.subType.name)
+                    {
+                        case "OrgCure": tagOrgName = GameManager.i.campaignScript.campaign.orgCure.name; break;
+                        case "OrgContract": tagOrgName = GameManager.i.campaignScript.campaign.orgContract.name; break;
+                        case "OrgHQ": tagOrgName = GameManager.i.campaignScript.campaign.orgHQ.name; break;
+                        case "OrgEmergency": tagOrgName = GameManager.i.campaignScript.campaign.orgEmergency.name; break;
+                        case "OrgInfo": tagOrgName = GameManager.i.campaignScript.campaign.orgInfo.name; break;
+                        default: Debug.LogWarningFormat("Unrecognised subType.name \"{0}\"", topic.subType.name); break;
+                    }
+                    break;
+                case "Story":
+                    //Story subTypes, need to pass a storyType
+                    switch (topic.subType.name)
+                    {
+                        case "StoryAlpha": storyType = StoryType.Alpha; break;
+                        case "StoryBravo": storyType = StoryType.Bravo; break;
+                        case "StoryCharlie": storyType = StoryType.Charlie; break;
+                        default: Debug.LogWarningFormat("Unrecognised subType.name \"{0}\"", topic.subType.name); break;
+                    }
+                    break;
             }
+            //data package to pass to EffectManager.cs
             CriteriaDataInput criteriaInput = new CriteriaDataInput()
             {
                 listOfCriteria = topic.listOfCriteria,
-                orgName = tagOrgName
+                orgName = tagOrgName,
+                storyType = storyType
             };
             string criteriaCheck = GameManager.i.effectScript.CheckCriteria(criteriaInput);
             if (criteriaCheck == null)
@@ -7162,6 +7180,38 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
+    #region SetStoryFlag
+    /// <summary>
+    /// Sets story flag to specified value. Note if 'scenarioIndex' left at default -1 then the CURRENT scenario index is automatically used
+    /// </summary>
+    /// <param name="storyType"></param>
+    /// <param name="value"></param>
+    /// <param name="scenarioIndex"></param>
+    public void SetStoryFlag(StoryType storyType, int value, int scenarioIndex = -1)
+    {
+        if (scenarioIndex == -1)
+        { scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex(); }
+        arrayOfStoryFlags[(int)storyType, scenarioIndex] = value;
+        Debug.LogFormat("[Sto] TopicManager.cs -> SetStoryFlag: story Flag [{0}, {1}] now {2}{3}", storyType, scenarioIndex, value, "\n");
+    }
+    #endregion
+
+    #region CheckStoryFlag
+    /// <summary>
+    /// returns value of specified story flag. 'flagNumber' is 0 to 4. Returns -1 if a problem
+    /// </summary>
+    /// <param name="storyType"></param>
+    /// <param name="scenarioIndex"></param>
+    /// <returns></returns>
+    public int CheckStoryFlag(StoryType storyType, int flagNumber)
+    {
+        if (flagNumber < 5 && flagNumber > -1)
+        { return arrayOfStoryFlags[(int)storyType, flagNumber]; }
+        else { Debug.LogErrorFormat("Invalid flagNumber \"{0}\" (should be 0 to 4)", flagNumber); }
+        return -1;
+    }
+    #endregion
+
     #endregion
 
     #region Meta Methods...
@@ -7659,7 +7709,7 @@ public class TopicManager : MonoBehaviour
         builder.AppendFormat("- Story Data{0}{1}", "\n", "\n");
         //story modules
         builder.AppendFormat(" Story Modules{0}", "\n");
-        builder.AppendFormat(" storyAlpha (Campaign): {0}{1}", pool != null ? pool.tag : "None", "\n");
+        builder.AppendFormat(" storyAlpha (Campaign): {0}{1}", storyAlphaPool != null ? storyAlphaPool.tag : "None", "\n");
         builder.AppendFormat(" storyBravo (Family): {0}{1}", storyBravoPool != null ? storyBravoPool.tag : "None", "\n");
         builder.AppendFormat(" storyCharlie (Hq): {0}{1}", storyCharliePool != null ? storyCharliePool.tag : "None", "\n");
         //group flags
@@ -7669,9 +7719,20 @@ public class TopicManager : MonoBehaviour
         builder.AppendFormat(" isStoryCharlieGood: {0}{1}", isStoryCharlieGood, "\n");
         //indexes
         builder.AppendFormat(" {0} Indexes{1}", "\n", "\n");
-        builder.AppendFormat(" storyAlphaCurrentIndex: {0}{1}", indexCurrent, "\n");
+        builder.AppendFormat(" storyAlphaCurrentIndex: {0}{1}", storyAlphaCurrentIndex, "\n");
         builder.AppendFormat(" storyBravoCurrentIndex: {0}{1}", storyBravoCurrentIndex, "\n");
         builder.AppendFormat(" storyCharlieCurrentIndex: {0}{1}", storyCharlieCurrentIndex, "\n");
+        //flags
+        builder.AppendFormat(" {0} Story Flags{1}", "\n", "\n");
+        builder.Append(" Alpha:  ");
+        for (int i = 0; i < arrayOfStoryFlags.GetUpperBound(1) + 1; i++)
+        { builder.AppendFormat("{0} flag{1} -> {2}", i == 0 ? "" : ",", i, arrayOfStoryFlags[(int)StoryType.Alpha, i]); }
+        builder.AppendFormat("{0} Bravo:  ", "\n");
+        for (int i = 0; i < arrayOfStoryFlags.GetUpperBound(1) + 1; i++)
+        { builder.AppendFormat("{0} flag{1} -> {2}", i == 0 ? "" : ",", i, arrayOfStoryFlags[(int)StoryType.Bravo, i]); }
+        builder.AppendFormat("{0} Charlie: ", "\n");
+        for (int i = 0; i < arrayOfStoryFlags.GetUpperBound(1) + 1; i++)
+        { builder.AppendFormat("{0} flag{1} -> {2}", i == 0 ? "" : ",", i, arrayOfStoryFlags[(int)StoryType.Charlie, i]); }
         return builder.ToString();
     }
 
@@ -7684,8 +7745,8 @@ public class TopicManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- Story Topics{0}{1}", "\n", "\n");
         //Alpha
-        builder.AppendFormat(" Alpha Pool (Campaign) -> \"{0}\"{1}", pool.tag, "\n");
-        builder.Append(DebugProcessStoryPool(pool));
+        builder.AppendFormat(" Alpha Pool (Campaign) -> \"{0}\"{1}", storyAlphaPool.tag, "\n");
+        builder.Append(DebugProcessStoryPool(storyAlphaPool));
         //Bravo
         builder.AppendFormat("{0} Bravo Pool (Campaign) -> \"{1}\"{2}", "\n", storyBravoPool.tag, "\n");
         builder.Append(DebugProcessStoryPool(storyBravoPool));

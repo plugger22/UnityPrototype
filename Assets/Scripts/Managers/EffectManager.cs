@@ -1413,6 +1413,65 @@ public class EffectManager : MonoBehaviour
                                         { BuildString(result, "FAILED topic"); }
                                         break;
                                     //
+                                    // - - - Story (topics) - - -
+                                    //
+                                    case "Story":
+                                        if (data.storyType != StoryType.None)
+                                        {
+                                            switch (criteria.effectCriteria.name)
+                                            {
+                                                //flag true
+                                                case "StoryFlagZeroTrue":
+                                                    if (GameManager.i.topicScript.CheckStoryFlag(data.storyType, 0) < 1)
+                                                    { BuildString(result, "Story Flag 0 False"); }
+                                                    break;
+                                                case "StoryFlagOneTrue":
+                                                    if (GameManager.i.topicScript.CheckStoryFlag(data.storyType, 1) < 1)
+                                                    { BuildString(result, "Story Flag 1 False"); }
+                                                    break;
+                                                case "StoryFlagTwoTrue":
+                                                    if (GameManager.i.topicScript.CheckStoryFlag(data.storyType, 2) < 1)
+                                                    { BuildString(result, "Story Flag 2 False"); }
+                                                    break;
+                                                case "StoryFlagThreeTrue":
+                                                    if (GameManager.i.topicScript.CheckStoryFlag(data.storyType, 3) < 1)
+                                                    { BuildString(result, "Story Flag 3 False"); }
+                                                    break;
+                                                case "StoryFlagFourTrue":
+                                                    if (GameManager.i.topicScript.CheckStoryFlag(data.storyType, 4) < 1)
+                                                    { BuildString(result, "Story Flag 4 False"); }
+                                                    break;
+                                                //flag false
+                                                case "StoryFlagZeroFalse":
+                                                    if (GameManager.i.topicScript.CheckStoryFlag(data.storyType, 0) > 0)
+                                                    { BuildString(result, "Story Flag 0 True"); }
+                                                    break;
+                                                case "StoryFlagOneFalse":
+                                                    if (GameManager.i.topicScript.CheckStoryFlag(data.storyType, 1) > 0)
+                                                    { BuildString(result, "Story Flag 1 True"); }
+                                                    break;
+                                                case "StoryFlagTwoFalse":
+                                                    if (GameManager.i.topicScript.CheckStoryFlag(data.storyType, 2) > 0)
+                                                    { BuildString(result, "Story Flag 2 True"); }
+                                                    break;
+                                                case "StoryFlagThreeFalse":
+                                                    if (GameManager.i.topicScript.CheckStoryFlag(data.storyType, 3) > 0)
+                                                    { BuildString(result, "Story Flag 3 True"); }
+                                                    break;
+                                                case "StoryFlagFourFalse":
+                                                    if (GameManager.i.topicScript.CheckStoryFlag(data.storyType, 4) > 0)
+                                                    { BuildString(result, "Story Flag 4 True"); }
+                                                    break;
+                                                default:
+                                                    BuildString(result, "Error!");
+                                                    Debug.LogWarning(string.Format("Invalid criteria.effectcriteria.name \"{0}\"", criteria.effectCriteria.name));
+                                                    errorFlag = true;
+                                                    break;
+                                            }
+                                        }
+                                        else { BuildString(result, "Invalid storyType"); }
+                                        break;
+                                    //
                                     // - - - Statistics - - - 
                                     //
                                     case "Statistics":
@@ -1649,6 +1708,7 @@ public class EffectManager : MonoBehaviour
                                                 break;
                                         }
                                         break;
+
                                     //
                                     // - - - HQ - - -
                                     //
@@ -4141,7 +4201,7 @@ public class EffectManager : MonoBehaviour
                 {
                     //place in listOfCaptureTools
                     if (GameManager.i.dataScript.AddCaptureTool(tool) == true)
-                        { effectResolve.bottomText = string.Format("{0}gained {1} device{2}", colourEffect, tool.tag, colourEnd); }
+                    { effectResolve.bottomText = string.Format("{0}gained {1} device{2}", colourEffect, tool.tag, colourEnd); }
                 }
                 break;
 
@@ -6126,7 +6186,7 @@ public class EffectManager : MonoBehaviour
             {
                 builderEffect.AppendFormat("{0}{1}{2}{3}{4} is at {5}, {6}{7}{8}{9}", "\n", colourNeutral, GameManager.i.campaignScript.scenario.missionResistance.npc.tag, colourEnd,
                     colourNormal, node.nodeName, colourEnd, colourAlert, node.Arc.name, colourEnd);
-                builderIntel.AppendFormat("{0}{1}<b>{2}{3}{4} at {5}</b>{6}", "\n", colourNeutral, GameManager.i.campaignScript.scenario.missionResistance.npc.tag, 
+                builderIntel.AppendFormat("{0}{1}<b>{2}{3}{4} at {5}</b>{6}", "\n", colourNeutral, GameManager.i.campaignScript.scenario.missionResistance.npc.tag,
                     colourEnd, colourNormal, node.nodeName, colourEnd);
                 listOfNodes.Add(node);
             }
@@ -6270,7 +6330,7 @@ public class EffectManager : MonoBehaviour
         List<Node> listOfNodes = new List<Node>();
         if (node != null)
         {
-            builderEffect.AppendFormat("{0}You release a Neural Whisper in the District and stand well back. {1}{2}Support +1{3}{4} in the following{5}{6}", 
+            builderEffect.AppendFormat("{0}You release a Neural Whisper in the District and stand well back. {1}{2}Support +1{3}{4} in the following{5}{6}",
                 colourGood, colourEnd, colourNeutral, colourEnd, colourGood, colourEnd, "\n");
             builderIntel.AppendFormat("{0}<b>Resistance Support has grown in the following districts {1}{2}(Support +1){3}</b>{4}", colourGood, colourEnd, colourNeutral, colourEnd, "\n");
             //current node

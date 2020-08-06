@@ -91,6 +91,7 @@ namespace packageAPI
         public int actorHqID;                       //optional
         public int teamArcID;                       //optional
         public string orgName;                      //optional (Organisation Name)
+        public StoryType storyType;                 //optional (Story Topics)
         public List<Criteria> listOfCriteria;
 
         public CriteriaDataInput()
