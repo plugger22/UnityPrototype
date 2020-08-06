@@ -6992,3 +6992,17 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 
 Dev seed 50291 -> Thursday, 6 August 2020 3:57 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 39829 -> Thursday, 6 August 2020 5:48 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ValidationManager.<CheckTopicData>m__16 (Topic x) (at Assets/Scripts/Managers/ValidationManager.cs:2993)
+	System.Linq.Enumerable+SelectListIterator`2[TSource,TResult].ToList () (at <839a3cb835c04d14aeb58d83bb7bc4bd>:0)
+	System.Linq.Enumerable.ToList[TSource] (System.Collections.Generic.IEnumerable`1[T] source) (at <839a3cb835c04d14aeb58d83bb7bc4bd>:0)
+	ValidationManager.CheckTopicData (System.String prefix, System.Int32 highestScenarioIndex) (at Assets/Scripts/Managers/ValidationManager.cs:2993)
+	ValidationManager.ExecuteIntegrityCheck () (at Assets/Scripts/Managers/ValidationManager.cs:1957)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:270)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:393)
+	
+Dev seed 56659 -> Thursday, 6 August 2020 5:58 PM
+City seed 5678 -> London, United Kingdom

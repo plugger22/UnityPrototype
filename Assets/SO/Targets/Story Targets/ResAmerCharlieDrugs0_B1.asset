@@ -21,7 +21,7 @@ MonoBehaviour:
   gear: {fileID: 11400000, guid: 11c5f192680724a4c96f53aec300aead, type: 2}
   sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
   targetType: {fileID: 11400000, guid: 0a1dbfbb803a4474f9d33d6879c25f02, type: 2}
-  nodeArc: {fileID: 0}
+  nodeArc: {fileID: 11400000, guid: 1667605fc4382654f9baac2b83741900, type: 2}
   listOfGoodEffects:
   - {fileID: 11400000, guid: c23ed1da5bca28b4883286a1de807e06, type: 2}
   listOfBadEffects: []

@@ -2726,6 +2726,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c9a02304144ad214da089569db924081, type: 2}
   - {fileID: 11400000, guid: b38dba624e4eb6c4eb8f170a86109cb0, type: 2}
   - {fileID: 11400000, guid: 3a923418c9de0954fa2e26586d315dfd, type: 2}
+  - {fileID: 11400000, guid: 50e43d19e731a984f9de7ddf099b787e, type: 2}
+  - {fileID: 11400000, guid: 662afcdc04ae8d44da1bd9117e861b4f, type: 2}
+  - {fileID: 11400000, guid: ff50896b8579f934e89a89eb17cee009, type: 2}
+  - {fileID: 11400000, guid: 5cba3627c1acb6c4ea92a9478ac28b20, type: 2}
   arrayOfOptionsActorContact:
   - {fileID: 11400000, guid: de3ca8550338a964d83728f77adf87d1, type: 2}
   - {fileID: 11400000, guid: e8f87885714be194a9acea71c6d688ee, type: 2}
@@ -3542,6 +3546,22 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2480c4f9d5c28af48bcb827e7735e0bf, type: 2}
   - {fileID: 11400000, guid: 4b401ea86e8f6944ba8c94e8a1f5240b, type: 2}
   - {fileID: 11400000, guid: fea037074f4f8a6409aba8b819e30673, type: 2}
+  - {fileID: 11400000, guid: 1354f01b2ab2057419fe4b6ba792aa1e, type: 2}
+  - {fileID: 11400000, guid: 60cb7fcc81771ef448a5bbe5776bd907, type: 2}
+  - {fileID: 11400000, guid: 6b851d816722a41419160ce44155fb87, type: 2}
+  - {fileID: 11400000, guid: 900d7fbe56239bd48a3d8376df3bc177, type: 2}
+  - {fileID: 11400000, guid: f429316e56f22a7448e07606439ab81b, type: 2}
+  - {fileID: 11400000, guid: 0ec6c1aa032a2b8468634da6e81c1b5e, type: 2}
+  - {fileID: 11400000, guid: 714e393e9cb83304fb57e51051b86d37, type: 2}
+  - {fileID: 11400000, guid: 1204e0f5f7c3bf342a453a7d373fa66f, type: 2}
+  - {fileID: 11400000, guid: 4e4cf876298b1024cb5d4dd492f97c35, type: 2}
+  - {fileID: 11400000, guid: b9b5d852cdebda040b24590616220119, type: 2}
+  - {fileID: 11400000, guid: 216bfbfa89f72a14baa7f21ab10ff124, type: 2}
+  - {fileID: 11400000, guid: 1a0d16446ab13094a9f8a1bc6e35a847, type: 2}
+  - {fileID: 11400000, guid: ac8884df9f9942846a2493c4c7aac913, type: 2}
+  - {fileID: 11400000, guid: 42ab1553934821c429b5920da5a8b45c, type: 2}
+  - {fileID: 11400000, guid: f1db01ccceed3bb4ab7c1853fa91198c, type: 2}
+  - {fileID: 11400000, guid: 9b2b5410d33fab9408375fc9a1f3e35b, type: 2}
   arrayOfOptionsStoryImperator:
   - {fileID: 11400000, guid: d718cb743367a3b458d2e94917525f00, type: 2}
   - {fileID: 11400000, guid: e08f65beb57780d449ad774ce7ef39db, type: 2}

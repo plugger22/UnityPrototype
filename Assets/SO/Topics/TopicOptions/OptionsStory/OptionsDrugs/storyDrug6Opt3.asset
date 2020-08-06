@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
-  m_Name: storyDrug4Opt0
+  m_Name: storyDrug6Opt3
   m_EditorClassIdentifier: 
-  descriptor: Story Drugs 4 Opt 0
+  descriptor: Story Drugs 6 Opt 3
   tag: Break In
   text: Steal Jamming Frequencies from Eclipse
-  topic: {fileID: 11400000, guid: b38dba624e4eb6c4eb8f170a86109cb0, type: 2}
+  topic: {fileID: 11400000, guid: 50e43d19e731a984f9de7ddf099b787e, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
   isIgnoredByHQ: 1
@@ -22,16 +22,16 @@ MonoBehaviour:
   isIgnoreMood: 1
   listOfCriteria: []
   listOfGoodEffects:
-  - {fileID: 11400000, guid: e5a3c5de445544146b76c2f015614b8b, type: 2}
+  - {fileID: 11400000, guid: 305af0aacc470e14cb866b7f4142ead1, type: 2}
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
   storyInfo: 
-  storyTarget: {fileID: 11400000, guid: 97e8aa7ff0cfef74f8b9b2e7f063cdc7, type: 2}
+  storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 2

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug5Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 5 Opt 0
-  tag: Confused
-  text: How does the Hub affect me?
+  tag: Kidnap
+  text: Take Eclipses Jamming Scientist
   topic: {fileID: 11400000, guid: 3a923418c9de0954fa2e26586d315dfd, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -22,7 +22,7 @@ MonoBehaviour:
   isIgnoreMood: 1
   listOfCriteria: []
   listOfGoodEffects:
-  - {fileID: 11400000, guid: 305af0aacc470e14cb866b7f4142ead1, type: 2}
+  - {fileID: 11400000, guid: e5a3c5de445544146b76c2f015614b8b, type: 2}
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
