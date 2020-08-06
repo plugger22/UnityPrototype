@@ -9,8 +9,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30da3650064771741bdfa0fae9de380c, type: 3}
-  m_Name: Story1_RuthlessBastard_40
+  m_Name: Generic_RuthlessBastard_40
   m_EditorClassIdentifier: 
-  target: {fileID: 11400000, guid: 97e8aa7ff0cfef74f8b9b2e7f063cdc7, type: 2}
+  target: {fileID: 11400000, guid: 042e44b6e7253f844813e68e7b09fd9e, type: 2}
   objective: {fileID: 11400000, guid: fc96d47689aa62240870c0871b31107f, type: 2}
   adjustment: 40

@@ -17,6 +17,9 @@ public class StoryData : ScriptableObject
     [Header("Lists")]
     [Tooltip("List of all Topic Items (sprites and sprite tooltips) that are referenced by various topics within the Story")]
     public List<TopicItem> listOfTopicItems;
+    [Tooltip("List of all Targets that are referenced by various options within the Story")]
+    public List<Target> listOfTargets;
+
 
 
     public void OnEnable()

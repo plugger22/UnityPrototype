@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
+  m_Name: ResAmerCharlieDrugs0_G1
+  m_EditorClassIdentifier: 
+  targetName: Disrupt Eclipse Power
+  descriptorResistance: Stop Jamming by Black Out
+  descriptorAuthority: Eclipse Corporation
+  reasonText: interrupt Eclipse Corp Power Supply
+  rumourText: interrupt Eclipse Corp Power Supply
+  targetLevel: 1
+  actorArc: {fileID: 11400000, guid: 585f6ebe97311aa4396d0c79f6faf1df, type: 2}
+  gear: {fileID: 11400000, guid: 11c5f192680724a4c96f53aec300aead, type: 2}
+  sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
+  targetType: {fileID: 11400000, guid: 0a1dbfbb803a4474f9d33d6879c25f02, type: 2}
+  nodeArc: {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: c23ed1da5bca28b4883286a1de807e06, type: 2}
+  listOfBadEffects: []
+  listOfFailEffects: []
+  moodEffect: {fileID: 0}
+  ongoingEffect: {fileID: 0}
+  profileBase: {fileID: 11400000, guid: 15a61a57750900343b859ddd2314ee88, type: 2}
+  isSuccessNeeded: 0
+  followOnTarget: {fileID: 0}
+  profile: {fileID: 11400000, guid: 81cd191419318d34c90a6f4426bf3cfe, type: 2}
+  targetStatus: 0
+  intel: 0
+  ongoingID: -1
+  isKnownByAI: 0
+  nodeID: -1
+  distance: 0
+  newIntel: 0
+  intelGain: 0
+  turnSuccess: -1
+  turnDone: -1
+  numOfAttempts: 0
+  turnsWindow: 0
+  timerDelay: 0
+  timerHardLimit: 0
+  timerWindow: 0
+  listOfRumourContacts: 

@@ -16,3 +16,8 @@ MonoBehaviour:
   listOfTopicItems:
   - {fileID: 11400000, guid: 2e6d0fdcecfe3bf41b25acc43c7bce7d, type: 2}
   - {fileID: 11400000, guid: 2e2ce29c7b61139488a5a4546df9fd77, type: 2}
+  listOfTargets:
+  - {fileID: 11400000, guid: 51e1ace29b9f95140a601f7475150729, type: 2}
+  - {fileID: 11400000, guid: 464dde104fe0d244b8f66b23a8a8fec6, type: 2}
+  - {fileID: 11400000, guid: 97e8aa7ff0cfef74f8b9b2e7f063cdc7, type: 2}
+  - {fileID: 11400000, guid: 9bdb2eb8d989fed44a8782c9ef232a6a, type: 2}

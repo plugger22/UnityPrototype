@@ -561,10 +561,12 @@ public class CampaignManager : MonoBehaviour
         { builder.AppendFormat(" Target Harbour: {0}{1}", mission.targetBaseHarbour.targetName, "\n"); }
         if (mission.targetBaseVIP != null)
         { builder.AppendFormat(" Target VIP: {0}{1}", mission.targetBaseVIP.targetName, "\n"); }
-        if (mission.targetBaseStory != null)
+
+        /*if (mission.targetBaseStory != null)
         { builder.AppendFormat(" Target Story: {0}{1}", mission.targetBaseStory.targetName, "\n"); }
         if (mission.targetBaseGoal != null)
-        { builder.AppendFormat(" Target Goal: {0}{1}", mission.targetBaseGoal.targetName, "\n"); }
+        { builder.AppendFormat(" Target Goal: {0}{1}", mission.targetBaseGoal.targetName, "\n"); }*/
+
         if (mission.profileGenericLive != null)
         { builder.AppendFormat(" Profile Generic Live: {0}{1}", mission.profileGenericLive.name, "\n"); }
         if (mission.profileGenericActive != null)

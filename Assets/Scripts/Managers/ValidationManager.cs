@@ -592,12 +592,14 @@ public class ValidationManager : MonoBehaviour
                     if (mission.targetBaseVIP != null)
                     { listOfTargets.Add(mission.targetBaseVIP); }
                     else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMissions: {0} mission has no targetBaseVIP{1}", mission.name, "\n"); }
-                    if (mission.targetBaseStory != null)
+
+                    /*if (mission.targetBaseStory != null)
                     { listOfTargets.Add(mission.targetBaseStory); }
                     else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMissions: {0} mission has no targetBaseStory{1}", mission.name, "\n"); }
                     if (mission.targetBaseGoal != null)
                     { listOfTargets.Add(mission.targetBaseGoal); }
-                    else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMissions: {0} mission has no targetBaseGoal{1}", mission.name, "\n"); }
+                    else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMissions: {0} mission has no targetBaseGoal{1}", mission.name, "\n"); }*/
+
                     //create a list of target.name
                     listOfNames.Clear();
                     for (int i = 0; i < listOfTargets.Count; i++)

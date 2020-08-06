@@ -34,10 +34,10 @@ public class Mission : ScriptableObject
     public Target targetBaseHarbour;
     [Tooltip("VIP target, can ignore")]
     public Target targetBaseVIP;
-    [Tooltip("Story target, can ignore")]
+    /*[Tooltip("Story target, can ignore")]
     public Target targetBaseStory;
     [Tooltip("Goal target, can ignore")]
-    public Target targetBaseGoal;
+    public Target targetBaseGoal;*/
     [Tooltip("Organisation target (use template target, dynamically assigned data each level). If none then no organisations will make contact in mission")]
     public Target targetOrganisation;
 

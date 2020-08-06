@@ -1401,6 +1401,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 091aa6a0e6440bb4cb5f54ed9c3be515, type: 2}
   - {fileID: 11400000, guid: 2126e2104dc710c43a4656461c55aeb2, type: 2}
   - {fileID: 11400000, guid: 3cac112efe0822249b012aabfba261d5, type: 2}
+  - {fileID: 11400000, guid: 15a61a57750900343b859ddd2314ee88, type: 2}
   arrayOfQualities:
   - {fileID: 11400000, guid: 5ad75c9a57dd5974ca71471b002beb6a, type: 2}
   - {fileID: 11400000, guid: 9410d882baed50b4b9c5129422340952, type: 2}
@@ -2723,6 +2724,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d3a99528dce03cc428e669f03cf3a62c, type: 2}
   - {fileID: 11400000, guid: a3a931349cd6f9f40a87eaf8c77739bd, type: 2}
   - {fileID: 11400000, guid: c9a02304144ad214da089569db924081, type: 2}
+  - {fileID: 11400000, guid: b38dba624e4eb6c4eb8f170a86109cb0, type: 2}
+  - {fileID: 11400000, guid: 3a923418c9de0954fa2e26586d315dfd, type: 2}
   arrayOfOptionsActorContact:
   - {fileID: 11400000, guid: de3ca8550338a964d83728f77adf87d1, type: 2}
   - {fileID: 11400000, guid: e8f87885714be194a9acea71c6d688ee, type: 2}
@@ -3535,6 +3538,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e8fcb8f5ab15bae4d9f653df1d398012, type: 2}
   - {fileID: 11400000, guid: 5c242f82796d41447b9daa1ab4dcb60e, type: 2}
   - {fileID: 11400000, guid: 9a77d7054c319414d8bc021832b3a2eb, type: 2}
+  - {fileID: 11400000, guid: 872915bc37449ca4aa14a7207f710ee7, type: 2}
+  - {fileID: 11400000, guid: 2480c4f9d5c28af48bcb827e7735e0bf, type: 2}
+  - {fileID: 11400000, guid: 4b401ea86e8f6944ba8c94e8a1f5240b, type: 2}
+  - {fileID: 11400000, guid: fea037074f4f8a6409aba8b819e30673, type: 2}
   arrayOfOptionsStoryImperator:
   - {fileID: 11400000, guid: d718cb743367a3b458d2e94917525f00, type: 2}
   - {fileID: 11400000, guid: e08f65beb57780d449ad774ce7ef39db, type: 2}
@@ -3634,6 +3641,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 97e8aa7ff0cfef74f8b9b2e7f063cdc7, type: 2}
   - {fileID: 11400000, guid: 9bdb2eb8d989fed44a8782c9ef232a6a, type: 2}
   - {fileID: 11400000, guid: 51e1ace29b9f95140a601f7475150729, type: 2}
+  - {fileID: 11400000, guid: 464dde104fe0d244b8f66b23a8a8fec6, type: 2}
   arrayOfTargetsGoal:
   - {fileID: 11400000, guid: 3092bd84d4483f249a7039bc13a54727, type: 2}
   - {fileID: 11400000, guid: cb0366be15bea08479bebcfe2818bf25, type: 2}

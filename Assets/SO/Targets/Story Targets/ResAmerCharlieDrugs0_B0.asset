@@ -9,31 +9,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
-  m_Name: StoryTarget3
+  m_Name: ResAmerCharlieDrugs0_B0
   m_EditorClassIdentifier: 
-  targetName: Story Target 3
-  descriptorResistance: Advance Story
-  descriptorAuthority: Loose lips sink ships
-  reasonText: Resolving the Story
-  rumourText: Resolve the Story
-  metaLevel: {fileID: 0}
+  targetName: Kidnap Eclipse Scientist
+  descriptorResistance: Take out Head of Jamming
+  descriptorAuthority: Eclipse Corp
+  reasonText: kidnap head of Eclipse Jamming
+  rumourText: kidnap head of Eclipse Jamming
   targetLevel: 1
-  actorArc: {fileID: 11400000, guid: 268c960d386d285478b3ab6aaa5796bf, type: 2}
-  gear: {fileID: 11400000, guid: e8011a067725d9e46bc9a30e85ee9700, type: 2}
+  actorArc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
+  gear: {fileID: 11400000, guid: 5a4c76688e4902243a2acc5bbdcb7540, type: 2}
   sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
   targetType: {fileID: 11400000, guid: 0a1dbfbb803a4474f9d33d6879c25f02, type: 2}
-  nodeArc: {fileID: 0}
-  listOfGoodEffects: []
+  nodeArc: {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: c23ed1da5bca28b4883286a1de807e06, type: 2}
   listOfBadEffects: []
   listOfFailEffects: []
-  OngoingEffect: {fileID: 11400000, guid: 37154581cfdc26a4e98b3eff2401c11e, type: 2}
-  profileBase: {fileID: 11400000, guid: 81cd191419318d34c90a6f4426bf3cfe, type: 2}
-  isSuccessNeeded: 1
+  moodEffect: {fileID: 0}
+  ongoingEffect: {fileID: 0}
+  profileBase: {fileID: 11400000, guid: 15a61a57750900343b859ddd2314ee88, type: 2}
+  isSuccessNeeded: 0
   followOnTarget: {fileID: 0}
   profile: {fileID: 11400000, guid: 81cd191419318d34c90a6f4426bf3cfe, type: 2}
   targetStatus: 0
   intel: 0
-  targetID: 26
   ongoingID: -1
   isKnownByAI: 0
   nodeID: -1

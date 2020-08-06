@@ -422,8 +422,8 @@ public class TargetManager : MonoBehaviour
             AssignCityTargets(mission);
             AssignGenericTargets(mission);
             AssignVIPTarget(mission);
-            AssignStoryTarget(mission);
-            AssignGoalTarget(mission);
+            /*AssignStoryTarget(mission);
+            AssignGoalTarget(mission);*/
             AssignOrganisationTarget(mission);
         }
         else { Debug.LogError("Invalid mission (Null)"); }
@@ -672,7 +672,7 @@ public class TargetManager : MonoBehaviour
         else { Debug.LogWarning("Invalid node (Null) for VIPTarget"); }
     }
 
-    /// <summary>
+    /*/// <summary>
     /// Assign a Story target to a random node
     /// </summary>
     /// <param name="mission"></param>
@@ -690,9 +690,9 @@ public class TargetManager : MonoBehaviour
             }
         }
         else { Debug.LogWarning("Invalid node (Null) for StoryTarget"); }
-    }
+    }*/
 
-    /// <summary>
+    /*/// <summary>
     /// Assign a Goal target to a random node
     /// </summary>
     /// <param name="mission"></param>
@@ -710,7 +710,7 @@ public class TargetManager : MonoBehaviour
             }
         }
         else { Debug.LogWarning("Invalid node (Null) for GoalTarget"); }
-    }
+    }*/
 
     /// <summary>
     /// Assign a single Organisation target (if space for a new org) each level
