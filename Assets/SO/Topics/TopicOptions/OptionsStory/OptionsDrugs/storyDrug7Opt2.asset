@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug7Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 7 Opt 2
-  tag: Break In
-  text: Steal Jamming Frequencies from Eclipse
+  tag: Mistakes
+  text: I take Full Responsibility
   topic: {fileID: 11400000, guid: 662afcdc04ae8d44da1bd9117e861b4f, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: That's the way! Nail that mistake to your mast and sail it all the way
+    to Luna.
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

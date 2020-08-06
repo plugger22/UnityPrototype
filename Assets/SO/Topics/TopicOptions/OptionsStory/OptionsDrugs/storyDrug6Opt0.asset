@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug6Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 6 Opt 0
-  tag: Break In
-  text: Steal Jamming Frequencies from Eclipse
+  tag: Sure
+  text: Happy to Help
   topic: {fileID: 11400000, guid: 50e43d19e731a984f9de7ddf099b787e, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I'd be happy to take you for a spin in the HQ Ground Hover vehicle next
+    time I'm in town. We could chase down some Swans
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

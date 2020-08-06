@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug8Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 8 Opt 1
-  tag: Break In
-  text: Steal Jamming Frequencies from Eclipse
+  tag: Excuse Me
+  text: I'm not sure that I like you
   topic: {fileID: 11400000, guid: ff50896b8579f934e89a89eb17cee009, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: My job is to get things done, not to be liked by all the little people
+    of the world. Find a mirror and tell somebody who cares.
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

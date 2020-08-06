@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug9Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 9 Opt 3
-  tag: Break In
-  text: Steal Jamming Frequencies from Eclipse
+  tag: Insult
+  text: Sit on your Secateurs and Twist
   topic: {fileID: 11400000, guid: 5cba3627c1acb6c4ea92a9478ac28b20, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: You do not address your superiors in this manner. I'm reporting you to
+    Americon HQ and recommending immediate TERMINATION. Good bye!
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

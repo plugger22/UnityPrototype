@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug8Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 8 Opt 0
-  tag: Break In
-  text: Steal Jamming Frequencies from Eclipse
+  tag: Unhappy
+  text: Who took all the Risks here?
   topic: {fileID: 11400000, guid: ff50896b8579f934e89a89eb17cee009, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Who cares what you did? Your job is to do as I tell you and speak when
+    you are spoken to. Am I speaking to you now? I don't think so.
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

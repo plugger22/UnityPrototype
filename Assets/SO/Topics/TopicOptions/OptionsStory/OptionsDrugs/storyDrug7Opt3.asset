@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug7Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 7 Opt 3
-  tag: Break In
-  text: Steal Jamming Frequencies from Eclipse
+  tag: Thanks
+  text: You're very understanding
   topic: {fileID: 11400000, guid: 662afcdc04ae8d44da1bd9117e861b4f, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Well, that's because I was given a second chance. Takes practice to be
+    a winner. The losers are locked up on Titan. I can see you're destined for success
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

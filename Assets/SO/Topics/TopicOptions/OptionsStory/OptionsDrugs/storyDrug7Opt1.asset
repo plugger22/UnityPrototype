@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug7Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 7 Opt 1
-  tag: Break In
-  text: Steal Jamming Frequencies from Eclipse
+  tag: Excuse
+  text: I was let down by Others
   topic: {fileID: 11400000, guid: 662afcdc04ae8d44da1bd9117e861b4f, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: That so? Let me give you a tip. Don't ever blame others for your  mistakes.
+    It leaves skidmarks in your underpants and that's just ugly
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

@@ -7006,3 +7006,6 @@ ValidationManager.<CheckTopicData>m__16 (Topic x) (at Assets/Scripts/Managers/Va
 	
 Dev seed 56659 -> Thursday, 6 August 2020 5:58 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 35103 -> Thursday, 6 August 2020 8:49 PM
+City seed 5678 -> London, United Kingdom

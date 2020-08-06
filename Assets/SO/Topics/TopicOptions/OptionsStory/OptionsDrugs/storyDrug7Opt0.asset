@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug7Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 7 Opt 0
-  tag: Break In
-  text: Steal Jamming Frequencies from Eclipse
+  tag: Tried
+  text: I did my best...
   topic: {fileID: 11400000, guid: 662afcdc04ae8d44da1bd9117e861b4f, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I can see that. Nobody likes to fail but you sure get points for trying.
+    The important thing is to learn a lesson or two on the way through.
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

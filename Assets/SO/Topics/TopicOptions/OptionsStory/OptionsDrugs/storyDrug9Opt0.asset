@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug9Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 9 Opt 0
-  tag: Break In
-  text: Steal Jamming Frequencies from Eclipse
+  tag: Really?
+  text: That's a bit Harsh, don't you think?
   topic: {fileID: 11400000, guid: 5cba3627c1acb6c4ea92a9478ac28b20, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I can sandpaper the skin off your face if you want HARSH. You FAILED
+    you miserable worm.
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

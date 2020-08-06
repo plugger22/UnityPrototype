@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug8Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 8 Opt 2
-  tag: Break In
-  text: Steal Jamming Frequencies from Eclipse
+  tag: No Problem
+  text: Any time, I'm happy to help
   topic: {fileID: 11400000, guid: ff50896b8579f934e89a89eb17cee009, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Of course you are. That's your job. Right now I'd like a cup of coffee.
+    With milk and some of that super sweet fungus mashl honey
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

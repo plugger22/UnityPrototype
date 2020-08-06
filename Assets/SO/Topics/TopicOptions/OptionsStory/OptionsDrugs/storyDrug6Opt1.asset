@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug6Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 6 Opt 1
-  tag: Break In
-  text: Steal Jamming Frequencies from Eclipse
+  tag: Worried
+  text: Are Eclipse Corp coming after me?
   topic: {fileID: 11400000, guid: 50e43d19e731a984f9de7ddf099b787e, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Well, darn, I sure hope not. You were careful, weren't you? That's one
+    MegaCorp I wouldn't want to be on the wrong side of.
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

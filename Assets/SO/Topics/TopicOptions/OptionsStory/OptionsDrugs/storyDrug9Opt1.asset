@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug9Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 9 Opt 1
-  tag: Break In
-  text: Steal Jamming Frequencies from Eclipse
+  tag: Excuse
+  text: There were Extenuating Circumstances
   topic: {fileID: 11400000, guid: 5cba3627c1acb6c4ea92a9478ac28b20, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Like not having a brain that works, maybe? Did you forget that you were
+    supposed to succeed? I see that you and FAILURE have met before
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

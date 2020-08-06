@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyDrugs7
   m_EditorClassIdentifier: 
-  tag: Cease Jamming
-  text: We need to stop the [Jamming] ASAP but I think there's room for a soft touch.
-    With luck you fly under the radar with [Eclipse Corp]
+  tag: Failed
+  text: It didn't work out this time but not to worry. We'll take care of the [Jamming]
+    ourselves. Don't be too hard on yourself as these things aren't easy
   designNotes: storyDrugs7
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
   subType: {fileID: 11400000, guid: cbe3debfe6a42e74bba2c4c8929ec971, type: 2}
