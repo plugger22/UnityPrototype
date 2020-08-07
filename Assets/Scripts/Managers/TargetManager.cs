@@ -1681,6 +1681,16 @@ public class TargetManager : MonoBehaviour
                         //Add to pool 
                         GameManager.i.dataScript.AddTargetToPool(target, Status.Done);
                     }
+                    //
+                    // - - - Story targets
+                    //
+                    switch (target.targetType.name)
+                    {
+                        //if target timed-out. Set storyFlag
+                        case "StoryAlpha": if (target.turnSuccess < 0) { GameManager.i.topicScript.SetStoryFlag(StoryType.Alpha, 1); } break;
+                        case "StoryBravo": if (target.turnSuccess < 0) { GameManager.i.topicScript.SetStoryFlag(StoryType.Bravo, 1); } break;
+                        case "StoryCharlie": if (target.turnSuccess < 0) { GameManager.i.topicScript.SetStoryFlag(StoryType.Charlie, 1); } break;
+                    }
                 }
             }
             else { Debug.LogError("Invalid target (Null)"); isSuccess = false; }
@@ -2067,6 +2077,32 @@ public class TargetManager : MonoBehaviour
             isSuccess = false;
         }
         return isSuccess;
+    }
+
+    /// <summary>
+    /// Assigns specified target dynamically during game (as opposed to the start of the game). Used for story targets
+    /// </summary>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public string AssignDynamicTarget(Target target)
+    {
+        string message = "Unknown";
+        if (target != null)
+        {
+            Node node = null;
+            //does target have a preference for the type of node? Try to get a node of that that type and if none available, return a random node
+            if (target.nodeArc != null)
+            { node = GameManager.i.dataScript.GetRandomTargetNode(target.nodeArc); }
+            else
+            {
+                //assign to a random node
+                node = GameManager.i.dataScript.GetRandomTargetNode();
+            }
+            if (node == null)
+            { Debug.LogWarningFormat("Invalid node (Null) for target \"{0}\" -> Target not assigned", target.name); }
+        }
+        else { Debug.LogWarning("Invalid target (Null)"); }
+        return message;
     }
 
 

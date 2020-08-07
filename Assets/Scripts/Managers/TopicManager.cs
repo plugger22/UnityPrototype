@@ -5104,7 +5104,8 @@ public class TopicManager : MonoBehaviour
             orgName = tagOrgName,
             investigationRef = tagStringData,
             gearName = tagGear,
-            relation = tagRelation
+            relation = tagRelation,
+            target = turnOption.storyTarget
         };
         return data;
     }

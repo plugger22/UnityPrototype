@@ -982,6 +982,7 @@ namespace packageAPI
         public string investigationRef;     //reference name of investigation
         public string gearName;             //name of gear, not tag
         public ActorRelationship relation;  //used for ActorTopic relationships
+        public Target target;               //used for story targets
     }
 
     /// <summary>

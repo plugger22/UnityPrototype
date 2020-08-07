@@ -4969,8 +4969,10 @@ public class EffectManager : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid topicOption (Null) for \"{0}\"", dataInput.dataName); }
                 break;
             case "StoryTarget":
-                //story target activated
-
+                //story target triggered
+                if (dataTopic.target != null)
+                { effectResolve.bottomText = GameManager.i.targetScript.AssignDynamicTarget(dataTopic.target); }
+                else { Debug.LogWarning("Invalid TopicEffectData.target (Null)"); }
                 break;
             //sets story flags (current level)
             case "StoryFlag":

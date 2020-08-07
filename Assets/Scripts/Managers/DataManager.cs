@@ -3165,6 +3165,41 @@ public class DataManager : MonoBehaviour
         return node;
     }
 
+    /// <summary>
+    /// gets a random node. Checks first if a node of the specified nodeArc type is available, otherwise a random
+    /// </summary>
+    /// <param name="nodeArc"></param>
+    /// <returns></returns>
+    public Node GetRandomTargetNode(NodeArc nodeArc)
+    {
+        if (nodeArc != null)
+        {
+            List<Node> tempList = new List<Node>();
+            List<Node> listOfNodes = GetListOfNodesByType(nodeArc.nodeArcID);
+            //find any that don't have targets
+            for (int i = 0; i < listOfNodes.Count; i++)
+            {
+                Node node = listOfNodes[i];
+                if (node != null)
+                {
+                    //if no target, add to tempList
+                    if (string.IsNullOrEmpty(node.targetName) == false)
+                    { tempList.Add(node); }
+                }
+                else { Debug.LogWarningFormat("Invalid node (Null) in listOfNodes[{0}] for nodeArc {1}", i, nodeArc.name); }
+            }
+            int count = tempList.Count;
+            if (count > 0)
+            {
+                //select a random node of the correct NodeArc
+                return tempList[Random.Range(0, count)];
+            }
+        }
+        else { Debug.LogWarning("Invalid nodeArc (Null)"); }
+        //Didn't find a preferred nodeArc (or wasn't specified). Go for a random one
+        return GetRandomNode();
+    }
+
     public Dictionary<string, Target> GetDictOfTargets()
     { return dictOfTargets; }
 
@@ -6371,9 +6406,11 @@ public class DataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- DictionaryOfGear{0}{1}", "\n", "\n");
-        foreach(var gear in dictOfGear)
-        { builder.AppendFormat("{0} ({1}), {2}, d {3}, used {4} times (total {5}{6}", gear.Value.tag, gear.Value.type.name, gear.Value.rarity.name, gear.Value.data, gear.Value.timesUsed, 
-            gear.Value.statTimesUsed, "\n"); }
+        foreach (var gear in dictOfGear)
+        {
+            builder.AppendFormat("{0} ({1}), {2}, d {3}, used {4} times (total {5}{6}", gear.Value.tag, gear.Value.type.name, gear.Value.rarity.name, gear.Value.data, gear.Value.timesUsed,
+              gear.Value.statTimesUsed, "\n");
+        }
         return builder.ToString();
     }
 
