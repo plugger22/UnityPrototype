@@ -2583,9 +2583,9 @@ public class ActionManager : MonoBehaviour
                 //story targets
                 switch (target.targetType.name)
                 {
-                    case "StoryAlpha": dataInput.dataSpecial = (int)StoryType.Alpha; break;
-                    case "StoryBravo": dataInput.dataSpecial = (int)StoryType.Bravo; break;
-                    case "StoryCharlie": dataInput.dataSpecial = (int)StoryType.Charlie; break;
+                    case "StoryAlpha": dataInput.dataSpecial = (int)StoryType.Alpha; dataInput.data = 1; break;
+                    case "StoryBravo": dataInput.dataSpecial = (int)StoryType.Bravo; dataInput.data = 1; break;
+                    case "StoryCharlie": dataInput.dataSpecial = (int)StoryType.Charlie; dataInput.data = 1; break;
                     default: dataInput.dataSpecial = (int)StoryType.None; break;
                 }
                 //effect derived help tags for outcome dialogue (only the first four are used, if none then is ignored)

@@ -7196,19 +7196,21 @@ public class TopicManager : MonoBehaviour
 
     #region SetStoryFlag
     /// <summary>
-    /// Sets story flag to specified value. Flag number is assumed to be current scenarioIndex.
+    /// Sets story flag to specified value. Flag number is assumed to be current scenarioIndex. Returns true if flag set successfully to true
     /// </summary>
     /// <param name="storyType"></param>
     /// <param name="value"></param>
-    public void SetStoryFlag(StoryType storyType, int value)
+    public bool SetStoryFlag(StoryType storyType, int value)
     {
         int flagNumber = GameManager.i.campaignScript.GetScenarioIndex();
         if (flagNumber < 5 && flagNumber > -1)
         {
             arrayOfStoryFlags[(int)storyType, flagNumber] = value;
             Debug.LogFormat("[Sto] TopicManager.cs -> SetStoryFlag: story Flag [{0}, {1}] now {2}{3}", storyType, flagNumber, value, "\n");
+            return true;
         }
         else { Debug.LogErrorFormat("Invalid flagNumber \"{0}\" (should be 0 to 4)", flagNumber); }
+        return false;
     }
     #endregion
 
@@ -7230,19 +7232,21 @@ public class TopicManager : MonoBehaviour
 
     #region SetStoryStar
     /// <summary>
-    /// Sets story star to specified value. 'starNumber' is 0 to 4 and is assumed to be currentScenarioIndex
+    /// Sets story star to specified value. 'starNumber' is 0 to 4 and is assumed to be currentScenarioIndex. Returns true if successful (star set to true)
     /// </summary>
     /// <param name="storyType"></param>
     /// <param name="value"></param>
-    public void SetStoryStar(StoryType storyType, int value)
+    public bool SetStoryStar(StoryType storyType, int value)
     {
         int starNumber = GameManager.i.campaignScript.GetScenarioIndex();
         if (starNumber < 5 && starNumber > -1)
         {
-            arrayOfStoryFlags[(int)storyType, starNumber] = value;
+            arrayOfStoryStars[(int)storyType, starNumber] = value;
             Debug.LogFormat("[Sto] TopicManager.cs -> SetStoryStar: story Star [{0}, {1}] now {2}{3}", storyType, starNumber, value, "\n");
+            return true;
         }
         else { Debug.LogErrorFormat("Invalid starNumber \"{0}\" (should be 0 to 4)", starNumber); }
+        return false;
     }
     #endregion
 

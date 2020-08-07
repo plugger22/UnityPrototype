@@ -2109,7 +2109,7 @@ public class TargetManager : MonoBehaviour
             {
                 //initialise target into target systems
                 if (SetTargetDetails(target, node) == true)
-                { message = string.Format(" Target {0}{1}{2} available", colourNeutral, target.targetName, colourEnd); }
+                { message = string.Format("{0}Target available{1}", colourNeutral, colourEnd); }
             }
         }
         else { Debug.LogWarning("Invalid target (Null)"); }

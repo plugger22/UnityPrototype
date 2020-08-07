@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyDrugs8
   m_EditorClassIdentifier: 
-  tag: Success
+  tag: Stopped the Jamming
   text: You did what was expected of you. Eclipse Corp have ceased their Jamming.
     I hope that you aren't expecting to get credit for what I mostly organised?
   designNotes: storyDrugs8
@@ -43,7 +43,7 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 0
+  status: 4
   isCurrent: 0
   timerStart: 0
   timerRepeat: 0

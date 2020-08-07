@@ -4976,11 +4976,13 @@ public class EffectManager : MonoBehaviour
                 break;
             //sets story flags (current level)
             case "StoryFlag":
-                GameManager.i.topicScript.SetStoryFlag((StoryType)dataInput.dataSpecial, dataInput.data);
+                if (GameManager.i.topicScript.SetStoryFlag((StoryType)dataInput.dataSpecial, dataInput.data) == true)
+                { effectResolve.bottomText = string.Format("{0}Story progresses..{1}", colourNeutral, colourEnd); }
                 break;
             //sets story star (current level)
             case "StoryStar":
-                GameManager.i.topicScript.SetStoryStar((StoryType)dataInput.dataSpecial, dataInput.data);
+                if (GameManager.i.topicScript.SetStoryStar((StoryType)dataInput.dataSpecial, dataInput.data) == true)
+                { effectResolve.bottomText = string.Format("{0}Gained +1 Story Star{1}", colourGood, colourEnd); }
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }

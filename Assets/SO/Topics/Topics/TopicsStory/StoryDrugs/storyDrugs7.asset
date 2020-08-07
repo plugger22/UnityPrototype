@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyDrugs7
   m_EditorClassIdentifier: 
-  tag: Failed
+  tag: Failed to Stop Jamming
   text: It didn't work out this time but not to worry. We'll take care of the [Jamming]
     ourselves. Don't be too hard on yourself as these things aren't easy
   designNotes: storyDrugs7
@@ -43,12 +43,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 0
+  status: 4
   isCurrent: 0
   timerStart: 0
   timerRepeat: 0
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 0
-  turnsLive: 0
+  turnsActive: 3
+  turnsLive: 1
   turnsDone: 0

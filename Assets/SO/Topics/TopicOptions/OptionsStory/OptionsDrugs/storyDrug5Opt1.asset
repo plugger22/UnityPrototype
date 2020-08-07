@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 5 Opt 1
   tag: Interrupt
-  text: Disrupt entire City Power Supply
+  text: Disrupt City Power Supply
   topic: {fileID: 11400000, guid: 3a923418c9de0954fa2e26586d315dfd, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -29,9 +29,9 @@ MonoBehaviour:
   news: 
   storyInfo: 
   storyTarget: {fileID: 11400000, guid: 464dde104fe0d244b8f66b23a8a8fec6, type: 2}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
-  optionNumber: 0
+  tooltipHeader: <color=#FFFFE0>Interrupt</color>
+  tooltipMain: <color=#98FB98> Target activated</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Disrupt entire City Power Supply</color>
+  optionNumber: 1

@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Are you hitting on me, you little worm? Is it Be Nice To The Doomed Day?
+  storyInfo: Are you hitting on me, you little worm? My goodness, is it Be Nice To
+    The Doomed day?
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Attracted</color>
   tooltipMain: <color=#98FB98> Information gained</color>

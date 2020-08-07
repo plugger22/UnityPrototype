@@ -27,12 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: That so? Let me give you a tip. Don't ever blame others for your  mistakes.
-    It leaves skidmarks in your underpants and that's just ugly
+  storyInfo: That so? Let me give you a word from the wise. Don't ever blame others
+    for your mistakes. It leaves skidmarks in your underpants and that's NASTY
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Excuse</color>
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>I was let down by Others</color>
   optionNumber: 1
