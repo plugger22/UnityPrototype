@@ -3558,6 +3558,17 @@ public class TopicManager : MonoBehaviour
                 dataInput.side = GameManager.i.sideScript.PlayerSide;
                 dataInput.data = Convert.ToInt32(turnOption.isIgnoreMood);
                 dataInput.dataName = turnOption.name;
+                if (turnTopic.name.Equals("Story", StringComparison.Ordinal) == true)
+                {
+                    //Story subTypes, need to pass a storyType
+                    switch (turnTopicSubType.name)
+                    {
+                        case "StoryAlpha": dataInput.dataSpecial = (int)StoryType.Alpha; break;
+                        case "StoryBravo": dataInput.dataSpecial = (int)StoryType.Bravo; break;
+                        case "StoryCharlie": dataInput.dataSpecial = (int)StoryType.Charlie; break;
+                        default: Debug.LogWarningFormat("Unrecognised subType.name \"{0}\"", turnTopicSubType.name); break;
+                    }
+                }
                 //use Player node as default placeholder (actual tagNodeID is used) except in special case of player captured
                 Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
                 //special case of PlayerGeneral topics (where each option refers to a different OnMap actor)
@@ -7184,13 +7195,13 @@ public class TopicManager : MonoBehaviour
 
     #region SetStoryFlag
     /// <summary>
-    /// Sets story flag to specified value. 'flagNumber' is 0 to 4.
+    /// Sets story flag to specified value. Flag number is assumed to be current scenarioIndex.
     /// </summary>
     /// <param name="storyType"></param>
     /// <param name="value"></param>
-    /// <param name="scenarioIndex"></param>
-    public void SetStoryFlag(StoryType storyType, int flagNumber, int value)
+    public void SetStoryFlag(StoryType storyType, int value)
     {
+        int flagNumber = GameManager.i.campaignScript.GetScenarioIndex();
         if (flagNumber < 5 && flagNumber > -1)
         {
             arrayOfStoryFlags[(int)storyType, flagNumber] = value;
@@ -7202,13 +7213,13 @@ public class TopicManager : MonoBehaviour
 
     #region CheckStoryFlag
     /// <summary>
-    /// returns value of specified story flag. 'flagNumber' is 0 to 4. Returns -1 if a problem
+    /// returns value of specified story flag. 'flagNumber' is assumed to be the current scenarioIndex. Returns -1 if a problem
     /// </summary>
     /// <param name="storyType"></param>
-    /// <param name="flagNumber"></param>
     /// <returns></returns>
-    public int CheckStoryFlag(StoryType storyType, int flagNumber)
+    public int CheckStoryFlag(StoryType storyType)
     {
+        int flagNumber = GameManager.i.campaignScript.GetScenarioIndex();
         if (flagNumber < 5 && flagNumber > -1)
         { return arrayOfStoryFlags[(int)storyType, flagNumber]; }
         else { Debug.LogErrorFormat("Invalid flagNumber \"{0}\" (should be 0 to 4)", flagNumber); }
@@ -7218,13 +7229,13 @@ public class TopicManager : MonoBehaviour
 
     #region SetStoryStar
     /// <summary>
-    /// Sets story star to specified value. 'starNumber' is 0 to 4.
+    /// Sets story star to specified value. 'starNumber' is 0 to 4 and is assumed to be currentScenarioIndex
     /// </summary>
     /// <param name="storyType"></param>
-    /// <param name="starNumber"></param>
     /// <param name="value"></param>
-    public void SetStoryStar(StoryType storyType, int starNumber, int value)
+    public void SetStoryStar(StoryType storyType, int value)
     {
+        int starNumber = GameManager.i.campaignScript.GetScenarioIndex();
         if (starNumber < 5 && starNumber > -1)
         {
             arrayOfStoryFlags[(int)storyType, starNumber] = value;

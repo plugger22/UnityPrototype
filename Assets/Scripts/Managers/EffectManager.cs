@@ -1421,46 +1421,13 @@ public class EffectManager : MonoBehaviour
                                             switch (criteria.effectCriteria.name)
                                             {
                                                 //flag true
-                                                case "StoryFlagZeroTrue":
-                                                    if (GameManager.i.topicScript.CheckStoryFlag(data.storyType, 0) < 1)
-                                                    { BuildString(result, "Story Flag 0 False"); }
+                                                case "StoryFlagTrue":
+                                                    if (GameManager.i.topicScript.CheckStoryFlag(data.storyType) < 1)
+                                                    { BuildString(result, "Story Flag False"); }
                                                     break;
-                                                case "StoryFlagOneTrue":
-                                                    if (GameManager.i.topicScript.CheckStoryFlag(data.storyType, 1) < 1)
-                                                    { BuildString(result, "Story Flag 1 False"); }
-                                                    break;
-                                                case "StoryFlagTwoTrue":
-                                                    if (GameManager.i.topicScript.CheckStoryFlag(data.storyType, 2) < 1)
-                                                    { BuildString(result, "Story Flag 2 False"); }
-                                                    break;
-                                                case "StoryFlagThreeTrue":
-                                                    if (GameManager.i.topicScript.CheckStoryFlag(data.storyType, 3) < 1)
-                                                    { BuildString(result, "Story Flag 3 False"); }
-                                                    break;
-                                                case "StoryFlagFourTrue":
-                                                    if (GameManager.i.topicScript.CheckStoryFlag(data.storyType, 4) < 1)
-                                                    { BuildString(result, "Story Flag 4 False"); }
-                                                    break;
-                                                //flag false
-                                                case "StoryFlagZeroFalse":
-                                                    if (GameManager.i.topicScript.CheckStoryFlag(data.storyType, 0) > 0)
-                                                    { BuildString(result, "Story Flag 0 True"); }
-                                                    break;
-                                                case "StoryFlagOneFalse":
-                                                    if (GameManager.i.topicScript.CheckStoryFlag(data.storyType, 1) > 0)
-                                                    { BuildString(result, "Story Flag 1 True"); }
-                                                    break;
-                                                case "StoryFlagTwoFalse":
-                                                    if (GameManager.i.topicScript.CheckStoryFlag(data.storyType, 2) > 0)
-                                                    { BuildString(result, "Story Flag 2 True"); }
-                                                    break;
-                                                case "StoryFlagThreeFalse":
-                                                    if (GameManager.i.topicScript.CheckStoryFlag(data.storyType, 3) > 0)
-                                                    { BuildString(result, "Story Flag 3 True"); }
-                                                    break;
-                                                case "StoryFlagFourFalse":
-                                                    if (GameManager.i.topicScript.CheckStoryFlag(data.storyType, 4) > 0)
-                                                    { BuildString(result, "Story Flag 4 True"); }
+                                                case "StoryFlagFalse":
+                                                    if (GameManager.i.topicScript.CheckStoryFlag(data.storyType) > 0)
+                                                    { BuildString(result, "Story Flag False"); }
                                                     break;
                                                 default:
                                                     BuildString(result, "Error!");
@@ -5006,20 +4973,12 @@ public class EffectManager : MonoBehaviour
 
                 break;
             //sets story flags (current level)
-            case "StoryFlagZero":
-                GameManager.i.topicScript.SetStoryFlag(dataTopic.storyType, 0, dataInput.data);
+            case "StoryFlag":
+                GameManager.i.topicScript.SetStoryFlag((StoryType)dataInput.dataSpecial, dataInput.data);
                 break;
-            case "StoryFlagOne":
-                GameManager.i.topicScript.SetStoryFlag(dataTopic.storyType, 1, dataInput.data);
-                break;
-            case "StoryFlagTwo":
-                GameManager.i.topicScript.SetStoryFlag(dataTopic.storyType, 2, dataInput.data);
-                break;
-            case "StoryFlagThree":
-                GameManager.i.topicScript.SetStoryFlag(dataTopic.storyType, 3, dataInput.data);
-                break;
-            case "StoryFlagFour":
-                GameManager.i.topicScript.SetStoryFlag(dataTopic.storyType, 4, dataInput.data);
+            //sets story star (current level)
+            case "StoryStar":
+                GameManager.i.topicScript.SetStoryStar((StoryType)dataInput.dataSpecial, dataInput.data);
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
         }

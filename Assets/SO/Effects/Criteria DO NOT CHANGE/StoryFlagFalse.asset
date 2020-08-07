@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d9bf8160387a664d800585e9347e94e, type: 3}
-  m_Name: StoryFlagThreeFalse
+  m_Name: StoryFlagFalse
   m_EditorClassIdentifier: 
-  description: Story Flag Three False
-  effectCriteria: {fileID: 11400000, guid: 44345927798ac0c44956a0d498e30ea4, type: 2}
+  description: Story Flag False
+  effectCriteria: {fileID: 11400000, guid: 184497fda07db6549a2a5c38e4a9364a, type: 2}
   comparison: {fileID: 0}
   apply: {fileID: 11400000, guid: 926d42c787876764299b2452d0afd7e7, type: 2}

@@ -9,14 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
-  m_Name: S_StoryFlagThree
+  m_Name: S_StoryFlag
   m_EditorClassIdentifier: 
   description: 
   ongoingTooltip: 
   listOfCriteria: []
   apply: {fileID: 11400000, guid: 7d70934aa1025f94196c12814a03f5d6, type: 2}
   topicApply: {fileID: 0}
-  outcome: {fileID: 11400000, guid: 510c217a189bf8f489c34116341d1bfd, type: 2}
+  outcome: {fileID: 11400000, guid: 5cf687534f227aa48bbaf77c12749ab0, type: 2}
   operand: {fileID: 0}
   typeOfEffect: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   duration: {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
