@@ -2482,7 +2482,9 @@ public class ActionManager : MonoBehaviour
                 int roll = Random.Range(0, 100);
                 if (roll < chance)
                 {
-                    //Success
+                    //
+                    // - - - Success
+                    //
                     isSuccessful = true;
                     GameManager.i.dataScript.StatisticIncrement(StatType.TargetSuccesses);
                     target.turnSuccess = GameManager.i.turnScript.Turn;
@@ -2509,6 +2511,9 @@ public class ActionManager : MonoBehaviour
                 }
                 else
                 {
+                    //
+                    // - - - FAILED
+                    //
                     Debug.LogFormat("[Rnd] TargetManager.cs -> ProcessNodeTarget: Target attempt FAILED need < {0}, rolled {1}{2}", chance, roll, "\n");
                     text = string.Format("Target {0} attempt FAILED", target.targetName);
                     GameManager.i.messageScript.GeneralRandom(text, "Target Attempt", chance, roll);
@@ -2574,6 +2579,14 @@ public class ActionManager : MonoBehaviour
                     dataInput.ongoingText = target.reasonText;
                     //add to target so it can link to effects
                     target.ongoingID = dataInput.ongoingID;
+                }
+                //story targets
+                switch (target.targetType.name)
+                {
+                    case "StoryAlpha": dataInput.dataSpecial = (int)StoryType.Alpha; break;
+                    case "StoryBravo": dataInput.dataSpecial = (int)StoryType.Bravo; break;
+                    case "StoryCharlie": dataInput.dataSpecial = (int)StoryType.Charlie; break;
+                    default: dataInput.dataSpecial = (int)StoryType.None; break;
                 }
                 //effect derived help tags for outcome dialogue (only the first four are used, if none then is ignored)
                 List<string> listOfHelpTags = new List<string>();

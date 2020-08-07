@@ -22,7 +22,7 @@ public class Target : ScriptableObject
     [Tooltip("Rumour text in format '[they'll be a chance soon to]....")]
     public string rumourText;
     [Tooltip("Base targets are level 1, follow-on targets in a sequence are numbered consecutively higher")]
-    [Range(1, 5)] public int targetLevel = 1;
+    [Range(1, 3)] public int targetLevel = 1;
 
     [Header("Target Resolution")]
     [Tooltip("Actor arc with special bonus for target resolution (max. 1)")]

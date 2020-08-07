@@ -1513,6 +1513,7 @@ public class TargetManager : MonoBehaviour
 
     /// <summary>
     /// Called whenever a target is done (finished OnMap, eg. Contained or Completed with no ongoing effects or timed out (window). Handles all admin. Returns true if all O.K
+    /// NOTE: called when Done, NOT exclusively when Successfully attempted 
     /// </summary>
     /// <param name="target"></param>
     /// <param name="node"></param>

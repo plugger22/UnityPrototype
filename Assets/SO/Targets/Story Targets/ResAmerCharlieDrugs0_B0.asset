@@ -20,10 +20,11 @@ MonoBehaviour:
   actorArc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
   gear: {fileID: 11400000, guid: 5a4c76688e4902243a2acc5bbdcb7540, type: 2}
   sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
-  targetType: {fileID: 11400000, guid: 0a1dbfbb803a4474f9d33d6879c25f02, type: 2}
+  targetType: {fileID: 11400000, guid: 5fa0146bd641c384eaf41d35caae7634, type: 2}
   nodeArc: {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
   listOfGoodEffects:
   - {fileID: 11400000, guid: c23ed1da5bca28b4883286a1de807e06, type: 2}
+  - {fileID: 11400000, guid: 988b9f50bdaa2f94aaecd82d27bbc078, type: 2}
   listOfBadEffects: []
   listOfFailEffects: []
   moodEffect: {fileID: 0}
@@ -31,7 +32,7 @@ MonoBehaviour:
   profileBase: {fileID: 11400000, guid: 15a61a57750900343b859ddd2314ee88, type: 2}
   isSuccessNeeded: 0
   followOnTarget: {fileID: 0}
-  profile: {fileID: 11400000, guid: 81cd191419318d34c90a6f4426bf3cfe, type: 2}
+  profile: {fileID: 11400000, guid: 15a61a57750900343b859ddd2314ee88, type: 2}
   targetStatus: 0
   intel: 0
   ongoingID: -1
