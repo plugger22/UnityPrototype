@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: ActDisNewsRES1
   m_EditorClassIdentifier: 
   tag: Fake News Backfire
-  text: Your [actors] propaganda spew of fake news into [node] outlets has been badly
-    timed and in poor taste, clashing with actual events. [badRES]
+  text: Your [actors] propaganda spew of fake news into [node] outlets was badly timed
+    and in poor taste, clashing with actual events. [badRES]
   designNotes: negative Blogger event
   type: {fileID: 11400000, guid: 1ce6dfe82212a19469d96d06e848917c, type: 2}
   subType: {fileID: 11400000, guid: 6a71691684fee3746bd4c2b4665d3558, type: 2}
@@ -24,6 +24,8 @@ MonoBehaviour:
   listOfLinkedTopics: []
   listOfBuddyTopics: []
   linkedIndex: -1
+  levelIndex: -1
+  topicItem: {fileID: 0}
   profile: {fileID: 11400000, guid: a4d1517c49566474cb962cc428050fb6, type: 2}
   listOfCriteria: []
   listOfIgnoreEffects:
@@ -33,15 +35,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 93750dccaea83de40b369e8319ae16f3, type: 2}
   - {fileID: 11400000, guid: a2dedd851ef72ea4cbc8488a145f0364, type: 2}
   - {fileID: 11400000, guid: de800e5304aa9cf4885deb28b41e30a3, type: 2}
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 2
+  status: 0
   isCurrent: 1
   timerStart: 0
-  timerRepeat: 2
+  timerRepeat: 3
   timerWindow: 0
-  turnsDormant: 0
+  turnsDormant: 1
   turnsActive: 0
-  turnsLive: 25
+  turnsLive: 20
   turnsDone: 0

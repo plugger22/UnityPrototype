@@ -284,6 +284,7 @@ public class TargetManager : MonoBehaviour
         else { Debug.LogError("Invalid dictOfTargets (Null)"); }
     }
 
+    #region CheckTargets
     /// <summary>
     /// Checks all targets on map and handles admin and status changes
     /// </summary>
@@ -410,6 +411,9 @@ public class TargetManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfNodes (Null)"); }
     }
+    #endregion
+
+    #region AssignTargets...
 
     /// <summary>
     /// master method to assign targets at level start
@@ -762,6 +766,7 @@ public class TargetManager : MonoBehaviour
             else { Debug.LogFormat("[Tar] TargetManager.cs -> AssignOrganisationTarget: No org target this level as player already in contact with max (contact {0}, limit {1}){2}", numOfOrgs, maxOrgs, "\n"); }
         }
     }
+    #endregion
 
     /// <summary>
     /// Sets target activation, status and adds to relevant pools. Returns true if successful
@@ -2100,6 +2105,12 @@ public class TargetManager : MonoBehaviour
             }
             if (node == null)
             { Debug.LogWarningFormat("Invalid node (Null) for target \"{0}\" -> Target not assigned", target.name); }
+            else
+            {
+                //initialise target into target systems
+                if (SetTargetDetails(target, node) == true)
+                { message = string.Format(" Target {0}{1}{2} available", colourNeutral, target.targetName, colourEnd); }
+            }
         }
         else { Debug.LogWarning("Invalid target (Null)"); }
         return message;

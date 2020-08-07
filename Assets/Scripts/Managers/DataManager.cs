@@ -3183,7 +3183,7 @@ public class DataManager : MonoBehaviour
                 if (node != null)
                 {
                     //if no target, add to tempList
-                    if (string.IsNullOrEmpty(node.targetName) == false)
+                    if (string.IsNullOrEmpty(node.targetName) == true)
                     { tempList.Add(node); }
                 }
                 else { Debug.LogWarningFormat("Invalid node (Null) in listOfNodes[{0}] for nodeArc {1}", i, nodeArc.name); }

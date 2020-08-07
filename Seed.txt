@@ -7052,3 +7052,81 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 3619 -> Friday, 7 August 2020 12:53 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 53376 -> Friday, 7 August 2020 3:56 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 22238 -> Friday, 7 August 2020 4:06 PM
+City seed 5678 -> London, United Kingdom
+ERROR String too long for TextMeshGenerator. Cutting off characters.
+UnityEngine.GUI:Box(Rect, String, GUIStyle)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1673)
+	
+Dev seed 10407 -> Friday, 7 August 2020 4:19 PM
+City seed 5678 -> London, United Kingdom
+WARNING Node Knightsbridge, INDUSTRIAL, id 16 NOT assigned target Kidnap Eclipse Scientist (Node already has target)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TargetManager:SetTargetDetails(Target, Node, TargetProfile) (at Assets/Scripts/Managers/TargetManager.cs:838)
+	TargetManager:AssignDynamicTarget(Target) (at Assets/Scripts/Managers/TargetManager.cs:2111)
+	EffectManager:ResolveTopicStoryEffect(Effect, EffectDataInput, TopicEffectData) (at Assets/Scripts/Managers/EffectManager.cs:4974)
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:4322)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1943)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3599)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:656)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 26222 -> Friday, 7 August 2020 4:37 PM
+City seed 5678 -> London, United Kingdom
+WARNING Node Covent Garden, CORPORATE, id 0 NOT assigned target Disrupt Eclipse Power (Node already has target)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TargetManager:SetTargetDetails(Target, Node, TargetProfile) (at Assets/Scripts/Managers/TargetManager.cs:838)
+	TargetManager:AssignDynamicTarget(Target) (at Assets/Scripts/Managers/TargetManager.cs:2111)
+	EffectManager:ResolveTopicStoryEffect(Effect, EffectDataInput, TopicEffectData) (at Assets/Scripts/Managers/EffectManager.cs:4974)
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:4322)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1943)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3599)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:656)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	
+Dev seed 35271 -> Friday, 7 August 2020 4:41 PM
+City seed 5678 -> London, United Kingdom

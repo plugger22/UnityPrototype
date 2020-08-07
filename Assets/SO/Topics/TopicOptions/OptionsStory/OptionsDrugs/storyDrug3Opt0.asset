@@ -27,13 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyHeader: 
-  storyInfo: Do dead people not worry you? Would you like to join them? Are you stupid?
+  storyInfo: Do dead people not worry you? Empathy is a foreign word? Is anybody home?
     If I say that it affects you then it damn well affects you. Are we clear?
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Confused</color>
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>How does the Hub affect me?</color>
   optionNumber: 0
