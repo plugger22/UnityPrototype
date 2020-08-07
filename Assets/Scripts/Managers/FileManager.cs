@@ -1679,6 +1679,32 @@ public class FileManager : MonoBehaviour
         write.topicData.storyAlphaCurrentIndex = GameManager.i.topicScript.storyAlphaCurrentIndex;
         write.topicData.storyBravoCurrentIndex = GameManager.i.topicScript.storyBravoCurrentIndex;
         write.topicData.storyCharlieCurrentIndex = GameManager.i.topicScript.storyCharlieCurrentIndex;
+        //arrayOfStoryFlags
+        int[,] arrayOfStoryFlags = GameManager.i.topicScript.arrayOfStoryFlags;
+        if (arrayOfStoryFlags != null)
+        {
+            write.topicData.flagsInner = arrayOfStoryFlags.GetUpperBound(0) + 1;
+            write.topicData.flagsOuter = arrayOfStoryFlags.GetUpperBound(1) + 1;
+            for (int i = 0; i < write.topicData.flagsInner; i++)
+            {
+                for (int j = 0; j < write.topicData.flagsOuter; j++)
+                { write.topicData.listOfStoryFlags.Add(arrayOfStoryFlags[i, j]); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfStoryFlags (Null)"); }
+        //arrayOfStoryStars
+        int[,] arrayOfStoryStars = GameManager.i.topicScript.arrayOfStoryStars;
+        if (arrayOfStoryStars != null)
+        {
+            write.topicData.starsInner = arrayOfStoryStars.GetUpperBound(0) + 1;
+            write.topicData.starsOuter = arrayOfStoryStars.GetUpperBound(1) + 1;
+            for (int i = 0; i < write.topicData.starsInner; i++)
+            {
+                for (int j = 0; j < write.topicData.starsOuter; j++)
+                { write.topicData.listOfStoryStars.Add(arrayOfStoryStars[i, j]); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfStoryStars (Null)"); }
         //topics
         Dictionary<string, Topic> dictOfTopics = GameManager.i.dataScript.GetDictOfTopics();
         if (dictOfTopics != null)
@@ -3753,6 +3779,35 @@ public class FileManager : MonoBehaviour
         GameManager.i.topicScript.storyAlphaCurrentIndex = read.topicData.storyAlphaCurrentIndex;
         GameManager.i.topicScript.storyBravoCurrentIndex = read.topicData.storyBravoCurrentIndex;
         GameManager.i.topicScript.storyCharlieCurrentIndex = read.topicData.storyCharlieCurrentIndex;
+        int index;
+        //arrayOfStoryFlags
+        int[,] arrayOfStoryFlags = GameManager.i.topicScript.arrayOfStoryFlags;
+        if (arrayOfStoryFlags != null)
+        {
+            for (int i = 0; i < read.topicData.flagsInner; i++)
+            {
+                for (int j = 0; j < read.topicData.flagsOuter; j++)
+                {
+                    index = (i * read.topicData.flagsOuter) + j;
+                    arrayOfStoryFlags[i, j] = read.topicData.listOfStoryFlags[index];
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfStoryFlags (Null)"); }
+        //arrayOfStoryStars
+        int[,] arrayOfStoryStars = GameManager.i.topicScript.arrayOfStoryStars;
+        if (arrayOfStoryStars != null)
+        {
+            for (int i = 0; i < read.topicData.starsInner; i++)
+            {
+                for (int j = 0; j < read.topicData.starsOuter; j++)
+                {
+                    index = (i * read.topicData.starsOuter) + j;
+                    arrayOfStoryStars[i, j] = read.topicData.listOfStoryStars[index];
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfStoryStars (Null)"); }
         //
         // - - - Topics
         //

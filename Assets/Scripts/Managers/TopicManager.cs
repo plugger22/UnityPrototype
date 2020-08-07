@@ -187,11 +187,12 @@ public class TopicManager : MonoBehaviour
     [HideInInspector] public bool isStoryBravoGood;
     [HideInInspector] public bool isStoryCharlieGood;
 
-    [HideInInspector] public int storyAlphaCurrentIndex;             //current linked index for story Alpha sequence of linked topics within the level
-    [HideInInspector] public int storyBravoCurrentIndex;             //current linked index for story Bravo sequence of linked topics within the level
-    [HideInInspector] public int storyCharlieCurrentIndex;           //current linked index for story Charlie sequence of linked topics within the level
+    [HideInInspector] public int storyAlphaCurrentIndex;            //current linked index for story Alpha sequence of linked topics within the level
+    [HideInInspector] public int storyBravoCurrentIndex;            //current linked index for story Bravo sequence of linked topics within the level
+    [HideInInspector] public int storyCharlieCurrentIndex;          //current linked index for story Charlie sequence of linked topics within the level
 
-    [HideInInspector] public int[,] arrayOfStoryFlags;
+    [HideInInspector] public int[,] arrayOfStoryFlags;              //flags for progressing story
+    [HideInInspector] public int[,] arrayOfStoryStars;              //stars for tracking player achievement
     #endregion
 
     #region private variables
@@ -317,6 +318,7 @@ public class TopicManager : MonoBehaviour
     {
         //collections
         arrayOfStoryFlags = new int[(int)StoryType.Count, GameManager.i.campaignScript.GetMaxScenarioIndex() + 1];
+        arrayOfStoryStars = new int[(int)StoryType.Count, GameManager.i.campaignScript.GetMaxScenarioIndex() + 1];
         //[Tst] debug logging on/off
         isTestLog = GameManager.i.testScript.isTopicManager;
         //debug topic pool
@@ -7203,7 +7205,7 @@ public class TopicManager : MonoBehaviour
     /// returns value of specified story flag. 'flagNumber' is 0 to 4. Returns -1 if a problem
     /// </summary>
     /// <param name="storyType"></param>
-    /// <param name="scenarioIndex"></param>
+    /// <param name="flagNumber"></param>
     /// <returns></returns>
     public int CheckStoryFlag(StoryType storyType, int flagNumber)
     {
@@ -7211,6 +7213,24 @@ public class TopicManager : MonoBehaviour
         { return arrayOfStoryFlags[(int)storyType, flagNumber]; }
         else { Debug.LogErrorFormat("Invalid flagNumber \"{0}\" (should be 0 to 4)", flagNumber); }
         return -1;
+    }
+    #endregion
+
+    #region SetStoryStar
+    /// <summary>
+    /// Sets story star to specified value. 'starNumber' is 0 to 4.
+    /// </summary>
+    /// <param name="storyType"></param>
+    /// <param name="starNumber"></param>
+    /// <param name="value"></param>
+    public void SetStoryStar(StoryType storyType, int starNumber, int value)
+    {
+        if (starNumber < 5 && starNumber > -1)
+        {
+            arrayOfStoryFlags[(int)storyType, starNumber] = value;
+            Debug.LogFormat("[Sto] TopicManager.cs -> SetStoryStar: story Star [{0}, {1}] now {2}{3}", storyType, starNumber, value, "\n");
+        }
+        else { Debug.LogErrorFormat("Invalid starNumber \"{0}\" (should be 0 to 4)", starNumber); }
     }
     #endregion
 
@@ -7735,6 +7755,17 @@ public class TopicManager : MonoBehaviour
         builder.AppendFormat("{0} Charlie: ", "\n");
         for (int i = 0; i < arrayOfStoryFlags.GetUpperBound(1) + 1; i++)
         { builder.AppendFormat("{0} flag{1} -> {2}", i == 0 ? "" : ",", i, arrayOfStoryFlags[(int)StoryType.Charlie, i]); }
+        //stars
+        builder.AppendFormat(" {0}{1} Story Stars{2}", "\n", "\n", "\n");
+        builder.Append(" Alpha:  ");
+        for (int i = 0; i < arrayOfStoryStars.GetUpperBound(1) + 1; i++)
+        { builder.AppendFormat("{0} star{1} -> {2}", i == 0 ? "" : ",", i, arrayOfStoryStars[(int)StoryType.Alpha, i]); }
+        builder.AppendFormat("{0} Bravo:  ", "\n");
+        for (int i = 0; i < arrayOfStoryStars.GetUpperBound(1) + 1; i++)
+        { builder.AppendFormat("{0} star{1} -> {2}", i == 0 ? "" : ",", i, arrayOfStoryStars[(int)StoryType.Bravo, i]); }
+        builder.AppendFormat("{0} Charlie: ", "\n");
+        for (int i = 0; i < arrayOfStoryStars.GetUpperBound(1) + 1; i++)
+        { builder.AppendFormat("{0} star{1} -> {2}", i == 0 ? "" : ",", i, arrayOfStoryStars[(int)StoryType.Charlie, i]); }
         return builder.ToString();
     }
 

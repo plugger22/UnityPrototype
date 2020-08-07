@@ -476,6 +476,12 @@ public class SaveTopicData
     public int storyAlphaCurrentIndex;
     public int storyBravoCurrentIndex;
     public int storyCharlieCurrentIndex;
+    public int flagsInner;                                          //array dimensions
+    public int flagsOuter;
+    public int starsInner;
+    public int starsOuter;
+    public List<int> listOfStoryFlags = new List<int>();
+    public List<int> listOfStoryStars = new List<int>();
     public List<SaveTopic> listOfTopics = new List<SaveTopic>();
 }
 #endregion
