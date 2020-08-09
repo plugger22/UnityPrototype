@@ -5272,7 +5272,7 @@ MonoBehaviour:
   topicDisplayScript: {fileID: 0}
   popUpDynamicScript: {fileID: 0}
   popUpFixedScript: {fileID: 0}
-  seedDev: 0
+  seedDev: 34754
   autoRunTurns: 20
   isPerformanceLog: 1
   isDataValidation: 1
@@ -5577,3 +5577,9 @@ MonoBehaviour:
   campaignScope: {fileID: 11400000, guid: ccdcde3a2c12dea4d9cea8d00bb5bc18, type: 2}
   maxTopicTextLength: 150
   maxOptionTextLength: 40
+  maxLinkedIndexStory: 3
+  numOfTopicsPerLevelStory: 10
+  numOfLinkedZeroTopicStory: 2
+  numOfLinkedOneTopicStory: 2
+  numOfLinkedTwoTopicStory: 2
+  numOfLinkedThreeTopicStory: 4

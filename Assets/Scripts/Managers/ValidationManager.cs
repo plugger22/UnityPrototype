@@ -96,6 +96,16 @@ public class ValidationManager : MonoBehaviour
     [Header("Structured Topic Data")]
     [Tooltip("Highest linkedIndex value allowed in a Story topic")]
     [Range(0, 5)] public int maxLinkedIndexStory = 3;
+    [Tooltip("Number of topics that should be present for any given levelIndex, Story pool")]
+    [Range(5, 15)] public int numOfTopicsPerLevelStory = 10;
+    [Tooltip("Number of linkedLevel 0 topics that should be present in any given levelIndex, Story pool")]
+    [Range(1, 4)] public int numOfLinkedZeroTopicStory = 2;
+    [Tooltip("Number of linkedLevel 1 topics that should be present in any given levelIndex, Story pool")]
+    [Range(1, 4)] public int numOfLinkedOneTopicStory = 2;
+    [Tooltip("Number of linkedLevel 2 topics that should be present in any given levelIndex, Story pool")]
+    [Range(1, 4)] public int numOfLinkedTwoTopicStory = 2;
+    [Tooltip("Number of linkedLevel 3 topics that should be present in any given levelIndex, Story pool")]
+    [Range(1, 4)] public int numOfLinkedThreeTopicStory = 4;
 
     //fast access
     private GlobalSide globalAuthority;
@@ -3067,10 +3077,11 @@ public class ValidationManager : MonoBehaviour
     /// </summary>
     private void CheckStructuredTopicData(string prefix, int highestScenario)
     {
+        int total;
         string tag = string.Format("{0}{1}", prefix, "CheckStructuredTopicData: ");
         TopicPool[] arrayOfTopicPools = GameManager.i.loadScript.arrayOfTopicPools;
         //temporary collections needed
-        int[,] arrayOfLevels = new int[highestScenario, maxLinkedIndexStory + 1];
+        int[,,] arrayOfLevels = new int[highestScenario + 1, maxLinkedIndexStory + 1, 2];       // [levelIndex, linkedIndex, groupIndex (0 for bad, 1 for good)]
         if (arrayOfTopicPools != null)
         {
             for (int i = 0; i < arrayOfTopicPools.Length; i++)
@@ -3090,15 +3101,50 @@ public class ValidationManager : MonoBehaviour
                                 {
                                     Topic topic = pool.listOfTopics[index];
                                     if (topic != null)
-                                    { arrayOfLevels[topic.levelIndex, topic.linkedIndex]++; }
+                                    {
+                                        switch (topic.group.name)
+                                        {
+                                            case "Good": arrayOfLevels[topic.levelIndex, topic.linkedIndex, 1]++; break;
+                                            case "Bad": arrayOfLevels[topic.levelIndex, topic.linkedIndex, 0]++; break;
+                                            default: Debug.LogWarningFormat("Unrecognised topic.group \"{0}\"", topic.group.name); break;
+                                        }
+
+                                    }
                                     else { Debug.LogWarningFormat("Invalid topic (Null) in {0}.listOfTopics[{1}]", topic.name, index); }
                                 }
+                                //run various number of topics checks
+                                for (int level = 0; level < arrayOfLevels.GetUpperBound(0) + 1; level++)
+                                {
+                                    total = 0;
+                                    //loop array and tally data
+                                    for (int linked = 0; linked < arrayOfLevels.GetUpperBound(1) + 1; linked++)
+                                    {
+                                        for (int group = 0; group < arrayOfLevels.GetUpperBound(2) + 1; group++)
+                                        { total += arrayOfLevels[level, linked, group]; }
 
-                                //check levelIndex range spans all levels
-                                //check each levelIndex has the correct number of topics
+                                    }
+                                    Debug.LogFormat("[Tst] ValidationManager.cs -> CheckStructuredTopicData: \"{0}\" level {1} total {2}{3}", pool.name, level, total, "\n");
+
+                                    if (total > 0)
+                                    {
+                                        //check each levelIndex has the correct number of topics
+                                        if (total != numOfTopicsPerLevelStory)
+                                        {
+                                            Debug.LogFormat("{0} Mismatch on topic Numbers ->  \"{1}\" levelIndex {2} has {3} topics (should be {4}){5}",
+                                              tag, pool.name, level, total, numOfTopicsPerLevelStory, "\n");
+                                        }
+                                        //check correct number of topics for each linkedIndex, also checks for equal numbers of good/bad topics
+                                        SubCheckLinkedTopics(tag, pool.name, level, 0, numOfLinkedZeroTopicStory, arrayOfLevels);
+                                        SubCheckLinkedTopics(tag, pool.name, level, 1, numOfLinkedOneTopicStory, arrayOfLevels);
+                                        SubCheckLinkedTopics(tag, pool.name, level, 2, numOfLinkedTwoTopicStory, arrayOfLevels);
+                                        SubCheckLinkedTopics(tag, pool.name, level, 3, numOfLinkedThreeTopicStory, arrayOfLevels);
+                                    }
+                                    else { Debug.LogFormat("{0} No topics present for \"{1}\" levelIndex {2}{3}", tag, pool.name, level, "\n"); }
+
+                                }
 
                             }
-                            else { Debug.LogFormat("{0} Story topic \"{1}\" excluded from Enhanced Validation checks{2}", tag, pool.name, "\n"); }
+                            else { Debug.LogFormat("{0} Story topic \"{1}\" excluded from Enhanced Validation checks (flag true){2}", tag, pool.name, "\n"); }
                             break;
                     }
                 }
@@ -3108,6 +3154,48 @@ public class ValidationManager : MonoBehaviour
         else { Debug.LogError("Invalid arrayOfTopicPools (Null)"); }
     }
     #endregion
+
+    #region SubCheckLinkedTopics
+    /// <summary>
+    /// SubMethod to check that there is the correct number of topics present for a specified linkedIndex with a given levelIndex
+    /// </summary>
+    /// <param name="tag"></param>
+    /// <param name="poolName"></param>
+    /// <param name="levelIndex"></param>
+    /// <param name="linkedIndex"></param>
+    /// <param name="numberRequired"></param>
+    /// <param name="arrayOfLevels"></param>
+    private void SubCheckLinkedTopics(string tag, string poolName, int levelIndex, int linkedIndex, int numberRequired, int[,,] arrayOfLevels)
+    {
+        //total is good plus bad topics for the linkedIndex andlevelIndex
+        int total = arrayOfLevels[levelIndex, linkedIndex, 0] + arrayOfLevels[levelIndex, linkedIndex, 1];
+        int goodOrBadRequired = numberRequired / 2;
+        //check for correct numbers of bad topics 
+        if (arrayOfLevels[levelIndex, linkedIndex, 0] != goodOrBadRequired)
+        {
+            Debug.LogFormat("{0} Mismatch on topic #'s -> \"{1}\" level {2}, linked {3} has {4} BAD topics (should be {5}){6}",
+                tag, poolName, levelIndex, linkedIndex, arrayOfLevels[levelIndex, linkedIndex, 0], goodOrBadRequired, "\n");
+        }
+        //check for correct numbers of good topics 
+        if (arrayOfLevels[levelIndex, linkedIndex, 1] != goodOrBadRequired)
+        {
+            Debug.LogFormat("{0} Mismatch on topic #'s -> \"{1}\" level {2}, linked {3} has {4} GOOD topics (should be {5}){6}",
+                tag, poolName, levelIndex, linkedIndex, arrayOfLevels[levelIndex, linkedIndex, 1], goodOrBadRequired, "\n");
+        }
+        //check correct number of topics for each linkedIndex 
+        if (total != numberRequired)
+        {
+            Debug.LogFormat("{0} Mismatch on topic Numbers -> \"{1}\" linkedIndex {2} has {3} topics (should be {4}){5}",
+              tag, poolName, linkedIndex, total, numberRequired, "\n");
+        }
+        else
+        {
+            Debug.LogFormat("[Tst] ValidationManager.cs -> CheckStructedTopicData: \"{0}\" level {1}, linkedIndex {2}, has {3} topics{4}",
+         poolName, levelIndex, linkedIndex, total, "\n");
+        }
+    }
+    #endregion
+
 
     #region CheckTextListData
     /// <summary>

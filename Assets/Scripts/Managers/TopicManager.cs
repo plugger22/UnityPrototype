@@ -4805,7 +4805,7 @@ public class TopicManager : MonoBehaviour
                     //exclude story types from this, if none found then return empty list
                     if (turnTopicType.name.Equals("Story", StringComparison.Ordinal) == false)
                     { listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live).ToList()); }
-                    else { Debug.LogWarningFormat("No valid story topic found for topicType.{0}, topicSubType.{1}", turnTopic.name, turnTopicSubType.name); }
+                    else { Debug.LogWarningFormat("No valid story topic found for topicType.{0}, topicSubType.{1}", turnTopicType.name, turnTopicSubType.name); }
                 }
                 else
                 {

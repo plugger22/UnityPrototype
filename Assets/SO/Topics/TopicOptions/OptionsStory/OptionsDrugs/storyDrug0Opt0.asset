@@ -27,9 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyHeader: 
-  storyInfo: Yes Sir, I am. Authorisation papers right here if you'd like to check
-    them.
+  storyInfo: Yes Sir, I am. Authorisation papers right here. Geniune, prime cut, Americon
+    meat puppet saying a big Hello!
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Clarify</color>
   tooltipMain: <color=#98FB98> Information gained</color>

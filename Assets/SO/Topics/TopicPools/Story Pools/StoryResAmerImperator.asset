@@ -22,3 +22,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bab0ec98b78ed7449a0d2aaa6c016bd1, type: 2}
   - {fileID: 11400000, guid: 9c8263d1861c1e740a4550b5cce86f27, type: 2}
   listOfSubSubTypePools: []
+  isIgnoreExtraValidation: 1
