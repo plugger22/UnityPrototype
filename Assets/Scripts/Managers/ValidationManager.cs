@@ -106,6 +106,18 @@ public class ValidationManager : MonoBehaviour
     [Range(1, 4)] public int numOfLinkedTwoTopicStory = 2;
     [Tooltip("Number of linkedLevel 3 topics that should be present in any given levelIndex, Story pool")]
     [Range(1, 4)] public int numOfLinkedThreeTopicStory = 4;
+    [Tooltip("Number of options for a standard Info topic, Story pool")]
+    [Range(2, 4)] public int numOfOptionInfoTopicStory = 4;
+    [Tooltip("Number of options for a standard Target topic, Story pool")]
+    [Range(2, 4)] public int numOfOptionsTargetTopicStory = 2;
+
+    [Header("Structured Topic Effects")]
+    [Tooltip("Effect for story Info")]
+    public Effect storyInfoEffect;
+    [Tooltip("Effect for story Target")]
+    public Effect storyTargetEffect;
+    [Tooltip("Criteria for Story Flag true")]
+    public Criteria storyFlagTrueCriteria;
 
     //fast access
     private GlobalSide globalAuthority;
@@ -161,8 +173,10 @@ public class ValidationManager : MonoBehaviour
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(normalProfile != null, "Invalid normalProfile (Null)");
-
-
+        //Story structure
+        Debug.Assert(storyInfoEffect != null, "Invalid storyInfoEffect (Null)");
+        Debug.Assert(storyTargetEffect != null, "Invalid storyTargetEffect (Null)");
+        Debug.Assert(storyFlagTrueCriteria != null, "Invalid storyFlagTrueCriteria (Null)");
     }
     #endregion
 
@@ -3078,6 +3092,7 @@ public class ValidationManager : MonoBehaviour
     private void CheckStructuredTopicData(string prefix, int highestScenario)
     {
         int total;
+        bool isSuccess;
         string tag = string.Format("{0}{1}", prefix, "CheckStructuredTopicData: ");
         TopicPool[] arrayOfTopicPools = GameManager.i.loadScript.arrayOfTopicPools;
         //temporary collections needed
@@ -3096,23 +3111,124 @@ public class ValidationManager : MonoBehaviour
                             if (pool.isIgnoreExtraValidation == false)
                             {
                                 Array.Clear(arrayOfLevels, 0, arrayOfLevels.Length);
-                                //loop topics
+                                //
+                                // - - - loop Topics
+                                //
                                 for (int index = 0; index < pool.listOfTopics.Count; index++)
                                 {
                                     Topic topic = pool.listOfTopics[index];
                                     if (topic != null)
                                     {
+                                        //tally topics by levelIndex / linkedIndex / GroupType
                                         switch (topic.group.name)
                                         {
                                             case "Good": arrayOfLevels[topic.levelIndex, topic.linkedIndex, 1]++; break;
                                             case "Bad": arrayOfLevels[topic.levelIndex, topic.linkedIndex, 0]++; break;
                                             default: Debug.LogWarningFormat("Unrecognised topic.group \"{0}\"", topic.group.name); break;
                                         }
-
+                                        //Check criteria -> last topics in sequence need a flag trigger from target success or timeOut
+                                        switch (topic.linkedIndex)
+                                        {
+                                            case 0:
+                                            case 1:
+                                            case 2:
+                                                //Should be No Criteria
+                                                if (topic.listOfCriteria.Count > 0)
+                                                { Debug.LogFormat("{0} Invalid CRITERIA (are {1}, should be None), for topic \"{2}\"{3}", tag, topic.listOfCriteria.Count, topic.name, "\n"); }
+                                                break;
+                                            case 3:
+                                                //Require a storyFlagTrue criteria
+                                                isSuccess = false;
+                                                for (int g = 0; g < topic.listOfCriteria.Count; g++)
+                                                {
+                                                    Criteria criteria = topic.listOfCriteria[g];
+                                                    if (criteria != null)
+                                                    {
+                                                        if (criteria.name.Equals(storyFlagTrueCriteria.name, StringComparison.Ordinal) == true)
+                                                        { isSuccess = true; break; }
+                                                    }
+                                                    else
+                                                    { Debug.LogFormat("{0} Invalid CRITERIA (Null), for topic \"{1}\", listOfCriteria[{2}]{3}", tag, topic.name, g, "\n"); }
+                                                }
+                                                if (isSuccess == false)
+                                                { Debug.LogFormat("{0} Missing CRITERIA \"{1}\", for topic \"{2}\"{3}", tag, storyFlagTrueCriteria.name, topic.name, "\n"); }
+                                                break;
+                                        }
+                                        //
+                                        // - - - Options and effects
+                                        //
+                                        switch (topic.linkedIndex)
+                                        {
+                                            case 0:
+                                            case 1:
+                                            case 3:
+                                                //Info topic -> should be 4 options, all for storyInfo effects
+                                                if (topic.listOfOptions.Count != numOfOptionInfoTopicStory)
+                                                {
+                                                    Debug.LogFormat("{0} Mismatch on Info topic Options ->  \"{1}\" level {2}, linked {3}, has {4} options (should be {5}){6}",
+                                                        tag, pool.name, topic.levelIndex, topic.linkedIndex, topic.listOfOptions.Count, numOfOptionInfoTopicStory, "\n");
+                                                }
+                                                //check that story Info effect present in all options
+                                                for (int j = 0; j < topic.listOfOptions.Count; j++)
+                                                {
+                                                    TopicOption option = topic.listOfOptions[j];
+                                                    if (option != null)
+                                                    {
+                                                        isSuccess = false;
+                                                        for (int k = 0; k < option.listOfGoodEffects.Count; k++)
+                                                        {
+                                                            Effect effect = option.listOfGoodEffects[k];
+                                                            if (effect != null)
+                                                            {
+                                                                if (effect.name.Equals(storyInfoEffect.name, StringComparison.Ordinal) == true)
+                                                                { isSuccess = true; break; }
+                                                            }
+                                                            else { Debug.LogFormat("{0} INVALID effect.listOfGoodEffects[{0}] for \"{1}\", topic \"{2}\"{3}", tag, k, option.name, topic.name, "\n"); }
+                                                        }
+                                                        if (isSuccess == false)
+                                                        { Debug.LogFormat("{0} Missing INFO Good Effect \"{1}\" for \"{2}\", topic \"{3}\"{4}", tag, storyInfoEffect.name, option.name, topic.name, "\n"); }
+                                                    }
+                                                    else { Debug.LogFormat("{0} INVALID topicOption.listOfOptions[{0}] for \"{1}\", topic \"{2}\"{3}", tag, j, topic.name, topic.name, "\n"); }
+                                                }
+                                                break;
+                                            case 2:
+                                                //Target topic -> should be 2 options, both for target effects
+                                                if (topic.listOfOptions.Count != numOfOptionsTargetTopicStory)
+                                                {
+                                                    Debug.LogFormat("{0} Mismatch on Target topic Options ->  \"{1}\" level {2}, linked {3}, has {4} options (should be {5}){6}",
+                                                        tag, pool.name, topic.levelIndex, topic.linkedIndex, topic.listOfOptions.Count, numOfOptionsTargetTopicStory, "\n");
+                                                }
+                                                //check that target Target effect present in all options
+                                                for (int j = 0; j < topic.listOfOptions.Count; j++)
+                                                {
+                                                    TopicOption option = topic.listOfOptions[j];
+                                                    if (option != null)
+                                                    {
+                                                        isSuccess = false;
+                                                        for (int k = 0; k < option.listOfGoodEffects.Count; k++)
+                                                        {
+                                                            Effect effect = option.listOfGoodEffects[k];
+                                                            if (effect != null)
+                                                            {
+                                                                if (effect.name.Equals(storyTargetEffect.name, StringComparison.Ordinal) == true)
+                                                                { isSuccess = true; break; }
+                                                            }
+                                                            else { Debug.LogFormat("{0} INVALID effect.listOfGoodEffects[{0}] for \"{1}\", topic \"{2}\"{3}", tag, k, option.name, topic.name, "\n"); }
+                                                        }
+                                                        if (isSuccess == false)
+                                                        { Debug.LogFormat("{0} Missing TARGET Good Effect \"{1}\" for \"{2}\", topic \"{3}\"{4}", tag, storyTargetEffect.name, option.name, topic.name, "\n"); }
+                                                    }
+                                                    else { Debug.LogFormat("{0} INVALID topicOption.listOfOptions[{0}] for \"{1}\", topic \"{2}\"{3}", tag, j, topic.name, topic.name, "\n"); }
+                                                }
+                                                break;
+                                            default: Debug.LogWarningFormat("Unrecognised topic.linkedIndex \"{0}\"", topic.linkedIndex); break;
+                                        }
                                     }
                                     else { Debug.LogWarningFormat("Invalid topic (Null) in {0}.listOfTopics[{1}]", topic.name, index); }
                                 }
-                                //run various number of topics checks
+                                //
+                                // - - - Topic Checks (Indexes)
+                                //
                                 for (int level = 0; level < arrayOfLevels.GetUpperBound(0) + 1; level++)
                                 {
                                     total = 0;
@@ -3121,7 +3237,6 @@ public class ValidationManager : MonoBehaviour
                                     {
                                         for (int group = 0; group < arrayOfLevels.GetUpperBound(2) + 1; group++)
                                         { total += arrayOfLevels[level, linked, group]; }
-
                                     }
                                     Debug.LogFormat("[Tst] ValidationManager.cs -> CheckStructuredTopicData: \"{0}\" level {1} total {2}{3}", pool.name, level, total, "\n");
 

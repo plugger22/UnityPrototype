@@ -5272,7 +5272,7 @@ MonoBehaviour:
   topicDisplayScript: {fileID: 0}
   popUpDynamicScript: {fileID: 0}
   popUpFixedScript: {fileID: 0}
-  seedDev: 34754
+  seedDev: 0
   autoRunTurns: 20
   isPerformanceLog: 1
   isDataValidation: 1
@@ -5583,3 +5583,9 @@ MonoBehaviour:
   numOfLinkedOneTopicStory: 2
   numOfLinkedTwoTopicStory: 2
   numOfLinkedThreeTopicStory: 4
+  numOfOptionInfoTopicStory: 4
+  numOfOptionsTargetTopicStory: 2
+  storyInfoEffect: {fileID: 11400000, guid: 305af0aacc470e14cb866b7f4142ead1, type: 2}
+  storyTargetEffect: {fileID: 11400000, guid: e5a3c5de445544146b76c2f015614b8b, type: 2}
+  storyFlagTrueCriteria: {fileID: 11400000, guid: 85bfee5dd2489b54789d867be5778846,
+    type: 2}
