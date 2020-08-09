@@ -118,6 +118,8 @@ public class ValidationManager : MonoBehaviour
     public Effect storyTargetEffect;
     [Tooltip("Criteria for Story Flag true")]
     public Criteria storyFlagTrueCriteria;
+    [Tooltip("Criteria for Story Flag false")]
+    public Criteria storyFlagFalseCriteria;
 
     //fast access
     private GlobalSide globalAuthority;
@@ -177,6 +179,7 @@ public class ValidationManager : MonoBehaviour
         Debug.Assert(storyInfoEffect != null, "Invalid storyInfoEffect (Null)");
         Debug.Assert(storyTargetEffect != null, "Invalid storyTargetEffect (Null)");
         Debug.Assert(storyFlagTrueCriteria != null, "Invalid storyFlagTrueCriteria (Null)");
+        Debug.Assert(storyFlagFalseCriteria != null, "Invalid storyFlagFalseCriteria (Null)");
     }
     #endregion
 
@@ -1982,7 +1985,7 @@ public class ValidationManager : MonoBehaviour
             CheckContactData(prefix, highestContactID, highestNodeID, highestActorID, highestTurn, playerSide);
             CheckPlayerData(prefix);
             CheckStoryModuleData(prefix);
-            CheckTopicData(prefix, highestScenario);
+            CheckTopicPoolData(prefix, highestScenario);
             CheckStructuredTopicData(prefix, highestScenario);
             CheckTraitData(prefix);
             CheckTextListData(prefix);
@@ -2924,12 +2927,12 @@ public class ValidationManager : MonoBehaviour
     }
     #endregion
 
-    #region CheckTopicData
+    #region CheckTopicPoolData
     /// <summary>
-    /// Integrity check of all relevant dynamic Topic data
+    /// Integrity check of all relevant dynamic Topic Pool data
     /// </summary>
     /// <param name="prefix"></param>
-    private void CheckTopicData(string prefix, int highestScenarioIndex)
+    private void CheckTopicPoolData(string prefix, int highestScenarioIndex)
     {
         int index;
         string tag = string.Format("{0}{1}", prefix, "CheckTopicData: ");
@@ -2944,7 +2947,14 @@ public class ValidationManager : MonoBehaviour
                 CheckDictList(pool.Value, "listOfTopics", tag, pool.Key);
                 foreach (Topic topic in pool.Value)
                 {
-                    //Level scope
+                    //Check topic options -> check for duplicates
+                    List<string> tempList = topic.listOfOptions.Select(x => x.name).ToList();
+                    if (tempList != null)
+                    { CheckListForDuplicates(tempList, "Topic", topic.name, "listOfOptions"); }
+                    else { Debug.LogWarningFormat("Invalid tempList (Null) from {0}.listOfOptions", topic.name); }
+                    //
+                    // - - - Level scope
+                    //
                     if (topic.subType.scope.name.Equals(levelScopeName, StringComparison.Ordinal) == true)
                     {
                         //each topic within pool should be 'isCurrent' true (dict contains all valid topics for the level) if Level Scope only
@@ -2965,23 +2975,15 @@ public class ValidationManager : MonoBehaviour
                             { Debug.LogFormat("{0}, topic \"{1}\", Invalid listOfBuddyTopics Count (is {2}, should be Zero){3}", tag, topic.name, topic.listOfBuddyTopics.Count, "\n"); }
                         }
                     }
-
-                    //Campaign scope
+                    //
+                    // - - Campaign scope
+                    //
                     else if (topic.subType.scope.name.Equals(campaignScopeName, StringComparison.Ordinal) == true)
                     {
                         index = topic.linkedIndex;
                         //linkedIndex > -1 (default)
                         if (index < 0)
                         { Debug.LogFormat("{0}, topic \"{1}\", Invalid linkedIndex (is {2}, should be > -1){3}", tag, topic.name, index, "\n"); }
-                        //Profile can't have a repeat delay or a window timer
-                        if (topic.profile != null)
-                        {
-                            if (topic.profile.delayRepeat > 0)
-                            { Debug.LogFormat("{0}, topic \"{1}\", Invalid profile.delayRepeat (is {2}, should be Zero){3}", tag, topic.name, topic.profile.delayRepeat, "\n"); }
-                            if (topic.profile.timerWindow > 0)
-                            { Debug.LogFormat("{0}, topic \"{1}\", Invalid profile.timerWindoow (is {2}, should be Zero){3}", tag, topic.name, topic.profile.timerWindow, "\n"); }
-                        }
-                        else { Debug.LogWarningFormat("Invalid profile (Null) for topic \"{0}\"", topic.name); }
                         //listOfBuddyTopics
                         if (topic.listOfBuddyTopics != null)
                         {
@@ -2991,7 +2993,7 @@ public class ValidationManager : MonoBehaviour
                             //check for nulls
                             CheckList(topic.listOfBuddyTopics, string.Format("{0}.listOfBuddyTopics", topic.name), tag);
                             //check for duplicates
-                            List<string> tempList = topic.listOfBuddyTopics.Select(x => x.name).ToList();
+                            tempList = topic.listOfBuddyTopics.Select(x => x.name).ToList();
                             if (tempList != null)
                             { CheckListForDuplicates(tempList, "Topic", topic.name, "listOfBuddyTopics"); }
                             else { Debug.LogWarningFormat("Invalid tempList (Null) from {0}.listOfBuddyTopics", topic.name); }
@@ -3019,7 +3021,7 @@ public class ValidationManager : MonoBehaviour
                                 //check for nulls
                                 CheckList(topic.listOfLinkedTopics, string.Format("{0}.listOfLinkedTopics", topic.name), tag);
                                 //check for duplicates
-                                List<string> tempList = topic.listOfLinkedTopics.Select(x => x.name).ToList();
+                                tempList = topic.listOfLinkedTopics.Select(x => x.name).ToList();
                                 if (tempList != null)
                                 { CheckListForDuplicates(tempList, "Topic", topic.name, "listOfLinkedTopics"); }
                                 else { Debug.LogWarningFormat("Invalid tempList (Null) from {0}.listOfLinkedTopics", topic.name); }
@@ -3088,6 +3090,7 @@ public class ValidationManager : MonoBehaviour
     #region CheckStructuredTopicData
     /// <summary>
     /// Validates structure and rules for Structured topic pool types, eg. Story. Can be switched off during module development by setting topicPool.isIgnoreExtraValidation to true
+    /// NOTE: Buddy and linked topics are handled in CheckTopicPoolData above
     /// </summary>
     private void CheckStructuredTopicData(string prefix, int highestScenario)
     {
@@ -3126,6 +3129,25 @@ public class ValidationManager : MonoBehaviour
                                             case "Bad": arrayOfLevels[topic.levelIndex, topic.linkedIndex, 0]++; break;
                                             default: Debug.LogWarningFormat("Unrecognised topic.group \"{0}\"", topic.group.name); break;
                                         }
+                                        //Check Profile (should be a 'Oncer')
+                                        if (topic.profile != null)
+                                        {
+                                            if (topic.profile.delayRepeatFactor > 0)
+                                            {
+                                                Debug.LogFormat("{0} Invalid PROFILE \"{1}\" (repeatFactor {2}, should be ZERO) for topic \"{3}\"{4}",
+                                                  tag, topic.profile.name, topic.profile.delayRepeatFactor, topic.name, "\n");
+                                            }
+                                            //Non-target topics shouldn't have a window timer
+                                            if (topic.linkedIndex != 2)
+                                            {
+                                                if (topic.profile.liveWindowFactor > 0)
+                                                {
+                                                    Debug.LogFormat("{0} Invalid PROFILE \"{1}\" (windowFactor {2}, should be ZERO) for topic \"{3}\"{4}",
+                                                  tag, topic.profile.name, topic.profile.liveWindowFactor, topic.name, "\n");
+                                                }
+                                            }
+                                        }
+                                        else { Debug.LogFormat("{0} Invalid Profile (Null) for topic \"{1}\"{2}", tag, topic.name, "\n"); }
                                         //Check criteria -> last topics in sequence need a flag trigger from target success or timeOut
                                         switch (topic.linkedIndex)
                                         {
@@ -3145,7 +3167,13 @@ public class ValidationManager : MonoBehaviour
                                                     if (criteria != null)
                                                     {
                                                         if (criteria.name.Equals(storyFlagTrueCriteria.name, StringComparison.Ordinal) == true)
-                                                        { isSuccess = true; break; }
+                                                        { isSuccess = true; }
+                                                        //check that the flase storyFlagFalse criteria hasn't been used by mistake
+                                                        if (criteria.name.Equals(storyFlagFalseCriteria.name, StringComparison.Ordinal) == true)
+                                                        {
+                                                            Debug.LogFormat("{0} Invalid CRITERIA (\"{1}\"), for topic \"{2}\", listOfCriteria[{3}]{4}",
+                                                              tag, storyFlagFalseCriteria.name, topic.name, g, "\n");
+                                                        }
                                                     }
                                                     else
                                                     { Debug.LogFormat("{0} Invalid CRITERIA (Null), for topic \"{1}\", listOfCriteria[{2}]{3}", tag, topic.name, g, "\n"); }
@@ -3310,7 +3338,6 @@ public class ValidationManager : MonoBehaviour
         }
     }
     #endregion
-
 
     #region CheckTextListData
     /// <summary>
