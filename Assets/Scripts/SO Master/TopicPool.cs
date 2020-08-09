@@ -29,6 +29,10 @@ public class TopicPool : ScriptableObject
     [Tooltip("Place all relevant SubSubType pools here")]
     public List<TopicPool> listOfSubSubTypePools;
 
+    [Header("Debugging")]
+    [Tooltip("Default false for the pool/topics to undergo enhanced Validation testing. Specific to STORY topic pools (enforces structure -> flag allows development of new stories). Optional")]
+    public bool isIgnoreExtraValidation;
+
 
     public void OnEnable()
     {

@@ -93,6 +93,10 @@ public class ValidationManager : MonoBehaviour
     [Tooltip("Max length of a topic Option text (excludes tagged data) in chars")]
     [Range(10, 50)] public int maxOptionTextLength = 40;
 
+    [Header("Structured Topic Data")]
+    [Tooltip("Highest linkedIndex value allowed in a Story topic")]
+    [Range(0, 5)] public int maxLinkedIndexStory = 3;
+
     //fast access
     private GlobalSide globalAuthority;
     private GlobalSide globalResistance;
@@ -1955,6 +1959,7 @@ public class ValidationManager : MonoBehaviour
             CheckPlayerData(prefix);
             CheckStoryModuleData(prefix);
             CheckTopicData(prefix, highestScenario);
+            CheckStructuredTopicData(prefix, highestScenario);
             CheckTraitData(prefix);
             CheckTextListData(prefix);
             CheckRelationsData(prefix);
@@ -3053,6 +3058,54 @@ public class ValidationManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfTopicPools (Null)"); }
+    }
+    #endregion
+
+    #region CheckStructuredTopicData
+    /// <summary>
+    /// Validates structure and rules for Structured topic pool types, eg. Story. Can be switched off during module development by setting topicPool.isIgnoreExtraValidation to true
+    /// </summary>
+    private void CheckStructuredTopicData(string prefix, int highestScenario)
+    {
+        string tag = string.Format("{0}{1}", prefix, "CheckStructuredTopicData: ");
+        TopicPool[] arrayOfTopicPools = GameManager.i.loadScript.arrayOfTopicPools;
+        //temporary collections needed
+        int[,] arrayOfLevels = new int[highestScenario, maxLinkedIndexStory + 1];
+        if (arrayOfTopicPools != null)
+        {
+            for (int i = 0; i < arrayOfTopicPools.Length; i++)
+            {
+                TopicPool pool = arrayOfTopicPools[i];
+                if (pool != null)
+                {
+                    switch (pool.type.name)
+                    {
+                        case "Story":
+                            //check only if flag is false
+                            if (pool.isIgnoreExtraValidation == false)
+                            {
+                                Array.Clear(arrayOfLevels, 0, arrayOfLevels.Length);
+                                //loop topics
+                                for (int index = 0; index < pool.listOfTopics.Count; index++)
+                                {
+                                    Topic topic = pool.listOfTopics[index];
+                                    if (topic != null)
+                                    { arrayOfLevels[topic.levelIndex, topic.linkedIndex]++; }
+                                    else { Debug.LogWarningFormat("Invalid topic (Null) in {0}.listOfTopics[{1}]", topic.name, index); }
+                                }
+
+                                //check levelIndex range spans all levels
+                                //check each levelIndex has the correct number of topics
+
+                            }
+                            else { Debug.LogFormat("{0} Story topic \"{1}\" excluded from Enhanced Validation checks{2}", tag, pool.name, "\n"); }
+                            break;
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid topicPool (Null) for arrayOfTopicPools[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfTopicPools (Null)"); }
     }
     #endregion
 

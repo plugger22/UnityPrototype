@@ -7142,3 +7142,28 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 10486 -> Friday, 7 August 2020 8:13 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 48630 -> Sunday, 9 August 2020 9:59 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 37549 -> Sunday, 9 August 2020 10:01 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 3101 -> Sunday, 9 August 2020 10:14 AM
+City seed 5678 -> London, United Kingdom
+ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+ValidationManager.CheckStructuredTopicData (System.String prefix, System.Int32 highestScenario) (at Assets/Scripts/Managers/ValidationManager.cs:3093)
+	ValidationManager.ExecuteIntegrityCheck () (at Assets/Scripts/Managers/ValidationManager.cs:1962)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:270)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:393)
+	
+Dev seed 21262 -> Sunday, 9 August 2020 10:15 AM
+City seed 5678 -> London, United Kingdom
+ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+ValidationManager.CheckStructuredTopicData (System.String prefix, System.Int32 highestScenario) (at Assets/Scripts/Managers/ValidationManager.cs:3093)
+	ValidationManager.ExecuteIntegrityCheck () (at Assets/Scripts/Managers/ValidationManager.cs:1962)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:270)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:393)
+	
+Dev seed 4350 -> Sunday, 9 August 2020 10:18 AM
+City seed 5678 -> London, United Kingdom
