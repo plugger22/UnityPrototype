@@ -18,7 +18,7 @@ MonoBehaviour:
   isPreferredByHQ: 0
   isDislikedByHQ: 0
   isIgnoredByHQ: 1
-  isIgnoreStress: 0
+  isIgnoreStress: 1
   isIgnoreMood: 1
   listOfCriteria: []
   listOfGoodEffects:
@@ -34,4 +34,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

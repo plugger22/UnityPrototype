@@ -3096,8 +3096,12 @@ public class ValidationManager : MonoBehaviour
     {
         int total;
         bool isSuccess;
+        bool isStoryData = false;
         string tag = string.Format("{0}{1}", prefix, "CheckStructuredTopicData: ");
         TopicPool[] arrayOfTopicPools = GameManager.i.loadScript.arrayOfTopicPools;
+        StoryData[] arrayOfStoryData = GameManager.i.loadScript.arrayOfStoryData;
+        if (arrayOfStoryData == null)
+        { Debug.LogError("Invalid arrayOfStoryData (Null)"); }
         //temporary collections needed
         int[,,] arrayOfLevels = new int[highestScenario + 1, maxLinkedIndexStory + 1, 2];       // [levelIndex, linkedIndex, groupIndex (0 for bad, 1 for good)]
         if (arrayOfTopicPools != null)
@@ -3113,6 +3117,12 @@ public class ValidationManager : MonoBehaviour
                             //check only if flag is false
                             if (pool.isIgnoreExtraValidation == false)
                             {
+                                //Get matching StoryData
+                                StoryData storyData = Array.Find(arrayOfStoryData, x => x.pool.name.Equals(pool.name, StringComparison.Ordinal) == true);
+                                if (storyData != null) { isStoryData = true; }
+                                else
+                                { Debug.LogFormat("{0} NO matching StoryData found for topicPool \"{1}\"{2}", tag, pool.name, "\n"); }
+                                //empty out totals array prior to tallying
                                 Array.Clear(arrayOfLevels, 0, arrayOfLevels.Length);
                                 //
                                 // - - - loop Topics
@@ -3129,7 +3139,7 @@ public class ValidationManager : MonoBehaviour
                                             case "Bad": arrayOfLevels[topic.levelIndex, topic.linkedIndex, 0]++; break;
                                             default: Debug.LogWarningFormat("Unrecognised topic.group \"{0}\"", topic.group.name); break;
                                         }
-                                        //Check Profile (should be a 'Oncer')
+                                        //Profile (should be a 'Oncer')
                                         if (topic.profile != null)
                                         {
                                             if (topic.profile.delayRepeatFactor > 0)
@@ -3148,7 +3158,25 @@ public class ValidationManager : MonoBehaviour
                                             }
                                         }
                                         else { Debug.LogFormat("{0} Invalid Profile (Null) for topic \"{1}\"{2}", tag, topic.name, "\n"); }
-                                        //Check criteria -> last topics in sequence need a flag trigger from target success or timeOut
+                                        //Special -> should all have a topicItem
+                                        if (topic.topicItem == null)
+                                        { Debug.LogFormat("{0} MISSING TopicItem (Null) for topic \"{1}\"{2}", tag, topic.name, "\n"); }
+                                        else
+                                        {
+                                            //check topicItem in StoryData (assocated with this story)
+                                            if (isStoryData == true)
+                                            {
+                                                if (storyData.listOfTopicItems.Exists(x => x.name.Equals(topic.topicItem.name, StringComparison.Ordinal)) == false)
+                                                { Debug.LogFormat("{0} TopicItem \"{1}\" for topic \"{2}\" NOT FOUND in storyData \"{3}\"{4}", 
+                                                    tag, topic.topicItem.name, topic.name, storyData.name, "\n"); }
+
+                                                /*List<TopicItem> listOfTopicItems = storyData.listOfTopicItems;
+                                                if (listOfTopicItems.Exists(x => x.name == topic.topicItem.name) == false)
+                                                { Debug.LogFormat("{0} TopicItem \"{1}\" for topic \"{2}\" NOT FOUND in storyData \"{3}\"{4}", 
+                                                    tag, topic.topicItem.name, topic.name, storyData.name, "\n"); }*/
+                                            }
+                                        }
+                                        //Criteria -> last topics in sequence need a flag trigger from target success or timeOut
                                         switch (topic.linkedIndex)
                                         {
                                             case 0:
@@ -3215,6 +3243,17 @@ public class ValidationManager : MonoBehaviour
                                                         }
                                                         if (isSuccess == false)
                                                         { Debug.LogFormat("{0} Missing INFO Good Effect \"{1}\" for \"{2}\", topic \"{3}\"{4}", tag, storyInfoEffect.name, option.name, topic.name, "\n"); }
+                                                        //Check specials
+                                                        if (option.isPreferredByHQ == true)
+                                                        { Debug.LogFormat("{0} INVALID Special (isPreferredByHQ true, should be FALSE) for \"{1}\", topic \"{2}\"{3}", tag, option.name, topic.name, "\n"); }
+                                                        if (option.isDislikedByHQ == true)
+                                                        { Debug.LogFormat("{0} INVALID Special (isDislikedByHQ true, should be FALSE) for \"{1}\", topic \"{2}\"{3}", tag, option.name, topic.name, "\n"); }
+                                                        if (option.isIgnoredByHQ == false)
+                                                        { Debug.LogFormat("{0} INVALID Special (isIgnoredByHQ false, should be TRUE) for \"{1}\", topic \"{2}\"{3}", tag, option.name, topic.name, "\n"); }
+                                                        if (option.isIgnoreStress == true)
+                                                        { Debug.LogFormat("{0} INVALID Special (isIgnoreStress true, should be FALSE) for \"{1}\", topic \"{2}\"{3}", tag, option.name, topic.name, "\n"); }
+                                                        if (option.isIgnoreMood == false)
+                                                        { Debug.LogFormat("{0} INVALID Special (isIgnoreMood false, should be TRUE) for \"{1}\", topic \"{2}\"{3}", tag, option.name, topic.name, "\n"); }
                                                     }
                                                     else { Debug.LogFormat("{0} INVALID topicOption.listOfOptions[{0}] for \"{1}\", topic \"{2}\"{3}", tag, j, topic.name, topic.name, "\n"); }
                                                 }
@@ -3245,6 +3284,17 @@ public class ValidationManager : MonoBehaviour
                                                         }
                                                         if (isSuccess == false)
                                                         { Debug.LogFormat("{0} Missing TARGET Good Effect \"{1}\" for \"{2}\", topic \"{3}\"{4}", tag, storyTargetEffect.name, option.name, topic.name, "\n"); }
+                                                        //Check specials
+                                                        if (option.isPreferredByHQ == true)
+                                                        { Debug.LogFormat("{0} INVALID Special (isPreferredByHQ true, should be FALSE) for \"{1}\", topic \"{2}\"{3}", tag, option.name, topic.name, "\n"); }
+                                                        if (option.isDislikedByHQ == true)
+                                                        { Debug.LogFormat("{0} INVALID Special (isDislikedByHQ true, should be FALSE) for \"{1}\", topic \"{2}\"{3}", tag, option.name, topic.name, "\n"); }
+                                                        if (option.isIgnoredByHQ == false)
+                                                        { Debug.LogFormat("{0} INVALID Special (isIgnoredByHQ false, should be TRUE) for \"{1}\", topic \"{2}\"{3}", tag, option.name, topic.name, "\n"); }
+                                                        if (option.isIgnoreStress == false)
+                                                        { Debug.LogFormat("{0} INVALID Special (isIgnoreStress false, should be TRUE) for \"{1}\", topic \"{2}\"{3}", tag, option.name, topic.name, "\n"); }
+                                                        if (option.isIgnoreMood == false)
+                                                        { Debug.LogFormat("{0} INVALID Special (isIgnoreMood false, should be TRUE) for \"{1}\", topic \"{2}\"{3}", tag, option.name, topic.name, "\n"); }
                                                     }
                                                     else { Debug.LogFormat("{0} INVALID topicOption.listOfOptions[{0}] for \"{1}\", topic \"{2}\"{3}", tag, j, topic.name, topic.name, "\n"); }
                                                 }

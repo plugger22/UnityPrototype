@@ -5589,3 +5589,5 @@ MonoBehaviour:
   storyTargetEffect: {fileID: 11400000, guid: e5a3c5de445544146b76c2f015614b8b, type: 2}
   storyFlagTrueCriteria: {fileID: 11400000, guid: 85bfee5dd2489b54789d867be5778846,
     type: 2}
+  storyFlagFalseCriteria: {fileID: 11400000, guid: a61fe0568152b8944af9414180dc8f96,
+    type: 2}
