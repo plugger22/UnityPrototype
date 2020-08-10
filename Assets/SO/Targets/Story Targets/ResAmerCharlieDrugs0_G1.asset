@@ -29,10 +29,10 @@ MonoBehaviour:
   listOfFailEffects: []
   moodEffect: {fileID: 0}
   ongoingEffect: {fileID: 0}
-  profileBase: {fileID: 11400000, guid: 15a61a57750900343b859ddd2314ee88, type: 2}
+  profileBase: {fileID: 11400000, guid: 3cac112efe0822249b012aabfba261d5, type: 2}
   isSuccessNeeded: 0
   followOnTarget: {fileID: 0}
-  profile: {fileID: 11400000, guid: 15a61a57750900343b859ddd2314ee88, type: 2}
+  profile: {fileID: 11400000, guid: 3cac112efe0822249b012aabfba261d5, type: 2}
   targetStatus: 0
   intel: 0
   ongoingID: -1

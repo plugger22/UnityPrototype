@@ -27,9 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyHeader: 
   storyInfo: Have to say that it's a buzz. It's all 'go there, fast and low'. I get
-    so excited that, on any given day, I've taken three cold showers before breakfast
+    so excited that, most days, I've taken three cold showers before breakfast
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

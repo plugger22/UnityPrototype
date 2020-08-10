@@ -17,5 +17,5 @@ MonoBehaviour:
   activation: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   window: 10
   isRepeat: 0
-  isSameNode: 0
+  isRepeatSameNode: 0
   repeatProfile: {fileID: 0}

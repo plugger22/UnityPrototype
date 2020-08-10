@@ -27,9 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Yes they will. That's why you are going to do this and not me. But they
-    can't chase a ghost, can they? Don't get your ugly face on camera and you'll be
-    O.K ... maybe.
+  storyInfo: Yes they will. That's why you're going to do this and not me. But they
+    can't chase a ghost, can they? Don't get scanned and you'll be O.K ... maybe.
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Worried</color>
   tooltipMain: <color=#98FB98> Information gained</color>

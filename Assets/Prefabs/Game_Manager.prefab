@@ -5586,9 +5586,13 @@ MonoBehaviour:
   numOfOptionInfoTopicStory: 4
   numOfOptionsTargetTopicStory: 2
   maxStoryInfoTextLength: 150
+  maxStoryTargetWindow: 15
   storyInfoEffect: {fileID: 11400000, guid: 305af0aacc470e14cb866b7f4142ead1, type: 2}
   storyTargetEffect: {fileID: 11400000, guid: e5a3c5de445544146b76c2f015614b8b, type: 2}
+  storyFlagEffect: {fileID: 11400000, guid: c23ed1da5bca28b4883286a1de807e06, type: 2}
+  storyStarEffect: {fileID: 11400000, guid: 988b9f50bdaa2f94aaecd82d27bbc078, type: 2}
   storyFlagTrueCriteria: {fileID: 11400000, guid: 85bfee5dd2489b54789d867be5778846,
     type: 2}
   storyFlagFalseCriteria: {fileID: 11400000, guid: a61fe0568152b8944af9414180dc8f96,
     type: 2}
+  storyTargetTrigger: {fileID: 11400000, guid: 2281c5546c92be642a0ed77de3ea91b6, type: 2}

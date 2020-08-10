@@ -112,16 +112,24 @@ public class ValidationManager : MonoBehaviour
     [Range(2, 4)] public int numOfOptionsTargetTopicStory = 2;
     [Tooltip("Max length of storyInfo option text, in chars")]
     [Range(100, 200)] public int maxStoryInfoTextLength = 150;
+    [Tooltip("Max length of story Target profile live window")]
+    [Range(10, 20)] public int maxStoryTargetWindow = 15;
 
     [Header("Structured Topic Effects")]
     [Tooltip("Effect for story Info")]
     public Effect storyInfoEffect;
     [Tooltip("Effect for story Target")]
     public Effect storyTargetEffect;
+    [Tooltip("Effect for story Flag (used by story related targets")]
+    public Effect storyFlagEffect;
+    [Tooltip("Effect for story Star (used by story related targets")]
+    public Effect storyStarEffect;
     [Tooltip("Criteria for Story Flag true")]
     public Criteria storyFlagTrueCriteria;
     [Tooltip("Criteria for Story Flag false")]
     public Criteria storyFlagFalseCriteria;
+    [Tooltip("TargetTrigger for story targets ('Live')")]
+    public TargetTrigger storyTargetTrigger;
 
     //fast access
     private GlobalSide globalAuthority;
@@ -180,8 +188,11 @@ public class ValidationManager : MonoBehaviour
         //Story structure
         Debug.Assert(storyInfoEffect != null, "Invalid storyInfoEffect (Null)");
         Debug.Assert(storyTargetEffect != null, "Invalid storyTargetEffect (Null)");
+        Debug.Assert(storyFlagEffect != null, "Invalid storyTargetEffect (Null)");
+        Debug.Assert(storyStarEffect != null, "Invalid storyTargetEffect (Null)");
         Debug.Assert(storyFlagTrueCriteria != null, "Invalid storyFlagTrueCriteria (Null)");
         Debug.Assert(storyFlagFalseCriteria != null, "Invalid storyFlagFalseCriteria (Null)");
+        Debug.Assert(storyTargetTrigger != null, "Invalid storyTargetTrigger (Null)");
     }
     #endregion
 
@@ -2357,6 +2368,7 @@ public class ValidationManager : MonoBehaviour
     private void CheckTargetData(string prefix, int highestNodeID, int highestContactID, int highestTurn)
     {
         string key;
+        bool isFlag, isStar;
         string tag = string.Format("{0}{1}", prefix, "CheckTargetData: ");
         int maxTargetIntel = GameManager.i.targetScript.maxTargetInfo;
         //Debug.LogFormat("{0}checking . . . {1}", tag, "\n");
@@ -2378,6 +2390,47 @@ public class ValidationManager : MonoBehaviour
                 CheckDictRange(target.Value.numOfAttempts, 0, 20, "numOfAtttempts", tag, key);
                 CheckDictList(target.Value.listOfRumourContacts, "listOfRumourContacts", tag, key, false);
                 CheckDictListBounds(target.Value.listOfRumourContacts, "listOfRumourContacts", tag, key, 0, highestContactID);
+                //Story targets
+                switch (target.Value.targetType.name)
+                {
+                    case "StoryAlpha":
+                    case "StoryBravo":
+                    case "StoryCharlie":
+                        isFlag = isStar = false;
+                        //loop listOfGoodEffects looking for a storyFlag and a storyStar effect
+                        for (int i = 0; i < target.Value.listOfGoodEffects.Count; i++)
+                        {
+                            Effect effect = target.Value.listOfGoodEffects[i];
+                            if (effect != null)
+                            {
+                                if (effect.name.Equals(storyFlagEffect.name, StringComparison.Ordinal) == true)
+                                { isFlag = true; }
+                                if (effect.name.Equals(storyStarEffect.name, StringComparison.Ordinal) == true)
+                                { isStar = true; }
+                            }
+                            else { Debug.LogFormat("{0} Invalid listOfGoodEffects (Null or Empty) for target \"{1}\"{2}", tag, target.Value.name, "\n"); }
+                        }
+                        if (isFlag == false)
+                        { Debug.LogFormat("{0} MISSING listOfGoodEffects.effect \"{1}\" for target \"{2}\"{3}", tag, storyFlagEffect.name, target.Value.name, "\n"); }
+                        if (isStar == false)
+                        { Debug.LogFormat("{0} MISSING listOfGoodEffects.effect \"{1}\" for target \"{2}\"{3}", tag, storyStarEffect.name, target.Value.name, "\n"); }
+                        //Check Target Profile -> should be Live with a window <= 15  and NOT repeat
+                        TargetProfile profile = target.Value.profile;
+                        if (profile != null)
+                        {
+                            //Trigger
+                            if (profile.trigger.name.Equals(storyTargetTrigger.name, StringComparison.Ordinal) == false)
+                            { Debug.LogFormat("{0} Invalid profile TRIGGER \"{1}\" (should be \"{2}\") for target \"{3}\"{4}", tag, profile.trigger.name, storyTargetTrigger.name, target.Value.name, "\n"); }
+                            //Window
+                            if (profile.window > maxStoryTargetWindow)
+                            { Debug.LogFormat("{0} Invalid profile WINDOW \"{1}\" (Max allowed \"{2}\") for target \"{3}\"{4}", tag, profile.window, maxStoryTargetWindow, target.Value.name, "\n"); }
+                            //No Repeat
+                            if (profile.isRepeat == true || profile.repeatProfile != null)
+                            { Debug.LogFormat("{0} Invalid profile REPEAT  (should NOT Repeat) for target \"{1}\"{2}", tag, target.Value.name, "\n"); }
+                        }
+                        else { Debug.LogFormat("{0} Invalid profile (Null) for target \"{1}\"{2}", tag, target.Value.name, "\n"); }
+                        break;
+                }
             }
         }
         else { Debug.LogError("Invalid dictOfTargets (Null)"); }
@@ -2846,21 +2899,22 @@ public class ValidationManager : MonoBehaviour
     private void CheckStoryModuleData(string prefix)
     {
         string tag = string.Format("{0}{1}", prefix, "CheckStoryModuleData: ");
+        int countOne, countTwo;
         StoryModule[] arrayOfStoryModules = GameManager.i.loadScript.arrayOfStoryModules;
         if (arrayOfStoryModules != null)
         {
-            int count = arrayOfStoryModules.Length;
-            if (count > 0)
+            countOne = arrayOfStoryModules.Length;
+            if (countOne > 0)
             {
-                for (int index = 0; index < count; index++)
+                for (int index = 0; index < countOne; index++)
                 {
-                    StoryModule story = arrayOfStoryModules[index];
-                    if (story != null)
+                    StoryModule storyModule = arrayOfStoryModules[index];
+                    if (storyModule != null)
                     {
                         //story Alpha -> Campaign
-                        for (int i = 0; i < story.listOfCampaignStories.Count; i++)
+                        for (int i = 0; i < storyModule.listOfCampaignStories.Count; i++)
                         {
-                            StoryData storyData = story.listOfCampaignStories[i];
+                            StoryData storyData = storyModule.listOfCampaignStories[i];
                             if (storyData != null)
                             {
                                 TopicPool pool = storyData.pool;
@@ -2872,17 +2926,17 @@ public class ValidationManager : MonoBehaviour
                                     //check topicSubType is correct
                                     if (pool.subType.name.Equals("StoryAlpha", StringComparison.Ordinal) == false)
                                     {
-                                        Debug.LogFormat("{0} Invalid topicSubType \"{1}\" (should be StoryAlpha) for topicPool \"{2}\" in {3}.listOfCampaignStories[{4}]{5}", tag, pool.subType.name, pool.name, story.name, i, "\n");
+                                        Debug.LogFormat("{0} Invalid topicSubType \"{1}\" (should be StoryAlpha) for topicPool \"{2}\" in {3}.listOfCampaignStories[{4}]{5}", tag, pool.subType.name, pool.name, storyModule.name, i, "\n");
                                     }
                                 }
-                                else { Debug.LogFormat("{0} Invalid topicPool (Null) for {1}.{2}{3}", tag, story.name, storyData.name, "\n"); }
+                                else { Debug.LogFormat("{0} Invalid topicPool (Null) for {1}.{2}{3}", tag, storyModule.name, storyData.name, "\n"); }
                             }
-                            else { Debug.LogFormat("{0} Invalid storyData (Null) for {1}.listOfCampaignStories[{2}]{3}", tag, story.name, i, "\n"); }
+                            else { Debug.LogFormat("{0} Invalid storyData (Null) for {1}.listOfCampaignStories[{2}]{3}", tag, storyModule.name, i, "\n"); }
                         }
                         //story Bravo -> Family
-                        for (int i = 0; i < story.listOfFamilyStories.Count; i++)
+                        for (int i = 0; i < storyModule.listOfFamilyStories.Count; i++)
                         {
-                            StoryData storyData = story.listOfFamilyStories[i];
+                            StoryData storyData = storyModule.listOfFamilyStories[i];
                             if (storyData != null)
                             {
                                 TopicPool pool = storyData.pool;
@@ -2893,16 +2947,16 @@ public class ValidationManager : MonoBehaviour
                                     { Debug.LogFormat("{0} Invalid topicType \"{0}\" (should be Story) for topicPool \"{1}\" in {2}.listOfFamilyStories[{3}]{4}", tag, pool.type.name, pool.name, i, "\n"); }
                                     //check topicSubType is correct
                                     if (pool.subType.name.Equals("StoryBravo", StringComparison.Ordinal) == false)
-                                    { Debug.LogFormat("{0} Invalid topicSubType \"{1}\" (should be StoryBravo) for topicPool \"{2}\" in {3}.listOfFamilyStories[{4}]{5}", tag, pool.subType.name, pool.name, story.name, i, "\n"); }
+                                    { Debug.LogFormat("{0} Invalid topicSubType \"{1}\" (should be StoryBravo) for topicPool \"{2}\" in {3}.listOfFamilyStories[{4}]{5}", tag, pool.subType.name, pool.name, storyModule.name, i, "\n"); }
                                 }
-                                else { Debug.LogFormat("{0} Invalid topicPool (Null) for {1}.{2}{3}", tag, story.name, storyData.name, "\n"); }
+                                else { Debug.LogFormat("{0} Invalid topicPool (Null) for {1}.{2}{3}", tag, storyModule.name, storyData.name, "\n"); }
                             }
-                            else { Debug.LogFormat("{0} Invalid storyData (Null) for {1}.listOfFamilyStories[{2}]{3}", tag, story.name, i, "\n"); }
+                            else { Debug.LogFormat("{0} Invalid storyData (Null) for {1}.listOfFamilyStories[{2}]{3}", tag, storyModule.name, i, "\n"); }
                         }
                         //story Charlie -> Authority/Resistance
-                        for (int i = 0; i < story.listOfHqStories.Count; i++)
+                        for (int i = 0; i < storyModule.listOfHqStories.Count; i++)
                         {
-                            StoryData storyData = story.listOfHqStories[i];
+                            StoryData storyData = storyModule.listOfHqStories[i];
                             if (storyData != null)
                             {
                                 TopicPool pool = storyData.pool;
@@ -2913,11 +2967,28 @@ public class ValidationManager : MonoBehaviour
                                     { Debug.LogFormat("{0} Invalid topicType \"{0}\" (should be Story) for topicPool \"{1}\" in {2}.listOfHqStories[{3}]{4}", tag, pool.type.name, pool.name, i, "\n"); }
                                     //check topicSubType is correct
                                     if (pool.subType.name.Equals("StoryCharlie", StringComparison.Ordinal) == false)
-                                    { Debug.LogFormat("{0} Invalid topicSubType \"{1}\" (should be StoryCharlie) for topicPool \"{2}\" in {3}.listOfHqStories[{4}]{5}", tag, pool.subType.name, pool.name, story.name, i, "\n"); }
+                                    { Debug.LogFormat("{0} Invalid topicSubType \"{1}\" (should be StoryCharlie) for topicPool \"{2}\" in {3}.listOfHqStories[{4}]{5}", 
+                                        tag, pool.subType.name, pool.name, storyModule.name, i, "\n"); }
+                                    //check targets have the same targetType as pool.subType
+                                    countTwo = storyData.listOfTargets.Count;
+                                    if (countTwo > 0)
+                                    {
+                                        for (int j = 0; j < countTwo; j++)
+                                        {
+                                            Target target = storyData.listOfTargets[i];
+                                            if (target != null)
+                                            {
+                                                if (target.targetType.name.Equals("StoryCharlie", StringComparison.Ordinal) == false)
+                                                { Debug.LogFormat("{0} Invalid targetType \"{1}\" (should be 'StoryCharlie') for target {2} Module {3}, Data {4}{5}", 
+                                                    tag, target.targetType.name, target.name, storyModule.name, storyData.name, "\n"); }
+                                            }
+                                            else { Debug.LogFormat("{0} Invalid target (Null) for {1}.{2}.listOfTargets[{3}]{4}", tag, storyModule.name, storyData.name, j, "\n"); }
+                                        }
+                                    }
                                 }
-                                else { Debug.LogFormat("{0} Invalid topicPool (Null) for {1}.{2}{3}", tag, story.name, storyData.name, "\n"); }
+                                else { Debug.LogFormat("{0} Invalid topicPool (Null) for {1}.{2}{3}", tag, storyModule.name, storyData.name, "\n"); }
                             }
-                            else { Debug.LogFormat("{0} Invalid storyData (Null) for {1}.listOfHqStories[{2}]{3}", tag, story.name, i, "\n"); }
+                            else { Debug.LogFormat("{0} Invalid storyData (Null) for {1}.listOfHqStories[{2}]{3}", tag, storyModule.name, i, "\n"); }
                         }
                     }
                     else { Debug.LogFormat("{0} Invalid storyModule (Null) for arrayOfStoryModules[{1}]{2}", tag, index, "\n"); }
@@ -3093,6 +3164,7 @@ public class ValidationManager : MonoBehaviour
     /// <summary>
     /// Validates structure and rules for Structured topic pool types, eg. Story. Can be switched off during module development by setting topicPool.isIgnoreExtraValidation to true
     /// NOTE: Buddy and linked topics are handled in CheckTopicPoolData above
+    /// NOTE: Story related Targets are hanlded by CheckTargetData above
     /// </summary>
     private void CheckStructuredTopicData(string prefix, int highestScenario)
     {
@@ -3244,8 +3316,10 @@ public class ValidationManager : MonoBehaviour
                                                         {
                                                             //enforce text length
                                                             if (option.storyInfo.Length > maxStoryInfoTextLength)
-                                                            { Debug.LogFormat("{0} OVERLENGTH storyInfo (has {1} chars, limit {2}) for \"{3}\", topic \"{4}\"{5}", 
-                                                                tag, option.storyInfo.Length, maxStoryInfoTextLength, option.name, topic.name, "\n"); }
+                                                            {
+                                                                Debug.LogFormat("{0} OVERLENGTH storyInfo (has {1} chars, limit {2}) for \"{3}\", topic \"{4}\"{5}",
+                                                                  tag, option.storyInfo.Length, maxStoryInfoTextLength, option.name, topic.name, "\n");
+                                                            }
                                                         }
                                                         //Effects
                                                         isSuccess = false;

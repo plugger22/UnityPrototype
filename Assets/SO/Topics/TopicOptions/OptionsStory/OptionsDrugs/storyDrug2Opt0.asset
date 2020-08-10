@@ -27,10 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyHeader: 
-  storyInfo: We've been taking a close look at what happened on the Hub and there
-    is no question that Eclipse Corp were behind it. My guess is we're being jammed
-    because they don't want us poking around
+  storyInfo: We've been investigating the incident on the Hub and there's no question
+    that Eclipse Corp were behind it. They are sending us a message
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

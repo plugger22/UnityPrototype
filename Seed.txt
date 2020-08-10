@@ -298,3 +298,60 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 28687 -> Monday, 10 August 2020 3:03 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 20188 -> Monday, 10 August 2020 3:17 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 5824 -> Monday, 10 August 2020 3:18 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 47721 -> Monday, 10 August 2020 3:24 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 22800 -> Monday, 10 August 2020 4:02 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 25932 -> Monday, 10 August 2020 4:03 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 55610 -> Monday, 10 August 2020 4:05 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 48907 -> Monday, 10 August 2020 4:27 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ValidationManager.CheckTargetData (System.String prefix, System.Int32 highestNodeID, System.Int32 highestContactID, System.Int32 highestTurn) (at Assets/Scripts/Managers/ValidationManager.cs:2422)
+	ValidationManager.ExecuteIntegrityCheck () (at Assets/Scripts/Managers/ValidationManager.cs:1991)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:270)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:393)
+	
+Dev seed 42086 -> Monday, 10 August 2020 4:30 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 35555 -> Monday, 10 August 2020 4:32 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 41580 -> Monday, 10 August 2020 4:33 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 64107 -> Monday, 10 August 2020 4:34 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51810 -> Monday, 10 August 2020 4:46 PM
+City seed 5678 -> London, United Kingdom
+ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+ValidationManager.CheckStoryModuleData (System.String prefix) (at Assets/Scripts/Managers/ValidationManager.cs:2910)
+	ValidationManager.ExecuteIntegrityCheck () (at Assets/Scripts/Managers/ValidationManager.cs:2000)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:270)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:393)
+	
+Dev seed 23971 -> Monday, 10 August 2020 4:48 PM
+City seed 5678 -> London, United Kingdom
+ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+ValidationManager.CheckStoryModuleData (System.String prefix) (at Assets/Scripts/Managers/ValidationManager.cs:2910)
+	ValidationManager.ExecuteIntegrityCheck () (at Assets/Scripts/Managers/ValidationManager.cs:2000)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:270)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:393)
+	
+Dev seed 62634 -> Monday, 10 August 2020 4:57 PM
+City seed 5678 -> London, United Kingdom

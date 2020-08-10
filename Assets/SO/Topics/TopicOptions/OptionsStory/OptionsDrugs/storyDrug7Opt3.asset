@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Well, that's because I was given a second chance. Takes practice to be
-    a winner. The losers are locked up on Titan. I can see you're destined for success
+  storyInfo: Well, that's because I was once given a second chance. It takes practice
+    to be a winner. I can see that you've got what it takes
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
