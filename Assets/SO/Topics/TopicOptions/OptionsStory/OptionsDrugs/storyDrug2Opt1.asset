@@ -27,7 +27,6 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyHeader: 
   storyInfo: Well, they might. They are a powerful, vindictive, MegaCorp who don't
     take kindly to those who oppose them. Probably best not to get caught.
   storyTarget: {fileID: 0}

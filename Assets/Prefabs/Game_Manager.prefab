@@ -5585,6 +5585,7 @@ MonoBehaviour:
   numOfLinkedThreeTopicStory: 4
   numOfOptionInfoTopicStory: 4
   numOfOptionsTargetTopicStory: 2
+  maxStoryInfoTextLength: 150
   storyInfoEffect: {fileID: 11400000, guid: 305af0aacc470e14cb866b7f4142ead1, type: 2}
   storyTargetEffect: {fileID: 11400000, guid: e5a3c5de445544146b76c2f015614b8b, type: 2}
   storyFlagTrueCriteria: {fileID: 11400000, guid: 85bfee5dd2489b54789d867be5778846,

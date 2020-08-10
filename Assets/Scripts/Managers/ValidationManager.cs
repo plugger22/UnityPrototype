@@ -110,6 +110,8 @@ public class ValidationManager : MonoBehaviour
     [Range(2, 4)] public int numOfOptionInfoTopicStory = 4;
     [Tooltip("Number of options for a standard Target topic, Story pool")]
     [Range(2, 4)] public int numOfOptionsTargetTopicStory = 2;
+    [Tooltip("Max length of storyInfo option text, in chars")]
+    [Range(100, 200)] public int maxStoryInfoTextLength = 150;
 
     [Header("Structured Topic Effects")]
     [Tooltip("Effect for story Info")]
@@ -3167,13 +3169,10 @@ public class ValidationManager : MonoBehaviour
                                             if (isStoryData == true)
                                             {
                                                 if (storyData.listOfTopicItems.Exists(x => x.name.Equals(topic.topicItem.name, StringComparison.Ordinal)) == false)
-                                                { Debug.LogFormat("{0} TopicItem \"{1}\" for topic \"{2}\" NOT FOUND in storyData \"{3}\"{4}", 
-                                                    tag, topic.topicItem.name, topic.name, storyData.name, "\n"); }
-
-                                                /*List<TopicItem> listOfTopicItems = storyData.listOfTopicItems;
-                                                if (listOfTopicItems.Exists(x => x.name == topic.topicItem.name) == false)
-                                                { Debug.LogFormat("{0} TopicItem \"{1}\" for topic \"{2}\" NOT FOUND in storyData \"{3}\"{4}", 
-                                                    tag, topic.topicItem.name, topic.name, storyData.name, "\n"); }*/
+                                                {
+                                                    Debug.LogFormat("{0} TopicItem \"{1}\" for topic \"{2}\" NOT FOUND in storyData \"{3}\"{4}",
+                                                      tag, topic.topicItem.name, topic.name, storyData.name, "\n");
+                                                }
                                             }
                                         }
                                         //Criteria -> last topics in sequence need a flag trigger from target success or timeOut
@@ -3218,7 +3217,9 @@ public class ValidationManager : MonoBehaviour
                                             case 0:
                                             case 1:
                                             case 3:
-                                                //Info topic -> should be 4 options, all for storyInfo effects
+                                                //
+                                                // - - - Info topic -> should be 4 options, all for storyInfo effects
+                                                //
                                                 if (topic.listOfOptions.Count != numOfOptionInfoTopicStory)
                                                 {
                                                     Debug.LogFormat("{0} Mismatch on Info topic Options ->  \"{1}\" level {2}, linked {3}, has {4} options (should be {5}){6}",
@@ -3230,6 +3231,23 @@ public class ValidationManager : MonoBehaviour
                                                     TopicOption option = topic.listOfOptions[j];
                                                     if (option != null)
                                                     {
+                                                        //Should NOT have a target
+                                                        if (option.storyTarget != null)
+                                                        {
+                                                            Debug.LogFormat("{0} INVALID target \"{1}\" (should be None) for \"{2}\", topic \"{3}\"{4}",
+                                                              tag, option.storyTarget.name, option.name, topic.name, "\n");
+                                                        }
+                                                        //Should HAVE storyInfo text
+                                                        if (string.IsNullOrEmpty(option.storyInfo) == true)
+                                                        { Debug.LogFormat("{0} MISSING storyInfo (Null or Empty) for \"{1}\", topic \"{2}\"{3}", tag, option.name, topic.name, "\n"); }
+                                                        else
+                                                        {
+                                                            //enforce text length
+                                                            if (option.storyInfo.Length > maxStoryInfoTextLength)
+                                                            { Debug.LogFormat("{0} OVERLENGTH storyInfo (has {1} chars, limit {2}) for \"{3}\", topic \"{4}\"{5}", 
+                                                                tag, option.storyInfo.Length, maxStoryInfoTextLength, option.name, topic.name, "\n"); }
+                                                        }
+                                                        //Effects
                                                         isSuccess = false;
                                                         for (int k = 0; k < option.listOfGoodEffects.Count; k++)
                                                         {
@@ -3239,7 +3257,7 @@ public class ValidationManager : MonoBehaviour
                                                                 if (effect.name.Equals(storyInfoEffect.name, StringComparison.Ordinal) == true)
                                                                 { isSuccess = true; break; }
                                                             }
-                                                            else { Debug.LogFormat("{0} INVALID effect.listOfGoodEffects[{0}] for \"{1}\", topic \"{2}\"{3}", tag, k, option.name, topic.name, "\n"); }
+                                                            else { Debug.LogFormat("{0} INVALID effect.listOfGoodEffects[{1}] for \"{2}\", topic \"{3}\"{4}", tag, k, option.name, topic.name, "\n"); }
                                                         }
                                                         if (isSuccess == false)
                                                         { Debug.LogFormat("{0} Missing INFO Good Effect \"{1}\" for \"{2}\", topic \"{3}\"{4}", tag, storyInfoEffect.name, option.name, topic.name, "\n"); }
@@ -3259,7 +3277,9 @@ public class ValidationManager : MonoBehaviour
                                                 }
                                                 break;
                                             case 2:
-                                                //Target topic -> should be 2 options, both for target effects
+                                                //
+                                                // - - - Target topic -> should be 2 options, both for target effects
+                                                //
                                                 if (topic.listOfOptions.Count != numOfOptionsTargetTopicStory)
                                                 {
                                                     Debug.LogFormat("{0} Mismatch on Target topic Options ->  \"{1}\" level {2}, linked {3}, has {4} options (should be {5}){6}",
@@ -3272,6 +3292,23 @@ public class ValidationManager : MonoBehaviour
                                                     if (option != null)
                                                     {
                                                         isSuccess = false;
+                                                        //must have a valid target
+                                                        if (option.storyTarget != null)
+                                                        {
+                                                            //check target is one from StoryData 
+                                                            if (isStoryData == true)
+                                                            {
+                                                                if (storyData.listOfTargets.Exists(x => x.name.Equals(option.storyTarget.name, StringComparison.Ordinal)) == false)
+                                                                {
+                                                                    Debug.LogFormat("{0} Target \"{1}\" for \"{2}\", topic \"{3}\" NOT FOUND in storyData{4}", tag, option.storyTarget.name,
+                                                                      option.name, topic.name, "\n");
+                                                                }
+                                                            }
+                                                        }
+                                                        //must NOT have storyInfo
+                                                        if (string.IsNullOrEmpty(option.storyInfo) == false)
+                                                        { Debug.LogFormat("{0} INVALID option.StoryInfo (shouldn't be there) for \"{1}\", topic \"{2}\"{3}", tag, option.name, topic.name, "\n"); }
+                                                        //must have a target effect
                                                         for (int k = 0; k < option.listOfGoodEffects.Count; k++)
                                                         {
                                                             Effect effect = option.listOfGoodEffects[k];
@@ -3284,7 +3321,7 @@ public class ValidationManager : MonoBehaviour
                                                         }
                                                         if (isSuccess == false)
                                                         { Debug.LogFormat("{0} Missing TARGET Good Effect \"{1}\" for \"{2}\", topic \"{3}\"{4}", tag, storyTargetEffect.name, option.name, topic.name, "\n"); }
-                                                        //Check specials
+                                                        //Check specials (slightly different to Info topics as isIgnoreStress should be true)
                                                         if (option.isPreferredByHQ == true)
                                                         { Debug.LogFormat("{0} INVALID Special (isPreferredByHQ true, should be FALSE) for \"{1}\", topic \"{2}\"{3}", tag, option.name, topic.name, "\n"); }
                                                         if (option.isDislikedByHQ == true)
