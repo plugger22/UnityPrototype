@@ -355,3 +355,9 @@ ValidationManager.CheckStoryModuleData (System.String prefix) (at Assets/Scripts
 	
 Dev seed 62634 -> Monday, 10 August 2020 4:57 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 27365 -> Monday, 10 August 2020 8:27 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 3219 -> Monday, 10 August 2020 8:29 PM
+City seed 5678 -> London, United Kingdom

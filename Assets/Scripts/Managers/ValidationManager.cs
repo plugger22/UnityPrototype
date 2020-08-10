@@ -2925,8 +2925,24 @@ public class ValidationManager : MonoBehaviour
                                     { Debug.LogFormat("{0} Invalid topicType \"{0}\" (should be Story) for topicPool \"{1}\" in {2}.listOfCampaignStories[{3}]{4}", tag, pool.type.name, pool.name, i, "\n"); }
                                     //check topicSubType is correct
                                     if (pool.subType.name.Equals("StoryAlpha", StringComparison.Ordinal) == false)
+                                    { Debug.LogFormat("{0} Invalid topicSubType \"{1}\" (should be StoryAlpha) for topicPool \"{2}\" in {3}.listOfCampaignStories[{4}]{5}", tag, pool.subType.name, pool.name, storyModule.name, i, "\n"); }
+                                    //check targets have the same targetType as pool.subType
+                                    countTwo = storyData.listOfTargets.Count;
+                                    if (countTwo > 0)
                                     {
-                                        Debug.LogFormat("{0} Invalid topicSubType \"{1}\" (should be StoryAlpha) for topicPool \"{2}\" in {3}.listOfCampaignStories[{4}]{5}", tag, pool.subType.name, pool.name, storyModule.name, i, "\n");
+                                        for (int j = 0; j < countTwo; j++)
+                                        {
+                                            Target target = storyData.listOfTargets[i];
+                                            if (target != null)
+                                            {
+                                                if (target.targetType.name.Equals("StoryAlpha", StringComparison.Ordinal) == false)
+                                                {
+                                                    Debug.LogFormat("{0} Invalid targetType \"{1}\" (should be 'StoryAlpha') for target {2} Module {3}, Data {4}{5}",
+                                                      tag, target.targetType.name, target.name, storyModule.name, storyData.name, "\n");
+                                                }
+                                            }
+                                            else { Debug.LogFormat("{0} Invalid target (Null) for {1}.{2}.listOfTargets[{3}]{4}", tag, storyModule.name, storyData.name, j, "\n"); }
+                                        }
                                     }
                                 }
                                 else { Debug.LogFormat("{0} Invalid topicPool (Null) for {1}.{2}{3}", tag, storyModule.name, storyData.name, "\n"); }
@@ -2948,6 +2964,24 @@ public class ValidationManager : MonoBehaviour
                                     //check topicSubType is correct
                                     if (pool.subType.name.Equals("StoryBravo", StringComparison.Ordinal) == false)
                                     { Debug.LogFormat("{0} Invalid topicSubType \"{1}\" (should be StoryBravo) for topicPool \"{2}\" in {3}.listOfFamilyStories[{4}]{5}", tag, pool.subType.name, pool.name, storyModule.name, i, "\n"); }
+                                    //check targets have the same targetType as pool.subType
+                                    countTwo = storyData.listOfTargets.Count;
+                                    if (countTwo > 0)
+                                    {
+                                        for (int j = 0; j < countTwo; j++)
+                                        {
+                                            Target target = storyData.listOfTargets[i];
+                                            if (target != null)
+                                            {
+                                                if (target.targetType.name.Equals("StoryBravo", StringComparison.Ordinal) == false)
+                                                {
+                                                    Debug.LogFormat("{0} Invalid targetType \"{1}\" (should be 'StoryBravo') for target {2} Module {3}, Data {4}{5}",
+                                                      tag, target.targetType.name, target.name, storyModule.name, storyData.name, "\n");
+                                                }
+                                            }
+                                            else { Debug.LogFormat("{0} Invalid target (Null) for {1}.{2}.listOfTargets[{3}]{4}", tag, storyModule.name, storyData.name, j, "\n"); }
+                                        }
+                                    }
                                 }
                                 else { Debug.LogFormat("{0} Invalid topicPool (Null) for {1}.{2}{3}", tag, storyModule.name, storyData.name, "\n"); }
                             }
