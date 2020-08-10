@@ -7250,6 +7250,22 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
+    #region CheckStoryStar
+    /// <summary>
+    /// returns value of specified story star. 'starNumber' is assumed to be the current scenarioIndex. Returns -1 if a problem
+    /// </summary>
+    /// <param name="storyType"></param>
+    /// <returns></returns>
+    public int CheckStoryStar(StoryType storyType)
+    {
+        int starNumber = GameManager.i.campaignScript.GetScenarioIndex();
+        if (starNumber < 5 && starNumber > -1)
+        { return arrayOfStoryStars[(int)storyType, starNumber]; }
+        else { Debug.LogErrorFormat("Invalid starNumber \"{0}\" (should be 0 to 4)", starNumber); }
+        return -1;
+    }
+    #endregion
+
     #endregion
 
     #region Meta Methods...

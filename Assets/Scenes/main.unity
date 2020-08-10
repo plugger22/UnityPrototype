@@ -40266,16 +40266,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114749875866318282, guid: 9ab2e0a640c5c1d4abd22709733a258b,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114749875866318282, guid: 9ab2e0a640c5c1d4abd22709733a258b,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1977303928689664, guid: 9ab2e0a640c5c1d4abd22709733a258b, type: 2}
       propertyPath: m_Name
       value: scrollItemLight_1
@@ -73661,16 +73651,6 @@ Prefab:
     - target: {fileID: 224752826347663206, guid: e5632702ac51afd41a1ea9d46f5baed8,
         type: 2}
       propertyPath: m_Pivot.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114150102649266240, guid: e5632702ac51afd41a1ea9d46f5baed8,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114150102649266240, guid: e5632702ac51afd41a1ea9d46f5baed8,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1644049504691518, guid: e5632702ac51afd41a1ea9d46f5baed8, type: 2}

@@ -361,3 +361,30 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 3219 -> Monday, 10 August 2020 8:29 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 6812 -> Tuesday, 11 August 2020 9:06 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20263 -> Tuesday, 11 August 2020 9:16 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 65158 -> Tuesday, 11 August 2020 9:19 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 56708 -> Tuesday, 11 August 2020 9:21 AM
+City seed 5678 -> London, United Kingdom
+WARNING ActorID 2 already exists in listOfActors
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	Secret:AddActor(Int32) (at Assets/Scripts/SO Master/Secret.cs:96)
+	ActorManager:ProcessSecrets(Actor, List`1, Int32, Boolean) (at Assets/Scripts/Managers/ActorManager.cs:6866)
+	ActorManager:CheckActiveResistanceActorsHuman() (at Assets/Scripts/Managers/ActorManager.cs:6109)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:494)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:446)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:537)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:326)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:421)
+	

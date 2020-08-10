@@ -1429,6 +1429,14 @@ public class EffectManager : MonoBehaviour
                                                     if (GameManager.i.topicScript.CheckStoryFlag(data.storyType) > 0)
                                                     { BuildString(result, "Story Flag False"); }
                                                     break;
+                                                case "StoryStarTrue":
+                                                    if (GameManager.i.topicScript.CheckStoryStar(data.storyType) < 1)
+                                                    { BuildString(result, "Story Star False"); }
+                                                    break;
+                                                case "StoryStarFalse":
+                                                    if (GameManager.i.topicScript.CheckStoryStar(data.storyType) > 0)
+                                                    { BuildString(result, "Story Star True"); }
+                                                    break;
                                                 default:
                                                     BuildString(result, "Error!");
                                                     Debug.LogWarning(string.Format("Invalid criteria.effectcriteria.name \"{0}\"", criteria.effectCriteria.name));

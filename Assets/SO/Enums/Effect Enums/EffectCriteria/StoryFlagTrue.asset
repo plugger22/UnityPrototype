@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 388824e1cb224e54eba0cf0741eca1fa, type: 3}
   m_Name: StoryFlagTrue
   m_EditorClassIdentifier: 
-  descriptor: Story Flag 0 true
+  descriptor: Story Flag true

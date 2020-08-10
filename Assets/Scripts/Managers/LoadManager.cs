@@ -175,7 +175,7 @@ public class LoadManager : MonoBehaviour
     public Mission[] arrayOfMissions;
     public Scenario[] arrayOfScenarios;
     public Campaign[] arrayOfCampaigns;
-    
+
 
 
     //Consolidated arrays
@@ -942,7 +942,7 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfStoryModules has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No StoryModules present"); }
-  
+
     }
     #endregion
 
@@ -1262,7 +1262,9 @@ public class LoadManager : MonoBehaviour
             Debug.AssertFormat(numArray == numDict, "Mismatch in Sprites count, array {0}, dict {1}", numArray, numDict);
         }
         else { Debug.LogError("Invalid dictOfSprites (Null)"); }
-        //
+
+        #region archived code
+        /*//
         // - - - Story Data - - - (do AFTER dictOfSprites)
         //
         //place all Topic items in StoryData objects in dictOfTopicItems
@@ -1321,7 +1323,56 @@ public class LoadManager : MonoBehaviour
             }
             else { Debug.LogError("Invalid dictOfSprites (Null) -> Import failed"); }
         }
-        else { Debug.LogError("Invalid dictOfTopicItems (Null) -> Import failed"); }
+        else { Debug.LogError("Invalid dictOfTopicItems (Null) -> Import failed"); }*/
+        #endregion
+
+        //
+        // - - - Story Data - - - (do AFTER dictOfSprites)
+        //
+        if (dictOfSprites != null)
+        {
+            int spriteCounter = 0;
+            counter = 0;
+            numArray = arrayOfStoryData.Length;
+            if (numArray > 0)
+            {
+                for (int i = 0; i < numArray; i++)
+                {
+                    StoryData storyData = arrayOfStoryData[i];
+                    if (storyData != null)
+                    {
+                        if (storyData.listOfTopicItems != null)
+                        {
+                            int count = storyData.listOfTopicItems.Count;
+                            if (count > 0)
+                            {
+                                //different number of topicItems than StoryData in array
+                                counter += count;
+                                for (int j = 0; j < count; j++)
+                                {
+
+                                    TopicItem topicItem = storyData.listOfTopicItems[j];
+                                    if (topicItem != null)
+                                    {
+                                        //Add sprite to dictOfSprites -> NOTE: topicItem.name is used, NOT sprite.name for Key
+                                        try
+                                        { dictOfSprites.Add(topicItem.name, topicItem.sprite); spriteCounter++; }
+                                        catch (ArgumentException)
+                                        { Debug.LogErrorFormat("Invalid TopicItem.sprite.name (duplicate) \"{0}\"", topicItem.sprite.name); }
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid topicItem (Null) for {0}.listOfTopicItems[{1}]", storyData.name, j); }
+                                }
+                            }
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid storyData (Null) for arrayOfStoryData[{0}]"); }
+                }
+            }
+            Debug.LogFormat("[Loa] InitialiseStart -> dictOfSprites has {0} extra entries from TopicItems (total now {1}){2}", spriteCounter, dictOfSprites.Count, "\n");
+        }
+        else { Debug.LogError("Invalid dictOfSprites (Null) -> Import failed"); }
+
+
         //
         // - - - MetaOptions - - -
         //

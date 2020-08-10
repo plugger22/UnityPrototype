@@ -1829,8 +1829,8 @@ public class ItemDataManager : MonoBehaviour
         {
             //crisis commences
             builder.AppendFormat("{0}<b>Crisis BEGINS</b>{1}{2}{3}", colourSideGood, colourEnd, "\n", "\n");
-            builder.AppendFormat("{0}{1}{2}{3}{4}", colourNeutral, node.crisis.description, colourEnd, "\n", "\n");
-            builder.AppendFormat("Crisis Explodes in {0}<b>{1} turn{2}</b>{3}{4}", colourNeutral, node.crisisTimer, node.crisisTimer != 1 ? "s" : "", colourEnd, "\n");
+            builder.AppendFormat("{0}<b>{1}</b>{2}{3}{4}", colourNeutral, node.crisis.description, colourEnd, "\n", "\n");
+            builder.AppendFormat("Crisis <b>Explodes</b> in {0}<b>{1} turn{2}</b>{3}{4}", colourNeutral, node.crisisTimer, node.crisisTimer != 1 ? "s" : "", colourEnd, "\n");
             builder.AppendFormat("{0}<b>City Loyalty -{1} if explodes</b>{2}", colourSideGood, GameManager.i.nodeScript.crisisCityLoyalty, colourEnd);
         }
         else
