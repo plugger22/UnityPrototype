@@ -388,3 +388,67 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:421)
 	
+Dev seed 14339 -> Tuesday, 11 August 2020 10:04 AM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid RelationshipData (Null) for Jaxon Porter, HEAVY, ID 0, slotID -1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EffectManager:ExecuteActorMotivation(Effect, Actor, EffectDataInput, TopicEffectData) (at Assets/Scripts/Managers/EffectManager.cs:5287)
+	EffectManager:ResolveTopicActorEffect(Effect, EffectDataInput, TopicEffectData, Actor) (at Assets/Scripts/Managers/EffectManager.cs:4377)
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:4224)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1951)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3599)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:656)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:271)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 48078 -> Tuesday, 11 August 2020 10:10 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 42790 -> Tuesday, 11 August 2020 10:12 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 1501 -> Tuesday, 11 August 2020 10:43 AM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ValidationManager.CheckStructuredTopicData (System.String prefix, System.Int32 highestScenario) (at Assets/Scripts/Managers/ValidationManager.cs:3314)
+	ValidationManager.ExecuteIntegrityCheck () (at Assets/Scripts/Managers/ValidationManager.cs:2008)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:270)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:393)
+	
+Dev seed 32347 -> Tuesday, 11 August 2020 10:46 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 30688 -> Tuesday, 11 August 2020 10:48 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 58591 -> Tuesday, 11 August 2020 10:51 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 9721 -> Tuesday, 11 August 2020 10:53 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 26744 -> Tuesday, 11 August 2020 10:54 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 16468 -> Tuesday, 11 August 2020 10:58 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 62884 -> Tuesday, 11 August 2020 10:59 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 745 -> Tuesday, 11 August 2020 10:59 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 19374 -> Tuesday, 11 August 2020 11:00 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 57988 -> Tuesday, 11 August 2020 11:03 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 56257 -> Tuesday, 11 August 2020 11:04 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 541 -> Tuesday, 11 August 2020 11:05 AM
+City seed 5678 -> London, United Kingdom

@@ -128,6 +128,10 @@ public class ValidationManager : MonoBehaviour
     public Criteria storyFlagTrueCriteria;
     [Tooltip("Criteria for Story Flag false")]
     public Criteria storyFlagFalseCriteria;
+    [Tooltip("Criteria for Story Star true")]
+    public Criteria storyStarTrueCriteria;
+    [Tooltip("Criteria for Story Star false")]
+    public Criteria storyStarFalseCriteria;
     [Tooltip("TargetTrigger for story targets ('Live')")]
     public TargetTrigger storyTargetTrigger;
 
@@ -192,6 +196,8 @@ public class ValidationManager : MonoBehaviour
         Debug.Assert(storyStarEffect != null, "Invalid storyTargetEffect (Null)");
         Debug.Assert(storyFlagTrueCriteria != null, "Invalid storyFlagTrueCriteria (Null)");
         Debug.Assert(storyFlagFalseCriteria != null, "Invalid storyFlagFalseCriteria (Null)");
+        Debug.Assert(storyStarTrueCriteria != null, "Invalid storyStarTrueCriteria (Null)");
+        Debug.Assert(storyStarFalseCriteria != null, "Invalid storyStarFalseCriteria (Null)");
         Debug.Assert(storyTargetTrigger != null, "Invalid storyTargetTrigger (Null)");
     }
     #endregion
@@ -3001,8 +3007,10 @@ public class ValidationManager : MonoBehaviour
                                     { Debug.LogFormat("{0} Invalid topicType \"{0}\" (should be Story) for topicPool \"{1}\" in {2}.listOfHqStories[{3}]{4}", tag, pool.type.name, pool.name, i, "\n"); }
                                     //check topicSubType is correct
                                     if (pool.subType.name.Equals("StoryCharlie", StringComparison.Ordinal) == false)
-                                    { Debug.LogFormat("{0} Invalid topicSubType \"{1}\" (should be StoryCharlie) for topicPool \"{2}\" in {3}.listOfHqStories[{4}]{5}", 
-                                        tag, pool.subType.name, pool.name, storyModule.name, i, "\n"); }
+                                    {
+                                        Debug.LogFormat("{0} Invalid topicSubType \"{1}\" (should be StoryCharlie) for topicPool \"{2}\" in {3}.listOfHqStories[{4}]{5}",
+                                          tag, pool.subType.name, pool.name, storyModule.name, i, "\n");
+                                    }
                                     //check targets have the same targetType as pool.subType
                                     countTwo = storyData.listOfTargets.Count;
                                     if (countTwo > 0)
@@ -3013,8 +3021,10 @@ public class ValidationManager : MonoBehaviour
                                             if (target != null)
                                             {
                                                 if (target.targetType.name.Equals("StoryCharlie", StringComparison.Ordinal) == false)
-                                                { Debug.LogFormat("{0} Invalid targetType \"{1}\" (should be 'StoryCharlie') for target {2} Module {3}, Data {4}{5}", 
-                                                    tag, target.targetType.name, target.name, storyModule.name, storyData.name, "\n"); }
+                                                {
+                                                    Debug.LogFormat("{0} Invalid targetType \"{1}\" (should be 'StoryCharlie') for target {2} Module {3}, Data {4}{5}",
+                                                      tag, target.targetType.name, target.name, storyModule.name, storyData.name, "\n");
+                                                }
                                             }
                                             else { Debug.LogFormat("{0} Invalid target (Null) for {1}.{2}.listOfTargets[{3}]{4}", tag, storyModule.name, storyData.name, j, "\n"); }
                                         }
@@ -3202,8 +3212,8 @@ public class ValidationManager : MonoBehaviour
     /// </summary>
     private void CheckStructuredTopicData(string prefix, int highestScenario)
     {
-        int total;
-        bool isSuccess;
+        int total, countTrue, countFalse;
+        bool isSuccessOne, isSuccessTwo;
         bool isStoryData = false;
         string tag = string.Format("{0}{1}", prefix, "CheckStructuredTopicData: ");
         TopicPool[] arrayOfTopicPools = GameManager.i.loadScript.arrayOfTopicPools;
@@ -3235,6 +3245,7 @@ public class ValidationManager : MonoBehaviour
                                 //
                                 // - - - loop Topics
                                 //
+                                countTrue = countFalse = 0;
                                 for (int index = 0; index < pool.listOfTopics.Count; index++)
                                 {
                                     Topic topic = pool.listOfTopics[index];
@@ -3281,7 +3292,9 @@ public class ValidationManager : MonoBehaviour
                                                 }
                                             }
                                         }
-                                        //Criteria -> last topics in sequence need a flag trigger from target success or timeOut
+                                        //
+                                        // - - - Criteria -> last topics in sequence need a flag trigger from target success or timeOut
+                                        //
                                         switch (topic.linkedIndex)
                                         {
                                             case 0:
@@ -3292,16 +3305,23 @@ public class ValidationManager : MonoBehaviour
                                                 { Debug.LogFormat("{0} Invalid CRITERIA (are {1}, should be None), for topic \"{2}\"{3}", tag, topic.listOfCriteria.Count, topic.name, "\n"); }
                                                 break;
                                             case 3:
-                                                //Require a storyFlagTrue criteria
-                                                isSuccess = false;
+                                                //Require a storyFlagTrue and storyStarTrue/False criteria
+                                                isSuccessOne = false;
+                                                isSuccessTwo = false;
+                                                //loop criteria
                                                 for (int g = 0; g < topic.listOfCriteria.Count; g++)
                                                 {
                                                     Criteria criteria = topic.listOfCriteria[g];
                                                     if (criteria != null)
                                                     {
                                                         if (criteria.name.Equals(storyFlagTrueCriteria.name, StringComparison.Ordinal) == true)
-                                                        { isSuccess = true; }
-                                                        //check that the flase storyFlagFalse criteria hasn't been used by mistake
+                                                        { isSuccessOne = true; }
+                                                        //check that a storyStar criteria is in use and count them
+                                                        if (criteria.name.Equals(storyStarTrueCriteria.name, StringComparison.Ordinal) == true)
+                                                        { isSuccessTwo = true; countTrue++; }
+                                                        else if (criteria.name.Equals(storyStarFalseCriteria.name, StringComparison.Ordinal) == true)
+                                                        { isSuccessTwo = true; countFalse++; }
+                                                        //check that the storyFlagFalse criteria hasn't been used by mistake
                                                         if (criteria.name.Equals(storyFlagFalseCriteria.name, StringComparison.Ordinal) == true)
                                                         {
                                                             Debug.LogFormat("{0} Invalid CRITERIA (\"{1}\"), for topic \"{2}\", listOfCriteria[{3}]{4}",
@@ -3311,8 +3331,10 @@ public class ValidationManager : MonoBehaviour
                                                     else
                                                     { Debug.LogFormat("{0} Invalid CRITERIA (Null), for topic \"{1}\", listOfCriteria[{2}]{3}", tag, topic.name, g, "\n"); }
                                                 }
-                                                if (isSuccess == false)
+                                                if (isSuccessOne == false)
                                                 { Debug.LogFormat("{0} Missing CRITERIA \"{1}\", for topic \"{2}\"{3}", tag, storyFlagTrueCriteria.name, topic.name, "\n"); }
+                                                if (isSuccessTwo == false)
+                                                { Debug.LogFormat("{0} Missing CRITERIA (StoryStarTrue/False), for topic \"{1}\"{2}", tag, topic.name, "\n"); }
                                                 break;
                                         }
                                         //
@@ -3356,18 +3378,18 @@ public class ValidationManager : MonoBehaviour
                                                             }
                                                         }
                                                         //Effects
-                                                        isSuccess = false;
+                                                        isSuccessOne = false;
                                                         for (int k = 0; k < option.listOfGoodEffects.Count; k++)
                                                         {
                                                             Effect effect = option.listOfGoodEffects[k];
                                                             if (effect != null)
                                                             {
                                                                 if (effect.name.Equals(storyInfoEffect.name, StringComparison.Ordinal) == true)
-                                                                { isSuccess = true; break; }
+                                                                { isSuccessOne = true; break; }
                                                             }
                                                             else { Debug.LogFormat("{0} INVALID effect.listOfGoodEffects[{1}] for \"{2}\", topic \"{3}\"{4}", tag, k, option.name, topic.name, "\n"); }
                                                         }
-                                                        if (isSuccess == false)
+                                                        if (isSuccessOne == false)
                                                         { Debug.LogFormat("{0} Missing INFO Good Effect \"{1}\" for \"{2}\", topic \"{3}\"{4}", tag, storyInfoEffect.name, option.name, topic.name, "\n"); }
                                                         //Check specials
                                                         if (option.isPreferredByHQ == true)
@@ -3399,7 +3421,7 @@ public class ValidationManager : MonoBehaviour
                                                     TopicOption option = topic.listOfOptions[j];
                                                     if (option != null)
                                                     {
-                                                        isSuccess = false;
+                                                        isSuccessOne = false;
                                                         //must have a valid target
                                                         if (option.storyTarget != null)
                                                         {
@@ -3423,11 +3445,11 @@ public class ValidationManager : MonoBehaviour
                                                             if (effect != null)
                                                             {
                                                                 if (effect.name.Equals(storyTargetEffect.name, StringComparison.Ordinal) == true)
-                                                                { isSuccess = true; break; }
+                                                                { isSuccessOne = true; break; }
                                                             }
                                                             else { Debug.LogFormat("{0} INVALID effect.listOfGoodEffects[{0}] for \"{1}\", topic \"{2}\"{3}", tag, k, option.name, topic.name, "\n"); }
                                                         }
-                                                        if (isSuccess == false)
+                                                        if (isSuccessOne == false)
                                                         { Debug.LogFormat("{0} Missing TARGET Good Effect \"{1}\" for \"{2}\", topic \"{3}\"{4}", tag, storyTargetEffect.name, option.name, topic.name, "\n"); }
                                                         //Check specials (slightly different to Info topics as isIgnoreStress should be true)
                                                         if (option.isPreferredByHQ == true)
@@ -3448,6 +3470,12 @@ public class ValidationManager : MonoBehaviour
                                         }
                                     }
                                     else { Debug.LogWarningFormat("Invalid topic (Null) in {0}.listOfTopics[{1}]", topic.name, index); }
+                                }
+                                //check StoryStarCriteria true/false counts for linkedIndex 3 topics (topics 6/7/8/9)
+                                if (countTrue != 2 || countFalse != 2)
+                                {
+                                    Debug.LogFormat("{0} Mismatch on Topics 6/7/8/9 CheckStar criteria. Current criteria True {1}, False {2} (should be 2 of each) for pool {3}{4}",
+                                      tag, countTrue, countFalse, pool.name, "\n");
                                 }
                                 //
                                 // - - - Topic Checks (Indexes)

@@ -7206,7 +7206,7 @@ public class TopicManager : MonoBehaviour
         if (flagNumber < 5 && flagNumber > -1)
         {
             arrayOfStoryFlags[(int)storyType, flagNumber] = value;
-            Debug.LogFormat("[Sto] TopicManager.cs -> SetStoryFlag: story Flag [{0}, {1}] now {2}{3}", storyType, flagNumber, value, "\n");
+            Debug.LogFormat("[Sto] TopicManager.cs -> SetStoryFlag: story FLAG [{0}, {1}] now {2}{3}", storyType, flagNumber, value, "\n");
             return true;
         }
         else { Debug.LogErrorFormat("Invalid flagNumber \"{0}\" (should be 0 to 4)", flagNumber); }
@@ -7242,7 +7242,7 @@ public class TopicManager : MonoBehaviour
         if (starNumber < 5 && starNumber > -1)
         {
             arrayOfStoryStars[(int)storyType, starNumber] = value;
-            Debug.LogFormat("[Sto] TopicManager.cs -> SetStoryStar: story Star [{0}, {1}] now {2}{3}", storyType, starNumber, value, "\n");
+            Debug.LogFormat("[Sto] TopicManager.cs -> SetStoryStar: story STAR [{0}, {1}] now {2}{3}", storyType, starNumber, value, "\n");
             return true;
         }
         else { Debug.LogErrorFormat("Invalid starNumber \"{0}\" (should be 0 to 4)", starNumber); }

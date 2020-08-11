@@ -5599,4 +5599,8 @@ MonoBehaviour:
     type: 2}
   storyFlagFalseCriteria: {fileID: 11400000, guid: a61fe0568152b8944af9414180dc8f96,
     type: 2}
+  storyStarTrueCriteria: {fileID: 11400000, guid: 1df575b60de58dc46b6f4b17f0a3a0ab,
+    type: 2}
+  storyStarFalseCriteria: {fileID: 11400000, guid: 7901b3f80822a35469f9969d81c04ab7,
+    type: 2}
   storyTargetTrigger: {fileID: 11400000, guid: 2281c5546c92be642a0ed77de3ea91b6, type: 2}
