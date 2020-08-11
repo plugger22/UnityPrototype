@@ -937,6 +937,12 @@ public class ValidationManager : MonoBehaviour
                             topicName = topic.name;
                             //check topic text chars limit
                             textLength = topic.text.Length;
+                            //knock one off the length if there is a freeform asterisk
+                            if (topic.text.Contains("*") == true)
+                            { textLength--; }
+                            //knock two off the length if there is a '[' (assumed to be an open and close square brackets)
+                            if (topic.text.Contains("[") == true)
+                            { textLength -= 2; }
                             if (textLength > maxTopicTextLength)
                             {
                                 Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Text is overlength (is {0} chars, should be <= {1}) for topic \"{2}\"{3}",
@@ -971,9 +977,12 @@ public class ValidationManager : MonoBehaviour
                                         //
                                         // - - - Checks for completed TopicOptions (text field has data) -> DEBUG (shouldn't be any of these on completion)
                                         //
-                                        //check text tags
+                                        //check text tags -> option.text
                                         if (string.IsNullOrEmpty(option.text) == false)
                                         { GameManager.i.topicScript.CheckTopicText(option.text, false, true, option.name); }
+                                        //check text tags -> option.storyInfo
+                                        if (string.IsNullOrEmpty(option.storyInfo) == false)
+                                        { GameManager.i.topicScript.CheckTopicText(option.storyInfo, false, true, option.name); }
                                         //text
                                         if (option.text != null && option.text.Length > 0)
                                         {

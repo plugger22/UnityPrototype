@@ -657,6 +657,12 @@ public class FileManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfCompletedInvestigations (Null)"); }
         #endregion
 
+        #region MegaCorpRelations
+        write.dataData.listOfMegaCorpRelations = GameManager.i.dataScript.GetArrayOfMegaCorpRelations().ToList();
+        if (write.dataData.listOfMegaCorpRelations == null)
+        { Debug.LogError("Invalid listOfMegaCorpRelations (Null)"); }
+        #endregion
+
         #region awards
         //Commendations
         List<AwardData> listOfCommendations = GameManager.i.dataScript.GetListOfCommendations();
@@ -2450,6 +2456,10 @@ public class FileManager : MonoBehaviour
 
         #region investigations
         GameManager.i.dataScript.SetListOfCompletedInvestigations(read.dataData.listOfInvestigations);
+        #endregion
+
+        #region megaCorpRelations
+        GameManager.i.dataScript.SetMegaCorpRelations(read.dataData.listOfMegaCorpRelations);
         #endregion
 
         #region awards

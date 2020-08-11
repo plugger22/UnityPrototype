@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrugs6
   m_EditorClassIdentifier: 
   tag: Stopped the Jamming
-  text: We'll, you've done it! The Jamming has ceased and [Americon HQ] are well pleased.
-    Can I say what a pleasure it is to work with a fellow [professional]
+  text: We'll, you've done it! The Jamming has ceased and [*Americon HQ] are well
+    pleased. Can I say what a pleasure it is to work with a fellow [*professional]
   designNotes: storyDrugs6
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
   subType: {fileID: 11400000, guid: cbe3debfe6a42e74bba2c4c8929ec971, type: 2}

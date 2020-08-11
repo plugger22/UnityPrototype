@@ -4973,7 +4973,10 @@ public class EffectManager : MonoBehaviour
                 //story info dump
                 TopicOption option = GameManager.i.dataScript.GetTopicOption(dataInput.dataName);
                 if (option != null)
-                { effectResolve.bottomText = string.Format("{0}{1}{2}", colourNormal, option.storyInfo, colourEnd); }
+                {
+                    string text = GameManager.i.topicScript.CheckTopicText(option.storyInfo);
+                    effectResolve.bottomText = string.Format("{0}{1}{2}", colourNormal, text, colourEnd);
+                }
                 else { Debug.LogWarningFormat("Invalid topicOption (Null) for \"{0}\"", dataInput.dataName); }
                 break;
             case "StoryTarget":

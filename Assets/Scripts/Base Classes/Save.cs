@@ -118,6 +118,8 @@ public class SaveDataData
     public List<SaveSecret> listOfSecretChanges = new List<SaveSecret>();
     //investigations
     public List<Investigation> listOfInvestigations = new List<Investigation>();
+    //megaCorps
+    public List<int> listOfMegaCorpRelations = new List<int>();
     //awards
     public List<AwardData> listOfCommendations = new List<AwardData>();
     public List<AwardData> listOfBlackmarks = new List<AwardData>();

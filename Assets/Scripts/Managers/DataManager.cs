@@ -52,6 +52,7 @@ public class DataManager : MonoBehaviour
     private string[] arrayOfFactorTags;                                                         //personality factors with quick reference tags (indexes correspond to Actor/Player personality arrays)
     private Actor[] arrayOfActorsHQ;                                                            //array of Actors for player side HQ characters, index -> enum.ActorHQ (index 0 & last few are Null as 'None', etc)
     private bool[] arrayOfOrgInfo;                                                              //index maps to enum.OrgInfoType and if true, OrgInfo is currently providing player info on that type
+    private int[] arrayOfMegaCorpRelations;                                                     //tracks relations (0 to 5 stars) for the five MegaCorps in the game
 
     private Graph graph;
 
@@ -348,6 +349,13 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid arrayOfTextLists (Null)"); }
         //arrayOfOrgType
         arrayOfOrgInfo = new bool[(int)OrgInfoType.Count];
+        //arrayOfMegaCorps
+        arrayOfMegaCorpRelations = new int[(int)MegaCorpType.Count];
+        for (int i = 0; i < arrayOfMegaCorpRelations.Length; i++)
+        {
+            //set all relations to excellent at start of a new game
+            UpdateMegaCorpRelations((MegaCorpType)i, 5);
+        }
     }
     #endregion
 
@@ -9717,10 +9725,94 @@ public class DataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    //
+    // - - - MegaCorp Relations
+    //
 
+    public int[] GetArrayOfMegaCorpRelations()
+    { return arrayOfMegaCorpRelations; }
 
+    /// <summary>
+    /// returns value (0 to 5) of current megaCorp Relations for specified corp. Returns -1 in the unlikely even that an incorrect MegaCorpType is entered,eg. 'Count'
+    /// </summary>
+    /// <param name="megaCorp"></param>
+    /// <returns></returns>
+    public int CheckMegaCorpRelations(MegaCorpType megaCorp)
+    {
+        if (megaCorp != MegaCorpType.Count)
+        { return arrayOfMegaCorpRelations[(int)megaCorp]; }
+        else { Debug.LogWarning("Invalid MegaCorpType ('Count')"); }
+        return -1;
+    }
 
-    //new methods above here
-}
+    /// <summary>
+    /// Update relations by an amount (positive or negative). Auto clamps the changed value within 0 to 5 range
+    /// </summary>
+    /// <param name="megaCorp"></param>
+    /// <param name="amountToChange"></param>
+    public void UpdateMegaCorpRelations(MegaCorpType megaCorp, int amountToChange)
+    {
+        if (megaCorp != MegaCorpType.Count)
+        {
+            int current = arrayOfMegaCorpRelations[(int)megaCorp];
+            int updated = current + amountToChange;
+            updated = Mathf.Clamp(updated, 0, 5);
+            arrayOfMegaCorpRelations[(int)megaCorp] = updated;
+            Debug.LogFormat("[Meg] DataManager.cs -> UpdateMegaCorpRelations: {0} rel was {1}, now {2} (changed {3}{4}){5}", 
+                GetMegaCorpName(megaCorp), current, updated, amountToChange > 0 ? "+" : "", amountToChange, "\n");
+        }
+        else { Debug.LogWarning("Invalid MegaCorpType ('Count')"); }
+    }
+
+    /// <summary>
+    /// returns name of MegaCorp, if 'isCorp' true then adds that to the name, eg. 'Eclipse Corp'
+    /// </summary>
+    /// <param name="megaCorp"></param>
+    /// <returns></returns>
+    public string GetMegaCorpName(MegaCorpType megaCorp, bool isCorp = true)
+    {
+        string megaName = "Unknown";
+        if (megaCorp != MegaCorpType.Count)
+        {
+            switch (megaCorp)
+            {
+                case MegaCorpType.MegaCorpOne: megaName = GameManager.i.globalScript.tagMegaCorpOne; break;
+                case MegaCorpType.MegaCorpTwo: megaName = GameManager.i.globalScript.tagMegaCorpTwo; break;
+                case MegaCorpType.MegaCorpThree: megaName = GameManager.i.globalScript.tagMegaCorpThree; break;
+                case MegaCorpType.MegaCorpFour: megaName = GameManager.i.globalScript.tagMegaCorpFour; break;
+                case MegaCorpType.MegaCorpFive: megaName = GameManager.i.globalScript.tagMegaCorpFive; break;
+            }
+            if (isCorp == true)
+            { megaName = string.Format("{0} Corp", megaName); }
+        }
+        else { Debug.LogWarning("Invalid MegaCorpType ('Count')"); }
+        return megaName;
+    }
+
+    /// <summary>
+    /// Restores arrayOfMegaCorpRelations after a save/load
+    /// </summary>
+    /// <param name="saveList"></param>
+    public void SetMegaCorpRelations(List<int> saveList)
+    {
+        if (saveList != null)
+        {
+            int limit = saveList.Count;
+            if (limit != arrayOfMegaCorpRelations.Length)
+            {
+                Debug.LogWarningFormat("Invalid saveList dimension (is {0}, should be {1}), changed automatically (if < than required, arrayOfMegaCorpRel's may be incorect)", 
+                    limit, arrayOfMegaCorpRelations.Length);
+                limit = Mathf.Min(limit, arrayOfMegaCorpRelations.Length);
+            }
+            for (int i = 0; i < limit; i++)
+            {
+                arrayOfMegaCorpRelations[i] = saveList[i];
+            }
+        }
+        else { Debug.LogError("Invalid saveList (Null)"); }
+    }
+
+        //new methods above here
+    }
 
 

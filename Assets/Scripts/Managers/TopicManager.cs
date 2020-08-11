@@ -5626,12 +5626,13 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
-    #region CheckText
+    #region CheckTopicText
     /// <summary>
     /// takes text from any topic source, checks for tags, eg. '[actor]', and replaces with context relevant info, eg. actor arc name. Returns Null if a problem
     /// isColourHighlight TRUE -> Colour and bold highlights certain texts (colourAlert), no colour formatting if false, default True
     /// if highlighting true, any unknown text inside brackets will be automatically highlighted, otherwise error condition for an invalid tag
-    /// isValidation true for validating topic.text/topicOption.news having correct tags, false otherwise(iscolourHighlighting ignored for validation), objectName only required for validation checks
+    /// isValidation true for validating topic.text/topicOption.news having correct tags, false otherwise(iscolourHighlighting ignored for validation)
+    /// objectName only required for validation checks
     /// Highlights -> actor.arc, node.nodeName
     /// </summary>
     /// <param name="text"></param>
@@ -6773,16 +6774,23 @@ public class TopicManager : MonoBehaviour
                         else { CountTextTag("side", dictOfTags); }
                         break;
                     default:
-                        /*if (isValidate == false)
-                        { Debug.LogWarningFormat("Unrecognised tag \"{0}\" in \"{1}\"", tag, text); }
-                        else { Debug.LogFormat("[Val] TopicManager.cs -> CheckTopicText: Unrecognised tag \"{0}\" for topic {1}", tag, objectName); }*/
-
                         //No known tag -> whatever is in the brackets, highlight it (error condition if isColourHighlighting false)
+                        //NOTE: Only works if the first character is an asterisk, eg. '[*highlight me]'
                         if (isValidate == false)
                         {
-                            if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, tag, colourEnd); }
-                            else { Debug.LogWarningFormat("Unrecognised tag \"{0}\" in \"{1}\"", tag, text); }
+                            if (tag.Substring(0, 1).Equals("*") == true)
+                            {
+                                string freeTag = tag.Substring(1, tag.Length);
+                                if (isColourHighlighting == true)
+                                { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, freeTag, colourEnd); }
+                                else { Debug.LogWarningFormat("Unrecognised tag \"{0}\" in \"{1}\"", freeTag, text); }
+                            }
+                        }
+                        else
+                        {
+                            //exclude free tags from validation checks
+                            if (tag.Substring(0, 1).Equals("*") == false)
+                            { Debug.LogFormat("[Val] TopicManager.cs -> CheckTopicText: Unrecognised tag \"{0}\" for topic {1}", tag, objectName); }
                         }
                         break;
                 }

@@ -101,7 +101,12 @@
     public enum Activation { Low, Medium, High }                            //chance of Target becoming 'Live' once 'Active'
     public enum GroupType { VeryBad, Bad, Neutral, Good }                   //Topic group type (NOTE: DO NOT CHANGE -> order specific) 'VeryBad' is another version of 'Bad'. Maps to actor Motivation (0 -> 3)
     public enum CampaignOutcome { Inconclusive, Commendation, Blackmark }   //anytime a campaign outcome occurs, eg. Review topic, fail a level, etc.
+
+    //
+    // - - - Story - - - 
+    //
     public enum StoryType { None, Alpha, Bravo, Charlie, Count }            //Story module type
+    public enum MegaCorpType { MegaCorpOne, MegaCorpTwo, MegaCorpThree, MegaCorpFour, MegaCorpFive, Count }  //correspond to GlobalManager.cs -> tagMegaCorpOne...
 
     //
     // - - - Actors - - -
