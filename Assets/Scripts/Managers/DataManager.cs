@@ -8952,6 +8952,7 @@ public class DataManager : MonoBehaviour
         IEnumerable<string> sorted =
             from tag in dictOfTags
             orderby tag.Value descending
+            where tag.Value > 2
             select string.Format("{0}   {1}", tag.Key, tag.Value);
         List<string> listOfSortedTags = sorted.ToList();
         builder.AppendFormat("- Text Tag Frequency Count in topics and topicOptions{0}", "\n");

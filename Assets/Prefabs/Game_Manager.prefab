@@ -4692,6 +4692,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tagGlobalAIName: GOLIATH
   tagGlobalDrug: Moon Dust
+  tagMegaCorpOne: Crypticon
+  tagMegaCorpTwo: AntBot
+  tagMegaCorpThree: Eclipse
+  tagMegaCorpFour: Dragon
+  tagMegaCorpFive: Orb
   metaBottom: {fileID: 0}
   metaMiddle: {fileID: 0}
   metaTop: {fileID: 0}

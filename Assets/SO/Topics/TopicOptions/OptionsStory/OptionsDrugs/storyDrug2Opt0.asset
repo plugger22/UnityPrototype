@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 2 Opt 0
   tag: Prove it
-  text: Is there any evidence that it's Eclipse?
+  text: Is there any evidence that it's [mega3]?
   topic: {fileID: 11400000, guid: fcfc091247189f0419077f3ddf84e4df, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -28,11 +28,11 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: We've been investigating the incident on the Hub and there's no question
-    that Eclipse Corp were behind it. They are sending us a message
+    that [mega3corp] were behind it. They are sending us a message
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Prove it</color>
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Is there any evidence that it's Eclipse?</color>
   optionNumber: 0

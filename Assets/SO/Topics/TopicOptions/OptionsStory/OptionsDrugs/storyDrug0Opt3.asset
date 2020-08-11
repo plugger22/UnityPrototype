@@ -27,9 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyHeader: 
   storyInfo: Well, I like the look of you. I can see something of myself in your eyes.
-    Eclipse Corp also happen to be jamming us from here.
+    [mega3corp] also happen to be jamming us from here.
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Unsure</color>
   tooltipMain: <color=#98FB98> Information gained</color>

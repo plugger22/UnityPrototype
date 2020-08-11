@@ -25,6 +25,8 @@ MonoBehaviour:
   listOfGoodEffects:
   - {fileID: 11400000, guid: c23ed1da5bca28b4883286a1de807e06, type: 2}
   - {fileID: 11400000, guid: 988b9f50bdaa2f94aaecd82d27bbc078, type: 2}
+  - {fileID: 11400000, guid: d2eec58e229e31740a0ac2bcd09b2d6a, type: 2}
+  - {fileID: 11400000, guid: 233d008d9c43c6449a6f4d851c42b88e, type: 2}
   listOfBadEffects: []
   listOfFailEffects: []
   moodEffect: {fileID: 0}
@@ -32,8 +34,8 @@ MonoBehaviour:
   profileBase: {fileID: 11400000, guid: 3cac112efe0822249b012aabfba261d5, type: 2}
   isSuccessNeeded: 0
   followOnTarget: {fileID: 0}
-  profile: {fileID: 11400000, guid: 2126e2104dc710c43a4656461c55aeb2, type: 2}
-  targetStatus: 4
+  profile: {fileID: 11400000, guid: 3cac112efe0822249b012aabfba261d5, type: 2}
+  targetStatus: 0
   intel: 0
   ongoingID: -1
   isKnownByAI: 0
@@ -42,7 +44,7 @@ MonoBehaviour:
   newIntel: 0
   intelGain: 0
   turnSuccess: -1
-  turnDone: 31
+  turnDone: -1
   numOfAttempts: 0
   turnsWindow: 5
   timerDelay: 0

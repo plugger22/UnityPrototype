@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 4 Opt 1
   tag: Power
-  text: Power down Eclipse's Jamming
+  text: Power down [mega3]'s Jamming
   topic: {fileID: 11400000, guid: b38dba624e4eb6c4eb8f170a86109cb0, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -29,9 +29,9 @@ MonoBehaviour:
   news: 
   storyInfo: 
   storyTarget: {fileID: 11400000, guid: 9bdb2eb8d989fed44a8782c9ef232a6a, type: 2}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Power</color>
+  tooltipMain: <color=#98FB98> Target activated</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Power down Eclipse's Jamming</color>
   optionNumber: 1

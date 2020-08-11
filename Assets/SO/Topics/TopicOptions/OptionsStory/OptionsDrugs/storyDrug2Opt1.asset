@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 2 Opt 1
   tag: Concerned
-  text: Won't Eclipse kick back?
+  text: Won't [mega3] kick back?
   topic: {fileID: 11400000, guid: fcfc091247189f0419077f3ddf84e4df, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -30,9 +30,9 @@ MonoBehaviour:
   storyInfo: Well, they might. They are a powerful, vindictive, MegaCorp who don't
     take kindly to those who oppose them. Probably best not to get caught.
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Concerned</color>
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Won't Eclipse kick back?</color>
   optionNumber: 1

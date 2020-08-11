@@ -1035,7 +1035,11 @@ public class TargetManager : MonoBehaviour
                 {
                     effect = target.listOfGoodEffects[i];
                     if (effect != null)
-                    { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.description, colourEnd)); }
+                    {
+                        //ignore effects with no description
+                        if (string.IsNullOrEmpty(effect.description) == false)
+                        { tempList.Add(string.Format("{0}{1}{2}", colourGood, effect.description, colourEnd)); }
+                    }
                     else { Debug.LogError(string.Format("Invalid Good effect (null) for \"{0}\"{1}", target.targetName, "\n")); }
                 }
             }
