@@ -9805,11 +9805,22 @@ public class DataManager : MonoBehaviour
                 limit = Mathf.Min(limit, arrayOfMegaCorpRelations.Length);
             }
             for (int i = 0; i < limit; i++)
-            {
-                arrayOfMegaCorpRelations[i] = saveList[i];
-            }
+            { arrayOfMegaCorpRelations[i] = saveList[i]; }
         }
         else { Debug.LogError("Invalid saveList (Null)"); }
+    }
+
+    /// <summary>
+    /// debug display of MegaCorp relations -> find in the 'Org and Corp' data tab
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayMegaCorpRelations()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("- MegaCorpRelations{0}", "\n");
+        for (int i = 0; i < arrayOfMegaCorpRelations.Length; i++)
+        { builder.AppendFormat(" {0}{1} -> {2}", "\n", GetMegaCorpName((MegaCorpType)i), arrayOfMegaCorpRelations[i]); }
+        return builder.ToString();
     }
 
         //new methods above here

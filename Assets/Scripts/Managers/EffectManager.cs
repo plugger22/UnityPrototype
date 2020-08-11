@@ -4974,7 +4974,7 @@ public class EffectManager : MonoBehaviour
                 TopicOption option = GameManager.i.dataScript.GetTopicOption(dataInput.dataName);
                 if (option != null)
                 {
-                    string text = GameManager.i.topicScript.CheckTopicText(option.storyInfo);
+                    string text = GameManager.i.topicScript.CheckTopicText(option.storyInfo, false);
                     effectResolve.bottomText = string.Format("{0}{1}{2}", colourNormal, text, colourEnd);
                 }
                 else { Debug.LogWarningFormat("Invalid topicOption (Null) for \"{0}\"", dataInput.dataName); }

@@ -1,499 +1,97 @@
 
-Dev seed 34754 -> Sunday, 9 August 2020 12:21 PM
+Dev seed 5084 -> Tuesday, 11 August 2020 4:44 PM
 City seed 5678 -> London, United Kingdom
-WARNING No valid story topic found for topicType.Story, topicSubType.StoryCharlie
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:GetTopicGroup(List`1, GroupType, String, String) (at Assets/Scripts/Managers/TopicManager.cs:4808)
-	TopicManager:GetStoryCharlieTopics(List`1, GlobalSide, String) (at Assets/Scripts/Managers/TopicManager.cs:3009)
-	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1840)
-	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1263)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:334)
-	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:251)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:393)
-	WARNING Invalid listOfTopics (EMPTY) for topicSubType "StoryCharlie" -> INFO Only
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1898)
-	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1263)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:334)
-	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:251)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:393)
-	WARNING No valid story topic found for topicType.Story, topicSubType.StoryCharlie
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:GetTopicGroup(List`1, GroupType, String, String) (at Assets/Scripts/Managers/TopicManager.cs:4808)
-	TopicManager:GetStoryCharlieTopics(List`1, GlobalSide, String) (at Assets/Scripts/Managers/TopicManager.cs:3009)
-	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1840)
-	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1263)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:334)
-	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:251)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:393)
-	WARNING Invalid listOfTopics (EMPTY) for topicSubType "StoryCharlie" -> INFO Only
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1898)
-	TopicManager:SelectTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1263)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:334)
-	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:251)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:393)
-	WARNING Unrecognised topic.group "Neutral"
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	ValidationManager:CheckStructuredTopicData(String, Int32) (at Assets/Scripts/Managers/ValidationManager.cs:3109)
-	ValidationManager:ExecuteIntegrityCheck() (at Assets/Scripts/Managers/ValidationManager.cs:1972)
-	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:270)
-	GameManager:Start() (at Assets/Scripts/GameManager.cs:393)
+City seed 5678 -> London, United Kingdom
+ASSERT ArgumentOutOfRangeException: Index and length must refer to a location within the string.
+Parameter name: length
+System.String.Substring (System.Int32 startIndex, System.Int32 length) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	TopicManager.CheckTopicText (System.String text, System.Boolean isColourHighlighting, System.Boolean isValidate, System.String objectName) (at Assets/Scripts/Managers/TopicManager.cs:6783)
+	TopicManager.InitialiseTopicUI () (at Assets/Scripts/Managers/TopicManager.cs:3368)
+	TopicManager.ProcessTopic (GlobalSide playerSide) (at Assets/Scripts/Managers/TopicManager.cs:3146)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:344)
+	TurnManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:421)
 	
-Dev seed 34754 -> Sunday, 9 August 2020 12:22 PM
+Dev seed 36169 -> Tuesday, 11 August 2020 4:49 PM
+City seed 5678 -> London, United Kingdom
+ASSERT ArgumentOutOfRangeException: Index and length must refer to a location within the string.
+Parameter name: length
+System.String.Substring (System.Int32 startIndex, System.Int32 length) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	TopicManager.CheckTopicText (System.String text, System.Boolean isColourHighlighting, System.Boolean isValidate, System.String objectName) (at Assets/Scripts/Managers/TopicManager.cs:6783)
+	TopicManager.InitialiseTopicUI () (at Assets/Scripts/Managers/TopicManager.cs:3368)
+	TopicManager.ProcessTopic (GlobalSide playerSide) (at Assets/Scripts/Managers/TopicManager.cs:3146)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:344)
+	TurnManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:421)
+	
+Dev seed 671 -> Tuesday, 11 August 2020 4:51 PM
+City seed 5678 -> London, United Kingdom
+City seed 5678 -> London, United Kingdom
+ASSERT ArgumentOutOfRangeException: Index and length must refer to a location within the string.
+Parameter name: length
+System.String.Substring (System.Int32 startIndex, System.Int32 length) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	TopicManager.CheckTopicText (System.String text, System.Boolean isColourHighlighting, System.Boolean isValidate, System.String objectName) (at Assets/Scripts/Managers/TopicManager.cs:6783)
+	TopicManager.InitialiseTopicUI () (at Assets/Scripts/Managers/TopicManager.cs:3368)
+	TopicManager.ProcessTopic (GlobalSide playerSide) (at Assets/Scripts/Managers/TopicManager.cs:3146)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:344)
+	TurnManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:421)
+	
+Dev seed 21217 -> Tuesday, 11 August 2020 4:55 PM
+City seed 5678 -> London, United Kingdom
 City seed 5678 -> London, United Kingdom
 
-Dev seed 34754 -> Sunday, 9 August 2020 3:53 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 34754 -> Sunday, 9 August 2020 3:53 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 34754 -> Sunday, 9 August 2020 3:54 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 30046 -> Sunday, 9 August 2020 4:20 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 26627 -> Sunday, 9 August 2020 4:21 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 30707 -> Sunday, 9 August 2020 4:23 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 63673 -> Sunday, 9 August 2020 4:26 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 62212 -> Sunday, 9 August 2020 4:28 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 45484 -> Sunday, 9 August 2020 4:46 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 46684 -> Sunday, 9 August 2020 4:47 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 18402 -> Sunday, 9 August 2020 4:48 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 14267 -> Sunday, 9 August 2020 4:49 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 57064 -> Sunday, 9 August 2020 4:53 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 34354 -> Monday, 10 August 2020 9:06 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 63128 -> Monday, 10 August 2020 9:07 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 60766 -> Monday, 10 August 2020 9:08 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 44628 -> Monday, 10 August 2020 9:18 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 53719 -> Monday, 10 August 2020 9:19 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 30983 -> Monday, 10 August 2020 9:38 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 53106 -> Monday, 10 August 2020 9:39 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 61311 -> Monday, 10 August 2020 9:40 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 25363 -> Monday, 10 August 2020 10:21 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 4399 -> Monday, 10 August 2020 10:21 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 36592 -> Monday, 10 August 2020 10:23 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 53005 -> Monday, 10 August 2020 10:28 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 31110 -> Monday, 10 August 2020 10:32 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 52776 -> Monday, 10 August 2020 10:37 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 34333 -> Monday, 10 August 2020 10:37 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 21097 -> Monday, 10 August 2020 10:38 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 40127 -> Monday, 10 August 2020 10:55 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 19001 -> Monday, 10 August 2020 10:56 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 64768 -> Monday, 10 August 2020 11:23 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 33630 -> Monday, 10 August 2020 11:29 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 35005 -> Monday, 10 August 2020 11:32 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 5980 -> Monday, 10 August 2020 11:40 AM
+Dev seed 7264 -> Tuesday, 11 August 2020 4:56 PM
 City seed 5678 -> London, United Kingdom
 ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-ActorTooltipUI.OnPointerEnter (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:50)
-	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerEnterHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:22)
-	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
-	UnityEngine.EventSystems.EventSystem:Update()
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-ActorHighlightUI.OnPointerEnter (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:30)
-	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerEnterHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:22)
-	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
-	UnityEngine.EventSystems.EventSystem:Update()
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-ActorTooltipUI.OnPointerExit (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:82)
-	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerExitHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:29)
-	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
-	UnityEngine.EventSystems.EventSystem:Update()
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-ActorTooltipUI.OnPointerEnter (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:50)
-	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerEnterHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:22)
-	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
-	UnityEngine.EventSystems.EventSystem:Update()
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-ActorTooltipUI.OnPointerExit (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:82)
-	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerExitHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:29)
-	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
-	UnityEngine.EventSystems.EventSystem:Update()
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-ActorHighlightUI.OnPointerExit (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:43)
-	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerExitHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:29)
-	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
-	UnityEngine.EventSystems.EventSystem:Update()
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:341)
-	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnMouseExit () (at Assets/Scripts/Base Classes/Node.cs:326)
-	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-ButtonInteraction.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
-	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
-	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
-	UnityEngine.EventSystems.EventSystem:Update()
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:341)
-	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-Node.OnMouseExit () (at Assets/Scripts/Base Classes/Node.cs:326)
-	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-WidgetTurnMouseUI.OnPointerEnter (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetTurnMouseUI.cs:36)
-	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerEnterHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:22)
-	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
-	UnityEngine.EventSystems.EventSystem:Update()
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-WidgetTurnMouseUI.OnPointerExit (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetTurnMouseUI.cs:58)
-	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerExitHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:29)
-	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
-	UnityEngine.EventSystems.EventSystem:Update()
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-WidgetBarLeftMouseUI.OnPointerEnter (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:36)
-	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerEnterHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:22)
-	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
-	UnityEngine.EventSystems.EventSystem:Update()
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-WidgetBarLeftMouseUI.OnPointerExit (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:58)
-	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerExitHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:29)
-	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
-	UnityEngine.EventSystems.EventSystem:Update()
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:601)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-ActionManager.OnDisable () (at Assets/Scripts/Managers/ActionManager.cs:258)
-	ASSERT NullReferenceException: Object reference not set to an instance of an object
-NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:443)
+DataManager.GetActorRecruitPool (System.Int32 level, GlobalSide side) (at Assets/Scripts/Managers/DataManager.cs:4744)
+	ValidationManager.CheckActorData (System.String prefix, System.Int32 highestActorID, System.Int32 highestHQID, System.Int32 highestNodeID, System.Int32 highestSlotID) (at Assets/Scripts/Managers/ValidationManager.cs:2287)
+	ValidationManager.ExecuteIntegrityCheck () (at Assets/Scripts/Managers/ValidationManager.cs:2005)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:270)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:393)
 	
-Dev seed 22101 -> Monday, 10 August 2020 11:53 AM
+Dev seed 63415 -> Tuesday, 11 August 2020 5:00 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 15512 -> Monday, 10 August 2020 12:00 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 47655 -> Monday, 10 August 2020 12:04 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 41769 -> Monday, 10 August 2020 12:08 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 22583 -> Monday, 10 August 2020 12:22 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 57440 -> Monday, 10 August 2020 12:23 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 49982 -> Monday, 10 August 2020 2:41 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 35020 -> Monday, 10 August 2020 2:42 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 50843 -> Monday, 10 August 2020 2:43 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 1436 -> Monday, 10 August 2020 2:46 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 34168 -> Monday, 10 August 2020 2:47 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 9742 -> Monday, 10 August 2020 2:54 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 14036 -> Monday, 10 August 2020 2:54 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 28693 -> Monday, 10 August 2020 2:55 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 41456 -> Monday, 10 August 2020 3:01 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 28687 -> Monday, 10 August 2020 3:03 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 20188 -> Monday, 10 August 2020 3:17 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 5824 -> Monday, 10 August 2020 3:18 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 47721 -> Monday, 10 August 2020 3:24 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 22800 -> Monday, 10 August 2020 4:02 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 25932 -> Monday, 10 August 2020 4:03 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 55610 -> Monday, 10 August 2020 4:05 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 48907 -> Monday, 10 August 2020 4:27 PM
+Dev seed 55671 -> Tuesday, 11 August 2020 5:00 PM
 City seed 5678 -> London, United Kingdom
 ASSERT NullReferenceException: Object reference not set to an instance of an object
-ValidationManager.CheckTargetData (System.String prefix, System.Int32 highestNodeID, System.Int32 highestContactID, System.Int32 highestTurn) (at Assets/Scripts/Managers/ValidationManager.cs:2422)
-	ValidationManager.ExecuteIntegrityCheck () (at Assets/Scripts/Managers/ValidationManager.cs:1991)
+DataManager.GetActorRecruitPool (System.Int32 level, GlobalSide side) (at Assets/Scripts/Managers/DataManager.cs:4744)
+	ValidationManager.CheckActorData (System.String prefix, System.Int32 highestActorID, System.Int32 highestHQID, System.Int32 highestNodeID, System.Int32 highestSlotID) (at Assets/Scripts/Managers/ValidationManager.cs:2287)
+	ValidationManager.ExecuteIntegrityCheck () (at Assets/Scripts/Managers/ValidationManager.cs:2005)
 	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:270)
 	GameManager.Start () (at Assets/Scripts/GameManager.cs:393)
 	
-Dev seed 42086 -> Monday, 10 August 2020 4:30 PM
+Dev seed 37130 -> Tuesday, 11 August 2020 5:02 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 35555 -> Monday, 10 August 2020 4:32 PM
+Dev seed 10219 -> Tuesday, 11 August 2020 5:02 PM
 City seed 5678 -> London, United Kingdom
-
-Dev seed 41580 -> Monday, 10 August 2020 4:33 PM
 City seed 5678 -> London, United Kingdom
-
-Dev seed 64107 -> Monday, 10 August 2020 4:34 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 51810 -> Monday, 10 August 2020 4:46 PM
-City seed 5678 -> London, United Kingdom
-ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
-ValidationManager.CheckStoryModuleData (System.String prefix) (at Assets/Scripts/Managers/ValidationManager.cs:2910)
-	ValidationManager.ExecuteIntegrityCheck () (at Assets/Scripts/Managers/ValidationManager.cs:2000)
-	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:270)
-	GameManager.Start () (at Assets/Scripts/GameManager.cs:393)
+ASSERT ArgumentOutOfRangeException: Index and length must refer to a location within the string.
+Parameter name: length
+System.String.Substring (System.Int32 startIndex, System.Int32 length) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	TopicManager.CheckTopicText (System.String text, System.Boolean isColourHighlighting, System.Boolean isValidate, System.String objectName) (at Assets/Scripts/Managers/TopicManager.cs:6783)
+	TopicManager.InitialiseTopicUI () (at Assets/Scripts/Managers/TopicManager.cs:3368)
+	TopicManager.ProcessTopic (GlobalSide playerSide) (at Assets/Scripts/Managers/TopicManager.cs:3146)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:344)
+	TurnManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:421)
 	
-Dev seed 23971 -> Monday, 10 August 2020 4:48 PM
-City seed 5678 -> London, United Kingdom
-ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
-ValidationManager.CheckStoryModuleData (System.String prefix) (at Assets/Scripts/Managers/ValidationManager.cs:2910)
-	ValidationManager.ExecuteIntegrityCheck () (at Assets/Scripts/Managers/ValidationManager.cs:2000)
-	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:270)
-	GameManager.Start () (at Assets/Scripts/GameManager.cs:393)
-	
-Dev seed 62634 -> Monday, 10 August 2020 4:57 PM
+Dev seed 43973 -> Tuesday, 11 August 2020 5:05 PM
 City seed 5678 -> London, United Kingdom
 
-Dev seed 27365 -> Monday, 10 August 2020 8:27 PM
+Dev seed 36376 -> Tuesday, 11 August 2020 5:07 PM
+City seed 5678 -> London, United Kingdom
 City seed 5678 -> London, United Kingdom
 
-Dev seed 3219 -> Monday, 10 August 2020 8:29 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 6812 -> Tuesday, 11 August 2020 9:06 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 20263 -> Tuesday, 11 August 2020 9:16 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 65158 -> Tuesday, 11 August 2020 9:19 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 56708 -> Tuesday, 11 August 2020 9:21 AM
-City seed 5678 -> London, United Kingdom
-WARNING ActorID 2 already exists in listOfActors
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	Secret:AddActor(Int32) (at Assets/Scripts/SO Master/Secret.cs:96)
-	ActorManager:ProcessSecrets(Actor, List`1, Int32, Boolean) (at Assets/Scripts/Managers/ActorManager.cs:6866)
-	ActorManager:CheckActiveResistanceActorsHuman() (at Assets/Scripts/Managers/ActorManager.cs:6109)
-	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:494)
-	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:446)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
-	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:537)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:326)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
-	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
-	GameManager:Update() (at Assets/Scripts/GameManager.cs:421)
-	
-Dev seed 14339 -> Tuesday, 11 August 2020 10:04 AM
-City seed 5678 -> London, United Kingdom
-WARNING Invalid RelationshipData (Null) for Jaxon Porter, HEAVY, ID 0, slotID -1
-UnityEngine.Debug:LogWarningFormat(String, Object[])
-	EffectManager:ExecuteActorMotivation(Effect, Actor, EffectDataInput, TopicEffectData) (at Assets/Scripts/Managers/EffectManager.cs:5287)
-	EffectManager:ResolveTopicActorEffect(Effect, EffectDataInput, TopicEffectData, Actor) (at Assets/Scripts/Managers/EffectManager.cs:4377)
-	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:4224)
-	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1951)
-	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3599)
-	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:656)
-	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:271)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
-	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
-	UnityEngine.EventSystems.EventSystem:Update()
-	
-Dev seed 48078 -> Tuesday, 11 August 2020 10:10 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 42790 -> Tuesday, 11 August 2020 10:12 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 1501 -> Tuesday, 11 August 2020 10:43 AM
-City seed 5678 -> London, United Kingdom
-ASSERT NullReferenceException: Object reference not set to an instance of an object
-ValidationManager.CheckStructuredTopicData (System.String prefix, System.Int32 highestScenario) (at Assets/Scripts/Managers/ValidationManager.cs:3314)
-	ValidationManager.ExecuteIntegrityCheck () (at Assets/Scripts/Managers/ValidationManager.cs:2008)
-	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:270)
-	GameManager.Start () (at Assets/Scripts/GameManager.cs:393)
-	
-Dev seed 32347 -> Tuesday, 11 August 2020 10:46 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 30688 -> Tuesday, 11 August 2020 10:48 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 58591 -> Tuesday, 11 August 2020 10:51 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 9721 -> Tuesday, 11 August 2020 10:53 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 26744 -> Tuesday, 11 August 2020 10:54 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 16468 -> Tuesday, 11 August 2020 10:58 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 62884 -> Tuesday, 11 August 2020 10:59 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 745 -> Tuesday, 11 August 2020 10:59 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 19374 -> Tuesday, 11 August 2020 11:00 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 57988 -> Tuesday, 11 August 2020 11:03 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 56257 -> Tuesday, 11 August 2020 11:04 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 541 -> Tuesday, 11 August 2020 11:05 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 56355 -> Tuesday, 11 August 2020 11:25 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 26380 -> Tuesday, 11 August 2020 11:34 AM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 59775 -> Tuesday, 11 August 2020 12:23 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 43021 -> Tuesday, 11 August 2020 12:30 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 3450 -> Tuesday, 11 August 2020 2:40 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 53946 -> Tuesday, 11 August 2020 2:41 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 39083 -> Tuesday, 11 August 2020 2:43 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 15564 -> Tuesday, 11 August 2020 2:56 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 16944 -> Tuesday, 11 August 2020 2:57 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 45966 -> Tuesday, 11 August 2020 3:00 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 10219 -> Tuesday, 11 August 2020 3:01 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 13357 -> Tuesday, 11 August 2020 3:03 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 21767 -> Tuesday, 11 August 2020 3:10 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 55230 -> Tuesday, 11 August 2020 3:20 PM
-City seed 5678 -> London, United Kingdom
-
-Dev seed 5972 -> Tuesday, 11 August 2020 4:05 PM
+Dev seed 46669 -> Tuesday, 11 August 2020 5:18 PM
 City seed 5678 -> London, United Kingdom

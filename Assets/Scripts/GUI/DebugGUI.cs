@@ -57,6 +57,7 @@ public class DebugGUI : MonoBehaviour
     private int topicToggle = 0;
     private int secretToggle = 0;
     private int storyToggle = 0;
+    private int orgToggle = 0;
     private int hqToggle = 0;
     private int analyseToggle = 0;
     private int statisticsToggle = 0;
@@ -470,12 +471,15 @@ public class DebugGUI : MonoBehaviour
 
 
             //twentySeventh button
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 25 + button_height * 25, button_width, button_height), "Organisation Data"))
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * 25 + button_height * 25, button_width, button_height), "Org & Corp Data"))
             {
-                Debug.Log("[Dbg] Button -> Organisation Data");
-                if (debugDisplay != 78)
-                { debugDisplay = 78; }
-                else { debugDisplay = 0; }
+                Debug.Log("[Dbg] Button -> Organisation and MegaCorp Data");
+                switch (orgToggle)
+                {
+                    case 0: debugDisplay = 78; orgToggle = 1; break;
+                    case 1: debugDisplay = 111; orgToggle = 2; break;
+                    case 2: debugDisplay = 0; orgToggle = 0; break;
+                }
             }
 
             //twentyEigth button
@@ -1980,6 +1984,12 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.topicScript.DebugDisplayStoryTopics();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 800), analysis, customBackground);
+                        break;
+                    //MegaCorp Relations Data
+                    case 111:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.i.dataScript.DebugDisplayMegaCorpRelations();
+                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
                         break;
                 }
             }

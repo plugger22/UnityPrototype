@@ -6780,7 +6780,7 @@ public class TopicManager : MonoBehaviour
                         {
                             if (tag.Substring(0, 1).Equals("*") == true)
                             {
-                                string freeTag = tag.Substring(1, tag.Length);
+                                string freeTag = tag.Substring(1, tag.Length - 1);
                                 if (isColourHighlighting == true)
                                 { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, freeTag, colourEnd); }
                                 else { Debug.LogWarningFormat("Unrecognised tag \"{0}\" in \"{1}\"", freeTag, text); }

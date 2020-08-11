@@ -1757,6 +1757,9 @@ public class ValidationManager : MonoBehaviour
 
 
 #if (UNITY_EDITOR)
+    //
+    // - - - SO Checks
+    //
 
     #region ValidateSO
     /// <summary>
@@ -1973,6 +1976,8 @@ public class ValidationManager : MonoBehaviour
     /// </summary>
     public void ExecuteIntegrityCheck()
     {
+        //do in case you are only doing Integrity checks in which case they won't be initiailised
+        SubInitialiseFastAccess();
         string prefix = "[Val] ValidationManager.cs -> ";
         //range limits
         int highestActorID = GameManager.i.actorScript.actorIDCounter;
