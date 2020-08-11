@@ -9819,7 +9819,7 @@ public class DataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- MegaCorpRelations{0}", "\n");
         for (int i = 0; i < arrayOfMegaCorpRelations.Length; i++)
-        { builder.AppendFormat(" {0}{1} -> {2}", "\n", GetMegaCorpName((MegaCorpType)i), arrayOfMegaCorpRelations[i]); }
+        { builder.AppendFormat(" {0}{1} -> {2} star{3}", "\n", GetMegaCorpName((MegaCorpType)i), arrayOfMegaCorpRelations[i], arrayOfMegaCorpRelations[i] != 1 ? "s" : ""); }
         return builder.ToString();
     }
 
