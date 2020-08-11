@@ -4305,6 +4305,10 @@ public class EffectManager : MonoBehaviour
                         //Player
                         effectResolve = ResolveTopicPlayerEffect(effect, dataInput, data);
                         break;
+                    case 'M':
+                        //MegaCorp's
+                        effectResolve = ResolveTopicMegaCorpEffect(effect, dataInput, data);
+                        break;
                     case 'N':
                         //Node
                         effectResolve = ResolveTopicNodeEffect(effect, dataInput, data);
@@ -5000,6 +5004,77 @@ public class EffectManager : MonoBehaviour
         return effectResolve;
     }
 
+    /// <summary>
+    /// private submethod for ResolveTopicData that handles all MegaCorp matters. Returns an EffectDataResolve data package in all cases (default data if a problem)
+    /// Add or Subtract based on operand, amount based on effect.value
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="dataInput"></param>
+    /// <param name="dataTopic"></param>
+    /// <returns></returns>
+    private EffectDataResolve ResolveTopicMegaCorpEffect(Effect effect, EffectDataInput dataInput, TopicEffectData dataTopic)
+    {
+        //data package to return to the calling methods
+        EffectDataResolve effectResolve = new EffectDataResolve();
+        //default data
+        effectResolve.topText = "Unknown effect";
+        effectResolve.bottomText = "Unknown effect";
+        effectResolve.isError = false;
+        switch (effect.operand.name)
+        {
+            case "Add":
+                switch (effect.outcome.name)
+                {
+                    case "MegaCorpOne":
+                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpOne, effect.value);
+                        effectResolve.bottomText = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpOne);
+                        break;
+                    case "MegaCorpTwo":
+                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpTwo, effect.value);
+                        effectResolve.bottomText = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpTwo);
+                        break;
+                    case "MegaCorpThree":
+                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpThree, effect.value);
+                        effectResolve.bottomText = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpThree);
+                        break;
+                    case "MegaCorpFour":
+                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpFour, effect.value);
+                        effectResolve.bottomText = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpFour);
+                        break;
+                    case "MegaCorpFive":
+                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpFive, effect.value);
+                        effectResolve.bottomText = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpFive);
+                        break;
+                }
+                break;
+            case "Subtract":
+                switch (effect.outcome.name)
+                {
+                    case "MegaCorpOne":
+                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpOne, effect.value * -1);
+                        effectResolve.bottomText = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpOne);
+                        break;
+                    case "MegaCorpTwo":
+                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpTwo, effect.value * -1);
+                        effectResolve.bottomText = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpTwo);
+                        break;
+                    case "MegaCorpThree":
+                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpThree, effect.value * -1);
+                        effectResolve.bottomText = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpThree);
+                        break;
+                    case "MegaCorpFour":
+                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpFour, effect.value * -1);
+                        effectResolve.bottomText = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpFour);
+                        break;
+                    case "MegaCorpFive":
+                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpFive, effect.value * -1);
+                        effectResolve.bottomText = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpFive);
+                        break;
+                }
+                break;
+        }
+        return effectResolve;
+    }
 
     /// <summary>
     /// private subMethod for ResolveTopicData that handles all topic City effects. Returns an EffectDataResolve data package in all cases (default data if a problem)
