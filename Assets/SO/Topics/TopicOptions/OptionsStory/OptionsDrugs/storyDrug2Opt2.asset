@@ -27,9 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyHeader: 
-  storyInfo: Not directly, no, but all those workers on the Hub have families back
-    here on Earth and if we don't look out for them who will?
+  storyInfo: Not directly, no, but all those workers on [hub] have families back here
+    on Earth and if we don't look out for them who will?
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

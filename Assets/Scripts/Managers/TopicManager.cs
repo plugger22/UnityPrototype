@@ -6712,7 +6712,7 @@ public class TopicManager : MonoBehaviour
                         }
                         else { CountTextTag("mega5", dictOfTags); }
                         break;
-                    case "mega1corp":
+                    case "mega1Corp":
                         //MegaCorporation One plus 'Corp'
                         if (isValidate == false)
                         {
@@ -6721,9 +6721,9 @@ public class TopicManager : MonoBehaviour
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, megaName, colourEnd); }
                             else { replaceText = megaName; }
                         }
-                        else { CountTextTag("mega1corp", dictOfTags); }
+                        else { CountTextTag("mega1Corp", dictOfTags); }
                         break;
-                    case "mega2corp":
+                    case "mega2Corp":
                         //MegaCorporation Two plus 'Corp'
                         if (isValidate == false)
                         {
@@ -6732,9 +6732,9 @@ public class TopicManager : MonoBehaviour
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, megaName, colourEnd); }
                             else { replaceText = megaName; }
                         }
-                        else { CountTextTag("mega2corp", dictOfTags); }
+                        else { CountTextTag("mega2Corp", dictOfTags); }
                         break;
-                    case "mega3corp":
+                    case "mega3Corp":
                         //MegaCorporation Three plus 'Corp'
                         if (isValidate == false)
                         {
@@ -6743,9 +6743,9 @@ public class TopicManager : MonoBehaviour
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, megaName, colourEnd); }
                             else { replaceText = megaName; }
                         }
-                        else { CountTextTag("mega3corp", dictOfTags); }
+                        else { CountTextTag("mega3Corp", dictOfTags); }
                         break;
-                    case "mega4corp":
+                    case "mega4Corp":
                         //MegaCorporation Four plus 'Corp'
                         if (isValidate == false)
                         {
@@ -6754,9 +6754,9 @@ public class TopicManager : MonoBehaviour
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, megaName, colourEnd); }
                             else { replaceText = megaName; }
                         }
-                        else { CountTextTag("mega4corp", dictOfTags); }
+                        else { CountTextTag("mega4Corp", dictOfTags); }
                         break;
-                    case "mega5corp":
+                    case "mega5Corp":
                         //MegaCorporation Five plus 'Corp'
                         if (isValidate == false)
                         {
@@ -6765,7 +6765,50 @@ public class TopicManager : MonoBehaviour
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, megaName, colourEnd); }
                             else { replaceText = megaName; }
                         }
-                        else { CountTextTag("mega5corp", dictOfTags); }
+                        else { CountTextTag("mega5Corp", dictOfTags); }
+                        break;
+                    case "facR1":
+                        //Resistance Americon faction 'Americon HQ'
+                        if (isValidate == false)
+                        {
+                            string factionName = string.Format("{0} HQ", GameManager.i.globalScript.tagResFactionOne);
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, factionName, colourEnd); }
+                            else { replaceText = factionName; }
+                        }
+                        else { CountTextTag("facR1Hq", dictOfTags); }
+                        break;
+                    case "facR2":
+                        //Resistance Eurasia faction 'Eurasia HQ'
+                        if (isValidate == false)
+                        {
+                            string factionName = string.Format("{0} HQ", GameManager.i.globalScript.tagResFactionOne);
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, factionName, colourEnd); }
+                            else { replaceText = factionName; }
+                        }
+                        else { CountTextTag("facR2Hq", dictOfTags); }
+                        break;
+                    case "facR3":
+                        //Resistance Chinock faction 'Chinock HQ'
+                        if (isValidate == false)
+                        {
+                            string factionName = string.Format("{0} HQ", GameManager.i.globalScript.tagResFactionOne);
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, factionName, colourEnd); }
+                            else { replaceText = factionName; }
+                        }
+                        else { CountTextTag("facR3Hq", dictOfTags); }
+                        break;
+                    case "hub":
+                        //Luna space station 'The Hub'
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>The Hub</b>{1}", colourCheckText, colourEnd); }
+                            else { replaceText = "The Hub"; }
+                        }
+                        else { CountTextTag("hub", dictOfTags); }
                         break;
                     case "side":
                         //Player side

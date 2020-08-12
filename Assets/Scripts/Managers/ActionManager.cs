@@ -2425,6 +2425,8 @@ public class ActionManager : MonoBehaviour
                     details = GameManager.i.captureScript.CheckCaptured(nodeID, actorID);
                     if (GameManager.i.playerScript.Invisibility == 0)
                     { isZeroInvisibility = true; }
+                    //history
+                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("Attempts Target ({0})", target.descriptorResistance) });
                 }
                 //Actor
                 else

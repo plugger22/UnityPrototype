@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: storyDrugs8
   m_EditorClassIdentifier: 
   tag: Stopped the Jamming
-  text: You did what was expected of you. [mega3corp] have ceased their jamming. I
+  text: You did what was expected of you. [mega3Corp] have ceased their jamming. I
     hope that you aren't expecting to get credit for what I mostly organised?
   designNotes: storyDrugs8
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
@@ -44,12 +44,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 0
+  status: 4
   isCurrent: 0
   timerStart: 0
   timerRepeat: 0
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 0
+  turnsActive: 11
   turnsLive: 0
   turnsDone: 0

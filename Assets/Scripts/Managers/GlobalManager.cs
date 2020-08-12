@@ -23,6 +23,14 @@ public class GlobalManager : MonoBehaviour
     public string tagMegaCorpFour = "Dragon";
     [Tooltip("Name of MegaCorp Five (first name only, eg. 'Eclipse' as you can add 'Corporation' yourself when needed")]
     public string tagMegaCorpFive = "Orb";
+    [Tooltip("Name of American Resistance Faction")]
+    public string tagResFactionOne = "Americon";
+    [Tooltip("Name of European Resistance Faction")]
+    public string tagResFactionTwo = "Eurasia";
+    [Tooltip("Name of Chinese Resistance Faction")]
+    public string tagResFactionThree = "Chinock";
+    [Tooltip("Name of Luna space station and main shipbuilding facility in system")]
+    public string tagSpaceHub = "The Hub";
 
     //used for quick reference -> Meta Levels where metaBottom is the lowest level and metaTop is the highest
     [HideInInspector] public GlobalMeta metaBottom;

@@ -5020,30 +5020,32 @@ public class EffectManager : MonoBehaviour
         effectResolve.topText = "Unknown effect";
         effectResolve.bottomText = "Unknown effect";
         effectResolve.isError = false;
+        //reason
+        string reason = dataInput.originText;
         switch (effect.operand.name)
         {
             case "Add":
                 switch (effect.outcome.name)
                 {
                     case "MegaCorpOne":
-                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpOne, effect.value);
-                        effectResolve.bottomText = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpOne);
+                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpOne, effect.value, reason);
+                        effectResolve.bottomText = string.Format("{0}{1} {2}{3}", colourGood, GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpOne), effect.description, colourEnd);
                         break;
                     case "MegaCorpTwo":
-                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpTwo, effect.value);
-                        effectResolve.bottomText = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpTwo);
+                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpTwo, effect.value, reason);
+                        effectResolve.bottomText = string.Format("{0}{1} {2}{3}", colourGood, GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpTwo), effect.description, colourEnd);
                         break;
                     case "MegaCorpThree":
-                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpThree, effect.value);
-                        effectResolve.bottomText = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpThree);
+                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpThree, effect.value, reason);
+                        effectResolve.bottomText = string.Format("{0}{1} {2}{3}", colourGood, GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpThree), effect.description, colourEnd);
                         break;
                     case "MegaCorpFour":
-                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpFour, effect.value);
-                        effectResolve.bottomText = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpFour);
+                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpFour, effect.value, reason);
+                        effectResolve.bottomText = string.Format("{0}{1} {2}{3}", colourGood, GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpFour), effect.description, colourEnd);
                         break;
                     case "MegaCorpFive":
-                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpFive, effect.value);
-                        effectResolve.bottomText = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpFive);
+                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpFive, effect.value, reason);
+                        effectResolve.bottomText = string.Format("{0}{1} {2}{3}", colourGood, GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpFive), effect.description, colourEnd);
                         break;
                 }
                 break;
@@ -5051,24 +5053,24 @@ public class EffectManager : MonoBehaviour
                 switch (effect.outcome.name)
                 {
                     case "MegaCorpOne":
-                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpOne, effect.value * -1);
-                        effectResolve.bottomText = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpOne);
+                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpOne, effect.value * -1, reason);
+                        effectResolve.bottomText = string.Format("{0}{1} {2}{3}", colourBad, GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpOne), effect.description, colourEnd);
                         break;
                     case "MegaCorpTwo":
-                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpTwo, effect.value * -1);
-                        effectResolve.bottomText = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpTwo);
+                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpTwo, effect.value * -1, reason);
+                        effectResolve.bottomText = string.Format("{0}{1} {2}{3}", colourBad, GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpTwo), effect.description, colourEnd);
                         break;
                     case "MegaCorpThree":
-                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpThree, effect.value * -1);
-                        effectResolve.bottomText = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpThree);
+                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpThree, effect.value * -1, reason);
+                        effectResolve.bottomText = string.Format("{0}{1} {2}{3}", colourBad, GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpThree), effect.description, colourEnd);
                         break;
                     case "MegaCorpFour":
-                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpFour, effect.value * -1);
-                        effectResolve.bottomText = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpFour);
+                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpFour, effect.value * -1, reason);
+                        effectResolve.bottomText = string.Format("{0}{1} {2}{3}", colourBad, GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpFour), effect.description, colourEnd);
                         break;
                     case "MegaCorpFive":
-                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpFive, effect.value * -1);
-                        effectResolve.bottomText = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpFive);
+                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpFive, effect.value * -1, reason);
+                        effectResolve.bottomText = string.Format("{0}{1} {2}{3}", colourBad, GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpFive), effect.description, colourEnd);
                         break;
                 }
                 break;

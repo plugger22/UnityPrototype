@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 3 Opt 1
   tag: Worried
-  text: Won't [mega3corp] come after me?
+  text: Won't [mega3Corp] come after me?
   topic: {fileID: 11400000, guid: cbafd1c4ecb287c4eaa29d7adb8c2139, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

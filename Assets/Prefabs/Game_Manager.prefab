@@ -4713,6 +4713,10 @@ MonoBehaviour:
   tagMegaCorpThree: Eclipse
   tagMegaCorpFour: Dragon
   tagMegaCorpFive: Orb
+  tagResFactionOne: Americon
+  tagResFactionTwo: Eurasia
+  tagResFactionThree: Chinock
+  tagSpaceHub: The Hub
   metaBottom: {fileID: 0}
   metaMiddle: {fileID: 0}
   metaTop: {fileID: 0}

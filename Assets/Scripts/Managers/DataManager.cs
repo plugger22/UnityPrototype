@@ -187,6 +187,7 @@ public class DataManager : MonoBehaviour
     private List<HistoryNemesisMove> listOfHistoryNemesisMove = new List<HistoryNemesisMove>();
     private List<HistoryNpcMove> listOfHistoryNpcMove = new List<HistoryNpcMove>();
     private List<HistoryActor> listOfHistoryPlayer = new List<HistoryActor>();
+    private List<HistoryMegaCorp> listOfHistoryMegaCorp = new List<HistoryMegaCorp>();
     private List<string> listOfHistoryAutoRun = new List<string>();
 
     //Topics
@@ -354,7 +355,7 @@ public class DataManager : MonoBehaviour
         for (int i = 0; i < arrayOfMegaCorpRelations.Length; i++)
         {
             //set all relations to excellent at start of a new game
-            UpdateMegaCorpRelations((MegaCorpType)i, 5);
+            UpdateMegaCorpRelations((MegaCorpType)i, 5, "Starting Relationship");
         }
     }
     #endregion
@@ -9746,11 +9747,11 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Update relations by an amount (positive or negative). Auto clamps the changed value within 0 to 5 range
+    /// Update relations by an amount (positive or negative). Auto clamps the changed value within 0 to 5 range. 'reason' should be short and self-contained
     /// </summary>
     /// <param name="megaCorp"></param>
     /// <param name="amountToChange"></param>
-    public void UpdateMegaCorpRelations(MegaCorpType megaCorp, int amountToChange)
+    public void UpdateMegaCorpRelations(MegaCorpType megaCorp, int amountToChange, string reason)
     {
         if (megaCorp != MegaCorpType.Count)
         {
@@ -9758,8 +9759,10 @@ public class DataManager : MonoBehaviour
             int updated = current + amountToChange;
             updated = Mathf.Clamp(updated, 0, 5);
             arrayOfMegaCorpRelations[(int)megaCorp] = updated;
-            Debug.LogFormat("[Meg] DataManager.cs -> UpdateMegaCorpRelations: {0} rel was {1}, now {2} (changed {3}{4}){5}", 
-                GetMegaCorpName(megaCorp), current, updated, amountToChange > 0 ? "+" : "", amountToChange, "\n");
+            Debug.LogFormat("[Meg] DataManager.cs -> UpdateMegaCorpRelations: {0} rel {1}{2} (was {3}, now {4}){5}", 
+                GetMegaCorpName(megaCorp), amountToChange > 0 ? "+" : "", amountToChange, current, updated, "\n");
+            //history
+            AddMegaCorpHistory(amountToChange, updated, reason);
         }
         else { Debug.LogWarning("Invalid MegaCorpType ('Count')"); }
     }
@@ -9811,6 +9814,27 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// automatically done via UpdateMegaCorpRelations
+    /// </summary>
+    /// <param name="changeAmount"></param>
+    /// <param name="relationshipAfterChange"></param>
+    /// <param name="reason"></param>
+    private void AddMegaCorpHistory(int changeAmount, int relationshipAfterChange, string reason)
+    {
+        if (string.IsNullOrEmpty(reason) == false)
+        {
+            HistoryMegaCorp history = new HistoryMegaCorp()
+            {
+                change = changeAmount,
+                relationshipNow = relationshipAfterChange,
+                text = reason
+            };
+            listOfHistoryMegaCorp.Add(history);
+        }
+        else { Debug.LogError("Invalid reason (Null or Empty)"); }
+    }
+
+    /// <summary>
     /// debug display of MegaCorp relations -> find in the 'Org and Corp' data tab
     /// </summary>
     /// <returns></returns>
@@ -9820,6 +9844,19 @@ public class DataManager : MonoBehaviour
         builder.AppendFormat("- MegaCorpRelations{0}", "\n");
         for (int i = 0; i < arrayOfMegaCorpRelations.Length; i++)
         { builder.AppendFormat(" {0}{1} -> {2} star{3}", "\n", GetMegaCorpName((MegaCorpType)i), arrayOfMegaCorpRelations[i], arrayOfMegaCorpRelations[i] != 1 ? "s" : ""); }
+        //history
+        builder.AppendFormat("{0}{1}- History", "\n", "\n");
+        int count = listOfHistoryMegaCorp.Count;
+        if (count > 0)
+        for (int i = 0; i < count; i++)
+        {
+                HistoryMegaCorp history = listOfHistoryMegaCorp[i];
+                if (history != null)
+                { builder.AppendFormat("{0} t{1}, {2}, rel {3}{4}, now {5}, \"{6}\"", 
+                    "\n", history.turn, history.cityTag, history.change > 0 ? "+" : "", history.change, history.relationshipNow, history.text); }
+                else { builder.AppendFormat("{0} ERROR (Null) for listOfHistoryMegaCorp[{1}]", "\n", i); }
+        }
+        else { builder.Append("No records present"); }
         return builder.ToString();
     }
 

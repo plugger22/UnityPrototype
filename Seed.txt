@@ -101,3 +101,21 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 48224 -> Tuesday, 11 August 2020 8:27 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 11547 -> Wednesday, 12 August 2020 9:05 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 169 -> Wednesday, 12 August 2020 9:12 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 64434 -> Wednesday, 12 August 2020 9:20 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 17317 -> Wednesday, 12 August 2020 10:34 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 49038 -> Wednesday, 12 August 2020 11:35 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 8952 -> Wednesday, 12 August 2020 11:36 AM
+City seed 5678 -> London, United Kingdom

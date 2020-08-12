@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 9 Opt 0
   tag: Really?
-  text: That's a bit Harsh, don't you think?
+  text: That's a bit harsh, don't you think?
   topic: {fileID: 11400000, guid: 5cba3627c1acb6c4ea92a9478ac28b20, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -30,9 +30,9 @@ MonoBehaviour:
   storyInfo: I can sandpaper the skin off your face if you want HARSH. You FAILED
     you miserable worm.
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Really?</color>
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>That's a bit Harsh, don't you think?</color>
   optionNumber: 0

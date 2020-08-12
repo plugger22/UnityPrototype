@@ -28,7 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: We've been investigating the incident on the Hub and there's no question
-    that [mega3corp] were behind it. They are sending us a message
+    that [mega3Corp] were behind it. They are sending us a message
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Prove it</color>
   tooltipMain: <color=#98FB98> Information gained</color>

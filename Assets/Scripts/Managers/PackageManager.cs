@@ -601,6 +601,33 @@ namespace packageAPI
     }
 
     /// <summary>
+    /// History of your relationships with MegaCorps
+    /// </summary>
+    [Serializable]
+    public class HistoryMegaCorp
+    {
+        public int change;                      //amount relationship changed by
+        public int relationshipNow;             //relationship level AFTER change
+        public string text;                     //reason why
+        //automatic
+        public int turn;
+        public string city;                     //city name, eg. 'NewYork'
+        public string cityTag;                  //city tag
+
+        public HistoryMegaCorp()
+        {
+            //bypass if load at start
+            if (GameManager.i.inputScript.GameState != GameState.LoadAtStart)
+            {
+                turn = GameManager.i.turnScript.Turn;
+                city = GameManager.i.campaignScript.scenario.city.name;
+                cityTag = GameManager.i.campaignScript.scenario.city.tag;
+            }
+        }
+    }
+
+
+    /// <summary>
     /// History of a level (once completed)
     /// </summary>
     [Serializable]
@@ -1181,7 +1208,7 @@ namespace packageAPI
         // - - - HQ Status
         //
         //NOTE: indexes of all relevant lists refer to the same actor
-        public List <Sprite> listOfHqSprites = new List<Sprite> ();
+        public List<Sprite> listOfHqSprites = new List<Sprite>();
         public List<string> listOfHqRenown = new List<string>();
         public List<string> listOfHqTitles = new List<string>();
         public List<TooltipData> listOfHqTooltips = new List<TooltipData>();

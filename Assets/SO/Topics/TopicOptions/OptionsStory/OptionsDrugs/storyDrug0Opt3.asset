@@ -28,7 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: Well, I like the look of you. I can see something of myself in your eyes.
-    [mega3corp] also happen to be jamming us from here.
+    [mega3Corp] also happen to be jamming us from here.
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Unsure</color>
   tooltipMain: <color=#98FB98> Information gained</color>

@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyDrugs2
   m_EditorClassIdentifier: 
-  tag: Eclipse Corporation
+  tag: Mega Corporation
   text: We think it's [mega3] jamming us. The're angry about us looking into the recent
-    deaths on the [*Hub]. We'll be helpless if we can't get Comms back
+    deaths on [hub]. We'll be helpless if we can't get Comms back
   designNotes: storyDrugs2
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
   subType: {fileID: 11400000, guid: cbe3debfe6a42e74bba2c4c8929ec971, type: 2}
@@ -42,12 +42,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 0
+  status: 4
   isCurrent: 0
   timerStart: 0
   timerRepeat: 0
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 0
-  turnsLive: 0
+  turnsActive: 1
+  turnsLive: 1
   turnsDone: 0
