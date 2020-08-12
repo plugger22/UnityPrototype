@@ -2174,6 +2174,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ea96f1cea39c38842b78e5b9729bec3c, type: 2}
   - {fileID: 11400000, guid: 8228697ce0df2ef488e3cac23fef3557, type: 2}
   - {fileID: 11400000, guid: 47f56aa60531194459cb2f11432aecfc, type: 2}
+  arrayOfStoryHelp:
+  - {fileID: 11400000, guid: d340f3099fcbeda45bfe6137fcb18258, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
@@ -5276,6 +5278,7 @@ MonoBehaviour:
   tooltipPlayerScript: {fileID: 0}
   tooltipGenericScript: {fileID: 0}
   tooltipHelpScript: {fileID: 0}
+  tooltipStoryScript: {fileID: 0}
   actionMenuScript: {fileID: 0}
   mainMenuScript: {fileID: 0}
   outcomeScript: {fileID: 0}

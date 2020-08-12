@@ -262,6 +262,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, RelationshipData> dictOfRelations = new Dictionary<int, RelationshipData>();        //Key -> slotID, Value -> RelationshipData.cs package
     private Dictionary<string, MetaOption> dictOfMetaOptions = new Dictionary<string, MetaOption>();            //Key -> MetaOption name, Value -> MetaOption
     private Dictionary<int, HistoryLevel> dictOfCampaignHistory = new Dictionary<int, HistoryLevel>();          //Key -> HistoryLevel.scenarioIndex, Value -> HistoryLevel
+    private Dictionary<string, StoryHelp> dictOfStoryHelp = new Dictionary<string, StoryHelp>();                //Key -> StoryHelp.name, Value -> StoryHelp
 
     //Development only collections
     private Dictionary<string, int> dictOfBeliefs = new Dictionary<string, int>();                              //Key -> belief name, Value -> belief count (num used in topic options)
@@ -9876,6 +9877,13 @@ public class DataManager : MonoBehaviour
         else { builder.Append("No records present"); }
         return builder.ToString();
     }
+
+    //
+    // - - - Stories
+    //
+
+    public Dictionary<string, StoryHelp> GetDictOfStoryHelp()
+    { return dictOfStoryHelp; }
 
         //new methods above here
     }

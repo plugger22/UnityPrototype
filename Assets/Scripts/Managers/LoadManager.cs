@@ -90,6 +90,7 @@ public class LoadManager : MonoBehaviour
 
     [Header("InitialiseEarly")]
     public StoryData[] arrayOfStoryData;
+    public StoryHelp[] arrayOfStoryHelp;
     public NodeArc[] arrayOfNodeArcs;
     public NodeCrisis[] arrayOfNodeCrisis;
     public Trait[] arrayOfTraits;
@@ -1371,7 +1372,37 @@ public class LoadManager : MonoBehaviour
             Debug.LogFormat("[Loa] InitialiseStart -> dictOfSprites has {0} extra entries from TopicItems (total now {1}){2}", spriteCounter, dictOfSprites.Count, "\n");
         }
         else { Debug.LogError("Invalid dictOfSprites (Null) -> Import failed"); }
-
+        //
+        // - - - StoryHelp - - -
+        //
+        Dictionary<string, StoryHelp> dictOfStoryHelp = GameManager.i.dataScript.GetDictOfStoryHelp();
+        if (dictOfStoryHelp != null)
+        {
+            List<StoryHelp> listOfStoryHelp = arrayOfStoryHelp.ToList();
+            Debug.LogFormat("[Loa] InitialiseEarly: arrayOfStoryHelp has {0} entries{1}", arrayOfStoryHelp.Length, "\n");
+            //loop options
+            counter = 0;
+            numArray = listOfStoryHelp.Count;
+            for (int i = 0; i < numArray; i++)
+            {
+                //add to dictionary
+                StoryHelp storyHelp = listOfStoryHelp[i];
+                if (storyHelp != null)
+                {
+                    try
+                    { dictOfStoryHelp.Add(storyHelp.name, storyHelp); counter++; }
+                    catch (ArgumentException)
+                    { Debug.LogErrorFormat("Duplicate storyHelp name \"{0}\" for listOfStoryHelp[{1}]", storyHelp.name, i); }
+                }
+                else { Debug.LogWarningFormat("Invalid storyHelp (Null) for listOfStoryHelp[{0}]", i); }
+            }
+            numDict = dictOfStoryHelp.Count;
+            Debug.LogFormat("[Loa] InitialiseEarly -> dictOfStoryHelp has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict == counter, "Mismatch on count");
+            Debug.Assert(numDict > 0, "No StoryHelp records have been imported");
+            Debug.AssertFormat(numArray == numDict, "Mismatch in StoryHelp count, array {0}, dict {1}", numArray, numDict);
+        }
+        else { Debug.LogError("Invalid dictOfStoryHelp (Null)"); }
 
         //
         // - - - MetaOptions - - -
