@@ -83,6 +83,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public TooltipPlayer tooltipPlayerScript;         //player tooltip static instance
     [HideInInspector] public TooltipGeneric tooltipGenericScript;       //generic tooltip static instance
     [HideInInspector] public TooltipHelp tooltipHelpScript;             //help tooltip static instance
+    [HideInInspector] public TooltipStory tooltipStoryScript;           //story tooltip static instance
     [HideInInspector] public ModalActionMenu actionMenuScript;          //Modal Action Menu (node)
     [HideInInspector] public ModalMainMenu mainMenuScript;              //Modal Main Menu
     [HideInInspector] public ModalOutcome outcomeScript;                //Modal Outcome window
@@ -243,6 +244,7 @@ public class GameManager : MonoBehaviour
         tooltipPlayerScript = TooltipPlayer.Instance();
         tooltipGenericScript = TooltipGeneric.Instance();
         tooltipHelpScript = TooltipHelp.Instance();
+        tooltipStoryScript = TooltipStory.Instance();
         actionMenuScript = ModalActionMenu.Instance();
         mainMenuScript = ModalMainMenu.Instance();
         outcomeScript = ModalOutcome.Instance();
@@ -326,6 +328,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(tooltipActorScript != null, "Invalid tooltipActorScript (Null)");
         Debug.Assert(tooltipPlayerScript != null, "Invalid tooltipPlayerScript (Null)");
         Debug.Assert(tooltipGenericScript != null, "Invalid tooltipGenericScript (Null)");
+        Debug.Assert(tooltipStoryScript != null, "Invalid tooltipStoryScript (Null)");
         Debug.Assert(actionMenuScript != null, "Invalid actionMenuScript (Null)");
         Debug.Assert(mainMenuScript != null, "Invalid mainMenuScript (Null)");
         Debug.Assert(outcomeScript != null, "Invalid outcomeScript (Null)");
