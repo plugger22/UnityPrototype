@@ -9733,6 +9733,9 @@ public class DataManager : MonoBehaviour
     public int[] GetArrayOfMegaCorpRelations()
     { return arrayOfMegaCorpRelations; }
 
+    public List<HistoryMegaCorp> GetListOfHistoryMegaCorp()
+    { return listOfHistoryMegaCorp; }
+
     /// <summary>
     /// returns value (0 to 5) of current megaCorp Relations for specified corp. Returns -1 in the unlikely even that an incorrect MegaCorpType is entered,eg. 'Count'
     /// </summary>
@@ -9832,6 +9835,20 @@ public class DataManager : MonoBehaviour
             listOfHistoryMegaCorp.Add(history);
         }
         else { Debug.LogError("Invalid reason (Null or Empty)"); }
+    }
+
+    /// <summary>
+    /// Clear list and then copy across loaded save game data
+    /// </summary>
+    /// <param name="listOfHistory"></param>
+    public void SetListOfHistoryMegaCorp(List<HistoryMegaCorp> listOfHistory)
+    {
+        if (listOfHistory != null)
+        {
+            listOfHistoryMegaCorp.Clear();
+            listOfHistoryMegaCorp.AddRange(listOfHistory);
+        }
+        else { Debug.LogError("Invalid listOfHistory (Null)"); }
     }
 
     /// <summary>

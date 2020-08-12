@@ -168,6 +168,7 @@ public class SaveDataData
     public List<HistoryNpcMove> listOfHistoryVip = new List<HistoryNpcMove>();
     public List<HistoryActor> listOfHistoryPlayer = new List<HistoryActor>();
     public List<HistoryLevel> listOfHistoryLevel = new List<HistoryLevel>();
+    public List<HistoryMegaCorp> listOfHistoryMegaCorp = new List<HistoryMegaCorp>();
     //Messages
     public int messageIDCounter;
     public List<int> listOfArchiveMessagesKey = new List<int>();
