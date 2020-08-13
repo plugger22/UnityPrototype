@@ -5312,7 +5312,7 @@ MonoBehaviour:
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1
-  isIntegrityCheck: 0
+  isIntegrityCheck: 1
   isRandomLevel: 0
   isRandomCity: 0
   isEncrypted: 0
@@ -5612,6 +5612,7 @@ MonoBehaviour:
   campaignScope: {fileID: 11400000, guid: ccdcde3a2c12dea4d9cea8d00bb5bc18, type: 2}
   maxTopicTextLength: 150
   maxOptionTextLength: 40
+  maxNumOfTopicStoryHelp: 2
   maxLinkedIndexStory: 3
   numOfTopicsPerLevelStory: 10
   numOfLinkedZeroTopicStory: 2

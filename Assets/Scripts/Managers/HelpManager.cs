@@ -936,7 +936,7 @@ public class HelpManager : MonoBehaviour
         data.header = string.Format("{0}Story Alpha{1}", colourTip, colourEnd);
         data.text = string.Format("\'You’re never going to kill storytelling because it’s built into the human plan. We come with it\' - {0}Margaret Atwood, Author{1}", colourAlert, colourEnd);
         listOfHelp.Add(data);
-        //HQ -> Tracking
+        //Story -> Good and Bad
         data = new HelpData();
         data.tag = "topicSub_27";
         data.header = "Good and Bad";
@@ -957,6 +957,15 @@ public class HelpManager : MonoBehaviour
         data.tag = "topicSub_29";
         data.header = string.Format("{0}Story Charlie{1}", colourTip, colourEnd);
         data.text = string.Format("\'Sometimes reality is too complex. Stories give it form\' - {0}Jean Luc Goodard, Film Director{1}", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+
+        //Story -> story Stars
+        data = new HelpData();
+        data.tag = "topicSub_30";
+        data.header = "Story Stars";
+        data.text = string.Format("Each Story gives you the opportunity to earn a {0}Story Star{1} by completing a Story related {2}target{3} in every {4}City{5} you visit. " +
+            "There is a total of {6}5 Stars{7} that can be earned" +
+            " per story over the duration of the {8}campaign{9}", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 

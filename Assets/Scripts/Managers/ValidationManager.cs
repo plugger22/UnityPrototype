@@ -92,6 +92,8 @@ public class ValidationManager : MonoBehaviour
     [Range(100, 200)] public int maxTopicTextLength = 150;
     [Tooltip("Max length of a topic Option text (excludes tagged data) in chars")]
     [Range(10, 50)] public int maxOptionTextLength = 40;
+    [Tooltip("Max number of StoryHelp.SO's allowed in listOfStoryHelp")]
+    [Range(1,3)] public int maxNumOfTopicStoryHelp = 2;
 
     [Header("Structured Topic Data")]
     [Tooltip("Highest linkedIndex value allowed in a Story topic")]
@@ -955,6 +957,13 @@ public class ValidationManager : MonoBehaviour
                             //check topic disabled
                             if (topic.isDisabled == true)
                             { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" is Disabled{1}", topic.name, "\n"); }
+                            //check topic listOfStoryHelp less than max allowed
+                            if (topic.listOfStoryHelp.Count > maxNumOfTopicStoryHelp)
+                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" has invalid # of storyHelp (has {1}, limit {2}){3}", topic.name, 
+                                topic.listOfStoryHelp.Count, maxNumOfTopicStoryHelp, "\n"); }
+                            //check no duplicates
+                            if (topic.listOfStoryHelp.Count > 1)
+                            { CheckListForDuplicates(topic.listOfStoryHelp.Select(x => x.name).ToList(), "StoryHelp", topic.name, "listOfStoryHelp"); }
                             //listOfOptions
                             if (topic.listOfOptions != null)
                             {
@@ -3069,6 +3078,7 @@ public class ValidationManager : MonoBehaviour
     /// </summary>
     private void CheckStoryHelpData(string prefix)
     {
+        int countOfTexts;
         string tag = string.Format("{0}{1}", prefix, "CheckStoryHelpData: ");
         StoryHelp[] arrayOfStoryHelp = GameManager.i.loadScript.arrayOfStoryHelp;
         if (arrayOfStoryHelp != null)
@@ -3078,6 +3088,7 @@ public class ValidationManager : MonoBehaviour
                 StoryHelp storyHelp = arrayOfStoryHelp[i];
                 if (storyHelp != null)
                 {
+                    countOfTexts = 0;
                     //check text lengths less than specified limit
                     if (storyHelp.textTop.Length > maxStoryHelpTextLength)
                     { Debug.LogFormat("{0} storyHelp \"{1}\", textTop is overlength (is {2}, limit {3}){4}", tag, storyHelp.name, storyHelp.textTop.Length, maxStoryHelpTextLength, "\n"); }
@@ -3085,6 +3096,12 @@ public class ValidationManager : MonoBehaviour
                     { Debug.LogFormat("{0} storyHelp \"{1}\", textMiddle is overlength (is {2}, limit {3}){4}", tag, storyHelp.name, storyHelp.textMiddle.Length, maxStoryHelpTextLength, "\n"); }
                     if (storyHelp.textBottom.Length > maxStoryHelpTextLength)
                     { Debug.LogFormat("{0} storyHelp \"{1}\", textBottom is overlength (is {2}, limit {3}){4}", tag, storyHelp.name, storyHelp.textBottom.Length, maxStoryHelpTextLength, "\n"); }
+                    //must be a minimum of 1 text present
+                    if (storyHelp.textTop.Length > 0) { countOfTexts++; }
+                    if (storyHelp.textMiddle.Length > 0) { countOfTexts++; }
+                    if (storyHelp.textBottom.Length > 0) { countOfTexts++; }
+                    if (countOfTexts < 1)
+                    { Debug.LogFormat("{0} storyHelp \"{1}\", has no valid texts. Must be at least one (top/middle/bottom){2}", tag, storyHelp.name, "\n"); }
                 }
                 else { Debug.LogWarningFormat("Invalid storyHelp (Null) for arrayOfStoryHelp[{0}]", i); }
             }
@@ -3752,6 +3769,7 @@ public class ValidationManager : MonoBehaviour
     #region CheckListForDuplicates
     /// <summary>
     /// generic method that takes any list of IComparables, eg. int, string, but NOT SO's, and checks for duplicates. Debug.LogFormat("[Val]"...) messages generated for dupes.
+    /// NOTE: How to handle SO's -> topic.listOfStoryHelp.Select(x => x.name).ToList()
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="listToCheck"></param>
