@@ -63,6 +63,8 @@ public class TopicUI : MonoBehaviour
     private GenericTooltipUI tooltipBoss;
     //help
     private GenericHelpTooltipUI helpSpecific;
+    private StoryHelpTooltipUI helpStory0;
+    private StoryHelpTooltipUI helpStory1;
     //options
     private TopicOption[] arrayOfOptions;
     private Button[] arrayOfButtons;
@@ -364,6 +366,11 @@ public class TopicUI : MonoBehaviour
             helpSpecific = buttonHelp_specific.GetComponent<GenericHelpTooltipUI>();
             if (helpSpecific == null)
             { Debug.LogWarning("Invalid GenericHelpTooltipUI for helpSpecific (Null)"); }
+            //story Help
+            helpStory0 = buttonStoryHelp0.GetComponent<StoryHelpTooltipUI>();
+            helpStory1 = buttonStoryHelp1.GetComponent<StoryHelpTooltipUI>();
+            if (helpStory0 == null) { Debug.LogWarning("Invalid StoryHelpTooltipUI for helpStory0 (Null)"); }
+            if (helpStory1 == null) { Debug.LogWarning("Invalid StoryHelpTooltipUI for helpStory1 (Null)"); }
         }
         else { Debug.LogWarning("Invalid listOfHelp (Null or Empty)"); }
     }
@@ -420,8 +427,17 @@ public class TopicUI : MonoBehaviour
                 switch (data.listOfStoryHelp.Count)
                 {
                     case 0: buttonStoryHelp0.gameObject.SetActive(false); buttonStoryHelp1.gameObject.SetActive(false); break;
-                    case 1: buttonStoryHelp0.gameObject.SetActive(true); buttonStoryHelp1.gameObject.SetActive(false); break;
-                    case 2: buttonStoryHelp0.gameObject.SetActive(true); buttonStoryHelp1.gameObject.SetActive(true); break;
+                    case 1:
+                        buttonStoryHelp0.gameObject.SetActive(true);
+                        buttonStoryHelp1.gameObject.SetActive(false);
+                        helpStory0.SetHelpTooltip(data.listOfStoryHelp[0]);
+                        break;
+                    case 2:
+                        buttonStoryHelp0.gameObject.SetActive(true);
+                        buttonStoryHelp1.gameObject.SetActive(true);
+                        helpStory0.SetHelpTooltip(data.listOfStoryHelp[0]);
+                        helpStory1.SetHelpTooltip(data.listOfStoryHelp[1]);
+                        break;
                 }
             }
             else { buttonStoryHelp0.gameObject.SetActive(false); buttonStoryHelp1.gameObject.SetActive(false); }
@@ -571,8 +587,9 @@ public class TopicUI : MonoBehaviour
     /// </summary>
     private void CloseTopicUI(int isOutcome)
     {
-        GameManager.i.tooltipGenericScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
-        GameManager.i.tooltipHelpScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
+        GameManager.i.tooltipGenericScript.CloseTooltip("TopicUI.cs -> CloseTopicUI");
+        GameManager.i.tooltipHelpScript.CloseTooltip("TopicUI.cs -> CloseTopicUI");
+        GameManager.i.tooltipStoryScript.CloseTooltip("TopicUI.cs -> CloseTopicUI");
         topicCanvas.gameObject.SetActive(false);
         Debug.LogFormat("[UI] TopicUI.cs -> CloseTopicDisplay{0}", "\n");
         //switch of AlertUI 

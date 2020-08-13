@@ -274,3 +274,37 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 12690 -> Thursday, 13 August 2020 12:06 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 3735 -> Thursday, 13 August 2020 3:04 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid storyHelp (Null)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/StoryHelpTooltipUI.cs:111)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 58251 -> Thursday, 13 August 2020 3:22 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 65243 -> Thursday, 13 August 2020 3:27 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 27956 -> Thursday, 13 August 2020 3:30 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 63533 -> Thursday, 13 August 2020 3:45 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31886 -> Thursday, 13 August 2020 3:49 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 49529 -> Thursday, 13 August 2020 3:54 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 40074 -> Thursday, 13 August 2020 3:55 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31830 -> Thursday, 13 August 2020 3:57 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 49293 -> Thursday, 13 August 2020 4:02 PM
+City seed 5678 -> London, United Kingdom
