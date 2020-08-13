@@ -30,6 +30,8 @@ public class TopicUI : MonoBehaviour
     public Button buttonShowMe;
     public Button buttonHelp_generic;
     public Button buttonHelp_specific;
+    public Button buttonStoryHelp0;
+    public Button buttonStoryHelp1;
 
     [Header("Texts")]
     public TextMeshProUGUI textHeader;
@@ -153,6 +155,8 @@ public class TopicUI : MonoBehaviour
         Debug.Assert(buttonShowMe != null, "Invalid buttonShowMe (Null)");
         Debug.Assert(buttonHelp_generic != null, "Invalid buttonHelp_generic (Null)");
         Debug.Assert(buttonHelp_specific != null, "Invalid buttonHelp_specific (Null)");
+        Debug.Assert(buttonStoryHelp0 != null, "Invalid buttonStoryHelp0 (Null)");
+        Debug.Assert(buttonStoryHelp1 != null, "Invalid buttonStoryHelp1 (Null)");
         Debug.Assert(textHeader != null, "Invalid textHeader (Null)");
         Debug.Assert(textMain != null, "Invalid textMain (Null)");
         Debug.Assert(textOption0 != null, "Invalid textOption0 (Null)");
@@ -410,6 +414,17 @@ public class TopicUI : MonoBehaviour
                 //use default sprite
                 imageTopic.sprite = GameManager.i.guiScript.topicDefaultSprite;
             }
+            //story Help
+            if (data.listOfStoryHelp != null)
+            {
+                switch (data.listOfStoryHelp.Count)
+                {
+                    case 0: buttonStoryHelp0.gameObject.SetActive(false); buttonStoryHelp1.gameObject.SetActive(false); break;
+                    case 1: buttonStoryHelp0.gameObject.SetActive(true); buttonStoryHelp1.gameObject.SetActive(false); break;
+                    case 2: buttonStoryHelp0.gameObject.SetActive(true); buttonStoryHelp1.gameObject.SetActive(true); break;
+                }
+            }
+            else { buttonStoryHelp0.gameObject.SetActive(false); buttonStoryHelp1.gameObject.SetActive(false); }
             //HQ boss
             if (data.isBoss == true)
             {

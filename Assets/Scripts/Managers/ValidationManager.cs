@@ -114,6 +114,8 @@ public class ValidationManager : MonoBehaviour
     [Range(100, 200)] public int maxStoryInfoTextLength = 150;
     [Tooltip("Max length of story Target profile live window")]
     [Range(10, 20)] public int maxStoryTargetWindow = 15;
+    [Tooltip("Max length of story Help text blocks (top/middle/bottom)")]
+    [Range(100, 200)] public int maxStoryHelpTextLength = 200;
 
     [Header("Structured Topic Effects")]
     [Tooltip("Effect for story Info")]
@@ -1916,6 +1918,8 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfMetaOptions);
         //StoryModules
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfStoryModules);
+        //StoryHelp
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfStoryHelp);
     }
     #endregion
 
@@ -2018,6 +2022,7 @@ public class ValidationManager : MonoBehaviour
             CheckContactData(prefix, highestContactID, highestNodeID, highestActorID, highestTurn, playerSide);
             CheckPlayerData(prefix);
             CheckStoryModuleData(prefix);
+            CheckStoryHelpData(prefix);
             CheckTopicPoolData(prefix, highestScenario);
             CheckStructuredTopicData(prefix, highestScenario);
             CheckTraitData(prefix);
@@ -3056,6 +3061,37 @@ public class ValidationManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfStoryModules (Null)"); }
     }
+    #endregion
+
+    #region CheckStoryHelpData
+    /// <summary>
+    /// Integrity check all storyHelp text lengths
+    /// </summary>
+    private void CheckStoryHelpData(string prefix)
+    {
+        string tag = string.Format("{0}{1}", prefix, "CheckStoryHelpData: ");
+        StoryHelp[] arrayOfStoryHelp = GameManager.i.loadScript.arrayOfStoryHelp;
+        if (arrayOfStoryHelp != null)
+        {
+            for (int i = 0; i < arrayOfStoryHelp.Length; i++)
+            {
+                StoryHelp storyHelp = arrayOfStoryHelp[i];
+                if (storyHelp != null)
+                {
+                    //check text lengths less than specified limit
+                    if (storyHelp.textTop.Length > maxStoryHelpTextLength)
+                    { Debug.LogFormat("{0} storyHelp \"{1}\", textTop is overlength (is {2}, limit {3}){4}", tag, storyHelp.name, storyHelp.textTop.Length, maxStoryHelpTextLength, "\n"); }
+                    if (storyHelp.textMiddle.Length > maxStoryHelpTextLength)
+                    { Debug.LogFormat("{0} storyHelp \"{1}\", textMiddle is overlength (is {2}, limit {3}){4}", tag, storyHelp.name, storyHelp.textMiddle.Length, maxStoryHelpTextLength, "\n"); }
+                    if (storyHelp.textBottom.Length > maxStoryHelpTextLength)
+                    { Debug.LogFormat("{0} storyHelp \"{1}\", textBottom is overlength (is {2}, limit {3}){4}", tag, storyHelp.name, storyHelp.textBottom.Length, maxStoryHelpTextLength, "\n"); }
+                }
+                else { Debug.LogWarningFormat("Invalid storyHelp (Null) for arrayOfStoryHelp[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfStoryHelp (Null)"); }
+    }
+
     #endregion
 
     #region CheckTopicPoolData

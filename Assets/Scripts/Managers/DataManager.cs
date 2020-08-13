@@ -9885,6 +9885,23 @@ public class DataManager : MonoBehaviour
     public Dictionary<string, StoryHelp> GetDictOfStoryHelp()
     { return dictOfStoryHelp; }
 
+    /// <summary>
+    /// Returns storyHelp for specified name. Null if not found or a problem.
+    /// </summary>
+    /// <param name="storyHelpName"></param>
+    /// <returns></returns>
+    public StoryHelp GetStoryHelp(string storyHelpName)
+    {
+        StoryHelp storyHelp = null;
+        if (String.IsNullOrEmpty(storyHelpName) == false)
+        {
+            if (dictOfStoryHelp.ContainsKey(storyHelpName) == true)
+            { storyHelp = dictOfStoryHelp[storyHelpName]; }
+        }
+        else { Debug.LogWarning("Invalid storyHelpName (Null or Empty)"); }
+        return storyHelp;
+    }
+
         //new methods above here
     }
 

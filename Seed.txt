@@ -153,3 +153,124 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 50411 -> Thursday, 13 August 2020 9:24 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 46042 -> Thursday, 13 August 2020 10:05 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 5737 -> Thursday, 13 August 2020 10:07 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46409 -> Thursday, 13 August 2020 10:29 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 35300 -> Thursday, 13 August 2020 10:52 AM
+WARNING [Val] ValidateSO: MISMATCH on StoryHelp, array 1, assets 3 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(StoryHelp[]) (at Assets/Scripts/Managers/ValidationManager.cs:1946)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1922)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:829)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:383)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 47731 -> Thursday, 13 August 2020 11:25 AM
+WARNING [Val] ValidateSO: MISMATCH on StoryHelp, array 1, assets 3 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(StoryHelp[]) (at Assets/Scripts/Managers/ValidationManager.cs:1946)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1922)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:829)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:383)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 51520 -> Thursday, 13 August 2020 11:26 AM
+WARNING [Val] ValidateSO: MISMATCH on StoryHelp, array 1, assets 3 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(StoryHelp[]) (at Assets/Scripts/Managers/ValidationManager.cs:1946)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1922)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:829)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:383)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 13395 -> Thursday, 13 August 2020 11:29 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 33330 -> Thursday, 13 August 2020 11:31 AM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:130)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:601)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActionManager.OnDisable () (at Assets/Scripts/Managers/ActionManager.cs:258)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:443)
+	
+Dev seed 7463 -> Thursday, 13 August 2020 11:34 AM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 59110 -> Thursday, 13 August 2020 11:41 AM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 6536 -> Thursday, 13 August 2020 11:59 AM
+City seed 5678 -> London, United Kingdom
+ERROR Invalid HelpData (duplicate) tag "topicSub_24" for listOfHelp["87"]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	LoadManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/LoadManager.cs:2264)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:829)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:882)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:392)
+	ERROR Invalid HelpData (duplicate) tag "topicSub_25" for listOfHelp["88"]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	LoadManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/LoadManager.cs:2264)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:829)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:882)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:392)
+	
+Dev seed 57887 -> Thursday, 13 August 2020 12:02 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 12690 -> Thursday, 13 August 2020 12:06 PM
+City seed 5678 -> London, United Kingdom

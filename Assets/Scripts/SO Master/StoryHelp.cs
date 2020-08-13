@@ -15,11 +15,11 @@ public class StoryHelp : ScriptableObject
     public Sprite sprite;
 
     [Tooltip("Text at top of tooltip text block, has a limit of 200 chars")]
-    [TextArea(3, 5)] public string textTop;
+    [TextArea(3, 4)] public string textTop;
     [Tooltip("Text in middle of tooltip text block, has a limit of 200 chars")]
-    [TextArea(3, 5)] public string textMiddle;
+    [TextArea(3, 4)] public string textMiddle;
     [Tooltip("Text at bottom of tooltip text block, has a limit of 200 chars")]
-    [TextArea(3, 5)] public string textBottom;
+    [TextArea(3, 4)] public string textBottom;
 
 
     public void OnEnable()

@@ -44,9 +44,11 @@ public class Topic : ScriptableObject
     [Tooltip("Specifies the level that the topic applies to. Campaign topics, with the same levelIndex (0 to Max, usually 4), play out in their linked index sequence. Default -1 for any other than Campaign scope")]
     public int levelIndex = -1;
 
-    [Header("Special")]
+    [Header("Story Special")]
     [Tooltip("TopicItem that provides a sprite and sprite tooltip for topic if needed (Story topics). Ignore otherwise")]
     public TopicItem topicItem;
+    [Tooltip("StoryHelp for topic. For each (max 2) there will be a mouseover icon shown under the sprite. Optional")]
+    public List<StoryHelp> listOfStoryHelp;
 
     [Header("Profile")]
     [Tooltip("Profile with timer and repeat data")]

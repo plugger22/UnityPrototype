@@ -2176,6 +2176,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 47f56aa60531194459cb2f11432aecfc, type: 2}
   arrayOfStoryHelp:
   - {fileID: 11400000, guid: d340f3099fcbeda45bfe6137fcb18258, type: 2}
+  - {fileID: 11400000, guid: aca67ebbde6f2b243935b3c8b03051b0, type: 2}
+  - {fileID: 11400000, guid: 52c226f81fd7a0a45800752cf7bd0ea2, type: 2}
+  - {fileID: 11400000, guid: 2edd14c0e12bcb343aa3b8a0703f8f69, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
@@ -5309,7 +5312,7 @@ MonoBehaviour:
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1
-  isIntegrityCheck: 0
+  isIntegrityCheck: 1
   isRandomLevel: 0
   isRandomCity: 0
   isEncrypted: 0
@@ -5619,6 +5622,7 @@ MonoBehaviour:
   numOfOptionsTargetTopicStory: 2
   maxStoryInfoTextLength: 150
   maxStoryTargetWindow: 15
+  maxStoryHelpTextLength: 200
   storyInfoEffect: {fileID: 11400000, guid: 305af0aacc470e14cb866b7f4142ead1, type: 2}
   storyTargetEffect: {fileID: 11400000, guid: e5a3c5de445544146b76c2f015614b8b, type: 2}
   storyFlagEffect: {fileID: 11400000, guid: c23ed1da5bca28b4883286a1de807e06, type: 2}

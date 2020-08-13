@@ -930,6 +930,34 @@ public class HelpManager : MonoBehaviour
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
 
+        //Story Alpha -> Overview
+        data = new HelpData();
+        data.tag = "topicSub_26";
+        data.header = string.Format("{0}Story Alpha{1}", colourTip, colourEnd);
+        data.text = string.Format("\'You’re never going to kill storytelling because it’s built into the human plan. We come with it\' - {0}Margaret Atwood, Author{1}", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //HQ -> Tracking
+        data = new HelpData();
+        data.tag = "topicSub_27";
+        data.header = "Good and Bad";
+        data.text = string.Format("This is one of {0}three{1} stories, drawn from a {2}pool{3}, that thread throughout the {4}campaign{5}. Each story has a good or bad path that is {6}randomly{7}" +
+            " determined at the start", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+
+        //Story Bravo -> Overview
+        data = new HelpData();
+        data.tag = "topicSub_28";
+        data.header = string.Format("{0}Story Bravo{1}", colourTip, colourEnd);
+        data.text = string.Format("\'The future belongs to a different kind of person with a different kind of mind: artists, inventors, storytellers-creative and holistic ‘right-brain’ thinkers\' - " +
+            "{0}Daniel Pink, Author{1}", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+
+        //Story Charlie -> Overview
+        data = new HelpData();
+        data.tag = "topicSub_29";
+        data.header = string.Format("{0}Story Charlie{1}", colourTip, colourEnd);
+        data.text = string.Format("\'Sometimes reality is too complex. Stories give it form\' - {0}Jean Luc Goodard, Film Director{1}", colourAlert, colourEnd);
+        listOfHelp.Add(data);
         #endregion
 
         #endregion

@@ -3266,6 +3266,7 @@ public class TopicManager : MonoBehaviour
                 data.listOfIgnoreEffects = turnTopic.listOfIgnoreEffects;
                 data.colour = GameManager.i.guiScript.colourTopicNormal;
                 data.listOfHelp = GetTopicSubTypeHelp();
+                data.listOfStoryHelp = turnTopic.listOfStoryHelp;
                 //subSubType
                 turnTopicSubSubType = turnTopic.subSubType;
                 //topic must have at least one option
@@ -7342,8 +7343,10 @@ public class TopicManager : MonoBehaviour
             case "OrgCure":
             case "OrgEmergency":
             case "OrgHQ":
-            case "OrgInfo":
-                listOfHelp = new List<string>() { "topicSub_21", "topicSub_22", "topicSub_23" }; break;
+            case "OrgInfo": listOfHelp = new List<string>() { "topicSub_21", "topicSub_22", "topicSub_23" }; break;
+            case "StoryAlpha": listOfHelp = new List<string>() { "topicSub_26", "topicSub_27" }; break;
+            case "StoryBravo": listOfHelp = new List<string>() { "topicSub_28", "topicSub_27" }; break;
+            case "StoryCharlie": listOfHelp = new List<string>() { "topicSub_29", "topicSub_27" }; break;
                 //no default as it only picks up what's needed
         }
         return listOfHelp;
