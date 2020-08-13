@@ -3266,7 +3266,7 @@ public class TopicManager : MonoBehaviour
                 data.listOfIgnoreEffects = turnTopic.listOfIgnoreEffects;
                 data.colour = GameManager.i.guiScript.colourTopicNormal;
                 data.listOfHelp = GetTopicSubTypeHelp();
-                data.listOfStoryHelp = turnTopic.listOfStoryHelp;
+                data.listOfStoryHelp = turnTopic.listOfStoryHelp.GetRange(0, Mathf.Min(2, turnTopic.listOfStoryHelp.Count));            //only takes the first two records, if present
                 //subSubType
                 turnTopicSubSubType = turnTopic.subSubType;
                 //topic must have at least one option
