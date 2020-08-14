@@ -1989,7 +1989,7 @@ public class DebugGUI : MonoBehaviour
                     case 111:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.dataScript.DebugDisplayMegaCorpRelations();
-                        GUI.Box(new Rect(Screen.width - 405, 10, 400, 600), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 600), analysis, customBackground);
                         break;
                 }
             }

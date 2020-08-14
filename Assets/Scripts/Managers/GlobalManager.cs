@@ -16,13 +16,11 @@ public class GlobalManager : MonoBehaviour
     [Tooltip("Name of MegaCorp One (first name only, eg. 'Eclipse' as you can add 'Corporation' yourself when needed")]
     public string tagMegaCorpOne = "Crypticon";
     [Tooltip("Name of MegaCorp Two (first name only, eg. 'Eclipse' as you can add 'Corporation' yourself when needed")]
-    public string tagMegaCorpTwo = "AntBot";
+    public string tagMegaCorpTwo = "Orb";
     [Tooltip("Name of MegaCorp Three (first name only, eg. 'Eclipse' as you can add 'Corporation' yourself when needed")]
     public string tagMegaCorpThree = "Eclipse";
     [Tooltip("Name of MegaCorp Four (first name only, eg. 'Eclipse' as you can add 'Corporation' yourself when needed")]
     public string tagMegaCorpFour = "Dragon";
-    [Tooltip("Name of MegaCorp Five (first name only, eg. 'Eclipse' as you can add 'Corporation' yourself when needed")]
-    public string tagMegaCorpFive = "Orb";
     [Tooltip("Name of American Resistance Faction")]
     public string tagResFactionOne = "Americon";
     [Tooltip("Name of European Resistance Faction")]

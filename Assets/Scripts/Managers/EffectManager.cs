@@ -5043,10 +5043,6 @@ public class EffectManager : MonoBehaviour
                         GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpFour, effect.value, reason);
                         effectResolve.bottomText = string.Format("{0}{1} {2}{3}", colourGood, GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpFour), effect.description, colourEnd);
                         break;
-                    case "MegaCorpFive":
-                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpFive, effect.value, reason);
-                        effectResolve.bottomText = string.Format("{0}{1} {2}{3}", colourGood, GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpFive), effect.description, colourEnd);
-                        break;
                 }
                 break;
             case "Subtract":
@@ -5067,10 +5063,6 @@ public class EffectManager : MonoBehaviour
                     case "MegaCorpFour":
                         GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpFour, effect.value * -1, reason);
                         effectResolve.bottomText = string.Format("{0}{1} {2}{3}", colourBad, GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpFour), effect.description, colourEnd);
-                        break;
-                    case "MegaCorpFive":
-                        GameManager.i.dataScript.UpdateMegaCorpRelations(MegaCorpType.MegaCorpFive, effect.value * -1, reason);
-                        effectResolve.bottomText = string.Format("{0}{1} {2}{3}", colourBad, GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpFive), effect.description, colourEnd);
                         break;
                 }
                 break;

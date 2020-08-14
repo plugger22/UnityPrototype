@@ -6703,16 +6703,6 @@ public class TopicManager : MonoBehaviour
                         }
                         else { CountTextTag("mega4", dictOfTags); }
                         break;
-                    case "mega5":
-                        //MegaCorporation Five -> first name only
-                        if (isValidate == false)
-                        {
-                            if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.globalScript.tagMegaCorpFive, colourEnd); }
-                            else { replaceText = GameManager.i.globalScript.tagMegaCorpFive; }
-                        }
-                        else { CountTextTag("mega5", dictOfTags); }
-                        break;
                     case "mega1Corp":
                         //MegaCorporation One plus 'Corp'
                         if (isValidate == false)
@@ -6756,17 +6746,6 @@ public class TopicManager : MonoBehaviour
                             else { replaceText = megaName; }
                         }
                         else { CountTextTag("mega4Corp", dictOfTags); }
-                        break;
-                    case "mega5Corp":
-                        //MegaCorporation Five plus 'Corp'
-                        if (isValidate == false)
-                        {
-                            string megaName = string.Format("{0} Corp", GameManager.i.globalScript.tagMegaCorpFive);
-                            if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, megaName, colourEnd); }
-                            else { replaceText = megaName; }
-                        }
-                        else { CountTextTag("mega5Corp", dictOfTags); }
                         break;
                     case "facR1":
                         //Resistance Americon faction 'Americon HQ'

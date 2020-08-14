@@ -25,7 +25,7 @@ public class StoryHelp : ScriptableObject
     public void OnEnable()
     {
         Debug.AssertFormat(tag != null, "Invalid tag (Null) for {0}", name);
-        Debug.AssertFormat(sprite != null, "Invalid sprite (Null) for {0}", name);
+        /*Debug.AssertFormat(sprite != null, "Invalid sprite (Null) for {0}", name); -> NOTE: O.K to not have one as GUIManager.cs -> InfoSprite used as a default*/
         Debug.AssertFormat(textTop != null, "Invalid textTop (Null) for {0}", name);
         Debug.AssertFormat(textMiddle != null, "Invalid textMiddle (Null) for {0}", name);
         Debug.AssertFormat(textBottom != null, "Invalid textBottom (Null) for {0}", name);

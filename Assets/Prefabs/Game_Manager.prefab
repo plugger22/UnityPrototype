@@ -1355,11 +1355,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9ffb133a69f0e37469339e1fdae6a2d9, type: 2}
   - {fileID: 11400000, guid: 5cf687534f227aa48bbaf77c12749ab0, type: 2}
   - {fileID: 11400000, guid: 4f410e6b298bd2846ab4ab0890325a2f, type: 2}
-  - {fileID: 11400000, guid: 78b1b52dcef2c224fb2aef279dd1c21f, type: 2}
+  - {fileID: 11400000, guid: 003bd95b5bb6f6a4a89457b94e330a62, type: 2}
   - {fileID: 11400000, guid: 969c3df4578ca73459665e00a7b0c78b, type: 2}
   - {fileID: 11400000, guid: 363c0bf3eec1b9948b3e8a72888a37a0, type: 2}
   - {fileID: 11400000, guid: 47fea7e9563878742be140203e9ea691, type: 2}
-  - {fileID: 11400000, guid: 003bd95b5bb6f6a4a89457b94e330a62, type: 2}
   arrayOfContactTypes:
   - {fileID: 11400000, guid: e83571238ceb3544f8ef9d46cb18cbc3, type: 2}
   - {fileID: 11400000, guid: 88efaf6304c9e364c8719f9c954d687d, type: 2}
@@ -2157,16 +2156,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e5a3c5de445544146b76c2f015614b8b, type: 2}
   - {fileID: 11400000, guid: c23ed1da5bca28b4883286a1de807e06, type: 2}
   - {fileID: 11400000, guid: 988b9f50bdaa2f94aaecd82d27bbc078, type: 2}
-  - {fileID: 11400000, guid: fae2a5db2a4e92e41b98cdfab934736c, type: 2}
+  - {fileID: 11400000, guid: 3a6f95c84cda78948a70134a9a98aba3, type: 2}
   - {fileID: 11400000, guid: fba4850adbfc04b4a8373fc5938d8fca, type: 2}
   - {fileID: 11400000, guid: 21318f5e7840a9b4391a8af8eeaf845c, type: 2}
   - {fileID: 11400000, guid: 1914d02b46252ff4d845f1d7a5916810, type: 2}
   - {fileID: 11400000, guid: 8ee6d7c0cbef04943819ff5740465883, type: 2}
-  - {fileID: 11400000, guid: 995a1bd75cd83ca4d8389178d216b753, type: 2}
+  - {fileID: 11400000, guid: 067f80614fe421042aade118882e35d9, type: 2}
   - {fileID: 11400000, guid: df11ee2fd4904ec47be0f4d580ff287f, type: 2}
   - {fileID: 11400000, guid: 28d0ade46a101b948b60be2263ea7309, type: 2}
-  - {fileID: 11400000, guid: 3a6f95c84cda78948a70134a9a98aba3, type: 2}
-  - {fileID: 11400000, guid: 067f80614fe421042aade118882e35d9, type: 2}
   arrayOfStoryData:
   - {fileID: 11400000, guid: 84c1f765e992bc042ab1175b2b7fd9ad, type: 2}
   - {fileID: 11400000, guid: 598b4a284bd388e45840f26c708a40b7, type: 2}
@@ -2179,6 +2176,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: aca67ebbde6f2b243935b3c8b03051b0, type: 2}
   - {fileID: 11400000, guid: 52c226f81fd7a0a45800752cf7bd0ea2, type: 2}
   - {fileID: 11400000, guid: 2edd14c0e12bcb343aa3b8a0703f8f69, type: 2}
+  - {fileID: 11400000, guid: eb6b22809cfce5944b6ec21e9a659f9a, type: 2}
+  - {fileID: 11400000, guid: 7103a4c541015dd40a7ada437543adfa, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
@@ -4717,7 +4716,6 @@ MonoBehaviour:
   tagMegaCorpTwo: AntBot
   tagMegaCorpThree: Eclipse
   tagMegaCorpFour: Dragon
-  tagMegaCorpFive: Orb
   tagResFactionOne: Americon
   tagResFactionTwo: Eurasia
   tagResFactionThree: Chinock

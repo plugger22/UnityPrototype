@@ -9766,7 +9766,7 @@ public class DataManager : MonoBehaviour
             Debug.LogFormat("[Meg] DataManager.cs -> UpdateMegaCorpRelations: {0} rel {1}{2} (was {3}, now {4}){5}", 
                 GetMegaCorpName(megaCorp), amountToChange > 0 ? "+" : "", amountToChange, current, updated, "\n");
             //history
-            AddMegaCorpHistory(amountToChange, updated, reason);
+            AddMegaCorpHistory(megaCorp, amountToChange, updated, reason);
         }
         else { Debug.LogWarning("Invalid MegaCorpType ('Count')"); }
     }
@@ -9787,7 +9787,6 @@ public class DataManager : MonoBehaviour
                 case MegaCorpType.MegaCorpTwo: megaName = GameManager.i.globalScript.tagMegaCorpTwo; break;
                 case MegaCorpType.MegaCorpThree: megaName = GameManager.i.globalScript.tagMegaCorpThree; break;
                 case MegaCorpType.MegaCorpFour: megaName = GameManager.i.globalScript.tagMegaCorpFour; break;
-                case MegaCorpType.MegaCorpFive: megaName = GameManager.i.globalScript.tagMegaCorpFive; break;
             }
             if (isCorp == true)
             { megaName = string.Format("{0} Corp", megaName); }
@@ -9823,12 +9822,13 @@ public class DataManager : MonoBehaviour
     /// <param name="changeAmount"></param>
     /// <param name="relationshipAfterChange"></param>
     /// <param name="reason"></param>
-    private void AddMegaCorpHistory(int changeAmount, int relationshipAfterChange, string reason)
+    private void AddMegaCorpHistory(MegaCorpType megaCorp, int changeAmount, int relationshipAfterChange, string reason)
     {
         if (string.IsNullOrEmpty(reason) == false)
         {
             HistoryMegaCorp history = new HistoryMegaCorp()
             {
+                megaCorp = megaCorp,
                 change = changeAmount,
                 relationshipNow = relationshipAfterChange,
                 text = reason
@@ -9870,8 +9870,8 @@ public class DataManager : MonoBehaviour
         {
                 HistoryMegaCorp history = listOfHistoryMegaCorp[i];
                 if (history != null)
-                { builder.AppendFormat("{0} t{1}, {2}, rel {3}{4}, now {5}, \"{6}\"", 
-                    "\n", history.turn, history.cityTag, history.change > 0 ? "+" : "", history.change, history.relationshipNow, history.text); }
+                { builder.AppendFormat("{0} t{1}, {2}, {3}, rel {4} ({5}{6}), \"{7}\"", 
+                    "\n", history.turn, GetMegaCorpName(history.megaCorp), history.cityTag, history.relationshipNow, history.change > 0 ? "+" : "", history.change, history.text); }
                 else { builder.AppendFormat("{0} ERROR (Null) for listOfHistoryMegaCorp[{1}]", "\n", i); }
         }
         else { builder.Append("No records present"); }

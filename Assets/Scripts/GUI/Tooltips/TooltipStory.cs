@@ -92,8 +92,10 @@ public class TooltipStory : MonoBehaviour
                 textBottom.gameObject.SetActive(true);
                 textBottom.text = storyHelp.textBottom;
             }
-            //sprite
-            storyImage.sprite = storyHelp.sprite;
+            //sprite -> default 'Info' sprite if none present
+            if (storyHelp.sprite != null)
+            { storyImage.sprite = storyHelp.sprite; }
+            else { storyImage.sprite = GameManager.i.guiScript.infoSprite; }
             //update rectTransform to get a correct height as it changes every time with the dynamic menu resizing depending on number of buttons
             Canvas.ForceUpdateCanvases();
             rectTransform = storyObject.GetComponent<RectTransform>();

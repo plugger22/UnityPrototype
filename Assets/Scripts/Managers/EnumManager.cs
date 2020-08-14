@@ -106,7 +106,7 @@
     // - - - Story - - - 
     //
     public enum StoryType { None, Alpha, Bravo, Charlie, Count }            //Story module type
-    public enum MegaCorpType { MegaCorpOne, MegaCorpTwo, MegaCorpThree, MegaCorpFour, MegaCorpFive, Count }  //correspond to GlobalManager.cs -> tagMegaCorpOne...
+    public enum MegaCorpType { MegaCorpOne, MegaCorpTwo, MegaCorpThree, MegaCorpFour, Count }  //correspond to GlobalManager.cs -> tagMegaCorpOne...
 
     //
     // - - - Actors - - -

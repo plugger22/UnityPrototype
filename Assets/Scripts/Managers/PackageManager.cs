@@ -606,6 +606,7 @@ namespace packageAPI
     [Serializable]
     public class HistoryMegaCorp
     {
+        public MegaCorpType megaCorp;
         public int change;                      //amount relationship changed by
         public int relationshipNow;             //relationship level AFTER change
         public string text;                     //reason why
