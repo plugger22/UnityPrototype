@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
+  m_Name: storyDrug8Opt1
+  m_EditorClassIdentifier: 
+  descriptor: Story Drugs 8 Opt 1
+  tag: Excuse Me
+  text: I'm not sure that I like you
+  topic: {fileID: 11400000, guid: ff50896b8579f934e89a89eb17cee009, type: 2}
+  isPreferredByHQ: 0
+  isDislikedByHQ: 0
+  isIgnoredByHQ: 1
+  isIgnoreStress: 0
+  isIgnoreMood: 1
+  listOfCriteria: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 305af0aacc470e14cb866b7f4142ead1, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 0}
+  chance: {fileID: 0}
+  news: 
+  storyInfo: My job is to get things done, not to be liked by all the little people
+    of the world. Find a mirror and tell somebody who cares.
+  storyTarget: {fileID: 0}
+  tooltipHeader: <color=#FFFFE0>Excuse Me</color>
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>I'm not sure that I like you</color>
+  optionNumber: 1
