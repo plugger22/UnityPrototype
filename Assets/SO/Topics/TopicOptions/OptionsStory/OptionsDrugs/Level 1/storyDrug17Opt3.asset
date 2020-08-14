@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I'm not sure that it would count for much, given we probably got them
+    all killed. Hiding under a rock for the next month might be a better idea
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

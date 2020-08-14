@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: In a world full of zoned out, brain dead, zombie humans wannabes, the
+    few of us who can string a sentence together, need to stick together.
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Oh my, yes you are. What a delight. Coffee please with another shot of
+    fungus sweetneer and a couple of maggot crispies with a dash of hommus
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

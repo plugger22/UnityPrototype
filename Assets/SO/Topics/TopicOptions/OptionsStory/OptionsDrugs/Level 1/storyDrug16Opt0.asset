@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Cool your jets there pardner. You're not ready for the big time yet.
+    Let me guide you to greatness, one small step at a time.
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

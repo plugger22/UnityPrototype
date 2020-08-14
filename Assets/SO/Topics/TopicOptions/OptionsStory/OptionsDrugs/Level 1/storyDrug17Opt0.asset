@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: For your sake I hope not. Were you spotted? Man, better make sure your
+    affairs are all neat and tidy like if you were
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

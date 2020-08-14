@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: The last person who kissed me died of asphyxiation. I remember seeing
+    them lying there beside me, their tongue blue and swollen, eyes bulgiing
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

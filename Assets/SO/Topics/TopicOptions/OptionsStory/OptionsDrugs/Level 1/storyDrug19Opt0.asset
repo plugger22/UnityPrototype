@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Share? SHARE? We don't even share Oxygen. Stop breathing immediately!
+    Stand over there and choke. Quietly. Painfully. Out of my sight
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

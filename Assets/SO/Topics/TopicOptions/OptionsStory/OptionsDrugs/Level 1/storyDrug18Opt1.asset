@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Oh, that's quaint. Do you realise that all complaints have to go through
+    me? How will you send one to [facR1] if you don't know how to contact them?
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

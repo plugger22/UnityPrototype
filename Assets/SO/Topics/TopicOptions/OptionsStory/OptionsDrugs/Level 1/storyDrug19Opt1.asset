@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: "Oh, your teeny tiny brain is only just catching up with current events?\n
+    Assassins do their job, unlike yourself who FAILED to do anything useful at all"
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

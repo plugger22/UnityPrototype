@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Yes, actually, I am. I take immunoSuppressants to prevent my nano-hair
+    from rejecting me. Cllearly nobody has told it that it's implanted on MY head
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

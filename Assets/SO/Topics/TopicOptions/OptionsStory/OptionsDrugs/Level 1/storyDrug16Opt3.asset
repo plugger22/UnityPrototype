@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Sure you do, don't be modest. I'll make sure that you get mentioned in
+    dispatches. Don't be afraid to blow your own trumpet once in a while
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
