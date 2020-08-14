@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: You're a gardener too? Flowers are my life. Love them. Sadly the UV cooked
+    the Roses. Gene replicas are all there are these days.
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Really?</color>
   tooltipMain: <color=#98FB98> Information gained</color>

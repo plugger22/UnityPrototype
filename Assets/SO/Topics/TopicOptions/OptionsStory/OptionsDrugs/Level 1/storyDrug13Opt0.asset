@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: 'Nothing you need to worry about. Just an absolutely lethal, psychopathic,
+    killing machine that thinks she is a flower in life''s garden. '
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Really?</color>
   tooltipMain: <color=#98FB98> Information gained</color>

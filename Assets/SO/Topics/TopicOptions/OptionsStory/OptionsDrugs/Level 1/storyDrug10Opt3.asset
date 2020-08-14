@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Because I'm the brains and you're the muscle. Well, not quite. You look
+    sharper than the nose cone of a Ramjet Shuttle. Together we'll figure it out
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Really?</color>
   tooltipMain: <color=#98FB98> Information gained</color>

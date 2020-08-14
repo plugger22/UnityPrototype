@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: They might although it would be a serious escalation. Hopefully not as
+    once a MegaCorp decides they don't want you it's buy an Urn time
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Really?</color>
   tooltipMain: <color=#98FB98> Information gained</color>

@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Don't be mislead by the name. She's augmented and highly optimised for
+    killing. Goodness, I wish I could ask a small favour of her...
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Really?</color>
   tooltipMain: <color=#98FB98> Information gained</color>
