@@ -134,6 +134,7 @@ namespace packageAPI
         public string bottomText { get; set; }
         public bool errorFlag { get; set; }
         public bool isAction;                                       //true if effect is considered an action
+        public bool isLargeText;                                    //true if you want the effect to be shown in larger font size (115%), default false. Optional
         public int ongoingID;                                       //only needed if there is an ongoing effect (any value > -1, if '-1' ignore)
         public List<string> listOfHelpTags = new List<string>();    //Effects can returns specific help strings to show in the outcome dialogue. Only the first four are taken into account (UI limit)
         public List<Node> listOfNodes = new List<Node>();           //optional -> for 'Show Me' purposes in ModalOutcome
@@ -148,6 +149,7 @@ namespace packageAPI
         public string topText;
         public string bottomText;
         public bool isError;
+        public bool isLargeText;                                    //true if you want the effect to be shown in larger font size (115%), default false. Optional
         public List<Node> listOfNodes = new List<Node>();           //optional -> for 'Show Me' purposes in ModalOutcome
     }
 

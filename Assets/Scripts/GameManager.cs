@@ -696,6 +696,7 @@ public class GameManager : MonoBehaviour
         startMethod.handler = topicScript.Initialise;
         startMethod.className = "TopicManager";
         listOfLevelMethods.Add(startMethod);
+        listOfLoadMethods.Add(startMethod);
         #endregion
 
         #region GUI Methods

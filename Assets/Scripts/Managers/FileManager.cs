@@ -3865,6 +3865,8 @@ public class FileManager : MonoBehaviour
             else { Debug.LogError("Invalid read.topicData.listOfTopics (Null)"); }
         }
         else { Debug.LogError("Invalid dictOfTopics"); }
+        //configure story Pools to their correct settings for the level
+        GameManager.i.topicScript.SetStoryPoolsOnLoad();
     }
     #endregion
 

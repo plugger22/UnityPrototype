@@ -351,13 +351,7 @@ public class DataManager : MonoBehaviour
         else { Debug.LogError("Invalid arrayOfTextLists (Null)"); }
         //arrayOfOrgType
         arrayOfOrgInfo = new bool[(int)OrgInfoType.Count];
-        //arrayOfMegaCorps
-        arrayOfMegaCorpRelations = new int[(int)MegaCorpType.Count];
-        for (int i = 0; i < arrayOfMegaCorpRelations.Length; i++)
-        {
-            //set all relations to excellent at start of a new game
-            UpdateMegaCorpRelations((MegaCorpType)i, 5, "Starting Relationship");
-        }
+
     }
     #endregion
 
@@ -406,6 +400,16 @@ public class DataManager : MonoBehaviour
         //Populate List of lists -> place node in the correct list
         foreach (var node in dictOfNodes)
         { listOfNodesByType[node.Value.Arc.nodeArcID].Add(node.Value); }
+        //arrayOfMegaCorps (may have already been initialised during a load save operation
+        if (arrayOfMegaCorpRelations == null)
+        {
+            arrayOfMegaCorpRelations = new int[(int)MegaCorpType.Count];
+            for (int i = 0; i < arrayOfMegaCorpRelations.Length; i++)
+            {
+                //set all relations to excellent at start of a new game
+                UpdateMegaCorpRelations((MegaCorpType)i, 5, "Starting Relationship");
+            }
+        }
         //HQ Positions
         if (GameManager.i.sideScript.PlayerSide.level == 1)
         {
@@ -9804,6 +9808,9 @@ public class DataManager : MonoBehaviour
         if (saveList != null)
         {
             int limit = saveList.Count;
+            //initialise if not done so already (possible due to sequencing issues)
+            if (arrayOfMegaCorpRelations == null)
+            { arrayOfMegaCorpRelations = new int[(int)MegaCorpType.Count]; }
             if (limit != arrayOfMegaCorpRelations.Length)
             {
                 Debug.LogWarningFormat("Invalid saveList dimension (is {0}, should be {1}), changed automatically (if < than required, arrayOfMegaCorpRel's may be incorect)", 

@@ -2540,6 +2540,7 @@ public class EffectManager : MonoBehaviour
                     effectReturn.topText = effectResolve.topText;
                     effectReturn.bottomText = effectResolve.bottomText;
                     effectReturn.isAction = false;
+                    effectReturn.isLargeText = effectResolve.isLargeText;
                     effectReturn.listOfNodes = effectResolve.listOfNodes;
                 }
             }
@@ -4999,7 +5000,8 @@ public class EffectManager : MonoBehaviour
                 if (option != null)
                 {
                     string text = GameManager.i.topicScript.CheckTopicText(option.storyInfo, false);
-                    effectResolve.bottomText = string.Format("{0}<size=115%>{1}</size>{2}", colourNormal, text, colourEnd);
+                    effectResolve.bottomText = string.Format("{0}{1}{2}", colourNormal, text, colourEnd);
+                    effectResolve.isLargeText = true;
                 }
                 else { Debug.LogWarningFormat("Invalid topicOption (Null) for \"{0}\"", dataInput.dataName); }
                 break;

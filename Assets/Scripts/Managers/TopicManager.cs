@@ -190,7 +190,6 @@ public class TopicManager : MonoBehaviour
     [HideInInspector] public int storyAlphaCurrentIndex;            //current linked index for story Alpha sequence of linked topics within the level
     [HideInInspector] public int storyBravoCurrentIndex;            //current linked index for story Bravo sequence of linked topics within the level
     [HideInInspector] public int storyCharlieCurrentIndex;          //current linked index for story Charlie sequence of linked topics within the level
-
     [HideInInspector] public int storyCurrentLevelIndex;            //current scenario index for all stories
 
     [HideInInspector] public int[,] arrayOfStoryFlags;              //flags for progressing story
@@ -412,7 +411,7 @@ public class TopicManager : MonoBehaviour
     /// </summary>
     private void SubInitialiseStoryTopics()
     {
-        SetStoryPoolsOnLoad();
+        /*SetStoryPoolsOnLoad(); EDIT -> Redundant Aug'20 */
     }
     #endregion
 
@@ -1131,12 +1130,12 @@ public class TopicManager : MonoBehaviour
     #region SetStoryPoolsOnLoad
     /// <summary>
     /// Runs through all story topic pools (campaign scope) and configures topics (status and isCurrent) so that the sequence will resume at the correct place once a save is loaded
+    /// NOTE: Called from FileManager.cs -> ReadTopics once all data has been read in (done due to sequencing issues as topic data is read AFTER the Initialisation routines above
     /// </summary>
     public void SetStoryPoolsOnLoad()
     {
-        //check loaded storyLevelIndex matches scenarioIndex
-        Debug.AssertFormat(storyCurrentLevelIndex == GameManager.i.campaignScript.GetScenarioIndex(), 
-            "Mismatch with storyCurrentLevelIndex {0} != scenarioIndex {1}", storyCurrentLevelIndex, GameManager.i.campaignScript.GetScenarioIndex());
+        /*//sequencing issues on loading require assignment of storyCurrentLevelIndx because value has not yet been loaded in from save file
+        storyCurrentLevelIndex = GameManager.i.campaignScript.GetScenarioIndex();*/
         //Process topic pools
         ProcessStoryTopicPool(storyAlphaPool, storyAlphaCurrentIndex, storyCurrentLevelIndex);
         ProcessStoryTopicPool(storyBravoPool, storyBravoCurrentIndex, storyCurrentLevelIndex);
@@ -3524,6 +3523,7 @@ public class TopicManager : MonoBehaviour
             //two builders for top and bottom texts
             StringBuilder builderTop = new StringBuilder();
             StringBuilder builderBottom = new StringBuilder();
+            StringBuilder builderTag = new StringBuilder();         //needed to handle story info effects that are oversized (avoids this for topic message display in MainInfoApp)
             //process outcome effects / rolls / messages / etc.
             List<Effect> listOfEffects = new List<Effect>();
             //mood effects always apply (needs to come first)
@@ -3610,6 +3610,7 @@ public class TopicManager : MonoBehaviour
                         if (turnOption.isIgnoreMood == false)
                         { builderBottom.AppendFormat("{0}{1}Nothing happened{2}", "\n", colourGrey, colourEnd); }
                     }
+                    builderTag.Append(builderBottom);
                     //loop effects
                     foreach (Effect effect in listOfEffects)
                     {
@@ -3623,15 +3624,24 @@ public class TopicManager : MonoBehaviour
                                 if (string.IsNullOrEmpty(effectReturn.bottomText) == false)
                                 {
                                     if (builderBottom.Length > 0) { builderBottom.AppendLine(); }
-                                    builderBottom.AppendFormat("{0}", effectReturn.bottomText);
+                                    if (builderTag.Length > 0) { builderTag.AppendLine(); }
+                                    //avoids oversize font for story topics (so it displays as normal size in MainInfoApp)
+                                    builderTag.AppendFormat("{0}", effectReturn.bottomText);
+                                    //display story topic info effects in larger text size for ease of reading
+                                    if (effectReturn.isLargeText == true)
+                                    { builderBottom.AppendFormat("<size=115%>{0}</size>", effectReturn.bottomText); }
+                                    //all else
+                                    else { builderBottom.AppendFormat("{0}", effectReturn.bottomText); }
                                 }
                                 //exit effect loop on error
                                 if (effectReturn.errorFlag == true) { break; }
                             }
                             else
                             {
-                                builderBottom.AppendLine();
+                                builderBottom.AppendLine(); 
                                 builderBottom.Append("Error");
+                                builderTag.AppendLine();
+                                builderTag.Append("Error");
                                 effectReturn.errorFlag = true;
                                 break;
                             }
@@ -3639,7 +3649,11 @@ public class TopicManager : MonoBehaviour
                         else { Debug.LogWarningFormat("Effect \"{0}\" not processed as invalid Node (Null) for option \"{1}\"", effect.name, turnOption.name); }
                     }
                 }
-                else { builderBottom.AppendFormat("{0}{1}Nothing happened{2}", "\n", colourGrey, colourEnd); }
+                else
+                {
+                    builderBottom.AppendFormat("{0}{1}Nothing happened{2}", "\n", colourGrey, colourEnd);
+                    builderTag.Append(builderBottom);
+                }
             }
             else
             { Debug.LogWarningFormat("Invalid listOfEffects (Null) for topic \"{0}\", option {1}", turnTopic.name, turnOption.name); }
@@ -3658,8 +3672,17 @@ public class TopicManager : MonoBehaviour
                             bossOpinion += opinionChange;
                             GameManager.i.hqScript.SetBossOpinion(bossOpinion, string.Format("\'{0}\', \'{1}\'", turnTopic.tag, turnOption.tag));
                             builderBottom.AppendLine();
-                            if (opinionChange > 0) { builderBottom.AppendFormat("{0}{1}Boss Approves of your decision{2}", "\n", colourGood, colourEnd); }
-                            else { builderBottom.AppendFormat("{0}{1}Boss Disapproves of your decision{2}", "\n", colourBad, colourEnd); }
+                            builderTag.AppendLine();
+                            if (opinionChange > 0)
+                            {
+                                builderBottom.AppendFormat("{0}{1}Boss Approves of your decision{2}", "\n", colourGood, colourEnd);
+                                builderTag.AppendFormat("{0}{1}Boss Approves of your decision{2}", "\n", colourGood, colourEnd);
+                            }
+                            else
+                            {
+                                builderBottom.AppendFormat("{0}{1}Boss Disapproves of your decision{2}", "\n", colourBad, colourEnd);
+                                builderTag.AppendFormat("{0}{1}Boss Disapproves of your decision{2}", "\n", colourBad, colourEnd);
+                            }
                         }
                     }
                     else { Debug.LogError("Invalid actorHQ (Null) for ActorHQ.Boss"); }
@@ -3683,7 +3706,7 @@ public class TopicManager : MonoBehaviour
             { SetTopicOutcome(builderTop, builderBottom, turnSprite); }
             else { SetTopicOutcome(builderTop, builderBottom); }
             //message outcome
-            tagOutcome = builderBottom.ToString();
+            tagOutcome = builderTag.ToString();
             //tidy up
             ProcessTopicAdmin();
         }
