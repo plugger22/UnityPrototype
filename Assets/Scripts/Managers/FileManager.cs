@@ -1690,6 +1690,7 @@ public class FileManager : MonoBehaviour
         write.topicData.storyAlphaCurrentIndex = GameManager.i.topicScript.storyAlphaCurrentIndex;
         write.topicData.storyBravoCurrentIndex = GameManager.i.topicScript.storyBravoCurrentIndex;
         write.topicData.storyCharlieCurrentIndex = GameManager.i.topicScript.storyCharlieCurrentIndex;
+        write.topicData.storyCurrentLevelIndex = GameManager.i.topicScript.storyCurrentLevelIndex;
         //arrayOfStoryFlags
         int[,] arrayOfStoryFlags = GameManager.i.topicScript.arrayOfStoryFlags;
         if (arrayOfStoryFlags != null)
@@ -3795,6 +3796,7 @@ public class FileManager : MonoBehaviour
         GameManager.i.topicScript.storyAlphaCurrentIndex = read.topicData.storyAlphaCurrentIndex;
         GameManager.i.topicScript.storyBravoCurrentIndex = read.topicData.storyBravoCurrentIndex;
         GameManager.i.topicScript.storyCharlieCurrentIndex = read.topicData.storyCharlieCurrentIndex;
+        GameManager.i.topicScript.storyCurrentLevelIndex = read.topicData.storyCurrentLevelIndex;
         int index;
         //arrayOfStoryFlags
         int[,] arrayOfStoryFlags = GameManager.i.topicScript.arrayOfStoryFlags;

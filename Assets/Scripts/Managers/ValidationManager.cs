@@ -3370,9 +3370,9 @@ public class ValidationManager : MonoBehaviour
                                             case 0:
                                             case 1:
                                             case 2:
-                                                //Should be No Criteria
-                                                if (topic.listOfCriteria.Count > 0)
-                                                { Debug.LogFormat("{0} Invalid CRITERIA (are {1}, should be None), for topic \"{2}\"{3}", tag, topic.listOfCriteria.Count, topic.name, "\n"); }
+                                                //Should be a single Criteria (scenario level)
+                                                if (topic.listOfCriteria.Count != 1)
+                                                { Debug.LogFormat("{0} Invalid CRITERIA (are {1}, should be 1), for topic \"{2}\"{3}", tag, topic.listOfCriteria.Count, topic.name, "\n"); }
                                                 break;
                                             case 3:
                                                 //Require a storyFlagTrue and storyStarTrue/False criteria

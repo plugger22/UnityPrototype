@@ -479,6 +479,7 @@ public class SaveTopicData
     public int storyAlphaCurrentIndex;
     public int storyBravoCurrentIndex;
     public int storyCharlieCurrentIndex;
+    public int storyCurrentLevelIndex;
     public int flagsInner;                                          //array dimensions
     public int flagsOuter;
     public int starsInner;

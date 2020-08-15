@@ -4999,7 +4999,7 @@ public class EffectManager : MonoBehaviour
                 if (option != null)
                 {
                     string text = GameManager.i.topicScript.CheckTopicText(option.storyInfo, false);
-                    effectResolve.bottomText = string.Format("{0}{1}{2}", colourNormal, text, colourEnd);
+                    effectResolve.bottomText = string.Format("{0}<size=115%>{1}</size>{2}", colourNormal, text, colourEnd);
                 }
                 else { Debug.LogWarningFormat("Invalid topicOption (Null) for \"{0}\"", dataInput.dataName); }
                 break;

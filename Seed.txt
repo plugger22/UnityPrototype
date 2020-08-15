@@ -527,3 +527,84 @@ City seed 765 -> New York, America
 Dev seed 53681 -> Saturday, 15 August 2020 4:24 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 57829 -> Saturday, 15 August 2020 4:59 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 59243 -> Saturday, 15 August 2020 5:00 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+WARNING Mismatch on Indexex, topic "storyDrugs12" linkedIndex 1 (should be 2)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:UpdateTopicStatus() (at Assets/Scripts/Managers/TopicManager.cs:4132)
+	TopicManager:ProcessTopicAdmin() (at Assets/Scripts/Managers/TopicManager.cs:3959)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3669)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:688)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:277)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Mismatch on Indexex, topic "storyDrugs13" linkedIndex 1 (should be 2)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:UpdateTopicStatus() (at Assets/Scripts/Managers/TopicManager.cs:4132)
+	TopicManager:ProcessTopicAdmin() (at Assets/Scripts/Managers/TopicManager.cs:3959)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3669)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:688)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:277)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Mismatch on Indexex, topic "storyDrugs14" linkedIndex 2 (should be 3)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:UpdateTopicStatus() (at Assets/Scripts/Managers/TopicManager.cs:4132)
+	TopicManager:ProcessTopicAdmin() (at Assets/Scripts/Managers/TopicManager.cs:3959)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3669)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:688)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:277)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Mismatch on Indexex, topic "storyDrugs15" linkedIndex 2 (should be 3)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:UpdateTopicStatus() (at Assets/Scripts/Managers/TopicManager.cs:4132)
+	TopicManager:ProcessTopicAdmin() (at Assets/Scripts/Managers/TopicManager.cs:3959)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3669)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:688)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:277)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Mismatch on Indexex, topic "storyDrugs16" linkedIndex 3 (should be 4)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:UpdateTopicStatus() (at Assets/Scripts/Managers/TopicManager.cs:4132)
+	TopicManager:ProcessTopicAdmin() (at Assets/Scripts/Managers/TopicManager.cs:3959)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3669)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:688)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:277)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Mismatch on Indexex, topic "storyDrugs17" linkedIndex 3 (should be 4)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:UpdateTopicStatus() (at Assets/Scripts/Managers/TopicManager.cs:4132)
+	TopicManager:ProcessTopicAdmin() (at Assets/Scripts/Managers/TopicManager.cs:3959)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3669)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:688)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:277)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 42987 -> Saturday, 15 August 2020 5:31 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 59945 -> Saturday, 15 August 2020 5:34 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 23388 -> Saturday, 15 August 2020 5:37 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 40763 -> Saturday, 15 August 2020 5:51 PM
+City seed 5678 -> London, United Kingdom

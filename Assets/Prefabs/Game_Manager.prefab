@@ -4773,7 +4773,7 @@ MonoBehaviour:
   tagGlobalAIName: GOLIATH
   tagGlobalDrug: Moon Dust
   tagMegaCorpOne: Crypticon
-  tagMegaCorpTwo: AntBot
+  tagMegaCorpTwo: Orb
   tagMegaCorpThree: Eclipse
   tagMegaCorpFour: Dragon
   tagResFactionOne: Americon
@@ -5619,6 +5619,7 @@ MonoBehaviour:
   storyAlphaCurrentIndex: 0
   storyBravoCurrentIndex: 0
   storyCharlieCurrentIndex: 0
+  storyCurrentLevelIndex: 0
 --- !u!114 &114983986480103908
 MonoBehaviour:
   m_ObjectHideFlags: 1

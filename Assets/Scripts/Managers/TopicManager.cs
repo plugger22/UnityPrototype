@@ -191,6 +191,8 @@ public class TopicManager : MonoBehaviour
     [HideInInspector] public int storyBravoCurrentIndex;            //current linked index for story Bravo sequence of linked topics within the level
     [HideInInspector] public int storyCharlieCurrentIndex;          //current linked index for story Charlie sequence of linked topics within the level
 
+    [HideInInspector] public int storyCurrentLevelIndex;            //current scenario index for all stories
+
     [HideInInspector] public int[,] arrayOfStoryFlags;              //flags for progressing story
     [HideInInspector] public int[,] arrayOfStoryStars;              //stars for tracking player achievement
     #endregion
@@ -399,6 +401,7 @@ public class TopicManager : MonoBehaviour
         //establish which TopicTypes are valid for the level. Initialise profile and status data.
         UpdateTopicPools();
         SetStoryGroupFlags();
+        SetStoryIndexes();
     }
     #endregion
 
@@ -1112,16 +1115,32 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
+    #region SetStoryIndexes
+    /// <summary>
+    /// Set/Reset story indexes at start of a new level
+    /// </summary>
+    private void SetStoryIndexes()
+    {
+        storyAlphaCurrentIndex = 0;
+        storyBravoCurrentIndex = 0;
+        storyCharlieCurrentIndex = 0;
+        storyCurrentLevelIndex = GameManager.i.campaignScript.GetScenarioIndex();
+    }
+    #endregion
+
     #region SetStoryPoolsOnLoad
     /// <summary>
     /// Runs through all story topic pools (campaign scope) and configures topics (status and isCurrent) so that the sequence will resume at the correct place once a save is loaded
     /// </summary>
     public void SetStoryPoolsOnLoad()
     {
-        int levelIndex = GameManager.i.campaignScript.GetScenarioIndex();
-        ProcessStoryTopicPool(storyAlphaPool, storyAlphaCurrentIndex, levelIndex);
-        ProcessStoryTopicPool(storyBravoPool, storyBravoCurrentIndex, levelIndex);
-        ProcessStoryTopicPool(storyCharliePool, storyCharlieCurrentIndex, levelIndex);
+        //check loaded storyLevelIndex matches scenarioIndex
+        Debug.AssertFormat(storyCurrentLevelIndex == GameManager.i.campaignScript.GetScenarioIndex(), 
+            "Mismatch with storyCurrentLevelIndex {0} != scenarioIndex {1}", storyCurrentLevelIndex, GameManager.i.campaignScript.GetScenarioIndex());
+        //Process topic pools
+        ProcessStoryTopicPool(storyAlphaPool, storyAlphaCurrentIndex, storyCurrentLevelIndex);
+        ProcessStoryTopicPool(storyBravoPool, storyBravoCurrentIndex, storyCurrentLevelIndex);
+        ProcessStoryTopicPool(storyCharliePool, storyCharlieCurrentIndex, storyCurrentLevelIndex);
     }
 
     /// <summary>
@@ -6777,7 +6796,7 @@ public class TopicManager : MonoBehaviour
                         //Resistance Eurasia faction 'Eurasia HQ'
                         if (isValidate == false)
                         {
-                            string factionName = string.Format("{0} HQ", GameManager.i.globalScript.tagResFactionOne);
+                            string factionName = string.Format("{0} HQ", GameManager.i.globalScript.tagResFactionTwo);
                             if (isColourHighlighting == true)
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, factionName, colourEnd); }
                             else { replaceText = factionName; }
@@ -6788,7 +6807,7 @@ public class TopicManager : MonoBehaviour
                         //Resistance Chinock faction 'Chinock HQ'
                         if (isValidate == false)
                         {
-                            string factionName = string.Format("{0} HQ", GameManager.i.globalScript.tagResFactionOne);
+                            string factionName = string.Format("{0} HQ", GameManager.i.globalScript.tagResFactionThree);
                             if (isColourHighlighting == true)
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, factionName, colourEnd); }
                             else { replaceText = factionName; }
@@ -7926,9 +7945,10 @@ public class TopicManager : MonoBehaviour
         builder.AppendFormat(" isStoryCharlieGood: {0}{1}", isStoryCharlieGood, "\n");
         //indexes
         builder.AppendFormat(" {0} Indexes{1}", "\n", "\n");
-        builder.AppendFormat(" storyAlphaCurrentIndex: {0}{1}", storyAlphaCurrentIndex, "\n");
-        builder.AppendFormat(" storyBravoCurrentIndex: {0}{1}", storyBravoCurrentIndex, "\n");
-        builder.AppendFormat(" storyCharlieCurrentIndex: {0}{1}", storyCharlieCurrentIndex, "\n");
+        builder.AppendFormat(" storyAlphaCurrentLinkedIndex: {0}{1}", storyAlphaCurrentIndex, "\n");
+        builder.AppendFormat(" storyBravoCurrentLinkedIndex: {0}{1}", storyBravoCurrentIndex, "\n");
+        builder.AppendFormat(" storyCharlieCurrentLinkedIndex: {0}{1}", storyCharlieCurrentIndex, "\n");
+        builder.AppendFormat(" storyCurrentLevelIndex: {0}{1}", storyCurrentLevelIndex, "\n");
         //flags
         builder.AppendFormat(" {0} Story Flags{1}", "\n", "\n");
         builder.Append(" Alpha:  ");
