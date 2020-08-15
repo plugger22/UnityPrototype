@@ -27,7 +27,7 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Well, look at you full of righteous anger. I'm willing to overlook your
+  storyInfo: Well, look at you full of righteous anger. I'm willing to ignore your
     emotional tirades but only if you brain flush in the nearest, convenient, toilet
   storyTarget: {fileID: 0}
   tooltipHeader: 

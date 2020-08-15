@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: storyDrugs18
   m_EditorClassIdentifier: 
   tag: Foiled the Petal
-  text: I saved the day, again. The Pink Petal, thanks to my timely intel, turned
+  text: I saved the day, again. [*The Pink Petal], thanks to my timely intel, turned
     up after the party was over. Gosh, I do believe that I'm essential
   designNotes: storyDrugs18
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
@@ -33,6 +33,7 @@ MonoBehaviour:
   listOfStoryHelp: []
   profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
   listOfCriteria:
+  - {fileID: 11400000, guid: 0149fc4442e0c8441940141f428f1035, type: 2}
   - {fileID: 11400000, guid: 85bfee5dd2489b54789d867be5778846, type: 2}
   - {fileID: 11400000, guid: 1df575b60de58dc46b6f4b17f0a3a0ab, type: 2}
   listOfIgnoreEffects: []

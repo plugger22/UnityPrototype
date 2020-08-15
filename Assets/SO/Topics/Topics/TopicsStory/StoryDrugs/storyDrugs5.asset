@@ -33,7 +33,8 @@ MonoBehaviour:
   listOfStoryHelp:
   - {fileID: 11400000, guid: 7103a4c541015dd40a7ada437543adfa, type: 2}
   profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 5ada6805d52fe0e4eb10c44a98c34cf0, type: 2}
   listOfIgnoreEffects:
   - {fileID: 11400000, guid: 51c55fecce89fea46821b68b833eaba6, type: 2}
   listOfOptions:

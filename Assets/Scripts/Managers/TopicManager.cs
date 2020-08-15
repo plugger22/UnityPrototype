@@ -5105,9 +5105,10 @@ public class TopicManager : MonoBehaviour
             orgName = tagOrgName,
             investigationRef = tagStringData,
             gearName = tagGear,
-            relation = tagRelation,
-            target = turnOption.storyTarget
+            relation = tagRelation
         };
+        if (turnOption != null)
+        { data.target = turnOption.storyTarget; }
         return data;
     }
     #endregion
@@ -5255,22 +5256,22 @@ public class TopicManager : MonoBehaviour
         {
             //Good effects
             if (option.listOfGoodEffects.Count > 0)
-            { GetGoodEffects(option.listOfGoodEffects, option.name, builder); }
+            { GetGoodEffects(option.listOfGoodEffects, option, builder); }
             //Bad effects
             if (option.listOfBadEffects.Count > 0)
-            { GetBadEffects(option.listOfBadEffects, option.name, builder); }
+            { GetBadEffects(option.listOfBadEffects, option, builder); }
         }
         else
         {
             //probability based option
             builder.AppendFormat("<b>{0} chance of SUCCESS</b>", GetProbability(option.chance));
             if (option.listOfGoodEffects.Count > 0)
-            { GetGoodEffects(option.listOfGoodEffects, option.name, builder); }
+            { GetGoodEffects(option.listOfGoodEffects, option, builder); }
             else { builder.AppendFormat("{0}{1}Nothing Happens{2}", "\n", colourGrey, colourEnd); }
             //Bad effects
             builder.AppendFormat("{0}{1}if UNSUCCESSFUL{2}", "\n", colourCancel, colourEnd);
             if (option.listOfBadEffects.Count > 0)
-            { GetBadEffects(option.listOfBadEffects, option.name, builder); }
+            { GetBadEffects(option.listOfBadEffects, option, builder); }
             else { builder.AppendFormat("{0}{1}Nothing Happens{2}", "\n", colourGrey, colourEnd); }
         }
         if (builder.Length == 0) { builder.Append("No Effects present"); }
@@ -5329,7 +5330,7 @@ public class TopicManager : MonoBehaviour
     /// </summary>
     /// <param name="listOfEffects"></param>
     /// <returns></returns>
-    private void GetGoodEffects(List<Effect> listOfEffects, string optionName, StringBuilder builder)
+    private void GetGoodEffects(List<Effect> listOfEffects, TopicOption option, StringBuilder builder)
     {
         if (listOfEffects != null)
         {
@@ -5337,15 +5338,29 @@ public class TopicManager : MonoBehaviour
             {
                 if (effect != null)
                 {
-                    if (builder.Length > 0) { builder.AppendLine(); }
-                    if (string.IsNullOrEmpty(effect.description) == false)
-                    { builder.AppendFormat("{0}{1} {2}{3}", colourGood, GetEffectPrefix(effect), effect.description, colourEnd); }
-                    else { Debug.LogWarningFormat("Invalid effect.description (Null or Empty) for effect \"{0}\"", effect.name); }
+                    if (effect.name.Equals("S_StoryTarget", StringComparison.Ordinal) == true)
+                    {
+                        //special case of Story Target Effect
+                        if (option.storyTarget != null)
+                        {
+                            if (builder.Length > 0) { builder.AppendLine(); }
+                            builder.AppendFormat("{0}Target ({1}, {2} gear){3}", colourGood, option.storyTarget.actorArc.name, option.storyTarget.gear.name, colourEnd);
+                        }
+                        else { Debug.LogWarningFormat("Invalid storyTarget (Null) for option \"{0}\"", option.name); }
+                    }
+                    else
+                    {
+                        //normal effect
+                        if (builder.Length > 0) { builder.AppendLine(); }
+                        if (string.IsNullOrEmpty(effect.description) == false)
+                        { builder.AppendFormat("{0}{1} {2}{3}", colourGood, GetEffectPrefix(effect), effect.description, colourEnd); }
+                        else { Debug.LogWarningFormat("Invalid effect.description (Null or Empty) for effect \"{0}\"", effect.name); }
+                    }
                 }
-                else { Debug.LogWarningFormat("Invalid effect (Null) in listOfGoodEffects for option \"{0}\"", optionName); }
+                else { Debug.LogWarningFormat("Invalid effect (Null) in listOfGoodEffects for option \"{0}\"", option.name); }
             }
         }
-        else { Debug.LogWarningFormat("Invalid listOfEffects (Null) for option \"{0}\"", optionName); }
+        else { Debug.LogWarningFormat("Invalid listOfEffects (Null) for option \"{0}\"", option.name); }
     }
     #endregion
 
@@ -5355,7 +5370,7 @@ public class TopicManager : MonoBehaviour
     /// </summary>
     /// <param name="listOfEffects"></param>
     /// <returns></returns>
-    private void GetBadEffects(List<Effect> listOfEffects, string optionName, StringBuilder builder)
+    private void GetBadEffects(List<Effect> listOfEffects, TopicOption option, StringBuilder builder)
     {
         if (listOfEffects != null)
         {
@@ -5368,10 +5383,10 @@ public class TopicManager : MonoBehaviour
                     { builder.AppendFormat("{0}{1} {2}{3}", colourBad, GetEffectPrefix(effect), effect.description, colourEnd); }
                     else { Debug.LogWarningFormat("Invalid effect.description (Null or Empty) for effect \"{0}\"", effect.name); }
                 }
-                else { Debug.LogWarningFormat("Invalid effect (Null) in listOfBadEffects for option \"{0}\"", optionName); }
+                else { Debug.LogWarningFormat("Invalid effect (Null) in listOfBadEffects for option \"{0}\"", option.name); }
             }
         }
-        else { Debug.LogWarningFormat("Invalid listOfEffects (Null) for option \"{0}\"", optionName); }
+        else { Debug.LogWarningFormat("Invalid listOfEffects (Null) for option \"{0}\"", option.name); }
     }
     #endregion
 

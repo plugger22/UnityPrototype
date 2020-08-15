@@ -940,7 +940,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "topicSub_27";
         data.header = "Good and Bad";
-        data.text = string.Format("This is one of {0}three{1} stories, drawn from a {2}pool{3}, that thread throughout the {4}campaign{5}. Each story has a good or bad path that is {6}randomly{7}" +
+        data.text = string.Format("This is one of {0}three{1} stories, drawn from a {2}pool{3}, that weave throughout the {4}campaign{5}. Each story has a good or bad path that is {6}randomly{7}" +
             " determined at the start", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
 
@@ -963,7 +963,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "topicSub_30";
         data.header = "Story Stars";
-        data.text = string.Format("Each Story gives you the opportunity to earn a {0}Story Star{1} by completing a Story related {2}target{3} in every {4}City{5} you visit. " +
+        data.text = string.Format("Each Story gives you the opportunity to earn a {0}Story Star{1} by completing a Story related {2}Target{3} in every {4}City{5} you visit. " +
             "There is a total of {6}5 Stars{7} that can be earned" +
             " per story over the duration of the {8}campaign{9}", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);

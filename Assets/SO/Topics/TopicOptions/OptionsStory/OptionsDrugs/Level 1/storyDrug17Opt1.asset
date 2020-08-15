@@ -27,9 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Well that depends if you were spotted or not. It's not, as a rule, a
-    good idea to plaster your face all over surveillance footage. They ain't auditioning
-    for movie stars
+  storyInfo: Well that depends if you were spotted or not. It's not a good idea to
+    plaster your face all over their surveillance footage. You didn't, did you?
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

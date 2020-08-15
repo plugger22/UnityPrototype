@@ -28,7 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: We'll I'd love to but, now that the meeting is over, I have to head back
-    to [fac1R] and fly a few home boys back to their point of origin.
+    to [facR1] and fly a few home boys back to their point of origin.
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

@@ -1437,6 +1437,26 @@ public class EffectManager : MonoBehaviour
                                                     if (GameManager.i.topicScript.CheckStoryStar(data.storyType) > 0)
                                                     { BuildString(result, "Story Star True"); }
                                                     break;
+                                                case "ScenarioIndex0":
+                                                    if (GameManager.i.campaignScript.GetScenarioIndex() != 0)
+                                                    { BuildString(result, "Incorrect Scenario"); }
+                                                    break;
+                                                case "ScenarioIndex1":
+                                                    if (GameManager.i.campaignScript.GetScenarioIndex() != 1)
+                                                    { BuildString(result, "Incorrect Scenario"); }
+                                                    break;
+                                                case "ScenarioIndex2":
+                                                    if (GameManager.i.campaignScript.GetScenarioIndex() != 2)
+                                                    { BuildString(result, "Incorrect Scenario"); }
+                                                    break;
+                                                case "ScenarioIndex3":
+                                                    if (GameManager.i.campaignScript.GetScenarioIndex() != 3)
+                                                    { BuildString(result, "Incorrect Scenario"); }
+                                                    break;
+                                                case "ScenarioIndex4":
+                                                    if (GameManager.i.campaignScript.GetScenarioIndex() != 4)
+                                                    { BuildString(result, "Incorrect Scenario"); }
+                                                    break;
                                                 default:
                                                     BuildString(result, "Error!");
                                                     Debug.LogWarning(string.Format("Invalid criteria.effectcriteria.name \"{0}\"", criteria.effectCriteria.name));

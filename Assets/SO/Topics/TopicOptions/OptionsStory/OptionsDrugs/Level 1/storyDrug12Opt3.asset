@@ -28,8 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: That's not up to me. I'm carrying out orders, just like you. Besides,
-    it isn't that simple. There's a lot of logistics involved in secretly moving that
-    many people around
+    it isn't that simple. There's an awful lot of careful planning involved
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Really?</color>
   tooltipMain: <color=#98FB98> Information gained</color>

@@ -27,9 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: You and me both. [facR1] aren't happy. We fluffed it. Important people
-    died. I hope they remember all the good things we've done. You've got a few of
-    those, haven't you?
+  storyInfo: Heck, yes. [facR1] aren't happy. We fluffed it. Important people died.
+    I hope they focus on the positives. You've got a few of those, haven't you?
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

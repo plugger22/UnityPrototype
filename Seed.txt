@@ -474,3 +474,56 @@ UnityEngine.Debug:LogWarning(Object)
 	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:884)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:392)
 	
+Dev seed 52691 -> Saturday, 15 August 2020 2:18 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 59566 -> Saturday, 15 August 2020 2:20 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 12466 -> Saturday, 15 August 2020 2:21 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 29798 -> Saturday, 15 August 2020 2:23 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 37324 -> Saturday, 15 August 2020 2:49 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 26725 -> Saturday, 15 August 2020 2:50 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 41059 -> Saturday, 15 August 2020 2:53 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 52900 -> Saturday, 15 August 2020 3:03 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 40887 -> Saturday, 15 August 2020 3:32 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51824 -> Saturday, 15 August 2020 3:34 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 39914 -> Saturday, 15 August 2020 3:36 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.GetTopicEffectData () (at Assets/Scripts/Managers/TopicManager.cs:5109)
+	EffectManager.ResolveTopicData (Effect effect, packageAPI.EffectDataInput dataInput) (at Assets/Scripts/Managers/EffectManager.cs:4203)
+	EffectManager.ProcessEffect (Effect effect, Node node, packageAPI.EffectDataInput dataInput, gameAPI.Actor actor) (at Assets/Scripts/Managers/EffectManager.cs:1951)
+	TopicManager.ProcessIgnore () (at Assets/Scripts/Managers/TopicManager.cs:3707)
+	TopicUI.ProcessTopicIgnore () (at Assets/Scripts/GUI/TopicUI.cs:637)
+	TopicUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/TopicUI.cs:289)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ButtonInteraction.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 41226 -> Saturday, 15 August 2020 3:55 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 53681 -> Saturday, 15 August 2020 4:24 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America

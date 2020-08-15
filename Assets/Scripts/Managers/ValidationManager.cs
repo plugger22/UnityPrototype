@@ -972,6 +972,8 @@ public class ValidationManager : MonoBehaviour
                                 count = topic.listOfOptions.Count();
                                 if (count > 0)
                                 {
+                                    //check for duplicates
+                                    CheckListForDuplicates(topic.listOfOptions.Select(x => x.name).ToList(), "TopicOption", topic.name, "listOfOptions");
                                     //max number of options not exceeded
                                     if (count > maxOptions)
                                     { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" has more options that allowed (has {1}, max is {2}){3}", topicName, count, maxOptions, "\n"); }
@@ -3279,7 +3281,7 @@ public class ValidationManager : MonoBehaviour
     /// </summary>
     private void CheckStructuredTopicData(string prefix, int highestScenario)
     {
-        int total, countTrue, countFalse;
+        int total;
         bool isSuccessOne, isSuccessTwo;
         bool isStoryData = false;
         string tag = string.Format("{0}{1}", prefix, "CheckStructuredTopicData: ");
@@ -3289,6 +3291,7 @@ public class ValidationManager : MonoBehaviour
         { Debug.LogError("Invalid arrayOfStoryData (Null)"); }
         //temporary collections needed
         int[,,] arrayOfLevels = new int[highestScenario + 1, maxLinkedIndexStory + 1, 2];       // [levelIndex, linkedIndex, groupIndex (0 for bad, 1 for good)]
+        int[,] arrayOfLast = new int[highestScenario + 1, 2];       //[LevelIndex, 0/1 (false/true)] tracks the # of true/false star criteria for the last set of topics (linkedIndex 3, topics 6/7/8/9)
         if (arrayOfTopicPools != null)
         {
             for (int i = 0; i < arrayOfTopicPools.Length; i++)
@@ -3312,7 +3315,7 @@ public class ValidationManager : MonoBehaviour
                                 //
                                 // - - - loop Topics
                                 //
-                                countTrue = countFalse = 0;
+                                Array.Clear(arrayOfLast, 0, arrayOfLast.Length);
                                 for (int index = 0; index < pool.listOfTopics.Count; index++)
                                 {
                                     Topic topic = pool.listOfTopics[index];
@@ -3385,9 +3388,9 @@ public class ValidationManager : MonoBehaviour
                                                         { isSuccessOne = true; }
                                                         //check that a storyStar criteria is in use and count them
                                                         if (criteria.name.Equals(storyStarTrueCriteria.name, StringComparison.Ordinal) == true)
-                                                        { isSuccessTwo = true; countTrue++; }
+                                                        { isSuccessTwo = true; arrayOfLast[topic.levelIndex, 1]++;}
                                                         else if (criteria.name.Equals(storyStarFalseCriteria.name, StringComparison.Ordinal) == true)
-                                                        { isSuccessTwo = true; countFalse++; }
+                                                        { isSuccessTwo = true; arrayOfLast[topic.levelIndex, 0]++; }
                                                         //check that the storyFlagFalse criteria hasn't been used by mistake
                                                         if (criteria.name.Equals(storyFlagFalseCriteria.name, StringComparison.Ordinal) == true)
                                                         {
@@ -3505,7 +3508,7 @@ public class ValidationManager : MonoBehaviour
                                                         //must NOT have storyInfo
                                                         if (string.IsNullOrEmpty(option.storyInfo) == false)
                                                         { Debug.LogFormat("{0} INVALID option.StoryInfo (shouldn't be there) for \"{1}\", topic \"{2}\"{3}", tag, option.name, topic.name, "\n"); }
-                                                        //must have a target effect
+                                                        //must have a target effect in listOfGOODeffects
                                                         for (int k = 0; k < option.listOfGoodEffects.Count; k++)
                                                         {
                                                             Effect effect = option.listOfGoodEffects[k];
@@ -3539,10 +3542,18 @@ public class ValidationManager : MonoBehaviour
                                     else { Debug.LogWarningFormat("Invalid topic (Null) in {0}.listOfTopics[{1}]", topic.name, index); }
                                 }
                                 //check StoryStarCriteria true/false counts for linkedIndex 3 topics (topics 6/7/8/9)
-                                if (countTrue != 2 || countFalse != 2)
+                                for (int j = 0; j < arrayOfLast.GetUpperBound(0); j++)
                                 {
-                                    Debug.LogFormat("{0} Mismatch on Topics 6/7/8/9 CheckStar criteria. Current criteria True {1}, False {2} (should be 2 of each) for pool {3}{4}",
-                                      tag, countTrue, countFalse, pool.name, "\n");
+                                    //check at least one star criteria present
+                                    if (arrayOfLast[j, 0] + arrayOfLast[j, 1] > 0)
+                                    {
+                                        if (arrayOfLast[j, 0] != 2 || arrayOfLast[j, 1] != 2)
+                                        {
+                                            Debug.LogFormat("{0} Mismatch on Topics {1}6/{2}7/{3}8/{4}9 CheckStar criteria. Current criteria True {5}, False {6} (should be 2 of each) for pool {7}{8}",
+                                              tag, j > 0 ? j.ToString() : "", j > 0 ? j.ToString() : "", j > 0 ? j.ToString() : "", j > 0 ? j.ToString() : "",
+                                              arrayOfLast[j, 1], arrayOfLast[j, 0], pool.name, "\n");
+                                        }
+                                    }
                                 }
                                 //
                                 // - - - Topic Checks (Indexes)
