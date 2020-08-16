@@ -2182,12 +2182,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8228697ce0df2ef488e3cac23fef3557, type: 2}
   - {fileID: 11400000, guid: 47f56aa60531194459cb2f11432aecfc, type: 2}
   arrayOfStoryHelp:
-  - {fileID: 11400000, guid: d340f3099fcbeda45bfe6137fcb18258, type: 2}
-  - {fileID: 11400000, guid: aca67ebbde6f2b243935b3c8b03051b0, type: 2}
-  - {fileID: 11400000, guid: 52c226f81fd7a0a45800752cf7bd0ea2, type: 2}
+  - {fileID: 11400000, guid: 87941c60a33c1bc4f8d370777fe09842, type: 2}
   - {fileID: 11400000, guid: 2edd14c0e12bcb343aa3b8a0703f8f69, type: 2}
+  - {fileID: 11400000, guid: d340f3099fcbeda45bfe6137fcb18258, type: 2}
+  - {fileID: 11400000, guid: 52c226f81fd7a0a45800752cf7bd0ea2, type: 2}
   - {fileID: 11400000, guid: eb6b22809cfce5944b6ec21e9a659f9a, type: 2}
   - {fileID: 11400000, guid: 7103a4c541015dd40a7ada437543adfa, type: 2}
+  - {fileID: 11400000, guid: b04251719ecdd854e809c24a8b0c85a4, type: 2}
+  - {fileID: 11400000, guid: 00835da57cfd59545b5b0e876ed4eda4, type: 2}
+  - {fileID: 11400000, guid: aca67ebbde6f2b243935b3c8b03051b0, type: 2}
+  - {fileID: 11400000, guid: 8674a3c8da0323644aa8bd96a5039c27, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}

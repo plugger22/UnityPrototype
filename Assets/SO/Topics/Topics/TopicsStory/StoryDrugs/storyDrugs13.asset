@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: The Pink Petal
   text: They've sent [*The Pink Petal] to target the meeting. Have you heard of her?
-    No? Of course not. You're tone deaf. That's why I'm here to take care of it
+    No? Of course not. She's [*augmented]. That's why I'm here to take care of it
   designNotes: storyDrugs13
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
   subType: {fileID: 11400000, guid: cbe3debfe6a42e74bba2c4c8929ec971, type: 2}
@@ -30,7 +30,8 @@ MonoBehaviour:
   linkedIndex: 1
   levelIndex: 1
   topicItem: {fileID: 11400000, guid: 2e6d0fdcecfe3bf41b25acc43c7bce7d, type: 2}
-  listOfStoryHelp: []
+  listOfStoryHelp:
+  - {fileID: 11400000, guid: 87941c60a33c1bc4f8d370777fe09842, type: 2}
   profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 0149fc4442e0c8441940141f428f1035, type: 2}
