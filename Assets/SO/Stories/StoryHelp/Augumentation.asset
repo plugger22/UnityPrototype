@@ -13,12 +13,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Augumentation
   sprite: {fileID: 21300000, guid: b409a5bb3e60fe2449c54d6642ca4a19, type: 3}
-  textTop: Technology for augumenting humans both physically and mentally has existed
-    for some time. Due to the advantages that such augmentations grant, they are heavily
-    restricted and a special permit is needed prior to implanting
+  textTop: Technology for augumenting humans physically and neurologically exits.
+    Due to the advantages that such augmentations grant, they are tightly restricted
+    and a special permit is required
   textMiddle: Side effects are an issue. Psychologists believe that preexisting tendencies
-    to meglomania or other power fantasies are turbo fuelled by being augmented. Pysch
-    screening is compulsory for any permit applicant
-  textBottom: Ripper Docs will happily install illegal augumentations which result
-    in the death penalty for any person caught with non-permit implants. That's if
-    the weird and crazy voices don't talk you into topping yourself first
+    to meglomania or other power fantasies are turbo fuelled by augumentations. Pysch
+    screening is compulsory for any applicant
+  textBottom: Ripper Docs can install illegal augumentations. Any individual found
+    with these faces the death penalty. That's if the weird and crazy implant voices
+    don't convince you into ending it yourself first

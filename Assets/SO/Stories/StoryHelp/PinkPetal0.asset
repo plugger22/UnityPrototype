@@ -13,13 +13,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: The Pink Petal
   sprite: {fileID: 21300000, guid: f8252a05227cda24b978271c78b656b7, type: 3}
-  textTop: A refugee from the Southern Asian Slumscape, of indeterminate origin. Believed
-    to be mentally unstable, possibly psychopathic, with numerous illegal augmentations
-    of a lethal nature.
-  textMiddle: Utilised by the MegaCorps to solve any 'outstanding issue' that takes
-    their fancy, she is immune to Government sanctions. Reports of her death by violent
-    means have repeatedly surfaced, only to fade away after yet another assassination
-  textBottom: Pink, gene synthesised, petals are glued the eyelids of her victims.
-    Concerned professors worry about the mental torment she must be going through,
-    surrounded by death and implant induced voices. 'Save the Petal' is currently
+  textTop: A refugee from the Southern Asian Slumscape, of indeterminate nationality.
+    Believed to be mentally unstable, possibly psychopathic, with numerous illegal
+    augmentations of a lethal nature.
+  textMiddle: Protected and utilised by MegaCorps to resolve 'delicate matters, she
+    is immune to Government sanctions. Pink, gene synthesised, petals are glued to
+    her victims eyelids
+  textBottom: Concerned professors worry about the mental aguish she must be enduring,
+    amongst death and implant induced voices. The 'Save the Petal' campaign is currently
     accepting donations

@@ -13,12 +13,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Petal Quirks
   sprite: {fileID: 21300000, guid: f8252a05227cda24b978271c78b656b7, type: 3}
-  textTop: One of The Pink Petals suite of illegal augumentations is rumoured to be
-    a micro guillotine installed in a delicate region. A favoured form of assassination,
-    it is said, is to lure her victim into an amorous assignation
-  textMiddle: Naturally this is hearsay and strenously denied by the organisers of
-    the 'Save the Petal' campaign who highlight the bias and stereotyping that all
-    pyschopathic augumented assassins are forced to endure
-  textBottom: An interesting side note is that The Pink Petal has, apparently, a memory
-    like an Elephant, augmented with a solid state nanodrive. Few who upset the Petal
-    live long enough to enjoy a SerialFlix season pass or can pee without a tube
+  textTop: One of The Pink Petal's suite of illegal augumentations is rumoured to
+    be a micro guillotine installed in a delicate area. She likes, it's said, to lure
+    her victim into an amorous assignation
+  textMiddle: Naturally this is hearsay and strenously denied by the 'Save the Petal'
+    campaign who point to the bias and stereotyping that all pyschopathic augumented
+    assassins are forced to endure
+  textBottom: The Pink Petal has, apparently, a memory like a nano drive equipped
+    Elephant,  Few who upset the Petal live long enough to enjoy their SerialFlix
+    season pass

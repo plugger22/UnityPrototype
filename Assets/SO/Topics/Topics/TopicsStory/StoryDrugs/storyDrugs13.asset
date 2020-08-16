@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: storyDrugs13
   m_EditorClassIdentifier: 
   tag: The Pink Petal
-  text: They've sent [*The Pink Petal] to target the meeting. Have you heard of her?
+  text: They've sent [*The Pink Petal] to kill our leaders. Have you heard of her?
     No? Of course not. She's [*augmented]. That's why I'm here to take care of it
   designNotes: storyDrugs13
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
