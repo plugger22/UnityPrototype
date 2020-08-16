@@ -5374,7 +5374,7 @@ MonoBehaviour:
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1
-  isIntegrityCheck: 1
+  isIntegrityCheck: 0
   isRandomLevel: 0
   isRandomCity: 0
   isEncrypted: 0

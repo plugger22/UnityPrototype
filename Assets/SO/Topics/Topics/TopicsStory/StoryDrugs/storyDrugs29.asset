@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: storyDrugs29
+  m_EditorClassIdentifier: 
+  tag: 
+  text: 
+  designNotes: storyDrugs29
+  type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
+  subType: {fileID: 11400000, guid: cbe3debfe6a42e74bba2c4c8929ec971, type: 2}
+  subSubType: {fileID: 0}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics: []
+  listOfBuddyTopics:
+  - {fileID: 11400000, guid: 61ddd6456ed81924dad5d48c96f8d514, type: 2}
+  - {fileID: 11400000, guid: c2c8edcacbe86bc48a35aee1d05d5fb3, type: 2}
+  - {fileID: 11400000, guid: 3174f085b759ab4469880910d58bf3cd, type: 2}
+  - {fileID: 11400000}
+  linkedIndex: 3
+  levelIndex: 2
+  topicItem: {fileID: 11400000, guid: 2e6d0fdcecfe3bf41b25acc43c7bce7d, type: 2}
+  listOfStoryHelp:
+  - {fileID: 11400000, guid: eb6b22809cfce5944b6ec21e9a659f9a, type: 2}
+  profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: eb9c8041761a3bc4f97296c5c0ed2966, type: 2}
+  - {fileID: 11400000, guid: 85bfee5dd2489b54789d867be5778846, type: 2}
+  - {fileID: 11400000, guid: 7901b3f80822a35469f9969d81c04ab7, type: 2}
+  listOfIgnoreEffects: []
+  listOfOptions:
+  - {fileID: 11400000, guid: ac8884df9f9942846a2493c4c7aac913, type: 2}
+  - {fileID: 11400000, guid: 42ab1553934821c429b5920da5a8b45c, type: 2}
+  - {fileID: 11400000, guid: f1db01ccceed3bb4ab7c1853fa91198c, type: 2}
+  - {fileID: 11400000, guid: 9b2b5410d33fab9408375fc9a1f3e35b, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  status: 0
+  isCurrent: 0
+  timerStart: 0
+  timerRepeat: 0
+  timerWindow: 0
+  turnsDormant: 0
+  turnsActive: 0
+  turnsLive: 0
+  turnsDone: 0
