@@ -5040,7 +5040,7 @@ public class EffectManager : MonoBehaviour
         EffectDataResolve effectResolve = new EffectDataResolve();
         //default data
         effectResolve.topText = "Unknown effect";
-        effectResolve.bottomText = "Unknown effect";
+        effectResolve.bottomText = ""; //leave blank
         effectResolve.isError = false;
         //reason
         string reason = dataInput.originText;

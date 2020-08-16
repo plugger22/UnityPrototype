@@ -25,7 +25,7 @@ MonoBehaviour:
   listOfGoodEffects:
   - {fileID: 11400000, guid: c23ed1da5bca28b4883286a1de807e06, type: 2}
   - {fileID: 11400000, guid: 988b9f50bdaa2f94aaecd82d27bbc078, type: 2}
-  - {fileID: 11400000, guid: d2eec58e229e31740a0ac2bcd09b2d6a, type: 2}
+  - {fileID: 11400000, guid: 97cd169356b9e544d85be4e629f8325d, type: 2}
   - {fileID: 11400000, guid: 233d008d9c43c6449a6f4d851c42b88e, type: 2}
   listOfBadEffects:
   - {fileID: 11400000, guid: 58139420dd98a074a9b7167a197a2598, type: 2}
