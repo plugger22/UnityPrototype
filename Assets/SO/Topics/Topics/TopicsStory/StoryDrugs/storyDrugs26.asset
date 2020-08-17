@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: storyDrugs26
   m_EditorClassIdentifier: 
   tag: ss
-  text: ss
+  text: You managed to buy us some time with your covert Jujistu? I like to stick
+    to flying but, hey, good job. That should quieten down [mega3Corp]
   designNotes: storyDrugs26
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
   subType: {fileID: 11400000, guid: cbe3debfe6a42e74bba2c4c8929ec971, type: 2}

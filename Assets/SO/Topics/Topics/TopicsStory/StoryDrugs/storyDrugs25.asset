@@ -11,8 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyDrugs25
   m_EditorClassIdentifier: 
-  tag: ss
-  text: ss
+  tag: Cover our Tracks
+  text: We smuggle in the drugs on [mega3Corp] freighters. Do they know this? What
+    would happen if they did? They can't find out, no matter what
   designNotes: storyDrugs25
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
   subType: {fileID: 11400000, guid: cbe3debfe6a42e74bba2c4c8929ec971, type: 2}
