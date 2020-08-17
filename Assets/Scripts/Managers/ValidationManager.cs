@@ -2962,13 +2962,15 @@ public class ValidationManager : MonoBehaviour
                                     //check topicSubType is correct
                                     if (pool.subType.name.Equals("StoryAlpha", StringComparison.Ordinal) == false)
                                     { Debug.LogFormat("{0} Invalid topicSubType \"{1}\" (should be StoryAlpha) for topicPool \"{2}\" in {3}.listOfCampaignStories[{4}]{5}", tag, pool.subType.name, pool.name, storyModule.name, i, "\n"); }
+                                    //gather all targets into a single list
+                                    List<Target> listOfTargets = GetStoryDataListOfTargets(storyData);
                                     //check targets have the same targetType as pool.subType
-                                    countTwo = storyData.listOfTargets.Count;
+                                    countTwo = listOfTargets.Count;
                                     if (countTwo > 0)
                                     {
                                         for (int j = 0; j < countTwo; j++)
                                         {
-                                            Target target = storyData.listOfTargets[i];
+                                            Target target = listOfTargets[i];
                                             if (target != null)
                                             {
                                                 if (target.targetType.name.Equals("StoryAlpha", StringComparison.Ordinal) == false)
@@ -3000,13 +3002,15 @@ public class ValidationManager : MonoBehaviour
                                     //check topicSubType is correct
                                     if (pool.subType.name.Equals("StoryBravo", StringComparison.Ordinal) == false)
                                     { Debug.LogFormat("{0} Invalid topicSubType \"{1}\" (should be StoryBravo) for topicPool \"{2}\" in {3}.listOfFamilyStories[{4}]{5}", tag, pool.subType.name, pool.name, storyModule.name, i, "\n"); }
+                                    //gather all targets into a single list
+                                    List<Target> listOfTargets = GetStoryDataListOfTargets(storyData);
                                     //check targets have the same targetType as pool.subType
-                                    countTwo = storyData.listOfTargets.Count;
+                                    countTwo = listOfTargets.Count;
                                     if (countTwo > 0)
                                     {
                                         for (int j = 0; j < countTwo; j++)
                                         {
-                                            Target target = storyData.listOfTargets[i];
+                                            Target target = listOfTargets[i];
                                             if (target != null)
                                             {
                                                 if (target.targetType.name.Equals("StoryBravo", StringComparison.Ordinal) == false)
@@ -3041,13 +3045,15 @@ public class ValidationManager : MonoBehaviour
                                         Debug.LogFormat("{0} Invalid topicSubType \"{1}\" (should be StoryCharlie) for topicPool \"{2}\" in {3}.listOfHqStories[{4}]{5}",
                                           tag, pool.subType.name, pool.name, storyModule.name, i, "\n");
                                     }
+                                    //gather all targets into a single list
+                                    List<Target> listOfTargets = GetStoryDataListOfTargets(storyData);
                                     //check targets have the same targetType as pool.subType
-                                    countTwo = storyData.listOfTargets.Count;
+                                    countTwo = listOfTargets.Count;
                                     if (countTwo > 0)
                                     {
                                         for (int j = 0; j < countTwo; j++)
                                         {
-                                            Target target = storyData.listOfTargets[i];
+                                            Target target = listOfTargets[i];
                                             if (target != null)
                                             {
                                                 if (target.targetType.name.Equals("StoryCharlie", StringComparison.Ordinal) == false)
@@ -3071,6 +3077,22 @@ public class ValidationManager : MonoBehaviour
             else { Debug.LogError("Invalid arrayOfStoryModules (Empty)"); }
         }
         else { Debug.LogError("Invalid arrayOfStoryModules (Null)"); }
+    }
+
+    /// <summary>
+    /// Sub method for CheckStoryModuleData which gathers up all targets within a storyData and returns them as a single list
+    /// </summary>
+    /// <param name="storyData"></param>
+    /// <returns></returns>
+    private List<Target> GetStoryDataListOfTargets(StoryData storyData)
+    {
+        List<Target> listOfTargets = new List<Target>();
+        listOfTargets.AddRange(storyData.listOfTargetsLevel0);
+        listOfTargets.AddRange(storyData.listOfTargetsLevel1);
+        listOfTargets.AddRange(storyData.listOfTargetsLevel2);
+        listOfTargets.AddRange(storyData.listOfTargetsLevel3);
+        listOfTargets.AddRange(storyData.listOfTargetsLevel4);
+        return listOfTargets;
     }
     #endregion
 
@@ -3347,7 +3369,7 @@ public class ValidationManager : MonoBehaviour
                                             }
                                         }
                                         else { Debug.LogFormat("{0} Invalid Profile (Null) for topic \"{1}\"{2}", tag, topic.name, "\n"); }
-                                        //Special -> should all have a topicItem
+                                        //TopicItem -> should all have
                                         if (topic.topicItem == null)
                                         { Debug.LogFormat("{0} MISSING TopicItem (Null) for topic \"{1}\"{2}", tag, topic.name, "\n"); }
                                         else
@@ -3358,9 +3380,45 @@ public class ValidationManager : MonoBehaviour
                                                 if (storyData.listOfTopicItems.Exists(x => x.name.Equals(topic.topicItem.name, StringComparison.Ordinal)) == false)
                                                 {
                                                     Debug.LogFormat("{0} TopicItem \"{1}\" for topic \"{2}\" NOT FOUND in storyData \"{3}\"{4}",
-                                                      tag, topic.topicItem.name, topic.name, storyData.name, "\n");
+                                                      tag, topic.topicItem.name, topic.name, storyData.name,  "\n");
                                                 }
                                             }
+                                        }
+                                        //Story Help -> should all have
+                                        if (topic.listOfStoryHelp != null)
+                                        {
+                                            int count = topic.listOfStoryHelp.Count;
+                                            if (count > 0)
+                                            {
+                                                for (int j = 0; j < count; j++)
+                                                {
+                                                    StoryHelp storyHelp = topic.listOfStoryHelp[j];
+                                                    if (storyHelp != null)
+                                                    {
+                                                        //check that storyHelp is in StoryData.listOfStoryHelp
+                                                        if (storyData.listOfStoryHelp.Exists(x => x.name.Equals(storyHelp.name)) == false)
+                                                        {
+                                                            Debug.LogFormat("{0} Topic \"{1}\" StoryHelp \"{2}\" not found in StoryData \"{3}\"{4}",
+                                                                tag, topic.name, storyHelp.name, storyData.name, "\n");
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        Debug.LogFormat("{0} Topic \"{1}\" Invalid StoryHelp (Null) topic.listOfStoryHelp[{2}]{3}",
+                                                            tag, topic.name, j, "\n");
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Debug.LogFormat("{0} Topic \"{1}\" MISSING StoryHelp (must have) in storyData \"{2}\"{3}",
+                                                    tag, topic.name, storyData.name, "\n");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            Debug.LogFormat("{0} Topic \"{1}\" MISSING StoryHelp (must have) in storyData \"{2}\"{3}",
+                                                tag, topic.name, storyData.name, "\n");
                                         }
                                         //
                                         // - - - Criteria -> last topics in sequence need a flag trigger from target success or timeOut
@@ -3498,10 +3556,28 @@ public class ValidationManager : MonoBehaviour
                                                             //check target is one from StoryData 
                                                             if (isStoryData == true)
                                                             {
-                                                                if (storyData.listOfTargets.Exists(x => x.name.Equals(option.storyTarget.name, StringComparison.Ordinal)) == false)
+                                                                List<Target> listOfTargets = null;
+                                                                switch (topic.levelIndex)
                                                                 {
-                                                                    Debug.LogFormat("{0} Target \"{1}\" for \"{2}\", topic \"{3}\" NOT FOUND in storyData{4}", tag, option.storyTarget.name,
-                                                                      option.name, topic.name, "\n");
+                                                                    case 0: listOfTargets = storyData.listOfTargetsLevel0; break;
+                                                                    case 1: listOfTargets = storyData.listOfTargetsLevel1; break;
+                                                                    case 2: listOfTargets = storyData.listOfTargetsLevel2; break;
+                                                                    case 3: listOfTargets = storyData.listOfTargetsLevel3; break;
+                                                                    case 4: listOfTargets = storyData.listOfTargetsLevel4; break;
+                                                                    default: Debug.LogWarningFormat("Unrecognised topic.levelIndex \"{0}\"", topic.levelIndex); break;
+                                                                }
+                                                                if (listOfTargets != null)
+                                                                {
+                                                                    if (listOfTargets.Exists(x => x.name.Equals(option.storyTarget.name, StringComparison.Ordinal)) == false)
+                                                                    {
+                                                                        Debug.LogFormat("{0} Target \"{1}\" for \"{2}\", topic \"{3}\" NOT FOUND in storyData{4}", tag, option.storyTarget.name,
+                                                                          option.name, topic.name, "\n");
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    Debug.LogFormat("{0} Target \"{1}\" for \"{2}\", topic \"{3}\" INVALID ListOfTargets (Null){4}", tag, option.storyTarget.name,
+                                                                       option.name, topic.name, "\n");
                                                                 }
                                                             }
                                                         }

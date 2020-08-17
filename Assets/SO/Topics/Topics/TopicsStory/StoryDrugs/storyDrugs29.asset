@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyDrugs29
   m_EditorClassIdentifier: 
-  tag: 
-  text: 
+  tag: ss
+  text: ss
   designNotes: storyDrugs29
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
   subType: {fileID: 11400000, guid: cbe3debfe6a42e74bba2c4c8929ec971, type: 2}
@@ -46,7 +46,7 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 0
+  status: 4
   isCurrent: 0
   timerStart: 0
   timerRepeat: 0

@@ -16,12 +16,26 @@ MonoBehaviour:
   listOfTopicItems:
   - {fileID: 11400000, guid: 2e6d0fdcecfe3bf41b25acc43c7bce7d, type: 2}
   - {fileID: 11400000, guid: 2e2ce29c7b61139488a5a4546df9fd77, type: 2}
-  listOfTargets:
-  - {fileID: 11400000, guid: 51e1ace29b9f95140a601f7475150729, type: 2}
-  - {fileID: 11400000, guid: 464dde104fe0d244b8f66b23a8a8fec6, type: 2}
+  listOfTargetsLevel0:
   - {fileID: 11400000, guid: 97e8aa7ff0cfef74f8b9b2e7f063cdc7, type: 2}
   - {fileID: 11400000, guid: 9bdb2eb8d989fed44a8782c9ef232a6a, type: 2}
-  - {fileID: 11400000, guid: e5a82fc1330e3b84c9a36f900ad9ea7d, type: 2}
-  - {fileID: 11400000, guid: a7b89b13079266f4b909f631288459fb, type: 2}
+  - {fileID: 11400000, guid: 51e1ace29b9f95140a601f7475150729, type: 2}
+  - {fileID: 11400000, guid: 464dde104fe0d244b8f66b23a8a8fec6, type: 2}
+  listOfTargetsLevel1:
   - {fileID: 11400000, guid: da2b7dd2ea5e1f14a884915cf15ff6af, type: 2}
   - {fileID: 11400000, guid: 71b01e4dbe730b945a1052247a68c6af, type: 2}
+  - {fileID: 11400000, guid: e5a82fc1330e3b84c9a36f900ad9ea7d, type: 2}
+  - {fileID: 11400000, guid: a7b89b13079266f4b909f631288459fb, type: 2}
+  listOfTargetsLevel2: []
+  listOfTargetsLevel3: []
+  listOfTargetsLevel4: []
+  listOfStoryHelp:
+  - {fileID: 11400000, guid: 87941c60a33c1bc4f8d370777fe09842, type: 2}
+  - {fileID: 11400000, guid: d340f3099fcbeda45bfe6137fcb18258, type: 2}
+  - {fileID: 11400000, guid: 52c226f81fd7a0a45800752cf7bd0ea2, type: 2}
+  - {fileID: 11400000, guid: eb6b22809cfce5944b6ec21e9a659f9a, type: 2}
+  - {fileID: 11400000, guid: 7103a4c541015dd40a7ada437543adfa, type: 2}
+  - {fileID: 11400000, guid: b04251719ecdd854e809c24a8b0c85a4, type: 2}
+  - {fileID: 11400000, guid: 00835da57cfd59545b5b0e876ed4eda4, type: 2}
+  - {fileID: 11400000, guid: aca67ebbde6f2b243935b3c8b03051b0, type: 2}
+  - {fileID: 11400000, guid: 8674a3c8da0323644aa8bd96a5039c27, type: 2}

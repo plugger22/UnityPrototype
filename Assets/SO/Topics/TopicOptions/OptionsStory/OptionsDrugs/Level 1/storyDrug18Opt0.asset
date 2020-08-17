@@ -27,12 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: The last person who kissed me died of asphyxiation. I remember seeing
-    them lying there beside me, their tongue blue and swollen, eyes bulgiing
+  storyInfo: Somebody kissed me once. I recall seeing them afterwards lying there
+    beside me, their tongue blue and swollen, eyes bulging. They stank
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Overcome</color>
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Yes, and gorgeous. Kiss?</color>
   optionNumber: 0

@@ -752,3 +752,32 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 39725 -> Monday, 17 August 2020 12:17 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 7429 -> Monday, 17 August 2020 2:28 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid saveList dimension (is 4, should be 5), changed automatically (if < than required, arrayOfMegaCorpRel's may be incorect)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:SetMegaCorpRelations(List`1) (at Assets/Scripts/Managers/DataManager.cs:9816)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2468)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:212)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	City seed 765 -> New York, America
+
+Dev seed 9150 -> Monday, 17 August 2020 3:07 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 8127 -> Monday, 17 August 2020 3:08 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 31778 -> Monday, 17 August 2020 3:11 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11293 -> Monday, 17 August 2020 3:36 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 13922 -> Monday, 17 August 2020 3:38 PM
+City seed 5678 -> London, United Kingdom

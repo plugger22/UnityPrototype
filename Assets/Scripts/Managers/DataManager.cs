@@ -9811,7 +9811,7 @@ public class DataManager : MonoBehaviour
             //initialise if not done so already (possible due to sequencing issues)
             if (arrayOfMegaCorpRelations == null)
             { arrayOfMegaCorpRelations = new int[(int)MegaCorpType.Count]; }
-            if (limit != arrayOfMegaCorpRelations.Length)
+            if (limit != arrayOfMegaCorpRelations.Length + 1)
             {
                 Debug.LogWarningFormat("Invalid saveList dimension (is {0}, should be {1}), changed automatically (if < than required, arrayOfMegaCorpRel's may be incorect)", 
                     limit, arrayOfMegaCorpRelations.Length);

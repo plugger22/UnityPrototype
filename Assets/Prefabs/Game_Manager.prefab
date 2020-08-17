@@ -535,6 +535,7 @@ MonoBehaviour:
   ratioPlayDoNothingHigh: 0.7
   ratioPlayAddictLow: 0.2
   ratioPlayAddictHigh: 0.7
+  chanceOfSpottedByMegaCorp: 50
 --- !u!114 &114271324079928462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5420,7 +5421,7 @@ MonoBehaviour:
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1
-  isIntegrityCheck: 0
+  isIntegrityCheck: 1
   isRandomLevel: 0
   isRandomCity: 0
   isEncrypted: 0
