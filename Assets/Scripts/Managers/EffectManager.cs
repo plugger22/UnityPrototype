@@ -5091,13 +5091,14 @@ public class EffectManager : MonoBehaviour
                         Debug.LogFormat("[Rnd] EffectManager.cs -> ResolveTopicMegaCorpEffect: {0} by {1}, need < {2}, rolled {3}{4}",
                             rnd < chanceOfSpottedByMegaCorp ? "Not Spotted" : "Spotted", megaCorpName, chanceOfSpottedByMegaCorp, rnd, "\n");
                         string text = string.Format("{0} {1}", rnd < chanceOfSpottedByMegaCorp ? "Not Spotted by " : "Spotted by ", megaCorpName);
-                        GameManager.i.messageScript.GeneralRandom(text, "MegaCorp", chanceOfSpottedByMegaCorp, rnd);
+                        GameManager.i.messageScript.GeneralRandom(text, "MegaCorp", chanceOfSpottedByMegaCorp, rnd, false, "rand_7");
                     }
                     if (isProceed == true)
                     {
                         GameManager.i.dataScript.UpdateMegaCorpRelations(megaCorpType, effect.value * -1, reason);
                         effectResolve.bottomText = string.Format("{0}{1} {2}{3}", colourBad, megaCorpName, effect.description, colourEnd);
                     }
+                    else { effectResolve.bottomText = string.Format("{0}NOT recognised by {1}{2}", colourGood, megaCorpName, colourEnd); }
                     break;
             }
         }

@@ -753,12 +753,10 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
-        #region TopicSubTypes
+        #region TopicSubType...
         //
         // - - - TopicSubType help (for optional 2nd help icon on topicUI that covers subType details for the topic)
         //
-
-        // NEXT # is _26
 
         //ActorPolitic -> Overview
         data = new HelpData();
@@ -1440,7 +1438,7 @@ public class HelpManager : MonoBehaviour
 
         #endregion
 
-        #region ...Random
+        #region Random...
 
         #region Random Rolls
         //
@@ -1524,6 +1522,15 @@ public class HelpManager : MonoBehaviour
         data.header = string.Format("{0}Relationships{1}", colourTip, colourEnd);
         data.text = string.Format("Whenever a {0}Friend or Enemy{1} relationship exists, any {2}change in Motivation{3} in one subordinate can affect the motivation of the {4}other subordinate{5}",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //MegaCorp Spotting
+        data = new HelpData();
+        data.tag = "rand_7";
+        data.header = string.Format("{0}MegaCorp Targets{1}", colourTip, colourEnd);
+        data.text = string.Format("Whenever you {0}attempt{1} a MegaCorp target and {2}Fail{3} there is a {4}{5} %{6} chance that you'll be {7}spotted{8} and that your " +
+            "{9}relations{10} with the MegaCorp will {11}deteroriate{12}",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, GameManager.i.effectScript.chanceOfSpottedByMegaCorp, 
+            colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 
