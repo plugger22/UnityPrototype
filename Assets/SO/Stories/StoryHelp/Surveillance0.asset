@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
+  m_Name: Surveillance0
+  m_EditorClassIdentifier: 
+  tag: Surveillance AI
+  sprite: {fileID: 21300000, guid: 54b08e6c19f29974aac8dafffa972789, type: 3}
+  textTop: There is a constant arms race between The Authority's rollout of surveillance
+    AI and the Resistance's ability to spoof it. Deep pools of resources vs. ingenuity
+  textMiddle: '[mega1Corp] develops the AI and has access to the most powerful Quantum
+    Cloud farms on the planet. Don''t tell anyone but most of them are on Luna. It''s
+    cold up there'
+  textBottom: Surveillance is no longer just a means of control. It's now primarily
+    focused on identifying and eliminating remnant Resistance activity. Rat extermination.

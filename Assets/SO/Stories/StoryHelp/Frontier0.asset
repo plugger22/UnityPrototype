@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
+  m_Name: Frontier0
+  m_EditorClassIdentifier: 
+  tag: The Frontier
+  sprite: {fileID: 0}
+  textTop: Anywhere out beyond Mars and her moons is the Frontier. The wild black
+    yonder. It's the Penal Colony on Titan, the mining operations, the small service
+    hubs.
+  textMiddle: It's where the future of mankind lies. Where everything plays loose
+    and fast. Where nobody will sell you life insurance and where you can still make
+    huge money, if you get lucky
+  textBottom: There is so much activity on the Frontier and it's so dispersed and
+    uncoordinated that nobody really knows whats going on where. But it's private.
+    All of it.

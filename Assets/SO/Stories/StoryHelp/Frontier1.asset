@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
+  m_Name: Frontier1
+  m_EditorClassIdentifier: 
+  tag: Frontier Law
+  sprite: {fileID: 0}
+  textTop: After the major power blocs on Earth saw their massive resource investments
+    on Mars collapse they gave up any semblance of control over the Frontier
+  textMiddle: It became the Wild West. If there is a law out there it's probably what's
+    enforced by [mega3Corp]. You can't get to the Frontier without going on a ship
+    they built
+  textBottom: Cooperation is limited and profit is king. It's mankind's competitive
+    capitalistic urges writ large and unrestrained in space with all the baggage that
+    entails
