@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
+  m_Name: storyDrug28Opt0
+  m_EditorClassIdentifier: 
+  descriptor: Story Drugs 28 Opt 0
+  tag: ww
+  text: 
+  topic: {fileID: 11400000, guid: 3174f085b759ab4469880910d58bf3cd, type: 2}
+  isPreferredByHQ: 0
+  isDislikedByHQ: 0
+  isIgnoredByHQ: 1
+  isIgnoreStress: 0
+  isIgnoreMood: 1
+  listOfCriteria: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 305af0aacc470e14cb866b7f4142ead1, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 0}
+  chance: {fileID: 0}
+  news: 
+  storyInfo: 
+  storyTarget: {fileID: 0}
+  tooltipHeader: <color=#FFFFE0>Question</color>
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
+  optionNumber: 0

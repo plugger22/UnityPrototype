@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: storyDrug20Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 20 Opt 3
-  tag: 
+  tag: ww
   text: 
   topic: {fileID: 11400000, guid: 708c9f3616c07924997dc01b6c2e16b9, type: 2}
   isPreferredByHQ: 0

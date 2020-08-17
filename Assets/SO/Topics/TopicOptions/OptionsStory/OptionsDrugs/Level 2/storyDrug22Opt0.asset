@@ -11,10 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
   m_Name: storyDrug22Opt0
   m_EditorClassIdentifier: 
-  descriptor: Story Drugs 21 Opt 0
-  tag: 
+  descriptor: Story Drugs 22 Opt 0
+  tag: ww
   text: 
-  topic: {fileID: 11400000, guid: b9e85e2e6a4798f45a59128473bb5988, type: 2}
+  topic: {fileID: 11400000, guid: 279d1996f2019834fb159f4e276f0ba2, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
   isIgnoredByHQ: 1

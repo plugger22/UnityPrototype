@@ -38,10 +38,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 85bfee5dd2489b54789d867be5778846, type: 2}
   listOfIgnoreEffects: []
   listOfOptions:
-  - {fileID: 11400000, guid: 1354f01b2ab2057419fe4b6ba792aa1e, type: 2}
-  - {fileID: 11400000, guid: 60cb7fcc81771ef448a5bbe5776bd907, type: 2}
-  - {fileID: 11400000, guid: 6b851d816722a41419160ce44155fb87, type: 2}
-  - {fileID: 11400000, guid: 900d7fbe56239bd48a3d8376df3bc177, type: 2}
+  - {fileID: 11400000, guid: 4c2bafc61abe02a44a461164eb040806, type: 2}
+  - {fileID: 11400000, guid: 51e077353c0c9304a9b01af8bfce8760, type: 2}
+  - {fileID: 11400000, guid: ee19a0a2710e97c498385a5ddd0ca2c5, type: 2}
+  - {fileID: 11400000, guid: 6426a175dee01a04095c2468b5cfcb2a, type: 2}
   isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
