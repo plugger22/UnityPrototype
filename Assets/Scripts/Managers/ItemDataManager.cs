@@ -124,15 +124,15 @@ public class ItemDataManager : MonoBehaviour
         //success or failure
         if (numRolled < numNeeded)
         {
-            builder.AppendFormat("{0}Rolled {1}<b>{2}</b>{3}{4}{5}", "\n", colourSuccess, numRolled, colourEnd, "\n", "\n");
-            builder.AppendFormat("{0}<b>SUCCESS</b>{1}{2}{3}", colourSuccess, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}<b>Rolled {1}{2}</b>{3}{4}{5}", "\n", colourSuccess, numRolled, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}<b><size=120%>SUCCESS</size></b>{1}{2}{3}", colourSuccess, colourEnd, "\n", "\n");
         }
         else
         {
             builder.AppendFormat("{0}Rolled {1}<b>{2}</b>{3}{4}{5}", "\n", colourFail, numRolled, colourEnd, "\n", "\n");
-            builder.AppendFormat("{0}<b>FAILED</b>{1}{2}{3}", colourFail, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}<b><size=120%>FAILED</size></b>{1}{2}{3}", colourFail, colourEnd, "\n", "\n");
         }
-        builder.AppendFormat("A {0}Percentage die{1} (1d00) is used", colourNeutral, colourEnd);
+        builder.AppendFormat("A {0}<b>Percentage die</b>{1} (1d00) is used", colourNeutral, colourEnd);
         return builder.ToString();
     }
 

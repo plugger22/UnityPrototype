@@ -64,6 +64,11 @@
     public enum ConnectionType { None, HIGH, MEDIUM, LOW, Active, Count }   //NOTE: keep first four entries as is (none -> Low)
 
     //
+    // - - - Effects - - -
+    //
+    public enum EffectSource { None, Topic, Gear, ReserveActor, ManageAction, NodeAction, Target, TargetAI, Mission, Team, MetaGame }   //source of effects being passed onto EffectManager.cs
+
+    //
     // - - - Nodes - - -
     // 
     public enum NodeInfo { Number, TargetsAll, TargetsLive, TargetsActive, Count }          //DataManager arrayOfNodes index
@@ -106,7 +111,7 @@
     // - - - Story - - - 
     //
     public enum StoryType { None, Alpha, Bravo, Charlie, Count }            //Story module type
-    public enum MegaCorpType { MegaCorpOne, MegaCorpTwo, MegaCorpThree, MegaCorpFour, Count }  //correspond to GlobalManager.cs -> tagMegaCorpOne...
+    public enum MegaCorpType { None, MegaCorpOne, MegaCorpTwo, MegaCorpThree, MegaCorpFour, Count }  //correspond to GlobalManager.cs -> tagMegaCorpOne...
 
     //
     // - - - Actors - - -

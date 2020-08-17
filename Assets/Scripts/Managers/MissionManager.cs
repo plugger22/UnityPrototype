@@ -853,6 +853,7 @@ public class MissionManager : MonoBehaviour
             EffectDataReturn effectReturn = new EffectDataReturn();
             EffectDataInput effectInput = new EffectDataInput();
             effectInput.originText = npc.tag;
+            effectInput.source = EffectSource.Mission;
             Node node = npc.currentNode;
             if (node != null)
             {

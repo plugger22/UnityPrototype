@@ -57,6 +57,7 @@ public class TargetManager : MonoBehaviour
     [Tooltip("Each target should have a TargetProfile. If not and there is no Mission SO profile, this profile is used as the default")]
     public TargetProfile defaultProfile;
 
+
     #region Save Compatible Data
     [HideInInspector] public int StartTargets;
     [HideInInspector] public int ActiveTargets;
@@ -1959,6 +1960,7 @@ public class TargetManager : MonoBehaviour
                     Action action = actor.arc.nodeAction;
                     EffectDataInput dataInput = new EffectDataInput();
                     dataInput.originText = "Target Intel";
+                    dataInput.source = EffectSource.NodeAction;
                     List<Effect> listOfEffects = action.GetEffects();
                     if (listOfEffects.Count > 0)
                     {

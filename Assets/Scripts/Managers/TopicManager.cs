@@ -3577,6 +3577,7 @@ public class TopicManager : MonoBehaviour
                 dataInput.originText = string.Format("Event {0}\'{1}\', {2}{3}", colourAlert, turnTopic.tag, turnOption.tag, colourEnd);
                 dataInput.side = GameManager.i.sideScript.PlayerSide;
                 dataInput.data = Convert.ToInt32(turnOption.isIgnoreMood);
+                dataInput.source = EffectSource.Topic;
                 dataInput.dataName = turnOption.name;
                 if (turnTopic.name.Equals("Story", StringComparison.Ordinal) == true)
                 {
@@ -3735,6 +3736,7 @@ public class TopicManager : MonoBehaviour
 
             //pass through data package
             EffectDataInput dataInput = new EffectDataInput();
+            dataInput.source = EffectSource.Topic;
             dataInput.originText = string.Format("{0} IGNORE", turnTopic.tag);
             dataInput.side = GameManager.i.sideScript.PlayerSide;
             Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());

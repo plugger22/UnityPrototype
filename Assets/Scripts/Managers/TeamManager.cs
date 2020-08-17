@@ -1446,6 +1446,7 @@ public class TeamManager : MonoBehaviour
                                 {
                                     EffectDataInput dataInput = new EffectDataInput();
                                     dataInput.originText = "Neutralise Team";
+                                    dataInput.source = EffectSource.NodeAction;
                                     foreach (Effect effect in listOfEffects)
                                     {
                                         if (effect.ignoreEffect == false)
@@ -1551,6 +1552,7 @@ public class TeamManager : MonoBehaviour
                 {
                     EffectDataInput dataInput = new EffectDataInput();
                     dataInput.originText = team.arc.name;
+                    dataInput.source = EffectSource.Team;
                     effectReturn = GameManager.i.effectScript.ProcessEffect(teamEffect, node, dataInput, actor);
                     isError = effectReturn.errorFlag;
                     if (isError == false)

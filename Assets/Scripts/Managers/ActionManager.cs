@@ -327,6 +327,7 @@ public class ActionManager : MonoBehaviour
                         //pass through data package
                         EffectDataInput dataInput = new EffectDataInput();
                         dataInput.originText = action.tag;
+                        dataInput.source = EffectSource.NodeAction;
                         //
                         // - - - Process effects
                         //
@@ -507,7 +508,7 @@ public class ActionManager : MonoBehaviour
                     //pass through data package
                     EffectDataInput dataInput = new EffectDataInput();
                     dataInput.originText = string.Format("{0} District Action", details.gearName);
-
+                    dataInput.source = EffectSource.Gear;
                     //
                     // - - - Process effects
                     //
@@ -1855,6 +1856,7 @@ public class ActionManager : MonoBehaviour
                         EffectDataReturn effectReturn = new EffectDataReturn();
                         //pass through data package
                         EffectDataInput dataInput = new EffectDataInput();
+                        dataInput.source = EffectSource.Gear;
                         dataInput.originText = "Use " + gear.tag;
                         //
                         // - - - Process effects
@@ -2574,6 +2576,7 @@ public class ActionManager : MonoBehaviour
                 dataInput.originText = string.Format("{0} target", target.targetName);
                 //org name, if present (only applies to ContactOrg effect for Organisation targets but send regardless)
                 dataInput.dataName = GameManager.i.targetScript.targetOrgName;
+                dataInput.source = EffectSource.Target;
                 //handle any Ongoing effects of target completed -> only if target Successful
                 if (isSuccessful == true && target.ongoingEffect != null)
                 {
@@ -2795,6 +2798,7 @@ public class ActionManager : MonoBehaviour
                             if (listOfEffects.Count > 0)
                             {
                                 EffectDataInput dataInput = new EffectDataInput();
+                                dataInput.source = EffectSource.ReserveActor;
                                 dataInput.originText = "Reserve Actor";
                                 foreach (Effect effect in listOfEffects)
                                 {
@@ -2968,6 +2972,7 @@ public class ActionManager : MonoBehaviour
                                 if (listOfEffects.Count > 0)
                                 {
                                     EffectDataInput dataInput = new EffectDataInput();
+                                    dataInput.source = EffectSource.ManageAction;
                                     dataInput.originText = "Dismiss Actor";
                                     foreach (Effect effect in listOfEffects)
                                     {
@@ -3136,6 +3141,7 @@ public class ActionManager : MonoBehaviour
                                 if (listOfEffects.Count > 0)
                                 {
                                     EffectDataInput dataInput = new EffectDataInput();
+                                    dataInput.source = EffectSource.ManageAction;
                                     dataInput.originText = "Dispose Actor";
                                     foreach (Effect effect in listOfEffects)
                                     {

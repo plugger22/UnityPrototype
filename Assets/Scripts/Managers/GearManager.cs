@@ -1215,6 +1215,7 @@ public class GearManager : MonoBehaviour
                                 Action action = actor.arc.nodeAction;
                                 EffectDataInput dataInput = new EffectDataInput();
                                 dataInput.originText = "Gear";
+                                dataInput.source = EffectSource.Gear;
                                 List<Effect> listOfEffects = action.GetEffects();
                                 if (listOfEffects.Count > 0)
                                 {
