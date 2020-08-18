@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Don't talk to me about SQUISHY! I have two Liver Cell breast implants
-    and I know all about SQUISHY. Go stuff your stomach with fungal muscle spore scones
+  storyInfo: Don't talk to me about SQUISHY! I have two Liver Cell breast implants.
+    I know all about SQUISHY. Go stuff your stomach with fungal muscle spore soup
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>

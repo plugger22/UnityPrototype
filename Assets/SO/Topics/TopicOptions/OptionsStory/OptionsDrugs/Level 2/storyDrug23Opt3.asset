@@ -28,7 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: By being very good and doing what I ask of you. My, what a precious little
-    astronaut you are. Full of ambition and enthusiasm. What a shame you're stupid
+    astronaut you are. Full of ambition and enthusiasm. All get up and go
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>

@@ -28,8 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: Oh, we know sarcasm, do we? My you are a learned individual. And they
-    put you in charge here in [city] did they? Who, I wonder, was responsible for
-    that?
+    put you in charge here in [city] did they? Goodness, that was brave
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>

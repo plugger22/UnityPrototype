@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: You could offer you body to science? Or become an escort? Or parachute
+    into the Camp if you're really feeling lucky. Kill Ball anyone?
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>

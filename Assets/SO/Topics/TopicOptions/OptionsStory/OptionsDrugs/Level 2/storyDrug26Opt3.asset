@@ -27,9 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Sadly not. [mega1Corp] have got us cornered with their new A.I. We rely
-    on the drugs to keep going. Maybe if some smart Alec figures out how to deal with
-    the A.I?
+  storyInfo: No. [mega1Corp] upgrade has us cornered. We rely on the drugs to keep
+    going. Maybe if some smart Alec figures out how to deal with the A.I?
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>

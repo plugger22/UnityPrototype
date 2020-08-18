@@ -27,7 +27,7 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: That wouldn't be good, no Sir. [fac1] would run short of cash. Operations
+  storyInfo: That wouldn't be good, no Sir. [facR1] would run short of cash. Operations
     couldn't be conducted. People couldn't be helped. We'd wither and die
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>

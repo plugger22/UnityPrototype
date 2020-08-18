@@ -28,7 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: You could ask for one of these fancy badges like I've got. The ones that'll
-    fuzz out the A.I and keep you anonymous. You have to be important. Are you?
+    fuzz out the A.I and keep you anonymous. But only important people get one
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>

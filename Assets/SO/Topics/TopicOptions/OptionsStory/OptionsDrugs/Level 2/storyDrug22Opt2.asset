@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: We''re making them happy. Don't forget that without the money that comes
-    from the drugs we can't help anyone. That new [mega1] A.I is really hurting us.
+  storyInfo: We''re making them happy. Don't forget that without the money from the
+    drugs we can't help anyone. That new [mega1] A.I is really hurting us.
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
