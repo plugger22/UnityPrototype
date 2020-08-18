@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
     [Tooltip("Autoruns game for 'x' number of turns with current player & Both sides as AI. Leave at Zero for normal operation")]
     public int autoRunTurns = 0;
     [Tooltip("Scenario level to start a new game on (default 0")]
-    public int scenarioStartLevel = 0;
+    [Range(0, 5)] public int scenarioStartLevel = 0;
 
     [Header("Debug Options")]
     [Tooltip("Switch ON to get a performance log of initialisation at Session Start")]
