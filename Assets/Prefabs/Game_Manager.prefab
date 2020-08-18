@@ -5426,6 +5426,7 @@ MonoBehaviour:
   popUpFixedScript: {fileID: 0}
   seedDev: 0
   autoRunTurns: 20
+  scenarioStartLevel: 2
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1

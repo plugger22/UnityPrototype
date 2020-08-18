@@ -22,3 +22,93 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 50909 -> Tuesday, 18 August 2020 2:51 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 30723 -> Tuesday, 18 August 2020 2:58 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 18367 -> Tuesday, 18 August 2020 3:00 PM
+City seed 765 -> New York, America
+
+Dev seed 41860 -> Tuesday, 18 August 2020 3:04 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 2709 -> Tuesday, 18 August 2020 3:10 PM
+City seed 234 -> Sydney, Australia
+
+Dev seed 7017 -> Tuesday, 18 August 2020 3:36 PM
+City seed 234 -> Sydney, Australia
+
+Dev seed 64057 -> Tuesday, 18 August 2020 4:01 PM
+City seed 234 -> Sydney, Australia
+
+Dev seed 46241 -> Tuesday, 18 August 2020 4:02 PM
+City seed 234 -> Sydney, Australia
+
+Dev seed 7439 -> Tuesday, 18 August 2020 4:05 PM
+City seed 234 -> Sydney, Australia
+
+Dev seed 50184 -> Tuesday, 18 August 2020 4:06 PM
+City seed 234 -> Sydney, Australia
+
+Dev seed 5416 -> Tuesday, 18 August 2020 4:11 PM
+City seed 234 -> Sydney, Australia
+
+Dev seed 12621 -> Tuesday, 18 August 2020 4:19 PM
+City seed 234 -> Sydney, Australia
+ERROR Invalid contact (Null) for actor Charlie Hawkins, OBSERVER, id 44 at nodeID 1
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:CreateNodeContacts() (at Assets/Scripts/Managers/DataManager.cs:2063)
+	DataManager:RemoveContactsActor(Int32) (at Assets/Scripts/Managers/DataManager.cs:1640)
+	DataManager:RemoveActorAdmin(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4299)
+	DataManager:RemoveCurrentActor(GlobalSide, Actor, ActorStatus, Boolean) (at Assets/Scripts/Managers/DataManager.cs:4263)
+	EffectManager:ResolveSpecialActorEffect(Effect, Actor) (at Assets/Scripts/Managers/EffectManager.cs:3920)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:2102)
+	ActorManager:ProcessActorConflict(Actor) (at Assets/Scripts/Managers/ActorManager.cs:5198)
+	EffectManager:ProcessActorMotivation(Actor, Int32, String, String, String, Boolean) (at Assets/Scripts/Managers/EffectManager.cs:5514)
+	EffectManager:ExecuteActorMotivation(Effect, Actor, EffectDataInput, TopicEffectData) (at Assets/Scripts/Managers/EffectManager.cs:5388)
+	EffectManager:ResolveTopicActorEffect(Effect, EffectDataInput, TopicEffectData, Actor) (at Assets/Scripts/Managers/EffectManager.cs:4406)
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:4249)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1975)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3621)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:688)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:277)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid RelationshipData (Null) for Michael Woods, RECRUITER, ID 54, slotID -1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EffectManager:ExecuteActorMotivation(Effect, Actor, EffectDataInput, TopicEffectData) (at Assets/Scripts/Managers/EffectManager.cs:5396)
+	EffectManager:ResolveTopicActorEffect(Effect, EffectDataInput, TopicEffectData, Actor) (at Assets/Scripts/Managers/EffectManager.cs:4406)
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:4249)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1975)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3621)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:688)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:277)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid contact (Null) for actor Charlie Hawkins, OBSERVER, id 44 at nodeID 1
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:CreateNodeContacts() (at Assets/Scripts/Managers/DataManager.cs:2063)
+	ContactManager:SetActorContacts(Actor) (at Assets/Scripts/Managers/ContactManager.cs:425)
+	DataManager:AddCurrentActor(GlobalSide, Actor, Int32) (at Assets/Scripts/Managers/DataManager.cs:4176)
+	ActionManager:ProcessActiveDutyActor(ModalActionDetails) (at Assets/Scripts/Managers/ActionManager.cs:2325)
+	ActionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActionManager.cs:210)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	<GetReservePoolActions>c__AnonStorey13:<>m__0() (at Assets/Scripts/Managers/ActorManager.cs:3372)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid contact (Null) for actor Charlie Hawkins, OBSERVER, id 44 at nodeID 1
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:CreateNodeContacts() (at Assets/Scripts/Managers/DataManager.cs:2063)
+	DataManager:RemoveContactsNode(Int32, String, Boolean, GlobalSide) (at Assets/Scripts/Managers/DataManager.cs:1739)
+	TeamManager:ProcessTeamEffect(Team, Node, Actor) (at Assets/Scripts/Managers/TeamManager.cs:1615)
+	TeamManager:StartTurnEarly() (at Assets/Scripts/Managers/TeamManager.cs:352)
+	TeamManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TeamManager.cs:160)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	TurnManager:StartTurnEarly() (at Assets/Scripts/Managers/TurnManager.cs:520)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:325)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:426)
+	

@@ -78,19 +78,19 @@ public class TooltipStory : MonoBehaviour
             if (storyHelp.textTop != null && storyHelp.textTop.Length > 0)
             {
                 textTop.gameObject.SetActive(true);
-                textTop.text = storyHelp.textTop;
+                textTop.text = GameManager.i.topicScript.CheckTopicText(storyHelp.textTop, false);
             }
             //middle
             if (storyHelp.textMiddle != null && storyHelp.textMiddle.Length > 0)
             {
                 textMiddle.gameObject.SetActive(true);
-                textMiddle.text = storyHelp.textMiddle;
+                textMiddle.text = GameManager.i.topicScript.CheckTopicText(storyHelp.textMiddle, false);
             }
             //bottom
             if (storyHelp.textBottom != null && storyHelp.textBottom.Length > 0)
             {
                 textBottom.gameObject.SetActive(true);
-                textBottom.text = storyHelp.textBottom;
+                textBottom.text = GameManager.i.topicScript.CheckTopicText(storyHelp.textBottom, false);
             }
             //sprite -> default 'Info' sprite if none present
             if (storyHelp.sprite != null)

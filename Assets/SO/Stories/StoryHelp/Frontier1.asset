@@ -13,11 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Frontier Law
   sprite: {fileID: 0}
-  textTop: After the major power blocs on Earth saw their massive resource investments
-    on Mars collapse they gave up any semblance of control over the Frontier
+  textTop: After the major power blocs on Earth saw their massive investments on Mars
+    evaporate they gave up any pretence of control over the Frontier
   textMiddle: It became the Wild West. If there is a law out there it's probably what's
-    enforced by [mega3Corp]. You can't get to the Frontier without going on a ship
-    they built
-  textBottom: Cooperation is limited and profit is king. It's mankind's competitive
-    capitalistic urges writ large and unrestrained in space with all the baggage that
-    entails
+    enforced by [mega3Corp]. You can't get to the Frontier without them
+  textBottom: Cooperation is limited. Profit is king. It's Mankind's competitive capitalistic
+    urges writ large and unrestrained in the remoteness of space. It can get ugly

@@ -395,7 +395,7 @@ public class ActorManager : MonoBehaviour
         if (nameSet == null)
         { Debug.LogError("Invalid nameSet (Null)"); }
         //create new actors -> first level only
-        if (GameManager.i.campaignScript.GetScenarioIndex() == 0)
+        if (GameManager.i.campaignScript.GetScenarioIndex() == GameManager.i.scenarioStartLevel)
         {
             //create active, OnMap actors (need to do both sides for purposes of setting up contacts)
             InitialiseActors(maxNumOfOnMapActors, GameManager.i.globalScript.sideResistance);

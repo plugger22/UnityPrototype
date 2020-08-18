@@ -5096,7 +5096,9 @@ public class EffectManager : MonoBehaviour
                     if (isProceed == true)
                     {
                         GameManager.i.dataScript.UpdateMegaCorpRelations(megaCorpType, effect.value * -1, reason);
-                        effectResolve.bottomText = string.Format("{0}{1} {2}{3}", colourBad, megaCorpName, effect.description, colourEnd);
+                        if (dataInput.source != EffectSource.Target)
+                        { effectResolve.bottomText = string.Format("{0}{1} {2}{3}", colourBad, megaCorpName, effect.description, colourEnd); }
+                        else { effectResolve.bottomText = string.Format("{0}Spotted!{1}{2} {3}{4}", colourBad, "\n", megaCorpName, effect.description, colourEnd); }
                     }
                     else { effectResolve.bottomText = string.Format("{0}NOT recognised by {1}{2}", colourGood, megaCorpName, colourEnd); }
                     break;

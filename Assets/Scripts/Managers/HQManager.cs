@@ -1279,7 +1279,7 @@ public class HQManager : MonoBehaviour
                         {
                             Debug.LogFormat("[HQ] HQManager.cs -> CheckHqHierarchy: {0}, {1}, renown {2} is secure in their position{3}", currentActor.actorName,
                                 GetHqTitle(currentActor.statusHQ), currentActor.Renown, "\n");
-                            if (GameManager.i.campaignScript.GetScenarioIndex() > 0)
+                            if (GameManager.i.campaignScript.GetScenarioIndex() > GameManager.i.scenarioStartLevel)
                             { currentActor.AddHistory(new HistoryActor() { text = string.Format("Position secure at HQ as {0}{1}{2}", colourAlert, GetHqTitle(currentActor.statusHQ), colourEnd) }); }
                         }
                     }

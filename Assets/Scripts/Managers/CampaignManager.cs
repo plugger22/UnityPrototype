@@ -213,7 +213,12 @@ public class CampaignManager : MonoBehaviour
     /// </summary>
     public void Reset()
     {
-        scenarioIndex = 0;
+        if (GameManager.i.scenarioStartLevel > 0)
+        {
+            scenarioIndex = GameManager.i.scenarioStartLevel;
+            Debug.LogFormat("[Tst] CampaignManager.cs -> Reset: Commence at ScenarioIndex {0}{1}", scenarioIndex, "\n");
+        }
+        else { scenarioIndex = 0; }
         commendations = 0;
         blackmarks = 0;
         investigationBlackmarks = 1;
@@ -241,7 +246,7 @@ public class CampaignManager : MonoBehaviour
     /// <returns></returns>
     public bool CheckIsFirstScenario()
     {
-        if (scenarioIndex == 0)
+        if (scenarioIndex == GameManager.i.scenarioStartLevel)
         { return true; }
         return false;
     }
