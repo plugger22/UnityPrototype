@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug20Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 20 Opt 1
-  tag: ww
-  text: 
+  tag: Worried
+  text: Should I stay indoors?
   topic: {fileID: 11400000, guid: 708c9f3616c07924997dc01b6c2e16b9, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: That might work provided you stay away from screens and anything electrical.
+    Even your ServoPod is spying on you. 1984 didn't come close
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 0
+  optionNumber: 1

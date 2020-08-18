@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug20Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 20 Opt 0
-  tag: ww
-  text: 
+  tag: Question
+  text: How is this affecting the Resistance?
   topic: {fileID: 11400000, guid: 708c9f3616c07924997dc01b6c2e16b9, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: It's making it hard for us to do business. We might be a movement but
+    we still have to pay the bills
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>

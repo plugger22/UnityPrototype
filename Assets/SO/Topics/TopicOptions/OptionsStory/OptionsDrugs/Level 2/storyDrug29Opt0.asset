@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug29Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 29 Opt 0
-  tag: ww
-  text: 
+  tag: Ridicule
+  text: I'm sure you can handle it
   topic: {fileID: 11400000, guid: 24614b7438d47d34c8e0a7655b86df31, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,13 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Oh, we know sarcasm, do we? My you are a learned individual. And they
+    put you in charge here in [city] did they? Who, I wonder, was responsible for
+    that?
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 3
+  optionNumber: 0

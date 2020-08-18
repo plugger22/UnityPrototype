@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug24Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 24 Opt 1
-  tag: ww
-  text: 
+  tag: Broadcast
+  text: Tell everybody how Corrupt [mega3] is
   topic: {fileID: 11400000, guid: 4054c20d904056245b262b74634811ed, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

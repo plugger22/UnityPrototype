@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug21Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 21 Opt 2
-  tag: ww
-  text: 
+  tag: Reluctant
+  text: I'm staying in my ServoPod forever
   topic: {fileID: 11400000, guid: b9e85e2e6a4798f45a59128473bb5988, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: That may be an improvement for the world but it won't help you as your
+    ServoPod is linked into the A.I's surveillance network. It's spying on you
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 1
+  optionNumber: 2

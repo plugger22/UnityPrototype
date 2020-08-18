@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug22Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 22 Opt 2
-  tag: ww
-  text: 
+  tag: Confused
+  text: Aren't we supposed to be helping people?
   topic: {fileID: 11400000, guid: 279d1996f2019834fb159f4e276f0ba2, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: We''re making them happy. Don't forget that without the money that comes
+    from the drugs we can't help anyone. That new [mega1] A.I is really hurting us.
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 1
+  optionNumber: 2

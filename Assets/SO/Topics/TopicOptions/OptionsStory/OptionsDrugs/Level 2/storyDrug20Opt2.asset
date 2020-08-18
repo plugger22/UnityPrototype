@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug20Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 20 Opt 2
-  tag: ww
-  text: 
+  tag: Alternative
+  text: What if I lived Underground?
   topic: {fileID: 11400000, guid: 708c9f3616c07924997dc01b6c2e16b9, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Good plan, cowboy. What use would you be to us if you rattled around
+    the sewers in the dark? They say there are gene-rats the size of bears down there
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 1
+  optionNumber: 2

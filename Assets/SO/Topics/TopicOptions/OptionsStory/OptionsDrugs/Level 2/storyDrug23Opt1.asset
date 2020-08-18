@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug23Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 23 Opt 1
-  tag: ww
-  text: 
+  tag: Angry
+  text: I didn't realise that I'm a drug dealer
   topic: {fileID: 11400000, guid: 8162af2e9ba7ab246bfc7bb871af2870, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -34,4 +34,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 0
+  optionNumber: 1

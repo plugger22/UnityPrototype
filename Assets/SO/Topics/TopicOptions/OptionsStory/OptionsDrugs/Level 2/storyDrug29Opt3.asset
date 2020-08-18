@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug29Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 29 Opt 3
-  tag: ww
-  text: 
+  tag: Question
+  text: What are we going to do now?
   topic: {fileID: 11400000, guid: 24614b7438d47d34c8e0a7655b86df31, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: We? Is there a WE in the room? I'm going to fix the problem and you are
+    going to lick the street off my red Rhino Horn pumps, you useless waste of space
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 2
+  optionNumber: 3

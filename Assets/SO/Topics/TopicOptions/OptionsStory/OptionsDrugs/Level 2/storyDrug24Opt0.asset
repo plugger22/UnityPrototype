@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug24Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 24 Opt 0
-  tag: ww
-  text: 
+  tag: Alter
+  text: Manipulate the Cargo Manifests
   topic: {fileID: 11400000, guid: 4054c20d904056245b262b74634811ed, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug27Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 27 Opt 0
-  tag: ww
-  text: 
+  tag: Explain
+  text: They saw us Coming
   topic: {fileID: 11400000, guid: c2c8edcacbe86bc48a35aee1d05d5fb3, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: That's 'cause they have that fancy new [mega1Corp] A.I. Hard to sneak
+    past that. Lucky you didn't get yourself killed in all the kerfuffle
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 3
+  optionNumber: 0

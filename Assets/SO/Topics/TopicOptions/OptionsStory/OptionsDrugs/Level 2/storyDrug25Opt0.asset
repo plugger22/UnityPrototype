@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug25Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 25 Opt 0
-  tag: ww
-  text: 
+  tag: Disable
+  text: Blow up the [mega3] Freight Terminal
   topic: {fileID: 11400000, guid: 0345f04a18f8fdc4aa4b7a5fba47ffbd, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

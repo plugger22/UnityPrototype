@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug29Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 29 Opt 1
-  tag: ww
-  text: 
+  tag: Confident
+  text: '[mega3Corp] aren''t worried about us'
   topic: {fileID: 11400000, guid: 24614b7438d47d34c8e0a7655b86df31, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: No? They worry about EVERYTHING. They have whole buildings full of algorithms
+    and people whose job it is to worry about [facR1].
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 0
+  optionNumber: 1

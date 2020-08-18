@@ -11,11 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
   m_Name: ResAmerCharlieDrugs2_B1
   m_EditorClassIdentifier: 
-  targetName: Infiltrate Server Farm
-  descriptorResistance: Infiltrate Eclipse Server Farm
+  targetName: Infiltrate Data Node
+  descriptorResistance: Infiltrate Eclipse Data Node
   descriptorAuthority: Eclipse Corporation
-  reasonText: infiltrate Server Farm
-  rumourText: infiltrate Server Farm
+  reasonText: infiltrate Data Node
+  rumourText: infiltrate Data Node
   targetLevel: 1
   actorArc: {fileID: 11400000, guid: acb9718e84f6a6740810786455da2a6e, type: 2}
   gear: {fileID: 11400000, guid: e8011a067725d9e46bc9a30e85ee9700, type: 2}

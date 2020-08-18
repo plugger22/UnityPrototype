@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug28Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 28 Opt 0
-  tag: ww
-  text: 
+  tag: Confident
+  text: Reliable is my middle name
   topic: {fileID: 11400000, guid: 3174f085b759ab4469880910d58bf3cd, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Oh, yes you are my very own super helpful, Swiss watch. Just keep ticking
+    away and we'll get along fine
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>

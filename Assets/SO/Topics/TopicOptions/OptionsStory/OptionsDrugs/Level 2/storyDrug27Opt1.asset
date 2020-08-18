@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug27Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 27 Opt 1
-  tag: ww
-  text: 
+  tag: Worried
+  text: So that's it? I'm fired?
   topic: {fileID: 11400000, guid: c2c8edcacbe86bc48a35aee1d05d5fb3, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Noooo. Settle down there, pardner. You're a valued member of the Resistance.
+    Nobody gets it right all the time. We give people space to make mistakes
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 0
+  optionNumber: 1

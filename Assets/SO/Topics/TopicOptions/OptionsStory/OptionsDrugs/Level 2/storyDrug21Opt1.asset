@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug21Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 21 Opt 1
-  tag: ww
-  text: 
+  tag: Worried
+  text: What should I do?
   topic: {fileID: 11400000, guid: b9e85e2e6a4798f45a59128473bb5988, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: You could ask for one of these fancy badges like I've got. The ones that'll
+    fuzz out the A.I and keep you anonymous. You have to be important. Are you?
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 0
+  optionNumber: 1

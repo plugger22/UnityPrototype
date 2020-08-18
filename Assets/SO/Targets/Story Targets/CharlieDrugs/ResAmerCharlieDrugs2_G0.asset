@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: ResAmerCharlieDrugs2_G0
   m_EditorClassIdentifier: 
   targetName: Inject Data
-  descriptorResistance: Seed Eclipse Manifests with false records
+  descriptorResistance: Overwrite Eclipse Manifests with false data
   descriptorAuthority: Eclipse Corporation
   reasonText: alter Eclipse Manifests
   rumourText: alter Eclipse Manifests

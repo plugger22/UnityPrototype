@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug23Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 23 Opt 0
-  tag: ww
-  text: 
+  tag: Dubious
+  text: That doesn't sound very Ethical
   topic: {fileID: 11400000, guid: 8162af2e9ba7ab246bfc7bb871af2870, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

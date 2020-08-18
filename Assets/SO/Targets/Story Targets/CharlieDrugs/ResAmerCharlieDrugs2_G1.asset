@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: ResAmerCharlieDrugs2_G1
   m_EditorClassIdentifier: 
   targetName: False News
-  descriptorResistance: Broadcast allegations about Eclipse Pilots
+  descriptorResistance: Broadcast allegations about Corruption
   descriptorAuthority: Eclipse Corporation
   reasonText: broadcast allegations
   rumourText: braodcast allegations

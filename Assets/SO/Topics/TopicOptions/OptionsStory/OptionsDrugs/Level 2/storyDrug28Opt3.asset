@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug28Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 28 Opt 3
-  tag: ww
-  text: 
+  tag: Question
+  text: '[mega3Corp] won''t bother us now?'
   topic: {fileID: 11400000, guid: 3174f085b759ab4469880910d58bf3cd, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Well they won't be bothering me. I can't vouch for you. They may even
+    send that psychopathic Petal woman after you, who can tell? Who cares?
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 2
+  optionNumber: 3

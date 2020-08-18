@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug22Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 22 Opt 0
-  tag: ww
-  text: 
+  tag: Upset
+  text: Drugs? We sell Drugs?
   topic: {fileID: 11400000, guid: 279d1996f2019834fb159f4e276f0ba2, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Yes Sir, we do. High quality, synth drugs with no impurities. How do
+    you think the Resistance earns money? Donations? Nobody does that anymore
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 3
+  optionNumber: 0

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug27Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 27 Opt 3
-  tag: ww
-  text: 
+  tag: Curious
+  text: Do we have to use [mega3] Freighters?
   topic: {fileID: 11400000, guid: c2c8edcacbe86bc48a35aee1d05d5fb3, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Who else would we use? The only freighters running between Earth and
+    The Frontier are those of [mega3Corp]
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 2
+  optionNumber: 3

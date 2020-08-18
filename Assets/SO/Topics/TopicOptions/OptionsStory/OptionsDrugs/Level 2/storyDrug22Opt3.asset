@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug22Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 22 Opt 3
-  tag: ww
-  text: 
+  tag: Question
+  text: What do YOU think about this?
   topic: {fileID: 11400000, guid: 279d1996f2019834fb159f4e276f0ba2, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: What's there to think? It's a necessary evil. The drugs give us money
+    and without that we can't do anything.
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 2
+  optionNumber: 3
