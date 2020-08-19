@@ -2577,6 +2577,9 @@ public class ActionManager : MonoBehaviour
                 //org name, if present (only applies to ContactOrg effect for Organisation targets but send regardless)
                 dataInput.dataName = GameManager.i.targetScript.targetOrgName;
                 dataInput.source = EffectSource.Target;
+                //player/actorID for topic story targets
+                if (isPlayer == true) { dataInput.data1 = 999; }
+                else { dataInput.data1 = actor.actorID; }
                 //handle any Ongoing effects of target completed -> only if target Successful
                 if (isSuccessful == true && target.ongoingEffect != null)
                 {
@@ -2588,9 +2591,9 @@ public class ActionManager : MonoBehaviour
                 //story targets
                 switch (target.targetType.name)
                 {
-                    case "StoryAlpha": dataInput.dataSpecial = (int)StoryType.Alpha; dataInput.data = 1; break;
-                    case "StoryBravo": dataInput.dataSpecial = (int)StoryType.Bravo; dataInput.data = 1; break;
-                    case "StoryCharlie": dataInput.dataSpecial = (int)StoryType.Charlie; dataInput.data = 1; break;
+                    case "StoryAlpha": dataInput.dataSpecial = (int)StoryType.Alpha; dataInput.data0 = 1; break;
+                    case "StoryBravo": dataInput.dataSpecial = (int)StoryType.Bravo; dataInput.data0 = 1; break;
+                    case "StoryCharlie": dataInput.dataSpecial = (int)StoryType.Charlie; dataInput.data0 = 1; break;
                     default: dataInput.dataSpecial = (int)StoryType.None; break;
                 }
                 //effect derived help tags for outcome dialogue (only the first four are used, if none then is ignored)

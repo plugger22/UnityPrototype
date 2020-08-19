@@ -113,7 +113,8 @@ namespace packageAPI
         public int ongoingID;                                                //used only if there are going to be ongoing effects, ignore otherwise
         public string ongoingText;                                           //used only if there are going to be ongoing effects, ignore otherwise
         public string originText;                                            //name of thing that caused the effect, eg. gear name
-        public int data;                                                     //multipurpose datapoint, eg. gearID
+        public int data0;                                                    //multipurpose datapoint   NOTE: be careful when using data0/1 that you keep them separate and don't overwrite
+        public int data1;                                                    //multipurpose datapoint
         public int dataSpecial;                                              //multipurpose datapoint, used for passing enums, eg. StoryType
         public string dataName;                                              //multipurpose data string, eg. organisation name for revealed secret
 

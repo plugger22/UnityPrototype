@@ -3643,7 +3643,7 @@ public class ValidationManager : MonoBehaviour
                                         for (int group = 0; group < arrayOfLevels.GetUpperBound(2) + 1; group++)
                                         { total += arrayOfLevels[level, linked, group]; }
                                     }
-                                    Debug.LogFormat("[Tst] ValidationManager.cs -> CheckStructuredTopicData: \"{0}\" level {1} total {2}{3}", pool.name, level, total, "\n");
+                                    /*Debug.LogFormat("[Tst] ValidationManager.cs -> CheckStructuredTopicData: \"{0}\" level {1} total {2}{3}", pool.name, level, total, "\n");*/
 
                                     if (total > 0)
                                     {
@@ -3708,11 +3708,9 @@ public class ValidationManager : MonoBehaviour
             Debug.LogFormat("{0} Mismatch on topic Numbers -> \"{1}\" linkedIndex {2} has {3} topics (should be {4}){5}",
               tag, poolName, linkedIndex, total, numberRequired, "\n");
         }
-        else
-        {
-            Debug.LogFormat("[Tst] ValidationManager.cs -> CheckStructedTopicData: \"{0}\" level {1}, linkedIndex {2}, has {3} topics{4}",
-         poolName, levelIndex, linkedIndex, total, "\n");
-        }
+        /*else
+        { Debug.LogFormat("[Tst] ValidationManager.cs -> CheckStructedTopicData: \"{0}\" level {1}, linkedIndex {2}, has {3} topics{4}",
+         poolName, levelIndex, linkedIndex, total, "\n"); }*/
     }
     #endregion
 

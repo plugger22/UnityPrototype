@@ -129,3 +129,18 @@ City seed 234 -> Sydney, Australia
 
 Dev seed 8144 -> Wednesday, 19 August 2020 10:05 AM
 City seed 234 -> Sydney, Australia
+
+Dev seed 23707 -> Wednesday, 19 August 2020 10:42 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 20454 -> Wednesday, 19 August 2020 11:20 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 41653 -> Wednesday, 19 August 2020 11:22 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38629 -> Wednesday, 19 August 2020 11:39 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51599 -> Wednesday, 19 August 2020 11:56 AM
+City seed 5678 -> London, United Kingdom

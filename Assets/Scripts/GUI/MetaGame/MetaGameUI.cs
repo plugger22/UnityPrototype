@@ -2159,7 +2159,7 @@ public class MetaGameUI : MonoBehaviour
                         {
                             effectInput.originText = data.Key;
                             effectInput.dataName = data.Value.dataName;
-                            effectInput.data = data.Value.data;
+                            effectInput.data0 = data.Value.data;
                             effectInput.source = EffectSource.MetaGame;
                             for (int i = 0; i < count; i++)
                             {

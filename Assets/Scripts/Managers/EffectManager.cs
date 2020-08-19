@@ -4082,7 +4082,7 @@ public class EffectManager : MonoBehaviour
         //dataInput.Data is topic.option.isIgnoreMood
         if (effect.belief != null)
         {
-            if (dataInput.data == 0)
+            if (dataInput.data0 == 0)
             { effectResolve.bottomText = GameManager.i.personScript.UpdateMood(effect.belief, dataInput.originText); }
             else
             {
@@ -4196,7 +4196,7 @@ public class EffectManager : MonoBehaviour
                 break;
             case "MetaOptionDevice":
                 //special capture tools available becuase HQ actor has a good opinion of you
-                CaptureTool tool = GameManager.i.captureScript.GetCaptureTool(dataInput.data);
+                CaptureTool tool = GameManager.i.captureScript.GetCaptureTool(dataInput.data0);
                 if (tool != null)
                 {
                     //place in listOfCaptureTools
@@ -4215,7 +4215,7 @@ public class EffectManager : MonoBehaviour
     //
 
     /// <summary>
-    /// subMethod to process topic specific effets. ColourEffect/Text are side specific colours for effects that vary good/bad depending on side, eg. city loyalty
+    /// subMethod to process topic specific effets. ColourEffect/Text are side specific colours for effects that vary good/bad depending on side, eg. city loyalty. Actor is Null for player
     /// </summary>
     /// <param name="effect"></param>
     /// <param name="dataInput"></param>
@@ -4570,7 +4570,24 @@ public class EffectManager : MonoBehaviour
         switch (effect.outcome.name)
         {
             case "Renown":
-                effectResolve.bottomText = ExecutePlayerRenown(effect);
+                //normal
+                if (dataInput.source != EffectSource.Target)
+                { effectResolve.bottomText = ExecutePlayerRenown(effect); }
+                //special case of story target -> could be Player or Actor renown
+                else
+                {
+                    //Player
+                    if (dataInput.data1 == 999)
+                    { effectResolve.bottomText = ExecutePlayerRenown(effect); }
+                    else
+                    {
+                        //actor
+                        Actor actor = GameManager.i.dataScript.GetActor(dataInput.data1);
+                        if (actor != null)
+                        { effectResolve.bottomText = ExecuteActorRenown(effect, actor, dataInput); }
+                        else { Debug.LogWarningFormat("Invalid Topic Target actor (Null) for actorID {0}", dataInput.data1); }
+                    }
+                }
                 break;
             case "Invisibility":
                 if (node == null)
@@ -5017,12 +5034,12 @@ public class EffectManager : MonoBehaviour
                 break;
             //sets story flags (current level)
             case "StoryFlag":
-                if (GameManager.i.topicScript.SetStoryFlag((StoryType)dataInput.dataSpecial, dataInput.data) == true)
+                if (GameManager.i.topicScript.SetStoryFlag((StoryType)dataInput.dataSpecial, dataInput.data0) == true)
                 { effectResolve.bottomText = string.Format("{0}Story progresses..{1}", colourNeutral, colourEnd); }
                 break;
             //sets story star (current level)
             case "StoryStar":
-                if (GameManager.i.topicScript.SetStoryStar((StoryType)dataInput.dataSpecial, dataInput.data) == true)
+                if (GameManager.i.topicScript.SetStoryStar((StoryType)dataInput.dataSpecial, dataInput.data0) == true)
                 { effectResolve.bottomText = string.Format("{0}Gained +1 Story Star{1}", colourGood, colourEnd); }
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\" for effect {1}", effect.outcome.name, effect.name); break;
