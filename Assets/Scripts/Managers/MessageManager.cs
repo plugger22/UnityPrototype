@@ -3743,6 +3743,7 @@ public class MessageManager : MonoBehaviour
             data.tag0 = "target_0";
             data.tag1 = "target_1";
             data.tag2 = "target_2";
+            data.tag3 = "target_3";
             //add
             GameManager.i.dataScript.AddMessage(message);
             GameManager.i.dataScript.AddItemData(data);

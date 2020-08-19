@@ -2185,14 +2185,14 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "target_0";
         data.header = "Overview";
-        data.text = string.Format("Targets can be {0}attempted{1} by either the {2}Player{3} (you need to move to the {4}District{5} to do so) or by the {6}subordinate{7} mentioned in the target description, eg. Blogger",
+        data.text = string.Format("Targets can be {0}attempted{1} by either the {2}Player{3} (you need to move to the {4}District{5} to do so) or by the {6}Subordinate{7} mentioned in the target description, eg. Blogger",
             colourAlert, colourEnd, colourAlert,  colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Subordinate
         data = new HelpData();
         data.tag = "target_1";
         data.header = "Subordinate";
-        data.text = string.Format("If you have the {0}correct subordinate{1} present in your line-up they can attempt the target at {2}any time{3}. There is no need for you to move to the District",
+        data.text = string.Format("If you have the {0}correct Subordinate{1} present in your line-up they can attempt the target at {2}any time{3}. There is no need for you to move to the District",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Target Attempts
@@ -2201,6 +2201,13 @@ public class HelpManager : MonoBehaviour
         data.header = "Attempts";
         data.text = string.Format("{0}Left Click{1} on the {2}District{3} if you have the correct subordinate, or you are in the District, and mouseover {4}Attempt Target{5} to see your chances of success",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Renown
+        data = new HelpData();
+        data.tag = "target_3";
+        data.header = "Renown";
+        data.text = string.Format("If there is Renown to be gained from {0}successfully{1} attempting the target, whoever attempts the target gets the Renown ({1}Player or Subordinate{2})",
+            colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 
