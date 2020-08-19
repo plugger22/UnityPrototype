@@ -585,7 +585,7 @@ public class NodeManager : MonoBehaviour
                 if (isFogOfWar == false)
                 {
                     //FOW Off
-                    tempList.AddRange(GameManager.i.dataScript.GetTargetPool(Status.Active));
+                    /*tempList.AddRange(GameManager.i.dataScript.GetTargetPool(Status.Active));*/
                     tempList.AddRange(GameManager.i.dataScript.GetTargetPool(Status.Live));
                     tempList.AddRange(GameManager.i.dataScript.GetTargetPool(Status.Outstanding));
                     if (tempList.Count > 0)
