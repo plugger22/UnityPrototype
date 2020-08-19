@@ -60,7 +60,7 @@ public class Node : MonoBehaviour
 
     //save collections
     private List<Team> listOfTeams;                     //Authority teams present at the node
-    private List <EffectDataOngoing> listOfOngoingEffects; //list of temporary (ongoing) effects impacting on the node
+    private List<EffectDataOngoing> listOfOngoingEffects; //list of temporary (ongoing) effects impacting on the node
 
     //private backing fields
     private int _stability;
@@ -85,7 +85,7 @@ public class Node : MonoBehaviour
     private List<Connection> listOfConnections;         //list of neighbouring connections
 
     [HideInInspector] public TextMeshPro faceText;         //textmesh component of faceObject (cached in Awake)
- 
+
 
 
     private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
@@ -195,10 +195,10 @@ public class Node : MonoBehaviour
     /// <param name="archetype"></param>
     public void Initialise(NodeArc archetype)
     {
-        Arc = archetype;        
+        Arc = archetype;
     }
-	
-	private void Awake ()
+
+    private void Awake()
     {
         Debug.Assert(faceObject != null, "Invalid faceObject (Null)");
         //collections
@@ -230,7 +230,7 @@ public class Node : MonoBehaviour
         Debug.Assert(launcher != null, "Invalid Launcher (Null)");
         Debug.Assert(faceText != null, "Invalid faceText (Null)");
         Debug.Assert(nodeRenderer != null, "Invalid renderer (Null)");
-	}
+    }
 
     private void OnEnable()
     {
@@ -275,45 +275,49 @@ public class Node : MonoBehaviour
     /// </summary>
     private void OnMouseDown()
     {
-        bool proceedFlag = true;
-        AlertType alertType = AlertType.None;
-        if (GameManager.i.guiScript.CheckIsBlocked() == false)
+        //only do so if new turn processing hasn't commenced
+        if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
         {
-            //exit any tooltip
-            if (onMouseFlag == true)
+            bool proceedFlag = true;
+            AlertType alertType = AlertType.None;
+            if (GameManager.i.guiScript.CheckIsBlocked() == false)
             {
-                StopMyCoroutine();
-                GameManager.i.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseDown");
-            }
-            //Action Menu -> not valid if AI is active for side
-            if (GameManager.i.sideScript.CheckInteraction() == false)
-            { proceedFlag = false; alertType = AlertType.SideStatus; }
-            //Action Menu -> not valid if  Player inactive
-            else if (GameManager.i.playerScript.status != ActorStatus.Active)
-            { proceedFlag = false; alertType = AlertType.PlayerStatus; }
-            //Proceed
-            if (proceedFlag == true)
-            {
-                //highlight current node
-                GameManager.i.nodeScript.ToggleNodeHighlight(nodeID);
-                //Action menu data package
-                ModalGenericMenuDetails details = new ModalGenericMenuDetails()
+                //exit any tooltip
+                if (onMouseFlag == true)
                 {
-                    itemID = nodeID,
-                    itemName = nodeName,
-                    itemDetails = string.Format("{0} ID {1}", Arc.name, nodeID),
-                    menuPos = transform.position,
-                    listOfButtonDetails = GameManager.i.actorScript.GetNodeActions(nodeID),
-                    menuType = ActionMenuType.Node
-                };
-                //activate menu
-                GameManager.i.actionMenuScript.SetActionMenu(details);
-            }
-            else
-            {
-                //explanatory message
-                if (alertType != AlertType.None)
-                { GameManager.i.guiScript.SetAlertMessageModalOne(alertType); }
+                    StopMyCoroutine();
+                    GameManager.i.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseDown");
+                }
+                //Action Menu -> not valid if AI is active for side
+                if (GameManager.i.sideScript.CheckInteraction() == false)
+                { proceedFlag = false; alertType = AlertType.SideStatus; }
+                //Action Menu -> not valid if  Player inactive
+                else if (GameManager.i.playerScript.status != ActorStatus.Active)
+                { proceedFlag = false; alertType = AlertType.PlayerStatus; }
+                //Proceed
+                if (proceedFlag == true)
+                {
+                    //highlight current node
+                    GameManager.i.nodeScript.ToggleNodeHighlight(nodeID);
+                    //Action menu data package
+                    ModalGenericMenuDetails details = new ModalGenericMenuDetails()
+                    {
+                        itemID = nodeID,
+                        itemName = nodeName,
+                        itemDetails = string.Format("{0} ID {1}", Arc.name, nodeID),
+                        menuPos = transform.position,
+                        listOfButtonDetails = GameManager.i.actorScript.GetNodeActions(nodeID),
+                        menuType = ActionMenuType.Node
+                    };
+                    //activate menu
+                    GameManager.i.actionMenuScript.SetActionMenu(details);
+                }
+                else
+                {
+                    //explanatory message
+                    if (alertType != AlertType.None)
+                    { GameManager.i.guiScript.SetAlertMessageModalOne(alertType); }
+                }
             }
         }
     }
@@ -345,44 +349,48 @@ public class Node : MonoBehaviour
             //
             if (Input.GetMouseButtonDown(1) == true)
             {
-                //exit any tooltip
-                if (onMouseFlag == true)
+                //only do so if new turn processing hasn't commenced
+                if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
                 {
-                    StopMyCoroutine();
-                    GameManager.i.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseOver");
-                }
-                //move action invalid if resistance player is captured, etc.
-                if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideResistance.level)
-                {
-                    //Action Menu -> not valid if AI is active for side
-                    if (GameManager.i.sideScript.CheckInteraction() == false)
-                    { proceedFlag = false; alertType = AlertType.SideStatus; }
-                    //Action Menu -> not valid if  Player inactive
-                    else if (GameManager.i.playerScript.status != ActorStatus.Active)
-                    { proceedFlag = false; alertType = AlertType.PlayerStatus; }
-                    //proceed
-                    if (proceedFlag == true)
+                    //exit any tooltip
+                    if (onMouseFlag == true)
                     {
-                        /*//exit any tooltip
-                        GameManager.i.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseOver");*/
+                        StopMyCoroutine();
+                        GameManager.i.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseOver");
+                    }
+                    //move action invalid if resistance player is captured, etc.
+                    if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideResistance.level)
+                    {
+                        //Action Menu -> not valid if AI is active for side
+                        if (GameManager.i.sideScript.CheckInteraction() == false)
+                        { proceedFlag = false; alertType = AlertType.SideStatus; }
+                        //Action Menu -> not valid if  Player inactive
+                        else if (GameManager.i.playerScript.status != ActorStatus.Active)
+                        { proceedFlag = false; alertType = AlertType.PlayerStatus; }
+                        //proceed
+                        if (proceedFlag == true)
+                        {
+                            /*//exit any tooltip
+                            GameManager.i.tooltipNodeScript.CloseTooltip("Node.cs -> OnMouseOver");*/
 
-                        //Create a Move Menu at the node
-                        if (GameManager.i.dataScript.CheckValidMoveNode(nodeID) == true)
-                        { EventManager.i.PostNotification(EventType.CreateMoveMenu, this, nodeID, "Node.cs -> OnMouseOver"); }
-                        //highlight all possible move options
+                            //Create a Move Menu at the node
+                            if (GameManager.i.dataScript.CheckValidMoveNode(nodeID) == true)
+                            { EventManager.i.PostNotification(EventType.CreateMoveMenu, this, nodeID, "Node.cs -> OnMouseOver"); }
+                            //highlight all possible move options
+                            else
+                            {
+                                EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.Move, "Node.cs -> OnMouseOver");
+                                //if at Player's current node then Gear Node menu
+                                if (nodeID == GameManager.i.nodeScript.GetPlayerNodeID())
+                                { EventManager.i.PostNotification(EventType.CreateGearNodeMenu, this, nodeID, "Node.cs -> OnMouseOver"); }
+                            }
+                        }
                         else
                         {
-                            EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.Move, "Node.cs -> OnMouseOver");
-                            //if at Player's current node then Gear Node menu
-                            if (nodeID == GameManager.i.nodeScript.GetPlayerNodeID())
-                            { EventManager.i.PostNotification(EventType.CreateGearNodeMenu, this, nodeID, "Node.cs -> OnMouseOver"); }
+                            //explanatory message
+                            if (alertType != AlertType.None)
+                            { GameManager.i.guiScript.SetAlertMessageModalOne(alertType); }
                         }
-                    }
-                    else
-                    {
-                        //explanatory message
-                        if (alertType != AlertType.None)
-                        { GameManager.i.guiScript.SetAlertMessageModalOne(alertType); }
                     }
                 }
             }
@@ -448,7 +456,7 @@ public class Node : MonoBehaviour
                     if (targetName != null)
                     { targetList = GameManager.i.targetScript.GetTargetTooltip(targetName, isTargetKnown); }
                     //crisis info
-                    List<string> crisisList= new List<string>();
+                    List<string> crisisList = new List<string>();
                     if (crisis != null)
                     {
                         crisisList.Add(string.Format("{0} CRISIS", crisis.tag));
@@ -490,7 +498,7 @@ public class Node : MonoBehaviour
                     bool showSpider = false;
                     if (isSpider == true)
                     {
-                        if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideResistance.level 
+                        if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideResistance.level
                             || GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideBoth.level)
                         {
                             if (GameManager.i.optionScript.fogOfWar == true)
@@ -752,7 +760,7 @@ public class Node : MonoBehaviour
         return connection;
     }
 
-    
+
     /// <summary>
     /// returns a list of ongoing effects currently impacting the node, returns empty list if none
     /// </summary>
@@ -871,8 +879,8 @@ public class Node : MonoBehaviour
             isTeamKnown = false;
             tracerTimer = 0;
             /*sSpiderKnown = false;*/
-            Debug.LogFormat("[Nod] Node.cs -> RemoveTracer: Tracer removed at {0}, {1}, nodeID {2}{3}", nodeName, Arc.name, nodeID,  "\n");
-            
+            Debug.LogFormat("[Nod] Node.cs -> RemoveTracer: Tracer removed at {0}, {1}, nodeID {2}{3}", nodeName, Arc.name, nodeID, "\n");
+
             /*//check neighbours
             foreach(Node node in listOfNeighbourNodes)
             {
@@ -963,7 +971,7 @@ public class Node : MonoBehaviour
                 int nodeArcID = team.arc.TeamArcID;
                 if (listOfTeams.Count > 0)
                 {
-                    foreach(Team teamExisting in listOfTeams)
+                    foreach (Team teamExisting in listOfTeams)
                     {
                         if (teamExisting.arc.TeamArcID == nodeArcID)
                         {
@@ -1017,7 +1025,7 @@ public class Node : MonoBehaviour
     /// <param name="teamID"></param>
     public bool RemoveTeam(int teamID)
     {
-        for(int i = 0; i < listOfTeams.Count; i++)
+        for (int i = 0; i < listOfTeams.Count; i++)
         {
             if (listOfTeams[i].teamID == teamID)
             {
@@ -1165,7 +1173,7 @@ public class Node : MonoBehaviour
     private int GetTeamEffect(NodeData type)
     {
         int teamEffect = 0;
-        switch(type)
+        switch (type)
         {
             case NodeData.Stability: if (isStabilityTeam == true) { teamEffect = stabilityTeamEffect; } break;
             case NodeData.Security: if (isSecurityTeam == true) { teamEffect = securityTeamEffect; } break;
@@ -1271,7 +1279,7 @@ public class Node : MonoBehaviour
     {
         if (listOfOngoingEffects.Count > 0)
         {
-            for(int i = listOfOngoingEffects.Count - 1; i >= 0; i--)
+            for (int i = listOfOngoingEffects.Count - 1; i >= 0; i--)
             {
                 //decrement timer
                 EffectDataOngoing ongoing = listOfOngoingEffects[i];
@@ -1284,7 +1292,7 @@ public class Node : MonoBehaviour
                     RemoveOngoingEffect(ongoing.ongoingID);
                     //message
                     Debug.LogFormat("[Nod] Node.cs -> ProcessOngoingEffect: REMOVE Ongoing effect ID {0}, \"{1}\" from node ID {2}{3}", ongoing.ongoingID, ongoing.description, nodeID, "\n");
-                    
+
                     /*//delete effect -> EDIT: RemoveOngoingEffect handles this
                     GameManager.instance.dataScript.RemoveOngoingEffectFromDict(ongoing);*/
                 }
@@ -1472,7 +1480,7 @@ public class Node : MonoBehaviour
             }
             //need an Ongoing entry for Node (everything apart from text is ignored by node)
             if (isAtLeastOneOngoing == true)
-            {                         
+            {
                 //create an entry in the nodes listOfOngoingEffects
                 AddOngoingEffect(process.effectOngoing);
             }
@@ -1621,7 +1629,7 @@ public class Node : MonoBehaviour
     public int GetNodeChange(NodeData type)
     {
         int difference = 0;
-        switch(type)
+        switch (type)
         {
             case NodeData.Support:
                 difference = Support - _supportStart;
@@ -1630,7 +1638,7 @@ public class Node : MonoBehaviour
                 difference = Stability - _stabilityStart;
                 break;
             case NodeData.Security:
-                difference = Security - _securityStart; 
+                difference = Security - _securityStart;
                 break;
             default:
                 Debug.LogError(string.Format("Invalid NodeData type \"{0}\"", type));

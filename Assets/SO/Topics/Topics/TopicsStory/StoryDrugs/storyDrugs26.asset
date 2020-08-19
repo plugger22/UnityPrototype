@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyDrugs26
   m_EditorClassIdentifier: 
-  tag: ss
+  tag: Cover Up Success
   text: You managed to buy us some time with your covert Jujistu. I like to stick
     to flying but, hey, good job. That should quieten down [mega3Corp]
   designNotes: storyDrugs26
@@ -53,6 +53,6 @@ MonoBehaviour:
   timerRepeat: 0
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 0
-  turnsLive: 0
+  turnsActive: 7
+  turnsLive: 1
   turnsDone: 0

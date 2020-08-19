@@ -112,3 +112,20 @@ UnityEngine.Debug:LogErrorFormat(String, Object[])
 	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:426)
 	
+Dev seed 39415 -> Wednesday, 19 August 2020 9:18 AM
+City seed 234 -> Sydney, Australia
+
+Dev seed 47714 -> Wednesday, 19 August 2020 9:31 AM
+City seed 234 -> Sydney, Australia
+
+Dev seed 5692 -> Wednesday, 19 August 2020 9:33 AM
+City seed 234 -> Sydney, Australia
+
+Dev seed 64644 -> Wednesday, 19 August 2020 9:35 AM
+City seed 234 -> Sydney, Australia
+
+Dev seed 49620 -> Wednesday, 19 August 2020 9:51 AM
+City seed 234 -> Sydney, Australia
+
+Dev seed 8144 -> Wednesday, 19 August 2020 10:05 AM
+City seed 234 -> Sydney, Australia

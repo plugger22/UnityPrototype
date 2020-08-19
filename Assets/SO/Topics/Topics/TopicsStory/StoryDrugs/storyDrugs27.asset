@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyDrugs27
   m_EditorClassIdentifier: 
-  tag: ss
+  tag: Cover Up Fail
   text: Didn't work out, huh? Mmmm... I'm going to have to get [facR1] to authorise
     Plan B. We can't have [mega3Corp] getting wise to our smuggling
   designNotes: storyDrugs27
@@ -53,6 +53,6 @@ MonoBehaviour:
   timerRepeat: 0
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 0
+  turnsActive: 8
   turnsLive: 0
   turnsDone: 0

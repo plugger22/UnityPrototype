@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyDrugs28
   m_EditorClassIdentifier: 
-  tag: ss
+  tag: Cover Up Success
   text: Against all expectations you've done what you're supposed to do. Wait here
     while I let [facR1] know that I've got it all under control
   designNotes: storyDrugs28

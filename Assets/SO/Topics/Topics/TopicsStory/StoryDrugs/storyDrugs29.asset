@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyDrugs29
   m_EditorClassIdentifier: 
-  tag: ss
+  tag: Cover Up Fail
   text: A wash out? Why am I not surprised. Do you realise how hard it is going to
     be for me to tidy up your mess and blow smoke at [mega3Corp]?
   designNotes: storyDrugs29

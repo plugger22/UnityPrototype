@@ -3740,6 +3740,9 @@ public class MessageManager : MonoBehaviour
             data.sideLevel = message.sideLevel;
             data.nodeID = node.nodeID;
             data.help = 1;
+            data.tag0 = "target_0";
+            data.tag1 = "target_1";
+            data.tag2 = "target_2";
             //add
             GameManager.i.dataScript.AddMessage(message);
             GameManager.i.dataScript.AddItemData(data);
