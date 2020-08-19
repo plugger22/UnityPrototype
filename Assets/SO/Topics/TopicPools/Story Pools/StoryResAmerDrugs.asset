@@ -47,5 +47,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c2c8edcacbe86bc48a35aee1d05d5fb3, type: 2}
   - {fileID: 11400000, guid: 3174f085b759ab4469880910d58bf3cd, type: 2}
   - {fileID: 11400000, guid: 24614b7438d47d34c8e0a7655b86df31, type: 2}
+  - {fileID: 11400000, guid: 8a81b6438ff109a4aab2f7aefb0038a4, type: 2}
+  - {fileID: 11400000, guid: c2b33313dda47ec459c46814d4feb21e, type: 2}
+  - {fileID: 11400000, guid: 795181d34d00d054193554e8bc61dbc0, type: 2}
+  - {fileID: 11400000, guid: 9533c970cf3373d41a8e504215de9238, type: 2}
+  - {fileID: 11400000, guid: 240ec474fc9e7744ab8c436667cf1104, type: 2}
+  - {fileID: 11400000, guid: 6a6128925d7f89d40a5d44589496f478, type: 2}
+  - {fileID: 11400000, guid: eaa90ec83054ea042812f907f8d403f7, type: 2}
+  - {fileID: 11400000, guid: 47c7b5afe4aa37049b176f73e78cc932, type: 2}
+  - {fileID: 11400000, guid: 0f2ec30776b4976489124b6e13bb3aca, type: 2}
+  - {fileID: 11400000, guid: 3859ba9753d43c94ba058974ca78d7b6, type: 2}
   listOfSubSubTypePools: []
   isIgnoreExtraValidation: 0

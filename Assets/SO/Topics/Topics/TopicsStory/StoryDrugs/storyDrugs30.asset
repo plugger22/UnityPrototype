@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: storyDrugs30
+  m_EditorClassIdentifier: 
+  tag: Return of the Petal
+  text: Word on the street is that the Pink Petal will target [facR1]. We've contained
+    our exposure to [mega3Corp] so it may be somebody else driving it
+  designNotes: storyDrugs30
+  type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
+  subType: {fileID: 11400000, guid: cbe3debfe6a42e74bba2c4c8929ec971, type: 2}
+  subSubType: {fileID: 0}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics:
+  - {fileID: 11400000, guid: 795181d34d00d054193554e8bc61dbc0, type: 2}
+  - {fileID: 11400000, guid: 9533c970cf3373d41a8e504215de9238, type: 2}
+  listOfBuddyTopics:
+  - {fileID: 11400000}
+  - {fileID: 11400000, guid: c2b33313dda47ec459c46814d4feb21e, type: 2}
+  linkedIndex: 0
+  levelIndex: 3
+  topicItem: {fileID: 11400000, guid: 2e2ce29c7b61139488a5a4546df9fd77, type: 2}
+  listOfStoryHelp: []
+  profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: c6de6729a40f1c849add45e2aee2e138, type: 2}
+  listOfIgnoreEffects: []
+  listOfOptions:
+  - {fileID: 11400000, guid: deaed82fe54ac2748af40e60c072736d, type: 2}
+  - {fileID: 11400000, guid: 9a74f62dda63c1040b609ecd6ffd56cb, type: 2}
+  - {fileID: 11400000, guid: 93386a615c0f83f40bbddb241984d704, type: 2}
+  - {fileID: 11400000, guid: 84a67372abb4d6b4391dd4820ed07de0, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  status: 4
+  isCurrent: 0
+  timerStart: 0
+  timerRepeat: 0
+  timerWindow: 0
+  turnsDormant: 0
+  turnsActive: 0
+  turnsLive: 0
+  turnsDone: 0

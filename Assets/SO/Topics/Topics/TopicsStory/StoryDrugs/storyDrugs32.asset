@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: storyDrugs32
+  m_EditorClassIdentifier: 
+  tag: The Cartel
+  text: We make use of the [*Cartel] to move our drugs. Business hasn't been good
+    for them recently, with all that's been going on in the [*CDZ]
+  designNotes: storyDrugs32
+  type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
+  subType: {fileID: 11400000, guid: cbe3debfe6a42e74bba2c4c8929ec971, type: 2}
+  subSubType: {fileID: 0}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics:
+  - {fileID: 11400000, guid: 240ec474fc9e7744ab8c436667cf1104, type: 2}
+  - {fileID: 11400000, guid: 6a6128925d7f89d40a5d44589496f478, type: 2}
+  listOfBuddyTopics:
+  - {fileID: 11400000}
+  - {fileID: 11400000, guid: 9533c970cf3373d41a8e504215de9238, type: 2}
+  linkedIndex: 1
+  levelIndex: 3
+  topicItem: {fileID: 11400000, guid: 2e2ce29c7b61139488a5a4546df9fd77, type: 2}
+  listOfStoryHelp: []
+  profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: c6de6729a40f1c849add45e2aee2e138, type: 2}
+  listOfIgnoreEffects: []
+  listOfOptions:
+  - {fileID: 11400000, guid: 7aa53b0e87eff334492acd8a89f82589, type: 2}
+  - {fileID: 11400000, guid: 44c318a1dacd424429875497c80f762c, type: 2}
+  - {fileID: 11400000, guid: b05fd394d852eaa41a5ca43b51dddbba, type: 2}
+  - {fileID: 11400000, guid: cd45c7512f7c25c4db0a4a4596731fd5, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  status: 4
+  isCurrent: 0
+  timerStart: 0
+  timerRepeat: 0
+  timerWindow: 0
+  turnsDormant: 0
+  turnsActive: 0
+  turnsLive: 0
+  turnsDone: 0
