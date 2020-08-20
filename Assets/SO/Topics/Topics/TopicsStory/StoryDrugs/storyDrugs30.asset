@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: storyDrugs30
   m_EditorClassIdentifier: 
   tag: Return of the Petal
-  text: Word on the street is that the Pink Petal will target [facR1]. We've contained
+  text: Word on the street is that the [*Pink Petal] will target [facR1]. We've contained
     our exposure to [mega3Corp] so it may be somebody else driving it
   designNotes: storyDrugs30
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
@@ -52,5 +52,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 0
+  turnsLive: 20
   turnsDone: 0

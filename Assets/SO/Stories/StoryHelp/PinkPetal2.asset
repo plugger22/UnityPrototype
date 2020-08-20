@@ -11,8 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
   m_Name: PinkPetal2
   m_EditorClassIdentifier: 
-  tag: Petal Power
+  tag: Pink Petal Ethics
   sprite: {fileID: 21300000, guid: 0990750233d69384f832d111b8981353, type: 3}
-  textTop: 
-  textMiddle: 
-  textBottom: 
+  textTop: There is a debate about the morality of the Petal. Does she eat new borns
+    for lunch? Would she be capable of giving birth to a non-headless baby?
+  textMiddle: Questions rage about whether there is a place on Earth for a highly
+    augumented killing machine? What societal function does such a person serve?
+  textBottom: The 'Save the Petal' campaign points out the benefits to all of culling
+    individuals from the herd. Didn't long extinct Lions do just that to great acclaim?

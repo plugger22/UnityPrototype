@@ -14,9 +14,10 @@ MonoBehaviour:
   tag: Americon Leadership
   sprite: {fileID: 21300000, guid: 0990750233d69384f832d111b8981353, type: 3}
   textTop: There is a lot of controversy surrounding the current leader of [facR1].
-    Hereditary right to rule is contested as a means of throwing up capable leaders
+    Hereditary right to rule is contested as a way of throwing up capable leaders
   textMiddle: The slobbering, can't-string-a-sentence-together, incumbent isn't helping
     those that support the families extended grip on power nor is his reluctance to
     step down
-  textBottom: Renewal is a word on many peoples lips and there is hope that the incumbent
-    may one day evac himself down the toilet by mistake and allow fresh blood in
+  textBottom: There is a lingering hope that the current, brain addled, incumbent
+    may one day evac himself head first down the toilet by mistake and allow fresh
+    blood in
