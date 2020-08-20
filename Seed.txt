@@ -2418,3 +2418,5 @@ ASSERT NullReferenceException: Object reference not set to an instance of an obj
 TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:264)
 	GameManager.Start () (at Assets/Scripts/GameManager.cs:398)
 	
+Dev seed 54409 -> Thursday, 20 August 2020 5:17 PM
+City seed 890 -> Arles, France

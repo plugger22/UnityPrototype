@@ -911,5 +911,14 @@ public class MissionManager : MonoBehaviour
         else { mission.npc = null; }
     }
 
+    /// <summary>
+    /// Resets npc listOfInvisibile nodes
+    /// </summary>
+    public void ResetNpcData()
+    {
+        if (mission.npc != null)
+        { mission.npc.Reset(); }
+    }
+
     //new methods above here
 }
