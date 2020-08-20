@@ -30,7 +30,8 @@ MonoBehaviour:
   linkedIndex: 2
   levelIndex: 3
   topicItem: {fileID: 11400000, guid: 2e6d0fdcecfe3bf41b25acc43c7bce7d, type: 2}
-  listOfStoryHelp: []
+  listOfStoryHelp:
+  - {fileID: 11400000, guid: 676dd14857595d44c8e41673f234a06c, type: 2}
   profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: c6de6729a40f1c849add45e2aee2e138, type: 2}

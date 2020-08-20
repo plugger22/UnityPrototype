@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug36Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 36 Opt 1
-  tag: 
-  text: 
+  tag: Puzzled
+  text: If not the Cartel, then who?
   topic: {fileID: 11400000, guid: eaa90ec83054ea042812f907f8d403f7, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: That's a damn good question and I'm not sure that I can answer it. If
+    it's not Eclipse and not the Cartel, who else would want us out of business?
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 0
+  optionNumber: 1

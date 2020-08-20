@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
+  m_Name: Cartel0
+  m_EditorClassIdentifier: 
+  tag: The Cartel
+  sprite: {fileID: 21300000, guid: 0990750233d69384f832d111b8981353, type: 3}
+  textTop: Central American drug growers largely went out of business once the heat
+    mites chewed through the jungle and their crops. The survivors merged and formed
+    The Cartel
+  textMiddle: Prevented from producting, they were forced to take up [facR1]'s offer
+    of off-world synth drugs and become retail providers. Drug pushers
+  textBottom: Taking advantage of the chaos in the CDZ they set up base in hidden
+    bunkers, deep in the island mountains. Local operatives are to be found in most
+    cities

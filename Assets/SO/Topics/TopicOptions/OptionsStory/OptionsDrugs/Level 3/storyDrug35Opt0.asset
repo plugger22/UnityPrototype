@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug35Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 35 Opt 0
-  tag: 
-  text: 
+  tag: Investigate
+  text: Search the home of a local Cartel Boss
   topic: {fileID: 11400000, guid: 6a6128925d7f89d40a5d44589496f478, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

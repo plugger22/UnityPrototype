@@ -28,8 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: When isn't it? Half the time you know what you're up against and for
-    the rest you're shooting in the dark. The only thing I'm certain about is that
-    I'll die
+    the rest you're shooting blanks at shadows in the dark
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>

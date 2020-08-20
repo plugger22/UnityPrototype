@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug39Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 39 Opt 1
-  tag: 
-  text: 
+  tag: Curious
+  text: Why is it an EXECUTIVE report?
   topic: {fileID: 11400000, guid: 3859ba9753d43c94ba058974ca78d7b6, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Oh, perhaps because I am an a very important EXECUTIVE myself. I don't
+    write poetry or do graffiti, I write EXECUTIVE reports, you useless halfwit
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 0
+  optionNumber: 1

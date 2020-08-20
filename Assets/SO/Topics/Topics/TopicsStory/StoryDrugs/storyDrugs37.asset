@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Name: storyDrugs37
   m_EditorClassIdentifier: 
   tag: Cartel Flop
-  text: w
+  text: It didn't pan out. It happens. We had to use another team to get the information
+    we needed. It's still not clear if the Cartel are gunning for us
   designNotes: storyDrugs37
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
   subType: {fileID: 11400000, guid: cbe3debfe6a42e74bba2c4c8929ec971, type: 2}
@@ -29,7 +30,8 @@ MonoBehaviour:
   linkedIndex: 3
   levelIndex: 3
   topicItem: {fileID: 11400000, guid: 2e2ce29c7b61139488a5a4546df9fd77, type: 2}
-  listOfStoryHelp: []
+  listOfStoryHelp:
+  - {fileID: 11400000, guid: 3d4d482dd45ddcc4f8200b02bb269e4b, type: 2}
   profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: c6de6729a40f1c849add45e2aee2e138, type: 2}

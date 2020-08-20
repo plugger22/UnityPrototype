@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug39Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 39 Opt 0
-  tag: 
-  text: 
+  tag: Complain
+  text: You set me a tough task
   topic: {fileID: 11400000, guid: 3859ba9753d43c94ba058974ca78d7b6, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: You are a Resistance City Leader, are you not? Surely you don't expect
+    that to be easy? So why do you think otherwise with me? I don't do EASY
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 3
+  optionNumber: 0

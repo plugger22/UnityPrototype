@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug34Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 34 Opt 0
-  tag: 
-  text: 
+  tag: Pump
+  text: Work a Cartel source
   topic: {fileID: 11400000, guid: 240ec474fc9e7744ab8c436667cf1104, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

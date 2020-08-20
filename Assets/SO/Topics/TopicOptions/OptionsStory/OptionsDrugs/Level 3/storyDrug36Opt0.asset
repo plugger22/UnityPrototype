@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug36Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 36 Opt 0
-  tag: 
-  text: 
+  tag: Hopeful
+  text: Was there anything at all useful?
   topic: {fileID: 11400000, guid: eaa90ec83054ea042812f907f8d403f7, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Yes. The Cartel have been onselling our sythn drugs for a higher price
+    than what they've owned up to. We might have to put the squeeze on them
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>

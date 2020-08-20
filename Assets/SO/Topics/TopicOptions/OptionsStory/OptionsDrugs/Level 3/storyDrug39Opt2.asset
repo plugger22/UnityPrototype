@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug39Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 39 Opt 2
-  tag: 
-  text: 
+  tag: Repentant
+  text: I'd like a second chance
   topic: {fileID: 11400000, guid: 3859ba9753d43c94ba058974ca78d7b6, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Gosh, everybody wants one of those. Sadly life has a limited supply and,
+    news flash, they're all used up! I've already tasked another team
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 1
+  optionNumber: 2

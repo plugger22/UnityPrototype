@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: ResAmerCharlieDrugs3_B1
   m_EditorClassIdentifier: 
   targetName: Question Boss
-  descriptorResistance: Kidnap and drug a local Cartel Boss
+  descriptorResistance: Kidnap and torture a local Cartel Boss
   descriptorAuthority: The Cartel
   reasonText: question a local cartel boss
   rumourText: question a local cartel boss

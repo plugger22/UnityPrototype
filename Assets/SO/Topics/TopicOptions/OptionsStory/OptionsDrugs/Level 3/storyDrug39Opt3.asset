@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug39Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 39 Opt 3
-  tag: 
-  text: 
+  tag: Instincts
+  text: Go with your Gut Feeling
   topic: {fileID: 11400000, guid: 3859ba9753d43c94ba058974ca78d7b6, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Oh, quite. The vibe, Sir, the VIBE. I, Tanyia Ball, recommend that we
+    declare war on the Cartel based on the 'vibe' of my, rather useless, subordinate
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 2
+  optionNumber: 3
