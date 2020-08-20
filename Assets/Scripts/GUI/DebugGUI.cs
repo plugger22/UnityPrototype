@@ -501,7 +501,9 @@ public class DebugGUI : MonoBehaviour
                 {
                     case 0: debugDisplay = 109; storyToggle = 1; break;
                     case 1: debugDisplay = 110; storyToggle = 2; break;
-                    case 2: debugDisplay = 0; storyToggle = 0; break;
+                    case 2: debugDisplay = 112; storyToggle = 3; break;
+                    case 3: debugDisplay = 113; storyToggle = 4; break;
+                    case 4: debugDisplay = 0; storyToggle = 0; break;
                 }
             }
 
@@ -1979,10 +1981,10 @@ public class DebugGUI : MonoBehaviour
                         analysis = GameManager.i.topicScript.DebugDisplayStoryData();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 750), analysis, customBackground);
                         break;
-                    //Story Topic Display
+                    //Story Topic Display -> Alpha
                     case 110:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.i.topicScript.DebugDisplayStoryTopics();
+                        analysis = GameManager.i.topicScript.DebugDisplayStoryTopics(StoryType.Alpha);
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 800), analysis, customBackground);
                         break;
                     //MegaCorp Relations Data
@@ -1990,6 +1992,18 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.dataScript.DebugDisplayMegaCorpRelations();
                         GUI.Box(new Rect(Screen.width - 455, 10, 450, 600), analysis, customBackground);
+                        break;
+                    //Story Topic Display -> Bravo
+                    case 112:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.i.topicScript.DebugDisplayStoryTopics(StoryType.Bravo);
+                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 800), analysis, customBackground);
+                        break;
+                    //Story Topic Display -> Charlie
+                    case 113:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.i.topicScript.DebugDisplayStoryTopics(StoryType.Charlie);
+                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 800), analysis, customBackground);
                         break;
                 }
             }

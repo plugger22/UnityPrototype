@@ -8003,19 +8003,17 @@ public class TopicManager : MonoBehaviour
     /// displays vital stats of all topics within the three story module pools
     /// </summary>
     /// <returns></returns>
-    public string DebugDisplayStoryTopics()
+    public string DebugDisplayStoryTopics(StoryType storyType)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("- Story Topics{0}{1}", "\n", "\n");
-        //Alpha
-        builder.AppendFormat(" Alpha Pool (Campaign) -> \"{0}\"{1}", storyAlphaPool.tag, "\n");
-        builder.Append(DebugProcessStoryPool(storyAlphaPool));
-        //Bravo
-        builder.AppendFormat("{0} Bravo Pool (Campaign) -> \"{1}\"{2}", "\n", storyBravoPool.tag, "\n");
-        builder.Append(DebugProcessStoryPool(storyBravoPool));
-        //Charlie
-        builder.AppendFormat("{0} Charlie Pool (Campaign) -> \"{1}\"{2}", "\n", storyCharliePool.tag, "\n");
-        builder.Append(DebugProcessStoryPool(storyCharliePool));
+        builder.AppendFormat("- Story Topics - {0} Pool (Campaign){1}{2}", storyType, "\n", "\n");
+        switch (storyType)
+        {
+            case StoryType.Alpha:  builder.Append(DebugProcessStoryPool(storyAlphaPool)); break;
+            case StoryType.Bravo:  builder.Append(DebugProcessStoryPool(storyBravoPool)); break;
+            case StoryType.Charlie:  builder.Append(DebugProcessStoryPool(storyCharliePool)); break;
+            default: Debug.LogWarningFormat("Unrecognised storyType \"{0}\"", storyType); break;
+        }
         return builder.ToString();
     }
 

@@ -97,6 +97,7 @@ public class CampaignManager : MonoBehaviour
     private void SubInitialiseNewGame()
     {
         GameManager.i.dataScript.InitialiseCampaignHistory();
+        GameManager.i.dataScript.ResetStoryHelp();
     }
     #endregion
 

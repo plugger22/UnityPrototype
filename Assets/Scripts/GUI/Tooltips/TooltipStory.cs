@@ -69,6 +69,8 @@ public class TooltipStory : MonoBehaviour
         GameManager.i.tooltipGenericScript.CloseTooltip("TooltipHelp.cs -> OnPointerEnter");
         if (storyHelp != null)
         {
+            //set story help as known
+            storyHelp.isKnown = true;
             //open panel at start
             storyCanvas.gameObject.SetActive(true);
             storyObject.SetActive(true);

@@ -27,12 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Oh, really? What an enticing prospect. Frollicking in recycled, reprocesseed,
+  storyInfo: Oh, really? What an enticing prospect. Frolicking in recycled, reprocesseed,
     sewerage that has been in contact with your nether regions
   storyTarget: {fileID: 0}
-  tooltipHeader: <color=#FFFFE0>Question</color>
+  tooltipHeader: <color=#FFFFE0>Proposal</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
-  textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
+  textToDisplay: <color=#EEFB73>We both need a hot bath</color>
   optionNumber: 3

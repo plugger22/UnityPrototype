@@ -9909,6 +9909,15 @@ public class DataManager : MonoBehaviour
         return storyHelp;
     }
 
+    /// <summary>
+    /// Sets all story Help to isKnown false at the start of a new campaign
+    /// </summary>
+    public void ResetStoryHelp()
+    {
+        foreach (var storyHelp in dictOfStoryHelp)
+        { storyHelp.Value.isKnown = false; }
+    }
+
         //new methods above here
     }
 

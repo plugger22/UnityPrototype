@@ -98,7 +98,8 @@ public class MissionManager : MonoBehaviour
     private void SubInitialiseNpc()
     {
         //clear out Invisible nodes
-        mission.npc.Reset();
+        if (mission.npc != null)
+        { mission.npc.Reset(); }
     }
     #endregion
 

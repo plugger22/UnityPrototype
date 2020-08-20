@@ -26,9 +26,8 @@ MonoBehaviour:
   approvalStartRebelHQ: 5
   approvalStartAuthorityHQ: 5
   cityStartLoyalty: 5
-  missionResistance: {fileID: 11400000, guid: c18dfa424a4646349ac6ee1fc6ddb8cf, type: 2}
+  missionResistance: {fileID: 11400000, guid: bfdb4de68c187b648a10d96cc101f6dc, type: 2}
   missionAuthority: {fileID: 0}
   challengeResistance: {fileID: 11400000, guid: 77769dd534e67a44bb51fbe33ec2a869,
     type: 2}
-  challengeAuthority: {fileID: 0}
   timer: 70

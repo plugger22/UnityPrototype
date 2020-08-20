@@ -21,6 +21,8 @@ public class StoryHelp : ScriptableObject
     [Tooltip("Text at bottom of tooltip text block, has a limit of 200 chars")]
     [TextArea(3, 4)] public string textBottom;
 
+    [HideInInspector] public bool isKnown;                              //set true once help has been displayed (enables help to be shown for lookup reference -> not yet implemented)
+
 
     public void OnEnable()
     {

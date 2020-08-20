@@ -1561,6 +1561,15 @@ public class ValidationManager : MonoBehaviour
                             Debug.LogWarningFormat("Unrecognised playerSide \"{0}\" for scenario \"{1}\"", scenario.side.name, scenario.name);
                             break;
                     }
+                    //NPC -> shouldn't be in small sized cities
+                    if (scenario.city.Arc.size.name.Equals("Small", StringComparison.Ordinal) == true)
+                    {
+                        if (scenario.missionResistance != null)
+                        {
+                            if (scenario.missionResistance.npc != null)
+                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateScenarios: {0} is too SMALL for an NPC, scenario \"{1}\"{2}", scenario.city.tag, scenario.name, "\n"); }
+                        }
+                    }
                 }
                 else { Debug.LogWarningFormat("Invalid scenario (Null) in arrayOfScenarios[{0}]", i); }
             }

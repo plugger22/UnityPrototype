@@ -261,6 +261,7 @@ public class TurnManager : MonoBehaviour
             //reset any accumulated popUp data
             GameManager.i.popUpFixedScript.Reset();
             //clear out Invisible nodes
+
             GameManager.i.missionScript.mission.npc.Reset();
             //in case of AI vs AI revert the player side to human control
             GameManager.i.sideScript.RevertToHumanPlayer();
