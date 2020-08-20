@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug32Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 32 Opt 1
-  tag: 
-  text: 
+  tag: Puzzled
+  text: Aren't we in business with the Cartel?
   topic: {fileID: 11400000, guid: 795181d34d00d054193554e8bc61dbc0, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Indeed, we are. We smuggle in the drugs and they push it out onto the
+    street. Works well for everyone, up until now. Greed. I bet it's greed
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 0
+  optionNumber: 1

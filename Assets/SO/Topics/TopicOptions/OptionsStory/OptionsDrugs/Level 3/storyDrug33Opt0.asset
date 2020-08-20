@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug33Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 33 Opt 0
-  tag: 
-  text: 
+  tag: Compassion
+  text: I'd like to help them if I could
   topic: {fileID: 11400000, guid: 9533c970cf3373d41a8e504215de9238, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: We sell them drugs so they can make a profit and afford to build better
+    bunkers. Ones that keep the rain and floods out. Ones with no windows
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 3
+  optionNumber: 0

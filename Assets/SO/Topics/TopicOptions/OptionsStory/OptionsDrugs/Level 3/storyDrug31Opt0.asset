@@ -27,7 +27,9 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: It's nice that the little people have confidence in me. It's reassuring
+    to know that I'm higher up the evolutionary heirarchy and that I'm admired from
+    below
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
