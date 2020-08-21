@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug44Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 44 Opt 0
-  tag: 
-  text: 
+  tag: Hack
+  text: Break into Intermediatries Comms
   topic: {fileID: 11400000, guid: 3bddc481a6989884882d02f34a68dfba, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -28,10 +28,10 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: 
-  storyTarget: {fileID: 0}
+  storyTarget: {fileID: 11400000, guid: 5b3bb586b26ed1b408b22847c821c277, type: 2}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 3
+  optionNumber: 0

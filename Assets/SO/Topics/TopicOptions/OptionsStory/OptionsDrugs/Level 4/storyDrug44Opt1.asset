@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug44Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 44 Opt 1
-  tag: 
-  text: 
+  tag: Honey Pot
+  text: Lure Intermediatry with sex
   topic: {fileID: 11400000, guid: 3bddc481a6989884882d02f34a68dfba, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -28,10 +28,10 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: 
-  storyTarget: {fileID: 0}
+  storyTarget: {fileID: 11400000, guid: 38020a783f607f64c96135b7b03f20ec, type: 2}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 0
+  optionNumber: 1

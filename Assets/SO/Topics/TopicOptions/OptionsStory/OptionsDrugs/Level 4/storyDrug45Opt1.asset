@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug45Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 45 Opt 1
-  tag: 
-  text: 
+  tag: Observe
+  text: Tail the Intermediatry
   topic: {fileID: 11400000, guid: 34df81854971f914994f317ee5fbc8fd, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -28,10 +28,10 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: 
-  storyTarget: {fileID: 0}
+  storyTarget: {fileID: 11400000, guid: 2e0063e575338b440977e15eae5bc34d, type: 2}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 0
+  optionNumber: 1

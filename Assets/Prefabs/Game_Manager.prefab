@@ -3885,6 +3885,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a9c3bb930a7eeb24cb52aba48db0515c, type: 2}
   - {fileID: 11400000, guid: 45b42a20dadb9634198fd6347a19bc00, type: 2}
   - {fileID: 11400000, guid: ce3d33e009cb28743af1566a0d5aca1f, type: 2}
+  - {fileID: 11400000, guid: 89dc3afce4f837b4d8bd3bc030934294, type: 2}
+  - {fileID: 11400000, guid: 2e0063e575338b440977e15eae5bc34d, type: 2}
+  - {fileID: 11400000, guid: 5b3bb586b26ed1b408b22847c821c277, type: 2}
+  - {fileID: 11400000, guid: 38020a783f607f64c96135b7b03f20ec, type: 2}
   arrayOfTargetsGoal:
   - {fileID: 11400000, guid: 3092bd84d4483f249a7039bc13a54727, type: 2}
   - {fileID: 11400000, guid: cb0366be15bea08479bebcfe2818bf25, type: 2}
