@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug40Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 40 Opt 0
-  tag: 
-  text: 
+  tag: Excessive
+  text: Isn't that Blackmail?
   topic: {fileID: 11400000, guid: 8e4302735bc4687479081378a229c928, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

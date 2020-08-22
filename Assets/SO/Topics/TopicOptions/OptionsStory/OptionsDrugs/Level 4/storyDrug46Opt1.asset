@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug46Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 46 Opt 1
-  tag: 
-  text: 
+  tag: Amazed
+  text: So we're Paying Off Shadows?
   topic: {fileID: 11400000, guid: 777aa19928d80f745bc008fbf4edf163, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -34,4 +34,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 0
+  optionNumber: 1

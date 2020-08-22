@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug42Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 42 Opt 1
-  tag: 
-  text: 
+  tag: Canvas
+  text: What's your opinion?
   topic: {fileID: 11400000, guid: 1d5abdc9925b2184498f3ab8548c8585, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -34,4 +34,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 0
+  optionNumber: 1

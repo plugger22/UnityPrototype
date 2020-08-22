@@ -11,8 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyDrugs48
   m_EditorClassIdentifier: 
-  tag: 
-  text: 
+  tag: Hidden Hand
+  text: For once you did what I asked off you but it's irrelevant. The [*intermediary]
+    has stayed one step ahead and we still have no clue who they represent
   designNotes: storyDrugs48
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
   subType: {fileID: 11400000, guid: cbe3debfe6a42e74bba2c4c8929ec971, type: 2}

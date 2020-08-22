@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 44 Opt 0
   tag: Hack
-  text: Break into Intermediatries Comms
+  text: Break into Intermediaries Comms
   topic: {fileID: 11400000, guid: 3bddc481a6989884882d02f34a68dfba, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

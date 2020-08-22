@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug40Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 40 Opt 3
-  tag: 
-  text: 
+  tag: Suggestion
+  text: Why not Pay Off the Petal directly?
   topic: {fileID: 11400000, guid: 8e4302735bc4687479081378a229c928, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -34,4 +34,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 2
+  optionNumber: 3
