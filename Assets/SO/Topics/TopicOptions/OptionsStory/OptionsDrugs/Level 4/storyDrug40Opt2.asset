@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Terrorists? Mmmmm.... Maybe ruthless b*stards. Terrorists want to sow
+    chaos and destruction, not sit back and get rich on a guaranteed income stream
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>

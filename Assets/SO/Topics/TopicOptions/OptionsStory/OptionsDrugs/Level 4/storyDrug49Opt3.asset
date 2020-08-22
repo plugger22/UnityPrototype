@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug49Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 49 Opt 3
-  tag: 
-  text: 
+  tag: Acceptance
+  text: I'll say that it was my fault
   topic: {fileID: 11400000, guid: e4460b19dc2c7af488d3dc230f6afe74, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I've already made that abundantly clear to [facR1]. You could say that
+    I have failed in my supervisory capacity but that's, as we know, utter nonsense
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 2
+  optionNumber: 3

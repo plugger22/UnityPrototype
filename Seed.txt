@@ -2504,3 +2504,5 @@ UnityEngine.Debug:LogWarning(Object)
 	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:887)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:394)
 	
+Dev seed 63164 -> Saturday, 22 August 2020 4:59 PM
+City seed 890 -> Arles, France

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug49Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 49 Opt 1
-  tag: 
-  text: 
+  tag: Indifferent
+  text: Some you win, some you don't
   topic: {fileID: 11400000, guid: e4460b19dc2c7af488d3dc230f6afe74, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Really? Your lack of self-awareness amazes me. Nothing is your fault
+    and nothing matters? I fear that your tiny brain is adrift in a dark place
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 0
+  optionNumber: 1

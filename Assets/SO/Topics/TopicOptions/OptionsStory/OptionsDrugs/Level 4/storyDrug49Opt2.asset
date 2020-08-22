@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug49Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 49 Opt 2
-  tag: 
-  text: 
+  tag: Deflection
+  text: Your best guess would be?
   topic: {fileID: 11400000, guid: e4460b19dc2c7af488d3dc230f6afe74, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I'm convinced that it is [facR3] who is the Hidden Hand. They have been
+    covertly trying to undermine us for years
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 1
+  optionNumber: 2

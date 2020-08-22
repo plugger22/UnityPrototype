@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug41Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 41 Opt 1
-  tag: 
-  text: 
+  tag: Question
+  text: Who's the Scumbag?
   topic: {fileID: 11400000, guid: 706a2a7dda329ec4ab7c94226d6ab9ed, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Well if I knew that there wouldn't be a problem, would there? The scumbag
+    is hiding behind their intermediary. It's rather bothersome
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 0
+  optionNumber: 1

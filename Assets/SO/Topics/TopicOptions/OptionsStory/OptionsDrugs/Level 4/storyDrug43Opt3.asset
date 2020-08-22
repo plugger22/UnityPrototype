@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug43Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 43 Opt 3
-  tag: 
-  text: 
+  tag: Proposition
+  text: Maybe Drugs aren't the best idea?
   topic: {fileID: 11400000, guid: b5b34a3187dd44a45ae041224798065e, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Holy Cyber Ghosts! Haven't you been listening? We smuggle drugs so we
+    can pay me? That's how it works. I'm important. I need money. I have bills...
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 2
+  optionNumber: 3

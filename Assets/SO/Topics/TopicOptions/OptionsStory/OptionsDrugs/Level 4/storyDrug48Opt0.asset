@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug48Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 48 Opt 0
-  tag: 
-  text: 
+  tag: Apologise
+  text: I'm sorry that I couldn't do more
   topic: {fileID: 11400000, guid: 9970f8fc82488154ba51180597925585, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,13 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: There's a part of me that, against my better judgement, is beginning
+    to like you. Rest assured that I have called the police and it'll be incarcerated
+    shortly
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 3
+  optionNumber: 0

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyDrug47Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Drugs 47 Opt 2
-  tag: 
-  text: 
+  tag: Shrug
+  text: Wasn't there a Back-Up Team?
   topic: {fileID: 11400000, guid: 5a26f66d4a2df134b89dd5815f7617c6, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Normally we'd have a plan B as a backstop but not for this one. Nobody
+    was expecting you to let us down as badly as you have. I'm disappointed
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Would Eclipse do that?</color>
-  optionNumber: 1
+  optionNumber: 2
