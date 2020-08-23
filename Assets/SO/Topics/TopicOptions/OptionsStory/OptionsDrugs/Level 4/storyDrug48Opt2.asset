@@ -27,9 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Clearly not. That's O.K. I'm the important person in charge and it's
-    my job to do all the worrying on your behalf. Don't stress yourself, Tanyia is
-    here
+  storyInfo: Clearly not. I'm the important person in charge and it's my job to do
+    all the worrying on your behalf. Don't stress yourself, Tanyia is here
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>

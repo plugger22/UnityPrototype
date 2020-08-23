@@ -2506,3 +2506,44 @@ UnityEngine.Debug:LogWarning(Object)
 	
 Dev seed 63164 -> Saturday, 22 August 2020 4:59 PM
 City seed 890 -> Arles, France
+
+Dev seed 41313 -> Sunday, 23 August 2020 2:01 PM
+City seed 890 -> Arles, France
+
+Dev seed 36825 -> Sunday, 23 August 2020 2:08 PM
+City seed 890 -> Arles, France
+
+Dev seed 31784 -> Sunday, 23 August 2020 2:08 PM
+City seed 890 -> Arles, France
+
+Dev seed 48319 -> Sunday, 23 August 2020 2:09 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 33947 -> Sunday, 23 August 2020 2:13 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 16449 -> Sunday, 23 August 2020 2:19 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 316 -> Sunday, 23 August 2020 2:23 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 33809 -> Sunday, 23 August 2020 2:25 PM
+City seed 1616 -> Mexico City, Mexico
+WARNING ActorID 0 already exists in listOfActors
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	Secret:AddActor(Int32) (at Assets/Scripts/SO Master/Secret.cs:96)
+	ActorManager:ProcessSecrets(Actor, List`1, Int32, Boolean) (at Assets/Scripts/Managers/ActorManager.cs:6866)
+	ActorManager:CheckActiveResistanceActorsHuman() (at Assets/Scripts/Managers/ActorManager.cs:6109)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:494)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:446)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:537)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:326)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:426)
+	
+Dev seed 45473 -> Sunday, 23 August 2020 5:14 PM
+City seed 1616 -> Mexico City, Mexico

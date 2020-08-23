@@ -27,9 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: There's a part of me that, against my better judgement, is beginning
-    to like you. Rest assured that I have called the police and it'll be incarcerated
-    shortly
+  storyInfo: There's a part of me that, reluctantly, is starting to like you. Rest
+    assured that I've instigated strict quarantine measures to keep it under control
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>

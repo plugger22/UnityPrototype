@@ -28,7 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: The leadership of [facR1]. Specifically the donut brained, pickled dill,
-    at the top. Have you two met? Gosh, I'd imagine that you'd have things in common
+    at the top. Have you two met? Gosh, you'd have things in common
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>

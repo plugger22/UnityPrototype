@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Offer Accepted
   text: '[facR1], against my advice, have gone ahead and said yes to an atrocious
-    deal where we pay half of our drug smuggling profits in return for no Petal'
+    deal where we pay [*half] of our drug smuggling profits in return for no Petal'
   designNotes: storyDrugs43
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
   subType: {fileID: 11400000, guid: cbe3debfe6a42e74bba2c4c8929ec971, type: 2}
@@ -30,7 +30,8 @@ MonoBehaviour:
   linkedIndex: 1
   levelIndex: 4
   topicItem: {fileID: 11400000, guid: 2e6d0fdcecfe3bf41b25acc43c7bce7d, type: 2}
-  listOfStoryHelp: []
+  listOfStoryHelp:
+  - {fileID: 11400000, guid: c60707f900ffd944c87206ce4c2afb0b, type: 2}
   profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 31ae6e57e0f05d14a8024e18925a812d, type: 2}
@@ -44,12 +45,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 0
-  isCurrent: 1
+  status: 4
+  isCurrent: 0
   timerStart: 0
   timerRepeat: 0
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 0
-  turnsLive: 0
+  turnsActive: 1
+  turnsLive: 1
   turnsDone: 0

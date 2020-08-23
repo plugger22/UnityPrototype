@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: storyDrugs45
   m_EditorClassIdentifier: 
   tag: Reveal
-  text: It's straight out blackmail, is what it is. The deal is to be signed with
+  text: It's straight out [*blackmail], is what it is. The deal is to be signed with
     the [*intermediary]. This is our last chance to find out who they represent
   designNotes: storyDrugs45
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
@@ -30,7 +30,8 @@ MonoBehaviour:
   linkedIndex: 2
   levelIndex: 4
   topicItem: {fileID: 11400000, guid: 2e6d0fdcecfe3bf41b25acc43c7bce7d, type: 2}
-  listOfStoryHelp: []
+  listOfStoryHelp:
+  - {fileID: 11400000, guid: 10fe304a03823bd43bf1775ac51ef86a, type: 2}
   profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 31ae6e57e0f05d14a8024e18925a812d, type: 2}

@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: That's above my pay grade. Those of us down in the trenches do or jobs
-    and hope that the people in charge have enough smarts to make the right decisions
+  storyInfo: That's above my pay grade. We do our jobs and hope that the people in
+    charge have enough smarts to make the right decisions
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>

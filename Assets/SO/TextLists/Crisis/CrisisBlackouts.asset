@@ -29,11 +29,11 @@ MonoBehaviour:
   - How can I watch Serial-Flix when the power is out, questions [npc], [job] of [node]?
     It's a damn disgrace
   - There aren't any lights on here at [node], says [npc], [job]. Not a single damn
-    one. It's as coal miner's *sshole
+    one. It's as dark as a coal miner's *sshole
   - When is the power coming back on, that's what I want to know, demands [npc], [job]
     of [node]. Rolling blackouts is all we've got
   - How am I supposed to feed my kids when there isn't any power, questions [npc],
     [job] of [node]? Why are only we having blackouts?
   - Is the power going to come back on here at [node] or am I going to have to ship
     off-planet, questions [npc], [job] of [node]?
-  index: 8
+  index: 1

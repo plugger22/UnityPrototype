@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Blackmail or a smart business move, take your pick. Either way it's effective.
-    [facR1] are burning through diapers at the thought of the Petal coming for them
+  storyInfo: 'Blackmail or a smart business move, take your pick. Either way it''s
+    effective. [facR1] are burning through diapers at the thought of the Petal '
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Question</color>
   tooltipMain: <color=#98FB98> Information gained</color>
