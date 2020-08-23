@@ -15,9 +15,9 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 0990750233d69384f832d111b8981353, type: 3}
   textTop: It's rumoured that intermediaries are augumented although nobody has managed
     to dissect one yet. They can be as elusive as a gene-fox
-  textMiddle: Intermedaries are scrupulously neutral. Anyone reneging on a deal brokered
+  textMiddle: Intermedaries are scrupulously neutral. Anyone breaking a deal brokered
     by an intermediary typically ends up with their brain box in formaldehyde
   textBottom: Their Guild is secretive and will fearlessly lobotomise anyone, regardless
     of their power. Their utility serves to protect them. In the shadows, they are
     the LAW
-  isKnown: 0
+  isKnown: 1

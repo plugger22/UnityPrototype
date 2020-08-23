@@ -14,11 +14,11 @@ MonoBehaviour:
   tag: Intermediaries Guild
   sprite: {fileID: 21300000, guid: 0990750233d69384f832d111b8981353, type: 3}
   textTop: In the shadows, beyond the reach of The Authority, intermediaries enable
-    enforcable deals to be made between organisations and individuals
+    enforcable contracts to be made between organisations and individuals
   textMiddle: Previous attempts at forcing counter parties to honour agreements using
     quantum cryptography or blockchain technologies all foundered without the human
     element
   textBottom: The Guild of Intermediaries is available to all and incur obligations
-    to abide by their rules. Which, as everybody knows, involves pickled brains in
-    bottles.
-  isKnown: 0
+    to abide by their rules. Reneging, as everybody knows, involves pickled brains
+    in bottles.
+  isKnown: 1

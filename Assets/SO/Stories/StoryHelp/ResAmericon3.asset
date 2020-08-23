@@ -14,7 +14,7 @@ MonoBehaviour:
   tag: Americon Weakness
   sprite: {fileID: 21300000, guid: 0990750233d69384f832d111b8981353, type: 3}
   textTop: Over the arc of [facR1] through time, it's fair to say that their current,
-    aging, hereditary leader, has made them weaker than at any point in their history
+    aging, hereditary, leader has made them weaker than at any point in their history
   textMiddle: The inability of their dribbling, drooling, leader to articulate a firm
     position on any policy has led to a vagueness that permeates the entire organisation
   textBottom: 'Vaccilation, back flips and indecision are what constitutes managerial
