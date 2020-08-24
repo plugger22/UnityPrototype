@@ -2598,3 +2598,52 @@ City seed 1616 -> Mexico City, Mexico
 
 Dev seed 11642 -> Monday, 24 August 2020 12:18 PM
 City seed 1616 -> Mexico City, Mexico
+
+Dev seed 26329 -> Monday, 24 August 2020 2:54 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 1913 -> Monday, 24 August 2020 2:57 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 50622 -> Monday, 24 August 2020 2:59 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 9121 -> Monday, 24 August 2020 3:01 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 7390 -> Monday, 24 August 2020 3:31 PM
+City seed 1616 -> Mexico City, Mexico
+ASSERT FormatException: Index (zero based) must be greater than or equal to zero and less than the size of the argument list.
+System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Text.StringBuilder.AppendFormat (System.String format, System.Object arg0) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	DataManager.CheckStoryModuleList (System.Collections.Generic.List`1[T] listOfStoryData) (at Assets/Scripts/Managers/DataManager.cs:10012)
+	DataManager.CreateStoryDataExport () (at Assets/Scripts/Managers/DataManager.cs:9975)
+	FileManager.ExportStoryData () (at Assets/Scripts/Managers/FileManager.cs:4880)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1164)
+	
+Dev seed 49749 -> Monday, 24 August 2020 3:32 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 36605 -> Monday, 24 August 2020 3:36 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 34597 -> Monday, 24 August 2020 3:44 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 27554 -> Monday, 24 August 2020 3:47 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 52982 -> Monday, 24 August 2020 4:06 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 40282 -> Monday, 24 August 2020 4:28 PM
+City seed 1616 -> Mexico City, Mexico
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+DataManager.CheckTopicPool (TopicPool pool) (at Assets/Scripts/Managers/DataManager.cs:10062)
+	DataManager.CheckStoryModuleList (System.Collections.Generic.List`1[T] listOfStoryData) (at Assets/Scripts/Managers/DataManager.cs:10012)
+	DataManager.CreateStoryDataExport () (at Assets/Scripts/Managers/DataManager.cs:9975)
+	FileManager.ExportStoryData () (at Assets/Scripts/Managers/FileManager.cs:4880)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1164)
+	
+Dev seed 49745 -> Monday, 24 August 2020 4:31 PM
+City seed 1616 -> Mexico City, Mexico

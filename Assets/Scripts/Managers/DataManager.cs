@@ -10000,12 +10000,124 @@ public class DataManager : MonoBehaviour
         {
             for (int i = 0; i < count; i++)
             {
-                builder.AppendFormat("name: {0}{1}", listOfStoryData[i].name, "\n");
-                builder.AppendFormat("design notes: {0}{1}", listOfStoryData[i].designNotes, "\n");
-                builder.AppendFormat("topic pool: {0}{1}", listOfStoryData[i].pool.name, "\n");
+                StoryData data = listOfStoryData[i];
+                if (data != null)
+                {
+                    builder.AppendFormat("name: {0}{1}", listOfStoryData[i].name, "\n");
+                    builder.AppendFormat("design notes: {0}{1}", listOfStoryData[i].designNotes, "\n");
+                    builder.AppendFormat("topic pool: {0}{1}", listOfStoryData[i].pool.name, "\n");
+                    builder.AppendFormat("topicItems: {0} present{1}", listOfStoryData[i].listOfTopicItems.Count, "\n");
+                    builder.AppendFormat("{0}{1}", CheckTopicItems(listOfStoryData[i].listOfTopicItems), "\n");
+                    if (listOfStoryData[i].pool.listOfTopics.Count > 0)
+                    { builder.AppendFormat("{0}{1}", CheckTopicPool(listOfStoryData[i].pool), "\n"); }
+                }
+                else { Debug.LogWarningFormat("Invalid storyData (Null) for listOfStoryData[{0}]", i); }
             }
         }
         else { builder.AppendFormat("No StoryData present{0}", "\n"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// private SubMethod for CheckStoryModuleList to handles TopicItemss
+    /// </summary>
+    /// <param name="listOfItems"></param>
+    /// <returns></returns>
+    private string CheckTopicItems(List<TopicItem> listOfItems)
+    {
+        StringBuilder builder = new StringBuilder();
+        int count = listOfItems.Count;
+        if (count > 0)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                builder.AppendFormat("{0}itemName: {1}{2}", "\n", listOfItems[i].name, "\n");
+                builder.AppendFormat("tag: {0}{1}", listOfItems[i].tag, "\n");
+                builder.AppendFormat("descriptor: {0}{1}", listOfItems[i].descriptor, "\n");
+            }
+        }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// private SubMethod for CheckStoryModuleList to return topics in a pools
+    /// </summary>
+    /// <param name="pool"></param>
+    /// <returns></returns>
+    private string CheckTopicPool(TopicPool pool)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (pool != null)
+        {
+            int count = pool.listOfTopics.Count;
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    Topic topic = pool.listOfTopics[i];
+                    if (topic != null)
+                    {
+                        builder.AppendFormat("{0}topicName: {1}{2}", "\n", topic.name, "\n");
+                        builder.AppendFormat("tag: {0}{1}", topic.tag, "\n");
+                        builder.AppendFormat("topicItem: {0}{1}", topic.topicItem != null ? topic.topicItem.name : "none present", "\n");
+                        builder.AppendFormat("{0}{1}", CheckTopicHelp(topic.listOfStoryHelp), "\n");
+                        builder.AppendFormat("{0}{1}", topic.text, "\n");
+                        builder.AppendFormat("{0}{1}", "\n", CheckTopicOptions(topic.listOfOptions));
+                    }
+                    else { Debug.LogWarningFormat("Invalid topic (Null) for TopicPool \"{0}\", listOfTopics[{1}]", pool.name, i); }
+                }
+            }
+        }
+        else { Debug.LogWarning("Invalid topicPool (Null)"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// private SubMethod for CheckTopicPool
+    /// </summary>
+    /// <param name="listOfOptions"></param>
+    /// <returns></returns>
+    private string CheckTopicOptions(List<TopicOption> listOfOptions)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (listOfOptions != null)
+        {
+            int count = listOfOptions.Count;
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    TopicOption option = listOfOptions[i];
+                    if (option != null)
+                    {
+                        builder.AppendFormat("{0}optionName: {1}{2}", "\n", option.name, "\n");
+                        builder.AppendFormat("tag: {0}{1}", option.tag, "\n");
+                        builder.AppendFormat("text: {0}{1}", option.text, "\n");
+                        builder.AppendFormat("{0}{1}{2}", "\n", option.storyInfo.Length > 0 ? option.storyInfo : "no storyInfo present", "\n");
+                        builder.AppendFormat("{0}{1}{2}", "\n", option.storyTarget != null ? option.storyTarget.name : "no target present", "\n");
+                    }
+                    else { Debug.LogWarningFormat("Invalid topicOption (Null) for listOfOptions[{0}]", i); }
+                }
+            }
+        }
+        else { Debug.LogWarning("Invalid listOfOptions (Null)"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// private subMethod for CheckTopicPool
+    /// </summary>
+    /// <param name="listOfHelp"></param>
+    /// <returns></returns>
+    private string CheckTopicHelp(List<StoryHelp> listOfHelp)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (listOfHelp != null)
+        {
+            for (int i = 0; i < listOfHelp.Count; i++)
+            { builder.AppendFormat("help: {0}, \"{1}\"{2}", listOfHelp[i].name, listOfHelp[i].tag, "\n"); }
+        }
+        else { Debug.LogWarning("Invalid listOfHelp (Null)"); }
         return builder.ToString();
     }
 
