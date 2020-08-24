@@ -42,8 +42,10 @@ public class DebugGUI : MonoBehaviour
     private int box_info;
     private int box_option;
     private int box_action;
-    private int box_level; 
+    private int box_level;
+    private int box_file;
     private int button_width;
+    private int offset;
     private int targetToggle = 0;
     private int campaignToggle = 0;
     private int personalityToggle = 0;
@@ -85,6 +87,7 @@ public class DebugGUI : MonoBehaviour
         box_info = box_x * 2 + box_width;
         box_action = box_x * 3 + box_width * 2;
         box_level = box_x * 4 + box_width * 3;
+        box_file = box_x * 5 + box_width * 4;
         //option strings
         optionAutoGear = "Auto Gear ON";
         optionFogOfWar = "Fog Of War ON";
@@ -136,7 +139,8 @@ public class DebugGUI : MonoBehaviour
             GUI.Box(new Rect(box_action, box_y, box_width, box_height + 340), "Action Menu", customBackground);
             //background box (Level)
             GUI.Box(new Rect(box_level, box_y, box_width, box_height / 2 + 60), "Map Menu", customBackground);
-
+            //background box (File Ops)
+            GUI.Box(new Rect(box_file, box_y, box_width, box_height / 2 + 60), "File Menu", customBackground);
             //
             // - - - Info (first box)
             //
@@ -985,19 +989,16 @@ public class DebugGUI : MonoBehaviour
             }
 
             //twentyFifth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 24 + button_height * 24, button_width, button_height), "Export Data"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 24 + button_height * 24, button_width, button_height), ""))
             {
-                Debug.Log("[Dbg] Button -> Export Data");
-                GameManager.i.textScript.ExportTextLists();
-                GameManager.i.textScript.ExportTopicOptions();
+
             }
 
             //twentySixth button
             modifier = 25;
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * modifier + button_height * modifier, button_width, button_height), "Import Data"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * modifier + button_height * modifier, button_width, button_height), ""))
             {
-                Debug.Log("[Dbg] Button -> Import Data");
-                GameManager.i.textScript.ImportTextLists();
+
             }
 
             //twentySeventh button
@@ -1126,6 +1127,53 @@ public class DebugGUI : MonoBehaviour
                 Debug.Log("[Dbg] Button -> Show Contact Nodes");
                 EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.ShowContacts, "DebugGUI.cs -> OnGUI");
             }
+
+            //
+            // - - - File Menu - - -
+            //
+
+            //first button
+            offset = 0;
+            if (GUI.Button(new Rect(box_file + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), "Export TextLists"))
+            {
+                Debug.Log("[Dbg] Button -> Export TextLists");
+                GameManager.i.textScript.ExportTextLists();
+            }
+
+            //second button
+            offset = 1;
+            if (GUI.Button(new Rect(box_file + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), "Import TextLists"))
+            {
+                Debug.Log("[Dbg] Button -> Import Data");
+                GameManager.i.textScript.ImportTextLists();
+            }
+
+            //third button
+            offset = 2;
+            if (GUI.Button(new Rect(box_file + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), "Exp Topic Options"))
+            {
+                Debug.Log("[Dbg] Button -> Export Topic Options");
+                GameManager.i.textScript.ExportTopicOptions();
+            }
+
+            //fourth button
+            offset = 3;
+            if (GUI.Button(new Rect(box_file + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), "Exp Story Data"))
+            {
+                Debug.Log("[Dbg] Button -> Export Story Data");
+                GameManager.i.fileScript.ExportStoryData();
+                
+            }
+
+            //fifth button
+            offset = 4;
+            if (GUI.Button(new Rect(box_file + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), "Exp Story Help"))
+            {
+                Debug.Log("[Dbg] Button -> Export Story Help");
+                GameManager.i.fileScript.ExportStoryHelp();
+            }
+
+
 
 
 

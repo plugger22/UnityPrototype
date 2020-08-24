@@ -2550,3 +2550,51 @@ City seed 1616 -> Mexico City, Mexico
 
 Dev seed 59822 -> Monday, 24 August 2020 9:05 AM
 City seed 1616 -> Mexico City, Mexico
+
+Dev seed 33082 -> Monday, 24 August 2020 10:48 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 26568 -> Monday, 24 August 2020 11:10 AM
+City seed 1616 -> Mexico City, Mexico
+WARNING Invalid Matching Npc nodes (start ID 27, end ID 27) for GetEndNode
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MissionManager:GetEndNode(Node) (at Assets/Scripts/Managers/MissionManager.cs:273)
+	MissionManager:UpdateActiveNpc(Npc) (at Assets/Scripts/Managers/MissionManager.cs:567)
+	MissionManager:ProcessNpc(Npc) (at Assets/Scripts/Managers/MissionManager.cs:380)
+	MissionManager:StartTurnLate() (at Assets/Scripts/Managers/MissionManager.cs:159)
+	MissionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/MissionManager.cs:124)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:537)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:326)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:251)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:398)
+	
+Dev seed 14288 -> Monday, 24 August 2020 11:21 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 37410 -> Monday, 24 August 2020 11:21 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 25708 -> Monday, 24 August 2020 11:41 AM
+City seed 1616 -> Mexico City, Mexico
+ASSERT UnassignedReferenceException: The variable sprite of StoryHelp has not been assigned.
+You probably need to assign the sprite variable of the StoryHelp script in the inspector.
+UnityEngine.Object.get_name () (at C:/buildslave/unity/build/Runtime/Export/UnityEngineObject.bindings.cs:198)
+	DataManager.CreateStoryHelpExport () (at Assets/Scripts/Managers/DataManager.cs:9933)
+	FileManager.ExportStoryHelp () (at Assets/Scripts/Managers/FileManager.cs:4915)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1173)
+	
+Dev seed 52321 -> Monday, 24 August 2020 11:44 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 32538 -> Monday, 24 August 2020 11:45 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 11975 -> Monday, 24 August 2020 11:52 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 62314 -> Monday, 24 August 2020 12:15 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 11642 -> Monday, 24 August 2020 12:18 PM
+City seed 1616 -> Mexico City, Mexico

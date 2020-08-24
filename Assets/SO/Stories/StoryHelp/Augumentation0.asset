@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
-  m_Name: Augumentation
+  m_Name: Augumentation0
   m_EditorClassIdentifier: 
   tag: Augumentation
   sprite: {fileID: 21300000, guid: b409a5bb3e60fe2449c54d6642ca4a19, type: 3}
@@ -22,3 +22,4 @@ MonoBehaviour:
   textBottom: Ripper Docs can install illegal augumentations. Any individual found
     with these faces the death penalty. That's if the weird and crazy implant voices
     don't convince you into ending it yourself first
+  isKnown: 0

@@ -9918,7 +9918,98 @@ public class DataManager : MonoBehaviour
         { storyHelp.Value.isKnown = false; }
     }
 
-        //new methods above here
+    /// <summary>
+    /// generate a string containing all storyHelp data in an suitable format to export to a file
+    /// </summary>
+    /// <returns></returns>
+    public string CreateStoryHelpExport()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("Story Help{0}", "\n");
+        List<string> tempList = dictOfStoryHelp.Keys.ToList();
+        if (tempList != null)
+        {
+            tempList.Sort();
+            for (int i = 0; i < tempList.Count; i++)
+            {
+                StoryHelp help = GetStoryHelp(tempList[i]);
+                if (help != null)
+                {
+                    builder.AppendFormat("{0}Name: {1}{2}", "\n", help.name, "\n");
+                    builder.AppendFormat("Tag: {0}{1}", help.tag, "\n");
+                    if (help.sprite != null)
+                    { builder.AppendFormat("Sprite: {0}{1}", help.sprite.name, "\n"); }
+                    else { builder.AppendFormat("Sprite: default{0}", "\n"); }
+                    builder.AppendFormat("{0}{1}{2}", "\n", help.textTop, "\n");
+                    builder.AppendFormat("{0}{1}{2}", "\n", help.textMiddle, "\n");
+                    builder.AppendFormat("{0}{1}{2}", "\n", help.textBottom, "\n");
+                    builder.AppendLine();
+                }
+                else { Debug.LogWarningFormat("Invalid storyHelp (Null) for key \"{0}\"", tempList[i]); }
+            }
+        }
+        else { Debug.LogError("Invalid tempList (Null) for dictOfStoryHelp"); }
+        return builder.ToString();
     }
+
+
+    /// <summary>
+    /// generate a string containing all story data in an suitable format to export to a file
+    /// </summary>
+    /// <returns></returns>
+    public string CreateStoryDataExport()
+    {
+        StringBuilder builder = new StringBuilder();
+        //loop storyModules
+        StoryModule[] arrayOfModules = GameManager.i.loadScript.arrayOfStoryModules;
+        if (arrayOfModules != null)
+        {
+            for (int j = 0; j < arrayOfModules.Length; j++)
+            {
+                StoryModule module = arrayOfModules[j];
+                if (module != null)
+                {
+                    builder.AppendFormat("storyModule: {0}{1}", module.name, "\n");
+                    builder.AppendFormat("side: {0}{1}", module.side.name, "\n");
+                    builder.AppendFormat("{0}List: Campaign Stories{1}", "\n", "\n");
+                    builder.Append(CheckStoryModuleList(module.listOfCampaignStories));
+                    builder.AppendFormat("{0}List: Family Stories{1}", "\n", "\n");
+                    builder.Append(CheckStoryModuleList(module.listOfFamilyStories));
+                    builder.AppendFormat("{0}List: HQ Stories{1}", "\n", "\n");
+                    builder.Append(CheckStoryModuleList(module.listOfHqStories));
+                    builder.AppendLine();
+                    builder.AppendLine();
+                }
+                else { Debug.LogWarningFormat("Invalid storyModule (Null) for arrayOfModules[{0}]", j); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfStoryModules (Null)"); }
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// private subMethod for CreateStoryDataExport that handles individual lists of StoryData
+    /// </summary>
+    /// <param name="listOfStoryData"></param>
+    /// <returns></returns>
+    private string CheckStoryModuleList(List<StoryData> listOfStoryData)
+    {
+        StringBuilder builder = new StringBuilder();
+        int count = listOfStoryData.Count;
+        if (count > 0)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                builder.AppendFormat("name: {0}{1}", listOfStoryData[i].name, "\n");
+                builder.AppendFormat("design notes: {0}{1}", listOfStoryData[i].designNotes, "\n");
+                builder.AppendFormat("topic pool: {0}{1}", listOfStoryData[i].pool.name, "\n");
+            }
+        }
+        else { builder.AppendFormat("No StoryData present{0}", "\n"); }
+        return builder.ToString();
+    }
+
+    //new methods above here
+}
 
 

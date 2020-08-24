@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
-  m_Name: MegaCorpRes
+  m_Name: MegaCorp1
   m_EditorClassIdentifier: 
   tag: 'Resistance and MegaCorps '
   sprite: {fileID: 0}
@@ -22,3 +22,4 @@ MonoBehaviour:
   textBottom: The Resistance, in turn, reluctantly turns a blind eye to such overwhelmingly
     powerful organisations that exploit planets and people, unrestrained by morals
     or rules
+  isKnown: 0

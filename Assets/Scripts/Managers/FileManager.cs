@@ -31,8 +31,6 @@ public class FileManager : MonoBehaviour
     //secondary
     private static readonly string STORYDATA_FILE = "storyDataFile.txt";
     private static readonly string STORYHELP_FILE = "storyHelpFile.txt";
-    private string writeStoryTEXT;
-    private string writeHelpTEXT;
     private string filenameStory;
     private string filenameHelp;
 
@@ -4879,7 +4877,8 @@ public class FileManager : MonoBehaviour
     /// </summary>
     public void ExportStoryData()
     {
-        writeStoryTEXT = GameManager.i.dataScript.CreateStoryDataExport();
+        string text = GameManager.i.dataScript.CreateStoryDataExport();
+        SaveStoryDataToFile(text);
     }
     #endregion
 
@@ -4887,7 +4886,7 @@ public class FileManager : MonoBehaviour
     /// <summary>
     /// write export dataDump to file
     /// </summary>
-    public void SaveStoryDataToFile()
+    private void SaveStoryDataToFile(string writeStoryTEXT)
     {
         if (writeStoryTEXT != null)
         {
@@ -4913,7 +4912,8 @@ public class FileManager : MonoBehaviour
     /// </summary>
     public void ExportStoryHelp()
     {
-        writeHelpTEXT = GameManager.i.dataScript.CreateStoryHelpExport();
+        string text = GameManager.i.dataScript.CreateStoryHelpExport();
+        SaveStoryHelpToFile(text);
     }
     #endregion
 
@@ -4921,7 +4921,7 @@ public class FileManager : MonoBehaviour
     /// <summary>
     /// write export dataDump to file
     /// </summary>
-    public void SaveStoryHelpToFile()
+    private void SaveStoryHelpToFile(string writeHelpTEXT)
     {
         if (writeHelpTEXT != null)
         {
