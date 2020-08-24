@@ -37,9 +37,9 @@ public class TextManager : MonoBehaviour
     #endregion
 
     /// <summary>
-    /// Export SO  method
+    /// Export TextList SO  method
     /// </summary>
-    public void Export()
+    public void ExportTextLists()
     {
         TextList textList;
         //don't exceed number of files present or maxCap
@@ -79,7 +79,7 @@ public class TextManager : MonoBehaviour
     /// <summary>
     /// Import external JSON data back into list of SO TextLists
     /// </summary>
-    public void Import()
+    public void ImportTextLists()
     {
         bool isSuccess = false;
         TextList textList;

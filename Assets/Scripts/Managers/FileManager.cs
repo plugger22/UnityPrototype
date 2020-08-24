@@ -14,7 +14,7 @@ using UnityEngine;
 /// </summary>
 public class FileManager : MonoBehaviour
 {
-
+    //main file operations
     private static readonly string SAVE_FILE = "savefile.json";
     private static readonly string AUTO_FILE = "autoSaveFile.json";
     private Save write;
@@ -27,6 +27,14 @@ public class FileManager : MonoBehaviour
     private byte[] soupRead;                //encryption in
 
     private string codeKey;
+
+    //secondary
+    private static readonly string STORYDATA_FILE = "storyDataFile.txt";
+    private static readonly string STORYHELP_FILE = "storyHelpFile.txt";
+    private string writeStoryTEXT;
+    private string writeHelpTEXT;
+    private string filenameStory;
+    private string filenameHelp;
 
     //fast access
     GlobalSide globalAuthority;
@@ -43,6 +51,8 @@ public class FileManager : MonoBehaviour
     {
         filenamePlayer = Path.Combine(Application.persistentDataPath, SAVE_FILE);
         filenameAuto = Path.Combine(Application.persistentDataPath, AUTO_FILE);
+        filenameStory = Path.Combine(Application.persistentDataPath, STORYDATA_FILE);
+        filenameHelp = Path.Combine(Application.persistentDataPath, STORYHELP_FILE);
         codeKey = "#kJ83DAl50$*@.<__'][90{4#dDA'a?~";                         //needs to be 32 characters long exactly
         //fast access
         globalAuthority = GameManager.i.globalScript.sideAuthority;
@@ -4855,6 +4865,78 @@ public class FileManager : MonoBehaviour
             actor.SetTeamActionData(readActor.listOfTeamActions);
         }
         return actor;
+    }
+    #endregion
+
+
+    //
+    // - - - Export File (Write only -> text -> dataDump)
+    //
+
+    #region ExportStoryData
+    /// <summary>
+    /// Take in-game data and convert to dataDamp export format suitable for a cut and paste into the Keep
+    /// </summary>
+    public void ExportStoryData()
+    {
+        writeStoryTEXT = GameManager.i.dataScript.CreateStoryDataExport();
+    }
+    #endregion
+
+    #region SaveStoryDataToFile
+    /// <summary>
+    /// write export dataDump to file
+    /// </summary>
+    public void SaveStoryDataToFile()
+    {
+        if (writeStoryTEXT != null)
+        {
+            //file present? If so delete
+            if (File.Exists(filenameStory) == true)
+            {
+                try { File.Delete(filenameStory); }
+                catch (Exception e) { Debug.LogErrorFormat("Failed to DELETE FILE, error \"{0}\"", e.Message); }
+            }
+            //create new file
+            try { File.WriteAllText(filenameStory, writeStoryTEXT); }
+            catch (Exception e) { Debug.LogErrorFormat("Failed to write TEXT FROM FILE, error \"{0}\"", e.Message); }
+            Debug.LogFormat("[Fil] FileManager.cs -> SaveStoryDataToFile: StoryData SAVED to \"{0}\"{1}", filenameStory, "\n");
+        }
+        else { Debug.LogError("Invalid writeTEXT (Null)"); }
+    }
+    #endregion
+
+
+    #region ExportStoryHelp
+    /// <summary>
+    /// Take in-game data and convert to dataDamp export format suitable for a cut and paste into the Keep
+    /// </summary>
+    public void ExportStoryHelp()
+    {
+        writeHelpTEXT = GameManager.i.dataScript.CreateStoryHelpExport();
+    }
+    #endregion
+
+    #region SaveStoryHelpToFile
+    /// <summary>
+    /// write export dataDump to file
+    /// </summary>
+    public void SaveStoryHelpToFile()
+    {
+        if (writeHelpTEXT != null)
+        {
+            //file present? If so delete
+            if (File.Exists(filenameHelp) == true)
+            {
+                try { File.Delete(filenameHelp); }
+                catch (Exception e) { Debug.LogErrorFormat("Failed to DELETE FILE, error \"{0}\"", e.Message); }
+            }
+            //create new file
+            try { File.WriteAllText(filenameHelp, writeHelpTEXT); }
+            catch (Exception e) { Debug.LogErrorFormat("Failed to write TEXT FROM FILE, error \"{0}\"", e.Message); }
+            Debug.LogFormat("[Fil] FileManager.cs -> SaveStoryHelpToFile: StoryHelp SAVED to \"{0}\"{1}", filenameHelp, "\n");
+        }
+        else { Debug.LogError("Invalid writeTEXT (Null)"); }
     }
     #endregion
 

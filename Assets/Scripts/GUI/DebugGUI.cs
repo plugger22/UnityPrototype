@@ -988,7 +988,7 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 24 + button_height * 24, button_width, button_height), "Export Data"))
             {
                 Debug.Log("[Dbg] Button -> Export Data");
-                GameManager.i.textScript.Export();
+                GameManager.i.textScript.ExportTextLists();
                 GameManager.i.textScript.ExportTopicOptions();
             }
 
@@ -997,7 +997,7 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * modifier + button_height * modifier, button_width, button_height), "Import Data"))
             {
                 Debug.Log("[Dbg] Button -> Import Data");
-                GameManager.i.textScript.Import();
+                GameManager.i.textScript.ImportTextLists();
             }
 
             //twentySeventh button
