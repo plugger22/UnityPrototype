@@ -2647,3 +2647,27 @@ DataManager.CheckTopicPool (TopicPool pool) (at Assets/Scripts/Managers/DataMana
 	
 Dev seed 49745 -> Monday, 24 August 2020 4:31 PM
 City seed 1616 -> Mexico City, Mexico
+
+Dev seed 47590 -> Monday, 24 August 2020 5:39 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 21014 -> Monday, 24 August 2020 6:22 PM
+City seed 1616 -> Mexico City, Mexico
+WARNING Invalid Matching Npc nodes (start ID 27, end ID 27) for GetEndNode
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MissionManager:GetEndNode(Node) (at Assets/Scripts/Managers/MissionManager.cs:273)
+	MissionManager:UpdateActiveNpc(Npc) (at Assets/Scripts/Managers/MissionManager.cs:567)
+	MissionManager:ProcessNpc(Npc) (at Assets/Scripts/Managers/MissionManager.cs:380)
+	MissionManager:StartTurnLate() (at Assets/Scripts/Managers/MissionManager.cs:159)
+	MissionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/MissionManager.cs:124)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:537)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:326)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:251)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:398)
+	
+Dev seed 58675 -> Monday, 24 August 2020 6:23 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 5187 -> Monday, 24 August 2020 6:26 PM
+City seed 1616 -> Mexico City, Mexico

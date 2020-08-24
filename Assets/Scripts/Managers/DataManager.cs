@@ -10093,8 +10093,11 @@ public class DataManager : MonoBehaviour
                         builder.AppendFormat("{0}optionName: {1}{2}", "\n", option.name, "\n");
                         builder.AppendFormat("tag: {0}{1}", option.tag, "\n");
                         builder.AppendFormat("text: {0}{1}", option.text, "\n");
-                        builder.AppendFormat("{0}{1}{2}", "\n", option.storyInfo.Length > 0 ? option.storyInfo : "no storyInfo present", "\n");
-                        builder.AppendFormat("{0}{1}{2}", "\n", option.storyTarget != null ? option.storyTarget.name : "no target present", "\n");
+                        if (option.storyInfo.Length > 0)
+                        { builder.AppendFormat("{0}{1}{2}", "\n", option.storyInfo, "\n"); }
+                        if (option.storyTarget != null)
+                        { builder.AppendFormat("{0}{1}, \"{2}\", {3}, {4}{5}", "\n", 
+                            option.storyTarget.name, option.storyTarget.targetName, option.storyTarget.descriptorResistance, option.storyTarget.nodeArc.name, "\n"); }
                     }
                     else { Debug.LogWarningFormat("Invalid topicOption (Null) for listOfOptions[{0}]", i); }
                 }
