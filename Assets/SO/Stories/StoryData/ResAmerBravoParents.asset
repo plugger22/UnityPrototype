@@ -13,4 +13,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   designNotes: Americon Bravo -> Parents
   pool: {fileID: 11400000, guid: e43144eec11486140b29ef695d829874, type: 2}
-  listOfTopicItems: []
+  listOfTopicItems:
+  - {fileID: 11400000, guid: 72a58ae57f66b8942915f9d7e27e980f, type: 2}
+  - {fileID: 11400000, guid: 669e729977a180040910330ae93c9d0c, type: 2}
+  listOfTargetsLevel0: []
+  listOfTargetsLevel1: []
+  listOfTargetsLevel2: []
+  listOfTargetsLevel3: []
+  listOfTargetsLevel4: []
+  listOfStoryHelp: []

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fd7af3a7dc189e41923a6aa964593ad, type: 3}
+  m_Name: Mom
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 21300000, guid: ffbf479d0e5373a48a1f87c69a6d797e, type: 3}
+  tag: Mom<br>Loving Matriarch
+  descriptor: The rock of your family. Aging and diabetic, she tirelessly works at
+    holding the fraying threds of the family together
+  pool: {fileID: 11400000, guid: e43144eec11486140b29ef695d829874, type: 2}

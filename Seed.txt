@@ -2671,3 +2671,15 @@ City seed 1616 -> Mexico City, Mexico
 
 Dev seed 5187 -> Monday, 24 August 2020 6:26 PM
 City seed 1616 -> Mexico City, Mexico
+
+Dev seed 36715 -> Tuesday, 25 August 2020 9:59 AM
+WARNING [Val] ValidateSO: MISMATCH on Topic, array 287, assets 293 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Topic[]) (at Assets/Scripts/Managers/ValidationManager.cs:1966)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1898)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:832)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:385)
+	City seed 1616 -> Mexico City, Mexico
+
+Dev seed 16889 -> Tuesday, 25 August 2020 10:50 AM
+City seed 1616 -> Mexico City, Mexico

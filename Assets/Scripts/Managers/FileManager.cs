@@ -4877,7 +4877,7 @@ public class FileManager : MonoBehaviour
     /// </summary>
     public void ExportStoryData()
     {
-        string text = GameManager.i.dataScript.CreateStoryDataExport();
+        string text = GameManager.i.textScript.CreateStoryDataExport();
         SaveStoryDataToFile(text);
     }
     #endregion
@@ -4912,7 +4912,7 @@ public class FileManager : MonoBehaviour
     /// </summary>
     public void ExportStoryHelp()
     {
-        string text = GameManager.i.dataScript.CreateStoryHelpExport();
+        string text = GameManager.i.textScript.CreateStoryHelpExport();
         SaveStoryHelpToFile(text);
     }
     #endregion

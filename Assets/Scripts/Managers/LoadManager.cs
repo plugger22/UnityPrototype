@@ -109,6 +109,7 @@ public class LoadManager : MonoBehaviour
     public TopicPool[] arrayOfTopicPools;
     public TopicScope[] arrayOfTopicScopes;
     public TopicGroupType[] arrayOfTopicGroupTypes;
+    public TopicItem[] arrayOfTopicItems;
     public Topic[] arrayOfTopics;
 
     [Header("Topic Options")]
@@ -1737,6 +1738,13 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTopicGroupTypes has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TopicGroupTypes present"); }
+        //
+        // - - - TopicItems (not stored in a collection)
+        //
+        numArray = arrayOfTopicItems.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTopicItems has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TopicItems present"); }
         //
         // - - - Topic Pools (not stored in a collection)
         //
