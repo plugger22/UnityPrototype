@@ -5382,9 +5382,13 @@ MonoBehaviour:
   actionSprite: {fileID: 21300000, guid: 8138c1817c988d041833703c6b085f72, type: 3}
   objectiveSprite: {fileID: 21300000, guid: 1e2bcaaa7e6fbaf4da0bb00f2ceba3f6, type: 3}
   topicDefaultSprite: {fileID: 21300000, guid: 0990750233d69384f832d111b8981353, type: 3}
-  topicOptionValidSprite: {fileID: 21300000, guid: d9a90c3e37216bf4a8c6946eb464ade7,
+  topicOptionNormalValidSprite: {fileID: 21300000, guid: d9a90c3e37216bf4a8c6946eb464ade7,
     type: 3}
-  topicOptionInvalidSprite: {fileID: 21300000, guid: de4067097f073d341b79d0136225ba40,
+  topicOptionNormalInvalidSprite: {fileID: 21300000, guid: de4067097f073d341b79d0136225ba40,
+    type: 3}
+  topicOptionLetterValidSprite: {fileID: 21300000, guid: 2f3c5378750402347972293a67ccd38f,
+    type: 3}
+  topicOptionLetterInvalidSprite: {fileID: 21300000, guid: 41f9a23fa9cc0c4489f4ae61389d2ccf,
     type: 3}
   topicReviewSprite: {fileID: 21300000, guid: 4bc3f8ffc1e52f741ba6d5f9d475aa7c, type: 3}
   friendSprite: {fileID: 21300000, guid: 8a947f318ba8ccf45895e42cc50c6af3, type: 3}

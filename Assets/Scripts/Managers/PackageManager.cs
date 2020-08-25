@@ -954,7 +954,7 @@ namespace packageAPI
     }
 
     /// <summary>
-    /// topic UI initialisation data
+    /// topic UI initialisation data (Decision topics)
     /// </summary>
     public class TopicUIData
     {
@@ -972,6 +972,7 @@ namespace packageAPI
         public string bossTooltipDetails;                                   //boss tooltip
         public int nodeID;                                                  //needed to toggle 'ShowMe' button, ignore if not relevant
         public bool isBoss;                                                 //True if HQ boss present (image + tooltip opinion)
+        public TopicDecisionType type;                                      //Type of decision, default 'Normal'
         public Color colour;                                                 //background colour (set to default blue in constructor)
         public Sprite spriteMain;                                           //Sprite for Main topic 
         public Sprite spriteBoss;                                           //Sprite for Boss (if 'isBoss' true, ignore otherwise)

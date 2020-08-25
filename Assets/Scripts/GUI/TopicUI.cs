@@ -16,6 +16,7 @@ public class TopicUI : MonoBehaviour
     public GameObject topicObject;
 
     [Header("Backgrounds")]
+    public Image outerBackground;
     public Image innerBackground;
 
     [Header("Panels")]
@@ -45,6 +46,9 @@ public class TopicUI : MonoBehaviour
     public Image imageTopic;
     public Image imageBoss;
 
+    //background images
+    private Image outerBackgroundImage;
+    private Image innerBackgroundImage;
     //button script handlers
     private ButtonInteraction buttonInteractiveOption0;
     private ButtonInteraction buttonInteractiveOption1;
@@ -79,7 +83,10 @@ public class TopicUI : MonoBehaviour
     private Sprite topicDefault;
     private Sprite topicOptionValid;
     private Sprite topicOptionInvalid;
-
+    private Sprite topicOptionNormalValid;
+    private Sprite topicOptionNormalInvalid;
+    private Sprite topicOptionLetterValid;
+    private Sprite topicOptionLetterInvalid;
 
     //static reference
     private static TopicUI topicUI;
@@ -147,7 +154,6 @@ public class TopicUI : MonoBehaviour
         //UI elements
         Debug.Assert(topicCanvas != null, "Invalid topicCanvas (Null)");
         Debug.Assert(topicObject != null, "Invalid topicObject (Null)");
-        Debug.Assert(innerBackground != null, "Invalid innerBackground (Null)");
         Debug.Assert(panelBoss != null, "Invalid panelBoss (Null)");
         Debug.Assert(buttonOption0 != null, "Invalid buttonOption0 (Null)");
         Debug.Assert(buttonOption1 != null, "Invalid buttonOption1 (Null)");
@@ -167,6 +173,20 @@ public class TopicUI : MonoBehaviour
         Debug.Assert(textOption3 != null, "Invalid textOption3 (Null)");
         Debug.Assert(imageTopic != null, "Invalid imageTopic (Null)");
         Debug.Assert(imageBoss != null, "Invalid imageBoss (Null)");
+        //images -> outer background
+        if (outerBackground != null)
+        {
+            outerBackgroundImage = outerBackground.GetComponent<Image>();
+            Debug.Assert(outerBackgroundImage != null, "Invalid outerBackgroundImage (Null)");
+        }
+        else { Debug.LogError("Invalid outerBackground (Null)"); }
+        //images -> inner background
+        if (innerBackground != null)
+        {
+            innerBackgroundImage = innerBackground.GetComponent<Image>();
+            Debug.Assert(innerBackgroundImage != null, "Invalid innerBackgroundImage (Null)");
+        }
+        else { Debug.LogError("Invalid innerBackground (Null)"); }
         //Button Interactive
         buttonInteractiveOption0 = buttonOption0.GetComponent<ButtonInteraction>();
         buttonInteractiveOption1 = buttonOption1.GetComponent<ButtonInteraction>();
@@ -232,12 +252,15 @@ public class TopicUI : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         topicDefault = GameManager.i.guiScript.topicDefaultSprite;
-        topicOptionValid = GameManager.i.guiScript.topicOptionValidSprite;
-        topicOptionInvalid = GameManager.i.guiScript.topicOptionInvalidSprite;
+        topicOptionNormalValid = GameManager.i.guiScript.topicOptionNormalValidSprite;
+        topicOptionNormalInvalid = GameManager.i.guiScript.topicOptionNormalInvalidSprite;
+        topicOptionLetterValid = GameManager.i.guiScript.topicOptionLetterValidSprite;
+        topicOptionLetterInvalid = GameManager.i.guiScript.topicOptionLetterInvalidSprite;
         Debug.Assert(topicDefault != null, "Invalid topicDefault sprite (Null)");
-        Debug.Assert(topicOptionValid != null, "Invalid topicOptionValid sprite (Null)");
-        Debug.Assert(topicOptionInvalid != null, "Invalid topicOptionInvalid sprite (Null)");
-
+        Debug.Assert(topicOptionNormalValid != null, "Invalid topicOptionNormalValid sprite (Null)");
+        Debug.Assert(topicOptionNormalInvalid != null, "Invalid topicOptionNormalInvalid sprite (Null)");
+        Debug.Assert(topicOptionLetterValid != null, "Invalid topicOptionLetterValid sprite (Null)");
+        Debug.Assert(topicOptionLetterInvalid != null, "Invalid topicOptionLetterInvalid sprite (Null)");
     }
     #endregion
 
@@ -382,6 +405,43 @@ public class TopicUI : MonoBehaviour
     private List<HelpData> GetInfoHelpList()
     { return GetHelpData("info_app_0", "info_app_1", "info_app_2", "info_app_3"); }*/
 
+    /// <summary>
+    /// Set up TopicUI for the specific TopicType required
+    /// </summary>
+    /// <param name="type"></param>
+    private void SetTopicType(TopicDecisionType type)
+    {
+        Color color = outerBackgroundImage.color;
+        switch (type)
+        {
+            case TopicDecisionType.Normal:
+                //hide letter background
+                outerBackgroundImage.color = new Color(color.r, color.g, color.b, 0.0f);
+                //show inner image
+                innerBackgroundImage.gameObject.SetActive(true);
+                //texts
+                textHeader.gameObject.SetActive(true);
+                textMain.gameObject.SetActive(true);
+                //option sprites
+                topicOptionValid = topicOptionNormalValid;
+                topicOptionInvalid = topicOptionNormalInvalid;
+                break;
+            case TopicDecisionType.Letter:
+                //100% alpha to display letter background
+                outerBackgroundImage.color = new Color(color.r, color.g, color.b, 1.0f);
+                //hide inner image
+                innerBackgroundImage.gameObject.SetActive(false);
+                //texts
+                textHeader.gameObject.SetActive(false);
+                textMain.gameObject.SetActive(false);
+                //option sprites
+                topicOptionValid = topicOptionLetterValid;
+                topicOptionInvalid = topicOptionLetterInvalid;
+                break;
+            default: Debug.LogWarningFormat("Unrecognised topicDecisionType \"{0}\"", type); break;
+        }
+    }
+
     #region SetTopicDisplay
     /// <summary>
     /// Initialise topicUI display
@@ -391,6 +451,7 @@ public class TopicUI : MonoBehaviour
     {
         if (data != null)
         {
+            SetTopicType(data.type);
             //set colour of background
             innerBackground.color = new Color(data.colour.r, data.colour.g, data.colour.b);
             //deactivate all options

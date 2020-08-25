@@ -147,10 +147,14 @@ public class GUIManager : MonoBehaviour
     public Sprite objectiveSprite;
     [Tooltip("Default topic sprite")]
     public Sprite topicDefaultSprite;
-    [Tooltip("Default sprite used for Topic UI (valid option) if none specified")]
-    public Sprite topicOptionValidSprite;
-    [Tooltip("Sprite used for an invalid topic option")]
-    public Sprite topicOptionInvalidSprite;
+    [Tooltip("Default sprite used for Topic UI (normal valid option) if none specified")]
+    public Sprite topicOptionNormalValidSprite;
+    [Tooltip("Sprite used for a normal invalid topic option")]
+    public Sprite topicOptionNormalInvalidSprite;
+    [Tooltip("Sprite used for a valid Letter format Topic UI option")]
+    public Sprite topicOptionLetterValidSprite;
+    [Tooltip("Sprite used for a invalid Letter format Topic UI option")]
+    public Sprite topicOptionLetterInvalidSprite;
     [Tooltip("Sprite used for Topic Reviews")]
     public Sprite topicReviewSprite;
     [Tooltip("Sprite for a Friendly relationship")]
@@ -330,8 +334,10 @@ public class GUIManager : MonoBehaviour
         Debug.Assert(actionSprite != null, "Invalid actionSprite (Null)");
         Debug.Assert(objectiveSprite != null, "Invalid objectiveSprite (Null)");
         Debug.Assert(topicDefaultSprite != null, "Invalid topicDefaultSprite (Null)");
-        Debug.Assert(topicOptionValidSprite != null, "Invalid topicValidSprite (Null)");
-        Debug.Assert(topicOptionInvalidSprite != null, "Invalid topicInvalidSprite (Null)");
+        Debug.Assert(topicOptionNormalValidSprite != null, "Invalid topicOptionNormalValidSprite (Null)");
+        Debug.Assert(topicOptionNormalInvalidSprite != null, "Invalid topicOptionNormalInvalidSprite (Null)");
+        Debug.Assert(topicOptionLetterValidSprite != null, "Invalid topicOptionLetterValidSprite (Null)");
+        Debug.Assert(topicOptionLetterInvalidSprite != null, "Invalid topicOptionLetterInvalidSprite (Null)");
         Debug.Assert(topicReviewSprite != null, "Invalid topicReviewSprite (Null)");
         Debug.Assert(friendSprite != null, "Invalid friendSprite (Null)");
         Debug.Assert(enemySprite != null, "Invalid enemySprite (Null)");
