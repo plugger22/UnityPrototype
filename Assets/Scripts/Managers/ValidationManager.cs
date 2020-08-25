@@ -1940,6 +1940,8 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfStoryModules);
         //StoryHelp
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfStoryHelp);
+        //TopicItems
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTopicItems);
     }
     #endregion
 
