@@ -11,8 +11,10 @@ public class Topic : ScriptableObject
     [Header("Texts")]
     [Tooltip("Short descriptor (TWO words), used as HEADER for topic UI display and other outputs")]
     public string tag;
-    [Tooltip("Topic text. Keep as short as possible")]
+    [Tooltip("Topic text. Keep as short as possible. Max of 2 and a bit lines")]
     [TextArea] public string text = "Unknown";
+    [Tooltip("Drop in a letter text object here if it's a Letter Decision topic, eg. StoryBravo -> Family, ignore otherwise")]
+    public StoryLetter letter;
     [Tooltip("Designer notes, not used inGame")]
     [TextArea] public string designNotes;
 

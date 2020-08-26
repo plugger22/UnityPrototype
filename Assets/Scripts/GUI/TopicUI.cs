@@ -37,6 +37,7 @@ public class TopicUI : MonoBehaviour
     [Header("Texts")]
     public TextMeshProUGUI textHeader;
     public TextMeshProUGUI textMain;
+    public TextMeshProUGUI letterText;
     public TextMeshProUGUI textOption0;
     public TextMeshProUGUI textOption1;
     public TextMeshProUGUI textOption2;
@@ -167,6 +168,7 @@ public class TopicUI : MonoBehaviour
         Debug.Assert(buttonStoryHelp1 != null, "Invalid buttonStoryHelp1 (Null)");
         Debug.Assert(textHeader != null, "Invalid textHeader (Null)");
         Debug.Assert(textMain != null, "Invalid textMain (Null)");
+        Debug.Assert(letterText != null, "Invalid letterText (Null)");
         Debug.Assert(textOption0 != null, "Invalid textOption0 (Null)");
         Debug.Assert(textOption1 != null, "Invalid textOption1 (Null)");
         Debug.Assert(textOption2 != null, "Invalid textOption2 (Null)");
@@ -409,10 +411,10 @@ public class TopicUI : MonoBehaviour
     /// Set up TopicUI for the specific TopicType required
     /// </summary>
     /// <param name="type"></param>
-    private void SetTopicType(TopicDecisionType type)
+    private void SetTopicType(TopicUIData data)
     {
         Color color = outerBackgroundImage.color;
-        switch (type)
+        switch (data.type)
         {
             case TopicDecisionType.Normal:
                 //hide letter background
@@ -422,9 +424,26 @@ public class TopicUI : MonoBehaviour
                 //texts
                 textHeader.gameObject.SetActive(true);
                 textMain.gameObject.SetActive(true);
+                letterText.gameObject.SetActive(false);
                 //option sprites
                 topicOptionValid = topicOptionNormalValid;
                 topicOptionInvalid = topicOptionNormalInvalid;
+                //topic header
+                if (string.IsNullOrEmpty(data.header) == false)
+                { textHeader.text = data.header; }
+                else
+                {
+                    Debug.LogWarningFormat("Invalid data.header (Null or Empty) for topic \"{0}\"", data.topicName);
+                    textHeader.text = "Unknown";
+                }
+                //topic text
+                if (string.IsNullOrEmpty(data.text) == false)
+                { textMain.text = data.text; }
+                else
+                {
+                    Debug.LogWarningFormat("Invalid data.text (Null or Empty) for topic \"{0}\"", data.topicName);
+                    textHeader.text = "Unknown";
+                }
                 break;
             case TopicDecisionType.Letter:
                 //100% alpha to display letter background
@@ -434,11 +453,14 @@ public class TopicUI : MonoBehaviour
                 //texts
                 textHeader.gameObject.SetActive(false);
                 textMain.gameObject.SetActive(false);
+                letterText.gameObject.SetActive(true);
                 //option sprites
                 topicOptionValid = topicOptionLetterValid;
                 topicOptionInvalid = topicOptionLetterInvalid;
+                //letter text
+                letterText.text = data.text;
                 break;
-            default: Debug.LogWarningFormat("Unrecognised topicDecisionType \"{0}\"", type); break;
+            default: Debug.LogWarningFormat("Unrecognised topicDecisionType \"{0}\"", data.type); break;
         }
     }
 
@@ -451,28 +473,13 @@ public class TopicUI : MonoBehaviour
     {
         if (data != null)
         {
-            SetTopicType(data.type);
+            SetTopicType(data);
             //set colour of background
             innerBackground.color = new Color(data.colour.r, data.colour.g, data.colour.b);
             //deactivate all options
             for (int i = 0; i < arrayOfButtons.Length; i++)
             { arrayOfButtons[i].gameObject.SetActive(false); }
-            //topic header
-            if (string.IsNullOrEmpty(data.header) == false)
-            { textHeader.text = data.header; }
-            else
-            {
-                Debug.LogWarningFormat("Invalid data.header (Null or Empty) for topic \"{0}\"", data.topicName);
-                textHeader.text = "Unknown";
-            }
-            //topic text
-            if (string.IsNullOrEmpty(data.text) == false)
-            { textMain.text = data.text; }
-            else
-            {
-                Debug.LogWarningFormat("Invalid data.text (Null or Empty) for topic \"{0}\"", data.topicName);
-                textHeader.text = "Unknown";
-            }
+
             //topic sprite
             if (data.spriteMain != null)
             { imageTopic.sprite = data.spriteMain; }
