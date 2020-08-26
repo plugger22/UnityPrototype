@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar0Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 0 Opt 2
-  tag: cc
-  text: 
+  tag: Ask
+  text: Can you still get SerialFlix?
   topic: {fileID: 11400000, guid: 924d965e3534ff243be40a4d7665e40e, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I can't but Mom can. I lean over and watch it in her servoPod. Trouble
+    is your Mom doesn't like watching Kill Ball shows. It's all old costume dramas
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

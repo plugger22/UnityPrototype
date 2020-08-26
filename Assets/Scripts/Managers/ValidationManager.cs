@@ -88,12 +88,14 @@ public class ValidationManager : MonoBehaviour
     public TopicScope campaignScope;
 
     [Header("Topic Data")]
-    [Tooltip("Max length of a topic (excludes tagged data) in chars (default is a twitter's worth of 140 chars")]
+    [Tooltip("Max length of a topic (excludes tagged data) in chars (default is a twitter's worth of 140 chars)")]
     [Range(100, 200)] public int maxTopicTextLength = 150;
     [Tooltip("Max length of a topic Option text (excludes tagged data) in chars")]
     [Range(10, 50)] public int maxOptionTextLength = 40;
     [Tooltip("Max number of StoryHelp.SO's allowed in listOfStoryHelp")]
-    [Range(1,3)] public int maxNumOfTopicStoryHelp = 2;
+    [Range(1, 3)] public int maxNumOfTopicStoryHelp = 2;
+    [Tooltip("Max length of StoryLetter textTop and textBottom chunks in chars")]
+    [Range(100, 200)] public int maxTopicLetterLength = 150;
 
     [Header("Structured Topic Data")]
     [Tooltip("Highest linkedIndex value allowed in a Story topic")]
@@ -939,28 +941,39 @@ public class ValidationManager : MonoBehaviour
                         if (topic != null)
                         {
                             topicName = topic.name;
-                            //check topic text chars limit
-                            textLength = topic.text.Length;
-                            //knock one off the length if there is a freeform asterisk
-                            if (topic.text.Contains("*") == true)
-                            { textLength--; }
-                            //knock two off the length if there is a '[' (assumed to be an open and close square brackets)
-                            if (topic.text.Contains("[") == true)
-                            { textLength -= 2; }
-                            if (textLength > maxTopicTextLength)
+
+                            switch (topic.subType.name)
                             {
-                                Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Text is overlength (is {0} chars, should be <= {1}) for topic \"{2}\"{3}",
-                                  textLength, maxTopicTextLength, topicName, "\n");
+                                case "StoryBravo":
+                                    //Letter Decision topics
+                                    if (topic.letter != null)
+                                    {
+                                        CheckTextLength(topic.letter.textTop, "ValidateTopics", "Letter", topic.letter.name, maxTopicLetterLength, true);
+                                        CheckTextLength(topic.letter.textBottom, "ValidateTopics", "Letter", topic.letter.name, maxTopicLetterLength, true);
+                                    }
+
+                                    else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Missing Letter (Null) for topic \"{0}\"{1}", topicName, "\n"); }
+                                        break;
+                                default:
+                                    //Normal Decision Topics
+                                    CheckTextLength(topic.text, "ValidateTopics", "Text", topic.name, maxTopicTextLength, true);
+                                    //should be no letter
+                                    if (topic.letter != null)
+                                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Letter \"{0}\" present (shouldn't be) for topic \"{1}\"{2}", topic.letter.name, topicName, "\n"); }
+                                    break;
                             }
                             //check topic text tags
-                            GameManager.i.topicScript.CheckTopicText(topic.text, false, true, topicName);
+                            if (string.IsNullOrEmpty(topic.text) == false)
+                            { GameManager.i.topicScript.CheckTopicText(topic.text, false, true, topicName); }
                             //check topic disabled
                             if (topic.isDisabled == true)
                             { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" is Disabled{1}", topic.name, "\n"); }
                             //check topic listOfStoryHelp less than max allowed
                             if (topic.listOfStoryHelp.Count > maxNumOfTopicStoryHelp)
-                            { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" has invalid # of storyHelp (has {1}, limit {2}){3}", topic.name, 
-                                topic.listOfStoryHelp.Count, maxNumOfTopicStoryHelp, "\n"); }
+                            {
+                                Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: topic \"{0}\" has invalid # of storyHelp (has {1}, limit {2}){3}", topic.name,
+                                  topic.listOfStoryHelp.Count, maxNumOfTopicStoryHelp, "\n");
+                            }
                             //check no duplicates
                             if (topic.listOfStoryHelp.Count > 1)
                             { CheckListForDuplicates(topic.listOfStoryHelp.Select(x => x.name).ToList(), "StoryHelp", topic.name, "listOfStoryHelp"); }
@@ -1002,12 +1015,7 @@ public class ValidationManager : MonoBehaviour
                                             textLength = option.text.Length;
                                             if (textLength > 0)
                                             {
-                                                //check text length limit
-                                                if (textLength > maxOptionTextLength)
-                                                {
-                                                    Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Text is overlength (is {0} chars, limit {1} chars) for option \"{2}\", topic {3}{4}",
-                                                        textLength, maxOptionTextLength, option.name, topic.name, "\n");
-                                                }
+                                                CheckTextLength(option.text, "ValidateTopics", "Text", option.name, maxOptionTextLength, true);
                                                 //check that there is only a single HQ option available (or none) as they are mutually exclusive
                                                 hqOptions = 0;
                                                 if (option.isPreferredByHQ == true) { hqOptions++; }
@@ -3391,7 +3399,7 @@ public class ValidationManager : MonoBehaviour
                                                 if (storyData.listOfTopicItems.Exists(x => x.name.Equals(topic.topicItem.name, StringComparison.Ordinal)) == false)
                                                 {
                                                     Debug.LogFormat("{0} TopicItem \"{1}\" for topic \"{2}\" NOT FOUND in storyData \"{3}\"{4}",
-                                                      tag, topic.topicItem.name, topic.name, storyData.name,  "\n");
+                                                      tag, topic.topicItem.name, topic.name, storyData.name, "\n");
                                                 }
                                             }
                                         }
@@ -3457,7 +3465,7 @@ public class ValidationManager : MonoBehaviour
                                                         { isSuccessOne = true; }
                                                         //check that a storyStar criteria is in use and count them
                                                         if (criteria.name.Equals(storyStarTrueCriteria.name, StringComparison.Ordinal) == true)
-                                                        { isSuccessTwo = true; arrayOfLast[topic.levelIndex, 1]++;}
+                                                        { isSuccessTwo = true; arrayOfLast[topic.levelIndex, 1]++; }
                                                         else if (criteria.name.Equals(storyStarFalseCriteria.name, StringComparison.Ordinal) == true)
                                                         { isSuccessTwo = true; arrayOfLast[topic.levelIndex, 0]++; }
                                                         //check that the storyFlagFalse criteria hasn't been used by mistake
@@ -4325,6 +4333,33 @@ public class ValidationManager : MonoBehaviour
             //O.K to have no topics if there are subSubType pools that will be used to fill the pool via UpdateTopicPools
             if (pool.subType.listOfSubSubType.Count == 0)
             { Debug.LogFormat("[Val] ValidationManager.cs-> CheckCampaignPool: campaign \"{0}\", \"{1}\" is EMPTY{2}", campaign.name, pool.name, "\n"); }
+        }
+    }
+
+    /// <summary>
+    /// utility to check text length within limits. 'msg' is for output if a problem, eg. 'ValidationManager.cs -> [methodName]: [child] is Overlength (is x, should be [limit]) for [parent]'. 
+    /// If 'isCheckTags' true then some allowance made for tags
+    /// </summary>
+    /// <param name="text"></param>
+    /// <param name="msg"></param>
+    /// <param name="limit"></param>
+    /// <param name="isCheckTags"></param>
+    private void CheckTextLength(string text, string methodName, string child, string parent, int limit, bool isCheckTags = false)
+    {
+        int textLength = text.Length;
+        if (isCheckTags == true)
+        {
+            //check topic text chars limit -> knock one off the length if there is a freeform asterisk
+            if (text.Contains("*") == true)
+            { textLength--; }
+            //knock two off the length if there is a '[' (assumed to be an open and close square brackets)
+            if (text.Contains("[") == true)
+            { textLength -= 2; }
+        }
+        if (textLength > limit)
+        {
+            Debug.LogFormat("[Val] ValidationManager.cs -> {0}: {1} is overlength (is {2} chars, should be <= {3}) for \"{4}\"{5}",
+              methodName, child, textLength, limit, parent, "\n");
         }
     }
 

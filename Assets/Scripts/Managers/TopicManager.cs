@@ -3278,7 +3278,7 @@ public class TopicManager : MonoBehaviour
             {
                 data.topicName = turnTopic.name;
                 data.header = turnTopic.tag;
-                data.text = turnTopic.text;
+
                 data.isBoss = turnTopic.subType.isBoss;
                 data.listOfOptions = turnTopic.listOfOptions;
                 data.listOfIgnoreEffects = turnTopic.listOfIgnoreEffects;
@@ -3288,8 +3288,19 @@ public class TopicManager : MonoBehaviour
                 //type
                 switch (turnTopicSubType.name)
                 {
-                    case "StoryBravo": data.type = TopicDecisionType.Letter; break; //family
-                    default: data.type = TopicDecisionType.Normal; break;
+                    case "StoryBravo":
+                        //Letter decision topics
+                        data.type = TopicDecisionType.Letter;
+                        if (turnTopic.letter != null)
+                        { data.text = string.Format("Dear {0}{1}{2}{3}{4}{5}{6}{7}{8}Love {9}", 
+                            turnTopic.letter.textDear, "\n", "\n", turnTopic.letter.textTop, "\n", "\n", turnTopic.letter.textBottom, "\n", "\n", turnTopic.letter.textLove); }
+                        else { Debug.LogErrorFormat("Invalid letter (Null) for topic \"{0}\"", turnTopic.text); }
+                        break; 
+                    default:
+                        //everything else -> Normal decision topics
+                        data.type = TopicDecisionType.Normal;
+                        data.text = turnTopic.text;
+                        break;
                 }
                 //subSubType
                 turnTopicSubSubType = turnTopic.subSubType;

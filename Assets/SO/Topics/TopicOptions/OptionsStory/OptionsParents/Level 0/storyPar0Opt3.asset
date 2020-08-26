@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar0Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 0 Opt 3
-  tag: cc
-  text: 
+  tag: Sorry
+  text: I'm busy right now
   topic: {fileID: 11400000, guid: 924d965e3534ff243be40a4d7665e40e, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I understand, Son. You're doing important work to make the world a better
+    place and your doddery old parents shouldn't be bothering you
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

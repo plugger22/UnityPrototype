@@ -47,9 +47,6 @@ public class TopicUI : MonoBehaviour
     public Image imageTopic;
     public Image imageBoss;
 
-    //background images
-    private Image outerBackgroundImage;
-    private Image innerBackgroundImage;
     //button script handlers
     private ButtonInteraction buttonInteractiveOption0;
     private ButtonInteraction buttonInteractiveOption1;
@@ -175,20 +172,8 @@ public class TopicUI : MonoBehaviour
         Debug.Assert(textOption3 != null, "Invalid textOption3 (Null)");
         Debug.Assert(imageTopic != null, "Invalid imageTopic (Null)");
         Debug.Assert(imageBoss != null, "Invalid imageBoss (Null)");
-        //images -> outer background
-        if (outerBackground != null)
-        {
-            outerBackgroundImage = outerBackground.GetComponent<Image>();
-            Debug.Assert(outerBackgroundImage != null, "Invalid outerBackgroundImage (Null)");
-        }
-        else { Debug.LogError("Invalid outerBackground (Null)"); }
-        //images -> inner background
-        if (innerBackground != null)
-        {
-            innerBackgroundImage = innerBackground.GetComponent<Image>();
-            Debug.Assert(innerBackgroundImage != null, "Invalid innerBackgroundImage (Null)");
-        }
-        else { Debug.LogError("Invalid innerBackground (Null)"); }
+        Debug.Assert(outerBackground != null, "Invalid outerBackgroundImage (Null)");
+        Debug.Assert(innerBackground != null, "Invalid innerBackgroundImage (Null)");
         //Button Interactive
         buttonInteractiveOption0 = buttonOption0.GetComponent<ButtonInteraction>();
         buttonInteractiveOption1 = buttonOption1.GetComponent<ButtonInteraction>();
@@ -413,14 +398,14 @@ public class TopicUI : MonoBehaviour
     /// <param name="type"></param>
     private void SetTopicType(TopicUIData data)
     {
-        Color color = outerBackgroundImage.color;
+        Color color = outerBackground.color;
         switch (data.type)
         {
             case TopicDecisionType.Normal:
                 //hide letter background
-                outerBackgroundImage.color = new Color(color.r, color.g, color.b, 0.0f);
-                //show inner image
-                innerBackgroundImage.gameObject.SetActive(true);
+                outerBackground.color = new Color(color.r, color.g, color.b, 0.0f);
+                //set colour of background
+                innerBackground.color = new Color(data.colour.r, data.colour.g, data.colour.b, 1.0f);
                 //texts
                 textHeader.gameObject.SetActive(true);
                 textMain.gameObject.SetActive(true);
@@ -447,9 +432,9 @@ public class TopicUI : MonoBehaviour
                 break;
             case TopicDecisionType.Letter:
                 //100% alpha to display letter background
-                outerBackgroundImage.color = new Color(color.r, color.g, color.b, 1.0f);
-                //hide inner image
-                innerBackgroundImage.gameObject.SetActive(false);
+                outerBackground.color = new Color(color.r, color.g, color.b, 1.0f);
+                //toggle off inner background using alpha (not gameObject as it switches off the whole shebang)
+                innerBackground.color = new Color(data.colour.r, data.colour.g, data.colour.b, 0.0f);
                 //texts
                 textHeader.gameObject.SetActive(false);
                 textMain.gameObject.SetActive(false);
@@ -474,8 +459,6 @@ public class TopicUI : MonoBehaviour
         if (data != null)
         {
             SetTopicType(data);
-            //set colour of background
-            innerBackground.color = new Color(data.colour.r, data.colour.g, data.colour.b);
             //deactivate all options
             for (int i = 0; i < arrayOfButtons.Length; i++)
             { arrayOfButtons[i].gameObject.SetActive(false); }

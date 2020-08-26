@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d9bf8160387a664d800585e9347e94e, type: 3}
-  m_Name: ScenarioFourth
+  m_Name: ScenarioZero
   m_EditorClassIdentifier: 
-  description: Scenario Index 3
-  effectCriteria: {fileID: 11400000, guid: 0532c6db8e7bf6c40b150f87a3d882f5, type: 2}
+  description: Scenario Index 0
+  effectCriteria: {fileID: 11400000, guid: eb747a3851cebfd4e96c94bf28c037b2, type: 2}
   comparison: {fileID: 0}
   apply: {fileID: 11400000, guid: 926d42c787876764299b2452d0afd7e7, type: 2}

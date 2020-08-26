@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar1Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 1 Opt 1
-  tag: cc
-  text: 
+  tag: Question
+  text: Are the Owners doing anything?
   topic: {fileID: 11400000, guid: 69433f712edbc71489d6a825cca4ccf3, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Owners? Fiddlesticks. Some MegaCorp who doesn't care if we all drown
+    in our sleep. May as well ask the Pope. Shame that he's a robot
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

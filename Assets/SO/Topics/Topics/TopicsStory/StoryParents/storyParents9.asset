@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: ss
   text: Unknown
+  letter: {fileID: 0}
   designNotes: storyParents9
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
   subType: {fileID: 11400000, guid: 9c0b06df8df43f641b72a6ea311f55a1, type: 2}
@@ -41,7 +42,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d92246c1833d41b4b90e5a63efd804a0, type: 2}
   - {fileID: 11400000, guid: 5baae2a11e44e7c45aed433efa363b4f, type: 2}
   - {fileID: 11400000, guid: f7e75d8b354ab6440925cd79d76b9eb2, type: 2}
-  isDisabled: 0
+  isDisabled: 1
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

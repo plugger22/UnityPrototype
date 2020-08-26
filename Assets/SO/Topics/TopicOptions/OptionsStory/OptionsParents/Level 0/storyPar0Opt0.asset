@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar0Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 0 Opt 0
-  tag: cc
-  text: 
+  tag: Suggestion
+  text: Can you talk to the Owner?
   topic: {fileID: 11400000, guid: 924d965e3534ff243be40a4d7665e40e, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: The building is owned by a MegaCorp and the only way to contact them
+    is to register in person for permission to join the complaints queue
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

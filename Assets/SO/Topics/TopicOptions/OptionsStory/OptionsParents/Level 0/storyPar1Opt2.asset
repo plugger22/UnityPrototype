@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar1Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 1 Opt 2
-  tag: cc
-  text: 
+  tag: Worried
+  text: Are you safe where you are?
   topic: {fileID: 11400000, guid: 69433f712edbc71489d6a825cca4ccf3, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,9 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I don't know, Son. If the rain doesn't stop the water will keep rising.
+    Your Father says that we'll be fine but I'm not so sure. Our servoPods aren't
+    waterproof
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

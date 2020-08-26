@@ -21,5 +21,5 @@ MonoBehaviour:
   isBoss: 0
   listOfSubSubType: []
   listOfCriteria: []
-  isDisabled: 1
+  isDisabled: 0
   minInterval: 8

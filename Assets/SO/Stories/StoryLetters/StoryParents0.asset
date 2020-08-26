@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5d6df66d797b34b989f3bc7d5e160b, type: 3}
+  m_Name: StoryParents0
+  m_EditorClassIdentifier: 
+  textDear: Son
+  textTop: God left the tap on full. The ground floor has been flooded. Five people
+    drowned in their servoPods while sleeping. Boy, can it rain up here
+  textBottom: We're up on the first floor but the tiles squelch when we walk and our
+    servoPods are starting to fog up. I'd call a plumber if there were any left to
+    call
+  textLove: Dad

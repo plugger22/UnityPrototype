@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar1Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 1 Opt 3
-  tag: cc
-  text: 
+  tag: Busy
+  text: Can I get back to you later?
   topic: {fileID: 11400000, guid: 69433f712edbc71489d6a825cca4ccf3, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Son, you do what you like. If your parents have drowned by the time you've
+    found space in your busy schedule then so be it. We're expendable
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

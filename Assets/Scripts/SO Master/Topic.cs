@@ -94,8 +94,11 @@ public class Topic : ScriptableObject
 
     public void OnEnable()
     {
-        Debug.AssertFormat(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty) for {0}", name);
-        Debug.AssertFormat(string.IsNullOrEmpty(text) == false, "Invalid text (Null or Empty) for {0}", name);
+        if (letter == null)
+        {
+            Debug.AssertFormat(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty) for {0}", name);
+            Debug.AssertFormat(string.IsNullOrEmpty(text) == false, "Invalid text (Null or Empty) for {0}", name);
+        }
         Debug.AssertFormat(type != null, "Invalid type (Null) for {0}", name);
         Debug.AssertFormat(subType != null, "Invalid subType (Null) for {0}", name);
         Debug.AssertFormat(priority != null, "Invalid priority (Null) for {0}", name);
