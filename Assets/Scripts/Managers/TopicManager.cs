@@ -3285,6 +3285,12 @@ public class TopicManager : MonoBehaviour
                 data.colour = GameManager.i.guiScript.colourTopicNormal;
                 data.listOfHelp = GetTopicSubTypeHelp();
                 data.listOfStoryHelp = turnTopic.listOfStoryHelp.GetRange(0, Mathf.Min(2, turnTopic.listOfStoryHelp.Count));            //only takes the first two records, if present
+                //type
+                switch (turnTopicSubType.name)
+                {
+                    case "StoryBravo": data.type = TopicDecisionType.Letter; break; //family
+                    default: data.type = TopicDecisionType.Normal; break;
+                }
                 //subSubType
                 turnTopicSubSubType = turnTopic.subSubType;
                 //topic must have at least one option

@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d48773d11cd406c49a773f4d29836b75, type: 3}
   m_Name: StoryBravo
   m_EditorClassIdentifier: 
-  tag: Campaign Story Line Bravo
+  tag: Family Story Line Bravo
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
   minIntervalFactor: 4
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
