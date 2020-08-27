@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar7Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 7 Opt 3
-  tag: cc
-  text: 
+  tag: Amazed
+  text: How old are you?
   topic: {fileID: 11400000, guid: 49981d955c8c3574d8235dfa58489b4c, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Don't you worry about that. I'm plenty old. A bit of sympathy for the
+    plight of your parents might not go astray. Have you had an Empathy Bypass?
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

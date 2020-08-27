@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar9Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 9 Opt 2
-  tag: cc
-  text: 
+  tag: Alternative
+  text: Have you tried 'Call A Kid'?
   topic: {fileID: 11400000, guid: 977382b634978944fb696097a4cae82a, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Your Father still hopes that you'll turn out OK but not me. I realised
+    what a selfish little sh*t you were years ago. Panda Porn has warped your mind
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

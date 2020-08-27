@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar6Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 6 Opt 1
-  tag: cc
-  text: 
+  tag: Annoyed
+  text: Why is it me who gets asked?
   topic: {fileID: 11400000, guid: 068ae7ddb76169645a299e14fe437d40, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Son, didn't I raise you better than that? It's a privilege to help others,
+    not a burden. Have you been indulging in Panda Porn again? You need to stop
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

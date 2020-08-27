@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyParents4
   m_EditorClassIdentifier: 
-  tag: ss
+  tag: Cry for Help
   text: Unknown
-  letter: {fileID: 0}
+  letter: {fileID: 11400000, guid: 947f3d80353191346882366e806df7c8, type: 2}
   designNotes: storyParents4
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
   subType: {fileID: 11400000, guid: 9c0b06df8df43f641b72a6ea311f55a1, type: 2}
@@ -30,7 +30,8 @@ MonoBehaviour:
   linkedIndex: 2
   levelIndex: 0
   topicItem: {fileID: 11400000, guid: 72a58ae57f66b8942915f9d7e27e980f, type: 2}
-  listOfStoryHelp: []
+  listOfStoryHelp:
+  - {fileID: 11400000, guid: 4e8a212b3ca2f984cb5aaf01485a20c3, type: 2}
   profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 5ada6805d52fe0e4eb10c44a98c34cf0, type: 2}
@@ -38,12 +39,12 @@ MonoBehaviour:
   listOfOptions:
   - {fileID: 11400000, guid: 7ab89b56e21feca4288e247c39f0f09e, type: 2}
   - {fileID: 11400000, guid: 3d438829ffb476c43aadcbb9779cbbb3, type: 2}
-  isDisabled: 1
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 4
-  isCurrent: 0
+  status: 0
+  isCurrent: 1
   timerStart: 0
   timerRepeat: 0
   timerWindow: 0

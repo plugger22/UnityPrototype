@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar9Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 9 Opt 1
-  tag: cc
-  text: 
+  tag: Reassure
+  text: Good to hear that you're O.K
   topic: {fileID: 11400000, guid: 977382b634978944fb696097a4cae82a, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Oh, thank you. It would have been nice if you could have torn yourself
+    away from watching endless Panda Porn and helped your dear old Mom
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

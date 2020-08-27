@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar2Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 2 Opt 1
-  tag: cc
-  text: 
+  tag: Advice
+  text: Can't you warn people?
   topic: {fileID: 11400000, guid: 018d848ab824ee847ba069414a586906, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Who want to listen to a senile old fireman? How many people today even
+    know what a fireman is? They are used to seeing drone and robots do the job
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

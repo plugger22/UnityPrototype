@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5d6df66d797b34b989f3bc7d5e160b, type: 3}
+  m_Name: StoryParents7
+  m_EditorClassIdentifier: 
+  textDear: Son
+  textTop: The flood water has glitched out the buildings A.I and we were able to
+    fake our way into permits and second floor servoPods.
+  textBottom: I'm sure you tried hard to get us permits (well I sincerely hope that
+    you did) but it has all worked out in the end. Dad to the rescue.
+  textLove: Dad

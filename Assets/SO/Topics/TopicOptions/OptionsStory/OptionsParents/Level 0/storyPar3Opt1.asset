@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar3Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 3 Opt 1
-  tag: cc
-  text: 
+  tag: Question
+  text: Can you afford to move?
   topic: {fileID: 11400000, guid: d3a99528dce03cc428e669f03cf3a62c, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Yes we can but you need a special permits to live higher up in the building.
+    If you aren't special they don't care if you drown
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

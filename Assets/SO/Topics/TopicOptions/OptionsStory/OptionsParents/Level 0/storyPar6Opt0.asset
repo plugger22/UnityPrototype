@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar6Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 6 Opt 0
-  tag: cc
-  text: 
+  tag: Thanks
+  text: Happy to have helped
   topic: {fileID: 11400000, guid: 068ae7ddb76169645a299e14fe437d40, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Hopefully we won't have to worry you again and I can get back to watching
+    Kill Ball. Did you see that skinny girl last night? Superwoman I tell you
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

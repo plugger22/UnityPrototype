@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar3Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 3 Opt 0
-  tag: cc
-  text: 
+  tag: Worried
+  text: How dangerous is it?
   topic: {fileID: 11400000, guid: d3a99528dce03cc428e669f03cf3a62c, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: The first floor, where we are, is just above the high water mark. Another
+    decent downpour and your Father and I will be needing lifejackets
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

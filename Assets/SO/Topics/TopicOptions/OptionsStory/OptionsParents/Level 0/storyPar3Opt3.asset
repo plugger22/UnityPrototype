@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar3Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 3 Opt 3
-  tag: cc
-  text: 
+  tag: Reassure
+  text: The weather will improve
   topic: {fileID: 11400000, guid: d3a99528dce03cc428e669f03cf3a62c, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: You aren't reading the news about what's happening here, Son, are you?
+    There might be ongoing droughts elsewhere but here, it just rains. Constantly.
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar8Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 8 Opt 2
-  tag: cc
-  text: 
+  tag: Reassure
+  text: Of course I'm going help
   topic: {fileID: 11400000, guid: 73615f2c934cba8438950ccf85a54374, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I know you are. We both love you. I hope that you aren't still indulging
+    in that awful Panda Porn. It's horrid nonsense and it'll rot your brain
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

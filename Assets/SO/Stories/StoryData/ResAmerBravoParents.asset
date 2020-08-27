@@ -16,10 +16,17 @@ MonoBehaviour:
   listOfTopicItems:
   - {fileID: 11400000, guid: 72a58ae57f66b8942915f9d7e27e980f, type: 2}
   - {fileID: 11400000, guid: 669e729977a180040910330ae93c9d0c, type: 2}
-  listOfTargetsLevel0: []
+  listOfTargetsLevel0:
+  - {fileID: 11400000, guid: acf4f09985455e940a8aec697d0a293f, type: 2}
+  - {fileID: 11400000, guid: 4b79d7f0dd46d4b44af5c3c256585419, type: 2}
+  - {fileID: 11400000, guid: b60c43bcabc51464ca18f1c9256b47f5, type: 2}
+  - {fileID: 11400000, guid: c5a578e5559be5d47a29dc139e2dfbd0, type: 2}
   listOfTargetsLevel1: []
   listOfTargetsLevel2: []
   listOfTargetsLevel3: []
   listOfTargetsLevel4: []
   listOfStoryHelp:
   - {fileID: 11400000, guid: dc13bb65e9b813e4e8b6ef4f96585801, type: 2}
+  - {fileID: 11400000, guid: 3fcfe384757750e45b9e5fdd1d0d5d47, type: 2}
+  - {fileID: 11400000, guid: 4e8a212b3ca2f984cb5aaf01485a20c3, type: 2}
+  - {fileID: 11400000, guid: 3bb6c4fa4a5f8254d9e7333f40ffe068, type: 2}

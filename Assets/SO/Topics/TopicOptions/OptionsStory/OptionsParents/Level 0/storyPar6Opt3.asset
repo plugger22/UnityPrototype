@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar6Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 6 Opt 3
-  tag: cc
-  text: 
+  tag: Sentimental
+  text: I miss being at Home
   topic: {fileID: 11400000, guid: 068ae7ddb76169645a299e14fe437d40, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Hey, that's great, Son. Sadly you know as well as I do that there is
+    no home. Who owns a home these days? Ours was torched in the riots years ago
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

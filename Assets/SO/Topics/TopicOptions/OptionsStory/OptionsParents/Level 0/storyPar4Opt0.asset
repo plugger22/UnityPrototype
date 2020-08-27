@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar4Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 4 Opt 0
-  tag: cc
-  text: 
+  tag: Hack
+  text: Penetrate Government Database
   topic: {fileID: 11400000, guid: 93d59f3cfa14b364197471f4d8f84a06, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -28,7 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: 
-  storyTarget: {fileID: 0}
+  storyTarget: {fileID: 11400000, guid: acf4f09985455e940a8aec697d0a293f, type: 2}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

@@ -14,5 +14,5 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: ffbf479d0e5373a48a1f87c69a6d797e, type: 3}
   tag: Mom<br>Loving Matriarch
   descriptor: The rock of your family. Aging and diabetic, she tirelessly works at
-    holding the fraying threds of the family together
+    holding the fraying threads of the family together
   pool: {fileID: 11400000, guid: e43144eec11486140b29ef695d829874, type: 2}

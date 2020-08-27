@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar2Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 2 Opt 2
-  tag: cc
-  text: 
+  tag: Idea
+  text: Buy up a bargain!
   topic: {fileID: 11400000, guid: 018d848ab824ee847ba069414a586906, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Do you think that's wise, Son? Buying up suicidePods so we can sell them
+    to the ignorant for a profit? Surely we did a better job of raising you
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Idea</color>
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Buy up a bargain!</color>
   optionNumber: 2

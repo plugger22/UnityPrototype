@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
+  m_Name: ServoPod0
+  m_EditorClassIdentifier: 
+  tag: ServoPods
+  sprite: {fileID: 0}
+  textTop: The most common form of housing is living in a massive Tower full of servoPods
+    which are basically fancy, oversized, coffins stacked two high in rows
+  textMiddle: Communal bathroom, kitchen and limited storage facilities exist within
+    the MegaCorp owned towers which can be over one hundred stories high
+  textBottom: Overcrowded cities full of people subsisting on a universal basic wage
+    have led to a servoPod culture. Nobody wants to live on the streets where violence
+    is endemic
+  isKnown: 0

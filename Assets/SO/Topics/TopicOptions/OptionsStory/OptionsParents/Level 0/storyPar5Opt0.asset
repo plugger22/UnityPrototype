@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar5Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 5 Opt 0
-  tag: cc
-  text: 
+  tag: Hack
+  text: Modify MegaCorp building database
   topic: {fileID: 11400000, guid: ba0a5615e1db6744d903771ff3e6cf76, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -28,7 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: 
-  storyTarget: {fileID: 0}
+  storyTarget: {fileID: 11400000, guid: b60c43bcabc51464ca18f1c9256b47f5, type: 2}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

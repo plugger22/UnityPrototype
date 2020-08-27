@@ -16,15 +16,11 @@ public class StoryLetter : ScriptableObject
     [Tooltip("Second paragraph, max of 2 and a half lines of text. Can use textTags")]
     [TextArea] public string textBottom;
 
-    [Tooltip("Love '...'")]
-    public string textLove;
-
 
     public void OnEnable()
     {
         Debug.AssertFormat(string.IsNullOrEmpty(textDear) == false, "Invalid textDear (Null or Empty) for {0}", name);
         Debug.AssertFormat(string.IsNullOrEmpty(textTop) == false, "Invalid textTop (Null or Empty) for {0}", name);
         Debug.AssertFormat(string.IsNullOrEmpty(textBottom) == false, "Invalid textBottom (Null or Empty) for {0}", name);
-        Debug.AssertFormat(string.IsNullOrEmpty(textLove) == false, "Invalid textLove (Null or Empty) for {0}", name);
     }
 }

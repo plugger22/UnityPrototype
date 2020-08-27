@@ -27,13 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: I don't know, Son. If the rain doesn't stop the water will keep rising.
-    Your Father says that we'll be fine but I'm not so sure. Our servoPods aren't
-    waterproof
+  storyInfo: Who knows? If the rain doesn't stop the water will keep rising. Your
+    Father says that we'll be fine but I'm not convinced. Our 'pods aren't waterproof
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Worried</color>
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Are you safe where you are?</color>
   optionNumber: 2

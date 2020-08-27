@@ -3292,8 +3292,8 @@ public class TopicManager : MonoBehaviour
                         //Letter decision topics
                         data.type = TopicDecisionType.Letter;
                         if (turnTopic.letter != null)
-                        { data.text = string.Format("Dear {0}{1}{2}{3}{4}{5}{6}{7}{8}Love {9}", 
-                            turnTopic.letter.textDear, "\n", "\n", turnTopic.letter.textTop, "\n", "\n", turnTopic.letter.textBottom, "\n", "\n", turnTopic.letter.textLove); }
+                        { data.text = string.Format("Dear {0}{1}{2}{3}{4}{5}{6}", 
+                            turnTopic.letter.textDear, "\n", "\n", turnTopic.letter.textTop, "\n", "\n", turnTopic.letter.textBottom); }
                         else { Debug.LogErrorFormat("Invalid letter (Null) for topic \"{0}\"", turnTopic.text); }
                         break; 
                     default:

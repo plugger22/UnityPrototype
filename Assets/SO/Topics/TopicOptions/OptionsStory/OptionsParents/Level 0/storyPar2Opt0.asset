@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar2Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 2 Opt 0
-  tag: cc
-  text: 
+  tag: Concerned
+  text: Are you and Mom O.K?
   topic: {fileID: 11400000, guid: 018d848ab824ee847ba069414a586906, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: We're fine, Son, just fine. Don't you worry about us. I might be old
+    and as stiff as a board but I can still take care of your Mother
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

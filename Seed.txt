@@ -2796,3 +2796,83 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	
 Dev seed 60520 -> Wednesday, 26 August 2020 5:00 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 10999 -> Thursday, 27 August 2020 9:01 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 13178 -> Thursday, 27 August 2020 9:28 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 28738 -> Thursday, 27 August 2020 9:32 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 7175 -> Thursday, 27 August 2020 9:32 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 650 -> Thursday, 27 August 2020 9:59 AM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfTopicPool (EMPTY) for topicSubType "StoryBravo"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1914)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:3235)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:3164)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:344)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:426)
+	WARNING Invalid listOfTopicPool (EMPTY) for topicSubType "StoryBravo"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:GetTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:1914)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:3235)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:3164)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:344)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:426)
+	
+Dev seed 39300 -> Thursday, 27 August 2020 10:01 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 50436 -> Thursday, 27 August 2020 11:05 AM
+WARNING [Val] ValidateSO: MISMATCH on Target, array 48, assets 52 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Target[]) (at Assets/Scripts/Managers/ValidationManager.cs:1976)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1934)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:832)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:385)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 33520 -> Thursday, 27 August 2020 11:11 AM
+WARNING [Val] ValidateSO: MISMATCH on Target, array 48, assets 52 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Target[]) (at Assets/Scripts/Managers/ValidationManager.cs:1976)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1934)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:832)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:385)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 54128 -> Thursday, 27 August 2020 3:10 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 36536 -> Thursday, 27 August 2020 3:19 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38302 -> Thursday, 27 August 2020 3:21 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 58292 -> Thursday, 27 August 2020 3:21 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 10452 -> Thursday, 27 August 2020 3:24 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 48156 -> Thursday, 27 August 2020 3:39 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 34655 -> Thursday, 27 August 2020 3:45 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46091 -> Thursday, 27 August 2020 3:46 PM
+City seed 5678 -> London, United Kingdom

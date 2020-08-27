@@ -28,8 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: Your Father likes to think that the world is going through a temporary
-    hiccup. The servoPods floating around downstairs with bodies in them have him
-    rattled
+    hiccup. The bodies in the servoPods floating around downstairs have him rattled
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Concerned</color>
   tooltipMain: <color=#98FB98> Information gained</color>

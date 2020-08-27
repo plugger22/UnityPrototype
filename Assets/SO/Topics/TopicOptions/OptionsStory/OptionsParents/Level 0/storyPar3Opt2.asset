@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar3Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 3 Opt 2
-  tag: cc
-  text: 
+  tag: Amazed
+  text: Who wants a ground floor 'pod?
   topic: {fileID: 11400000, guid: d3a99528dce03cc428e669f03cf3a62c, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Everybody. There are tens of thousands of applicants. It's better than
+    sleeping rough. You might drown in your 'pod but at least you don't get eaten
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

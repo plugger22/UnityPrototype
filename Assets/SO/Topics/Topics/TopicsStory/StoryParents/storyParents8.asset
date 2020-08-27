@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyParents8
   m_EditorClassIdentifier: 
-  tag: ss
-  text: Unknown
-  letter: {fileID: 0}
+  tag: Second Floor
+  text: 
+  letter: {fileID: 11400000, guid: ce6c898e87215574ea5267e8d8846244, type: 2}
   designNotes: storyParents8
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
   subType: {fileID: 11400000, guid: 9c0b06df8df43f641b72a6ea311f55a1, type: 2}
@@ -30,7 +30,8 @@ MonoBehaviour:
   linkedIndex: 3
   levelIndex: 0
   topicItem: {fileID: 11400000, guid: 669e729977a180040910330ae93c9d0c, type: 2}
-  listOfStoryHelp: []
+  listOfStoryHelp:
+  - {fileID: 11400000, guid: 3bb6c4fa4a5f8254d9e7333f40ffe068, type: 2}
   profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 5ada6805d52fe0e4eb10c44a98c34cf0, type: 2}
@@ -42,11 +43,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 57c66e74c694e5f48bfa8f45e4f6c4e1, type: 2}
   - {fileID: 11400000, guid: 28785ff1a4ce22c45b15a3181d62cf82, type: 2}
   - {fileID: 11400000, guid: 1a764c6c87e4986498b45e4685c269fa, type: 2}
-  isDisabled: 1
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 4
+  status: 0
   isCurrent: 0
   timerStart: 0
   timerRepeat: 0

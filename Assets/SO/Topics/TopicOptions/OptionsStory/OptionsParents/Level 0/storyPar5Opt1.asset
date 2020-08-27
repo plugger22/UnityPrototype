@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar5Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 5 Opt 1
-  tag: cc
-  text: 
+  tag: Coerce
+  text: Convince MegaCorp clerk to issue permit
   topic: {fileID: 11400000, guid: ba0a5615e1db6744d903771ff3e6cf76, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -28,10 +28,10 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: 
-  storyTarget: {fileID: 0}
+  storyTarget: {fileID: 11400000, guid: c5a578e5559be5d47a29dc139e2dfbd0, type: 2}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

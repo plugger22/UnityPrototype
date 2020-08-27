@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar9Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 9 Opt 0
-  tag: cc
-  text: 
+  tag: Annoyed
+  text: 'I have a lot going on '
   topic: {fileID: 11400000, guid: 977382b634978944fb696097a4cae82a, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Of course you do. Panda Porn for breakfast, lunch and dinner. Can you
+    still stand up after all that? My you must have a strong constitution, Son
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 3
+  optionNumber: 0
