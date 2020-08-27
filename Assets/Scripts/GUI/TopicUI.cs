@@ -38,6 +38,12 @@ public class TopicUI : MonoBehaviour
     public Button buttonNormalHelp_specific;
     public Button buttonNormalStoryHelp0;
     public Button buttonNormalStoryHelp1;
+    public Button buttonLetterIgnore;
+    public Button buttonLetterShowMe;
+    public Button buttonLetterHelp_generic;
+    public Button buttonLetterHelp_specific;
+    public Button buttonLetterStoryHelp0;
+    public Button buttonLetterStoryHelp1;
 
     [Header("Texts")]
     public TextMeshProUGUI textHeader;
@@ -61,8 +67,10 @@ public class TopicUI : MonoBehaviour
     private ButtonInteraction letterInteractiveOption1;
     private ButtonInteraction letterInteractiveOption2;
     private ButtonInteraction letterInteractiveOption3;
-    private ButtonInteraction buttonInteractiveIgnore;
-    private ButtonInteraction buttonInteractiveShowMe;
+    private ButtonInteraction normalInteractiveIgnore;
+    private ButtonInteraction normalInteractiveShowMe;
+    private ButtonInteraction letterInteractiveIgnore;
+    private ButtonInteraction letterInteractiveShowMe;
     //tooltips
     private GenericTooltipUI tooltipOption0;
     private GenericTooltipUI tooltipOption1;
@@ -170,12 +178,18 @@ public class TopicUI : MonoBehaviour
         Debug.Assert(optionLetter1 != null, "Invalid optionLetter1 (Null)");
         Debug.Assert(optionLetter2 != null, "Invalid optionLetter2 (Null)");
         Debug.Assert(optionLetter3 != null, "Invalid optionLetter3 (Null)");
-        Debug.Assert(buttonNormalIgnore != null, "Invalid buttonIgnore (Null)");
-        Debug.Assert(buttonNormalShowMe != null, "Invalid buttonShowMe (Null)");
-        Debug.Assert(buttonNormalHelp_generic != null, "Invalid buttonHelp_generic (Null)");
-        Debug.Assert(buttonNormalHelp_specific != null, "Invalid buttonHelp_specific (Null)");
-        Debug.Assert(buttonNormalStoryHelp0 != null, "Invalid buttonStoryHelp0 (Null)");
-        Debug.Assert(buttonNormalStoryHelp1 != null, "Invalid buttonStoryHelp1 (Null)");
+        Debug.Assert(buttonNormalIgnore != null, "Invalid buttonNormalIgnore (Null)");
+        Debug.Assert(buttonNormalShowMe != null, "Invalid buttonNormalShowMe (Null)");
+        Debug.Assert(buttonNormalHelp_generic != null, "Invalid buttonNormalHelp_generic (Null)");
+        Debug.Assert(buttonNormalHelp_specific != null, "Invalid buttonNormalHelp_specific (Null)");
+        Debug.Assert(buttonNormalStoryHelp0 != null, "Invalid buttonNormalStoryHelp0 (Null)");
+        Debug.Assert(buttonNormalStoryHelp1 != null, "Invalid buttonNormalStoryHelp1 (Null)");
+        Debug.Assert(buttonLetterIgnore != null, "Invalid buttonLetterIgnore (Null)");
+        Debug.Assert(buttonLetterShowMe != null, "Invalid buttonLetterShowMe (Null)");
+        Debug.Assert(buttonLetterHelp_generic != null, "Invalid buttonLetterHelp_generic (Null)");
+        Debug.Assert(buttonLetterHelp_specific != null, "Invalid buttonLetterHelp_specific (Null)");
+        Debug.Assert(buttonLetterStoryHelp0 != null, "Invalid buttonLetterStoryHelp0 (Null)");
+        Debug.Assert(buttonLetterStoryHelp1 != null, "Invalid buttonLetterStoryHelp1 (Null)");
         Debug.Assert(textHeader != null, "Invalid textHeader (Null)");
         Debug.Assert(textMain != null, "Invalid textMain (Null)");
         Debug.Assert(letterText != null, "Invalid letterText (Null)");
@@ -193,28 +207,32 @@ public class TopicUI : MonoBehaviour
         normalInteractiveOption1 = optionNormal1.GetComponent<ButtonInteraction>();
         normalInteractiveOption2 = optionNormal2.GetComponent<ButtonInteraction>();
         normalInteractiveOption3 = optionNormal3.GetComponent<ButtonInteraction>();
+        normalInteractiveIgnore = buttonNormalIgnore.GetComponent<ButtonInteraction>();
+        normalInteractiveShowMe = buttonNormalShowMe.GetComponent<ButtonInteraction>();
         letterInteractiveOption0 = optionLetter0.GetComponent<ButtonInteraction>();
         letterInteractiveOption1 = optionLetter1.GetComponent<ButtonInteraction>();
         letterInteractiveOption2 = optionLetter2.GetComponent<ButtonInteraction>();
         letterInteractiveOption3 = optionLetter3.GetComponent<ButtonInteraction>();
-        buttonInteractiveIgnore = buttonNormalIgnore.GetComponent<ButtonInteraction>();
-        buttonInteractiveShowMe = buttonNormalShowMe.GetComponent<ButtonInteraction>();
+        letterInteractiveIgnore = buttonNormalIgnore.GetComponent<ButtonInteraction>();
+        letterInteractiveShowMe = buttonNormalShowMe.GetComponent<ButtonInteraction>();
         Debug.Assert(normalInteractiveOption0 != null, "Invalid normalInteractiveOption0 (Null)");
         Debug.Assert(normalInteractiveOption1 != null, "Invalid normalInteractiveOption1 (Null)");
         Debug.Assert(normalInteractiveOption2 != null, "Invalid normalInteractiveOption2 (Null)");
         Debug.Assert(normalInteractiveOption3 != null, "Invalid normalInteractiveOption3 (Null)");
+        Debug.Assert(normalInteractiveIgnore != null, "Invalid normalInteractiveIgnore (Null)");
+        Debug.Assert(normalInteractiveShowMe != null, "Invalid normalInteractiveShowMe (Null)");
         Debug.Assert(letterInteractiveOption0 != null, "Invalid letterInteractiveOption0 (Null)");
         Debug.Assert(letterInteractiveOption1 != null, "Invalid letterInteractiveOption1 (Null)");
         Debug.Assert(letterInteractiveOption2 != null, "Invalid letterInteractiveOption2 (Null)");
         Debug.Assert(letterInteractiveOption3 != null, "Invalid letterInteractiveOption3 (Null)");
-        Debug.Assert(buttonInteractiveIgnore != null, "Invalid buttonInteractiveIgnore (Null)");
-        Debug.Assert(buttonInteractiveShowMe != null, "Invalid buttonInteractiveShowMe (Null)");
+        Debug.Assert(letterInteractiveIgnore != null, "Invalid letterInteractiveIgnore (Null)");
+        Debug.Assert(letterInteractiveShowMe != null, "Invalid letterInteractiveShowMe (Null)");
         //Button events
         normalInteractiveOption0?.SetButton(EventType.TopicDisplayOption);
         normalInteractiveOption1?.SetButton(EventType.TopicDisplayOption);
         normalInteractiveOption2?.SetButton(EventType.TopicDisplayOption);
         normalInteractiveOption3?.SetButton(EventType.TopicDisplayOption);
-        buttonInteractiveIgnore?.SetButton(EventType.TopicDisplayIgnore);
+        normalInteractiveIgnore?.SetButton(EventType.TopicDisplayIgnore);
         letterInteractiveOption0?.SetButton(EventType.TopicDisplayOption);
         letterInteractiveOption1?.SetButton(EventType.TopicDisplayOption);
         letterInteractiveOption2?.SetButton(EventType.TopicDisplayOption);
@@ -638,12 +656,12 @@ public class TopicUI : MonoBehaviour
             }
             else { Debug.LogWarningFormat("Invalid listOfOptions (Null) for topic \"{0}\"", data.topicName); }
             //ignore button
-            buttonInteractiveIgnore.SetButton(EventType.TopicDisplayIgnore, -1);
+            normalInteractiveIgnore.SetButton(EventType.TopicDisplayIgnore, -1);
             //show Me button
             if (dataPackage.nodeID > -1)
             {
                 buttonNormalShowMe.gameObject.SetActive(true);
-                buttonInteractiveShowMe.SetButton(EventType.TopicDisplayShowMe, -1);
+                normalInteractiveShowMe.SetButton(EventType.TopicDisplayShowMe, -1);
             }
             else { buttonNormalShowMe.gameObject.SetActive(false); }
             //optional second help icon
