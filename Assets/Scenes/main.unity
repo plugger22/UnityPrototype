@@ -27746,7 +27746,8 @@ MonoBehaviour:
   topicCanvas: {fileID: 2073812143}
   topicObject: {fileID: 1071249910}
   outerBackground: {fileID: 1260968079}
-  innerBackground: {fileID: 2043910899}
+  innerBackgroundNormal: {fileID: 2043910899}
+  innerBackgroundLetter: {fileID: 428042322}
   panelBoss: {fileID: 1846757262}
   buttonOption0: {fileID: 1336395239}
   buttonOption1: {fileID: 664950695}
@@ -29794,11 +29795,11 @@ MonoBehaviour:
     lineCount: 10
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -42658,7 +42659,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1071249911
 RectTransform:
   m_ObjectHideFlags: 0

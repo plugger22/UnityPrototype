@@ -17,16 +17,21 @@ public class TopicUI : MonoBehaviour
 
     [Header("Backgrounds")]
     public Image outerBackground;
-    public Image innerBackground;
+    public Image innerBackgroundNormal;
+    public Image innerBackgroundLetter;
 
     [Header("Panels")]
     public Image panelBoss;
 
     [Header("Buttons")]
-    public Button buttonOption0;
-    public Button buttonOption1;
-    public Button buttonOption2;
-    public Button buttonOption3;
+    public Button optionNormal0;
+    public Button optionNormal1;
+    public Button optionNormal2;
+    public Button optionNormal3;
+    public Button optionLetter0;
+    public Button optionLetter1;
+    public Button optionLetter2;
+    public Button optionLetter3;
     public Button buttonIgnore;
     public Button buttonShowMe;
     public Button buttonHelp_generic;
@@ -153,10 +158,11 @@ public class TopicUI : MonoBehaviour
         Debug.Assert(topicCanvas != null, "Invalid topicCanvas (Null)");
         Debug.Assert(topicObject != null, "Invalid topicObject (Null)");
         Debug.Assert(panelBoss != null, "Invalid panelBoss (Null)");
-        Debug.Assert(buttonOption0 != null, "Invalid buttonOption0 (Null)");
-        Debug.Assert(buttonOption1 != null, "Invalid buttonOption1 (Null)");
-        Debug.Assert(buttonOption2 != null, "Invalid buttonOption2 (Null)");
-        Debug.Assert(buttonOption3 != null, "Invalid buttonOption3 (Null)");
+        Debug.Assert(optionNormal0 != null, "Invalid optionNormal0 (Null)");
+        Debug.Assert(optionNormal1 != null, "Invalid optionNormal1 (Null)");
+        Debug.Assert(optionNormal2 != null, "Invalid optionNormal2 (Null)");
+        Debug.Assert(optionNormal3 != null, "Invalid optionNormal3 (Null)");
+        Debug.Assert(optionLetter0 != null, "Invalid optionLetter0 (Null)");
         Debug.Assert(buttonIgnore != null, "Invalid buttonIgnore (Null)");
         Debug.Assert(buttonShowMe != null, "Invalid buttonShowMe (Null)");
         Debug.Assert(buttonHelp_generic != null, "Invalid buttonHelp_generic (Null)");
@@ -173,12 +179,13 @@ public class TopicUI : MonoBehaviour
         Debug.Assert(imageTopic != null, "Invalid imageTopic (Null)");
         Debug.Assert(imageBoss != null, "Invalid imageBoss (Null)");
         Debug.Assert(outerBackground != null, "Invalid outerBackgroundImage (Null)");
-        Debug.Assert(innerBackground != null, "Invalid innerBackgroundImage (Null)");
+        Debug.Assert(innerBackgroundNormal != null, "Invalid innerBackgroundNormal (Null)");
+        Debug.Assert(innerBackgroundLetter != null, "Invalid innerBackgroundLetter (Null)");
         //Button Interactive
-        buttonInteractiveOption0 = buttonOption0.GetComponent<ButtonInteraction>();
-        buttonInteractiveOption1 = buttonOption1.GetComponent<ButtonInteraction>();
-        buttonInteractiveOption2 = buttonOption2.GetComponent<ButtonInteraction>();
-        buttonInteractiveOption3 = buttonOption3.GetComponent<ButtonInteraction>();
+        buttonInteractiveOption0 = optionNormal0.GetComponent<ButtonInteraction>();
+        buttonInteractiveOption1 = optionNormal1.GetComponent<ButtonInteraction>();
+        buttonInteractiveOption2 = optionNormal2.GetComponent<ButtonInteraction>();
+        buttonInteractiveOption3 = optionNormal3.GetComponent<ButtonInteraction>();
         buttonInteractiveIgnore = buttonIgnore.GetComponent<ButtonInteraction>();
         buttonInteractiveShowMe = buttonShowMe.GetComponent<ButtonInteraction>();
         Debug.Assert(buttonInteractiveOption0 != null, "Invalid buttonInteractiveOption0 (Null)");
@@ -194,10 +201,10 @@ public class TopicUI : MonoBehaviour
         buttonInteractiveOption3?.SetButton(EventType.TopicDisplayOption);
         buttonInteractiveIgnore?.SetButton(EventType.TopicDisplayIgnore);
         //Tooltips
-        tooltipOption0 = buttonOption0.GetComponent<GenericTooltipUI>();
-        tooltipOption1 = buttonOption1.GetComponent<GenericTooltipUI>();
-        tooltipOption2 = buttonOption2.GetComponent<GenericTooltipUI>();
-        tooltipOption3 = buttonOption3.GetComponent<GenericTooltipUI>();
+        tooltipOption0 = optionNormal0.GetComponent<GenericTooltipUI>();
+        tooltipOption1 = optionNormal1.GetComponent<GenericTooltipUI>();
+        tooltipOption2 = optionNormal2.GetComponent<GenericTooltipUI>();
+        tooltipOption3 = optionNormal3.GetComponent<GenericTooltipUI>();
         tooltipIgnore = buttonIgnore.GetComponent<GenericTooltipUI>();
         tooltipShowMe = buttonShowMe.GetComponent<GenericTooltipUI>();
         tooltipImage = imageTopic.GetComponent<GenericTooltipUI>();
@@ -211,10 +218,10 @@ public class TopicUI : MonoBehaviour
         Debug.Assert(tooltipImage != null, "Invalid tooltipImage (Null)");
         Debug.Assert(tooltipBoss != null, "Invalid tooltipBoss (Null)");
         //populate arrayOfButtons
-        arrayOfButtons[0] = buttonOption0;
-        arrayOfButtons[1] = buttonOption1;
-        arrayOfButtons[2] = buttonOption2;
-        arrayOfButtons[3] = buttonOption3;
+        arrayOfButtons[0] = optionNormal0;
+        arrayOfButtons[1] = optionNormal1;
+        arrayOfButtons[2] = optionNormal2;
+        arrayOfButtons[3] = optionNormal3;
         //populate arrayOfButtonInteractions
         arrayOfButtonInteractions[0] = buttonInteractiveOption0;
         arrayOfButtonInteractions[1] = buttonInteractiveOption1;
@@ -230,6 +237,9 @@ public class TopicUI : MonoBehaviour
         arrayOfTooltips[1] = tooltipOption1;
         arrayOfTooltips[2] = tooltipOption2;
         arrayOfTooltips[3] = tooltipOption3;
+        //set gameObject to active
+        topicObject.SetActive(true);
+        outerBackground.gameObject.SetActive(true);
         //fixed tooltips
         InitialiseTooltips();
     }
@@ -281,7 +291,7 @@ public class TopicUI : MonoBehaviour
         {
             case EventType.TopicDisplayOpen:
                 TopicUIData data = Param as TopicUIData;
-                SetTopicDisplay(data);
+                SetTopicDisplayNormal(data);
                 break;
             case EventType.TopicDisplayOption:
                 ProcessTopicOption((int)Param);
@@ -343,7 +353,7 @@ public class TopicUI : MonoBehaviour
     public void ActivateTopicDisplay()
     {
         if (dataPackage != null)
-        { SetTopicDisplay(dataPackage); }
+        { DisplayTopic(dataPackage); }
         else { Debug.LogError("Invalid dataPackage (Null)"); }
     }
 
@@ -392,7 +402,7 @@ public class TopicUI : MonoBehaviour
     private List<HelpData> GetInfoHelpList()
     { return GetHelpData("info_app_0", "info_app_1", "info_app_2", "info_app_3"); }*/
 
-    /// <summary>
+    /*/// <summary>
     /// Set up TopicUI for the specific TopicType required
     /// </summary>
     /// <param name="type"></param>
@@ -405,7 +415,7 @@ public class TopicUI : MonoBehaviour
                 //hide letter background
                 outerBackground.color = new Color(color.r, color.g, color.b, 0.0f);
                 //set colour of background
-                innerBackground.color = new Color(data.colour.r, data.colour.g, data.colour.b, 1.0f);
+                innerBackgroundNormal.color = new Color(data.colour.r, data.colour.g, data.colour.b, 1.0f);
                 //texts
                 textHeader.gameObject.SetActive(true);
                 textMain.gameObject.SetActive(true);
@@ -434,7 +444,7 @@ public class TopicUI : MonoBehaviour
                 //100% alpha to display letter background
                 outerBackground.color = new Color(color.r, color.g, color.b, 1.0f);
                 //toggle off inner background using alpha (not gameObject as it switches off the whole shebang)
-                innerBackground.color = new Color(data.colour.r, data.colour.g, data.colour.b, 0.0f);
+                innerBackgroundNormal.color = new Color(data.colour.r, data.colour.g, data.colour.b, 0.0f);
                 //texts
                 textHeader.gameObject.SetActive(false);
                 textMain.gameObject.SetActive(false);
@@ -447,6 +457,28 @@ public class TopicUI : MonoBehaviour
                 break;
             default: Debug.LogWarningFormat("Unrecognised topicDecisionType \"{0}\"", data.type); break;
         }
+    }*/
+
+    /// <summary>
+    /// Displays relevant topic type, normal or letter style
+    /// </summary>
+    /// <param name="data"></param>
+    private void DisplayTopic(TopicUIData data)
+    {
+        switch (data.type)
+        {
+            case TopicDecisionType.Normal:
+                innerBackgroundNormal.gameObject.SetActive(true);
+                innerBackgroundLetter.gameObject.SetActive(false);
+                SetTopicDisplayNormal(data);
+                break;
+            case TopicDecisionType.Letter:
+                innerBackgroundNormal.gameObject.SetActive(false);
+                innerBackgroundLetter.gameObject.SetActive(true);
+                SetTopicDisplayLetter(data);
+                break;
+            default: Debug.LogWarningFormat("Unrecognised data.type \"{0}\"", data.type); break;
+        }
     }
 
     #region SetTopicDisplay
@@ -454,15 +486,35 @@ public class TopicUI : MonoBehaviour
     /// Initialise topicUI display
     /// </summary>
     /// <param name="data"></param>
-    private void SetTopicDisplay(TopicUIData data)
+    private void SetTopicDisplayNormal(TopicUIData data)
     {
         if (data != null)
         {
-            SetTopicType(data);
             //deactivate all options
             for (int i = 0; i < arrayOfButtons.Length; i++)
             { arrayOfButtons[i].gameObject.SetActive(false); }
 
+            //set colour of background
+            innerBackgroundNormal.color = new Color(data.colour.r, data.colour.g, data.colour.b, 1.0f);
+            //texts
+            textHeader.gameObject.SetActive(true);
+            textMain.gameObject.SetActive(true);
+            //topic header
+            if (string.IsNullOrEmpty(data.header) == false)
+            { textHeader.text = data.header; }
+            else
+            {
+                Debug.LogWarningFormat("Invalid data.header (Null or Empty) for topic \"{0}\"", data.topicName);
+                textHeader.text = "Unknown";
+            }
+            //topic text
+            if (string.IsNullOrEmpty(data.text) == false)
+            { textMain.text = data.text; }
+            else
+            {
+                Debug.LogWarningFormat("Invalid data.text (Null or Empty) for topic \"{0}\"", data.topicName);
+                textHeader.text = "Unknown";
+            }
             //topic sprite
             if (data.spriteMain != null)
             { imageTopic.sprite = data.spriteMain; }
@@ -553,8 +605,8 @@ public class TopicUI : MonoBehaviour
                             //button Interaction
                             arrayOfButtonInteractions[i].SetButton(EventType.TopicDisplayOption, i);
                             //button sprite (yellow bar to match yellow text for valid, grey all for invalid)
-                            if (option.isValid == true) { arrayOfButtons[i].image.sprite = topicOptionValid; }
-                            else { arrayOfButtons[i].image.sprite = topicOptionInvalid; }
+                            if (option.isValid == true) { arrayOfButtons[i].image.sprite = topicOptionNormalValid; }
+                            else { arrayOfButtons[i].image.sprite = topicOptionNormalInvalid; }
                             //initialise option
                             arrayOfButtons[i].gameObject.SetActive(true);
                         }
@@ -632,6 +684,16 @@ public class TopicUI : MonoBehaviour
     }
     #endregion
 
+    #region SetTopicDisplayLetter
+    /// <summary>
+    /// display topicUI in letter format (story Bravo topics -> family)
+    /// </summary>
+    /// <param name="data"></param>
+    private void SetTopicDisplayLetter(TopicUIData data)
+    {
+
+    }
+    #endregion
 
     /// <summary>
     /// close TopicUI display. Outcome if parameter >= 0, none if otherwise
