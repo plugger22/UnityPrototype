@@ -49,10 +49,14 @@ public class TopicUI : MonoBehaviour
     public TextMeshProUGUI textHeader;
     public TextMeshProUGUI textMain;
     public TextMeshProUGUI letterText;
-    public TextMeshProUGUI textOption0;
-    public TextMeshProUGUI textOption1;
-    public TextMeshProUGUI textOption2;
-    public TextMeshProUGUI textOption3;
+    public TextMeshProUGUI textOptionNormal0;
+    public TextMeshProUGUI textOptionNormal1;
+    public TextMeshProUGUI textOptionNormal2;
+    public TextMeshProUGUI textOptionNormal3;
+    public TextMeshProUGUI textOptionLetter0;
+    public TextMeshProUGUI textOptionLetter1;
+    public TextMeshProUGUI textOptionLetter2;
+    public TextMeshProUGUI textOptionLetter3;
 
     [Header("Sprite")]
     public Image imageTopic;
@@ -63,33 +67,44 @@ public class TopicUI : MonoBehaviour
     private ButtonInteraction normalInteractiveOption1;
     private ButtonInteraction normalInteractiveOption2;
     private ButtonInteraction normalInteractiveOption3;
+    private ButtonInteraction normalInteractiveIgnore;
+    private ButtonInteraction normalInteractiveShowMe;
     private ButtonInteraction letterInteractiveOption0;
     private ButtonInteraction letterInteractiveOption1;
     private ButtonInteraction letterInteractiveOption2;
     private ButtonInteraction letterInteractiveOption3;
-    private ButtonInteraction normalInteractiveIgnore;
-    private ButtonInteraction normalInteractiveShowMe;
     private ButtonInteraction letterInteractiveIgnore;
     private ButtonInteraction letterInteractiveShowMe;
     //tooltips
-    private GenericTooltipUI tooltipOption0;
-    private GenericTooltipUI tooltipOption1;
-    private GenericTooltipUI tooltipOption2;
-    private GenericTooltipUI tooltipOption3;
-    private GenericTooltipUI tooltipIgnore;
-    private GenericTooltipUI tooltipShowMe;
-    private GenericTooltipUI tooltipImage;
-    private GenericTooltipUI tooltipBoss;
+    private GenericTooltipUI tooltipNormalOption0;
+    private GenericTooltipUI tooltipNormalOption1;
+    private GenericTooltipUI tooltipNormalOption2;
+    private GenericTooltipUI tooltipNormalOption3;
+    private GenericTooltipUI tooltipNormalIgnore;
+    private GenericTooltipUI tooltipNormalShowMe;
+    private GenericTooltipUI tooltipNormalImage;
+    private GenericTooltipUI tooltipNormalBoss;
+    private GenericTooltipUI tooltipLetterOption0;
+    private GenericTooltipUI tooltipLetterOption1;
+    private GenericTooltipUI tooltipLetterOption2;
+    private GenericTooltipUI tooltipLetterOption3;
+    private GenericTooltipUI tooltipLetterIgnore;
+    private GenericTooltipUI tooltipLetterShowMe;
+    private GenericTooltipUI tooltipLetterImage;
+    private GenericTooltipUI tooltipLetterBoss;
     //help
-    private GenericHelpTooltipUI helpSpecific;
-    private StoryHelpTooltipUI helpStory0;
-    private StoryHelpTooltipUI helpStory1;
+    private GenericHelpTooltipUI helpNormalSpecific;
+    private StoryHelpTooltipUI helpNormalStory0;
+    private StoryHelpTooltipUI helpNormalStory1;
+    private GenericHelpTooltipUI helpLetterSpecific;
+    private StoryHelpTooltipUI helpLetterStory0;
+    private StoryHelpTooltipUI helpLetterStory1;
     //options
-    private TopicOption[] arrayOfOptions;
-    private Button[] arrayOfButtons;
-    private TextMeshProUGUI[] arrayOfOptionTexts;
-    private ButtonInteraction[] arrayOfButtonInteractions;
-    private GenericTooltipUI[] arrayOfTooltips;
+    private TopicOption[,] arrayOfOptions;
+    private Button[,] arrayOfButtons;
+    private TextMeshProUGUI[,] arrayOfOptionTexts;
+    private ButtonInteraction[,] arrayOfButtonInteractions;
+    private GenericTooltipUI[,] arrayOfTooltips;
 
     //data package
     private TopicUIData dataPackage;
@@ -157,11 +172,11 @@ public class TopicUI : MonoBehaviour
         //hard coded max num of options based on how many fields in class (need to change if maxOptions increases)
         if (maxNumOfOptions > 0 && maxNumOfOptions < 5)
         {
-            arrayOfOptions = new TopicOption[maxNumOfOptions];
-            arrayOfButtons = new Button[maxNumOfOptions];
-            arrayOfOptionTexts = new TextMeshProUGUI[maxNumOfOptions];
-            arrayOfButtonInteractions = new ButtonInteraction[maxNumOfOptions];
-            arrayOfTooltips = new GenericTooltipUI[maxNumOfOptions];
+            arrayOfOptions = new TopicOption[(int)TopicDecisionType.Count, maxNumOfOptions];
+            arrayOfButtons = new Button[(int)TopicDecisionType.Count, maxNumOfOptions];
+            arrayOfOptionTexts = new TextMeshProUGUI[(int)TopicDecisionType.Count, maxNumOfOptions];
+            arrayOfButtonInteractions = new ButtonInteraction[(int)TopicDecisionType.Count, maxNumOfOptions];
+            arrayOfTooltips = new GenericTooltipUI[(int)TopicDecisionType.Count, maxNumOfOptions];
         }
         else { Debug.LogErrorFormat("Invalid maxOptions \"{0}\", arrays not initialised", maxNumOfOptions); }
         /*//background
@@ -193,10 +208,14 @@ public class TopicUI : MonoBehaviour
         Debug.Assert(textHeader != null, "Invalid textHeader (Null)");
         Debug.Assert(textMain != null, "Invalid textMain (Null)");
         Debug.Assert(letterText != null, "Invalid letterText (Null)");
-        Debug.Assert(textOption0 != null, "Invalid textOption0 (Null)");
-        Debug.Assert(textOption1 != null, "Invalid textOption1 (Null)");
-        Debug.Assert(textOption2 != null, "Invalid textOption2 (Null)");
-        Debug.Assert(textOption3 != null, "Invalid textOption3 (Null)");
+        Debug.Assert(textOptionNormal0 != null, "Invalid textOptionNormal0 (Null)");
+        Debug.Assert(textOptionNormal1 != null, "Invalid textOptionNormal1 (Null)");
+        Debug.Assert(textOptionNormal2 != null, "Invalid textOptionNormal2 (Null)");
+        Debug.Assert(textOptionNormal3 != null, "Invalid textOptionNormal3 (Null)");
+        Debug.Assert(textOptionLetter0 != null, "Invalid textOptionLetter0 (Null)");
+        Debug.Assert(textOptionLetter1 != null, "Invalid textOptionLetter1 (Null)");
+        Debug.Assert(textOptionLetter2 != null, "Invalid textOptionLetter2 (Null)");
+        Debug.Assert(textOptionLetter3 != null, "Invalid textOptionLetter3 (Null)");
         Debug.Assert(imageTopic != null, "Invalid imageTopic (Null)");
         Debug.Assert(imageBoss != null, "Invalid imageBoss (Null)");
         Debug.Assert(outerBackground != null, "Invalid outerBackgroundImage (Null)");
@@ -239,42 +258,77 @@ public class TopicUI : MonoBehaviour
         letterInteractiveOption3?.SetButton(EventType.TopicDisplayOption);
         letterInteractiveIgnore?.SetButton(EventType.TopicDisplayIgnore);
         //Tooltips
-        tooltipOption0 = optionNormal0.GetComponent<GenericTooltipUI>();
-        tooltipOption1 = optionNormal1.GetComponent<GenericTooltipUI>();
-        tooltipOption2 = optionNormal2.GetComponent<GenericTooltipUI>();
-        tooltipOption3 = optionNormal3.GetComponent<GenericTooltipUI>();
-        tooltipIgnore = buttonNormalIgnore.GetComponent<GenericTooltipUI>();
-        tooltipShowMe = buttonNormalShowMe.GetComponent<GenericTooltipUI>();
-        tooltipImage = imageTopic.GetComponent<GenericTooltipUI>();
-        tooltipBoss = imageBoss.GetComponent<GenericTooltipUI>();
-        Debug.Assert(tooltipOption0 != null, "Invalid tooltipOption0 (Null)");
-        Debug.Assert(tooltipOption1 != null, "Invalid tooltipOption1 (Null)");
-        Debug.Assert(tooltipOption2 != null, "Invalid tooltipOption2 (Null)");
-        Debug.Assert(tooltipOption3 != null, "Invalid tooltipOption3 (Null)");
-        Debug.Assert(tooltipIgnore != null, "Invalid tooltipIgnore (Null)");
-        Debug.Assert(tooltipShowMe != null, "Invalid tooltipShowMe (Null)");
-        Debug.Assert(tooltipImage != null, "Invalid tooltipImage (Null)");
-        Debug.Assert(tooltipBoss != null, "Invalid tooltipBoss (Null)");
+        tooltipNormalOption0 = optionNormal0.GetComponent<GenericTooltipUI>();
+        tooltipNormalOption1 = optionNormal1.GetComponent<GenericTooltipUI>();
+        tooltipNormalOption2 = optionNormal2.GetComponent<GenericTooltipUI>();
+        tooltipNormalOption3 = optionNormal3.GetComponent<GenericTooltipUI>();
+        tooltipNormalIgnore = buttonNormalIgnore.GetComponent<GenericTooltipUI>();
+        tooltipNormalShowMe = buttonNormalShowMe.GetComponent<GenericTooltipUI>();
+        tooltipNormalImage = imageTopic.GetComponent<GenericTooltipUI>();
+        tooltipNormalBoss = imageBoss.GetComponent<GenericTooltipUI>();
+        tooltipLetterOption0 = optionLetter0.GetComponent<GenericTooltipUI>();
+        tooltipLetterOption1 = optionLetter1.GetComponent<GenericTooltipUI>();
+        tooltipLetterOption2 = optionLetter2.GetComponent<GenericTooltipUI>();
+        tooltipLetterOption3 = optionLetter3.GetComponent<GenericTooltipUI>();
+        tooltipLetterIgnore = buttonLetterIgnore.GetComponent<GenericTooltipUI>();
+        tooltipLetterShowMe = buttonLetterShowMe.GetComponent<GenericTooltipUI>();
+        tooltipLetterImage = imageTopic.GetComponent<GenericTooltipUI>();
+        tooltipLetterBoss = imageBoss.GetComponent<GenericTooltipUI>();
+        Debug.Assert(tooltipNormalOption0 != null, "Invalid tooltipNormalOption0 (Null)");
+        Debug.Assert(tooltipNormalOption1 != null, "Invalid tooltipNormalOption1 (Null)");
+        Debug.Assert(tooltipNormalOption2 != null, "Invalid tooltipNormalOption2 (Null)");
+        Debug.Assert(tooltipNormalOption3 != null, "Invalid tooltipNormalOption3 (Null)");
+        Debug.Assert(tooltipNormalIgnore != null, "Invalid tooltipNormalIgnore (Null)");
+        Debug.Assert(tooltipNormalShowMe != null, "Invalid tooltipNormalShowMe (Null)");
+        Debug.Assert(tooltipNormalImage != null, "Invalid tooltipNormalImage (Null)");
+        Debug.Assert(tooltipNormalBoss != null, "Invalid tooltipNormalBoss (Null)");
+        Debug.Assert(tooltipLetterOption0 != null, "Invalid tooltipLetterOption0 (Null)");
+        Debug.Assert(tooltipLetterOption1 != null, "Invalid tooltipLetterOption1 (Null)");
+        Debug.Assert(tooltipLetterOption2 != null, "Invalid tooltipLetterOption2 (Null)");
+        Debug.Assert(tooltipLetterOption3 != null, "Invalid tooltipLetterOption3 (Null)");
+        Debug.Assert(tooltipLetterIgnore != null, "Invalid tooltipLetterIgnore (Null)");
+        Debug.Assert(tooltipLetterShowMe != null, "Invalid tooltipLetterShowMe (Null)");
+        Debug.Assert(tooltipLetterImage != null, "Invalid tooltipLetterImage (Null)");
+        Debug.Assert(tooltipLetterBoss != null, "Invalid tooltipLetterBoss (Null)");
         //populate arrayOfButtons
-        arrayOfButtons[0] = optionNormal0;
-        arrayOfButtons[1] = optionNormal1;
-        arrayOfButtons[2] = optionNormal2;
-        arrayOfButtons[3] = optionNormal3;
+        int indexNormal = (int)TopicDecisionType.Normal;
+        int indexLetter = (int)TopicDecisionType.Letter;
+        arrayOfButtons[indexNormal, 0] = optionNormal0;
+        arrayOfButtons[indexNormal, 1] = optionNormal1;
+        arrayOfButtons[indexNormal, 2] = optionNormal2;
+        arrayOfButtons[indexNormal, 3] = optionNormal3;
+        arrayOfButtons[indexLetter, 0] = optionLetter0;
+        arrayOfButtons[indexLetter, 1] = optionLetter1;
+        arrayOfButtons[indexLetter, 2] = optionLetter2;
+        arrayOfButtons[indexLetter, 3] = optionLetter3;
         //populate arrayOfButtonInteractions
-        arrayOfButtonInteractions[0] = normalInteractiveOption0;
-        arrayOfButtonInteractions[1] = normalInteractiveOption1;
-        arrayOfButtonInteractions[2] = normalInteractiveOption2;
-        arrayOfButtonInteractions[3] = normalInteractiveOption3;
+        arrayOfButtonInteractions[indexNormal, 0] = normalInteractiveOption0;
+        arrayOfButtonInteractions[indexNormal, 1] = normalInteractiveOption1;
+        arrayOfButtonInteractions[indexNormal, 2] = normalInteractiveOption2;
+        arrayOfButtonInteractions[indexNormal, 3] = normalInteractiveOption3;
+        arrayOfButtonInteractions[indexLetter, 0] = letterInteractiveOption0;
+        arrayOfButtonInteractions[indexLetter, 1] = letterInteractiveOption1;
+        arrayOfButtonInteractions[indexLetter, 2] = letterInteractiveOption2;
+        arrayOfButtonInteractions[indexLetter, 3] = letterInteractiveOption3;
         //populate arrayOfOptionTexts
-        arrayOfOptionTexts[0] = textOption0;
-        arrayOfOptionTexts[1] = textOption1;
-        arrayOfOptionTexts[2] = textOption2;
-        arrayOfOptionTexts[3] = textOption3;
+        arrayOfOptionTexts[indexNormal, 0] = textOptionNormal0;
+        arrayOfOptionTexts[indexNormal, 1] = textOptionNormal1;
+        arrayOfOptionTexts[indexNormal, 2] = textOptionNormal2;
+        arrayOfOptionTexts[indexNormal, 3] = textOptionNormal3;
+        arrayOfOptionTexts[indexLetter, 0] = textOptionLetter0;
+        arrayOfOptionTexts[indexLetter, 1] = textOptionLetter1;
+        arrayOfOptionTexts[indexLetter, 2] = textOptionLetter2;
+        arrayOfOptionTexts[indexLetter, 3] = textOptionLetter3;
         //populate arrayOfTooltips
-        arrayOfTooltips[0] = tooltipOption0;
-        arrayOfTooltips[1] = tooltipOption1;
-        arrayOfTooltips[2] = tooltipOption2;
-        arrayOfTooltips[3] = tooltipOption3;
+        arrayOfTooltips[indexNormal, 0] = tooltipNormalOption0;
+        arrayOfTooltips[indexNormal, 1] = tooltipNormalOption1;
+        arrayOfTooltips[indexNormal, 2] = tooltipNormalOption2;
+        arrayOfTooltips[indexNormal, 3] = tooltipNormalOption3;
+        arrayOfTooltips[indexLetter, 0] = tooltipNormalOption0;
+        arrayOfTooltips[indexLetter, 1] = tooltipNormalOption1;
+        arrayOfTooltips[indexLetter, 2] = tooltipNormalOption2;
+        arrayOfTooltips[indexLetter, 3] = tooltipNormalOption3;
+
         //set gameObject to active
         topicObject.SetActive(true);
         outerBackground.gameObject.SetActive(true);
@@ -402,15 +456,15 @@ public class TopicUI : MonoBehaviour
     {
         //guiManager.cs provides a standard ShowMe tooltip implementation
         Tuple<string, string, string> texts = GameManager.i.guiScript.GetShowMeTooltip();
-        tooltipShowMe.tooltipHeader = texts.Item1;
-        tooltipShowMe.tooltipMain = texts.Item2;
-        tooltipShowMe.tooltipDetails = texts.Item3;
+        tooltipNormalShowMe.tooltipHeader = texts.Item1;
+        tooltipNormalShowMe.tooltipMain = texts.Item2;
+        tooltipNormalShowMe.tooltipDetails = texts.Item3;
         //needs to be offset to prevent button being covered and causing 'blinking tooltip' syndrome (ShowMe and Ignore tooltips)
-        tooltipShowMe.x_offset = 60;
-        tooltipIgnore.x_offset = -402;
-        tooltipImage.x_offset = -180;
-        tooltipImage.y_offset = 10;
-        tooltipBoss.x_offset = -275;
+        tooltipNormalShowMe.x_offset = 60;
+        tooltipNormalIgnore.x_offset = -402;
+        tooltipNormalImage.x_offset = -180;
+        tooltipNormalImage.y_offset = 10;
+        tooltipNormalBoss.x_offset = -275;
         //help
         List<HelpData> listOfHelp = GameManager.i.helpScript.GetHelpData("topicUI_0", "topicUI_1", "topicUI_2", "topicUI_3");
         if (listOfHelp != null && listOfHelp.Count > 0)
@@ -421,14 +475,14 @@ public class TopicUI : MonoBehaviour
             { helpGeneric.SetHelpTooltip(listOfHelp, 150, 200); }
             else { Debug.LogWarning("Invalid GenericHelpTooltipUI for helpGeneric (Null)"); }
             //specific help (don't populate help, just get component)
-            helpSpecific = buttonNormalHelp_specific.GetComponent<GenericHelpTooltipUI>();
-            if (helpSpecific == null)
+            helpNormalSpecific = buttonNormalHelp_specific.GetComponent<GenericHelpTooltipUI>();
+            if (helpNormalSpecific == null)
             { Debug.LogWarning("Invalid GenericHelpTooltipUI for helpSpecific (Null)"); }
             //story Help
-            helpStory0 = buttonNormalStoryHelp0.GetComponent<StoryHelpTooltipUI>();
-            helpStory1 = buttonNormalStoryHelp1.GetComponent<StoryHelpTooltipUI>();
-            if (helpStory0 == null) { Debug.LogWarning("Invalid StoryHelpTooltipUI for helpStory0 (Null)"); }
-            if (helpStory1 == null) { Debug.LogWarning("Invalid StoryHelpTooltipUI for helpStory1 (Null)"); }
+            helpNormalStory0 = buttonNormalStoryHelp0.GetComponent<StoryHelpTooltipUI>();
+            helpNormalStory1 = buttonNormalStoryHelp1.GetComponent<StoryHelpTooltipUI>();
+            if (helpNormalStory0 == null) { Debug.LogWarning("Invalid StoryHelpTooltipUI for helpStory0 (Null)"); }
+            if (helpNormalStory1 == null) { Debug.LogWarning("Invalid StoryHelpTooltipUI for helpStory1 (Null)"); }
         }
         else { Debug.LogWarning("Invalid listOfHelp (Null or Empty)"); }
     }
@@ -528,9 +582,10 @@ public class TopicUI : MonoBehaviour
     {
         if (data != null)
         {
+            int index = (int)TopicDecisionType.Normal;
             //deactivate all options
             for (int i = 0; i < arrayOfButtons.Length; i++)
-            { arrayOfButtons[i].gameObject.SetActive(false); }
+            { arrayOfButtons[index, i].gameObject.SetActive(false); }
 
             //set colour of background
             innerBackgroundNormal.color = new Color(data.colour.r, data.colour.g, data.colour.b, 1.0f);
@@ -571,13 +626,13 @@ public class TopicUI : MonoBehaviour
                     case 1:
                         buttonNormalStoryHelp0.gameObject.SetActive(true);
                         buttonNormalStoryHelp1.gameObject.SetActive(false);
-                        helpStory0.SetHelpTooltip(data.listOfStoryHelp[0]);
+                        helpNormalStory0.SetHelpTooltip(data.listOfStoryHelp[0]);
                         break;
                     case 2:
                         buttonNormalStoryHelp0.gameObject.SetActive(true);
                         buttonNormalStoryHelp1.gameObject.SetActive(true);
-                        helpStory0.SetHelpTooltip(data.listOfStoryHelp[0]);
-                        helpStory1.SetHelpTooltip(data.listOfStoryHelp[1]);
+                        helpNormalStory0.SetHelpTooltip(data.listOfStoryHelp[0]);
+                        helpNormalStory1.SetHelpTooltip(data.listOfStoryHelp[1]);
                         break;
                 }
             }
@@ -594,16 +649,16 @@ public class TopicUI : MonoBehaviour
                 //initialise boss image tooltip
                 if (string.IsNullOrEmpty(data.bossTooltipHeader) == false)
                 {
-                    tooltipBoss.gameObject.SetActive(true);
-                    tooltipBoss.tooltipHeader = data.bossTooltipHeader;
+                    tooltipNormalBoss.gameObject.SetActive(true);
+                    tooltipNormalBoss.tooltipHeader = data.bossTooltipHeader;
                 }
-                else { tooltipBoss.tooltipHeader = ""; }
+                else { tooltipNormalBoss.tooltipHeader = ""; }
                 if (string.IsNullOrEmpty(data.bossTooltipMain) == false)
-                { tooltipBoss.tooltipMain = data.bossTooltipMain; }
-                else { tooltipBoss.tooltipMain = ""; }
+                { tooltipNormalBoss.tooltipMain = data.bossTooltipMain; }
+                else { tooltipNormalBoss.tooltipMain = ""; }
                 if (string.IsNullOrEmpty(data.bossTooltipDetails) == false)
-                { tooltipBoss.tooltipDetails = data.bossTooltipDetails; }
-                else { tooltipBoss.tooltipDetails = ""; }
+                { tooltipNormalBoss.tooltipDetails = data.bossTooltipDetails; }
+                else { tooltipNormalBoss.tooltipDetails = ""; }
             }
             else { panelBoss.gameObject.SetActive(false); }
             //options
@@ -619,34 +674,34 @@ public class TopicUI : MonoBehaviour
                         TopicOption option = data.listOfOptions[i];
                         if (option != null)
                         {
-                            arrayOfOptions[i] = option;
+                            arrayOfOptions[index, i] = option;
                             //initialise option text
                             if (string.IsNullOrEmpty(option.textToDisplay) == false)
-                            { arrayOfOptionTexts[i].text = option.textToDisplay; }
+                            { arrayOfOptionTexts[index, i].text = option.textToDisplay; }
                             else
                             {
-                                arrayOfOptionTexts[i].text = "Unknown";
+                                arrayOfOptionTexts[index, i].text = "Unknown";
                                 Debug.LogWarningFormat("Invalid optionText (Null or Empty) for arrayOfOptionTexts[{0}], topic \"{1}\"", i, data.topicName);
                             }
                             //initialise option tooltip
                             if (string.IsNullOrEmpty(option.tooltipHeader) == false)
                             {
-                                arrayOfTooltips[i].gameObject.SetActive(true);
-                                arrayOfTooltips[i].tooltipHeader = option.tooltipHeader;
+                                arrayOfTooltips[index, i].gameObject.SetActive(true);
+                                arrayOfTooltips[index, i].tooltipHeader = option.tooltipHeader;
                             }
                             if (string.IsNullOrEmpty(option.tooltipMain) == false)
-                            { arrayOfTooltips[i].tooltipMain = option.tooltipMain; }
+                            { arrayOfTooltips[index, i].tooltipMain = option.tooltipMain; }
                             if (string.IsNullOrEmpty(option.tooltipDetails) == false)
-                            { arrayOfTooltips[i].tooltipDetails = option.tooltipDetails; }
+                            { arrayOfTooltips[index, i].tooltipDetails = option.tooltipDetails; }
                             //need to offset to prevent obscuring part of button and suffering 'blinking tooltip' syndrome
-                            arrayOfTooltips[i].x_offset = -550;
+                            arrayOfTooltips[index, i].x_offset = -550;
                             //button Interaction
-                            arrayOfButtonInteractions[i].SetButton(EventType.TopicDisplayOption, i);
+                            arrayOfButtonInteractions[index, i].SetButton(EventType.TopicDisplayOption, i);
                             //button sprite (yellow bar to match yellow text for valid, grey all for invalid)
-                            if (option.isValid == true) { arrayOfButtons[i].image.sprite = topicOptionNormalValid; }
-                            else { arrayOfButtons[i].image.sprite = topicOptionNormalInvalid; }
+                            if (option.isValid == true) { arrayOfButtons[index, i].image.sprite = topicOptionNormalValid; }
+                            else { arrayOfButtons[index, i].image.sprite = topicOptionNormalInvalid; }
                             //initialise option
-                            arrayOfButtons[i].gameObject.SetActive(true);
+                            arrayOfButtons[index, i].gameObject.SetActive(true);
                         }
                         else
                         { Debug.LogWarningFormat("Invalid option (Null) in listOfOptions[{0}] for topic \"{1}\"", i, data.topicName); }
@@ -668,11 +723,11 @@ public class TopicUI : MonoBehaviour
             if (data.listOfHelp != null && data.listOfHelp.Count > 0)
             {
                 buttonNormalHelp_specific.gameObject.SetActive(true);
-                if (helpSpecific != null)
+                if (helpNormalSpecific != null)
                 {
                     List<HelpData> listOfHelpData = GameManager.i.helpScript.GetHelpData(data.listOfHelp);
                     if (listOfHelpData != null)
-                    { helpSpecific.SetHelpTooltip(listOfHelpData, 150, 180); }
+                    { helpNormalSpecific.SetHelpTooltip(listOfHelpData, 150, 180); }
                     else { buttonNormalHelp_specific.gameObject.SetActive(false); }
                 }
                 else { Debug.LogWarning("Invalid GenericHelpTooltipUI for helpSpecific (Null)"); }
@@ -681,29 +736,29 @@ public class TopicUI : MonoBehaviour
             //initialise Image tooltip
             if (string.IsNullOrEmpty(data.imageTooltipHeader) == false)
             {
-                tooltipImage.gameObject.SetActive(true);
-                tooltipImage.tooltipHeader = data.imageTooltipHeader;
+                tooltipNormalImage.gameObject.SetActive(true);
+                tooltipNormalImage.tooltipHeader = data.imageTooltipHeader;
             }
-            else { tooltipImage.tooltipHeader = ""; }
+            else { tooltipNormalImage.tooltipHeader = ""; }
             if (string.IsNullOrEmpty(data.imageTooltipMain) == false)
-            { tooltipImage.tooltipMain = data.imageTooltipMain; }
-            else { tooltipImage.tooltipMain = ""; }
+            { tooltipNormalImage.tooltipMain = data.imageTooltipMain; }
+            else { tooltipNormalImage.tooltipMain = ""; }
             if (string.IsNullOrEmpty(data.imageTooltipDetails) == false)
-            { tooltipImage.tooltipDetails = data.imageTooltipDetails; }
-            else { tooltipImage.tooltipDetails = ""; }
+            { tooltipNormalImage.tooltipDetails = data.imageTooltipDetails; }
+            else { tooltipNormalImage.tooltipDetails = ""; }
             //initialise ignore Button tooltip
             if (string.IsNullOrEmpty(data.ignoreTooltipHeader) == false)
             {
-                tooltipIgnore.gameObject.SetActive(true);
-                tooltipIgnore.tooltipHeader = data.ignoreTooltipHeader;
+                tooltipNormalIgnore.gameObject.SetActive(true);
+                tooltipNormalIgnore.tooltipHeader = data.ignoreTooltipHeader;
             }
-            else { tooltipIgnore.tooltipHeader = ""; }
+            else { tooltipNormalIgnore.tooltipHeader = ""; }
             if (string.IsNullOrEmpty(data.ignoreTooltipMain) == false)
-            { tooltipIgnore.tooltipMain = data.ignoreTooltipMain; }
-            else { tooltipIgnore.tooltipMain = ""; }
+            { tooltipNormalIgnore.tooltipMain = data.ignoreTooltipMain; }
+            else { tooltipNormalIgnore.tooltipMain = ""; }
             if (string.IsNullOrEmpty(data.ignoreTooltipDetails) == false)
-            { tooltipIgnore.tooltipDetails = data.ignoreTooltipDetails; }
-            else { tooltipIgnore.tooltipDetails = ""; }
+            { tooltipNormalIgnore.tooltipDetails = data.ignoreTooltipDetails; }
+            else { tooltipNormalIgnore.tooltipDetails = ""; }
             //Fixed position at screen centre
             Vector3 screenPos = new Vector3();
             screenPos.x = Screen.width / 2;
@@ -729,7 +784,164 @@ public class TopicUI : MonoBehaviour
     /// <param name="data"></param>
     private void SetTopicDisplayLetter(TopicUIData data)
     {
-
+        if (data != null)
+        {
+            int index = (int)TopicDecisionType.Letter;
+            //deactivate all options
+            for (int i = 0; i < arrayOfButtons.Length; i++)
+            { arrayOfButtons[index, i].gameObject.SetActive(false); }
+            //texts
+            letterText.gameObject.SetActive(true);
+            //topic text
+            if (string.IsNullOrEmpty(data.text) == false)
+            { letterText.text = data.text; }
+            else
+            {
+                Debug.LogWarningFormat("Invalid data.text (Null or Empty) for topic \"{0}\"", data.topicName);
+                textHeader.text = "Unknown";
+            }
+            //topic sprite
+            if (data.spriteMain != null)
+            { imageTopic.sprite = data.spriteMain; }
+            else
+            {
+                Debug.LogWarningFormat("Invalid data.sprite (Null or Empty) for topic \"{0}\"", data.topicName);
+                //use default sprite
+                imageTopic.sprite = GameManager.i.guiScript.topicDefaultSprite;
+            }
+            //story Help
+            if (data.listOfStoryHelp != null)
+            {
+                switch (data.listOfStoryHelp.Count)
+                {
+                    case 0: buttonLetterStoryHelp0.gameObject.SetActive(false); buttonLetterStoryHelp1.gameObject.SetActive(false); break;
+                    case 1:
+                        buttonLetterStoryHelp0.gameObject.SetActive(true);
+                        buttonLetterStoryHelp1.gameObject.SetActive(false);
+                        helpLetterStory0.SetHelpTooltip(data.listOfStoryHelp[0]);
+                        break;
+                    case 2:
+                        buttonLetterStoryHelp0.gameObject.SetActive(true);
+                        buttonLetterStoryHelp1.gameObject.SetActive(true);
+                        helpLetterStory0.SetHelpTooltip(data.listOfStoryHelp[0]);
+                        helpLetterStory1.SetHelpTooltip(data.listOfStoryHelp[1]);
+                        break;
+                }
+            }
+            else { buttonLetterStoryHelp0.gameObject.SetActive(false); buttonLetterStoryHelp1.gameObject.SetActive(false); }
+            //options
+            if (data.listOfOptions != null)
+            {
+                int count = data.listOfOptions.Count;
+                if (count > 0)
+                {
+                    Debug.AssertFormat(count <= arrayOfOptions.Length, "Mismatch on option count (should be {0}, is {1})", arrayOfOptions.Length, count);
+                    //populate arrayOfOptions
+                    for (int i = 0; i < count; i++)
+                    {
+                        TopicOption option = data.listOfOptions[i];
+                        if (option != null)
+                        {
+                            arrayOfOptions[index, i] = option;
+                            //initialise option text
+                            if (string.IsNullOrEmpty(option.textToDisplay) == false)
+                            { arrayOfOptionTexts[index, i].text = option.textToDisplay; }
+                            else
+                            {
+                                arrayOfOptionTexts[index, i].text = "Unknown";
+                                Debug.LogWarningFormat("Invalid optionText (Null or Empty) for arrayOfOptionTexts[{0}], topic \"{1}\"", i, data.topicName);
+                            }
+                            //initialise option tooltip
+                            if (string.IsNullOrEmpty(option.tooltipHeader) == false)
+                            {
+                                arrayOfTooltips[index, i].gameObject.SetActive(true);
+                                arrayOfTooltips[index, i].tooltipHeader = option.tooltipHeader;
+                            }
+                            if (string.IsNullOrEmpty(option.tooltipMain) == false)
+                            { arrayOfTooltips[index, i].tooltipMain = option.tooltipMain; }
+                            if (string.IsNullOrEmpty(option.tooltipDetails) == false)
+                            { arrayOfTooltips[index, i].tooltipDetails = option.tooltipDetails; }
+                            //need to offset to prevent obscuring part of button and suffering 'blinking tooltip' syndrome
+                            arrayOfTooltips[index, i].x_offset = -550;
+                            //button Interaction
+                            arrayOfButtonInteractions[index, i].SetButton(EventType.TopicDisplayOption, i);
+                            //button sprite (yellow bar to match yellow text for valid, grey all for invalid)
+                            if (option.isValid == true) { arrayOfButtons[index, i].image.sprite = topicOptionLetterValid; }
+                            else { arrayOfButtons[index, i].image.sprite = topicOptionLetterInvalid; }
+                            //initialise option
+                            arrayOfButtons[index, i].gameObject.SetActive(true);
+                        }
+                        else
+                        { Debug.LogWarningFormat("Invalid option (Null) in listOfOptions[{0}] for topic \"{1}\"", i, data.topicName); }
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid listOfOptions (Empty) for topic \"{0}\"", data.topicName); }
+            }
+            else { Debug.LogWarningFormat("Invalid listOfOptions (Null) for topic \"{0}\"", data.topicName); }
+            //ignore button
+            letterInteractiveIgnore.SetButton(EventType.TopicDisplayIgnore, -1);
+            //show Me button
+            if (dataPackage.nodeID > -1)
+            {
+                buttonLetterShowMe.gameObject.SetActive(true);
+                letterInteractiveShowMe.SetButton(EventType.TopicDisplayShowMe, -1);
+            }
+            else { buttonLetterShowMe.gameObject.SetActive(false); }
+            //optional second help icon
+            if (data.listOfHelp != null && data.listOfHelp.Count > 0)
+            {
+                buttonLetterHelp_specific.gameObject.SetActive(true);
+                if (helpLetterSpecific != null)
+                {
+                    List<HelpData> listOfHelpData = GameManager.i.helpScript.GetHelpData(data.listOfHelp);
+                    if (listOfHelpData != null)
+                    { helpLetterSpecific.SetHelpTooltip(listOfHelpData, 150, 180); }
+                    else { buttonLetterHelp_specific.gameObject.SetActive(false); }
+                }
+                else { Debug.LogWarning("Invalid GenericHelpTooltipUI for helpSpecific (Null)"); }
+            }
+            else { buttonLetterHelp_specific.gameObject.SetActive(false); }
+            //initialise Image tooltip
+            if (string.IsNullOrEmpty(data.imageTooltipHeader) == false)
+            {
+                tooltipLetterImage.gameObject.SetActive(true);
+                tooltipLetterImage.tooltipHeader = data.imageTooltipHeader;
+            }
+            else { tooltipLetterImage.tooltipHeader = ""; }
+            if (string.IsNullOrEmpty(data.imageTooltipMain) == false)
+            { tooltipLetterImage.tooltipMain = data.imageTooltipMain; }
+            else { tooltipLetterImage.tooltipMain = ""; }
+            if (string.IsNullOrEmpty(data.imageTooltipDetails) == false)
+            { tooltipLetterImage.tooltipDetails = data.imageTooltipDetails; }
+            else { tooltipLetterImage.tooltipDetails = ""; }
+            //initialise ignore Button tooltip
+            if (string.IsNullOrEmpty(data.ignoreTooltipHeader) == false)
+            {
+                tooltipLetterIgnore.gameObject.SetActive(true);
+                tooltipLetterIgnore.tooltipHeader = data.ignoreTooltipHeader;
+            }
+            else { tooltipLetterIgnore.tooltipHeader = ""; }
+            if (string.IsNullOrEmpty(data.ignoreTooltipMain) == false)
+            { tooltipLetterIgnore.tooltipMain = data.ignoreTooltipMain; }
+            else { tooltipLetterIgnore.tooltipMain = ""; }
+            if (string.IsNullOrEmpty(data.ignoreTooltipDetails) == false)
+            { tooltipLetterIgnore.tooltipDetails = data.ignoreTooltipDetails; }
+            else { tooltipLetterIgnore.tooltipDetails = ""; }
+            //Fixed position at screen centre
+            Vector3 screenPos = new Vector3();
+            screenPos.x = Screen.width / 2;
+            screenPos.y = Screen.height / 2;
+            //set position
+            topicObject.transform.position = screenPos;
+            //set states
+            ModalStateData package = new ModalStateData() { mainState = ModalSubState.Topic };
+            GameManager.i.inputScript.SetModalState(package);
+            GameManager.i.guiScript.SetIsBlocked(true);
+            Debug.LogFormat("[UI] TopicUI.cs -> SetTopicDisplay{0}", "\n");
+            //initialise Canvas (switches one everything once all ready to go)
+            topicCanvas.gameObject.SetActive(true);
+        }
+        else { Debug.LogError("Invalid TopicUIData (Null)"); }
     }
     #endregion
 
