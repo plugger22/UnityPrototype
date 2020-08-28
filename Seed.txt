@@ -2885,3 +2885,87 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 34969 -> Thursday, 27 August 2020 5:07 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 33125 -> Friday, 28 August 2020 11:11 AM
+City seed 5678 -> London, United Kingdom
+ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+TopicUI.SetTopicDisplayNormal (packageAPI.TopicUIData data) (at Assets/Scripts/GUI/TopicUI.cs:588)
+	TopicUI.DisplayTopic (packageAPI.TopicUIData data) (at Assets/Scripts/GUI/TopicUI.cs:565)
+	TopicUI.ActivateTopicDisplay () (at Assets/Scripts/GUI/TopicUI.cs:448)
+	GUIManager.InitialiseTopic () (at Assets/Scripts/Managers/GUIManager.cs:949)
+	GUIManager+<Topic>c__Iterator2.MoveNext () (at Assets/Scripts/Managers/GUIManager.cs:914)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:859)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 28103 -> Friday, 28 August 2020 11:14 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 11945 -> Friday, 28 August 2020 11:18 AM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicUI.SetTopicDisplayLetter (packageAPI.TopicUIData data) (at Assets/Scripts/GUI/TopicUI.cs:821)
+	TopicUI.DisplayTopic (packageAPI.TopicUIData data) (at Assets/Scripts/GUI/TopicUI.cs:570)
+	TopicUI.ActivateTopicDisplay () (at Assets/Scripts/GUI/TopicUI.cs:448)
+	GUIManager.InitialiseTopic () (at Assets/Scripts/Managers/GUIManager.cs:949)
+	GUIManager+<Topic>c__Iterator2.MoveNext () (at Assets/Scripts/Managers/GUIManager.cs:914)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:859)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 57949 -> Friday, 28 August 2020 11:22 AM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid GenericHelpTooltipUI for helpSpecific (Null)
+UnityEngine.Debug:LogWarning(Object)
+	TopicUI:SetTopicDisplayLetter(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:905)
+	TopicUI:DisplayTopic(TopicUIData) (at Assets/Scripts/GUI/TopicUI.cs:574)
+	TopicUI:ActivateTopicDisplay() (at Assets/Scripts/GUI/TopicUI.cs:448)
+	GUIManager:InitialiseTopic() (at Assets/Scripts/Managers/GUIManager.cs:949)
+	<Topic>c__Iterator2:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:914)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:859)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 5968 -> Friday, 28 August 2020 11:26 AM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 45959 -> Friday, 28 August 2020 11:30 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 42532 -> Friday, 28 August 2020 11:37 AM
+City seed 5678 -> London, United Kingdom
+WARNING tempList has 22 records for tab 0 -> INFO only
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:696)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:398)
+	
+Dev seed 2671 -> Friday, 28 August 2020 11:39 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 56918 -> Friday, 28 August 2020 11:51 AM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 22514 -> Friday, 28 August 2020 11:57 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 3235 -> Friday, 28 August 2020 12:26 PM
+City seed 5678 -> London, United Kingdom

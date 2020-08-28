@@ -58,8 +58,9 @@ public class TopicUI : MonoBehaviour
     public TextMeshProUGUI textOptionLetter2;
     public TextMeshProUGUI textOptionLetter3;
 
-    [Header("Sprite")]
-    public Image imageTopic;
+    [Header("Images")]
+    public Image imageTopicNormal;
+    public Image imageTopicLetter;
     public Image imageBoss;
 
     //button script handlers
@@ -216,7 +217,8 @@ public class TopicUI : MonoBehaviour
         Debug.Assert(textOptionLetter1 != null, "Invalid textOptionLetter1 (Null)");
         Debug.Assert(textOptionLetter2 != null, "Invalid textOptionLetter2 (Null)");
         Debug.Assert(textOptionLetter3 != null, "Invalid textOptionLetter3 (Null)");
-        Debug.Assert(imageTopic != null, "Invalid imageTopic (Null)");
+        Debug.Assert(imageTopicNormal != null, "Invalid imageTopic (Null)");
+        Debug.Assert(imageTopicLetter != null, "Invalid imageTopic (Null)");
         Debug.Assert(imageBoss != null, "Invalid imageBoss (Null)");
         Debug.Assert(outerBackground != null, "Invalid outerBackgroundImage (Null)");
         Debug.Assert(innerBackgroundNormal != null, "Invalid innerBackgroundNormal (Null)");
@@ -264,7 +266,7 @@ public class TopicUI : MonoBehaviour
         tooltipNormalOption3 = optionNormal3.GetComponent<GenericTooltipUI>();
         tooltipNormalIgnore = buttonNormalIgnore.GetComponent<GenericTooltipUI>();
         tooltipNormalShowMe = buttonNormalShowMe.GetComponent<GenericTooltipUI>();
-        tooltipNormalImage = imageTopic.GetComponent<GenericTooltipUI>();
+        tooltipNormalImage = imageTopicNormal.GetComponent<GenericTooltipUI>();
         tooltipNormalBoss = imageBoss.GetComponent<GenericTooltipUI>();
         tooltipLetterOption0 = optionLetter0.GetComponent<GenericTooltipUI>();
         tooltipLetterOption1 = optionLetter1.GetComponent<GenericTooltipUI>();
@@ -272,7 +274,7 @@ public class TopicUI : MonoBehaviour
         tooltipLetterOption3 = optionLetter3.GetComponent<GenericTooltipUI>();
         tooltipLetterIgnore = buttonLetterIgnore.GetComponent<GenericTooltipUI>();
         tooltipLetterShowMe = buttonLetterShowMe.GetComponent<GenericTooltipUI>();
-        tooltipLetterImage = imageTopic.GetComponent<GenericTooltipUI>();
+        tooltipLetterImage = imageTopicLetter.GetComponent<GenericTooltipUI>();
         tooltipLetterBoss = imageBoss.GetComponent<GenericTooltipUI>();
         Debug.Assert(tooltipNormalOption0 != null, "Invalid tooltipNormalOption0 (Null)");
         Debug.Assert(tooltipNormalOption1 != null, "Invalid tooltipNormalOption1 (Null)");
@@ -324,10 +326,10 @@ public class TopicUI : MonoBehaviour
         arrayOfTooltips[indexNormal, 1] = tooltipNormalOption1;
         arrayOfTooltips[indexNormal, 2] = tooltipNormalOption2;
         arrayOfTooltips[indexNormal, 3] = tooltipNormalOption3;
-        arrayOfTooltips[indexLetter, 0] = tooltipNormalOption0;
-        arrayOfTooltips[indexLetter, 1] = tooltipNormalOption1;
-        arrayOfTooltips[indexLetter, 2] = tooltipNormalOption2;
-        arrayOfTooltips[indexLetter, 3] = tooltipNormalOption3;
+        arrayOfTooltips[indexLetter, 0] = tooltipLetterOption0;
+        arrayOfTooltips[indexLetter, 1] = tooltipLetterOption1;
+        arrayOfTooltips[indexLetter, 2] = tooltipLetterOption2;
+        arrayOfTooltips[indexLetter, 3] = tooltipLetterOption3;
 
         //set gameObject to active
         topicObject.SetActive(true);
@@ -469,20 +471,30 @@ public class TopicUI : MonoBehaviour
         List<HelpData> listOfHelp = GameManager.i.helpScript.GetHelpData("topicUI_0", "topicUI_1", "topicUI_2", "topicUI_3");
         if (listOfHelp != null && listOfHelp.Count > 0)
         {
-            //generic help
-            GenericHelpTooltipUI helpGeneric = buttonNormalHelp_generic.GetComponent<GenericHelpTooltipUI>();
-            if (helpGeneric != null)
-            { helpGeneric.SetHelpTooltip(listOfHelp, 150, 200); }
-            else { Debug.LogWarning("Invalid GenericHelpTooltipUI for helpGeneric (Null)"); }
+            //generic help -> normal
+            GenericHelpTooltipUI helpGenericNormal = buttonNormalHelp_generic.GetComponent<GenericHelpTooltipUI>();
+            if (helpGenericNormal != null)
+            { helpGenericNormal.SetHelpTooltip(listOfHelp, 150, 200); }
+            else { Debug.LogWarning("Invalid GenericHelpTooltipUI for helpGenericNormal (Null)"); }
+            GenericHelpTooltipUI helpGenericLetter = buttonLetterHelp_generic.GetComponent<GenericHelpTooltipUI>();
+            //generic help -> letters
+            if (helpGenericLetter != null)
+            { helpGenericLetter.SetHelpTooltip(listOfHelp, 150, 200); }
+            else { Debug.LogWarning("Invalid GenericHelpTooltipUI for helpGenericLetter (Null)"); }
             //specific help (don't populate help, just get component)
             helpNormalSpecific = buttonNormalHelp_specific.GetComponent<GenericHelpTooltipUI>();
-            if (helpNormalSpecific == null)
-            { Debug.LogWarning("Invalid GenericHelpTooltipUI for helpSpecific (Null)"); }
+            helpLetterSpecific = buttonLetterHelp_specific.GetComponent<GenericHelpTooltipUI>();
+            if (helpNormalSpecific == null) { Debug.LogWarning("Invalid GenericHelpTooltipUI for helpNormalSpecific (Null)"); }
+            if (helpLetterSpecific == null) { Debug.LogWarning("Invalid GenericHelpTooltipUI for helpLetterSpecific (Null)"); }
             //story Help
             helpNormalStory0 = buttonNormalStoryHelp0.GetComponent<StoryHelpTooltipUI>();
             helpNormalStory1 = buttonNormalStoryHelp1.GetComponent<StoryHelpTooltipUI>();
-            if (helpNormalStory0 == null) { Debug.LogWarning("Invalid StoryHelpTooltipUI for helpStory0 (Null)"); }
-            if (helpNormalStory1 == null) { Debug.LogWarning("Invalid StoryHelpTooltipUI for helpStory1 (Null)"); }
+            helpLetterStory0 = buttonLetterStoryHelp0.GetComponent<StoryHelpTooltipUI>();
+            helpLetterStory1 = buttonLetterStoryHelp1.GetComponent<StoryHelpTooltipUI>();
+            if (helpNormalStory0 == null) { Debug.LogWarning("Invalid StoryHelpTooltipUI for helpNormalStory0 (Null)"); }
+            if (helpNormalStory1 == null) { Debug.LogWarning("Invalid StoryHelpTooltipUI for helpNormalStory1 (Null)"); }
+            if (helpLetterStory0 == null) { Debug.LogWarning("Invalid StoryHelpTooltipUI for helpLetterStory0 (Null)"); }
+            if (helpLetterStory1 == null) { Debug.LogWarning("Invalid StoryHelpTooltipUI for helpLetterStory1 (Null)"); }
         }
         else { Debug.LogWarning("Invalid listOfHelp (Null or Empty)"); }
     }
@@ -494,63 +506,7 @@ public class TopicUI : MonoBehaviour
     private List<HelpData> GetInfoHelpList()
     { return GetHelpData("info_app_0", "info_app_1", "info_app_2", "info_app_3"); }*/
 
-    /*/// <summary>
-    /// Set up TopicUI for the specific TopicType required
-    /// </summary>
-    /// <param name="type"></param>
-    private void SetTopicType(TopicUIData data)
-    {
-        Color color = outerBackground.color;
-        switch (data.type)
-        {
-            case TopicDecisionType.Normal:
-                //hide letter background
-                outerBackground.color = new Color(color.r, color.g, color.b, 0.0f);
-                //set colour of background
-                innerBackgroundNormal.color = new Color(data.colour.r, data.colour.g, data.colour.b, 1.0f);
-                //texts
-                textHeader.gameObject.SetActive(true);
-                textMain.gameObject.SetActive(true);
-                letterText.gameObject.SetActive(false);
-                //option sprites
-                topicOptionValid = topicOptionNormalValid;
-                topicOptionInvalid = topicOptionNormalInvalid;
-                //topic header
-                if (string.IsNullOrEmpty(data.header) == false)
-                { textHeader.text = data.header; }
-                else
-                {
-                    Debug.LogWarningFormat("Invalid data.header (Null or Empty) for topic \"{0}\"", data.topicName);
-                    textHeader.text = "Unknown";
-                }
-                //topic text
-                if (string.IsNullOrEmpty(data.text) == false)
-                { textMain.text = data.text; }
-                else
-                {
-                    Debug.LogWarningFormat("Invalid data.text (Null or Empty) for topic \"{0}\"", data.topicName);
-                    textHeader.text = "Unknown";
-                }
-                break;
-            case TopicDecisionType.Letter:
-                //100% alpha to display letter background
-                outerBackground.color = new Color(color.r, color.g, color.b, 1.0f);
-                //toggle off inner background using alpha (not gameObject as it switches off the whole shebang)
-                innerBackgroundNormal.color = new Color(data.colour.r, data.colour.g, data.colour.b, 0.0f);
-                //texts
-                textHeader.gameObject.SetActive(false);
-                textMain.gameObject.SetActive(false);
-                letterText.gameObject.SetActive(true);
-                //option sprites
-                topicOptionValid = topicOptionLetterValid;
-                topicOptionInvalid = topicOptionLetterInvalid;
-                //letter text
-                letterText.text = data.text;
-                break;
-            default: Debug.LogWarningFormat("Unrecognised topicDecisionType \"{0}\"", data.type); break;
-        }
-    }*/
-
+   
     /// <summary>
     /// Displays relevant topic type, normal or letter style
     /// </summary>
@@ -584,7 +540,7 @@ public class TopicUI : MonoBehaviour
         {
             int index = (int)TopicDecisionType.Normal;
             //deactivate all options
-            for (int i = 0; i < arrayOfButtons.Length; i++)
+            for (int i = 0; i < arrayOfButtons.GetUpperBound(1); i++)
             { arrayOfButtons[index, i].gameObject.SetActive(false); }
 
             //set colour of background
@@ -610,12 +566,12 @@ public class TopicUI : MonoBehaviour
             }
             //topic sprite
             if (data.spriteMain != null)
-            { imageTopic.sprite = data.spriteMain; }
+            { imageTopicNormal.sprite = data.spriteMain; }
             else
             {
                 Debug.LogWarningFormat("Invalid data.sprite (Null or Empty) for topic \"{0}\"", data.topicName);
                 //use default sprite
-                imageTopic.sprite = GameManager.i.guiScript.topicDefaultSprite;
+                imageTopicNormal.sprite = GameManager.i.guiScript.topicDefaultSprite;
             }
             //story Help
             if (data.listOfStoryHelp != null)
@@ -788,7 +744,7 @@ public class TopicUI : MonoBehaviour
         {
             int index = (int)TopicDecisionType.Letter;
             //deactivate all options
-            for (int i = 0; i < arrayOfButtons.Length; i++)
+            for (int i = 0; i < arrayOfButtons.GetUpperBound(1); i++)
             { arrayOfButtons[index, i].gameObject.SetActive(false); }
             //texts
             letterText.gameObject.SetActive(true);
@@ -802,12 +758,12 @@ public class TopicUI : MonoBehaviour
             }
             //topic sprite
             if (data.spriteMain != null)
-            { imageTopic.sprite = data.spriteMain; }
+            { imageTopicLetter.sprite = data.spriteMain; }
             else
             {
                 Debug.LogWarningFormat("Invalid data.sprite (Null or Empty) for topic \"{0}\"", data.topicName);
                 //use default sprite
-                imageTopic.sprite = GameManager.i.guiScript.topicDefaultSprite;
+                imageTopicLetter.sprite = GameManager.i.guiScript.topicDefaultSprite;
             }
             //story Help
             if (data.listOfStoryHelp != null)
