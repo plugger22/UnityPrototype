@@ -18,7 +18,7 @@ public class TopicUI : MonoBehaviour
     [Header("Backgrounds")]
     public Image outerBackground;
     public Image innerBackgroundNormal;
-    public Image innerBackgroundLetter;
+    public Image innerBackgroundOther;
 
     [Header("Panels")]
     public Image panelBoss;
@@ -28,39 +28,39 @@ public class TopicUI : MonoBehaviour
     public Button optionNormal1;
     public Button optionNormal2;
     public Button optionNormal3;
-    public Button optionLetter0;
-    public Button optionLetter1;
-    public Button optionLetter2;
-    public Button optionLetter3;
+    public Button optionOther0;
+    public Button optionOther1;
+    public Button optionOther2;
+    public Button optionOther3;
     public Button buttonNormalIgnore;
     public Button buttonNormalShowMe;
     public Button buttonNormalHelp_generic;
     public Button buttonNormalHelp_specific;
     public Button buttonNormalStoryHelp0;
     public Button buttonNormalStoryHelp1;
-    public Button buttonLetterIgnore;
-    public Button buttonLetterShowMe;
-    public Button buttonLetterHelp_generic;
-    public Button buttonLetterHelp_specific;
-    public Button buttonLetterStoryHelp0;
-    public Button buttonLetterStoryHelp1;
+    public Button buttonOtherIgnore;
+    public Button buttonOtherShowMe;
+    public Button buttonOtherHelp_generic;
+    public Button buttonOtherHelp_specific;
+    public Button buttonOtherStoryHelp0;
+    public Button buttonOtherStoryHelp1;
 
     [Header("Texts")]
     public TextMeshProUGUI textHeader;
     public TextMeshProUGUI textMain;
-    public TextMeshProUGUI letterText;
+    public TextMeshProUGUI otherText;
     public TextMeshProUGUI textOptionNormal0;
     public TextMeshProUGUI textOptionNormal1;
     public TextMeshProUGUI textOptionNormal2;
     public TextMeshProUGUI textOptionNormal3;
-    public TextMeshProUGUI textOptionLetter0;
-    public TextMeshProUGUI textOptionLetter1;
-    public TextMeshProUGUI textOptionLetter2;
-    public TextMeshProUGUI textOptionLetter3;
+    public TextMeshProUGUI textOptionOther0;
+    public TextMeshProUGUI textOptionOther1;
+    public TextMeshProUGUI textOptionOther2;
+    public TextMeshProUGUI textOptionOther3;
 
     [Header("Images")]
     public Image imageTopicNormal;
-    public Image imageTopicLetter;
+    public Image imageTopicOther;
     public Image imageBoss;
 
     //button script handlers
@@ -70,12 +70,12 @@ public class TopicUI : MonoBehaviour
     private ButtonInteraction normalInteractiveOption3;
     private ButtonInteraction normalInteractiveIgnore;
     private ButtonInteraction normalInteractiveShowMe;
-    private ButtonInteraction letterInteractiveOption0;
-    private ButtonInteraction letterInteractiveOption1;
-    private ButtonInteraction letterInteractiveOption2;
-    private ButtonInteraction letterInteractiveOption3;
-    private ButtonInteraction letterInteractiveIgnore;
-    private ButtonInteraction letterInteractiveShowMe;
+    private ButtonInteraction otherInteractiveOption0;
+    private ButtonInteraction otherInteractiveOption1;
+    private ButtonInteraction otherInteractiveOption2;
+    private ButtonInteraction otherInteractiveOption3;
+    private ButtonInteraction otherInteractiveIgnore;
+    private ButtonInteraction otherInteractiveShowMe;
     //tooltips
     private GenericTooltipUI tooltipNormalOption0;
     private GenericTooltipUI tooltipNormalOption1;
@@ -85,21 +85,21 @@ public class TopicUI : MonoBehaviour
     private GenericTooltipUI tooltipNormalShowMe;
     private GenericTooltipUI tooltipNormalImage;
     private GenericTooltipUI tooltipNormalBoss;
-    private GenericTooltipUI tooltipLetterOption0;
-    private GenericTooltipUI tooltipLetterOption1;
-    private GenericTooltipUI tooltipLetterOption2;
-    private GenericTooltipUI tooltipLetterOption3;
-    private GenericTooltipUI tooltipLetterIgnore;
-    private GenericTooltipUI tooltipLetterShowMe;
-    private GenericTooltipUI tooltipLetterImage;
-    private GenericTooltipUI tooltipLetterBoss;
+    private GenericTooltipUI tooltipOtherOption0;
+    private GenericTooltipUI tooltipOtherOption1;
+    private GenericTooltipUI tooltipOtherOption2;
+    private GenericTooltipUI tooltipOtherOption3;
+    private GenericTooltipUI tooltipOtherIgnore;
+    private GenericTooltipUI tooltipOtherShowMe;
+    private GenericTooltipUI tooltipOtherImage;
+    private GenericTooltipUI tooltipOtherBoss;
     //help
     private GenericHelpTooltipUI helpNormalSpecific;
     private StoryHelpTooltipUI helpNormalStory0;
     private StoryHelpTooltipUI helpNormalStory1;
-    private GenericHelpTooltipUI helpLetterSpecific;
-    private StoryHelpTooltipUI helpLetterStory0;
-    private StoryHelpTooltipUI helpLetterStory1;
+    private GenericHelpTooltipUI helpOtherSpecific;
+    private StoryHelpTooltipUI helpOtherStory0;
+    private StoryHelpTooltipUI helpOtherStory1;
     //options
     private TopicOption[,] arrayOfOptions;
     private Button[,] arrayOfButtons;
@@ -116,8 +116,8 @@ public class TopicUI : MonoBehaviour
     private Sprite topicOptionInvalid;
     private Sprite topicOptionNormalValid;
     private Sprite topicOptionNormalInvalid;
-    private Sprite topicOptionLetterValid;
-    private Sprite topicOptionLetterInvalid;
+    private Sprite topicOptionOtherValid;
+    private Sprite topicOptionOtherInvalid;
 
     //static reference
     private static TopicUI topicUI;
@@ -190,39 +190,39 @@ public class TopicUI : MonoBehaviour
         Debug.Assert(optionNormal1 != null, "Invalid optionNormal1 (Null)");
         Debug.Assert(optionNormal2 != null, "Invalid optionNormal2 (Null)");
         Debug.Assert(optionNormal3 != null, "Invalid optionNormal3 (Null)");
-        Debug.Assert(optionLetter0 != null, "Invalid optionLetter0 (Null)");
-        Debug.Assert(optionLetter1 != null, "Invalid optionLetter1 (Null)");
-        Debug.Assert(optionLetter2 != null, "Invalid optionLetter2 (Null)");
-        Debug.Assert(optionLetter3 != null, "Invalid optionLetter3 (Null)");
+        Debug.Assert(optionOther0 != null, "Invalid optionOther0 (Null)");
+        Debug.Assert(optionOther1 != null, "Invalid optionOther1 (Null)");
+        Debug.Assert(optionOther2 != null, "Invalid optionOther2 (Null)");
+        Debug.Assert(optionOther3 != null, "Invalid optionOther3 (Null)");
         Debug.Assert(buttonNormalIgnore != null, "Invalid buttonNormalIgnore (Null)");
         Debug.Assert(buttonNormalShowMe != null, "Invalid buttonNormalShowMe (Null)");
         Debug.Assert(buttonNormalHelp_generic != null, "Invalid buttonNormalHelp_generic (Null)");
         Debug.Assert(buttonNormalHelp_specific != null, "Invalid buttonNormalHelp_specific (Null)");
         Debug.Assert(buttonNormalStoryHelp0 != null, "Invalid buttonNormalStoryHelp0 (Null)");
         Debug.Assert(buttonNormalStoryHelp1 != null, "Invalid buttonNormalStoryHelp1 (Null)");
-        Debug.Assert(buttonLetterIgnore != null, "Invalid buttonLetterIgnore (Null)");
-        Debug.Assert(buttonLetterShowMe != null, "Invalid buttonLetterShowMe (Null)");
-        Debug.Assert(buttonLetterHelp_generic != null, "Invalid buttonLetterHelp_generic (Null)");
-        Debug.Assert(buttonLetterHelp_specific != null, "Invalid buttonLetterHelp_specific (Null)");
-        Debug.Assert(buttonLetterStoryHelp0 != null, "Invalid buttonLetterStoryHelp0 (Null)");
-        Debug.Assert(buttonLetterStoryHelp1 != null, "Invalid buttonLetterStoryHelp1 (Null)");
+        Debug.Assert(buttonOtherIgnore != null, "Invalid buttonOtherIgnore (Null)");
+        Debug.Assert(buttonOtherShowMe != null, "Invalid buttonOtherShowMe (Null)");
+        Debug.Assert(buttonOtherHelp_generic != null, "Invalid buttonOtherHelp_generic (Null)");
+        Debug.Assert(buttonOtherHelp_specific != null, "Invalid buttonOtherHelp_specific (Null)");
+        Debug.Assert(buttonOtherStoryHelp0 != null, "Invalid buttonOtherStoryHelp0 (Null)");
+        Debug.Assert(buttonOtherStoryHelp1 != null, "Invalid buttonOtherStoryHelp1 (Null)");
         Debug.Assert(textHeader != null, "Invalid textHeader (Null)");
         Debug.Assert(textMain != null, "Invalid textMain (Null)");
-        Debug.Assert(letterText != null, "Invalid letterText (Null)");
+        Debug.Assert(otherText != null, "Invalid letterText (Null)");
         Debug.Assert(textOptionNormal0 != null, "Invalid textOptionNormal0 (Null)");
         Debug.Assert(textOptionNormal1 != null, "Invalid textOptionNormal1 (Null)");
         Debug.Assert(textOptionNormal2 != null, "Invalid textOptionNormal2 (Null)");
         Debug.Assert(textOptionNormal3 != null, "Invalid textOptionNormal3 (Null)");
-        Debug.Assert(textOptionLetter0 != null, "Invalid textOptionLetter0 (Null)");
-        Debug.Assert(textOptionLetter1 != null, "Invalid textOptionLetter1 (Null)");
-        Debug.Assert(textOptionLetter2 != null, "Invalid textOptionLetter2 (Null)");
-        Debug.Assert(textOptionLetter3 != null, "Invalid textOptionLetter3 (Null)");
+        Debug.Assert(textOptionOther0 != null, "Invalid textOptionOther0 (Null)");
+        Debug.Assert(textOptionOther1 != null, "Invalid textOptionOther1 (Null)");
+        Debug.Assert(textOptionOther2 != null, "Invalid textOptionOther2 (Null)");
+        Debug.Assert(textOptionOther3 != null, "Invalid textOptionOther3 (Null)");
         Debug.Assert(imageTopicNormal != null, "Invalid imageTopic (Null)");
-        Debug.Assert(imageTopicLetter != null, "Invalid imageTopic (Null)");
+        Debug.Assert(imageTopicOther != null, "Invalid imageTopic (Null)");
         Debug.Assert(imageBoss != null, "Invalid imageBoss (Null)");
         Debug.Assert(outerBackground != null, "Invalid outerBackgroundImage (Null)");
         Debug.Assert(innerBackgroundNormal != null, "Invalid innerBackgroundNormal (Null)");
-        Debug.Assert(innerBackgroundLetter != null, "Invalid innerBackgroundLetter (Null)");
+        Debug.Assert(innerBackgroundOther != null, "Invalid innerBackgroundOther (Null)");
         //Button Interactive
         normalInteractiveOption0 = optionNormal0.GetComponent<ButtonInteraction>();
         normalInteractiveOption1 = optionNormal1.GetComponent<ButtonInteraction>();
@@ -230,35 +230,35 @@ public class TopicUI : MonoBehaviour
         normalInteractiveOption3 = optionNormal3.GetComponent<ButtonInteraction>();
         normalInteractiveIgnore = buttonNormalIgnore.GetComponent<ButtonInteraction>();
         normalInteractiveShowMe = buttonNormalShowMe.GetComponent<ButtonInteraction>();
-        letterInteractiveOption0 = optionLetter0.GetComponent<ButtonInteraction>();
-        letterInteractiveOption1 = optionLetter1.GetComponent<ButtonInteraction>();
-        letterInteractiveOption2 = optionLetter2.GetComponent<ButtonInteraction>();
-        letterInteractiveOption3 = optionLetter3.GetComponent<ButtonInteraction>();
-        letterInteractiveIgnore = buttonNormalIgnore.GetComponent<ButtonInteraction>();
-        letterInteractiveShowMe = buttonNormalShowMe.GetComponent<ButtonInteraction>();
+        otherInteractiveOption0 = optionOther0.GetComponent<ButtonInteraction>();
+        otherInteractiveOption1 = optionOther1.GetComponent<ButtonInteraction>();
+        otherInteractiveOption2 = optionOther2.GetComponent<ButtonInteraction>();
+        otherInteractiveOption3 = optionOther3.GetComponent<ButtonInteraction>();
+        otherInteractiveIgnore = buttonOtherIgnore.GetComponent<ButtonInteraction>();
+        otherInteractiveShowMe = buttonOtherShowMe.GetComponent<ButtonInteraction>();
         Debug.Assert(normalInteractiveOption0 != null, "Invalid normalInteractiveOption0 (Null)");
         Debug.Assert(normalInteractiveOption1 != null, "Invalid normalInteractiveOption1 (Null)");
         Debug.Assert(normalInteractiveOption2 != null, "Invalid normalInteractiveOption2 (Null)");
         Debug.Assert(normalInteractiveOption3 != null, "Invalid normalInteractiveOption3 (Null)");
         Debug.Assert(normalInteractiveIgnore != null, "Invalid normalInteractiveIgnore (Null)");
         Debug.Assert(normalInteractiveShowMe != null, "Invalid normalInteractiveShowMe (Null)");
-        Debug.Assert(letterInteractiveOption0 != null, "Invalid letterInteractiveOption0 (Null)");
-        Debug.Assert(letterInteractiveOption1 != null, "Invalid letterInteractiveOption1 (Null)");
-        Debug.Assert(letterInteractiveOption2 != null, "Invalid letterInteractiveOption2 (Null)");
-        Debug.Assert(letterInteractiveOption3 != null, "Invalid letterInteractiveOption3 (Null)");
-        Debug.Assert(letterInteractiveIgnore != null, "Invalid letterInteractiveIgnore (Null)");
-        Debug.Assert(letterInteractiveShowMe != null, "Invalid letterInteractiveShowMe (Null)");
+        Debug.Assert(otherInteractiveOption0 != null, "Invalid letterInteractiveOption0 (Null)");
+        Debug.Assert(otherInteractiveOption1 != null, "Invalid letterInteractiveOption1 (Null)");
+        Debug.Assert(otherInteractiveOption2 != null, "Invalid letterInteractiveOption2 (Null)");
+        Debug.Assert(otherInteractiveOption3 != null, "Invalid letterInteractiveOption3 (Null)");
+        Debug.Assert(otherInteractiveIgnore != null, "Invalid letterInteractiveIgnore (Null)");
+        Debug.Assert(otherInteractiveShowMe != null, "Invalid letterInteractiveShowMe (Null)");
         //Button events
         normalInteractiveOption0?.SetButton(EventType.TopicDisplayOption);
         normalInteractiveOption1?.SetButton(EventType.TopicDisplayOption);
         normalInteractiveOption2?.SetButton(EventType.TopicDisplayOption);
         normalInteractiveOption3?.SetButton(EventType.TopicDisplayOption);
         normalInteractiveIgnore?.SetButton(EventType.TopicDisplayIgnore);
-        letterInteractiveOption0?.SetButton(EventType.TopicDisplayOption);
-        letterInteractiveOption1?.SetButton(EventType.TopicDisplayOption);
-        letterInteractiveOption2?.SetButton(EventType.TopicDisplayOption);
-        letterInteractiveOption3?.SetButton(EventType.TopicDisplayOption);
-        letterInteractiveIgnore?.SetButton(EventType.TopicDisplayIgnore);
+        otherInteractiveOption0?.SetButton(EventType.TopicDisplayOption);
+        otherInteractiveOption1?.SetButton(EventType.TopicDisplayOption);
+        otherInteractiveOption2?.SetButton(EventType.TopicDisplayOption);
+        otherInteractiveOption3?.SetButton(EventType.TopicDisplayOption);
+        otherInteractiveIgnore?.SetButton(EventType.TopicDisplayIgnore);
         //Tooltips
         tooltipNormalOption0 = optionNormal0.GetComponent<GenericTooltipUI>();
         tooltipNormalOption1 = optionNormal1.GetComponent<GenericTooltipUI>();
@@ -268,14 +268,14 @@ public class TopicUI : MonoBehaviour
         tooltipNormalShowMe = buttonNormalShowMe.GetComponent<GenericTooltipUI>();
         tooltipNormalImage = imageTopicNormal.GetComponent<GenericTooltipUI>();
         tooltipNormalBoss = imageBoss.GetComponent<GenericTooltipUI>();
-        tooltipLetterOption0 = optionLetter0.GetComponent<GenericTooltipUI>();
-        tooltipLetterOption1 = optionLetter1.GetComponent<GenericTooltipUI>();
-        tooltipLetterOption2 = optionLetter2.GetComponent<GenericTooltipUI>();
-        tooltipLetterOption3 = optionLetter3.GetComponent<GenericTooltipUI>();
-        tooltipLetterIgnore = buttonLetterIgnore.GetComponent<GenericTooltipUI>();
-        tooltipLetterShowMe = buttonLetterShowMe.GetComponent<GenericTooltipUI>();
-        tooltipLetterImage = imageTopicLetter.GetComponent<GenericTooltipUI>();
-        tooltipLetterBoss = imageBoss.GetComponent<GenericTooltipUI>();
+        tooltipOtherOption0 = optionOther0.GetComponent<GenericTooltipUI>();
+        tooltipOtherOption1 = optionOther1.GetComponent<GenericTooltipUI>();
+        tooltipOtherOption2 = optionOther2.GetComponent<GenericTooltipUI>();
+        tooltipOtherOption3 = optionOther3.GetComponent<GenericTooltipUI>();
+        tooltipOtherIgnore = buttonOtherIgnore.GetComponent<GenericTooltipUI>();
+        tooltipOtherShowMe = buttonOtherShowMe.GetComponent<GenericTooltipUI>();
+        tooltipOtherImage = imageTopicOther.GetComponent<GenericTooltipUI>();
+        tooltipOtherBoss = imageBoss.GetComponent<GenericTooltipUI>();
         Debug.Assert(tooltipNormalOption0 != null, "Invalid tooltipNormalOption0 (Null)");
         Debug.Assert(tooltipNormalOption1 != null, "Invalid tooltipNormalOption1 (Null)");
         Debug.Assert(tooltipNormalOption2 != null, "Invalid tooltipNormalOption2 (Null)");
@@ -284,52 +284,52 @@ public class TopicUI : MonoBehaviour
         Debug.Assert(tooltipNormalShowMe != null, "Invalid tooltipNormalShowMe (Null)");
         Debug.Assert(tooltipNormalImage != null, "Invalid tooltipNormalImage (Null)");
         Debug.Assert(tooltipNormalBoss != null, "Invalid tooltipNormalBoss (Null)");
-        Debug.Assert(tooltipLetterOption0 != null, "Invalid tooltipLetterOption0 (Null)");
-        Debug.Assert(tooltipLetterOption1 != null, "Invalid tooltipLetterOption1 (Null)");
-        Debug.Assert(tooltipLetterOption2 != null, "Invalid tooltipLetterOption2 (Null)");
-        Debug.Assert(tooltipLetterOption3 != null, "Invalid tooltipLetterOption3 (Null)");
-        Debug.Assert(tooltipLetterIgnore != null, "Invalid tooltipLetterIgnore (Null)");
-        Debug.Assert(tooltipLetterShowMe != null, "Invalid tooltipLetterShowMe (Null)");
-        Debug.Assert(tooltipLetterImage != null, "Invalid tooltipLetterImage (Null)");
-        Debug.Assert(tooltipLetterBoss != null, "Invalid tooltipLetterBoss (Null)");
+        Debug.Assert(tooltipOtherOption0 != null, "Invalid tooltipOtherOption0 (Null)");
+        Debug.Assert(tooltipOtherOption1 != null, "Invalid tooltipOtherOption1 (Null)");
+        Debug.Assert(tooltipOtherOption2 != null, "Invalid tooltipOtherOption2 (Null)");
+        Debug.Assert(tooltipOtherOption3 != null, "Invalid tooltipOtherOption3 (Null)");
+        Debug.Assert(tooltipOtherIgnore != null, "Invalid tooltipOtherIgnore (Null)");
+        Debug.Assert(tooltipOtherShowMe != null, "Invalid tooltipOtherShowMe (Null)");
+        Debug.Assert(tooltipOtherImage != null, "Invalid tooltipOtherImage (Null)");
+        Debug.Assert(tooltipOtherBoss != null, "Invalid tooltipOtherBoss (Null)");
         //populate arrayOfButtons
-        int indexNormal = (int)TopicDecisionType.Normal;
-        int indexLetter = (int)TopicDecisionType.Letter;
+        int indexNormal = (int)TopicBase.Normal;
+        int indexOther = (int)TopicBase.Other;
         arrayOfButtons[indexNormal, 0] = optionNormal0;
         arrayOfButtons[indexNormal, 1] = optionNormal1;
         arrayOfButtons[indexNormal, 2] = optionNormal2;
         arrayOfButtons[indexNormal, 3] = optionNormal3;
-        arrayOfButtons[indexLetter, 0] = optionLetter0;
-        arrayOfButtons[indexLetter, 1] = optionLetter1;
-        arrayOfButtons[indexLetter, 2] = optionLetter2;
-        arrayOfButtons[indexLetter, 3] = optionLetter3;
+        arrayOfButtons[indexOther, 0] = optionOther0;
+        arrayOfButtons[indexOther, 1] = optionOther1;
+        arrayOfButtons[indexOther, 2] = optionOther2;
+        arrayOfButtons[indexOther, 3] = optionOther3;
         //populate arrayOfButtonInteractions
         arrayOfButtonInteractions[indexNormal, 0] = normalInteractiveOption0;
         arrayOfButtonInteractions[indexNormal, 1] = normalInteractiveOption1;
         arrayOfButtonInteractions[indexNormal, 2] = normalInteractiveOption2;
         arrayOfButtonInteractions[indexNormal, 3] = normalInteractiveOption3;
-        arrayOfButtonInteractions[indexLetter, 0] = letterInteractiveOption0;
-        arrayOfButtonInteractions[indexLetter, 1] = letterInteractiveOption1;
-        arrayOfButtonInteractions[indexLetter, 2] = letterInteractiveOption2;
-        arrayOfButtonInteractions[indexLetter, 3] = letterInteractiveOption3;
+        arrayOfButtonInteractions[indexOther, 0] = otherInteractiveOption0;
+        arrayOfButtonInteractions[indexOther, 1] = otherInteractiveOption1;
+        arrayOfButtonInteractions[indexOther, 2] = otherInteractiveOption2;
+        arrayOfButtonInteractions[indexOther, 3] = otherInteractiveOption3;
         //populate arrayOfOptionTexts
         arrayOfOptionTexts[indexNormal, 0] = textOptionNormal0;
         arrayOfOptionTexts[indexNormal, 1] = textOptionNormal1;
         arrayOfOptionTexts[indexNormal, 2] = textOptionNormal2;
         arrayOfOptionTexts[indexNormal, 3] = textOptionNormal3;
-        arrayOfOptionTexts[indexLetter, 0] = textOptionLetter0;
-        arrayOfOptionTexts[indexLetter, 1] = textOptionLetter1;
-        arrayOfOptionTexts[indexLetter, 2] = textOptionLetter2;
-        arrayOfOptionTexts[indexLetter, 3] = textOptionLetter3;
+        arrayOfOptionTexts[indexOther, 0] = textOptionOther0;
+        arrayOfOptionTexts[indexOther, 1] = textOptionOther1;
+        arrayOfOptionTexts[indexOther, 2] = textOptionOther2;
+        arrayOfOptionTexts[indexOther, 3] = textOptionOther3;
         //populate arrayOfTooltips
         arrayOfTooltips[indexNormal, 0] = tooltipNormalOption0;
         arrayOfTooltips[indexNormal, 1] = tooltipNormalOption1;
         arrayOfTooltips[indexNormal, 2] = tooltipNormalOption2;
         arrayOfTooltips[indexNormal, 3] = tooltipNormalOption3;
-        arrayOfTooltips[indexLetter, 0] = tooltipLetterOption0;
-        arrayOfTooltips[indexLetter, 1] = tooltipLetterOption1;
-        arrayOfTooltips[indexLetter, 2] = tooltipLetterOption2;
-        arrayOfTooltips[indexLetter, 3] = tooltipLetterOption3;
+        arrayOfTooltips[indexOther, 0] = tooltipOtherOption0;
+        arrayOfTooltips[indexOther, 1] = tooltipOtherOption1;
+        arrayOfTooltips[indexOther, 2] = tooltipOtherOption2;
+        arrayOfTooltips[indexOther, 3] = tooltipOtherOption3;
 
         //set gameObject to active
         topicObject.SetActive(true);
@@ -345,13 +345,13 @@ public class TopicUI : MonoBehaviour
         topicDefault = GameManager.i.guiScript.topicDefaultSprite;
         topicOptionNormalValid = GameManager.i.guiScript.topicOptionNormalValidSprite;
         topicOptionNormalInvalid = GameManager.i.guiScript.topicOptionNormalInvalidSprite;
-        topicOptionLetterValid = GameManager.i.guiScript.topicOptionLetterValidSprite;
-        topicOptionLetterInvalid = GameManager.i.guiScript.topicOptionLetterInvalidSprite;
+        topicOptionOtherValid = GameManager.i.guiScript.topicOptionOtherValidSprite;
+        topicOptionOtherInvalid = GameManager.i.guiScript.topicOptionOtherInvalidSprite;
         Debug.Assert(topicDefault != null, "Invalid topicDefault sprite (Null)");
         Debug.Assert(topicOptionNormalValid != null, "Invalid topicOptionNormalValid sprite (Null)");
         Debug.Assert(topicOptionNormalInvalid != null, "Invalid topicOptionNormalInvalid sprite (Null)");
-        Debug.Assert(topicOptionLetterValid != null, "Invalid topicOptionLetterValid sprite (Null)");
-        Debug.Assert(topicOptionLetterInvalid != null, "Invalid topicOptionLetterInvalid sprite (Null)");
+        Debug.Assert(topicOptionOtherValid != null, "Invalid topicOptionOtherValid sprite (Null)");
+        Debug.Assert(topicOptionOtherInvalid != null, "Invalid topicOptionOtherInvalid sprite (Null)");
     }
     #endregion
 
@@ -467,6 +467,16 @@ public class TopicUI : MonoBehaviour
         tooltipNormalImage.x_offset = -180;
         tooltipNormalImage.y_offset = 10;
         tooltipNormalBoss.x_offset = -275;
+        //Other
+        tooltipOtherShowMe.tooltipHeader = texts.Item1;
+        tooltipOtherShowMe.tooltipMain = texts.Item2;
+        tooltipOtherShowMe.tooltipDetails = texts.Item3;
+        //needs to be offset to prevent button being covered and causing 'blinking tooltip' syndrome (ShowMe and Ignore tooltips)
+        tooltipOtherShowMe.x_offset = 60;
+        tooltipOtherIgnore.x_offset = -402;
+        tooltipOtherImage.x_offset = -180;
+        tooltipOtherImage.y_offset = 10;
+        tooltipOtherBoss.x_offset = -275;
         //help
         List<HelpData> listOfHelp = GameManager.i.helpScript.GetHelpData("topicUI_0", "topicUI_1", "topicUI_2", "topicUI_3");
         if (listOfHelp != null && listOfHelp.Count > 0)
@@ -476,25 +486,25 @@ public class TopicUI : MonoBehaviour
             if (helpGenericNormal != null)
             { helpGenericNormal.SetHelpTooltip(listOfHelp, 150, 200); }
             else { Debug.LogWarning("Invalid GenericHelpTooltipUI for helpGenericNormal (Null)"); }
-            GenericHelpTooltipUI helpGenericLetter = buttonLetterHelp_generic.GetComponent<GenericHelpTooltipUI>();
+            GenericHelpTooltipUI helpGenericOther = buttonOtherHelp_generic.GetComponent<GenericHelpTooltipUI>();
             //generic help -> letters
-            if (helpGenericLetter != null)
-            { helpGenericLetter.SetHelpTooltip(listOfHelp, 150, 200); }
-            else { Debug.LogWarning("Invalid GenericHelpTooltipUI for helpGenericLetter (Null)"); }
+            if (helpGenericOther != null)
+            { helpGenericOther.SetHelpTooltip(listOfHelp, 150, 200); }
+            else { Debug.LogWarning("Invalid GenericHelpTooltipUI for helpGenericOther (Null)"); }
             //specific help (don't populate help, just get component)
             helpNormalSpecific = buttonNormalHelp_specific.GetComponent<GenericHelpTooltipUI>();
-            helpLetterSpecific = buttonLetterHelp_specific.GetComponent<GenericHelpTooltipUI>();
+            helpOtherSpecific = buttonOtherHelp_specific.GetComponent<GenericHelpTooltipUI>();
             if (helpNormalSpecific == null) { Debug.LogWarning("Invalid GenericHelpTooltipUI for helpNormalSpecific (Null)"); }
-            if (helpLetterSpecific == null) { Debug.LogWarning("Invalid GenericHelpTooltipUI for helpLetterSpecific (Null)"); }
+            if (helpOtherSpecific == null) { Debug.LogWarning("Invalid GenericHelpTooltipUI for helpOtherSpecific (Null)"); }
             //story Help
             helpNormalStory0 = buttonNormalStoryHelp0.GetComponent<StoryHelpTooltipUI>();
             helpNormalStory1 = buttonNormalStoryHelp1.GetComponent<StoryHelpTooltipUI>();
-            helpLetterStory0 = buttonLetterStoryHelp0.GetComponent<StoryHelpTooltipUI>();
-            helpLetterStory1 = buttonLetterStoryHelp1.GetComponent<StoryHelpTooltipUI>();
+            helpOtherStory0 = buttonOtherStoryHelp0.GetComponent<StoryHelpTooltipUI>();
+            helpOtherStory1 = buttonOtherStoryHelp1.GetComponent<StoryHelpTooltipUI>();
             if (helpNormalStory0 == null) { Debug.LogWarning("Invalid StoryHelpTooltipUI for helpNormalStory0 (Null)"); }
             if (helpNormalStory1 == null) { Debug.LogWarning("Invalid StoryHelpTooltipUI for helpNormalStory1 (Null)"); }
-            if (helpLetterStory0 == null) { Debug.LogWarning("Invalid StoryHelpTooltipUI for helpLetterStory0 (Null)"); }
-            if (helpLetterStory1 == null) { Debug.LogWarning("Invalid StoryHelpTooltipUI for helpLetterStory1 (Null)"); }
+            if (helpOtherStory0 == null) { Debug.LogWarning("Invalid StoryHelpTooltipUI for helpOtherStory0 (Null)"); }
+            if (helpOtherStory1 == null) { Debug.LogWarning("Invalid StoryHelpTooltipUI for helpOtherStory1 (Null)"); }
         }
         else { Debug.LogWarning("Invalid listOfHelp (Null or Empty)"); }
     }
@@ -508,24 +518,24 @@ public class TopicUI : MonoBehaviour
 
    
     /// <summary>
-    /// Displays relevant topic type, normal or letter style
+    /// Displays relevant topic base UI type
     /// </summary>
     /// <param name="data"></param>
     private void DisplayTopic(TopicUIData data)
     {
-        switch (data.type)
+        switch (data.baseType)
         {
-            case TopicDecisionType.Normal:
+            case TopicBase.Normal:
                 innerBackgroundNormal.gameObject.SetActive(true);
-                innerBackgroundLetter.gameObject.SetActive(false);
+                innerBackgroundOther.gameObject.SetActive(false);
                 SetTopicDisplayNormal(data);
                 break;
-            case TopicDecisionType.Letter:
+            case TopicBase.Other:
                 innerBackgroundNormal.gameObject.SetActive(false);
-                innerBackgroundLetter.gameObject.SetActive(true);
-                SetTopicDisplayLetter(data);
+                innerBackgroundOther.gameObject.SetActive(true);
+                SetTopicDisplayOther(data);
                 break;
-            default: Debug.LogWarningFormat("Unrecognised data.type \"{0}\"", data.type); break;
+            default: Debug.LogWarningFormat("Unrecognised data.type \"{0}\"", data.uiType); break;
         }
     }
 
@@ -538,7 +548,7 @@ public class TopicUI : MonoBehaviour
     {
         if (data != null)
         {
-            int index = (int)TopicDecisionType.Normal;
+            int index = (int)TopicBase.Normal;
             //deactivate all options
             for (int i = 0; i < arrayOfButtons.GetUpperBound(1); i++)
             { arrayOfButtons[index, i].gameObject.SetActive(false); }
@@ -666,8 +676,6 @@ public class TopicUI : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid listOfOptions (Empty) for topic \"{0}\"", data.topicName); }
             }
             else { Debug.LogWarningFormat("Invalid listOfOptions (Null) for topic \"{0}\"", data.topicName); }
-            //ignore button
-            normalInteractiveIgnore.SetButton(EventType.TopicDisplayIgnore, -1);
             //show Me button
             if (dataPackage.nodeID > -1)
             {
@@ -733,24 +741,24 @@ public class TopicUI : MonoBehaviour
     }
     #endregion
 
-    #region SetTopicDisplayLetter
+    #region SetTopicDisplayOther
     /// <summary>
     /// display topicUI in letter format (story Bravo topics -> family)
     /// </summary>
     /// <param name="data"></param>
-    private void SetTopicDisplayLetter(TopicUIData data)
+    private void SetTopicDisplayOther(TopicUIData data)
     {
         if (data != null)
         {
-            int index = (int)TopicDecisionType.Letter;
+            int index = (int)TopicBase.Other;
             //deactivate all options
             for (int i = 0; i < arrayOfButtons.GetUpperBound(1); i++)
             { arrayOfButtons[index, i].gameObject.SetActive(false); }
             //texts
-            letterText.gameObject.SetActive(true);
+            otherText.gameObject.SetActive(true);
             //topic text
             if (string.IsNullOrEmpty(data.text) == false)
-            { letterText.text = data.text; }
+            { otherText.text = data.text; }
             else
             {
                 Debug.LogWarningFormat("Invalid data.text (Null or Empty) for topic \"{0}\"", data.topicName);
@@ -758,33 +766,33 @@ public class TopicUI : MonoBehaviour
             }
             //topic sprite
             if (data.spriteMain != null)
-            { imageTopicLetter.sprite = data.spriteMain; }
+            { imageTopicOther.sprite = data.spriteMain; }
             else
             {
                 Debug.LogWarningFormat("Invalid data.sprite (Null or Empty) for topic \"{0}\"", data.topicName);
                 //use default sprite
-                imageTopicLetter.sprite = GameManager.i.guiScript.topicDefaultSprite;
+                imageTopicOther.sprite = GameManager.i.guiScript.topicDefaultSprite;
             }
             //story Help
             if (data.listOfStoryHelp != null)
             {
                 switch (data.listOfStoryHelp.Count)
                 {
-                    case 0: buttonLetterStoryHelp0.gameObject.SetActive(false); buttonLetterStoryHelp1.gameObject.SetActive(false); break;
+                    case 0: buttonOtherStoryHelp0.gameObject.SetActive(false); buttonOtherStoryHelp1.gameObject.SetActive(false); break;
                     case 1:
-                        buttonLetterStoryHelp0.gameObject.SetActive(true);
-                        buttonLetterStoryHelp1.gameObject.SetActive(false);
-                        helpLetterStory0.SetHelpTooltip(data.listOfStoryHelp[0]);
+                        buttonOtherStoryHelp0.gameObject.SetActive(true);
+                        buttonOtherStoryHelp1.gameObject.SetActive(false);
+                        helpOtherStory0.SetHelpTooltip(data.listOfStoryHelp[0]);
                         break;
                     case 2:
-                        buttonLetterStoryHelp0.gameObject.SetActive(true);
-                        buttonLetterStoryHelp1.gameObject.SetActive(true);
-                        helpLetterStory0.SetHelpTooltip(data.listOfStoryHelp[0]);
-                        helpLetterStory1.SetHelpTooltip(data.listOfStoryHelp[1]);
+                        buttonOtherStoryHelp0.gameObject.SetActive(true);
+                        buttonOtherStoryHelp1.gameObject.SetActive(true);
+                        helpOtherStory0.SetHelpTooltip(data.listOfStoryHelp[0]);
+                        helpOtherStory1.SetHelpTooltip(data.listOfStoryHelp[1]);
                         break;
                 }
             }
-            else { buttonLetterStoryHelp0.gameObject.SetActive(false); buttonLetterStoryHelp1.gameObject.SetActive(false); }
+            else { buttonOtherStoryHelp0.gameObject.SetActive(false); buttonOtherStoryHelp1.gameObject.SetActive(false); }
             //options
             if (data.listOfOptions != null)
             {
@@ -822,8 +830,8 @@ public class TopicUI : MonoBehaviour
                             //button Interaction
                             arrayOfButtonInteractions[index, i].SetButton(EventType.TopicDisplayOption, i);
                             //button sprite (yellow bar to match yellow text for valid, grey all for invalid)
-                            if (option.isValid == true) { arrayOfButtons[index, i].image.sprite = topicOptionLetterValid; }
-                            else { arrayOfButtons[index, i].image.sprite = topicOptionLetterInvalid; }
+                            if (option.isValid == true) { arrayOfButtons[index, i].image.sprite = topicOptionOtherValid; }
+                            else { arrayOfButtons[index, i].image.sprite = topicOptionOtherInvalid; }
                             //initialise option
                             arrayOfButtons[index, i].gameObject.SetActive(true);
                         }
@@ -834,55 +842,53 @@ public class TopicUI : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid listOfOptions (Empty) for topic \"{0}\"", data.topicName); }
             }
             else { Debug.LogWarningFormat("Invalid listOfOptions (Null) for topic \"{0}\"", data.topicName); }
-            //ignore button
-            letterInteractiveIgnore.SetButton(EventType.TopicDisplayIgnore, -1);
             //show Me button
             if (dataPackage.nodeID > -1)
             {
-                buttonLetterShowMe.gameObject.SetActive(true);
-                letterInteractiveShowMe.SetButton(EventType.TopicDisplayShowMe, -1);
+                buttonOtherShowMe.gameObject.SetActive(true);
+                otherInteractiveShowMe.SetButton(EventType.TopicDisplayShowMe, -1);
             }
-            else { buttonLetterShowMe.gameObject.SetActive(false); }
+            else { buttonOtherShowMe.gameObject.SetActive(false); }
             //optional second help icon
             if (data.listOfHelp != null && data.listOfHelp.Count > 0)
             {
-                buttonLetterHelp_specific.gameObject.SetActive(true);
-                if (helpLetterSpecific != null)
+                buttonOtherHelp_specific.gameObject.SetActive(true);
+                if (helpOtherSpecific != null)
                 {
                     List<HelpData> listOfHelpData = GameManager.i.helpScript.GetHelpData(data.listOfHelp);
                     if (listOfHelpData != null)
-                    { helpLetterSpecific.SetHelpTooltip(listOfHelpData, 150, 180); }
-                    else { buttonLetterHelp_specific.gameObject.SetActive(false); }
+                    { helpOtherSpecific.SetHelpTooltip(listOfHelpData, 150, 180); }
+                    else { buttonOtherHelp_specific.gameObject.SetActive(false); }
                 }
                 else { Debug.LogWarning("Invalid GenericHelpTooltipUI for helpSpecific (Null)"); }
             }
-            else { buttonLetterHelp_specific.gameObject.SetActive(false); }
+            else { buttonOtherHelp_specific.gameObject.SetActive(false); }
             //initialise Image tooltip
             if (string.IsNullOrEmpty(data.imageTooltipHeader) == false)
             {
-                tooltipLetterImage.gameObject.SetActive(true);
-                tooltipLetterImage.tooltipHeader = data.imageTooltipHeader;
+                tooltipOtherImage.gameObject.SetActive(true);
+                tooltipOtherImage.tooltipHeader = data.imageTooltipHeader;
             }
-            else { tooltipLetterImage.tooltipHeader = ""; }
+            else { tooltipOtherImage.tooltipHeader = ""; }
             if (string.IsNullOrEmpty(data.imageTooltipMain) == false)
-            { tooltipLetterImage.tooltipMain = data.imageTooltipMain; }
-            else { tooltipLetterImage.tooltipMain = ""; }
+            { tooltipOtherImage.tooltipMain = data.imageTooltipMain; }
+            else { tooltipOtherImage.tooltipMain = ""; }
             if (string.IsNullOrEmpty(data.imageTooltipDetails) == false)
-            { tooltipLetterImage.tooltipDetails = data.imageTooltipDetails; }
-            else { tooltipLetterImage.tooltipDetails = ""; }
+            { tooltipOtherImage.tooltipDetails = data.imageTooltipDetails; }
+            else { tooltipOtherImage.tooltipDetails = ""; }
             //initialise ignore Button tooltip
             if (string.IsNullOrEmpty(data.ignoreTooltipHeader) == false)
             {
-                tooltipLetterIgnore.gameObject.SetActive(true);
-                tooltipLetterIgnore.tooltipHeader = data.ignoreTooltipHeader;
+                tooltipOtherIgnore.gameObject.SetActive(true);
+                tooltipOtherIgnore.tooltipHeader = data.ignoreTooltipHeader;
             }
-            else { tooltipLetterIgnore.tooltipHeader = ""; }
+            else { tooltipOtherIgnore.tooltipHeader = ""; }
             if (string.IsNullOrEmpty(data.ignoreTooltipMain) == false)
-            { tooltipLetterIgnore.tooltipMain = data.ignoreTooltipMain; }
-            else { tooltipLetterIgnore.tooltipMain = ""; }
+            { tooltipOtherIgnore.tooltipMain = data.ignoreTooltipMain; }
+            else { tooltipOtherIgnore.tooltipMain = ""; }
             if (string.IsNullOrEmpty(data.ignoreTooltipDetails) == false)
-            { tooltipLetterIgnore.tooltipDetails = data.ignoreTooltipDetails; }
-            else { tooltipLetterIgnore.tooltipDetails = ""; }
+            { tooltipOtherIgnore.tooltipDetails = data.ignoreTooltipDetails; }
+            else { tooltipOtherIgnore.tooltipDetails = ""; }
             //Fixed position at screen centre
             Vector3 screenPos = new Vector3();
             screenPos.x = Screen.width / 2;

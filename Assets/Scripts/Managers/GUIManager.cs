@@ -151,10 +151,10 @@ public class GUIManager : MonoBehaviour
     public Sprite topicOptionNormalValidSprite;
     [Tooltip("Sprite used for a normal invalid topic option")]
     public Sprite topicOptionNormalInvalidSprite;
-    [Tooltip("Sprite used for a valid Letter format Topic UI option")]
-    public Sprite topicOptionLetterValidSprite;
-    [Tooltip("Sprite used for a invalid Letter format Topic UI option")]
-    public Sprite topicOptionLetterInvalidSprite;
+    [Tooltip("Sprite used for a valid Other format Topic UI option")]
+    public Sprite topicOptionOtherValidSprite;
+    [Tooltip("Sprite used for a invalid Other format Topic UI option")]
+    public Sprite topicOptionOtherInvalidSprite;
     [Tooltip("Sprite used for Topic Reviews")]
     public Sprite topicReviewSprite;
     [Tooltip("Sprite for a Friendly relationship")]
@@ -336,8 +336,8 @@ public class GUIManager : MonoBehaviour
         Debug.Assert(topicDefaultSprite != null, "Invalid topicDefaultSprite (Null)");
         Debug.Assert(topicOptionNormalValidSprite != null, "Invalid topicOptionNormalValidSprite (Null)");
         Debug.Assert(topicOptionNormalInvalidSprite != null, "Invalid topicOptionNormalInvalidSprite (Null)");
-        Debug.Assert(topicOptionLetterValidSprite != null, "Invalid topicOptionLetterValidSprite (Null)");
-        Debug.Assert(topicOptionLetterInvalidSprite != null, "Invalid topicOptionLetterInvalidSprite (Null)");
+        Debug.Assert(topicOptionOtherValidSprite != null, "Invalid topicOptionOtherValidSprite (Null)");
+        Debug.Assert(topicOptionOtherInvalidSprite != null, "Invalid topicOptionOtherInvalidSprite (Null)");
         Debug.Assert(topicReviewSprite != null, "Invalid topicReviewSprite (Null)");
         Debug.Assert(friendSprite != null, "Invalid friendSprite (Null)");
         Debug.Assert(enemySprite != null, "Invalid enemySprite (Null)");

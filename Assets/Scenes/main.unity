@@ -3067,11 +3067,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1488035410952364, guid: 63bb2d0f27d333142b0fa40622085c5f, type: 2}
       propertyPath: m_Name
-      value: letterOption2
+      value: otherOption2
       objectReference: {fileID: 0}
     - target: {fileID: 1497912559467680, guid: 63bb2d0f27d333142b0fa40622085c5f, type: 2}
       propertyPath: m_Name
-      value: option2LetterText
+      value: option2OtherText
       objectReference: {fileID: 0}
     - target: {fileID: 114502623275907798, guid: 63bb2d0f27d333142b0fa40622085c5f,
         type: 2}
@@ -4850,7 +4850,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1685218529275618, guid: 1e4f0c2befdb31a4096d5b12f630938f, type: 2}
       propertyPath: m_Name
-      value: storyHelpIcon1
+      value: storyHelpIconOther1
       objectReference: {fileID: 0}
     - target: {fileID: 114652320604000822, guid: 1e4f0c2befdb31a4096d5b12f630938f,
         type: 2}
@@ -17427,7 +17427,7 @@ GameObject:
   - component: {fileID: 428042321}
   - component: {fileID: 428042320}
   m_Layer: 5
-  m_Name: topicInnerBackgroundLetter
+  m_Name: topicInnerBackgroundOther
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21653,7 +21653,7 @@ Prefab:
       objectReference: {fileID: 482717892}
     - target: {fileID: 1685218529275618, guid: 1e4f0c2befdb31a4096d5b12f630938f, type: 2}
       propertyPath: m_Name
-      value: storyHelpIcon0
+      value: storyHelpIconOther0
       objectReference: {fileID: 0}
     - target: {fileID: 114652320604000822, guid: 1e4f0c2befdb31a4096d5b12f630938f,
         type: 2}
@@ -25845,7 +25845,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1486534099321474, guid: d086aed7d68115448ab4f87ee94f50bd, type: 2}
       propertyPath: m_Name
-      value: ButtonIgnore
+      value: ButtonIgnoreOther
       objectReference: {fileID: 0}
     - target: {fileID: 114395408053451060, guid: d086aed7d68115448ab4f87ee94f50bd,
         type: 2}
@@ -27763,41 +27763,41 @@ MonoBehaviour:
   topicObject: {fileID: 1071249910}
   outerBackground: {fileID: 1260968079}
   innerBackgroundNormal: {fileID: 2043910899}
-  innerBackgroundLetter: {fileID: 428042322}
+  innerBackgroundOther: {fileID: 428042322}
   panelBoss: {fileID: 1846757262}
   optionNormal0: {fileID: 1336395239}
   optionNormal1: {fileID: 664950695}
   optionNormal2: {fileID: 916043117}
   optionNormal3: {fileID: 1146991044}
-  optionLetter0: {fileID: 739772322}
-  optionLetter1: {fileID: 1330608293}
-  optionLetter2: {fileID: 1144023536}
-  optionLetter3: {fileID: 1084666571}
+  optionOther0: {fileID: 739772322}
+  optionOther1: {fileID: 1330608293}
+  optionOther2: {fileID: 1144023536}
+  optionOther3: {fileID: 1084666571}
   buttonNormalIgnore: {fileID: 2069218509}
   buttonNormalShowMe: {fileID: 2128062750}
   buttonNormalHelp_generic: {fileID: 2039622391}
   buttonNormalHelp_specific: {fileID: 319143681}
   buttonNormalStoryHelp0: {fileID: 639292267}
   buttonNormalStoryHelp1: {fileID: 1795059231}
-  buttonLetterIgnore: {fileID: 1761497018}
-  buttonLetterShowMe: {fileID: 869707167}
-  buttonLetterHelp_generic: {fileID: 1221089868}
-  buttonLetterHelp_specific: {fileID: 1797736925}
-  buttonLetterStoryHelp0: {fileID: 482717891}
-  buttonLetterStoryHelp1: {fileID: 1953364697}
+  buttonOtherIgnore: {fileID: 1761497018}
+  buttonOtherShowMe: {fileID: 869707167}
+  buttonOtherHelp_generic: {fileID: 1221089868}
+  buttonOtherHelp_specific: {fileID: 1797736925}
+  buttonOtherStoryHelp0: {fileID: 482717891}
+  buttonOtherStoryHelp1: {fileID: 1953364697}
   textHeader: {fileID: 891827637}
   textMain: {fileID: 1852539988}
-  letterText: {fileID: 684105039}
+  otherText: {fileID: 684105039}
   textOptionNormal0: {fileID: 968215953}
   textOptionNormal1: {fileID: 664950694}
   textOptionNormal2: {fileID: 916043116}
   textOptionNormal3: {fileID: 1146991043}
-  textOptionLetter0: {fileID: 1218275894}
-  textOptionLetter1: {fileID: 944363260}
-  textOptionLetter2: {fileID: 63116941}
-  textOptionLetter3: {fileID: 1498605639}
+  textOptionOther0: {fileID: 1218275894}
+  textOptionOther1: {fileID: 944363260}
+  textOptionOther2: {fileID: 63116941}
+  textOptionOther3: {fileID: 1498605639}
   imageTopicNormal: {fileID: 1436693636}
-  imageTopicLetter: {fileID: 862353868}
+  imageTopicOther: {fileID: 862353868}
   imageBoss: {fileID: 1239454388}
 --- !u!114 &615421595
 MonoBehaviour:
@@ -28698,7 +28698,7 @@ Prefab:
       objectReference: {fileID: 639292268}
     - target: {fileID: 1685218529275618, guid: 1e4f0c2befdb31a4096d5b12f630938f, type: 2}
       propertyPath: m_Name
-      value: storyHelpIcon0
+      value: storyHelpIconNormal0
       objectReference: {fileID: 0}
     - target: {fileID: 114652320604000822, guid: 1e4f0c2befdb31a4096d5b12f630938f,
         type: 2}
@@ -29698,7 +29698,7 @@ GameObject:
   - component: {fileID: 684105040}
   - component: {fileID: 684105039}
   m_Layer: 5
-  m_Name: letter_text
+  m_Name: other_text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34700,7 +34700,7 @@ GameObject:
   - component: {fileID: 862353868}
   - component: {fileID: 862353867}
   m_Layer: 5
-  m_Name: topicLetter_image
+  m_Name: topicOther_image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35779,7 +35779,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1685218529275618, guid: 1e4f0c2befdb31a4096d5b12f630938f, type: 2}
       propertyPath: m_Name
-      value: ButtonHelp_generic
+      value: ButtonHelp_genericOther
       objectReference: {fileID: 0}
     - target: {fileID: 114652320604000822, guid: 1e4f0c2befdb31a4096d5b12f630938f,
         type: 2}
@@ -36995,7 +36995,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1685218529275618, guid: 1e4f0c2befdb31a4096d5b12f630938f, type: 2}
       propertyPath: m_Name
-      value: ButtonHelp_specifc
+      value: ButtonHelp_specifcNormal
       objectReference: {fileID: 0}
     - target: {fileID: 224903428417104764, guid: 1e4f0c2befdb31a4096d5b12f630938f,
         type: 2}
@@ -38662,11 +38662,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1488035410952364, guid: 63bb2d0f27d333142b0fa40622085c5f, type: 2}
       propertyPath: m_Name
-      value: letterOption1
+      value: otherOption1
       objectReference: {fileID: 0}
     - target: {fileID: 1497912559467680, guid: 63bb2d0f27d333142b0fa40622085c5f, type: 2}
       propertyPath: m_Name
-      value: option1LetterText
+      value: option1OtherText
       objectReference: {fileID: 0}
     - target: {fileID: 114502623275907798, guid: 63bb2d0f27d333142b0fa40622085c5f,
         type: 2}
@@ -47530,7 +47530,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1488035410952364, guid: 63bb2d0f27d333142b0fa40622085c5f, type: 2}
       propertyPath: m_Name
-      value: letterOption0
+      value: otherOption0
       objectReference: {fileID: 0}
     - target: {fileID: 114430437821327172, guid: 63bb2d0f27d333142b0fa40622085c5f,
         type: 2}
@@ -47549,7 +47549,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1497912559467680, guid: 63bb2d0f27d333142b0fa40622085c5f, type: 2}
       propertyPath: m_Name
-      value: option0LetterText
+      value: option0OtherText
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63bb2d0f27d333142b0fa40622085c5f, type: 2}
@@ -49434,7 +49434,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1486534099321474, guid: d086aed7d68115448ab4f87ee94f50bd, type: 2}
       propertyPath: m_Name
-      value: ButtonShowMe
+      value: ButtonShowMeOther
       objectReference: {fileID: 0}
     - target: {fileID: 114395408053451060, guid: d086aed7d68115448ab4f87ee94f50bd,
         type: 2}
@@ -56636,11 +56636,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1488035410952364, guid: 63bb2d0f27d333142b0fa40622085c5f, type: 2}
       propertyPath: m_Name
-      value: letterOption3
+      value: otherOption3
       objectReference: {fileID: 0}
     - target: {fileID: 1497912559467680, guid: 63bb2d0f27d333142b0fa40622085c5f, type: 2}
       propertyPath: m_Name
-      value: option3LetterText
+      value: option3OtherText
       objectReference: {fileID: 0}
     - target: {fileID: 114502623275907798, guid: 63bb2d0f27d333142b0fa40622085c5f,
         type: 2}
@@ -62746,7 +62746,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1685218529275618, guid: 1e4f0c2befdb31a4096d5b12f630938f, type: 2}
       propertyPath: m_Name
-      value: ButtonHelp_specifc
+      value: ButtonHelp_specificOther
       objectReference: {fileID: 0}
     - target: {fileID: 224903428417104764, guid: 1e4f0c2befdb31a4096d5b12f630938f,
         type: 2}
@@ -68958,7 +68958,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1685218529275618, guid: 1e4f0c2befdb31a4096d5b12f630938f, type: 2}
       propertyPath: m_Name
-      value: storyHelpIcon1
+      value: storyHelpIconNormal1
       objectReference: {fileID: 0}
     - target: {fileID: 114652320604000822, guid: 1e4f0c2befdb31a4096d5b12f630938f,
         type: 2}
@@ -72312,6 +72312,95 @@ CanvasRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1877848245}
+  m_CullTransparentMesh: 0
+--- !u!1 &1877965650
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1877965651}
+  - component: {fileID: 1877965654}
+  - component: {fileID: 1877965653}
+  - component: {fileID: 1877965652}
+  m_Layer: 5
+  m_Name: topicLetter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1877965651
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1877965650}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2043910898}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 30, y: 120}
+  m_SizeDelta: {x: 600, y: 300}
+  m_Pivot: {x: 0, y: 1}
+--- !u!114 &1877965652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1877965650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1679637790, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 1
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
+--- !u!114 &1877965653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1877965650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &1877965654
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1877965650}
   m_CullTransparentMesh: 0
 --- !u!1 &1878615431
 GameObject:
@@ -77739,6 +77828,7 @@ RectTransform:
   m_Children:
   - {fileID: 1917893741}
   - {fileID: 1136519883}
+  - {fileID: 1877965651}
   m_Father: {fileID: 1260968078}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -79143,7 +79233,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2073812140
 RectTransform:
   m_ObjectHideFlags: 0
@@ -80044,7 +80134,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1486534099321474, guid: d086aed7d68115448ab4f87ee94f50bd, type: 2}
       propertyPath: m_Name
-      value: ButtonIgnore
+      value: ButtonIgnoreNormal
       objectReference: {fileID: 0}
     - target: {fileID: 114395408053451060, guid: d086aed7d68115448ab4f87ee94f50bd,
         type: 2}
@@ -81006,7 +81096,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1685218529275618, guid: 1e4f0c2befdb31a4096d5b12f630938f, type: 2}
       propertyPath: m_Name
-      value: ButtonHelp_generic
+      value: ButtonHelp_genericNormal
       objectReference: {fileID: 0}
     - target: {fileID: 114652320604000822, guid: 1e4f0c2befdb31a4096d5b12f630938f,
         type: 2}
@@ -81625,7 +81715,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1486534099321474, guid: d086aed7d68115448ab4f87ee94f50bd, type: 2}
       propertyPath: m_Name
-      value: ButtonShowMe
+      value: ButtonShowMeNormal
       objectReference: {fileID: 0}
     - target: {fileID: 114395408053451060, guid: d086aed7d68115448ab4f87ee94f50bd,
         type: 2}

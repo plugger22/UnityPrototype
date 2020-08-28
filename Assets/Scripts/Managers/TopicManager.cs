@@ -3278,7 +3278,7 @@ public class TopicManager : MonoBehaviour
             {
                 data.topicName = turnTopic.name;
                 data.header = turnTopic.tag;
-
+                data.baseType = TopicBase.Normal;
                 data.isBoss = turnTopic.subType.isBoss;
                 data.listOfOptions = turnTopic.listOfOptions;
                 data.listOfIgnoreEffects = turnTopic.listOfIgnoreEffects;
@@ -3290,7 +3290,7 @@ public class TopicManager : MonoBehaviour
                 {
                     case "StoryBravo":
                         //Letter decision topics
-                        data.type = TopicDecisionType.Letter;
+                        data.uiType = TopicDecisionType.Letter;
                         if (turnTopic.letter != null)
                         { data.text = string.Format("Dear {0}{1}{2}{3}{4}{5}{6}", 
                             turnTopic.letter.textDear, "\n", "\n", turnTopic.letter.textTop, "\n", "\n", turnTopic.letter.textBottom); }
@@ -3298,7 +3298,7 @@ public class TopicManager : MonoBehaviour
                         break; 
                     default:
                         //everything else -> Normal decision topics
-                        data.type = TopicDecisionType.Normal;
+                        data.uiType = TopicDecisionType.Normal;
                         data.text = turnTopic.text;
                         break;
                 }
