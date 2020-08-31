@@ -27,7 +27,7 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: I agree with you, Son. It's going to be sunshine and roses from here
+  storyInfo: I agree with you, [child]. It's going to be sunshine and roses from here
     on in. Your Mother and I will have to upscale our sunscreen plans
   storyTarget: {fileID: 0}
   tooltipHeader: 

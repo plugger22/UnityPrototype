@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: We're fine, Son, just fine. Don't you worry about us. I might be old
-    and as stiff as a board but I can still take care of your Mother
+  storyInfo: We're fine, [child], just fine. Don't you worry about us. I might be
+    old and as stiff as a board but I can still take care of your Mother
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

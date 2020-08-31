@@ -27,12 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: I understand, Son. You're doing important work to make the world a better
-    place and your doddery old parents shouldn't be bothering you
+  storyInfo: I understand, [child]. You're doing important work to make the world
+    a better place and your doddery old parents shouldn't be bothering you
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Sorry</color>
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>I'm busy right now</color>
   optionNumber: 3

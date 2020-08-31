@@ -11,11 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5d6df66d797b34b989f3bc7d5e160b, type: 3}
   m_Name: StoryParents1
   m_EditorClassIdentifier: 
-  textDear: Son
+  textDear: '[child]'
   textTop: Your father thinks that all this rain is abnormal. It's getting to be a
     regular event here. People are drowning in their servoPods down on the ground
     floor
   textBottom: Luckily we're on the first floor but, if the rain keeps on coming and
     they don't unblock the sewers, we'll be next for a watery grave. How can they
     abandon people like this?
-  textLove: Mom

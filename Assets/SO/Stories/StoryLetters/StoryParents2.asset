@@ -11,9 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5d6df66d797b34b989f3bc7d5e160b, type: 3}
   m_Name: StoryParents2
   m_EditorClassIdentifier: 
-  textDear: Son
+  textDear: '[child]'
   textTop: They've cleaned out the bodies from the ground floor servoPods and they're
     accepting applications for them from the public.  We call 'em Suicide Pods.
   textBottom: Funny thing is there is such a shortage of 'pods here that they are
     overwhelmed with people wanting them, just so they can be the next to drown
-  textLove: Dad

@@ -11,9 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5d6df66d797b34b989f3bc7d5e160b, type: 3}
   m_Name: StoryParents9
   m_EditorClassIdentifier: 
-  textDear: Son
-  textTop: Did you try and help us, Son? We have heard nothing from you for some time.
-    I'm sure you must still be working on it
+  textDear: '[child]'
+  textTop: Did you try and help us, [child]? We have heard nothing from you for some
+    time. I'm sure you must still be working on it
   textBottom: Luckily there was a mix-up with the building A.I. Water damage I think.
     Anyway we managed to grab new 'pods on the second floor. Just in time
-  textLove: Mom

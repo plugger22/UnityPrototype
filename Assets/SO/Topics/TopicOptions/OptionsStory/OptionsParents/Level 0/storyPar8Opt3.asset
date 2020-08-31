@@ -27,7 +27,7 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: No, Son, they didn't. They will probably drown during the next flood.
+  storyInfo: No, [child], they didn't. They will probably drown during the next flood.
     The building owners are leaving the doors open to let the water flow through
   storyTarget: {fileID: 0}
   tooltipHeader: 

@@ -11,9 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5d6df66d797b34b989f3bc7d5e160b, type: 3}
   m_Name: StoryParents3
   m_EditorClassIdentifier: 
-  textDear: Son
+  textDear: '[child]'
   textTop: People are rushing to buy the servoPods on the ground floor. The ones the
     poor souls drowned in when during the last floods. Can you believe it?
   textBottom: The price of 'pods on the upper floors has skyrocketed. Nobody is going
     to drown on the second floor, or above. Your Father is concerned about us
-  textLove: Mom

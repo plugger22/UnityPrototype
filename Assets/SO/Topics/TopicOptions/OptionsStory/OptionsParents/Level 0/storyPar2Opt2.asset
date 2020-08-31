@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Do you think that's wise, Son? Buying up suicidePods so we can sell them
-    to the ignorant for a profit? Surely we did a better job of raising you
+  storyInfo: Do you think that's wise, [child]? Buying up suicidePods so we can sell
+    them to the ignorant for a profit? Surely we did a better job of raising you
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Idea</color>
   tooltipMain: <color=#98FB98> Information gained</color>

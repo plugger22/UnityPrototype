@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: You aren't reading the news about what's happening here, Son, are you?
-    There might be ongoing droughts elsewhere but here, it just rains. Constantly.
+  storyInfo: You aren't reading the news about what's happening here, [child], are
+    you? There might be ongoing droughts elsewhere but here, it just rains. Constantly.
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

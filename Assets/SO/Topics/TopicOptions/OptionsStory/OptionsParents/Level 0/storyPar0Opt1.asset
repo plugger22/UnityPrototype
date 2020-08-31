@@ -27,12 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: I would, Son, if I could. My firefighter days are long gone. I can barely
-    dribble my hose into the toilet, let alone pump out a building
+  storyInfo: I would, [child], if I could. My firefighter days are long gone. I can
+    barely dribble my hose into the toilet, let alone pump out a building
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Tell</color>
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Pump it out</color>
   optionNumber: 1

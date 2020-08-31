@@ -5762,6 +5762,26 @@ public class TopicManager : MonoBehaviour
                         }
                         else { CountTextTag("player", dictOfTags); }
                         break;
+                    case "child":
+                        //parent talking to Player (no highlight)
+                        if (isValidate == false)
+                        {
+                            string child = "Son";
+                            if (GameManager.i.playerScript.sex == ActorSex.Female) { child = "Daughter"; }
+                            replaceText = child;
+                        }
+                        else { CountTextTag("child", dictOfTags); }
+                        break;
+                    case "sibling":
+                        //sibling talking to player (no highlight)
+                        if (isValidate == false)
+                        {
+                            string sibling = "Brother";
+                            if (GameManager.i.playerScript.sex == ActorSex.Female) { sibling = "Sister"; }
+                            replaceText = sibling;
+                        }
+                        else { CountTextTag("sibling", dictOfTags); }
+                        break;
                     case "actor":
                         //actor arc name
                         if (isValidate == false)

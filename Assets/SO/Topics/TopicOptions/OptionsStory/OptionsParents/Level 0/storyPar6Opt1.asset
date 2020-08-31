@@ -27,8 +27,9 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Son, didn't I raise you better than that? It's a privilege to help others,
-    not a burden. Have you been indulging in Panda Porn again? You need to stop
+  storyInfo: '[child], didn''t I raise you better than that? It''s a privilege to
+    help others, not a burden. Have you been indulging in Panda Porn again? You need
+    to stop'
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

@@ -11,9 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5d6df66d797b34b989f3bc7d5e160b, type: 3}
   m_Name: StoryParents8
   m_EditorClassIdentifier: 
-  textDear: Son
+  textDear: '[child]'
   textTop: Both your Father and I are now safely ensconsced in new servoPods up on
     the second floor, out of reach from the rising flood waters.
   textBottom: It was very kind of you to take time out to help us with our permits.
     Without those we would probably be floating out to sea by now. Shark food
-  textLove: Mom

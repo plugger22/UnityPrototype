@@ -11,9 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5d6df66d797b34b989f3bc7d5e160b, type: 3}
   m_Name: StoryParents4
   m_EditorClassIdentifier: 
-  textDear: Son
-  textTop: I'm sorry to bother you again, Son, but it's flooding once more and both
-    your Mother and I are taking on water inside our servoPods
+  textDear: '[child]'
+  textTop: I'm sorry to bother you again, [child], but it's flooding once more and
+    both your Mother and I are taking on water inside our servoPods
   textBottom: If we stay here we'll drown. Are you able to get us a permit so we can
     move to a higher floor? I've asked but they refuse to talk to me
-  textLove: Dad

@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Hey, that's great, Son. Sadly you know as well as I do that there is
-    no home. Who owns a home these days? Ours was torched in the riots years ago
+  storyInfo: Hey, that's great, [child]. Sadly you know as well as I do that there
+    is no home. Who owns a home these days? Ours was torched in the riots years ago
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

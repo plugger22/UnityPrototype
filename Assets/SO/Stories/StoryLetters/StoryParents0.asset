@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5d6df66d797b34b989f3bc7d5e160b, type: 3}
   m_Name: StoryParents0
   m_EditorClassIdentifier: 
-  textDear: Son
+  textDear: '[child]'
   textTop: God left the tap on full. The ground floor has been flooded. Five people
     drowned in their servoPods while sleeping. Boy, can it rain  here
   textBottom: We're up on the first floor but the tiles squelch when we walk and our

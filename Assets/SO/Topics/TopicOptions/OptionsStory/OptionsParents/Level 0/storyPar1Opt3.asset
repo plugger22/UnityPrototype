@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Son, you do what you like. If your parents have drowned by the time you've
-    found space in your busy schedule then so be it. We're expendable
+  storyInfo: '[child], you do what you like. If your parents have drowned by the time
+    you''ve found space in your busy schedule then so be it. We''re expendable'
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

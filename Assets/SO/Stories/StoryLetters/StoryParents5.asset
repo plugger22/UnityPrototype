@@ -11,10 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5d6df66d797b34b989f3bc7d5e160b, type: 3}
   m_Name: StoryParents5
   m_EditorClassIdentifier: 
-  textDear: Son
+  textDear: '[child]'
   textTop: Your Father and I are in dire straits. The floods have returned and our
     floor is awash. Both our servoPods have shorted out.
   textBottom: If we don't move up a floor we'll drown. Your Father has tried to get
     us a permit to do so but they won't even talk to him. He's distraught. Can you
     help?
-  textLove: Mom

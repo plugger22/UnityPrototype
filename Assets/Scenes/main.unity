@@ -28094,7 +28094,7 @@ MonoBehaviour:
   innerBackgroundNormal: {fileID: 2043910899}
   innerBackgroundOther: {fileID: 428042322}
   panelBoss: {fileID: 1846757262}
-  penalLetter: {fileID: 1078965089}
+  panelLetter: {fileID: 1877965653}
   optionNormal0: {fileID: 1336395239}
   optionNormal1: {fileID: 664950695}
   optionNormal2: {fileID: 916043117}
@@ -79928,7 +79928,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2073812140
 RectTransform:
   m_ObjectHideFlags: 0
