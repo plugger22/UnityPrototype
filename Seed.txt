@@ -3014,3 +3014,97 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 24496 -> Monday, 31 August 2020 12:04 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 2837 -> Monday, 31 August 2020 1:29 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 32840 -> Monday, 31 August 2020 2:51 PM
+City seed 5678 -> London, United Kingdom
+ASSERT ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument argument, System.ExceptionResource resource) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.ThrowHelper.ThrowArgumentOutOfRangeException () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].get_Item (System.Int32 index) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	ActorManager.DebugCreateNodeActionResistanceData (System.Int32 numOfActions) (at Assets/Scripts/Managers/ActorManager.cs:5701)
+	SideManager.RevertToHumanPlayer () (at Assets/Scripts/Managers/SideManager.cs:476)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:266)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:398)
+	
+Dev seed 9971 -> Monday, 31 August 2020 2:55 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 2817 -> Monday, 31 August 2020 2:55 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 24315 -> Monday, 31 August 2020 2:56 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 34017 -> Monday, 31 August 2020 2:57 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46870 -> Monday, 31 August 2020 2:59 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 39290 -> Monday, 31 August 2020 3:00 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 64669 -> Monday, 31 August 2020 3:08 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 7379 -> Monday, 31 August 2020 3:10 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 56465 -> Monday, 31 August 2020 3:17 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 30194 -> Monday, 31 August 2020 3:18 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46996 -> Monday, 31 August 2020 3:20 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 55025 -> Monday, 31 August 2020 3:35 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid TopicUIData package (Null)
+UnityEngine.Debug:LogWarning(Object)
+	TopicUI:ProcessTopicIgnore() (at Assets/Scripts/GUI/TopicUI.cs:1057)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:418)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 64142 -> Monday, 31 August 2020 4:01 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid TopicUIData package (Null)
+UnityEngine.Debug:LogWarning(Object)
+	TopicUI:ProcessTopicIgnore() (at Assets/Scripts/GUI/TopicUI.cs:1057)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:418)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 59806 -> Monday, 31 August 2020 4:09 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid TopicUIData package (Null)
+UnityEngine.Debug:LogWarning(Object)
+	TopicUI:ProcessTopicIgnore() (at Assets/Scripts/GUI/TopicUI.cs:1057)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:418)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 38855 -> Monday, 31 August 2020 4:23 PM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid TopicUIData package (Null)
+UnityEngine.Debug:LogWarning(Object)
+	TopicUI:ProcessTopicIgnore() (at Assets/Scripts/GUI/TopicUI.cs:1057)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:418)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 47556 -> Monday, 31 August 2020 4:31 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 2462 -> Monday, 31 August 2020 4:35 PM
+City seed 5678 -> London, United Kingdom
