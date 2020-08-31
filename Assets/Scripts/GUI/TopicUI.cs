@@ -22,6 +22,7 @@ public class TopicUI : MonoBehaviour
 
     [Header("Panels")]
     public Image panelBoss;
+    public Image panelLetter;
 
     [Header("Buttons")]
     public Button optionNormal0;
@@ -44,11 +45,14 @@ public class TopicUI : MonoBehaviour
     public Button buttonOtherHelp_specific;
     public Button buttonOtherStoryHelp0;
     public Button buttonOtherStoryHelp1;
+    public Button buttonLetterStoryHelp0;
+    public Button buttonLetterStoryHelp1;
 
     [Header("Texts")]
     public TextMeshProUGUI textHeader;
     public TextMeshProUGUI textMain;
     public TextMeshProUGUI otherText;
+    public TextMeshProUGUI letterText;
     public TextMeshProUGUI textOptionNormal0;
     public TextMeshProUGUI textOptionNormal1;
     public TextMeshProUGUI textOptionNormal2;
@@ -61,6 +65,7 @@ public class TopicUI : MonoBehaviour
     [Header("Images")]
     public Image imageTopicNormal;
     public Image imageTopicOther;
+    public Image imageTopicLetter;
     public Image imageBoss;
 
     //button script handlers
@@ -97,6 +102,8 @@ public class TopicUI : MonoBehaviour
     private GenericHelpTooltipUI helpNormalSpecific;
     private StoryHelpTooltipUI helpNormalStory0;
     private StoryHelpTooltipUI helpNormalStory1;
+    private StoryHelpTooltipUI helpLetterStory0;
+    private StoryHelpTooltipUI helpLetterStory1;
     private GenericHelpTooltipUI helpOtherSpecific;
     private StoryHelpTooltipUI helpOtherStory0;
     private StoryHelpTooltipUI helpOtherStory1;
@@ -186,6 +193,7 @@ public class TopicUI : MonoBehaviour
         Debug.Assert(topicCanvas != null, "Invalid topicCanvas (Null)");
         Debug.Assert(topicObject != null, "Invalid topicObject (Null)");
         Debug.Assert(panelBoss != null, "Invalid panelBoss (Null)");
+        Debug.Assert(panelLetter != null, "Invalid panelLetter (Null)");
         Debug.Assert(optionNormal0 != null, "Invalid optionNormal0 (Null)");
         Debug.Assert(optionNormal1 != null, "Invalid optionNormal1 (Null)");
         Debug.Assert(optionNormal2 != null, "Invalid optionNormal2 (Null)");
@@ -206,9 +214,12 @@ public class TopicUI : MonoBehaviour
         Debug.Assert(buttonOtherHelp_specific != null, "Invalid buttonOtherHelp_specific (Null)");
         Debug.Assert(buttonOtherStoryHelp0 != null, "Invalid buttonOtherStoryHelp0 (Null)");
         Debug.Assert(buttonOtherStoryHelp1 != null, "Invalid buttonOtherStoryHelp1 (Null)");
+        Debug.Assert(buttonLetterStoryHelp0 != null, "Invalid buttonLetterStoryHelp0 (Null)");
+        Debug.Assert(buttonLetterStoryHelp1 != null, "Invalid buttonLetterStoryHelp1 (Null)");
         Debug.Assert(textHeader != null, "Invalid textHeader (Null)");
         Debug.Assert(textMain != null, "Invalid textMain (Null)");
-        Debug.Assert(otherText != null, "Invalid letterText (Null)");
+        Debug.Assert(otherText != null, "Invalid otherText (Null)");
+        Debug.Assert(letterText != null, "Invalid letterText (Null)");
         Debug.Assert(textOptionNormal0 != null, "Invalid textOptionNormal0 (Null)");
         Debug.Assert(textOptionNormal1 != null, "Invalid textOptionNormal1 (Null)");
         Debug.Assert(textOptionNormal2 != null, "Invalid textOptionNormal2 (Null)");
@@ -217,8 +228,9 @@ public class TopicUI : MonoBehaviour
         Debug.Assert(textOptionOther1 != null, "Invalid textOptionOther1 (Null)");
         Debug.Assert(textOptionOther2 != null, "Invalid textOptionOther2 (Null)");
         Debug.Assert(textOptionOther3 != null, "Invalid textOptionOther3 (Null)");
-        Debug.Assert(imageTopicNormal != null, "Invalid imageTopic (Null)");
-        Debug.Assert(imageTopicOther != null, "Invalid imageTopic (Null)");
+        Debug.Assert(imageTopicNormal != null, "Invalid imageTopicNormal (Null)");
+        Debug.Assert(imageTopicOther != null, "Invalid imageTopicOther (Null)");
+        Debug.Assert(imageTopicLetter != null, "Invalid imageTopicLetter (Null)");
         Debug.Assert(imageBoss != null, "Invalid imageBoss (Null)");
         Debug.Assert(outerBackground != null, "Invalid outerBackgroundImage (Null)");
         Debug.Assert(innerBackgroundNormal != null, "Invalid innerBackgroundNormal (Null)");
@@ -501,10 +513,14 @@ public class TopicUI : MonoBehaviour
             helpNormalStory1 = buttonNormalStoryHelp1.GetComponent<StoryHelpTooltipUI>();
             helpOtherStory0 = buttonOtherStoryHelp0.GetComponent<StoryHelpTooltipUI>();
             helpOtherStory1 = buttonOtherStoryHelp1.GetComponent<StoryHelpTooltipUI>();
+            helpLetterStory0 = buttonLetterStoryHelp0.GetComponent<StoryHelpTooltipUI>();
+            helpLetterStory1 = buttonLetterStoryHelp1.GetComponent<StoryHelpTooltipUI>();
             if (helpNormalStory0 == null) { Debug.LogWarning("Invalid StoryHelpTooltipUI for helpNormalStory0 (Null)"); }
             if (helpNormalStory1 == null) { Debug.LogWarning("Invalid StoryHelpTooltipUI for helpNormalStory1 (Null)"); }
             if (helpOtherStory0 == null) { Debug.LogWarning("Invalid StoryHelpTooltipUI for helpOtherStory0 (Null)"); }
             if (helpOtherStory1 == null) { Debug.LogWarning("Invalid StoryHelpTooltipUI for helpOtherStory1 (Null)"); }
+            if (helpLetterStory0 == null) { Debug.LogWarning("Invalid StoryHelpTooltipUI for helpLetterStory0 (Null)"); }
+            if (helpLetterStory1 == null) { Debug.LogWarning("Invalid StoryHelpTooltipUI for helpLetterStory1 (Null)"); }
         }
         else { Debug.LogWarning("Invalid listOfHelp (Null or Empty)"); }
     }
@@ -516,7 +532,7 @@ public class TopicUI : MonoBehaviour
     private List<HelpData> GetInfoHelpList()
     { return GetHelpData("info_app_0", "info_app_1", "info_app_2", "info_app_3"); }*/
 
-   
+
     /// <summary>
     /// Displays relevant topic base UI type
     /// </summary>
@@ -539,7 +555,8 @@ public class TopicUI : MonoBehaviour
         }
     }
 
-    #region SetTopicDisplay
+
+    #region SetTopicDisplayNormal
     /// <summary>
     /// Initialise topicUI display
     /// </summary>
@@ -555,78 +572,131 @@ public class TopicUI : MonoBehaviour
 
             //set colour of background
             innerBackgroundNormal.color = new Color(data.colour.r, data.colour.g, data.colour.b, 1.0f);
-            //texts
-            textHeader.gameObject.SetActive(true);
-            textMain.gameObject.SetActive(true);
-            //topic header
-            if (string.IsNullOrEmpty(data.header) == false)
-            { textHeader.text = data.header; }
-            else
+            //toggle UI elements depending on type of normal Display
+            switch (data.uiType)
             {
-                Debug.LogWarningFormat("Invalid data.header (Null or Empty) for topic \"{0}\"", data.topicName);
-                textHeader.text = "Unknown";
+                case TopicDecisionType.Normal:
+                    //toggle off letter
+                    panelLetter.gameObject.SetActive(false);
+                    //texts
+                    textHeader.gameObject.SetActive(true);
+                    textMain.gameObject.SetActive(true);
+                    //topic header
+                    if (string.IsNullOrEmpty(data.header) == false)
+                    { textHeader.text = data.header; }
+                    else
+                    {
+                        Debug.LogWarningFormat("Invalid data.header (Null or Empty) for topic \"{0}\"", data.topicName);
+                        textHeader.text = "Unknown";
+                    }
+                    //topic text
+                    if (string.IsNullOrEmpty(data.text) == false)
+                    { textMain.text = data.text; }
+                    else
+                    {
+                        Debug.LogWarningFormat("Invalid data.text (Null or Empty) for topic \"{0}\"", data.topicName);
+                        textHeader.text = "Unknown";
+                    }
+                    //topic sprite
+                    imageTopicNormal.gameObject.SetActive(true);
+                    if (data.spriteMain != null)
+                    { imageTopicNormal.sprite = data.spriteMain; }
+                    else
+                    {
+                        Debug.LogWarningFormat("Invalid data.sprite (Null or Empty) for topic \"{0}\"", data.topicName);
+                        //use default sprite
+                        imageTopicNormal.sprite = GameManager.i.guiScript.topicDefaultSprite;
+                    }
+                    //story Help
+                    if (data.listOfStoryHelp != null)
+                    {
+                        switch (data.listOfStoryHelp.Count)
+                        {
+                            case 0: buttonNormalStoryHelp0.gameObject.SetActive(false); buttonNormalStoryHelp1.gameObject.SetActive(false); break;
+                            case 1:
+                                buttonNormalStoryHelp0.gameObject.SetActive(true);
+                                buttonNormalStoryHelp1.gameObject.SetActive(false);
+                                helpNormalStory0.SetHelpTooltip(data.listOfStoryHelp[0]);
+                                break;
+                            case 2:
+                                buttonNormalStoryHelp0.gameObject.SetActive(true);
+                                buttonNormalStoryHelp1.gameObject.SetActive(true);
+                                helpNormalStory0.SetHelpTooltip(data.listOfStoryHelp[0]);
+                                helpNormalStory1.SetHelpTooltip(data.listOfStoryHelp[1]);
+                                break;
+                        }
+                    }
+                    else { buttonNormalStoryHelp0.gameObject.SetActive(false); buttonNormalStoryHelp1.gameObject.SetActive(false); }
+                    //HQ boss
+                    if (data.isBoss == true)
+                    {
+                        //boss present, toggle on
+                        panelBoss.gameObject.SetActive(true);
+                        //sprite
+                        if (data.spriteBoss != null)
+                        { imageBoss.sprite = data.spriteBoss; }
+                        else { Debug.LogWarning("Invalid spriteBoss (Null)"); }
+                        //initialise boss image tooltip
+                        if (string.IsNullOrEmpty(data.bossTooltipHeader) == false)
+                        {
+                            tooltipNormalBoss.gameObject.SetActive(true);
+                            tooltipNormalBoss.tooltipHeader = data.bossTooltipHeader;
+                        }
+                        else { tooltipNormalBoss.tooltipHeader = ""; }
+                        if (string.IsNullOrEmpty(data.bossTooltipMain) == false)
+                        { tooltipNormalBoss.tooltipMain = data.bossTooltipMain; }
+                        else { tooltipNormalBoss.tooltipMain = ""; }
+                        if (string.IsNullOrEmpty(data.bossTooltipDetails) == false)
+                        { tooltipNormalBoss.tooltipDetails = data.bossTooltipDetails; }
+                        else { tooltipNormalBoss.tooltipDetails = ""; }
+                    }
+                    else { panelBoss.gameObject.SetActive(false); }
+                    break;
+                case TopicDecisionType.Letter:
+                    //toggle on letter background
+                    panelLetter.gameObject.SetActive(true);
+                    //text
+                    letterText.gameObject.SetActive(true);
+                    if (string.IsNullOrEmpty(data.text) == false)
+                    { letterText.text = data.text; }
+                    else
+                    { Debug.LogWarningFormat("Invalid data.text (Null or Empty) for topic \"{0}\"", data.topicName); }
+                    //sprite
+                    imageTopicNormal.gameObject.SetActive(false);
+                    imageTopicLetter.gameObject.SetActive(true);
+                    if (data.spriteMain != null)
+                    { imageTopicLetter.sprite = data.spriteMain; }
+                    else
+                    {
+                        Debug.LogWarningFormat("Invalid data.sprite (Null or Empty) for topic \"{0}\"", data.topicName);
+                        //use default sprite
+                        imageTopicLetter.sprite = GameManager.i.guiScript.topicDefaultSprite;
+                    }
+                    //story Help
+                    if (data.listOfStoryHelp != null)
+                    {
+                        switch (data.listOfStoryHelp.Count)
+                        {
+                            case 0: buttonLetterStoryHelp0.gameObject.SetActive(false); buttonLetterStoryHelp1.gameObject.SetActive(false); break;
+                            case 1:
+                                buttonLetterStoryHelp0.gameObject.SetActive(true);
+                                buttonLetterStoryHelp1.gameObject.SetActive(false);
+                                helpLetterStory0.SetHelpTooltip(data.listOfStoryHelp[0]);
+                                break;
+                            case 2:
+                                buttonLetterStoryHelp0.gameObject.SetActive(true);
+                                buttonLetterStoryHelp1.gameObject.SetActive(true);
+                                helpLetterStory0.SetHelpTooltip(data.listOfStoryHelp[0]);
+                                helpLetterStory1.SetHelpTooltip(data.listOfStoryHelp[1]);
+                                break;
+                        }
+                    }
+                    else { buttonLetterStoryHelp0.gameObject.SetActive(false); buttonLetterStoryHelp1.gameObject.SetActive(false); }
+                    //HQ Boss off
+                    panelBoss.gameObject.SetActive(false);
+                    break;
+                default: Debug.LogWarningFormat("Invalid data.uiType \"{0}\"", data.uiType); break;
             }
-            //topic text
-            if (string.IsNullOrEmpty(data.text) == false)
-            { textMain.text = data.text; }
-            else
-            {
-                Debug.LogWarningFormat("Invalid data.text (Null or Empty) for topic \"{0}\"", data.topicName);
-                textHeader.text = "Unknown";
-            }
-            //topic sprite
-            if (data.spriteMain != null)
-            { imageTopicNormal.sprite = data.spriteMain; }
-            else
-            {
-                Debug.LogWarningFormat("Invalid data.sprite (Null or Empty) for topic \"{0}\"", data.topicName);
-                //use default sprite
-                imageTopicNormal.sprite = GameManager.i.guiScript.topicDefaultSprite;
-            }
-            //story Help
-            if (data.listOfStoryHelp != null)
-            {
-                switch (data.listOfStoryHelp.Count)
-                {
-                    case 0: buttonNormalStoryHelp0.gameObject.SetActive(false); buttonNormalStoryHelp1.gameObject.SetActive(false); break;
-                    case 1:
-                        buttonNormalStoryHelp0.gameObject.SetActive(true);
-                        buttonNormalStoryHelp1.gameObject.SetActive(false);
-                        helpNormalStory0.SetHelpTooltip(data.listOfStoryHelp[0]);
-                        break;
-                    case 2:
-                        buttonNormalStoryHelp0.gameObject.SetActive(true);
-                        buttonNormalStoryHelp1.gameObject.SetActive(true);
-                        helpNormalStory0.SetHelpTooltip(data.listOfStoryHelp[0]);
-                        helpNormalStory1.SetHelpTooltip(data.listOfStoryHelp[1]);
-                        break;
-                }
-            }
-            else { buttonNormalStoryHelp0.gameObject.SetActive(false); buttonNormalStoryHelp1.gameObject.SetActive(false); }
-            //HQ boss
-            if (data.isBoss == true)
-            {
-                //boss present, toggle on
-                panelBoss.gameObject.SetActive(true);
-                //sprite
-                if (data.spriteBoss != null)
-                { imageBoss.sprite = data.spriteBoss; }
-                else { Debug.LogWarning("Invalid spriteBoss (Null)"); }
-                //initialise boss image tooltip
-                if (string.IsNullOrEmpty(data.bossTooltipHeader) == false)
-                {
-                    tooltipNormalBoss.gameObject.SetActive(true);
-                    tooltipNormalBoss.tooltipHeader = data.bossTooltipHeader;
-                }
-                else { tooltipNormalBoss.tooltipHeader = ""; }
-                if (string.IsNullOrEmpty(data.bossTooltipMain) == false)
-                { tooltipNormalBoss.tooltipMain = data.bossTooltipMain; }
-                else { tooltipNormalBoss.tooltipMain = ""; }
-                if (string.IsNullOrEmpty(data.bossTooltipDetails) == false)
-                { tooltipNormalBoss.tooltipDetails = data.bossTooltipDetails; }
-                else { tooltipNormalBoss.tooltipDetails = ""; }
-            }
-            else { panelBoss.gameObject.SetActive(false); }
             //options
             if (data.listOfOptions != null)
             {

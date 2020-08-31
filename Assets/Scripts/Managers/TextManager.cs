@@ -316,7 +316,10 @@ public class TextManager : MonoBehaviour
                         builder.AppendFormat("tag: {0}{1}", topic.tag, "\n");
                         builder.AppendFormat("topicItem: {0}{1}", topic.topicItem != null ? topic.topicItem.name : "none present", "\n");
                         builder.AppendFormat("{0}{1}", CheckTopicHelp(topic.listOfStoryHelp), "\n");
-                        builder.AppendFormat("{0}{1}", topic.text, "\n");
+                        if (topic.letter == null)
+                        { builder.AppendFormat("{0}{1}", topic.text, "\n"); }
+                        else
+                        { builder.AppendFormat("Dear {0},{1}{2}{3}{4}{5}{6}{7}", topic.letter.textDear, "\n", "\n", topic.letter.textTop, "\n", "\n", topic.letter.textBottom, "\n"); }
                         builder.AppendFormat("{0}{1}", "\n", CheckTopicOptions(topic.listOfOptions));
                     }
                     else { Debug.LogWarningFormat("Invalid topic (Null) for TopicPool \"{0}\", listOfTopics[{1}]", pool.name, i); }
