@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar17Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 17 Opt 1
-  tag: x
-  text: 
+  tag: Order
+  text: Find another Nurse for Mom
   topic: {fileID: 11400000, guid: 9b259a2a23745524194da3635068d163, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: How to propose I do that or even pay for it even if I could? Clara helped
+    out of the goodness of her heart. There's a lesson there, [child]
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

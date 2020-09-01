@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar13Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 13 Opt 0
-  tag: x
-  text: 
+  tag: Sceptical
+  text: You're hallucinating
   topic: {fileID: 11400000, guid: f2ff66ce527ebbd429780385c1370aa5, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,9 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Sadly [child], I'm not. Evil strides through the shadows and his name
+    is Vigo. Poor Clara was just his latest victim. No young woman is safe on our
+    floor
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

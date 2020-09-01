@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar14Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 14 Opt 0
-  tag: x
-  text: 
+  tag: Hijack
+  text: Show them who the victim was
   topic: {fileID: 11400000, guid: c72c55b46c604a0468250d4d3a6d82a2, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

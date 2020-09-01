@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar16Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 16 Opt 0
-  tag: x
-  text: 
+  tag: Acknowledge
+  text: Yes Sir, that was me
   topic: {fileID: 11400000, guid: 014ea8794fd4edd4b987aa0aba05e584, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: You are an inspiration to us all, [child]. Your Mother is proud of you
+    although she is getting pretty twitchy about that Panda Porn that you keep watching
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

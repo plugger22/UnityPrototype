@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar17Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 17 Opt 2
-  tag: x
-  text: 
+  tag: Cajole
+  text: Man up, Dad, and fix it yourself
   topic: {fileID: 11400000, guid: 9b259a2a23745524194da3635068d163, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I would if I could, [child]. I have to say that I'm finding your attitude
+    a mite disappointing. Maybe you should ease up on Panda Porn for a while
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

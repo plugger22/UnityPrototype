@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar11Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 11 Opt 1
-  tag: x
-  text: 
+  tag: Concerned
+  text: Will you be O.K?
   topic: {fileID: 11400000, guid: 58fba770fdfdeb6469b2d001c6a92bdd, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I'll always be O.K. Your Father takes good care of me whenever he can
+    tear himself away from another episode of Kill Ball. Goodness, he's fixated!
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar17Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 17 Opt 3
-  tag: x
-  text: 
+  tag: Complain
+  text: I hated School
   topic: {fileID: 11400000, guid: 9b259a2a23745524194da3635068d163, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Nobody likes being taught by a 'bot but at least you got an education.
+    Who gets that these days? Kids learn about life from serialFlix, so help them
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

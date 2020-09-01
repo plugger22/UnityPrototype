@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar16Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 16 Opt 2
-  tag: x
-  text: 
+  tag: Caution
+  text: You shouldn't drink that stuff
   topic: {fileID: 11400000, guid: 014ea8794fd4edd4b987aa0aba05e584, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: What, this 'ole fungus wine? Am I supposed to be on a health kick at
+    my age? The nanoSmog will kill me long before the fungus sauce ever does
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

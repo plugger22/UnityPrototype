@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar17Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 17 Opt 0
-  tag: x
-  text: 
+  tag: Blank
+  text: I don't remember Clara at all
   topic: {fileID: 11400000, guid: 9b259a2a23745524194da3635068d163, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Well she remembered you. She and your Mother would talk at length about
+    all the things you two used to do when you were young. Are you on drugs?
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

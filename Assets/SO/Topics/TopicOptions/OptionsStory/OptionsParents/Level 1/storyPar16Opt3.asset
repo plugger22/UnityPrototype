@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar16Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 16 Opt 3
-  tag: x
-  text: 
+  tag: Cheer
+  text: Score one for the little people!
   topic: {fileID: 11400000, guid: 014ea8794fd4edd4b987aa0aba05e584, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: One day [child], when I'm long gone, the little people are going to fry
+    the brain chips in every robots head into a crisp. I hope you'll be there
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

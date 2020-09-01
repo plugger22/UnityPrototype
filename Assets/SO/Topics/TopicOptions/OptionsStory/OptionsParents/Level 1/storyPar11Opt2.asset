@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar11Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 11 Opt 2
-  tag: x
-  text: 
+  tag: Question
+  text: Is that the Vigo I used to know?
   topic: {fileID: 11400000, guid: 58fba770fdfdeb6469b2d001c6a92bdd, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: The very same. He lived down the road when we still had a house. I once
+    caught him feeding a cat into a mulcher. He had an evil streak
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar13Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 13 Opt 3
-  tag: x
-  text: 
+  tag: Caution
+  text: Don't ever leave the Pod Tower
   topic: {fileID: 11400000, guid: f2ff66ce527ebbd429780385c1370aa5, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Don't worry [child], I won't. It's been years since your Father and I
+    haven't put a foot outside. We're old. I'd be a granny burger in no time
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

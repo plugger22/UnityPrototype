@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar13Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 13 Opt 2
-  tag: x
-  text: 
+  tag: Worried
+  text: I wouldn't tell Dad what happened
   topic: {fileID: 11400000, guid: f2ff66ce527ebbd429780385c1370aa5, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I don't plan on doing so. Your Father drifts along in a bubble that floats
+    from one violent episode of Kill Ball to another in a happly blur of ignorance
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

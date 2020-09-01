@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar12Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 12 Opt 2
-  tag: x
-  text: 
+  tag: Caution
+  text: I'd avoid Vigo if I was you
   topic: {fileID: 11400000, guid: 9a34dde0e5527634a849d654fa35fa20, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I could well say the same to you. Luckily you are both in different cities.
+    Don't worry about us, we stick to our 'pods and mind our own business
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

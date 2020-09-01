@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar11Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 11 Opt 3
-  tag: x
-  text: 
+  tag: Indifferent
+  text: Clara can handle it
   topic: {fileID: 11400000, guid: 58fba770fdfdeb6469b2d001c6a92bdd, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: No [child], she can't. She's a lovely, sweet, girl who thinks the best
+    of everybody. She won't survive on the street. It's a jungle out there
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

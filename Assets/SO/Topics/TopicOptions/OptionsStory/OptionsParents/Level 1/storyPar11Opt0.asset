@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar11Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 11 Opt 0
-  tag: x
-  text: 
+  tag: Reassure
+  text: Sorry to hear that. Who's Clara?
   topic: {fileID: 11400000, guid: 58fba770fdfdeb6469b2d001c6a92bdd, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: You and her used to play together when you were children. For a while
+    there you were inseparable. How can you forget her?
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

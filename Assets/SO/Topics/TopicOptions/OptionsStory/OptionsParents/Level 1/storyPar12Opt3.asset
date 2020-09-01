@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar12Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 12 Opt 3
-  tag: x
-  text: 
+  tag: So?
+  text: That's how the Jungle works
   topic: {fileID: 11400000, guid: 9a34dde0e5527634a849d654fa35fa20, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: It might be but that doesn't make it right. Clara was an exceptionally  nice
+    person who got diced and dissected in a world that no longer cares
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

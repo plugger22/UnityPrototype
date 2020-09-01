@@ -27,7 +27,7 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Vigo lived down the road. He was a nasty, arrogant, kid even back then.
+  storyInfo: Vigo lived down the road. He was a nasty, arrogant kid even back then.
     You once gave him a bloody nose. I bet he still hasn't forgotten that
   storyTarget: {fileID: 0}
   tooltipHeader: 

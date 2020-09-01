@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar12Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 12 Opt 0
-  tag: x
-  text: 
+  tag: Pacify
+  text: Calm down Dad, take it easy
   topic: {fileID: 11400000, guid: 9a34dde0e5527634a849d654fa35fa20, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I'm the most easy going guy I know. Which is what I'll be just as soon
+    as I've rammed a high capacity hose up Vigo's backside and blasted water up it
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

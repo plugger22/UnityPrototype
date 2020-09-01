@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar16Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 16 Opt 1
-  tag: x
-  text: 
+  tag: Generous
+  text: I'll spare a thought for Clara
   topic: {fileID: 11400000, guid: 014ea8794fd4edd4b987aa0aba05e584, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: She would have made you a fine wife. You could have settled down and
+    pushed out a few subSprogs. Kept the family line going. Lived in a couples pod
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
