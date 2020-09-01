@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar10Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 10 Opt 3
-  tag: 
-  text: 
+  tag: Check
+  text: How is Mom's diabetes going?
   topic: {fileID: 11400000, guid: b12b90a46398e4a4b82bd011c7820d33, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: It was going great until Clara got kicked out the door. She was a big
+    help to your Mom. Without her your Mom tends to forget to do her jabs
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

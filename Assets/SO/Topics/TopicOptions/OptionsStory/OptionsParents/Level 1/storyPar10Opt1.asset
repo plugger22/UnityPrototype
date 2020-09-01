@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar10Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 10 Opt 1
-  tag: 
-  text: 
+  tag: Recall
+  text: Do I know Clara?
   topic: {fileID: 11400000, guid: b12b90a46398e4a4b82bd011c7820d33, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: You used to play with her when you were both little and we still had
+    a house. Well, it only had one room but there was at least a roof and four walls
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

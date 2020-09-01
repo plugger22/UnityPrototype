@@ -3978,6 +3978,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c5a578e5559be5d47a29dc139e2dfbd0, type: 2}
   - {fileID: 11400000, guid: acf4f09985455e940a8aec697d0a293f, type: 2}
   - {fileID: 11400000, guid: 4b79d7f0dd46d4b44af5c3c256585419, type: 2}
+  - {fileID: 11400000, guid: 8b487f96ac402bb49af2f6ec88b5cf5a, type: 2}
+  - {fileID: 11400000, guid: 4fb3ba0a88c782942bca94436ac88cb4, type: 2}
+  - {fileID: 11400000, guid: 894345c39a154664b977493aaef64cd3, type: 2}
+  - {fileID: 11400000, guid: 4ebfc55e6f4ee784d82667f115513257, type: 2}
   arrayOfTargetsGoal:
   - {fileID: 11400000, guid: 3092bd84d4483f249a7039bc13a54727, type: 2}
   - {fileID: 11400000, guid: cb0366be15bea08479bebcfe2818bf25, type: 2}

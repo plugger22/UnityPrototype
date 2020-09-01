@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar10Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 10 Opt 2
-  tag: 
-  text: 
+  tag: Shrugs
+  text: Maybe Clara should have agreed
   topic: {fileID: 11400000, guid: b12b90a46398e4a4b82bd011c7820d33, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: '[child], wash your mouth out. Women should be treated with respect as
+    and your equal. Haven''t I told you that a hundred times already?'
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

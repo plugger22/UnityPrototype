@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: storyPar14Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 14 Opt 1
-  tag: 
+  tag: x
   text: 
   topic: {fileID: 11400000, guid: c72c55b46c604a0468250d4d3a6d82a2, type: 2}
   isPreferredByHQ: 0
@@ -28,10 +28,10 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: 
-  storyTarget: {fileID: 0}
+  storyTarget: {fileID: 11400000, guid: 4ebfc55e6f4ee784d82667f115513257, type: 2}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

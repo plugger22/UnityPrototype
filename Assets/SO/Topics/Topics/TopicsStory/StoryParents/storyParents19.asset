@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyParents19
   m_EditorClassIdentifier: 
-  tag: Second Floor
+  tag: 
   text: 
-  letter: {fileID: 0}
+  letter: {fileID: 11400000, guid: 0d111659c14b4724f8abd567c933ca8c, type: 2}
   designNotes: storyParents19
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
   subType: {fileID: 11400000, guid: 9c0b06df8df43f641b72a6ea311f55a1, type: 2}

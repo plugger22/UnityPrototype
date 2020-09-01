@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar10Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 10 Opt 0
-  tag: 
-  text: 
+  tag: Query
+  text: Is that Vigo from back home?
   topic: {fileID: 11400000, guid: b12b90a46398e4a4b82bd011c7820d33, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Vigo lived down the road. He was a nasty, arrogant, kid even back then.
+    You once gave him a bloody nose. I bet he still hasn't forgotten that
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

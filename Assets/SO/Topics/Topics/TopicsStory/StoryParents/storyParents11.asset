@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyParents11
   m_EditorClassIdentifier: 
-  tag: Torrential
+  tag: 
   text: 
-  letter: {fileID: 0}
+  letter: {fileID: 11400000, guid: c2a1f5dddaff0ab448967114b795a247, type: 2}
   designNotes: storyParents11
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
   subType: {fileID: 11400000, guid: 9c0b06df8df43f641b72a6ea311f55a1, type: 2}
@@ -45,12 +45,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 4
-  isCurrent: 0
+  status: 1
+  isCurrent: 1
   timerStart: 0
   timerRepeat: 0
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 0
+  turnsActive: 21
   turnsLive: 0
   turnsDone: 0
