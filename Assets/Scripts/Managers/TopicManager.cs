@@ -2979,6 +2979,8 @@ public class TopicManager : MonoBehaviour
         //group based on story flag
         if (isStoryAlphaGood == true) { group = GroupType.Good; }
         else { group = GroupType.Bad; }
+        //avoids 'Show Me' button
+        tagNodeID = -1;
         //if no entries then returns empty list and a warning
         listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
         return listOfTopics;
@@ -3001,6 +3003,8 @@ public class TopicManager : MonoBehaviour
         //group based on story flag
         if (isStoryBravoGood == true) { group = GroupType.Good; }
         else { group = GroupType.Bad; }
+        //avoids 'Show Me' button
+        tagNodeID = -1;
         //if no entries then returns empty list and a warning
         listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
         return listOfTopics;
@@ -3023,6 +3027,8 @@ public class TopicManager : MonoBehaviour
         //group based on story flag
         if (isStoryCharlieGood == true) { group = GroupType.Good; }
         else { group = GroupType.Bad; }
+        //avoids 'Show Me' button
+        tagNodeID = -1;
         //if no entries then returns empty list and a warning
         listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
         return listOfTopics;

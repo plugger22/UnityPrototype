@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: storyParents12
+  m_EditorClassIdentifier: 
+  tag: Pod Sale
+  text: Unknown
+  letter: {fileID: 0}
+  designNotes: storyParents12
+  type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
+  subType: {fileID: 11400000, guid: 9c0b06df8df43f641b72a6ea311f55a1, type: 2}
+  subSubType: {fileID: 0}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics:
+  - {fileID: 11400000, guid: c72c55b46c604a0468250d4d3a6d82a2, type: 2}
+  - {fileID: 11400000, guid: a9a075215c6ac33409d063d48fe490ae, type: 2}
+  listOfBuddyTopics:
+  - {fileID: 11400000}
+  - {fileID: 11400000, guid: f2ff66ce527ebbd429780385c1370aa5, type: 2}
+  linkedIndex: 1
+  levelIndex: 0
+  topicItem: {fileID: 11400000, guid: 72a58ae57f66b8942915f9d7e27e980f, type: 2}
+  listOfStoryHelp:
+  - {fileID: 11400000, guid: 3fcfe384757750e45b9e5fdd1d0d5d47, type: 2}
+  profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: 0149fc4442e0c8441940141f428f1035, type: 2}
+  listOfIgnoreEffects: []
+  listOfOptions:
+  - {fileID: 11400000, guid: 36c3351b616c4ab4c953e68ef41eb660, type: 2}
+  - {fileID: 11400000, guid: cc40f9fd81cf01f458c65eccedfe2fa2, type: 2}
+  - {fileID: 11400000, guid: 552f550edaf9e9d47aca3257dfde8f04, type: 2}
+  - {fileID: 11400000, guid: b2b81a623ff331144822e2caea3f29be, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  status: 4
+  isCurrent: 0
+  timerStart: 0
+  timerRepeat: 0
+  timerWindow: 0
+  turnsDormant: 0
+  turnsActive: 1
+  turnsLive: 1
+  turnsDone: 0

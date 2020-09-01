@@ -13,8 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: ServoPods
   sprite: {fileID: 0}
-  textTop: The most common form of housing is living in a massive Tower full of servoPods
-    which are basically fancy, oversized, coffins stacked two high in rows
+  textTop: The most common form of housing is living in a servoPod which look like
+    fancy, oversized, coffins stacked two high in endless rows within enormous Pod
+    Towers
   textMiddle: Communal bathroom, kitchen and limited storage facilities exist within
     the MegaCorp owned towers which can be over one hundred stories high
   textBottom: Overcrowded cities full of people subsisting on a universal basic wage
