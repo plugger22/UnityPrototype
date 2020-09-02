@@ -3299,10 +3299,12 @@ public class TopicManager : MonoBehaviour
                         //Letter decision topics
                         data.uiType = TopicDecisionType.Letter;
                         if (turnTopic.letter != null)
-                        { data.text = string.Format("Dear {0}{1}{2}{3}{4}{5}{6}", 
-                            turnTopic.letter.textDear, "\n", "\n", turnTopic.letter.textTop, "\n", "\n", turnTopic.letter.textBottom); }
+                        {
+                            data.text = string.Format("Dear {0}{1}{2}{3}{4}{5}{6}",
+                              turnTopic.letter.textDear, "\n", "\n", turnTopic.letter.textTop, "\n", "\n", turnTopic.letter.textBottom);
+                        }
                         else { Debug.LogErrorFormat("Invalid letter (Null) for topic \"{0}\"", turnTopic.text); }
-                        break; 
+                        break;
                     default:
                         //everything else -> Normal decision topics
                         data.uiType = TopicDecisionType.Normal;
@@ -3663,7 +3665,7 @@ public class TopicManager : MonoBehaviour
                             }
                             else
                             {
-                                builderBottom.AppendLine(); 
+                                builderBottom.AppendLine();
                                 builderBottom.Append("Error");
                                 builderTag.AppendLine();
                                 builderTag.Append("Error");
@@ -7551,30 +7553,35 @@ public class TopicManager : MonoBehaviour
     /// </summary>
     public void DebugTestNews()
     {
-        string newsSnippet = "";
-        TopicPool pool = GameManager.i.testScript.debugTopicPool;
-        if (pool != null)
+        //can only do if no GUI elements visible
+        if (GameManager.i.inputScript.ModalState == ModalState.Normal)
         {
-            List<Topic> listOfTopics = pool.listOfTopics;
-            if (listOfTopics != null)
+            string newsSnippet = "";
+            TopicPool pool = GameManager.i.testScript.debugTopicPool;
+            if (pool != null)
             {
-                int maxNodeID = GameManager.i.nodeScript.maxNodeValue;
-                tagOrgTag = GameManager.i.campaignScript.campaign.orgInfo.tag;
-                if (Random.Range(0, 100) < 50) { tagRecruit = GameManager.i.cityScript.GetCity().country.nameSet.firstFemaleNames.GetRandomRecord(); }
-                else { tagRecruit = GameManager.i.cityScript.GetCity().country.nameSet.firstMaleNames.GetRandomRecord(); }
-                tagRecruit += " " + GameManager.i.cityScript.GetCity().country.nameSet.lastNames.GetRandomRecord();
-                tagTeam = "ERASURE Team Alpha";
-                int count = listOfTopics.Count;
-                if (count > 0)
+                List<Topic> listOfTopics = pool.listOfTopics;
+                if (listOfTopics != null)
                 {
-                    Sprite debugSprite = GameManager.i.guiScript.topicDefaultSprite;
-                    coroutine = DisplayNews(listOfTopics, newsSnippet, debugSprite, maxNodeID);
-                    StartCoroutine(coroutine);
+                    int maxNodeID = GameManager.i.nodeScript.maxNodeValue;
+                    tagOrgTag = GameManager.i.campaignScript.campaign.orgInfo.tag;
+                    if (Random.Range(0, 100) < 50) { tagRecruit = GameManager.i.cityScript.GetCity().country.nameSet.firstFemaleNames.GetRandomRecord(); }
+                    else { tagRecruit = GameManager.i.cityScript.GetCity().country.nameSet.firstMaleNames.GetRandomRecord(); }
+                    tagRecruit += " " + GameManager.i.cityScript.GetCity().country.nameSet.lastNames.GetRandomRecord();
+                    tagTeam = "ERASURE Team Alpha";
+                    int count = listOfTopics.Count;
+                    if (count > 0)
+                    {
+                        Sprite debugSprite = GameManager.i.guiScript.topicDefaultSprite;
+                        coroutine = DisplayNews(listOfTopics, newsSnippet, debugSprite, maxNodeID);
+                        StartCoroutine(coroutine);
+                    }
+                    else { Debug.LogErrorFormat("Invalid listOfTopics (Empty) for topicPool \"{0}\"", pool.name); }
                 }
-                else { Debug.LogErrorFormat("Invalid listOfTopics (Empty) for topicPool \"{0}\"", pool.name); }
+                else { Debug.LogErrorFormat("Invalid listOfTopics (Null) for topicPool \"{0}\"", pool.name); }
             }
-            else { Debug.LogErrorFormat("Invalid listOfTopics (Null) for topicPool \"{0}\"", pool.name); }
         }
+        else { Debug.LogWarning("Invalid modalState (must be NORMAL"); }
     }
 
     /// <summary>
@@ -7619,6 +7626,93 @@ public class TopicManager : MonoBehaviour
             else { Debug.LogErrorFormat("Invalid listOfTopics[{0}]", i); }
         }
     }
+
+    /// <summary>
+    /// displays all story Help within storyData that corresponds to debug topic pool to enable checking
+    /// </summary>
+    public void DebugTestStoryHelp()
+    {
+        //can only do if no GUI elements visible
+        if (GameManager.i.inputScript.ModalState == ModalState.Normal)
+        {
+            TopicPool pool = GameManager.i.testScript.debugTopicPool;
+            StoryData data = null;
+            if (pool != null)
+            {
+                StoryData[] arrayOfStoryData = GameManager.i.loadScript.arrayOfStoryData;
+                if (arrayOfStoryData != null)
+                {
+                    //find storyData that has the corresponding pool
+                    for (int i = 0; i < arrayOfStoryData.Length; i++)
+                    {
+                        if (arrayOfStoryData[i].pool.name.Equals(pool.name, StringComparison.Ordinal) == true)
+                        {
+                            data = arrayOfStoryData[i];
+                            break;
+                        }
+                    }
+                    if (data != null)
+                    {
+                        List<StoryHelp> listOfHelp = data.listOfStoryHelp;
+                        if (listOfHelp != null)
+                        {
+                            coroutine = DisplayStoryHelp(listOfHelp);
+                            StartCoroutine(coroutine);
+                        }
+                        else { Debug.LogWarningFormat("Invalid listOfHelp (Null) for StoryData \"{0}\"", data.name); }
+                    }
+                    else { Debug.LogWarningFormat("TopicPool \"{0}\" not found in arrayOfStoryData", pool.name); }
+                }
+                else { Debug.LogError("Invalid arrayOfStoryData (Null)"); }
+            }
+            else { Debug.LogWarning("TestManager.cs -> debugTopicPool is Empty (Null)"); }
+        }
+        else { Debug.LogWarning("Invalid modalState (must be NORMAL"); }
+    }
+
+    /// <summary>
+    /// Coroutine that loops all topics in a topic pool, all options within each topic and displays an individual outcome message showing the newsSnippet for each
+    /// haltExecution is a class variable that controls the display of the outcome windows. OnEvent.CloseOutcomeWindow sets haltExecution to false allowing next outcome window in sequence to display
+    /// </summary>
+    /// <param name="listOfTopics"></param>
+    /// <param name="newsSnippet"></param>
+    /// <param name="debugSprite"></param>
+    /// <param name="maxNodeID"></param>
+    /// <returns></returns>
+    IEnumerator DisplayStoryHelp(List<StoryHelp> listOfHelp)
+    {
+        int count = listOfTopics.Count;
+        //loop topics
+        for (int i = 0; i < count; i++)
+        {
+            Topic topic = listOfTopics[i];
+            if (topic != null)
+            {
+                //loop options within topic
+                List<TopicOption> listOfOptions = topic.listOfOptions;
+                if (listOfOptions != null)
+                {
+                    for (int j = 0; j < listOfOptions.Count; j++)
+                    {
+                        tagNodeID = Random.Range(0, maxNodeID);
+                        haltExecution = true;
+                        newsSnippet = CheckTopicText(listOfOptions[j].news, false);
+                        ModalOutcomeDetails details = new ModalOutcomeDetails()
+                        {
+                            textTop = string.Format("Topic: {0}{1}{2}{3}Option: {4}{5}{6}", colourNeutral, topic.name, colourEnd, "\n", colourAlert, listOfOptions[j].name, colourEnd),
+                            textBottom = newsSnippet,
+                            sprite = debugSprite
+                        };
+                        EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
+                        yield return new WaitUntil(() => haltExecution == false);
+                    }
+                }
+                else { Debug.LogErrorFormat("Invalid listOfOptions (Null) for topic \"{0}\"", topic.name); }
+            }
+            else { Debug.LogErrorFormat("Invalid listOfTopics[{0}]", i); }
+        }
+    }
+
 
     /// <summary>
     /// Display's topic type data in a more user friendly manner (subTypes grouped by Types)
@@ -8053,9 +8147,9 @@ public class TopicManager : MonoBehaviour
         builder.AppendFormat("- Story Topics - {0} Pool (Campaign){1}{2}", storyType, "\n", "\n");
         switch (storyType)
         {
-            case StoryType.Alpha:  builder.Append(DebugProcessStoryPool(storyAlphaPool)); break;
-            case StoryType.Bravo:  builder.Append(DebugProcessStoryPool(storyBravoPool)); break;
-            case StoryType.Charlie:  builder.Append(DebugProcessStoryPool(storyCharliePool)); break;
+            case StoryType.Alpha: builder.Append(DebugProcessStoryPool(storyAlphaPool)); break;
+            case StoryType.Bravo: builder.Append(DebugProcessStoryPool(storyBravoPool)); break;
+            case StoryType.Charlie: builder.Append(DebugProcessStoryPool(storyCharliePool)); break;
             default: Debug.LogWarningFormat("Unrecognised storyType \"{0}\"", storyType); break;
         }
         return builder.ToString();

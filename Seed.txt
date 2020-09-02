@@ -3297,3 +3297,20 @@ NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:443)
 	
 Dev seed 11935 -> Wednesday, 2 September 2020 12:22 PM
 City seed 765 -> New York, America
+
+Dev seed 35465 -> Wednesday, 2 September 2020 2:34 PM
+City seed 765 -> New York, America
+WARNING tempList has 23 records for tab 0 -> INFO only
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:696)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:398)
+	
+Dev seed 46171 -> Wednesday, 2 September 2020 2:55 PM
+City seed 765 -> New York, America
+
+Dev seed 12788 -> Wednesday, 2 September 2020 2:59 PM
+City seed 765 -> New York, America
+
+Dev seed 54041 -> Wednesday, 2 September 2020 3:17 PM
+City seed 765 -> New York, America
