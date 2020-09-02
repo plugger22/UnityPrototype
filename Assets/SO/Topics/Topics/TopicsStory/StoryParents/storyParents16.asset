@@ -28,10 +28,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 38482410678b3e5478642914075a7f89, type: 2}
   - {fileID: 11400000, guid: 7ba328f96d36a5c48b581355239b9080, type: 2}
   linkedIndex: 3
-  levelIndex: 0
+  levelIndex: 1
   topicItem: {fileID: 11400000, guid: 72a58ae57f66b8942915f9d7e27e980f, type: 2}
   listOfStoryHelp:
-  - {fileID: 11400000, guid: 3bb6c4fa4a5f8254d9e7333f40ffe068, type: 2}
+  - {fileID: 11400000, guid: 5c7a043393b97514a8169e6d2641505a, type: 2}
   profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 0149fc4442e0c8441940141f428f1035, type: 2}
@@ -47,7 +47,7 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 0
+  status: 4
   isCurrent: 0
   timerStart: 0
   timerRepeat: 0

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar19Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 19 Opt 3
-  tag: x
-  text: 
+  tag: Conciliatory
+  text: I still love you
   topic: {fileID: 11400000, guid: 7ba328f96d36a5c48b581355239b9080, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: That's wonderful, [child]. I may have gotten a little carried away due
+    to all that's been happening here to your Father and I. My apologies
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

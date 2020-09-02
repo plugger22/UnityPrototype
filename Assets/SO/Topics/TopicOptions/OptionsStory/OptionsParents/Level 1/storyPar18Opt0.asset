@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I'm sure she would if she had known about it. As your Mother it behoves
+    me to point out that it's not polite to expect things of others, [child]
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

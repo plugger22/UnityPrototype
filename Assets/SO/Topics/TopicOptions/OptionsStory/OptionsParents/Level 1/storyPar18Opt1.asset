@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I'm sure you will [child]. Your father and I are expecting subSprogs
+    one day. Don't leave it too long. Time is not on our side
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

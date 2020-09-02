@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar18Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 18 Opt 3
-  tag: x
-  text: 
+  tag: Joking
+  text: I hope they left the best bits
   topic: {fileID: 11400000, guid: 38482410678b3e5478642914075a7f89, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: '[child], have you ever considered Detox therapy? Panda Porn is eating
+    away at your mind like an insidious, flesh eating microbe. You have a sickness'
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

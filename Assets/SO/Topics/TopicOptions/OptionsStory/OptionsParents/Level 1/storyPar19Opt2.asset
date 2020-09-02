@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar19Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 19 Opt 2
-  tag: x
-  text: 
+  tag: Concerned
+  text: Are you still taking your Meds?
   topic: {fileID: 11400000, guid: 7ba328f96d36a5c48b581355239b9080, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Do I need medication to know that I've raised a dead beat, drop kick
+    of a [child]? I already know that without having to take pharmacueticals
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

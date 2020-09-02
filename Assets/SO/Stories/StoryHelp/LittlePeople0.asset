@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
+  m_Name: LittlePeople0
+  m_EditorClassIdentifier: 
+  tag: Individual Rights
+  sprite: {fileID: 21300000, guid: 9c060f66520d9874297a5ed308585c4c, type: 3}
+  textTop: Statutory legal rights for the privileged few are extensive and enforced
+    by state or MegaCorp. For the masses, there are few rights
+  textMiddle: The vast majority, the 'little people', exist in a state of perpetual
+    subjugation where they are prey for anyone who yields a modicum of power
+  textBottom: Unions have long been outlawed. Taking care of the basics of food, shelter
+    and safety is enough to keep most people busy. Until there's a riot...
+  isKnown: 0

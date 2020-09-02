@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar18Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 18 Opt 2
-  tag: x
-  text: 
+  tag: Maybe
+  text: Can they glue her back together?
   topic: {fileID: 11400000, guid: 38482410678b3e5478642914075a7f89, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: What, collect all the bits of poor Clara from vulture poo and glue her
+    back together? I suspect that she would no longer smell of peaches and roses
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
