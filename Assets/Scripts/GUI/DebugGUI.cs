@@ -759,10 +759,10 @@ public class DebugGUI : MonoBehaviour
             }
 
             //fourth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), "News Tester"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), "Activate Cures"))
             {
-                GameManager.i.topicScript.DebugTestNews();
-                Debug.Log("[Dbg] Button -> News Tester");
+                Debug.Log("[Dbg] Button -> Activate Cures");
+                GameManager.i.dataScript.DebugActivateAllCures();
             }
 
             //fifth button
@@ -982,10 +982,10 @@ public class DebugGUI : MonoBehaviour
             }
 
             //twentyfourth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 23 + button_height * 23, button_width, button_height), "Activate Cures"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 23 + button_height * 23, button_width, button_height), "News Tester"))
             {
-                Debug.Log("[Dbg] Button -> Activate Cures");
-                GameManager.i.dataScript.DebugActivateAllCures();
+                Debug.Log("[Dbg] Button -> Topic News Tester");
+                GameManager.i.topicScript.DebugTestNews();
             }
 
             //twentyFifth button
@@ -997,9 +997,10 @@ public class DebugGUI : MonoBehaviour
 
             //twentySixth button
             modifier = 25;
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * modifier + button_height * modifier, button_width, button_height), ""))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * modifier + button_height * modifier, button_width, button_height), "Option Tester"))
             {
-
+                Debug.Log("[Dbg] Button -> TopicOption Tester");
+                GameManager.i.topicScript.DebugTestTopicOptions();
             }
 
             //twentySeventh button

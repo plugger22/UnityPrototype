@@ -3472,3 +3472,66 @@ UnityEngine.Debug:LogWarning(Object)
 	TopicManager:DebugTestStoryHelp() (at Assets/Scripts/Managers/TopicManager.cs:7679)
 	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:995)
 	
+Dev seed 36536 -> Thursday, 3 September 2020 9:03 AM
+City seed 765 -> New York, America
+WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6932)
+	<DisplayNews>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7622)
+	UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator)
+	TopicManager:DebugTestNews() (at Assets/Scripts/Managers/TopicManager.cs:7586)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:764)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6932)
+	<DisplayNews>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7622)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6932)
+	<DisplayNews>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7622)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6932)
+	<DisplayNews>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7622)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6932)
+	<DisplayNews>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7622)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6932)
+	<DisplayNews>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7622)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6932)
+	<DisplayNews>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7622)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 7768 -> Thursday, 3 September 2020 9:25 AM
+City seed 765 -> New York, America
+WARNING Invalid Matching Npc nodes (start ID 27, end ID 27) for GetEndNode
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MissionManager:GetEndNode(Node) (at Assets/Scripts/Managers/MissionManager.cs:273)
+	MissionManager:UpdateActiveNpc(Npc) (at Assets/Scripts/Managers/MissionManager.cs:567)
+	MissionManager:ProcessNpc(Npc) (at Assets/Scripts/Managers/MissionManager.cs:380)
+	MissionManager:StartTurnLate() (at Assets/Scripts/Managers/MissionManager.cs:159)
+	MissionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/MissionManager.cs:124)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:537)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:326)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:251)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:398)
+	
+Dev seed 43310 -> Thursday, 3 September 2020 9:41 AM
+City seed 765 -> New York, America
+
+Dev seed 16880 -> Thursday, 3 September 2020 9:42 AM
+City seed 765 -> New York, America
+
+Dev seed 25131 -> Thursday, 3 September 2020 9:48 AM
+City seed 765 -> New York, America

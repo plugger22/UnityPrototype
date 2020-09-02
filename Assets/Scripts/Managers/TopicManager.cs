@@ -7637,6 +7637,93 @@ public class TopicManager : MonoBehaviour
     }
 
     /// <summary>
+    /// displays option tag, text and storyInfo (if present) for each topic in debug topic pool to enable checking
+    /// </summary>
+    public void DebugTestTopicOptions()
+    {
+        //can only do if no GUI elements visible
+        if (GameManager.i.inputScript.ModalState == ModalState.Normal)
+        {
+            TopicPool pool = GameManager.i.testScript.debugTopicPool;
+            if (pool != null)
+            {
+                List<Topic> listOfTopics = pool.listOfTopics;
+                if (listOfTopics != null)
+                {
+                    int count = listOfTopics.Count;
+                    if (count > 0)
+                    {
+                        Sprite debugSprite = GameManager.i.guiScript.topicDefaultSprite;
+                        coroutine = DisplayTopicOptions(listOfTopics);
+                        StartCoroutine(coroutine);
+                    }
+                    else { Debug.LogErrorFormat("Invalid listOfTopics (Empty) for topicPool \"{0}\"", pool.name); }
+                }
+                else { Debug.LogErrorFormat("Invalid listOfTopics (Null) for topicPool \"{0}\"", pool.name); }
+            }
+        }
+        else { Debug.LogWarning("Invalid modalState (must be NORMAL"); }
+    }
+
+    /// <summary>
+    /// Coroutine that loops all topics in a topic pool, all options within each topic and displays an individual outcome message showing option text details for each
+    /// haltExecution is a class variable that controls the display of the outcome windows. OnEvent.CloseOutcomeWindow sets haltExecution to false allowing next outcome window in sequence to display
+    /// </summary>
+    /// <param name="listOfTopics"></param>
+    /// <returns></returns>
+    IEnumerator DisplayTopicOptions(List<Topic> listOfTopics)
+    {
+        int count = listOfTopics.Count;
+        string optionText, storyText;
+        Sprite debugSprite = GameManager.i.guiScript.topicDefaultSprite;
+        //loop topics
+        for (int i = 0; i < count; i++)
+        {
+            Topic topic = listOfTopics[i];
+            if (topic != null)
+            {
+                //loop options within topic
+                List<TopicOption> listOfOptions = topic.listOfOptions;
+                if (listOfOptions != null)
+                {
+                    for (int j = 0; j < listOfOptions.Count; j++)
+                    {
+                        TopicOption option = listOfOptions[j];
+                        if (option != null)
+                        {
+                            SetHaltExecutionTopic(true);
+                            
+                            optionText = CheckTopicText(option.text, false);
+                            //storyInfo if present
+                            if (string.IsNullOrEmpty(option.storyInfo) == false)
+                            { storyText = CheckTopicText(option.storyInfo); }
+                            else
+                            {
+                                //storyTarget if present
+                                if (option.storyTarget != null)
+                                { storyText = string.Format("{0}{1}{2}", colourAlert, option.storyTarget.targetName, colourEnd); }
+                                else { storyText = ""; }
+                            }
+                            ModalOutcomeDetails details = new ModalOutcomeDetails()
+                            {
+                                textTop = string.Format("Topic: {0}{1}{2}{3}Option: {4}{5}{6}", colourNeutral, topic.name, colourEnd, "\n", colourAlert, option.name, colourEnd),
+                                textBottom = string.Format("{0}{1}{2}{3}{4}{5}", option.tag, "\n", colourNeutral, option.text, colourEnd,
+                                    storyText.Length > 0 ? string.Format("{0}{1}{2}", "\n", "\n", storyText) : ""),
+                                sprite = debugSprite
+                            };
+                            EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
+                            yield return new WaitUntil(() => haltExecutionTopic == false);
+                        }
+                        else { Debug.LogWarningFormat("Invalid topicOption (Null) for topic \"{0}\", listOfOptions[{1}]", topic.name, j); }
+                    }
+                }
+                else { Debug.LogErrorFormat("Invalid listOfOptions (Null) for topic \"{0}\"", topic.name); }
+            }
+            else { Debug.LogErrorFormat("Invalid listOfTopics[{0}]", i); }
+        }
+    }
+
+    /// <summary>
     /// displays all story Help within storyData that corresponds to debug topic pool to enable checking
     /// </summary>
     public void DebugTestStoryHelp()
