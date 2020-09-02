@@ -7681,7 +7681,7 @@ public class TopicManager : MonoBehaviour
 
     /// <summary>
     /// Coroutine that loops all topics in a topic pool, all options within each topic and displays an individual outcome message showing the newsSnippet for each
-    /// haltExecution is a class variable that controls the display of the outcome windows. OnEvent.CloseOutcomeWindow sets haltExecution to false allowing next outcome window in sequence to display
+    /// Use SPACE or ESC to flip through storyHelp instances
     /// </summary>
     /// <param name="listOfTopics"></param>
     /// <param name="newsSnippet"></param>

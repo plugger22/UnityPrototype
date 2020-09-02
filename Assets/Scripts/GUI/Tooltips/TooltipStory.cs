@@ -137,6 +137,8 @@ public class TooltipStory : MonoBehaviour
         Debug.LogFormat("[UI] TooltipStoryHelp -> CloseTooltip: called by {0}{1}", text, "\n");
         storyObject.SetActive(false);
         storyCanvas.gameObject.SetActive(false);
+        //used for debugging topic StoryHelp
+        GameManager.i.topicScript.SetHaltExecutionTopic(false);
     }
 
     /// <summary>

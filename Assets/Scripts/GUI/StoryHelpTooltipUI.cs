@@ -102,23 +102,5 @@ public class StoryHelpTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerE
         }
     }
 
-    /// <summary>
-    /// manual method of closing -> used by TopicManager.cs -> DebugTestShowHelp
-    /// </summary>
-    public void CloseTooltip()
-    {
-        onMouseFlag = false;
-        if (myCoroutine != null)
-        { StopCoroutine(myCoroutine); }
-        GameManager.i.tooltipStoryScript.CloseTooltip("StoryHelpTooltipUI.cs -> OnPointerExit");
-        //used for debugging topic StoryHelp
-        GameManager.i.topicScript.SetHaltExecutionTopic(false);
-    }
 
-    /// <summary>
-    /// returns true if tooltip active, false otherwise. Used by InputManager.cs  for TopicManager.cs -> DebugTestShowHelp
-    /// </summary>
-    /// <returns></returns>
-    public bool CheckIsActive()
-    { return onMouseFlag; }
 }
