@@ -7676,7 +7676,7 @@ public class TopicManager : MonoBehaviour
             }
             else { Debug.LogWarning("TestManager.cs -> debugTopicPool is Empty (Null)"); }
         }
-        else { Debug.LogWarning("Invalid modalState (must be NORMAL"); }
+        else { Debug.LogWarning("Invalid modalState (must be NORMAL)"); }
     }
 
     /// <summary>
@@ -7700,9 +7700,9 @@ public class TopicManager : MonoBehaviour
             {
                 SetHaltExecutionTopic(true);
                 GameManager.i.tooltipStoryScript.SetTooltip(help, new Vector3(Screen.width / 2, Screen.height / 2));
-                yield return new WaitUntil(() => haltExecutionTopic == false);
             }
             else { Debug.LogErrorFormat("Invalid listOfTopics[{0}]", i); }
+            yield return new WaitUntil(() => haltExecutionTopic == false);
         }
         GameManager.i.inputScript.ResetStates();
     }
