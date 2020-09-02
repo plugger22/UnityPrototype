@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyParents11
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Vigo and Clara
   text: 
   letter: {fileID: 11400000, guid: c2a1f5dddaff0ab448967114b795a247, type: 2}
   designNotes: storyParents11
@@ -52,5 +52,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 0
+  turnsLive: 19
   turnsDone: 0

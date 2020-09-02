@@ -27,9 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: He's always been nasty, that one. As a security guard he's got power.
-    When Clara didn't sleep with him he made an example of her so that the others
-    will
+  storyInfo: He's always been nasty, that one. As a security guard he has power. When
+    Clara didn't sleep with him he made an example of her so that the others will
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

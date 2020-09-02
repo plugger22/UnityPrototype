@@ -28,7 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: 
-  storyTarget: {fileID: 11400000, guid: e5a82fc1330e3b84c9a36f900ad9ea7d, type: 2}
+  storyTarget: {fileID: 11400000, guid: 8b487f96ac402bb49af2f6ec88b5cf5a, type: 2}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 

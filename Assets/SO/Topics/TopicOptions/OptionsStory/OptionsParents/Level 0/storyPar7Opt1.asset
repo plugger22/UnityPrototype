@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: That I am. My bones are old and creaky, though. Perhaps next time you
-    could manage to help us out. Just a bit. I'm not Superman any more
+  storyInfo: That I am but my bones are old and creaky. Perhaps next time you could
+    manage to help us out. Just a bit. I'm not Superman any more
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

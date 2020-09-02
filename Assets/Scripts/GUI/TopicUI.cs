@@ -567,7 +567,7 @@ public class TopicUI : MonoBehaviour
         {
             int index = (int)TopicBase.Normal;
             //deactivate all options
-            for (int i = 0; i < arrayOfButtons.GetUpperBound(1); i++)
+            for (int i = 0; i < arrayOfButtons.GetUpperBound(1) + 1; i++)
             { arrayOfButtons[index, i].gameObject.SetActive(false); }
 
             //set colour of background
@@ -835,7 +835,7 @@ public class TopicUI : MonoBehaviour
         {
             int index = (int)TopicBase.Other;
             //deactivate all options
-            for (int i = 0; i < arrayOfButtons.GetUpperBound(1); i++)
+            for (int i = 0; i < arrayOfButtons.GetUpperBound(1) + 1; i++)
             { arrayOfButtons[index, i].gameObject.SetActive(false); }
             //texts
             otherText.gameObject.SetActive(true);

@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: You are an inspiration to us all, [child]. Your Mother is proud of you
-    although she is getting pretty twitchy about that Panda Porn that you keep watching
+  storyInfo: You're an inspiration to us all, [child]. Your Mother is proud of you
+    although she is getting twitchy about all that Panda Porn that you keep watching
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

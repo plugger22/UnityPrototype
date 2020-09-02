@@ -984,6 +984,14 @@ namespace packageAPI
 
         public TopicUIData()
         { colour = GameManager.i.guiScript.colourTopicNormal; }
+
+        public void Reset()
+        {
+            listOfOptions.Clear();
+            listOfIgnoreEffects.Clear();
+            listOfStoryHelp.Clear();
+            listOfHelp.Clear();
+        }
     }
 
     /// <summary>

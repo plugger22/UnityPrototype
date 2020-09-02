@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: I'm sure you would, [child]. That's what I keep telling your Mother although
-    she keeps mentioning your Panda Porn habit. That's not still going on, is it?
+  storyInfo: I'm sure you would, [child]. That's what I keep telling your Mother.
+    She keeps mentioning your Panda Porn habit. That's not still going on, is it?
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

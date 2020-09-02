@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: I don't plan on doing so. Your Father drifts along in a bubble that floats
-    from one violent episode of Kill Ball to another in a happly blur of ignorance
+  storyInfo: I won't. Your Father drifts along in a bubble that floats from one violent
+    episode of Kill Ball to another in a happly blur of ignorance
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

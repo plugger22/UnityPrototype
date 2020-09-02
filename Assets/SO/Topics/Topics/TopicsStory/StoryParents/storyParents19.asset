@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyParents19
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Statement
   text: 
   letter: {fileID: 11400000, guid: 0d111659c14b4724f8abd567c933ca8c, type: 2}
   designNotes: storyParents19
@@ -47,7 +47,7 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 4
+  status: 0
   isCurrent: 0
   timerStart: 0
   timerRepeat: 0

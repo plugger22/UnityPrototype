@@ -3209,6 +3209,7 @@ public class TopicManager : MonoBehaviour
             string subTypeNormal = turnTopicSubType.name;
             //data package
             TopicUIData data = new TopicUIData();
+            data.Reset();
             //Debug initialise data package if any debug topics present (if none use normally selected topic)
             if (debugTopicPool != null)
             {

@@ -27,9 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Sadly [child], I'm not. Evil strides through the shadows and his name
-    is Vigo. Poor Clara was just his latest victim. No young woman is safe on our
-    floor
+  storyInfo: Sadly [child], I'm not. Evil strides through the shadows and it's name
+    is Vigo. Poor Clara was just his latest victim. No young woman is safe here
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
