@@ -588,6 +588,16 @@ public class InputManager : MonoBehaviour
                             break;
                         #endregion
 
+                        #region Debug
+                        case ModalSubState.Debug:
+                            //debug mode, eg. test topic Story Help (cycle through)
+                            if (Input.GetButtonDown("Cancel") == true)
+                            { GameManager.i.tooltipStoryScript.CloseTooltip(); }
+                            else if (Input.GetButtonDown("Multipurpose") == true)
+                            { GameManager.i.tooltipStoryScript.CloseTooltip(); }
+                            break;
+                        #endregion
+
                         #region InfoDisplay
                         case ModalSubState.InfoDisplay:
                             //info displays are all at ModalLevel 1. Ignore commands if level > 1, eg. outcome window open on top of an info display.

@@ -23,7 +23,7 @@
     //  - - - UI - - -
     //
     public enum ModalState { Normal, ModalUI}                                                                                           //main modal state
-    public enum ModalSubState { None, Outcome, Confirm, GenericPicker, ActionMenu, MainMenu, Inventory, TeamPicker, DiceRoller, Topic, InfoDisplay, ShowMe, Review, Transition, MetaGame } //ModalUI sub game states
+    public enum ModalSubState { None, Outcome, Confirm, GenericPicker, ActionMenu, MainMenu, Inventory, TeamPicker, DiceRoller, Topic, InfoDisplay, ShowMe, Review, Transition, MetaGame, Debug } //ModalUI sub game states
     public enum ModalInfoSubState { None, CityInfo, AIInfo, MainInfo }                                                                  //if ModalUI.InfoDisplay -> what type of info
     public enum ModalGenericPickerSubState { None, Normal, CompromisedGear }                                                            //if ModalUI.GenericPicker -> what type of picker
     public enum ModalMetaSubState { None, PlayerOptions, OptionsConfirm, EndScreen }                                                    //if ModalUI.MetaGame -> what type of meta UI

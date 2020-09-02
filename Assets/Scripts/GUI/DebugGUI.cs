@@ -989,9 +989,10 @@ public class DebugGUI : MonoBehaviour
             }
 
             //twentyFifth button
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 24 + button_height * 24, button_width, button_height), ""))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * 24 + button_height * 24, button_width, button_height), "Test StoryHelp"))
             {
-
+                Debug.Log("[Dbg] Button -> Test StoryHelp");
+                GameManager.i.topicScript.DebugTestStoryHelp();
             }
 
             //twentySixth button

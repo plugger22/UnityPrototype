@@ -205,7 +205,7 @@ public class TopicManager : MonoBehaviour
     //debugging (testManager.cs)
     private TopicPool debugTopicPool;
     private IEnumerator coroutine;
-    private bool haltExecution;
+    private bool haltExecutionTopic;
     private bool isTestLog;
 
     //info tags (topic specific info) -> reset to defaults each turn in ResetTopicAdmin prior to use
@@ -518,7 +518,7 @@ public class TopicManager : MonoBehaviour
                 SetColours();
                 break;
             case EventType.OutcomeClose:
-                haltExecution = false;
+                SetHaltExecutionTopic(false);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -7509,6 +7509,15 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
+    #region SetHaltExecutionTopic
+    /// <summary>
+    /// Sets haltExecutionTopic to isSetting (default false)
+    /// </summary>
+    /// <param name="isFalse"></param>
+    public void SetHaltExecutionTopic(bool isSetting = false)
+    { haltExecutionTopic = isSetting; }
+    #endregion
+
     #endregion
 
     #region Meta Methods...
@@ -7609,7 +7618,7 @@ public class TopicManager : MonoBehaviour
                     for (int j = 0; j < listOfOptions.Count; j++)
                     {
                         tagNodeID = Random.Range(0, maxNodeID);
-                        haltExecution = true;
+                        SetHaltExecutionTopic(true);
                         newsSnippet = CheckTopicText(listOfOptions[j].news, false);
                         ModalOutcomeDetails details = new ModalOutcomeDetails()
                         {
@@ -7618,7 +7627,7 @@ public class TopicManager : MonoBehaviour
                             sprite = debugSprite
                         };
                         EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
-                        yield return new WaitUntil(() => haltExecution == false);
+                        yield return new WaitUntil(() => haltExecutionTopic == false);
                     }
                 }
                 else { Debug.LogErrorFormat("Invalid listOfOptions (Null) for topic \"{0}\"", topic.name); }
@@ -7681,36 +7690,21 @@ public class TopicManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator DisplayStoryHelp(List<StoryHelp> listOfHelp)
     {
-        int count = listOfTopics.Count;
-        //loop topics
+        int count = listOfHelp.Count;
+        GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Debug });
+        //loop help
         for (int i = 0; i < count; i++)
         {
-            Topic topic = listOfTopics[i];
-            if (topic != null)
+            StoryHelp help = listOfHelp[i];
+            if (help != null)
             {
-                //loop options within topic
-                List<TopicOption> listOfOptions = topic.listOfOptions;
-                if (listOfOptions != null)
-                {
-                    for (int j = 0; j < listOfOptions.Count; j++)
-                    {
-                        tagNodeID = Random.Range(0, maxNodeID);
-                        haltExecution = true;
-                        newsSnippet = CheckTopicText(listOfOptions[j].news, false);
-                        ModalOutcomeDetails details = new ModalOutcomeDetails()
-                        {
-                            textTop = string.Format("Topic: {0}{1}{2}{3}Option: {4}{5}{6}", colourNeutral, topic.name, colourEnd, "\n", colourAlert, listOfOptions[j].name, colourEnd),
-                            textBottom = newsSnippet,
-                            sprite = debugSprite
-                        };
-                        EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
-                        yield return new WaitUntil(() => haltExecution == false);
-                    }
-                }
-                else { Debug.LogErrorFormat("Invalid listOfOptions (Null) for topic \"{0}\"", topic.name); }
+                SetHaltExecutionTopic(true);
+                GameManager.i.tooltipStoryScript.SetTooltip(help, new Vector3(Screen.width / 2, Screen.height / 2));
+                yield return new WaitUntil(() => haltExecutionTopic == false);
             }
             else { Debug.LogErrorFormat("Invalid listOfTopics[{0}]", i); }
         }
+        GameManager.i.inputScript.ResetStates();
     }
 
 
