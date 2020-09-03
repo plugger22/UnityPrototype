@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar23Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 23 Opt 2
-  tag: 
-  text: 
+  tag: Puzzled
+  text: Don't you lock your servoPods?
   topic: {fileID: 11400000, guid: e04da57c821dbe742ac82979b4002741, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Yes but the locks can be overriden by anyone with a floor security clearance
+    like Vigo. They occasionally have to pull bodies out of 'pods
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

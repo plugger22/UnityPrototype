@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar23Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 23 Opt 1
-  tag: 
-  text: 
+  tag: Uncertain
+  text: Are you sure it's Dad's fault?
   topic: {fileID: 11400000, guid: e04da57c821dbe742ac82979b4002741, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,13 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: 'Sadly, yes. He means well but he speaks before he thinks. I''m sure
+    those back to back episodes of Kill Ball he watches have something to do with
+    it '
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

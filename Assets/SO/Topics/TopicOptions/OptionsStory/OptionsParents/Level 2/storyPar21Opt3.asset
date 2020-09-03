@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar21Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 21 Opt 3
-  tag: 
-  text: 
+  tag: Busy
+  text: I have a show to watch...
   topic: {fileID: 11400000, guid: e829b2822bdd3f14299675e9a6680597, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Does it involve Pandas [child]? Are you ignoring your Mother so you can
+    plug yourself into that horrid animal Porn again? You'll go blind
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

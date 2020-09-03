@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar28Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 28 Opt 1
-  tag: 
-  text: 
+  tag: Please
+  text: Could you stop nagging me?
   topic: {fileID: 11400000, guid: abd47b8be1610584b810ee9e41ffcafe, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: 'About your disgusting animal viewing habit? The one that involves people
+    in Panda bear suits doing unspeakable things to inanimate objects? '
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

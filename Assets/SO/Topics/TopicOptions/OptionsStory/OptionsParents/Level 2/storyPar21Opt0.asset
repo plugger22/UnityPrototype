@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar21Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 21 Opt 0
-  tag: 
-  text: 
+  tag: Frustrated
+  text: Ahhh, Dad strikes again
   topic: {fileID: 11400000, guid: e829b2822bdd3f14299675e9a6680597, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,13 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Your Father means well but he is so overcome with pride that he can't
+    help himself whispering your name around the second floor. I'll speak to the old
+    fool
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 3
+  optionNumber: 0

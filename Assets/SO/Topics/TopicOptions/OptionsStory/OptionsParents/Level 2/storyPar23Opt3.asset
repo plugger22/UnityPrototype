@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar23Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 23 Opt 3
-  tag: 
-  text: 
+  tag: Question
+  text: What does Vigo think I do?
   topic: {fileID: 11400000, guid: e04da57c821dbe742ac82979b4002741, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Work for the Resistance, of course. Would he be going to all this trouble
+    if he thought you drove a floatCab? Pay attention, [child], this is important
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

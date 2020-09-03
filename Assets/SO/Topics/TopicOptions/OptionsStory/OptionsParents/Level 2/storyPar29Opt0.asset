@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar29Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 29 Opt 0
-  tag: 
-  text: 
+  tag: Aggrieved
+  text: That was unnecessary
   topic: {fileID: 11400000, guid: 5b7c319069525f94e9507e62e0a5d6fc, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Yes, I'm sorry [child]. You deserve a more considerate and understanding
+    Mother who accomodates your little eccentricities
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 3
+  optionNumber: 0

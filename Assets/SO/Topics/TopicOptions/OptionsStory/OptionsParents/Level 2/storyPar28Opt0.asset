@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar28Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 28 Opt 0
-  tag: 
-  text: 
+  tag: No...
+  text: Would you do that to Dad?
   topic: {fileID: 11400000, guid: abd47b8be1610584b810ee9e41ffcafe, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: No, [child], I was only joking. Your Father and I have been married for
+    so long that we both pass wind at the same time. I love the old rooster
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 3
+  optionNumber: 0

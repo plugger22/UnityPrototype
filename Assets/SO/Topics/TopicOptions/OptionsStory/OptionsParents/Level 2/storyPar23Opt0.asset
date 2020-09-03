@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar23Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 23 Opt 0
-  tag: 
-  text: 
+  tag: Reassure
+  text: I'm always careful, Mom
   topic: {fileID: 11400000, guid: e04da57c821dbe742ac82979b4002741, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,13 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Stay that way, you'll live longer. Get rid of your Panda Porn habit and
+    you may even find somebody to share your life with other than a horny virtual
+    bear
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 3
+  optionNumber: 0

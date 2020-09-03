@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar29Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 29 Opt 3
-  tag: 
-  text: 
+  tag: Hearten
+  text: I did try
   topic: {fileID: 11400000, guid: 5b7c319069525f94e9507e62e0a5d6fc, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Don't give me that nonsense you crooked, useless, waste of a [child]!
+    I didn't raise you to be a Panda Porn junkie full of excuses. Time to grow up
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

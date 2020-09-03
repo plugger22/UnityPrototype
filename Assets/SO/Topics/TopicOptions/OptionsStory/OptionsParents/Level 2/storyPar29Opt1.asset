@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar29Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 29 Opt 1
-  tag: 
-  text: 
+  tag: Angry
+  text: You have the wrong [child]
   topic: {fileID: 11400000, guid: 5b7c319069525f94e9507e62e0a5d6fc, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Oh, all my [child]s are Panda Porn junkies, are they? Goodness, now I
+    know the extent of my parental failure. I should never have had children
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1
