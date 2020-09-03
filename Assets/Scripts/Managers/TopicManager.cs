@@ -7674,14 +7674,27 @@ public class TopicManager : MonoBehaviour
     IEnumerator DisplayTopicOptions(List<Topic> listOfTopics)
     {
         int count = listOfTopics.Count;
-        string optionText, storyText;
+        string topicText, optionText, storyText;
         Sprite debugSprite = GameManager.i.guiScript.topicDefaultSprite;
+        Sprite topicSprite;
         //loop topics
         for (int i = 0; i < count; i++)
         {
             Topic topic = listOfTopics[i];
             if (topic != null)
             {
+                topicSprite = null;
+                //topic text/letter
+                if (topic.letter != null)
+                {
+                    topicText = string.Format("<size=80%>{0}Dear {1}{2}{3}{4}{5}{6}{7}{8}</size>", colourNormal, CheckTopicText(topic.letter.textDear), "\n", "\n",
+                        CheckTopicText(topic.letter.textTop), "\n", "\n", CheckTopicText(topic.letter.textBottom), colourEnd);
+                }
+                else
+                { topicText = string.Format("<size=80%>{0}{1}{2}</size>", colourNormal, CheckTopicText(topic.text), colourEnd); }
+                //sprite
+                if (topic.topicItem != null)
+                { topicSprite = topic.topicItem.sprite; }
                 //loop options within topic
                 List<TopicOption> listOfOptions = topic.listOfOptions;
                 if (listOfOptions != null)
@@ -7692,7 +7705,6 @@ public class TopicManager : MonoBehaviour
                         if (option != null)
                         {
                             SetHaltExecutionTopic(true);
-                            
                             optionText = CheckTopicText(option.text, false);
                             //storyInfo if present
                             if (string.IsNullOrEmpty(option.storyInfo) == false)
@@ -7701,15 +7713,20 @@ public class TopicManager : MonoBehaviour
                             {
                                 //storyTarget if present
                                 if (option.storyTarget != null)
-                                { storyText = string.Format("{0}{1}{2}", colourAlert, option.storyTarget.targetName, colourEnd); }
+                                {
+                                    storyText = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}", option.storyTarget.targetName, "\n", colourAlert,
+                                      option.storyTarget.descriptorResistance, colourEnd, "\n",
+                                      option.storyTarget.actorArc.name, "\n", colourAlert, option.storyTarget.gear.name, colourEnd, "\n", option.storyTarget.nodeArc.name);
+                                }
                                 else { storyText = ""; }
                             }
                             ModalOutcomeDetails details = new ModalOutcomeDetails()
                             {
-                                textTop = string.Format("Topic: {0}{1}{2}{3}Option: {4}{5}{6}", colourNeutral, topic.name, colourEnd, "\n", colourAlert, option.name, colourEnd),
-                                textBottom = string.Format("{0}{1}{2}{3}{4}{5}", option.tag, "\n", colourNeutral, option.text, colourEnd,
+                                textTop = string.Format("Topic: {0}{1}{2}{3}Option: {4}{5}{6}{7}{8}{9}", colourNeutral, topic.name, colourEnd, "\n",
+                                    colourAlert, option.name, colourEnd, "\n", "\n", topicText),
+                                textBottom = string.Format("{0}{1}{2}{3}{4}{5}", option.tag, "\n", colourNeutral, optionText, colourEnd,
                                     storyText.Length > 0 ? string.Format("{0}{1}{2}", "\n", "\n", storyText) : ""),
-                                sprite = debugSprite
+                                sprite = topicSprite != null ? topicSprite : debugSprite
                             };
                             EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
                             yield return new WaitUntil(() => haltExecutionTopic == false);

@@ -3535,3 +3535,38 @@ City seed 765 -> New York, America
 
 Dev seed 25131 -> Thursday, 3 September 2020 9:48 AM
 City seed 765 -> New York, America
+
+Dev seed 39699 -> Thursday, 3 September 2020 10:24 AM
+City seed 765 -> New York, America
+
+Dev seed 19729 -> Thursday, 3 September 2020 10:30 AM
+City seed 765 -> New York, America
+
+Dev seed 58756 -> Thursday, 3 September 2020 10:36 AM
+City seed 765 -> New York, America
+
+Dev seed 23898 -> Thursday, 3 September 2020 10:41 AM
+City seed 765 -> New York, America
+
+Dev seed 21757 -> Thursday, 3 September 2020 10:49 AM
+City seed 765 -> New York, America
+
+Dev seed 53701 -> Thursday, 3 September 2020 10:50 AM
+City seed 765 -> New York, America
+
+Dev seed 24248 -> Thursday, 3 September 2020 10:54 AM
+City seed 765 -> New York, America
+
+Dev seed 43241 -> Thursday, 3 September 2020 10:56 AM
+City seed 765 -> New York, America
+WARNING Invalid modalState (must be NORMAL
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:DebugTestTopicOptions() (at Assets/Scripts/Managers/TopicManager.cs:7665)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1003)
+	WARNING Invalid modalState (must be NORMAL
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:DebugTestTopicOptions() (at Assets/Scripts/Managers/TopicManager.cs:7665)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1003)
+	
+Dev seed 58738 -> Thursday, 3 September 2020 10:59 AM
+City seed 765 -> New York, America
