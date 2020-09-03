@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5d6df66d797b34b989f3bc7d5e160b, type: 3}
+  m_Name: StoryParents22
+  m_EditorClassIdentifier: 
+  textDear: '[child]'
+  textTop: Your Mother and I came back from the showers this morning to find that
+    both of our Pods had been searched. One of our neighbours said it was Vigo
+  textBottom: I don't want to concern you, [child], but I'm starting to get anxious.
+    He's a nasty little man and who knows what he will do next?
