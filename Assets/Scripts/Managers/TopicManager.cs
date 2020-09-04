@@ -5728,7 +5728,7 @@ public class TopicManager : MonoBehaviour
         string checkedText = null;
         string colourCheckText = colourAlert; //highlight colour
         //no highlighting for storyBravo (Letter) texts
-        if (turnTopicSubType.name.Equals("StoryBravo", StringComparison.Ordinal) == true)
+        if (turnTopicSubType?.name.Equals("StoryBravo", StringComparison.Ordinal) == true)
         { isColourHighlighting = false; }
         //if validation run need dictionary of tags for analysis purposes
         Dictionary<string, int> dictOfTags = null;

@@ -3625,3 +3625,39 @@ City seed 234 -> Sydney, Australia
 
 Dev seed 59401 -> Friday, 4 September 2020 11:43 AM
 City seed 234 -> Sydney, Australia
+
+Dev seed 3527 -> Friday, 4 September 2020 12:07 PM
+City seed 234 -> Sydney, Australia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.CheckTopicText (System.String text, System.Boolean isColourHighlighting, System.Boolean isValidate, System.String objectName) (at Assets/Scripts/Managers/TopicManager.cs:5731)
+	ValidationManager.ValidateTopics () (at Assets/Scripts/Managers/ValidationManager.cs:967)
+	ValidationManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/ValidationManager.cs:167)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:832)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:887)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:394)
+	
+Dev seed 38580 -> Friday, 4 September 2020 12:08 PM
+City seed 234 -> Sydney, Australia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.CheckTopicText (System.String text, System.Boolean isColourHighlighting, System.Boolean isValidate, System.String objectName) (at Assets/Scripts/Managers/TopicManager.cs:5731)
+	ValidationManager.ValidateTopics () (at Assets/Scripts/Managers/ValidationManager.cs:967)
+	ValidationManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/ValidationManager.cs:167)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:832)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:887)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:394)
+	
+Dev seed 53102 -> Friday, 4 September 2020 12:10 PM
+City seed 234 -> Sydney, Australia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.CheckTopicText (System.String text, System.Boolean isColourHighlighting, System.Boolean isValidate, System.String objectName) (at Assets/Scripts/Managers/TopicManager.cs:5731)
+	ValidationManager.ValidateTopics () (at Assets/Scripts/Managers/ValidationManager.cs:967)
+	ValidationManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/ValidationManager.cs:167)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:832)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:887)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:394)
+	
+Dev seed 37823 -> Friday, 4 September 2020 12:11 PM
+City seed 234 -> Sydney, Australia
+
+Dev seed 41268 -> Friday, 4 September 2020 12:22 PM
+City seed 234 -> Sydney, Australia

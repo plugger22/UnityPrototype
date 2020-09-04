@@ -16,7 +16,7 @@ MonoBehaviour:
   textTop: There are none. Not for those that live on the street, anway. Nobody has
     the time or resources to help those that can't help themselves
   textMiddle: In the dog eat dog world of street living it's best to be eaten quickly
-    than linger on, being slowly chewed up, one limb at a time.
+    than to linger on, being slowly chewed up, one limb at a time.
   textBottom: If you're lucky enough to have a Pod Permit then there are organisations
     that can help but for those without it's a scary, short, future
-  isKnown: 0
+  isKnown: 1

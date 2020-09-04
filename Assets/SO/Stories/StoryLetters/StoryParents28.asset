@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: StoryParents28
   m_EditorClassIdentifier: 
   textDear: '[child]'
-  textTop: Vigo has gone quiet. We've barely seen him. Whatever it wss you did to
+  textTop: Vigo has gone quiet. We've barely seen him. Whatever it was you did to
     his family in [city], it worked. Thanks [child]
   textBottom: Your Father wouldn't have lasted on the Street. I would have had to
     sell him to the Organ Grinders in order to save myself. Best not to mention that
