@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyParents28
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Lucky Virus
   text: 
   letter: {fileID: 11400000, guid: dd59c77a3de6f3e48b4f5339ce6c3f26, type: 2}
   designNotes: storyParents28

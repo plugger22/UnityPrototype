@@ -28,8 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: No, [child], I'd be prime rib steak. They would be killing each other
-    for the chance to eat a prime cut of my rump. I'd choke them on the way down,
-    though
+    for the chance to eat a cut of my rump. I'd choke them on the way down, though
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

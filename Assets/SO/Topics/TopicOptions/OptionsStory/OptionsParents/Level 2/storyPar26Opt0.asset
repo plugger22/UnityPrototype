@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Not sure that I do, [child]. I recall you thumping the living crap out
-    of some strangers once who tried to steal your screen. Hey, you stood your ground
+  storyInfo: Not sure that I do. I recall you thumping the living crap out of some
+    strangers once who tried to steal your screen. Hey, you stood your ground
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

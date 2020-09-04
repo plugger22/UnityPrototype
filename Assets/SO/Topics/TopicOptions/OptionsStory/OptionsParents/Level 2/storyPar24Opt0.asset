@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar24Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 24 Opt 0
-  tag: Rat
-  text: Send a Message with a Rat in their Pod
+  tag: Rodent
+  text: Leave a dead Rat in their Pod
   topic: {fileID: 11400000, guid: 4703d55e83a03b04fb36f4506b0e0407, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -29,9 +29,9 @@ MonoBehaviour:
   news: 
   storyInfo: 
   storyTarget: {fileID: 11400000, guid: 0a396e7a2c32cba4ea77c20d76b73294, type: 2}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Rat</color>
+  tooltipMain: <color=#98FB98>Target (OPERATOR, Movement gear)</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Send a Message with a Rat in their Pod</color>
   optionNumber: 0

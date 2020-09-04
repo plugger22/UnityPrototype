@@ -2216,7 +2216,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0c0b005febed5fd4ea7dd2ed6c5adf77, type: 2}
   - {fileID: 11400000, guid: bf0df5db423db884890bfc80331d5a01, type: 2}
   - {fileID: 11400000, guid: 2d959c667565de248972caf9bae0b784, type: 2}
-  - {fileID: 11400000, guid: b02a835d1add4d849b89ac467f31b4bb, type: 2}
+  - {fileID: 11400000, guid: 5036411eccf6e534fa50218958af72eb, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
@@ -4968,7 +4968,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 11400000, guid: d40c883331c8e5c44b8dc80b3a772399, type: 2}
+  debugTopicPool: {fileID: 11400000, guid: e43144eec11486140b29ef695d829874, type: 2}
   numOfGearItems: -1
   numOfWorkers: 8
   bonusRenown: 0

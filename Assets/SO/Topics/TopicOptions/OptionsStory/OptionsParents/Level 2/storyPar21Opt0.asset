@@ -27,9 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Your Father means well but he is so overcome with pride that he can't
-    help himself whispering your name around the second floor. I'll speak to the old
-    fool
+  storyInfo: Your Father means well but he is so full of pride that he can't help
+    himself whispering your name around the second floor. I'll speak to the old fool
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyParents20
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Suspicious
   text: 
   letter: {fileID: 11400000, guid: b256073591be6564795a8ad7984fc451, type: 2}
   designNotes: storyParents20
@@ -52,5 +52,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 19
+  turnsLive: 17
   turnsDone: 0

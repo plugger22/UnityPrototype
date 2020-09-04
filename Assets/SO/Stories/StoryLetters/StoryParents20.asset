@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: StoryParents20
   m_EditorClassIdentifier: 
   textDear: '[child]'
-  textTop: Vigo, remember him? The Security Guard that nobbled Clara. He's been asking
-    around, asking questions about you and where you might be
+  textTop: Vigo, remember him? The Security Guard that nobbled Clara. He's been around,
+    asking questions about you and what you are up to
   textBottom: He's somehow got the idea that you're connected with the Resistance,
     who knows where from? Be careful as Vigo is like a cyborg bloodhound

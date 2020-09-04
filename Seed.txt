@@ -3573,3 +3573,55 @@ City seed 765 -> New York, America
 
 Dev seed 25169 -> Thursday, 3 September 2020 11:57 AM
 City seed 765 -> New York, America
+
+Dev seed 62835 -> Friday, 4 September 2020 11:01 AM
+WARNING [Val] ValidateSO: MISMATCH on StoryHelp, array 34, assets 38 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(StoryHelp[]) (at Assets/Scripts/Managers/ValidationManager.cs:1976)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1950)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:832)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:385)
+	City seed 234 -> Sydney, Australia
+
+Dev seed 39283 -> Friday, 4 September 2020 11:04 AM
+WARNING Invalid storyHelp (Null) for listOfStoryHelp[33]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	LoadManager:InitialiseEarly(GameState) (at Assets/Scripts/Managers/LoadManager.cs:1398)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:832)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:385)
+	City seed 234 -> Sydney, Australia
+WARNING Invalid storyHelp (Null) for arrayOfStoryHelp[33]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:CheckStoryHelpData(String) (at Assets/Scripts/Managers/ValidationManager.cs:3149)
+	ValidationManager:ExecuteIntegrityCheck() (at Assets/Scripts/Managers/ValidationManager.cs:2055)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:270)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:398)
+	
+Dev seed 35172 -> Friday, 4 September 2020 11:05 AM
+City seed 234 -> Sydney, Australia
+
+Dev seed 63530 -> Friday, 4 September 2020 11:15 AM
+City seed 234 -> Sydney, Australia
+
+Dev seed 11662 -> Friday, 4 September 2020 11:16 AM
+City seed 234 -> Sydney, Australia
+
+Dev seed 18849 -> Friday, 4 September 2020 11:19 AM
+City seed 234 -> Sydney, Australia
+WARNING Invalid topic (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	MessageManager:TopicDecision(TopicMessageData) (at Assets/Scripts/Managers/MessageManager.cs:4575)
+	TopicManager:UpdateTopicAdmin() (at Assets/Scripts/Managers/TopicManager.cs:4130)
+	TopicManager:ProcessTopicAdmin() (at Assets/Scripts/Managers/TopicManager.cs:4030)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3738)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:1096)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:406)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 48011 -> Friday, 4 September 2020 11:24 AM
+City seed 234 -> Sydney, Australia
+
+Dev seed 59401 -> Friday, 4 September 2020 11:43 AM
+City seed 234 -> Sydney, Australia

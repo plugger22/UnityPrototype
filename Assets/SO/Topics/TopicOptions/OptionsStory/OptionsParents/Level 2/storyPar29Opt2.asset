@@ -27,9 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Fate is a wonderful thing when it works for you, isn't it? I make a lot
-    of plans that involve Fate serving life up on a platter for me. I'm grateful to
-    Fate
+  storyInfo: Fate is a wonderful thing when it works for you, isn't it? It's a fickle
+    master, though [child], and I wouldn't be making any plans around it
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

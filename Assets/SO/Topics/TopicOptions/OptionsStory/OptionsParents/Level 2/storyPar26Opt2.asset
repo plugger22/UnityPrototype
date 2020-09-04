@@ -27,7 +27,7 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: I know you wouldn't. One day you are going to save not just your wobbly
+  storyInfo: I know you won't. One day you are going to save not just your wobbly
     old parents but millions of people. I'm having dreams about you and Mrs Destiny
   storyTarget: {fileID: 0}
   tooltipHeader: 

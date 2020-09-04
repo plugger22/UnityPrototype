@@ -27,9 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Stay that way, you'll live longer. Get rid of your Panda Porn habit and
-    you may even find somebody to share your life with other than a horny virtual
-    bear
+  storyInfo: Stay that way and get rid of your Panda Porn habit. You may even find
+    somebody to share your life with other than a horny virtual bear
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

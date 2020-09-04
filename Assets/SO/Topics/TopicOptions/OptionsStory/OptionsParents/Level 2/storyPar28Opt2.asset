@@ -27,9 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Sure he can, [child]. He'd Kung Fu all those bad people into sushi and
-    we'd soon be King and Queen of the Streets, living like Royalty inside a trash
-    can
+  storyInfo: Sure he can. He'd Kung Fu all those bad people into sushi and we'd soon
+    be King and Queen of the Streets, living like Royalty inside a trash can
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

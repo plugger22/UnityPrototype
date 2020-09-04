@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Viruses
   sprite: {fileID: 0}
-  textTop: With a massive population living in predominately confined circumstances,
-    Earth has been racked with a continual stream of Viral pandemics
+  textTop: With a massive population living in tight, confined circumstances, Earth
+    has been racked with a continual stream of viral pandemics
   textMiddle: Medical technology and AI have combined to quickly push out vaccines
     for whatever new virus turns up. Distribution is another matter, however
   textBottom: Anyone in 'The System' will get their shots for free. Everybody else
