@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: storyParents36
+  m_EditorClassIdentifier: 
+  tag: 
+  text: 
+  letter: {fileID: 11400000, guid: f3727c7beb566bb4480df348338918b0, type: 2}
+  designNotes: storyParents36
+  type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
+  subType: {fileID: 11400000, guid: 9c0b06df8df43f641b72a6ea311f55a1, type: 2}
+  subSubType: {fileID: 0}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics: []
+  listOfBuddyTopics:
+  - {fileID: 11400000}
+  - {fileID: 11400000, guid: e226bcd762a04ef48a9aa830f8ab46da, type: 2}
+  - {fileID: 11400000, guid: 6dc280be7dfbbc349b5946900f7e6094, type: 2}
+  - {fileID: 11400000, guid: 46cd4fe866b9aa0418e77ca6159705cc, type: 2}
+  linkedIndex: 3
+  levelIndex: 3
+  topicItem: {fileID: 11400000, guid: 72a58ae57f66b8942915f9d7e27e980f, type: 2}
+  listOfStoryHelp: []
+  profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: c6de6729a40f1c849add45e2aee2e138, type: 2}
+  - {fileID: 11400000, guid: 1df575b60de58dc46b6f4b17f0a3a0ab, type: 2}
+  - {fileID: 11400000, guid: 85bfee5dd2489b54789d867be5778846, type: 2}
+  listOfIgnoreEffects: []
+  listOfOptions:
+  - {fileID: 11400000, guid: 009613a12e6353040b76f99cbbf653c5, type: 2}
+  - {fileID: 11400000, guid: e2d5c12f4dd9b57419f3206f3459788c, type: 2}
+  - {fileID: 11400000, guid: 7aff8784042c449458d547f427917744, type: 2}
+  - {fileID: 11400000, guid: 180ed9944a94a2f4aaec3ab7655a5c34, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  status: 0
+  isCurrent: 0
+  timerStart: 0
+  timerRepeat: 0
+  timerWindow: 0
+  turnsDormant: 0
+  turnsActive: 0
+  turnsLive: 0
+  turnsDone: 0

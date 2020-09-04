@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: storyParents30
+  m_EditorClassIdentifier: 
+  tag: 
+  text: 
+  letter: {fileID: 11400000, guid: a95e6f6a9cb2a724cafc1dd20c3ffa13, type: 2}
+  designNotes: storyParents30
+  type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
+  subType: {fileID: 11400000, guid: 9c0b06df8df43f641b72a6ea311f55a1, type: 2}
+  subSubType: {fileID: 0}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics:
+  - {fileID: 11400000, guid: 9cc40064f2b7d9f4ba32a56abd456e43, type: 2}
+  - {fileID: 11400000, guid: 007684aa6e43a2f4bbfb5e932ac1697f, type: 2}
+  listOfBuddyTopics:
+  - {fileID: 11400000}
+  - {fileID: 11400000, guid: 09ed6b7ff3c30ce4896549e9ebd7a6cf, type: 2}
+  linkedIndex: 0
+  levelIndex: 3
+  topicItem: {fileID: 11400000, guid: 72a58ae57f66b8942915f9d7e27e980f, type: 2}
+  listOfStoryHelp: []
+  profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: c6de6729a40f1c849add45e2aee2e138, type: 2}
+  listOfIgnoreEffects: []
+  listOfOptions:
+  - {fileID: 11400000, guid: f74d94e2bb35aba43a5fa6000387b08f, type: 2}
+  - {fileID: 11400000, guid: 581f7d77a05a282499bda78c54278c55, type: 2}
+  - {fileID: 11400000, guid: 1c7b58de208b2114ba88a83ca830fdf7, type: 2}
+  - {fileID: 11400000, guid: 196c575dde004b9429a7b29a69d71d71, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  status: 4
+  isCurrent: 0
+  timerStart: 0
+  timerRepeat: 0
+  timerWindow: 0
+  turnsDormant: 0
+  turnsActive: 0
+  turnsLive: 17
+  turnsDone: 0
