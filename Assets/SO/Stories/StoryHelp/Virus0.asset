@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
+  m_Name: Virus0
+  m_EditorClassIdentifier: 
+  tag: Viruses
+  sprite: {fileID: 0}
+  textTop: With a massive population living in predominately confined circumstances,
+    Earth has been racked with a continual stream of Viral pandemics
+  textMiddle: Medical technology and AI have combined to quickly push out vaccines
+    for whatever new virus turns up. Distribution is another matter, however
+  textBottom: Anyone in 'The System' will get their shots for free. Everybody else
+    has to pay more money than they can afford to be placed on a waiting list
+  isKnown: 0

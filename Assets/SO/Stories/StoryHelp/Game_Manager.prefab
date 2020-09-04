@@ -2213,10 +2213,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5c7a043393b97514a8169e6d2641505a, type: 2}
   - {fileID: 11400000, guid: 1246979a493fdb14d814cd663bcaccef, type: 2}
   - {fileID: 11400000, guid: 546a0c18751e01346bbb68d1b3b1de07, type: 2}
-  - {fileID: 11400000, guid: 0c0b005febed5fd4ea7dd2ed6c5adf77, type: 2}
-  - {fileID: 11400000, guid: bf0df5db423db884890bfc80331d5a01, type: 2}
-  - {fileID: 11400000, guid: 2d959c667565de248972caf9bae0b784, type: 2}
-  - {fileID: 11400000, guid: b02a835d1add4d849b89ac467f31b4bb, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
