@@ -7656,7 +7656,6 @@ public class TopicManager : MonoBehaviour
                     int count = listOfTopics.Count;
                     if (count > 0)
                     {
-                        Sprite debugSprite = GameManager.i.guiScript.topicDefaultSprite;
                         coroutine = DisplayTopicOptions(listOfTopics);
                         StartCoroutine(coroutine);
                     }

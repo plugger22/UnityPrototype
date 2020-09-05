@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryParents33
   m_EditorClassIdentifier: 
   textDear: '[child]'
-  textTop: 
-  textBottom: 
+  textTop: I've told your Father to stop wasting his time with that strange kid, Milford.
+    Vigo, the Security Guard, beat the kid up yesterday, just out of spite
+  textBottom: We don't want Vigo to pay us anymore attention and Milford is a real
+    fruit loop. If he wants to join the Pig People Cult then let him go, I say

@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryParents31
   m_EditorClassIdentifier: 
   textDear: '[child]'
-  textTop: 
-  textBottom: 
+  textTop: Your Father is spending a lot of time with a kid called Milford. He says
+    that the kid reminds him of you when you were young. I remember you being smarter
+  textBottom: Milford is all dreams and aspirations. Wants to joint the Resistance
+    one day, apparently. More likely to join the Pig Cultists, is my guess

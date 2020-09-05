@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryParents35
   m_EditorClassIdentifier: 
   textDear: '[child]'
-  textTop: 
-  textBottom: 
+  textTop: Ahhh, your Father is insisting that I ask you to help his new best friend,
+    that kid, Milford. He wants you to fix him up with an eductation
+  textBottom: You make your own mind up about it, [child], but I wouldn't go busting
+    your boiler over a kid who thinks that everyone has six fingers

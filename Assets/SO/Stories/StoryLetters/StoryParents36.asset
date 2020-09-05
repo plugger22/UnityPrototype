@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryParents36
   m_EditorClassIdentifier: 
   textDear: '[child]'
-  textTop: 
-  textBottom: 
+  textTop: Milford is going gangbusters with his education. The kids is like a sponge,
+    soaking up knowledge. You've done well, [child]
+  textBottom: Those crazy Pig People cultists will have to find another victim. Anyone
+    with smarts knows enough to stay away from that lot

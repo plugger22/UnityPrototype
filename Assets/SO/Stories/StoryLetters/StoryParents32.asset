@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryParents32
   m_EditorClassIdentifier: 
   textDear: '[child]'
-  textTop: 
-  textBottom: 
+  textTop: Vigo, the Security Guard, beat up that kid I mentioned, Milford, yesterday
+    for mouthing off at him. Broke his nose. Probably a good lesson
+  textBottom: Milford is convinced the Pig People have all the answers and is loosing
+    interest in the Resistance. What do they teach kids these days?

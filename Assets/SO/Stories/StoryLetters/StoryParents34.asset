@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryParents34
   m_EditorClassIdentifier: 
   textDear: '[child]'
-  textTop: 
-  textBottom: 
+  textTop: I've spoken to that kid, Milford, and I'm convinced he'd make a great recruit
+    for the Resistance once he grows up. But he doesn't know anything
+  textBottom: Milford needs an education. I'd do it if I could but I'm just a burnt
+    out old fireman. The Pig People are going to grab him if we don't occupy his mind
