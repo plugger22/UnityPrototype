@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar32Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 32 Opt 2
-  tag: 
-  text: 
+  tag: Rueful
+  text: Education is what it used to be
   topic: {fileID: 11400000, guid: 9cc40064f2b7d9f4ba32a56abd456e43, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: At least you went to school, even if you were taught by an eduBot. Kids
+    these days don't even get that. Most of 'em can barely read a sentence
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar36Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 36 Opt 2
-  tag: 
-  text: 
+  tag: Curious
+  text: Are there many Pig People there?
   topic: {fileID: 11400000, guid: 62e3abdff813a584da8667e4784de82a, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Hard to tell. They don't tend to advertise.  Nobody is shouting 'I Love
+    Purple Pigs' around here but I reckon there's more than a few of 'em. Lurking
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

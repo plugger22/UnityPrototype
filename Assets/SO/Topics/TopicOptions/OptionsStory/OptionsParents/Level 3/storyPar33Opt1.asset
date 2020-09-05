@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar33Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 33 Opt 1
-  tag: 
-  text: 
+  tag: Curious
+  text: Has the kid had any Education?
   topic: {fileID: 11400000, guid: 007684aa6e43a2f4bbfb5e932ac1697f, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: No. What kid has these days? They are nothing more than raw meat for
+    the predators. Like the Pig People. That's one lot of do gooders I don't trust
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

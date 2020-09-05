@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar38Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 38 Opt 0
-  tag: 
-  text: 
+  tag: Mmmm...
+  text: That doesn't sound promising
   topic: {fileID: 11400000, guid: 6dc280be7dfbbc349b5946900f7e6094, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Those Pig People cultists don't know when to stop. They keep pestering
+    people until they join up and then it's too late. Once they get that nanoTatt...
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 3
+  optionNumber: 0

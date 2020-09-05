@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar30Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 30 Opt 3
-  tag: 
-  text: 
+  tag: Indifferent
+  text: Let the Pig People have him
   topic: {fileID: 11400000, guid: 3eb2434fb9cd5c74198edfaba74aae3f, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: No, [child]. He's a nice kid, just a bit confused. He doesn't know much
+    about anything and those Pig People are like hound dogs following a wounded deer
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

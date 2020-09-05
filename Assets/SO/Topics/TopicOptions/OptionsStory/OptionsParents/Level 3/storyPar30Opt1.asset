@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar30Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 30 Opt 1
-  tag: 
-  text: 
+  tag: Curious
+  text: How old is Milford?
   topic: {fileID: 11400000, guid: 3eb2434fb9cd5c74198edfaba74aae3f, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,13 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Fourteen, as far as I can tell. He can't count so it's hard for him to
+    know. What the kid really needs is a education. That'd keep the Pig People at
+    bay
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

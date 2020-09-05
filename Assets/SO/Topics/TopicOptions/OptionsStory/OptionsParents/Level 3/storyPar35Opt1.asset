@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar35Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 35 Opt 1
-  tag: 
-  text: 
+  tag: Fake Permit
+  text: Authorise a fake Education Permit
   topic: {fileID: 11400000, guid: 42400e6510763934386998ae8a1f66b5, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

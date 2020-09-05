@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar31Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 31 Opt 2
-  tag: 
-  text: 
+  tag: Question
+  text: What do you think of the Kid?
   topic: {fileID: 11400000, guid: 09ed6b7ff3c30ce4896549e9ebd7a6cf, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: The kid is prime Pig People Cult material. Ignorant and all mouth. Your
+    father shouldn't be wasting time on him. It'll just attract attention
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

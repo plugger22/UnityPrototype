@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar31Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 31 Opt 3
-  tag: 
-  text: 
+  tag: Worried
+  text: Is Dad going senile?
   topic: {fileID: 11400000, guid: 09ed6b7ff3c30ce4896549e9ebd7a6cf, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: No, although if he keeps watching Kill Ball episodes he'll pobably strangle
+    himself one day. All that violence isn't good for your mind. It does things...
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar36Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 36 Opt 3
-  tag: 
-  text: 
+  tag: Joke
+  text: Education Never Done Me No Good
   topic: {fileID: 11400000, guid: 62e3abdff813a584da8667e4784de82a, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Sure it did! Look at you, a rising star in the Resistance, making a difference
+    to the world. Education and upbringing did that. I'm proud of you [child]
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

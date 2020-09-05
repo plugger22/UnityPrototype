@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar36Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 36 Opt 1
-  tag: 
-  text: 
+  tag: Caution
+  text: Tell him to stay clear of Vigo
   topic: {fileID: 11400000, guid: 62e3abdff813a584da8667e4784de82a, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Already done. He's learnt his leasson. Don't kick back against Authority.
+    Be like water and flow around the obstacles. Be like me
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

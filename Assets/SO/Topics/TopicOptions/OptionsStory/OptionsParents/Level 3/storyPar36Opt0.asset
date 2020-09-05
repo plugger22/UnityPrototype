@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar36Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 36 Opt 0
-  tag: 
-  text: 
+  tag: Request
+  text: Keep an eye on Milford for me
   topic: {fileID: 11400000, guid: 62e3abdff813a584da8667e4784de82a, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: He's on track for a big future, I can feel it in my hose. I'll give him
+    a nudge back on track when he needs it, just like I did with you.
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 3
+  optionNumber: 0

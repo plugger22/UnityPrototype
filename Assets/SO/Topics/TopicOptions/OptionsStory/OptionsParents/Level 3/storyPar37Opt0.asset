@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar37Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 37 Opt 0
-  tag: 
-  text: 
+  tag: Caution
+  text: Stay clear of him, Dad
   topic: {fileID: 11400000, guid: e226bcd762a04ef48a9aa830f8ab46da, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: It pains me to agree with you but once the Pig People have tagged him
+    it's all over. It's a shame 'cause he was a good kid and had a future
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 3
+  optionNumber: 0

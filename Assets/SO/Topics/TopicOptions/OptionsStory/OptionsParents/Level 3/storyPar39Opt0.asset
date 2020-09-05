@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar39Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 39 Opt 0
-  tag: 
-  text: 
+  tag: Criticise
+  text: Sarcasm doesn't become you, Mom
   topic: {fileID: 11400000, guid: 46cd4fe866b9aa0418e77ca6159705cc, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I'm choosing to ignore that comment, [child]. You are probably under
+    a lot of pressure and aren't at your best. I understand and I forgive
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 3
+  optionNumber: 0

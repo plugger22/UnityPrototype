@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar32Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 32 Opt 0
-  tag: 
-  text: 
+  tag: Angry
+  text: Vigo again, I thought he was sick
   topic: {fileID: 11400000, guid: 9cc40064f2b7d9f4ba32a56abd456e43, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: He had the virus for a long while but bounced back because of his shots.
+    Now he struts up and down our floor like an arrogant peacock dispensing 'justice'
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 3
+  optionNumber: 0

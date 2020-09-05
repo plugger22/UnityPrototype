@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar39Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 39 Opt 2
-  tag: 
-  text: 
+  tag: Annoyed
+  text: Dad needs to get a life
   topic: {fileID: 11400000, guid: 46cd4fe866b9aa0418e77ca6159705cc, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: He does, [child], he does. It would be great if you could come home and
+    tell him that yourself as he doesn't listen to a thing I say. We miss you
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

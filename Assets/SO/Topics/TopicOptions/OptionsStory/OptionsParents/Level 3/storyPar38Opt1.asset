@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar38Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 38 Opt 1
-  tag: 
-  text: 
+  tag: Confident
+  text: Education will sort him out
   topic: {fileID: 11400000, guid: 6dc280be7dfbbc349b5946900f7e6094, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Hopefully. It worked wonders for you, [child]. I always thought that
+    you'd become a 'pod slug but then you went and got educated. It made a difference
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar39Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 39 Opt 3
-  tag: 
-  text: 
+  tag: Confused
+  text: Aren't the Piggies trying to save the World?
   topic: {fileID: 11400000, guid: 46cd4fe866b9aa0418e77ca6159705cc, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: That's what they TELL you. I don't believe them. Besides, what good do
+    petitions do anyway? Who ever saved the day with a PETITION for goodness sakes?
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

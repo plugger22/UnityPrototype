@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar34Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 34 Opt 0
-  tag: 
-  text: 
+  tag: LearnMeUp App
+  text: Coerce App from Official
   topic: {fileID: 11400000, guid: 74979de02968f82448185902190c6ae9, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

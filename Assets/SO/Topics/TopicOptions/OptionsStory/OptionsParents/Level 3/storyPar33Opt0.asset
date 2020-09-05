@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar33Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 33 Opt 0
-  tag: 
-  text: 
+  tag: Query
+  text: Vigo is still causing trouble?
   topic: {fileID: 11400000, guid: 007684aa6e43a2f4bbfb5e932ac1697f, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: He recovered from the virus, unfortunately. The guards all get the shots
+    as part of their deal. He's as arrogant and as rude as ever, and as dangerous
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 3
+  optionNumber: 0

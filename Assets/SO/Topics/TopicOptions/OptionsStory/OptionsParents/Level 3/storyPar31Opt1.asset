@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar31Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 31 Opt 1
-  tag: 
-  text: 
+  tag: Amazed
+  text: Milford? That's a name?
   topic: {fileID: 11400000, guid: 09ed6b7ff3c30ce4896549e9ebd7a6cf, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I think the kid's parents were zoned out on [drug] when they named him.
+    I've trodden on insects with better names
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

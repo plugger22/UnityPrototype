@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar30Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 30 Opt 0
-  tag: 
-  text: 
+  tag: Odd
+  text: Isn't that the name of a TractorBot?
   topic: {fileID: 11400000, guid: 3eb2434fb9cd5c74198edfaba74aae3f, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: No, [child], it's the name of the kid I'm telling you about. Listen up
+    and put that Panda Porn nonsense away while you can still see straight
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
