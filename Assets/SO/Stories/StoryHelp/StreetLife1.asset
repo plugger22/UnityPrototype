@@ -18,5 +18,5 @@ MonoBehaviour:
   textMiddle: Organ Grinders collect warm, still breathing, bodies and deliver them
     to the harversters who onsell parts to Ripper Docs and other shady operators
   textBottom: Vultures are a cannibalistic cult who consider human flesh to be the
-    main ingredient of a balanced diet. They eat people alive as fresh meat is healthier
-  isKnown: 0
+    main ingredient of a balanced diet. They eat people alive as fresh meat is safest
+  isKnown: 1

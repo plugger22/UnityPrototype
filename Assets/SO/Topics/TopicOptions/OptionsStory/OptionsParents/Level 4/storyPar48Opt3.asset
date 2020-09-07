@@ -27,13 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: I will. We can't have Vigo thinking that there's still some life left
-    in me. Your Father is going to get some Froth pills so I can spit bubbles at the
-    same time
+  storyInfo: We can't have Vigo thinking that there's still life left in me. Your
+    Father is getting some Froth pills so I can spit bubbles at the same time
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

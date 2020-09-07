@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Story Parents 47 Opt 3
   tag: Shrugs
-  text: Mom wad due to check out anyway
+  text: Mom was due to check out anyway
   topic: {fileID: 11400000, guid: 6c3ddeb428c1e9a4aaab8f38e8b8360d, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -28,12 +28,11 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: Are you saying that your parents deserve to die because they're OLD?
-    that'll be you one day, [child], that's if your heart doesn't give out from Panda
-    Porn
+    that'll be you one day, [child], that's if the Panda Porn doesn't get you first
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

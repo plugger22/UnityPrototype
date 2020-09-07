@@ -15,8 +15,8 @@ MonoBehaviour:
   sprite: {fileID: 0}
   textTop: Desperate parents, deprived of official educational opportunities for their
     children, source alternative means. All are banned or restricted
-  textMiddle: Attachments can be fitted to a childs servoPod which enables them to
+  textMiddle: Attachments can be fitted to a child's servoPod which enables them to
     link into organised educational activities. These require a permit and are expensive
   textBottom: Illegal LearnMeUpp Apps can be sourced that used sophisticated neural
     AI's to provide a personalised tutor for your child. Almost impossible to find
-  isKnown: 0
+  isKnown: 1

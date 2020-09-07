@@ -27,12 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: He's already done it. He stood there in front of our pods like a mini
-    dictator with an evil smirk and told us how there were 'changes' to our circumstances
+  storyInfo: It's done. He stood there in front of our pods like a Mini Dictator with
+    an evil smirk and told us how there were 'changes' to our circumstances
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 3
+  optionNumber: 0

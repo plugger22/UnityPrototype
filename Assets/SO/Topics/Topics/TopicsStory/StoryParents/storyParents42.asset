@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyParents42
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Vigo
   text: 
   letter: {fileID: 11400000, guid: f7138df1ea9b99e4abe0161072724c34, type: 2}
   designNotes: storyParents42
@@ -46,7 +46,7 @@ MonoBehaviour:
   tooltipMain: 
   tooltipDetails: 
   status: 0
-  isCurrent: 0
+  isCurrent: 1
   timerStart: 0
   timerRepeat: 0
   timerWindow: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: UBI
   sprite: {fileID: 21300000, guid: 9c060f66520d9874297a5ed308585c4c, type: 3}
-  textTop: The average citizen, operating within the rules of hte system, either has
+  textTop: The average citizen, operating within the rules of the system, either has
     a job or is paid a Universal Basic Income. Typically jobs pay the same as the
     UBI
   textMiddle: People choose to work, not for any extra money, but to provide a purpose
@@ -21,4 +21,4 @@ MonoBehaviour:
   textBottom: The UBI, along with endless permits, allow The Authority to maintain
     a tight grip on the majority of their citizens. Few people earn more than the
     UBI
-  isKnown: 0
+  isKnown: 1

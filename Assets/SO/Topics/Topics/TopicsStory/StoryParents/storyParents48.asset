@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyParents48
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Mom
   text: 
   letter: {fileID: 11400000, guid: 0fde66410cf5c574e84827249b80fa68, type: 2}
   designNotes: storyParents48

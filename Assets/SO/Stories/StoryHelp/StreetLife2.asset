@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Charities
   sprite: {fileID: 21300000, guid: 0990750233d69384f832d111b8981353, type: 3}
-  textTop: There are none. Not for those that live on the street, anway. Nobody has
+  textTop: There are none. Not for those that live on the street, anyway. Nobody has
     the time or resources to help those that can't help themselves
   textMiddle: In the dog eat dog world of street living it's best to be eaten quickly
     than to linger on, being slowly chewed up, one limb at a time.

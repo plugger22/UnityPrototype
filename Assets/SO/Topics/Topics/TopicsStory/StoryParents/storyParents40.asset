@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyParents40
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Milford
   text: 
   letter: {fileID: 11400000, guid: da37f9c9a417a05449550c10a4ffb409, type: 2}
   designNotes: storyParents40
@@ -45,12 +45,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 2
-  isCurrent: 1
+  status: 4
+  isCurrent: 0
   timerStart: 0
   timerRepeat: 0
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 17
+  turnsLive: 20
   turnsDone: 0

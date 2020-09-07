@@ -28,12 +28,11 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: It's because of you, [child]. He remembers when you broke his nose. This
-    is just his way of evening out the score. It's a shame it has to involve your
-    Mom
+    is his way of evening out the score. It's a shame it has to involve your Mom
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

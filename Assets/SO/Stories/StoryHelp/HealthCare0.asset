@@ -13,10 +13,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Prescriptions
   sprite: {fileID: 0}
-  textTop: For the masses, MedBot terminals ccan you and diagnose any problems. Medications,
-    if needed, are obtained via medAuthorisation chips
+  textTop: For the masses, MedBot terminals will scan you and diagnose any problems.
+    Medications, if needed, are obtained via medAuthorisation chips
   textMiddle: Inserting a chip into a MedDispenser will spit out the required medicine.
-    Geniune pharmacueticals cost more money than most people can afford
+    Geniune pharmacueticals are priced beyond most people's reach
   textBottom: Cheap, derivative meds with dubious provenance are what spew forth from
     the MedDispensers. Best to stay healthy, if at all possible.
-  isKnown: 0
+  isKnown: 1

@@ -3876,3 +3876,26 @@ City seed 890 -> Arles, France
 
 Dev seed 48552 -> Monday, 7 September 2020 4:33 PM
 City seed 1616 -> Mexico City, Mexico
+
+Dev seed 10878 -> Tuesday, 8 September 2020 9:03 AM
+City seed 1616 -> Mexico City, Mexico
+WARNING Invalid topic (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	MessageManager:TopicDecision(TopicMessageData) (at Assets/Scripts/Managers/MessageManager.cs:4575)
+	TopicManager:UpdateTopicAdmin() (at Assets/Scripts/Managers/TopicManager.cs:4130)
+	TopicManager:ProcessTopicAdmin() (at Assets/Scripts/Managers/TopicManager.cs:4030)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3738)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:1096)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:406)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 57429 -> Tuesday, 8 September 2020 9:14 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 64088 -> Tuesday, 8 September 2020 9:20 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 21233 -> Tuesday, 8 September 2020 9:31 AM
+City seed 1616 -> Mexico City, Mexico

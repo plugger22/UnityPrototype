@@ -27,9 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: So did our planet until we decided to give it a haircut and cook it.
-    Like Milford it HAD potential. He's now in the piggie meat grinder and we're getting
-    toasted
+  storyInfo: So did our planet until we decided to give it a haircut and over cook
+    it. Like Milford it HAD potential
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
