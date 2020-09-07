@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Kids are indestructible. You could drop them out a two  storey window
-    and they'd bounce. All Vigo did was mess Milford up and splash blood on the walls
+  storyInfo: Kids are indestructible. You could drop them out of a two storey window
+    and they'd bounce. All Vigo did was mess Milford up some
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

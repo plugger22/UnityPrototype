@@ -3673,3 +3673,139 @@ City seed 234 -> Sydney, Australia
 
 Dev seed 60656 -> Saturday, 5 September 2020 4:49 PM
 City seed 890 -> Arles, France
+
+Dev seed 32783 -> Sunday, 6 September 2020 11:55 AM
+City seed 890 -> Arles, France
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.ProcessPlayerMove (modalAPI.ModalMoveDetails moveDetails) (at Assets/Scripts/Managers/NodeManager.cs:2270)
+	NodeManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/NodeManager.cs:399)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	NodeManager+<CreateMoveMenu>c__AnonStorey3.<>m__0 () (at Assets/Scripts/Managers/NodeManager.cs:1700)
+	UnityEngine.Events.InvokableCall.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent.cs:166)
+	UnityEngine.Events.UnityEvent.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent_0.cs:58)
+	UnityEngine.UI.Button.Press () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:36)
+	UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:45)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.ProcessPlayerMove (modalAPI.ModalMoveDetails moveDetails) (at Assets/Scripts/Managers/NodeManager.cs:2270)
+	NodeManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/NodeManager.cs:399)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	NodeManager+<CreateMoveMenu>c__AnonStorey3.<>m__0 () (at Assets/Scripts/Managers/NodeManager.cs:1700)
+	UnityEngine.Events.InvokableCall.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent.cs:166)
+	UnityEngine.Events.UnityEvent.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent_0.cs:58)
+	UnityEngine.UI.Button.Press () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:36)
+	UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:45)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+EffectManager.ExecutePlayerInvisibility (Effect effect, packageAPI.EffectDataInput dataInput, Node node) (at Assets/Scripts/Managers/EffectManager.cs:5657)
+	EffectManager.ProcessEffect (Effect effect, Node node, packageAPI.EffectDataInput dataInput, gameAPI.Actor actor) (at Assets/Scripts/Managers/EffectManager.cs:2389)
+	TargetManager.ProcessTargetInfo (modalAPI.GenericReturnData detailsGeneric) (at Assets/Scripts/Managers/TargetManager.cs:1972)
+	TargetManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TargetManager.cs:236)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ModalGenericPicker.ProcessGenericChoice () (at Assets/Scripts/GUI/ModalGenericPicker.cs:721)
+	ModalGenericPicker.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalGenericPicker.cs:155)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ButtonInteraction.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+EffectManager.ExecutePlayerInvisibility (Effect effect, packageAPI.EffectDataInput dataInput, Node node) (at Assets/Scripts/Managers/EffectManager.cs:5657)
+	EffectManager.ProcessEffect (Effect effect, Node node, packageAPI.EffectDataInput dataInput, gameAPI.Actor actor) (at Assets/Scripts/Managers/EffectManager.cs:2389)
+	ActionManager.ProcessNodeAction (modalAPI.ModalActionDetails details) (at Assets/Scripts/Managers/ActionManager.cs:343)
+	ActionManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ActionManager.cs:151)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ActorManager+<GetNodeActions>c__AnonStorey2.<>m__0 () (at Assets/Scripts/Managers/ActorManager.cs:1645)
+	UnityEngine.Events.InvokableCall.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent.cs:166)
+	UnityEngine.Events.UnityEvent.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent_0.cs:58)
+	UnityEngine.UI.Button.Press () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:36)
+	UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:45)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 21480 -> Sunday, 6 September 2020 12:02 PM
+City seed 890 -> Arles, France
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.ProcessPlayerMove (modalAPI.ModalMoveDetails moveDetails) (at Assets/Scripts/Managers/NodeManager.cs:2270)
+	NodeManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/NodeManager.cs:399)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	NodeManager+<CreateMoveMenu>c__AnonStorey3.<>m__0 () (at Assets/Scripts/Managers/NodeManager.cs:1700)
+	UnityEngine.Events.InvokableCall.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent.cs:166)
+	UnityEngine.Events.UnityEvent.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent_0.cs:58)
+	UnityEngine.UI.Button.Press () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:36)
+	UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:45)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.ProcessPlayerMove (modalAPI.ModalMoveDetails moveDetails) (at Assets/Scripts/Managers/NodeManager.cs:2270)
+	NodeManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/NodeManager.cs:399)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	NodeManager+<CreateMoveMenu>c__AnonStorey3.<>m__0 () (at Assets/Scripts/Managers/NodeManager.cs:1700)
+	UnityEngine.Events.InvokableCall.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent.cs:166)
+	UnityEngine.Events.UnityEvent.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent_0.cs:58)
+	UnityEngine.UI.Button.Press () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:36)
+	UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:45)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+EffectManager.ExecutePlayerInvisibility (Effect effect, packageAPI.EffectDataInput dataInput, Node node) (at Assets/Scripts/Managers/EffectManager.cs:5657)
+	EffectManager.ProcessEffect (Effect effect, Node node, packageAPI.EffectDataInput dataInput, gameAPI.Actor actor) (at Assets/Scripts/Managers/EffectManager.cs:2389)
+	ActionManager.ProcessNodeAction (modalAPI.ModalActionDetails details) (at Assets/Scripts/Managers/ActionManager.cs:343)
+	ActionManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ActionManager.cs:151)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ActorManager+<GetNodeActions>c__AnonStorey2.<>m__0 () (at Assets/Scripts/Managers/ActorManager.cs:1645)
+	UnityEngine.Events.InvokableCall.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent.cs:166)
+	UnityEngine.Events.UnityEvent.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent_0.cs:58)
+	UnityEngine.UI.Button.Press () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:36)
+	UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:45)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+EffectManager.ExecutePlayerInvisibility (Effect effect, packageAPI.EffectDataInput dataInput, Node node) (at Assets/Scripts/Managers/EffectManager.cs:5657)
+	EffectManager.ProcessEffect (Effect effect, Node node, packageAPI.EffectDataInput dataInput, gameAPI.Actor actor) (at Assets/Scripts/Managers/EffectManager.cs:2389)
+	ActionManager.ProcessNodeAction (modalAPI.ModalActionDetails details) (at Assets/Scripts/Managers/ActionManager.cs:343)
+	ActionManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ActionManager.cs:151)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ActorManager+<GetNodeActions>c__AnonStorey2.<>m__0 () (at Assets/Scripts/Managers/ActorManager.cs:1645)
+	UnityEngine.Events.InvokableCall.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent.cs:166)
+	UnityEngine.Events.UnityEvent.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent_0.cs:58)
+	UnityEngine.UI.Button.Press () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:36)
+	UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:45)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 46368 -> Monday, 7 September 2020 9:27 AM
+WARNING [Val] ValidateSO: MISMATCH on TopicOption, array 1147, assets 1148 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicOption[]) (at Assets/Scripts/Managers/ValidationManager.cs:1976)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1898)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:832)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:385)
+	City seed 890 -> Arles, France
+
+Dev seed 20727 -> Monday, 7 September 2020 9:48 AM
+WARNING [Val] ValidateSO: MISMATCH on TopicOption, array 1147, assets 1148 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicOption[]) (at Assets/Scripts/Managers/ValidationManager.cs:1976)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1898)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:832)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:385)
+	City seed 890 -> Arles, France
+
+Dev seed 20850 -> Monday, 7 September 2020 9:49 AM
+WARNING [Val] ValidateSO: MISMATCH on TopicOption, array 1147, assets 1148 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicOption[]) (at Assets/Scripts/Managers/ValidationManager.cs:1976)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1898)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:832)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:385)
+	City seed 890 -> Arles, France

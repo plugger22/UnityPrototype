@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: He had the virus for a long while but bounced back because of his shots.
-    Now he struts up and down our floor like an arrogant peacock dispensing 'justice'
+  storyInfo: He had the virus for a while but bounced back because of his shots. Now
+    he struts up and down our floor like an arrogant peacock dispensing 'justice'
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

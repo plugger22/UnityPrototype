@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: No, although if he keeps watching Kill Ball episodes he'll pobably strangle
-    himself one day. All that violence isn't good for your mind. It does things...
+  storyInfo: No, but if he keeps watching Kill Ball episodes he'll pobably strangle
+    himself one day. All that violence isn't good for his mind. It does things...
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

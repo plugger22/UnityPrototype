@@ -27,9 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Fourteen, as far as I can tell. He can't count so it's hard for him to
-    know. What the kid really needs is a education. That'd keep the Pig People at
-    bay
+  storyInfo: Fifteen, as far as I can tell. He can't count so it's hard for him to
+    know. What the kid really needs is a education. That'll keep the Piggies at bay
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

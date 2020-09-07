@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Oh do I, [child]? Helping the young isn't acceptable behaviour for your
-    dear old Dad, is it? Should I follow your example and crank up a Panda Porn habit?
+  storyInfo: Oh do I? Helping the young isn't acceptable behaviour for your dear old
+    Dad, is it? Should I follow your example and start up a Panda Porn habit?
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

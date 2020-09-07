@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Story Parents 39 Opt 3
   tag: Confused
-  text: Aren't the Piggies trying to save the World?
+  text: Aren't the Piggies out to save Us?
   topic: {fileID: 11400000, guid: 46cd4fe866b9aa0418e77ca6159705cc, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

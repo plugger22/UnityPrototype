@@ -28,7 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: Those Pig People cultists don't know when to stop. They keep pestering
-    people until they join up and then it's too late. Once they get that nanoTatt...
+    people until they join and then it's too late. Once they get that nanoTatt...
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

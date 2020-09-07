@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: How do I do that? Cut off his Kill Ball episodes? He'd start having fits
-    from the shock. You need to come home and talk to your Father. He listens to you
+  storyInfo: Howt? Cut off his Kill Ball episodes? He'd start having fits from the
+    shock. You need to come home and talk to your Father. He listens to you
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

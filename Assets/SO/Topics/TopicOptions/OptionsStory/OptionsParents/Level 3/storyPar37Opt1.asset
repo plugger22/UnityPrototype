@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: How often do we ask anything of you, [child]? You're a big wheel in the
-    Resistance and we're just little, lonely, old folk who happen to be your parents
+  storyInfo: How often do we ask anything of you? You're a big wheel in the Resistance
+    and we're just little, lonely, old folk who happen to be your parents
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Sure it did! Look at you, a rising star in the Resistance, making a difference
-    to the world. Education and upbringing did that. I'm proud of you [child]
+  storyInfo: Yes it did! Look at you, a rising star in the Resistance, making a difference
+    to the world. Education and upbringing did that. I'm proud of you
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

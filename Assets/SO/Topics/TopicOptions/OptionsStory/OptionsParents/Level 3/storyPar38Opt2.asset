@@ -27,7 +27,7 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Well at least Vigo isn't back on our case. That's something. Who  knows,
+  storyInfo: Well at least Vigo isn't bothering us. That's something. Who  knows,
     maybe Milford will turn out O.K? Kids huh? Roll the dice and hope for the best
   storyTarget: {fileID: 0}
   tooltipHeader: 
