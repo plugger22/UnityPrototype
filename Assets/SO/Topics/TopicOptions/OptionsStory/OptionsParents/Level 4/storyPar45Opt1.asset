@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar45Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 45 Opt 1
-  tag: 
-  text: 
+  tag: Plunder
+  text: Ransack a Med supply warehouse
   topic: {fileID: 11400000, guid: e912002979d2b1c4d8ba11ea9dead7b3, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

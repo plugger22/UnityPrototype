@@ -12,5 +12,9 @@ MonoBehaviour:
   m_Name: StoryParents48
   m_EditorClassIdentifier: 
   textDear: '[child]'
-  textTop: 
-  textBottom: 
+  textTop: I'm back taking my insulin shots, thanks to you. I'm still shaking but
+    it's getting less every day. I've hidden a spare supply in an air vent just in
+    case
+  textBottom: Vigo doesn't know that I have the insulin and I have to make a point
+    of shaking up a storm everytime he comes past. He's a vulture, waiting for me
+    to die

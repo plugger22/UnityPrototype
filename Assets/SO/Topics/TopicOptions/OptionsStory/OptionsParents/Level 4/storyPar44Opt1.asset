@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar44Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 44 Opt 1
-  tag: 
-  text: 
+  tag: Locate
+  text: Access a blank MedAuthorisation chip
   topic: {fileID: 11400000, guid: 7ce84f177b1087945ba413df008d96df, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

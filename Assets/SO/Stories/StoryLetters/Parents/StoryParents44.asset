@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryParents44
   m_EditorClassIdentifier: 
   textDear: '[child]'
-  textTop: 
-  textBottom: 
+  textTop: Your Mother has got the wobbles, [child]. If she doesn't get her regular
+    diabetes shots soon, she is liable to shake herself to bits
+  textBottom: Vigo has cut off her supply. He's doing it because of you, [child].
+    The cult crap is just an excuse. You need to source some medicine for your Mother

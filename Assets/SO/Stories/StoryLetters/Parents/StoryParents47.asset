@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryParents47
   m_EditorClassIdentifier: 
   textDear: '[child]'
-  textTop: 
-  textBottom: 
+  textTop: Finding time to help your Mother obtain vital medicine was too much for
+    you, was it [child]? You're too busy to help your dying Mother these days?
+  textBottom: I sold off some family treasures and managed to get some meds for her
+    from the local Ripper Doc, no thanks to you. Don't bother us again

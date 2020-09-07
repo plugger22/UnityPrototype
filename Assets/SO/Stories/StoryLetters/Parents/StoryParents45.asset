@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryParents45
   m_EditorClassIdentifier: 
   textDear: '[child]'
-  textTop: 
-  textBottom: 
+  textTop: I'm having to ask your Father to write this for me as my hand shakes too
+    much to do it myself. Without insulin my future isn't great
+  textBottom: You'll have to get me some meds, [child]. I'm on a timer here. I don't
+    want your Father to wake up one morning and find me dead in my 'pod

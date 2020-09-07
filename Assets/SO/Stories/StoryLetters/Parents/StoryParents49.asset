@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryParents49
   m_EditorClassIdentifier: 
   textDear: '[child]'
-  textTop: 
-  textBottom: 
+  textTop: You probably don't care but your Father sold a few of his treasures and
+    bought me a supply of insulin from a Ripper Doc. It's low grade but I'll manage
+  textBottom: We now know how you feel about us, [child] and what you are willing
+    to do to help in an emergency. Which is NOTHING. Whose [child] are you, anyway?

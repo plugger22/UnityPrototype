@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Name: StoryParents46
   m_EditorClassIdentifier: 
   textDear: '[child]'
-  textTop: 
-  textBottom: 
+  textTop: Your Mother has settled down. She is no longer vibrating like a tuning
+    fork and can lie in her 'pod without bouncing off the lid. The marvels of modern
+    medicine...
+  textBottom: Thanks [child], good job. We'll have to be discrete about but I think
+    the situation is under control. Apart from Vigo. He's a worry, that one

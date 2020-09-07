@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Name: StoryParents43
   m_EditorClassIdentifier: 
   textDear: '[child]'
-  textTop: 
-  textBottom: 
+  textTop: I'm in trouble, [child]. Vigo, that evil Security Guard, heard the kid
+    telling us, and the rest of the floor, how the Pig People will one day save the
+    world
+  textBottom: Vigo immediately cancelled my medAuthorisation and I can no longer access
+    my insulin shots. I don't know how long I can last without them?
