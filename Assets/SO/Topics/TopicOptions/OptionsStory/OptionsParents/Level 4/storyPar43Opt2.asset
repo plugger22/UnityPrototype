@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar43Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 43 Opt 2
-  tag: 
-  text: 
+  tag: Frustrated
+  text: Vigo is a real menace
   topic: {fileID: 11400000, guid: b9413c119437704428c8ef64e9f0931e, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,9 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: It's because of you, [child]. He remembers when you broke his nose. This
+    is just his way of evening out the score. It's a shame it has to involve your
+    Mom
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

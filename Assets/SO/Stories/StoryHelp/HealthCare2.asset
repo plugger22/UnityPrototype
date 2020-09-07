@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
+  m_Name: HealthCare2
+  m_EditorClassIdentifier: 
+  tag: Alternative Medicine
+  sprite: {fileID: 0}
+  textTop: As a result of the poor reputation of what comes out of a MedDispenser,
+    many alternatives are available, none of them officially recognised
+  textMiddle: Few manage to provide a benefit beyond the low MedDispenser quality
+    standard and many actively harm those who take them.
+  textBottom: In the absence of proper medical care there is always a market for snake
+    oil. Who knows, you might get lucky?
+  isKnown: 0

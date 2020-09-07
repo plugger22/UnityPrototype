@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar41Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 41 Opt 2
-  tag: 
-  text: 
+  tag: Warn
+  text: Don't attract attention
   topic: {fileID: 11400000, guid: 71cef098c3b3b2f43847cdcfa53be7ab, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I'm aware of that. I've told your Father to stop lamenting what might
+    have been and shoo that mixxed up kid away before he gets us both in trouble
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

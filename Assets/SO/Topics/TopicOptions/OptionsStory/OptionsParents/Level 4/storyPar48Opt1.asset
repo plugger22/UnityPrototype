@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar48Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 48 Opt 1
-  tag: 
-  text: 
+  tag: Pleased
+  text: Good to hear that you're O.K
   topic: {fileID: 11400000, guid: 39c8dc33f2b49aa44969d75d917c1ddc, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I'm always O.K, you know that. Your Father and I are grateful that you
+    can do all that exciting Resistance stuff and still find time to help us
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

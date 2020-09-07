@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar40Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 40 Opt 1
-  tag: 
-  text: 
+  tag: Statement
+  text: Once the Piggies have you it's all over
   topic: {fileID: 11400000, guid: 35aa26fcfb39b1a42826130f4c1df5f1, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I haven't heard anybody who was able to be shaken loose from the Pig
+    People once they had their hooks in them. Those predatory cultists play for keeps
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

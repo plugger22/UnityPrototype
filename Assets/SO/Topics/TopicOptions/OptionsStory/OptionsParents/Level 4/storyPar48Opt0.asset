@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar48Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 48 Opt 0
-  tag: 
-  text: 
+  tag: Assert
+  text: Vigo needs to be dealt with
   topic: {fileID: 11400000, guid: 39c8dc33f2b49aa44969d75d917c1ddc, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: He does, [child] and you're the person to do it. Come home, take care
+    of him and then spend some time with your parents. It's been a while
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

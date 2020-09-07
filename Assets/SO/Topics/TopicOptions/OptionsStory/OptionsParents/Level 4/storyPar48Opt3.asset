@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar48Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 48 Opt 3
-  tag: 
-  text: 
+  tag: Laugh
+  text: Keep Shaking, Mom
   topic: {fileID: 11400000, guid: 39c8dc33f2b49aa44969d75d917c1ddc, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,9 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I will. We can't have Vigo thinking that there's still some life left
+    in me. Your Father is going to get some Froth pills so I can spit bubbles at the
+    same time
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

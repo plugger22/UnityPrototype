@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar49Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 49 Opt 3
-  tag: 
-  text: 
+  tag: Explain
+  text: I have to follow the Rules
   topic: {fileID: 11400000, guid: 7dc79bdb6cd65ee41b1cd94ed0c51aaa, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Since when have you ever followed RULES? The reason you joined the Resistance
+    is because you were a black sheep and unable to do as you're told
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

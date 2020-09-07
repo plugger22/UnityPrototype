@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar46Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 46 Opt 1
-  tag: 
-  text: 
+  tag: Check
+  text: Will she be O.K?
   topic: {fileID: 11400000, guid: 877d3bf3d9f3d794284f35ac28208815, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Your Mom is as tough as Kangaroo leather. You know, that material they
+    used to make satellites out of. From dead marsupials, fed on Kryponite
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

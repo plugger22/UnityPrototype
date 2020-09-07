@@ -3809,3 +3809,70 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:832)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:385)
 	City seed 890 -> Arles, France
+
+Dev seed 36421 -> Monday, 7 September 2020 4:13 PM
+City seed 890 -> Arles, France
+
+Dev seed 36102 -> Monday, 7 September 2020 4:16 PM
+City seed 890 -> Arles, France
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+CaptureManager.CapturePlayer (packageAPI.CaptureDetails details, System.Boolean isStartOfTurn) (at Assets/Scripts/Managers/CaptureManager.cs:275)
+	CaptureManager.CaptureSomebody (packageAPI.CaptureDetails details) (at Assets/Scripts/Managers/CaptureManager.cs:158)
+	CaptureManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/CaptureManager.cs:118)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	AIRebelManager.ExecuteMoveTask (packageAPI.AITask task, System.Boolean isAction) (at Assets/Scripts/Managers/AIRebelManager.cs:2890)
+	AIRebelManager.ExecuteTask (packageAPI.AITask task) (at Assets/Scripts/Managers/AIRebelManager.cs:2807)
+	AIRebelManager.ProcessTaskFinal () (at Assets/Scripts/Managers/AIRebelManager.cs:2787)
+	AIRebelManager.ProcessAI () (at Assets/Scripts/Managers/AIRebelManager.cs:546)
+	AIManager.ProcessAISideResistance () (at Assets/Scripts/Managers/AIManager.cs:632)
+	TurnManager.EndTurnAI () (at Assets/Scripts/Managers/TurnManager.cs:572)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:321)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:251)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:398)
+	
+Dev seed 36102 -> Monday, 7 September 2020 4:21 PM
+City seed 890 -> Arles, France
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+CaptureManager.CapturePlayer (packageAPI.CaptureDetails details, System.Boolean isStartOfTurn) (at Assets/Scripts/Managers/CaptureManager.cs:275)
+	CaptureManager.CaptureSomebody (packageAPI.CaptureDetails details) (at Assets/Scripts/Managers/CaptureManager.cs:158)
+	CaptureManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/CaptureManager.cs:118)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	AIRebelManager.ExecuteMoveTask (packageAPI.AITask task, System.Boolean isAction) (at Assets/Scripts/Managers/AIRebelManager.cs:2890)
+	AIRebelManager.ExecuteTask (packageAPI.AITask task) (at Assets/Scripts/Managers/AIRebelManager.cs:2807)
+	AIRebelManager.ProcessTaskFinal () (at Assets/Scripts/Managers/AIRebelManager.cs:2787)
+	AIRebelManager.ProcessAI () (at Assets/Scripts/Managers/AIRebelManager.cs:546)
+	AIManager.ProcessAISideResistance () (at Assets/Scripts/Managers/AIManager.cs:632)
+	TurnManager.EndTurnAI () (at Assets/Scripts/Managers/TurnManager.cs:572)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:321)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:251)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:398)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	
+Dev seed 36102 -> Monday, 7 September 2020 4:23 PM
+City seed 890 -> Arles, France
+
+Dev seed 36102 -> Monday, 7 September 2020 4:23 PM
+City seed 890 -> Arles, France
+
+Dev seed 25637 -> Monday, 7 September 2020 4:27 PM
+City seed 890 -> Arles, France
+
+Dev seed 48552 -> Monday, 7 September 2020 4:33 PM
+City seed 1616 -> Mexico City, Mexico

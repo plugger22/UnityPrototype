@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar42Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 42 Opt 0
-  tag: 
-  text: 
+  tag: Uncertain
+  text: Vigo can do that?
   topic: {fileID: 11400000, guid: 5af25949e47176e40b1d19266a5e0eb8, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: He's already done it. He stood there in front of our pods like a mini
+    dictator with an evil smirk and told us how there were 'changes' to our circumstances
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

@@ -28,10 +28,10 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: 
-  storyTarget: {fileID: 11400000, guid: 2e0063e575338b440977e15eae5bc34d, type: 2}
+  storyTarget: {fileID: 11400000, guid: 2e73453252f44a3449cd412b3b54752d, type: 2}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

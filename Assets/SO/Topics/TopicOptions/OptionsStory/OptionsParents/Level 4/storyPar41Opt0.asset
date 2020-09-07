@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar41Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 41 Opt 0
-  tag: 
-  text: 
+  tag: Agree
+  text: We tried but it didn't work out
   topic: {fileID: 11400000, guid: 71cef098c3b3b2f43847cdcfa53be7ab, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Education can be a double edged sword. I've met a lot of educated, smart
+    people who don't have a lick of common sense. Pig food, the lot of them
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

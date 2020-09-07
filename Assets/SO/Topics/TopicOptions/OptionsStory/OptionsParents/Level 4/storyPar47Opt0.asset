@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar47Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 47 Opt 0
-  tag: 
-  text: 
+  tag: Pardon?
+  text: Mom was DYING?
   topic: {fileID: 11400000, guid: 6c3ddeb428c1e9a4aaab8f38e8b8360d, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Yes, [child], she was. I thought that I explained the gravity of the
+    situation to you in crystal clear terms but I see that you must have been asleep
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

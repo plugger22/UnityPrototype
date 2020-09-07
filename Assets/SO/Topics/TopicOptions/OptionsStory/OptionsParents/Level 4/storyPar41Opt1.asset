@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar41Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 41 Opt 1
-  tag: 
-  text: 
+  tag: Hang on
+  text: Weren't you interested in the Cult?
   topic: {fileID: 11400000, guid: 71cef098c3b3b2f43847cdcfa53be7ab, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Yes, [child], there was a bad moment in my life when I was but I managed
+    to choke it down and it passed. I blame it on your Father, mostly
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

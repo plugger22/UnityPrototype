@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar43Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 43 Opt 3
-  tag: 
-  text: 
+  tag: Careless
+  text: No meds might do you some good
   topic: {fileID: 11400000, guid: b9413c119437704428c8ef64e9f0931e, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: It might do YOU some good if I keel over. You'd no longer have your old
+    Mom nagging you about your disgusting Panda Porn habit
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar48Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 48 Opt 2
-  tag: 
-  text: 
+  tag: Reassure
+  text: Let me know if you need more
   topic: {fileID: 11400000, guid: 39c8dc33f2b49aa44969d75d917c1ddc, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I will, [child], and thank you. What I've got might see me out but you
+    never know what might happen if I start popping a few of those ageBuster pills
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

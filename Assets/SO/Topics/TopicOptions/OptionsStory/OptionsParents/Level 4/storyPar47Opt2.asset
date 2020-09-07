@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar47Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 47 Opt 2
-  tag: 
-  text: 
+  tag: Apologise
+  text: Sorry, Dad, I forget
   topic: {fileID: 11400000, guid: 6c3ddeb428c1e9a4aaab8f38e8b8360d, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Forgot that your Mother was about to die? Gosh, [child], that's a mighty
+    big lot of forgetting you've done there. That must take practice
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

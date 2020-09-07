@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar40Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 40 Opt 3
-  tag: 
-  text: 
+  tag: Question
+  text: Can you knock some sense into him?
   topic: {fileID: 11400000, guid: 35aa26fcfb39b1a42826130f4c1df5f1, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Milford would probably knock me senseless. I'm old, [child], and rough
+    house days are long gone. Besides, the Piggies have already programmed him
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

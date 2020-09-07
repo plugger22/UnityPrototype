@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
+  m_Name: HealthCare1
+  m_EditorClassIdentifier: 
+  tag: Inequality
+  sprite: {fileID: 0}
+  textTop: Pharmacuetical companies manufacture advanced medicines for the exclusive
+    use of the Elites who enjoy average life expectancies in excess of 120 years
+  textMiddle: The masses make do with whatever dribbles out of the ubiquitious MedDispensers.
+    These medicines are usually full of offcuts and waste chemicals
+  textBottom: Chronic disease is rife and few expect to live a long, happy life. Three
+    score years and ten is more of an aspiration than a reality
+  isKnown: 0

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar49Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 49 Opt 2
-  tag: 
-  text: 
+  tag: Excuse
+  text: I was Undercover and couldn't help
   topic: {fileID: 11400000, guid: 7dc79bdb6cd65ee41b1cd94ed0c51aaa, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Well don't worry about it [child]. It turned out OK regardless. We bot
+    understand that you have an important job to do. We're only your PARENTS
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

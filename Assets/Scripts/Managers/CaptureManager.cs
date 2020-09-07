@@ -272,7 +272,8 @@ public class CaptureManager : MonoBehaviour
             GameManager.i.aiRebelScript.GearPoolEmpty("being CAPTURED");
         }
         //invisible node
-        GameManager.i.missionScript.mission.npc.AddInvisibleNode(details.node.nodeID);
+        if (GameManager.i.missionScript.mission.npc != null)
+        { GameManager.i.missionScript.mission.npc.AddInvisibleNode(details.node.nodeID); }
         //popUpFixed -> don't wait for an outcome Msg, display straight away
         GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, "CAPTURED!");
         GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, "Gear Lost");

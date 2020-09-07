@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar49Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 49 Opt 1
-  tag: 
-  text: 
+  tag: Complain
+  text: I'm getting sick of your nagging
   topic: {fileID: 11400000, guid: 7dc79bdb6cd65ee41b1cd94ed0c51aaa, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: About your Panda Porn habit? About how you appear to spend your entire
+    time plugged into an immersion VR rig getting stimulated by horny animals?
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

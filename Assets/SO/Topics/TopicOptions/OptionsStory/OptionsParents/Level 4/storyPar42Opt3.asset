@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar42Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 42 Opt 3
-  tag: 
-  text: 
+  tag: Hands Off
+  text: It's the Kid's fault. He can fix it
   topic: {fileID: 11400000, guid: 5af25949e47176e40b1d19266a5e0eb8, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I'm not sure that Milford cares. It's your Mother, [child], not his.
+    Lets see some responsibility and maturity here, please
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

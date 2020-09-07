@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
+  m_Name: HealthCare0
+  m_EditorClassIdentifier: 
+  tag: Prescriptions
+  sprite: {fileID: 0}
+  textTop: For the masses, MedBot terminals ccan you and diagnose any problems. Medications,
+    if needed, are obtained via medAuthorisation chips
+  textMiddle: Inserting a chip into a MedDispenser will spit out the required medicine.
+    Geniune pharmacueticals cost more money than most people can afford
+  textBottom: Cheap, derivative meds with dubious provenance are what spew forth from
+    the MedDispensers. Best to stay healthy, if at all possible.
+  isKnown: 0

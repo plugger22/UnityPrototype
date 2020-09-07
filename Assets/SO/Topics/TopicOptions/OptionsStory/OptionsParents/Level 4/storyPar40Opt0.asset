@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar40Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 40 Opt 0
-  tag: 
-  text: 
+  tag: Commiserate
+  text: That's a pity, Milford had potential
   topic: {fileID: 11400000, guid: 35aa26fcfb39b1a42826130f4c1df5f1, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,9 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: So did our planet until we decided to give it a haircut and cook it.
+    Like Milford it HAD potential. He's now in the piggie meat grinder and we're getting
+    toasted
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

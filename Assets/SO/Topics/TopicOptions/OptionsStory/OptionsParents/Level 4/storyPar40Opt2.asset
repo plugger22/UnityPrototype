@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar40Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 40 Opt 2
-  tag: 
-  text: 
+  tag: Warn
+  text: Don't associate with Cultists
   topic: {fileID: 11400000, guid: 35aa26fcfb39b1a42826130f4c1df5f1, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I hear you. Your Mother went through a stage once where she thought that
+    we should join up so we could spend more time together. Bad idea
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

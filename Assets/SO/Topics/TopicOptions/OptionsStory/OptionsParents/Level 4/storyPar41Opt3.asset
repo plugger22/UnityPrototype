@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar41Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 41 Opt 3
-  tag: 
-  text: 
+  tag: Statement
+  text: The Pig People are clever
   topic: {fileID: 11400000, guid: 71cef098c3b3b2f43847cdcfa53be7ab, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: No doubt about that. They could manipulate a mother into giving up her
+    first born if they thought it would do them any good. Predators
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

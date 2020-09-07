@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar46Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 46 Opt 0
-  tag: 
-  text: 
+  tag: Worried
+  text: Has Mom got enough Meds?
   topic: {fileID: 11400000, guid: 877d3bf3d9f3d794284f35ac28208815, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Who has got enough of anything these days apart from the Elites? Down
+    here in Little People world we stumble from one scarcity to another
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

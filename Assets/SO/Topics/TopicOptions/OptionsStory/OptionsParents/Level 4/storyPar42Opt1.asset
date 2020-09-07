@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar42Opt1
   m_EditorClassIdentifier: 
   descriptor: Story Parents 42 Opt 1
-  tag: 
-  text: 
+  tag: Question
+  text: Are their alternative Meds?
   topic: {fileID: 11400000, guid: 5af25949e47176e40b1d19266a5e0eb8, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Like those Rat derivative herbal meds? Do you know anyone who took them
+    who wasn't a crazy leaf brained tree hugger? Who wants to take Rat Meds?
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

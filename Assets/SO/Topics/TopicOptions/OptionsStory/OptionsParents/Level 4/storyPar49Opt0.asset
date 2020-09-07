@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar49Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 49 Opt 0
-  tag: 
-  text: 
+  tag: Belligerent
+  text: I wasn't needed, was I?
   topic: {fileID: 11400000, guid: 7dc79bdb6cd65ee41b1cd94ed0c51aaa, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: What aging parents need help from their [child] when there is an emergency?
+    Obviously not us. We have to fend for ourselves
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

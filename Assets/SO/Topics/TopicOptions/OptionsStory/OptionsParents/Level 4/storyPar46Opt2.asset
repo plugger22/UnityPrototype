@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar46Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 46 Opt 2
-  tag: 
-  text: 
+  tag: Cautious
+  text: How will you deal with Vigo?
   topic: {fileID: 11400000, guid: 877d3bf3d9f3d794284f35ac28208815, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I won't. We'll ignore him and he'll, hopefully, ignore us. Arrogant *rseholes
+    like Vigo are always looking for their next victim. He'll have moved on
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

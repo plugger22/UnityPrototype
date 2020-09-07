@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar42Opt2
   m_EditorClassIdentifier: 
   descriptor: Story Parents 42 Opt 2
-  tag: 
-  text: 
+  tag: Question
+  text: Can Mom tough it out?
   topic: {fileID: 11400000, guid: 5af25949e47176e40b1d19266a5e0eb8, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: No. The insulin medication is what keeps her going. Without it she'll
+    coast to a shakey stop and her engine will expire
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

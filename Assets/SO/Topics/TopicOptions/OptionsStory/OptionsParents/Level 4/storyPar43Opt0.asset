@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar43Opt0
   m_EditorClassIdentifier: 
   descriptor: Story Parents 43 Opt 0
-  tag: 
-  text: 
+  tag: Declare
+  text: That Kid needs to go
   topic: {fileID: 11400000, guid: b9413c119437704428c8ef64e9f0931e, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: It's too late, [child], the damage has been done. I'm on a ticking clock.
+    Without my insulin shots I'm on a downhill trajectory. Crash landing ahead
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

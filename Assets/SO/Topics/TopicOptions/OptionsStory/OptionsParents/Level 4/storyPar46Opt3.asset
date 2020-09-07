@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyPar46Opt3
   m_EditorClassIdentifier: 
   descriptor: Story Parents 46 Opt 3
-  tag: 
-  text: 
+  tag: Concerned
+  text: What if Vigo finds the Meds?
   topic: {fileID: 11400000, guid: 877d3bf3d9f3d794284f35ac28208815, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: He'll confiscate them but don't worry as good 'ole Dad has it all under
+    control. I've hidden them. Not even a cyberHound could sniff them out
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
