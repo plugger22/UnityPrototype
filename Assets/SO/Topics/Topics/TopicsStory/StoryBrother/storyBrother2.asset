@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: ss
   text: Unknown
-  letter: {fileID: 0}
+  letter: {fileID: 11400000, guid: 115b3fb23fe4b0e41ae301c905f1ac5f, type: 2}
   designNotes: storyBrother2
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
   subType: {fileID: 11400000, guid: 9c0b06df8df43f641b72a6ea311f55a1, type: 2}
@@ -21,14 +21,17 @@ MonoBehaviour:
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
-  listOfLinkedTopics: []
+  listOfLinkedTopics:
+  - {fileID: 11400000, guid: 874b728b69f29684a922792efe6e0b47, type: 2}
+  - {fileID: 11400000, guid: 19941497a9aec41469f1c54029264ccb, type: 2}
   listOfBuddyTopics:
   - {fileID: 11400000}
   - {fileID: 11400000, guid: d9ed9a7ab095a4046981a6ff4b90bdee, type: 2}
   linkedIndex: 1
   levelIndex: 0
   topicItem: {fileID: 0}
-  listOfStoryHelp: []
+  listOfStoryHelp:
+  - {fileID: 0}
   profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
   listOfCriteria: []
   listOfIgnoreEffects: []

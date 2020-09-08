@@ -2175,6 +2175,13 @@ MonoBehaviour:
   arrayOfStoryModules:
   - {fileID: 11400000, guid: 4a3d16d5f29b52a48b74192c0bbd80d2, type: 2}
   - {fileID: 11400000, guid: 47b8784802e99f3418be87e7e59e34a2, type: 2}
+  arrayOfStoryData:
+  - {fileID: 11400000, guid: 84c1f765e992bc042ab1175b2b7fd9ad, type: 2}
+  - {fileID: 11400000, guid: 598b4a284bd388e45840f26c708a40b7, type: 2}
+  - {fileID: 11400000, guid: d3cf84ac114de8f459287936865a58f3, type: 2}
+  - {fileID: 11400000, guid: ea96f1cea39c38842b78e5b9729bec3c, type: 2}
+  - {fileID: 11400000, guid: 8228697ce0df2ef488e3cac23fef3557, type: 2}
+  - {fileID: 11400000, guid: 47f56aa60531194459cb2f11432aecfc, type: 2}
   arrayOfStoryLetters:
   - {fileID: 11400000, guid: 917f7decc105211438ae12eae0c0fbf3, type: 2}
   - {fileID: 11400000, guid: 4eaca07d764969148b1b9662f7a9119a, type: 2}
@@ -2226,13 +2233,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 95aab5390e1fe1044a95c40adb4ab467, type: 2}
   - {fileID: 11400000, guid: 0fde66410cf5c574e84827249b80fa68, type: 2}
   - {fileID: 11400000, guid: a908f85e005311a469d4a65572f7b11c, type: 2}
-  arrayOfStoryData:
-  - {fileID: 11400000, guid: 84c1f765e992bc042ab1175b2b7fd9ad, type: 2}
-  - {fileID: 11400000, guid: 598b4a284bd388e45840f26c708a40b7, type: 2}
-  - {fileID: 11400000, guid: d3cf84ac114de8f459287936865a58f3, type: 2}
-  - {fileID: 11400000, guid: ea96f1cea39c38842b78e5b9729bec3c, type: 2}
-  - {fileID: 11400000, guid: 8228697ce0df2ef488e3cac23fef3557, type: 2}
-  - {fileID: 11400000, guid: 47f56aa60531194459cb2f11432aecfc, type: 2}
+  - {fileID: 11400000, guid: 60a22a7feeb7b434fba8591a2e6a0212, type: 2}
+  - {fileID: 11400000, guid: 3870bad62089ca74cb43b2c150b02b9d, type: 2}
+  - {fileID: 11400000, guid: 115b3fb23fe4b0e41ae301c905f1ac5f, type: 2}
+  - {fileID: 11400000, guid: 80842efe2958af4459655ac0f5a78623, type: 2}
+  - {fileID: 11400000, guid: c4cc7d4c03158a442ba2a7b1eabf5715, type: 2}
+  - {fileID: 11400000, guid: 74dd1ec53cd01694baa89165cdbd6d93, type: 2}
+  - {fileID: 11400000, guid: 9b8709f5dd7717247b921bf56fa52dcc, type: 2}
+  - {fileID: 11400000, guid: df277fd590840b64b9957013b311c748, type: 2}
+  - {fileID: 11400000, guid: fb1455fd553091d4fb8168e84fb8dfc7, type: 2}
+  - {fileID: 11400000, guid: a079fa4f73bbe0841a99305147c2b5ff, type: 2}
   arrayOfStoryHelp:
   - {fileID: 11400000, guid: 87941c60a33c1bc4f8d370777fe09842, type: 2}
   - {fileID: 11400000, guid: 2edd14c0e12bcb343aa3b8a0703f8f69, type: 2}
@@ -2923,6 +2933,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6c3ddeb428c1e9a4aaab8f38e8b8360d, type: 2}
   - {fileID: 11400000, guid: 39c8dc33f2b49aa44969d75d917c1ddc, type: 2}
   - {fileID: 11400000, guid: 7dc79bdb6cd65ee41b1cd94ed0c51aaa, type: 2}
+  - {fileID: 11400000, guid: 874b728b69f29684a922792efe6e0b47, type: 2}
+  - {fileID: 11400000, guid: 19941497a9aec41469f1c54029264ccb, type: 2}
+  - {fileID: 11400000, guid: 9a63777846e6aab4cbb7217bd91905b6, type: 2}
+  - {fileID: 11400000, guid: 016ae9804fcadcd4590160c6dcc8a796, type: 2}
+  - {fileID: 11400000, guid: a54dfc5b5a992da41a551d464ad2ba5d, type: 2}
+  - {fileID: 11400000, guid: fcdf339eeadb58b469d3697b752994ab, type: 2}
   arrayOfOptionsActorContact:
   - {fileID: 11400000, guid: de3ca8550338a964d83728f77adf87d1, type: 2}
   - {fileID: 11400000, guid: e8f87885714be194a9acea71c6d688ee, type: 2}
@@ -3718,6 +3734,26 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 53236493c62d98240b77d8ec9adc2235, type: 2}
   - {fileID: 11400000, guid: d4694a158f977614991090d2440b4855, type: 2}
   - {fileID: 11400000, guid: 6925590871c08ed469e4de9739fa822c, type: 2}
+  - {fileID: 11400000, guid: 4bcec95e2c6ab064689961f691b65bae, type: 2}
+  - {fileID: 11400000, guid: 0d186faea749f884390c2b221fa97262, type: 2}
+  - {fileID: 11400000, guid: 89ef27d20e997a645bee25e03db0f4ea, type: 2}
+  - {fileID: 11400000, guid: db4e0bb6e9edae0499eebedd7b5a612f, type: 2}
+  - {fileID: 11400000, guid: 7b1387a49673bf54bb0983e52537d39b, type: 2}
+  - {fileID: 11400000, guid: 09b2e4d49ee961c44b77fee085783306, type: 2}
+  - {fileID: 11400000, guid: e3fe714ebae363044b56e261f56ca6c7, type: 2}
+  - {fileID: 11400000, guid: c398dd761f063ff4ba826e303846646f, type: 2}
+  - {fileID: 11400000, guid: d28cceb24431f2c44be30e33a42f62c1, type: 2}
+  - {fileID: 11400000, guid: 14d59f581b6d77a4b98ed5a0ce07a7e8, type: 2}
+  - {fileID: 11400000, guid: 8ff81aa9ab55d324ca0618bc54a7f8f3, type: 2}
+  - {fileID: 11400000, guid: 00dde9d99ac045847a7ee7ad87a1cff7, type: 2}
+  - {fileID: 11400000, guid: f504aa46b7b357048818e02f3b462ab6, type: 2}
+  - {fileID: 11400000, guid: bb581b36cd44d1b42a81bf8df67e8e13, type: 2}
+  - {fileID: 11400000, guid: b437c9e93651657439ffad1c8016e2d3, type: 2}
+  - {fileID: 11400000, guid: b53f442bc26ef0d40bf8a02dc07fde14, type: 2}
+  - {fileID: 11400000, guid: 71f9f3c698c08e24db7454bccb3a02af, type: 2}
+  - {fileID: 11400000, guid: ec72ce71e80f9434885e55f19f3e2a80, type: 2}
+  - {fileID: 11400000, guid: a356927cb2a6766418f4b97dc0ebc747, type: 2}
+  - {fileID: 11400000, guid: dfbb2c78b7626ce41b7496af147ef119, type: 2}
   arrayOfOptionsStoryDrugs:
   - {fileID: 11400000, guid: da62ead6090cad149b7409e49da11b1b, type: 2}
   - {fileID: 11400000, guid: 8d9ec7db7eea82944aa2e20e02acdf56, type: 2}
@@ -4199,6 +4235,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2e73453252f44a3449cd412b3b54752d, type: 2}
   - {fileID: 11400000, guid: b7b78ea5ff1de7c4aba13c809db5cd86, type: 2}
   - {fileID: 11400000, guid: 0d9f9b324c87d1a42b0315ae2196ef65, type: 2}
+  - {fileID: 11400000, guid: b274a0a54f5762d4ba725fe87b8a067b, type: 2}
+  - {fileID: 11400000, guid: 705d0050f1e97fb4783d569b25164177, type: 2}
+  - {fileID: 11400000, guid: 1451bcbbc41f2344191d53bc9b95d882, type: 2}
+  - {fileID: 11400000, guid: 1ce35e775ea98cd46afceb5842bd5cf6, type: 2}
   arrayOfTargetsGoal:
   - {fileID: 11400000, guid: 3092bd84d4483f249a7039bc13a54727, type: 2}
   - {fileID: 11400000, guid: cb0366be15bea08479bebcfe2818bf25, type: 2}
@@ -5845,7 +5885,7 @@ MonoBehaviour:
   popUpFixedScript: {fileID: 0}
   seedDev: 0
   autoRunTurns: 20
-  scenarioStartLevel: 4
+  scenarioStartLevel: 0
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1

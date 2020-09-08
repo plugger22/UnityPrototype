@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
-  m_Name: storyBrother0
+  m_Name: storyBrother4
   m_EditorClassIdentifier: 
-  tag: ss
-  text: Unknown
-  letter: {fileID: 11400000, guid: 60a22a7feeb7b434fba8591a2e6a0212, type: 2}
-  designNotes: storyBrother0
+  tag: 
+  text: 
+  letter: {fileID: 11400000, guid: c4cc7d4c03158a442ba2a7b1eabf5715, type: 2}
+  designNotes: storyBrother4
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
   subType: {fileID: 11400000, guid: 9c0b06df8df43f641b72a6ea311f55a1, type: 2}
   subSubType: {fileID: 0}
@@ -22,29 +22,28 @@ MonoBehaviour:
   group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   listOfLinkedTopics:
-  - {fileID: 11400000, guid: 83da7a3284f09f64aae2314c2f0d5b33, type: 2}
-  - {fileID: 11400000, guid: d9ed9a7ab095a4046981a6ff4b90bdee, type: 2}
+  - {fileID: 11400000, guid: 9a63777846e6aab4cbb7217bd91905b6, type: 2}
+  - {fileID: 11400000, guid: 016ae9804fcadcd4590160c6dcc8a796, type: 2}
   listOfBuddyTopics:
+  - {fileID: 11400000, guid: 19941497a9aec41469f1c54029264ccb, type: 2}
   - {fileID: 11400000}
-  - {fileID: 11400000, guid: fc34ecde1eebb1b4591453f90f814e25, type: 2}
-  linkedIndex: 0
+  linkedIndex: 2
   levelIndex: 0
-  topicItem: {fileID: 0}
+  topicItem: {fileID: 11400000, guid: 2e2ce29c7b61139488a5a4546df9fd77, type: 2}
   listOfStoryHelp:
   - {fileID: 0}
   profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 5ada6805d52fe0e4eb10c44a98c34cf0, type: 2}
   listOfIgnoreEffects: []
   listOfOptions:
-  - {fileID: 11400000, guid: e2c6823e405df814a8f23cc5b88c34b0, type: 2}
-  - {fileID: 11400000, guid: 92fad361244f7e04f9845ef8470d0de4, type: 2}
-  - {fileID: 11400000, guid: 38d833e1d5ed7704ea2496be1f6633d2, type: 2}
-  - {fileID: 11400000, guid: 1850f14eb5a379d47a54a9e6b57f37ad, type: 2}
-  isDisabled: 1
+  - {fileID: 11400000, guid: 4bcec95e2c6ab064689961f691b65bae, type: 2}
+  - {fileID: 11400000, guid: 0d186faea749f884390c2b221fa97262, type: 2}
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 4
+  status: 0
   isCurrent: 0
   timerStart: 0
   timerRepeat: 0
