@@ -15,6 +15,8 @@ public class PreLoadManager : MonoBehaviour
     public string nameAuthority;
     [Tooltip("Name of Human controlled Resistance Player")]
     public string nameResistance;
+    [Tooltip("First name of Human Player")]
+    public string nameFirst;
     [Tooltip("actorID of Player")]
     public int playerActorID = 999;
     

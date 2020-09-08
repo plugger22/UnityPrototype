@@ -739,6 +739,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameAuthority: Mr EVIL
   nameResistance: The Phantom
+  nameFirst: Cameron
   playerActorID: 999
   numOfQualities: 3
 --- !u!114 &114364785414329898
@@ -2599,6 +2600,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 72a58ae57f66b8942915f9d7e27e980f, type: 2}
   - {fileID: 11400000, guid: 669e729977a180040910330ae93c9d0c, type: 2}
   - {fileID: 11400000, guid: 2e6d0fdcecfe3bf41b25acc43c7bce7d, type: 2}
+  - {fileID: 11400000, guid: 768dba55f32589b44a2d12428659524a, type: 2}
+  - {fileID: 11400000, guid: 8f26e4ad57a9a5a4c90746abb7dcfb1c, type: 2}
   arrayOfTopics:
   - {fileID: 11400000, guid: 52a29993f16d9a04b9cdc6d40bcc3731, type: 2}
   - {fileID: 11400000, guid: 62c940907de46bd4f985e355cc57b213, type: 2}
@@ -5294,6 +5297,8 @@ MonoBehaviour:
   tagResFactionTwo: Eurasia
   tagResFactionThree: Chinock
   tagSpaceHub: The Hub
+  tagBrother: Tristan
+  tagSister: Tessa
   metaBottom: {fileID: 0}
   metaMiddle: {fileID: 0}
   metaTop: {fileID: 0}

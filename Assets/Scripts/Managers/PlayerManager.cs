@@ -76,6 +76,7 @@ public class PlayerManager : MonoBehaviour
     private int _renownAuthority;
     private string _playerNameResistance;
     private string _playerNameAuthority;
+    private string _firstName;
     private int _invisibility;
     private int _innocence;
 
@@ -119,6 +120,9 @@ public class PlayerManager : MonoBehaviour
             }
         }
     }
+
+    public string FirstName
+    { get { return _firstName; } }
 
     public int Renown
     {
@@ -2225,6 +2229,13 @@ public class PlayerManager : MonoBehaviour
         else { Debug.LogError("Invalid Resistance playerName (Null or Empty)"); }
     }
 
+    public void SetPlayerFirstName(string firstName)
+    {
+        if (string.IsNullOrEmpty(firstName) == false)
+        { _firstName = firstName; }
+        else { Debug.LogError("Invalid Player First Name (Null or Empty)"); }
+    }
+
     /// <summary>
     /// returns name of Authority Player regardless of whether it is AI or Human controlled
     /// </summary>
@@ -2472,6 +2483,7 @@ public class PlayerManager : MonoBehaviour
         List<Condition> listOfConditions = GetListOfConditionForSide(playerSide);
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- {0} Player Stats{1}{2}", playerSide.name, "\n", "\n");
+        builder.AppendFormat(" {0}, first name \"{1}\"{2}{3}", PlayerName, FirstName, "\n", "\n");
         builder.AppendFormat("- Stats{0}", "\n");
         if (playerSide.level == globalResistance.level)
         { builder.AppendFormat(" Invisibility {0}{1}", Invisibility, "\n"); }

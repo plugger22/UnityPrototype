@@ -326,6 +326,19 @@ public class CityManager : MonoBehaviour
         return text;
     }
 
+    /// <summary>
+    /// Returns name of city in next scenario (one after the current scenario). If on last scenario in campaign will return 'Unknown' as there is no next
+    /// </summary>
+    /// <returns></returns>
+    public string GetNextCityName()
+    {
+        string cityName = "Unknown";
+        int scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex();
+        if (scenarioIndex < GameManager.i.campaignScript.GetMaxScenarioIndex())
+        { cityName = GameManager.i.campaignScript.GetScenario(scenarioIndex + 1).city.name; }
+        return cityName;
+    }
+
 
 
     /// <summary>

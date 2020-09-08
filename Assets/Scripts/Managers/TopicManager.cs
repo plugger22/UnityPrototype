@@ -5774,6 +5774,15 @@ public class TopicManager : MonoBehaviour
                         }
                         else { CountTextTag("player", dictOfTags); }
                         break;
+                    case "first":
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}{1}{2}", colourCheckText, GameManager.i.playerScript.PlayerName, colourEnd); }
+                            else { replaceText = GameManager.i.playerScript.PlayerName; }
+                        }
+                        else { CountTextTag("player", dictOfTags); }
+                        break;
                     case "child":
                         //parent talking to Player (no highlight)
                         if (isValidate == false)
@@ -5793,6 +5802,26 @@ public class TopicManager : MonoBehaviour
                             replaceText = sibling;
                         }
                         else { CountTextTag("sibling", dictOfTags); }
+                        break;
+                    case "brother":
+                        //first name of player's brother
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.globalScript.tagBrother, colourEnd); }
+                            else { replaceText = GameManager.i.globalScript.tagBrother; }
+                        }
+                        else { CountTextTag("brother", dictOfTags); }
+                        break;
+                    case "sister":
+                        //first name of player's sister
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.globalScript.tagSister, colourEnd); }
+                            else { replaceText = GameManager.i.globalScript.tagSister; }
+                        }
+                        else { CountTextTag("sister", dictOfTags); }
                         break;
                     case "actor":
                         //actor arc name
@@ -6293,6 +6322,16 @@ public class TopicManager : MonoBehaviour
                             else { replaceText = string.Format("{0}'s", GameManager.i.cityScript.GetCity().name); }
                         }
                         else { CountTextTag("citys", dictOfTags); }
+                        break;
+                    case "cityNext":
+                        //city name for next city in campaign (returns 'unknown' if last scenario of campaign)
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.cityScript.GetNextCityName(), colourEnd); }
+                            else { replaceText = GameManager.i.cityScript.GetNextCityName(); }
+                        }
+                        else { CountTextTag("cityNext", dictOfTags); }
                         break;
                     case "target":
                         //target name

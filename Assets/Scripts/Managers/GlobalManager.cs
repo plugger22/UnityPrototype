@@ -29,6 +29,10 @@ public class GlobalManager : MonoBehaviour
     public string tagResFactionThree = "Chinock";
     [Tooltip("Name of Luna space station and main shipbuilding facility in system")]
     public string tagSpaceHub = "The Hub";
+    [Tooltip("First name of Player's Brother")]
+    public string tagBrother = "Tristan";
+    [Tooltip("First name of Player's Sister")]
+    public string tagSister = "Tessa";
 
     //used for quick reference -> Meta Levels where metaBottom is the lowest level and metaTop is the highest
     [HideInInspector] public GlobalMeta metaBottom;

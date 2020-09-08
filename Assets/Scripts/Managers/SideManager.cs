@@ -201,6 +201,8 @@ public class SideManager : MonoBehaviour
                         break;
                 }
             }
+            //set first name
+            GameManager.i.playerScript.SetPlayerFirstName(GameManager.i.preloadScript.nameFirst);
         }
         else { Debug.LogError("Invalid campaign (Null)"); }
     }
