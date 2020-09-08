@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyBrother1
   m_EditorClassIdentifier: 
-  tag: ss
+  tag: Missing
   text: Unknown
   letter: {fileID: 11400000, guid: 3870bad62089ca74cb43b2c150b02b9d, type: 2}
   designNotes: storyBrother1

@@ -11,6 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5d6df66d797b34b989f3bc7d5e160b, type: 3}
   m_Name: Brother1
   m_EditorClassIdentifier: 
-  textDear: 
-  textTop: 
-  textBottom: 
+  textDear: '[first]'
+  textTop: I am here about [brother], your brother. He's gone missing. I know this.
+    I know lots of things that you don't. This will not change. Accept it
+  textBottom: We will have to work together to find [brother]. I am ready to assist
+    and can put heavily armed men on the ground at a moments notice

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro20pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 2 Opt 1
-  tag: dd
-  text: 
+  tag: Sceptical
+  text: You want to find my Brother why?
   topic: {fileID: 11400000, guid: 83da7a3284f09f64aae2314c2f0d5b33, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Because I LOVE him, silly. We were to be MARRIED soon. We'd already chosen
+    a couples 'pod in a nice tower. He talked about having BABIES
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

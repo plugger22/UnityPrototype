@@ -11,6 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5d6df66d797b34b989f3bc7d5e160b, type: 3}
   m_Name: Brother0
   m_EditorClassIdentifier: 
-  textDear: 
-  textTop: 
-  textBottom: 
+  textDear: '[first]'
+  textTop: Have you heard from your brother recently? It's been a while since [brother]
+    contacted me and I'm becoming concerned. I'm his girlfriend by the way
+  textBottom: What is with having to WRITE to you on PAPER? Who the heck does that
+    these days? Haven't you got a device? Are you old, or something?

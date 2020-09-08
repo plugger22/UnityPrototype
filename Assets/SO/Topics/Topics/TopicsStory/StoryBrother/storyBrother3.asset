@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyBrother3
   m_EditorClassIdentifier: 
-  tag: ss
+  tag: Derrick
   text: Unknown
   letter: {fileID: 11400000, guid: 80842efe2958af4459655ac0f5a78623, type: 2}
   designNotes: storyBrother3

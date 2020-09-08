@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro50pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 5 Opt 1
-  tag: dd
-  text: 
+  tag: SearchBot
+  text: Trawl business Archives
   topic: {fileID: 11400000, guid: 19941497a9aec41469f1c54029264ccb, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -34,4 +34,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

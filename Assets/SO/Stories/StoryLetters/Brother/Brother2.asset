@@ -11,6 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5d6df66d797b34b989f3bc7d5e160b, type: 3}
   m_Name: Brother2
   m_EditorClassIdentifier: 
-  textDear: 
-  textTop: 
-  textBottom: 
+  textDear: '[first]'
+  textTop: '[brother] told me that he was going to talk to Derrick. He sounded worried
+    about the meeting and said that Derrick was paranoid'
+  textBottom: Wilson. Derrick Wilson, that's who. Head of a little company in [cityNext].
+    He had a thing about 'Gators. Pets, I think [brother] said

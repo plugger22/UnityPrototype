@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro00pt2
   m_EditorClassIdentifier: 
   descriptor: Story Brother 0 Opt 2
-  tag: dd
-  text: 
+  tag: Interrogate
+  text: When did you last see [brother]?
   topic: {fileID: 11400000, guid: 61212be9bfe56964fafe84e0acdaacb5, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: It's been over a week since he last called. He's been in [cityNext],
+    but you already knew that. We device link most days, usually
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

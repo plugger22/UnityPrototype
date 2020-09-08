@@ -5170,7 +5170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 11400000, guid: e43144eec11486140b29ef695d829874, type: 2}
+  debugTopicPool: {fileID: 11400000, guid: 15d3d285c373f774eaf6e263890e5fc7, type: 2}
   numOfGearItems: -1
   numOfWorkers: 8
   bonusRenown: 0

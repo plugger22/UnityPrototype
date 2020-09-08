@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro60pt2
   m_EditorClassIdentifier: 
   descriptor: Story Brother 6 Opt 2
-  tag: dd
-  text: 
+  tag: Curious
+  text: What type of Alligators are they?
   topic: {fileID: 11400000, guid: 9a63777846e6aab4cbb7217bd91905b6, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Haven't we already discussed this? Killer 'Gators. Genetically modified
+    to drag you into the water and shred you worse than a cheese grater
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

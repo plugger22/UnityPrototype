@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro00pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 0 Opt 0
-  tag: dd
-  text: 
+  tag: Unclear
+  text: Ember? Aren't you his ex-girlfriend?
   topic: {fileID: 11400000, guid: 61212be9bfe56964fafe84e0acdaacb5, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: No, no. We're together. Of course we are. If anybody tells you otherwise
+    they're LYING. I love [brother] and his cutesy ways. He's ADORABLE
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro60pt3
   m_EditorClassIdentifier: 
   descriptor: Story Brother 6 Opt 3
-  tag: dd
-  text: 
+  tag: Stern
+  text: Are you a member of the Piggie Cult?
   topic: {fileID: 11400000, guid: 9a63777846e6aab4cbb7217bd91905b6, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Goodness me, NO. [brother] and I always thought that they were fringe
+    dwelling CRAZIES who should be locked up for their own safety
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

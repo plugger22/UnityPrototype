@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro20pt2
   m_EditorClassIdentifier: 
   descriptor: Story Brother 2 Opt 2
-  tag: dd
-  text: 
+  tag: Test
+  text: What has [brother] been doing lately?
   topic: {fileID: 11400000, guid: 83da7a3284f09f64aae2314c2f0d5b33, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: He's got this really SPECIAL job as an investigate reporter for one of
+    those Vlog 'casters. They pay him when he has a BIG story. Like about the Piggies
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

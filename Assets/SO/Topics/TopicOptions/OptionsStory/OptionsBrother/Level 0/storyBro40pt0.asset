@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro40pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 4 Opt 0
-  tag: dd
-  text: 
+  tag: Forensic Audit
+  text: Illegally Audit Derrick's Accounts
   topic: {fileID: 11400000, guid: 874b728b69f29684a922792efe6e0b47, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro50pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 5 Opt 0
-  tag: dd
-  text: 
+  tag: Siphon Intel
+  text: Hack into an Industrial Node
   topic: {fileID: 11400000, guid: 19941497a9aec41469f1c54029264ccb, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

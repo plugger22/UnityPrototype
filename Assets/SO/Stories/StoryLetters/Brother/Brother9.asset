@@ -11,6 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5d6df66d797b34b989f3bc7d5e160b, type: 3}
   m_Name: Brother9
   m_EditorClassIdentifier: 
-  textDear: 
-  textTop: 
-  textBottom: 
+  textDear: '[first]'
+  textTop: Clearly you are deficient and unable to carry out even simple tasks. It
+    is not a concern as I have contacts. Your brother last spoke to Derrick Wilson
+    a week ago
+  textBottom: Derrick runs a business which is a front, apparently, for the Purple
+    Pig Cultists. He is a paid up member and cannot be trusted. This, I know

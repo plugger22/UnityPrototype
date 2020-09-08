@@ -11,6 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5d6df66d797b34b989f3bc7d5e160b, type: 3}
   m_Name: Brother7
   m_EditorClassIdentifier: 
-  textDear: 
-  textTop: 
-  textBottom: 
+  textDear: '[first]'
+  textTop: Do I have to do everything? Why are you so USELESS? I checked up on Derrick
+    Wilson and his killer 'Gators and found that he's a closet Pig Cultist
+  textBottom: '[brother] must have been asking him about the Piggie People. I don''t
+    like the sound of Derrick and if you don''t do something I will'

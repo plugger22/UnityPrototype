@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro20pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 2 Opt 0
-  tag: dd
-  text: 
+  tag: Inconsistent
+  text: Aren't Alligators extinct?
   topic: {fileID: 11400000, guid: 83da7a3284f09f64aae2314c2f0d5b33, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,9 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Sure they are. He'd have gene tailored 'Gators. Probably tuned up as
+    attack 'Gators for perimeter defence, that kind of thing. You don't want to get
+    close
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

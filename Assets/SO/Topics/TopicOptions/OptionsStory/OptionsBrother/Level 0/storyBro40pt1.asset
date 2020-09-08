@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro40pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 4 Opt 1
-  tag: dd
-  text: 
+  tag: Network
+  text: Speak to a Government Source
   topic: {fileID: 11400000, guid: 874b728b69f29684a922792efe6e0b47, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -34,4 +34,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

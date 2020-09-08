@@ -11,6 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5d6df66d797b34b989f3bc7d5e160b, type: 3}
   m_Name: Brother8
   m_EditorClassIdentifier: 
-  textDear: 
-  textTop: 
-  textBottom: 
+  textDear: '[first]'
+  textTop: The Purple Pig Cult present no military threat and I am perplexed as to
+    why Derrick Wilson is connected with them. What was your brother doing?
+  textBottom: You must cease all other activity and focus on recovering your brother,
+    dead or alive. I reiterate my willingness to cooperate and expect full disclosure

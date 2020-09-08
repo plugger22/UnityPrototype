@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro70pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 7 Opt 0
-  tag: dd
-  text: 
+  tag: Amazed
+  text: Derrick is a member of the Pig Cult?
   topic: {fileID: 11400000, guid: 016ae9804fcadcd4590160c6dcc8a796, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -34,4 +34,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 3
+  optionNumber: 0

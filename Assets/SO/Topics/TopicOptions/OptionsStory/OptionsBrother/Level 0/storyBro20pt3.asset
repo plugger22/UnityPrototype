@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro20pt3
   m_EditorClassIdentifier: 
   descriptor: Story Brother 2 Opt 3
-  tag: dd
-  text: 
+  tag: Check
+  text: Derrick Wilson, are you sure?
   topic: {fileID: 11400000, guid: 83da7a3284f09f64aae2314c2f0d5b33, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Do I look SIMPLE? Hey, Resistance person. Do your RESISTANCE thing and
+    find your brother. Stop asking stupid questions and get to WORK
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

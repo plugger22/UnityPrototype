@@ -11,6 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b5d6df66d797b34b989f3bc7d5e160b, type: 3}
   m_Name: Brother6
   m_EditorClassIdentifier: 
-  textDear: 
-  textTop: 
-  textBottom: 
+  textDear: '[first]'
+  textTop: I insist that you tell me EVERYTHING. Your brother and I are very close.
+    I need to know where [brother] is. He's missing me, I'm certain of it
+  textBottom: So that Derrick guy is a closet Piggie Cultist is he? Why am I not surprised?
+    They love 'Gators, that lot. They jump in naked and swim with them

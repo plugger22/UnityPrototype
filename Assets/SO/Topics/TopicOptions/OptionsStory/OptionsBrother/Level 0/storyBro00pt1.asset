@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro00pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 0 Opt 1
-  tag: dd
-  text: 
+  tag: Question
+  text: How do you know about me?
   topic: {fileID: 11400000, guid: 61212be9bfe56964fafe84e0acdaacb5, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: '[brother] spoke about you often. He''s in AWE of you. Who wouldn''t
+    be? You''re a HERO. A real Resistance fighter. Don''t worry, I won''t tell a soul'
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
