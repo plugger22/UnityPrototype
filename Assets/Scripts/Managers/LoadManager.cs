@@ -44,7 +44,6 @@ public class LoadManager : MonoBehaviour
     public OrgType[] arrayOfOrgTypes;
     public HqPosition[] arrayOfHqPositions;
     public CaptureTool[] arrayOfCaptureTools;
-    public StoryModule[] arrayOfStoryModules;
 
     [Header("InitialiseStart")]
     public Condition[] arrayOfConditions;
@@ -88,9 +87,13 @@ public class LoadManager : MonoBehaviour
     public Effect[] arrayOfEffectsTeams;
     public Effect[] arrayOfEffectsTopics;
 
-    [Header("InitialiseEarly")]
+    [Header("Stories")]
+    public StoryModule[] arrayOfStoryModules;
     public StoryData[] arrayOfStoryData;
+    public StoryLetter[] arrayOfStoryLetters;
     public StoryHelp[] arrayOfStoryHelp;
+
+    [Header("InitialiseEarly")]
     public NodeArc[] arrayOfNodeArcs;
     public NodeCrisis[] arrayOfNodeCrisis;
     public Trait[] arrayOfTraits;
@@ -944,7 +947,13 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfStoryModules has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No StoryModules present"); }
-
+        //
+        // - - - Story Letters (not stored in a collection)
+        //
+        numArray = arrayOfStoryLetters.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfStoryLetters has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No StoryLetters present"); }
     }
     #endregion
 

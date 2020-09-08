@@ -1948,6 +1948,10 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfStoryModules);
         //StoryHelp
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfStoryHelp);
+        //StoryLetters
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfStoryLetters);
+        //StoryData
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfStoryData);
         //TopicItems
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfTopicItems);
     }
