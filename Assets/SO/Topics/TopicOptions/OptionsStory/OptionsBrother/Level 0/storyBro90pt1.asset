@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro90pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 9 Opt 1
-  tag: dd
-  text: 
+  tag: Perplexed
+  text: Why do you need me if you have contacts?
   topic: {fileID: 11400000, guid: fcdf339eeadb58b469d3697b752994ab, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: There are limits to what I can do for reasons I can't tell you. Besides,
+    I am busy. It's your Brother that has gone missing, not mine. Please take an interest
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

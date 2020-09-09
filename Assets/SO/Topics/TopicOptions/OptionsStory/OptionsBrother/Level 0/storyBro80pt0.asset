@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro80pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 8 Opt 0
-  tag: dd
-  text: 
+  tag: Explain
+  text: My brother was investigating the Cult
   topic: {fileID: 11400000, guid: a54dfc5b5a992da41a551d464ad2ba5d, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: It appears so. I think that this has led to his disappearance. He may
+    have even been eaten by Derrick Wilson's Alligators. We shall see
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 3
+  optionNumber: 0

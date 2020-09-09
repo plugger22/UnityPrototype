@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro30pt2
   m_EditorClassIdentifier: 
   descriptor: Story Brother 3 Opt 2
-  tag: dd
-  text: 
+  tag: Inquire
+  text: Who is Derrick Wilson?
   topic: {fileID: 11400000, guid: d9ed9a7ab095a4046981a6ff4b90bdee, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: He runs a business in an Industrical district in [cityNext]. Your Brother
+    visited Derrick.This is all I know and it is your job to find out more
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro80pt3
   m_EditorClassIdentifier: 
   descriptor: Story Brother 8 Opt 3
-  tag: dd
-  text: 
+  tag: Probe
+  text: My Brother was a Reporter, not a Merc
   topic: {fileID: 11400000, guid: a54dfc5b5a992da41a551d464ad2ba5d, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Yes, this I know. I am in the Merc business. Tell me something I don't
+    and please do not waste my time any more by stating the obvious
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

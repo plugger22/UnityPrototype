@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro30pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 3 Opt 1
-  tag: dd
-  text: 
+  tag: Laugh
+  text: Am I working for you now?
   topic: {fileID: 11400000, guid: d9ed9a7ab095a4046981a6ff4b90bdee, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: You are a woman? You are good with a gun and a knife? No? Then I don't
+    think so. I only hire the best. Besides, your fashion sense is TERRIBLE
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

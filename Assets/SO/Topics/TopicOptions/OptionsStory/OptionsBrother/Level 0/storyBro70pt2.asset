@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro70pt2
   m_EditorClassIdentifier: 
   descriptor: Story Brother 7 Opt 2
-  tag: dd
-  text: 
+  tag: Sceptical
+  text: '[brother] didn''t say much about you...'
   topic: {fileID: 11400000, guid: 016ae9804fcadcd4590160c6dcc8a796, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Well he wouldn't, would he? [brother] was a PRIVATE person who didn't
+    like to tell the whole world about his life. Shouldn't you know that as his brother?
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

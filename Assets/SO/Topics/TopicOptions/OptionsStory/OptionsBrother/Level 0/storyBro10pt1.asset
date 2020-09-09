@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro10pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 1 Opt 1
-  tag: dd
-  text: 
+  tag: Hello?
+  text: What's with the Armed Men?
   topic: {fileID: 11400000, guid: fc34ecde1eebb1b4591453f90f814e25, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: There are no men. We are a business that employs only women. Fit, agile,
+    lethal, women. Ones that dress with class and kill with style
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

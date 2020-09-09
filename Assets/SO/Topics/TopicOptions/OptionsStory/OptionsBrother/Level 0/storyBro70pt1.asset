@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro70pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 7 Opt 1
-  tag: dd
-  text: 
+  tag: Question
+  text: Where did you obtain this intel?
   topic: {fileID: 11400000, guid: 016ae9804fcadcd4590160c6dcc8a796, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: That's none of your business, kind Sir. What's important is that I got
+    it which is just as well as you DIDN"T. What do you intend to do now?
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

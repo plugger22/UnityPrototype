@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro30pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 3 Opt 0
-  tag: dd
-  text: 
+  tag: Uncertain
+  text: Why are you involved?
   topic: {fileID: 11400000, guid: d9ed9a7ab095a4046981a6ff4b90bdee, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: It is best to leave matters of higher import to those who have brains
+    larger than a grapefruit. I will tell you what you need to know. Do not worry
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro10pt3
   m_EditorClassIdentifier: 
   descriptor: Story Brother 1 Opt 3
-  tag: dd
-  text: 
+  tag: Unclear
+  text: How do you know my Brother?
   topic: {fileID: 11400000, guid: fc34ecde1eebb1b4591453f90f814e25, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I don't know your brother. He is inconsequential. Clearly, however, he
+    has some relevance to other matters which I cannot divulge
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro30pt3
   m_EditorClassIdentifier: 
   descriptor: Story Brother 3 Opt 3
-  tag: dd
-  text: 
+  tag: Cautious
+  text: Where do the Alligators come into it?
   topic: {fileID: 11400000, guid: d9ed9a7ab095a4046981a6ff4b90bdee, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Derrick Wilson keeps them as pets at his facility. Gene tailored alligators.
+    Aquatic killing machines. You must stay clear of them. Very dangerous
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

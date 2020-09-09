@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro10pt2
   m_EditorClassIdentifier: 
   descriptor: Story Brother 1 Opt 2
-  tag: dd
-  text: 
+  tag: Decline
+  text: Please go away
   topic: {fileID: 11400000, guid: fc34ecde1eebb1b4591453f90f814e25, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: You do not understand. I am here to help you find your missing Brother.
+    You will assist. We will work together. I will accept nothing less
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

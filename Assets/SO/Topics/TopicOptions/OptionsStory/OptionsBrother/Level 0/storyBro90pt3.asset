@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro90pt3
   m_EditorClassIdentifier: 
   descriptor: Story Brother 9 Opt 3
-  tag: dd
-  text: 
+  tag: Cautious
+  text: Are you connected to the Cult?
   topic: {fileID: 11400000, guid: fcdf339eeadb58b469d3697b752994ab, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Does the Cult require deadly, female only, mercenaries? I am happy to
+    supply them with such. Do I have any other contact with them? No
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro70pt3
   m_EditorClassIdentifier: 
   descriptor: Story Brother 7 Opt 3
-  tag: dd
-  text: 
+  tag: Interested
+  text: You gene-splice extinct critters?
   topic: {fileID: 11400000, guid: 016ae9804fcadcd4590160c6dcc8a796, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I'm part of a team that does. Really all I do is make them mugs of Fungus
+    Coffee. They're IMPORTANT people and I'm just there to support them
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

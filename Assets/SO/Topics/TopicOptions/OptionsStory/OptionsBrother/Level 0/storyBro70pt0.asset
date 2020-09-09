@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: It looks like it. I suspect that's why [brother] wanted to talk to him.
+    Derrick could be a front for the Piggies, laundering money for them
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

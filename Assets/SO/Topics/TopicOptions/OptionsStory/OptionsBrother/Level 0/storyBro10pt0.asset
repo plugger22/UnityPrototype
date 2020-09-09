@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro10pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 1 Opt 0
-  tag: dd
-  text: 
+  tag: Pardon
+  text: Excuse me, you are?
   topic: {fileID: 11400000, guid: fc34ecde1eebb1b4591453f90f814e25, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: LeAnn Lopez, I run 'Girls With Guns', a contract Merc Hire business with
+    an outstanding reputation. We kill for money. We have the best hair
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro80pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 8 Opt 1
-  tag: dd
-  text: 
+  tag: Unclear
+  text: If I withhold information....?
   topic: {fileID: 11400000, guid: a54dfc5b5a992da41a551d464ad2ba5d, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Did I mention that I employ women trained to kill? Of course I did. You
+    are jesting with me. I have trouble with this as I have no sense of humour
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1
