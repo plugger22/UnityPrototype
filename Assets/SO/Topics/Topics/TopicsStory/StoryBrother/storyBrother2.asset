@@ -31,16 +31,17 @@ MonoBehaviour:
   levelIndex: 0
   topicItem: {fileID: 11400000, guid: 768dba55f32589b44a2d12428659524a, type: 2}
   listOfStoryHelp:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: a902e1e24745f9241b8e43d59f0614ce, type: 2}
   profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
-  listOfCriteria: []
+  listOfCriteria:
+  - {fileID: 11400000, guid: 5ada6805d52fe0e4eb10c44a98c34cf0, type: 2}
   listOfIgnoreEffects: []
   listOfOptions:
   - {fileID: 11400000, guid: 6878b8051eedaa74c8ffb8077a0fd096, type: 2}
   - {fileID: 11400000, guid: e0d58b79f3f675b47aa5560a61193fb1, type: 2}
   - {fileID: 11400000, guid: 4ee7bd0dbadb0f64bbadbc5f0fa0328a, type: 2}
   - {fileID: 11400000, guid: 1abb3b8b76ac6994b91ecd5110785491, type: 2}
-  isDisabled: 1
+  isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
@@ -50,6 +51,6 @@ MonoBehaviour:
   timerRepeat: 0
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 0
-  turnsLive: 0
+  turnsActive: 1
+  turnsLive: 1
   turnsDone: 0

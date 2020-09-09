@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
+  m_Name: Animals0
+  m_EditorClassIdentifier: 
+  tag: Big Game
+  sprite: {fileID: 0}
+  textTop: Naturally occurring big game animals on Earth are extinct. Zoo's banked
+    animal DNA decades ago in the hope that, one day, big game can return
+  textMiddle: Which it has, In a manner. Gene splicing has enabled test tube animals
+    but the temptation to tinker with natures base code has proven irresistable
+  textBottom: Big Game is enhanced. It's faster, deadlier and more exotic than it
+    ever was before. Who doesn't want a killer TigerLion prowling their perimeter?
+  isKnown: 1

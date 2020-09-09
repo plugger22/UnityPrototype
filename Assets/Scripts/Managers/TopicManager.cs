@@ -5778,8 +5778,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}{1}{2}", colourCheckText, GameManager.i.playerScript.PlayerName, colourEnd); }
-                            else { replaceText = GameManager.i.playerScript.PlayerName; }
+                            { replaceText = string.Format("{0}{1}{2}", colourCheckText, GameManager.i.playerScript.FirstName, colourEnd); }
+                            else { replaceText = GameManager.i.playerScript.FirstName; }
                         }
                         else { CountTextTag("player", dictOfTags); }
                         break;

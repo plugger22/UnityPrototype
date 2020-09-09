@@ -27,7 +27,7 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: I'm part of a team that does. Really all I do is make them mugs of Fungus
+  storyInfo: I'm part of a team that does. Really all I do is make them mugs of REAL
     Coffee. They're IMPORTANT people and I'm just there to support them
   storyTarget: {fileID: 0}
   tooltipHeader: 

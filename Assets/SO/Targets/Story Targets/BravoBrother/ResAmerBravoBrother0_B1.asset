@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: ResAmerBravoBrother0_B1
   m_EditorClassIdentifier: 
   targetName: Trawl Archives
-  descriptorResistance: Set a SearchBot loose
+  descriptorResistance: Set a SearchBot loose on Derrick
   descriptorAuthority: Industrial
   reasonText: setting a searchBot loose
   rumourText: setting a searchBot loose

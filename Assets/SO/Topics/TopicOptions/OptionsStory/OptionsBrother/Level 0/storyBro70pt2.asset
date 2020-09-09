@@ -27,12 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Well he wouldn't, would he? [brother] was a PRIVATE person who didn't
-    like to tell the whole world about his life. Shouldn't you know that as his brother?
+  storyInfo: Why would he? [brother] was a PRIVATE person who didn't like to tell
+    the whole world about his life. Shouldn't you KNOW that as his brother?
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Sceptical</color>
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Tristan didn't say much about you...</color>
   optionNumber: 2

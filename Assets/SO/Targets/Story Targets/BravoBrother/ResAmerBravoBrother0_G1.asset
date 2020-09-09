@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: ResAmerBravoBrother0_G1
   m_EditorClassIdentifier: 
   targetName: Tap Network
-  descriptorResistance: Speak to a Government contact
+  descriptorResistance: Speak to a Govt contact about Derrick
   descriptorAuthority: Government
   reasonText: tapping contact network
   rumourText: tapping contact network
@@ -34,7 +34,7 @@ MonoBehaviour:
   isSuccessNeeded: 0
   followOnTarget: {fileID: 0}
   profile: {fileID: 11400000, guid: 3cac112efe0822249b012aabfba261d5, type: 2}
-  targetStatus: 0
+  targetStatus: 4
   intel: 0
   ongoingID: -1
   isKnownByAI: 0
@@ -43,10 +43,10 @@ MonoBehaviour:
   newIntel: 0
   intelGain: 0
   turnSuccess: -1
-  turnDone: -1
+  turnDone: 37
   numOfAttempts: 0
   turnsWindow: 10
   timerDelay: 0
   timerHardLimit: 0
-  timerWindow: 9
+  timerWindow: 0
   listOfRumourContacts: 

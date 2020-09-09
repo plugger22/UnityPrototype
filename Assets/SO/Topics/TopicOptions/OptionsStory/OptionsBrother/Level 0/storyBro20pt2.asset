@@ -27,12 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: He's got this really SPECIAL job as an investigate reporter for one of
-    those Vlog 'casters. They pay him when he has a BIG story. Like about the Piggies
+  storyInfo: He's got this really SPECIAL job as an investigator for one of those
+    Vlog 'casters. They pay him when he has a BIG story. Like about the Piggies
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Test</color>
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>What has Tristan been doing lately?</color>
   optionNumber: 2

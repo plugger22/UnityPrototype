@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: ResAmerBravoBrother0_B0
   m_EditorClassIdentifier: 
   targetName: Tap Node
-  descriptorResistance: Hack into an Industrial Node
+  descriptorResistance: Hack into a Derrick's Industrial Node
   descriptorAuthority: Industrial
   reasonText: hacking into a database
   rumourText: hacking into a database

@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: There are limits to what I can do for reasons I can't tell you. Besides,
-    I am busy. It's your Brother that has gone missing, not mine. Please take an interest
+  storyInfo: There are limits to what I can do. Besides, I am busy. It's your Brother
+    that has gone missing, not mine. Please take an interest in this
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
