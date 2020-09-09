@@ -2244,6 +2244,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: df277fd590840b64b9957013b311c748, type: 2}
   - {fileID: 11400000, guid: fb1455fd553091d4fb8168e84fb8dfc7, type: 2}
   - {fileID: 11400000, guid: a079fa4f73bbe0841a99305147c2b5ff, type: 2}
+  - {fileID: 11400000, guid: bf4481325d92fb345935a797a17a4fac, type: 2}
+  - {fileID: 11400000, guid: 9292a124380a01c4899283b850929f4e, type: 2}
+  - {fileID: 11400000, guid: 2b516e8ac1be28046932e6f83741a466, type: 2}
+  - {fileID: 11400000, guid: 5baf7cb6305375f44885d2fea90f0082, type: 2}
+  - {fileID: 11400000, guid: 9470c0ad9e09b7845bace4464a562151, type: 2}
+  - {fileID: 11400000, guid: b5868dab86d76744d860f905c33468e5, type: 2}
+  - {fileID: 11400000, guid: 4fa9806587ab83a4bbbbb613d593190c, type: 2}
+  - {fileID: 11400000, guid: b8d0cd7a7b476d240b52b7d847175aa6, type: 2}
+  - {fileID: 11400000, guid: 345daf7404aa94d44911ee9c912ba94c, type: 2}
+  - {fileID: 11400000, guid: 13f81cb7e98db894d9765753115eb086, type: 2}
   arrayOfStoryHelp:
   - {fileID: 11400000, guid: 87941c60a33c1bc4f8d370777fe09842, type: 2}
   - {fileID: 11400000, guid: 2edd14c0e12bcb343aa3b8a0703f8f69, type: 2}
@@ -2947,6 +2957,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 016ae9804fcadcd4590160c6dcc8a796, type: 2}
   - {fileID: 11400000, guid: a54dfc5b5a992da41a551d464ad2ba5d, type: 2}
   - {fileID: 11400000, guid: fcdf339eeadb58b469d3697b752994ab, type: 2}
+  - {fileID: 11400000, guid: d572d37a9838da54fb430ae70e513ae8, type: 2}
+  - {fileID: 11400000, guid: 79418a0c36d0466458fdf27d247e51c8, type: 2}
+  - {fileID: 11400000, guid: eb299a671adaec44491408098bbcbd88, type: 2}
+  - {fileID: 11400000, guid: 275e40b06a641b54ab0c0d9b4af0b1a6, type: 2}
+  - {fileID: 11400000, guid: 2a5a4c0934900c9489fc0e1247be0fbf, type: 2}
+  - {fileID: 11400000, guid: 8aaef6f610d8c364b91c2dfb1a3ac2e3, type: 2}
+  - {fileID: 11400000, guid: e9bb44addd7ba4b48ad99cac03d47063, type: 2}
+  - {fileID: 11400000, guid: f21331303e3ce9449b49c0d984d34baf, type: 2}
+  - {fileID: 11400000, guid: 58a9b7b51cd16414786695e0dd4018a7, type: 2}
+  - {fileID: 11400000, guid: 393aa7ec9b838fd4ebf998b4f1255fad, type: 2}
   arrayOfOptionsActorContact:
   - {fileID: 11400000, guid: de3ca8550338a964d83728f77adf87d1, type: 2}
   - {fileID: 11400000, guid: e8f87885714be194a9acea71c6d688ee, type: 2}
@@ -3762,6 +3782,42 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ec72ce71e80f9434885e55f19f3e2a80, type: 2}
   - {fileID: 11400000, guid: a356927cb2a6766418f4b97dc0ebc747, type: 2}
   - {fileID: 11400000, guid: dfbb2c78b7626ce41b7496af147ef119, type: 2}
+  - {fileID: 11400000, guid: b1af9c06edaf516439655c97d12af1a6, type: 2}
+  - {fileID: 11400000, guid: b42c99c7b1f5f1042bc934d0ea12d793, type: 2}
+  - {fileID: 11400000, guid: e3651c5f0c7cd554d9720f03f9a94a01, type: 2}
+  - {fileID: 11400000, guid: 75cfcf4a8db895c41b0aa5c554bc53c4, type: 2}
+  - {fileID: 11400000, guid: 740374f1892d1f140bd9409c05e12589, type: 2}
+  - {fileID: 11400000, guid: 4b20c937d884ca142a209d4af4580fda, type: 2}
+  - {fileID: 11400000, guid: a8eb28968071ab54dac86c5a4983b386, type: 2}
+  - {fileID: 11400000, guid: 1882c0f81cd1f6d439ec279ac8990b8f, type: 2}
+  - {fileID: 11400000, guid: 78f0ef341aaddc5449e6c2bb4b759f72, type: 2}
+  - {fileID: 11400000, guid: a30d2be686b25d74fb8f596bcbccc8a0, type: 2}
+  - {fileID: 11400000, guid: 845ec8b0a5a647741b0cb209ed56931e, type: 2}
+  - {fileID: 11400000, guid: 93e3bb02ba1b9af43a23b075512e76f3, type: 2}
+  - {fileID: 11400000, guid: 102bb3118e036994db75c0f646b93ac9, type: 2}
+  - {fileID: 11400000, guid: dee26dcabf78d7845a5b2c694bbc7f17, type: 2}
+  - {fileID: 11400000, guid: 13b8af08839314447a82c65774254f10, type: 2}
+  - {fileID: 11400000, guid: c814e6c5995238d44916aa7b233882ea, type: 2}
+  - {fileID: 11400000, guid: 1f8447ed1d0c3524d921fca084a98faa, type: 2}
+  - {fileID: 11400000, guid: 1e163f06498aff74392ef4bd878398f8, type: 2}
+  - {fileID: 11400000, guid: 8409729b46640e54fab105253788e41e, type: 2}
+  - {fileID: 11400000, guid: 2c9d68732ea5e7143b0acee8b9a433cd, type: 2}
+  - {fileID: 11400000, guid: 6f305d930ac2d9b4f8e6b5baf0c8c602, type: 2}
+  - {fileID: 11400000, guid: 862fbcf758a924c4284240ef689e1037, type: 2}
+  - {fileID: 11400000, guid: 68a727be31e62a24cb25e0c95c77538a, type: 2}
+  - {fileID: 11400000, guid: e0b4c7079e680f442819a81f10097703, type: 2}
+  - {fileID: 11400000, guid: 7446cc71b477e034da677a6eaa16d4dc, type: 2}
+  - {fileID: 11400000, guid: 66d52f0589d2f174f8f1d0616e32e97f, type: 2}
+  - {fileID: 11400000, guid: 72ef05636e34f164b8a03b5968e9c60c, type: 2}
+  - {fileID: 11400000, guid: fd04e00eaa5513045bd1980feabda3e4, type: 2}
+  - {fileID: 11400000, guid: 3c27e3029583d5749bd301ddf46f33b8, type: 2}
+  - {fileID: 11400000, guid: 6277a9a083892bb4a893c52f1c911895, type: 2}
+  - {fileID: 11400000, guid: fcf6c2c871835b94e970eff3dcfcc6c3, type: 2}
+  - {fileID: 11400000, guid: 35be2654a7bcf604882e556ecc7dba95, type: 2}
+  - {fileID: 11400000, guid: 61a05412556b72e488292220b3bb9e62, type: 2}
+  - {fileID: 11400000, guid: f63cb1ad86ed6da449fa293ee458ee20, type: 2}
+  - {fileID: 11400000, guid: 3ac9596184c1a024b80100c71d2b4b5d, type: 2}
+  - {fileID: 11400000, guid: 059959e8fe43ea849af66b5735b32572, type: 2}
   arrayOfOptionsStoryDrugs:
   - {fileID: 11400000, guid: da62ead6090cad149b7409e49da11b1b, type: 2}
   - {fileID: 11400000, guid: 8d9ec7db7eea82944aa2e20e02acdf56, type: 2}
@@ -4247,6 +4303,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 705d0050f1e97fb4783d569b25164177, type: 2}
   - {fileID: 11400000, guid: 1451bcbbc41f2344191d53bc9b95d882, type: 2}
   - {fileID: 11400000, guid: 1ce35e775ea98cd46afceb5842bd5cf6, type: 2}
+  - {fileID: 11400000, guid: 1489e00a1f36e31418a40c0539c87f91, type: 2}
+  - {fileID: 11400000, guid: e2afd4a7bfc47ff4baa782bf9422e214, type: 2}
+  - {fileID: 11400000, guid: e9a46aae253071042b1f9b7492514855, type: 2}
+  - {fileID: 11400000, guid: 849d5c9fe27234b4f8e7b7dbb6539f35, type: 2}
   arrayOfTargetsGoal:
   - {fileID: 11400000, guid: 3092bd84d4483f249a7039bc13a54727, type: 2}
   - {fileID: 11400000, guid: cb0366be15bea08479bebcfe2818bf25, type: 2}
@@ -5895,7 +5955,7 @@ MonoBehaviour:
   popUpFixedScript: {fileID: 0}
   seedDev: 0
   autoRunTurns: 20
-  scenarioStartLevel: 0
+  scenarioStartLevel: 1
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1

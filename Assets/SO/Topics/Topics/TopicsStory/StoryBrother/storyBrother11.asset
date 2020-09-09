@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: storyBrother11
+  m_EditorClassIdentifier: 
+  tag: 
+  text: 
+  letter: {fileID: 11400000, guid: 9292a124380a01c4899283b850929f4e, type: 2}
+  designNotes: storyBrother11
+  type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
+  subType: {fileID: 11400000, guid: 9c0b06df8df43f641b72a6ea311f55a1, type: 2}
+  subSubType: {fileID: 0}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics:
+  - {fileID: 11400000, guid: eb299a671adaec44491408098bbcbd88, type: 2}
+  - {fileID: 11400000, guid: 275e40b06a641b54ab0c0d9b4af0b1a6, type: 2}
+  listOfBuddyTopics:
+  - {fileID: 11400000, guid: d572d37a9838da54fb430ae70e513ae8, type: 2}
+  - {fileID: 11400000}
+  linkedIndex: 0
+  levelIndex: 1
+  topicItem: {fileID: 11400000, guid: 8f26e4ad57a9a5a4c90746abb7dcfb1c, type: 2}
+  listOfStoryHelp:
+  - {fileID: 11400000, guid: deee034309ce1e9438b29ee2bb0177d2, type: 2}
+  profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: 0149fc4442e0c8441940141f428f1035, type: 2}
+  listOfIgnoreEffects: []
+  listOfOptions:
+  - {fileID: 11400000, guid: 740374f1892d1f140bd9409c05e12589, type: 2}
+  - {fileID: 11400000, guid: 4b20c937d884ca142a209d4af4580fda, type: 2}
+  - {fileID: 11400000, guid: a8eb28968071ab54dac86c5a4983b386, type: 2}
+  - {fileID: 11400000, guid: 1882c0f81cd1f6d439ec279ac8990b8f, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  status: 4
+  isCurrent: 0
+  timerStart: 0
+  timerRepeat: 0
+  timerWindow: 0
+  turnsDormant: 0
+  turnsActive: 0
+  turnsLive: 18
+  turnsDone: 0
