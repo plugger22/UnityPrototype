@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro120pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 12 Opt 0
-  tag: 
-  text: 
+  tag: Curious
+  text: What did you say?
   topic: {fileID: 11400000, guid: eb299a671adaec44491408098bbcbd88, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I smiled and said that I'm spoken for. I resisted the urge to claw his
+    BLOOD RED eyeballs out of his SKULL and tread on them until they POPPED
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 3
+  optionNumber: 0

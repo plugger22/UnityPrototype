@@ -9,11 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b5d6df66d797b34b989f3bc7d5e160b, type: 3}
-  m_Name: Brother15
+  m_Name: StoryBrother4
   m_EditorClassIdentifier: 
   textDear: '[first]'
-  textTop: If your Brother is still alive he'll be inside the complex. Most likely
-    the office as the warehouse would be too busy. We need to determine if he's there
-  textBottom: I will not interfere and will leave this task to you as I cannot be
-    seen to be actively helping a known Resistance Leader. You do, of course, have
-    my support
+  textTop: You ought to investigate that Derrick guy. The one with the killer 'Gators.
+    If he's fed your Brother to his awful creatures I'll CRY
+  textBottom: '[brother] is the love of my life and I''m holding you responsible for
+    his safe return. Don''t mess it up or I''ll COMPLAIN'

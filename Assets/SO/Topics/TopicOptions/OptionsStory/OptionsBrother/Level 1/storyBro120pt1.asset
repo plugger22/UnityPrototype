@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro120pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 12 Opt 1
-  tag: 
-  text: 
+  tag: Compliment
+  text: You have lovely teeth
   topic: {fileID: 11400000, guid: eb299a671adaec44491408098bbcbd88, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: They're fake. Most of my teeth rotted to bits 'cause I used to chew on
+    fungus Fudge sticks. My parents got a cheap set of chompers from a Ripper Doc
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

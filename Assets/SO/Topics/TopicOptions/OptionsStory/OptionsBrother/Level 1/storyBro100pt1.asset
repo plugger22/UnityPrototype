@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro100pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 10 Opt 1
-  tag: 
-  text: 
+  tag: Query
+  text: Why do you think he's Crazy?
   topic: {fileID: 11400000, guid: d572d37a9838da54fb430ae70e513ae8, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Did you miss the bit about my TOES? He has RED EYES that stare straight
+    at the SUN. Is he SATAN on a sabbatical? He's super CREEPY
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

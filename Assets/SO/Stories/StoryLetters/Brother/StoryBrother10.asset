@@ -9,10 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b5d6df66d797b34b989f3bc7d5e160b, type: 3}
-  m_Name: Brother3
+  m_Name: StoryBrother10
   m_EditorClassIdentifier: 
   textDear: '[first]'
-  textTop: Your brother was last seen entering a business owned by Derrick Wilson
-    in [cityNext]. Investigate this business please and report back to me
-  textBottom: I am finding your requirements to communicate via antique paper rather
-    quaint. No matter, I will adapt. Old fashioned habits can be amusing
+  textTop: I've met the Derrick guy. He's really polite. Charming. But he's totally,
+    bat crap CRAZY. He asked if I wanted to donate my TOES
+  textBottom: As if I don't want my toes? His pet 'Gators love toes for breakfast.
+    Normal people eat Fungus Bread but no, his 'Gators want my TOES. Wild

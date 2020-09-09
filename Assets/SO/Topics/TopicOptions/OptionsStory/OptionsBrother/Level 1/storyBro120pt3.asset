@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro120pt3
   m_EditorClassIdentifier: 
   descriptor: Story Brother 12 Opt 3
-  tag: 
-  text: 
+  tag: Cautious
+  text: You've been to Luna?
   topic: {fileID: 11400000, guid: eb299a671adaec44491408098bbcbd88, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Yes, hasn't everybody? I worked in a small gene FabLab up there for a
+    while. I didn't like it. All dark and dreary. The buildings stank of stale men
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

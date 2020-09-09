@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro120pt2
   m_EditorClassIdentifier: 
   descriptor: Story Brother 12 Opt 2
-  tag: 
-  text: 
+  tag: Excuse Me
+  text: Who's Bob?
   topic: {fileID: 11400000, guid: eb299a671adaec44491408098bbcbd88, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Bob? How the heck should I know. Maybe Derrick murdered Bob and fed his
+    feet to his awful 'Gators before taking over Bob's business. Poor Bob
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

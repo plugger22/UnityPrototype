@@ -9,10 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b5d6df66d797b34b989f3bc7d5e160b, type: 3}
-  m_Name: Brother8
+  m_Name: StoryBrother11
   m_EditorClassIdentifier: 
   textDear: '[first]'
-  textTop: The Purple Pig Cult present no military threat and I am perplexed as to
-    why Derrick Wilson is connected with them. What was your brother doing?
-  textBottom: You must cease all other activity and focus on recovering your brother,
-    dead or alive. I reiterate my willingness to cooperate and expect full disclosure
+  textTop: My contacts tell me that Derrick Wilson is terminally mad. He has pet 'Gators
+    that eat intruders. He calls them his three wise men. Not a sane man
+  textBottom: But extremely polite. I'm told that he apologies before sawing off your
+    feet and feeding them to his 'Gators. They consider toes to be a delicacy. Really?

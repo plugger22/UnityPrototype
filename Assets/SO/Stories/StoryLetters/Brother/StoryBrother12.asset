@@ -9,10 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b5d6df66d797b34b989f3bc7d5e160b, type: 3}
-  m_Name: Brother1
+  m_Name: StoryBrother12
   m_EditorClassIdentifier: 
   textDear: '[first]'
-  textTop: I am here about [brother], your brother. He's gone missing. I know this.
-    I know lots of things that you don't. This will not change. Accept it
-  textBottom: We will have to work together to find [brother]. I am ready to assist
-    and can put heavily armed personnel on the ground at a moments notice
+  textTop: Derrick runs 'Bob's Luna Imports'. It's not a big operation. They onsell
+    offworld medical instruments. All those Low G's on Luna make delicate easy
+  textBottom: He told me that their bestseller is dental ware. Instruments for those
+    CREEPY dentalBots to help them rip out your molars. Derrick asked me out

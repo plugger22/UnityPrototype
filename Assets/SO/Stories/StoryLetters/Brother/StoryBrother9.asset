@@ -9,10 +9,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b5d6df66d797b34b989f3bc7d5e160b, type: 3}
-  m_Name: Brother19
+  m_Name: StoryBrother9
   m_EditorClassIdentifier: 
   textDear: '[first]'
-  textTop: It is fortunate that I anticipated your complete and utter failure to complete
-    this mission. Why should I have expected anything less from you?
-  textBottom: My agent spotted a vehicle departing with your Brother bound up inside,
-    in the company of several Pig People Cultists. He's been kidnapped
+  textTop: Clearly you are deficient and unable to carry out even simple tasks. It
+    is not a concern as I have contacts. Your brother last spoke to Derrick Wilson
+    a week ago
+  textBottom: Derrick runs a business which is a front, apparently, for the Purple
+    Pig Cultists. He is a paid up member and cannot be trusted. This, I know

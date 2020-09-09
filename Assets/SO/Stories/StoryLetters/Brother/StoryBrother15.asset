@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5d6df66d797b34b989f3bc7d5e160b, type: 3}
+  m_Name: StoryBrother15
+  m_EditorClassIdentifier: 
+  textDear: '[first]'
+  textTop: If your Brother is still alive he'll be inside the complex. Most likely
+    the office as the warehouse would be too busy. We need to determine if he's there
+  textBottom: I will not interfere and will leave this task to you as I cannot be
+    seen to be actively helping a known Resistance Leader. You do, of course, have
+    my support

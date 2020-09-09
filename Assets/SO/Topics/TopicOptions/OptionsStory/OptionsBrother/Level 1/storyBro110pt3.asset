@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro110pt3
   m_EditorClassIdentifier: 
   descriptor: Story Brother 11 Opt 3
-  tag: 
-  text: 
+  tag: Uncertain
+  text: Don't you like 'Gators?
   topic: {fileID: 11400000, guid: 79418a0c36d0466458fdf27d247e51c8, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Nobody likes giant toothy lizards with a bad attitude. They twist their
+    genes so badly that they become unpredictable, liable to lash out at anyone
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

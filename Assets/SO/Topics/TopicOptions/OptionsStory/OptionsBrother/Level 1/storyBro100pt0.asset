@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro100pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 10 Opt 0
-  tag: 
-  text: 
+  tag: Confused
+  text: Do you know Derrick?
   topic: {fileID: 11400000, guid: d572d37a9838da54fb430ae70e513ae8, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I don't mix with crazies who have toe GOBBLING 'Gators for pets. I bumped
+    into him. I can do that. I'm a GIRL. Men liked to be bumped into by cuties
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

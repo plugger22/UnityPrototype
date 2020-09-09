@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro130pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 13 Opt 0
-  tag: 
-  text: 
+  tag: Question
+  text: Are you sure about the Alligators?
   topic: {fileID: 11400000, guid: 275e40b06a641b54ab0c0d9b4af0b1a6, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -34,4 +34,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 3
+  optionNumber: 0

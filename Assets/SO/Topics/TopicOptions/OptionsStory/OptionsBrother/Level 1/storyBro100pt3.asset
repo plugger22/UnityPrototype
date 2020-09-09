@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro100pt3
   m_EditorClassIdentifier: 
   descriptor: Story Brother 10 Opt 3
-  tag: 
-  text: 
+  tag: Puzzled
+  text: Are you following me around?
   topic: {fileID: 11400000, guid: d572d37a9838da54fb430ae70e513ae8, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: What? NO, of course not. You're OLD. I don't do OLD people. I am trying
+    to help you find [brother], though. Without me you would be LOST
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro100pt2
   m_EditorClassIdentifier: 
   descriptor: Story Brother 10 Opt 2
-  tag: 
-  text: 
+  tag: Reprimand
+  text: I'd didn't ask you to get Involved
   topic: {fileID: 11400000, guid: d572d37a9838da54fb430ae70e513ae8, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Of course you didn't, silly billy. I have to be here to make sure that
+    you do the RIGHT THING. [brother] is depending on me to keep you in LINE
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2
