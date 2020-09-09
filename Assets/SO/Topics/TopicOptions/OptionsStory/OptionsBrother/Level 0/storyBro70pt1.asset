@@ -28,11 +28,11 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: That's none of your business, kind Sir. What's important is that I got
-    it which is just as well as you DIDN"T. What do you intend to do now?
+    it which is just as well as you DIDN'T. What do you intend to do now?
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Question</color>
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Where did you obtain this intel?</color>
   optionNumber: 1

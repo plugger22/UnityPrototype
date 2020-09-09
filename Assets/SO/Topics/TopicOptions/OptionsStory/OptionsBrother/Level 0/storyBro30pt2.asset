@@ -27,7 +27,7 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: He runs a business in an Industrical district in [cityNext]. Your Brother
+  storyInfo: He runs a business in an Industrial district in [cityNext]. Your Brother
     visited Derrick.This is all I know and it is your job to find out more
   storyTarget: {fileID: 0}
   tooltipHeader: 

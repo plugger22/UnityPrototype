@@ -28,7 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: Yes, this I know. I am in the Merc business. Tell me something I don't
-    and please do not waste my time any more by stating the obvious
+    and please do not waste my time by stating the obvious
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

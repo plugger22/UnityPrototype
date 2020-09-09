@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Thiis is what we must determine. People who pry into the inner workings
-    of the Cult do not, as a rule, have a bright future. Mostly they die
+  storyInfo: This is what we must determine. People who pry into the inner workings
+    of the Cult don't, in my experience, have a bright future. They die
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
