@@ -37,8 +37,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: eb9c8041761a3bc4f97296c5c0ed2966, type: 2}
   listOfIgnoreEffects: []
   listOfOptions:
-  - {fileID: 11400000, guid: 8409729b46640e54fab105253788e41e, type: 2}
-  - {fileID: 11400000, guid: 2c9d68732ea5e7143b0acee8b9a433cd, type: 2}
+  - {fileID: 11400000, guid: bdcb085efb04d3940aa19228f3598034, type: 2}
+  - {fileID: 11400000, guid: 2238bcf81a9a8144b9d8e1cd9ae17ae4, type: 2}
   isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
