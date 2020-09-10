@@ -28,11 +28,11 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: I don't mix with crazies who have toe GOBBLING 'Gators for pets. I bumped
-    into him. I can do that. I'm a GIRL. Men liked to be bumped into by cuties
+    into him. I can do that. I'm a GIRL. Men like to be bumped into by girls
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Confused</color>
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
   optionNumber: 0

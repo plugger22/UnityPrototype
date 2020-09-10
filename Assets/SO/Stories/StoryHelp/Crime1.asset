@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
+  m_Name: Crime1
+  m_EditorClassIdentifier: 
+  tag: Calling the Police
+  sprite: {fileID: 21300000, guid: be963c4af0f86a64ebaa6c5c5ee8e329, type: 3}
+  textTop: Anyone can call the police if they are the victim of a crime. Unless you
+    are one of the Elites or their technoClass, you'll be placed on indefinite hold
+  textMiddle: The police don't care what happens to you. Unless you do anything to
+    threaten the continued safe working of the City. Then you'll be dealt with. Harshly
+  textBottom: Justice lives on as a cheap and cheerful breakfast cereal. As in 'Do
+    your stomach JUSTICE today with a mix of exotic Fungal spore muesli mix'
+  isKnown: 0

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro160pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 16 Opt 0
-  tag: 
-  text: 
+  tag: Reassure
+  text: There's a Tracker on the vehicle
   topic: {fileID: 11400000, guid: e9bb44addd7ba4b48ad99cac03d47063, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Oh, goodie. At least SOMEBODY is thinking ahead. All we have to do is
+    follow them, right? I have my toothbrush and hairspray with me. Let's go
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 3
+  optionNumber: 0

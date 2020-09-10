@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro190pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 19 Opt 1
-  tag: 
-  text: 
+  tag: Help
+  text: How can we follow them?
   topic: {fileID: 11400000, guid: 393aa7ec9b838fd4ebf998b4f1255fad, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: You use the tracking device that my agent planted on the vehicle. You
+    wait until they reach their destination and then you call me. Are we clear?
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

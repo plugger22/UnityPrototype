@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro160pt2
   m_EditorClassIdentifier: 
   descriptor: Story Brother 16 Opt 2
-  tag: 
-  text: 
+  tag: Unsure
+  text: Are you sure it was [brother]?
   topic: {fileID: 11400000, guid: e9bb44addd7ba4b48ad99cac03d47063, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Is he not the love of my life? Are you inferring that he's been CLONED?
+    What an awful thought. Are you a clone? You do look a little sickly...
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

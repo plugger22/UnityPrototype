@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro160pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 16 Opt 1
-  tag: 
-  text: 
+  tag: Curious
+  text: How could you tell they were Cultists?
   topic: {fileID: 11400000, guid: e9bb44addd7ba4b48ad99cac03d47063, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Because they have EVIL little piggie eyes and were wearing those silly
+    purple hoodies with I AM A CULTIST on the back. Oh, and they DRIBBLED
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

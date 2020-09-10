@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro180pt2
   m_EditorClassIdentifier: 
   descriptor: Story Brother 18 Opt 2
-  tag: 
-  text: 
+  tag: Surprised
+  text: Why would the Cultists want him?
   topic: {fileID: 11400000, guid: 58a9b7b51cd16414786695e0dd4018a7, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: He is a threat to them? He is a hostage to be traded? He is a kidnap
+    victim that can extort credits for? Who can tell. It is your job to find out
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: There is a moat. It has full of water. Alligators live in water. Derrick
+    has them as pets. This is known. Would you like to swim a lap of the moat?
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

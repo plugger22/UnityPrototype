@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: ResAmerBravoBrother1_G0
   m_EditorClassIdentifier: 
   targetName: Observe
-  descriptorResistance: Stakeout Derricks Business
+  descriptorResistance: Stakeout Derrick's business
   descriptorAuthority: Industrial
   reasonText: staking out derricks business
   rumourText: staking out derricks business

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro180pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 18 Opt 1
-  tag: 
-  text: 
+  tag: Puzzled
+  text: Why couldn't your Merc have helped?
   topic: {fileID: 11400000, guid: 58a9b7b51cd16414786695e0dd4018a7, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: It is not up to us to rescue your Brother. He is your responsibility.
+    Have I not made this clear previously? Your role is clear. There is no ambiguity
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro160pt3
   m_EditorClassIdentifier: 
   descriptor: Story Brother 16 Opt 3
-  tag: 
-  text: 
+  tag: Calm
+  text: We'll get him back, don't worry
   topic: {fileID: 11400000, guid: e9bb44addd7ba4b48ad99cac03d47063, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: My job is to worry. I'm his fiancee. How can we marry and have lovely
+    little BABIES if he isn't there to help? Those evil Piggie People have him
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

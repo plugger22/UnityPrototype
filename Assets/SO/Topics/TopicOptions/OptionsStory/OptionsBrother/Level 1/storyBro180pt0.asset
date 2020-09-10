@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro180pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 18 Opt 0
-  tag: 
-  text: 
+  tag: Hopeful
+  text: Did your Merc plant a Tracker?
   topic: {fileID: 11400000, guid: 58a9b7b51cd16414786695e0dd4018a7, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Of course. I am now giving you the tracking device so that you can follow
+    the vehicle. Please inform me once they arrive at their destination
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 3
+  optionNumber: 0

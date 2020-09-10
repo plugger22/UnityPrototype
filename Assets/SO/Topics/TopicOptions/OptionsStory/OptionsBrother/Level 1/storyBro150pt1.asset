@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro150pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 15 Opt 1
-  tag: 
-  text: 
+  tag: Distract
+  text: Blow up part of Bob's Luna Imports
   topic: {fileID: 11400000, guid: 8aaef6f610d8c364b91c2dfb1a3ac2e3, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -34,4 +34,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

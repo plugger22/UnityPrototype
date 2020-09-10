@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro170pt3
   m_EditorClassIdentifier: 
   descriptor: Story Brother 17 Opt 3
-  tag: 
-  text: 
+  tag: Puzzled
+  text: He was bound and gagged?
   topic: {fileID: 11400000, guid: f21331303e3ce9449b49c0d984d34baf, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Didn't I say so? How can poor [brother] be related to you? He's so full
+    of energy and confidence. You seem very FLAT and UNSURE of yourself
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

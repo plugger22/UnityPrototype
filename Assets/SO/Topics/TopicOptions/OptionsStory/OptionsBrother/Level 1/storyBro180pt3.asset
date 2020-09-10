@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro180pt3
   m_EditorClassIdentifier: 
   descriptor: Story Brother 18 Opt 3
-  tag: 
-  text: 
+  tag: Ask
+  text: What's next?
   topic: {fileID: 11400000, guid: 58a9b7b51cd16414786695e0dd4018a7, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Do I have to lead you by the nose? Follow the vehicle. Find out where
+    the Cultists are taking your Brother. This is obvious. Why do have to tell you?
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

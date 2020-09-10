@@ -4024,3 +4024,57 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:832)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:385)
 	City seed 765 -> New York, America
+
+Dev seed 3613 -> Thursday, 10 September 2020 11:03 AM
+City seed 765 -> New York, America
+WARNING Invalid Matching Npc nodes (start ID 27, end ID 27) for GetEndNode
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MissionManager:GetEndNode(Node) (at Assets/Scripts/Managers/MissionManager.cs:273)
+	MissionManager:UpdateActiveNpc(Npc) (at Assets/Scripts/Managers/MissionManager.cs:567)
+	MissionManager:ProcessNpc(Npc) (at Assets/Scripts/Managers/MissionManager.cs:380)
+	MissionManager:StartTurnLate() (at Assets/Scripts/Managers/MissionManager.cs:159)
+	MissionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/MissionManager.cs:124)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:537)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:326)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:251)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:398)
+	
+Dev seed 3613 -> Thursday, 10 September 2020 11:23 AM
+City seed 765 -> New York, America
+WARNING Invalid Matching Npc nodes (start ID 27, end ID 27 "Node(Clone)") for GetEndNode
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MissionManager:GetEndNode(Node) (at Assets/Scripts/Managers/MissionManager.cs:273)
+	MissionManager:UpdateActiveNpc(Npc) (at Assets/Scripts/Managers/MissionManager.cs:567)
+	MissionManager:ProcessNpc(Npc) (at Assets/Scripts/Managers/MissionManager.cs:380)
+	MissionManager:StartTurnLate() (at Assets/Scripts/Managers/MissionManager.cs:159)
+	MissionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/MissionManager.cs:124)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:537)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:326)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:251)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:398)
+	
+Dev seed 3613 -> Thursday, 10 September 2020 11:25 AM
+City seed 765 -> New York, America
+
+Dev seed 3613 -> Thursday, 10 September 2020 11:25 AM
+City seed 765 -> New York, America
+
+Dev seed 5578 -> Thursday, 10 September 2020 11:26 AM
+City seed 765 -> New York, America
+
+Dev seed 57109 -> Thursday, 10 September 2020 11:28 AM
+City seed 765 -> New York, America
+WARNING Invalid topic (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	MessageManager:TopicDecision(TopicMessageData) (at Assets/Scripts/Managers/MessageManager.cs:4575)
+	TopicManager:UpdateTopicAdmin() (at Assets/Scripts/Managers/TopicManager.cs:4130)
+	TopicManager:ProcessTopicAdmin() (at Assets/Scripts/Managers/TopicManager.cs:4030)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3738)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:1096)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:406)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	

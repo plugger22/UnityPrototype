@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: He was the original owner of the business who went missing in mysterious
+    circumstances soon after Derrick bought in. Eaten by his 'Gators?
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

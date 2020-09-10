@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro190pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 19 Opt 0
-  tag: 
-  text: 
+  tag: Puzzled
+  text: My Brother, kidnapped?
   topic: {fileID: 11400000, guid: 393aa7ec9b838fd4ebf998b4f1255fad, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Yes. Why is this a surprise? Your Brother has been investigating the
+    Cult. Clearly they do not like this. Consider yourself lucky that he wasn't killed
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 3
+  optionNumber: 0

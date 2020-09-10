@@ -31,7 +31,7 @@ MonoBehaviour:
   levelIndex: 1
   topicItem: {fileID: 11400000, guid: 768dba55f32589b44a2d12428659524a, type: 2}
   listOfStoryHelp:
-  - {fileID: 11400000, guid: a72b7924bab47804da73a721625a307a, type: 2}
+  - {fileID: 11400000, guid: ac0056349f21ec5429bcf62b30b33dc9, type: 2}
   profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 0149fc4442e0c8441940141f428f1035, type: 2}

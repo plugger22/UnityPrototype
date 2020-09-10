@@ -270,7 +270,7 @@ public class MissionManager : MonoBehaviour
         //fail safe
         if (endNode.nodeID == startNode.nodeID)
         {
-            Debug.LogWarningFormat("Invalid Matching Npc nodes (start ID {0}, end ID {1}) for GetEndNode", endNode.nodeID, startNode.nodeID);
+            Debug.LogWarningFormat("Invalid Matching Npc nodes (start ID {0}, end ID {1} \"{2}\") for GetEndNode", endNode.nodeID, startNode.nodeID, mission.npc.nodeEnd.name);
             endNode = GameManager.i.dataScript.GetRandomNodeExclude(startNode);
         }
         return endNode;

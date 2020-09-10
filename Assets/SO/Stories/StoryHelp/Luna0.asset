@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
+  m_Name: Luna0
+  m_EditorClassIdentifier: 
+  tag: Luna Trade
+  sprite: {fileID: 21300000, guid: be963c4af0f86a64ebaa6c5c5ee8e329, type: 3}
+  textTop: While Luna is primarily a resource gathering and support base for the giant
+    orbiting LunaHub space station, there is a signficant amount of trade between
+    it and Earth
+  textMiddle: Imports, naturally, keep Luna alive although their reliance on Earth
+    is diminishing over time as hydroponic farm domes gradually take up the slack
+  textBottom: The low gravity environment and their down well proximity to Earth makes
+    manufacturing, low mass, high-end precision equipment a profitable business
+  isKnown: 0

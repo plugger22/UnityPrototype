@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro190pt3
   m_EditorClassIdentifier: 
   descriptor: Story Brother 19 Opt 3
-  tag: 
-  text: 
+  tag: Angry
+  text: Did I ask for your help?
   topic: {fileID: 11400000, guid: 393aa7ec9b838fd4ebf998b4f1255fad, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: No, but I gave it regardless, luckily for you. Do you want your Brother
+    to disappear without a trace, never to be seen again? Accept my help
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

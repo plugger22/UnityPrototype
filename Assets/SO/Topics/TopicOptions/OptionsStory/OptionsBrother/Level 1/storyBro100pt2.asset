@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Story Brother 10 Opt 2
   tag: Reprimand
-  text: I'd didn't ask you to get Involved
+  text: I didn't ask you to get Involved
   topic: {fileID: 11400000, guid: d572d37a9838da54fb430ae70e513ae8, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -30,9 +30,9 @@ MonoBehaviour:
   storyInfo: Of course you didn't, silly billy. I have to be here to make sure that
     you do the RIGHT THING. [brother] is depending on me to keep you in LINE
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Reprimand</color>
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>I'd didn't ask you to get Involved</color>
   optionNumber: 2

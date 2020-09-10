@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
   m_Name: ResAmerBravoBrother1_B1
   m_EditorClassIdentifier: 
-  targetName: Stir Up
+  targetName: Distract
   descriptorResistance: Blow Up part of Bob's Luna Imports
   descriptorAuthority: Industrial
   reasonText: blowing up part of Bob's Imports
