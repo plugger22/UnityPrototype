@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b5d6df66d797b34b989f3bc7d5e160b, type: 3}
+  m_Name: StoryBrother21
+  m_EditorClassIdentifier: 
+  textDear: '[first]'
+  textTop: Yes, thank you for letting me know. The Cultists are in [city] and have
+    arrived at the Luna Corp Office. This is what we have been waiting for
+  textBottom: A connection has been established between the Cultists and Luna Corp.
+    Why, we do not know but I am confident that your Brother will not be far away
