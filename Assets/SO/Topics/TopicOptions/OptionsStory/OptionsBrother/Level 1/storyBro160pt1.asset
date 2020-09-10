@@ -27,7 +27,7 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Because they have EVIL little piggie eyes and were wearing those silly
+  storyInfo: Because they had EVIL little piggie eyes and were wearing those silly
     purple hoodies with I AM A CULTIST on the back. Oh, and they DRIBBLED
   storyTarget: {fileID: 0}
   tooltipHeader: 

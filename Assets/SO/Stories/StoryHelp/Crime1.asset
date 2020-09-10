@@ -16,7 +16,7 @@ MonoBehaviour:
   textTop: Anyone can call the police if they are the victim of a crime. Unless you
     are one of the Elites or their technoClass, you'll be placed on indefinite hold
   textMiddle: The police don't care what happens to you. Unless you do anything to
-    threaten the continued safe working of the City. Then you'll be dealt with. Harshly
-  textBottom: Justice lives on as a cheap and cheerful breakfast cereal. As in 'Do
-    your stomach JUSTICE today with a mix of exotic Fungal spore muesli mix'
-  isKnown: 0
+    threaten the stability or cohesion of the City. Then you'll be dealt with. Harshly
+  textBottom: Justice lives on only as a cheap and cheerful breakfast cereal. As in
+    'Do your stomach JUSTICE today with a mix of exotic Fungal spore muesli mix'
+  isKnown: 1

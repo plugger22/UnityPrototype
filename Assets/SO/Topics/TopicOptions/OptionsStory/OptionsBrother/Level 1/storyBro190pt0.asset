@@ -28,7 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: Yes. Why is this a surprise? Your Brother has been investigating the
-    Cult. Clearly they do not like this. Consider yourself lucky that he wasn't killed
+    Cult. Clearly they don't like this. You are lucky that he is still alive
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

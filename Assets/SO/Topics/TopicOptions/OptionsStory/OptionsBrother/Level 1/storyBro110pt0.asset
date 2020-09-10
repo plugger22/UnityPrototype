@@ -28,7 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: I have excellent sources. They can be relied upon to be precise and accurate.
-    Perhaps you could learn a lesson from them. You are, I've noticed, sloppy
+    You could learn a lesson from them. You are, I've noticed, sloppy
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

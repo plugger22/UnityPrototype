@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyBrother14
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Brother
   text: 
   letter: {fileID: 11400000, guid: 9470c0ad9e09b7845bace4464a562151, type: 2}
   designNotes: storyBrother14

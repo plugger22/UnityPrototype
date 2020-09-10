@@ -13,6 +13,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: aeb2ee06f63ad044f86fb5e53b2d92cb, type: 3}
   tag: LeAnn Lopez<br>Merc with a murky past
-  descriptor: An ex-Merc who now heads up a Merc For Hire business. With no known
+  descriptor: An ex-Merc who now heads up a Guns For Hire business. With no known
     connection to your Brother why does she insist on helping?
   pool: {fileID: 11400000, guid: 15d3d285c373f774eaf6e263890e5fc7, type: 2}

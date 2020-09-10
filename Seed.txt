@@ -4078,3 +4078,29 @@ UnityEngine.Debug:LogWarning(Object)
 	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
 	UnityEngine.EventSystems.EventSystem:Update()
 	
+Dev seed 10869 -> Thursday, 10 September 2020 1:42 PM
+City seed 765 -> New York, America
+WARNING Invalid RelationshipData (Null) for Lennox Collins, BLOGGER, ID 0, slotID -1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EffectManager:ExecuteActorMotivation(Effect, Actor, EffectDataInput, TopicEffectData) (at Assets/Scripts/Managers/EffectManager.cs:5413)
+	EffectManager:ResolveTopicActorEffect(Effect, EffectDataInput, TopicEffectData, Actor) (at Assets/Scripts/Managers/EffectManager.cs:4406)
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:4249)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1975)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3647)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:1096)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:406)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 10869 -> Thursday, 10 September 2020 1:54 PM
+City seed 765 -> New York, America
+
+Dev seed 43432 -> Thursday, 10 September 2020 2:02 PM
+City seed 765 -> New York, America
+
+Dev seed 2889 -> Thursday, 10 September 2020 2:09 PM
+City seed 765 -> New York, America
+
+Dev seed 32925 -> Thursday, 10 September 2020 2:09 PM
+City seed 765 -> New York, America

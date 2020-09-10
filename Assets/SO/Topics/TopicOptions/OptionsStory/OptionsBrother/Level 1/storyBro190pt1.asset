@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: You use the tracking device that my agent planted on the vehicle. You
-    wait until they reach their destination and then you call me. Are we clear?
+  storyInfo: Use the tracking device that my agent attached to the vehicle. You wait
+    until they reach their destination and then you call me. Are we clear?
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

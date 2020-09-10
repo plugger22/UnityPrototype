@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyBrother10
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Unstable
   text: 
   letter: {fileID: 11400000, guid: bf4481325d92fb345935a797a17a4fac, type: 2}
   designNotes: storyBrother10
@@ -52,5 +52,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 18
+  turnsLive: 16
   turnsDone: 0

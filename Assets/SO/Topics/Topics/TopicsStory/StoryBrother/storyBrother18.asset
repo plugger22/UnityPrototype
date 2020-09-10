@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyBrother18
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Kidnapped!
   text: 
   letter: {fileID: 11400000, guid: 345daf7404aa94d44911ee9c912ba94c, type: 2}
   designNotes: storyBrother18

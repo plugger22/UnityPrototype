@@ -27,12 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: There is a moat. It has full of water. Alligators live in water. Derrick
-    has them as pets. This is known. Would you like to swim a lap of the moat?
+  storyInfo: There is a moat. It is full of water. Alligators live in water. Derrick
+    has them as pets. This is known. Would you like to swim a few laps?
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Question</color>
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Are you sure about the Alligators?</color>
   optionNumber: 0

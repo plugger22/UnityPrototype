@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Story Brother 13 Opt 2
   tag: Ask
-  text: Is the Luna connection mean anything?
+  text: Does the Luna connection mean anything?
   topic: {fileID: 11400000, guid: 275e40b06a641b54ab0c0d9b4af0b1a6, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -30,9 +30,9 @@ MonoBehaviour:
   storyInfo: Who can say? Derrick has a contract with a business on Luna. That's not
     unusual and it appears legitimate. Is he smuggling in [drug]? Possibly
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Ask</color>
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Is the Luna connection mean anything?</color>
   optionNumber: 2

@@ -13,12 +13,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Mental Illness
   sprite: {fileID: 0}
-  textTop: There are many neural enhancements available for everyday use. These are
-    relatively harmless but they are the exclusive domain of the Elites and technoClass
+  textTop: There are many neural enhancements available for day to day use. These
+    are relatively harmless but they are the exclusive domain of the Elites and technoClass
   textMiddle: Ordinary people make do with backyard versions, hacked together from
     stolen code snippets. Ripper Docs will happily give you a cocktail of glued together
     enhancements
   textBottom: Voices inside your head from all manner of dodgy enhancements mix with
-    mental health issues brought on by life stress. There are a LOT of crazies out
-    there
+    mental health issues brought on by normal life stress. There are a LOT of crazies
+    out there
   isKnown: 1
