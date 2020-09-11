@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyBrother28
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Laying Low
   text: 
   letter: {fileID: 11400000, guid: ce11d4821ef7a5847a8e1289921a6edd, type: 2}
   designNotes: storyBrother28
@@ -31,7 +31,7 @@ MonoBehaviour:
   levelIndex: 1
   topicItem: {fileID: 11400000, guid: 8f26e4ad57a9a5a4c90746abb7dcfb1c, type: 2}
   listOfStoryHelp:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: ba0f15bb7dfe0ad4fa09296b52662071, type: 2}
   profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: eb9c8041761a3bc4f97296c5c0ed2966, type: 2}
