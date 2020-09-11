@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: storyBrother39
+  m_EditorClassIdentifier: 
+  tag: 
+  text: 
+  letter: {fileID: 11400000, guid: 609f955b84693d24daabcf6bd72abcb7, type: 2}
+  designNotes: storyBrother39
+  type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
+  subType: {fileID: 11400000, guid: 9c0b06df8df43f641b72a6ea311f55a1, type: 2}
+  subSubType: {fileID: 0}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics: []
+  listOfBuddyTopics:
+  - {fileID: 11400000, guid: a57f016254c00cb4f993d5d1543f0725, type: 2}
+  - {fileID: 11400000, guid: 50d14d4a27aad6b4a87d5eb0060cefa8, type: 2}
+  - {fileID: 11400000, guid: 4103b6e0d23159847a24ea1b88d89b9b, type: 2}
+  - {fileID: 11400000}
+  linkedIndex: 3
+  levelIndex: 3
+  topicItem: {fileID: 11400000, guid: 8f26e4ad57a9a5a4c90746abb7dcfb1c, type: 2}
+  listOfStoryHelp: []
+  profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: c6de6729a40f1c849add45e2aee2e138, type: 2}
+  - {fileID: 11400000, guid: 85bfee5dd2489b54789d867be5778846, type: 2}
+  - {fileID: 11400000, guid: 7901b3f80822a35469f9969d81c04ab7, type: 2}
+  listOfIgnoreEffects: []
+  listOfOptions:
+  - {fileID: 11400000, guid: c819dc079bfe5024a964c923b7d427fc, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  status: 0
+  isCurrent: 0
+  timerStart: 0
+  timerRepeat: 0
+  timerWindow: 0
+  turnsDormant: 0
+  turnsActive: 0
+  turnsLive: 0
+  turnsDone: 0
