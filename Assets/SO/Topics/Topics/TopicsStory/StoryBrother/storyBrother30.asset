@@ -36,7 +36,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c6de6729a40f1c849add45e2aee2e138, type: 2}
   listOfIgnoreEffects: []
   listOfOptions:
-  - {fileID: 11400000, guid: 1a95e3c07050dc9419fd1c1cd29f9f9d, type: 2}
+  - {fileID: 11400000, guid: a8a1ba3c83e62f641a6e22f5162e4a28, type: 2}
+  - {fileID: 11400000, guid: e1f068b20bd867e41925a6ce6668fdff, type: 2}
+  - {fileID: 11400000, guid: 75066c2244277a647831e30800414c78, type: 2}
+  - {fileID: 11400000, guid: 028ddeb93cfb01b4fb195b22c91d11cb, type: 2}
   isDisabled: 0
   tooltipHeader: 
   tooltipMain: 
