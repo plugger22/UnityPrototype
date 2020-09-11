@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro240pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 24 Opt 1
-  tag: 
-  text: 
+  tag: Hack
+  text: Trawl Luna Corp Personnel files
   topic: {fileID: 11400000, guid: 3769b0fdfe4d96e46925939eeef82a6f, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

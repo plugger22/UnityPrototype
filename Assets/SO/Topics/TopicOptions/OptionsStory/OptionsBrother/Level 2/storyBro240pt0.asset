@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro240pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 24 Opt 0
-  tag: 
-  text: 
+  tag: Follow
+  text: Tail Luna Corp Executives
   topic: {fileID: 11400000, guid: 3769b0fdfe4d96e46925939eeef82a6f, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

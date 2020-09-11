@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro260pt2
   m_EditorClassIdentifier: 
   descriptor: Story Brother 26 Opt 2
-  tag: 
-  text: 
+  tag: Ambiguous
+  text: What's the connection with my Brother?
   topic: {fileID: 11400000, guid: e6c4213302ae7414baad99bc04030910, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Obviously SOMETHING important or Julina wouldn't have run off, would
+    she? Maybe she has also been kidnapped by those AWFUL Piggie People?
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 1
+  optionNumber: 2

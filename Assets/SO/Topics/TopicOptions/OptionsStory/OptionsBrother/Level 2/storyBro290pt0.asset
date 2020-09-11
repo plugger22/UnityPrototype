@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro290pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 29 Opt 0
-  tag: 
-  text: 
+  tag: Uncertain
+  text: Julina is on the run?
   topic: {fileID: 11400000, guid: 08e6a6cff2cdd2a448aa359457852650, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: As the Luna Corp Trade Rep for [city] she is obliged to remain here.
+    A sudden departure indicates a concern for her own safety. Surely this is obvious?
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 3
+  optionNumber: 0

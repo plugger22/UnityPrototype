@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro210pt3
   m_EditorClassIdentifier: 
   descriptor: Story Brother 21 Opt 3
-  tag: 
-  text: 
+  tag: Request
+  text: Send a team to raid Luna Corp
   topic: {fileID: 11400000, guid: 1647a30b96d9e9641998f17e69aaa449, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,13 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: This isn't possible. There are certain lines we cannot cross. You are
+    not a paying client and this is against The Authority. I can help you in other
+    ways
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 2
+  optionNumber: 3

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro250pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 25 Opt 1
-  tag: 
-  text: 
+  tag: Squeeze
+  text: Blackmail a Luna Corp Executive
   topic: {fileID: 11400000, guid: 09c2462f88602fd40823216e4574eb2c, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

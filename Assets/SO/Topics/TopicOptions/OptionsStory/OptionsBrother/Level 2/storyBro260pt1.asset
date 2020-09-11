@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro260pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 26 Opt 1
-  tag: 
-  text: 
+  tag: Undecided
+  text: Do you think Julina is in Danger?
   topic: {fileID: 11400000, guid: e6c4213302ae7414baad99bc04030910, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Am I the ORACLE of the FUTURE? I'd make a river of credits from betting
+    on Kill Ball if I was, wouldn't I? I'd retire into a luxury Pod Tower
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 0
+  optionNumber: 1

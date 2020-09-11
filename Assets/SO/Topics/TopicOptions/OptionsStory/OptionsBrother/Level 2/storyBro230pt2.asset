@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro230pt2
   m_EditorClassIdentifier: 
   descriptor: Story Brother 23 Opt 2
-  tag: 
-  text: 
+  tag: Cautious
+  text: Are Luna Corp corrupt?
   topic: {fileID: 11400000, guid: eb0d357738d66b1469ed86cc180633bb, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: There is no evidence of corrupt activity. They uphold high standards
+    as they are a trading entity that relies on the goodwill of both sides to operate
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 1
+  optionNumber: 2

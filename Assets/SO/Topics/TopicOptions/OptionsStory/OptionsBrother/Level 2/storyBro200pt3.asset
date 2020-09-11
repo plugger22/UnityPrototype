@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro200pt3
   m_EditorClassIdentifier: 
   descriptor: Story Brother 20 Opt 3
-  tag: 
-  text: 
+  tag: Demand
+  text: Where is my Brother now?
   topic: {fileID: 11400000, guid: 1a458a938e7656242a3bfc38b5f62ce0, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: The Piggie People still have him, silly. Why don't you ask THEM? Perhaps
+    you should sit down and LISTEN to what they have to say?
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 2
+  optionNumber: 3

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro220pt3
   m_EditorClassIdentifier: 
   descriptor: Story Brother 22 Opt 3
-  tag: 
-  text: 
+  tag: Unclear
+  text: You've had no contact with Luna Corp?
   topic: {fileID: 11400000, guid: 606ba8f8becf0c142bfedd2b7aa3168f, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: No. I've already told you that Luna Corp is full of V.I.P's who deal
+    with IMPORTANT mattes. Little 'ole me is INVISIBLE to people like them
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 2
+  optionNumber: 3

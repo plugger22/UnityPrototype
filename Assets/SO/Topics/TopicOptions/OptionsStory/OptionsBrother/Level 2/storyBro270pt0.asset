@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro270pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 27 Opt 0
-  tag: 
-  text: 
+  tag: Mystified
+  text: You found Julina?
   topic: {fileID: 11400000, guid: f75383158c3bde34f850959af5fff8e8, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Of course. Am I not both GORGEOUS and a GENIUS? [brother] won big when
+    he met me. I am a CATCH, baby, a real JACKPOT
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>

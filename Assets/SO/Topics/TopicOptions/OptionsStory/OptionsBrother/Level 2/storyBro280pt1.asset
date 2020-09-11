@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro280pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 28 Opt 1
-  tag: 
-  text: 
+  tag: Clarify
+  text: You're acting for a Client?
   topic: {fileID: 11400000, guid: 5cb576124f6ae8b4abbf313829b31dd6, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Correct. We take instructions from our Client. Don't ask anymore questions
+    about our Client as we take confidentiality seriously and will use force
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 0
+  optionNumber: 1

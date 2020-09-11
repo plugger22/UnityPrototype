@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro250pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 25 Opt 0
-  tag: 
-  text: 
+  tag: Detain
+  text: Interrogate a Luna Corp Executive
   topic: {fileID: 11400000, guid: 09c2462f88602fd40823216e4574eb2c, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

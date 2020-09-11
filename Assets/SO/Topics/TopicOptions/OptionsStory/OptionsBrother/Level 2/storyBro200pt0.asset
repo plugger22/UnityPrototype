@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro200pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 20 Opt 0
-  tag: 
-  text: 
+  tag: Perplexed
+  text: Why do you keep following me?
   topic: {fileID: 11400000, guid: 1a458a938e7656242a3bfc38b5f62ce0, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: You're OLD but you're cute. How old are you exactly? Thirty? Wowza, that's
+    heavy duty WRINKLE land right THERE. I feel like I need to look after you
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>

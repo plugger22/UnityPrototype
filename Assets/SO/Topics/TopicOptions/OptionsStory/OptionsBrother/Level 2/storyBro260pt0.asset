@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro260pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 26 Opt 0
-  tag: 
-  text: 
+  tag: Hazy
+  text: Are you related to Julina?
   topic: {fileID: 11400000, guid: e6c4213302ae7414baad99bc04030910, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Is she my MOM? Maybe. I can't remember who my Mom was. I was ABANDONED
+    when I was born. The orphan people looked after me until I was of age
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 3
+  optionNumber: 0

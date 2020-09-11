@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro290pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 29 Opt 1
-  tag: 
-  text: 
+  tag: Firm
+  text: I'm not sure we have a Relationship
   topic: {fileID: 11400000, guid: 08e6a6cff2cdd2a448aa359457852650, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: No, we're not married, that is obvious. We do, however, have a mutual
+    interest. You wish to find your Brother and my Client wants answers
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 0
+  optionNumber: 1

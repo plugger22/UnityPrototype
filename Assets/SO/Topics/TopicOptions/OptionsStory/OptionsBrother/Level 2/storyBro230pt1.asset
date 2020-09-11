@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro230pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 23 Opt 1
-  tag: 
-  text: 
+  tag: Impatient
+  text: I'll talk with her now
   topic: {fileID: 11400000, guid: eb0d357738d66b1469ed86cc180633bb, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: You'll need to make an appointment. Julina has many meetings. Please
+    do not mention myself. I prefer to remain in the background
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 0
+  optionNumber: 1
