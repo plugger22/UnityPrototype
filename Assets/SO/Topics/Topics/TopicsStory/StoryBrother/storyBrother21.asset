@@ -28,7 +28,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1a458a938e7656242a3bfc38b5f62ce0, type: 2}
   - {fileID: 11400000}
   linkedIndex: 0
-  levelIndex: 1
+  levelIndex: 2
   topicItem: {fileID: 11400000, guid: 8f26e4ad57a9a5a4c90746abb7dcfb1c, type: 2}
   listOfStoryHelp:
   - {fileID: 11400000, guid: a29fa366ef1a627458b9903f9a1456e1, type: 2}
@@ -52,5 +52,5 @@ MonoBehaviour:
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 16
+  turnsLive: 21
   turnsDone: 0

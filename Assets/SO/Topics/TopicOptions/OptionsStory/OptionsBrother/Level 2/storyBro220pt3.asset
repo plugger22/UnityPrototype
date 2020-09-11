@@ -28,7 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: No. I've already told you that Luna Corp is full of V.I.P's who deal
-    with IMPORTANT mattes. Little 'ole me is INVISIBLE to people like them
+    with IMPORTANT matters. Little 'ole me is INVISIBLE to people like them
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>

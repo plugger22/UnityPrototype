@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Correct. We take instructions from our Client. Don't ask anymore questions
-    about our Client as we take confidentiality seriously and will use force
+  storyInfo: Correct. I take instructions from our Client. Please don't ask anymore
+    questions I take confidentiality seriously and will use force if necessary
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>

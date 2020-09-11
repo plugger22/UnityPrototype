@@ -28,7 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: Haven't you seen them? HUGE, the size of RATS. They must have slurped
-    up some stray genes and mutated into oversized armoured scavengers
+    up some stray genes and mutated into oversized creepy crawlies
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>

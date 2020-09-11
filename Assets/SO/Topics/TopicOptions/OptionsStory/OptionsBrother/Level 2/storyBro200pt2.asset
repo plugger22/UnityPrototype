@@ -28,7 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: The Piggies like to hug trees in their spare time. There are no trees
-    on Luna. It's a COLD, lonley, DESERT. I know 'cause I used to live there
+    on Luna. It's a COLD, lonely, DESERT. It smells. I never liked it
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>

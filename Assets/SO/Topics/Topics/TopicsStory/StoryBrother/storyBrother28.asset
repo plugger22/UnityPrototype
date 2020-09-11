@@ -28,7 +28,7 @@ MonoBehaviour:
   - {fileID: 11400000}
   - {fileID: 11400000, guid: 08e6a6cff2cdd2a448aa359457852650, type: 2}
   linkedIndex: 3
-  levelIndex: 1
+  levelIndex: 2
   topicItem: {fileID: 11400000, guid: 8f26e4ad57a9a5a4c90746abb7dcfb1c, type: 2}
   listOfStoryHelp:
   - {fileID: 11400000, guid: ba0f15bb7dfe0ad4fa09296b52662071, type: 2}

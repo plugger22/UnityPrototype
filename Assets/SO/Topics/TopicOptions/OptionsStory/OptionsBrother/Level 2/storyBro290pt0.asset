@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: As the Luna Corp Trade Rep for [city] she is obliged to remain here.
-    A sudden departure indicates a concern for her own safety. Surely this is obvious?
+  storyInfo: As the Luna Trade Rep for [city] she is obliged to be present. A sudden
+    departure indicates a concern for her own safety. Surely this is obvious?
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>

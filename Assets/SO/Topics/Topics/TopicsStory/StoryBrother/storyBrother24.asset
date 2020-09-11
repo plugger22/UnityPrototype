@@ -28,7 +28,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 09c2462f88602fd40823216e4574eb2c, type: 2}
   - {fileID: 11400000}
   linkedIndex: 2
-  levelIndex: 1
+  levelIndex: 2
   topicItem: {fileID: 11400000, guid: 768dba55f32589b44a2d12428659524a, type: 2}
   listOfStoryHelp:
   - {fileID: 11400000, guid: 33f5436927724a344bccaf63bd703ab7, type: 2}
@@ -44,7 +44,7 @@ MonoBehaviour:
   tooltipMain: 
   tooltipDetails: 
   status: 0
-  isCurrent: 0
+  isCurrent: 1
   timerStart: 0
   timerRepeat: 0
   timerWindow: 0
