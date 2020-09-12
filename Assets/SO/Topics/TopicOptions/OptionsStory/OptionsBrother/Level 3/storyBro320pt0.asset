@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro320pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 32 Opt 0
-  tag: 
-  text: 
+  tag: Shrug
+  text: There are Snakes and there are Ladders
   topic: {fileID: 11400000, guid: 34f6fd3701461c345b620d6b9ec3565f, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Wowza! You're a philosopher? Snakes, huh? Do those things still exist?
+    REAL ONES I mean. I saw some pink ones on a doc 'cast once. CREEPY
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 3
+  optionNumber: 0

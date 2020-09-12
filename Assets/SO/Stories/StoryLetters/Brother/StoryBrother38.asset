@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Name: StoryBrother38
   m_EditorClassIdentifier: 
   textDear: '[first]'
-  textTop: 
-  textBottom: 
+  textTop: It appears that we have mixed blessings. Yes, you have found Julina. In
+    the basement. Lifeless. Recently murdered. Not the outcome my Client wanted
+  textBottom: On the other hand you've found DNA traces of your Brother. You're still
+    on his trail. This is good news and I will relay it to my Client. They will be
+    interested

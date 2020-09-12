@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro300pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 30 Opt 0
-  tag: 
-  text: 
+  tag: Caution
+  text: I need to confirm the Sighting
   topic: {fileID: 11400000, guid: 7d702f457cc53eb4fb0ca78fcf50b294, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Julina and your Brother are either there or they aren't. You don't have
+    time to DITHER, Resistance person. Get MOVING, right now!
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>

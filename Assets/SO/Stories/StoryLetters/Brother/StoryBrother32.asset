@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryBrother32
   m_EditorClassIdentifier: 
   textDear: '[first]'
-  textTop: 
-  textBottom: 
+  textTop: It was a false alarm? That's SAD. It means ANOTHER day when your Brother
+    and I aren't together. I really do miss him
+  textBottom: But don't stop searching for Julina. I KNOW that you can find her. I
+    can't help as I don't know ANYONE here in [city]. This place is a mystery to me

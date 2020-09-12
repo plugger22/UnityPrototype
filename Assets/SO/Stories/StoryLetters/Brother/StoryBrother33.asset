@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryBrother33
   m_EditorClassIdentifier: 
   textDear: '[first]'
-  textTop: 
-  textBottom: 
+  textTop: Your contacts appear to be poorly informed. They clearly don't know where
+    Julina is hiding, or where your Brother is, for that matter. Correct?
+  textBottom: My Client is becoming ANXIOUS. Nobody enjoys an anxious Client. Get
+    back in touch with your contacts and squeeze them harder. Find Julina

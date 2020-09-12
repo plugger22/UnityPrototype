@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro360pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 36 Opt 0
-  tag: 
-  text: 
+  tag: Gone
+  text: R.I.P Julina
   topic: {fileID: 11400000, guid: a57f016254c00cb4f993d5d1543f0725, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Well we don't have to worry about her again, do we? I hope she was in
+    one of her CLASSY outfits when she was killed. It's important to look your best
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 3
+  optionNumber: 0

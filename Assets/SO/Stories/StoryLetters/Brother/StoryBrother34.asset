@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryBrother34
   m_EditorClassIdentifier: 
   textDear: '[first]'
-  textTop: 
-  textBottom: 
+  textTop: This time you really do know where Julina is? That's WONDERFUL. She's in
+    a basement? WOW. She dresses so NICELY. Basements are AWFUL
+  textBottom: It's time to do something. Right now. Break down a door, smash a window.
+    Go, you Resistance person, go. [brother] and I are relying on you

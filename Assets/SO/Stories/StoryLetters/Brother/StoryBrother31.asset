@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryBrother31
   m_EditorClassIdentifier: 
   textDear: '[first]'
-  textTop: 
-  textBottom: 
+  textTop: Where is Julina Walker, the Luna Corp Trade Rep? You mentioned that you
+    had contacts here in [city]. Perhaps you could talk to them. Before Xmas?
+  textBottom: Ahhh, you already have? Excellent. She is here? Lead the way. We both
+    have our reasons for talking with her. I see no reason to delay

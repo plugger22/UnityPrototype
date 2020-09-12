@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro320pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 32 Opt 1
-  tag: 
-  text: 
+  tag: Confident
+  text: Leave it with me, I'll find her
   topic: {fileID: 11400000, guid: 34f6fd3701461c345b620d6b9ec3565f, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Yes, I KNOW you will. That's why I'm here with you. For an OLD person
+    you are doing moderately OK. Perhaps you could work a little FASTER?
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 0
+  optionNumber: 1

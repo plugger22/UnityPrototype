@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryBrother37
   m_EditorClassIdentifier: 
   textDear: '[first]'
-  textTop: 
-  textBottom: 
+  textTop: Did I expect that you'd raid the Basement? No, of COURSE not. You're hopeless.
+    That's why I snuck in and had a sneaky little look myself.
+  textBottom: Poor Julina, the Luna Trade Rep, is DEAD. Lying on the floor in a pool
+    of BLOOD. [brother] had scratched his name on the wall! He was there!

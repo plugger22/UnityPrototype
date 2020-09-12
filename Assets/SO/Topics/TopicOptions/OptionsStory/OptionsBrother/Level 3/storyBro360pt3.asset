@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro360pt3
   m_EditorClassIdentifier: 
   descriptor: Story Brother 36 Opt 3
-  tag: 
-  text: 
+  tag: Possible
+  text: The Cultists may have taken Julina
   topic: {fileID: 11400000, guid: a57f016254c00cb4f993d5d1543f0725, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: The Piggie People are hoovering random people, locking them in basements
+    and MURDERING them? Poor Julina and where is my [brother] now?
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 2
+  optionNumber: 3

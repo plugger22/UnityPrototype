@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryBrother36
   m_EditorClassIdentifier: 
   textDear: '[first]'
-  textTop: 
-  textBottom: 
+  textTop: So you found the Basement. Julina was there DEAD? What happened? There
+    was DNA evidence that your Brother had been there as well?
+  textBottom: Have the Piggies lost the plot and started killing important people?
+    What have they done with my [brother]? Why was he with Julina, of all people?

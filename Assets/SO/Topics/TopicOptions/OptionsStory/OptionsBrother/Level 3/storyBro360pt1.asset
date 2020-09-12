@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro360pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 36 Opt 1
-  tag: 
-  text: 
+  tag: Frustrated
+  text: '[brother] had been taken. Again'
   topic: {fileID: 11400000, guid: a57f016254c00cb4f993d5d1543f0725, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I'm going to burst into TEARS and CRY. That's horrible. When will I ever
+    see [brother] again? Can't you do ANYTHING?
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 0
+  optionNumber: 1

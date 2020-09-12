@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryBrother30
   m_EditorClassIdentifier: 
   textDear: '[first]'
-  textTop: 
-  textBottom: 
+  textTop: You have contacts that know where Julina Walker, the Luna Corp Trade Rep,
+    is hiding? That's AWESOME. I knew that I could count on you
+  textBottom: What are we waiting for? We need to ACT now. If [brother] is with her
+    we need to find them before the Piggie People drag them away again

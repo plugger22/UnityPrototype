@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro300pt3
   m_EditorClassIdentifier: 
   descriptor: Story Brother 30 Opt 3
-  tag: 
-  text: 
+  tag: Assert
+  text: I'll be making the decision, thank you
   topic: {fileID: 11400000, guid: 7d702f457cc53eb4fb0ca78fcf50b294, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Oh, of COURSE you will. Nobody is suggesting otherwise. My, you are such
+    a SENSITIVE Resistance person, aren't you? [brother] isn't like that at all
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 2
+  optionNumber: 3

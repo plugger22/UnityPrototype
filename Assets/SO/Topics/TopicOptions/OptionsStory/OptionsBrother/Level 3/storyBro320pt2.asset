@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro320pt2
   m_EditorClassIdentifier: 
   descriptor: Story Brother 32 Opt 2
-  tag: 
-  text: 
+  tag: Brush Off
+  text: Go home, I'll let you know what happens
   topic: {fileID: 11400000, guid: 34f6fd3701461c345b620d6b9ec3565f, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: What, and miss all the EXCITEMENT? I couldn't do that. Besides, we are
+    starting to get on SWELL, you and I. We're like two PEACHES on a plate
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 1
+  optionNumber: 2
