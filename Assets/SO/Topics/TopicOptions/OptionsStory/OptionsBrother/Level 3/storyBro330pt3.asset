@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro330pt3
   m_EditorClassIdentifier: 
   descriptor: Story Brother 33 Opt 3
-  tag: 
-  text: 
+  tag: Curious
+  text: Do you have a Brother?
   topic: {fileID: 11400000, guid: 966b29cba559cac499c345bac828e72b, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Yes, I did. Once. He died from malnutrition when I was young. Times were
+    hard. Crops were failing. Microbial biomass proteins weren't available
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 2
+  optionNumber: 3

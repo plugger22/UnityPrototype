@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro390pt2
   m_EditorClassIdentifier: 
   descriptor: Story Brother 39 Opt 2
-  tag: 
-  text: 
+  tag: Confirm
+  text: How do we know my Brother is alive?
   topic: {fileID: 11400000, guid: 382af6b3d36c2f8459648eabc5fabfbe, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: We don't. But there is hope. The only blood on the scene was Julinas.
+    There is every reason to think that he has been moved on by his captors
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 1
+  optionNumber: 2

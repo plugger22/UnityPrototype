@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro330pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 33 Opt 1
-  tag: 
-  text: 
+  tag: Sympathy
+  text: It must be difficult dealing with Clients
   topic: {fileID: 11400000, guid: 966b29cba559cac499c345bac828e72b, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: It's my job. I deal with all manner of Clients. Not having a sense of
+    humour helps. I don't have the burden of finding the humour in a situation
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 0
+  optionNumber: 1

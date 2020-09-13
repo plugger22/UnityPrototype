@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro380pt3
   m_EditorClassIdentifier: 
   descriptor: Story Brother 38 Opt 3
-  tag: 
-  text: 
+  tag: Unclear
+  text: Why would the Cultists kill Julina?
   topic: {fileID: 11400000, guid: 4103b6e0d23159847a24ea1b88d89b9b, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: We don't know that they did. Other parties may be involved. Julina may
+    have voluntarily chosen to accompany the Cultists to [city]
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 2
+  optionNumber: 3

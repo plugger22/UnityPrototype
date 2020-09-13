@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro330pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 33 Opt 0
-  tag: 
-  text: 
+  tag: Shrug
+  text: Do I care about your Client?
   topic: {fileID: 11400000, guid: 966b29cba559cac499c345bac828e72b, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: No, but they care about your Brother. Not directly, of course, but as
+    he relates to their interests. Julina will, hopefully, know where he is
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 3
+  optionNumber: 0

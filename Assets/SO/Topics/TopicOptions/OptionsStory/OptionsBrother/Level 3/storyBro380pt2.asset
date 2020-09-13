@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro380pt2
   m_EditorClassIdentifier: 
   descriptor: Story Brother 38 Opt 2
-  tag: 
-  text: 
+  tag: Puzzled
+  text: Your Client's interest in my Brother?
   topic: {fileID: 11400000, guid: 4103b6e0d23159847a24ea1b88d89b9b, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Do I have to repeat myself? It is becoming repetitious to inform you
+    that my Client, and their interests, are none of your business. Please desist
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 1
+  optionNumber: 2
