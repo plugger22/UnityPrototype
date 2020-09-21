@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryBrother42
   m_EditorClassIdentifier: 
   textDear: '[first]'
-  textTop: 
-  textBottom: 
+  textTop: Have you checked poor [brother] toe? Run forensics on it and the message?
+    The machines are SMART these days. They KNOW stuff that we don't
+  textBottom: Who do you think has [brother]? I bet it's those creepy Purple Piggie
+    Cultists. That's just the kind of thing they would do. They should all be NUKED

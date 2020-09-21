@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryBrother44
   m_EditorClassIdentifier: 
   textDear: '[first]'
-  textTop: 
-  textBottom: 
+  textTop: 'There''s a drop off. They want money. You need to GIVE IT TO THEM so that
+    my darling [brother] can come back to me. '
+  textBottom: They are willing to give ME [brother] if YOU pay them. What is there
+    to discuss? If not for me, do it for [brother], he's your brother after all

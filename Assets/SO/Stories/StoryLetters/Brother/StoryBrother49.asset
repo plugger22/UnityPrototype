@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryBrother49
   m_EditorClassIdentifier: 
   textDear: '[first]'
-  textTop: 
-  textBottom: 
+  textTop: You didn't bother to pay the Ransom? Strange. I would have thought that
+    you'd be happy to get your brother back? Clearly family is not that important
+  textBottom: Regardless, tell me about the second message. It came with another toe,
+    yes I know this. Your brother still has eight remaining. It isn't a concern

@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryBrother43
   m_EditorClassIdentifier: 
   textDear: '[first]'
-  textTop: 
-  textBottom: 
+  textTop: There is an opportunity here to forensically examine your brother's toe
+    and the accompanying message. We may be able to find out who his captors are
+  textBottom: I will arrange for the appropriate scanners to be delivered. They are
+    compact and have a low emissions signature. The Authority will be unaware

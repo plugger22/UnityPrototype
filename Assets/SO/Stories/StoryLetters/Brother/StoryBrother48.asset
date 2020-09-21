@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryBrother48
   m_EditorClassIdentifier: 
   textDear: '[first]'
-  textTop: 
-  textBottom: 
+  textTop: Yes, it's unfortunate that the Cultists took your money and declined to
+    release your Brother. They are known to be unpredictable and difficult
+  textBottom: But you did get a second message? That is a good sign. With another
+    toe? Your brother can still walk with eight toes. Nothing to be concerned about

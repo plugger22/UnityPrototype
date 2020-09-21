@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryBrother45
   m_EditorClassIdentifier: 
   textDear: '[first]'
-  textTop: 
-  textBottom: 
+  textTop: We have come to the sharp end, you and I. They want to be paid a ransom
+    in return for your brother. They are asking very little. We should do this
+  textBottom: Negotiations are futile. Pay them what they want, it is an insignificant
+    sum. Recover your brother. Why they aren't asking for more is a mystery?

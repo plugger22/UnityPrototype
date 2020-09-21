@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryBrother46
   m_EditorClassIdentifier: 
   textDear: '[first]'
-  textTop: 
-  textBottom: 
+  textTop: You paid the ransom but they didn't hand over poor [brother]? The Piggie
+    People reneged on the deal? They are EVIL. Burn them all
+  textBottom: There's a second message from them? With ANOTHER toe? That's dreadful.
+    I'm going to personally kill every Piggie Person on the planet

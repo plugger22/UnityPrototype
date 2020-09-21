@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryBrother47
   m_EditorClassIdentifier: 
   textDear: '[first]'
-  textTop: 
-  textBottom: 
+  textTop: So where is my darling [brother]? You were supposed to pay the ransom to
+    those awful Piggie People and return him safely to me
+  textBottom: I'm NOT SEEING him. What have you done? There is another message from
+    them? With a second TOE? I can't COPE. Help me

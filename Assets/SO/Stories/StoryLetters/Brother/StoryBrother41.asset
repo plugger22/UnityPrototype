@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Name: StoryBrother41
   m_EditorClassIdentifier: 
   textDear: '[first]'
-  textTop: 
-  textBottom: 
+  textTop: I see you have received a present. Grisly. Not something to be excited
+    about. Be reassured by your Brother still having nine remaining toes
+  textBottom: The severing of body parts is unusual in these situations and would
+    indicate a desire to personalise the message. You should not listen to your emotions
