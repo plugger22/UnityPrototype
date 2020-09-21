@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
+  m_Name: Mercenaries1
+  m_EditorClassIdentifier: 
+  tag: Merc Companies
+  sprite: {fileID: 0}
+  textTop: Mercs are organised in 'companies' which may consist of a handful of operators
+    all the way up to several hundred strong. Each company has it's own speciality.
+    Generalists need not apply
+  textMiddle: Companies are run as a businesses. A few are covertly sponsored by a
+    MegaCorp but most are independently owned and have the usual imperative of having
+    to earn an income
+  textBottom: A company is typically run by an ex-Merc. It's a difficult, volatile
+    business to be in and experience pays dividends. Accountants don't run merc companies
+  isKnown: 0

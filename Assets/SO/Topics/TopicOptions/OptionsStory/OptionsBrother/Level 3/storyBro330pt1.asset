@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Story Brother 33 Opt 1
   tag: Sympathy
-  text: It must be difficult dealing with Clients
+  text: It must be hard dealing with Clients
   topic: {fileID: 11400000, guid: 966b29cba559cac499c345bac828e72b, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

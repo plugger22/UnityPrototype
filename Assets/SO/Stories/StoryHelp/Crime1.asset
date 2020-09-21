@@ -18,5 +18,6 @@ MonoBehaviour:
   textMiddle: The police don't care what happens to you. Unless you do anything to
     threaten the stability or cohesion of the City. Then you'll be dealt with. Harshly
   textBottom: Justice lives on only as a cheap and cheerful breakfast cereal. As in
-    'Do your stomach JUSTICE today with a mix of exotic Fungal spore muesli mix'
-  isKnown: 1
+    'Do your stomach JUSTICE today with a mix of exotic strawberry Fungal spore muesli
+    mix'
+  isKnown: 0

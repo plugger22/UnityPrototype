@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyBrother36
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Foul Play
   text: 
   letter: {fileID: 11400000, guid: 752aa568952d596428845070f603ac94, type: 2}
   designNotes: storyBrother36
@@ -30,7 +30,8 @@ MonoBehaviour:
   linkedIndex: 3
   levelIndex: 3
   topicItem: {fileID: 11400000, guid: 768dba55f32589b44a2d12428659524a, type: 2}
-  listOfStoryHelp: []
+  listOfStoryHelp:
+  - {fileID: 11400000, guid: f07786175ccea71449214e38c2c16b74, type: 2}
   profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: c6de6729a40f1c849add45e2aee2e138, type: 2}

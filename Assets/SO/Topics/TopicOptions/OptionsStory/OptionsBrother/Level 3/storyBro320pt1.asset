@@ -28,7 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: Yes, I KNOW you will. That's why I'm here with you. For an OLD person
-    you are doing moderately OK. Perhaps you could work a little FASTER?
+    you are doing moderately OK. Maybe you could work a little FASTER?
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>

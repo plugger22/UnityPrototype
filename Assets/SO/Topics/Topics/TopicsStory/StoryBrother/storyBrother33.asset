@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyBrother33
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Bad Intel
   text: 
   letter: {fileID: 11400000, guid: 5187e29f74f1ad446b3a8e601ee8364a, type: 2}
   designNotes: storyBrother33
@@ -30,7 +30,8 @@ MonoBehaviour:
   linkedIndex: 1
   levelIndex: 3
   topicItem: {fileID: 11400000, guid: 8f26e4ad57a9a5a4c90746abb7dcfb1c, type: 2}
-  listOfStoryHelp: []
+  listOfStoryHelp:
+  - {fileID: 11400000, guid: d0c6e65193341d34d9a35b86ded00cb1, type: 2}
   profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: c6de6729a40f1c849add45e2aee2e138, type: 2}
@@ -44,12 +45,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 4
-  isCurrent: 0
+  status: 0
+  isCurrent: 1
   timerStart: 0
   timerRepeat: 0
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 1
-  turnsLive: 1
+  turnsActive: 0
+  turnsLive: 0
   turnsDone: 0

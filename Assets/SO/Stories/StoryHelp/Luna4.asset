@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
+  m_Name: Luna4
+  m_EditorClassIdentifier: 
+  tag: Trade Rep Murder
+  sprite: {fileID: 0}
+  textTop: Nobody harms a Luna Trade Rep. They don't even think about it. Who would
+    be suicidal enough to incur the combined wrath of the Blocs and MegaCorps?
+  textMiddle: Trade Rep's have been killed in the past but only from accidental causes.
+    Diplomatic status doesn't grant you immunity from bad luck
+  textBottom: The deliberate murder of a Luna Trade Rep is an affront to the rich
+    and powerful. It is not something that they are likely to let lie
+  isKnown: 0

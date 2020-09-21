@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
+  m_Name: Mercenaries0
+  m_EditorClassIdentifier: 
+  tag: Mercenaries
+  sprite: {fileID: 0}
+  textTop: Mercs are in demand. MegaCorps in particular make use of them to resolve
+    their many minor disputes. Open conflict is bad for business but covert ops flourish
+  textMiddle: The power Blocs use mercs to squash dissent when it gets beyond what
+    the local enforcement can handle. Deniability is a bonus but nobody really cares
+  textBottom: Standing armies are no more. The Blocs resolve any territorial disputes
+    with mercs as doing so keeps conflicts to small, localised, affairs fought with
+    expendable contractors
+  isKnown: 1

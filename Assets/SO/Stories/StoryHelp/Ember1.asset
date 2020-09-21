@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
+  m_Name: Ember1
+  m_EditorClassIdentifier: 
+  tag: The Breakup
+  sprite: {fileID: 0}
+  textTop: There was a big bustup between your brother, [brother], and Ember Collins.
+    [brother] couldn't handle the snakes and the whispers in Ember's head from 'Mr
+    Ed'
+  textMiddle: Ember wasn't, however, an easy person to leave. She kept following [brother]
+    despite him making it clear that it was over between them. It was over only when
+    Mr Ed said so, apparently
+  textBottom: '[brother] had been becoming increasingly disturbed by the regurgitated
+    birds and rodents that he kept finding in his servoPod and had recently asked
+    for your help'
+  isKnown: 0

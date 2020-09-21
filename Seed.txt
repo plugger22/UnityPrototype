@@ -4134,3 +4134,32 @@ City seed 234 -> Sydney, Australia
 
 Dev seed 26059 -> Friday, 11 September 2020 3:46 PM
 City seed 234 -> Sydney, Australia
+
+Dev seed 6407 -> Monday, 21 September 2020 9:09 AM
+City seed 890 -> Arles, France
+WARNING Invalid topic (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	MessageManager:TopicDecision(TopicMessageData) (at Assets/Scripts/Managers/MessageManager.cs:4575)
+	TopicManager:UpdateTopicAdmin() (at Assets/Scripts/Managers/TopicManager.cs:4130)
+	TopicManager:ProcessTopicAdmin() (at Assets/Scripts/Managers/TopicManager.cs:4030)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3738)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:1096)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:406)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 54072 -> Monday, 21 September 2020 10:23 AM
+City seed 890 -> Arles, France
+
+Dev seed 61444 -> Monday, 21 September 2020 10:26 AM
+City seed 890 -> Arles, France
+
+Dev seed 65525 -> Monday, 21 September 2020 10:29 AM
+City seed 890 -> Arles, France
+
+Dev seed 17568 -> Monday, 21 September 2020 10:29 AM
+City seed 890 -> Arles, France
+
+Dev seed 14895 -> Monday, 21 September 2020 10:34 AM
+City seed 890 -> Arles, France

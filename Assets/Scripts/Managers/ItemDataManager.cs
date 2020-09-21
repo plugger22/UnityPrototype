@@ -1713,7 +1713,7 @@ public class ItemDataManager : MonoBehaviour
         { colourStart = colourBad; colourFinish = colourGood; colourCrisis = colourGood; }
         //text
         if (string.IsNullOrEmpty(description) == false)
-        { builder.AppendFormat("{0}", description); }
+        { builder.AppendFormat("<b>{0}</b>", description); }
         if (duration > 0)
         { builder.AppendFormat("{0}{1}<b>Duration {2}{3} turn{4}</b>{5}", "\n", "\n", colourNeutral, duration, duration != 1 ? "s" : "", colourEnd); }
         if (loyaltyAdjust != 0)
