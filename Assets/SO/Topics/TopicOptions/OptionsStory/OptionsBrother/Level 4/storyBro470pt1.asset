@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro470pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 47 Opt 1
-  tag: 
-  text: 
+  tag: Calm
+  text: '[brother] has a LOT of toes'
   topic: {fileID: 11400000, guid: 1238729372eedad4cb8edbc668fec455, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: He's only got eight now. Who knows how many he'll have left by this time
+    next week? Mr Ed likes toes. How about I send him around to nibble on YOURS?
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 0
+  optionNumber: 1

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
+  m_Name: PigCult3
+  m_EditorClassIdentifier: 
+  tag: Cult Violence
+  sprite: {fileID: 21300000, guid: 0990750233d69384f832d111b8981353, type: 3}
+  textTop: There is a dark undertone to the Cult of the Purple Pig. It's not something
+    that is obvious or apparent to the majority of cult followers but it exists
+  textMiddle: Like any large organisation operating in a dangerous, socially stratified
+    world rife with natural disasters, it maintains a capability to inflict extreme
+    violence
+  textBottom: Whether this reflects an underlying philosophical bent or simply a practical
+    take on today's uncertain world isn't known. Best not to upset the Piggies
+  isKnown: 0

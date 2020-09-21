@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro470pt2
   m_EditorClassIdentifier: 
   descriptor: Story Brother 47 Opt 2
-  tag: 
-  text: 
+  tag: Confirm
+  text: The Cultists still have [brother]
   topic: {fileID: 11400000, guid: 1238729372eedad4cb8edbc668fec455, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: That's the best you can come up with? Of COURSE they do, you IDIOT. They
+    are amputating his toes, ONE by ONE while you stand around clueless
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 1
+  optionNumber: 2

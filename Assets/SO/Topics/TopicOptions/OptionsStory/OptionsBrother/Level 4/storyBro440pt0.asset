@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro440pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 44 Opt 0
-  tag: 
-  text: 
+  tag: Exchange
+  text: Pay the Ransom to free [tristan]
   topic: {fileID: 11400000, guid: 6ea188ea739cd3e41b5e0a69d274c5f4, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -34,4 +34,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 3
+  optionNumber: 0

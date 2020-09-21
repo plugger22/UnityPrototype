@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro470pt3
   m_EditorClassIdentifier: 
   descriptor: Story Brother 47 Opt 3
-  tag: 
-  text: 
+  tag: Offer
+  text: Would you like to keep the Toes?
   topic: {fileID: 11400000, guid: 1238729372eedad4cb8edbc668fec455, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: WHAT? How INSENSITIVE. Do I look like I have my own personal TOE collection?
+    Do you think that I'm as crazy as the Piggie People?
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 2
+  optionNumber: 3

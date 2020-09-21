@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro460pt3
   m_EditorClassIdentifier: 
   descriptor: Story Brother 46 Opt 3
-  tag: 
-  text: 
+  tag: Hopeful
+  text: We'll find him, don't worry
   topic: {fileID: 11400000, guid: e21e3236063ddef41b88acbd0e22b721, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: How many toes will he have by then? One? Will poor [brother] have to
+    HOBBLE around with a stick like a two legged DOG? Can RipperDoc's do toes?
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 2
+  optionNumber: 3

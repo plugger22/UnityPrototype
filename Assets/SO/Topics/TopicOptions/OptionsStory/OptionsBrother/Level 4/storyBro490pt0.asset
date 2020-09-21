@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro490pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 49 Opt 0
-  tag: 
-  text: 
+  tag: Affronted
+  text: Family means everything to me
   topic: {fileID: 11400000, guid: 871456570e4c6b643909b7caac25af12, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Does it? Perhaps only when it's convenient. Or easy. Or when it doesn't
+    cost you money. Family, it appears, is a flexible construct on your part
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 3
+  optionNumber: 0

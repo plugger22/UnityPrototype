@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro400pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 40 Opt 1
-  tag: 
-  text: 
+  tag: Explain
+  text: It's a message
   topic: {fileID: 11400000, guid: ac350673651c3be4bb7bebd3df704309, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: For what? Advertising for some dodgy backyard Ripper Doc who grafts on
+    new toes with glow in the dark toenails? Nobody sends a TOE as a message
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 0
+  optionNumber: 1

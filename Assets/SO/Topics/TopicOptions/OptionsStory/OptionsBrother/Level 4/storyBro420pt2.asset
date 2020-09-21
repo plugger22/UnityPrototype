@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro420pt2
   m_EditorClassIdentifier: 
   descriptor: Story Brother 42 Opt 2
-  tag: 
-  text: 
+  tag: Interesting
+  text: The message was sent from [city]
   topic: {fileID: 11400000, guid: 32890e085a58eed4e879214578198998, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Here? Wow! That's exciting. [brother] must be nearby. I can FEEL him.
+    He's hurting. I need to give him a big HUG and tell him it'll all be O.K
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 1
+  optionNumber: 2

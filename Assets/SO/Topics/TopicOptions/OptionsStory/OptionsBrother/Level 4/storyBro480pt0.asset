@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro480pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 48 Opt 0
-  tag: 
-  text: 
+  tag: Angry
+  text: A heads up would have been useful
   topic: {fileID: 11400000, guid: 4865ceaeb79251a49815c32662edee4b, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Excess information can be impede your ability to function, especially
+    if you're packing a low grade processor. I'll tell you what you need to know
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 3
+  optionNumber: 0

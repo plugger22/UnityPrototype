@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
+  m_Name: Crime2
+  m_EditorClassIdentifier: 
+  tag: Hostage Taking
+  sprite: {fileID: 21300000, guid: be963c4af0f86a64ebaa6c5c5ee8e329, type: 3}
+  textTop: This is extremely rare. The only people worth taking hostage are the Elites
+    and, perhaps, their supporting technoClass. Nobody else has  sufficient money
+    for a ransom
+  textMiddle: While it is feasible to hijack an Elite citizen and take them hostage
+    it isn't advisable. Massive resources would be applied. Captors would be quickly
+    rounded up and executed
+  textBottom: Hostages, if taken, are mostly done for gaining information. Then they
+    are killed. There is little choice here as a burnt earth strategy is the only
+    way to avoid being captured
+  isKnown: 0

@@ -2346,6 +2346,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 42200db31c0cdc1429141ad84bfe286b, type: 2}
   - {fileID: 11400000, guid: d0c6e65193341d34d9a35b86ded00cb1, type: 2}
   - {fileID: 11400000, guid: 472038eccae172044b1aff5609903447, type: 2}
+  - {fileID: 11400000, guid: 3d818916faa155140b00257bc902eaa0, type: 2}
+  - {fileID: 11400000, guid: 3eb4ebb4b126cbb4bbb769b8d7599239, type: 2}
+  - {fileID: 11400000, guid: 01cfde1b183b54640ab1fca6c1b0d7fd, type: 2}
+  - {fileID: 11400000, guid: 221ecf7889ef617429a41497c727c720, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
@@ -6149,7 +6153,7 @@ MonoBehaviour:
   popUpFixedScript: {fileID: 0}
   seedDev: 0
   autoRunTurns: 20
-  scenarioStartLevel: 3
+  scenarioStartLevel: 4
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1

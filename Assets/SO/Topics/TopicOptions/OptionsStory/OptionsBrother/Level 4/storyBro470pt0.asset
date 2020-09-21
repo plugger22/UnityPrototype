@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro470pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 47 Opt 0
-  tag: 
-  text: 
+  tag: Explain
+  text: They didn't want a Ransom
   topic: {fileID: 11400000, guid: 1238729372eedad4cb8edbc668fec455, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Well, gosh, you didn't give them one so HOW DO YOU KNOW? [brother] might
+    be here with me now if you'd have done what you were supposed to
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 3
+  optionNumber: 0

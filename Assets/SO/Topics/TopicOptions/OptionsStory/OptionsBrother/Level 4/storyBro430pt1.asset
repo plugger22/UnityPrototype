@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro430pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 43 Opt 1
-  tag: 
-  text: 
+  tag: Question
+  text: Why can't you do it?
   topic: {fileID: 11400000, guid: be9efe79608f15d48907dfed47eb268f, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Take some responsibility for your own brother. The toe tells me that
+    the Cultists did this. They have a fetish for loose toes. Human and animal
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 0
+  optionNumber: 1

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro410pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 41 Opt 1
-  tag: 
-  text: 
+  tag: Confused
+  text: They haven't asked for Anything?
   topic: {fileID: 11400000, guid: 46354b24369679148b7d914f8a0f3e2d, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: No, but they will. It's a series of steps, like an old fashioned dance.
+    You must play your part
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 0
+  optionNumber: 1

@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyBrother49
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Fallout
   text: 
   letter: {fileID: 11400000, guid: ad2d407cc9660194bb9ad86c092cbddd, type: 2}
   designNotes: storyBrother49
@@ -30,7 +30,8 @@ MonoBehaviour:
   linkedIndex: 3
   levelIndex: 4
   topicItem: {fileID: 11400000, guid: 8f26e4ad57a9a5a4c90746abb7dcfb1c, type: 2}
-  listOfStoryHelp: []
+  listOfStoryHelp:
+  - {fileID: 11400000, guid: 221ecf7889ef617429a41497c727c720, type: 2}
   profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 31ae6e57e0f05d14a8024e18925a812d, type: 2}
@@ -46,7 +47,7 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 0
+  status: 4
   isCurrent: 0
   timerStart: 0
   timerRepeat: 0

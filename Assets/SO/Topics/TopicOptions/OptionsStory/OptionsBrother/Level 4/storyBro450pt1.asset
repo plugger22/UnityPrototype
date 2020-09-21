@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro450pt1
   m_EditorClassIdentifier: 
   descriptor: Story Brother 45 Opt 1
-  tag: 
-  text: 
+  tag: Track
+  text: Follow Captors back to your Brother
   topic: {fileID: 11400000, guid: 9ae3073d49c32644da21fd6d4ef4aa67, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -34,4 +34,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
-  optionNumber: 0
+  optionNumber: 1

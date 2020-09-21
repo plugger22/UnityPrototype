@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyBrother42
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Who?
   text: 
   letter: {fileID: 11400000, guid: 5d36f52efcbb7634d9c59dc48c14f83e, type: 2}
   designNotes: storyBrother42
@@ -30,7 +30,8 @@ MonoBehaviour:
   linkedIndex: 1
   levelIndex: 4
   topicItem: {fileID: 11400000, guid: 768dba55f32589b44a2d12428659524a, type: 2}
-  listOfStoryHelp: []
+  listOfStoryHelp:
+  - {fileID: 11400000, guid: 01cfde1b183b54640ab1fca6c1b0d7fd, type: 2}
   profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 31ae6e57e0f05d14a8024e18925a812d, type: 2}
@@ -44,8 +45,8 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 0
-  isCurrent: 1
+  status: 4
+  isCurrent: 0
   timerStart: 0
   timerRepeat: 0
   timerWindow: 0

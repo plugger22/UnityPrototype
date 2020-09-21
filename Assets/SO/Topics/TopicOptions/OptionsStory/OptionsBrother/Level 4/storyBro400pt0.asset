@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyBro400pt0
   m_EditorClassIdentifier: 
   descriptor: Story Brother 40 Opt 0
-  tag: 
-  text: 
+  tag: Hoax
+  text: It could be a fake
   topic: {fileID: 11400000, guid: ac350673651c3be4bb7bebd3df704309, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I know your brother intimately. That's HIS toe. I'd recognise it anywhere.
+    You could show me fifty toes and I'd pick out the right one. I know TOES
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>
