@@ -4205,3 +4205,40 @@ City seed 1616 -> Mexico City, Mexico
 
 Dev seed 7743 -> Tuesday, 22 September 2020 11:42 AM
 City seed 1616 -> Mexico City, Mexico
+
+Dev seed 28818 -> Tuesday, 22 September 2020 12:17 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 27431 -> Tuesday, 22 September 2020 12:25 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 48430 -> Tuesday, 22 September 2020 2:40 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 34557 -> Tuesday, 22 September 2020 3:19 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 23186 -> Tuesday, 22 September 2020 3:27 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 53152 -> Tuesday, 22 September 2020 4:05 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 49151 -> Tuesday, 22 September 2020 4:06 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 28973 -> Tuesday, 22 September 2020 4:12 PM
+City seed 1616 -> Mexico City, Mexico
+ERROR Invalid editor window UnityEditor.PreviewWindow
+UnityEditor.EditorApplicationLayout:FinalizePlaymodeLayout()
+	
+Dev seed 20719 -> Tuesday, 22 September 2020 4:32 PM
+City seed 1616 -> Mexico City, Mexico
+ERROR Invalid editor window UnityEditor.PreviewWindow
+UnityEditor.EditorApplicationLayout:FinalizePlaymodeLayout()
+	
+Dev seed 317 -> Tuesday, 22 September 2020 4:38 PM
+City seed 1616 -> Mexico City, Mexico
+ERROR Invalid editor window UnityEditor.PreviewWindow
+UnityEditor.EditorApplicationLayout:FinalizePlaymodeLayout()
+	

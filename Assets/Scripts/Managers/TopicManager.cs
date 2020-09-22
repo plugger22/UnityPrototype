@@ -3297,7 +3297,7 @@ public class TopicManager : MonoBehaviour
                 {
                     case "StoryBravo":
                         //Letter decision topics
-                        data.uiType = TopicDecisionType.Letter;
+                        data.uiType = TopicDecisionType.Comms;
                         if (turnTopic.letter != null)
                         {
                             data.text = string.Format("Dear {0}{1}{2}{3}{4}{5}{6}",
