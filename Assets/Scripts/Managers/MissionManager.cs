@@ -334,7 +334,9 @@ public class MissionManager : MonoBehaviour
                 NodeArc arc = npcNode.nodeArc;
                 if (arc != null)
                 {
-                    node = GameManager.i.dataScript.GetRandomNode(arc.nodeArcID);
+                    if (sourceNode != null)
+                    { node = GameManager.i.dataScript.GetRandomNode(arc.nodeArcID, sourceNode.nodeID); }
+                    else { node = GameManager.i.dataScript.GetRandomNode(arc.nodeArcID); }
                     if (node == null) { Debug.LogWarningFormat("Invalid node (Null) for \"{0}\"", npcNode.name); }
                 }
                 else { Debug.LogWarningFormat("Invalid nodeArc (Null) for \"{0}\"", npcNode.name); }

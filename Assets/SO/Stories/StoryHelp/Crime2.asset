@@ -20,6 +20,5 @@ MonoBehaviour:
     it isn't advisable. Massive resources would be applied. Captors would be quickly
     rounded up and executed
   textBottom: Hostages, if taken, are mostly done for gaining information. Then they
-    are killed. There is little choice here as a burnt earth strategy is the only
-    way to avoid being captured
-  isKnown: 0
+    are killed. There is little choice here. Either burn everything or face the consequences
+  isKnown: 1

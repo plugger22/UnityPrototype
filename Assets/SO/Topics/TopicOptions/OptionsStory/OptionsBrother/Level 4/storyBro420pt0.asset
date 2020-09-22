@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: I KNEW IT! I'm going to roast every Piggie Person I find over a fire
-    pit until they melt down into a pool of greasy nothingness. That's what they deserve
+  storyInfo: I KNEW IT! I'm going to ROAST every Piggie Person I find until they melt
+    down into a pool of greasy nothingness. That's what they deserve
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>

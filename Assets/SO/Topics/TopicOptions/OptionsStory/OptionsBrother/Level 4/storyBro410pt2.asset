@@ -28,11 +28,11 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: Yes, so it seems. Imagine how much worse it would be if you were receiving
-    the toes of random people? You at least know the provenance of the toes
+    the toes of random people? You at least know the provenance of the toe
   storyTarget: {fileID: 0}
-  tooltipHeader: <color=#FFFFE0>Confused</color>
+  tooltipHeader: <color=#FFFFE0>Upset</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
-  textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
+  textToDisplay: <color=#EEFB73>That's my Brother's TOE!</color>
   optionNumber: 2

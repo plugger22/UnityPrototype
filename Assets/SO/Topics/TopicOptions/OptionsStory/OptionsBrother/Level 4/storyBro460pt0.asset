@@ -28,8 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: Didn't I tell you that right at the start? Did you listen to anything
-    I said? I'm blaming YOU for every TOE that arrives. You're sinking into TOE DEBT
-    with me
+    I said? I'm blaming YOU for every TOE that arrives. Oh, poor [brother]!
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>
   tooltipMain: <color=#98FB98> Information gained</color>

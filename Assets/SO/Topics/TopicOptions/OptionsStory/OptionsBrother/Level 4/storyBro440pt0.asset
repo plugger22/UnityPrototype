@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Story Brother 44 Opt 0
   tag: Exchange
-  text: Pay the Ransom to free [tristan]
+  text: Pay the Ransom to free [brother]
   topic: {fileID: 11400000, guid: 6ea188ea739cd3e41b5e0a69d274c5f4, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

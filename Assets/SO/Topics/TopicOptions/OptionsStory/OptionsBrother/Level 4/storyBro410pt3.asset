@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Story Brother 41 Opt 3
   tag: Question
-  text: You've dealt with this type of thing before?
+  text: You've dealt with severed toes before?
   topic: {fileID: 11400000, guid: 46354b24369679148b7d914f8a0f3e2d, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

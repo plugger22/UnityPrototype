@@ -4166,3 +4166,33 @@ City seed 890 -> Arles, France
 
 Dev seed 39772 -> Monday, 21 September 2020 11:45 AM
 City seed 890 -> Arles, France
+
+Dev seed 40829 -> Tuesday, 22 September 2020 9:03 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 47098 -> Tuesday, 22 September 2020 9:13 AM
+City seed 1616 -> Mexico City, Mexico
+WARNING Invalid Matching Npc nodes (start ID 27, end ID 27 "arcCORPORATE") for GetEndNode
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MissionManager:GetEndNode(Node) (at Assets/Scripts/Managers/MissionManager.cs:273)
+	MissionManager:UpdateActiveNpc(Npc) (at Assets/Scripts/Managers/MissionManager.cs:567)
+	MissionManager:ProcessNpc(Npc) (at Assets/Scripts/Managers/MissionManager.cs:380)
+	MissionManager:StartTurnLate() (at Assets/Scripts/Managers/MissionManager.cs:159)
+	MissionManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/MissionManager.cs:124)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:537)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:326)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:251)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:398)
+	
+Dev seed 47098 -> Tuesday, 22 September 2020 9:43 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 29020 -> Tuesday, 22 September 2020 9:46 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 48955 -> Tuesday, 22 September 2020 9:56 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 4932 -> Tuesday, 22 September 2020 10:09 AM
+City seed 1616 -> Mexico City, Mexico

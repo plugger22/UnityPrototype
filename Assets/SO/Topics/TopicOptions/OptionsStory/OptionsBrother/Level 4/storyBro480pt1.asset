@@ -27,7 +27,7 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: If they stopped talking to you after talking the ransom you gave them
+  storyInfo: If they stopped talking to you after taking the ransom you gave them
     your brother would already be dead. That toe has come from a live body
   storyTarget: {fileID: 0}
   tooltipHeader: <color=#FFFFE0>Confused</color>

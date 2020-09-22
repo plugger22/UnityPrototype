@@ -28,11 +28,11 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: He will find you. Eventually. If the Cultists don't kill him first or
-    chop of all of his toes. This is how these things work. Have patience
+    chop off all of his toes. This is how these things work. Have patience
   storyTarget: {fileID: 0}
-  tooltipHeader: <color=#FFFFE0>Confused</color>
+  tooltipHeader: <color=#FFFFE0>Ask</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
-  textToDisplay: <color=#EEFB73>Do you know Derrick?</color>
+  textToDisplay: <color=#EEFB73>How will I find my brother?</color>
   optionNumber: 3

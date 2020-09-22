@@ -2500,10 +2500,11 @@ public class DataManager : MonoBehaviour
 
     /// <summary>
     /// returns a Random node of a particular NodeArc type, or (by default) ANY random node. Returns null if a problem.
+    /// if 'exclusionNodeID' parameter provided then that node will be removed from the pool of possible nodes (excluded, eg. get any node but that one). Doesn't apply if only one node in pool
     /// </summary>
     /// <param name="nodeArcID"></param>
     /// <returns></returns>
-    public Node GetRandomNode(int nodeArcID = -1)
+    public Node GetRandomNode(int nodeArcID = -1, int exclusionNodeID = -1)
     {
         Node node = null;
         int key;
@@ -2511,6 +2512,12 @@ public class DataManager : MonoBehaviour
         {
             //return a Random Node (ANY)
             List<int> keyList = new List<int>(dictOfNodes.Keys);
+            if (exclusionNodeID > -1)
+            {
+                //remove exclusion node from list (if > 1 items in list)
+                if (keyList.Count > 1)
+                { keyList.Remove(exclusionNodeID); }
+            }
             key = keyList[Random.Range(0, keyList.Count)];
             node = GetNode(key);
         }
@@ -2521,6 +2528,17 @@ public class DataManager : MonoBehaviour
             //no go if no nodes of that type present in scene
             if (nodeList != null && nodeList.Count > 0)
             {
+                //exclusion node
+                if (exclusionNodeID > -1)
+                {
+                    //remove exclusion node from list (if > 1 items in list)
+                    if (nodeList.Count > 1)
+                    {
+                        int index = nodeList.FindIndex(x => x.nodeID == exclusionNodeID);
+                        if (index > -1)
+                        { nodeList.RemoveAt(index); }
+                    }
+                }
                 //return a Random Node (specific nodeArc type)
                 node = nodeList[Random.Range(0, nodeList.Count)];
             }
@@ -2528,6 +2546,13 @@ public class DataManager : MonoBehaviour
             {
                 //return a Random Node (ANY)
                 List<int> keyList = new List<int>(dictOfNodes.Keys);
+                //exclusion node
+                if (exclusionNodeID > -1)
+                {
+                    //remove exclusion node from list (if > 1 items in list)
+                    if (keyList.Count > 1)
+                    { keyList.Remove(exclusionNodeID); }
+                }
                 key = keyList[Random.Range(0, keyList.Count)];
                 node = GetNode(key);
                 Debug.LogWarning(string.Format("Alert: nodeList is either Null or Count Zero for nodeArcID \"{0}\", {1}{2}",
