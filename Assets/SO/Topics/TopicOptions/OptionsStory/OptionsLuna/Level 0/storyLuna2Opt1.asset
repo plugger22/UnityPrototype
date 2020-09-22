@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
+  m_Name: storyLuna2Opt1
+  m_EditorClassIdentifier: 
+  descriptor: Story LunaHub 2 Opt 1
+  tag: 
+  text: 
+  topic: {fileID: 11400000, guid: fb14e9307f25b8742b7d94cef1dec9e2, type: 2}
+  isPreferredByHQ: 0
+  isDislikedByHQ: 0
+  isIgnoredByHQ: 1
+  isIgnoreStress: 0
+  isIgnoreMood: 1
+  listOfCriteria: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 305af0aacc470e14cb866b7f4142ead1, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 0}
+  chance: {fileID: 0}
+  news: 
+  storyInfo: 
+  storyTarget: {fileID: 0}
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  isValid: 0
+  textToDisplay: 
+  optionNumber: 1

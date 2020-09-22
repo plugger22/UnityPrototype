@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
-  m_Name: storyLunaHub1
+  m_Name: storyLunaHub5
   m_EditorClassIdentifier: 
   tag: 
   text: 
   letter: {fileID: 0}
-  designNotes: storyLunaHub1
+  designNotes: storyLunaHub5
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
   subType: {fileID: 11400000, guid: bdf3a8a85780b674f81d87a4766c3b61, type: 2}
   subSubType: {fileID: 0}
@@ -22,24 +22,23 @@ MonoBehaviour:
   group: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   listOfLinkedTopics:
-  - {fileID: 11400000, guid: fb14e9307f25b8742b7d94cef1dec9e2, type: 2}
-  - {fileID: 11400000, guid: 95a4e00896e67244491ff1ecd1e2fd42, type: 2}
+  - {fileID: 11400000, guid: 2954d53245cdba4498fcc7bdc8f21980, type: 2}
+  - {fileID: 11400000, guid: 0230759bb5238ca4f899c3b70a1f1815, type: 2}
   listOfBuddyTopics:
-  - {fileID: 11400000, guid: 81b05d542b0264445abe6e2d25f5238f, type: 2}
   - {fileID: 11400000}
-  linkedIndex: 0
+  - {fileID: 11400000, guid: 37dc09216b327844085cbfb68bbb902c, type: 2}
+  linkedIndex: 2
   levelIndex: 0
   topicItem: {fileID: 11400000, guid: e397aadc2af693341bee310f0dac2d9c, type: 2}
-  listOfStoryHelp: []
+  listOfStoryHelp:
+  - {fileID: 11400000, guid: 3eb4ebb4b126cbb4bbb769b8d7599239, type: 2}
   profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
   listOfCriteria:
   - {fileID: 11400000, guid: 5ada6805d52fe0e4eb10c44a98c34cf0, type: 2}
   listOfIgnoreEffects: []
   listOfOptions:
-  - {fileID: 11400000, guid: 536b2355067a3c041bd67fda2385d580, type: 2}
-  - {fileID: 11400000, guid: 8143b8f40267dfd4895d1ce341e0c1b2, type: 2}
-  - {fileID: 11400000, guid: 217d331a57316ee4b836a2e9031b1630, type: 2}
-  - {fileID: 11400000, guid: 1bea9d64a55276b41824d7cc5b816493, type: 2}
+  - {fileID: 11400000, guid: 118af33f850d57d4ea2941c34c33ad3f, type: 2}
+  - {fileID: 11400000, guid: 3e62bea4aa1cee34884bf80e8a593984, type: 2}
   isDisabled: 0
   tooltipHeader: 
   tooltipMain: 

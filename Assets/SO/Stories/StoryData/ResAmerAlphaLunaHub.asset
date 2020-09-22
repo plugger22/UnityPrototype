@@ -13,4 +13,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   designNotes: Americon Alpha -> Luna Hub
   pool: {fileID: 11400000, guid: 41913f810f38de54a99fa06d99df0b6d, type: 2}
-  listOfTopicItems: []
+  listOfTopicItems:
+  - {fileID: 11400000, guid: 228b03b52ee0f3a4293d42f1a068dbfd, type: 2}
+  - {fileID: 11400000, guid: e397aadc2af693341bee310f0dac2d9c, type: 2}
+  listOfTargetsLevel0:
+  - {fileID: 11400000, guid: cd14e6464f78034438263f8268a2975e, type: 2}
+  - {fileID: 11400000, guid: 5a3468da761b4674e983b731c73d3811, type: 2}
+  - {fileID: 11400000, guid: 45d8fd228c2e26446bbeb4c237277e20, type: 2}
+  - {fileID: 11400000, guid: 7ab2aaac4457aa249b7c420b55514895, type: 2}
+  listOfTargetsLevel1: []
+  listOfTargetsLevel2: []
+  listOfTargetsLevel3: []
+  listOfTargetsLevel4: []
+  listOfStoryHelp: []
