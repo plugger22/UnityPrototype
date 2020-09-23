@@ -4391,3 +4391,74 @@ TopicUI+<CommsInterference>c__Iterator0.MoveNext () (at Assets/Scripts/GUI/Topic
 	
 Dev seed 48148 -> Wednesday, 23 September 2020 12:42 PM
 City seed 1616 -> Mexico City, Mexico
+
+Dev seed 32962 -> Wednesday, 23 September 2020 2:32 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 9519 -> Wednesday, 23 September 2020 2:37 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 46120 -> Wednesday, 23 September 2020 2:39 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 25276 -> Wednesday, 23 September 2020 2:41 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 27769 -> Wednesday, 23 September 2020 2:52 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 57156 -> Wednesday, 23 September 2020 2:52 PM
+City seed 1616 -> Mexico City, Mexico
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicUI.SetTopicDisplayNormal (packageAPI.TopicUIData data) (at Assets/Scripts/GUI/TopicUI.cs:842)
+	TopicUI.DisplayTopic (packageAPI.TopicUIData data) (at Assets/Scripts/GUI/TopicUI.cs:598)
+	TopicUI.ActivateTopicDisplay () (at Assets/Scripts/GUI/TopicUI.cs:506)
+	GUIManager.InitialiseTopic () (at Assets/Scripts/Managers/GUIManager.cs:953)
+	GUIManager+<Topic>c__Iterator2.MoveNext () (at Assets/Scripts/Managers/GUIManager.cs:918)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<InfoPipeline>c__Iterator0:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:863)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 59403 -> Wednesday, 23 September 2020 2:54 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 16163 -> Wednesday, 23 September 2020 2:56 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 27908 -> Wednesday, 23 September 2020 3:04 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 17544 -> Wednesday, 23 September 2020 3:05 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 61172 -> Wednesday, 23 September 2020 3:06 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 15229 -> Wednesday, 23 September 2020 3:16 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 62495 -> Wednesday, 23 September 2020 3:22 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 35493 -> Wednesday, 23 September 2020 3:24 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 60589 -> Wednesday, 23 September 2020 3:26 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 27782 -> Wednesday, 23 September 2020 3:29 PM
+City seed 1616 -> Mexico City, Mexico
+WARNING New Scene in play mode is not supported. Exit play mode and try again.
+
+Dev seed 24411 -> Wednesday, 23 September 2020 3:33 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 4458 -> Wednesday, 23 September 2020 3:34 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 34235 -> Wednesday, 23 September 2020 3:35 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 58668 -> Wednesday, 23 September 2020 3:36 PM
+City seed 1616 -> Mexico City, Mexico

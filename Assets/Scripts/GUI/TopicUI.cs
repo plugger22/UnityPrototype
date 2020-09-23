@@ -75,6 +75,7 @@ public class TopicUI : MonoBehaviour
     public Image imageBoss;
     public Image commsLine;
     public Image commsSplatterTop;
+    public Image commsSplatterBottom;
 
     //button script handlers
     private ButtonInteraction normalInteractiveOption0;
@@ -130,7 +131,7 @@ public class TopicUI : MonoBehaviour
     //data package
     private TopicUIData dataPackage;
 
-    //comms interference line
+    //comms
     private float commsParentHeight;                //height of parent for commsLine (panelComms)
     private float commsInterval;                    //fast access from GUIManager.cs
     private Coroutine commsCoroutine;               //comms panel interference line
@@ -258,6 +259,7 @@ public class TopicUI : MonoBehaviour
         Debug.Assert(imageBoss != null, "Invalid imageBoss (Null)");
         Debug.Assert(commsLine != null, "Invalid commsLine (Null)");
         Debug.Assert(commsSplatterTop != null, "Invalid commsSplatterTop (Null)");
+        Debug.Assert(commsSplatterBottom != null, "Invalid commsSplatterBottom (Null)");
         Debug.Assert(outerBackground != null, "Invalid outerBackgroundImage (Null)");
         Debug.Assert(innerBackgroundNormal != null, "Invalid innerBackgroundNormal (Null)");
         /*Debug.Assert(innerBackgroundOther != null, "Invalid innerBackgroundOther (Null)");*/
@@ -837,6 +839,7 @@ public class TopicUI : MonoBehaviour
                     else { tooltipCommsImage.tooltipDetails = ""; }
                     //splatter
                     commsSplatterTop.gameObject.SetActive(true);
+                    commsSplatterBottom.gameObject.SetActive(true);
                     //start interference line coroutine
                     commsCoroutine = StartCoroutine("CommsInterference");
                     break;
@@ -1110,41 +1113,118 @@ public class TopicUI : MonoBehaviour
     #endregion*/
 
     /// <summary>
-    /// Coroutine to run comms interference line
+    /// Coroutine to run comms interference line and top and bottom splatter sprites
     /// </summary>
     /// <returns></returns>
     private IEnumerator CommsInterference()
     {
         float pos_y = 0;
-        int index = 0;
+        int rnd;
+        int indexTop = 0;
+        int indexBottom = 0;
         int maxIndex = arrayOfSplatter.Length;
-        int counter = 0;
-        int displayLimit = 3;
+        int counterTop = 0;
+        int counterBottom = 0;
+        int displayLimit = 2;                   //how long splatter remains in view
+        int thresholdLine = 98;                 //1d100, higher than this to have the interference line appear
+        int thresholdTop = 95;                   //1d100, higher than this to end blank interval between splatter 
+        int thresholdBottom = 95;                //1d100, higher than this to end blank interval between splatter
+        float lineSpeed = commsInterval;        //base speed, varies +/-
+        float speedVariation = 0.75f;           //how much base speed can vary by, +/-
+        bool isLine = true;                     //true if interference line currently being displayed
+        bool isSplatterTop = true;              //true if splatter being displayed top right
+        bool isSplatterBottom = true;           //true if splatter being displayed bottom left
         //set first lot of splatter
-        commsSplatterTop.sprite = arrayOfSplatter[index];
+        commsSplatterTop.sprite = arrayOfSplatter[indexTop];
+        commsSplatterBottom.sprite = arrayOfSplatter[indexBottom];
         //infinite loop, stopped when topicUI closed
-        while(true)
+        while (true)
         {
             //
             // - - - Interference line
             //
-            pos_y += commsInterval;
-            //reset if reached bottom of parent
-            if (pos_y > commsParentHeight)
-            { pos_y = 0; }
-            //update position relative to parent
-            commsLine.transform.localPosition = new Vector3(0, pos_y * -1, 0);
-            //
-            // - - - Splatter
-            //
-            counter++;
-            if (counter == displayLimit)
+            if (isLine == true)
             {
-                counter = 0;
-                //change splatter
-                index++;
-                if (index == maxIndex) { index = 0; }
-                commsSplatterTop.sprite = arrayOfSplatter[index];
+                pos_y += lineSpeed;
+                //reset if reached bottom of parent
+                if (pos_y > commsParentHeight)
+                {
+                    pos_y = 0;
+                    //randomise lineSpeed for some variety
+                    rnd = UnityEngine.Random.Range(0, 100);
+                    if (rnd > 66) { lineSpeed = commsInterval + speedVariation; }
+                    else if (rnd < 33)
+                    {
+                        lineSpeed = commsInterval - speedVariation;
+                        lineSpeed = Mathf.Max(lineSpeed, 1.0f);
+                    }
+                    else { lineSpeed = commsInterval; }
+                    //reset toggle
+                    isLine = false;
+                }
+                //update position relative to parent
+                commsLine.transform.localPosition = new Vector3(0, pos_y * -1, 0);
+            }
+            else
+            {
+                //random interval between line instances
+                if (UnityEngine.Random.Range(0, 100) > thresholdLine)
+                {
+                    //new line
+                    isLine = true;
+                }
+            }
+            //
+            // - - - Splatter Top
+            //
+            if (isSplatterTop == true)
+            {
+                counterTop++;
+                if (counterTop == displayLimit)
+                {
+                    counterTop = 0;
+                    isSplatterTop = false;
+                    commsSplatterTop.gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                //random interval between splatter display
+                if (UnityEngine.Random.Range(0, 100) > thresholdTop)
+                {
+                    isSplatterTop = true;
+                    //new splatter
+                    indexTop++;
+                    if (indexTop == maxIndex) { indexTop = 0; }
+                    commsSplatterTop.sprite = arrayOfSplatter[indexTop];
+                    commsSplatterTop.gameObject.SetActive(true);
+                }
+            }
+            //
+            // - - - Splatter Bottom
+            //
+            if (isSplatterBottom == true)
+            {
+                counterBottom++;
+                if (counterBottom == displayLimit)
+                {
+                    counterBottom = 0;
+                    isSplatterBottom = false;
+                    commsSplatterBottom.gameObject.SetActive(false);
+                }
+            }
+            else
+            {
+                //random interval between splatter display
+                if (UnityEngine.Random.Range(0, 100) > thresholdBottom)
+                {
+                    isSplatterBottom = true;
+                    //new splatter
+                    indexBottom++;
+                    if (indexBottom == maxIndex) { indexBottom = 0; }
+                    commsSplatterBottom.sprite = arrayOfSplatter[indexBottom];
+                    commsSplatterBottom.gameObject.SetActive(true);
+                }
             }
             yield return null;
         }

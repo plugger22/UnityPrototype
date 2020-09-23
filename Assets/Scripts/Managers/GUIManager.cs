@@ -77,7 +77,7 @@ public class GUIManager : MonoBehaviour
     [Range(0, 1.0f)] public float iconFontIncrement = 0.25f;
 
     [Header("TopicUI")]
-    [Tooltip("Coroutine interval for Comms topic line interference movement down panel (higher is faster")]
+    [Tooltip("Coroutine base speed for Comms topic line interference movement down panel (higher is faster)")]
     [Range(0, 3.0f)] public float commsInterval = 1.5f;
 
     [Header("ModalReviewUI Review Button Flash")]
