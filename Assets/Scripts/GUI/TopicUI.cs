@@ -1,6 +1,7 @@
 ﻿using gameAPI;
 using packageAPI;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -127,6 +128,10 @@ public class TopicUI : MonoBehaviour
 
     //data package
     private TopicUIData dataPackage;
+
+    //other
+    private float commsParentHeight;          //height of parent for commsLine (panelComms)
+    private Coroutine commsCoroutine;            //comms panel interference line
 
     //fast access
     private Sprite topicDefault;
@@ -370,6 +375,10 @@ public class TopicUI : MonoBehaviour
         arrayOfTooltips[indexOther, 2] = tooltipOtherOption2;
         arrayOfTooltips[indexOther, 3] = tooltipOtherOption3;*/
 
+        //commsParent height
+        RectTransform rectTransform = panelComms.GetComponent<RectTransform>();
+        commsParentHeight = rectTransform.rect.height;
+
         //set gameObject to active
         topicObject.SetActive(true);
         outerBackground.gameObject.SetActive(true);
@@ -603,7 +612,8 @@ public class TopicUI : MonoBehaviour
             //deactivate all options
             for (int i = 0; i < arrayOfButtons.GetUpperBound(1) + 1; i++)
             { arrayOfButtons[index, i].gameObject.SetActive(false); }
-
+            //set coroutines
+            commsCoroutine = null;
             //set colour of background
             innerBackgroundNormal.color = new Color(data.colour.r, data.colour.g, data.colour.b, 1.0f);
             //toggle UI elements depending on type of normal Display
@@ -764,7 +774,8 @@ public class TopicUI : MonoBehaviour
                     panelLetter.gameObject.SetActive(false);
                     //interference line
                     commsLine.gameObject.SetActive(true);
-                    commsLine.transform.SetPositionAndRotation(new Vector3(0, -20.0f));
+                    /*commsLine.transform.localPosition = new Vector3(0, commsParentHeight/2 * -1, 0); testing*/
+
                     //text
                     commsText.gameObject.SetActive(true);
                     if (string.IsNullOrEmpty(data.text) == false)
@@ -818,6 +829,8 @@ public class TopicUI : MonoBehaviour
                     if (string.IsNullOrEmpty(data.imageTooltipDetails) == false)
                     { tooltipCommsImage.tooltipDetails = data.imageTooltipDetails; }
                     else { tooltipCommsImage.tooltipDetails = ""; }
+                    //start interference line coroutine
+                    commsCoroutine = StartCoroutine("CommsInterference");
                     break;
                 default: Debug.LogWarningFormat("Invalid data.uiType \"{0}\"", data.uiType); break;
             }
@@ -1089,6 +1102,29 @@ public class TopicUI : MonoBehaviour
     #endregion*/
 
     /// <summary>
+    /// Coroutine to run comms interference line
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator CommsInterference()
+    {
+        float pos_y = 0;
+        //infinite loop, stopped when topicUI closed
+        while(true)
+        {
+            //move increment
+            pos_y += 1;
+            //reset if reached bottom of parent
+            if (pos_y > commsParentHeight)
+            { pos_y = 0; }
+            //update position relative to parent
+            commsLine.transform.localPosition = new Vector3(0, pos_y * -1, 0);
+            yield return null;
+        }
+        
+    }
+
+
+    /// <summary>
     /// close TopicUI display. Outcome if parameter >= 0, none if otherwise
     /// </summary>
     private void CloseTopicUI(int isOutcome)
@@ -1100,6 +1136,9 @@ public class TopicUI : MonoBehaviour
         Debug.LogFormat("[UI] TopicUI.cs -> CloseTopicDisplay{0}", "\n");
         //switch of AlertUI 
         GameManager.i.alertScript.CloseAlertUI();
+        //switch of coroutines
+        if (commsCoroutine != null)
+        { StopCoroutine(commsCoroutine); }
 
         /*//set game state -> EDIT: Don't do this as you are going straight to the maininfoApp on every occasion and resetting the state allows clicks to node in the interim.
         GameManager.instance.inputScript.ResetStates();
