@@ -76,6 +76,10 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Amount icon font size changes each time interval")]
     [Range(0, 1.0f)] public float iconFontIncrement = 0.25f;
 
+    [Header("TopicUI")]
+    [Tooltip("Coroutine interval for Comms topic line interference movement down panel (higher is faster")]
+    [Range(0, 3.0f)] public float commsInterval = 1.5f;
+
     [Header("ModalReviewUI Review Button Flash")]
     [Tooltip("Max button size (y_axis)")]
     [Range(10, 30)] public int reviewMaxButtonSize = 20;

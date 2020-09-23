@@ -74,6 +74,7 @@ public class TopicUI : MonoBehaviour
     public Image imageTopicComms;
     public Image imageBoss;
     public Image commsLine;
+    public Image commsSplatterTop;
 
     //button script handlers
     private ButtonInteraction normalInteractiveOption0;
@@ -129,9 +130,11 @@ public class TopicUI : MonoBehaviour
     //data package
     private TopicUIData dataPackage;
 
-    //other
-    private float commsParentHeight;          //height of parent for commsLine (panelComms)
-    private Coroutine commsCoroutine;            //comms panel interference line
+    //comms interference line
+    private float commsParentHeight;                //height of parent for commsLine (panelComms)
+    private float commsInterval;                    //fast access from GUIManager.cs
+    private Coroutine commsCoroutine;               //comms panel interference line
+    public Sprite[] arrayOfSplatter;                //splatter sprites for comms panel
 
     //fast access
     private Sprite topicDefault;
@@ -254,10 +257,12 @@ public class TopicUI : MonoBehaviour
         Debug.Assert(imageTopicComms != null, "Invalid imageTopicComms (Null)");
         Debug.Assert(imageBoss != null, "Invalid imageBoss (Null)");
         Debug.Assert(commsLine != null, "Invalid commsLine (Null)");
+        Debug.Assert(commsSplatterTop != null, "Invalid commsSplatterTop (Null)");
         Debug.Assert(outerBackground != null, "Invalid outerBackgroundImage (Null)");
         Debug.Assert(innerBackgroundNormal != null, "Invalid innerBackgroundNormal (Null)");
         /*Debug.Assert(innerBackgroundOther != null, "Invalid innerBackgroundOther (Null)");*/
 
+        Debug.Assert(arrayOfSplatter.Length > 1, "Invalid arrayOfSplatter (Should be at least 2 items");
         //Button Interactive
         normalInteractiveOption0 = optionNormal0.GetComponent<ButtonInteraction>();
         normalInteractiveOption1 = optionNormal1.GetComponent<ButtonInteraction>();
@@ -377,7 +382,7 @@ public class TopicUI : MonoBehaviour
 
         //commsParent height
         RectTransform rectTransform = panelComms.GetComponent<RectTransform>();
-        commsParentHeight = rectTransform.rect.height;
+        commsParentHeight = rectTransform.rect.height - 10;
 
         //set gameObject to active
         topicObject.SetActive(true);
@@ -393,6 +398,7 @@ public class TopicUI : MonoBehaviour
         topicDefault = GameManager.i.guiScript.topicDefaultSprite;
         topicOptionNormalValid = GameManager.i.guiScript.topicOptionNormalValidSprite;
         topicOptionNormalInvalid = GameManager.i.guiScript.topicOptionNormalInvalidSprite;
+        commsInterval = GameManager.i.guiScript.commsInterval;
         /*topicOptionOtherValid = GameManager.i.guiScript.topicOptionOtherValidSprite;
         topicOptionOtherInvalid = GameManager.i.guiScript.topicOptionOtherInvalidSprite;*/
         Debug.Assert(topicDefault != null, "Invalid topicDefault sprite (Null)");
@@ -620,7 +626,7 @@ public class TopicUI : MonoBehaviour
             switch (data.uiType)
             {
                 case TopicDecisionType.Normal:
-                    //toggle off letter
+                    //toggle off letter & comms panels
                     panelLetter.gameObject.SetActive(false);
                     panelComms.gameObject.SetActive(false);
                     //texts
@@ -829,6 +835,8 @@ public class TopicUI : MonoBehaviour
                     if (string.IsNullOrEmpty(data.imageTooltipDetails) == false)
                     { tooltipCommsImage.tooltipDetails = data.imageTooltipDetails; }
                     else { tooltipCommsImage.tooltipDetails = ""; }
+                    //splatter
+                    commsSplatterTop.gameObject.SetActive(true);
                     //start interference line coroutine
                     commsCoroutine = StartCoroutine("CommsInterference");
                     break;
@@ -1108,19 +1116,38 @@ public class TopicUI : MonoBehaviour
     private IEnumerator CommsInterference()
     {
         float pos_y = 0;
+        int index = 0;
+        int maxIndex = arrayOfSplatter.Length;
+        int counter = 0;
+        int displayLimit = 3;
+        //set first lot of splatter
+        commsSplatterTop.sprite = arrayOfSplatter[index];
         //infinite loop, stopped when topicUI closed
         while(true)
         {
-            //move increment
-            pos_y += 1;
+            //
+            // - - - Interference line
+            //
+            pos_y += commsInterval;
             //reset if reached bottom of parent
             if (pos_y > commsParentHeight)
             { pos_y = 0; }
             //update position relative to parent
             commsLine.transform.localPosition = new Vector3(0, pos_y * -1, 0);
+            //
+            // - - - Splatter
+            //
+            counter++;
+            if (counter == displayLimit)
+            {
+                counter = 0;
+                //change splatter
+                index++;
+                if (index == maxIndex) { index = 0; }
+                commsSplatterTop.sprite = arrayOfSplatter[index];
+            }
             yield return null;
         }
-        
     }
 
 

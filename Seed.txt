@@ -4361,3 +4361,33 @@ City seed 1616 -> Mexico City, Mexico
 
 Dev seed 61359 -> Wednesday, 23 September 2020 9:59 AM
 City seed 1616 -> Mexico City, Mexico
+
+Dev seed 58183 -> Wednesday, 23 September 2020 10:42 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 38287 -> Wednesday, 23 September 2020 10:47 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 7077 -> Wednesday, 23 September 2020 10:49 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 46625 -> Wednesday, 23 September 2020 11:23 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 59622 -> Wednesday, 23 September 2020 11:30 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 52698 -> Wednesday, 23 September 2020 11:35 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 28191 -> Wednesday, 23 September 2020 12:18 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 13890 -> Wednesday, 23 September 2020 12:41 PM
+City seed 1616 -> Mexico City, Mexico
+ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+TopicUI+<CommsInterference>c__Iterator0.MoveNext () (at Assets/Scripts/GUI/TopicUI.cs:1147)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	
+Dev seed 48148 -> Wednesday, 23 September 2020 12:42 PM
+City seed 1616 -> Mexico City, Mexico
