@@ -15,6 +15,8 @@ public class Topic : ScriptableObject
     [TextArea] public string text = "Unknown";
     [Tooltip("Drop in a letter text object here if it's a Letter Decision topic, eg. StoryBravo -> Family, ignore otherwise")]
     public StoryLetter letter;
+    [Tooltip("Drop in a comms text object here if it's a Comms Decision topic, eg. StoryAlpha -> Campaign, ignore otherwise")]
+    public StoryComms comms;
     [Tooltip("Designer notes, not used inGame")]
     [TextArea] public string designNotes;
 
@@ -94,7 +96,7 @@ public class Topic : ScriptableObject
 
     public void OnEnable()
     {
-        if (letter == null)
+        if (letter == null || comms == null)
         {
             Debug.AssertFormat(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty) for {0}", name);
             Debug.AssertFormat(string.IsNullOrEmpty(text) == false, "Invalid text (Null or Empty) for {0}", name);

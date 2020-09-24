@@ -91,6 +91,7 @@ public class LoadManager : MonoBehaviour
     public StoryModule[] arrayOfStoryModules;
     public StoryData[] arrayOfStoryData;
     public StoryLetter[] arrayOfStoryLetters;
+    public StoryComms[] arrayOfStoryComms;
     public StoryHelp[] arrayOfStoryHelp;
 
     [Header("InitialiseEarly")]
@@ -954,6 +955,13 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfStoryLetters has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No StoryLetters present"); }
+        //
+        // - - - Story Comms (not stored in a collection)
+        //
+        numArray = arrayOfStoryComms.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfStoryComms has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No StoryComms present"); }
     }
     #endregion
 

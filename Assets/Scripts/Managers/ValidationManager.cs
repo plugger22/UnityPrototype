@@ -94,6 +94,8 @@ public class ValidationManager : MonoBehaviour
     [Range(10, 50)] public int maxOptionTextLength = 40;
     [Tooltip("Max number of StoryHelp.SO's allowed in listOfStoryHelp")]
     [Range(1, 3)] public int maxNumOfTopicStoryHelp = 2;
+    [Tooltip("Max length of StoryComms textTop and textBottom chunks in chars")]
+    [Range(100, 200)] public int maxTopicCommsLength = 150;
     [Tooltip("Max length of StoryLetter textTop and textBottom chunks in chars")]
     [Range(100, 200)] public int maxTopicLetterLength = 150;
 
@@ -944,6 +946,15 @@ public class ValidationManager : MonoBehaviour
 
                             switch (topic.subType.name)
                             {
+                                case "StoryAlpha":
+                                    //Comms Decision topics
+                                    if (topic.comms != null)
+                                    {
+                                        CheckTextLength(topic.comms.textTop, "ValidateTopics", "Comms", topic.comms.name, maxTopicCommsLength, true);
+                                        CheckTextLength(topic.comms.textBottom, "ValidateTopics", "Comms", topic.comms.name, maxTopicCommsLength, true);
+                                    }
+                                    else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Missing Comms (Null) for topic \"{0}\"{1}", topicName, "\n"); }
+                                    break;
                                 case "StoryBravo":
                                     //Letter Decision topics
                                     if (topic.letter != null)
@@ -951,9 +962,8 @@ public class ValidationManager : MonoBehaviour
                                         CheckTextLength(topic.letter.textTop, "ValidateTopics", "Letter", topic.letter.name, maxTopicLetterLength, true);
                                         CheckTextLength(topic.letter.textBottom, "ValidateTopics", "Letter", topic.letter.name, maxTopicLetterLength, true);
                                     }
-
                                     else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Missing Letter (Null) for topic \"{0}\"{1}", topicName, "\n"); }
-                                        break;
+                                    break;
                                 default:
                                     //Normal Decision Topics
                                     CheckTextLength(topic.text, "ValidateTopics", "Text", topic.name, maxTopicTextLength, true);
@@ -1950,6 +1960,8 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfStoryHelp);
         //StoryLetters
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfStoryLetters);
+        //StoryComms
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfStoryComms);
         //StoryData
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfStoryData);
         //TopicItems
