@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: 'There''s this Merc called Monique. Pretty rough round the edges and
+    liable to break your legs but she, amazingly, likes me. '
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

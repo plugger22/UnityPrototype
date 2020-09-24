@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna6Opt3
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 6 Opt 3
-  tag: 
-  text: 
+  tag: Question
+  text: Can you get back to Luna?
   topic: {fileID: 11400000, guid: d71e30acdadf5e34590dfe6c329872aa, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Not until I can get through to [facR1]. It's canned grey goop and straight
+    legged hot bunks for me. Laughs and giggles in all directions
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3
