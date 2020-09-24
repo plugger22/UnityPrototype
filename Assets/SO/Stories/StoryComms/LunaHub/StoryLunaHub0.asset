@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85cf7b0549cc9b4488032e3a9a4db0b2, type: 3}
+  m_Name: StoryLunaHub0
+  m_EditorClassIdentifier: 
+  textFrom: Rusty
+  textWhere: Luna Hub
+  textTop: Hey, [player], long time no see. You're a city leader now and I'm stuck
+    here on a tin can in space. Wanna swap lives? That'd be great 'cause mine SUX
+  textBottom: There's trouble here. Work place deaths. Eclipse doesn't care. Mercs
+    on the Hub. I'm doing what I can to calm it down but it's not looking good

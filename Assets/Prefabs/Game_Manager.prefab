@@ -2284,6 +2284,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8314700b725f2e944b5daa02c626b924, type: 2}
   - {fileID: 11400000, guid: 9ef39e9ba84c598408058473e0a73da5, type: 2}
   - {fileID: 11400000, guid: ad2d407cc9660194bb9ad86c092cbddd, type: 2}
+  arrayOfStoryComms:
+  - {fileID: 11400000, guid: bf96ff1751760bd45bc20fe892315f81, type: 2}
+  - {fileID: 11400000, guid: 05e911e0a1b1b404a82e34662f5a4e7d, type: 2}
+  - {fileID: 11400000, guid: 6c21b9cc18492c44b9f39bb3d199ef31, type: 2}
+  - {fileID: 11400000, guid: 8178aea567ad956458d213f989a8d1f4, type: 2}
+  - {fileID: 11400000, guid: c55959091875e184682cc9ff5235d5f5, type: 2}
+  - {fileID: 11400000, guid: dc3ec82a530fda44780e4e4b35e9b83e, type: 2}
+  - {fileID: 11400000, guid: 7d524cf12111b3f4daf094d5805f77bc, type: 2}
+  - {fileID: 11400000, guid: e4fdd1c0fa4d6354bb6d7576b7b7a7b2, type: 2}
+  - {fileID: 11400000, guid: b95af7d8bf1427e4e8f98b3e0791dc72, type: 2}
+  - {fileID: 11400000, guid: 4e10f9114f0ff4f4eb4d2e425081337d, type: 2}
   arrayOfStoryHelp:
   - {fileID: 11400000, guid: 87941c60a33c1bc4f8d370777fe09842, type: 2}
   - {fileID: 11400000, guid: 2edd14c0e12bcb343aa3b8a0703f8f69, type: 2}
@@ -5465,7 +5476,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 11400000, guid: 15d3d285c373f774eaf6e263890e5fc7, type: 2}
+  debugTopicPool: {fileID: 11400000, guid: 41913f810f38de54a99fa06d99df0b6d, type: 2}
   numOfGearItems: -1
   numOfWorkers: 8
   bonusRenown: 0
@@ -5959,6 +5970,7 @@ MonoBehaviour:
   iconDefaultFontSize: 14
   iconFlashInterval: 0.05
   iconFontIncrement: 0.25
+  commsInterval: 1.5
   reviewMaxButtonSize: 20
   reviewButtonIncrement: 2
   reviewTimeInterval: 0.1
@@ -6185,7 +6197,7 @@ MonoBehaviour:
   popUpFixedScript: {fileID: 0}
   seedDev: 0
   autoRunTurns: 20
-  scenarioStartLevel: 4
+  scenarioStartLevel: 0
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1
@@ -6491,6 +6503,7 @@ MonoBehaviour:
   maxTopicTextLength: 150
   maxOptionTextLength: 40
   maxNumOfTopicStoryHelp: 2
+  maxTopicCommsLength: 150
   maxTopicLetterLength: 175
   maxLinkedIndexStory: 3
   numOfTopicsPerLevelStory: 10

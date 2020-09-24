@@ -13,9 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   listOfCampaignStories:
-  - {fileID: 11400000, guid: 84c1f765e992bc042ab1175b2b7fd9ad, type: 2}
   - {fileID: 11400000, guid: 598b4a284bd388e45840f26c708a40b7, type: 2}
-  - {fileID: 11400000, guid: d3cf84ac114de8f459287936865a58f3, type: 2}
   listOfFamilyStories:
   - {fileID: 11400000, guid: ea96f1cea39c38842b78e5b9729bec3c, type: 2}
   listOfHqStories:

@@ -3295,9 +3295,20 @@ public class TopicManager : MonoBehaviour
                 //type
                 switch (turnTopicSubType.name)
                 {
+                    case "StoryAlpha":
+                        //Comms decision topics
+                        data.uiType = TopicDecisionType.Comms;
+                        if (turnTopic.comms != null)
+                        {
+                            data.text = string.Format("ATTN: {0}, {1}{2}FRM: {3}, {4}{5}{6}{7}{8}{9}{10}",
+                                turnTopic.comms.textFrom, turnTopic.comms.textWhere, "\n", GameManager.i.playerScript.PlayerName, GameManager.i.cityScript.GetCity().tag, "\n", "\n",
+                                turnTopic.comms.textTop, "\n", "\n", turnTopic.comms.textBottom);
+                        }
+                        else { Debug.LogErrorFormat("Invalid comms (Null) for topic \"{0}\"", turnTopic.text); }
+                        break;
                     case "StoryBravo":
                         //Letter decision topics
-                        data.uiType = TopicDecisionType.Comms;
+                        data.uiType = TopicDecisionType.Letter;
                         if (turnTopic.letter != null)
                         {
                             data.text = string.Format("Dear {0}{1}{2}{3}{4}{5}{6}",

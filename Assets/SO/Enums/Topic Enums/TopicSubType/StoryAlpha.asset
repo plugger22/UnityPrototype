@@ -18,8 +18,8 @@ MonoBehaviour:
   priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   scope: {fileID: 11400000, guid: ccdcde3a2c12dea4d9cea8d00bb5bc18, type: 2}
   groupType: {fileID: 11400000, guid: 5d70d9b0339914f40ac4caee6d2886c9, type: 2}
-  isBoss: 1
+  isBoss: 0
   listOfSubSubType: []
   listOfCriteria: []
-  isDisabled: 1
+  isDisabled: 0
   minInterval: 8

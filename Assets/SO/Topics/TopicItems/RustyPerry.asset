@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: RustyPerry
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 66c332eaf3a78544696778ebf86004e9, type: 3}
-  tag: Rusty Perry<br>Living Dangerously
+  tag: Rusty Perry<br>Clown on the Edge
   descriptor: Rusty is an undercover Resistance operative working on LunaHub helping
     the Collective. You were friends at school
   pool: {fileID: 11400000, guid: 41913f810f38de54a99fa06d99df0b6d, type: 2}

@@ -14,6 +14,7 @@ MonoBehaviour:
   tag: 
   text: 
   letter: {fileID: 0}
+  comms: {fileID: 11400000, guid: c55959091875e184682cc9ff5235d5f5, type: 2}
   designNotes: storyLunaHub4
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
   subType: {fileID: 11400000, guid: bdf3a8a85780b674f81d87a4766c3b61, type: 2}

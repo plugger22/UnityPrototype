@@ -628,6 +628,7 @@ public class TopicUI : MonoBehaviour
             switch (data.uiType)
             {
                 case TopicDecisionType.Normal:
+                    #region Normal
                     //toggle off letter & comms panels
                     panelLetter.gameObject.SetActive(false);
                     panelComms.gameObject.SetActive(false);
@@ -717,8 +718,10 @@ public class TopicUI : MonoBehaviour
                     if (string.IsNullOrEmpty(data.imageTooltipDetails) == false)
                     { tooltipNormalImage.tooltipDetails = data.imageTooltipDetails; }
                     else { tooltipNormalImage.tooltipDetails = ""; }
+                    #endregion
                     break;
                 case TopicDecisionType.Letter:
+                    #region Letter
                     //toggle on letter background
                     panelLetter.gameObject.SetActive(true);
                     panelComms.gameObject.SetActive(false);
@@ -775,8 +778,10 @@ public class TopicUI : MonoBehaviour
                     if (string.IsNullOrEmpty(data.imageTooltipDetails) == false)
                     { tooltipLetterImage.tooltipDetails = data.imageTooltipDetails; }
                     else { tooltipLetterImage.tooltipDetails = ""; }
+                    #endregion
                     break;
                 case TopicDecisionType.Comms:
+                    #region Comms
                     //toggle on comms background
                     panelComms.gameObject.SetActive(true);
                     panelLetter.gameObject.SetActive(false);
@@ -842,6 +847,7 @@ public class TopicUI : MonoBehaviour
                     commsSplatterBottom.gameObject.SetActive(true);
                     //start interference line coroutine
                     commsCoroutine = StartCoroutine("CommsInterference");
+                    #endregion
                     break;
                 default: Debug.LogWarningFormat("Invalid data.uiType \"{0}\"", data.uiType); break;
             }
