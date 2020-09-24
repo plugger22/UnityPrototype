@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna3Opt3
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 3 Opt 3
-  tag: 
-  text: 
+  tag: Puzzled
+  text: What's Rusty to you?
   topic: {fileID: 11400000, guid: 95a4e00896e67244491ff1ecd1e2fd42, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: We're an item. Both of us are stuck on the Hub going nowhere. Rusty has
+    this wicked sense of humour and I'm sick of hurting people
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

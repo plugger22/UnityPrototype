@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyLunaHub6
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Rusty's Parents
   text: 
   letter: {fileID: 0}
   comms: {fileID: 11400000, guid: 7d524cf12111b3f4daf094d5805f77bc, type: 2}
@@ -48,7 +48,7 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 4
+  status: 0
   isCurrent: 0
   timerStart: 0
   timerRepeat: 0

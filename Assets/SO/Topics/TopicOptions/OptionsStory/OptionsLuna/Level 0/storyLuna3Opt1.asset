@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna3Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 3 Opt 1
-  tag: 
-  text: 
+  tag: Inquire
+  text: Why can't you talk to Rusty?
   topic: {fileID: 11400000, guid: 95a4e00896e67244491ff1ecd1e2fd42, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Increased security. Everybody watching everybody. The Hub isn't very
+    private, you know. Even the showers have two way Vid Feeds
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

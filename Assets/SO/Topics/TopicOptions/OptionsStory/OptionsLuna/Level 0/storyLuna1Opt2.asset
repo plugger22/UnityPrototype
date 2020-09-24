@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna1Opt2
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 1 Opt 2
-  tag: 
-  text: 
+  tag: Cautious
+  text: How do I know I can trust you?
   topic: {fileID: 11400000, guid: 31a143f5389093f47b6f9ad5cfe38d8a, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: 'You don''t. Rusty said that you were suspicious. Part of the deal I
+    suppose. Take a chance. I am. I''m dead if I get caught talking to you '
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: Unknown
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73></color>
   optionNumber: 2

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna3Opt2
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 3 Opt 2
-  tag: 
-  text: 
+  tag: Question
+  text: How much trouble is Rusty in?
   topic: {fileID: 11400000, guid: 95a4e00896e67244491ff1ecd1e2fd42, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: He's been marked down as a ring leader. Whether they'll want us to round
+    them up for interrogation or extermination I can't say
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

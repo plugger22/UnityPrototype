@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna1Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 1 Opt 1
-  tag: 
-  text: 
+  tag: Surprised
+  text: You're a Mercenary?
   topic: {fileID: 11400000, guid: 31a143f5389093f47b6f9ad5cfe38d8a, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Yeah, that's me. I work for a company on a rolling contract with [mega3].
+    Suppression is our speciality. Hard to rebel with broken legs
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: Unknown
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73></color>
   optionNumber: 1

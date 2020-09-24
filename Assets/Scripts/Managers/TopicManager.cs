@@ -3301,7 +3301,7 @@ public class TopicManager : MonoBehaviour
                         if (turnTopic.comms != null)
                         {
                             data.text = string.Format("ATTN: {0}, {1}{2}FRM: {3}, {4}{5}{6}{7}{8}{9}{10}",
-                                turnTopic.comms.textFrom, turnTopic.comms.textWhere, "\n", GameManager.i.playerScript.PlayerName, GameManager.i.cityScript.GetCity().tag, "\n", "\n",
+                                GameManager.i.playerScript.PlayerName, GameManager.i.cityScript.GetCity().tag, "\n", turnTopic.comms.textFrom, turnTopic.comms.textWhere, "\n", "\n",
                                 turnTopic.comms.textTop, "\n", "\n", turnTopic.comms.textBottom);
                         }
                         else { Debug.LogErrorFormat("Invalid comms (Null) for topic \"{0}\"", turnTopic.text); }
@@ -5739,7 +5739,7 @@ public class TopicManager : MonoBehaviour
         string checkedText = null;
         string colourCheckText = colourAlert; //highlight colour
         //no highlighting for storyBravo (Letter) texts
-        if (turnTopicSubType?.name.Equals("StoryBravo", StringComparison.Ordinal) == true)
+        if (turnTopicSubType?.name.Equals("StoryBravo", StringComparison.Ordinal) == true || turnTopicSubType?.name.Equals("StoryAlpha", StringComparison.Ordinal) == true)
         { isColourHighlighting = false; }
         //if validation run need dictionary of tags for analysis purposes
         Dictionary<string, int> dictOfTags = null;

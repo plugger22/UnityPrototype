@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textFrom: Rusty
   textWhere: Luna Hub
-  textTop: Hey, [player], long time no see. You're a city leader now and I'm stuck
-    here on a tin can in space. Wanna swap lives? That'd be great 'cause mine SUX
-  textBottom: There's trouble here. Work place deaths. Eclipse doesn't care. Mercs
-    on the Hub. I'm doing what I can to calm it down but it's not looking good
+  textTop: Hey, [first], long time no SEE. You're a city leader now and I'm stuck
+    here on a tin can in SPACE. Wanna swap lives? That'd be great 'cause mine SUX
+  textBottom: There's trouble here. Work place DEATHS. Eclipse doesn't care. Mercs
+    on the Hub. I'm doing what I can to CALM it down but it's not looking good

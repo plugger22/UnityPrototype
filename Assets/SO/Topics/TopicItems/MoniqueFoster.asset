@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: MoniqueFoster
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: d717241d8def069448743dd829d0a289, type: 3}
-  tag: Monique Foster<br>Kind hearted Killer
+  tag: Monique Foster<br>Troubled Conscience
   descriptor: Monique is a contracted 'troubleshooter' who is having second thoughts
     about her career in crowd control and death
   pool: {fileID: 11400000, guid: 41913f810f38de54a99fa06d99df0b6d, type: 2}

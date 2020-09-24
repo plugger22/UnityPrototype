@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna5Opt0
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 5 Opt 0
-  tag: 
-  text: 
+  tag: Protect
+  text: Surveil Rusty's Family
   topic: {fileID: 11400000, guid: da0328303e19c9c42ad9acdd8e515e1b, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -34,4 +34,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 0

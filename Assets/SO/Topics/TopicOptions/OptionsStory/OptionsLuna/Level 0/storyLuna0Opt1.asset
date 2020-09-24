@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna0Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 0 Opt 1
-  tag: 
-  text: 
+  tag: Anxious
+  text: What's with all the Deaths?
   topic: {fileID: 11400000, guid: 81b05d542b0264445abe6e2d25f5238f, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: '[mega3Corp] has got a backlog of ship orders. They''re pushing their
+    workforce in the Hub ''yards hard. Too hard. Tired people make mistakes'
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: Unknown
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73></color>
   optionNumber: 1

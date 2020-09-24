@@ -16,5 +16,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 598b4a284bd388e45840f26c708a40b7, type: 2}
   listOfFamilyStories:
   - {fileID: 11400000, guid: ea96f1cea39c38842b78e5b9729bec3c, type: 2}
+  - {fileID: 11400000, guid: 8228697ce0df2ef488e3cac23fef3557, type: 2}
   listOfHqStories:
   - {fileID: 11400000, guid: 47f56aa60531194459cb2f11432aecfc, type: 2}

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna0Opt2
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 0 Opt 2
-  tag: 
-  text: 
+  tag: Puzzled
+  text: Why have you contacted me?
   topic: {fileID: 11400000, guid: 81b05d542b0264445abe6e2d25f5238f, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I've lost my channel to [facR1]. Damn device broke. I thought of you
+    instead. I may need some help back on Earth
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: Unknown
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73></color>
   optionNumber: 2

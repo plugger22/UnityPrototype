@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyLunaHub2
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Dead Mercs
   text: 
   letter: {fileID: 0}
   comms: {fileID: 11400000, guid: 6c21b9cc18492c44b9f39bb3d199ef31, type: 2}
@@ -45,8 +45,8 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 4
-  isCurrent: 0
+  status: 0
+  isCurrent: 1
   timerStart: 0
   timerRepeat: 0
   timerWindow: 0

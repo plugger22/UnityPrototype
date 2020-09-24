@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna2Opt0
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 2 Opt 0
-  tag: 
-  text: 
+  tag: Question
+  text: What do the Collective want?
   topic: {fileID: 11400000, guid: fb14e9307f25b8742b7d94cef1dec9e2, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: What they've always wanted. Independence for Luna and the Hub with a
+    streak of meglomania thrown in for good measure. They're too ambitious
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: Unknown
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73></color>
   optionNumber: 0

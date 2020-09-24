@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna4Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 4 Opt 1
-  tag: 
-  text: 
+  tag: Block
+  text: Intercept any permit cancellations
   topic: {fileID: 11400000, guid: 37dc09216b327844085cbfb68bbb902c, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -34,4 +34,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

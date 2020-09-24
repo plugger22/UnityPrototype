@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna6Opt0
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 6 Opt 0
-  tag: 
-  text: 
+  tag: Concerned
+  text: Are you O.K?
   topic: {fileID: 11400000, guid: d71e30acdadf5e34590dfe6c329872aa, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -34,4 +34,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 3
+  optionNumber: 0

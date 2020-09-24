@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna1Opt3
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 1 Opt 3
-  tag: 
-  text: 
+  tag: Confused
+  text: Why are people dying?
   topic: {fileID: 11400000, guid: 31a143f5389093f47b6f9ad5cfe38d8a, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: '[mega3] is pushing them hard. Lots of ships to build in a hurry. Working
+    double shifts in ZeroG are a recipe for mistakes. Usually fatal'
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: Unknown
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73></color>
   optionNumber: 3

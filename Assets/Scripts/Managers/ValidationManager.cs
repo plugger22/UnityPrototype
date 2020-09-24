@@ -954,6 +954,8 @@ public class ValidationManager : MonoBehaviour
                                         CheckTextLength(topic.comms.textBottom, "ValidateTopics", "Comms", topic.comms.name, maxTopicCommsLength, true);
                                     }
                                     else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Missing Comms (Null) for topic \"{0}\"{1}", topicName, "\n"); }
+                                    if (topic.letter != null)
+                                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid Letter (Should be none) for topic \"{0}\"{1}", topicName, "\n"); }
                                     break;
                                 case "StoryBravo":
                                     //Letter Decision topics
@@ -963,6 +965,8 @@ public class ValidationManager : MonoBehaviour
                                         CheckTextLength(topic.letter.textBottom, "ValidateTopics", "Letter", topic.letter.name, maxTopicLetterLength, true);
                                     }
                                     else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Missing Letter (Null) for topic \"{0}\"{1}", topicName, "\n"); }
+                                    if (topic.comms != null)
+                                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid Comms (Should be none) for topic \"{0}\"{1}", topicName, "\n"); }
                                     break;
                                 default:
                                     //Normal Decision Topics
@@ -970,6 +974,8 @@ public class ValidationManager : MonoBehaviour
                                     //should be no letter
                                     if (topic.letter != null)
                                     { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Letter \"{0}\" present (shouldn't be) for topic \"{1}\"{2}", topic.letter.name, topicName, "\n"); }
+                                    if (topic.comms != null)
+                                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Comms \"{0}\" present (shouldn't be) for topic \"{1}\"{2}", topic.comms.name, topicName, "\n"); }
                                     break;
                             }
                             //check topic text tags
