@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 5 Opt 1
   tag: Forestall
-  text: Pearl Harbour local Permit Office
+  text: Pearl Harbour the local Permit Office
   topic: {fileID: 11400000, guid: da0328303e19c9c42ad9acdd8e515e1b, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -29,9 +29,9 @@ MonoBehaviour:
   news: 
   storyInfo: 
   storyTarget: {fileID: 11400000, guid: 5a3468da761b4674e983b731c73d3811, type: 2}
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  isValid: 0
-  textToDisplay: 
+  tooltipHeader: <color=#FFFFE0>Forestall</color>
+  tooltipMain: <color=#98FB98>Target (ANARCHIST, Kinetic gear)</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73>Pearl Harbour local Permit Office</color>
   optionNumber: 1
