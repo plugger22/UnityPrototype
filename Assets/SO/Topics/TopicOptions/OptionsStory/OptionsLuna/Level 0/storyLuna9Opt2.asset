@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna9Opt2
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 9 Opt 2
-  tag: 
-  text: 
+  tag: Insist
+  text: Rusty is my Friend. I care
   topic: {fileID: 11400000, guid: 0230759bb5238ca4f899c3b70a1f1815, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Do you? How about organising Rusty out of here then? If he stays on the
+    Hub he'll be running a big risk. More violence is coming. Pull him out
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

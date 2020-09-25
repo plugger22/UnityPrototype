@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna8Opt3
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 8 Opt 3
-  tag: 
-  text: 
+  tag: Ask
+  text: Do you want to Defect?
   topic: {fileID: 11400000, guid: 2954d53245cdba4498fcc7bdc8f21980, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Defect? To where? The Frontier? Mars? Lame idea. I'm a Merc. We don't
+    quit. Ever. I'm helping Rusty out 'cause I like the guy, that's all
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

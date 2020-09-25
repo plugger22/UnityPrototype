@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: It's part of their master plan to become the ruling centre for the solar
+    system that's outward from Luna. How's that ever going to happen?
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

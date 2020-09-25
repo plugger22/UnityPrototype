@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
+  m_Name: LunaCollective1
+  m_EditorClassIdentifier: 
+  tag: He who has the Hub...
+  sprite: {fileID: 0}
+  textTop: The Collective has a strong interest in the Hub. Whoever controls the Hub
+    controls the vital logistical backbone that supports Mars and the entire Frontier
+    zone
+  textMiddle: Workers rights are the wedge the Collective has chosen to pry open [mega3]'s
+    hold on the Hub. Without a compliant workforce, no ships would be built
+  textBottom: 'It''s no holds barred asymmetrical psyop warfare that has morphed into
+    open conflict recently with the death of several Mercs. Where will it go from
+    here? '
+  isKnown: 0

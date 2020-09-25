@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna8Opt0
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 8 Opt 0
-  tag: 
-  text: 
+  tag: Explain
+  text: It's not up to me
   topic: {fileID: 11400000, guid: 2954d53245cdba4498fcc7bdc8f21980, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: You work for the Resistance don't you? Rusty said that you did. If you
+    can't do it then find somebody who can. Use some damn initiative
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 3
+  optionNumber: 0

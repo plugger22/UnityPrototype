@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna9Opt3
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 9 Opt 3
-  tag: 
-  text: 
+  tag: Question
+  text: Do Mercs wear Sports Bras?
   topic: {fileID: 11400000, guid: 0230759bb5238ca4f899c3b70a1f1815, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Say what? Rusty said you're OK but I'm not so sure. You sound a little
+    creepy. Anyway, it doesn't matter what I wear. I do my job. Efficiently
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 2
+  optionNumber: 3

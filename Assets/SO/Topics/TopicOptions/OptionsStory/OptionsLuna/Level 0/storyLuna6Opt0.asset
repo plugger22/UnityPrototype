@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I've got a broken leg. One of the Mercs roughed me up. It's in a fastHealCast
+    and it gives me a couple of weeks off work to catch up on serialFlix
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 

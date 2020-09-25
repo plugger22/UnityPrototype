@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna7Opt2
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 7 Opt 2
-  tag: 
-  text: 
+  tag: Direct
+  text: Come back and sort it out yourself
   topic: {fileID: 11400000, guid: 54c595b64d596fa40be72f07236abfc7, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I've been on the Hub or Luna for over two years now. The Doc says that
+    my bones are now too mushy to return to Earth permanently
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

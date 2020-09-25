@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna8Opt2
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 8 Opt 2
-  tag: 
-  text: 
+  tag: Surprised
+  text: You broke his LEG?
   topic: {fileID: 11400000, guid: 2954d53245cdba4498fcc7bdc8f21980, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I break lots of legs. It's my job. Sometimes I break an arm for variety.
+    Or a head. You've got to be careful with heads, though. They crack
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 1
+  optionNumber: 2

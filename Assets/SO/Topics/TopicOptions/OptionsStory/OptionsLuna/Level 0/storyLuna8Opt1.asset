@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna8Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 8 Opt 1
-  tag: 
-  text: 
+  tag: Perplexed
+  text: Why are you helping Rusty?
   topic: {fileID: 11400000, guid: 2954d53245cdba4498fcc7bdc8f21980, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Because he is funny and cute and because I'm just a little tired of killing
+    innocent people. Is that a problem? Do I need to pay you a visit?
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

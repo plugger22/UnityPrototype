@@ -25,4 +25,8 @@ MonoBehaviour:
   listOfTargetsLevel2: []
   listOfTargetsLevel3: []
   listOfTargetsLevel4: []
-  listOfStoryHelp: []
+  listOfStoryHelp:
+  - {fileID: 11400000, guid: 4dc7ee6be067b154c8d79d83fb763d20, type: 2}
+  - {fileID: 11400000, guid: d84f4605efce26a4d8384d50d5346d01, type: 2}
+  - {fileID: 11400000, guid: 52c226f81fd7a0a45800752cf7bd0ea2, type: 2}
+  - {fileID: 11400000, guid: 230e01535f74ecd41abd0c43b39710e1, type: 2}

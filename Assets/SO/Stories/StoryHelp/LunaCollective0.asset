@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
+  m_Name: LunaCollective0
+  m_EditorClassIdentifier: 
+  tag: Luna Workers Collective
+  sprite: {fileID: 0}
+  textTop: The Collective are fighting for the independence of Luna and it's giant
+    orbiting space station, the Hub. There're now people on Luna who've been born
+    there. They call it home
+  textMiddle: Nobody wants to grant Luna independence. Not the three major power Bloc's
+    on Earth nor the MegaCorps, especially [mega3] who own the construction bays on
+    the Hub
+  textBottom: The Collective dreams of a day when Earth has been vassalised by an
+    independant Luna who rules the length and breadth of the Solar System
+  isKnown: 0

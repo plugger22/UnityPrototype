@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna9Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 9 Opt 1
-  tag: 
-  text: 
+  tag: Confused
+  text: He's safe with a split SKULL?
   topic: {fileID: 11400000, guid: 0230759bb5238ca4f899c3b70a1f1815, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: It's a minor split. They can glue it back together. He'll be fine. Another
+    24 hours with the interroBots and they would have broken him
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1

@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Name: storyParents3
   m_EditorClassIdentifier: 
   tag: Pod Sale
-  text: Unknown
+  text: 
   letter: {fileID: 11400000, guid: 36e8ebc1846841841adcc1cef06c86dd, type: 2}
+  comms: {fileID: 0}
   designNotes: storyParents3
   type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
   subType: {fileID: 11400000, guid: 9c0b06df8df43f641b72a6ea311f55a1, type: 2}
@@ -45,12 +46,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 4
+  status: 0
   isCurrent: 0
   timerStart: 0
   timerRepeat: 0
   timerWindow: 0
   turnsDormant: 0
-  turnsActive: 1
-  turnsLive: 1
+  turnsActive: 0
+  turnsLive: 0
   turnsDone: 0

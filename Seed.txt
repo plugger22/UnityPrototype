@@ -4671,3 +4671,56 @@ UnityEngine.Debug:LogWarning(Object)
 	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:426)
 	
+Dev seed 62997 -> Friday, 25 September 2020 9:35 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 19856 -> Friday, 25 September 2020 9:38 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 18679 -> Friday, 25 September 2020 9:41 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 26292 -> Friday, 25 September 2020 9:52 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 51829 -> Friday, 25 September 2020 9:53 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 59437 -> Friday, 25 September 2020 9:54 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 761 -> Friday, 25 September 2020 10:05 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 30107 -> Friday, 25 September 2020 10:50 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 40995 -> Friday, 25 September 2020 11:19 AM
+WARNING [Val] ValidateSO: MISMATCH on StoryHelp, array 65, assets 68 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(StoryHelp[]) (at Assets/Scripts/Managers/ValidationManager.cs:1998)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1966)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:832)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:385)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 10611 -> Friday, 25 September 2020 11:35 AM
+WARNING [Val] ValidateSO: MISMATCH on StoryHelp, array 65, assets 68 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(StoryHelp[]) (at Assets/Scripts/Managers/ValidationManager.cs:1998)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1966)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:832)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:385)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 10735 -> Friday, 25 September 2020 11:36 AM
+WARNING [Val] ValidateSO: MISMATCH on StoryHelp, array 65, assets 68 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(StoryHelp[]) (at Assets/Scripts/Managers/ValidationManager.cs:1998)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1966)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:832)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:385)
+	City seed 5678 -> London, United Kingdom
+
+Dev seed 16061 -> Friday, 25 September 2020 11:37 AM
+City seed 5678 -> London, United Kingdom

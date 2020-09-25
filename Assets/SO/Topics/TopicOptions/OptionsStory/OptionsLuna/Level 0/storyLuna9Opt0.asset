@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna9Opt0
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 9 Opt 0
-  tag: 
-  text: 
+  tag: Upset
+  text: I don't take orders from a Merc
   topic: {fileID: 11400000, guid: 0230759bb5238ca4f899c3b70a1f1815, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: No, you don't. I'm ASKING you to help a friend. Which was too much for
+    you, apparently. Rusty is on his own up here. He needs your help
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 3
+  optionNumber: 0

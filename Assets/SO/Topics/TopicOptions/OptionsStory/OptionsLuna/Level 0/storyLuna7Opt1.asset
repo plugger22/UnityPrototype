@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna7Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 7 Opt 1
-  tag: 
-  text: 
+  tag: Agree
+  text: I'll mention the Hub to my HQ
   topic: {fileID: 11400000, guid: 54c595b64d596fa40be72f07236abfc7, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: That'd be great. Ask them to smuggle up a new commsDevice for me while
+    they are at it. And a tree. Love to see a tree. A green one
   storyTarget: {fileID: 0}
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 0
+  optionNumber: 1
