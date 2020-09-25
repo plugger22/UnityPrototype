@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85cf7b0549cc9b4488032e3a9a4db0b2, type: 3}
+  m_Name: StoryLunaHub12
+  m_EditorClassIdentifier: 
+  textFrom: Rusty
+  textWhere: Luna Hub
+  textTop: '[mega3] exec''s are tearing their hair out. The Collective has gone for
+    rolling MALFUNCTIONS in the SHIPYARD bays. Stuff breaks down constantly. Stuff
+    that SHOULDN''T'
+  textBottom: It's really messing with [mega3] building SCHEDULE. Their pet Mercs
+    are roaming the HUB with MENACE in their eyes, looking for trouble. It ain't good
+    up here

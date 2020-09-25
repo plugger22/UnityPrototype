@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85cf7b0549cc9b4488032e3a9a4db0b2, type: 3}
+  m_Name: StoryLunaHub14
+  m_EditorClassIdentifier: 
+  textFrom: Rusty
+  textWhere: Luna Hub
+  textTop: Word from the Collective is that [mega3Corp] are sending an EXEC from the
+    HUB to attend a secret MEETING on Earth. In [city]. Where you are
+  textBottom: Can U find out who they are meeting with? The Collective's strategy
+    of rolling SHUTDOWNS of the 'yards is working but [mega3] are planning something
+    BAD in response

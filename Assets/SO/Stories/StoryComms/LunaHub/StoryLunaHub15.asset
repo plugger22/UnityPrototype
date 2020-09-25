@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85cf7b0549cc9b4488032e3a9a4db0b2, type: 3}
+  m_Name: StoryLunaHub15
+  m_EditorClassIdentifier: 
+  textFrom: Monique Foster
+  textWhere: Luna Hub
+  textTop: Message from Rusty to U, Resistance person. [mega3] are sending one of
+    their Exec's here on the HUB down to Earth for a MEETING planetside in [city]
+  textBottom: Rusty says it's important that you find out who they are meeting WITH.
+    Nobody tells us Merc's anything up here. It's up to you

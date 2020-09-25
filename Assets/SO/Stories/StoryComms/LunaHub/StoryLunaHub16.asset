@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85cf7b0549cc9b4488032e3a9a4db0b2, type: 3}
+  m_Name: StoryLunaHub16
+  m_EditorClassIdentifier: 
+  textFrom: Rusty
+  textWhere: Luna Hub
+  textTop: That picture you sent up of the people at the meeting down at [city]? NOBODY
+    knows who they are apart from the [mega3] Executive on the left
+  textBottom: Could you check your contacts and run it past them? Be good to know
+    what's going on. Man, am I getting sick of eating GOOP. Send icecream soonest!

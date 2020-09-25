@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
+  m_Name: storyLunaHub12
+  m_EditorClassIdentifier: 
+  tag: 
+  text: 
+  letter: {fileID: 0}
+  comms: {fileID: 11400000, guid: 6225fbed68ffd1648beea2bd48ab1c90, type: 2}
+  designNotes: storyLunaHub12
+  type: {fileID: 11400000, guid: faa574238a62d9841a47f8bffda01e77, type: 2}
+  subType: {fileID: 11400000, guid: bdf3a8a85780b674f81d87a4766c3b61, type: 2}
+  subSubType: {fileID: 0}
+  priority: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  group: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
+  listOfLinkedTopics:
+  - {fileID: 11400000, guid: 4bfce3edc83c6ef439445290dc6ac6e6, type: 2}
+  - {fileID: 11400000, guid: aabc60027ee7b5b44beff08e0724531b, type: 2}
+  listOfBuddyTopics:
+  - {fileID: 11400000}
+  - {fileID: 11400000, guid: c8015b10dbbb03843853eb826c88114d, type: 2}
+  linkedIndex: 1
+  levelIndex: 1
+  topicItem: {fileID: 11400000, guid: 228b03b52ee0f3a4293d42f1a068dbfd, type: 2}
+  listOfStoryHelp:
+  - {fileID: 11400000, guid: 4dc7ee6be067b154c8d79d83fb763d20, type: 2}
+  profile: {fileID: 11400000, guid: 8cccd51ddc9fd0b4c8b0b8a9abc43c93, type: 2}
+  listOfCriteria:
+  - {fileID: 11400000, guid: 0149fc4442e0c8441940141f428f1035, type: 2}
+  listOfIgnoreEffects: []
+  listOfOptions:
+  - {fileID: 11400000, guid: 4dec9c91fe1073c4ea293000a51ebd30, type: 2}
+  - {fileID: 11400000, guid: 94b864b2add72994e9581692529a21bb, type: 2}
+  - {fileID: 11400000, guid: 2531b3c0ca2d2604a84e654da1471075, type: 2}
+  - {fileID: 11400000, guid: cba7e2baa557f3e448d24e497a6530f5, type: 2}
+  isDisabled: 0
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  status: 0
+  isCurrent: 1
+  timerStart: 0
+  timerRepeat: 0
+  timerWindow: 0
+  turnsDormant: 0
+  turnsActive: 0
+  turnsLive: 0
+  turnsDone: 0
