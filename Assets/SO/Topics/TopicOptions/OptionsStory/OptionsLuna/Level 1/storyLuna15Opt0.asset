@@ -28,7 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: 
-  storyTarget: {fileID: 0}
+  storyTarget: {fileID: 11400000, guid: 447f97547603fec43a5c1086bf61fdc1, type: 2}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
