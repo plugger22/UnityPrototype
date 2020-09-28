@@ -2374,6 +2374,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4dc7ee6be067b154c8d79d83fb763d20, type: 2}
   - {fileID: 11400000, guid: d84f4605efce26a4d8384d50d5346d01, type: 2}
   - {fileID: 11400000, guid: 230e01535f74ecd41abd0c43b39710e1, type: 2}
+  - {fileID: 11400000, guid: e1e22ff985af08948b0d528b133f7c54, type: 2}
+  - {fileID: 11400000, guid: 2b116d064f4a11747bb7ee71a2d7e838, type: 2}
+  - {fileID: 11400000, guid: ef2ecb7b66f468544bcc4e4d5e779bba, type: 2}
+  - {fileID: 11400000, guid: 3787b37f5671a664bb6741638a08b4ac, type: 2}
   arrayOfNodeArcs:
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
