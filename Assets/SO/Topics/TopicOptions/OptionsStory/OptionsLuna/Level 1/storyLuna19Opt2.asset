@@ -27,7 +27,7 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: You could do that but I'd tell them about Rusty and You, WORM. Do you
+  storyInfo: You could do that but I'd tell them about Rusty and you, WORM. Do you
     want that? How about I tell you what to do and you shut up?
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown

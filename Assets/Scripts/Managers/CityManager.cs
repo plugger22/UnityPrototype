@@ -335,7 +335,7 @@ public class CityManager : MonoBehaviour
         string cityName = "Unknown";
         int scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex();
         if (scenarioIndex < GameManager.i.campaignScript.GetMaxScenarioIndex())
-        { cityName = GameManager.i.campaignScript.GetScenario(scenarioIndex + 1).city.name; }
+        { cityName = GameManager.i.campaignScript.GetScenario(scenarioIndex + 1).city.tag; }
         return cityName;
     }
 

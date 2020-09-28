@@ -11,13 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
   m_Name: LunaCollective2
   m_EditorClassIdentifier: 
-  tag: The Balance of Power
+  tag: Balance of Power
   sprite: {fileID: 21300000, guid: 0990750233d69384f832d111b8981353, type: 3}
-  textTop: On the face of it there is little chance of The Collective's dream of becoming
-    the controlling faction in the Solar System every  coming to fruition
-  textMiddle: However Luna and the Hub have developed into the Gateway to the system
-    and all space going ships are built in the Hub's 'yards. Luna provides the raw
-    materials to do so
-  textBottom: Add in a highly skilled, irreplacable, Luna based workforce and perhaps
-    it's the Collective who holds the key to the gateway
-  isKnown: 0
+  textTop: On the face of it there is little chance of the Collective's dream of becoming
+    the controlling faction in the Solar System ever coming to fruition
+  textMiddle: However Luna and the Hub have developed into the Gateway to the Solar
+    System. All space going ships are built in the Hub's 'yards while Luna provides
+    the raw materials to do so
+  textBottom: Add in a highly skilled, hard to replace, Luna based, workforce and
+    perhaps it's the Collective who holds the key to the gateway?
+  isKnown: 1

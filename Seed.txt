@@ -4739,3 +4739,138 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 34344 -> Friday, 25 September 2020 4:48 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 54400 -> Monday, 28 September 2020 2:45 PM
+City seed 765 -> New York, America
+
+Dev seed 38742 -> Monday, 28 September 2020 2:51 PM
+City seed 765 -> New York, America
+
+Dev seed 39246 -> Monday, 28 September 2020 3:19 PM
+City seed 765 -> New York, America
+
+Dev seed 30071 -> Monday, 28 September 2020 3:20 PM
+City seed 765 -> New York, America
+
+Dev seed 62731 -> Monday, 28 September 2020 3:31 PM
+City seed 765 -> New York, America
+WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6985)
+	<DisplayTopicOptions>c__Iterator1:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7746)
+	UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator)
+	TopicManager:DebugTestTopicOptions() (at Assets/Scripts/Managers/TopicManager.cs:7710)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1003)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6985)
+	<DisplayTopicOptions>c__Iterator1:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7746)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6985)
+	<DisplayTopicOptions>c__Iterator1:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7746)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6985)
+	<DisplayTopicOptions>c__Iterator1:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7746)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6985)
+	<DisplayTopicOptions>c__Iterator1:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7746)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6985)
+	<DisplayTopicOptions>c__Iterator1:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7746)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6985)
+	<DisplayTopicOptions>c__Iterator1:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7746)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6985)
+	<DisplayTopicOptions>c__Iterator1:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7746)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6985)
+	<DisplayTopicOptions>c__Iterator1:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7746)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6985)
+	<DisplayTopicOptions>c__Iterator1:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7746)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6985)
+	<DisplayTopicOptions>c__Iterator1:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7746)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6985)
+	<DisplayTopicOptions>c__Iterator1:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7746)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6985)
+	<DisplayTopicOptions>c__Iterator1:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7746)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6985)
+	<DisplayTopicOptions>c__Iterator1:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7746)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6985)
+	<DisplayTopicOptions>c__Iterator1:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7746)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6985)
+	<DisplayTopicOptions>c__Iterator1:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7746)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6985)
+	<DisplayTopicOptions>c__Iterator1:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7746)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6985)
+	<DisplayTopicOptions>c__Iterator1:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7746)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6985)
+	<DisplayTopicOptions>c__Iterator1:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7746)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid text (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	TopicManager:CheckTopicText(String, Boolean, Boolean, String) (at Assets/Scripts/Managers/TopicManager.cs:6985)
+	<DisplayTopicOptions>c__Iterator1:MoveNext() (at Assets/Scripts/Managers/TopicManager.cs:7746)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 20620 -> Monday, 28 September 2020 3:43 PM
+City seed 765 -> New York, America
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager+<DisplayTopicOptions>c__Iterator1.MoveNext () (at Assets/Scripts/Managers/TopicManager.cs:7747)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator)
+	TopicManager:DebugTestTopicOptions() (at Assets/Scripts/Managers/TopicManager.cs:7710)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1003)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager+<DisplayTopicOptions>c__Iterator1.MoveNext () (at Assets/Scripts/Managers/TopicManager.cs:7747)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator)
+	TopicManager:DebugTestTopicOptions() (at Assets/Scripts/Managers/TopicManager.cs:7710)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1003)
+	
+Dev seed 36956 -> Monday, 28 September 2020 3:44 PM
+City seed 765 -> New York, America

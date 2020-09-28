@@ -27,12 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Yeah, it is. [meg3Corp] are going to do something bad up here. We all
+  storyInfo: Yeah, it is. [mega3Corp] are going to do something bad up here. We all
     know it's coming but we have no idea what it is. Hey, you tried. Thanks
   storyTarget: {fileID: 0}
-  tooltipHeader: Unknown
+  tooltipHeader: <color=#FFFFE0>Perplexed</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
-  textToDisplay: <color=#EEFB73></color>
+  textToDisplay: <color=#EEFB73>Is it that important?</color>
   optionNumber: 3

@@ -14,10 +14,11 @@ MonoBehaviour:
   tag: Zero G Shipyards
   sprite: {fileID: 21300000, guid: 0990750233d69384f832d111b8981353, type: 3}
   textTop: Ships are built in ZeroG 'yards. The amount of energy required to enforce
-    gravity in the large enclosed spaces is prohibitive and the lack of gravity makes
-    construction easier
+    gravity in the large enclosed spaces is prohibitive and it's absence enables construction
+    to scale easily
   textMiddle: Robotics have advanced dramatically but the challenge of operating in
     a full zeroG environment restricts their use to supplementary actions
   textBottom: There are numerous ZeroG robo assistants available but for complicated
-    construction work there is no substitute for a skilled human in a 'Z' suit
-  isKnown: 0
+    construction work there is no substitute for a skilled, experienced, meat puppet
+    in a 'Z' suit
+  isKnown: 1

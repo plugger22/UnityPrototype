@@ -6319,8 +6319,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.cityScript.GetCity().name, colourEnd); }
-                            else { replaceText = GameManager.i.cityScript.GetCity().name; }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.cityScript.GetCity().tag, colourEnd); }
+                            else { replaceText = GameManager.i.cityScript.GetCity().tag; }
                         }
                         else { CountTextTag("city", dictOfTags); }
                         break;
@@ -6329,8 +6329,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}'s</b>{2}", colourCheckText, GameManager.i.cityScript.GetCity().name, colourEnd); }
-                            else { replaceText = string.Format("{0}'s", GameManager.i.cityScript.GetCity().name); }
+                            { replaceText = string.Format("{0}<b>{1}'s</b>{2}", colourCheckText, GameManager.i.cityScript.GetCity().tag, colourEnd); }
+                            else { replaceText = string.Format("{0}'s", GameManager.i.cityScript.GetCity().tag); }
                         }
                         else { CountTextTag("citys", dictOfTags); }
                         break;
@@ -7741,6 +7741,11 @@ public class TopicManager : MonoBehaviour
                 {
                     topicText = string.Format("<size=80%>{0}Dear {1}{2}{3}{4}{5}{6}{7}{8}</size>", colourNormal, CheckTopicText(topic.letter.textDear), "\n", "\n",
                         CheckTopicText(topic.letter.textTop), "\n", "\n", CheckTopicText(topic.letter.textBottom), colourEnd);
+                }
+                else if (topic.comms != null)
+                {
+                    topicText = string.Format("<size=80%>{0}FRM: {1}, {2}{3}{4}{5}{6}{7}{8}{9}</size>", colourNormal, topic.comms.textFrom, topic.comms.textWhere, "\n", "\n",
+                        CheckTopicText(topic.comms.textTop), "\n", "\n", CheckTopicText(topic.comms.textBottom), colourEnd);
                 }
                 else
                 { topicText = string.Format("<size=80%>{0}{1}{2}</size>", colourNormal, CheckTopicText(topic.text), colourEnd); }
