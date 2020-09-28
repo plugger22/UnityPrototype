@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna12Opt3
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 12 Opt 3
-  tag: 
-  text: 
+  tag: Curious
+  text: Aren't you sleeping with a Merc?
   topic: {fileID: 11400000, guid: 9864a418e346f2746862ea9e5184dcfb, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Well, yes, I am. When we get the opportunity which isn't often. She's
+    a sweet girl who breaks legs and heads. Don't tell anyone
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 2
+  optionNumber: 3

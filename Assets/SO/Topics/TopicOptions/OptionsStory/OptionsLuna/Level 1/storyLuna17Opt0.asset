@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna17Opt0
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 17 Opt 0
-  tag: 
-  text: 
+  tag: Indifferent
+  text: Mystery Men are Overrated
   topic: {fileID: 11400000, guid: dd07fa8f3803dc743ac45e0d87892f58, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Who doesn't like a mystery? What the heck happened the person I used
+    to know? The one who would tear any mystery apart at the seams?
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 3
+  optionNumber: 0

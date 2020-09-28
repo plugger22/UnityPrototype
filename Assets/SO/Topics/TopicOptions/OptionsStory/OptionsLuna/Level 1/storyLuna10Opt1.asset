@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna10Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 10 Opt 1
-  tag: 
-  text: 
+  tag: Canvas
+  text: What do you think [mega3] will do?
   topic: {fileID: 11400000, guid: 7d7bb5d2e7bedf64398ec20c82081fb9, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: They're ruthless. All they care about are that we keep their shipyards
+    humming and their river of credits flowing
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 0
+  optionNumber: 1

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna11Opt2
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 11 Opt 2
-  tag: 
-  text: 
+  tag: Curious
+  text: What do they feed you up there?
   topic: {fileID: 11400000, guid: e651023620405b44988212c4804a46ef, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: The food on the Hub is pretty good. Steak and dessert most nights. Fake
+    stuff, of course, but good quality none the less. They feed the workers goop
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 1
+  optionNumber: 2

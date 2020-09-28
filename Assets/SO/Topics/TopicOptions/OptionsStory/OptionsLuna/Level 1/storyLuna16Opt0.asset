@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna16Opt0
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 16 Opt 0
-  tag: 
-  text: 
+  tag: Amazed
+  text: Goop is that bad, huh?
   topic: {fileID: 11400000, guid: 9f367020c73fe41479886ac2cbfcaaf2, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Next time you vomit, put it in a bowl, spray paint it grey and mix in
+    some washing detergent just for fun. That's Goop, cusine a-la-Hub
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>

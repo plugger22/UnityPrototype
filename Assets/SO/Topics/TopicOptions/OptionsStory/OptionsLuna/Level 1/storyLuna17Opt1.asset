@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna17Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 17 Opt 1
-  tag: 
-  text: 
+  tag: Excuse
+  text: 'It was raining '
   topic: {fileID: 11400000, guid: dd07fa8f3803dc743ac45e0d87892f58, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Wow! That's OK then. No point in getting your toes wet for poor 'ole
+    Rusty. Wait until summer when it's nice and warm. Take your time. Relax
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 0
+  optionNumber: 1

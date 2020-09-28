@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna10Opt0
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 10 Opt 0
-  tag: 
-  text: 
+  tag: Caution
+  text: Don't do anything stupid
   topic: {fileID: 11400000, guid: 7d7bb5d2e7bedf64398ec20c82081fb9, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I'm undercover. Do that enough and stupid is ground out of you by the
+    constant stress. I used to laugh at my own jokes, now I can't even remember them
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>

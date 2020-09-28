@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyLunaHub10
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Dead Head
   text: 
   letter: {fileID: 0}
   comms: {fileID: 11400000, guid: 7f030e7dbb3c68641aefc4e81a39e176, type: 2}

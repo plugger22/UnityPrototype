@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna13Opt0
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 13 Opt 0
-  tag: 
-  text: 
+  tag: Query
+  text: What will [mega3] do next?
   topic: {fileID: 11400000, guid: c8015b10dbbb03843853eb826c88114d, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Don't know. Nothing good. I'm starting to think that the dream of future
+    together with me and Rusty might not be possible. We're both at risk
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 3
+  optionNumber: 0

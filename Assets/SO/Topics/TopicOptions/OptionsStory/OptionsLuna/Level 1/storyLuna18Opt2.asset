@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna18Opt2
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 18 Opt 0
-  tag: 
-  text: 
+  tag: Indifferent
+  text: Mystery man is still a Mystery
   topic: {fileID: 11400000, guid: a2d5530de155d0145884fd2430204e38, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Doesn't matter much to me either but Rusty thought it was important to
+    know. Too late now. Whatever's coming can't be changed
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 1
+  optionNumber: 2

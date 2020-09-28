@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna11Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 11 Opt 1
-  tag: 
-  text: 
+  tag: Grateful
+  text: Thanks for helping Rusty out
   topic: {fileID: 11400000, guid: e651023620405b44988212c4804a46ef, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Rusty and I were thinking that when this is over we might build a shack
+    in some quiet Luna crater and pump out some junior Mercs
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 0
+  optionNumber: 1

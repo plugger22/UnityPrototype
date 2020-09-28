@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna18Opt3
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 18 Opt 0
-  tag: 
-  text: 
+  tag: Amazed
+  text: Rusty wants to start a Family?
   topic: {fileID: 11400000, guid: a2d5530de155d0145884fd2430204e38, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: He does. With me. On Luna. There are craters out the back of the main
+    settlement that you can buy cheap if you want to homestead
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 2
+  optionNumber: 3

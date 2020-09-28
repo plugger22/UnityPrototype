@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna17Opt2
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 17 Opt 2
-  tag: 
-  text: 
+  tag: Brag
+  text: I can count three Trees from here
   topic: {fileID: 11400000, guid: dd07fa8f3803dc743ac45e0d87892f58, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Good for you. All I can see out the window is black space. Who decided
+    space should be black? I'd have made it a warm blue. Like the sky
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 1
+  optionNumber: 2

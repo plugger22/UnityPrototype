@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna13Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 13 Opt 1
-  tag: 
-  text: 
+  tag: Cautious
+  text: Are the malfunctions dangerous?
   topic: {fileID: 11400000, guid: c8015b10dbbb03843853eb826c88114d, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: For us, maybe. The workers know how the Hub ticks whereas we haven't
+    been here long enough to figure it out. Stupid mistakes can get you killed
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 0
+  optionNumber: 1

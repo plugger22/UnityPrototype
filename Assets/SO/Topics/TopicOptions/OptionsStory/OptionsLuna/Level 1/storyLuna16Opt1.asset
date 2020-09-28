@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna16Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 16 Opt 1
-  tag: 
-  text: 
+  tag: Bad news
+  text: Sorry, nothing but blanks down here
   topic: {fileID: 11400000, guid: 9f367020c73fe41479886ac2cbfcaaf2, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Ahhhh! That's not good. I was hoping you'd know somebody who'd  have
+    the answers. That's what's wrong with life today, nobody knows anything
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 0
+  optionNumber: 1

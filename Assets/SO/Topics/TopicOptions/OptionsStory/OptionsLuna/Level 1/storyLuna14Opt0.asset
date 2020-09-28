@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna14Opt0
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 14 Opt 0
-  tag: 
-  text: 
+  tag: Tail
+  text: Covertly follow Exec to the Meeting
   topic: {fileID: 11400000, guid: 4bfce3edc83c6ef439445290dc6ac6e6, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -34,4 +34,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 3
+  optionNumber: 0

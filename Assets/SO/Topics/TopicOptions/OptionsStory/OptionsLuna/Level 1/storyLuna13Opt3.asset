@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna13Opt3
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 13 Opt 3
-  tag: 
-  text: 
+  tag: Curious
+  text: Do you like you being a Merc?
   topic: {fileID: 11400000, guid: c8015b10dbbb03843853eb826c88114d, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Love it. Greatest job in the system. Where else can you break legs and
+    get paid for it? Although I'm not happy about killing people. It can get ugly
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 2
+  optionNumber: 3

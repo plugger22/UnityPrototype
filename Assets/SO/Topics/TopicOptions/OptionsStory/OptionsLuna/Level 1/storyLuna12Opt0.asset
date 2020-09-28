@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna12Opt0
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 12 Opt 0
-  tag: 
-  text: 
+  tag: Puzzled
+  text: Why doesn't [mega3] fire everybody?
   topic: {fileID: 11400000, guid: 9864a418e346f2746862ea9e5184dcfb, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: They could do that but then who would build their ships for them? ZeroG
+    riggers and 'yard monkeys don't grow on trees. The robots aren't there yet
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 3
+  optionNumber: 0

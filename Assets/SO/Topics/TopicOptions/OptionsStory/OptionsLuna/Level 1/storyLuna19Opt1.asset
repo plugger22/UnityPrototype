@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna19Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 19 Opt 1
-  tag: 
-  text: 
+  tag: Reassure
+  text: Tell Rusty that I did my best
   topic: {fileID: 11400000, guid: fde8f48d27ad9b6498a32c77ea6f3dff, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Oh, sure. You tried REALLY REALLY hard. Did you even THINK about it?
+    Go bleat to somebody else and stop wasting my time
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 0
+  optionNumber: 1

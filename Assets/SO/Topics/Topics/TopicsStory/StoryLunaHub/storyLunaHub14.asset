@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyLunaHub14
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Secret Meeting
   text: 
   letter: {fileID: 0}
   comms: {fileID: 11400000, guid: 3e289952d2c614b49afd2167a70a080a, type: 2}

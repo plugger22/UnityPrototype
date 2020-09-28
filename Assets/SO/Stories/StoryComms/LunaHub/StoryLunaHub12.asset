@@ -13,9 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textFrom: Rusty
   textWhere: Luna Hub
-  textTop: '[mega3] exec''s are tearing their hair out. The Collective has gone for
-    rolling MALFUNCTIONS in the SHIPYARD bays. Stuff breaks down constantly. Stuff
-    that SHOULDN''T'
+  textTop: '[mega3] exec''s are frantic. The Collective has gone for rolling MALFUNCTIONS
+    in the ''yards bays. Stuff breaks down constantly. Stuff that SHOULDN''T'
   textBottom: It's really messing with [mega3] building SCHEDULE. Their pet Mercs
     are roaming the HUB with MENACE in their eyes, looking for trouble. It ain't good
     up here
