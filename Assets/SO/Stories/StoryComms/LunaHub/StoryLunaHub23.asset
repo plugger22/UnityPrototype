@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85cf7b0549cc9b4488032e3a9a4db0b2, type: 3}
+  m_Name: StoryLunaHub23
+  m_EditorClassIdentifier: 
+  textFrom: Monique Foster
+  textWhere: Luna Hub
+  textTop: I've grabbed Rusty and shoved him into an AIR VENT. He was about to be
+    WAXXED. They are killing anyone to do with the Collective
+  textBottom: Don't worry. I'll make sure that he's fed and pass his messages  onto
+    U. He'll have to STAY in the VENT until it's safe to shuttle down to Luna

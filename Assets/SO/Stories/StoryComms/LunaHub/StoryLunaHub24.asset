@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85cf7b0549cc9b4488032e3a9a4db0b2, type: 3}
+  m_Name: StoryLunaHub24
+  m_EditorClassIdentifier: 
+  textFrom: Rusty
+  textWhere: Luna Hub
+  textTop: I'm going Ape CRAZY stuck here in the air vents. This is no place for man
+    or woman. It's CLAUSTROPHOBIC and NOISY from the extractor fans
+  textBottom: I've given some footage of the MASSACRE to the Merc. She's downloading
+    it to U. Can you see that it's gets on the 'casts? People need to KNOW

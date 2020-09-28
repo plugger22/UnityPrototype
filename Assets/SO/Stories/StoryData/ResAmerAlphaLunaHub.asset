@@ -26,7 +26,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e072f1dbe7d94824dbe2d46366d94f2f, type: 2}
   - {fileID: 11400000, guid: b00275b0bdf15c740853936cdb0d3a7b, type: 2}
   - {fileID: 11400000, guid: 393e3625420ffac4eb78d2c5fa651586, type: 2}
-  listOfTargetsLevel2: []
+  listOfTargetsLevel2:
+  - {fileID: 11400000, guid: 79c09b586cedf204a90c7eb9b9caa816, type: 2}
+  - {fileID: 11400000, guid: 59b24089d540d7641b88cd8d3619953d, type: 2}
+  - {fileID: 11400000, guid: 5981edc328ea2b74bbc6a7347c8ae355, type: 2}
+  - {fileID: 11400000, guid: 7159b794fbfc03440bfae147bb733f3c, type: 2}
   listOfTargetsLevel3: []
   listOfTargetsLevel4: []
   listOfStoryHelp:
