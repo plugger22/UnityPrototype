@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna23Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 23 Opt 1
-  tag: 
-  text: 
+  tag: Curious
+  text: How long will he have to VENT it for?
   topic: {fileID: 11400000, guid: 60c4c5f6da8b39048ba3510c2d532796, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Hard to say. I may be able to organise a deal with a shuttle crew but
+    it'll take time. The entire Hub is in lockdown which makes things tough
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 0
+  optionNumber: 1

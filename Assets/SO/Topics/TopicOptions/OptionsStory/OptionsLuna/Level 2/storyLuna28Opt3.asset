@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna28Opt3
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 28 Opt 3
-  tag: 
-  text: 
+  tag: Curious
+  text: How's he coping in the Vent?
   topic: {fileID: 11400000, guid: b6ea93aef1a3d6a45bb25813e505fefc, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: He's not. He's both deaf and chronically constipated by now. But there's
+    no choice. He has to stay there. He's toast if they spot him
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 2
+  optionNumber: 3

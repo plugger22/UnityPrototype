@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna23Opt2
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 23 Opt 2
-  tag: 
-  text: 
+  tag: Concerned
+  text: Are they actively looking for him?
   topic: {fileID: 11400000, guid: 60c4c5f6da8b39048ba3510c2d532796, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Yes. They've ID'd all the bodies and Rusty is the only one on their list
+    that they didn't get. They know that he's still here on the Hub. Hiding
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 1
+  optionNumber: 2

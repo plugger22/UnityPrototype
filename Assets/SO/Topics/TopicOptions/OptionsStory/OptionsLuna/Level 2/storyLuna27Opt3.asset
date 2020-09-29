@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna27Opt3
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 27 Opt 3
-  tag: 
-  text: 
+  tag: Resassure
+  text: Hang in there. Insects are resiliant
   topic: {fileID: 11400000, guid: fffdfa160024c5c48abbc466d84a65d1, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: What? Hang in where? The air vent? Like a Bat? Upside down? Are you nuts?
+    Every insect I've ever trod on has been SQUASHED. Do you even care?
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 2
+  optionNumber: 3

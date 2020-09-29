@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna29Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 29 Opt 1
-  tag: 
-  text: 
+  tag: Reassure
+  text: Tell Rusty to think Positive
   topic: {fileID: 11400000, guid: 92796341ebca4a246a20648aa97f6c86, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Yeah, he'll appreciate your advice. Lying down in a narrow air vent for
+    days on end listening to a wall of noise isn't a life enhancing experience
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 0
+  optionNumber: 1

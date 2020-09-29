@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna28Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 28 Opt 1
-  tag: 
-  text: 
+  tag: Concerned
+  text: What if you get caught?
   topic: {fileID: 11400000, guid: b6ea93aef1a3d6a45bb25813e505fefc, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: We'll I'd be executed for aiding and abetting and Rusty would probably
+    starve to death in the world's noisiest air vent
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 0
+  optionNumber: 1

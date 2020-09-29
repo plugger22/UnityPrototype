@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna21Opt0
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 21 Opt 0
-  tag: 
-  text: 
+  tag: Shocked
+  text: You MURDERED innocent people?
   topic: {fileID: 11400000, guid: 8c26331ff4d8b4141a06e69fc30e38b5, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: It's my job. I do what I'm told. I don't like doing it and, if I can
+    work it out with Rusty, I'm going to hang up my Merc badge and start a family
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 3
+  optionNumber: 0

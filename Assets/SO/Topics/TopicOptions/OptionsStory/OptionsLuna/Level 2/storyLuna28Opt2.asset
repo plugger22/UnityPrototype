@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna28Opt2
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 28 Opt 2
-  tag: 
-  text: 
+  tag: Motivate
+  text: You're Rusty's only hope
   topic: {fileID: 11400000, guid: b6ea93aef1a3d6a45bb25813e505fefc, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Hope is wonderful thing. It's him who's given me hope. I'd be RIPPING
+    eyeballs out just for fun if it wasn't for Rusty. He's saved me from myself
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 1
+  optionNumber: 2

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna20Opt3
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 20 Opt 3
-  tag: 
-  text: 
+  tag: Curious
+  text: When did this happen?
   topic: {fileID: 11400000, guid: 5dc62cd32e7012349a60d2a56de6e890, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Hours ago. The Mercs are still collecting bodies and dragging them off
+    to the Incinerator. There's too many of them to blast out the airlocks
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 2
+  optionNumber: 3

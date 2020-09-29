@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna20Opt2
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 20 Opt 2
-  tag: 
-  text: 
+  tag: Perplexed
+  text: Don't they NEED the Workers?
   topic: {fileID: 11400000, guid: 5dc62cd32e7012349a60d2a56de6e890, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: They do and they have been very careful not to kill anyone who is irreplacable.
+    A lot of the others, though, you could train up a replacement quick
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 1
+  optionNumber: 2

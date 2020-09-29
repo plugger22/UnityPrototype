@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna22Opt3
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 22 Opt 3
-  tag: 
-  text: 
+  tag: Ask
+  text: Is there a toilet in the Air Vent?
   topic: {fileID: 11400000, guid: 767b6328907263642b3f4a971660c45a, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: No, there isn't. I'm not sure what I'm going to do. How long can you
+    be constipated for before you blow apart? Could you look it up for me?
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 2
+  optionNumber: 3

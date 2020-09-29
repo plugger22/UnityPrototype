@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna25Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 25 Opt 1
-  tag: 
-  text: 
+  tag: Operator
+  text: Covertly swap footage for NewsCast
   topic: {fileID: 11400000, guid: 745e2b755d300dc46a6469a2a670e814, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -34,4 +34,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 0
+  optionNumber: 1

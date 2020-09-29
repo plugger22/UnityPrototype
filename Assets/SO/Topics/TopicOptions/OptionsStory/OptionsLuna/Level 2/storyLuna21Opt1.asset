@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna21Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 21 Opt 1
-  tag: 
-  text: 
+  tag: Worried
+  text: Did Rusty make it?
   topic: {fileID: 11400000, guid: 8c26331ff4d8b4141a06e69fc30e38b5, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: He's safe. Luckily he had enough sense to hide just before it went down.
+    It's that sixth sense of his. He can't SEE the future but he can SENSE it
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 0
+  optionNumber: 1

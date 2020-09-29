@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna29Opt3
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 29 Opt 3
-  tag: 
-  text: 
+  tag: Suggest
+  text: Crawl in there and give him a Cuddle
   topic: {fileID: 11400000, guid: 92796341ebca4a246a20648aa97f6c86, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: There's only enough room for one person to lie down. Two of us would
+    get jammed. The air would back up and an alarm would trigger
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 2
+  optionNumber: 3

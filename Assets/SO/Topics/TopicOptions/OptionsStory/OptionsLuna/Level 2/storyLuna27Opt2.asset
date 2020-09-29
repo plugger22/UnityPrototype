@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna27Opt2
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 27 Opt 2
-  tag: 
-  text: 
+  tag: Curious
+  text: How's your Constipation going?
   topic: {fileID: 11400000, guid: fffdfa160024c5c48abbc466d84a65d1, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: My belly looks like I'm about to give BIRTH. I haven't been to the toilet
+    for a REALLY long time. I'm going to die from TOXIC poisoning soon
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 1
+  optionNumber: 2

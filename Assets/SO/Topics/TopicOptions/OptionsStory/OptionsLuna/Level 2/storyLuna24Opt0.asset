@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna24Opt0
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 24 Opt 0
-  tag: 
-  text: 
+  tag: Hacker
+  text: Splice footage into NewsCast
   topic: {fileID: 11400000, guid: 349239f287fb6b44da219d70ece9413d, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -34,4 +34,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 3
+  optionNumber: 0

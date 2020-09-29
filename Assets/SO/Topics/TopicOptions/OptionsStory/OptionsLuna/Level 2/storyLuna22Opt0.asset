@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna22Opt0
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 22 Opt 0
-  tag: 
-  text: 
+  tag: Dubious
+  text: Can you trust the Merc?
   topic: {fileID: 11400000, guid: 767b6328907263642b3f4a971660c45a, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Yep. She likes me. I like her. We'll probably get together once this
+    is all over and do stuff. Like make kids and start digging our own Luna mine
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 3
+  optionNumber: 0

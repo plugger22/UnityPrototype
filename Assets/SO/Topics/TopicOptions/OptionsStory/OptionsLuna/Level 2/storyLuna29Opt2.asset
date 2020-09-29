@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna29Opt2
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 29 Opt 2
-  tag: 
-  text: 
+  tag: Curious
+  text: Can you chew your own arm off?
   topic: {fileID: 11400000, guid: 92796341ebca4a246a20648aa97f6c86, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: That's SICK. Why are you even thinking that? But to answer your question,
+    yes, it's doable. We locked a guy up once and didn't feed him for weeks
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 1
+  optionNumber: 2

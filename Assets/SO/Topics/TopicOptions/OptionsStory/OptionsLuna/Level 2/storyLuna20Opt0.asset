@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna20Opt0
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 20 Opt 0
-  tag: 
-  text: 
+  tag: Shocked
+  text: The Mercs went on a Killing Spree?
   topic: {fileID: 11400000, guid: 5dc62cd32e7012349a60d2a56de6e890, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Yeah. Sick, huh? I've counted over two dozen bodies and that's just the
+    ones I've seen. Who knows how many they've gunned down in cold blood?
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
