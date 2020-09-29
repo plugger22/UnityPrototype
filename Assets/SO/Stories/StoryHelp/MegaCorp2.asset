@@ -15,9 +15,9 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 0990750233d69384f832d111b8981353, type: 3}
   textTop: Whenever a MegaCorp steps outside the boundaries of acceptable behaviour
     there is a general rule applied. Does their action threaten others?
-  textMiddle: If another MegaCorp of an Earth based power Bloc comes under the gun
-    because of a massacre, for instance, then it is a big deal and is treated as such
+  textMiddle: If another MegaCorp or an Earth based power Bloc comes under the gun
+    because of a massacre, for instance, then it's a big deal and is treated as such
   textBottom: However if nobody important is threatened or, even worse, if the massacre
     aids a power Bloc, for example, in their goals then it's just part of the rich
     tapestry of everyday business
-  isKnown: 0
+  isKnown: 1

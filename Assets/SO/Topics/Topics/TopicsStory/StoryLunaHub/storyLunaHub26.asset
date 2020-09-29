@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyLunaHub26
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Stuck
   text: 
   letter: {fileID: 0}
   comms: {fileID: 11400000, guid: 803453325c00d9c43beff5acd6a7f340, type: 2}

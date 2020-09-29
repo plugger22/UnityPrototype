@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyLunaHub21
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Massacre
   text: 
   letter: {fileID: 0}
   comms: {fileID: 11400000, guid: 8d423ead9f9c34540b47b515bbef1be1, type: 2}

@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyLunaHub22
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Hiding
   text: 
   letter: {fileID: 0}
   comms: {fileID: 11400000, guid: c8b75b58404b0a44b875fe75722ced4a, type: 2}

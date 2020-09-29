@@ -96,12 +96,10 @@ public class Topic : ScriptableObject
 
     public void OnEnable()
     {
-        //no letter or comms, then should be text and tag present
-        if (letter == null && comms == null )
-        {
-            Debug.AssertFormat(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty) for {0}", name);
-            Debug.AssertFormat(string.IsNullOrEmpty(text) == false, "Invalid text (Null or Empty) for {0}", name);
-        }
+        Debug.AssertFormat(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty) for {0}", name);
+        //no letter or comms, then should be text present
+        if (letter == null && comms == null)
+        { Debug.AssertFormat(string.IsNullOrEmpty(text) == false, "Invalid text (Null or Empty) for {0}", name); }
         else
         {
             //letter or comms present, should be no text

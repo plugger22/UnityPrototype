@@ -6914,7 +6914,7 @@ public class TopicManager : MonoBehaviour
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, factionName, colourEnd); }
                             else { replaceText = factionName; }
                         }
-                        else { CountTextTag("facR1Hq", dictOfTags); }
+                        else { CountTextTag("facR1", dictOfTags); }
                         break;
                     case "facR2":
                         //Resistance Eurasia faction 'Eurasia HQ'
@@ -6925,7 +6925,7 @@ public class TopicManager : MonoBehaviour
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, factionName, colourEnd); }
                             else { replaceText = factionName; }
                         }
-                        else { CountTextTag("facR2Hq", dictOfTags); }
+                        else { CountTextTag("facR2", dictOfTags); }
                         break;
                     case "facR3":
                         //Resistance Chinock faction 'Chinock HQ'
@@ -6936,7 +6936,40 @@ public class TopicManager : MonoBehaviour
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, factionName, colourEnd); }
                             else { replaceText = factionName; }
                         }
-                        else { CountTextTag("facR3Hq", dictOfTags); }
+                        else { CountTextTag("facR3", dictOfTags); }
+                        break;
+                    case "bloc1":
+                        //power bloc -> 'Americon'
+                        if (isValidate == false)
+                        {
+                            string factionName = GameManager.i.globalScript.tagResFactionOne;
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, factionName, colourEnd); }
+                            else { replaceText = factionName; }
+                        }
+                        else { CountTextTag("bloc1", dictOfTags); }
+                        break;
+                    case "bloc2":
+                        //power bloc -> 'Eurasia'
+                        if (isValidate == false)
+                        {
+                            string factionName = GameManager.i.globalScript.tagResFactionTwo;
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, factionName, colourEnd); }
+                            else { replaceText = factionName; }
+                        }
+                        else { CountTextTag("bloc2", dictOfTags); }
+                        break;
+                    case "bloc3":
+                        //power bloc -> 'Chinock'
+                        if (isValidate == false)
+                        {
+                            string factionName = GameManager.i.globalScript.tagResFactionThree;
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, factionName, colourEnd); }
+                            else { replaceText = factionName; }
+                        }
+                        else { CountTextTag("bloc3", dictOfTags); }
                         break;
                     case "hub":
                         //Luna space station 'The Hub'

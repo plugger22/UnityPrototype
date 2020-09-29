@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: storyLuna24Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 24 Opt 1
-  tag: Blogger
+  tag: Sidestep
   text: Broadcast Footage on a Pirate 'Cast
   topic: {fileID: 11400000, guid: 349239f287fb6b44da219d70ece9413d, type: 2}
   isPreferredByHQ: 0

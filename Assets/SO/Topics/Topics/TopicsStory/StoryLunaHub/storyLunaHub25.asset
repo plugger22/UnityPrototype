@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyLunaHub25
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Footage
   text: 
   letter: {fileID: 0}
   comms: {fileID: 11400000, guid: c043953f13ab3b847b6bd6eaac5ed6bb, type: 2}
