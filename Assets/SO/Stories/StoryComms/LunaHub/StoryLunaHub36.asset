@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85cf7b0549cc9b4488032e3a9a4db0b2, type: 3}
+  m_Name: StoryLunaHub36
+  m_EditorClassIdentifier: 
+  textFrom: Rusty
+  textWhere: Luna
+  textTop: The Luna medBot did the job. Fixed me up in a couple of hours. Can't recall
+    what happened as I was OUT. Woke up with a headache
+  textBottom: I feel better now, though. Much better. Like a NORMAL human rather than
+    a TEMPORARY one. Monique is grateful for your help as am I

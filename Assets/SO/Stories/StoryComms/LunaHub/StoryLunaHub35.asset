@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85cf7b0549cc9b4488032e3a9a4db0b2, type: 3}
+  m_Name: StoryLunaHub35
+  m_EditorClassIdentifier: 
+  textFrom: Monique Foster
+  textWhere: Luna
+  textTop: Rusty is on the way OUT. If I can't get him to a proper medBot I'm going
+    to LOSE him. He's not legal here. Still in hiding. Can you get a PERMIT for him?
+  textBottom: A Luna HABITATION permit. One that'll let me take him to the nearest
+    hygienic medBot ASAP. Please? Rusty means a lot to both of us

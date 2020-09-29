@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e739f061c125d4db408f361188a130, type: 3}
+  m_Name: storyLuna34Opt0
+  m_EditorClassIdentifier: 
+  descriptor: Story LunaHub 34 Opt 0
+  tag: 
+  text: 
+  topic: {fileID: 11400000, guid: e44321e3db210174cb93441a8d79538b, type: 2}
+  isPreferredByHQ: 0
+  isDislikedByHQ: 0
+  isIgnoredByHQ: 1
+  isIgnoreStress: 1
+  isIgnoreMood: 1
+  listOfCriteria: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: e5a3c5de445544146b76c2f015614b8b, type: 2}
+  listOfBadEffects: []
+  moodEffect: {fileID: 0}
+  chance: {fileID: 0}
+  news: 
+  storyInfo: 
+  storyTarget: {fileID: 0}
+  tooltipHeader: Unknown
+  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
+  isValid: 1
+  textToDisplay: <color=#EEFB73></color>
+  optionNumber: 3

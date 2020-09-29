@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85cf7b0549cc9b4488032e3a9a4db0b2, type: 3}
+  m_Name: StoryLunaHub31
+  m_EditorClassIdentifier: 
+  textFrom: Monique Foster
+  textWhere: Luna
+  textTop: Rusty and I are OFF the Hub. We're down on LUNA. It took some doing but
+    I smuggled him out on a shuttle. He's not good, though. Sick. Really sick.
+  textBottom: I left him in that air vent for too long. He can't walk and can barely
+    whisper. I'm going to take him to a RipperDoc I know. He'll agree to keep it quiet
