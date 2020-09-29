@@ -18,6 +18,6 @@ MonoBehaviour:
   textMiddle: While these would make great hidey holes they are easily searched for
     signs of life by the many service drones that constantly patrol the voids
   textBottom: The air vents are different. Nobody in their right mind would squeeze
-    into a coffin sized vent where noise and air flow are ever present. Nor is there
-    anything in a vent to interest a drone
-  isKnown: 0
+    into a coffin sized vent where noise and air flow are ever present. There's nothing
+    in a vent to interest a drone
+  isKnown: 1

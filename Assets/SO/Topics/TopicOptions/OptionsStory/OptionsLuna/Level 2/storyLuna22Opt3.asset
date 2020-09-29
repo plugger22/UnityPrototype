@@ -28,7 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: No, there isn't. I'm not sure what I'm going to do. How long can you
-    be constipated for before you blow apart? Could you look it up for me?
+    be constipated before you blow apart at the seams? Could you look it up for me?
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>

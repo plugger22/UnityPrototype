@@ -27,8 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: I'll be killed on sight. I'm a witness to the massacre and they think
-    that I'm an organiser for the Collective. That's two big reasons to waste me
+  storyInfo: I'll be shot on sight. I'm a witness to the massacre and they think that
+    I'm an organiser for the Collective. There's two big reasons to waste me
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>

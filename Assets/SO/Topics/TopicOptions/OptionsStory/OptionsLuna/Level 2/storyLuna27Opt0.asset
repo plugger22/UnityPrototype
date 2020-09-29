@@ -28,7 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: Holy Bat Crap! Have you even bothered to help me? Have I been deluded
-    in thinking that you are my friend? Tell me it ain't so
+    into thinking that you are my friend? Tell me it ain't so
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>

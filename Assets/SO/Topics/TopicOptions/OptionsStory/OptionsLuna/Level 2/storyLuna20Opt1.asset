@@ -28,7 +28,7 @@ MonoBehaviour:
   chance: {fileID: 0}
   news: 
   storyInfo: I hid in the galley, behind the Goop mixer. I might have to stay here
-    a while before it's safe to leave. Man, do I hate the smell of Goop
+    a while before it's safe to leave. Boy, do I hate the smell of Goop
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>

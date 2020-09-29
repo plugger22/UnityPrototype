@@ -18,8 +18,8 @@ MonoBehaviour:
     facility
   textMiddle: The design of the Hub incorporated many new ideas which were necessary
     because nobody had ever built something that vast in space before. The ideas,
-    luckily, were winners
-  textBottom: While incremental design is feasible through piloting small orbital
+    fortuitously, were solid
+  textBottom: While incremental design is feasible through piloting smaller orbital
     constructions, at some point the sheer size of what's involved requires revolutionary
     concepts
-  isKnown: 0
+  isKnown: 1
