@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna37Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 37 Opt 1
-  tag: 
-  text: 
+  tag: Explain
+  text: Luna Permits aren't easily obtained
   topic: {fileID: 11400000, guid: 15c4c5be1a8e030449df899aeaf1b60f, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Nope, clearly not. That's why it took Monique a whole fifteen minutes
+    to find one. Cost a big bundle of credits but it wasn't hard to track down
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 0
+  optionNumber: 1

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna35Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 35 Opt 1
-  tag: 
-  text: 
+  tag: Acquire
+  text: Pay for a blackmarket Luna Permit
   topic: {fileID: 11400000, guid: 2c1eaf2b200017a41828c1a1834af416, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

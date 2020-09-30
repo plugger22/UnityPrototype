@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
+  m_Name: HealthCare4
+  m_EditorClassIdentifier: 
+  tag: RipperDocs
+  sprite: {fileID: 21300000, guid: 0990750233d69384f832d111b8981353, type: 3}
+  textTop: Medical professionals who have been disbarred from their profession typically
+    transition into a second career as a RipperDoc
+  textMiddle: There is no governing body that controls or authenticates RipperDocs.
+    Anyone with enough moxy and exposure to sufficient canned medSims can be a 'Doc
+  textBottom: Medical procedures performed by a 'Doc don't come with a guarantee.
+    Buyer beware. While more money generally buys better service it doesn't necessarily
+    buy experience
+  isKnown: 1

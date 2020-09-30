@@ -27,7 +27,7 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Homesteading. Luna Corp will pay for a small Hab if you're willing to
+  storyInfo: Homesteading. Luna Corp will pay for a family Hab if you're willing to
     live in a small crater and improve it. Mine or a Maggot farm, maybe
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown

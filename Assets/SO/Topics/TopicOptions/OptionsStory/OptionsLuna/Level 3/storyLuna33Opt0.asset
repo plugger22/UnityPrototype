@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna33Opt0
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 33 Opt 0
-  tag: 
-  text: 
+  tag: Angry
+  text: What did you expect from a 'Doc?
   topic: {fileID: 11400000, guid: 5e0359fcf1948cf45814edf97ffcd83f, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Service, that's what. I went back after I settled Rusty and broke both
+    that b*stard 'Doc's legs before kicking his nuts into porridge
   storyTarget: {fileID: 0}
-  tooltipHeader: Unknown
+  tooltipHeader: <color=#FFFFE0>Angry</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
-  textToDisplay: <color=#EEFB73></color>
-  optionNumber: 3
+  textToDisplay: <color=#EEFB73>What did you expect from a 'Doc?</color>
+  optionNumber: 0

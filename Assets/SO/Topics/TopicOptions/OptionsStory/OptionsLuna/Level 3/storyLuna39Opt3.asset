@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna39Opt3
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 39 Opt 3
-  tag: 
-  text: 
+  tag: Astonished
+  text: You spent your Life Savings?
   topic: {fileID: 11400000, guid: 08576e1db8751cc4ebdb5c436a6def69, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Yeah, all of it. You get paid well if you're with a solid company. Of
+    course I would still be a financially independent Merc if you hadn't messed up
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 2
+  optionNumber: 3

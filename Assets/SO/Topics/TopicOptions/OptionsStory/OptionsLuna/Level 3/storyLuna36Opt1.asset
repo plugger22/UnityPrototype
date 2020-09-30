@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 36 Opt 1
   tag: Congrats
-  text: So you and Monique are a Couple?
+  text: So you and Monique are an Item?
   topic: {fileID: 11400000, guid: 4885ff327a897204bada99e8e93cc920, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

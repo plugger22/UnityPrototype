@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna31Opt2
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 31 Opt 2
-  tag: 
-  text: 
+  tag: Interested
+  text: How did you get him onto a Shuttle?
   topic: {fileID: 11400000, guid: 8190039e39ee73c4d9029d6cc11fbbbf, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: With difficulty. I had to fold him up inside a cargo crate. It had biologicals
+    inside and nobody wants to mess with those, do they?
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 1
+  optionNumber: 2

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna33Opt3
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 33 Opt 3
-  tag: 
-  text: 
+  tag: Ask
+  text: Was the RipperDoc sober?
   topic: {fileID: 11400000, guid: 5e0359fcf1948cf45814edf97ffcd83f, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: 'Might have been, hard to tell. He kept fumbling and dropping stuff on
+    the floor. I must have picked up the damn autoScalpel six times '
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 2
+  optionNumber: 3

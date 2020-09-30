@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna38Opt2
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 38 Opt 2
-  tag: 
-  text: 
+  tag: Ask
+  text: What are you going to do now?
   topic: {fileID: 11400000, guid: e8bb024dfd398f14ea14ce9fc17f55d8, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Well, we're legit so we qualify for a loan from Luna Corp. I've been
+    telling Rusty all about the thrill of Deep Rock mining. He's interested
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 1
+  optionNumber: 2

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna38Opt0
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 38 Opt 0
-  tag: 
-  text: 
+  tag: Pleased
+  text: Happy to have helped you both
   topic: {fileID: 11400000, guid: e8bb024dfd398f14ea14ce9fc17f55d8, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I've been thinking that you're probably not the arrogant *sshole that
+    I thought you were. Maybe one day we can meet? I'll be able to tell, then
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 3
+  optionNumber: 0

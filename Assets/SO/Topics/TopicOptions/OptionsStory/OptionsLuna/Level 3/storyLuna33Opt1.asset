@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna33Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 33 Opt 1
-  tag: 
-  text: 
+  tag: Angrier
+  text: Illegal meds? What the...
   topic: {fileID: 11400000, guid: 5e0359fcf1948cf45814edf97ffcd83f, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I do what I can. I bought ten different kinds of meds and if one of them
+    works then it'll help Rusty, won't it? Huh? Only ONE has to work? Right?
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 0
+  optionNumber: 1

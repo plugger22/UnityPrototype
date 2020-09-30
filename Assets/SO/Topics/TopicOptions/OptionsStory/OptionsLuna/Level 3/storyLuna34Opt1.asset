@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna34Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 34 Opt 1
-  tag: 
-  text: 
+  tag: Penetrate
+  text: Hack into Luna Dbase for a Permit
   topic: {fileID: 11400000, guid: e44321e3db210174cb93441a8d79538b, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -30,7 +30,7 @@ MonoBehaviour:
   storyInfo: 
   storyTarget: {fileID: 11400000, guid: 5c7651b68df3a834082cf1bb34542029, type: 2}
   tooltipHeader: Unknown
-  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipMain: <color=#98FB98>Target (HACKER, Hacking gear)</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>

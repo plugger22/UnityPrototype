@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna37Opt2
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 37 Opt 2
-  tag: 
-  text: 
+  tag: Astonished
+  text: You're still with that MERC?
   topic: {fileID: 11400000, guid: 15c4c5be1a8e030449df899aeaf1b60f, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Hey, that's Monique to you. Moderate your tone as I'm going to marry
+    her. She may be a reformed head kicker but she has a good heart
   storyTarget: {fileID: 0}
-  tooltipHeader: Unknown
+  tooltipHeader: <color=#FFFFE0>Astonished</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
-  textToDisplay: <color=#EEFB73></color>
-  optionNumber: 1
+  textToDisplay: <color=#EEFB73>You're still with that MERC?</color>
+  optionNumber: 2
