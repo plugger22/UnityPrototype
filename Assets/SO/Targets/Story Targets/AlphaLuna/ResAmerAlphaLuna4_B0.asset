@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
+  m_Name: ResAmerAlphaLuna4_B0
+  m_EditorClassIdentifier: 
+  targetName: 
+  descriptorResistance: 
+  descriptorAuthority: 
+  reasonText: 
+  rumourText: 
+  targetLevel: 1
+  actorArc: {fileID: 0}
+  gear: {fileID: 0}
+  sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
+  targetType: {fileID: 11400000, guid: 0a1dbfbb803a4474f9d33d6879c25f02, type: 2}
+  nodeArc: {fileID: 0}
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: c23ed1da5bca28b4883286a1de807e06, type: 2}
+  - {fileID: 11400000, guid: 988b9f50bdaa2f94aaecd82d27bbc078, type: 2}
+  - {fileID: 11400000, guid: 97cd169356b9e544d85be4e629f8325d, type: 2}
+  listOfBadEffects: []
+  listOfFailEffects: []
+  moodEffect: {fileID: 0}
+  ongoingEffect: {fileID: 0}
+  profileBase: {fileID: 11400000, guid: 3cac112efe0822249b012aabfba261d5, type: 2}
+  isSuccessNeeded: 0
+  followOnTarget: {fileID: 0}
+  profile: {fileID: 11400000, guid: 3cac112efe0822249b012aabfba261d5, type: 2}
+  targetStatus: 0
+  intel: 0
+  ongoingID: -1
+  isKnownByAI: 0
+  nodeID: -1
+  distance: 0
+  newIntel: 0
+  intelGain: 0
+  turnSuccess: -1
+  turnDone: -1
+  numOfAttempts: 0
+  turnsWindow: 10
+  timerDelay: 0
+  timerHardLimit: 0
+  timerWindow: 9
+  listOfRumourContacts: 
