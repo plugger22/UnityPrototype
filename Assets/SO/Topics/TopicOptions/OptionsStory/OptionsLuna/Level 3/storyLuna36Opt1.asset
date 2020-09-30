@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna36Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 36 Opt 1
-  tag: 
-  text: 
+  tag: Congrats
+  text: So you and Monique are a Couple?
   topic: {fileID: 11400000, guid: 4885ff327a897204bada99e8e93cc920, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: She's a wonderful woman once you get past the jagged, sharp, edges. No
+    more being a Merc for her. It's live a long, happy life with Rusty instead
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 0
+  optionNumber: 1

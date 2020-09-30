@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna36Opt0
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 36 Opt 0
-  tag: 
-  text: 
+  tag: Clarify
+  text: Can you walk?
   topic: {fileID: 11400000, guid: 4885ff327a897204bada99e8e93cc920, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Good 'ole Rusty is back to normal. Mostly. There's some permanent damage
+    to my guts but nothing that modern pharmacueticals can't handle
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>

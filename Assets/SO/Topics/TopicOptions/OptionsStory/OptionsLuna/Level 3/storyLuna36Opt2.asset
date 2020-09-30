@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna36Opt2
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 36 Opt 2
-  tag: 
-  text: 
+  tag: Ask
+  text: What's the plan now?
   topic: {fileID: 11400000, guid: 4885ff327a897204bada99e8e93cc920, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Homesteading. Luna Corp will pay for a small Hab if you're willing to
+    live in a small crater and improve it. Mine or a Maggot farm, maybe
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 1
+  optionNumber: 2

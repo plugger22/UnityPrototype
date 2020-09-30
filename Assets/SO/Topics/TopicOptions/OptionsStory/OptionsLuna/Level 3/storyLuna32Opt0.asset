@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna32Opt0
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 32 Opt 0
-  tag: 
-  text: 
+  tag: Dubious
+  text: What kind of pills are they?
   topic: {fileID: 11400000, guid: 6655cdfeee4827c4e831273d3e1a27b0, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Big red ones. A guy on the Hub sold them to me a while ago. I've been
+    keeping them for a special occasion. He called them 'Brain Spikes'
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 3
+  optionNumber: 0

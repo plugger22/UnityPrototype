@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna30Opt0
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 30 Opt 0
-  tag: 
-  text: 
+  tag: Worried
+  text: What's wrong with you?
   topic: {fileID: 11400000, guid: e53abb2828909884dbd1084b100f2b3a, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I can't feel my toes. My knees have locked up worse than my neck and
+    don't even ask me about my constipated bowels
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna32Opt2
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 32 Opt 2
-  tag: 
-  text: 
+  tag: Perplexed
+  text: Why can't you get proper help?
   topic: {fileID: 11400000, guid: 6655cdfeee4827c4e831273d3e1a27b0, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Because I'm in hiding. Isn't that OBVIOUS? [mega3] goons are still looking
+    for me, even here on Luna. They aren't looking to buy me a beer
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 1
+  optionNumber: 2

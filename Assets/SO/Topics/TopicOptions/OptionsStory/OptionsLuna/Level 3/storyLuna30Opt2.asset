@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna30Opt2
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 30 Opt 2
-  tag: 
-  text: 
+  tag: Puzzled
+  text: Drug Tests?
   topic: {fileID: 11400000, guid: e53abb2828909884dbd1084b100f2b3a, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Everybody on the Hub has to pass a drug test every month. You don't want
+    anyone flipping out on [drug] up there, especially in ZeroG
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 1
+  optionNumber: 2
