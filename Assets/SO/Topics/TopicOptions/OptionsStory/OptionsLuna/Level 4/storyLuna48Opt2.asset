@@ -27,12 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: Then how about you marry come up here and marry Rusty? You can Maggot
-    on together. Not only does he farm maggots but we EAT them
+  storyInfo: Then how about you come up here and marry Rusty? You can Maggot out together.
+    Not only does he farm maggots but he EATS them
   storyTarget: {fileID: 0}
-  tooltipHeader: Unknown
+  tooltipHeader: <color=#FFFFE0>Envious</color>
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
-  textToDisplay: <color=#EEFB73></color>
+  textToDisplay: <color=#EEFB73>I dream of being a Maggot Farmer</color>
   optionNumber: 2
