@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyLunaHub41
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Maggots
   text: 
   letter: {fileID: 0}
   comms: {fileID: 11400000, guid: 720aa8b53a182a14792504707b951ad3, type: 2}
@@ -46,12 +46,12 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 4
-  isCurrent: 0
+  status: 2
+  isCurrent: 1
   timerStart: 0
   timerRepeat: 0
   timerWindow: 0
   turnsDormant: 0
   turnsActive: 0
-  turnsLive: 0
+  turnsLive: 18
   turnsDone: 0

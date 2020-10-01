@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna40Opt3
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 40 Opt 3
-  tag: 
-  text: 
+  tag: Question
+  text: Do you HAVE to farm Grubs?
   topic: {fileID: 11400000, guid: a780d54e2500652469e720e864ee2223, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: They're LARVAE, not grubs. Monique wants us to start up a Deep Rock mining
+    operation but we've already spent our loan on the Maggots
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 2
+  optionNumber: 3

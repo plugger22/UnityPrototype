@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna47Opt0
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 47 Opt 0
-  tag: 
-  text: 
+  tag: Sorry
+  text: I'm NOT a Granny Killer
   topic: {fileID: 11400000, guid: 778f8fb25c0451a4eb5966d30db98eb6, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Yeah, it was a bit much. If I'd known that Monique was going to go all
+    RAMBO on the Arbitrator I wouldn't have asked in the first place
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 3
+  optionNumber: 0

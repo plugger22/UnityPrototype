@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna44Opt0
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 44 Opt 0
-  tag: 
-  text: 
+  tag: Bang!
+  text: Blow Up Arbitrator's Mother
   topic: {fileID: 11400000, guid: f5466bc88c21fb24390512abbcf4c27a, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -34,4 +34,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 3
+  optionNumber: 0

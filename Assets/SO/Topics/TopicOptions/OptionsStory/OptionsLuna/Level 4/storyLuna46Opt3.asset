@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna46Opt3
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 46 Opt 3
-  tag: 
-  text: 
+  tag: Ask
+  text: Are you ENJOYING Maggot farming?
   topic: {fileID: 11400000, guid: f04f11c304bfc9a40bc709d6d22bb544, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I'm enjoying the CREDITS and, after a while, you just see them as money
+    machines. Monique, however, thinks they are ugly, stinking parasites
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 2
+  optionNumber: 3

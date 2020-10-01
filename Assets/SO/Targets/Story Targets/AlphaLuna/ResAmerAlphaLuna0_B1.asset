@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: ResAmerAlphaLuna0_B1
   m_EditorClassIdentifier: 
   targetName: Preventive Action
-  descriptorResistance: Pearl Harbour local Permit Office
+  descriptorResistance: Blow up local Permit Office
   descriptorAuthority: Government
   reasonText: blowing up local Permit office
   rumourText: blowing up local Permit office

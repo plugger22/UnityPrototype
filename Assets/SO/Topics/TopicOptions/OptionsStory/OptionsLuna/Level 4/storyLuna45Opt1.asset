@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna45Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 45 Opt 1
-  tag: 
-  text: 
+  tag: Extort
+  text: Kidnap Arbitrator's Mother
   topic: {fileID: 11400000, guid: a2e5c16fd0d47e849ae70c77abd0edb5, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -34,4 +34,4 @@ MonoBehaviour:
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 0
+  optionNumber: 1

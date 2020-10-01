@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna42Opt2
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 42 Opt 2
-  tag: 
-  text: 
+  tag: Suggest
+  text: Can you bribe the Judge?
   topic: {fileID: 11400000, guid: 241b64ec509821643954e6c11fd227e7, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: No idea. The Luna legal system is opaque. Wait and see is the best we
+    can do at the moment. Maybe they've mistaken me for somebody else?
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 1
+  optionNumber: 2

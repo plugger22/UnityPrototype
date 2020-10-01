@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna40Opt0
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 40 Opt 0
-  tag: 
-  text: 
+  tag: Puzzled
+  text: What are you telling me?
   topic: {fileID: 11400000, guid: a780d54e2500652469e720e864ee2223, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,7 +27,8 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: I don't know. Maybe that I'm going to have to choose between the Maggots
+    and Monique? It's heading in that direction. Got any good advice?
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>

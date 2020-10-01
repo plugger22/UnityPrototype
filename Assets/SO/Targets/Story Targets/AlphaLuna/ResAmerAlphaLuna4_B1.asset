@@ -11,24 +11,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
   m_Name: ResAmerAlphaLuna4_B1
   m_EditorClassIdentifier: 
-  targetName: 
-  descriptorResistance: 
-  descriptorAuthority: 
-  reasonText: 
-  rumourText: 
+  targetName: Kidnap Mother
+  descriptorResistance: Kidnap Arbitrator's Mother
+  descriptorAuthority: Gated
+  reasonText: kidnapping Arbitrator's Mother
+  rumourText: kidnapping Arbitrator's Mother
   targetLevel: 1
-  actorArc: {fileID: 0}
-  gear: {fileID: 0}
+  actorArc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
+  gear: {fileID: 11400000, guid: 5a4c76688e4902243a2acc5bbdcb7540, type: 2}
   sprite: {fileID: 21300000, guid: ea98f5a4562f99b4e8684a4232b3c6e4, type: 3}
   targetType: {fileID: 11400000, guid: 0a1dbfbb803a4474f9d33d6879c25f02, type: 2}
-  nodeArc: {fileID: 0}
+  nodeArc: {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
   listOfGoodEffects:
   - {fileID: 11400000, guid: c23ed1da5bca28b4883286a1de807e06, type: 2}
   - {fileID: 11400000, guid: 988b9f50bdaa2f94aaecd82d27bbc078, type: 2}
   - {fileID: 11400000, guid: 97cd169356b9e544d85be4e629f8325d, type: 2}
   listOfBadEffects: []
   listOfFailEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 6fd01813adb0ba94bb6b9b174e68692d, type: 2}
   ongoingEffect: {fileID: 0}
   profileBase: {fileID: 11400000, guid: 3cac112efe0822249b012aabfba261d5, type: 2}
   isSuccessNeeded: 0

@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b098c67b9a67f1348acc9c542be839d8, type: 3}
   m_Name: storyLunaHub43
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Deportation
   text: 
   letter: {fileID: 0}
   comms: {fileID: 11400000, guid: 4d77a7bf89ab4b84fbe0c216fa1dc181, type: 2}
@@ -46,7 +46,7 @@ MonoBehaviour:
   tooltipHeader: 
   tooltipMain: 
   tooltipDetails: 
-  status: 4
+  status: 0
   isCurrent: 0
   timerStart: 0
   timerRepeat: 0

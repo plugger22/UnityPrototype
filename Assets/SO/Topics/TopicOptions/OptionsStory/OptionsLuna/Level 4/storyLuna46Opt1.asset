@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna46Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 46 Opt 1
-  tag: 
-  text: 
+  tag: Resentful
+  text: Don't ask me to do that again
   topic: {fileID: 11400000, guid: f04f11c304bfc9a40bc709d6d22bb544, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: You could have just frightened them. I didn't mean for you to hurt them.
+    They're harmless old folk. I think this one is on YOU
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 0
+  optionNumber: 1
