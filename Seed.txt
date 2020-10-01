@@ -5010,3 +5010,43 @@ City seed 890 -> Arles, France
 
 Dev seed 35149 -> Thursday, 1 October 2020 9:42 AM
 City seed 1616 -> Mexico City, Mexico
+
+Dev seed 51911 -> Thursday, 1 October 2020 4:09 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 26822 -> Thursday, 1 October 2020 4:12 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 5101 -> Thursday, 1 October 2020 4:16 PM
+City seed 1616 -> Mexico City, Mexico
+ERROR Invalid text (Null)
+UnityEngine.Debug:LogError(Object)
+	GameManager:Formatt(String, ColourType) (at Assets/Scripts/GameManager.cs:1077)
+	TooltipStory:SetTooltip(StoryHelp, Vector3) (at Assets/Scripts/GUI/Tooltips/TooltipStory.cs:78)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/StoryHelpTooltipUI.cs:97)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ERROR Invalid text (Null)
+UnityEngine.Debug:LogError(Object)
+	GameManager:Formatt(String, ColourType) (at Assets/Scripts/GameManager.cs:1077)
+	TooltipStory:SetTooltip(StoryHelp, Vector3) (at Assets/Scripts/GUI/Tooltips/TooltipStory.cs:78)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/StoryHelpTooltipUI.cs:97)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ERROR Invalid text (Null)
+UnityEngine.Debug:LogError(Object)
+	GameManager:Formatt(String, ColourType) (at Assets/Scripts/GameManager.cs:1077)
+	TooltipStory:SetTooltip(StoryHelp, Vector3) (at Assets/Scripts/GUI/Tooltips/TooltipStory.cs:78)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/StoryHelpTooltipUI.cs:97)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ERROR Invalid text (Null)
+UnityEngine.Debug:LogError(Object)
+	GameManager:Formatt(String, ColourType) (at Assets/Scripts/GameManager.cs:1077)
+	TooltipStory:SetTooltip(StoryHelp, Vector3) (at Assets/Scripts/GUI/Tooltips/TooltipStory.cs:78)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/StoryHelpTooltipUI.cs:97)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ERROR Invalid text (Null)
+UnityEngine.Debug:LogError(Object)
+	GameManager:Formatt(String, ColourType) (at Assets/Scripts/GameManager.cs:1077)
+	TooltipStory:SetTooltip(StoryHelp, Vector3) (at Assets/Scripts/GUI/Tooltips/TooltipStory.cs:78)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/StoryHelpTooltipUI.cs:97)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	

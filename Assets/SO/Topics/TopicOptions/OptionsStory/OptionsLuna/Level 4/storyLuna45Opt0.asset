@@ -19,7 +19,7 @@ MonoBehaviour:
   isDislikedByHQ: 0
   isIgnoredByHQ: 1
   isIgnoreStress: 1
-  isIgnoreMood: 1
+  isIgnoreMood: 0
   listOfCriteria: []
   listOfGoodEffects:
   - {fileID: 11400000, guid: e5a3c5de445544146b76c2f015614b8b, type: 2}
@@ -29,9 +29,9 @@ MonoBehaviour:
   news: 
   storyInfo: 
   storyTarget: {fileID: 11400000, guid: 88e29a46ce3a6cb42bfc718205fea3dc, type: 2}
-  tooltipHeader: Unknown
-  tooltipMain: <color=#98FB98> Information gained</color>
+  tooltipHeader: <color=#FFFFE0>Torment</color>
+  tooltipMain: <color=#98FB98>Target (HEAVY, Movement gear)</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
-  textToDisplay: <color=#EEFB73></color>
+  textToDisplay: <color=#EEFB73>Take and Torture Arbitrator's Mother</color>
   optionNumber: 0

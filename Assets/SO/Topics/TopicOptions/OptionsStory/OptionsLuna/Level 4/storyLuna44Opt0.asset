@@ -19,7 +19,7 @@ MonoBehaviour:
   isDislikedByHQ: 0
   isIgnoredByHQ: 1
   isIgnoreStress: 1
-  isIgnoreMood: 1
+  isIgnoreMood: 0
   listOfCriteria: []
   listOfGoodEffects:
   - {fileID: 11400000, guid: e5a3c5de445544146b76c2f015614b8b, type: 2}

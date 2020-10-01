@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
   m_Name: Luna11
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Crater Life
   sprite: {fileID: 21300000, guid: 0990750233d69384f832d111b8981353, type: 3}
   textTop: Any citizen of Luna who wishes to homestead will be given a hab, a loan
     and their own private crater. There is no shortage of free space
@@ -19,4 +19,4 @@ MonoBehaviour:
     module, some radiation shielding and a clearly defined property boundary
   textBottom: Nobody who lives in a crater expects that THEIR crater will be hit by
     a meteor again. Craters give you that warm fuzzy LUCKY feeling
-  isKnown: 0
+  isKnown: 1

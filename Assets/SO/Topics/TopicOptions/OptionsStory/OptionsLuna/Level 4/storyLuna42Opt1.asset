@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 42 Opt 1
   tag: Confused
-  text: '[meg3] are still after you?'
+  text: '[mega3] are still after you?'
   topic: {fileID: 11400000, guid: 241b64ec509821643954e6c11fd227e7, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0

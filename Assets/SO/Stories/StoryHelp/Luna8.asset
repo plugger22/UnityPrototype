@@ -11,15 +11,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75eca689624396e49a65079d04d478bc, type: 3}
   m_Name: Luna8
   m_EditorClassIdentifier: 
-  tag: 
+  tag: Food
   sprite: {fileID: 21300000, guid: 0990750233d69384f832d111b8981353, type: 3}
-  textTop: Feeding the population of Luna requires some lateral thinking and a fair
+  textTop: Feeding the population of Luna requires some lateral thinking and a large
     measure of understanding on the part of the population. Importing food isn't practical
-    due to the cost
+    due to the gravity debt
   textMiddle: Which leave home grown algae, fungus and maggots. Don't be alarmed as
     the food scientists of Luna Corp have come up with many tasty and nutritional
     ways to combine the three
   textBottom: What is imported are flavour and spice additives. They turn yuck in
-    yum. Extensive marketing is part of it. Luna cusine is both a tourist attraction
-    and a sick joke
-  isKnown: 0
+    yum. Extensive marketing helps. Luna cusine is both a tourist attraction and a
+    sick joke
+  isKnown: 1
