@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna48Opt3
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 48 Opt 3
-  tag: 
-  text: 
+  tag: Curious
+  text: What's it like living in a Crater?
   topic: {fileID: 11400000, guid: 8566e0922fe9bb84189daba316247449, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Dark. Then it's really, really bright. Nothing in between. The view is
+    only UP but it's quiet and nobody bothers you. It's your crater, nobody elses
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 2
+  optionNumber: 3

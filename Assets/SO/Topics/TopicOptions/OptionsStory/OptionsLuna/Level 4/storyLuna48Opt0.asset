@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna48Opt0
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 48 Opt 0
-  tag: 
-  text: 
+  tag: Angry
+  text: I'd like to tell you the DETAILS
   topic: {fileID: 11400000, guid: 8566e0922fe9bb84189daba316247449, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Talk to a mirror. I know more about DETAILS than you could image. I was
+    a Merc. We did stuff. Lots of stuff. It was all about the DETAILS
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 3
+  optionNumber: 0

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna41Opt1
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 41 Opt 1
-  tag: 
-  text: 
+  tag: Sympathise
+  text: Rusty is Stubborn
   topic: {fileID: 11400000, guid: 49a57ff4c0d34db428d61c36b7e26e65, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: You said it. I don't think he's enjoying the Maggots either but he doesn't
+    want to admit defeat. Beside, we've used up the money from the Loan
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 0
+  optionNumber: 1

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna41Opt2
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 41 Opt 2
-  tag: 
-  text: 
+  tag: Insight
+  text: Farming isn't much after being a Merc
   topic: {fileID: 11400000, guid: 49a57ff4c0d34db428d61c36b7e26e65, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: Well being a Merc wasn't much either with a daily menu of violence and
+    intimidation. How many eyeballs can a girl tread on in one lifetime?
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 1
+  optionNumber: 2

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna49Opt0
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 49 Opt 0
-  tag: 
-  text: 
+  tag: Perplexed
+  text: How do you borrow BALLS?
   topic: {fileID: 11400000, guid: 4ef7a5df80193c148b36cbe740dfc508, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: A razor sharp nanoBlade and not having to ask permission first both help.
+    You have to be polite about it. Can I cut off your balls PLEASE?
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 3
+  optionNumber: 0

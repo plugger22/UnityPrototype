@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna49Opt3
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 49 Opt 3
-  tag: 
-  text: 
+  tag: Dismissive
+  text: Maggots? Toughen up Sunshine
   topic: {fileID: 11400000, guid: 4ef7a5df80193c148b36cbe740dfc508, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: When did you last eat a plate of FRIED maggots fed on your own bodily
+    waste for dinner? That's recylcing, right there. Live and wriggling
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 2
+  optionNumber: 3

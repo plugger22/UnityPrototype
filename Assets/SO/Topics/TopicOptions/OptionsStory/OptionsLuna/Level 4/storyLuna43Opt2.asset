@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: storyLuna43Opt2
   m_EditorClassIdentifier: 
   descriptor: Story LunaHub 43 Opt 2
-  tag: 
-  text: 
+  tag: Question
+  text: Why not kill Rusty there on Luna?
   topic: {fileID: 11400000, guid: e239f05b6bfabc54ca410d667fdb1da0, type: 2}
   isPreferredByHQ: 0
   isDislikedByHQ: 0
@@ -27,11 +27,12 @@ MonoBehaviour:
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
   news: 
-  storyInfo: 
+  storyInfo: They'd have to get past me first but I think it's because they want to
+    use Rusty as a warning to other whistleblowers. Make it VISIBLE and PAINFUL
   storyTarget: {fileID: 0}
   tooltipHeader: Unknown
   tooltipMain: <color=#98FB98> Information gained</color>
   tooltipDetails: <color=#BDC3C7>No Effect on Player Mood</color>
   isValid: 1
   textToDisplay: <color=#EEFB73></color>
-  optionNumber: 1
+  optionNumber: 2
