@@ -5132,3 +5132,74 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:426)
 	
+Dev seed 25976 -> Friday, 2 October 2020 9:27 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 55614 -> Friday, 2 October 2020 9:29 AM
+City seed 1616 -> Mexico City, Mexico
+WARNING Invalid option.moodEffect (Null) for option storyLuna44Opt0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:5373)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:3399)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:3170)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:344)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:426)
+	WARNING Invalid option.moodEffect (Null) for option storyLuna44Opt1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TopicManager:InitialiseOptionTooltip(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:5373)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:3399)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:3170)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:344)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:426)
+	
+Dev seed 19158 -> Friday, 2 October 2020 10:06 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 52344 -> Friday, 2 October 2020 10:11 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 20042 -> Friday, 2 October 2020 10:13 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 51233 -> Friday, 2 October 2020 10:14 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 29990 -> Friday, 2 October 2020 10:19 AM
+City seed 1616 -> Mexico City, Mexico
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TopicManager.InitialiseOptionTooltip (TopicOption option) (at Assets/Scripts/Managers/TopicManager.cs:5378)
+	TopicManager.InitialiseTopicUI () (at Assets/Scripts/Managers/TopicManager.cs:3399)
+	TopicManager.ProcessTopic (GlobalSide playerSide) (at Assets/Scripts/Managers/TopicManager.cs:3170)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:344)
+	TurnManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:426)
+	
+Dev seed 59700 -> Friday, 2 October 2020 10:21 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 18231 -> Friday, 2 October 2020 10:24 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 15892 -> Friday, 2 October 2020 10:30 AM
+City seed 1616 -> Mexico City, Mexico
+ERROR Invalid contact (Null) for actor Rusty Peterson, PLANNER, id 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	TeamManager:ProcessErasureTeamSighting(Team, Node) (at Assets/Scripts/Managers/TeamManager.cs:467)
+	TeamManager:StartTurnEarly() (at Assets/Scripts/Managers/TeamManager.cs:370)
+	TeamManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TeamManager.cs:160)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	TurnManager:StartTurnEarly() (at Assets/Scripts/Managers/TurnManager.cs:520)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:325)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:324)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:426)
+	

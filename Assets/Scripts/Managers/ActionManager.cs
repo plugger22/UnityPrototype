@@ -2470,7 +2470,8 @@ public class ActionManager : MonoBehaviour
                     //reset flag
                     errorFlag = false;
                 }
-                //NOT captured, proceed with target
+
+                // player/actor NOT captured, proceed with target
 
                 //
                 // - - - Attempt Target - - -  

@@ -5375,8 +5375,24 @@ public class TopicManager : MonoBehaviour
         }
         else
         {
-            //option switch to ignore mood
-            option.tooltipDetails = string.Format("{0}No Effect on Player Mood{1}", colourGrey, colourEnd);
+            if (option.storyTarget != null)
+            {
+                if (option.storyTarget.moodEffect != null)
+                {
+                    //special case of story target having a moodEffect
+                    option.tooltipDetails = GameManager.i.personScript.GetMoodTooltip(option.storyTarget.moodEffect.belief, "Player");
+                }
+                else
+                {
+                    //option switch to ignore mood
+                    option.tooltipDetails = string.Format("{0}No Effect on Player Mood{1}", colourGrey, colourEnd);
+                }
+            }
+            else
+            {
+                //option switch to ignore mood
+                option.tooltipDetails = string.Format("{0}No Effect on Player Mood{1}", colourGrey, colourEnd);
+            }
         }
         return isSucceed;
     }

@@ -464,7 +464,7 @@ public class TeamManager : MonoBehaviour
                                         isSpotted = false;
                                     }
                                 }
-                                else { Debug.LogErrorFormat("Invalid contact (Null) for actor {0}, {1}, id {2}", actor.actorName, actor.arc.name, actor.actorID); }
+                                /*else { Debug.LogErrorFormat("Invalid contact (Null) for actor {0}, {1}, id {2}", actor.actorName, actor.arc.name, actor.actorID); } NOTE: Shouldn't be an error here*/
                             }
                         }
                         else { Debug.LogErrorFormat("Invalid actor (Null) for listOfActors.actorID {0}", listOfActors[index]); }
