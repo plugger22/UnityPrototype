@@ -498,6 +498,20 @@ public class InputManager : MonoBehaviour
                             break;
                         #endregion
 
+                        #region Billboard
+                        case ModalSubState.Billboard:
+                            if (Input.GetButtonDown("Multipurpose") == true)
+                            {
+                                GameManager.i.guiScript.waitUntilDone = true;
+                                /*EventManager.i.PostNotification(EventType.InventoryCloseUI, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");*/
+                            }
+                            else
+                            {
+                                GameManager.i.guiScript.waitUntilDone = true;
+                            }
+                            break;
+                        #endregion
+
                         #region TeamPicker
                         case ModalSubState.TeamPicker:
                             if (Input.GetButtonDown("Cancel") == true)

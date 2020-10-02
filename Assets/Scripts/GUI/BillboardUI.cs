@@ -16,8 +16,9 @@ public class BillboardUI : MonoBehaviour
     private RectTransform billTransformLeft;
     private RectTransform billTransformRight;
 
-    private int halfScreenWidth;
-    private int midPoint;
+    private float halfScreenWidth;
+    private float width;
+    private float distance;
 
     private static BillboardUI billboardUI;
 
@@ -58,7 +59,10 @@ public class BillboardUI : MonoBehaviour
     {
         //measurements
         halfScreenWidth = Screen.width / 2;
-        midPoint = 500;
+        width = billTransformLeft.rect.width;
+        /*distance = width * 0.5f + halfScreenWidth;*/
+        distance = halfScreenWidth;
+        Debug.LogFormat("[Tst] BillboardUI.cs -> halfScreenWidth {0}, panelWidth {1}, distance {2}{3}", halfScreenWidth, width, distance, "\n");
         //activate
         billCanvas.gameObject.SetActive(true);
         //Reset panels at start
@@ -70,8 +74,8 @@ public class BillboardUI : MonoBehaviour
     /// </summary>
     public void Reset()
     {
-        billLeft.transform.localPosition = new Vector3(-midPoint - halfScreenWidth, 0, 0);
-        billRight.transform.localPosition = new Vector3(midPoint + halfScreenWidth, 0, 0);
+        billLeft.transform.localPosition = new Vector3(-distance, 0, 0);
+        billRight.transform.localPosition = new Vector3(distance, 0, 0);
     }
 
     /// <summary>
@@ -90,8 +94,8 @@ public class BillboardUI : MonoBehaviour
     {
         Reset();
         int counter = 0;
-        int speed = 5;
-        int distance = midPoint + halfScreenWidth;
+        int speed = 10;
+        GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = gameAPI.ModalSubState.Billboard });
         while (counter < halfScreenWidth)
         {
             counter += speed;
@@ -99,7 +103,6 @@ public class BillboardUI : MonoBehaviour
             billRight.transform.localPosition = new Vector3(distance - counter, 0, 0);
             yield return null;
         }
-        GameManager.i.guiScript.waitUntilDone = true;
     }
 
     //events above here

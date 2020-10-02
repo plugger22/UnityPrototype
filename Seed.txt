@@ -103,3 +103,63 @@ City seed 1616 -> Mexico City, Mexico
 
 Dev seed 58477 -> Friday, 2 October 2020 4:35 PM
 City seed 1616 -> Mexico City, Mexico
+
+Dev seed 42916 -> Friday, 2 October 2020 5:07 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 7307 -> Friday, 2 October 2020 5:09 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 29963 -> Friday, 2 October 2020 5:10 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 39760 -> Friday, 2 October 2020 5:12 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 59469 -> Friday, 2 October 2020 5:16 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 64818 -> Friday, 2 October 2020 5:25 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 11008 -> Friday, 2 October 2020 5:25 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 5935 -> Friday, 2 October 2020 5:28 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 32163 -> Friday, 2 October 2020 5:30 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 43092 -> Friday, 2 October 2020 5:32 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 8530 -> Friday, 2 October 2020 5:36 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 47963 -> Friday, 2 October 2020 5:37 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 2785 -> Friday, 2 October 2020 5:37 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 4990 -> Friday, 2 October 2020 5:38 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 61268 -> Friday, 2 October 2020 5:39 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 62240 -> Friday, 2 October 2020 5:41 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 38053 -> Friday, 2 October 2020 5:44 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 2442 -> Friday, 2 October 2020 5:49 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 21942 -> Friday, 2 October 2020 5:57 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 56074 -> Friday, 2 October 2020 6:00 PM
+City seed 1616 -> Mexico City, Mexico
