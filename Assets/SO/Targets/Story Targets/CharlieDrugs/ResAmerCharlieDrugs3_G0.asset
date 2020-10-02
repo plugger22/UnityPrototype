@@ -29,7 +29,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 233d008d9c43c6449a6f4d851c42b88e, type: 2}
   listOfBadEffects: []
   listOfFailEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 0e0bf18551a7ab3459fdb872f60fc610, type: 2}
   ongoingEffect: {fileID: 0}
   profileBase: {fileID: 11400000, guid: 3cac112efe0822249b012aabfba261d5, type: 2}
   isSuccessNeeded: 0

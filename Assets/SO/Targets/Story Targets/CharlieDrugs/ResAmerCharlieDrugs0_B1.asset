@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
   m_Name: ResAmerCharlieDrugs0_B1
   m_EditorClassIdentifier: 
-  targetName: Blow Up City Power
+  targetName: Blow Up Power
   descriptorResistance: Disrupt Eclispse Corp Jamming
   descriptorAuthority: City Power Supply
   reasonText: damage the city power supply
@@ -31,7 +31,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 58139420dd98a074a9b7167a197a2598, type: 2}
   listOfFailEffects:
   - {fileID: 11400000, guid: 3a6f95c84cda78948a70134a9a98aba3, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: 8dc091925e7d83642bebf867a597d813, type: 2}
   ongoingEffect: {fileID: 0}
   profileBase: {fileID: 11400000, guid: 3cac112efe0822249b012aabfba261d5, type: 2}
   isSuccessNeeded: 0

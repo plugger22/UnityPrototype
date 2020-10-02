@@ -28,13 +28,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 97cd169356b9e544d85be4e629f8325d, type: 2}
   listOfBadEffects: []
   listOfFailEffects: []
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: e45295871512b7d4594acfd43c46a912, type: 2}
   ongoingEffect: {fileID: 0}
   profileBase: {fileID: 11400000, guid: 3cac112efe0822249b012aabfba261d5, type: 2}
   isSuccessNeeded: 0
   followOnTarget: {fileID: 0}
   profile: {fileID: 11400000, guid: 3cac112efe0822249b012aabfba261d5, type: 2}
-  targetStatus: 4
+  targetStatus: 0
   intel: 0
   ongoingID: -1
   isKnownByAI: 0
@@ -43,8 +43,8 @@ MonoBehaviour:
   newIntel: 0
   intelGain: 0
   turnSuccess: -1
-  turnDone: 37
-  numOfAttempts: 9
+  turnDone: -1
+  numOfAttempts: 0
   turnsWindow: 10
   timerDelay: 0
   timerHardLimit: 0

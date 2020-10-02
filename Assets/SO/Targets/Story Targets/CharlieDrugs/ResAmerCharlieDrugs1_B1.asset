@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc49b46e8d124ff4685a6dadef6ead5b, type: 3}
   m_Name: ResAmerCharlieDrugs1_B1
   m_EditorClassIdentifier: 
-  targetName: Eclipse Executive
+  targetName: Torture Exec
   descriptorResistance: Torture Eclipse Executive for Intel
   descriptorAuthority: Eclipse Corp
   reasonText: gain intel on The Pink Petal
@@ -30,7 +30,7 @@ MonoBehaviour:
   listOfBadEffects: []
   listOfFailEffects:
   - {fileID: 11400000, guid: 3a6f95c84cda78948a70134a9a98aba3, type: 2}
-  moodEffect: {fileID: 0}
+  moodEffect: {fileID: 11400000, guid: bb2e60ca54af3884690f14f3f3c7406f, type: 2}
   ongoingEffect: {fileID: 0}
   profileBase: {fileID: 11400000, guid: 3cac112efe0822249b012aabfba261d5, type: 2}
   isSuccessNeeded: 0
