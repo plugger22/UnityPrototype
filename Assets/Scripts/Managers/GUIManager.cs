@@ -849,12 +849,21 @@ public class GUIManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator InfoPipeline(GlobalSide playerSide)
     {
+
+        GameManager.i.billboardScript.RunBillboard();
+        yield return new WaitUntil(() => waitUntilDone == true);
+        waitUntilDone = false;
+        yield return new WaitForSecondsRealtime(pipelineWait);
+        GameManager.i.billboardScript.Reset();
+
         //loop through each message type and display in enum order, if present, one at a time.
         foreach (var msgType in Enum.GetValues(typeof(MsgPipelineType)))
         {
             if ((MsgPipelineType)msgType != MsgPipelineType.None)
-            { yield return StartCoroutine("InfoPipelineMessage", (MsgPipelineType)msgType); }
-            yield return new WaitForSecondsRealtime(pipelineWait);
+            {
+                yield return StartCoroutine("InfoPipelineMessage", (MsgPipelineType)msgType);
+                yield return new WaitForSecondsRealtime(pipelineWait);
+            }
         }
         InfoPipelineDictClear();
         //only do topic if level or campaign win state is 'None' (level win state incorporates campaign win state where appropriate)

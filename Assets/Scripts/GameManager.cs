@@ -110,6 +110,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public TopicUI topicDisplayScript;                //Topic UI
     [HideInInspector] public PopUpDynamic popUpDynamicScript;           //PopUpDynamic
     [HideInInspector] public PopUpFixed popUpFixedScript;               //PopUpFixed
+    [HideInInspector] public BillboardUI billboardScript;               //Billboard UI
 #endregion
 
 
@@ -272,6 +273,7 @@ public class GameManager : MonoBehaviour
         topicDisplayScript = TopicUI.Instance();
         popUpDynamicScript = PopUpDynamic.Instance();
         popUpFixedScript = PopUpFixed.Instance();
+        billboardScript = BillboardUI.Instance();
         //Error Checking
         Debug.Assert(startScript != null, "Invalid startScript (Null)");
         Debug.Assert(levelScript != null, "Invalid levelScript (Null)");
