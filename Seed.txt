@@ -163,3 +163,27 @@ City seed 1616 -> Mexico City, Mexico
 
 Dev seed 56074 -> Friday, 2 October 2020 6:00 PM
 City seed 1616 -> Mexico City, Mexico
+
+Dev seed 20047 -> Friday, 2 October 2020 8:01 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 40989 -> Sunday, 4 October 2020 11:28 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 46101 -> Sunday, 4 October 2020 11:54 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 49120 -> Sunday, 4 October 2020 11:55 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 15160 -> Sunday, 4 October 2020 12:01 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 4548 -> Sunday, 4 October 2020 12:21 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 56221 -> Sunday, 4 October 2020 12:22 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 62008 -> Sunday, 4 October 2020 12:26 PM
+City seed 1616 -> Mexico City, Mexico

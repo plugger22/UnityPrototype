@@ -17,7 +17,8 @@ public class BillboardUI : MonoBehaviour
     private RectTransform billTransformRight;
 
     private float halfScreenWidth;
-    private float width;
+    /*private float width;*/
+    private int speed;
     private float distance;
 
     private static BillboardUI billboardUI;
@@ -59,10 +60,10 @@ public class BillboardUI : MonoBehaviour
     {
         //measurements
         halfScreenWidth = Screen.width / 2;
-        width = billTransformLeft.rect.width;
-        /*distance = width * 0.5f + halfScreenWidth;*/
+        /*width = billTransformLeft.rect.width;*/
         distance = halfScreenWidth;
-        Debug.LogFormat("[Tst] BillboardUI.cs -> halfScreenWidth {0}, panelWidth {1}, distance {2}{3}", halfScreenWidth, width, distance, "\n");
+        speed = 15;
+        /*Debug.LogFormat("[Tst] BillboardUI.cs -> halfScreenWidth {0}, panelWidth {1}, distance {2}{3}", halfScreenWidth, width, distance, "\n");*/
         //activate
         billCanvas.gameObject.SetActive(true);
         //Reset panels at start
@@ -94,7 +95,6 @@ public class BillboardUI : MonoBehaviour
     {
         Reset();
         int counter = 0;
-        int speed = 10;
         GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = gameAPI.ModalSubState.Billboard });
         while (counter < halfScreenWidth)
         {
