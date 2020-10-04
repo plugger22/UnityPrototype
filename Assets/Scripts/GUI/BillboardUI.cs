@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,7 @@ public class BillboardUI : MonoBehaviour
     public GameObject billObject;
     public Image billLeft;
     public Image billRight;
+    public TextMeshProUGUI billText;
 
     private RectTransform billTransformLeft;
     private RectTransform billTransformRight;
@@ -45,6 +47,7 @@ public class BillboardUI : MonoBehaviour
         Debug.Assert(billObject != null, "Invalid billObject (Null)");
         Debug.Assert(billLeft != null, "Invalid billLeft (Null)");
         Debug.Assert(billRight != null, "Invalid billRight (Null)");
+        Debug.Assert(billText != null, "Invalid billText (Null)");
         //initialise components
         billTransformLeft = billLeft.GetComponent<RectTransform>();
         billTransformRight = billRight.GetComponent<RectTransform>();
@@ -75,6 +78,7 @@ public class BillboardUI : MonoBehaviour
     /// </summary>
     public void Reset()
     {
+        billText.gameObject.SetActive(false);
         billLeft.transform.localPosition = new Vector3(-distance, 0, 0);
         billRight.transform.localPosition = new Vector3(distance, 0, 0);
     }
@@ -103,6 +107,7 @@ public class BillboardUI : MonoBehaviour
             billRight.transform.localPosition = new Vector3(distance - counter, 0, 0);
             yield return null;
         }
+        billText.gameObject.SetActive(true);
     }
 
     //events above here
