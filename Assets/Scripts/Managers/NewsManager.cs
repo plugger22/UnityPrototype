@@ -151,7 +151,7 @@ public class NewsManager : MonoBehaviour
     /// <returns></returns>
     public string GetNews()
     {
-        int indexNews, indexAdvert, countNews, countAdvert, limit;
+        int indexNews, countNews, limit;
         string newsSnippet, advert;
         string splicer = " ... Updating ... ";
         listOfCurrentNews.Clear();
@@ -165,68 +165,79 @@ public class NewsManager : MonoBehaviour
         List<NewsItem> listOfNewsItems = GameManager.i.dataScript.GetListOfNewsItems();
         if (listOfNewsItems != null)
         {
-            List<string> listOfAdverts = GameManager.i.dataScript.GetListOfAdverts();
-            if (listOfAdverts != null)
+            countNews = listOfNewsItems.Count;
+            if (countNews > 0)
             {
-                countNews = listOfNewsItems.Count;
-                if (countNews > 0)
+                //get num required per turn, capped by number available
+                limit = Mathf.Min(countNews, numOfNewsItems);
+                for (int i = 0; i < limit; i++)
                 {
-                    //get num required per turn, capped by number available
-                    limit = Mathf.Min(countNews, numOfNewsItems);
-                    for (int i = 0; i < limit; i++)
+                    //randomly select item from list
+                    indexNews = Random.Range(0, listOfNewsItems.Count);
+                    newsSnippet = listOfNewsItems[indexNews].text;
+                    listOfCurrentNews.Add(newsSnippet);
+                    if (string.IsNullOrEmpty(newsSnippet) == false)
                     {
-                        //randomly select item from list
-                        indexNews = Random.Range(0, listOfNewsItems.Count);
-                        newsSnippet = listOfNewsItems[indexNews].text;
-                        listOfCurrentNews.Add(newsSnippet);
-                        if (string.IsNullOrEmpty(newsSnippet) == false)
-                        {
-                            if (builder.Length > 0) { builder.Append(splicer); }
-                            builder.Append(newsSnippet);
-                            //
-                            // - - - ADVERT -> randomly select item from list
-                            //
-                            countAdvert = listOfAdverts.Count;
-                            if (countAdvert == 0)
-                            {
-                                //reinitialise
-                                GameManager.i.dataScript.InitialiseAdvertList();
-                                countAdvert = listOfAdverts.Count;
-                            }
-                            if (countAdvert > 0)
-                            {
-                                indexAdvert = Random.Range(0, listOfAdverts.Count);
-                                advert = listOfAdverts[indexAdvert];
-                                listOfCurrentAdverts.Add(advert);
-                                if (string.IsNullOrEmpty(advert) == false)
-                                {
-                                    if (builder.Length > 0) { builder.Append(splicer); }
-                                    builder.Append(advert);
-                                }
-                                else { Debug.LogWarningFormat("Invalid advert (Null or Empty) for listOfAdverts[{0}]", indexAdvert); }
+                        if (builder.Length > 0) { builder.Append(splicer); }
+                        builder.Append(newsSnippet);
 
-                                //delete Advert from list to prevent dupes
-                                listOfAdverts.RemoveAt(indexAdvert);
-                            }
-                            else { Debug.LogWarning("Invalid listOfAdverts (CountAdvert is Zero AFTER Reinitialising)"); }
-                        }
-                        else { Debug.LogWarningFormat("Invalid newsItem newsSnippet (Null or Empty) for listOfNewsItem[{0}]", indexNews); }
-                        //delete newsItem from list to prevent dupes
-                        listOfNewsItems.RemoveAt(indexNews);
+                        /*//get Advert
+                        advert = GetAdvert();
+                        //add to news
+                        if (builder.Length > 0) { builder.Append(splicer); }
+                        builder.Append(advert);*/
+
                     }
-                }
-                else
-                {
-                    builder.AppendFormat("{0}City News Blackout in force. Strikes at the Server Farm", splicer);
-                    listOfCurrentNews.Add("City News Blackout in force. Strikes at the Server Farm");
+                    else { Debug.LogWarningFormat("Invalid newsItem newsSnippet (Null or Empty) for listOfNewsItem[{0}]", indexNews); }
+                    //delete newsItem from list to prevent dupes
+                    listOfNewsItems.RemoveAt(indexNews);
                 }
             }
-            else { Debug.LogError("Invalid listOfAdverts (Null)"); }
+            else
+            {
+                builder.AppendFormat("{0}City News Blackout in force. Strikes at the Server Farm", splicer);
+                listOfCurrentNews.Add("City News Blackout in force. Strikes at the Server Farm");
+            }
         }
         else { Debug.LogError("Invalid listOfNewsItems (Null)"); }
         //fail safe
         if (builder.Length == 0) { builder.Append("News BlackOut in place"); }
         return builder.ToString();
+    }
+
+    /// <summary>
+    /// Returns a random advertisement, deletes from list, reinitialises list if empty
+    /// </summary>
+    /// <returns></returns>
+    public string GetAdvert()
+    {
+        int countAdvert, indexAdvert;
+        string advert = "Unknown";
+        List<string> listOfAdverts = GameManager.i.dataScript.GetListOfAdverts();
+        if (listOfAdverts != null)
+        {
+            countAdvert = listOfAdverts.Count;
+            if (countAdvert == 0)
+            {
+                //reinitialise
+                GameManager.i.dataScript.InitialiseAdvertList();
+                countAdvert = listOfAdverts.Count;
+            }
+            if (countAdvert > 0)
+            {
+                indexAdvert = Random.Range(0, listOfAdverts.Count);
+                advert = listOfAdverts[indexAdvert];
+                listOfCurrentAdverts.Add(advert);
+                //check for invalid advert
+                if (string.IsNullOrEmpty(advert) == true)
+                { Debug.LogWarningFormat("Invalid advert (Null or Empty) for listOfAdverts[{0}]", indexAdvert); }
+                //delete Advert from list to prevent dupes
+                listOfAdverts.RemoveAt(indexAdvert);
+            }
+            else { Debug.LogWarning("Invalid listOfAdverts (CountAdvert is Zero AFTER Reinitialising)"); }
+        }
+        else { Debug.LogError("Invalid listOfAdverts (Null)"); }
+        return advert;
     }
 
 
@@ -254,7 +265,7 @@ public class NewsManager : MonoBehaviour
                 checkedText = data.text;
                 string tag, replaceText;
                 int tagStart, tagFinish, length; //indexes
-                //loop while ever tags are present
+                                                 //loop while ever tags are present
                 while (checkedText.Contains("[") == true)
                 {
                     tagStart = checkedText.IndexOf("[");
@@ -360,8 +371,10 @@ public class NewsManager : MonoBehaviour
                         case "who":
                             //My '[best friend]'s [crazy] [sister]' 
                             if (data.isValidate == false)
-                            { replaceText = string.Format("{0}'s {1} {2}", GameManager.i.topicScript.textListWho0.GetRandomRecord(), GameManager.i.topicScript.textListCondition.GetRandomRecord(),
-                                GameManager.i.topicScript.textListWho1.GetRandomRecord()); }
+                            {
+                                replaceText = string.Format("{0}'s {1} {2}", GameManager.i.topicScript.textListWho0.GetRandomRecord(), GameManager.i.topicScript.textListCondition.GetRandomRecord(),
+                                  GameManager.i.topicScript.textListWho1.GetRandomRecord());
+                            }
                             break;
                         default:
                             if (data.isValidate == false)
