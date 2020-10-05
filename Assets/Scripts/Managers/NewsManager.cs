@@ -152,7 +152,7 @@ public class NewsManager : MonoBehaviour
     public string GetNews()
     {
         int indexNews, countNews, limit;
-        string newsSnippet, advert;
+        string newsSnippet;
         string splicer = " ... Updating ... ";
         listOfCurrentNews.Clear();
         listOfCurrentAdverts.Clear();
@@ -181,7 +181,7 @@ public class NewsManager : MonoBehaviour
                         if (builder.Length > 0) { builder.Append(splicer); }
                         builder.Append(newsSnippet);
 
-                        /*//get Advert
+                        /*//get Advert              NOTE: adverts now show on billboards, if you want to rejig you'll need to add the string variable 'advert'
                         advert = GetAdvert();
                         //add to news
                         if (builder.Length > 0) { builder.Append(splicer); }

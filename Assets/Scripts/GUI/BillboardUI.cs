@@ -13,7 +13,8 @@ public class BillboardUI : MonoBehaviour
     public GameObject billObject;
     public Image billLeft;
     public Image billRight;
-    public Image billPanel;
+    public Image billPanelOuter;
+    public Image billPanelInner;
     public TextMeshProUGUI billText;
 
     private RectTransform billTransformLeft;
@@ -23,6 +24,9 @@ public class BillboardUI : MonoBehaviour
     /*private float width;*/
     private int speed;
     private float distance;
+    private bool isFading;
+    private Color outerColour;
+    private float flashTime;
 
     private static BillboardUI billboardUI;
 
@@ -48,7 +52,8 @@ public class BillboardUI : MonoBehaviour
         Debug.Assert(billObject != null, "Invalid billObject (Null)");
         Debug.Assert(billLeft != null, "Invalid billLeft (Null)");
         Debug.Assert(billRight != null, "Invalid billRight (Null)");
-        Debug.Assert(billPanel != null, "Invalid billPanel (Null)");
+        Debug.Assert(billPanelInner != null, "Invalid billPanel (Null)");
+        Debug.Assert(billPanelOuter != null, "Invalid billPanel (Null)");
         Debug.Assert(billText != null, "Invalid billText (Null)");
         //initialise components
         billTransformLeft = billLeft.GetComponent<RectTransform>();
@@ -63,6 +68,8 @@ public class BillboardUI : MonoBehaviour
     /// </summary>
     private void InitialiseBillboard()
     {
+        outerColour = billPanelOuter.color;
+        flashTime = 1.0f;
         //measurements
         halfScreenWidth = Screen.width / 2;
         /*width = billTransformLeft.rect.width;*/
@@ -80,7 +87,8 @@ public class BillboardUI : MonoBehaviour
     /// </summary>
     public void Reset()
     {
-        billPanel.gameObject.SetActive(false);
+        billPanelOuter.gameObject.SetActive(false);
+        billPanelInner.gameObject.SetActive(false);
         billLeft.transform.localPosition = new Vector3(-distance, 0, 0);
         billRight.transform.localPosition = new Vector3(distance, 0, 0);
     }
@@ -111,7 +119,28 @@ public class BillboardUI : MonoBehaviour
             billRight.transform.localPosition = new Vector3(distance - counter, 0, 0);
             yield return null;
         }
-        billPanel.gameObject.SetActive(true);
+        billPanelInner.gameObject.SetActive(true);
+        billPanelOuter.gameObject.SetActive(true);
+        //indefinitely strobe outer panel (cyan neon borders)
+        isFading = true;
+        while (true)
+        {
+            outerColour = billPanelOuter.color;
+            if (isFading == false)
+            {
+                outerColour.a += Time.deltaTime / flashTime;
+                if (outerColour.a >= 1.0f)
+                { isFading = true; }
+            }
+            else
+            {
+                outerColour.a -= Time.deltaTime / flashTime;
+                if (outerColour.a <= 0.0f)
+                { isFading = false; }
+            }
+            billPanelOuter.color = outerColour;
+            yield return null;
+        }
     }
 
     //events above here
