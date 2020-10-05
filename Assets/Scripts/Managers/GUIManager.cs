@@ -98,6 +98,10 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Max number of options available in UI")]
     [Range(4, 4)] public int maxInventoryOptions = 4;
 
+    [Header("BillboardUI")]
+    [Tooltip("If billboard is switch 'ON' gives the % chance (less than) of a billboard being shown at the end of a turn (eg. determines frequency)")]
+    [Range(0, 100)] public int billboardChance = 33;
+
     [Header("Sprites")]
     [Tooltip("Sprite to use for ActorGUI to show that the position is vacant")]
     public Sprite vacantActorSprite;
@@ -851,12 +855,19 @@ public class GUIManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator InfoPipeline(GlobalSide playerSide)
     {
-
-        GameManager.i.billboardScript.RunBillboard();
-        yield return new WaitUntil(() => waitUntilDone == true);
-        waitUntilDone = false;
-        GameManager.i.billboardScript.ResetBillboard();
-
+        //Billboard
+        if (GameManager.i.optionScript.billboard == true)
+        {
+            int rnd = UnityEngine.Random.Range(0, 100);
+            Debug.LogFormat("[Rnd] -> GUIManager.cs -> InfoPipeline: Billboard {0}, need < {1}, rolled {2}{3}", rnd < billboardChance ? "True" : "False", billboardChance, rnd, "\n");
+            if (rnd < billboardChance)
+            {
+                GameManager.i.billboardScript.RunBillboard();
+                yield return new WaitUntil(() => waitUntilDone == true);
+                waitUntilDone = false;
+                GameManager.i.billboardScript.ResetBillboard();
+            }
+        }
         //loop through each message type and display in enum order, if present, one at a time.
         foreach (var msgType in Enum.GetValues(typeof(MsgPipelineType)))
         {

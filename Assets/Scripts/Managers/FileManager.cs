@@ -352,11 +352,14 @@ public class FileManager : MonoBehaviour
     {
         write.optionData.autoGearResolution = GameManager.i.optionScript.autoGearResolution;
         write.optionData.fogOfWar = GameManager.i.optionScript.fogOfWar;
+        write.optionData.fixedActorStats = GameManager.i.optionScript.fixedActorStats;
+        write.optionData.billboard = GameManager.i.optionScript.billboard;
         write.optionData.debugData = GameManager.i.optionScript.debugData;
         write.optionData.noAI = GameManager.i.optionScript.noAI;
         write.optionData.showContacts = GameManager.i.optionScript.showContacts;
         write.optionData.showRenown = GameManager.i.optionScript.showRenown;
         write.optionData.connectorTooltips = GameManager.i.optionScript.connectorTooltips;
+        write.optionData.fullMoodInfo = GameManager.i.optionScript.fullMoodInfo;
         write.optionData.colourScheme = GameManager.i.optionScript.ColourOption;
     }
     #endregion
@@ -2059,11 +2062,14 @@ public class FileManager : MonoBehaviour
     {
         GameManager.i.optionScript.autoGearResolution = read.optionData.autoGearResolution;
         GameManager.i.optionScript.fogOfWar = read.optionData.fogOfWar;
+        GameManager.i.optionScript.fixedActorStats = read.optionData.fixedActorStats;
+        GameManager.i.optionScript.billboard = read.optionData.billboard;
         GameManager.i.optionScript.debugData = read.optionData.debugData;
         GameManager.i.optionScript.noAI = read.optionData.noAI;
         GameManager.i.optionScript.showContacts = read.optionData.showContacts;
         GameManager.i.optionScript.showRenown = read.optionData.showRenown;
         GameManager.i.optionScript.connectorTooltips = read.optionData.connectorTooltips;
+        GameManager.i.optionScript.fullMoodInfo = read.optionData.fullMoodInfo;
         GameManager.i.optionScript.ColourOption = read.optionData.colourScheme;
         //Debug button texts
         if (read.optionData.autoGearResolution == true)

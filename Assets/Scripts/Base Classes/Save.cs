@@ -93,10 +93,13 @@ public class SaveOptionData
     public bool autoGearResolution;
     public bool fogOfWar;
     public bool debugData;
+    public bool fixedActorStats;
+    public bool billboard;
     public bool noAI;
     public bool showContacts;
     public bool showRenown;
     public bool connectorTooltips;
+    public bool fullMoodInfo;
     public ColourScheme colourScheme;
 }
 #endregion

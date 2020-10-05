@@ -79,6 +79,7 @@ public class DebugGUI : MonoBehaviour
     private string optionPath;
     public string optionContacts;
     private string optionMoodInfo;
+    private string optionBillboardInfo;
 
     private void Awake()
     {
@@ -101,6 +102,7 @@ public class DebugGUI : MonoBehaviour
         optionPath = "Input Path";
         optionContacts = "Contacts ON";
         optionMoodInfo = "Mood Info ON";
+        optionBillboardInfo = "Billboard OFF";
     }
 
     // Update is called once per frame
@@ -132,7 +134,7 @@ public class DebugGUI : MonoBehaviour
 
             customBackground.alignment = TextAnchor.UpperCenter;
             //background box (Options)
-            GUI.Box(new Rect(box_option, box_y, box_width, box_height / 2 + 60), "Option Menu", customBackground);
+            GUI.Box(new Rect(box_option, box_y, box_width, box_height / 2 + 90), "Option Menu", customBackground);
             //background box (Info)
             GUI.Box(new Rect(box_info, box_y, box_width, box_height + 290), "Info Menu", customBackground);
             //background box (Actions)
@@ -512,7 +514,7 @@ public class DebugGUI : MonoBehaviour
             }
 
             //
-            // - - - Options (second box)
+            // - - - Options Menu
             //
 
             //first button
@@ -708,7 +710,8 @@ public class DebugGUI : MonoBehaviour
             }
 
             //twelfth button
-            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 9 + button_height * 9, button_width, button_height), optionMoodInfo))
+            int offset = 9;
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), optionMoodInfo))
             {
                 Debug.Log("[Dbg] Button -> Toggle Full Mood Info option");
                 if (GameManager.i.optionScript.fullMoodInfo == true)
@@ -723,7 +726,22 @@ public class DebugGUI : MonoBehaviour
                 }
             }
 
-
+            //thirteenth button
+            offset = 10;
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), optionBillboardInfo))
+            {
+                Debug.Log("[Dbg] Button -> Toggle Billboard option");
+                if (GameManager.i.optionScript.billboard == true)
+                {
+                    GameManager.i.optionScript.billboard = false;
+                    optionBillboardInfo = "Billboard ON";
+                }
+                else
+                {
+                    GameManager.i.optionScript.billboard = true;
+                    optionBillboardInfo = "Billboard OFF";
+                }
+            }
 
             //
             // - - - Actions (third box)

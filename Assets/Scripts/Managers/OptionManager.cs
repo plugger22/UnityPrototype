@@ -14,6 +14,7 @@ public class OptionManager : MonoBehaviour
     [HideInInspector] public bool autoGearResolution = false;                     //if true then dice roller ignored whenever not enough renown to save gear
     [HideInInspector] public bool fogOfWar = false;                               //if true then one sides sees only the information that they should
     [HideInInspector] public bool fixedActorStats = false;                        //if true then actors will have varying stats according to level, if false then actors of the same level all have identical stats
+    [HideInInspector] public bool billboard = true;                               //if true billboard shows between turns
     
     //Debug options
     [HideInInspector] public bool debugData = false;                              //if true debug data is displayed onscreen
@@ -68,6 +69,8 @@ public class OptionManager : MonoBehaviour
             .AppendFormat("{0}- Game Options{1}", "\n", "\n")
             .AppendFormat(" Fog Of War (Show from POV of Player) -> {0}{1}", fogOfWar, "\n")
             .AppendFormat(" Auto Gear (Dice ignored if not enough renown) -> {0}{1}", autoGearResolution, "\n")
+            .AppendFormat(" Fixed Actor Stats -> {0}{1}", fixedActorStats, "\n")
+            .AppendFormat(" Billboards -> {0}{1}", billboard, "\n")
             .AppendFormat("{0}- Debug Options{1}","\n", "\n")
             .AppendFormat(" Debug Data -> {0}{1}", debugData, "\n")
             .AppendFormat(" NO AI -> {0}{1}", noAI, "\n")
