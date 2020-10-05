@@ -39,6 +39,8 @@ public class GUIManager : MonoBehaviour
     [Range(0.1f, 1.0f)] public float flashConnectiontTime = 0.4f;
     [Tooltip("Flash interval (in real seconds) for InfoApp alerts over the top of Request and Meeting tabs")]
     [Range(0.1f, 1.0f)] public float flashInfoTabTime = 0.4f;
+    [Tooltip("Billboard neon cyan background, strobing in and out")]
+    [Range(0.5f, 2.0f)] public float flashBillboardTime = 1.0f;
 
     [Header("PopUp Texts")]
     [Tooltip("How long the full animation cycle lasts (seconds)")]
@@ -853,8 +855,7 @@ public class GUIManager : MonoBehaviour
         GameManager.i.billboardScript.RunBillboard();
         yield return new WaitUntil(() => waitUntilDone == true);
         waitUntilDone = false;
-        yield return new WaitForSecondsRealtime(pipelineWait);
-        GameManager.i.billboardScript.Reset();
+        GameManager.i.billboardScript.ResetBillboard();
 
         //loop through each message type and display in enum order, if present, one at a time.
         foreach (var msgType in Enum.GetValues(typeof(MsgPipelineType)))

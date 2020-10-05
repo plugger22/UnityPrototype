@@ -503,11 +503,13 @@ public class InputManager : MonoBehaviour
                             if (Input.GetButtonDown("Multipurpose") == true)
                             {
                                 GameManager.i.guiScript.waitUntilDone = true;
-                                /*EventManager.i.PostNotification(EventType.InventoryCloseUI, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");*/
+                                EventManager.i.PostNotification(EventType.BillboardClose, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
                             }
                             else
                             {
+                                //any key or mouse click
                                 GameManager.i.guiScript.waitUntilDone = true;
+                                EventManager.i.PostNotification(EventType.BillboardClose, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
                             }
                             break;
                         #endregion

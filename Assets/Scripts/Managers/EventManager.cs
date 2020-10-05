@@ -211,6 +211,8 @@ public enum EventType
     TopicDisplayShowMe,
     TopicDisplayOption,
     TopicDisplayIgnore,
+    //Billboard
+    BillboardClose,
     //ShowMe
     ShowMeRestore,
     //ActorPanelUI

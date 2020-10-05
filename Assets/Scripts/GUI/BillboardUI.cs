@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using gameAPI;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -23,10 +25,12 @@ public class BillboardUI : MonoBehaviour
     private float halfScreenWidth;
     /*private float width;*/
     private int speed;
+    private int counter;
     private float distance;
     private bool isFading;
     private Color outerColour;
-    private float flashTime;
+    private float flashNeon;
+    private float offset;                   //offset distance to get panels off screen during development
 
     private static BillboardUI billboardUI;
 
@@ -45,9 +49,43 @@ public class BillboardUI : MonoBehaviour
         return billboardUI;
     }
 
-    public void OnEnable()
+
+    public void Initialise(GameState state)
     {
-        //asserts
+        switch (state)
+        {
+            case GameState.StartUp:
+            case GameState.NewInitialisation:
+                SubInitialiseFastAccess();
+                SubInitialiseSessionStart();
+                SubInitialiseEvents();
+                break;
+            case GameState.LoadAtStart:
+                SubInitialiseFastAccess();
+                SubInitialiseSessionStart();
+                SubInitialiseEvents();
+                break;
+            case GameState.FollowOnInitialisation:
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
+                break;
+        }
+    }
+
+    #region Initialise SubMethods
+
+    #region SubInitialiseFastAccess
+    private void SubInitialiseFastAccess()
+    {
+        flashNeon = GameManager.i.guiScript.flashBillboardTime;
+        Debug.Assert(flashNeon > 0.0f, "Invalid flashNeon (Zero)");
+    }
+    #endregion
+
+    #region SubInitialiseSessionStart
+    private void SubInitialiseSessionStart()
+    {
         Debug.Assert(billCanvas != null, "Invalid billCanvas (Null)");
         Debug.Assert(billObject != null, "Invalid billObject (Null)");
         Debug.Assert(billLeft != null, "Invalid billLeft (Null)");
@@ -60,8 +98,41 @@ public class BillboardUI : MonoBehaviour
         billTransformRight = billRight.GetComponent<RectTransform>();
         Debug.Assert(billTransformLeft != null, "Invalid billTransformLeft (Null)");
         Debug.Assert(billTransformRight != null, "Invalid billTransformRight (Null)");
+        //initialise billboard
         InitialiseBillboard();
     }
+    #endregion
+
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
+    {
+        //event listener
+        EventManager.i.AddListener(EventType.BillboardClose, OnEvent, "BillboardUI");
+    }
+    #endregion
+
+    #endregion
+
+    /// <summary>
+    /// Event handler
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //Detect event type
+        switch (eventType)
+        {
+            case EventType.BillboardClose:
+                CloseBillboard();
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
+                break;
+        }
+    }
+
 
     /// <summary>
     /// Set billboard parameters and start position
@@ -69,28 +140,29 @@ public class BillboardUI : MonoBehaviour
     private void InitialiseBillboard()
     {
         outerColour = billPanelOuter.color;
-        flashTime = 1.0f;
+        flashNeon = 1.0f;
         //measurements
         halfScreenWidth = Screen.width / 2;
-        /*width = billTransformLeft.rect.width;*/
-        distance = halfScreenWidth;
+        offset = 135;
+        distance = halfScreenWidth + offset;
         speed = 15;
-        /*Debug.LogFormat("[Tst] BillboardUI.cs -> halfScreenWidth {0}, panelWidth {1}, distance {2}{3}", halfScreenWidth, width, distance, "\n");*/
         //activate
         billCanvas.gameObject.SetActive(true);
         //Reset panels at start
-        Reset();
+        ResetBillboard();
+        /*Debug.LogFormat("[Tst] BillboardUI.cs -> halfScreenWidth {0}, panelWidth {1}, distance {2}{3}", halfScreenWidth, width, distance, "\n");*/
     }
 
     /// <summary>
     /// reset panels just off screen
     /// </summary>
-    public void Reset()
+    public void ResetBillboard()
     {
         billPanelOuter.gameObject.SetActive(false);
         billPanelInner.gameObject.SetActive(false);
         billLeft.transform.localPosition = new Vector3(-distance, 0, 0);
         billRight.transform.localPosition = new Vector3(distance, 0, 0);
+        Debug.LogFormat("[UI] BillboardUI.cs -> Reset: Reset Billboard{0}", "\n");
     }
 
     /// <summary>
@@ -98,21 +170,21 @@ public class BillboardUI : MonoBehaviour
     /// </summary>
     public void RunBillboard()
     {
+        Debug.LogFormat("[UI] BillboardUI.cs -> RunBillboard: Start Billboard{0}", "\n");
         string displayText = GameManager.i.newsScript.GetAdvert();
-        StartCoroutine("Slide", displayText);
+        StartCoroutine("BillOpen", displayText);
     }
 
     /// <summary>
-    /// coroutine to slide panels together
+    /// coroutine to slide panels together then display billboard (strobes the neon border)
     /// </summary>
     /// <returns></returns>
-    private IEnumerator Slide(string textToDisplay)
+    private IEnumerator BillOpen(string textToDisplay)
     {
-        Reset();
-        int counter = 0;
+        counter = 0;
         billText.text = textToDisplay;
-        GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = gameAPI.ModalSubState.Billboard });
-        while (counter < halfScreenWidth)
+        GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Billboard });
+        while (counter < distance)
         {
             counter += speed;
             billLeft.transform.localPosition = new Vector3(-distance + counter, 0, 0);
@@ -128,13 +200,13 @@ public class BillboardUI : MonoBehaviour
             outerColour = billPanelOuter.color;
             if (isFading == false)
             {
-                outerColour.a += Time.deltaTime / flashTime;
+                outerColour.a += Time.deltaTime / flashNeon;
                 if (outerColour.a >= 1.0f)
                 { isFading = true; }
             }
             else
             {
-                outerColour.a -= Time.deltaTime / flashTime;
+                outerColour.a -= Time.deltaTime / flashNeon;
                 if (outerColour.a <= 0.0f)
                 { isFading = false; }
             }
@@ -143,5 +215,36 @@ public class BillboardUI : MonoBehaviour
         }
     }
 
-    //events above here
+
+    /// <summary>
+    /// Close billboard controller
+    /// </summary>
+    public void CloseBillboard()
+    {
+        Debug.LogFormat("[UI] BillboardUI.cs -> CloseBillboard: Close Billboard{0}", "\n");
+        StartCoroutine("BillClose");
+    }
+
+    /// <summary>
+    /// Slides billboard panels back out of view after turning off billboard display
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator BillClose()
+    {
+        counter = Convert.ToInt32(halfScreenWidth);
+        GameManager.i.inputScript.ResetStates();
+        billPanelInner.gameObject.SetActive(false);
+        billPanelOuter.gameObject.SetActive(false);
+        while (counter > 0)
+        {
+            counter -= speed;
+            billLeft.transform.localPosition = new Vector3(-distance + counter, 0, 0);
+            billRight.transform.localPosition = new Vector3(distance - counter, 0, 0);
+            yield return null;
+        }
+
+    }
+
+
+        //events above here
 }

@@ -770,6 +770,10 @@ public class GameManager : MonoBehaviour
         startMethod.handler = inventoryScript.Initialise;
         startMethod.className = "ModalInventoryUI";
         listOfUIMethods.Add(startMethod);
+        //BillboardUI
+        startMethod.handler = billboardScript.Initialise;
+        startMethod.className = "BillboardUI";
+        listOfUIMethods.Add(startMethod);
         #endregion
 
         #region Debug Methods
