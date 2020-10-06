@@ -2173,6 +2173,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 067f80614fe421042aade118882e35d9, type: 2}
   - {fileID: 11400000, guid: df11ee2fd4904ec47be0f4d580ff287f, type: 2}
   - {fileID: 11400000, guid: 28d0ade46a101b948b60be2263ea7309, type: 2}
+  arrayOfBillboardAdverts:
+  - {fileID: 11400000, guid: 0f4fcf7e686e3284a96ac4c137d953e7, type: 2}
+  - {fileID: 11400000, guid: 53dcb7642d407c34b8e3a0c64391a16f, type: 2}
+  - {fileID: 11400000, guid: 10ff82120fb35684f8e60054a06d3aae, type: 2}
+  - {fileID: 11400000, guid: 8aeca94dadee55b4fb28438711883298, type: 2}
+  - {fileID: 11400000, guid: 40abc10c17901ef478831334e215dbf5, type: 2}
+  - {fileID: 11400000, guid: 34a615c171bad654b9377bcdcf1cd563, type: 2}
+  - {fileID: 11400000, guid: 89013e672a7bc844ca53e9a6808b0202, type: 2}
+  - {fileID: 11400000, guid: 88f60dbb3c73fbc4d9ed199ec9f05d06, type: 2}
+  - {fileID: 11400000, guid: 0cae4f79ef1445448bb587adb5cf885a, type: 2}
+  - {fileID: 11400000, guid: a70305db510d0034aa4e1db7da8a9e9c, type: 2}
   arrayOfStoryModules:
   - {fileID: 11400000, guid: 4a3d16d5f29b52a48b74192c0bbd80d2, type: 2}
   - {fileID: 11400000, guid: 47b8784802e99f3418be87e7e59e34a2, type: 2}
@@ -5657,6 +5668,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cc00a3de8e625da47828df89ceee4e6f, type: 2}
   - {fileID: 11400000, guid: c53678f6037fc1a4090276eceaec08b1, type: 2}
   arrayOfMetaOptions: []
+  arrayOfBillboards: []
 --- !u!114 &114395521989347528
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5697,6 +5709,7 @@ MonoBehaviour:
   autoGearResolution: 0
   fogOfWar: 0
   fixedActorStats: 0
+  billboard: 1
   debugData: 0
   noAI: 0
   showContacts: 0
@@ -6220,6 +6233,7 @@ MonoBehaviour:
   flashNodeTime: 0.4
   flashConnectiontTime: 0.4
   flashInfoTabTime: 0.4
+  flashBillboardTime: 1
   timerMax: 2
   moveSpeed: 0
   increaseScale: 1
@@ -6240,6 +6254,7 @@ MonoBehaviour:
   reviewTimeInterval: 0.1
   actorFontSize: 18
   maxInventoryOptions: 4
+  billboardChance: 100
   vacantActorSprite: {fileID: 21300000, guid: d7f77a0f40a944e4bafd0104b4e0b8b1, type: 3}
   errorSprite: {fileID: 21300000, guid: b9bbb6ebf7eace84fa8f788ca4d7fc72, type: 3}
   infoSprite: {fileID: 21300000, guid: 487d8e165f0c4564b8465f21c927f6b2, type: 3}

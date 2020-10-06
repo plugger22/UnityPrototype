@@ -87,6 +87,9 @@ public class LoadManager : MonoBehaviour
     public Effect[] arrayOfEffectsTeams;
     public Effect[] arrayOfEffectsTopics;
 
+    [Header("Billboards")]
+    public Billboard[] arrayOfBillboardAdverts;
+
     [Header("Stories")]
     public StoryModule[] arrayOfStoryModules;
     public StoryData[] arrayOfStoryData;
@@ -192,6 +195,7 @@ public class LoadManager : MonoBehaviour
     [HideInInspector] public Target[] arrayOfTargets;
     [HideInInspector] public TopicOption[] arrayOfTopicOptions;
     [HideInInspector] public MetaOption[] arrayOfMetaOptions;
+    [HideInInspector] public Billboard[] arrayOfBillboards;
     #endregion
 
     #region InitialiseStart
@@ -962,6 +966,19 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfStoryComms has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No StoryComms present"); }
+        //
+        // - - - Billboards (not stored in a collection)
+        //
+        Debug.Assert(arrayOfBillboardAdverts.Length > 0, "Invalid arrayOfBillboardAdverts (Empty)");
+        //consolidate into master array
+        List<Billboard> listOfBillboards = new List<Billboard>();
+        listOfBillboards.AddRange(arrayOfBillboardAdverts);
+        arrayOfBillboards = listOfBillboards.ToArray();
+        numArray = arrayOfBillboards.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfBillboards has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No Billboards present"); }
+
     }
     #endregion
 

@@ -1,7 +1,6 @@
 ﻿using gameAPI;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -171,18 +170,23 @@ public class BillboardUI : MonoBehaviour
     public void RunBillboard()
     {
         Debug.LogFormat("[UI] BillboardUI.cs -> RunBillboard: Start Billboard{0}", "\n");
-        string displayText = GameManager.i.newsScript.GetAdvert();
-        StartCoroutine("BillOpen", displayText);
+        /*string displayText = GameManager.i.newsScript.GetAdvert();*/
+        Billboard billboard = GameManager.i.dataScript.GetBillboard();
+        if (billboard != null)
+        {
+            StartCoroutine("BillOpen", billboard);
+        }
+        else { Debug.LogWarning("Invalid billboard (Null)"); }
     }
 
     /// <summary>
     /// coroutine to slide panels together then display billboard (strobes the neon border)
     /// </summary>
     /// <returns></returns>
-    private IEnumerator BillOpen(string textToDisplay)
+    private IEnumerator BillOpen(Billboard billboard)
     {
         counter = 0;
-        billText.text = textToDisplay;
+        billText.text = ProcessBillboardText(billboard);
         GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Billboard });
         while (counter < distance)
         {
@@ -215,6 +219,22 @@ public class BillboardUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Takes strings from billboard and converts any '[' and ']' tags (topText only) into textmeshPro tags
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    private string ProcessBillboardText(Billboard billboard)
+    {
+        string checkedText = "Unknown";
+        if (string.IsNullOrEmpty(billboard.textTop) == false)
+        {
+            string tempText = billboard.textTop.Replace("[", "<size=120%><color=#66B2FF>");
+            checkedText = tempText.Replace("]", "</size><color=#A89947>");
+        }
+        return checkedText;
+    }
+
 
     /// <summary>
     /// Close billboard controller
@@ -222,6 +242,7 @@ public class BillboardUI : MonoBehaviour
     public void CloseBillboard()
     {
         Debug.LogFormat("[UI] BillboardUI.cs -> CloseBillboard: Close Billboard{0}", "\n");
+        StopCoroutine("BillOpen");
         StartCoroutine("BillClose");
     }
 
@@ -246,5 +267,5 @@ public class BillboardUI : MonoBehaviour
     }
 
 
-        //events above here
+    //events above here
 }

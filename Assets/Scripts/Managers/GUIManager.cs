@@ -100,7 +100,7 @@ public class GUIManager : MonoBehaviour
 
     [Header("BillboardUI")]
     [Tooltip("If billboard is switch 'ON' gives the % chance (less than) of a billboard being shown at the end of a turn (eg. determines frequency)")]
-    [Range(0, 100)] public int billboardChance = 33;
+    [Range(0, 100)] public int billboardChance = 10;
 
     [Header("Sprites")]
     [Tooltip("Sprite to use for ActorGUI to show that the position is vacant")]
