@@ -1972,6 +1972,8 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfStoryData);
         //TopicItems
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfTopicItems);
+        //Billboards
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfBillboards);
     }
     #endregion
 

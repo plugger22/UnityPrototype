@@ -20,4 +20,11 @@ public class Billboard : ScriptableObject
     [Header("Details")]
     [Tooltip("Highlights are shown as Blue colour (with yellow normal text) but you can select Red for the highlight if needed")]
     public bool isRedHighlight;
+
+    public void OnEnable()
+    {
+        Debug.AssertFormat(string.IsNullOrEmpty(textTop) == false, "Invalid textTop (Null or Empty) for {0}", name);
+        Debug.AssertFormat(string.IsNullOrEmpty(textBottom) == false, "Invalid textBottom (Null or Empty) for {0}", name);
+        Debug.AssertFormat(category != null, "Invalid category (Null) for {0}", name);
+    }
 }
