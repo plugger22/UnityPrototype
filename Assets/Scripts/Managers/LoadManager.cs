@@ -601,6 +601,38 @@ public class LoadManager : MonoBehaviour
         Debug.AssertFormat(dictOfTextLists.Count == numArray, "Mismatch on Textlists. Array has {0}, dict has {1}", numArray, dictOfTextLists.Count);
         Debug.LogFormat("[Loa] InitialiseStart -> dictOfTextLists has {0} records{1}", dictOfTextLists.Count, "\n");
         //
+        // - - - Billboards Advertisments (not stored in a collection)
+        //
+        numArray = arrayOfBillboardAdverts.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfBillboardAdverts has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No BillboardAdverts present"); }
+        //
+        // - - - Billboards (not stored in a collection)
+        //
+        List<Billboard> listOfBillboards = new List<Billboard>();
+        listOfBillboards.AddRange(arrayOfBillboardAdverts);
+        //consolidate into master array
+        arrayOfBillboards = listOfBillboards.ToArray();
+        numArray = arrayOfBillboards.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfBillboards has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No Billboards present"); }
+        //add to dictOfBillboards
+        Dictionary<string, Billboard> dictOfBillboards = GameManager.i.dataScript.GetDictOfBillboards();
+        foreach (Billboard billboard in arrayOfBillboards)
+        {
+            if (billboard != null)
+            {
+                try { dictOfBillboards.Add(billboard.name, billboard); }
+                catch (ArgumentException)
+                { Debug.LogWarningFormat("Duplicate Billboard {0} in dictOfBillboards", billboard.name); }
+            }
+            else { Debug.LogWarning("Invalid billboard (Null) in arrayOfBillboards"); }
+        }
+        Debug.AssertFormat(dictOfBillboards.Count == numArray, "Mismatch on Billboards. Array has {0}, dict has {1}", numArray, dictOfBillboards.Count);
+        Debug.LogFormat("[Loa] InitialiseStart -> dictOfBillboards has {0} records{1}", dictOfBillboards.Count, "\n");
+        //
         // - - - NameSets (not stored in a collection)
         //
         Dictionary<string, NameSet> dictOfNameSet = GameManager.i.dataScript.GetDictOfNameSet();
@@ -966,18 +998,7 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfStoryComms has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No StoryComms present"); }
-        //
-        // - - - Billboards (not stored in a collection)
-        //
-        Debug.Assert(arrayOfBillboardAdverts.Length > 0, "Invalid arrayOfBillboardAdverts (Empty)");
-        //consolidate into master array
-        List<Billboard> listOfBillboards = new List<Billboard>();
-        listOfBillboards.AddRange(arrayOfBillboardAdverts);
-        arrayOfBillboards = listOfBillboards.ToArray();
-        numArray = arrayOfBillboards.Length;
-        if (numArray > 0)
-        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfBillboards has {0} entries{1}", numArray, "\n"); }
-        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No Billboards present"); }
+
 
     }
     #endregion

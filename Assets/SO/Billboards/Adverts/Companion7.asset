@@ -9,9 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 58fde649d276b1846859ce00887dee3b, type: 3}
-  m_Name: Boarsun8
+  m_Name: Companion7
   m_EditorClassIdentifier: 
   category: {fileID: 11400000, guid: 77d10a28a59a81147ba25515edeeb451, type: 2}
-  textTop: Chess or checkers? We'll make you a Master with a course of premium [ThinkRite]
-  textBottom: Boarsun Pharmaceuticals, Drugs for Life
-  isRedHighlight: 1
+  textTop: You'll never feel lonely with one of our models. They [know] that you're
+    [special]
+  textBottom: Companions For Life, Automation Made Real
+  isRedHighlight: 0

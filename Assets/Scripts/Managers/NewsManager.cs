@@ -468,5 +468,28 @@ public class NewsManager : MonoBehaviour
         return builder.ToString();
     }
 
+    /// <summary>
+    /// debug display of listOfBillboards (billboard pool yet to be displayed)
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayBillboards()
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.AppendFormat("- listOfBillboards{0}", "\n");
+        List<string> listOfBillboards = GameManager.i.dataScript.GetListOfBillboards();
+        if (listOfBillboards != null)
+        {
+            int count = listOfBillboards.Count;
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                { builder.AppendFormat(" {0}{1}", listOfBillboards[i], "\n"); }
+            }
+            else { builder.AppendFormat("{0} no records found", "\n"); }
+        }
+        else { Debug.LogWarning("Invalid listOfBillboards (Null)"); }
+        return builder.ToString();
+    }
+
     //new methods above here
 }

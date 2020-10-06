@@ -16,4 +16,8 @@ public class Billboard : ScriptableObject
     [TextArea] public string textTop;
     [Tooltip("Secondary text, shown slanted in a smaller size down the bottom (can't use tags)")]
     [TextArea] public string textBottom;
+
+    [Header("Details")]
+    [Tooltip("Highlights are shown as Blue colour (with yellow normal text) but you can select Red for the highlight if needed")]
+    public bool isRedHighlight;
 }

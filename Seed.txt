@@ -16,3 +16,56 @@ City seed 1616 -> Mexico City, Mexico
 
 Dev seed 13102 -> Tuesday, 6 October 2020 12:38 PM
 City seed 1616 -> Mexico City, Mexico
+
+Dev seed 64231 -> Tuesday, 6 October 2020 2:39 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 10244 -> Tuesday, 6 October 2020 2:43 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 790 -> Tuesday, 6 October 2020 2:45 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 26584 -> Tuesday, 6 October 2020 2:46 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 63766 -> Tuesday, 6 October 2020 2:49 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 14555 -> Tuesday, 6 October 2020 2:56 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 11629 -> Tuesday, 6 October 2020 3:05 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 22050 -> Tuesday, 6 October 2020 3:19 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 24235 -> Tuesday, 6 October 2020 4:07 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 64251 -> Tuesday, 6 October 2020 4:22 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 65495 -> Tuesday, 6 October 2020 4:35 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 26544 -> Tuesday, 6 October 2020 4:37 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 25211 -> Tuesday, 6 October 2020 4:43 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 10675 -> Tuesday, 6 October 2020 4:47 PM
+City seed 1616 -> Mexico City, Mexico
+WARNING Invalid saveList dimension (is 5, should be 5), changed automatically (if < than required, arrayOfMegaCorpRel's may be incorect)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:SetMegaCorpRelations(List`1) (at Assets/Scripts/Managers/DataManager.cs:9934)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2490)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:220)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	City seed 1616 -> Mexico City, Mexico

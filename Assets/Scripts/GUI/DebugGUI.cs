@@ -471,7 +471,8 @@ public class DebugGUI : MonoBehaviour
                 {
                     case 0: debugDisplay = 72; newsToggle = 1; break;
                     case 1: debugDisplay = 73; newsToggle = 2; break;
-                    case 2: debugDisplay = 0; newsToggle = 0; break;
+                    case 2: debugDisplay = 114; newsToggle = 3; break;
+                    case 3: debugDisplay = 0; newsToggle = 0; break;
                 }
             }
 
@@ -2071,6 +2072,12 @@ public class DebugGUI : MonoBehaviour
                     case 113:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.topicScript.DebugDisplayStoryTopics(StoryType.Charlie);
+                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 800), analysis, customBackground);
+                        break;
+                    //Billboards
+                    case 114:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.i.newsScript.DebugDisplayBillboards();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 800), analysis, customBackground);
                         break;
                 }

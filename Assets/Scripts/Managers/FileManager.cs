@@ -1279,6 +1279,14 @@ public class FileManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid dictOfTextLists (Null)"); }
         #endregion
+
+        #region billboards
+        //billboards
+        List<string> listOfBillboards = GameManager.i.dataScript.GetListOfBillboards();
+        if (listOfBillboards != null)
+        { write.dataData.listOfBillboards.AddRange(listOfBillboards); }
+        else { Debug.LogError("Invalid listOfBillboards (Null)"); }
+        #endregion
     }
     #endregion
 
@@ -3204,6 +3212,10 @@ public class FileManager : MonoBehaviour
         #region News
         GameManager.i.dataScript.SetListOfNewsItems(read.dataData.listOfNewsItems);
         GameManager.i.dataScript.SetListOfAdverts(read.dataData.listOfAdverts);
+        #endregion
+
+        #region Billboards
+        GameManager.i.dataScript.SetListOfBillboards(read.dataData.listOfBillboards);
         #endregion
 
         #region textLists

@@ -16,7 +16,8 @@ public class BillboardUI : MonoBehaviour
     public Image billRight;
     public Image billPanelOuter;
     public Image billPanelInner;
-    public TextMeshProUGUI billText;
+    public TextMeshProUGUI billTextTop;
+    public TextMeshProUGUI billTextBottom;
 
     private RectTransform billTransformLeft;
     private RectTransform billTransformRight;
@@ -30,6 +31,11 @@ public class BillboardUI : MonoBehaviour
     private Color outerColour;
     private float flashNeon;
     private float offset;                   //offset distance to get panels off screen during development
+    private string colourBlue;
+    private string colourRed;
+    private string endTag;
+    private string sizeLarge;
+    private string sizeSmall;
 
     private static BillboardUI billboardUI;
 
@@ -91,12 +97,19 @@ public class BillboardUI : MonoBehaviour
         Debug.Assert(billRight != null, "Invalid billRight (Null)");
         Debug.Assert(billPanelInner != null, "Invalid billPanel (Null)");
         Debug.Assert(billPanelOuter != null, "Invalid billPanel (Null)");
-        Debug.Assert(billText != null, "Invalid billText (Null)");
+        Debug.Assert(billTextTop != null, "Invalid billTextTop (Null)");
+        Debug.Assert(billTextBottom != null, "Invalid billTextBottom (Null)");
         //initialise components
         billTransformLeft = billLeft.GetComponent<RectTransform>();
         billTransformRight = billRight.GetComponent<RectTransform>();
         Debug.Assert(billTransformLeft != null, "Invalid billTransformLeft (Null)");
         Debug.Assert(billTransformRight != null, "Invalid billTransformRight (Null)");
+        //colours
+        colourRed = "<color=#FF3333>";
+        colourBlue = "<color=#66B2FF>";
+        endTag = "</color></size>";
+        sizeLarge = "<size=120%>";
+        sizeSmall = "<size= 80%>";
         //initialise billboard
         InitialiseBillboard();
     }
@@ -169,11 +182,11 @@ public class BillboardUI : MonoBehaviour
     /// </summary>
     public void RunBillboard()
     {
-        Debug.LogFormat("[UI] BillboardUI.cs -> RunBillboard: Start Billboard{0}", "\n");
         /*string displayText = GameManager.i.newsScript.GetAdvert();*/
-        Billboard billboard = GameManager.i.dataScript.GetBillboard();
+        Billboard billboard = GameManager.i.dataScript.GetRandomBillboard();
         if (billboard != null)
         {
+            Debug.LogFormat("[UI] BillboardUI.cs -> RunBillboard: Start Billboard with \"{0}\"{1}", billboard.name, "\n");
             StartCoroutine("BillOpen", billboard);
         }
         else { Debug.LogWarning("Invalid billboard (Null)"); }
@@ -186,7 +199,8 @@ public class BillboardUI : MonoBehaviour
     private IEnumerator BillOpen(Billboard billboard)
     {
         counter = 0;
-        billText.text = ProcessBillboardText(billboard);
+        billTextTop.text = ProcessBillboardTextTop(billboard);
+        billTextBottom.text = billboard.textBottom;
         GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Billboard });
         while (counter < distance)
         {
@@ -220,17 +234,22 @@ public class BillboardUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Takes strings from billboard and converts any '[' and ']' tags (topText only) into textmeshPro tags
+    /// Takes textTop from billboard and converts any '[' and ']' tags (topText only) into textmeshPro tags
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
-    private string ProcessBillboardText(Billboard billboard)
+    private string ProcessBillboardTextTop(Billboard billboard)
     {
         string checkedText = "Unknown";
+        string startTag;
+        //normally a blue highlight but can be red. Always upsized
+        if (billboard.isRedHighlight == true)
+        { startTag = string.Format("{0}{1}", sizeLarge, colourRed); }
+        else { startTag = string.Format("{0}{1}", sizeLarge, colourBlue); }
         if (string.IsNullOrEmpty(billboard.textTop) == false)
         {
-            string tempText = billboard.textTop.Replace("[", "<size=120%><color=#66B2FF>");
-            checkedText = tempText.Replace("]", "</size><color=#A89947>");
+            string tempText = billboard.textTop.Replace("[", startTag);
+            checkedText = tempText.Replace("]", endTag);
         }
         return checkedText;
     }

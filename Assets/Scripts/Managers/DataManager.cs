@@ -199,7 +199,7 @@ public class DataManager : MonoBehaviour
     //Adverts
     private List<string> listOfAdverts = new List<string>();
     //Billboard
-    private List<Billboard> listOfBillboards = new List<Billboard>();
+    private List<string> listOfBillboards = new List<string>();
 
     //dictionaries
     private Dictionary<int, GameObject> dictOfNodeObjects = new Dictionary<int, GameObject>();                  //Key -> nodeID, Value -> Node gameObject
@@ -265,6 +265,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, MetaOption> dictOfMetaOptions = new Dictionary<string, MetaOption>();            //Key -> MetaOption name, Value -> MetaOption
     private Dictionary<int, HistoryLevel> dictOfCampaignHistory = new Dictionary<int, HistoryLevel>();          //Key -> HistoryLevel.scenarioIndex, Value -> HistoryLevel
     private Dictionary<string, StoryHelp> dictOfStoryHelp = new Dictionary<string, StoryHelp>();                //Key -> StoryHelp.name, Value -> StoryHelp
+    private Dictionary<string, Billboard> dictOfBillboards = new Dictionary<string, Billboard>();               //Key -> Billboard.name, Value -> Billboard
 
     //Development only collections
     private Dictionary<string, int> dictOfBeliefs = new Dictionary<string, int>();                              //Key -> belief name, Value -> belief count (num used in topic options)
@@ -8951,23 +8952,61 @@ public class DataManager : MonoBehaviour
     // - - - Billboards
     //
 
+    public Dictionary<string, Billboard> GetDictOfBillboards()
+    { return dictOfBillboards; }
+
+    public List<string> GetListOfBillboards()
+    { return listOfBillboards; }
+
     /// <summary>
     /// Initialises listOfBillboards from loadManager.cs master array
     /// </summary>
     public void InitialiseBillboardList()
     {
         listOfBillboards.Clear();
-        listOfBillboards = GameManager.i.loadScript.arrayOfBillboards?.ToList();
+        listOfBillboards = GameManager.i.loadScript.arrayOfBillboards?.Select(x => x.name).ToList();
+    }
+
+    /// <summary>
+    /// Clear out and then refill listOfBillboards with loaded save game data
+    /// </summary>
+    /// <param name="listOfBillboards"></param>
+    public void SetListOfBillboards(List<string> listOfBillboards)
+    {
+        if (listOfBillboards != null)
+        {
+            listOfBillboards.Clear();
+            listOfBillboards.AddRange(listOfBillboards);
+        }
+        else { Debug.LogError("Invalid listOfBillboards (Null)"); }
+    }
+
+    /// <summary>
+    /// Get billboard from dictOfBillboards based on name of billboard. Returns null if not found
+    /// </summary>
+    /// <param name="billboardName"></param>
+    /// <returns></returns>
+    public Billboard GetBillboard(string billboardName)
+    {
+        if (string.IsNullOrEmpty(billboardName) == false)
+        {
+            if (dictOfBillboards.ContainsKey(billboardName))
+            { return dictOfBillboards[billboardName]; }
+            else { Debug.LogWarning(string.Format("Billboard \"{0}\" not found in dictOfBillboards{1}", billboardName, "\n")); }
+        }
+        else { Debug.LogError("Invalid nameOfBillboard (Null or Empty)"); }
+        return null;
     }
 
 
     /// <summary>
-    /// Returns a random billboard, deletes from list, reinitialises list if empty. Returns null if a problem
+    /// Returns a random Billboard, deletes from list, reinitialises list if empty. Returns null if a problem
     /// </summary>
     /// <returns></returns>
-    public Billboard GetBillboard()
+    public Billboard GetRandomBillboard()
     {
         int countBillboard, indexBillboard;
+        string nameOfBillboard;
         Billboard billboard = null;
         if (listOfBillboards != null)
         {
@@ -8981,12 +9020,17 @@ public class DataManager : MonoBehaviour
             if (countBillboard > 0)
             {
                 indexBillboard = Random.Range(0, listOfBillboards.Count);
-                billboard = listOfBillboards[indexBillboard];
-                //check for invalid billboard
-                if (billboard == null)
-                { Debug.LogWarningFormat("Invalid billboard (Null) for listOfBillboards[{0}]", indexBillboard); }
-                //delete billboard from list to prevent dupes
-                listOfBillboards.RemoveAt(indexBillboard);
+                nameOfBillboard = listOfBillboards[indexBillboard];
+                if (string.IsNullOrEmpty(nameOfBillboard) == false)
+                {
+                    billboard = GetBillboard(nameOfBillboard);
+                    //check for invalid billboard
+                    if (billboard == null)
+                    { Debug.LogWarningFormat("Invalid billboard (Null) for listOfBillboards[{0}]", indexBillboard); }
+                    //delete billboard from list to prevent dupes
+                    listOfBillboards.RemoveAt(indexBillboard);
+                }
+                else { Debug.LogErrorFormat("Invalid billboard name (Null or Empty) for listOfBillboards[{0}]", indexBillboard); }
             }
             else { Debug.LogWarning("Invalid listOfBillboards (CountBillboard is Zero AFTER Reinitialising)"); }
         }

@@ -216,6 +216,8 @@ public class SaveDataData
     //TestLists
     public List<string> listOfTextListNames = new List<string>();
     public List<int> listOfTextListIndexes = new List<int>();
+    //Billboard
+    public List<string> listOfBillboards = new List<string>();
 
 }
 #endregion
