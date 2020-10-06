@@ -162,6 +162,8 @@ public class BillboardUI : MonoBehaviour
         billCanvas.gameObject.SetActive(true);
         //Reset panels at start
         ResetBillboard();
+        //initialise listOfBillboards
+        GameManager.i.dataScript.InitialiseBillboardList();
         /*Debug.LogFormat("[Tst] BillboardUI.cs -> halfScreenWidth {0}, panelWidth {1}, distance {2}{3}", halfScreenWidth, width, distance, "\n");*/
     }
 

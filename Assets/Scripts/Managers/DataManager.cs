@@ -8915,7 +8915,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     public void InitialiseAdvertList()
     {
-        listOfBillboards.Clear();
+        listOfAdverts.Clear();
         TextList[] arrayOfAdverts = GameManager.i.loadScript.arrayOfAdvertTextLists;
         if (arrayOfAdverts != null)
         {
@@ -8971,12 +8971,12 @@ public class DataManager : MonoBehaviour
     /// Clear out and then refill listOfBillboards with loaded save game data
     /// </summary>
     /// <param name="listOfBillboards"></param>
-    public void SetListOfBillboards(List<string> listOfBillboards)
+    public void SetListOfBillboards(List<string> listOfSavedBillboards)
     {
-        if (listOfBillboards != null)
+        if (listOfSavedBillboards != null)
         {
             listOfBillboards.Clear();
-            listOfBillboards.AddRange(listOfBillboards);
+            listOfBillboards.AddRange(listOfSavedBillboards);
         }
         else { Debug.LogError("Invalid listOfBillboards (Null)"); }
     }
@@ -9929,7 +9929,7 @@ public class DataManager : MonoBehaviour
             //initialise if not done so already (possible due to sequencing issues)
             if (arrayOfMegaCorpRelations == null)
             { arrayOfMegaCorpRelations = new int[(int)MegaCorpType.Count]; }
-            if (limit != arrayOfMegaCorpRelations.Length + 1)
+            if (limit != arrayOfMegaCorpRelations.Length)
             {
                 Debug.LogWarningFormat("Invalid saveList dimension (is {0}, should be {1}), changed automatically (if < than required, arrayOfMegaCorpRel's may be incorect)", 
                     limit, arrayOfMegaCorpRelations.Length);
