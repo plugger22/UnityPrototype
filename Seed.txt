@@ -102,3 +102,420 @@ City seed 1616 -> Mexico City, Mexico
 Dev seed 20700 -> Tuesday, 6 October 2020 8:02 PM
 City seed 1616 -> Mexico City, Mexico
 City seed 1616 -> Mexico City, Mexico
+
+Dev seed 41637 -> Wednesday, 7 October 2020 9:02 AM
+City seed 1616 -> Mexico City, Mexico
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ButtonInteraction.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:463)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:428)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ButtonInteraction.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseExit () (at Assets/Scripts/Base Classes/Node.cs:330)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Connection.OnMouseOver () (at Assets/Scripts/SO Master/Connection.cs:392)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Connection.OnMouseOver () (at Assets/Scripts/SO Master/Connection.cs:392)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Connection.OnMouseOver () (at Assets/Scripts/SO Master/Connection.cs:392)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Connection.OnMouseOver () (at Assets/Scripts/SO Master/Connection.cs:392)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Connection.OnMouseExit () (at Assets/Scripts/SO Master/Connection.cs:418)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:463)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:428)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseDown () (at Assets/Scripts/Base Classes/Node.cs:279)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ButtonInteraction.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseExit () (at Assets/Scripts/Base Classes/Node.cs:330)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Connection.OnMouseOver () (at Assets/Scripts/SO Master/Connection.cs:392)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Connection.OnMouseOver () (at Assets/Scripts/SO Master/Connection.cs:392)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Connection.OnMouseOver () (at Assets/Scripts/SO Master/Connection.cs:392)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Connection.OnMouseOver () (at Assets/Scripts/SO Master/Connection.cs:392)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Connection.OnMouseOver () (at Assets/Scripts/SO Master/Connection.cs:392)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Connection.OnMouseOver () (at Assets/Scripts/SO Master/Connection.cs:392)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Connection.OnMouseOver () (at Assets/Scripts/SO Master/Connection.cs:392)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Connection.OnMouseOver () (at Assets/Scripts/SO Master/Connection.cs:392)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Connection.OnMouseOver () (at Assets/Scripts/SO Master/Connection.cs:392)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Connection.OnMouseOver () (at Assets/Scripts/SO Master/Connection.cs:392)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Connection.OnMouseExit () (at Assets/Scripts/SO Master/Connection.cs:418)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:345)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseExit () (at Assets/Scripts/Base Classes/Node.cs:330)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarLeftMouseUI.OnPointerEnter (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:36)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerEnterHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:22)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarLeftMouseUI.OnPointerExit (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:58)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerExitHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:29)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 24340 -> Wednesday, 7 October 2020 9:03 AM
+City seed 1616 -> Mexico City, Mexico
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 55634 -> Wednesday, 7 October 2020 9:08 AM
+City seed 1616 -> Mexico City, Mexico
+City seed 1616 -> Mexico City, Mexico
