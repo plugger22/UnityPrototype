@@ -16,8 +16,10 @@ public class BillboardUI : MonoBehaviour
     public Image billRight;
     public Image billPanelOuter;
     public Image billPanelInner;
+    public Image billPanelName;
     public TextMeshProUGUI billTextTop;
     public TextMeshProUGUI billTextBottom;
+    public TextMeshProUGUI billTextName;
 
     private RectTransform billTransformLeft;
     private RectTransform billTransformRight;
@@ -98,8 +100,10 @@ public class BillboardUI : MonoBehaviour
         Debug.Assert(billRight != null, "Invalid billRight (Null)");
         Debug.Assert(billPanelInner != null, "Invalid billPanel (Null)");
         Debug.Assert(billPanelOuter != null, "Invalid billPanel (Null)");
+        Debug.Assert(billPanelName != null, "Invalid billPanelName (Null)");
         Debug.Assert(billTextTop != null, "Invalid billTextTop (Null)");
         Debug.Assert(billTextBottom != null, "Invalid billTextBottom (Null)");
+        Debug.Assert(billTextName != null, "Invalid billTextName (Null)");
         //initialise components
         billTransformLeft = billLeft.GetComponent<RectTransform>();
         billTransformRight = billRight.GetComponent<RectTransform>();
@@ -203,6 +207,7 @@ public class BillboardUI : MonoBehaviour
         counter = 0;
         billTextTop.text = ProcessBillboardTextTop(billboard);
         billTextBottom.text = billboard.textBottom;
+        billTextName.text = GameManager.i.playerScript.FirstName;
         GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Billboard });
         while (counter < distance)
         {
@@ -213,6 +218,7 @@ public class BillboardUI : MonoBehaviour
         }
         billPanelInner.gameObject.SetActive(true);
         billPanelOuter.gameObject.SetActive(true);
+        billPanelName.gameObject.SetActive(true);
         //indefinitely strobe outer panel (cyan neon borders)
         isFading = true;
         while (true)
