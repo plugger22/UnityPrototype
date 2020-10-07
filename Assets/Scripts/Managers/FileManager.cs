@@ -1281,11 +1281,16 @@ public class FileManager : MonoBehaviour
         #endregion
 
         #region billboards
-        //billboards
+        //billboards (pool)
         List<string> listOfBillboards = GameManager.i.dataScript.GetListOfBillboards();
         if (listOfBillboards != null)
         { write.dataData.listOfBillboards.AddRange(listOfBillboards); }
         else { Debug.LogError("Invalid listOfBillboards (Null)"); }
+        //billboards seen
+        List<string> listOfBillboardsSeen = GameManager.i.dataScript.GetListOfBillboardsSeen();
+        if (listOfBillboardsSeen != null)
+        { write.dataData.listOfBillboardsSeen.AddRange(listOfBillboardsSeen); }
+        else { Debug.LogError("Invalid listOfBillboardsSeen (Null)"); }
         #endregion
     }
     #endregion
@@ -3216,6 +3221,7 @@ public class FileManager : MonoBehaviour
 
         #region Billboards
         GameManager.i.dataScript.SetListOfBillboards(read.dataData.listOfBillboards);
+        GameManager.i.dataScript.SetListOfBillboardsSeen(read.dataData.listOfBillboardsSeen);
         #endregion
 
         #region textLists

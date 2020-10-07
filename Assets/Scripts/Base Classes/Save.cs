@@ -218,6 +218,7 @@ public class SaveDataData
     public List<int> listOfTextListIndexes = new List<int>();
     //Billboard
     public List<string> listOfBillboards = new List<string>();
+    public List<string> listOfBillboardsSeen = new List<string>();
 
 }
 #endregion

@@ -199,7 +199,8 @@ public class DataManager : MonoBehaviour
     //Adverts
     private List<string> listOfAdverts = new List<string>();
     //Billboard
-    private List<string> listOfBillboards = new List<string>();
+    private List<string> listOfBillboards = new List<string>();                                                 //pool from which billboards are randomly drawn from
+    private List<string> listOfBillboardsSeen = new List<string>();                                             //ones that player has seen
 
     //dictionaries
     private Dictionary<int, GameObject> dictOfNodeObjects = new Dictionary<int, GameObject>();                  //Key -> nodeID, Value -> Node gameObject
@@ -8958,12 +8959,16 @@ public class DataManager : MonoBehaviour
     public List<string> GetListOfBillboards()
     { return listOfBillboards; }
 
+    public List<string> GetListOfBillboardsSeen()
+    { return listOfBillboardsSeen; }
+
     /// <summary>
     /// Initialises listOfBillboards from loadManager.cs master array
     /// </summary>
     public void InitialiseBillboardList()
     {
         listOfBillboards.Clear();
+        listOfBillboardsSeen.Clear();
         listOfBillboards = GameManager.i.loadScript.arrayOfBillboards?.Select(x => x.name).ToList();
     }
 
@@ -8977,6 +8982,20 @@ public class DataManager : MonoBehaviour
         {
             listOfBillboards.Clear();
             listOfBillboards.AddRange(listOfSavedBillboards);
+        }
+        else { Debug.LogError("Invalid listOfBillboards (Null)"); }
+    }
+
+    /// <summary>
+    /// Clear out and then refill listOfBillboardSeen with loaded save game data
+    /// </summary>
+    /// <param name="listOfBillboardsSeen"></param>
+    public void SetListOfBillboardsSeen(List<string> listOfSavedBillboards)
+    {
+        if (listOfSavedBillboards != null)
+        {
+            listOfBillboardsSeen.Clear();
+            listOfBillboardsSeen.AddRange(listOfSavedBillboards);
         }
         else { Debug.LogError("Invalid listOfBillboards (Null)"); }
     }
@@ -9035,7 +9054,21 @@ public class DataManager : MonoBehaviour
             else { Debug.LogWarning("Invalid listOfBillboards (CountBillboard is Zero AFTER Reinitialising)"); }
         }
         else { Debug.LogError("Invalid listOfBillboards (Null)"); }
+        //add billboard to list of Seen
+        if (billboard != null)
+        { AddBillboardSeen(billboard.name); }
         return billboard;
+    }
+
+    /// <summary>
+    /// Adds name of billboard to list of those displayed
+    /// </summary>
+    /// <param name="billboardName"></param>
+    public void AddBillboardSeen(string billboardName)
+    {
+        if (string.IsNullOrEmpty(billboardName) == false)
+        { listOfBillboardsSeen.Add(billboardName); }
+        else { Debug.LogError("Invalid billboardName (Null or Empty)"); }
     }
 
     //
