@@ -101,6 +101,8 @@ public class GUIManager : MonoBehaviour
     [Header("BillboardUI")]
     [Tooltip("If billboard is switch 'ON' gives the % chance (less than) of a billboard being shown at the end of a turn (eg. determines frequency)")]
     [Range(0, 100)] public int billboardChance = 10;
+    [Tooltip("Speed at which billboard blinds open and shut (speed x Time.deltaTime)")]
+    [Range(0f, 100f)] public float billboardSpeed = 100.0f;
 
     [Header("Sprites")]
     [Tooltip("Sprite to use for ActorGUI to show that the position is vacant")]

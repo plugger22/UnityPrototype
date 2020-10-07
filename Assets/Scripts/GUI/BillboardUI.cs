@@ -24,8 +24,8 @@ public class BillboardUI : MonoBehaviour
 
     private float halfScreenWidth;
     /*private float width;*/
-    private int speed;
-    private int counter;
+    private float speed;
+    private float counter;
     private float distance;
     private bool isFading;
     private Color outerColour;
@@ -35,7 +35,6 @@ public class BillboardUI : MonoBehaviour
     private string colourRed;
     private string endTag;
     private string sizeLarge;
-    private string sizeSmall;
 
     private static BillboardUI billboardUI;
 
@@ -84,7 +83,9 @@ public class BillboardUI : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         flashNeon = GameManager.i.guiScript.flashBillboardTime;
+        speed = GameManager.i.guiScript.billboardSpeed;
         Debug.Assert(flashNeon > 0.0f, "Invalid flashNeon (Zero)");
+        Debug.Assert(speed > 0.0f, "Invalid speed (Zero)");
     }
     #endregion
 
@@ -109,7 +110,6 @@ public class BillboardUI : MonoBehaviour
         colourBlue = "<color=#66B2FF>";
         endTag = "</color></size>";
         sizeLarge = "<size=120%>";
-        sizeSmall = "<size= 80%>";
         //initialise billboard
         InitialiseBillboard();
     }
@@ -153,11 +153,11 @@ public class BillboardUI : MonoBehaviour
     {
         outerColour = billPanelOuter.color;
         flashNeon = 1.0f;
+        speed *= 10;
         //measurements
         halfScreenWidth = Screen.width / 2;
         offset = 135;
         distance = halfScreenWidth + offset;
-        speed = 15;
         //activate
         billCanvas.gameObject.SetActive(true);
         //Reset panels at start
@@ -206,7 +206,7 @@ public class BillboardUI : MonoBehaviour
         GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Billboard });
         while (counter < distance)
         {
-            counter += speed;
+            counter += speed * Time.deltaTime;
             billLeft.transform.localPosition = new Vector3(-distance + counter, 0, 0);
             billRight.transform.localPosition = new Vector3(distance - counter, 0, 0);
             yield return null;
@@ -279,7 +279,7 @@ public class BillboardUI : MonoBehaviour
         billPanelOuter.gameObject.SetActive(false);
         while (counter > 0)
         {
-            counter -= speed;
+            counter -= speed * Time.deltaTime;
             billLeft.transform.localPosition = new Vector3(-distance + counter, 0, 0);
             billRight.transform.localPosition = new Vector3(distance - counter, 0, 0);
             yield return null;
