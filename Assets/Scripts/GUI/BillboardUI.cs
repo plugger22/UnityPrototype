@@ -21,6 +21,9 @@ public class BillboardUI : MonoBehaviour
     public TextMeshProUGUI billTextBottom;
     public TextMeshProUGUI billTextName;
 
+    //flashing lights (0 to 19 in correct sequence)
+    public Sprite[] arrayOfLights;
+
     private RectTransform billTransformLeft;
     private RectTransform billTransformRight;
 
@@ -29,6 +32,11 @@ public class BillboardUI : MonoBehaviour
     private float speed;
     private float counter;
     private float distance;
+    private float lightCounter;
+    private float lightCounterMax;
+    private float lightSpeed;
+    private int lightIndex;
+    private int lightIndexMax;
     private bool isFading;
     private Color outerColour;
     private float flashNeon;
@@ -104,6 +112,8 @@ public class BillboardUI : MonoBehaviour
         Debug.Assert(billTextTop != null, "Invalid billTextTop (Null)");
         Debug.Assert(billTextBottom != null, "Invalid billTextBottom (Null)");
         Debug.Assert(billTextName != null, "Invalid billTextName (Null)");
+        Debug.Assert(arrayOfLights != null, "Invalid arrayOfLights (Null)");
+        Debug.AssertFormat(arrayOfLights.Length == 20, "Invalid arrayOfLights (should be 20 items, is {0}", arrayOfLights.Length);
         //initialise components
         billTransformLeft = billLeft.GetComponent<RectTransform>();
         billTransformRight = billRight.GetComponent<RectTransform>();
@@ -155,6 +165,9 @@ public class BillboardUI : MonoBehaviour
     /// </summary>
     private void InitialiseBillboard()
     {
+        lightIndexMax = arrayOfLights.Length;
+        lightCounterMax = 1.0f;
+        lightSpeed = 20.0f;
         outerColour = billPanelOuter.color;
         flashNeon = 1.0f;
         speed *= 10;
@@ -204,7 +217,9 @@ public class BillboardUI : MonoBehaviour
     /// <returns></returns>
     private IEnumerator BillOpen(Billboard billboard)
     {
+        lightIndex = 0;
         counter = 0;
+        lightCounter = 0;
         billTextTop.text = ProcessBillboardTextTop(billboard);
         billTextBottom.text = billboard.textBottom;
         billTextName.text = GameManager.i.playerScript.FirstName;
@@ -219,6 +234,7 @@ public class BillboardUI : MonoBehaviour
         billPanelInner.gameObject.SetActive(true);
         billPanelOuter.gameObject.SetActive(true);
         billPanelName.gameObject.SetActive(true);
+        
         //indefinitely strobe outer panel (cyan neon borders)
         isFading = true;
         while (true)
@@ -237,6 +253,17 @@ public class BillboardUI : MonoBehaviour
                 { isFading = false; }
             }
             billPanelOuter.color = outerColour;
+            /*
+            //strobe name lighting
+            lightCounter += lightSpeed * Time.deltaTime;
+            if (lightCounter > lightCounterMax)
+            {
+                lightCounter = 0.0f;
+                lightIndex++;
+                if (lightIndex == lightIndexMax) { lightIndex = 0; }
+                billPanelName.sprite = arrayOfLights[lightIndex];
+            }
+            */
             yield return null;
         }
     }
