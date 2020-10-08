@@ -39,6 +39,7 @@
     public enum PopUpPosition { ActorSlot0, ActorSlot1, ActorSlot2, ActorSlot3, Player, TopBarLeft, TopBarRight, TopCentre, Count}  //used for fixed UI PopUps
     public enum RestorePoint { None, MetaTransition, MetaOptions, MetaComplete }                       //when save and exit, chance to return to game. This specifies the point of return
     public enum EndlLevelMedal { DeadDuck, Bronze, Silver, Gold }                               //used by EndLevel data to determine medal to award during TransitionUI / MetaGame
+    public enum Pulsing { Fading, Growing, Constant }                     //used for UI elements, eg. text, that 'pulse' (grown/shrink in size). Constant is for maintaining constant size 
     public enum AlertType {
         None,
         MainMenuUnavailable,

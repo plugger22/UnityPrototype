@@ -580,3 +580,210 @@ City seed 1616 -> Mexico City, Mexico
 
 Dev seed 41122 -> Wednesday, 7 October 2020 4:51 PM
 City seed 1616 -> Mexico City, Mexico
+
+Dev seed 54693 -> Wednesday, 7 October 2020 7:54 PM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 29858 -> Thursday, 8 October 2020 9:11 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 10310 -> Thursday, 8 October 2020 9:32 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 6366 -> Thursday, 8 October 2020 9:34 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 4005 -> Thursday, 8 October 2020 9:35 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 19466 -> Thursday, 8 October 2020 9:36 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 34992 -> Thursday, 8 October 2020 9:43 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 29821 -> Thursday, 8 October 2020 9:44 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 26676 -> Thursday, 8 October 2020 9:45 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 36917 -> Thursday, 8 October 2020 9:46 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 52446 -> Thursday, 8 October 2020 9:47 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 21390 -> Thursday, 8 October 2020 9:56 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 45942 -> Thursday, 8 October 2020 9:57 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 39178 -> Thursday, 8 October 2020 9:58 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 17733 -> Thursday, 8 October 2020 10:03 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 11083 -> Thursday, 8 October 2020 10:04 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 32135 -> Thursday, 8 October 2020 10:17 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 18089 -> Thursday, 8 October 2020 10:18 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 2153 -> Thursday, 8 October 2020 10:30 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 29822 -> Thursday, 8 October 2020 10:31 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 50814 -> Thursday, 8 October 2020 10:33 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 22382 -> Thursday, 8 October 2020 10:34 AM
+City seed 1616 -> Mexico City, Mexico
+WARNING tempList has 21 records for tab 0 -> INFO only
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:700)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:985)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:966)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 58914 -> Thursday, 8 October 2020 10:37 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 2548 -> Thursday, 8 October 2020 10:40 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 47738 -> Thursday, 8 October 2020 10:41 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 21908 -> Thursday, 8 October 2020 10:43 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 41581 -> Thursday, 8 October 2020 10:52 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 59809 -> Thursday, 8 October 2020 10:59 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 60355 -> Thursday, 8 October 2020 11:01 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 6179 -> Thursday, 8 October 2020 11:02 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 32436 -> Thursday, 8 October 2020 11:07 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 5860 -> Thursday, 8 October 2020 11:08 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 12848 -> Thursday, 8 October 2020 11:10 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 7901 -> Thursday, 8 October 2020 11:11 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 61633 -> Thursday, 8 October 2020 11:12 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 37635 -> Thursday, 8 October 2020 11:12 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 55337 -> Thursday, 8 October 2020 11:13 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 20330 -> Thursday, 8 October 2020 11:14 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 14510 -> Thursday, 8 October 2020 11:15 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 31234 -> Thursday, 8 October 2020 11:23 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 48366 -> Thursday, 8 October 2020 11:30 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 26181 -> Thursday, 8 October 2020 11:31 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 308 -> Thursday, 8 October 2020 11:31 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 54357 -> Thursday, 8 October 2020 11:33 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 24532 -> Thursday, 8 October 2020 11:35 AM
+City seed 1616 -> Mexico City, Mexico
+WARNING Invalid scenarioIndex "4" (should be < Max Scenario Index 4)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MissionManager:GetNextMission(GlobalSide) (at Assets/Scripts/Managers/MissionManager.cs:205)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:132)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:242)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:90)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	ControlManager:ProcessEndLevel() (at Assets/Scripts/Managers/ControlManager.cs:222)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:87)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:381)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:428)
+	WARNING Invalid mission (Null) for side "Resistance"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MissionManager:GetNextMission(GlobalSide) (at Assets/Scripts/Managers/MissionManager.cs:207)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:132)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:242)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:90)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	ControlManager:ProcessEndLevel() (at Assets/Scripts/Managers/ControlManager.cs:222)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:87)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:381)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:428)
+	
+Dev seed 45922 -> Thursday, 8 October 2020 11:41 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 54141 -> Thursday, 8 October 2020 11:48 AM
+City seed 1616 -> Mexico City, Mexico
+
+Dev seed 29821 -> Thursday, 8 October 2020 11:55 AM
+City seed 1616 -> Mexico City, Mexico
+WARNING Invalid scenarioIndex "4" (should be < Max Scenario Index 4)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MissionManager:GetNextMission(GlobalSide) (at Assets/Scripts/Managers/MissionManager.cs:205)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:132)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:242)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:90)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	ControlManager:ProcessEndLevel() (at Assets/Scripts/Managers/ControlManager.cs:222)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:87)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:253)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:428)
+	WARNING Invalid mission (Null) for side "Resistance"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	MissionManager:GetNextMission(GlobalSide) (at Assets/Scripts/Managers/MissionManager.cs:207)
+	MetaManager:ProcessMetaGame() (at Assets/Scripts/Managers/MetaManager.cs:132)
+	ControlManager:ProcessMetaGame() (at Assets/Scripts/Managers/ControlManager.cs:242)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:90)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	ControlManager:ProcessEndLevel() (at Assets/Scripts/Managers/ControlManager.cs:222)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:87)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:253)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:428)
+	
+Dev seed 61778 -> Thursday, 8 October 2020 11:57 AM
+City seed 1616 -> Mexico City, Mexico

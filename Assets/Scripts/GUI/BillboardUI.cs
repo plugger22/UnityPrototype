@@ -32,11 +32,24 @@ public class BillboardUI : MonoBehaviour
     private float speed;
     private float counter;
     private float distance;
-    private float lightCounter;
+
+    //flashing light border of name texts
+    /*private float lightCounter;
     private float lightCounterMax;
     private float lightSpeed;
     private int lightIndex;
-    private int lightIndexMax;
+    private int lightIndexMax;*/
+
+    //Name text (pulses up and down in size)
+    private float fontSizeMax;
+    private float fontSizeMin;
+    private float fontSizeCurrent;
+    private float fontSizeCounter;
+    private float fontSizeCounterMax;
+    private float fontSizeSpeed;
+    private Pulsing fontSizeState;
+
+    //neon borders and text colours for main billboard
     private bool isFading;
     private Color outerColour;
     private float flashNeon;
@@ -121,9 +134,9 @@ public class BillboardUI : MonoBehaviour
         Debug.Assert(billTransformRight != null, "Invalid billTransformRight (Null)");
         //colours
         colourRed = "<color=#FF3333>";
-        colourBlue = "<color=#66B2FF>";
+        colourBlue = "<color=#3D97DD>";
         endTag = "</color></size>";
-        sizeLarge = "<size=120%>";
+        sizeLarge = "<size=130%>";
         //initialise billboard
         InitialiseBillboard();
     }
@@ -165,9 +178,10 @@ public class BillboardUI : MonoBehaviour
     /// </summary>
     private void InitialiseBillboard()
     {
-        lightIndexMax = arrayOfLights.Length;
+        /*lightIndexMax = arrayOfLights.Length;
         lightCounterMax = 1.0f;
-        lightSpeed = 20.0f;
+        lightSpeed = 20.0f;*/
+        fontSizeCounterMax = 1.25f;
         outerColour = billPanelOuter.color;
         flashNeon = 1.0f;
         speed *= 10;
@@ -175,10 +189,13 @@ public class BillboardUI : MonoBehaviour
         halfScreenWidth = Screen.width / 2;
         offset = 135;
         distance = halfScreenWidth + offset;
+        //Name text won't pulse with this on
+        billTextName.enableAutoSizing = false;
         //activate
         billCanvas.gameObject.SetActive(true);
         //Reset panels at start
         ResetBillboard();
+
         //initialise listOfBillboards
         GameManager.i.dataScript.InitialiseBillboardList();
         /*Debug.LogFormat("[Tst] BillboardUI.cs -> halfScreenWidth {0}, panelWidth {1}, distance {2}{3}", halfScreenWidth, width, distance, "\n");*/
@@ -217,12 +234,25 @@ public class BillboardUI : MonoBehaviour
     /// <returns></returns>
     private IEnumerator BillOpen(Billboard billboard)
     {
-        lightIndex = 0;
+        /*lightIndex = 0;
+        lightCounter = 0;*/
+
         counter = 0;
-        lightCounter = 0;
         billTextTop.text = ProcessBillboardTextTop(billboard);
         billTextBottom.text = billboard.textBottom;
         billTextName.text = GameManager.i.playerScript.FirstName;
+        //any longer than set num of char's will cause issues with pulsing, use a default text instead
+        if (billTextName.text.Length > 9)
+        { billTextName.text = "Yes YOU!"; }
+        //determine parameters for name text font size pulsing (max size is current max size feasible in space)
+        fontSizeMax = billTextName.fontSize;
+        fontSizeMin = 12.0f;
+        fontSizeCurrent = fontSizeMax;
+        fontSizeState = Pulsing.Fading;
+        fontSizeSpeed = 1.25f;
+        fontSizeCounter = 0.0f;
+
+        //modal state
         GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Billboard });
         while (counter < distance)
         {
@@ -234,7 +264,7 @@ public class BillboardUI : MonoBehaviour
         billPanelInner.gameObject.SetActive(true);
         billPanelOuter.gameObject.SetActive(true);
         billPanelName.gameObject.SetActive(true);
-        
+
         //indefinitely strobe outer panel (cyan neon borders)
         isFading = true;
         while (true)
@@ -253,8 +283,8 @@ public class BillboardUI : MonoBehaviour
                 { isFading = false; }
             }
             billPanelOuter.color = outerColour;
-            /*
-            //strobe name lighting
+            
+            /*//strobe name lighting
             lightCounter += lightSpeed * Time.deltaTime;
             if (lightCounter > lightCounterMax)
             {
@@ -262,8 +292,44 @@ public class BillboardUI : MonoBehaviour
                 lightIndex++;
                 if (lightIndex == lightIndexMax) { lightIndex = 0; }
                 billPanelName.sprite = arrayOfLights[lightIndex];
+            }*/
+            
+
+            //Name text font size Pulsing
+            switch (fontSizeState)
+            {
+                case Pulsing.Constant:
+                    //pause pulsing at max font size for a short moment
+                    fontSizeCounter += Time.deltaTime;
+                    if (fontSizeCounter > fontSizeCounterMax)
+                    {
+                        fontSizeState = Pulsing.Fading;
+                        fontSizeCounter = 0.0f;
+                    }
+                    break;
+                case Pulsing.Growing:
+                    fontSizeCurrent += fontSizeCurrent * Time.deltaTime * fontSizeSpeed;
+                    if (fontSizeCurrent >= fontSizeMax)
+                    {
+                        fontSizeState = Pulsing.Constant;
+                        //make sure fontsize doesn't momentarily go over the max and be outside the displayable area
+                        fontSizeCurrent = Mathf.Min(fontSizeCurrent, fontSizeMax);
+                    }
+                    break;
+                case Pulsing.Fading:
+                    //shrinking
+                    fontSizeCurrent -= fontSizeCurrent * Time.deltaTime * fontSizeSpeed;
+                    if (fontSizeCurrent <= fontSizeMin)
+                    {
+                        fontSizeCurrent = Mathf.Max(0.0f, fontSizeCurrent);
+                        fontSizeState = Pulsing.Growing;
+                    }
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised fontSizeState \"{0}\"", fontSizeState); break;
             }
-            */
+            //adjust font size
+            billTextName.fontSize = fontSizeCurrent;
+
             yield return null;
         }
     }
@@ -317,6 +383,7 @@ public class BillboardUI : MonoBehaviour
             billRight.transform.localPosition = new Vector3(distance - counter, 0, 0);
             yield return null;
         }
+        billTextName.fontSize = fontSizeMax;
 
     }
 
