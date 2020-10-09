@@ -17,6 +17,7 @@ public class BillboardUI : MonoBehaviour
     public Image billPanelOuter;
     public Image billPanelInner;
     public Image billPanelName;
+    public Image billPanelFrame;
     public TextMeshProUGUI billTextTop;
     public TextMeshProUGUI billTextBottom;
     public TextMeshProUGUI billTextName;
@@ -122,6 +123,7 @@ public class BillboardUI : MonoBehaviour
         Debug.Assert(billPanelInner != null, "Invalid billPanel (Null)");
         Debug.Assert(billPanelOuter != null, "Invalid billPanel (Null)");
         Debug.Assert(billPanelName != null, "Invalid billPanelName (Null)");
+        Debug.Assert(billPanelFrame != null, "Invalid billPanelFrame (Null)");
         Debug.Assert(billTextTop != null, "Invalid billTextTop (Null)");
         Debug.Assert(billTextBottom != null, "Invalid billTextBottom (Null)");
         Debug.Assert(billTextName != null, "Invalid billTextName (Null)");
@@ -133,8 +135,8 @@ public class BillboardUI : MonoBehaviour
         Debug.Assert(billTransformLeft != null, "Invalid billTransformLeft (Null)");
         Debug.Assert(billTransformRight != null, "Invalid billTransformRight (Null)");
         //colours
-        colourRed = "<color=#FF3333>";
-        colourBlue = "<color=#3D97DD>";
+        colourRed = "<color=#ee043a>";
+        colourBlue = "<color=#58c1ef>";
         endTag = "</color></size>";
         sizeLarge = "<size=130%>";
         //initialise billboard
@@ -208,6 +210,7 @@ public class BillboardUI : MonoBehaviour
     {
         billPanelOuter.gameObject.SetActive(false);
         billPanelInner.gameObject.SetActive(false);
+        billPanelFrame.gameObject.SetActive(false);
         billLeft.transform.localPosition = new Vector3(-distance, 0, 0);
         billRight.transform.localPosition = new Vector3(distance, 0, 0);
         Debug.LogFormat("[UI] BillboardUI.cs -> Reset: Reset Billboard{0}", "\n");
@@ -239,8 +242,8 @@ public class BillboardUI : MonoBehaviour
 
         counter = 0;
         billTextTop.text = ProcessBillboardTextTop(billboard);
-        billTextBottom.text = billboard.textBottom;
-        billTextName.text = GameManager.i.playerScript.FirstName;
+        billTextBottom.text = billboard.textBottom.ToUpper();
+        billTextName.text = GameManager.i.playerScript.FirstName.ToUpper(); ;
         //any longer than set num of char's will cause issues with pulsing, use a default text instead
         if (billTextName.text.Length > 9)
         { billTextName.text = "Yes YOU!"; }
@@ -263,6 +266,7 @@ public class BillboardUI : MonoBehaviour
         }
         billPanelInner.gameObject.SetActive(true);
         billPanelOuter.gameObject.SetActive(true);
+        billPanelFrame.gameObject.SetActive(true);
         billPanelName.gameObject.SetActive(true);
 
         //indefinitely strobe outer panel (cyan neon borders)
@@ -347,9 +351,12 @@ public class BillboardUI : MonoBehaviour
         if (billboard.isRedHighlight == true)
         { startTag = string.Format("{0}{1}", sizeLarge, colourRed); }
         else { startTag = string.Format("{0}{1}", sizeLarge, colourBlue); }
-        if (string.IsNullOrEmpty(billboard.textTop) == false)
+        //switch to Caps
+        string text = billboard.textTop.ToUpper();
+        //replace tags
+        if (string.IsNullOrEmpty(text) == false)
         {
-            string tempText = billboard.textTop.Replace("[", startTag);
+            string tempText = text.Replace("[", startTag);
             checkedText = tempText.Replace("]", endTag);
         }
         return checkedText;
@@ -376,6 +383,7 @@ public class BillboardUI : MonoBehaviour
         GameManager.i.inputScript.ResetStates();
         billPanelInner.gameObject.SetActive(false);
         billPanelOuter.gameObject.SetActive(false);
+        billPanelFrame.gameObject.SetActive(false);
         while (counter > 0)
         {
             counter -= speed * Time.deltaTime;
