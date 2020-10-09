@@ -4,6 +4,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// End of turn Billboard UI prior to infoPipeline
@@ -18,6 +19,10 @@ public class BillboardUI : MonoBehaviour
     public Image billPanelInner;
     public Image billPanelName;
     public Image billPanelFrame;
+    public Image billLightLeft;
+    public Image billLightRight;
+    public Image billBeamLeft;
+    public Image billBeamRight;
     public TextMeshProUGUI billTextTop;
     public TextMeshProUGUI billTextBottom;
     public TextMeshProUGUI billTextName;
@@ -59,6 +64,14 @@ public class BillboardUI : MonoBehaviour
     private string colourRed;
     private string endTag;
     private string sizeLarge;
+
+    //light beams
+    private bool isBeamLeftOn;
+    private bool isBeamRightOn;
+    private float beamLeftCounter;
+    private float beamRightCounter;
+    private float beamCounterMax;
+    private int beamChance;
 
     private static BillboardUI billboardUI;
 
@@ -124,6 +137,10 @@ public class BillboardUI : MonoBehaviour
         Debug.Assert(billPanelOuter != null, "Invalid billPanel (Null)");
         Debug.Assert(billPanelName != null, "Invalid billPanelName (Null)");
         Debug.Assert(billPanelFrame != null, "Invalid billPanelFrame (Null)");
+        Debug.Assert(billLightLeft != null, "Invalid billLightLeft (Null)");
+        Debug.Assert(billLightRight != null, "Invalid billLightRight (Null)");
+        Debug.Assert(billBeamLeft != null, "Invalid billBeamLeft (Null)");
+        Debug.Assert(billBeamRight != null, "Invalid billBeamRight (Null)");
         Debug.Assert(billTextTop != null, "Invalid billTextTop (Null)");
         Debug.Assert(billTextBottom != null, "Invalid billTextBottom (Null)");
         Debug.Assert(billTextName != null, "Invalid billTextName (Null)");
@@ -193,6 +210,9 @@ public class BillboardUI : MonoBehaviour
         distance = halfScreenWidth + offset;
         //Name text won't pulse with this on
         billTextName.enableAutoSizing = false;
+        //light beams
+        beamCounterMax = 0.10f;
+        beamChance = 1;
         //activate
         billCanvas.gameObject.SetActive(true);
         //Reset panels at start
@@ -211,6 +231,10 @@ public class BillboardUI : MonoBehaviour
         billPanelOuter.gameObject.SetActive(false);
         billPanelInner.gameObject.SetActive(false);
         billPanelFrame.gameObject.SetActive(false);
+        billLightLeft.gameObject.SetActive(false);
+        billLightRight.gameObject.SetActive(false);
+        billBeamLeft.gameObject.SetActive(false);
+        billBeamRight.gameObject.SetActive(false);
         billLeft.transform.localPosition = new Vector3(-distance, 0, 0);
         billRight.transform.localPosition = new Vector3(distance, 0, 0);
         Debug.LogFormat("[UI] BillboardUI.cs -> Reset: Reset Billboard{0}", "\n");
@@ -254,7 +278,8 @@ public class BillboardUI : MonoBehaviour
         fontSizeState = Pulsing.Fading;
         fontSizeSpeed = 1.25f;
         fontSizeCounter = 0.0f;
-
+        isBeamLeftOn = true;
+        isBeamRightOn = true;
         //modal state
         GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Billboard });
         while (counter < distance)
@@ -268,7 +293,10 @@ public class BillboardUI : MonoBehaviour
         billPanelOuter.gameObject.SetActive(true);
         billPanelFrame.gameObject.SetActive(true);
         billPanelName.gameObject.SetActive(true);
-
+        billLightLeft.gameObject.SetActive(true);
+        billLightRight.gameObject.SetActive(true);
+        billBeamLeft.gameObject.SetActive(true);
+        billBeamRight.gameObject.SetActive(true);
         //indefinitely strobe outer panel (cyan neon borders)
         isFading = true;
         while (true)
@@ -287,7 +315,7 @@ public class BillboardUI : MonoBehaviour
                 { isFading = false; }
             }
             billPanelOuter.color = outerColour;
-            
+
             /*//strobe name lighting
             lightCounter += lightSpeed * Time.deltaTime;
             if (lightCounter > lightCounterMax)
@@ -297,7 +325,7 @@ public class BillboardUI : MonoBehaviour
                 if (lightIndex == lightIndexMax) { lightIndex = 0; }
                 billPanelName.sprite = arrayOfLights[lightIndex];
             }*/
-            
+
 
             //Name text font size Pulsing
             switch (fontSizeState)
@@ -333,7 +361,49 @@ public class BillboardUI : MonoBehaviour
             }
             //adjust font size
             billTextName.fontSize = fontSizeCurrent;
+            //light beams at top randomly flash on/off
+            if (isBeamLeftOn == true)
+            {
+                if (Random.Range(0, 100) < beamChance)
+                {
 
+                    //switch off
+                    billBeamLeft.gameObject.SetActive(false);
+                    isBeamLeftOn = false;
+                    beamLeftCounter = 0.0f;
+                }
+            }
+            else
+            {
+                //momentary off (flicker)
+                beamLeftCounter += Time.deltaTime;
+                if (beamLeftCounter > beamCounterMax)
+                {
+                    //switch on
+                    billBeamLeft.gameObject.SetActive(true);
+                    isBeamLeftOn = true;
+                }
+            }
+            if (isBeamRightOn == true)
+            {
+                if (Random.Range(0, 100) < beamChance)
+                {
+                    //switch off
+                    billBeamRight.gameObject.SetActive(false);
+                    isBeamRightOn = false;
+                    beamRightCounter = 0.0f;
+                }
+            }
+            else
+            {
+                beamRightCounter += Time.deltaTime;
+                if (beamRightCounter > beamCounterMax)
+                {
+                    //switch on
+                    billBeamRight.gameObject.SetActive(true);
+                    isBeamRightOn = true;
+                }
+            }
             yield return null;
         }
     }
@@ -384,6 +454,10 @@ public class BillboardUI : MonoBehaviour
         billPanelInner.gameObject.SetActive(false);
         billPanelOuter.gameObject.SetActive(false);
         billPanelFrame.gameObject.SetActive(false);
+        billLightLeft.gameObject.SetActive(false);
+        billLightRight.gameObject.SetActive(false);
+        billBeamLeft.gameObject.SetActive(false);
+        billBeamRight.gameObject.SetActive(false);
         while (counter > 0)
         {
             counter -= speed * Time.deltaTime;
