@@ -1590,3 +1590,63 @@ UnityEngine.Debug:LogErrorFormat(String, Object[])
 Dev seed 58002 -> Saturday, 10 October 2020 4:20 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 6512 -> Sunday, 11 October 2020 9:43 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 37696 -> Sunday, 11 October 2020 9:44 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46313 -> Sunday, 11 October 2020 9:51 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 53151 -> Sunday, 11 October 2020 9:52 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 58945 -> Sunday, 11 October 2020 9:54 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 23917 -> Sunday, 11 October 2020 9:55 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 2645 -> Sunday, 11 October 2020 9:56 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 38287 -> Sunday, 11 October 2020 9:57 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 58436 -> Sunday, 11 October 2020 9:58 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 33547 -> Sunday, 11 October 2020 10:02 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 41710 -> Sunday, 11 October 2020 10:09 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 32180 -> Sunday, 11 October 2020 10:13 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 29092 -> Sunday, 11 October 2020 10:21 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 14730 -> Sunday, 11 October 2020 10:22 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 3315 -> Sunday, 11 October 2020 10:23 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 25073 -> Sunday, 11 October 2020 10:25 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 5276 -> Sunday, 11 October 2020 10:26 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 35703 -> Sunday, 11 October 2020 10:27 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 33996 -> Sunday, 11 October 2020 10:33 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 13702 -> Sunday, 11 October 2020 10:33 AM
+City seed 5678 -> London, United Kingdom

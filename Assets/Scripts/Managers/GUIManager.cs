@@ -22,7 +22,7 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Alpha of Actor portraits when ActorStatus is 'InActive'")]
     [Range(0f, 1f)] public float alphaInactive = 0.45f;
     [Tooltip("Alpha of Base Panel city and country text. Uses a 'byte' due to TextMeshPro script interface which is different to C#")]
-    [Range(0, 255)] public byte alphaBaseText = 100;
+    [Range(0, 255)] public byte alphaBaseText = 135;
 
     [Header("Modal")]
     [Tooltip("How many blocking modal levels are there? eg. the number of stackable UI levels?")]
