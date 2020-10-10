@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6a504a81166ad548a7acdd6c804222d, type: 3}
   m_Name: United Kingdom
   m_EditorClassIdentifier: 
-  colourName: Salmon
-  colour_red: 255
-  colour_green: 153
-  colour_blue: 153
+  colourName: '#e6667e'
+  colour_red: 230
+  colour_green: 102
+  colour_blue: 126
   nameSet: {fileID: 11400000, guid: 854ab7ac874cecd418818e40bda1e9bf, type: 2}

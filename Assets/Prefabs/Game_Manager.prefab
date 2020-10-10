@@ -5982,7 +5982,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 8f27491b3a31d1f46adb5b141c02f8dc, type: 2}
   - {fileID: 2100000, guid: 7f4b99c270750174dbe3b365ad9c260f, type: 2}
   - {fileID: 2100000, guid: 08d40ab47bf9d7c47b9708251fead6df, type: 2}
-  - {fileID: 2100000, guid: f419980abb0e05b4bb63e3185d702065, type: 2}
+  - {fileID: 2100000, guid: dcfae46d408354146aee814cf140efe7, type: 2}
   - {fileID: 2100000, guid: b2b16d40939fe40449a5dd3b8b5d3b3c, type: 2}
   resetConnections: 0
 --- !u!114 &114653768297724556
@@ -6283,7 +6283,7 @@ MonoBehaviour:
   pipelineWait: 0.1
   alphaActive: 1
   alphaInactive: 0.45
-  alphaBaseText: 100
+  alphaBaseText: 135
   numOfModalLevels: 2
   flashRedTime: 1
   flashAlertTime: 1
