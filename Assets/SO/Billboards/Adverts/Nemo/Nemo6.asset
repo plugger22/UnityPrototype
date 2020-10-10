@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Nemo6
   m_EditorClassIdentifier: 
   category: {fileID: 11400000, guid: 77d10a28a59a81147ba25515edeeb451, type: 2}
-  textTop: If you think you've been there and done it all try one of our special [ZeroG
-    private rooms]
+  textTop: If you think you've been there and done it all try one of our special [Zero
+    G private rooms]
   textBottom: Nemo Near Earth Orbitals
   isRedHighlight: 0

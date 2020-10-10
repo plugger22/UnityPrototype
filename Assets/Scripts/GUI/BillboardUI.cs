@@ -27,24 +27,13 @@ public class BillboardUI : MonoBehaviour
     public TextMeshProUGUI billTextBottom;
     public TextMeshProUGUI billTextName;
 
-    //flashing lights (0 to 19 in correct sequence)
-    public Sprite[] arrayOfLights;
-
     private RectTransform billTransformLeft;
     private RectTransform billTransformRight;
 
     private float halfScreenWidth;
-    /*private float width;*/
-    private float speed;
-    private float counter;
-    private float distance;
-
-    //flashing light border of name texts
-    /*private float lightCounter;
-    private float lightCounterMax;
-    private float lightSpeed;
-    private int lightIndex;
-    private int lightIndexMax;*/
+    private float screenSpeed;
+    private float screenCounter;
+    private float screenDistance;
 
     //Name text (pulses up and down in size)
     private float fontSizeMax;
@@ -53,17 +42,20 @@ public class BillboardUI : MonoBehaviour
     private float fontSizeCounter;
     private float fontSizeCounterMax;
     private float fontSizeSpeed;
+    private float fontSizeBoost;           //will grow at a faster rate than shrinking due to the boost
     private Pulsing fontSizeState;
 
-    //neon borders and text colours for main billboard
+    //billboard borders and text colours for main billboard
     private bool isFading;
     private Color outerColour;
-    private float flashNeon;
-    private float offset;                   //offset distance to get panels off screen during development
+    private float flashBorder;
+    private float panelOffset;                   //offset distance to get panels off screen during development
+    private int maxNameChars;                    //max number of chars in playerName before it's swapped to a default text to prevent overflowing
     private string colourBlue;
     private string colourRed;
     private string endTag;
     private string sizeLarge;
+    
 
     //light beams
     private bool isBeamLeftOn;
@@ -119,10 +111,27 @@ public class BillboardUI : MonoBehaviour
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
     {
-        flashNeon = GameManager.i.guiScript.flashBillboardTime;
-        speed = GameManager.i.guiScript.billboardSpeed;
-        Debug.Assert(flashNeon > 0.0f, "Invalid flashNeon (Zero)");
-        Debug.Assert(speed > 0.0f, "Invalid speed (Zero)");
+        flashBorder = GameManager.i.guiScript.billboardFlash;
+        screenSpeed = GameManager.i.guiScript.billboardSpeed;
+        panelOffset = GameManager.i.guiScript.billboardOffset;
+        fontSizeMin = GameManager.i.guiScript.billboardFontMin;
+        fontSizeCounterMax = GameManager.i.guiScript.billboardFontPause;
+        fontSizeSpeed = GameManager.i.guiScript.billboardFontSpeed;
+        fontSizeBoost = GameManager.i.guiScript.billboardFontBoost;
+        maxNameChars = GameManager.i.guiScript.billboardNameMax;
+        beamCounterMax = GameManager.i.guiScript.billboardLightOff;
+        beamChance = GameManager.i.guiScript.billboardLightChance;
+        //Asserts
+        Debug.Assert(flashBorder > 0.0f, "Invalid flashNeon (Zero)");
+        Debug.Assert(screenSpeed > 0.0f, "Invalid speed (Zero)");
+        Debug.Assert(panelOffset > 0.0f, "Invalid panelOffset (Zero)");
+        Debug.Assert(fontSizeMin > 0.0f, "Invalid fontSizeMin (Zero)");
+        Debug.Assert(fontSizeCounterMax > 0.0f, "Invalid fontSizeCounterMax (Zero)");
+        Debug.Assert(fontSizeSpeed > 0.0f, "Invalid fontSizeSpeed (Zero)");
+        Debug.Assert(fontSizeBoost > 0.0f, "Invalid fontSizeBoost (Zero)");
+        Debug.Assert(maxNameChars > 0, "Invalid maxNameChars (Zero)");
+        Debug.Assert(beamCounterMax > 0.0f, "Invalid beamCounterMax (Zero)");
+        Debug.Assert(beamChance > 0, "Invalid beamChance (Zero)");
     }
     #endregion
 
@@ -144,8 +153,6 @@ public class BillboardUI : MonoBehaviour
         Debug.Assert(billTextTop != null, "Invalid billTextTop (Null)");
         Debug.Assert(billTextBottom != null, "Invalid billTextBottom (Null)");
         Debug.Assert(billTextName != null, "Invalid billTextName (Null)");
-        Debug.Assert(arrayOfLights != null, "Invalid arrayOfLights (Null)");
-        Debug.AssertFormat(arrayOfLights.Length == 20, "Invalid arrayOfLights (should be 20 items, is {0}", arrayOfLights.Length);
         //initialise components
         billTransformLeft = billLeft.GetComponent<RectTransform>();
         billTransformRight = billRight.GetComponent<RectTransform>();
@@ -197,28 +204,27 @@ public class BillboardUI : MonoBehaviour
     /// </summary>
     private void InitialiseBillboard()
     {
-        /*lightIndexMax = arrayOfLights.Length;
-        lightCounterMax = 1.0f;
-        lightSpeed = 20.0f;*/
-        fontSizeCounterMax = 1.25f;
+        /*fontSizeCounterMax = 1.25f;
+        fontSizeSpeed = 1.25f;
+        fontSizeBoost = 1.75f;
+        fontSizeMin = 12.0f;
+        flashBorder = 1.0f;
+        panelOffset = 135;
+        beamCounterMax = 0.10f;
+        beamChance = 1;*/
+
+        screenSpeed *= 10;
         outerColour = billPanelOuter.color;
-        flashNeon = 1.0f;
-        speed *= 10;
         //measurements
         halfScreenWidth = Screen.width / 2;
-        offset = 135;
-        distance = halfScreenWidth + offset;
+        screenDistance = halfScreenWidth + panelOffset;
         //Name text won't pulse with this on
         billTextName.enableAutoSizing = false;
-        //light beams
-        beamCounterMax = 0.10f;
-        beamChance = 1;
         //activate
         billCanvas.gameObject.SetActive(true);
         //Reset panels at start
         ResetBillboard();
-
-        //initialise listOfBillboards
+        //initialise listOfBillboard texts
         GameManager.i.dataScript.InitialiseBillboardList();
         /*Debug.LogFormat("[Tst] BillboardUI.cs -> halfScreenWidth {0}, panelWidth {1}, distance {2}{3}", halfScreenWidth, width, distance, "\n");*/
     }
@@ -235,8 +241,8 @@ public class BillboardUI : MonoBehaviour
         billLightRight.gameObject.SetActive(false);
         billBeamLeft.gameObject.SetActive(false);
         billBeamRight.gameObject.SetActive(false);
-        billLeft.transform.localPosition = new Vector3(-distance, 0, 0);
-        billRight.transform.localPosition = new Vector3(distance, 0, 0);
+        billLeft.transform.localPosition = new Vector3(-screenDistance, 0, 0);
+        billRight.transform.localPosition = new Vector3(screenDistance, 0, 0);
         Debug.LogFormat("[UI] BillboardUI.cs -> Reset: Reset Billboard{0}", "\n");
     }
 
@@ -264,39 +270,31 @@ public class BillboardUI : MonoBehaviour
         /*lightIndex = 0;
         lightCounter = 0;*/
 
-        counter = 0;
+        screenCounter = 0;
         billTextTop.text = ProcessBillboardTextTop(billboard);
         billTextBottom.text = billboard.textBottom.ToUpper();
         billTextName.text = GameManager.i.playerScript.FirstName.ToUpper(); ;
         //any longer than set num of char's will cause issues with pulsing, use a default text instead
-        if (billTextName.text.Length > 9)
+        if (billTextName.text.Length > maxNameChars)
         { billTextName.text = "Yes YOU!"; }
         //determine parameters for name text font size pulsing (max size is current max size feasible in space)
         fontSizeMax = billTextName.fontSize;
-        fontSizeMin = 12.0f;
         fontSizeCurrent = fontSizeMax;
         fontSizeState = Pulsing.Fading;
-        fontSizeSpeed = 1.25f;
+
         fontSizeCounter = 0.0f;
         isBeamLeftOn = true;
         isBeamRightOn = true;
         //modal state
         GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Billboard });
-        while (counter < distance)
+        while (screenCounter < screenDistance)
         {
-            counter += speed * Time.deltaTime;
-            billLeft.transform.localPosition = new Vector3(-distance + counter, 0, 0);
-            billRight.transform.localPosition = new Vector3(distance - counter, 0, 0);
+            screenCounter += screenSpeed * Time.deltaTime;
+            billLeft.transform.localPosition = new Vector3(-screenDistance + screenCounter, 0, 0);
+            billRight.transform.localPosition = new Vector3(screenDistance - screenCounter, 0, 0);
             yield return null;
         }
-        billPanelInner.gameObject.SetActive(true);
-        billPanelOuter.gameObject.SetActive(true);
-        billPanelFrame.gameObject.SetActive(true);
-        billPanelName.gameObject.SetActive(true);
-        billLightLeft.gameObject.SetActive(true);
-        billLightRight.gameObject.SetActive(true);
-        billBeamLeft.gameObject.SetActive(true);
-        billBeamRight.gameObject.SetActive(true);
+        SetBillboardCentre(true);
         //indefinitely strobe outer panel (cyan neon borders)
         isFading = true;
         while (true)
@@ -304,29 +302,17 @@ public class BillboardUI : MonoBehaviour
             outerColour = billPanelOuter.color;
             if (isFading == false)
             {
-                outerColour.a += Time.deltaTime / flashNeon;
+                outerColour.a += Time.deltaTime / flashBorder;
                 if (outerColour.a >= 1.0f)
                 { isFading = true; }
             }
             else
             {
-                outerColour.a -= Time.deltaTime / flashNeon;
+                outerColour.a -= Time.deltaTime / flashBorder;
                 if (outerColour.a <= 0.0f)
                 { isFading = false; }
             }
             billPanelOuter.color = outerColour;
-
-            /*//strobe name lighting
-            lightCounter += lightSpeed * Time.deltaTime;
-            if (lightCounter > lightCounterMax)
-            {
-                lightCounter = 0.0f;
-                lightIndex++;
-                if (lightIndex == lightIndexMax) { lightIndex = 0; }
-                billPanelName.sprite = arrayOfLights[lightIndex];
-            }*/
-
-
             //Name text font size Pulsing
             switch (fontSizeState)
             {
@@ -340,7 +326,8 @@ public class BillboardUI : MonoBehaviour
                     }
                     break;
                 case Pulsing.Growing:
-                    fontSizeCurrent += fontSizeCurrent * Time.deltaTime * fontSizeSpeed;
+                    //grow at a faster rate than shrinking
+                    fontSizeCurrent += fontSizeCurrent * Time.deltaTime * fontSizeSpeed * fontSizeBoost;
                     if (fontSizeCurrent >= fontSizeMax)
                     {
                         fontSizeState = Pulsing.Constant;
@@ -449,8 +436,43 @@ public class BillboardUI : MonoBehaviour
     /// <returns></returns>
     private IEnumerator BillClose()
     {
-        counter = Convert.ToInt32(halfScreenWidth);
+        screenCounter = Convert.ToInt32(halfScreenWidth);
+        //revert modal state back to normal
         GameManager.i.inputScript.ResetStates();
+        //disable centre elements
+        SetBillboardCentre(false);
+        //open up side panels
+        while (screenCounter > 0)
+        {
+            screenCounter -= screenSpeed * Time.deltaTime;
+            billLeft.transform.localPosition = new Vector3(-screenDistance + screenCounter, 0, 0);
+            billRight.transform.localPosition = new Vector3(screenDistance - screenCounter, 0, 0);
+            yield return null;
+        }
+        billTextName.fontSize = fontSizeMax;
+
+    }
+
+    /// <summary>
+    /// Toggles billboard centre elements on/off
+    /// </summary>
+    /// <param name="isSwitchOn"></param>
+    private void SetBillboardCentre(bool isSwitchOn)
+    {
+        if (isSwitchOn)
+        {
+            //enable centre elements
+            billPanelInner.gameObject.SetActive(true);
+            billPanelOuter.gameObject.SetActive(true);
+            billPanelFrame.gameObject.SetActive(true);
+            billLightLeft.gameObject.SetActive(true);
+            billLightRight.gameObject.SetActive(true);
+            billBeamLeft.gameObject.SetActive(true);
+            billBeamRight.gameObject.SetActive(true);
+        }
+        else
+        {
+        //disable centre elements
         billPanelInner.gameObject.SetActive(false);
         billPanelOuter.gameObject.SetActive(false);
         billPanelFrame.gameObject.SetActive(false);
@@ -458,15 +480,7 @@ public class BillboardUI : MonoBehaviour
         billLightRight.gameObject.SetActive(false);
         billBeamLeft.gameObject.SetActive(false);
         billBeamRight.gameObject.SetActive(false);
-        while (counter > 0)
-        {
-            counter -= speed * Time.deltaTime;
-            billLeft.transform.localPosition = new Vector3(-distance + counter, 0, 0);
-            billRight.transform.localPosition = new Vector3(distance - counter, 0, 0);
-            yield return null;
         }
-        billTextName.fontSize = fontSizeMax;
-
     }
 
 

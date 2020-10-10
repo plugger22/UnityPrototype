@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Name: Nemo10
   m_EditorClassIdentifier: 
   category: {fileID: 11400000, guid: 77d10a28a59a81147ba25515edeeb451, type: 2}
-  textTop: Give the gift of ZeroG to that [special someone] in your life
+  textTop: Give the gift of Zero G to that [special someone] in your life
   textBottom: Nemo Near Earth Orbitals
   isRedHighlight: 1

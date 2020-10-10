@@ -39,8 +39,6 @@ public class GUIManager : MonoBehaviour
     [Range(0.1f, 1.0f)] public float flashConnectiontTime = 0.4f;
     [Tooltip("Flash interval (in real seconds) for InfoApp alerts over the top of Request and Meeting tabs")]
     [Range(0.1f, 1.0f)] public float flashInfoTabTime = 0.4f;
-    [Tooltip("Billboard neon cyan background, strobing in and out")]
-    [Range(0.5f, 2.0f)] public float flashBillboardTime = 1.0f;
 
     [Header("PopUp Texts")]
     [Tooltip("How long the full animation cycle lasts (seconds)")]
@@ -99,10 +97,28 @@ public class GUIManager : MonoBehaviour
     [Range(4, 4)] public int maxInventoryOptions = 4;
 
     [Header("BillboardUI")]
+    [Tooltip("Offset distance to get side panels offscreen during development (pixels")]
+    [Range(0f, 200f)] public float billboardOffset = 135;
+    [Tooltip("Billboard border flash speed, strobing in and out")]
+    [Range(0.5f, 2.0f)] public float billboardFlash = 1.0f;
     [Tooltip("If billboard is switch 'ON' gives the % chance (less than) of a billboard being shown at the end of a turn (eg. determines frequency)")]
     [Range(0, 100)] public int billboardChance = 10;
     [Tooltip("Speed at which billboard blinds open and shut (speed x Time.deltaTime)")]
     [Range(0f, 100f)] public float billboardSpeed = 100.0f;
+    [Tooltip("Strobing of playerName font size. How will it pause at full size? (Time.deltaTime)")]
+    [Range(0f, 3.00f)] public float billboardFontPause = 1.25f;
+    [Tooltip("Speed of font growing or shrinking (Time.deltaTime")]
+    [Range(1.0f, 3.00f)] public float billboardFontSpeed = 1.25f;
+    [Tooltip("Extra boost (multiplier) to font Growing (so it's this much times faster than when it's shrinking)")]
+    [Range(1.0f, 3.00f)] public float billboardFontBoost = 1.75f;
+    [Tooltip("Minimum font size that playerName will shrink to before growing")]
+    [Range(10.0f, 20.0f)] public float billboardFontMin = 12.0f;
+    [Tooltip("Max number of characters in playerName, over which it'll be swapped for a default text")]
+    [Range(0, 50)] public int billboardNameMax = 20;
+    [Tooltip("Light beams (top lights) -> how long they'll flicker off for")]
+    [Range(0f, 1.0f)] public float billboardLightOff = 0.10f;
+    [Tooltip("% chance of a light beam flickering each frame")]
+    [Range(0, 100)] public int billboardLightChance = 1;
 
     [Header("Sprites")]
     [Tooltip("Sprite to use for ActorGUI to show that the position is vacant")]
