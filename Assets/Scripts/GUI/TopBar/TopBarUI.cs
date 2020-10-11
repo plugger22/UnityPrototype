@@ -16,7 +16,7 @@ public class TopBarUI : MonoBehaviour
     public TopBarDataInteraction innocence;
     //TopBarItem prefab interactions RHS -> Status
     public TopBarDataInteraction unhappy;                       //number of unhappy actors in reserves
-    public TopBarDataInteraction conflicts;                     //number of potential actor relationship conflicts (actors with motivation 0)
+    public TopBarDataInteraction conflicts;                     //number of potential actor relationship conflicts (actors with opinion 0)
     public TopBarDataInteraction blackmail;                     //number of blackmail attempts
     public TopBarDataInteraction doom;                          //number of turns remaining for doom timer
 
@@ -708,7 +708,7 @@ public class TopBarUI : MonoBehaviour
     }
 
     /// <summary>
-    /// dynamically updates potential (motivation 0) relationship Conflicts tooltip (exluding header and offsets)
+    /// dynamically updates potential (opinion 0) relationship Conflicts tooltip (exluding header and offsets)
     /// </summary>
     /// <param name="value"></param>
     private void UpdateConflictTooltip(int value)

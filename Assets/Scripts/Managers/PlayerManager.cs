@@ -1733,7 +1733,7 @@ public class PlayerManager : MonoBehaviour
                                 if (actor != null)
                                 {
                                     rnd = Random.Range(0, 100);
-                                    motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                                    motivation = actor.GetDatapoint(ActorDatapoint.Opinion1);
                                     switch (motivation)
                                     {
                                         case 3: chance = 80; break;

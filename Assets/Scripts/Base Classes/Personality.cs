@@ -16,7 +16,7 @@ public class Personality
     private string profileExplanation;                                  //psychological explanation of profile
     //collections
     private List<string> listOfDescriptors = new List<string>();                                //list of personality descriptors
-    private List<HistoryMotivation> listOfMotivation = new List<HistoryMotivation>();           //list of all motivational changes
+    private List<HistoryOpinion> listOfMotivation = new List<HistoryOpinion>();           //list of all motivational changes
 
     /// <summary>
     /// constructor
@@ -178,7 +178,7 @@ public class Personality
     { return arrayOfFactors[0] + arrayOfFactors[2]; }
 
 
-    public List<HistoryMotivation> GetListOfMotivation()
+    public List<HistoryOpinion> GetListOfMotivation()
     { return listOfMotivation; }
 
 
@@ -197,7 +197,7 @@ public class Personality
     /// Add a record to the listOfMotivation (History)
     /// </summary>
     /// <param name="history"></param>
-    public void AddMotivation(HistoryMotivation history)
+    public void AddMotivation(HistoryOpinion history)
     {
         if (history != null)
         { listOfMotivation.Add(history); }
@@ -208,7 +208,7 @@ public class Personality
     /// set listOfMotivation (History) from saved load game data. Clears any existing data beforehand.
     /// </summary>
     /// <param name="listOfMotivation"></param>
-    public void SetMotivation(List<HistoryMotivation> listOfMotivation)
+    public void SetMotivation(List<HistoryOpinion> listOfMotivation)
     {
         if (listOfMotivation != null)
         {

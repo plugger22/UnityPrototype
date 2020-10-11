@@ -37,7 +37,7 @@ public class TopicManager : MonoBehaviour
     [Range(0, 100)] public int chanceMedium = 50;
     [Tooltip("Number (less than) to roll for a Low probability option to Succeed")]
     [Range(0, 100)] public int chanceLow = 25;
-    [Tooltip("If Motivation is neutral (2) then there is this % chance of the topic being good and the balance for it being bad")]
+    [Tooltip("If Opinion is neutral (2) then there is this % chance of the topic being good and the balance for it being bad")]
     [Range(0, 100)] public int chanceNeutralGood = 70;
     [Tooltip("If Player Stressed there is a random chance that any option in a topic will be unavailable")]
     [Range(0, 100)] public int chanceStressedNoOption = 25;
@@ -1782,11 +1782,11 @@ public class TopicManager : MonoBehaviour
                         listOfPotentialTopics = GetTopicGroup(listOfSubTypeTopics, group, turnTopicSubType.name);
                         break;
                     case "AuthorityTeam":
-                        //base on actor Motivation
+                        //base on actor Opinion
                         listOfPotentialTopics = GetAuthorityTeamTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "ActorGear":
-                        //based on actor Motivation
+                        //based on actor Opinion
                         listOfPotentialTopics = GetActorGearTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "ActorPolitic":
@@ -1794,7 +1794,7 @@ public class TopicManager : MonoBehaviour
                         listOfPotentialTopics = GetActorPoliticTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "ActorContact":
-                        //based on actor Motivation
+                        //based on actor Opinion
                         listOfPotentialTopics = GetActorContactTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "ActorMatch":
@@ -1802,7 +1802,7 @@ public class TopicManager : MonoBehaviour
                         listOfPotentialTopics = GetActorMatchTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "ActorDistrict":
-                        //based on actor Motivation
+                        //based on actor Opinion
                         listOfPotentialTopics = GetActorDistrictTopics(listOfSubTypeTopics, playerSide, turnTopicSubType.name);
                         break;
                     case "PlayerDistrict":
@@ -1936,7 +1936,7 @@ public class TopicManager : MonoBehaviour
 
     #region GetActorContactTopics
     /// <summary>
-    /// subType ActorContact template topics selected by actor / motivation (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
+    /// subType ActorContact template topics selected by actor / opinion (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
     /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
     /// </summary>
     /// <returns></returns>
@@ -1954,8 +1954,8 @@ public class TopicManager : MonoBehaviour
                 Actor actor = listOfActors[Random.Range(0, listOfActors.Count)];
                 if (actor != null)
                 {
-                    //get actor motivation
-                    group = GetGroupMotivation(actor.GetDatapoint(ActorDatapoint.Motivation1));
+                    //get actor opinion
+                    group = GetGroupOpinion(actor.GetDatapoint(ActorDatapoint.Opinion1));
                     //if no entries use entire list by default
                     listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
                     //Info tags
@@ -1992,7 +1992,7 @@ public class TopicManager : MonoBehaviour
         group = GetGroupMood(GameManager.i.playerScript.GetMood());
         //if no entries use entire list by default
         listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
-        //get a candidate actor (may change later in ProcessSpecialTopicData) -> aim for actor with motivation that coresponds to group
+        //get a candidate actor (may change later in ProcessSpecialTopicData) -> aim for actor with opinion that coresponds to group
         List<Actor> listOfActors = GameManager.i.dataScript.GetActiveActors(playerSide);
         if (listOfActors != null)
         {
@@ -2004,13 +2004,13 @@ public class TopicManager : MonoBehaviour
                     switch (group)
                     {
                         case GroupType.Good:
-                            //actors with motivation 2+
-                            if (actor.GetDatapoint(ActorDatapoint.Motivation1) >= 2)
+                            //actors with opinion 2+
+                            if (actor.GetDatapoint(ActorDatapoint.Opinion1) >= 2)
                             { selectionList.Add(actor); }
                             break;
                         case GroupType.Bad:
-                            //actors with motivation 2-
-                            if (actor.GetDatapoint(ActorDatapoint.Motivation1) <= 2)
+                            //actors with opinion 2-
+                            if (actor.GetDatapoint(ActorDatapoint.Opinion1) <= 2)
                             { selectionList.Add(actor); }
                             break;
                     }
@@ -2074,7 +2074,7 @@ public class TopicManager : MonoBehaviour
 
     #region GetActorGearTopics
     /// <summary>
-    /// subType ActorGear template topics selected by random actor (who has gear) based on motivation (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
+    /// subType ActorGear template topics selected by random actor (who has gear) based on opinion (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
     /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
     /// </summary>
     /// <returns></returns>
@@ -2097,8 +2097,8 @@ public class TopicManager : MonoBehaviour
                     //actor must have gear
                     if (actor.CheckIfGear() == true)
                     {
-                        //seed selection pool by motivation (the further off neutral their motivation, the more entries they get)
-                        switch (actor.GetDatapoint(ActorDatapoint.Motivation1))
+                        //seed selection pool by opinion (the further off neutral their opinion, the more entries they get)
+                        switch (actor.GetDatapoint(ActorDatapoint.Opinion1))
                         {
                             case 3: numOfEntries = 2; break;
                             case 2: numOfEntries = 1; break;
@@ -2126,7 +2126,7 @@ public class TopicManager : MonoBehaviour
                     if (gear != null)
                     {
                         tagGear = gear.tag;
-                        group = GetGroupMotivation(actor.GetDatapoint(ActorDatapoint.Motivation1));
+                        group = GetGroupOpinion(actor.GetDatapoint(ActorDatapoint.Opinion1));
                         //if no entries use entire list by default
                         listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
                         //Info tags
@@ -2149,7 +2149,7 @@ public class TopicManager : MonoBehaviour
 
     #region GetActorDistrictTopics
     /// <summary>
-    /// subType ActorDistrict template topics selected by random actor based on motivation (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
+    /// subType ActorDistrict template topics selected by random actor based on opinion (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
     /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
     /// </summary>
     /// <param name="listOfSubTypeTopics"></param>
@@ -2213,8 +2213,8 @@ public class TopicManager : MonoBehaviour
                 {
                     //update turnTopicSubType to accommodate currently selected actor, not just the last one in the  loop above
                     turnTopicSubSubType = GetTopicSubSubType(data.nodeAction);
-                    //group depends on actor motivation
-                    group = GetGroupMotivation(actor.GetDatapoint(ActorDatapoint.Motivation1));
+                    //group depends on actor opinion
+                    group = GetGroupOpinion(actor.GetDatapoint(ActorDatapoint.Opinion1));
                     //if no entries use entire list by default
                     listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName, turnTopicSubSubType.name);
                     //debug
@@ -2518,7 +2518,7 @@ public class TopicManager : MonoBehaviour
             tagActorID = listOfActors[Random.Range(0, listOfActors.Count)];
             if (tagActorID > -1)
             {
-                //group based on Actor Motivation
+                //group based on Actor Opinion
                 group = GetGroupMood(GameManager.i.playerScript.GetMood());
                 //if no entries use entire list by default
                 listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
@@ -2559,7 +2559,7 @@ public class TopicManager : MonoBehaviour
                     tagNodeID = -1;
                     if (string.IsNullOrEmpty(tagGear) == false)
                     {
-                        //group based on Actor Motivation
+                        //group based on Actor Opinion
                         group = GetGroupMood(GameManager.i.playerScript.GetMood());
                         //if no entries use entire list by default
                         listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName);
@@ -2682,8 +2682,8 @@ public class TopicManager : MonoBehaviour
                     {
                         //need data for dual actor effect and also relationship type -> NOTE: actorID's are actually hqID's (O.K 'cause tagHqActors is true which caters for this in code)
                         tagHqActors = true;
-                        //tagActorID is always the actor with the highest (or equal highest) motivation (optimises HQ single actor topics)
-                        if (actorFirst.GetDatapoint(ActorDatapoint.Motivation1) >= actorSecond.GetDatapoint(ActorDatapoint.Motivation1))
+                        //tagActorID is always the actor with the highest (or equal highest) opinion (optimises HQ single actor topics)
+                        if (actorFirst.GetDatapoint(ActorDatapoint.Opinion1) >= actorSecond.GetDatapoint(ActorDatapoint.Opinion1))
                         {
                             tagActorID = actorFirst.hqID;
                             tagActorOtherID = actorSecond.hqID;
@@ -3037,7 +3037,7 @@ public class TopicManager : MonoBehaviour
 
     #region GetAuthorityTeamTopics
     /// <summary>
-    /// subType ActorDistrict template topics selected by random actor based on motivation (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
+    /// subType ActorDistrict template topics selected by random actor based on opinion (good/bad group). Returns a list of suitable Live topics. Returns EMPTY if none found.
     /// NOTE: listOfSubTypeTopics and playerSide checked for Null by the parent method
     /// </summary>
     /// <param name="listOfSubTypeTopics"></param>
@@ -3100,8 +3100,8 @@ public class TopicManager : MonoBehaviour
                 turnTopicSubSubType = GetTopicSubSubType(data.teamAction);
                 if (data != null)
                 {
-                    //group depends on actor motivation
-                    group = GetGroupMotivation(actor.GetDatapoint(ActorDatapoint.Motivation1));
+                    //group depends on actor opinion
+                    group = GetGroupOpinion(actor.GetDatapoint(ActorDatapoint.Opinion1));
                     //if no entries use entire list by default
                     listOfTopics = GetTopicGroup(listOfSubTypeTopics, group, subTypeName, turnTopicSubSubType.name);
                     //debug
@@ -4651,20 +4651,20 @@ public class TopicManager : MonoBehaviour
 
     #region GetGroup Methods
     /// <summary>
-    /// returns groupType based on Actor Motivations, returns Neutral if a problem
+    /// returns groupType based on Actor Opinions, returns Neutral if a problem
     /// </summary>
-    /// <param name="motivation"></param>
+    /// <param name="opinion"></param>
     /// <returns></returns>
-    private GroupType GetGroupMotivation(int motivation)
+    private GroupType GetGroupOpinion(int opinion)
     {
         GroupType group = GroupType.Neutral;
-        switch (motivation)
+        switch (opinion)
         {
             case 3: group = GroupType.Good; break;
             case 2: group = GroupType.Neutral; break;
             case 1: group = GroupType.Bad; break;
             case 0: group = GroupType.VeryBad; break;
-            default: Debug.LogWarningFormat("Unrecognised Actor Motivation \"{0}\", default GroupType.Neutral used", motivation); break;
+            default: Debug.LogWarningFormat("Unrecognised Actor Opinion \"{0}\", default GroupType.Neutral used", opinion); break;
         }
         return group;
     }
@@ -4858,12 +4858,12 @@ public class TopicManager : MonoBehaviour
                 switch (group)
                 {
                     case GroupType.Good:
-                        //high motivation, good group
+                        //high opinion, good group
                         listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live &&
                         t.group.name.Equals("Good", StringComparison.Ordinal)).ToList());
                         break;
                     case GroupType.Neutral:
-                        //neutral motivation, use all Active topics
+                        //neutral opinion, use all Active topics
                         if (Random.Range(0, 100) < chanceNeutralGood)
                         { listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live && t.group.name.Equals("Good", StringComparison.Ordinal)).ToList()); }
                         else
@@ -4871,7 +4871,7 @@ public class TopicManager : MonoBehaviour
                         break;
                     case GroupType.Bad:
                     case GroupType.VeryBad:
-                        //low motivation, bad group
+                        //low opinion, bad group
                         listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live &&
                         t.group.name.Equals("Bad", StringComparison.Ordinal)).ToList());
                         break;
@@ -4901,19 +4901,19 @@ public class TopicManager : MonoBehaviour
                 switch (group)
                 {
                     case GroupType.Good:
-                        //high motivation, good group
+                        //high opinion, good group
                         listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live &&
                         t.subSubType.name.Equals(subSubTypeName, StringComparison.Ordinal) &&
                         t.group.name.Equals("Good", StringComparison.Ordinal)).ToList());
                         break;
                     case GroupType.Neutral:
-                        //neutral motivation, use all Active topics
+                        //neutral opinion, use all Active topics
                         listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live &&
                         t.subSubType.name.Equals(subSubTypeName, StringComparison.Ordinal)).ToList());
                         break;
                     case GroupType.Bad:
                     case GroupType.VeryBad:
-                        //low motivation, bad group
+                        //low opinion, bad group
                         listOfTopics.AddRange(inputList.Where(t => t.status == Status.Live &&
                         t.subSubType.name.Equals(subSubTypeName, StringComparison.Ordinal) &&
                         t.group.name.Equals("Bad", StringComparison.Ordinal)).ToList());
@@ -7291,7 +7291,7 @@ public class TopicManager : MonoBehaviour
 
     #region GetActorTooltip
     /// <summary>
-    /// Returns tooltip main and details for various actor subTypes (Motivation). tooltip.Header already covered by parent method. If returns nothing, which is O.K, then no tooltip is shown on mouseover
+    /// Returns tooltip main and details for various actor subTypes (Opinion). tooltip.Header already covered by parent method. If returns nothing, which is O.K, then no tooltip is shown on mouseover
     /// Note: Actor checked for Null by parent method
     /// </summary>
     /// <param name="data"></param>
@@ -7341,18 +7341,18 @@ public class TopicManager : MonoBehaviour
                         default: Debug.LogWarningFormat("Unrecognised turnTopic.group \"{0}\"", turnTopic.group.name); break;
                     }
                     //details
-                    int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                    int opinion = actor.GetDatapoint(ActorDatapoint.Opinion1);
                     int oddsGood = chanceNeutralGood;
                     int oddsBad = 100 - chanceNeutralGood;
-                    builder.AppendFormat("Determined by{0}{1}{2}'s{3}{4}{5}<size=110%>Motivation</size>{6}{7}", "\n", colourAlert, actor.arc.name, colourEnd, "\n", colourNeutral, colourEnd, "\n");
-                    //highlight current motivation band, grey out the rest
-                    if (motivation == 3) { builder.AppendFormat("if {0}3{1}, {2}Good{3}{4}", colourNeutral, colourEnd, colourGood, colourEnd, "\n"); }
+                    builder.AppendFormat("Determined by{0}{1}{2}'s{3}{4}{5}<size=110%>Opinion</size>{6}{7}", "\n", colourAlert, actor.arc.name, colourEnd, "\n", colourNeutral, colourEnd, "\n");
+                    //highlight current opinion band, grey out the rest
+                    if (opinion == 3) { builder.AppendFormat("if {0}3{1}, {2}Good{3}{4}", colourNeutral, colourEnd, colourGood, colourEnd, "\n"); }
                     else { builder.AppendFormat("<size=90%>{0}if 3, Good{1}{2}</size>", colourGrey, colourEnd, "\n"); }
 
-                    if (motivation == 2) { builder.AppendFormat("if {0}2{1}, could be either{2}<size=90%>({3}/{4} Good/Bad)</size>{5}", colourNeutral, colourEnd, "\n", oddsGood, oddsBad, "\n"); }
+                    if (opinion == 2) { builder.AppendFormat("if {0}2{1}, could be either{2}<size=90%>({3}/{4} Good/Bad)</size>{5}", colourNeutral, colourEnd, "\n", oddsGood, oddsBad, "\n"); }
                     else { builder.AppendFormat("<size=90%>{0}if 2, could be either{1}({2}/{3} Good/Bad){4}{5}</size>", colourGrey, "\n", oddsGood, oddsBad, colourEnd, "\n"); }
 
-                    if (motivation < 2) { builder.AppendFormat("if {0}1{1} or {2}0{3}, {4}Bad{5}", colourNeutral, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd); }
+                    if (opinion < 2) { builder.AppendFormat("if {0}1{1} or {2}0{3}, {4}Bad{5}", colourNeutral, colourEnd, colourNeutral, colourEnd, colourBad, colourEnd); }
                     else { builder.AppendFormat("<size=90%>{0}if 1 or 0, Bad{1}</size>", colourGrey, colourEnd); }
                     textDetails = builder.ToString();
                     break;

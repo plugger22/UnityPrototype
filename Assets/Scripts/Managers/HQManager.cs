@@ -1413,7 +1413,7 @@ public class HQManager : MonoBehaviour
                 if (actor != null)
                 {
                     builder.AppendFormat("{0}- {1}{2}", "\n", actor.statusHQ, "\n");
-                    builder.AppendFormat(" {0}, {1}, ID {2}, Mot {3}, Comp {4}, R {5}{6}", actor.actorName, actor.arc.name, actor.actorID, actor.GetDatapoint(ActorDatapoint.Motivation1),
+                    builder.AppendFormat(" {0}, {1}, ID {2}, Mot {3}, Comp {4}, R {5}{6}", actor.actorName, actor.arc.name, actor.actorID, actor.GetDatapoint(ActorDatapoint.Opinion1),
                         actor.GetPersonality().GetCompatibilityWithPlayer(), actor.Renown, "\n");
                     builder.AppendFormat("  trait: {0}{1}  {2}{3}", actor.GetTrait().tag, "\n", actor.GetTrait().hqDescription, "\n");
                 }
@@ -1443,7 +1443,7 @@ public class HQManager : MonoBehaviour
                 {
                     foreach (Actor actor in listOfWorkers)
                     {
-                        builder.AppendFormat(" {0}, {1}, ID {2}, Mot {3}, Comp {4}, R {5}{6}", actor.actorName, actor.arc.name, actor.actorID, actor.GetDatapoint(ActorDatapoint.Motivation1),
+                        builder.AppendFormat(" {0}, {1}, ID {2}, Mot {3}, Comp {4}, R {5}{6}", actor.actorName, actor.arc.name, actor.actorID, actor.GetDatapoint(ActorDatapoint.Opinion1),
                             actor.GetPersonality().GetCompatibilityWithPlayer(), actor.Renown, "\n");
                     }
                 }
@@ -1454,7 +1454,7 @@ public class HQManager : MonoBehaviour
                 {
                     foreach (Actor actor in listOfLeftHQ)
                     {
-                        builder.AppendFormat(" {0}, {1}, ID {2}, Mot {3}, Comp {4}, R {5}{6}", actor.actorName, actor.arc.name, actor.actorID, actor.GetDatapoint(ActorDatapoint.Motivation1),
+                        builder.AppendFormat(" {0}, {1}, ID {2}, Mot {3}, Comp {4}, R {5}{6}", actor.actorName, actor.arc.name, actor.actorID, actor.GetDatapoint(ActorDatapoint.Opinion1),
                             actor.GetPersonality().GetCompatibilityWithPlayer(), actor.Renown, "\n");
                     }
                 }
@@ -1521,7 +1521,7 @@ public class HQManager : MonoBehaviour
                 {
                     foreach (Actor actor in listOfWorkers)
                     {
-                        builder.AppendFormat(" {0}, {1}, ID {2}, Mot {3}, Comp {4}, R {5}{6}", actor.actorName, actor.arc.name, actor.actorID, actor.GetDatapoint(ActorDatapoint.Motivation1),
+                        builder.AppendFormat(" {0}, {1}, ID {2}, Mot {3}, Comp {4}, R {5}{6}", actor.actorName, actor.arc.name, actor.actorID, actor.GetDatapoint(ActorDatapoint.Opinion1),
                             actor.GetPersonality().GetCompatibilityWithPlayer(), actor.Renown, "\n");
                         List<HqRenownData> listOfRenownData = actor.GetListOfHqRenownData();
                         if (listOfRenownData != null && listOfRenownData.Count > 0)
@@ -1616,7 +1616,7 @@ public class HQManager : MonoBehaviour
                     //
                     // - - - third factor -> Personal Opinion
                     //
-                    num = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                    num = actor.GetDatapoint(ActorDatapoint.Opinion1);
                     if (isMetaLogs)
                     { Debug.LogFormat("[Tst] HQManager.cs -> GetEndLevelData: {0} Opinion {1}{2}", actorHQ, num, "\n"); }
                     builder.Append(GetFactorString(factorThree, num));
@@ -1655,7 +1655,7 @@ public class HQManager : MonoBehaviour
                     //
                     actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
                     if (actor != null)
-                    { num = actor.GetDatapoint(ActorDatapoint.Motivation1); }
+                    { num = actor.GetDatapoint(ActorDatapoint.Opinion1); }
                     else
                     {
                         Debug.LogWarning("Invalid actor (Null) for ActorHQ.Boss");
@@ -1699,7 +1699,7 @@ public class HQManager : MonoBehaviour
                     //
                     actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
                     if (actor != null)
-                    { num = actor.GetDatapoint(ActorDatapoint.Motivation1); }
+                    { num = actor.GetDatapoint(ActorDatapoint.Opinion1); }
                     else
                     {
                         Debug.LogWarning("Invalid actor (Null) for ActorHQ.Boss");
@@ -1744,7 +1744,7 @@ public class HQManager : MonoBehaviour
                     //
                     actor = GameManager.i.dataScript.GetHqHierarchyActor(actorHQ);
                     if (actor != null)
-                    { num = actor.GetDatapoint(ActorDatapoint.Motivation1); }
+                    { num = actor.GetDatapoint(ActorDatapoint.Opinion1); }
                     else
                     {
                         Debug.LogWarning("Invalid actor (Null) for ActorHQ.Boss");

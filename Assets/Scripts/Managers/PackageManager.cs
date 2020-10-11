@@ -539,15 +539,15 @@ namespace packageAPI
     }
 
     /// <summary>
-    /// history of actor's motivational changes
+    /// history of actor's opinion changes
     /// </summary>
     [System.Serializable]
-    public class HistoryMotivation
+    public class HistoryOpinion
     {
         public int change;              //positive change is good, negative bad
         public int turn;
-        public int motivation;          //motivation AFTER then change
-        public bool isNormal;           //True if motivation change occured normally, False if negated by actor's compatibility with player
+        public int opinion;             //opinion AFTER then change
+        public bool isNormal;           //True if opinion change occured normally, False if negated by actor's compatibility with player
         public string descriptor;       //FORMATTED string, eg. 'Gear HoloPorn Given +1' displayed in green, red if negative, grey if negated
     }
 
@@ -1165,7 +1165,7 @@ namespace packageAPI
     {
         public bool isDismissed;            //listOfActorsDismissed: true -> included, false -> excluded          
         public bool isResigned;             //listOfActorsResigned: true -> included, false -> excluded
-        public bool isLowMotivation;        //true -> includes any actor, false -> excludes any actor with motivation < 2
+        public bool isLowOpinion;            //true -> includes any actor, false -> excludes any actor with opinion < 2
         public bool isTraitor;              //true -> include traitorous actors, actor.isTraitor, false -> exclude
         public bool isLevelTwo;             //true -> all actors will be level 2, or better, false -> base pool of actors will be level 1
     }

@@ -1609,7 +1609,7 @@ public class ActionManager : MonoBehaviour
     /// <param name="details"></param>
     public void ProcessGiveGearAction(ModalActionDetails details)
     {
-        int motivationBoost = 0;
+        int opinionBoost = 0;
         bool errorFlag = false;
         ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
         Gear gear = null;
@@ -1634,33 +1634,33 @@ public class ActionManager : MonoBehaviour
                     if (preferredGear != null)
                     {
                         bool isPreferred = false;
-                        motivationBoost = gearSwapBaseAmount;
+                        opinionBoost = gearSwapBaseAmount;
                         builder.AppendFormat("{0}{1} no longer available{2}", colourBad, gear.tag, colourEnd);
-                        //motivation loss more if preferred gear
+                        //opinion loss more if preferred gear
                         if (preferredGear.name.Equals(gear.type.name, System.StringComparison.Ordinal) == true)
                         {
-                            //Preferred gear (extra motivation)
-                            motivationBoost += gearSwapPreferredAmount;
+                            //Preferred gear (extra opinion)
+                            opinionBoost += gearSwapPreferredAmount;
                             isPreferred = true;
                         }
-                        //give actor motivation boost
-                        int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
-                        motivation += motivationBoost;
-                        motivation = Mathf.Min(GameManager.i.actorScript.maxStatValue, motivation);
-                        string colourMotivation = colourGood;
-                        if (actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, string.Format("Given {0} gear", gear.tag)) == false)
-                        { colourMotivation = colourGrey; }
+                        //give actor opinion boost
+                        int opinion = actor.GetDatapoint(ActorDatapoint.Opinion1);
+                        opinion += opinionBoost;
+                        opinion = Mathf.Min(GameManager.i.actorScript.maxStatValue, opinion);
+                        string colourOpinion = colourGood;
+                        if (actor.SetDatapoint(ActorDatapoint.Opinion1, opinion, string.Format("Given {0} gear", gear.tag)) == false)
+                        { colourOpinion = colourGrey; }
                         //fixed popUp
-                        GameManager.i.popUpFixedScript.SetData(actor.slotID, $"Motivation +{motivationBoost}");
+                        GameManager.i.popUpFixedScript.SetData(actor.slotID, $"Opinion +{opinionBoost}");
                         GameManager.i.popUpFixedScript.SetData(actor.slotID, $"Gain {gear.tag}");
                         GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Lose {gear.tag}");
-                        //motivation message
+                        //opinion message
                         if (isPreferred == true)
                         {
-                            builder.AppendFormat("{0}{1}{2}{3} Motivation +{4} {5}{6}{7}Preferred Gear{8}", "\n", "\n", colourMotivation, actor.arc.name, motivationBoost, colourEnd,
+                            builder.AppendFormat("{0}{1}{2}{3} Opinion +{4} {5}{6}{7}Preferred Gear{8}", "\n", "\n", colourOpinion, actor.arc.name, opinionBoost, colourEnd,
                                 "\n", colourNeutral, colourEnd);
                         }
-                        else { builder.AppendFormat("{0}{1}{2}{3} Motivation +{4}{5}", "\n", "\n", colourMotivation, actor.arc.name, gearSwapBaseAmount, colourEnd); }
+                        else { builder.AppendFormat("{0}{1}{2}{3} Opinion +{4}{5}", "\n", "\n", colourOpinion, actor.arc.name, gearSwapBaseAmount, colourEnd); }
                         //mood change
                         string moodText = GameManager.i.personScript.UpdateMood(MoodType.GiveGear, actor.arc.name);
                         builder.AppendFormat("{0}{1}{2}", "\n", "\n", moodText);
@@ -1701,7 +1701,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.textBottom = builder.ToString();
             //message
             string text = string.Format("{0} ({1}) given to {2}, {3}", gear.tag, gear.rarity.name, actor.arc.name, actor.actorName);
-            GameManager.i.messageScript.GearTakeOrGive(text, actor, gear, motivationBoost);
+            GameManager.i.messageScript.GearTakeOrGive(text, actor, gear, opinionBoost);
             //statistics
             GameManager.i.dataScript.StatisticIncrement(StatType.PlayerGiveGear);
             //action (if valid) expended -> must be BEFORE outcome window event
@@ -1720,7 +1720,7 @@ public class ActionManager : MonoBehaviour
     /// <param name="details"></param>
     public void ProcessTakeGearAction(ModalActionDetails details)
     {
-        int motivationCost = 0;
+        int opinionCost = 0;
         bool errorFlag = false;
         ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
         Gear gear = null;
@@ -1735,7 +1735,7 @@ public class ActionManager : MonoBehaviour
                 if (gear != null)
                 {
                     //Cost to take gear
-                    motivationCost = gearSwapBaseAmount;
+                    opinionCost = gearSwapBaseAmount;
                     //Take gear custom message -> actor gets increasingly annoyed the more you take gear off them (no game effect)
                     string emotion = "respectfully";
                     switch (actor.GetGearTimesTaken())
@@ -1753,44 +1753,44 @@ public class ActionManager : MonoBehaviour
                         builder.AppendFormat("{0}{1} is available{2}", colourGood, gear.tag, colourEnd);
                         if (preferredGear.name.Equals(gear.type.name, System.StringComparison.Ordinal) == true)
                         {
-                            //Preferred gear (extra motivation)
-                            motivationCost += gearSwapPreferredAmount;
+                            //Preferred gear (extra opinion)
+                            opinionCost += gearSwapPreferredAmount;
                             isPreferred = true;
                         }
-                        //deduct motivation from actor
-                        if (motivationCost > 0)
+                        //deduct opinion from actor
+                        if (opinionCost > 0)
                         {
-                            int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
-                            //deduct motivation
-                            motivation -= motivationCost;
-                            motivation = Mathf.Max(0, motivation);
-                            string colourMotivation = colourBad;
-                            if (actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, string.Format("{0} gear taken", gear.tag)) == false)
-                            { colourMotivation = colourGrey; }
-                            else if (motivation < motivationCost)
+                            int opinion = actor.GetDatapoint(ActorDatapoint.Opinion1);
+                            //deduct opinion
+                            opinion -= opinionCost;
+                            opinion = Mathf.Max(0, opinion);
+                            string colourOpinion = colourBad;
+                            if (actor.SetDatapoint(ActorDatapoint.Opinion1, opinion, string.Format("{0} gear taken", gear.tag)) == false)
+                            { colourOpinion = colourGrey; }
+                            else if (opinion < opinionCost)
                             {
-                                //relationship Conflict  (ActorConflict) -> Motivation change passes compatibility test
-                                builder.AppendFormat("{0}{1}{2}{3} Motivation too Low!{4}", "\n", "\n", colourAlert, actor.arc.name, colourEnd);
+                                //relationship Conflict  (ActorConflict) -> Opinion change passes compatibility test
+                                builder.AppendFormat("{0}{1}{2}{3} Opinion too Low!{4}", "\n", "\n", colourAlert, actor.arc.name, colourEnd);
                                 builder.AppendFormat("{0}{1}RELATIONSHIP CONFLICT{2}", "\n", colourBad, colourEnd);
                                 builder.AppendFormat("{0}{1}{2}", "\n", "\n", GameManager.i.actorScript.ProcessActorConflict(actor));
                                 GameManager.i.popUpFixedScript.SetData(actor.slotID, "CONFLICT");
                             }
                             //fixed popUp
-                            GameManager.i.popUpFixedScript.SetData(actor.slotID, $"Motivation -{motivationCost}");
+                            GameManager.i.popUpFixedScript.SetData(actor.slotID, $"Opinion -{opinionCost}");
                             GameManager.i.popUpFixedScript.SetData(actor.slotID, $"Lose {gear.tag}");
                             GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Gain {gear.tag}");
-                            //motivation message
+                            //opinion message
                             if (isPreferred == true)
                             {
-                                builder.AppendFormat("{0}{1}{2}{3} Motivation -{4}{5}{6}{7}Preferred Gear{8}", "\n", "\n", colourMotivation, actor.arc.name, motivationCost, colourEnd, "\n",
+                                builder.AppendFormat("{0}{1}{2}{3} Opinion -{4}{5}{6}{7}Preferred Gear{8}", "\n", "\n", colourOpinion, actor.arc.name, opinionCost, colourEnd, "\n",
                                 colourNeutral, colourEnd);
                             }
-                            else { builder.AppendFormat("{0}{1}{2}{3} Motivation -{4}{5}", "\n", "\n", colourMotivation, actor.arc.name, motivationCost, colourEnd); }
+                            else { builder.AppendFormat("{0}{1}{2}{3} Opinion -{4}{5}", "\n", "\n", colourOpinion, actor.arc.name, opinionCost, colourEnd); }
                         }
                         else
                         {
-                            //no motivation cost
-                            builder.AppendFormat("{0}{1} loses {2}{3}No{4}{5} Motivation{6}", colourGood, actor.arc.name, colourEnd, colourNeutral, colourEnd, colourGood, colourEnd);
+                            //no opinion cost
+                            builder.AppendFormat("{0}{1} loses {2}{3}No{4}{5} Opinion{6}", colourGood, actor.arc.name, colourEnd, colourNeutral, colourEnd, colourGood, colourEnd);
                         }
                         //mood change
                         string moodText = GameManager.i.personScript.UpdateMood(MoodType.TakeGear, actor.arc.name);
@@ -1814,7 +1814,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.textBottom = builder.ToString();
             //message
             string text = string.Format("{0} ({1}) taken back from {2}, {3}", gear.tag, gear.rarity.name, actor.arc.name, actor.actorName);
-            GameManager.i.messageScript.GearTakeOrGive(text, actor, gear, motivationCost, false);
+            GameManager.i.messageScript.GearTakeOrGive(text, actor, gear, opinionCost, false);
             //action (if valid) expended -> must be BEFORE outcome window event
             outcomeDetails.isAction = true;
             outcomeDetails.reason = "Take Gear";
@@ -2107,7 +2107,7 @@ public class ActionManager : MonoBehaviour
     /// <param name="actorID"></param>
     private void ProcessLetGoActor(ModalActionDetails details)
     {
-        int motivationLoss = GameManager.i.actorScript.motivationLossLetGo;
+        int opinionLoss = GameManager.i.actorScript.opinionLossLetGo;
         bool errorFlag = false;
         int numOfTeams = 0;
         string moodText = "Unknown";
@@ -2125,12 +2125,12 @@ public class ActionManager : MonoBehaviour
                     //remove all active teams connected with this actor
                     numOfTeams = GameManager.i.teamScript.TeamCleanUp(actor);
                 }
-                //lower actors motivation
-                int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
-                motivation -= motivationLoss;
-                motivation = Mathf.Max(0, motivation);
-                actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, "Let Go from Reserves");
-                builder.AppendFormat("{0}{1} Motivation -{2}{3}", colourBad, actor.actorName, motivationLoss, colourEnd);
+                //lower actors opinion
+                int opinion = actor.GetDatapoint(ActorDatapoint.Opinion1);
+                opinion -= opinionLoss;
+                opinion = Mathf.Max(0, opinion);
+                actor.SetDatapoint(ActorDatapoint.Opinion1, opinion, "Let Go from Reserves");
+                builder.AppendFormat("{0}{1} Opinion -{2}{3}", colourBad, actor.actorName, opinionLoss, colourEnd);
                 //change actors status
                 actor.Status = ActorStatus.RecruitPool;
                 actor.ResetStates();
@@ -2190,7 +2190,7 @@ public class ActionManager : MonoBehaviour
     /// <param name="actorID"></param>
     private void ProcessFireReserveActor(ModalActionDetails details)
     {
-        /*int motivationLoss = GameManager.instance.actorScript.motivationLossFire;*/
+        /*int opinionLoss = GameManager.instance.actorScript.motivationLossFire;*/
         bool errorFlag = false;
         int numOfTeams = 0;
         string moodText = "Unknown";
@@ -2288,7 +2288,7 @@ public class ActionManager : MonoBehaviour
     /// <param name="actorID"></param>
     private void ProcessActiveDutyActor(ModalActionDetails details)
     {
-        int motivationGain = GameManager.i.actorScript.motivationGainActiveDuty;
+        int opinionGain = GameManager.i.actorScript.opinionGainActiveDuty;
         bool errorFlag = false;
         StringBuilder builder = new StringBuilder();
         ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
@@ -2301,12 +2301,12 @@ public class ActionManager : MonoBehaviour
                 int actorSlotID = GameManager.i.dataScript.CheckForSpareActorSlot(details.side);
                 if (actorSlotID > -1)
                 {
-                    //raise actors motivation
-                    int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
-                    motivation += motivationGain;
-                    motivation = Mathf.Min(GameManager.i.actorScript.maxStatValue, motivation);
-                    actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, "Recalled for Active Duty");
-                    builder.AppendFormat("{0}{1} Motivation +{2}{3}", colourGood, actor.actorName, motivationGain, colourEnd);
+                    //raise actors opinion
+                    int opinion = actor.GetDatapoint(ActorDatapoint.Opinion1);
+                    opinion += opinionGain;
+                    opinion = Mathf.Min(GameManager.i.actorScript.maxStatValue, opinion);
+                    actor.SetDatapoint(ActorDatapoint.Opinion1, opinion, "Recalled for Active Duty");
+                    builder.AppendFormat("{0}{1} Opinion +{2}{3}", colourGood, actor.actorName, opinionGain, colourEnd);
                     //was actor threatening
                     if (actor.isThreatening == true)
                     {
@@ -2330,7 +2330,7 @@ public class ActionManager : MonoBehaviour
                     //update actorPanelUI
                     GameManager.i.actorPanelScript.UpdateActorCompatibilityUI(actor.slotID, actor.GetPersonality().GetCompatibilityWithPlayer());
                     //popUp
-                    GameManager.i.popUpFixedScript.SetData(actor.slotID, $"Motivation +{motivationGain}");
+                    GameManager.i.popUpFixedScript.SetData(actor.slotID, $"Opinion +{opinionGain}");
                     //history
                     actor.AddHistory(new HistoryActor() { text = "Recalled up for Active Duty" });
                     //Authority Actor brings team with them (if space available)

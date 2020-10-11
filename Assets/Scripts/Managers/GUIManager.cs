@@ -274,7 +274,7 @@ public class GUIManager : MonoBehaviour
     [HideInInspector] public char supportChar;
     [HideInInspector] public char securityChar;
     [HideInInspector] public char invisibilityChar;
-    [HideInInspector] public char motivationChar;
+    [HideInInspector] public char opinionChar;
     [HideInInspector] public char connectionsChar;
     [HideInInspector] public char cityChar;
     [HideInInspector] public char compatibilityChar;
@@ -289,7 +289,7 @@ public class GUIManager : MonoBehaviour
     [HideInInspector] public string supportIcon;
     [HideInInspector] public string securityIcon;
     [HideInInspector] public string invisibilityIcon;
-    [HideInInspector] public string motivationIcon;
+    [HideInInspector] public string opinionIcon;
     [HideInInspector] public string connectionsIcon;
     [HideInInspector] public string innocenceIcon;
     [HideInInspector] public string cityIcon;
@@ -432,7 +432,7 @@ public class GUIManager : MonoBehaviour
         supportChar = '\uf2b5';
         securityChar = '\uf3ed';
         invisibilityChar = '\uf06e';
-        motivationChar = '\uf118';
+        opinionChar = '\uf118';
         connectionsChar = '\uf500';
         cityChar = '\uf64f';
         compatibilityChar = '\uf6ad';
@@ -452,7 +452,7 @@ public class GUIManager : MonoBehaviour
         supportIcon = string.Format("{0}{1}{2}", colourIcon, supportChar, colourEnd);
         securityIcon = string.Format("{0}{1}{2}", colourIcon, securityChar, colourEnd);
         invisibilityIcon = string.Format("{0}<font=\"fontAwesomeReg\">{1}</font>{2}", colourIcon, invisibilityChar, colourEnd);
-        motivationIcon = string.Format("{0}<font=\"fontAwesomeReg\">{1}</font>{2}", colourIcon, motivationChar, colourEnd);
+        opinionIcon = string.Format("{0}<font=\"fontAwesomeReg\">{1}</font>{2}", colourIcon, opinionChar, colourEnd);
         connectionsIcon = string.Format("{0}{1}{2}", colourIcon, connectionsChar, colourEnd);
         innocenceIcon = string.Format("{0}{1}{2}", colourIcon, innocenceChar, colourEnd);
         compatibilityIcon = string.Format("{0}{1}{2}", colourIcon, compatibilityChar, colourEnd);
@@ -1185,7 +1185,7 @@ public class GUIManager : MonoBehaviour
             GameManager.Formatt("GOOD", ColourType.salmonText),
             GameManager.Formatt(starIconBad, ColourType.badText),
             GameManager.Formatt("BAD", ColourType.salmonText),
-            GameManager.Formatt(starIconGood, ColourType.goodText), "\n", motivationIcon);
+            GameManager.Formatt(starIconGood, ColourType.goodText), "\n", opinionIcon);
         GenericTooltipData tooltip = new GenericTooltipData()
         {
             header = tooltipHeader,

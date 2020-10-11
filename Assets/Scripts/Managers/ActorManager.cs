@@ -45,9 +45,9 @@ public class ActorManager : MonoBehaviour
     [Range(0, 3)] public int manageSecretRenown = 2;
     [Tooltip("Base Renown cost for carrying out Manage Dispose Actor actions")]
     [Range(1, 5)] public int manageDisposeRenown = 3;
-    [Tooltip("Once actor is unhappy, the chance per turn (1d100) of losing motivation -1")]
-    [Range(1, 99)] public int unhappyLoseMotivationChance = 40;
-    [Tooltip("Once actor in Reserves is unhappy and has motivation 0 the chance of them acting on their dissatisfaction / turn")]
+    [Tooltip("Once actor is unhappy, the chance per turn (1d100) of losing opinion -1")]
+    [Range(1, 99)] public int unhappyLoseOpinionChance = 40;
+    [Tooltip("Once actor in Reserves is unhappy and has opinion 0 the chance of them acting on their dissatisfaction / turn")]
     [Range(1, 99)] public int unhappyTakeActionChance = 30;
     [Tooltip("When an unhappy actor in the Reserve pool takes action this is the first check made (ignored if actor has no secrets")]
     [Range(1, 99)] public int unhappyRevealSecretChance = 50;
@@ -59,12 +59,12 @@ public class ActorManager : MonoBehaviour
     [Range(1, 10)] public int unhappyReassureBoost = 5;
     [Tooltip("Increase to the actor's Unhappy Timer after they have been Bullied")]
     [Range(1, 10)] public int unhappyBullyBoost = 5;
-    [Tooltip("Amount of motivation lost when actor let go from reserve pool")]
-    [Range(1, 3)] public int motivationLossLetGo = 1;
-    [Tooltip("Amount of motivation lost when actor fired")]
-    [Range(1, 3)] public int motivationLossFire = 2;
-    [Tooltip("Amount of motivation gained when recalled from Reserves to Active Duty")]
-    [Range(1, 3)] public int motivationGainActiveDuty = 2;
+    [Tooltip("Amount of opinion lost when actor let go from reserve pool")]
+    [Range(1, 3)] public int opinionLossLetGo = 1;
+    [Tooltip("Amount of opinion lost when actor fired")]
+    [Range(1, 3)] public int opinionLossFire = 2;
+    [Tooltip("Amount of opinion gained when recalled from Reserves to Active Duty")]
+    [Range(1, 3)] public int opinionGainActiveDuty = 2;
     [Tooltip("Base chance (low priority) of an AI leader dismissing a Questionable actor (adds AITasks into pool) during an autorun (Med priority x 2 chance, High x 3)")]
     [Range(1, 30)] public int dismissQuestionableChance = 15;
 
@@ -125,7 +125,7 @@ public class ActorManager : MonoBehaviour
     [Header("Actor to Actor Relations")]
     [Tooltip("Relationships can't be changed while ever timer > 0 (counts down every turn)")]
     [Range(0, 1000)] public int timerRelations = 999;
-    [Tooltip("Chance of a motivational shift occuring when a friend/enemy relationship exists (will only ever be +/-1 regardless of how big the initial shift in the originating actor")]
+    [Tooltip("Chance of an opinion shift occuring when a friend/enemy relationship exists (will only ever be +/-1 regardless of how big the initial shift in the originating actor")]
     [Range(0, 100)] public int chanceRelationShift = 100;
 
     #region Save Compatible Data
@@ -684,7 +684,7 @@ public class ActorManager : MonoBehaviour
                         Debug.LogFormat("[Tst] ActorManager.cs -> GetOnMapActorsFromPool: MetaGame options - - - {0}", "\n");
                         Debug.LogFormat("[Tst] isDismissed: {0}{1}", data.isDismissed, "\n");
                         Debug.LogFormat("[Tst] isResigned: {0}{1}", data.isResigned, "\n");
-                        Debug.LogFormat("[Tst] isLowMotivation: {0}{1}", data.isLowMotivation, "\n");
+                        Debug.LogFormat("[Tst] isLowOpinion: {0}{1}", data.isLowOpinion, "\n");
                         Debug.LogFormat("[Tst] isTraitor: {0}{1}", data.isTraitor, "\n");
                         Debug.LogFormat("[Tst] isLevelTwo: {0}{1}", data.isLevelTwo, "\n");
                     }
@@ -729,7 +729,7 @@ public class ActorManager : MonoBehaviour
                             if (tempActor != null)
                             {
                                 Debug.LogFormat("[Tst] {0}, {1}, ID {2}, L {3}, M {4}, isD {5}, isR {6}, isT {7}{8}", tempActor.actorName, tempActor.arc.name, tempActor.actorID,
-                                  tempActor.level, tempActor.GetDatapoint(ActorDatapoint.Motivation1), tempActor.isDismissed, tempActor.isResigned, tempActor.isTraitor, "\n");
+                                  tempActor.level, tempActor.GetDatapoint(ActorDatapoint.Opinion1), tempActor.isDismissed, tempActor.isResigned, tempActor.isTraitor, "\n");
                             }
                             else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", listOfActors[i]); }
                         }
@@ -739,7 +739,7 @@ public class ActorManager : MonoBehaviour
                 // - - - filter actor list
                 //
                 //are any metaGame filtering options active (can ignore filtering otherwise)
-                if (data.isDismissed == false || data.isResigned == false || data.isLowMotivation == false || data.isTraitor == false)
+                if (data.isDismissed == false || data.isResigned == false || data.isLowOpinion == false || data.isTraitor == false)
                 {
                     //loop backwards as could be removing data
                     for (int i = listOfActors.Count - 1; i >= 0; i--)
@@ -766,10 +766,10 @@ public class ActorManager : MonoBehaviour
                                     continue;
                                 }
                             }
-                            if (data.isLowMotivation == false)
+                            if (data.isLowOpinion == false)
                             {
-                                //remove actor if motivation Zero
-                                if (actor.GetDatapoint(ActorDatapoint.Motivation1) == 0)
+                                //remove actor if opinion Zero
+                                if (actor.GetDatapoint(ActorDatapoint.Opinion1) == 0)
                                 {
                                     listOfActors.Remove(actorID);
                                     continue;
@@ -801,7 +801,7 @@ public class ActorManager : MonoBehaviour
                         if (tempActor != null)
                         {
                             Debug.LogFormat("[Tst] {0}, {1}, ID {2}, L {3}, M {4}, isD {5}, isR {6}, isT {7}{8}", tempActor.actorName, tempActor.arc.name, tempActor.actorID,
-                              tempActor.level, tempActor.GetDatapoint(ActorDatapoint.Motivation1), tempActor.isDismissed, tempActor.isResigned, tempActor.isTraitor, "\n");
+                              tempActor.level, tempActor.GetDatapoint(ActorDatapoint.Opinion1), tempActor.isDismissed, tempActor.isResigned, tempActor.isTraitor, "\n");
                         }
                         else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", listOfActors[i]); }
                     }
@@ -1336,7 +1336,7 @@ public class ActorManager : MonoBehaviour
                     int limitUpper = Math.Min(4, level + 2);
                     //level -> assign
                     actor.SetDatapoint(ActorDatapoint.Datapoint0, Random.Range(limitLower, limitUpper)); //connections and influence
-                    actor.SetDatapoint(ActorDatapoint.Datapoint1, Random.Range(limitLower, limitUpper)); //motivation and support
+                    actor.SetDatapoint(ActorDatapoint.Datapoint1, Random.Range(limitLower, limitUpper)); //opinion and support
                     //Datapoint 2
                     if (side.level == GameManager.i.globalScript.sideResistance.level)
                     {
@@ -2230,12 +2230,12 @@ public class ActorManager : MonoBehaviour
                                                 if (preferredGear.name.Equals(gear.type.name, StringComparison.Ordinal) == true)
                                                 {
                                                     benefit += gearSwapPreferredAmount;
-                                                    builderTooltip.AppendFormat("Preferred Gear for {0}{1}{2}{3} Motivation +{4}{5}",
+                                                    builderTooltip.AppendFormat("Preferred Gear for {0}{1}{2}{3} Opinion +{4}{5}",
                                                       actor.arc.name, "\n", colourGood, actor.arc.name, benefit, colourEnd);
                                                 }
                                                 else
                                                 {
-                                                    builderTooltip.AppendFormat("NOT Preferred Gear (prefers {0}{1}{2}){3}{4}{5} Motivation +{6}{7}", colourDefault,
+                                                    builderTooltip.AppendFormat("NOT Preferred Gear (prefers {0}{1}{2}){3}{4}{5} Opinion +{6}{7}", colourDefault,
                                                       preferredGear.name, colourEnd, "\n", colourGood, actor.arc.name, benefit, colourEnd);
                                                 }
                                             }
@@ -2327,12 +2327,12 @@ public class ActorManager : MonoBehaviour
                                                 if (preferredGear.name.Equals(gearActor.type.name, StringComparison.Ordinal) == true)
                                                 {
                                                     benefit += gearSwapPreferredAmount;
-                                                    builder.AppendFormat("Preferred Gear for {0}{1}{2}{3} Motivation -{4}{5}",
+                                                    builder.AppendFormat("Preferred Gear for {0}{1}{2}{3} Opinion -{4}{5}",
                                                       actor.arc.name, "\n", colourBad, actor.arc.name, benefit, colourEnd);
                                                 }
                                                 else
                                                 {
-                                                    builder.AppendFormat("NOT Preferred Gear (prefers {0}{1}{2}){3}{4}{5} Motivation -{6}{7}", colourNeutral,
+                                                    builder.AppendFormat("NOT Preferred Gear (prefers {0}{1}{2}){3}{4}{5} Opinion -{6}{7}", colourNeutral,
                                                       preferredGear.name, colourEnd, "\n", colourBad, actor.arc.name, benefit, colourEnd);
                                                 }
                                             }
@@ -2345,9 +2345,9 @@ public class ActorManager : MonoBehaviour
                                             string moodText = GameManager.i.personScript.GetMoodTooltip(MoodType.TakeGear, actor.arc.name);
                                             builder.AppendFormat("{0}{1}", "\n", moodText);
                                             //relationship conflict
-                                            if (actor.GetDatapoint(ActorDatapoint.Motivation1) < benefit)
+                                            if (actor.GetDatapoint(ActorDatapoint.Opinion1) < benefit)
                                             {
-                                                builder.AppendFormat("{0}{1} Motivation too Low!{2}", "\n", colourAlert, colourEnd);
+                                                builder.AppendFormat("{0}{1} Opinion too Low!{2}", "\n", colourAlert, colourEnd);
                                                 builder.AppendFormat("{0}{1}RELATIONSHIP CONFLICT{2}", "\n", colourBad, colourEnd);
                                                 builder.AppendFormat("{0}{1}If you Take Gear{2}", "\n", colourAlert, colourEnd);
                                             }
@@ -3180,12 +3180,12 @@ public class ActorManager : MonoBehaviour
                                             if (preferredGear.name.Equals(gear.type.name, StringComparison.Ordinal) == true)
                                             {
                                                 benefit += gearSwapPreferredAmount;
-                                                builderTooltip.AppendFormat("{0}Preferred Gear for {1}{2}{3}{4}{5} motivation +{6}{7}",
+                                                builderTooltip.AppendFormat("{0}Preferred Gear for {1}{2}{3}{4}{5} opinion +{6}{7}",
                                                   colourNeutral, actor.arc.name, colourEnd, "\n", colourGood, actor.arc.name, benefit, colourEnd);
                                             }
                                             else
                                             {
-                                                builderTooltip.AppendFormat("NOT Preferred Gear (prefers {0}{1}{2}){3}{4}{5} Motivation +{6}{7}", colourNeutral,
+                                                builderTooltip.AppendFormat("NOT Preferred Gear (prefers {0}{1}{2}){3}{4}{5} Opinion +{6}{7}", colourNeutral,
                                                   preferredGear.name, colourEnd, "\n", colourGood, actor.arc.name, benefit, colourEnd);
                                             }
                                         }
@@ -3346,7 +3346,7 @@ public class ActorManager : MonoBehaviour
                 if (GameManager.i.dataScript.CheckActorArcPresent(actor.arc, playerSide, true) == false)
                 {
                     StringBuilder builderActive = new StringBuilder();
-                    builderActive.AppendFormat("{0}{1} Motivation +{2}{3}{4}", colourGood, actor.actorName, motivationGainActiveDuty, colourEnd, "\n");
+                    builderActive.AppendFormat("{0}{1} Opinion +{2}{3}{4}", colourGood, actor.actorName, opinionGainActiveDuty, colourEnd, "\n");
                     builderActive.AppendFormat("{0}{1} joins others On Map{2}{3}", colourNeutral, actor.actorName, colourEnd, "\n");
                     builderActive.AppendFormat("{0}{1} will no longer be Unhappy or Complain{2}{3}", colourGood, actor.actorName, colourEnd, "\n");
                     if (playerSide.level == globalAuthority.level)
@@ -3460,7 +3460,7 @@ public class ActorManager : MonoBehaviour
                 if (actor.isNewRecruit == true)
                 {
                     StringBuilder builder = new StringBuilder();
-                    builder.AppendFormat("{0}{1}'s{2}Motivation -1{3}{4}{5}Can be recruited again{6}", colourBad, actor.actorName, "\n",
+                    builder.AppendFormat("{0}{1}'s{2}Opinion -1{3}{4}{5}Can be recruited again{6}", colourBad, actor.actorName, "\n",
                         colourEnd, "\n", colourNeutral, colourEnd);
                     //mood info
                     string moodText = GameManager.i.personScript.GetMoodTooltip(MoodType.ReserveLetGo, actor.arc.name);
@@ -3993,7 +3993,7 @@ public class ActorManager : MonoBehaviour
         int numOfActors = 0;
         int offset = 1;             //accomodates fact that first entry in arrayOfActorsHQ is 'None'
         int lengthOfArray;
-        int motivation;
+        int opinion;
         bool errorFlag = false;
         bool isBoss;
         string title;
@@ -4026,15 +4026,15 @@ public class ActorManager : MonoBehaviour
                     Actor actor = arrayOfHqActors[i];
                     if (actor != null)
                     {
-                        motivation = actor.GetDatapoint(ActorDatapoint.Datapoint1);
+                        opinion = actor.GetDatapoint(ActorDatapoint.Datapoint1);
                         title = GameManager.i.hqScript.GetHqTitle((ActorHQ)i);
                         if ((ActorHQ)i == ActorHQ.Boss) { isBoss = true; } else { isBoss = false; }
                         GenericOptionData optionData = new GenericOptionData();
                         optionData.sprite = actor.sprite;
                         optionData.textTop = GameManager.i.guiScript.GetCompatibilityStars(actor.GetPersonality().GetCompatibilityWithPlayer());
                         optionData.textUpper = string.Format("{0}{1}{2}", colourAlert, title, colourEnd);
-                        //motivation stars
-                        optionData.textLower = GameManager.i.guiScript.GetNormalStars(motivation);
+                        //opinion stars
+                        optionData.textLower = GameManager.i.guiScript.GetNormalStars(opinion);
                         /*optionData.textLower = actor.actorName;*/
                         optionData.optionID = actor.actorID;
                         //tooltip -> sprite
@@ -4050,9 +4050,9 @@ public class ActorManager : MonoBehaviour
                         }
                         if (isBoss == true)
                         { tooltipDetailsSprite.textDetails = string.Format("Opinion of your{0}Decisions{1}{2}", "\n", "\n", GameManager.i.hqScript.GetBossOpinionFormatted()); }
-                        //tooltip -> stars (bottom text, motivation -> same for all)
+                        //tooltip -> stars (bottom text, opinion -> same for all)
                         GenericTooltipDetails tooltipDetailsStars = new GenericTooltipDetails();
-                        tooltipDetailsStars.textHeader = string.Format("{0}'s{1}{2}<size=120%>MOTIVATION{3}", actor.actorName, "\n", colourNeutral, colourEnd);
+                        tooltipDetailsStars.textHeader = string.Format("{0}'s{1}{2}<size=120%>OPINION{3}", actor.actorName, "\n", colourNeutral, colourEnd);
                         tooltipDetailsStars.textMain = string.Format("A measure of the {0}{1}{2}'s{3}{4}{5}willingness to help you{6}", "\n", colourAlert, title, colourEnd, "\n", colourNeutral, colourEnd);
                         tooltipDetailsStars.textDetails = string.Format("0 to 3 stars{0}{1}Higher the better{2}", "\n", colourAlert, colourEnd);
                         //tooltip -> compatibility (top text -> same for all)
@@ -4210,7 +4210,7 @@ public class ActorManager : MonoBehaviour
         int numOfActors = 0;
         int offset = 1;             //accomodates fact that first entry in arrayOfActorsHQ is 'None'
         int lengthOfArray;
-        int motivation;
+        int opinion;
         int votesFor = 0;
         int votesAgainst = 0;
         int votesAbstained = 0;
@@ -4247,7 +4247,7 @@ public class ActorManager : MonoBehaviour
                     Actor actor = arrayOfHqActors[i];
                     if (actor != null)
                     {
-                        motivation = actor.GetDatapoint(ActorDatapoint.Datapoint1);
+                        opinion = actor.GetDatapoint(ActorDatapoint.Datapoint1);
                         title = GameManager.i.hqScript.GetHqTitle((ActorHQ)i);
                         if ((ActorHQ)i == ActorHQ.Boss) { isBoss = true; } else { isBoss = false; }
                         if (isBoss == true)
@@ -4261,13 +4261,13 @@ public class ActorManager : MonoBehaviour
                             tooltipDetailsSprite.textMain = string.Format("Opinion of your{0}Decisions{1}<size=120%>{2}", "\n", "\n", GameManager.i.hqScript.GetBossOpinionFormatted());
                             //tooltip -> result 
                             int opinionConverted = 2;
-                            int opinion = GameManager.i.hqScript.GetBossOpinion();
-                            if (opinion > 1) { opinionConverted = 3; }
-                            else if (opinion < -1) { opinionConverted = 1; }
+                            int opinionBoss = GameManager.i.hqScript.GetBossOpinion();
+                            if (opinionBoss > 1) { opinionConverted = 3; }
+                            else if (opinionBoss < -1) { opinionConverted = 1; }
                             tooltipDetailsResult = new GenericTooltipDetails();
                             tooltipDetailsResult.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, title, colourEnd);
                             tooltipDetailsResult.textMain = string.Format("Thinks you are doing {0}{1}{2}{3}job", opinionConverted == 2 ? "an" : "a", "\n", GetOpinionText(opinionConverted), "\n");
-                            tooltipDetailsResult.textDetails = string.Format("Their opinion of you{0}is based on their{1}{2}Opinion of your Decisions{3}", "\n", "\n", colourNeutral, colourEnd);
+                            tooltipDetailsResult.textDetails = string.Format("Their view of you{0}is based on their{1}{2}Judgment of your Decisions{3}", "\n", "\n", colourNeutral, colourEnd);
                             //option data
                             optionData = new GenericOptionData();
                             optionData.sprite = actor.sprite;
@@ -4279,23 +4279,23 @@ public class ActorManager : MonoBehaviour
                             data.arrayOfTooltipsSprite[i - offset] = tooltipDetailsSprite;
                             data.arrayOfTooltipsResult[i - offset] = tooltipDetailsResult;
                             //
-                            //- - - second Boss -> motivation
+                            //- - - second Boss -> opinion
                             //
                             //tooltip -> sprite
                             tooltipDetailsSprite = new GenericTooltipDetails();
                             tooltipDetailsSprite.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, title.ToUpper(), colourEnd);
-                            tooltipDetailsSprite.textMain = string.Format("{0}<pos=57%>{1}{2}", "Motivation", GameManager.i.guiScript.GetNormalStars(actor.GetDatapoint(ActorDatapoint.Motivation1)), "\n");
+                            tooltipDetailsSprite.textMain = string.Format("{0}<pos=57%>{1}{2}", "Opinion", GameManager.i.guiScript.GetNormalStars(actor.GetDatapoint(ActorDatapoint.Opinion1)), "\n");
                             //tooltip -> result 
                             tooltipDetailsResult = new GenericTooltipDetails();
                             tooltipDetailsResult.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, title, colourEnd);
-                            tooltipDetailsResult.textMain = string.Format("Thinks you are doing {0}{1}{2}{3}job", motivation == 2 ? "an" : "a", "\n", GetOpinionText(motivation), "\n");
-                            tooltipDetailsResult.textDetails = string.Format("Their opinion of you{0}is based on their{1}{2}<size=110%>MOTIVATION{3}", "\n", "\n", colourAlert, colourEnd);
+                            tooltipDetailsResult.textMain = string.Format("Thinks you are doing {0}{1}{2}{3}job", opinion == 2 ? "an" : "a", "\n", GetOpinionText(opinion), "\n");
+                            tooltipDetailsResult.textDetails = string.Format("Their view of you{0}is based on their{1}{2}<size=110%>OPINION{3}", "\n", "\n", colourAlert, colourEnd);
                             //option data
                             optionData = new GenericOptionData();
                             optionData.sprite = actor.sprite;
                             optionData.textUpper = string.Format("{0}{1}{2}", colourAlert, title, colourEnd);
                             optionData.optionID = actor.hqID;
-                            optionData.textLower = GetReviewResult(motivation, ref votesFor, ref votesAgainst, ref votesAbstained);
+                            optionData.textLower = GetReviewResult(opinion, ref votesFor, ref votesAgainst, ref votesAbstained);
                             //add to arrays
                             data.arrayOfOptions[i + 1 - offset] = optionData;
                             data.arrayOfTooltipsSprite[i + 1 - offset] = tooltipDetailsSprite;
@@ -4306,18 +4306,18 @@ public class ActorManager : MonoBehaviour
                             //standard HQ hierarchy -> tooltip Sprite
                             tooltipDetailsSprite = new GenericTooltipDetails();
                             tooltipDetailsSprite.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, title.ToUpper(), colourEnd);
-                            tooltipDetailsSprite.textMain = string.Format("{0}<pos=57%>{1}{2}", "Motivation", GameManager.i.guiScript.GetNormalStars(actor.GetDatapoint(ActorDatapoint.Motivation1)), "\n");
+                            tooltipDetailsSprite.textMain = string.Format("{0}<pos=57%>{1}{2}", "Opinion", GameManager.i.guiScript.GetNormalStars(actor.GetDatapoint(ActorDatapoint.Opinion1)), "\n");
                             //tooltip -> result 
                             tooltipDetailsResult = new GenericTooltipDetails();
                             tooltipDetailsResult.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, title, colourEnd);
-                            tooltipDetailsResult.textMain = string.Format("Thinks you are doing {0}{1}{2}{3}job", motivation == 2 ? "an" : "a", "\n", GetOpinionText(motivation), "\n");
-                            tooltipDetailsResult.textDetails = string.Format("Their opinion of you{0}is based on their{1}{2}<size=110%>MOTIVATION{3}", "\n", "\n", colourAlert, colourEnd);
+                            tooltipDetailsResult.textMain = string.Format("Thinks you are doing {0}{1}{2}{3}job", opinion == 2 ? "an" : "a", "\n", GetOpinionText(opinion), "\n");
+                            tooltipDetailsResult.textDetails = string.Format("Their view of you{0}is based on their{1}{2}<size=110%>OPINION{3}", "\n", "\n", colourAlert, colourEnd);
                             //option data
                             optionData = new GenericOptionData();
                             optionData.sprite = actor.sprite;
                             optionData.textUpper = string.Format("{0}{1}{2}", colourAlert, title, colourEnd);
                             optionData.optionID = actor.hqID;
-                            optionData.textLower = GetReviewResult(motivation, ref votesFor, ref votesAgainst, ref votesAbstained);
+                            optionData.textLower = GetReviewResult(opinion, ref votesFor, ref votesAgainst, ref votesAbstained);
                             //add to arrays
                             data.arrayOfOptions[i + 1 - offset] = optionData;
                             data.arrayOfTooltipsSprite[i + 1 - offset] = tooltipDetailsSprite;
@@ -4348,19 +4348,19 @@ public class ActorManager : MonoBehaviour
                     Actor actor = arrayOfActors[i];
                     if (actor != null)
                     {
-                        motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                        opinion = actor.GetDatapoint(ActorDatapoint.Opinion1);
                         //subordinate data
                         optionData.sprite = actor.sprite;
                         optionData.textUpper = string.Format("{0}{1}{2}", colourAlert, actor.arc.name, colourEnd);
-                        optionData.textLower = GetReviewResult(motivation, ref votesFor, ref votesAgainst, ref votesAbstained);
+                        optionData.textLower = GetReviewResult(opinion, ref votesFor, ref votesAgainst, ref votesAbstained);
                         optionData.optionID = actor.actorID;
                         //tooltip -> sprite
                         tooltipDetailsSprite.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, actor.arc.name, colourEnd);
-                        tooltipDetailsSprite.textMain = string.Format("{0}<pos=57%>{1}{2}", "Motivation", GameManager.i.guiScript.GetNormalStars(actor.GetDatapoint(ActorDatapoint.Motivation1)), "\n");
+                        tooltipDetailsSprite.textMain = string.Format("{0}<pos=57%>{1}{2}", "Opinion", GameManager.i.guiScript.GetNormalStars(actor.GetDatapoint(ActorDatapoint.Opinion1)), "\n");
                         //tooltip -> result 
                         tooltipDetailsResult.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, actor.arc.name, colourEnd);
-                        tooltipDetailsResult.textMain = string.Format("Thinks you are doing {0}{1}{2}{3}job", motivation == 2 ? "an" : "a", "\n", GetOpinionText(motivation), "\n");
-                        tooltipDetailsResult.textDetails = string.Format("Their opinion of you{0}is based on their{1}{2}<size=110%>MOTIVATION{3}", "\n", "\n", colourAlert, colourEnd);
+                        tooltipDetailsResult.textMain = string.Format("Thinks you are doing {0}{1}{2}{3}job", opinion == 2 ? "an" : "a", "\n", GetOpinionText(opinion), "\n");
+                        tooltipDetailsResult.textDetails = string.Format("Their view of you{0}is based on their{1}{2}<size=110%>OPINION{3}", "\n", "\n", colourAlert, colourEnd);
                     }
                     else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[i]", i); }
                 }
@@ -4408,21 +4408,21 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns colour formatted review icon (fontAwesome) for a given motivation/opinion of decisions taken (values from 0 to 3)
+    /// returns colour formatted review icon (fontAwesome) for a given opinion of decisions taken (values from 0 to 3)
     /// NOTE: ref parameters as votesFor/Against are ongoing tallies
     /// </summary>
-    /// <param name="motivation"></param>
+    /// <param name="opinion"></param>
     /// <returns></returns>
-    private string GetReviewResult(int motivation, ref int votesFor, ref int votesAgainst, ref int votesAbstained)
+    private string GetReviewResult(int opinion, ref int votesFor, ref int votesAgainst, ref int votesAbstained)
     {
         string review = "?";
-        switch (motivation)
+        switch (opinion)
         {
             case 3: review = string.Format("{0}{1}{2}", colourDataGood, GameManager.i.guiScript.positiveChar, colourEnd); votesFor++; break;
             case 2: review = string.Format("{0}<alpha=#22>{1}{2}", colourNeutral, GameManager.i.guiScript.neutralChar, colourEnd); votesAbstained++; break;
             case 1:
             case 0: review = string.Format("{0}{1}{2}", colourDataTerrible, GameManager.i.guiScript.negativeChar, colourEnd); votesAgainst++; break;
-            default: Debug.LogWarningFormat("Unrecognised motivation \"{0}\"", motivation); break;
+            default: Debug.LogWarningFormat("Unrecognised opinion \"{0}\"", opinion); break;
         }
         return review;
     }
@@ -4430,18 +4430,18 @@ public class ActorManager : MonoBehaviour
     /// <summary>
     /// returns a colour formatted string of the actor's opinion of you, eg. Good / Bad
     /// </summary>
-    /// <param name="motivation"></param>
+    /// <param name="opinion"></param>
     /// <returns></returns>
-    private string GetOpinionText(int motivation)
+    private string GetOpinionText(int opinion)
     {
         string opinionText = "Unknown";
-        switch (motivation)
+        switch (opinion)
         {
             case 3: opinionText = string.Format("{0}<size=120%>GOOD</size>{1}", colourGood, colourEnd); break;
             case 2: opinionText = string.Format("{0}<size=120%>O.K</size>{1}", colourNeutral, colourEnd); break;
             case 1:
             case 0: opinionText = string.Format("{0}<size=120%>POOR</size>{1}", colourBad, colourEnd); break;
-            default: Debug.LogWarningFormat("Unrecognised motivation \"{0}\"", motivation); break;
+            default: Debug.LogWarningFormat("Unrecognised opinion \"{0}\"", opinion); break;
         }
         return opinionText;
     }
@@ -5012,7 +5012,7 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// When an actor's motivation drops below zero (before mincapping) they suffer a relationship conflict with the player. Returns two line text outcome (as well as applying effect).
+    /// When an actor's opinion drops below zero (before mincapping) they suffer a relationship conflict with the player. Returns two line text outcome (as well as applying effect).
     /// </summary>
     /// <param name="actor"></param>
     /// <returns></returns>
@@ -5589,18 +5589,18 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Provides a random motivational shift (+1/-1), 50% chance, for the actor for testing purposes
+    /// Provides a random opinion shift (+1/-1), 50% chance, for the actor for testing purposes
     /// NOTE: actor checked for Null by calling method
     /// </summary>
     /// <param name="actor"></param>
-    private void DebugRandomMotivationShift(Actor actor)
+    private void DebugRandomOpinionShift(Actor actor)
     {
         //50% chance of happening
         if (Random.Range(0, 100) < 50)
         {
             int shift = 0;
-            int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
-            switch (motivation)
+            int opinion = actor.GetDatapoint(ActorDatapoint.Opinion1);
+            switch (opinion)
             {
                 case 3: shift = -1; break;
                 case 2:
@@ -5609,10 +5609,10 @@ public class ActorManager : MonoBehaviour
                     if (Random.Range(0, 100) < 50) { shift = -1; }
                     break;
                 case 0: shift = 1; break;
-                default: Debug.LogErrorFormat("Unrecognised motivation \"{0}\"", motivation); break;
+                default: Debug.LogErrorFormat("Unrecognised opinion \"{0}\"", opinion); break;
             }
-            motivation += shift;
-            actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, "Debug Purposes");
+            opinion += shift;
+            actor.SetDatapoint(ActorDatapoint.Opinion1, opinion, "Debug Purposes");
         }
     }
 
@@ -6056,7 +6056,7 @@ public class ActorManager : MonoBehaviour
         string gearName;
         int numOfTraitors = 0;
         int numOfBlackmailers = 0;
-        int numOfMotivationZeroActors = 0;
+        int numOfOpinionZeroActors = 0;
         string text, topText, detailsTop, detailsBottom;
         //no checks are made if player is not Active
         if (GameManager.i.playerScript.status == ActorStatus.Active)
@@ -6091,9 +6091,9 @@ public class ActorManager : MonoBehaviour
                             //Checks all actors -> can inform on Player regardless of their status
                             if (actor.isTraitor == true)
                             { numOfTraitors++; }
-                            //tally up actors with Motivation Zero (potential Relationship Conflicts for topBar Icon) -> Active / Inactive. Ignore actors with Team Player trait
-                            if (actor.GetDatapoint(ActorDatapoint.Motivation1) == 0 && actor.CheckTraitEffect(actorConflictNone) == false)
-                            { numOfMotivationZeroActors++; }
+                            //tally up actors with Opinion Zero (potential Relationship Conflicts for topBar Icon) -> Active / Inactive. Ignore actors with Team Player trait
+                            if (actor.GetDatapoint(ActorDatapoint.Opinion1) == 0 && actor.CheckTraitEffect(actorConflictNone) == false)
+                            { numOfOpinionZeroActors++; }
                             //Active actors only
                             if (actor.Status == ActorStatus.Active)
                             {
@@ -6131,10 +6131,10 @@ public class ActorManager : MonoBehaviour
                                 if (actor.GetDatapoint(ActorDatapoint.Invisibility2) == 0)
                                 { ProcessInvisibilityWarning(actor); }
                                 //
-                                // - - - Motivation Warning - - -
+                                // - - - Opinion Warning - - -
                                 //
-                                if (actor.GetDatapoint(ActorDatapoint.Motivation1) == 0)
-                                { ProcessMotivationWarning(actor); }
+                                if (actor.GetDatapoint(ActorDatapoint.Opinion1) == 0)
+                                { ProcessOpinionWarning(actor); }
                                 //
                                 // - - - Info App conditions (any)
                                 //
@@ -6201,7 +6201,7 @@ public class ActorManager : MonoBehaviour
                 //Check for a betrayal
                 CheckForBetrayal(numOfTraitors);
                 //update top bar icon for potential relationship conflicts
-                GameManager.i.topBarScript.UpdateConflicts(numOfMotivationZeroActors);
+                GameManager.i.topBarScript.UpdateConflicts(numOfOpinionZeroActors);
                 //update top bar icon for blackmailers
                 GameManager.i.topBarScript.UpdateBlackmail(numOfBlackmailers);
             }
@@ -6342,7 +6342,7 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     private void CheckActiveAuthorityActorsHuman()
     {
-        int numOfMotivationZeroActors = 0;
+        int numOfOpinionZeroActors = 0;
         int numOfBlackmailers = 0;
         string text, topText, detailsTop, detailsBottom;
         //no checks are made if player is not Active
@@ -6369,9 +6369,9 @@ public class ActorManager : MonoBehaviour
                         Actor actor = arrayOfActors[i];
                         if (actor != null)
                         {
-                            //check for motivation Zero actors for topBar UI Potential Relationship conflicts. Ignore Team Player trait actors
-                            if (actor.GetDatapoint(ActorDatapoint.Motivation1) == 0 && actor.CheckTraitEffect(actorConflictNone) == false)
-                            { numOfMotivationZeroActors++; }
+                            //check for opinion Zero actors for topBar UI Potential Relationship conflicts. Ignore Team Player trait actors
+                            if (actor.GetDatapoint(ActorDatapoint.Opinion1) == 0 && actor.CheckTraitEffect(actorConflictNone) == false)
+                            { numOfOpinionZeroActors++; }
                             if (actor.Status == ActorStatus.Active)
                             {
                                 //
@@ -6403,10 +6403,10 @@ public class ActorManager : MonoBehaviour
                                 if (listOfBadConditions.Count > 0)
                                 { ProcessCompatibility(actor, listOfBadConditions); }
                                 //
-                                // - - - Motivation Warning - - -
+                                // - - - Opinion Warning - - -
                                 //
-                                if (actor.GetDatapoint(ActorDatapoint.Motivation1) == 0)
-                                { ProcessMotivationWarning(actor); }
+                                if (actor.GetDatapoint(ActorDatapoint.Opinion1) == 0)
+                                { ProcessOpinionWarning(actor); }
                                 //
                                 // - - - Info App conditions (any)
                                 //
@@ -6444,7 +6444,7 @@ public class ActorManager : MonoBehaviour
                     }
                 }
                 //update topBarUI for potential conflicts
-                GameManager.i.topBarScript.UpdateConflicts(numOfMotivationZeroActors);
+                GameManager.i.topBarScript.UpdateConflicts(numOfOpinionZeroActors);
                 //update topBarUI for blackmailers
                 GameManager.i.topBarScript.UpdateBlackmail(numOfBlackmailers);
             }
@@ -6713,17 +6713,17 @@ public class ActorManager : MonoBehaviour
         bool isResolved = false;
         //decrement timer
         actor.blackmailTimer--;
-        if (actor.GetDatapoint(ActorDatapoint.Motivation1) == maxStatValue)
+        if (actor.GetDatapoint(ActorDatapoint.Opinion1) == maxStatValue)
         {
             //trait Vindictive (won't be appeased)
             if (actor.CheckTraitEffect(actorAppeaseNone) == false)
             {
-                //Motivation at max value, Blackmailer condition cancelled
-                actor.RemoveCondition(conditionBlackmailer, string.Format("{0} has Maximum Motivation", actor.arc.name));
+                //Opinion at max value, Blackmailer condition cancelled
+                actor.RemoveCondition(conditionBlackmailer, string.Format("{0} has Maximum Opinion", actor.arc.name));
                 isResolved = true;
                 //message
-                msgText = string.Format("{0} has full Motivation and has dropped their threat", actor.arc.name);
-                reason = string.Format("{0} has regained MAXIMUM Motivation", actor.arc.name);
+                msgText = string.Format("{0} has MAX Opinion and has dropped their threat", actor.arc.name);
+                reason = string.Format("{0} has regained MAXIMUM Opinion", actor.arc.name);
                 GameManager.i.messageScript.ActorBlackmail(msgText, actor, null, true, reason);
             }
             else
@@ -7063,13 +7063,13 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Warning if actor Motivation Zero, InfoApp effects tab
+    /// Warning if actor Opinion Zero, InfoApp effects tab
     /// </summary>
     /// <param name="actor"></param>
-    public void ProcessMotivationWarning(Actor actor)
+    public void ProcessOpinionWarning(Actor actor)
     {
         string msgText = string.Format("{0} at risk of a Relationship Conflict", actor.arc.name);
-        string reason = string.Format("<b>{0}, {1}{2}{3}{4}{5}{6}{7}Motivation at {8}Zero{9}{10}</b>", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n",
+        string reason = string.Format("<b>{0}, {1}{2}{3}{4}{5}{6}{7}Opinion at {8}Zero{9}{10}</b>", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n",
             colourNormal, colourEnd, colourNeutral, colourEnd, "\n");
         string warning = string.Format("{0}<b>Can develop a RELATIONSHIP CONFLICT</b>{1}", colourBad, colourEnd);
         List<string> listOfHelp = new List<string>() { "conflict_0", "conflict_1", "conflict_2" };
@@ -7977,32 +7977,32 @@ public class ActorManager : MonoBehaviour
                     else
                     {
                         totalUnhappy++;
-                        //unhappy timer has reached zero. Is actor's motivation > 0?
-                        if (actor.GetDatapoint(ActorDatapoint.Motivation1) > 0)
+                        //unhappy timer has reached zero. Is actor's opinion > 0?
+                        if (actor.GetDatapoint(ActorDatapoint.Opinion1) > 0)
                         {
-                            //chance of decrementing motivation each turn till it reaches zero
-                            chance = unhappyLoseMotivationChance;
+                            //chance of decrementing opinion each turn till it reaches zero
+                            chance = unhappyLoseOpinionChance;
                             //chance is 100% if actor was promised
                             if (actor.isPromised == true)
                             { chance = 100; }
                             rnd = Random.Range(0, 100);
                             if (rnd < chance)
                             {
-                                int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
-                                motivation--;
-                                actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, "Unhappy in Reserves");
-                                Debug.LogFormat("[Res] ActorManager.cs -> CheckReserveActors: {0}, {1}, ID {2} is UNHAPPY, Motivation now {3}{4}", actor.actorName, actor.arc.name, actor.actorID,
-                                    motivation, "\n");
-                                //lost motivation warning
-                                msgText = string.Format("{0}, {1}, in Reserves, has lost Motivation", actor.actorName, actor.arc.name);
-                                itemText = string.Format("Reserve {0} loses Motivation", actor.arc.name);
+                                int opinion = actor.GetDatapoint(ActorDatapoint.Opinion1);
+                                opinion--;
+                                actor.SetDatapoint(ActorDatapoint.Opinion1, opinion, "Unhappy in Reserves");
+                                Debug.LogFormat("[Res] ActorManager.cs -> CheckReserveActors: {0}, {1}, ID {2} is UNHAPPY, Opinion now {3}{4}", actor.actorName, actor.arc.name, actor.actorID,
+                                    opinion, "\n");
+                                //lost opinion warning
+                                msgText = string.Format("{0}, {1}, in Reserves, has lost Opinion", actor.actorName, actor.arc.name);
+                                itemText = string.Format("Reserve {0} loses Opinion", actor.arc.name);
                                 reason = string.Format("<b>{0}, {1}{2}{3}, is upset at being left in the Reserves</b>", actor.actorName, colourAlert, actor.arc.name, colourEnd);
-                                warning = string.Format("{0} Motivation -1", actor.actorName);
-                                GameManager.i.messageScript.GeneralWarning(msgText, itemText, "Loses Motivation", reason, warning);
+                                warning = string.Format("{0} Opinion -1", actor.actorName);
+                                GameManager.i.messageScript.GeneralWarning(msgText, itemText, "Loses Opinion", reason, warning);
                                 //random message
-                                Debug.LogFormat("[Rnd] ActorManager.cs -> UpdateReserveActor: Unhappy {0} Motivation check SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
-                                msgText = string.Format("Unhappy {0} Motivation check SUCCESS", actor.arc.name);
-                                GameManager.i.messageScript.GeneralRandom(msgText, "Lose Motivation", chance, rnd, true);
+                                Debug.LogFormat("[Rnd] ActorManager.cs -> UpdateReserveActor: Unhappy {0} Opinion check SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                                msgText = string.Format("Unhappy {0} Opinion check SUCCESS", actor.arc.name);
+                                GameManager.i.messageScript.GeneralRandom(msgText, "Lose Opinion", chance, rnd, true);
                             }
                             else
                             {
@@ -8013,14 +8013,14 @@ public class ActorManager : MonoBehaviour
                                 warning = string.Format("{0} will act on their displeasure {1}<b>SOON</b>{2}", actor.actorName, colourBad, colourEnd);
                                 GameManager.i.messageScript.GeneralWarning(msgText, itemText, "Unhappy", reason, warning);
                                 //random message
-                                Debug.LogFormat("[Rnd] ActorManager.cs -> UpdateReserveActor: Unhappy {0} Motivation check FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
-                                msgText = string.Format("Unhappy {0} Motivation check FAILED", actor.arc.name);
-                                GameManager.i.messageScript.GeneralRandom(msgText, "Lose Motivation", chance, rnd, true);
+                                Debug.LogFormat("[Rnd] ActorManager.cs -> UpdateReserveActor: Unhappy {0} Opinion check FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                                msgText = string.Format("Unhappy {0} Opinion check FAILED", actor.arc.name);
+                                GameManager.i.messageScript.GeneralRandom(msgText, "Lose Opinion", chance, rnd, true);
                             }
                         }
                         else
                         {
-                            //actor is Unhappy and has 0 motivation. Do they take action?
+                            //actor is Unhappy and has 0 opinion. Do they take action?
                             chance = unhappyTakeActionChance;
                             string situation = "";
                             //if actor has previously been promised or reassured, double chance of action (4X if both promised and reassured)
@@ -8109,32 +8109,32 @@ public class ActorManager : MonoBehaviour
                     else
                     {
                         totalUnhappy++;
-                        //unhappy timer has reached zero. Is actor's motivation > 0?
-                        if (actor.GetDatapoint(ActorDatapoint.Motivation1) > 0)
+                        //unhappy timer has reached zero. Is actor's opinion > 0?
+                        if (actor.GetDatapoint(ActorDatapoint.Opinion1) > 0)
                         {
-                            //chance of decrementing motivation each turn till it reaches zero
-                            chance = unhappyLoseMotivationChance;
+                            //chance of decrementing opinion each turn till it reaches zero
+                            chance = unhappyLoseOpinionChance;
                             //chance is 100% if actor was promised
                             if (actor.isPromised == true)
                             { chance = 100; }
                             rnd = Random.Range(0, 100);
                             if (rnd < chance)
                             {
-                                int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
-                                motivation--;
-                                actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, "Unhappy in Reserves");
-                                Debug.LogFormat("[Res] ActorManager.cs -> CheckReserveActors: {0}, {1}, ID {2} is UNHAPPY, Motivation now {3}, chance {4}{5}", actor.actorName, actor.arc.name, actor.actorID,
-                                     motivation, chance, "\n");
-                                //lost motivation warning
-                                msgText = string.Format("{0}, {1}, in Reserves, has lost Motivation", actor.actorName, actor.arc.name);
-                                itemText = string.Format("Reserve {0} loses Motivation", actor.arc.name);
+                                int opinion = actor.GetDatapoint(ActorDatapoint.Opinion1);
+                                opinion--;
+                                actor.SetDatapoint(ActorDatapoint.Opinion1, opinion, "Unhappy in Reserves");
+                                Debug.LogFormat("[Res] ActorManager.cs -> CheckReserveActors: {0}, {1}, ID {2} is UNHAPPY, Opinion now {3}, chance {4}{5}", actor.actorName, actor.arc.name, actor.actorID,
+                                     opinion, chance, "\n");
+                                //lost opinion warning
+                                msgText = string.Format("{0}, {1}, in Reserves, has lost Opinion", actor.actorName, actor.arc.name);
+                                itemText = string.Format("Reserve {0} loses Opinion", actor.arc.name);
                                 reason = string.Format("<b>{0}, {1}{2}{3}, is upset at being left in the Reserves</b>", actor.actorName, colourAlert, actor.arc.name, colourEnd);
-                                warning = string.Format("{0} <b>Motivation -1</b>", actor.actorName);
-                                GameManager.i.messageScript.GeneralWarning(msgText, itemText, "Loses Motivation", reason, warning);
+                                warning = string.Format("{0} <b>Opinion -1</b>", actor.actorName);
+                                GameManager.i.messageScript.GeneralWarning(msgText, itemText, "Loses Opinion", reason, warning);
                                 //random message
-                                Debug.LogFormat("[Rnd] ActorManager.cs -> UpdateReserveActor: Unhappy {0} Motivation check SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
-                                msgText = string.Format("Unhappy {0} Motivation check SUCCESS", actor.arc.name);
-                                GameManager.i.messageScript.GeneralRandom(msgText, "Lose Motivation", chance, rnd, true);
+                                Debug.LogFormat("[Rnd] ActorManager.cs -> UpdateReserveActor: Unhappy {0} Opinion check SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                                msgText = string.Format("Unhappy {0} Opinion check SUCCESS", actor.arc.name);
+                                GameManager.i.messageScript.GeneralRandom(msgText, "Lose Opinion", chance, rnd, true);
                             }
                             else
                             {
@@ -8145,14 +8145,14 @@ public class ActorManager : MonoBehaviour
                                 warning = string.Format("{0} is threatening action", actor.actorName);
                                 GameManager.i.messageScript.GeneralWarning(msgText, itemText, "Unhappy", reason, warning);
                                 //random message
-                                Debug.LogFormat("[Rnd] ActorManager.cs -> UpdateReserveActor: Unhappy {0} Motivation check FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
-                                msgText = string.Format("Unhappy {0} Motivation check FAILED", actor.arc.name);
-                                GameManager.i.messageScript.GeneralRandom(msgText, "Lose Motivation", chance, rnd, true);
+                                Debug.LogFormat("[Rnd] ActorManager.cs -> UpdateReserveActor: Unhappy {0} Opinion check FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                                msgText = string.Format("Unhappy {0} Opinion check FAILED", actor.arc.name);
+                                GameManager.i.messageScript.GeneralRandom(msgText, "Lose Opinion", chance, rnd, true);
                             }
                         }
                         else
                         {
-                            //actor is Unhappy and has 0 motivation. Do they take action?
+                            //actor is Unhappy and has 0 opinion. Do they take action?
                             chance = unhappyTakeActionChance;
                             //if actor has previously been promised or reassured, double chance of action (4X if both promised and reassured)
                             if (actor.isPromised == true)
@@ -8271,7 +8271,7 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns a colour formatted string of all actors who currently have motivation 0 and can potentially have a conflict with the player in format actorName + actorArc. 
+    /// Returns a colour formatted string of all actors who currently have opinion 0 and can potentially have a conflict with the player in format actorName + actorArc. 
     /// Used by topBar conflict status icon tooltip details, returns null if a problem
     /// </summary>
     /// <returns></returns>
@@ -8290,7 +8290,7 @@ public class ActorManager : MonoBehaviour
                     Actor actor = arrayOfActors[i];
                     if (actor != null)
                     {
-                        if (actor.GetDatapoint(ActorDatapoint.Motivation1) == 0)
+                        if (actor.GetDatapoint(ActorDatapoint.Opinion1) == 0)
                         {
                             if (builder.Length > 0) { builder.AppendLine(); }
                             builder.AppendFormat("{0}{1}{2}{3}{4}", actor.actorName, "\n", colourAlert, actor.arc.name, colourEnd);
@@ -8305,12 +8305,12 @@ public class ActorManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns number of onMap (active/inactive) actors with motivation Zero
+    /// returns number of onMap (active/inactive) actors with opinion Zero
     /// </summary>
     /// <returns></returns>
     public int CheckNumOfConflictActors()
     {
-        int numOfMotivationZero = 0;
+        int numOfOpinionZero = 0;
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(playerSide);
         if (arrayOfActors != null)
@@ -8323,15 +8323,15 @@ public class ActorManager : MonoBehaviour
                     Actor actor = arrayOfActors[i];
                     if (actor != null)
                     {
-                        if (actor.GetDatapoint(ActorDatapoint.Motivation1) == 0)
-                        { numOfMotivationZero++; }
+                        if (actor.GetDatapoint(ActorDatapoint.Opinion1) == 0)
+                        { numOfOpinionZero++; }
                     }
                     else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[{0}]", i); }
                 }
             }
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
-        return numOfMotivationZero;
+        return numOfOpinionZero;
     }
 
 
@@ -8765,35 +8765,35 @@ public class ActorManager : MonoBehaviour
             //opinion of you
             string title = GameManager.i.hqScript.GetHqTitle(actorHq);
             string assistance = "Unknown";
-            string opinion = "Unknown";
+            string opinionText = "Unknown";
             char bullet = '\u2022';
-            int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
-            switch (motivation)
+            int opinion = actor.GetDatapoint(ActorDatapoint.Opinion1);
+            switch (opinion)
             {
                 case 3:
-                    opinion = string.Format("{0}{1}{2} thinks you are doing a {3}great job{4}, by the way", colourAlert, actor.firstName, colourEnd, colourAlert, colourEnd);
+                    opinionText = string.Format("{0}{1}{2} thinks you are doing a {3}great job{4}, by the way", colourAlert, actor.firstName, colourEnd, colourAlert, colourEnd);
                     assistance = string.Format("{0}{1}{2} is happy to help you and has gone out of their way to offer {3}special options{4}", colourAlert, actor.actorName, colourEnd, colourAlert, colourEnd);
                     break;
                 case 2:
-                    opinion = string.Format("{0}{1}{2} is {3}indifferent{4} and considers you {5}just another leader{6}",
+                    opinionText = string.Format("{0}{1}{2} is {3}indifferent{4} and considers you {5}just another leader{6}",
                         colourAlert, actor.firstName, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
                     assistance = string.Format("{0}{1}{2} is willing to help you because it's their job. They have some {3}additional options{4} but only because it's standard protocol",
                         colourAlert, actor.actorName, colourEnd, colourAlert, colourEnd);
                     break;
                 case 1:
-                    opinion = string.Format("{0}{1}{2} is {3}disappointed{4} in your performance to date", colourAlert, actor.firstName, colourEnd, colourAlert, colourEnd);
+                    opinionText = string.Format("{0}{1}{2} is {3}disappointed{4} in your performance to date", colourAlert, actor.firstName, colourEnd, colourAlert, colourEnd);
                     assistance = string.Format("{0}{1}{2} is reluctant to help you and {3}won't{4} be offering any {5}special options{6}",
                         colourAlert, actor.actorName, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
                     break;
                 case 0:
-                    opinion = string.Format("{0}{1}{2} wonders {3}why you are still here{4} considering that you're a {5}walking disaster{6}",
+                    opinionText = string.Format("{0}{1}{2} wonders {3}why you are still here{4} considering that you're a {5}walking disaster{6}",
                         colourAlert, actor.firstName, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
                     assistance = string.Format("{0}{1}{2} can't stand you but will do what is required. You can {3}forget{4} about any {5}special options{6}",
                         colourAlert, actor.actorName, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
                     break;
             }
-            string status = string.Format("{0}{1}{2}{3} {4} Renown {5}{6}{7}{8} {9} Motivation {10}  (current opinion of you)",
-                colourAlert, actor.actorName, colourEnd, "\n", bullet, colourAlert, actor.Renown, colourEnd, "\n", bullet, GameManager.i.guiScript.GetNormalStars(motivation));
+            string status = string.Format("{0}{1}{2}{3} {4} Renown {5}{6}{7}{8} {9} Opinion {10}  (current opinion of you)",
+                colourAlert, actor.actorName, colourEnd, "\n", bullet, colourAlert, actor.Renown, colourEnd, "\n", bullet, GameManager.i.guiScript.GetNormalStars(opinion));
             //title and name
             HelpData data0 = new HelpData()
             {
@@ -8805,7 +8805,7 @@ public class ActorManager : MonoBehaviour
             HelpData data1 = new HelpData()
             {
                 header = "Opinion of You",
-                text = opinion
+                text = opinionText
             };
             listOfHelp.Add(data1);
             //stats
@@ -8836,7 +8836,7 @@ public class ActorManager : MonoBehaviour
         StringBuilder builderMain = new StringBuilder();
         StringBuilder builderHeader = new StringBuilder();
         //actor data
-        int motivation = actor.GetDatapoint(ActorDatapoint.Datapoint1);
+        int opinion = actor.GetDatapoint(ActorDatapoint.Datapoint1);
         string title = GameManager.i.hqScript.GetHqTitle(actor.statusHQ);
         //header
         builderHeader.AppendFormat("{0}<size=110%>{1}{2}{3}{4}</size>{5}", actor.actorName, "\n", colourAlert, title.ToUpper(), colourEnd, "\n");
@@ -8848,7 +8848,7 @@ public class ActorManager : MonoBehaviour
         else
         {
             //actor has an HQ relevant trait
-            builderMain.AppendFormat("Motivation<pos=57%>{0}{1}", GameManager.i.guiScript.GetNormalStars(motivation), "\n");
+            builderMain.AppendFormat("Opinion<pos=57%>{0}{1}", GameManager.i.guiScript.GetNormalStars(opinion), "\n");
             builderMain.AppendFormat("Compatibility<pos=57%>{0}", GameManager.i.guiScript.GetCompatibilityStars(actor.GetPersonality().GetCompatibilityWithPlayer()));
         }
 
@@ -9736,8 +9736,8 @@ public class ActorManager : MonoBehaviour
             Actor actor = GameManager.i.dataScript.GetCurrentActor(slotID, playerSide);
             if (actor != null)
             {
-                //set motivation to Zero (if not already). Note use SetDatapointLoad to avoid personality interference
-                actor.SetDatapointLoad(ActorDatapoint.Motivation1, 0);
+                //set opinion to Zero (if not already). Note use SetDatapointLoad to avoid personality interference
+                actor.SetDatapointLoad(ActorDatapoint.Opinion1, 0);
                 //conflict
                 string conflictText = ProcessActorConflict(actor);
                 result = string.Format("{0}, {1} initiates a Conflict", actor.actorName, actor.arc.name);
@@ -10077,7 +10077,7 @@ public class ActorManager : MonoBehaviour
                                         colourRelation = data.relationship == ActorRelationship.Friend ? colourGood : colourBad;
                                         detailsTop = string.Format("{0}, {1}{2}{3}{4}is {5}{6}{7} with{8}{9}, {10}{11}{12}", actorFirst.actorName, colourAlert, actorFirst.arc.name, colourEnd, "\n",
                                             colourRelation, relationship, colourEnd, "\n", actorSecond.actorName, colourAlert, actorSecond.arc.name, colourEnd);
-                                        detailsBottom = string.Format("Any changes in {0}Motivation{1} in one {2}can affect the other{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+                                        detailsBottom = string.Format("Any changes in {0}Opinion{1} in one {2}can affect the other{3}", colourAlert, colourEnd, colourAlert, colourEnd);
                                         msgData.text = string.Format("{0} and {1} are {2}", actorFirst.arc.name, actorSecond.arc.name, relationship);
                                         msgData.topText = "Relationship Exists";
                                         msgData.detailsTop = detailsTop;

@@ -19,11 +19,11 @@ public class PersonalityManager : MonoBehaviour
     [Range(4, 4)] public int profileThreshold = 4;
 
     [Header("Compatibility Effect")]
-    [Tooltip("% chance of actor letting a motivational change go by the boards due to their compatibility with the player assuming it's +/- 1")]
+    [Tooltip("% chance of actor letting an opinion change go by the boards due to their compatibility with the player assuming it's +/- 1")]
     [Range(1, 100)] public int compatibilityChanceOne = 20;
-    [Tooltip("% chance of actor letting a motivational change go by the boards due to their compatibility with the player assuming it's +/- 2")]
+    [Tooltip("% chance of actor letting an opinion change go by the boards due to their compatibility with the player assuming it's +/- 2")]
     [Range(1, 100)] public int compatibilityChanceTwo = 40;
-    [Tooltip("% chance of actor letting a motivational change go by the boards due to their compatibility with the player assuming it's +/- 3")]
+    [Tooltip("% chance of actor letting an opinion change go by the boards due to their compatibility with the player assuming it's +/- 3")]
     [Range(1, 100)] public int compatibilityChanceThree = 60;
 
     [Header("Range Limits")]

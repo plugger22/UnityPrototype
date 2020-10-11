@@ -766,7 +766,7 @@ public class SaveActor
     //collections
     public List<int> listOfPersonalityFactors = new List<int>();
     public List<string> listOfDescriptors = new List<string>();
-    public List<HistoryMotivation> listOfMotivation = new List<HistoryMotivation>();
+    public List<HistoryOpinion> listOfMotivation = new List<HistoryOpinion>();
     public List<int> listOfTeams = new List<int>();
     public List<string> listOfSecrets = new List<string>();
     public List<string> listOfConditions = new List<string>();

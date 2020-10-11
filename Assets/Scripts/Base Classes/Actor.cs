@@ -198,7 +198,7 @@ namespace gameAPI
                 case ActorDatapoint.Datapoint0:
                     value = datapoint0;
                     break;
-                case ActorDatapoint.Motivation1:
+                case ActorDatapoint.Opinion1:
                 case ActorDatapoint.Datapoint1:
                     value = datapoint1;
                     break;
@@ -215,8 +215,8 @@ namespace gameAPI
         }
 
         /// <summary>
-        /// Set value of a datapoint. 'reasonForChange' needed if a Motivational shift that may be negated due to actor's compatibility with player. Ignore otherwise.
-        /// Returns true if Motivation change accepted, false if actor compatibility negates it and true for all other datapoint cases (ignore, it's only for datapoint1, motivation)
+        /// Set value of a datapoint. 'reasonForChange' needed if an Opinion shift that may be negated due to actor's compatibility with player. Ignore otherwise.
+        /// Returns true if Opinion change accepted, false if actor compatibility negates it and true for all other datapoint cases (ignore, it's only for datapoint1, opinion)
         /// </summary>
         /// <param name="datapoint"></param>
         /// <param name="value"></param>
@@ -234,7 +234,7 @@ namespace gameAPI
                     { Debug.LogWarningFormat("SetDatapoint change Datapoint0 has same value as already present for {0}, {1}, ID {2}", actorName, arc.name, actorID); }
                     datapoint0 = value;
                     break;
-                case ActorDatapoint.Motivation1:
+                case ActorDatapoint.Opinion1:
                 case ActorDatapoint.Datapoint1:
                     //player side actor, take into account actor's compatibility with the player
                     if (side.level == GameManager.i.sideScript.PlayerSide.level)
@@ -242,7 +242,7 @@ namespace gameAPI
                         //doesn't apply on first turn (creating actors)
                         if (turn > 0)
                         {
-                            //motivation is special as actor compatibility with player can negate the change
+                            //opinion is special as actor compatibility with player can negate the change
                             int difference = value - datapoint1;
                             int rndNum = Random.Range(0, 100);
                             int numNeeded = 0;
@@ -334,8 +334,8 @@ namespace gameAPI
                                 { datapoint1 = value; }
                                 else
                                 {
-                                    //Motivational shift negated due to compatibility
-                                    text = string.Format("{0}, {1}, ID {2}, negates Motivational change of {3}{4} due to compatibility with Player{5}", actorName, arc.name, actorID,
+                                    //Opinion shift negated due to compatibility
+                                    text = string.Format("{0}, {1}, ID {2}, negates Opinion change of {3}{4} due to compatibility with Player{5}", actorName, arc.name, actorID,
                                         difference > 0 ? "+" : "", difference, "\n");
                                     GameManager.i.messageScript.ActorCompatibility(text, this, difference, reasonForChange);
                                     isSuccess = false;
@@ -347,15 +347,15 @@ namespace gameAPI
                                 //random roll message regardless, provided a check was made
                                 if (numNeeded > 0)
                                 {
-                                    text = string.Format("{0}, {1}, ignore Motivation {2}", actorName, arc.name, isProceed == true ? "FAILED" : "SUCCESS");
+                                    text = string.Format("{0}, {1}, ignore Opinion {2}", actorName, arc.name, isProceed == true ? "FAILED" : "SUCCESS");
                                     GameManager.i.messageScript.GeneralRandom(text, "Compatibility", numNeeded, rndNum, isBadOutcome, "rand_0");
                                     Debug.LogFormat("[Rnd] Actor.cs -> SetDatapoint: {0} need < {1}, rolled {2} for datapoint {3}{4}", isProceed == true ? "FAILED" : "SUCCESS", numNeeded, rndNum, datapoint, "\n");
                                 }
-                                //motivational History
-                                HistoryMotivation history = new HistoryMotivation();
+                                //opinion History
+                                HistoryOpinion history = new HistoryOpinion();
                                 history.change = value;
                                 history.turn = turn;
-                                history.motivation = datapoint1;
+                                history.opinion = datapoint1;
                                 history.isNormal = isProceed;
                                 text = string.Format("{0} {1}{2}", reasonForChange, difference > 0 ? "+" : "", difference);
                                 if (isProceed == false)
@@ -380,13 +380,13 @@ namespace gameAPI
                         {
                             //turn 0, CreateActors
                             datapoint1 = value;
-                            //Starting Motivation
-                            HistoryMotivation history = new HistoryMotivation();
+                            //Starting Opinion
+                            HistoryOpinion history = new HistoryOpinion();
                             history.change = 0;
                             history.turn = turn;
-                            history.motivation = datapoint1;
+                            history.opinion = datapoint1;
                             history.isNormal = true;
-                            text = string.Format("Starting Motivation {0}", datapoint1);
+                            text = string.Format("Starting Opinion {0}", datapoint1);
                             history.descriptor = GameManager.Formatt(text, ColourType.neutralText);
                             personality.AddMotivation(history);
                         }
@@ -412,7 +412,7 @@ namespace gameAPI
         }
 
         /// <summary>
-        /// Set datapoint's using loaded save game data ONLY (straight assignment, no motivation compatibility checks)
+        /// Set datapoint's using loaded save game data ONLY (straight assignment, no opinion compatibility checks)
         /// </summary>
         /// <param name="datapoint"></param>
         /// <param name="value"></param>
@@ -427,7 +427,7 @@ namespace gameAPI
                 case ActorDatapoint.Datapoint0:
                     datapoint0 = value;
                     break;
-                case ActorDatapoint.Motivation1:
+                case ActorDatapoint.Opinion1:
                 case ActorDatapoint.Datapoint1:
                     datapoint1 = value;
                     break;
@@ -1498,7 +1498,7 @@ namespace gameAPI
         public string DebugDisplayHistory()
         {
             StringBuilder builder = new StringBuilder();
-            builder.AppendFormat("- {0}, {1}, ID {2}, LvL {3}, Mot {4}, isD {5}, isR {6}{7}", actorName, arc.name, actorID, level, GetDatapoint(ActorDatapoint.Motivation1), isDismissed, isResigned, "\n");
+            builder.AppendFormat("- {0}, {1}, ID {2}, LvL {3}, Mot {4}, isD {5}, isR {6}{7}", actorName, arc.name, actorID, level, GetDatapoint(ActorDatapoint.Opinion1), isDismissed, isResigned, "\n");
             int count = listOfHistory.Count;
             if (count > 0)
             {

@@ -77,7 +77,7 @@ public class TooltipPlayer : MonoBehaviour
     {
         //node datapoint icons
         arrayOfIcons[0] = GameManager.i.guiScript.invisibilityIcon;
-        arrayOfIcons[1] = GameManager.i.guiScript.motivationIcon;
+        arrayOfIcons[1] = GameManager.i.guiScript.opinionIcon;
         arrayOfIcons[2] = GameManager.i.guiScript.innocenceIcon;
         Debug.Assert(arrayOfIcons[0] != null, "Invalid arrayOfIcons[0] (Null)");
         Debug.Assert(arrayOfIcons[1] != null, "Invalid arrayOfIcons[1] (Null)");

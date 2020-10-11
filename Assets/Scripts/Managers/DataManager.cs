@@ -4237,7 +4237,7 @@ public class DataManager : MonoBehaviour
     /// <summary>
     /// Removes current actor and handles all relevant admin details. Returns true if actor removed successfully. Actor could be in Reserves.
     /// NOTE: Actor status will be updated if operation successful otherwise no change
-    /// NOTE: Dismissed / Resigned actors will have their motivation set to Zero
+    /// NOTE: Dismissed / Resigned actors will have their opinion set to Zero
     /// </summary>
     /// <param name="side"></param>
     /// <param name="actor"></param>
@@ -4263,7 +4263,7 @@ public class DataManager : MonoBehaviour
                     if (AddActorToDismissed(actor.actorID, side) == true)
                     {
                         //actor movitation now Zero
-                        actor.SetDatapoint(ActorDatapoint.Motivation1, 0, "Dismissed");
+                        actor.SetDatapoint(ActorDatapoint.Opinion1, 0, "Dismissed");
                         actor.isDismissed = true;
                         RemoveActorAdmin(side, actor, status);
                         return true;
@@ -4287,7 +4287,7 @@ public class DataManager : MonoBehaviour
                     if (AddActorToResigned(actor.actorID, side) == true)
                     {
                         //actor movitation now Zero
-                        actor.SetDatapoint(ActorDatapoint.Motivation1, 0, "Resigned");
+                        actor.SetDatapoint(ActorDatapoint.Opinion1, 0, "Resigned");
                         actor.isResigned = true;
                         RemoveActorAdmin(side, actor, status);
                         return true;

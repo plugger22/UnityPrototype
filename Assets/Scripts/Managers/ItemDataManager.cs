@@ -2476,7 +2476,7 @@ public class ItemDataManager : MonoBehaviour
         Actor actor = GameManager.i.dataScript.GetHqHierarchyActor(invest.lead);
         if (actor != null)
         {
-            int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+            int motivation = actor.GetDatapoint(ActorDatapoint.Opinion1);
             builder.AppendFormat("Lead Investigator{0}<b>{1}, {2}{3}{4}</b>{5}{6}", "\n", actor.actorName, colourAlert, GameManager.i.dataScript.GetHqActorPosition(invest.lead), colourEnd, "\n", "\n");
             builder.AppendFormat("<b>Motivation</b><pos=57%>{0}{1}{2}", GameManager.i.guiScript.GetNormalStars(motivation), "\n", "\n");
         }

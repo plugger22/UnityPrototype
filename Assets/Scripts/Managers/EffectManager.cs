@@ -920,7 +920,7 @@ public class EffectManager : MonoBehaviour
                                                 //Actor motivation is neutral (2) or better
                                                 if (actor != null)
                                                 {
-                                                    if (actor.GetDatapoint(ActorDatapoint.Motivation1) < neutralStatValue)
+                                                    if (actor.GetDatapoint(ActorDatapoint.Opinion1) < neutralStatValue)
                                                     { BuildString(result, string.Format(" {0} Low Motivation (need 2+)", actor.arc.name)); }
                                                 }
                                                 else { Debug.LogWarning("Invalid actor (Null) for MotivationNeutralMin"); }
@@ -929,7 +929,7 @@ public class EffectManager : MonoBehaviour
                                                 //Actor motivation is 1+
                                                 if (actor != null)
                                                 {
-                                                    if (actor.GetDatapoint(ActorDatapoint.Motivation1) == 0)
+                                                    if (actor.GetDatapoint(ActorDatapoint.Opinion1) == 0)
                                                     { BuildString(result, string.Format(" {0} Motivation Zero", actor.arc.name)); }
                                                 }
                                                 else { Debug.LogWarning("Invalid actor (Null) for MotivationNOTZero"); }
@@ -1729,7 +1729,7 @@ public class EffectManager : MonoBehaviour
                                                 Actor actorBoss = GameManager.i.dataScript.GetHqHierarchyActor(ActorHQ.Boss);
                                                 if (actorBoss != null)
                                                 {
-                                                    if (actorBoss.GetDatapoint(ActorDatapoint.Motivation1) < 2)
+                                                    if (actorBoss.GetDatapoint(ActorDatapoint.Opinion1) < 2)
                                                     { BuildString(result, string.Format("{0} Motivation < 2", GameManager.i.hqScript.GetHqTitle(ActorHQ.Boss))); }
                                                 }
                                                 else { Debug.LogWarning("Invalid HQ Boss (Null)"); }
@@ -1739,7 +1739,7 @@ public class EffectManager : MonoBehaviour
                                                 Actor actorSubBoss1 = GameManager.i.dataScript.GetHqHierarchyActor(ActorHQ.SubBoss1);
                                                 if (actorSubBoss1 != null)
                                                 {
-                                                    if (actorSubBoss1.GetDatapoint(ActorDatapoint.Motivation1) < 2)
+                                                    if (actorSubBoss1.GetDatapoint(ActorDatapoint.Opinion1) < 2)
                                                     { BuildString(result, string.Format("{0} Motivation < 2", GameManager.i.hqScript.GetHqTitle(ActorHQ.SubBoss1))); }
                                                 }
                                                 else { Debug.LogWarning("Invalid HQ SubBoss1 (Null)"); }
@@ -1749,7 +1749,7 @@ public class EffectManager : MonoBehaviour
                                                 Actor actorSubBoss2 = GameManager.i.dataScript.GetHqHierarchyActor(ActorHQ.SubBoss2);
                                                 if (actorSubBoss2 != null)
                                                 {
-                                                    if (actorSubBoss2.GetDatapoint(ActorDatapoint.Motivation1) < 2)
+                                                    if (actorSubBoss2.GetDatapoint(ActorDatapoint.Opinion1) < 2)
                                                     { BuildString(result, string.Format("{0} Motivation < 2", GameManager.i.hqScript.GetHqTitle(ActorHQ.SubBoss2))); }
                                                 }
                                                 else { Debug.LogWarning("Invalid HQ SubBoss2 (Null)"); }
@@ -1759,7 +1759,7 @@ public class EffectManager : MonoBehaviour
                                                 Actor actorSubBoss3 = GameManager.i.dataScript.GetHqHierarchyActor(ActorHQ.SubBoss3);
                                                 if (actorSubBoss3 != null)
                                                 {
-                                                    if (actorSubBoss3.GetDatapoint(ActorDatapoint.Motivation1) < 2)
+                                                    if (actorSubBoss3.GetDatapoint(ActorDatapoint.Opinion1) < 2)
                                                     { BuildString(result, string.Format("{0} Motivation < 2", GameManager.i.hqScript.GetHqTitle(ActorHQ.SubBoss3))); }
                                                 }
                                                 else { Debug.LogWarning("Invalid HQ SubBoss3 (Null)"); }
@@ -2654,20 +2654,20 @@ public class EffectManager : MonoBehaviour
                             switch (effect.outcome.name)
                             {
                                 case "Motivation":
-                                    int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
-                                    int dataBefore = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                                    int motivation = actor.GetDatapoint(ActorDatapoint.Opinion1);
+                                    int dataBefore = actor.GetDatapoint(ActorDatapoint.Opinion1);
                                     switch (effect.operand.name)
                                     {
                                         case "Add":
                                             motivation += effect.value;
                                             motivation = Mathf.Min(GameManager.i.actorScript.maxStatValue, motivation);
-                                            actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, dataInput.originText);
+                                            actor.SetDatapoint(ActorDatapoint.Opinion1, motivation, dataInput.originText);
                                             GameManager.i.popUpFixedScript.SetData(actor.slotID, string.Format("Motivation +{0}", effect.value));
                                             break;
                                         case "Subtract":
                                             motivation -= effect.value;
                                             motivation = Mathf.Max(GameManager.i.actorScript.minStatValue, motivation);
-                                            actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, dataInput.originText);
+                                            actor.SetDatapoint(ActorDatapoint.Opinion1, motivation, dataInput.originText);
                                             GameManager.i.popUpFixedScript.SetData(actor.slotID, string.Format("Motivation -{0}", effect.value));
                                             break;
                                         default:
@@ -5508,14 +5508,14 @@ public class EffectManager : MonoBehaviour
     private string ProcessActorMotivation(Actor actor, int amount, string operandName, string originText, string description, bool isHqActor = false)
     {
         string bottomText = "Unknown";
-        int dataBefore = actor.GetDatapoint(ActorDatapoint.Motivation1);
-        int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+        int dataBefore = actor.GetDatapoint(ActorDatapoint.Opinion1);
+        int motivation = actor.GetDatapoint(ActorDatapoint.Opinion1);
         switch (operandName)
         {
             case "Add":
                 motivation += Mathf.Abs(amount);
                 motivation = Mathf.Min(GameManager.i.actorScript.maxStatValue, motivation);
-                actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, originText);
+                actor.SetDatapoint(ActorDatapoint.Opinion1, motivation, originText);
                 bottomText = string.Format("{0}{1} {2}{3}", colourGood, isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ), description, colourEnd);
                 break;
             case "Subtract":
@@ -5542,7 +5542,7 @@ public class EffectManager : MonoBehaviour
                 }
                 else
                 { bottomText = string.Format("{0}{1} {2}{3}", colourBad, isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ), description, colourEnd); }
-                actor.SetDatapoint(ActorDatapoint.Motivation1, motivation, originText);
+                actor.SetDatapoint(ActorDatapoint.Opinion1, motivation, originText);
                 break;
             default: Debug.LogWarningFormat("Unrecognised operandName \"{0}\"", operandName); break;
         }

@@ -561,7 +561,7 @@ public class MetaManager : MonoBehaviour
                                 {
                                     metaSpecial.dataName = gear.name;
                                     metaSpecial.dataTag = gear.tag;
-                                    motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                                    motivation = actor.GetDatapoint(ActorDatapoint.Opinion1);
                                     //option active and displayed only if actor has a good opinion of player
                                     if (motivation >= 2)
                                     {
@@ -643,7 +643,7 @@ public class MetaManager : MonoBehaviour
                                     metaSpecial.data = device.innocenceLevel;
                                     metaSpecial.dataTag = device.tag;
                                     //option active and displayed only if actor has a good opinion of player
-                                    motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
+                                    motivation = actor.GetDatapoint(ActorDatapoint.Opinion1);
                                     if (motivation >= 2)
                                     {
                                         metaSpecial.isActive = true;
