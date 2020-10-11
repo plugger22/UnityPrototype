@@ -5982,7 +5982,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 8f27491b3a31d1f46adb5b141c02f8dc, type: 2}
   - {fileID: 2100000, guid: 7f4b99c270750174dbe3b365ad9c260f, type: 2}
   - {fileID: 2100000, guid: 08d40ab47bf9d7c47b9708251fead6df, type: 2}
-  - {fileID: 2100000, guid: dcfae46d408354146aee814cf140efe7, type: 2}
+  - {fileID: 2100000, guid: b2b16d40939fe40449a5dd3b8b5d3b3c, type: 2}
   - {fileID: 2100000, guid: b2b16d40939fe40449a5dd3b8b5d3b3c, type: 2}
   resetConnections: 0
 --- !u!114 &114653768297724556
@@ -6382,7 +6382,7 @@ MonoBehaviour:
   colourTopicNormal: {r: 0.078431375, g: 0.56078434, b: 0.9372549, a: 0}
   colourTopicCapture: {r: 0.9372549, g: 0.078431375, b: 0.27058825, a: 0}
   colourMainBackground: {r: 0.078431375, g: 0.56078434, b: 0.9372549, a: 0}
-  colourTopBarBackground: {r: 0.252047, g: 0.25464034, b: 0.3018868, a: 0}
+  colourTopBarBackground: {r: 0.3254902, g: 0.20392157, b: 0.57254905, a: 0}
   colourIconDormant: {r: 0.96862745, g: 0.972549, b: 0.75686276, a: 0}
   colourIconActiveGood: {r: 0.49803922, g: 1, b: 0, a: 0}
   colourIconActiveBad: {r: 1, g: 0, b: 0, a: 0}
