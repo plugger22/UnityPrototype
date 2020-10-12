@@ -1180,12 +1180,12 @@ public class GUIManager : MonoBehaviour
             GameManager.Formatt("Intensity", ColourType.salmonText), "\n",
             GameManager.Formatt("Constant", ColourType.salmonText)
             );
-        string tooltipDetails = string.Format("<align=\"left\">A character {0} ignore {1} ({2}) or {3} ({4}){5}{6} Motivational outcomes",
+        string tooltipDetails = string.Format("<align=\"left\">A character {0} ignore {1} ({2}) or {3} ({4}){5}{6} Opinion outcomes",
             GameManager.Formatt("may", ColourType.salmonText),
             GameManager.Formatt("GOOD", ColourType.salmonText),
-            GameManager.Formatt(starIconBad, ColourType.badText),
+            GameManager.Formatt(starIconGood, ColourType.badText),
             GameManager.Formatt("BAD", ColourType.salmonText),
-            GameManager.Formatt(starIconGood, ColourType.goodText), "\n", opinionIcon);
+            GameManager.Formatt(starIconBad, ColourType.goodText), "\n", opinionIcon);
         GenericTooltipData tooltip = new GenericTooltipData()
         {
             header = tooltipHeader,
