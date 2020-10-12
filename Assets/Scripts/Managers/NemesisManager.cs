@@ -61,8 +61,8 @@ public class NemesisManager : MonoBehaviour
     [Range(1, 10)] public int durationControlPeriod = 5;
     [Tooltip("How mnay turns cooldown does the Player have to wait before they can excercise control again")]
     [Range(1, 10)] public int durationControlCoolDown = 3;
-    [Tooltip("How much Renown it costs for the player to exercise control (per instance)")]
-    [Range(0, 3)] public int controlRenownCost = 1;
+    [Tooltip("How much Power it costs for the player to exercise control (per instance)")]
+    [Range(0, 3)] public int controlPowerCost = 1;
 
 
     [HideInInspector] public Nemesis nemesis;
@@ -627,12 +627,12 @@ public class NemesisManager : MonoBehaviour
             Node node = GameManager.i.dataScript.GetNode(nodeID);
             if (node != null)
             {
-                //deduct renown cost for control
-                int renown = GameManager.i.playerScript.Power;
-                renown -= controlRenownCost;
-                if (renown > -1)
+                //deduct Power cost for control
+                int power = GameManager.i.playerScript.Power;
+                power -= controlPowerCost;
+                if (power > -1)
                 {
-                    GameManager.i.playerScript.Power = renown;
+                    GameManager.i.playerScript.Power = power;
                     //change relevant fields
                     isPlayerControl = true;
                     controlNodeID = nodeID;
@@ -644,10 +644,10 @@ public class NemesisManager : MonoBehaviour
                     //set normal target node to invalid number (otherwise hunt mode will automatically act)
                     targetNodeID = -1;
                     //log
-                    Debug.LogFormat("[Nem] NemesisManager.cs -> SetPlayerControlStart: Authority Player now has control of Nemesis, {0}, {1}, nodeID {2}, cost {3} Renown{4}", node.nodeName, node.Arc.name,
-                        node.nodeID, controlRenownCost, "\n");
+                    Debug.LogFormat("[Nem] NemesisManager.cs -> SetPlayerControlStart: Authority Player now has control of Nemesis, {0}, {1}, nodeID {2}, cost {3} Power{4}", node.nodeName, node.Arc.name,
+                        node.nodeID, controlPowerCost, "\n");
                 }
-                else { Debug.LogWarning("Insufficient Renown available to take control of Nemesis"); }
+                else { Debug.LogWarning("Insufficient Power available to take control of Nemesis"); }
             }
             else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); }
         }

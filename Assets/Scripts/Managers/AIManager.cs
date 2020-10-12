@@ -135,7 +135,7 @@ public class AIManager : MonoBehaviour
     [Range(1, 5)] public int handoutCityLoyaltyHigh = 3;
 
     [Header("Hacking AI")]
-    [Tooltip("Base cost, in renown, to hack AI at start of a level")]
+    [Tooltip("Base cost, in Power, to hack AI at start of a level")]
     [Range(0, 5)] public int hackingBaseCost = 2;
     [Tooltip("Amount that the hackingBaseCost increases everytime AI Reboots")]
     [Range(0, 3)] public int hackingIncrement = 1;
@@ -169,9 +169,9 @@ public class AIManager : MonoBehaviour
     [Tooltip("When the AI instigates any Policies they will stay in place for this number of turns")]
     [Range(1, 10)] public int aiPolicyTimer= 5;
 
-    [Header("Renown/Resources")]
-    [Tooltip("At the end of an AutoRun the amount of resources is divided by this in order to give the amount of renown to the Authority player")]
-    [Range(1, 3)] public int renownFactor = 2;
+    [Header("Power/Resources")]
+    [Tooltip("At the end of an AutoRun the amount of resources is divided by this in order to give the amount of Power to the Authority player")]
+    [Range(1, 3)] public int powerFactor = 2;
 
     #region Save Compatible Data
     //assorted
@@ -2848,7 +2848,7 @@ public class AIManager : MonoBehaviour
         //pass timer
         data.rebootTimer = rebootTimer;
         //decision test
-        data.powerDecision = string.Format("Hack AI for {0}{1}{2} Renown", colourNeutral, hackingModifiedCost, colourEnd);
+        data.powerDecision = string.Format("Hack AI for {0}{1}{2} Power", colourNeutral, hackingModifiedCost, colourEnd);
         //if tasks are present, process into descriptor strings
         if (count > 0)
         {
@@ -3783,10 +3783,10 @@ public class AIManager : MonoBehaviour
 
 
     /// <summary>
-    /// Sends a colour formatted data package to AISideTabUI indicating cost and status for Resistance Human player to hack AI. Ignore renown parameter (it's used by PlayerManager.cs -> Renown Set property).
+    /// Sends a colour formatted data package to AISideTabUI indicating cost and status for Resistance Human player to hack AI. Ignore Power parameter (it's used by PlayerManager.cs -> Power Set property).
     /// NOTE: data is dynamic
     /// </summary>
-    public void UpdateSideTabData(int renown = 0)
+    public void UpdateSideTabData(int power = 0)
     {
         if (GameManager.i.sideScript.resistanceOverall == SideState.Human)
         {
@@ -3798,9 +3798,9 @@ public class AIManager : MonoBehaviour
             switch (GameManager.i.playerScript.status)
             {
                 case ActorStatus.Active:
-                    int playerRenown = renown;
-                    if (playerRenown == 0)
-                    { playerRenown = GameManager.i.playerScript.Power; }
+                    int playerPower = power;
+                    if (playerPower == 0)
+                    { playerPower = GameManager.i.playerScript.Power; }
                     if (isRebooting == true)
                     {
                         //AI Security System rebooting, Hacking is unavailable
@@ -3818,25 +3818,25 @@ public class AIManager : MonoBehaviour
                             data.topText = "A.I";
                             data.status = HackingStatus.Possible;
                             StringBuilder builder = new StringBuilder();
-                            //renown to spare -> Green
-                            if (playerRenown > hackingModifiedCost)
+                            //Power to spare -> Green
+                            if (playerPower > hackingModifiedCost)
                             {
                                 data.bottomText = string.Format("{0}{1}{2}", colourGood, hackingModifiedCost, colourEnd);
-                                builder.AppendFormat("You can hack the AI for {0}{1}{2}{3} Renown{4}{5}", "\n", colourGood, hackingModifiedCost, colourEnd, "\n", gearEffect);
+                                builder.AppendFormat("You can hack the AI for {0}{1}{2}{3} Power{4}{5}", "\n", colourGood, hackingModifiedCost, colourEnd, "\n", gearEffect);
                             }
-                            //just enough renown -> Yellow
-                            else if (playerRenown == hackingModifiedCost)
+                            //just enough Power -> Yellow
+                            else if (playerPower == hackingModifiedCost)
                             {
                                 data.bottomText = string.Format("{0}{1}{2}", colourNeutral, hackingModifiedCost, colourEnd);
-                                builder.AppendFormat("You can hack the AI for {0}{1}{2}{3} Renown{4}{5}", "\n", colourNeutral, hackingModifiedCost, colourEnd, "\n", gearEffect);
+                                builder.AppendFormat("You can hack the AI for {0}{1}{2}{3} Power{4}{5}", "\n", colourNeutral, hackingModifiedCost, colourEnd, "\n", gearEffect);
                             }
                             else
                             {
-                                //insufficient renown -> Greyed out
+                                //insufficient Power -> Greyed out
                                 data.topText = string.Format("{0}A.I{1}", colourGrey, colourEnd);
                                 data.bottomText = string.Format("{0}{1}{2}", colourGrey, hackingModifiedCost, colourEnd);
                                 data.status = HackingStatus.InsufficientPower;
-                                builder.AppendFormat("You can hack the AI for {0}{1}{2}{3} Renown{4}{5}", "\n", colourBad, hackingModifiedCost, colourEnd, "\n", gearEffect);
+                                builder.AppendFormat("You can hack the AI for {0}{1}{2}{3} Power{4}{5}", "\n", colourBad, hackingModifiedCost, colourEnd, "\n", gearEffect);
                             }
                             //AI countermeasures
                             if (isTraceBack == true || isScreamer == true)
@@ -4212,7 +4212,7 @@ public class AIManager : MonoBehaviour
                         break;
                 }
             }
-            //deduct renown cost for hacking
+            //deduct Power cost for hacking
             UpdateHackingCost(isDetected, hackingAttemptsDetected, hackingAttemptsTotal);
 
             //
@@ -4383,20 +4383,20 @@ public class AIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Player is hacking AI -> pays cost in renown, called from AIDisplayUI.cs -> OpenAIDisplayPanel
+    /// Player is hacking AI -> pays cost in Power, called from AIDisplayUI.cs -> OpenAIDisplayPanel
     /// </summary>
     public void UpdateHackingCost(bool isDetected, int attemptsDetected, int attemptsTotal)
     {
         //deduct cost
-        int renown = GameManager.i.playerScript.Power;
+        int power = GameManager.i.playerScript.Power;
         //ai gear effects?
         Tuple <int, string> results = GetHackingCost(true);
         hackingModifiedCost = results.Item1;
         string gearEffect = results.Item2;
-        //update Player renown
-        renown -= hackingModifiedCost;
-        Debug.Assert(renown >= 0, "Invalid Renown cost (below zero)");
-        GameManager.i.playerScript.Power = renown;
+        //update Player Power
+        power -= hackingModifiedCost;
+        Debug.Assert(power >= 0, "Invalid Power cost (below zero)");
+        GameManager.i.playerScript.Power = power;
         //message
         GameManager.i.messageScript.AIHacked("AI has been hacked", hackingModifiedCost, isDetected, attemptsDetected, attemptsTotal);
     }
@@ -4493,7 +4493,7 @@ public class AIManager : MonoBehaviour
         int tempCost = 0;
         string gearEffect = "";
         //deduct cost
-        int renown = GameManager.i.playerScript.Power;
+        int power = GameManager.i.playerScript.Power;
         string textGear;
         //ai gear effects?
         if (CheckAIGearEffectPresent(cheapHackingEffectText) == true && CheckAIGearEffectPresent(freeHackingEffectText) == false)

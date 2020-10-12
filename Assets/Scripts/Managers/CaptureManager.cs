@@ -215,7 +215,7 @@ public class CaptureManager : MonoBehaviour
             GameManager.i.playerScript.inactiveStatus = ActorInactive.None;
             //AI side tab
             GameManager.i.aiScript.UpdateSideTabData();
-            //add renown to authority actor who owns the team (only if they are still OnMap
+            //add power to authority actor who owns the team (only if they are still OnMap
             if (GameManager.i.sideScript.authorityOverall == SideState.Human)
             {
                 if (GameManager.i.dataScript.CheckActorSlotStatus(details.team.actorSlotID, GameManager.i.globalScript.sideAuthority) == true)

@@ -276,7 +276,7 @@ public class SideManager : MonoBehaviour
     /// </summary>
     public void RevertToHumanPlayer()
     {
-        int renown;
+        int power;
         ActorStatus status;
         ActorInactive inactiveStatus;
         float inactiveAlpha = GameManager.i.guiScript.alphaInactive;
@@ -296,11 +296,11 @@ public class SideManager : MonoBehaviour
                 authorityCurrent = SideState.Human;
                 resistanceOverall = SideState.AI;
                 resistanceCurrent = SideState.AI;
-                //convert resources to renown
-                renown = GameManager.i.dataScript.CheckAIResourcePool(globalAuthority);
-                Debug.LogFormat("[Aim] SideManager.cs -> RevertToHumanPlayer: Authority has {0} Resources{1}", renown, "\n");
-                renown /= GameManager.i.aiScript.renownFactor;
-                GameManager.i.playerScript.Power = renown;
+                //convert resources to power
+                power = GameManager.i.dataScript.CheckAIResourcePool(globalAuthority);
+                Debug.LogFormat("[Aim] SideManager.cs -> RevertToHumanPlayer: Authority has {0} Resources{1}", power, "\n");
+                power /= GameManager.i.aiScript.powerFactor;
+                GameManager.i.playerScript.Power = power;
                 //update states
                 status = GameManager.i.aiScript.status;
                 inactiveStatus = GameManager.i.aiScript.inactiveStatus;
@@ -371,11 +371,11 @@ public class SideManager : MonoBehaviour
                 authorityOverall = SideState.AI;
                 authorityCurrent = SideState.AI;
                 GameManager.i.nemesisScript.SetResistancePlayer(SideState.Human);
-                //convert resources to renown
-                renown = GameManager.i.dataScript.CheckAIResourcePool(globalResistance);
-                Debug.LogFormat("[Rim] SideManager.cs -> RevertToHumanPlayer: Resistance has {0} Resources{1}", renown, "\n");
-                renown /= GameManager.i.aiRebelScript.renownFactor;
-                GameManager.i.playerScript.Power = renown;
+                //convert resources to power
+                power = GameManager.i.dataScript.CheckAIResourcePool(globalResistance);
+                Debug.LogFormat("[Rim] SideManager.cs -> RevertToHumanPlayer: Resistance has {0} Resources{1}", power, "\n");
+                power /= GameManager.i.aiRebelScript.powerFactor;
+                GameManager.i.playerScript.Power = power;
                 //update states
                 status = GameManager.i.aiRebelScript.status;
                 inactiveStatus = GameManager.i.aiRebelScript.inactiveStatus;

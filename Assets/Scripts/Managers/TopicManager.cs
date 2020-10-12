@@ -3910,13 +3910,13 @@ public class TopicManager : MonoBehaviour
                         listOfActors = GameManager.i.dataScript.GetActiveActorsSpecial(ActorCheck.KnowsSecret, GameManager.i.sideScript.PlayerSide);
                         isSuccess = ProcessActorMatch(listOfActors, criteria.effectCriteria);
                         break;
-                    case "RenownActorsLess":
-                        //need an actor with less renown than player
+                    case "PowerActorsLess":
+                        //need an actor with less power than player
                         listOfActors = GameManager.i.dataScript.GetActiveActorsSpecial(ActorCheck.PowerLess, GameManager.i.sideScript.PlayerSide);
                         isSuccess = ProcessActorMatch(listOfActors, criteria.effectCriteria);
                         break;
-                    case "RenownActorsMore":
-                        //need an actor with more renown than player
+                    case "PowerActorsMore":
+                        //need an actor with more power than player
                         listOfActors = GameManager.i.dataScript.GetActiveActorsSpecial(ActorCheck.PowerMore, GameManager.i.sideScript.PlayerSide);
                         isSuccess = ProcessActorMatch(listOfActors, criteria.effectCriteria);
                         break;
@@ -4012,8 +4012,8 @@ public class TopicManager : MonoBehaviour
                         }
                         else { Debug.LogError("Invalid actor (Null) in listOfActors"); isSuccess = false; }
                         break;
-                    case "RenownActorsLess":
-                    case "RenownActorsMore":
+                    case "PowerActorsLess":
+                    case "PowerActorsMore":
                         //get random actor from list
                         actor = listOfActors[Random.Range(0, listOfActors.Count)];
                         if (actor != null)

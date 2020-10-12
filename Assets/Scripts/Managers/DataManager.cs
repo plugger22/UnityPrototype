@@ -5283,11 +5283,11 @@ public class DataManager : MonoBehaviour
                                 if (actor.CheckNewContactAllowed() == true) { numOfActors++; }
                                 break;
                             case ActorCheck.PowerMore:
-                                //At least one active actor with MORE renown than Player
+                                //At least one active actor with MORE Power than Player
                                 if (actor.Power > GameManager.i.playerScript.Power) { numOfActors++; }
                                 break;
                             case ActorCheck.PowerLess:
-                                //At least one active actor with LESS renown than Player
+                                //At least one active actor with LESS Power than Player
                                 if (actor.Power < GameManager.i.playerScript.Power) { numOfActors++; }
                                 break;
                             case ActorCheck.KnowsSecret:
@@ -5349,11 +5349,11 @@ public class DataManager : MonoBehaviour
                                 if (actor.CheckNewContactAllowed() == true) { listOfActors.Add(actor); }
                                 break;
                             case ActorCheck.PowerMore:
-                                //At least one active actor with MORE renown than Player
+                                //At least one active actor with MORE Power than Player
                                 if (actor.Power > GameManager.i.playerScript.Power) { listOfActors.Add(actor); }
                                 break;
                             case ActorCheck.PowerLess:
-                                //At least one active actor with LESS renown than Player
+                                //At least one active actor with LESS Power than Player
                                 if (actor.Power < GameManager.i.playerScript.Power) { listOfActors.Add(actor); }
                                 break;
                             case ActorCheck.KnowsSecret:

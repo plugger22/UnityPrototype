@@ -10050,7 +10050,7 @@ GameObject:
   - component: {fileID: 239597923}
   - component: {fileID: 239597922}
   m_Layer: 5
-  m_Name: renownText
+  m_Name: powerText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28768,8 +28768,8 @@ MonoBehaviour:
   tabSelected: {fileID: 1235284457}
   textStatus: {fileID: 1883276692}
   textSelected: {fileID: 1851181565}
-  renownBackground: {fileID: 1571880970}
-  renownAmount: {fileID: 239597922}
+  powerBackground: {fileID: 1571880970}
+  powerAmount: {fileID: 239597922}
   page_header: {fileID: 1538790712}
   scrollBarObject: {fileID: 279346926}
   scrollBackground: {fileID: 1877160706}
@@ -28905,12 +28905,12 @@ MonoBehaviour:
   endLevelBar: {fileID: 2105061024}
   endLevelTextLeft: {fileID: 1349239368}
   endLevelTextRight: {fileID: 831286916}
-  renownText: {fileID: 1877848247}
+  powerText: {fileID: 1877848247}
   endLevelBoss: {fileID: 2118979187}
   endLevelSubBoss1: {fileID: 1944613913}
   endLevelSubBoss2: {fileID: 2065989542}
   endLevelSubBoss3: {fileID: 1135288624}
-  tooltipEndRenown: {fileID: 2007872587}
+  tooltipEndPower: {fileID: 2007872587}
   hqCanvas: {fileID: 797605791}
   hqBackground: {fileID: 1083892369}
   hierarchyBackground: {fileID: 616813183}
@@ -63269,7 +63269,7 @@ GameObject:
   - component: {fileID: 1571880970}
   - component: {fileID: 1571880972}
   m_Layer: 5
-  m_Name: RenownCircle
+  m_Name: PowerCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

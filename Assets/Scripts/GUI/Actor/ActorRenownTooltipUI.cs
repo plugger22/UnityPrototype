@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using packageAPI;
 
 /// <summary>
-/// tooltip for actor renown display
+/// tooltip for actor Power display
 /// </summary>
 public class ActorRenownTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {

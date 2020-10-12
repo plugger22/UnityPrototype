@@ -210,7 +210,7 @@ public class AISideTabUI : MonoBehaviour
             if (string.IsNullOrEmpty(data.topText) == false)
             { topText.text = data.topText; }
             else { topText.text = "?"; }
-            //cost in renown
+            //cost in Power
             if (string.IsNullOrEmpty(data.bottomText) == false)
             { bottomText.text = data.bottomText; }
             else { bottomText.text = "?"; }

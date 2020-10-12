@@ -17,15 +17,15 @@ public class MetaOption : ScriptableObject
     public string header;
     [Tooltip("Right hand side item details. Multi-line O.K")]
     [TextArea] public string descriptor;
-    [Tooltip("Base cost level of option in renown prior to any adjustments. NOTE: If 'isRenownGain' true then renown cost is the amount of renown GAINED")]
-    public GlobalChance renownCost;   
+    [Tooltip("Base cost level of option in Power prior to any adjustments. NOTE: If 'isPowerGain' true then Power cost is the amount of power GAINED")]
+    public GlobalChance powerCost;   
     [Tooltip("HQ actor who handles this option")]
     public HqPosition hqPosition;
     [Tooltip("Sprite used in RHS of metaGameUI")]
     public Sprite sprite;
 
     [Header("Recommendation")]
-    [Tooltip("True if recommended (default choice). Actual recommended options will be selected based on recommendPriority order until no more renown remains")]
+    [Tooltip("True if recommended (default choice). Actual recommended options will be selected based on recommendPriority order until no more Power remains")]
     public bool isRecommended;
     [Tooltip("Priority order of recommendation selections. Higher the priority, more likely it is to be selected over other recommendations")]
     public GlobalChance recommendPriority;
@@ -35,8 +35,8 @@ public class MetaOption : ScriptableObject
     public bool isPlayerStatus;
     [Tooltip("If true, option is always displayed, regardless of valid criteria, or not. NOTE: If false there must be Criteria unless it's a Special case")]
     public bool isAlways;
-    [Tooltip("If true then there is NO renown cost and instead a renown GAIN equal to whatever is set in Renown Cost/ NOTE: if True, can't be 'isRecommended'")]
-    public bool isRenownGain;
+    [Tooltip("If true then there is NO Power cost and instead a Power GAIN equal to whatever is set in Power Cost/ NOTE: if True, can't be 'isRecommended'")]
+    public bool isPowerGain;
     [Tooltip("Must be present if isAlways is TRUE and CRITERIA present (ignore otherwise) as a self contained explanation as to why option can't be selected if isActive False due to failed criteria")]
     [TextArea] public string textInactive;
     
@@ -81,6 +81,6 @@ public class MetaOption : ScriptableObject
 
 
     //
-    //NOTE - - -> ValidationManager.cs -> ValidateMetaOptions handles error states for text / renownCost / hqPosition and effects (should be at least one)
+    //NOTE - - -> ValidationManager.cs -> ValidateMetaOptions handles error states for text / powerCost / hqPosition and effects (should be at least one)
     //
 }

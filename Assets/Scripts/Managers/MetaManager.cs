@@ -14,8 +14,8 @@ public class MetaManager : MonoBehaviour
     [Header("MetaOption core data")]
     [Tooltip("The max number of metaOption choices you can choose (UI restrictions displaying more than these, also good to have a cap)")]
     [Range(1, 10)] public int numOfChoices = 6;
-    [Tooltip("Minimum amount of renown required before Recommendations (button) can be made in MetaGameUI")]
-    [Range(0, 10)] public int renownRecommendMin = 2;
+    [Tooltip("Minimum amount of Power required before Recommendations (button) can be made in MetaGameUI")]
+    [Range(0, 10)] public int powerRecommendMin = 2;
     [Tooltip("Maximum amount of Special Gear available during MetaGame (priority order of enum.ActorHQ.Boss on down)")]
     [Range(0, 3)] public int maxNumOfGear = 3;
     [Tooltip("Maximum amount of Interrogation Devices available during MetaGame (priority order of enum.ActorHQ.Boss on down")]
@@ -33,7 +33,7 @@ public class MetaManager : MonoBehaviour
     [Tooltip("Place metaOptions here to handle interrogation devices for each member of HQ (1 for each), in order of Hierarchy, eg. Boss first, subBoss1 second, etc.")]
     public MetaOption[] arrayOfDeviceOptions;
 
-    [Header("Renown cost of MetaOptions")]
+    [Header("Power cost of MetaOptions")]
     [Range(0, 10)] public int costLowPriority = 2;
     [Range(0, 10)] public int costMediumPriority = 4;
     [Range(0, 10)] public int costHighPriority = 6;
@@ -105,10 +105,10 @@ public class MetaManager : MonoBehaviour
         metaGameOptions.isTraitor = true;
         metaGameOptions.isLevelTwo = false;
         //Debug
-        if (GameManager.i.testScript.bonusRenown > 0)
+        if (GameManager.i.testScript.bonusPower > 0)
         {
-            GameManager.i.playerScript.Power += GameManager.i.testScript.bonusRenown;
-            Debug.LogFormat("[Met] MetaManager.cs -> InitialiseMetaGame: Player gains {0} bonus Renown (Debug){1}", GameManager.i.testScript.bonusRenown, "\n");
+            GameManager.i.playerScript.Power += GameManager.i.testScript.bonusPower;
+            Debug.LogFormat("[Met] MetaManager.cs -> InitialiseMetaGame: Player gains {0} bonus Power (Debug){1}", GameManager.i.testScript.bonusPower, "\n");
         }
     }
 
@@ -737,7 +737,7 @@ public class MetaManager : MonoBehaviour
                             isActive = metaOption.isActive,
                             isRecommended = metaOption.isRecommended,
                             isSelected = false,
-                            isPowerGain = metaOption.isRenownGain,
+                            isPowerGain = metaOption.isPowerGain,
                             help = 1,
                             tag0 = metaOption.help0,
                             tag1 = metaOption.help1,
@@ -752,28 +752,28 @@ public class MetaManager : MonoBehaviour
                         metaData.listOfEffects.AddRange(metaOption.listOfEffects);
                         //priority and cost
                         cost = 0;
-                        switch (metaOption.renownCost.level)
+                        switch (metaOption.powerCost.level)
                         {
                             case 0: metaData.priority = MetaPriority.Low; cost = costLowPriority; break;
                             case 1: metaData.priority = MetaPriority.Medium; cost = costMediumPriority; break;
                             case 2: metaData.priority = MetaPriority.High; cost = costHighPriority; break;
                             case 3: metaData.priority = MetaPriority.Extreme; cost = costExtremePriority; break;
-                            default: Debug.LogWarningFormat("Invalid metaOption.RenownCost.level \"{0}\" for metaOption {1}", metaOption.renownCost.level, metaOption.name); break;
+                            default: Debug.LogWarningFormat("Invalid metaOption.RenownCost.level \"{0}\" for metaOption {1}", metaOption.powerCost.level, metaOption.name); break;
                         }
                         //RenownCost (base cost * relationship modifier which is default 1 in case where this doesn't apply)
                         cost *= metaOption.relationshipModifier;
                         metaData.powerCost = cost;
                         //header texts
-                        if (metaOption.isRenownGain == false)
+                        if (metaOption.isPowerGain == false)
                         {
-                            //costs renown
+                            //costs Power
                             metaData.textSelect = $"Costs <size=130%>{GameManager.Formatt(cost.ToString(), ColourType.neutralText)}</size> Renown";
                             metaData.textDeselect = $"Gain <size=130%>{GameManager.Formatt(cost.ToString(), ColourType.neutralText)}</size> Renown";
                             metaData.textInsufficient = $"Not enough Renown (need <size=130%>{GameManager.Formatt(cost.ToString(), ColourType.neutralText)}</size>)";
                         }
                         else
                         {
-                            //gain renown
+                            //gain Power
                             metaData.textSelect = $"Gain <size=130%>{GameManager.Formatt(cost.ToString(), ColourType.neutralText)}</size> Renown";
                             metaData.textDeselect = $"Costs <size=130%>{GameManager.Formatt(cost.ToString(), ColourType.neutralText)}</size> Renown";
                             metaData.textInsufficient = $"ERROR";

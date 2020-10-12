@@ -1093,7 +1093,7 @@ public class ItemDataManager : MonoBehaviour
             {
                 if (coolDownTimer == 0)
                 {
-                    builder.AppendFormat("You can <b>TAKE CONTROL</b> at any time (<b>cost {0}{1} Power</b>{2})", colourBad, GameManager.i.nemesisScript.controlRenownCost, colourEnd);
+                    builder.AppendFormat("You can <b>TAKE CONTROL</b> at any time (<b>cost {0}{1} Power</b>{2})", colourBad, GameManager.i.nemesisScript.controlPowerCost, colourEnd);
                     builder.AppendFormat("{0}{1}The <b>AI</b> will {2}<b>automatically manage</b>{3} the nemesis otherwise", "\n", "\n", colourAlert, colourEnd);
                 }
                 else

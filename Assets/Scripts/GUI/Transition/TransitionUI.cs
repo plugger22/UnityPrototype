@@ -99,14 +99,14 @@ public class TransitionUI : MonoBehaviour
     public Image endLevelBar;
     public TextMeshProUGUI endLevelTextLeft;
     public TextMeshProUGUI endLevelTextRight;
-    public TextMeshProUGUI renownText;
+    public TextMeshProUGUI powerText;
 
     public EndLevelInteraction endLevelBoss;
     public EndLevelInteraction endLevelSubBoss1;
     public EndLevelInteraction endLevelSubBoss2;
     public EndLevelInteraction endLevelSubBoss3;
 
-    public GenericTooltipUI tooltipEndRenown;
+    public GenericTooltipUI tooltipEndPower;
 
     //collection
     private EndLevelInteraction[] arrayOfEndLevelOptions;
@@ -154,7 +154,7 @@ public class TransitionUI : MonoBehaviour
     private WorkerInteraction[] arrayOfWorkerOptions;
 
     //assorted
-    private TooltipData renownTooltip;
+    private TooltipData powerTooltip;
     private TooltipData specialTooltipHQ;
 
     //fast access
@@ -302,7 +302,7 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(endLevelSubBoss1 != null, "Invalid endLevelSubBoss1 (Null)");
         Debug.Assert(endLevelSubBoss2 != null, "Invalid endLevelSubBoss2 (Null)");
         Debug.Assert(endLevelSubBoss3 != null, "Invalid endLevelSubBoss3 (Null)");
-        Debug.Assert(tooltipEndRenown != null, "Invalid tooltipEndRenown (Null)");
+        Debug.Assert(tooltipEndPower != null, "Invalid tooltipEndPower (Null)");
         //collections
         arrayOfEndLevelOptions = new EndLevelInteraction[GameManager.i.hqScript.numOfActorsHQ];
         //populate
@@ -417,12 +417,12 @@ public class TransitionUI : MonoBehaviour
         workerSprite.color = colorBackground;
         hierarchyBar.color = colorBackground;
         workerBar.color = colorBackground;
-        //renown tooltip
-        renownTooltip = new TooltipData()
+        //Power tooltip
+        powerTooltip = new TooltipData()
         {
-            header = string.Format("{0}RENOWN{1}", colourCancel, colourEnd),
-            main = string.Format("{0}Hierarchy positions are determined by <b>who has the most Renown</b>{1}", colourNormal, colourEnd),
-            details = string.Format("{0}If a <b>Worker</b> accumulates more Renown than a member of the Hierarchy they will <b>take their spot</b>{1}", colourNormal, colourEnd)
+            header = string.Format("{0}POWER{1}", colourCancel, colourEnd),
+            main = string.Format("{0}Hierarchy positions are determined by <b>who has the most Power</b>{1}", colourNormal, colourEnd),
+            details = string.Format("{0}If a <b>Worker</b> accumulates more Power than a member of the Hierarchy they will <b>take their spot</b>{1}", colourNormal, colourEnd)
         };
         //background
         hqBackground.gameObject.SetActive(true);
@@ -625,7 +625,7 @@ public class TransitionUI : MonoBehaviour
             {
                 arrayOfEndLevelOptions[i].hqPortrait.sprite = null;
                 arrayOfEndLevelOptions[i].hqTitle.text = "";
-                arrayOfEndLevelOptions[i].hqRenown.text = "";
+                arrayOfEndLevelOptions[i].hqPower.text = "";
                 arrayOfEndLevelOptions[i].medal.sprite = null;
                 arrayOfEndLevelOptions[i].assessmentText.text = "";
                 arrayOfEndLevelOptions[i].tooltipPortrait.tooltipHeader = "";
@@ -648,8 +648,8 @@ public class TransitionUI : MonoBehaviour
                     EndLevelData endData = data.listOfEndLevelData[i];
                     if (endData != null)
                     {
-                        //renown
-                        option.hqRenown.text = string.Format("{0}{1}{2}{3}", colourHeader, endData.power > 0 ? "+" : "", endData.power, colourEnd);
+                        //Power
+                        option.hqPower.text = string.Format("{0}{1}{2}{3}", colourHeader, endData.power > 0 ? "+" : "", endData.power, colourEnd);
                         //medal
                         switch (endData.medal)
                         {
@@ -682,28 +682,28 @@ public class TransitionUI : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid arrayOfEndLevelInteraction (Null) for arrayOfEndLevelOptions[{0}]", i); }
             }
 
-            //renown tooltip
-            string posRenown = "<pos=70%>";
-            int playerRenown = GameManager.i.playerScript.Power;
-            int renownTotal = playerRenown + data.listOfEndLevelData.Select(x => x.power).Sum();
+            //Power tooltip
+            string posPower = "<pos=70%>";
+            int playerPower = GameManager.i.playerScript.Power;
+            int powerTotal = playerPower + data.listOfEndLevelData.Select(x => x.power).Sum();
             StringBuilder builder = new StringBuilder();
-            builder.AppendFormat("{0}<align=\"left\">Carried Over</align>{1}{2}{3}{4}{5}{6}", colourNormal, colourEnd, posRenown, colourNeutral, playerRenown, colourEnd, "\n");
-            builder.AppendFormat("{0}<align=\"left\">{1}</align>{2}{3}{4}{5}{6}{7}", colourNormal, GameManager.i.hqScript.GetHqTitle(ActorHQ.Boss), colourEnd, posRenown, colourNeutral, 
+            builder.AppendFormat("{0}<align=\"left\">Carried Over</align>{1}{2}{3}{4}{5}{6}", colourNormal, colourEnd, posPower, colourNeutral, playerPower, colourEnd, "\n");
+            builder.AppendFormat("{0}<align=\"left\">{1}</align>{2}{3}{4}{5}{6}{7}", colourNormal, GameManager.i.hqScript.GetHqTitle(ActorHQ.Boss), colourEnd, posPower, colourNeutral, 
                 data.listOfEndLevelData[(int)ActorHQ.Boss - 1].power, colourEnd, "\n");
-            builder.AppendFormat("{0}<align=\"left\">{1}</align>{2}{3}{4}{5}{6}{7}", colourNormal, GameManager.i.hqScript.GetHqTitle(ActorHQ.SubBoss1), colourEnd, posRenown, colourNeutral,
+            builder.AppendFormat("{0}<align=\"left\">{1}</align>{2}{3}{4}{5}{6}{7}", colourNormal, GameManager.i.hqScript.GetHqTitle(ActorHQ.SubBoss1), colourEnd, posPower, colourNeutral,
                 data.listOfEndLevelData[(int)ActorHQ.SubBoss1 - 1].power, colourEnd, "\n");
-            builder.AppendFormat("{0}<align=\"left\">{1}</align>{2}{3}{4}{5}{6}{7}", colourNormal, GameManager.i.hqScript.GetHqTitle(ActorHQ.SubBoss2), colourEnd, posRenown, colourNeutral,
+            builder.AppendFormat("{0}<align=\"left\">{1}</align>{2}{3}{4}{5}{6}{7}", colourNormal, GameManager.i.hqScript.GetHqTitle(ActorHQ.SubBoss2), colourEnd, posPower, colourNeutral,
                 data.listOfEndLevelData[(int)ActorHQ.SubBoss2 - 1].power, colourEnd, "\n");
-            builder.AppendFormat("{0}<align=\"left\">{1}</align>{2}{3}{4}{5}{6}{7}", colourNormal, GameManager.i.hqScript.GetHqTitle(ActorHQ.SubBoss3), colourEnd, posRenown, colourNeutral,
+            builder.AppendFormat("{0}<align=\"left\">{1}</align>{2}{3}{4}{5}{6}{7}", colourNormal, GameManager.i.hqScript.GetHqTitle(ActorHQ.SubBoss3), colourEnd, posPower, colourNeutral,
                 data.listOfEndLevelData[(int)ActorHQ.SubBoss3 - 1].power, colourEnd, "\n");
-            tooltipEndRenown.tooltipHeader = string.Format("{0}Player Renown{1}", colourAlert, colourEnd);
-            tooltipEndRenown.tooltipMain = builder.ToString();
-            tooltipEndRenown.tooltipDetails = string.Format("{0}Total Renown{1}{2}{3}{4}{5}", colourNormal, colourEnd, posRenown, colourNeutral, renownTotal, colourEnd);
-            tooltipEndRenown.x_offset = -350;
-            tooltipEndRenown.y_offset = -50;
-            //renown -> update player for renown granted by HQ and update renown display
-            renownText.text = renownTotal.ToString();
-            GameManager.i.playerScript.Power = renownTotal;
+            tooltipEndPower.tooltipHeader = string.Format("{0}Player Power{1}", colourAlert, colourEnd);
+            tooltipEndPower.tooltipMain = builder.ToString();
+            tooltipEndPower.tooltipDetails = string.Format("{0}Total Power{1}{2}{3}{4}{5}", colourNormal, colourEnd, posPower, colourNeutral, powerTotal, colourEnd);
+            tooltipEndPower.x_offset = -350;
+            tooltipEndPower.y_offset = -50;
+            //Power -> update player for Power granted by HQ and update Power display
+            powerText.text = powerTotal.ToString();
+            GameManager.i.playerScript.Power = powerTotal;
             //special tooltip
             specialTooltipEndLevel = new TooltipData()
             {
@@ -763,12 +763,12 @@ public class TransitionUI : MonoBehaviour
 
                 }
                 else { Debug.LogWarningFormat("Invalid tooltip (Null) for arrayOfHqOptions[{0}].optionTooltip", i); }
-                //renown tooltip
-                arrayOfHqOptions[i].renownTooltip.tooltipHeader = renownTooltip.header;
-                arrayOfHqOptions[i].renownTooltip.tooltipMain = renownTooltip.main;
-                arrayOfHqOptions[i].renownTooltip.tooltipDetails = renownTooltip.details;
-                arrayOfHqOptions[i].renownTooltip.x_offset = x_offset;
-                arrayOfHqOptions[i].renownTooltip.y_offset = x_offset;     //NOTE: I want x_offset for both here
+                //Power tooltip
+                arrayOfHqOptions[i].powerTooltip.tooltipHeader = powerTooltip.header;
+                arrayOfHqOptions[i].powerTooltip.tooltipMain = powerTooltip.main;
+                arrayOfHqOptions[i].powerTooltip.tooltipDetails = powerTooltip.details;
+                arrayOfHqOptions[i].powerTooltip.x_offset = x_offset;
+                arrayOfHqOptions[i].powerTooltip.y_offset = x_offset;     //NOTE: I want x_offset for both here
             }
             //worker options -> populate
             Debug.AssertFormat(data.listOfWorkerSprites.Count == data.listOfWorkerArcs.Count, "Mismatch -> listOfWorkersSprites has {0} records, listOfWorkerNames has {1} records",
@@ -789,12 +789,12 @@ public class TransitionUI : MonoBehaviour
                     arrayOfWorkerOptions[i].optionTooltip.y_offset = y_offset;
                 }
                 else { Debug.LogWarningFormat("Invalid tooltip (Null) for arrayOfWorkerOptions[{0}].optionTooltip", i); }
-                //renown tooltip
-                arrayOfWorkerOptions[i].renownTooltip.tooltipHeader = renownTooltip.header;
-                arrayOfWorkerOptions[i].renownTooltip.tooltipMain = renownTooltip.main;
-                arrayOfWorkerOptions[i].renownTooltip.tooltipDetails = renownTooltip.details;
-                arrayOfWorkerOptions[i].renownTooltip.x_offset = x_offset;
-                arrayOfWorkerOptions[i].renownTooltip.y_offset = x_offset;   //NOTE: I want x_offset for both here
+                //Power tooltip
+                arrayOfWorkerOptions[i].powerTooltip.tooltipHeader = powerTooltip.header;
+                arrayOfWorkerOptions[i].powerTooltip.tooltipMain = powerTooltip.main;
+                arrayOfWorkerOptions[i].powerTooltip.tooltipDetails = powerTooltip.details;
+                arrayOfWorkerOptions[i].powerTooltip.x_offset = x_offset;
+                arrayOfWorkerOptions[i].powerTooltip.y_offset = x_offset;   //NOTE: I want x_offset for both here
             }
 
             //special button tooltip

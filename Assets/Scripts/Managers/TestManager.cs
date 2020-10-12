@@ -29,8 +29,8 @@ public class TestManager : MonoBehaviour
     [Range(0, 8)] public int numOfWorkers = -1;
 
     [Header("MetaGame")]
-    [Tooltip("Bonus Renown given to player at start of every MetaGame, default 0")]
-    [Range(0, 10)] public int bonusRenown = 0;
+    [Tooltip("Bonus Power given to player at start of every MetaGame, default 0")]
+    [Range(0, 10)] public int bonusPower = 0;
 
     [Header("Authority Player AutoRun tests")]
     [Tooltip("Specify a turn (LESS THAN autorun period, ignored otherwise) where the indicated Condition will be given to the Authority player")]

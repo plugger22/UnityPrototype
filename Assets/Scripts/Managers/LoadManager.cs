@@ -1133,7 +1133,7 @@ public class LoadManager : MonoBehaviour
                         //add to list
                         listOfAllTraits.Add(trait);
                         //update hq fields
-                        if (trait.hqMajorMultiplier > 0 || trait.hqMinorMultiplier > 0 || trait.hqRenownMultiplier > 0)
+                        if (trait.hqMajorMultiplier > 0 || trait.hqMinorMultiplier > 0 || trait.hqPowerMultiplier > 0)
                         {
                             //can only be one, takes first one found and ignores the rest
                             trait.isHqTrait = true;
@@ -1144,13 +1144,13 @@ public class LoadManager : MonoBehaviour
                             }
                             else if (trait.hqMinorMultiplier > 0)
                             {
-                                trait.hqDescription = string.Format("Chance of a Good (change in renown) event {0} % {1}",
+                                trait.hqDescription = string.Format("Chance of a Good (change in Power) event {0} % {1}",
                                   trait.hqMinorMultiplier > 1.0 ? (trait.hqMinorMultiplier - 1.0) * 100 : trait.hqMinorMultiplier * 100, trait.hqMinorMultiplier < 1.0f ? "less" : "more");
                             }
-                            else if (trait.hqRenownMultiplier > 0)
+                            else if (trait.hqPowerMultiplier > 0)
                             {
                                 trait.hqDescription = string.Format("Renown gain, or loss, from an event is {0}% {1}",
-                                  trait.hqRenownMultiplier > 1.0 ? (trait.hqRenownMultiplier - 1.0) * 100 : trait.hqRenownMultiplier * 100, trait.hqRenownMultiplier < 1.0f ? "less" : "more");
+                                  trait.hqPowerMultiplier > 1.0 ? (trait.hqPowerMultiplier - 1.0) * 100 : trait.hqPowerMultiplier * 100, trait.hqPowerMultiplier < 1.0f ? "less" : "more");
                             }
                         }
                         else

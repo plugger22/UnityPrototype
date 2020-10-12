@@ -54,8 +54,8 @@ public class MetaGameUI : MonoBehaviour
     public TextMeshProUGUI textSelected;
 
     [Header("Top")]
-    public Image renownBackground;
-    public TextMeshProUGUI renownAmount;        //use UpdateRenown() rather than do so directly for enhanced readability and code maintenance
+    public Image powerBackground;
+    public TextMeshProUGUI powerAmount;        //use UpdatePower() rather than do so directly for enhanced readability and code maintenance
 
     [Header("Centre Miscellanous")]
     public TextMeshProUGUI page_header;
@@ -121,7 +121,7 @@ public class MetaGameUI : MonoBehaviour
     private GenericHelpTooltipUI helpTabSubBoss3;               //fourth side tab from top
     private GenericHelpTooltipUI helpTabStatus;                 //top tab
     private GenericHelpTooltipUI helpTabSelected;               //top tab
-    private GenericHelpTooltipUI helpRenown;                    //renown background
+    private GenericHelpTooltipUI helpPower;                     //power background
 
     //Side arrays -> tabs
     private GameObject[] arrayOfSideTabObjects;
@@ -179,7 +179,7 @@ public class MetaGameUI : MonoBehaviour
     private int numOfVisibleItems = 10;                              //hardwired visible items in main page -> 10
     private int numOfItemsCurrent = -1;                              //count of items in current list / page
     private int numOfItemsPrevious = -1;                             //count of items in previous list / page
-    private int renownCurrent;                                       //current amount of renown remaining available to spend
+    private int powerCurrent;                                       //current amount of Power remaining available to spend
     private int numOfChoicesCurrent = 0;                             //how many choices the player has made (capped at numOfChoicesMax)
 
     //help tooltips (I don't want this as a global, just a master private field)
@@ -190,12 +190,12 @@ public class MetaGameUI : MonoBehaviour
     private MetaInfoData metaInfoData = new MetaInfoData();
 
     //fast access
-    private int costLow = -1;                                        //renown cost for low priority metaOptions
+    private int costLow = -1;                                        //Power cost for low priority metaOptions
     private int costMedium = -1;
     private int costHigh = -1;
     private int costExtreme = -1;
     private int numOfChoicesMax = -1;                               //max num of items you choose (good or bad)
-    private int renownRecommendMin = -1;                            //min amount of renown required for Recommendation button to work
+    private int powerRecommendMin = -1;                            //min amount of power required for Recommendation button to work
 
     //colours
     string colourDefault;
@@ -390,8 +390,8 @@ public class MetaGameUI : MonoBehaviour
         Debug.Assert(scrollRect != null, "Invalid scrollRect (Null)");
         Debug.Assert(scrollBar != null, "Invalid scrollBar (Null)");
         //top
-        Debug.Assert(renownBackground != null, "Invalid renownBackground (Null)");
-        Debug.Assert(renownAmount != null, "Invalid renownAmount (Null)");
+        Debug.Assert(powerBackground != null, "Invalid powerBackground (Null)");
+        Debug.Assert(powerAmount != null, "Invalid powerAmount (Null)");
         //RHS
         Debug.Assert(rightImage != null, "Invalid rightImage (Null)");
         Debug.Assert(rightImageDefault != null, "Invalid rightImageDefault (Null)");
@@ -410,7 +410,7 @@ public class MetaGameUI : MonoBehaviour
         helpTabSubBoss3 = tabSubBoss3.GetComponent<GenericHelpTooltipUI>();
         helpTabStatus = tabStatus.GetComponent<GenericHelpTooltipUI>();
         helpTabSelected = tabSelected.GetComponent<GenericHelpTooltipUI>();
-        helpRenown = renownBackground.GetComponent<GenericHelpTooltipUI>();
+        helpPower = powerBackground.GetComponent<GenericHelpTooltipUI>();
         Debug.Assert(helpCentre != null, "Invalid helpCentre (Null)");
         Debug.Assert(helpCombined != null, "Invalid helpCombined (Null)");
         Debug.Assert(helpMain != null, "Invalid helpMain (Null)");
@@ -423,7 +423,7 @@ public class MetaGameUI : MonoBehaviour
         Debug.Assert(helpTabSubBoss3 != null, "Invalid helpTabSubBoss3 (Null)");
         Debug.Assert(helpTabStatus != null, "Invalid helpTabStatus (Null)");
         Debug.Assert(helpTabSelected != null, "Invalid helpTabSelected (Null)");
-        Debug.Assert(helpRenown != null, "Invalid helpRenown (Null)");
+        Debug.Assert(helpPower != null, "Invalid helpPower (Null)");
         //backgrounds
         Debug.Assert(backgroundMain != null, "Invalid backgroundMain (Null)");
         Debug.Assert(backgroundLeft != null, "Invalid backgroundLeft (Null)");
@@ -616,8 +616,8 @@ public class MetaGameUI : MonoBehaviour
         Debug.Assert(costExtreme > -1, "Invalid costExtreme (-1)");
         numOfChoicesMax = GameManager.i.metaScript.numOfChoices;
         Debug.Assert(numOfChoicesMax > -1, "Invalid numOfChoicesMax (-1)");
-        renownRecommendMin = GameManager.i.metaScript.renownRecommendMin;
-        Debug.Assert(renownRecommendMin > -1, "Invalid renownRecommendMin (-1)");
+        powerRecommendMin = GameManager.i.metaScript.powerRecommendMin;
+        Debug.Assert(powerRecommendMin > -1, "Invalid powerRecommendMin (-1)");
     }
     #endregion
 
@@ -763,11 +763,11 @@ public class MetaGameUI : MonoBehaviour
         if (metaInfoData != null)
         {
             int count;
-            //player renown
-            int playerRenown = GameManager.i.playerScript.Power;
-            renownCurrent = playerRenown;
-            UpdateRenown();
-            Debug.LogFormat("[Met] MetaGameUI.cs -> InitialiseMetaUI: Player has {0} Renown{1}", playerRenown, "\n");
+            //player Power
+            int playerPower = GameManager.i.playerScript.Power;
+            powerCurrent = playerPower;
+            UpdatePower();
+            Debug.LogFormat("[Met] MetaGameUI.cs -> InitialiseMetaUI: Player has {0} Power{1}", playerPower, "\n");
             Color portraitColor, backgroundColor;
             //default metaData for selected tab (when nothing has been selected)
             defaultSelected = metaInfoData.selectedDefault;
@@ -927,11 +927,11 @@ public class MetaGameUI : MonoBehaviour
         if (listOfHelp != null)
         { helpTabSelected.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
         else { Debug.LogWarning("Invalid listOfHelp for helpTabSelected (Null)"); }
-        //Renown
+        //Power
         listOfHelp = GameManager.i.helpScript.GetHelpData("metaGameUI_15", "metaGameUI_16");
         if (listOfHelp != null)
-        { helpRenown.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
-        else { Debug.LogWarning("Invalid listOfHelp for helpRenown (Null)"); }
+        { helpPower.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
+        else { Debug.LogWarning("Invalid listOfHelp for helpPower (Null)"); }
     }
 
     /// <summary>
@@ -974,9 +974,9 @@ public class MetaGameUI : MonoBehaviour
         GameManager.i.tooltipHelpScript.CloseTooltip("MainInfoUI.cs -> CloseMainInfo");
         canvasMeta.gameObject.SetActive(false);
         Debug.LogFormat("[UI] MainInfoUI.cs -> CloseMainInfo{0}", "\n");
-        //update player renown
-        GameManager.i.playerScript.Power = renownCurrent;
-        Debug.LogFormat("[Met] MetaGameUI.cs -> CloseMetaUI: Player carries over {0} Renown{1}", renownCurrent, "\n");
+        //update player Power
+        GameManager.i.playerScript.Power = powerCurrent;
+        Debug.LogFormat("[Met] MetaGameUI.cs -> CloseMetaUI: Player carries over {0} Power{1}", powerCurrent, "\n");
         //set state
         GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.MetaGame, metaState = ModalMetaSubState.EndScreen });
         /*
@@ -1422,22 +1422,22 @@ public class MetaGameUI : MonoBehaviour
                 {
                     //hasn't been selected
                     buttonDeselect.gameObject.SetActive(false);
-                    //enough renown for option
+                    //enough Power for option
                     if (data.isPowerGain == false)
                     {
-                        //costs renown
-                        if (data.powerCost <= renownCurrent)
+                        //costs Power
+                        if (data.powerCost <= powerCurrent)
                         { buttonSelect.gameObject.SetActive(true); }
                         else
                         {
-                            //insufficient renown
+                            //insufficient Power
                             buttonSelect.gameObject.SetActive(false);
                             rightTextTop.text = data.textInsufficient;
                         }
                     }
                     else
                     {
-                        //gain renown
+                        //gain Power
                         buttonSelect.gameObject.SetActive(true);
                     }
                 }
@@ -1458,23 +1458,23 @@ public class MetaGameUI : MonoBehaviour
                     else { Debug.LogWarning("Invalid listOfHelp (Null)"); }
                     if (data.isPowerGain == false)
                     {
-                        //costs renown
-                        if (data.powerCost <= renownCurrent)
+                        //costs Power
+                        if (data.powerCost <= powerCurrent)
                         {
-                            //enough renown
+                            //enough Power
                             buttonHelpCentre.gameObject.SetActive(false);
                             buttonHelpCombined.gameObject.SetActive(true);
                         }
                         else
                         {
-                            //insufficient renown
+                            //insufficient Power
                             buttonHelpCombined.gameObject.SetActive(false);
                             buttonHelpCentre.gameObject.SetActive(true);
                         }
                     }
                     else
                     {
-                        //gains renown
+                        //gains Power
                         buttonHelpCentre.gameObject.SetActive(false);
                         buttonHelpCombined.gameObject.SetActive(true);
                     }
@@ -1763,16 +1763,16 @@ public class MetaGameUI : MonoBehaviour
                 MetaOption metaOption = GameManager.i.dataScript.GetMetaOption(metaData.metaName);
                 if (metaOption != null)
                 {
-                    //adjust renown display
+                    //adjust Power display
                     if (metaData.isPowerGain == false)
                     {
-                        renownCurrent -= metaData.powerCost;
-                        renownCurrent = Mathf.Max(0, renownCurrent);
+                        powerCurrent -= metaData.powerCost;
+                        powerCurrent = Mathf.Max(0, powerCurrent);
                     }
-                    else { renownCurrent += metaData.powerCost; }
+                    else { powerCurrent += metaData.powerCost; }
                     //add to dictOfSelected
                     AddToSelected(metaData);
-                    UpdateRenown();
+                    UpdatePower();
                     //set as selected
                     metaData.isSelected = true;
                     //switch buttons
@@ -1785,8 +1785,8 @@ public class MetaGameUI : MonoBehaviour
                     rightTextTop.text = metaData.textDeselect;
                     //popUp floating text -> test
                     if (metaData.isPowerGain == false)
-                    { SetRenownPopUp(metaData.powerCost * -1); }
-                    else { SetRenownPopUp(metaData.powerCost); }
+                    { SetPowerPopUp(metaData.powerCost * -1); }
+                    else { SetPowerPopUp(metaData.powerCost); }
                 }
                 else { Debug.LogWarningFormat("Invalid metaOption (Null) for metaData.metaName \"{0}\"", metaData.metaName); }
             }
@@ -1825,17 +1825,17 @@ public class MetaGameUI : MonoBehaviour
             MetaOption metaOption = GameManager.i.dataScript.GetMetaOption(metaData.metaName);
             if (metaOption != null)
             {
-                //adjust renown display
+                //adjust Power display
                 if (metaData.isPowerGain == false)
-                { renownCurrent += metaData.powerCost; }
+                { powerCurrent += metaData.powerCost; }
                 else
                 {
-                    renownCurrent -= metaData.powerCost;
-                    renownCurrent = Mathf.Max(0, renownCurrent);
+                    powerCurrent -= metaData.powerCost;
+                    powerCurrent = Mathf.Max(0, powerCurrent);
                 }
                 //remove from dictOfSelected
                 RemoveFromSelected(metaData);
-                UpdateRenown();
+                UpdatePower();
                 //set as deSelected
                 metaData.isSelected = false;
                 //switch buttons
@@ -1846,8 +1846,8 @@ public class MetaGameUI : MonoBehaviour
                 arrayOfTopMetaCheckMark[highlightIndex].gameObject.SetActive(false);
                 //popUp floating text
                 if (metaData.isPowerGain == false)
-                { SetRenownPopUp(metaData.powerCost); }
-                else { SetRenownPopUp(metaData.powerCost * -1); }
+                { SetPowerPopUp(metaData.powerCost); }
+                else { SetPowerPopUp(metaData.powerCost * -1); }
                 //switch top texts
                 rightTextTop.text = metaData.textSelect;
             }
@@ -1875,17 +1875,17 @@ public class MetaGameUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Initiate pop up text over renown display
+    /// Initiate pop up text over Power display
     /// </summary>
     /// <param name="amount"></param>
-    private void SetRenownPopUp(int amount)
+    private void SetPowerPopUp(int amount)
     {
         PopUpDynamicData data = new PopUpDynamicData()
         {
-            position = renownBackground.transform.position,
+            position = powerBackground.transform.position,
             x_offset = -50,
             y_offset = 60,
-            text = string.Format("Renown {0}{1}", amount > 0 ? "+" : "", amount)
+            text = string.Format("Power {0}{1}", amount > 0 ? "+" : "", amount)
         };
         GameManager.i.popUpDynamicScript.ExecuteDynamic(data);
     }
@@ -1941,19 +1941,19 @@ public class MetaGameUI : MonoBehaviour
                 if (data.Value != null)
                 {
                     data.Value.isSelected = false;
-                    //update renown
+                    //update Power
                     if (data.Value.isPowerGain == false)
-                    { renownCurrent += data.Value.powerCost; }
+                    { powerCurrent += data.Value.powerCost; }
                     else
                     {
-                        renownCurrent -= data.Value.powerCost;
-                        renownCurrent = Mathf.Max(0, renownCurrent);
+                        powerCurrent -= data.Value.powerCost;
+                        powerCurrent = Mathf.Max(0, powerCurrent);
                     }
                     Debug.LogFormat("[Met] MetaGameUI.cs -> ExecuteReset: metaData \"{0}\" Deselected (Reset button pressed){1}", data.Key, "\n");
                 }
                 else { Debug.LogWarningFormat("Invalid metaData (Null) for \"{0}\" in dictOfSelected", data.Key); }
             }
-            UpdateRenown();
+            UpdatePower();
             //empty dict
             dictOfSelected.Clear();
 
@@ -1980,7 +1980,7 @@ public class MetaGameUI : MonoBehaviour
                     {
                         if (data.isPowerGain == false)
                         {
-                            if (renownCurrent >= data.powerCost)
+                            if (powerCurrent >= data.powerCost)
                             {
                                 //unaffordable option
                                 rightTextTop.text = data.textInsufficient;
@@ -2008,8 +2008,8 @@ public class MetaGameUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Recommeneded button pressed. All options reset and new ones auto selected based on listOfRecommendations (highest priority on down until run out of renown).
-    /// Generates an outcome windown no matter what (no recommendations / insufficient renown / 'x' recommendations made
+    /// Recommeneded button pressed. All options reset and new ones auto selected based on listOfRecommendations (highest priority on down until run out of Power).
+    /// Generates an outcome windown no matter what (no recommendations / insufficient Power / 'x' recommendations made
     /// Sets MetaGameUI display to top 'Selected' tab on complettion
     /// </summary>
     void ExecuteRecommended()
@@ -2018,18 +2018,18 @@ public class MetaGameUI : MonoBehaviour
         int count = listOfRecommended.Count;
         int numSelected = 0;
         int totalCost = 0;
-        //availableRenown could include bonus renown from taking negative options
-        int availableRenown = Mathf.Max(GameManager.i.playerScript.Power, renownCurrent);
+        //availablePower could include bonus Power from taking negative options
+        int availablePower = Mathf.Max(GameManager.i.playerScript.Power, powerCurrent);
         ModalOutcomeDetails details = null;
         //must be items on recommended list
         if (count > 0)
         {
-            //player must have a minimum amount of renown
-            if (availableRenown >= renownRecommendMin)
+            //player must have a minimum amount of Power
+            if (availablePower >= powerRecommendMin)
             {
                 //start with a clean slate
                 ExecuteReset(false);
-                //loop through list selecting until available renown expended
+                //loop through list selecting until available Power expended
                 for (int i = 0; i < count; i++)
                 {
                     MetaData metaData = listOfRecommended[i];
@@ -2040,17 +2040,17 @@ public class MetaGameUI : MonoBehaviour
                         {
                             cost = metaData.powerCost;
                             //check affordability
-                            if (renownCurrent >= cost)
+                            if (powerCurrent >= cost)
                             {
                                 //Select item
                                 metaData.isSelected = true;
-                                renownCurrent -= cost;
+                                powerCurrent -= cost;
                                 totalCost += cost;
                                 numSelected++;
                                 AddToSelected(metaData);
                             }
-                            //run out of available renown -> exit
-                            if (renownCurrent < renownRecommendMin)
+                            //run out of available Power -> exit
+                            if (powerCurrent < powerRecommendMin)
                             { break; }
                             if (numSelected >= numOfChoicesMax)
                             { break; }
@@ -2058,7 +2058,7 @@ public class MetaGameUI : MonoBehaviour
                     }
                     else { Debug.LogWarningFormat("Invalid metaData (Null) for listOfRecommended[{0}]", i); }
                 }
-                UpdateRenown();
+                UpdatePower();
                 //show selected tab
                 OpenTopTab((int)MetaTabTop.Selected);
                 //Outcome message depends on whether any recommendations have been made
@@ -2069,7 +2069,7 @@ public class MetaGameUI : MonoBehaviour
                     {
                         side = GameManager.i.sideScript.PlayerSide,
                         textTop = string.Format("{0}RECOMMENDED{1}", colourAlert, colourEnd),
-                        textBottom = string.Format("{0}{1}{2} recommended option{3} have been automatically selected for a cost of {4}{5}{6} Renown<br><br>There is a {7}{8}{9} option {10}limit{11}",
+                        textBottom = string.Format("{0}{1}{2} recommended option{3} have been automatically selected for a cost of {4}{5}{6} Power<br><br>There is a {7}{8}{9} option {10}limit{11}",
                         colourNeutral, numSelected, colourEnd, numSelected != 1 ? "s" : "", colourNeutral, totalCost, colourEnd, colourNeutral, numOfChoicesMax, colourEnd, colourNeutral, colourEnd),
                         sprite = GameManager.i.guiScript.alertInformationSprite,
                         modalLevel = 2,
@@ -2084,7 +2084,7 @@ public class MetaGameUI : MonoBehaviour
                     {
                         side = GameManager.i.sideScript.PlayerSide,
                         textTop = string.Format("{0}RECOMMENDED{1}", colourAlert, colourEnd),
-                        textBottom = string.Format("No recommendations have been selected as you had {0}insufficient renown{1} to pay for them", colourCancel, colourEnd),
+                        textBottom = string.Format("No recommendations have been selected as you had {0}insufficient Power{1} to pay for them", colourCancel, colourEnd),
                         sprite = GameManager.i.guiScript.alertInformationSprite,
                         modalLevel = 2,
                         modalState = ModalSubState.MetaGame,
@@ -2094,12 +2094,12 @@ public class MetaGameUI : MonoBehaviour
             }
             else
             {
-                //Insufficient renown
+                //Insufficient Power
                 details = new ModalOutcomeDetails()
                 {
                     side = GameManager.i.sideScript.PlayerSide,
                     textTop = string.Format("{0}RECOMMENDED{1}", colourAlert, colourEnd),
-                    textBottom = string.Format("No recommendations have been selected as you had {0}insufficient renown{1} to pay for them", colourCancel, colourEnd),
+                    textBottom = string.Format("No recommendations have been selected as you had {0}insufficient Power{1} to pay for them", colourCancel, colourEnd),
                     sprite = GameManager.i.guiScript.alertInformationSprite,
                     modalLevel = 2,
                     modalState = ModalSubState.MetaGame,
@@ -2140,7 +2140,7 @@ public class MetaGameUI : MonoBehaviour
             EffectDataReturn effectReturn = new EffectDataReturn();
             EffectDataInput effectInput = new EffectDataInput();
             StringBuilder builder = new StringBuilder();
-            //stop renown coroutine
+            //stop Power coroutine
             GameManager.i.popUpDynamicScript.StopMyCoroutine();
             //
             // - - - Process Effects
@@ -2193,8 +2193,8 @@ public class MetaGameUI : MonoBehaviour
             //check options have been selected
             if (builder.Length > 0)
             {
-                //add renown note
-                builder.AppendFormat("{0}{1}{2}{3}{4} Renown will carry over", "\n", "\n", colourNeutral, renownCurrent, colourEnd);
+                //add Power note
+                builder.AppendFormat("{0}{1}{2}{3}{4} Power will carry over", "\n", "\n", colourNeutral, powerCurrent, colourEnd);
                 //confirmation outcome popup
                 ModalOutcomeDetails details = new ModalOutcomeDetails()
                 {
@@ -2216,7 +2216,7 @@ public class MetaGameUI : MonoBehaviour
             //nothing selected -> Confirm continue?
             ModalConfirmDetails details = new ModalConfirmDetails()
             {
-                topText = string.Format("You haven't selected any options<br>{0}<b>{1}</b>{2} Renown will carry over", colourNeutral, renownCurrent, colourEnd),
+                topText = string.Format("You haven't selected any options<br>{0}<b>{1}</b>{2} Power will carry over", colourNeutral, powerCurrent, colourEnd),
                 buttonFalse = "BACK",
                 buttonTrue = "CONTINUE",
                 modalLevel = 2,
@@ -2303,11 +2303,11 @@ public class MetaGameUI : MonoBehaviour
     }
 
     /// <summary>
-    /// subMethod to update renown display with renownCurrent (use this for readability and enhanced code maintenance)
+    /// subMethod to update Power display with powerCurrent (use this for readability and enhanced code maintenance)
     /// </summary>
-    /// <param name="newRenown"></param>
-    private void UpdateRenown()
-    { renownAmount.text = renownCurrent.ToString(); }
+    /// <param name="newPower"></param>
+    private void UpdatePower()
+    { powerAmount.text = powerCurrent.ToString(); }
 
     /// <summary>
     /// subMethod to add a new entry to dictOfSelected
@@ -2320,9 +2320,9 @@ public class MetaGameUI : MonoBehaviour
             dictOfSelected.Add(metaData.metaName, metaData);
             numOfChoicesCurrent++;
             if (metaData.isPowerGain == false)
-            { Debug.LogFormat("[Met] MetaGameUI.cs -> AddToSelected: metaOption \"{0}\" Selected at a cost of {1} Renown ({2} remaining){3}", metaData.metaName, metaData.powerCost, renownCurrent, "\n"); }
+            { Debug.LogFormat("[Met] MetaGameUI.cs -> AddToSelected: metaOption \"{0}\" Selected at a cost of {1} Power ({2} remaining){3}", metaData.metaName, metaData.powerCost, powerCurrent, "\n"); }
             else
-            { Debug.LogFormat("[Met] MetaGameUI.cs -> AddToSelected: metaOption \"{0}\" Selected for a gain of {1} Renown ({2} remaining){3}", metaData.metaName, metaData.powerCost, renownCurrent, "\n"); }
+            { Debug.LogFormat("[Met] MetaGameUI.cs -> AddToSelected: metaOption \"{0}\" Selected for a gain of {1} Power ({2} remaining){3}", metaData.metaName, metaData.powerCost, powerCurrent, "\n"); }
         }
         catch (ArgumentNullException)
         { Debug.LogError("Invalid metaData (Null)"); }
@@ -2341,9 +2341,9 @@ public class MetaGameUI : MonoBehaviour
             dictOfSelected.Remove(metaData.metaName);
             numOfChoicesCurrent--;
             if (metaData.isPowerGain == false)
-            { Debug.LogFormat("[Met] MetaGameUI.cs -> RemoveFromSelected: metaOption \"{0}\" Deselected for +{1} Renown (now {2}){3}", metaData.metaName, metaData.powerCost, renownCurrent, "\n"); }
+            { Debug.LogFormat("[Met] MetaGameUI.cs -> RemoveFromSelected: metaOption \"{0}\" Deselected for +{1} Power (now {2}){3}", metaData.metaName, metaData.powerCost, powerCurrent, "\n"); }
             else
-            { Debug.LogFormat("[Met] MetaGameUI.cs -> RemoveFromSelected: metaOption \"{0}\" Deselected for -{1} Renown (now {2}){3}", metaData.metaName, metaData.powerCost, renownCurrent, "\n"); }
+            { Debug.LogFormat("[Met] MetaGameUI.cs -> RemoveFromSelected: metaOption \"{0}\" Deselected for -{1} Power (now {2}){3}", metaData.metaName, metaData.powerCost, powerCurrent, "\n"); }
         }
         else { Debug.LogWarningFormat("metaData \"{0}\" not found in dictOfSelected (Not removed)", metaData.metaName); }
     }
@@ -2370,7 +2370,7 @@ public class MetaGameUI : MonoBehaviour
                     {
                         if (data.Value != null)
                         {
-                            builder.AppendFormat(" {0}, Renown {1}{2}, dataN {3}, dataT {4}{5}", data.Key, data.Value.isPowerGain ? "+" : "-", data.Value.powerCost,
+                            builder.AppendFormat(" {0}, Power {1}{2}, dataN {3}, dataT {4}{5}", data.Key, data.Value.isPowerGain ? "+" : "-", data.Value.powerCost,
                                 string.IsNullOrEmpty(data.Key) ? "n.a" : data.Value.dataName, string.IsNullOrEmpty(data.Value.dataTag) ? "n.a" : data.Value.dataTag, "\n");
                         }
                         else { Debug.LogWarningFormat("Invalid metaData in dictOfSelected[{0}]", data.Key); }

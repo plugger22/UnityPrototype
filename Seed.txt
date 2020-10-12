@@ -1739,3 +1739,14 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 18885 -> Monday, 12 October 2020 2:40 PM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 2257 -> Monday, 12 October 2020 4:52 PM
+City seed 5678 -> London, United Kingdom
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+AIDisplayUI.SetAllStatus (System.Boolean status) (at Assets/Scripts/GUI/AIDisplay/AIDisplayUI.cs:256)
+	AIDisplayUI.SubInitialiseResistance () (at Assets/Scripts/GUI/AIDisplay/AIDisplayUI.cs:164)
+	AIDisplayUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/AIDisplay/AIDisplayUI.cs:102)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:838)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:892)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:396)
+	

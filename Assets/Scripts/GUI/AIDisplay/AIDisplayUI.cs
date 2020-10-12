@@ -17,7 +17,7 @@ public class AIDisplayUI : MonoBehaviour
     public Image subTopPanel;
     public Image subMiddlePanel;
     public Image subBottomPanel;
-    public Image renownPanel;
+    public Image powerPanel;
     public Image textPanel;
     public Image buttonPanel;
     public Button cancelButton;
@@ -48,7 +48,7 @@ public class AIDisplayUI : MonoBehaviour
 
     private int rebootTimer;                                //data passed in from AIManager.cs. Tab will only open if timer is 0
     private GlobalSide aiSide;                             //side the AI controls (opposite to player)
-    private bool isFree;                                    //true once renown cost paid. Reset to false each turn.
+    private bool isFree;                                    //true once Power cost paid. Reset to false each turn.
     private string tabBottomTextCache;                      //needed for hacking detected text swap
     private string hackingDetected;
     private Coroutine myCoroutine;                          //used for flashing red alert if hacking attempt detected
@@ -253,7 +253,7 @@ public class AIDisplayUI : MonoBehaviour
         tabSideMouse.gameObject.SetActive(status);
         tabTopMouse.gameObject.SetActive(status);
         tabBottomMouse.gameObject.SetActive(status);
-        renownPanel.gameObject.SetActive(status);
+        powerPanel.gameObject.SetActive(status);
         decisionText.gameObject.SetActive(status);
         gearText.gameObject.SetActive(status);
         cancelButton.gameObject.SetActive(status);
@@ -304,7 +304,7 @@ public class AIDisplayUI : MonoBehaviour
     {
         if (data != null)
         {
-            //timer & renown details
+            //timer & Power details
             rebootTimer = data.rebootTimer;
             decisionText.text = data.powerDecision;
             //reset isFree at beginning of each turn
@@ -422,10 +422,10 @@ public class AIDisplayUI : MonoBehaviour
     {
         //close side tab
         EventManager.i.PostNotification(EventType.AISideTabClose, this, null, "AIDisplayUI.cs -> SetAIDisplay");
-        //renown panel on/off
+        //Power panel on/off
         if (isFree == true)
         {
-            renownPanel.gameObject.SetActive(false);
+            powerPanel.gameObject.SetActive(false);
             tabBottomText.text = tabBottomTextCache;
             SetDetectedFlasher(false);
         }
@@ -436,7 +436,7 @@ public class AIDisplayUI : MonoBehaviour
             //gear text
             gearText.text = GameManager.i.aiScript.UpdateGearText();
             //open UI
-            renownPanel.gameObject.SetActive(true);
+            powerPanel.gameObject.SetActive(true);
         }
         //switch on display
         aiDisplayObject.SetActive(true);
@@ -452,11 +452,11 @@ public class AIDisplayUI : MonoBehaviour
     }
 
     /// <summary>
-    /// 'Proceed' clicked on renown panel. Panel 'opened' to reveal AI data underneath
+    /// 'Proceed' clicked on Power panel. Panel 'opened' to reveal AI data underneath
     /// </summary>
     public void OpenAIDisplayPanel()
     {
-        renownPanel.gameObject.SetActive(false);
+        powerPanel.gameObject.SetActive(false);
         isFree = true;
 
         /*//deduct cost [Edit] built into UpdateHackingStatus, made more sense [/edit]

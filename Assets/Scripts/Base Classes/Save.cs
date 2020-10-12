@@ -97,7 +97,7 @@ public class SaveOptionData
     public bool billboard;
     public bool noAI;
     public bool showContacts;
-    public bool showRenown;
+    public bool showPower;
     public bool connectorTooltips;
     public bool fullMoodInfo;
     public ColourScheme colourScheme;
@@ -231,7 +231,7 @@ public class SaveDataData
 [System.Serializable]
 public class SavePlayerData
 {
-    public int renown;
+    public int power;
     public int Invisibility;
     public int Innocence;
     public int mood;
@@ -284,12 +284,12 @@ public class SaveMetaGameData
     public List<EndLevelData> listOfEndLevelData = new List<EndLevelData>();
     //HQ status
     public List<string> listOfHqSprites = new List<string>();
-    public List<string> listOfHqRenown = new List<string>();
+    public List<string> listOfHqPower = new List<string>();
     public List<string> listOfHqTitles = new List<string>();
     public List<string> listOfHqEvents = new List<string>();
     public List<TooltipData> listOfHqTooltips = new List<TooltipData>();
     public List<string> listOfWorkerSprites = new List<string>();
-    public List<string> listOfWorkerRenown = new List<string>();
+    public List<string> listOfWorkerPower = new List<string>();
     public List<string> listOfWorkerArcs = new List<string>();
     public List<TooltipData> listOfWorkerTooltips = new List<TooltipData>();
 
@@ -673,7 +673,7 @@ public class SaveGear
     public int statTimesGiven;
     public int statTimesCompromised;
     public int statTimesSaved;
-    public int statRenownSpent;
+    public int statPowerSpent;
 }
 #endregion
 
@@ -736,7 +736,7 @@ public class SaveActor
     //public Trait trait;
     public string traitName;
     //data that can be ignored if actor is in Recruit Pool
-    public int Renown;
+    public int Power;
     public int unhappyTimer;
     public int blackmailTimer;
     public int captureTimer;
@@ -775,7 +775,7 @@ public class SaveActor
     public List<string> listOfTraitEffects = new List<string>();
     public List<NodeActionData> listOfNodeActions = new List<NodeActionData>();
     public List<TeamActionData> listOfTeamActions = new List<TeamActionData>();
-    public List<HqPowerData> listOfHqRenownData = new List<HqPowerData>();
+    public List<HqPowerData> listOfHqPowerData = new List<HqPowerData>();
     public List<HistoryActor> listOfHistory = new List<HistoryActor>();
 
     /*public List<int> listOfTraitEffects = new List<int>();*/   //trait effects generated dynamically when loading trait
@@ -985,7 +985,7 @@ public class SaveMetaData
     public MetaPriority priority;
     public MetaTabSide tabSide;
     public MetaTabTop tabTop;
-    public int renownCost;
+    public int powerCost;
     public int sideLevel;
     public bool isActive;
     public bool isRecommended;

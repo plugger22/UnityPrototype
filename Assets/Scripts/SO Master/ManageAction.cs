@@ -23,7 +23,7 @@ public class ManageAction : ScriptableObject
     public List<Criteria> listOfCriteria;
     [Tooltip("Effects that occur when this Manage Action is selected")]
     public List<Effect> listOfEffects;
-    [Tooltip("If the action requires a renown cost to use then True, otherwise default false. Cost is added to the tooltip dynamically")]
+    [Tooltip("If the action requires a Power cost to use then True, otherwise default false. Cost is added to the tooltip dynamically")]
     public bool isPowerCost;
 
 }

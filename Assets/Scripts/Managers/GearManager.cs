@@ -25,7 +25,7 @@ public class GearManager : MonoBehaviour
     [Range(0, 3)] public int gearSwapBaseAmount = 1;
     [Tooltip("Motivation boost/cost to give/take PREFERRED gear from an actor")]
     [Range(0, 3)] public int gearSwapPreferredAmount = 1;
-    [Tooltip("Base cost to save compromised gear (in Renown)")]
+    [Tooltip("Base cost to save compromised gear (in Power)")]
     [Range(0, 3)] public int gearSaveBaseCost = 0;
 
     [Header("Actor Gear")]
@@ -62,7 +62,7 @@ public class GearManager : MonoBehaviour
 
     #region Save Data Compatible
     //compromised gear
-    private int gearSaveCurrentCost;                                          //how much renown to save a compromised item of gear (increments +1 each time option used)
+    private int gearSaveCurrentCost;                                          //how much Power to save a compromised item of gear (increments +1 each time option used)
     private List<string> listOfCompromisedGear;                               //list cleared each turn that contains names of compromised gear (used for outcome dialogues)
     #endregion
 
@@ -357,7 +357,7 @@ public class GearManager : MonoBehaviour
 
 
     /// <summary>
-    /// run at turn end to check all gear (Player and actor, eg. target use) that has been used to see if it's compromised. Generates Generic Picker for player choice (use renown to keep gear) if so
+    /// run at turn end to check all gear (Player and actor, eg. target use) that has been used to see if it's compromised. Generates Generic Picker for player choice (use Power to keep gear) if so
     /// </summary>
     public void CheckForCompromisedGear()
     {
@@ -423,23 +423,23 @@ public class GearManager : MonoBehaviour
                 //any Player compromised gear? (Actor gear is automatically lost if compromised, handled by ActorManager.cs -> CheckActive/InactiveResistanceActorsHuman)
                 if (isCompromisedGear == true)
                 {
-                    //check Player has enough renown to save gear
-                    int playerRenown = GameManager.i.playerScript.Power;
-                    if (playerRenown >= gearSaveCurrentCost)
+                    //check Player has enough Power to save gear
+                    int playerPower = GameManager.i.playerScript.Power;
+                    if (playerPower >= gearSaveCurrentCost)
                     {
                         //initialise generic picker
                         InitialiseCompromisedGearPicker();
                     }
                     else
                     {
-                        //not enough renown -> remove gear and reset stats
+                        //not enough Power -> remove gear and reset stats
                         /*ProcessCompromisedGear(null);*/
                         GameManager.i.playerScript.UpdateGear();
                         //outcome dialogue
                         ModalOutcomeDetails details = new ModalOutcomeDetails();
                         StringBuilder builderTop = new StringBuilder();
                         builderTop.AppendFormat("{0}Gear used this turn has been {1}{2}COMPROMISED{3}{4}", colourNormal, colourEnd, colourBad, colourEnd, "\n");
-                        builderTop.AppendFormat("{0}You have {1}{2}{3}Insufficient Renown{4}{5}", colourNormal, colourEnd, "\n", colourBad, colourEnd, "\n");
+                        builderTop.AppendFormat("{0}You have {1}{2}{3}Insufficient Power{4}{5}", colourNormal, colourEnd, "\n", colourBad, colourEnd, "\n");
                         builderTop.AppendFormat("<size=85%>({0}{1}{2} needed)</size>{3}", colourNeutral, gearSaveCurrentCost, colourEnd, "\n");
                         builderTop.AppendFormat("{0}to {1}{2}Save{3}{4} any gear{5}", colourNormal, colourEnd, colourGood, colourEnd, colourNormal, colourEnd);
                         details.textTop = builderTop.ToString();
@@ -562,7 +562,7 @@ public class GearManager : MonoBehaviour
         genericDetails.textTop = string.Format("Select {0}ONE{1} Item of Gear to {2}SAVE{3} <size=70%>(optional)</size>", colourNeutral, colourEnd, colourGood, colourEnd);
         genericDetails.textMiddle = string.Format("{0}Any Gear NOT Saved will be Lost{1}", colourAlert, colourEnd);
         genericDetails.textBottom = "Click on an item to Select. Press CONFIRM to SAVE gear. Mouseover gear for more information.";
-        //renown cost to save gear
+        //Power cost to save gear
         genericDetails.data = gearSaveCurrentCost;
         //get all compromised gear
         List<string> listOfGear = GameManager.i.playerScript.GetListOfGear();
@@ -1081,17 +1081,17 @@ public class GearManager : MonoBehaviour
     {
         if (data != null)
         {
-            //deduct renown
+            //deduct Power
             if (string.IsNullOrEmpty(data.optionName) == false)
             {
-                int renown = GameManager.i.playerScript.Power;
-                renown -= gearSaveCurrentCost;
-                if (renown < 0)
+                int power = GameManager.i.playerScript.Power;
+                power -= gearSaveCurrentCost;
+                if (power < 0)
                 {
-                    Debug.LogWarning("Renown invalid (< 0)");
-                    renown = 0;
+                    Debug.LogWarning("Power invalid (< 0)");
+                    power = 0;
                 }
-                GameManager.i.playerScript.Power = renown;
+                GameManager.i.playerScript.Power = power;
                 //retain saved gear, remove any unsaved gear
                 GameManager.i.playerScript.UpdateGear(gearSaveCurrentCost, data.optionName);
                 //stats
@@ -1099,14 +1099,14 @@ public class GearManager : MonoBehaviour
                 if (gear != null)
                 {
                     gear.statTimesSaved++;
-                    gear.statRenownSpent += gearSaveCurrentCost;
+                    gear.statPowerSpent += gearSaveCurrentCost;
                 }
                 else { Debug.LogWarningFormat("Invalid gear (Null) for gear {0}", data.optionName); }
                 //outcome -> one item saved, any other compromised gear lost
                 ModalOutcomeDetails details = new ModalOutcomeDetails();
                 StringBuilder builderTop = new StringBuilder();
                 builderTop.AppendFormat("{0}Gear used this turn has been{1}{2}{3}COMPROMISED{4}{5}", colourNormal, colourEnd, "\n", colourBad, colourEnd, "\n");
-                builderTop.AppendFormat("{0}You used {1}{2}{3}{4}{5} Renown to Save gear{6}", colourNormal, colourEnd, colourNeutral, gearSaveCurrentCost, colourEnd,
+                builderTop.AppendFormat("{0}You used {1}{2}{3}{4}{5} Power to Save gear{6}", colourNormal, colourEnd, colourNeutral, gearSaveCurrentCost, colourEnd,
                     colourNormal, colourEnd);
                 details.textTop = builderTop.ToString();
                 StringBuilder builderBottom = new StringBuilder();
@@ -1376,21 +1376,21 @@ public class GearManager : MonoBehaviour
     }
 
     /*/// <summary>
-    /// subMethod to handle admin for Player renown expenditure
+    /// subMethod to handle admin for Player Power expenditure
     /// </summary>
     /// <param name="amount"></param>
     /// <returns></returns>
-    public string RenownUsed(Gear gear, Node node, int amount)
+    public string PowerUsed(Gear gear, Node node, int amount)
     {
-        //update player renown
-        int renown = GameManager.instance.playerScript.Renown;
-        renown -= amount;
-        GameManager.instance.playerScript.Renown = renown;
+        //update player power
+        int power = GameManager.instance.playerScript.Power;
+        power -= amount;
+        GameManager.instance.playerScript.Power = power;
         //message
-        string textMsg = string.Format("{0}, ID {1} has been compromised. Saved by using {2} Renown.", gear.tag, gear.gearID, amount);
-        GameManager.instance.messageScript.RenownUsedPlayer(textMsg, string.Format("save {0} gear", gear.tag), amount, gear.gearID, node.nodeID);
+        string textMsg = string.Format("{0}, ID {1} has been compromised. Saved by using {2} Power.", gear.tag, gear.gearID, amount);
+        GameManager.instance.messageScript.PowerUsedPlayer(textMsg, string.Format("save {0} gear", gear.tag), amount, gear.gearID, node.nodeID);
         //return text string for builder
-        return string.Format("{0}{1}{2}Gear saved, Renown -{3}{4}", "\n", "\n", colourBad, amount, colourEnd);
+        return string.Format("{0}{1}{2}Gear saved, Power -{3}{4}", "\n", "\n", colourBad, amount, colourEnd);
     }*/
 
     /// <summary>
@@ -1520,7 +1520,7 @@ public class GearManager : MonoBehaviour
             builderMain.AppendFormat("{0}<size=110%> {1} %</size>{2}   <size=90%>({3}{4}{5} time{6})</size>{7}", "<mark=#FFFFFF4D>", gear.chanceOfCompromise, "</mark>",
                 colourNeutral, gear.timesUsed, colourEnd, gear.timesUsed != 1 ? "s" : "", "\n");
             builderMain.AppendFormat("{0}{1}{2}{3}", colourNormal, gear.reasonUsed, colourEnd, "\n");
-            builderMain.AppendFormat("{0}LEFT CLICK to SAVE{1}{2}Cost {3}{4}{5} Renown", colourAlert, colourEnd, "\n", colourNeutral, gearSaveCurrentCost, colourEnd);
+            builderMain.AppendFormat("{0}LEFT CLICK to SAVE{1}{2}Cost {3}{4}{5} Power", colourAlert, colourEnd, "\n", colourNeutral, gearSaveCurrentCost, colourEnd);
             //details
             builderDetails.AppendFormat("{0}{1}{2}", colourGood, gear.rarity.name, colourEnd);
             builderDetails.AppendLine();

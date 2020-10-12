@@ -1979,10 +1979,10 @@ public class DebugGUI : MonoBehaviour
                         GUI.Box(new Rect(Screen.width / 2 - 175, 100, 350, 40), textOutput, customBackground);
                         status = GUIStatus.None;
                         break;
-                    //HQ actors renown history
+                    //HQ actors Power history
                     case 99:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.i.hqScript.DebugDisplayHqActorRenown();
+                        analysis = GameManager.i.hqScript.DebugDisplayHqActorPower();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 500), analysis, customBackground);
                         break;
                     //OnMap Actors History

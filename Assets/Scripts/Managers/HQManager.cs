@@ -13,23 +13,23 @@ public class HQManager : MonoBehaviour
     [Header("HQ Data")]
     [Tooltip("Approval for both sides HQ range from 0 to this amount")]
     [Range(0, 10)] public int maxHqApproval = 10;
-    [Tooltip("How much Renown will the HQ give per turn if they decide to support the Player")]
-    [Range(1, 3)] public int renownPerTurn = 1;
+    [Tooltip("How much Power will the HQ give per turn if they decide to support the Player")]
+    [Range(1, 3)] public int powerPerTurn = 1;
     [Tooltip("How many actors in the HQ line up. Needs to correspond with enum.ActorHQ. Determines size of DataManager.cs -> arrayOfActorsHQ")]
     [Range(1, 6)] public int numOfActorsHQ = 4;
     [Tooltip("Size cap on HQ worker pool")]
     [Range(0, 10)] public int maxNumOfWorkers = 8;
-    [Tooltip("Multiplier for HQ hierarchy Actors renown (Boss gets highest renown, subBoss's progressively less) forumla renown = (numOfActorsHQ + 2 - enum.StatusHQ) * renownFactor")]
-    [Range(1, 20)] public int renownFactor = 10;
+    [Tooltip("Multiplier for HQ hierarchy Actors Power (Boss gets highest Power, subBoss's progressively less) forumla Power = (numOfActorsHQ + 2 - enum.StatusHQ) * powerFactor")]
+    [Range(1, 20)] public int powerFactor = 10;
 
     [Header("HQ Assessments (End Level page)")]
-    [Tooltip("Weighting for HQ Boss (renown granted per Overall star)")]
+    [Tooltip("Weighting for HQ Boss (Power granted per Overall star)")]
     [Range(1, 5)] public int factorBoss = 4;
-    [Tooltip("Weighting for HQ SubBoss1 (renown granted per Overall star)")]
+    [Tooltip("Weighting for HQ SubBoss1 (Power granted per Overall star)")]
     [Range(1, 5)] public int factorSubBoss1 = 3;
-    [Tooltip("Weighting for HQ SubBoss2 (renown granted per Overall star)")]
+    [Tooltip("Weighting for HQ SubBoss2 (Power granted per Overall star)")]
     [Range(1, 5)] public int factorSubBoss2 = 2;
-    [Tooltip("Weighting for HQ SubBoss3 (renown granted per Overall star)")]
+    [Tooltip("Weighting for HQ SubBoss3 (Power granted per Overall star)")]
     [Range(1, 5)] public int factorSubBoss3 = 1;
     [Tooltip("Weighting for first criteria (number of stars * weighting")]
     [Range(1, 5)] public int factorFirst = 3;
@@ -39,15 +39,15 @@ public class HQManager : MonoBehaviour
     [Range(1, 5)] public int factorThird = 1;
 
     [Header("MetaGame")]
-    [Tooltip("Chance of an HQ actor suffering a random event that effects their renown")]
+    [Tooltip("Chance of an HQ actor suffering a random event that effects their Power")]
     [Range(0, 100)] public int chanceOfRandomEvent = 25;
     [Tooltip("Chance of an HQ actor Major random event (eg. leave), if failed then a random event")]
     [Range(0, 100)] public int chanceOfMajorEvent = 25;
     [Tooltip("Max number of random events that can affect HQ actors - no more checks made after cap reached")]
     [Range(0, 10)] public int maxNumOfEvents = 4;
-    [Tooltip("Base amount of renown gained or lost due to a Minor event")]
-    [Range(0, 10)] public int baseRenownChange = 6;
-    [Tooltip("HQ hierarchy multiplier to baseRenownChange")]
+    [Tooltip("Base amount of Power gained or lost due to a Minor event")]
+    [Range(0, 10)] public int basePowerChange = 6;
+    [Tooltip("HQ hierarchy multiplier to basePowerChange")]
     [Range(0, 3)] public int hierarchyFactor = 2;
 
     [Header("Actor Influence")]
@@ -65,13 +65,13 @@ public class HQManager : MonoBehaviour
     [Header("Text Lists")]
     [Tooltip("Major event reasons for an HQ actor to Leave")]
     public TextList hQMajorEvent;
-    [Tooltip("Minor event (good) reasons for an HQ Hierarchy actor to gain renown")]
+    [Tooltip("Minor event (good) reasons for an HQ Hierarchy actor to gain Power")]
     public TextList hQMinorEventHierarchyGood;
-    [Tooltip("Minor event (bad) reasons for an HQ Hierarchy actor to lose renown")]
+    [Tooltip("Minor event (bad) reasons for an HQ Hierarchy actor to lose Power")]
     public TextList hQMinorEventHierarchyBad;
-    [Tooltip("Minor event (good) reasons for an HQ Worker to gain renown")]
+    [Tooltip("Minor event (good) reasons for an HQ Worker to gain Power")]
     public TextList hQMinorEventWorkerGood;
-    [Tooltip("Minor event (bad) reasons for an HQ Worker to lose renown")]
+    [Tooltip("Minor event (bad) reasons for an HQ Worker to lose Power")]
     public TextList hQMinorEventWorkerBad;
 
     [Header("HQ Positions -> Authority")]
@@ -292,7 +292,7 @@ public class HQManager : MonoBehaviour
                 SetColours();
                 break;
             case EventType.StartTurnEarly:
-                CheckHQRenownSupport();
+                CheckHQPowerSupport();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -363,9 +363,9 @@ public class HQManager : MonoBehaviour
     }
 
     /// <summary>
-    /// checks if player given support (+1 renown) from their HQ based on a random roll vs. level of HQ approval. No support if player inactive.
+    /// checks if player given support (+1 Power) from their HQ based on a random roll vs. level of HQ approval. No support if player inactive.
     /// </summary>
-    private void CheckHQRenownSupport()
+    private void CheckHQPowerSupport()
     {
         bool isProceed = true;
         //ignore if autorun with both sides AI
@@ -375,7 +375,7 @@ public class HQManager : MonoBehaviour
         if (GameManager.i.playerScript.status == ActorStatus.Inactive)
         {
             isProceed = false;
-            Debug.LogFormat("[HQ] HqManager.cs -> CheckHQRenownSupport: NO support as Player is Inactive ({0}){1}", GameManager.i.playerScript.inactiveStatus, "\n");
+            Debug.LogFormat("[HQ] HqManager.cs -> CheckHQPowerSupport: NO support as Player is Inactive ({0}){1}", GameManager.i.playerScript.inactiveStatus, "\n");
         }
         //HQ relocating
         if (isHqRelocating == true)
@@ -384,7 +384,7 @@ public class HQManager : MonoBehaviour
             Hq hqFaction = GetCurrentHQ();
             if (hqFaction != null)
             {
-                Debug.LogFormat("[HQ] HqManager.cs -> CheckHQRenownSupport: NO support as HQ Relocating{0}", "\n");
+                Debug.LogFormat("[HQ] HqManager.cs -> CheckHQPowerSupport: NO support as HQ Relocating{0}", "\n");
                 string text = string.Format("HQ support unavailable as HQ is currently Relocating{0}", "\n");
                 string reason = GameManager.Formatt(string.Format("<b>{0} is currently Relocating</b>", hqFaction.tag), ColourType.salmonText);
                 GameManager.i.messageScript.HqSupportUnavailable(text, reason, hqFaction);
@@ -406,18 +406,18 @@ public class HQManager : MonoBehaviour
                         if (rnd < threshold)
                         {
                             //Support Provided
-                            Debug.LogFormat("[Rnd] HqManager.cs -> CheckHQRenownSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
-                            string msgText = string.Format("{0} provides SUPPORT (+1 Renown)", hQAuthority.tag);
-                            GameManager.i.messageScript.HqSupport(msgText, hQAuthority, _approvalAuthority, GameManager.i.playerScript.Power, renownPerTurn);
+                            Debug.LogFormat("[Rnd] HqManager.cs -> CheckHQPowerSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
+                            string msgText = string.Format("{0} provides SUPPORT (+1 Power)", hQAuthority.tag);
+                            GameManager.i.messageScript.HqSupport(msgText, hQAuthority, _approvalAuthority, GameManager.i.playerScript.Power, powerPerTurn);
                             //random
                             GameManager.i.messageScript.GeneralRandom("HQ support GIVEN", "HQ Support", threshold, rnd);
                             //Support given
-                            GameManager.i.playerScript.Power += renownPerTurn;
+                            GameManager.i.playerScript.Power += powerPerTurn;
                         }
                         else
                         {
                             //Support declined
-                            Debug.LogFormat("[Rnd] HqManager.cs -> CheckHQRenownSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
+                            Debug.LogFormat("[Rnd] HqManager.cs -> CheckHQPowerSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                             string msgText = string.Format("{0} declines support ({1} % chance of support)", hQAuthority.tag, threshold);
                             GameManager.i.messageScript.HqSupport(msgText, hQAuthority, _approvalAuthority, GameManager.i.playerScript.Power);
                             //random
@@ -430,18 +430,18 @@ public class HQManager : MonoBehaviour
                         if (rnd < threshold)
                         {
                             //Support Provided
-                            Debug.LogFormat("[Rnd] HqManager.cs -> CheckHQRenownSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
-                            string msgText = string.Format("{0} provides SUPPORT (+1 Renown)", hQResistance.tag);
-                            GameManager.i.messageScript.HqSupport(msgText, hQResistance, _approvalResistance, GameManager.i.playerScript.Power, renownPerTurn);
+                            Debug.LogFormat("[Rnd] HqManager.cs -> CheckHQPowerSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
+                            string msgText = string.Format("{0} provides SUPPORT (+1 Power)", hQResistance.tag);
+                            GameManager.i.messageScript.HqSupport(msgText, hQResistance, _approvalResistance, GameManager.i.playerScript.Power, powerPerTurn);
                             //random
                             GameManager.i.messageScript.GeneralRandom("HQ support GIVEN", "HQ Support", threshold, rnd, false, "rand_1");
                             //Support given
-                            GameManager.i.playerScript.Power += renownPerTurn;
+                            GameManager.i.playerScript.Power += powerPerTurn;
                         }
                         else
                         {
                             //Support declined
-                            Debug.LogFormat("[Rnd] HqManager.cs -> CheckHQRenownSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
+                            Debug.LogFormat("[Rnd] HqManager.cs -> CheckHQPowerSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                             string msgText = string.Format("{0} declines support ({1} % chance of support)", hQResistance.tag, threshold);
                             GameManager.i.messageScript.HqSupport(msgText, hQResistance, _approvalResistance, GameManager.i.playerScript.Power);
                             //random
@@ -976,11 +976,11 @@ public class HQManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid arrayOfActorsHQ (Null)"); }
-        //Hq Workers checked last -> Minor (renown) events only
+        //Hq Workers checked last -> Minor (Power) events only
         if (numOfEvents < maxNumOfEvents)
         {
             List<int> ListOfHqActors = GameManager.i.dataScript.GetListOfActorHq();
-            //reverse loop as workers may be 'removed' due to renown dropping below zero
+            //reverse loop as workers may be 'removed' due to Power dropping below zero
             for (int i = ListOfHqActors.Count - 1; i >= 0; i--)
             {
                 Actor actor = GameManager.i.dataScript.GetHqActor(ListOfHqActors[i]);
@@ -997,7 +997,7 @@ public class HQManager : MonoBehaviour
                 else { Debug.LogErrorFormat("Invalid Hq Actor (Null) for listOfHqActors[{0}]", i); }
             }
         }
-        //check hierarchy positions (may change due to renown)
+        //check hierarchy positions (may change due to Power)
         CheckHqHierarchy();
     }
 
@@ -1016,7 +1016,7 @@ public class HQManager : MonoBehaviour
             GetHqTitle(actor.statusHQ), actor.hqID, chanceOfRandomEvent, rnd, "\n");
         if (rnd < chanceOfRandomEvent)
         {
-            int change, renownBefore;
+            int change, powerBefore;
             float changeMultiplier = 1.0f;
             float chanceMajor = chanceOfMajorEvent;
             float chanceGood = 50;
@@ -1046,15 +1046,15 @@ public class HQManager : MonoBehaviour
             else
             {
                 //
-                // - - - Minor event -> change in renown
+                // - - - Minor event -> change in Power
                 //
                 Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqHierarchy: {0}, {1}, hqID {2} Minor Event{3}", actor.actorName, GetHqTitle(actor.statusHQ), actor.hqID, "\n");
                 //amount
-                renownBefore = actor.Power;
-                change = (int)(baseRenownChange * changeMultiplier);
+                powerBefore = actor.Power;
+                change = (int)(basePowerChange * changeMultiplier);
                 if (actor.statusHQ != ActorHQ.Worker)
                 { change *= hierarchyFactor; }
-                //determine renown change good or bad
+                //determine Power change good or bad
                 rnd = Random.Range(0, 100);
                 Debug.LogFormat("[Rnd] HQManager.cs -> ProcessHqHierarchy: {0}, {1}, hqID {2} Minor Good Event Check, need < {3}, rolled {4}{5}", actor.actorName,
                     GetHqTitle(actor.statusHQ), actor.hqID, chanceGood, rnd, "\n");
@@ -1063,10 +1063,10 @@ public class HQManager : MonoBehaviour
                     //good change
                     actor.Power += change;
                     text = hQMinorEventHierarchyGood.GetRandomRecord(false);
-                    reason = string.Format("gains +{0} renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Power);
-                    actor.AddHistory(new HistoryActor() { text = string.Format("Gains Renown at HQ because of {0}", text) });
+                    reason = string.Format("gains +{0} Power because of {1} (before {2}, now {3} Power)", change, text, powerBefore, actor.Power);
+                    actor.AddHistory(new HistoryActor() { text = string.Format("Gains Power at HQ because of {0}", text) });
                     //add to list
-                    eventText = string.Format("{0}{1}{2}, {3}{4}{5}{6}gains {7}+{8} Renown{9} due to {10}", colourNormal, actor.actorName, colourEnd, colourNeutral, GetHqTitle(actor.statusHQ),
+                    eventText = string.Format("{0}{1}{2}, {3}{4}{5}{6}gains {7}+{8} Power{9} due to {10}", colourNormal, actor.actorName, colourEnd, colourNeutral, GetHqTitle(actor.statusHQ),
                         colourEnd, "\n", colourGood, change, colourEnd, text);
                     GameManager.i.dataScript.AddHqEvent(eventText);
                 }
@@ -1076,17 +1076,17 @@ public class HQManager : MonoBehaviour
                     actor.Power -= change;
                     text = hQMinorEventHierarchyBad.GetRandomRecord(false);
                     change *= -1;
-                    reason = string.Format("loses {0} renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Power);
-                    actor.AddHistory(new HistoryActor() { text = string.Format("Loses Renown at HQ because of {0}", text) });
+                    reason = string.Format("loses {0} Power because of {1} (before {2}, now {3} Power)", change, text, powerBefore, actor.Power);
+                    actor.AddHistory(new HistoryActor() { text = string.Format("Loses Power at HQ because of {0}", text) });
                     //add to list
-                    eventText = string.Format("{0}{1}{2}, {3}{4}{5}{6}loses {7}{8} Renown{9} because of {10}", colourNormal, actor.actorName, colourEnd, colourNeutral, GetHqTitle(actor.statusHQ),
+                    eventText = string.Format("{0}{1}{2}, {3}{4}{5}{6}loses {7}{8} Power{9} because of {10}", colourNormal, actor.actorName, colourEnd, colourNeutral, GetHqTitle(actor.statusHQ),
                         colourEnd, "\n", colourBad, change, colourEnd, text);
                     GameManager.i.dataScript.AddHqEvent(eventText);
                 }
                 Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqHierarchy: {0}, {1}, {2}{3}", actor.actorName, GetHqTitle(actor.statusHQ),
                     reason, "\n");
-                //Renown tracking
-                HqPowerData renownData = new HqPowerData()
+                //Power tracking
+                HqPowerData powerData = new HqPowerData()
                 {
                     turn = 0,
                     scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex() + 1,
@@ -1094,7 +1094,7 @@ public class HQManager : MonoBehaviour
                     newPower = actor.Power,
                     reason = eventText
                 };
-                actor.AddHqPowerData(renownData);
+                actor.AddHqPowerData(powerData);
             }
             //limit of events exceeded?
             numOfEvents++;
@@ -1112,7 +1112,7 @@ public class HQManager : MonoBehaviour
     /// <returns></returns>
     private int ProcessHqWorkers(Actor actor, int numOfEvents)
     {
-        int rnd, renownBefore;
+        int rnd, powerBefore;
         //random event?
         rnd = Random.Range(0, 100);
         Debug.LogFormat("[Rnd] HQManager.cs -> ProcessHqWorkers: {0}, {1}, hqID {2} Event Check, need < {3}, rolled {4}{5}", actor.actorName,
@@ -1128,15 +1128,15 @@ public class HQManager : MonoBehaviour
             string text = "Unknown";
             string eventText = "Unknown";
             //
-            // - - - Minor events only -> change in renown
+            // - - - Minor events only -> change in Power
             //
             Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqWorkers: {0}, {1}, hqID {2} Minor Event{3}", actor.actorName, GetHqTitle(actor.statusHQ), actor.hqID, "\n");
             //amount
-            renownBefore = actor.Power;
-            change = (int)(baseRenownChange * changeMultiplier);
+            powerBefore = actor.Power;
+            change = (int)(basePowerChange * changeMultiplier);
             if (actor.statusHQ != ActorHQ.Worker)
             { change *= hierarchyFactor; }
-            //determine renown change good or bad
+            //determine Power change good or bad
             rnd = Random.Range(0, 100);
             Debug.LogFormat("[Rnd] HQManager.cs -> ProcessHqWorkers: {0}, {1}, hqID {2} Minor Good Event Check, need < {3}, rolled {4}{5}", actor.actorName,
                 GetHqTitle(actor.statusHQ), actor.hqID, chanceGood, rnd, "\n");
@@ -1145,10 +1145,10 @@ public class HQManager : MonoBehaviour
                 //good change
                 actor.Power += change;
                 text = hQMinorEventWorkerGood.GetRandomRecord(false);
-                reason = string.Format("gains +{0} Renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Power);
-                actor.AddHistory(new HistoryActor() { text = string.Format("Gains Renown at HQ because of {0}", text) });
+                reason = string.Format("gains +{0} Power because of {1} (before {2}, now {3} Power)", change, text, powerBefore, actor.Power);
+                actor.AddHistory(new HistoryActor() { text = string.Format("Gains Power at HQ because of {0}", text) });
                 //add to list
-                eventText = string.Format("{0}{1}{2}, {3}{4}{5}{6}gains {7}+{8} Renown{9} due to {10}", colourNormal, actor.actorName, colourEnd, colourAlert, GetHqTitle(actor.statusHQ),
+                eventText = string.Format("{0}{1}{2}, {3}{4}{5}{6}gains {7}+{8} Power{9} due to {10}", colourNormal, actor.actorName, colourEnd, colourAlert, GetHqTitle(actor.statusHQ),
                     colourEnd, "\n", colourGood, change, colourEnd, text);
                 GameManager.i.dataScript.AddHqEvent(eventText);
             }
@@ -1158,17 +1158,17 @@ public class HQManager : MonoBehaviour
                 actor.Power -= change;
                 text = hQMinorEventWorkerBad.GetRandomRecord(false);
                 change *= -1;
-                reason = string.Format("loses {0} Renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Power);
-                actor.AddHistory(new HistoryActor() { text = string.Format("Loses Renown at HQ because of {0}", text) });
+                reason = string.Format("loses {0} Power because of {1} (before {2}, now {3} Power)", change, text, powerBefore, actor.Power);
+                actor.AddHistory(new HistoryActor() { text = string.Format("Loses Power at HQ because of {0}", text) });
                 //add to list
-                text = string.Format("{0}{1}{2}, {3}{4}{5}{6}loses {7}{8} Renown{9} due to {10}", colourNormal, actor.actorName, colourEnd, colourAlert, GetHqTitle(actor.statusHQ), colourEnd,
+                text = string.Format("{0}{1}{2}, {3}{4}{5}{6}loses {7}{8} Power{9} due to {10}", colourNormal, actor.actorName, colourEnd, colourAlert, GetHqTitle(actor.statusHQ), colourEnd,
                     "\n", colourBad, change, colourEnd, text);
                 GameManager.i.dataScript.AddHqEvent(text);
             }
             Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqWorkers: {0}, {1}, {2}{3}", actor.actorName, GetHqTitle(actor.statusHQ),
                 reason, "\n");
-            //Renown tracking
-            HqPowerData renownData = new HqPowerData()
+            //Power tracking
+            HqPowerData powerData = new HqPowerData()
             {
                 turn = 0,
                 scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex() + 1,
@@ -1176,13 +1176,13 @@ public class HQManager : MonoBehaviour
                 newPower = actor.Power,
                 reason = eventText
             };
-            actor.AddHqPowerData(renownData);
+            actor.AddHqPowerData(powerData);
             //limit of events exceeded?
             numOfEvents++;
             if (isMetaLogs)
             { Debug.LogFormat("[Tst] HQManager.cs -> ProcessHqWorkers: numOfEvents {0} of {1}{2}", numOfEvents, maxNumOfEvents, "\n"); }
-            //Renown dropped below Zero, remove actor from hq
-            if (renownBefore + change < 0)
+            //Power dropped below Zero, remove actor from hq
+            if (powerBefore + change < 0)
             {
                 //record event
                 text = string.Format("{0}{1}{2}, {3}{4}{5}{6}dismissed from HQ", colourNormal, actor.actorName, colourEnd, colourAlert, GetHqTitle(actor.statusHQ),
@@ -1190,7 +1190,7 @@ public class HQManager : MonoBehaviour
                 GameManager.i.dataScript.AddHqEvent(text);
                 //remove actor
                 GameManager.i.dataScript.RemoveHqActor(actor.hqID);
-                Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqWorker: {0}, {1}, hqID {2}, Worker, forcefully removed from HQ (Renown < 0){3}", actor.actorName, actor.arc.name, actor.hqID, "\n");
+                Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqWorker: {0}, {1}, hqID {2}, Worker, forcefully removed from HQ (Poewr < 0){3}", actor.actorName, actor.arc.name, actor.hqID, "\n");
             }
         }
         return numOfEvents;
@@ -1208,8 +1208,8 @@ public class HQManager : MonoBehaviour
         Trait trait = actor.GetTrait();
         if (trait != null)
         {
-            if (trait.hqRenownMultiplier > 0)
-            { changeMultiplier = trait.hqRenownMultiplier; }
+            if (trait.hqPowerMultiplier > 0)
+            { changeMultiplier = trait.hqPowerMultiplier; }
             if (trait.hqMajorMultiplier > 0)
             { chanceMajor *= trait.hqMajorMultiplier; }
             if (trait.hqMinorMultiplier > 0)
@@ -1219,7 +1219,7 @@ public class HQManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks hq hierarchy and shuffles / assigns actors into vacant slots in order of descending Renown, eg. Boss has the highest renown. Workers can take over hierarchy slots with enough renown
+    /// Checks hq hierarchy and shuffles / assigns actors into vacant slots in order of descending Power, eg. Boss has the highest Power. Workers can take over hierarchy slots with enough Power
     /// </summary>
     private void CheckHqHierarchy()
     {
@@ -1229,7 +1229,7 @@ public class HQManager : MonoBehaviour
         {
             if (listOfHqActors != null)
             {
-                int limitRenown = 0;
+                int limitPower = 0;
                 ActorHQ currentStatus;
                 ActorHQ previousStatus;
                 for (int index = 1; index < (int)ActorHQ.Count - 2; index++)
@@ -1238,18 +1238,18 @@ public class HQManager : MonoBehaviour
                     Actor currentActor = arrayOfHqActors[index];
                     if (currentActor != null) { currentStatus = currentActor.statusHQ; }
                     else { currentStatus = (ActorHQ)index; }
-                    //check no actor has more renown -> NOTE: code assumes that slots will be filled progressively from highest rank to lowest
+                    //check no actor has more Power -> NOTE: code assumes that slots will be filled progressively from highest rank to lowest
                     switch (currentStatus)
                     {
-                        case ActorHQ.Boss: limitRenown = 999; break;
-                        case ActorHQ.SubBoss1: limitRenown = arrayOfHqActors[(int)ActorHQ.Boss].Power; break;
-                        case ActorHQ.SubBoss2: limitRenown = arrayOfHqActors[(int)ActorHQ.SubBoss1].Power; break;
-                        case ActorHQ.SubBoss3: limitRenown = arrayOfHqActors[(int)ActorHQ.SubBoss2].Power; break;
+                        case ActorHQ.Boss: limitPower = 999; break;
+                        case ActorHQ.SubBoss1: limitPower = arrayOfHqActors[(int)ActorHQ.Boss].Power; break;
+                        case ActorHQ.SubBoss2: limitPower = arrayOfHqActors[(int)ActorHQ.SubBoss1].Power; break;
+                        case ActorHQ.SubBoss3: limitPower = arrayOfHqActors[(int)ActorHQ.SubBoss2].Power; break;
                     }
                     //current actor holding down position
                     if (currentActor != null)
                     {
-                        Actor newActor = GetActorWithHighestRenown(listOfHqActors, currentActor.Power, limitRenown);
+                        Actor newActor = GetActorWithHighestPower(listOfHqActors, currentActor.Power, limitPower);
                         if (newActor != null)
                         {
                             previousStatus = newActor.statusHQ;
@@ -1277,7 +1277,7 @@ public class HQManager : MonoBehaviour
                         }
                         else
                         {
-                            Debug.LogFormat("[HQ] HQManager.cs -> CheckHqHierarchy: {0}, {1}, renown {2} is secure in their position{3}", currentActor.actorName,
+                            Debug.LogFormat("[HQ] HQManager.cs -> CheckHqHierarchy: {0}, {1}, Power {2} is secure in their position{3}", currentActor.actorName,
                                 GetHqTitle(currentActor.statusHQ), currentActor.Power, "\n");
                             if (GameManager.i.campaignScript.GetScenarioIndex() > GameManager.i.scenarioStartLevel)
                             { currentActor.AddHistory(new HistoryActor() { text = string.Format("Position secure at HQ as {0}{1}{2}", colourAlert, GetHqTitle(currentActor.statusHQ), colourEnd) }); }
@@ -1285,8 +1285,8 @@ public class HQManager : MonoBehaviour
                     }
                     else
                     {
-                        //new actor needed, get one with highest renown (null current actor, hence 0 renown)
-                        Actor newActor = GetActorWithHighestRenown(listOfHqActors, 0, limitRenown);
+                        //new actor needed, get one with highest Power (null current actor, hence 0 Power)
+                        Actor newActor = GetActorWithHighestPower(listOfHqActors, 0, limitPower);
                         if (newActor != null)
                         {
                             previousStatus = newActor.statusHQ;
@@ -1327,30 +1327,30 @@ public class HQManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Finds actor with highest renown, > currentRenown (renown of actor currently in that position) and <  limitRenown eg. actor in next highest position. Returns Null if none found
+    /// Finds actor with highest Power, > currentPower (Power of actor currently in that position) and <  limitPower eg. actor in next highest position. Returns Null if none found
     /// ListOfActors is uptodate listOfHqActors and is null checked by parent method
     /// </summary>
     /// <param name="hierarchy"></param>
     /// <returns></returns>
-    private Actor GetActorWithHighestRenown(List<int> listOfActors, int currentRenown, int limitRenown)
+    private Actor GetActorWithHighestPower(List<int> listOfActors, int currentPower, int limitPower)
     {
         Actor actorTemp = null;
         int hqID;
         int candidateHqID = -1;
-        int candidateHqRenown = currentRenown;
+        int candidateHqPower = currentPower;
         for (int i = 0; i < listOfActors.Count; i++)
         {
             hqID = listOfActors[i];
             actorTemp = GameManager.i.dataScript.GetHqActor(hqID);
             if (actorTemp != null)
             {
-                if (actorTemp.Power > candidateHqRenown && actorTemp.Power < limitRenown)
+                if (actorTemp.Power > candidateHqPower && actorTemp.Power < limitPower)
                 {
-                    //viable candidate -> check if higher renown than any existing candidate
-                    if (actorTemp.Power > candidateHqRenown)
+                    //viable candidate -> check if higher Power than any existing candidate
+                    if (actorTemp.Power > candidateHqPower)
                     {
                         candidateHqID = actorTemp.hqID;
-                        candidateHqRenown = actorTemp.Power;
+                        candidateHqPower = actorTemp.Power;
                     }
                 }
             }
@@ -1468,34 +1468,34 @@ public class HQManager : MonoBehaviour
 
 
     /// <summary>
-    /// displays HQ actors renown data packages if any are present (eg. entries made everytime actor experiences a change in renown)
+    /// displays HQ actors Power data packages if any are present (eg. entries made everytime actor experiences a change in Power)
     /// </summary>
     /// <returns></returns>
-    public string DebugDisplayHqActorRenown()
+    public string DebugDisplayHqActorPower()
     {
         StringBuilder builder = new StringBuilder();
         Actor[] arrayOfActors = GameManager.i.dataScript.GetArrayOfActorsHQ();
         if (arrayOfActors != null)
         {
-            builder.AppendFormat("-HQ Hierarchy Renown Data{0}", "\n");
+            builder.AppendFormat("-HQ Hierarchy Power Data{0}", "\n");
             //first and last indexes are blanks ('None', 'Workers', 'LeftHQ')
             for (int i = 1; i < (int)ActorHQ.Count - 2; i++)
             {
                 Actor actor = arrayOfActors[i];
                 if (actor != null)
                 {
-                    List<HqPowerData> listOfRenownData = actor.GetListOfHqPowerData();
-                    if (listOfRenownData != null && listOfRenownData.Count > 0)
+                    List<HqPowerData> listOfPowerData = actor.GetListOfHqPowerData();
+                    if (listOfPowerData != null && listOfPowerData.Count > 0)
                     {
                         builder.AppendFormat("{0}- {1}, {2}, {3}, ID {4}{5}", "\n", actor.statusHQ, actor.actorName, GetHqTitle(actor.statusHQ), actor.actorID, "\n");
                         builder.AppendFormat("  trait: {0}{1}  {2}{3}", actor.GetTrait().tag, "\n", actor.GetTrait().hqDescription, "\n");
-                        for (int j = 0; j < listOfRenownData.Count; j++)
+                        for (int j = 0; j < listOfPowerData.Count; j++)
                         {
-                            HqPowerData data = listOfRenownData[j];
+                            HqPowerData data = listOfPowerData[j];
                             if (data != null)
                             { builder.AppendFormat("  s{0}, t{1}: R {2}{3}, now {4}, {5}{6}", data.scenarioIndex, data.turn, data.change > 0 ? "+" : "", data.change, data.newPower, data.reason, "\n"); }
                             else
-                            { Debug.LogWarningFormat("Invalid hqRenownData (Null) for listOfHqRenownData[{0}], actor {1}, {2}, ID {3}", j, actor.actorName, GetHqTitle(actor.statusHQ), actor.actorID); }
+                            { Debug.LogWarningFormat("Invalid hqPowerData (Null) for listOfHqPowerData[{0}], actor {1}, {2}, ID {3}", j, actor.actorName, GetHqTitle(actor.statusHQ), actor.actorID); }
                         }
                     }
                 }
@@ -1523,15 +1523,15 @@ public class HQManager : MonoBehaviour
                     {
                         builder.AppendFormat(" {0}, {1}, ID {2}, Mot {3}, Comp {4}, R {5}{6}", actor.actorName, actor.arc.name, actor.actorID, actor.GetDatapoint(ActorDatapoint.Opinion1),
                             actor.GetPersonality().GetCompatibilityWithPlayer(), actor.Power, "\n");
-                        List<HqPowerData> listOfRenownData = actor.GetListOfHqPowerData();
-                        if (listOfRenownData != null && listOfRenownData.Count > 0)
+                        List<HqPowerData> listOfPowerData = actor.GetListOfHqPowerData();
+                        if (listOfPowerData != null && listOfPowerData.Count > 0)
                         {
-                            for (int j = 0; j < listOfRenownData.Count; j++)
+                            for (int j = 0; j < listOfPowerData.Count; j++)
                             {
-                                HqPowerData data = listOfRenownData[j];
+                                HqPowerData data = listOfPowerData[j];
                                 if (data != null)
                                 { builder.AppendFormat("  s{0}, t{1}: R {2}{3}, now {4}, {5}{6}", data.scenarioIndex, data.turn, data.change > 0 ? "+" : "", data.change, data.newPower, data.reason, "\n"); }
-                                else { Debug.LogWarningFormat("Invalid hqRenownData (Null) for listOfHqRenownData[{0}], actor {1}, {2}, ID {3}", j, actor.actorName, actor.arc.name, actor.actorID); }
+                                else { Debug.LogWarningFormat("Invalid hqPowerData (Null) for listOfHqPowerData[{0}], actor {1}, {2}, ID {3}", j, actor.actorName, actor.arc.name, actor.actorID); }
                             }
                         }
                     }
@@ -1877,14 +1877,14 @@ public class HQManager : MonoBehaviour
     }
 
 
-    private TooltipData GetEndLevelPortraitTooltip(Actor actor, int renown, string factorOne, string factorTwo, string factorThree)
+    private TooltipData GetEndLevelPortraitTooltip(Actor actor, int power, string factorOne, string factorTwo, string factorThree)
     {
         TooltipData data = new TooltipData();
         int factor = 0;
         string pos = "<pos=70%>";
         //header
-        data.header = string.Format("{0}{1}{2}<size=120%>{3}</size>{4}{5}Grants {6}{7}{8} Renown", actor.actorName, "\n", colourAlert, GetHqTitle(actor.statusHQ), colourEnd,
-                      "\n", colourNeutral, renown, colourEnd);
+        data.header = string.Format("{0}{1}{2}<size=120%>{3}</size>{4}{5}Grants {6}{7}{8} Power", actor.actorName, "\n", colourAlert, GetHqTitle(actor.statusHQ), colourEnd,
+                      "\n", colourNeutral, power, colourEnd);
         //main
         StringBuilder builder = new StringBuilder();
         switch (actor.statusHQ)
@@ -1920,7 +1920,7 @@ public class HQManager : MonoBehaviour
         }
         data.main = builder.ToString();
         //details
-        data.details = string.Format("{0}Overall{1}{2} Renown per Star{3}{4}{5}{6}", colourAlert, colourEnd, "\n", pos, colourNeutral, factor, colourEnd);
+        data.details = string.Format("{0}Overall{1}{2} Power per Star{3}{4}{5}{6}", colourAlert, colourEnd, "\n", pos, colourNeutral, factor, colourEnd);
         return data;
     }
 

@@ -1744,9 +1744,9 @@ public class ValidationManager : MonoBehaviour
             {
                 if (meta.Value != null)
                 {
-                    //check Renown cost not null
-                    if (meta.Value.renownCost == null)
-                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: Invalid Renown cost (Null) for metaOption \"{0}\"{1}", meta.Value.name, "\n"); }
+                    //check Power cost not null
+                    if (meta.Value.powerCost == null)
+                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: Invalid Power cost (Null) for metaOption \"{0}\"{1}", meta.Value.name, "\n"); }
                     //check HQ Position not null
                     if (meta.Value.hqPosition == null)
                     { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: Invalid Hq Position (Null) for metaOption \"{0}\"{1}", meta.Value.name, "\n"); }
@@ -1789,9 +1789,9 @@ public class ValidationManager : MonoBehaviour
                             }
                         }
                     }
-                    //check isRenownGain isn't a Recommended option
-                    if (meta.Value.isRenownGain == true && meta.Value.isRecommended == true)
-                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: isRenownGain TRUE and isRecommended TRUE (not allowed) for metaOption \"{0}\"{1}", meta.Value.name, "\n"); }
+                    //check isPowerGain isn't a Recommended option
+                    if (meta.Value.isPowerGain == true && meta.Value.isRecommended == true)
+                    { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateMetaOptions: isPowerGain TRUE and isRecommended TRUE (not allowed) for metaOption \"{0}\"{1}", meta.Value.name, "\n"); }
                 }
                 else { Debug.LogWarningFormat("Invalid metaOption (Null) in dictOfMetaOptions for \"{0}\"", meta.Key); }
             }
@@ -2310,7 +2310,7 @@ public class ValidationManager : MonoBehaviour
                 CheckDictRange(actor.Value.GetDatapoint(ActorDatapoint.Datapoint1), 0, maxStatValue, "datapoint1", tag, key);
                 CheckDictRange(actor.Value.GetDatapoint(ActorDatapoint.Datapoint2), 0, maxStatValue, "datapoint2", tag, key);
                 CheckDictRange(actor.Value.Power, 0, 999, "Renown", tag, key);
-                //renown data
+                //Power data
                 if (actor.Value.GetListOfHqPowerData().Count > 0)
                 { CheckList(actor.Value.GetListOfHqPowerData(), "HqRenownData", tag); }
                 //personality
@@ -3872,7 +3872,7 @@ public class ValidationManager : MonoBehaviour
                     count = 0;
                     if (trait.hqMajorMultiplier > 0) { count++; }
                     if (trait.hqMinorMultiplier > 0) { count++; }
-                    if (trait.hqRenownMultiplier > 0) { count++; }
+                    if (trait.hqPowerMultiplier > 0) { count++; }
                     if (count > 1)
                     { Debug.LogFormat("{0}Too many HQ traits (max 1) for trait \"{1}\"{2}", tag, trait.tag, "\n"); }
                     if (count > 1 && trait.isHqTrait == false)

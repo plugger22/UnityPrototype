@@ -1087,7 +1087,7 @@ public class ActorManager : MonoBehaviour
     {
         int numOfArcs, level;
         int numOfActors = GameManager.i.hqScript.numOfActorsHQ;
-        int powerFactor = GameManager.i.hqScript.renownFactor;
+        int powerFactor = GameManager.i.hqScript.powerFactor;
         int[] arrayOfLevels = new int[] { 3, 3, 3, 3, 2, 2, 2, 1, 1 }; //weighted towards higher calibre actors
         List<ActorArc> listOfArcs;
         List<Actor> listOfActors = new List<Actor>();

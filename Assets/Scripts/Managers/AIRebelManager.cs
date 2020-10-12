@@ -55,7 +55,7 @@ public class AIRebelManager : MonoBehaviour
     [Range(0, 100)] public int lieLowChanceActor = 60;
 
     [Header("Stress Leave")]
-    [Tooltip("Cost in resources/renown for the player or actor to take Stress Leave")]
+    [Tooltip("Cost in resources/power for the player or actor to take Stress Leave")]
     [Range(0, 10)] public int stressLeaveCost = 2;
 
     [Header("Gear Use")]
@@ -77,8 +77,8 @@ public class AIRebelManager : MonoBehaviour
     [Range(0, 10)] public int gearPoolThreshold = 3;
     [Tooltip("If a Fixer action occurs this is how many extra gear Points will be generated")]
     [Range(0, 10)] public int gearPoolTopUp = 2;
-    [Tooltip("The % chance of Renown/Resource point being used to retain gear (random roll every time gear is used. Cannot send resources below zero")]
-    [Range(0, 100)] public int gearRenownChance = 20;
+    [Tooltip("The % chance of Power/Resource point being used to retain gear (random roll every time gear is used. Cannot send resources below zero")]
+    [Range(0, 100)] public int gearPowerChance = 20;
 
     [Header("Target Intel")]
     [Tooltip("The maximum amount of target Intel that can be held. You can go beyond this but no Planner action will be generated to gain more, will only do so if targetIntel < targetIntelMax")]
@@ -102,11 +102,11 @@ public class AIRebelManager : MonoBehaviour
     [Tooltip("Below this level of faction support a faction task can be generated to raise support")]
     [Range(0, 5)] public int factionSupportThreshold = 4;
 
-    [Header("Renown/Resources")]
+    [Header("Power/Resources")]
     [Tooltip("The number of AI Resources granted per turn (Resistance side only) provided Faction decides to provide support (dependant on HQ support level as per normal)")]
     [Range(1, 3)] public int resourcesAllowance = 1;
-    [Tooltip("At the end of an AutoRun the amount of resources is divided by this in order to give the amount of renown to the Resistance player")]
-    [Range(1, 3)] public int renownFactor = 2;
+    [Tooltip("At the end of an AutoRun the amount of resources is divided by this in order to give the amount of Power to the Resistance player")]
+    [Range(1, 3)] public int powerFactor = 2;
 
     //AI Resistance Player
     [HideInInspector] public ActorStatus status;
@@ -688,7 +688,7 @@ public class AIRebelManager : MonoBehaviour
         actionsUsed = 0;
         //security state
         security = GameManager.i.turnScript.authoritySecurityState;
-        //renown (equivalent to resources for AI Rebel player)
+        //Power (equivalent to resources for AI Rebel player)
         ProcessResources();
         //conditions
         ProcessConditions();
@@ -1359,14 +1359,14 @@ public class AIRebelManager : MonoBehaviour
 
 
     /// <summary>
-    /// provides resources (equivalent to renown for resistance AI side) depending on level of faction support (as per normal)
+    /// provides resources (equivalent to Power for resistance AI side) depending on level of faction support (as per normal)
     /// </summary>
     private void ProcessResources()
     {
         int resources;
         int rnd = Random.Range(0, 100);
         int approvalResistance = GameManager.i.hqScript.ApprovalResistance;
-        int renownPerTurn = GameManager.i.hqScript.renownPerTurn;
+        int powerPerTurn = GameManager.i.hqScript.powerPerTurn;
         int threshold = approvalResistance * 10;
         factionResistance = GameManager.i.hqScript.hQResistance;
         if (factionResistance != null)
@@ -1382,7 +1382,7 @@ public class AIRebelManager : MonoBehaviour
                 if (isPlayer == true)
                 {
                     string msgText = string.Format("{0} provides +{1} SUPPORT (now {2} Resource{3})", factionResistance.name, resourcesAllowance, resources, resources != 1 ? "s" : "");
-                    GameManager.i.messageScript.HqSupport(msgText, factionResistance, approvalResistance, GameManager.i.playerScript.Power, renownPerTurn);
+                    GameManager.i.messageScript.HqSupport(msgText, factionResistance, approvalResistance, GameManager.i.playerScript.Power, powerPerTurn);
                     Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessResources: {0}", msgText);
                     //random
                     GameManager.i.messageScript.GeneralRandom("Faction support GIVEN", "Faction Support", threshold, rnd);
@@ -2967,7 +2967,7 @@ public class AIRebelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// actor / player takes stress leave where invis max and stressed (NOT a survival task). Renown cost & Opportunity cost
+    /// actor / player takes stress leave where invis max and stressed (NOT a survival task). Power cost & Opportunity cost
     /// </summary>
     private void ExecuteStressLeaveTask(AITask task)
     {
@@ -3097,7 +3097,7 @@ public class AIRebelManager : MonoBehaviour
             {
                 actorName = "Player";
                 isPlayer = true;
-                UpdateRenown();
+                UpdatePower();
                 //debug
                 DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.PlayerObtainGear, "AI_Gear");
             }
@@ -3107,7 +3107,7 @@ public class AIRebelManager : MonoBehaviour
                 if (actor != null)
                 {
                     actorName = actor.actorName;
-                    UpdateRenown(actor);
+                    UpdatePower(actor);
                     //debug
                     DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.ActorObtainGear, "AI_Gear");
                 }
@@ -3154,7 +3154,7 @@ public class AIRebelManager : MonoBehaviour
             {
                 actorName = "Player";
                 isPlayer = true;
-                UpdateRenown();
+                UpdatePower();
                 //debug
                 DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.PlayerGainTargetInfo, "AI_Target");
             }
@@ -3164,7 +3164,7 @@ public class AIRebelManager : MonoBehaviour
                 if (actor != null)
                 {
                     actorName = actor.actorName;
-                    UpdateRenown(actor);
+                    UpdatePower(actor);
                     //debug
                     DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.ActorGainTargetInfo, "AI_Target");
                 }
@@ -3208,7 +3208,7 @@ public class AIRebelManager : MonoBehaviour
             {
                 actorName = "Player";
                 isPlayerAction = true;
-                UpdateRenown();
+                UpdatePower();
                 //debug
                 DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.PlayerRecruitActor, "AI_Actor");
             }
@@ -3218,7 +3218,7 @@ public class AIRebelManager : MonoBehaviour
                 if (actor != null)
                 {
                     actorName = actor.actorName;
-                    UpdateRenown(actor);
+                    UpdatePower(actor);
                     //debug
                     DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.ActorRecruitActor, "AI_Actor");
                 }
@@ -3270,7 +3270,7 @@ public class AIRebelManager : MonoBehaviour
                 actorName = playerName;
                 actorArcName = "Player";
                 isPlayerAction = true;
-                UpdateRenown();
+                UpdatePower();
                 //debug
                 DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.PlayerSpreadFakeNews, "Unknown");
             }
@@ -3281,7 +3281,7 @@ public class AIRebelManager : MonoBehaviour
                 {
                     actorName = actor.actorName;
                     actorArcName = actor.arc.name;
-                    UpdateRenown(actor);
+                    UpdatePower(actor);
                     //debug
                     DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.ActorSpreadFakeNews, "Unknown");
                 }
@@ -3332,7 +3332,7 @@ public class AIRebelManager : MonoBehaviour
                 actorName = playerName;
                 actorArcName = "Player";
                 isPlayerAction = true;
-                UpdateRenown();
+                UpdatePower();
                 //debug
                 DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.PlayerBlowStuffUp, "Unknown");
             }
@@ -3343,7 +3343,7 @@ public class AIRebelManager : MonoBehaviour
                 {
                     actorName = actor.actorName;
                     actorArcName = actor.arc.name;
-                    UpdateRenown(actor);
+                    UpdatePower(actor);
                     //debug
                     DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.ActorBlowStuffUp, "Unknown");
                 }
@@ -3395,7 +3395,7 @@ public class AIRebelManager : MonoBehaviour
                 actorName = playerName;
                 actorArcName = "Player";
                 isPlayerAction = true;
-                UpdateRenown();
+                UpdatePower();
                 //debug
                 DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.PlayerInsertTracer, "Unknown");
             }
@@ -3406,7 +3406,7 @@ public class AIRebelManager : MonoBehaviour
                 {
                     actorName = actor.actorName;
                     actorArcName = actor.arc.name;
-                    UpdateRenown(actor);
+                    UpdatePower(actor);
                     //debug
                     DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.ActorInsertTracer, "Unknown");
                 }
@@ -3458,7 +3458,7 @@ public class AIRebelManager : MonoBehaviour
                 actorName = playerName;
                 actorArcName = "Player";
                 isPlayerAction = true;
-                UpdateRenown();
+                UpdatePower();
                 //debug
                 DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.PlayerNeutraliseTeam, "Unknown");
             }
@@ -3469,7 +3469,7 @@ public class AIRebelManager : MonoBehaviour
                 {
                     actorName = actor.actorName;
                     actorArcName = actor.arc.name;
-                    UpdateRenown(actor);
+                    UpdatePower(actor);
                     //debug
                     DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.ActorNeutraliseTeam, "Unknown");
                 }
@@ -3520,7 +3520,7 @@ public class AIRebelManager : MonoBehaviour
                 actorName = playerName;
                 actorArcName = "Player";
                 isPlayerAction = true;
-                UpdateRenown();
+                UpdatePower();
                 //debug
                 DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.PlayerHackSecurity, "Unknown");
             }
@@ -3531,7 +3531,7 @@ public class AIRebelManager : MonoBehaviour
                 {
                     actorName = actor.actorName;
                     actorArcName = actor.arc.name;
-                    UpdateRenown(actor);
+                    UpdatePower(actor);
                     //debug
                     DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.ActorHackSecurity, "Unknown");
                 }
@@ -3602,7 +3602,7 @@ public class AIRebelManager : MonoBehaviour
                     actorName = playerName;
                     actorArcName = "Player";
                     isPlayerAction = true;
-                    UpdateRenown();
+                    UpdatePower();
                     //debug
                     DebugCreateNodeActionPlayerRecord(node.nodeID, NodeAction.PlayerCreateRiots, "Unknown");
                 }
@@ -3613,7 +3613,7 @@ public class AIRebelManager : MonoBehaviour
                     {
                         actorName = actor.actorName;
                         actorArcName = actor.arc.name;
-                        UpdateRenown(actor);
+                        UpdatePower(actor);
                         //debug
                         DebugCreateNodeActionActorRecord(node.nodeID, actor, NodeAction.ActorCreateRiots, "Unknown");
                     }
@@ -3722,7 +3722,7 @@ public class AIRebelManager : MonoBehaviour
                 actorName = playerName;
                 actorArcName = "Player";
                 /*isPlayerAction = true;*/
-                UpdateRenown();
+                UpdatePower();
             }
             else
             {
@@ -3731,7 +3731,7 @@ public class AIRebelManager : MonoBehaviour
                 {
                     actorName = actor.actorName;
                     actorArcName = actor.arc.name;
-                    UpdateRenown(actor);
+                    UpdatePower(actor);
                 }
                 else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", task.data0); }
             }
@@ -3961,7 +3961,7 @@ public class AIRebelManager : MonoBehaviour
         Actor actor = GameManager.i.dataScript.GetActor(task.data0);
         if (actor != null)
         {
-            //calc renown/resources cost (need to do prior to DismissActorAI as secrets will be removed
+            //calc Power/resources cost (need to do prior to DismissActorAI as secrets will be removed
             int numOfSecrets = actor.CheckNumOfSecrets();
             int cost = numOfSecrets * GameManager.i.actorScript.manageSecretPower + GameManager.i.actorScript.manageDismissPower;
             cost *= 2;
@@ -3986,7 +3986,7 @@ public class AIRebelManager : MonoBehaviour
                 resources = Mathf.Max(0, resources - cost);
                 GameManager.i.dataScript.SetAIResources(globalResistance, resources);
                 //admin
-                Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteDismissTask: {0} Dismissed, cost {1} Renown ({2} secrets){3}", actor.arc.name, cost, numOfSecrets, "\n");
+                Debug.LogFormat("[Rim] AIRebelManager.cs -> ExecuteDismissTask: {0} Dismissed, cost {1} Power ({2} secrets){3}", actor.arc.name, cost, numOfSecrets, "\n");
             }
         }
         else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", questionableID); }
@@ -4042,10 +4042,10 @@ public class AIRebelManager : MonoBehaviour
     //
 
     /// <summary>
-    /// increment renown (actors) and resources (player) as a result of taking an action. Leave actor as Null for Player.
+    /// increment Power (actors) and resources (player) as a result of taking an action. Leave actor as Null for Player.
     /// </summary>
     /// <param name="actor"></param>
-    private void UpdateRenown(Actor actor = null)
+    private void UpdatePower(Actor actor = null)
     {
         if (actor == null)
         {
@@ -4597,9 +4597,9 @@ public class AIRebelManager : MonoBehaviour
         
         if (threshold > 0)
         {
-            //renown/resource point expended (random chance regardless of whether gear is available or not)
+            //Power/resource point expended (random chance regardless of whether gear is available or not)
             rnd = Random.Range(0, 100);
-            if (rnd < gearRenownChance)
+            if (rnd < gearPowerChance)
             {
                 //deduct one resource but cannot go below zero
                 int resources = GameManager.i.dataScript.CheckAIResourcePool(globalResistance);
@@ -4607,7 +4607,7 @@ public class AIRebelManager : MonoBehaviour
                 {
                     resources--;
                     GameManager.i.dataScript.SetAIResources(globalResistance, resources);
-                    Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckGearAvailable: 1 resource expended on Gear retention (need {0}, rolled {1}){2}", gearRenownChance, rnd, "\n");
+                    Debug.LogFormat("[Rim] AIRebelManager.cs -> CheckGearAvailable: 1 resource expended on Gear retention (need {0}, rolled {1}){2}", gearPowerChance, rnd, "\n");
                 }
             }
         }
@@ -4891,7 +4891,7 @@ public class AIRebelManager : MonoBehaviour
         builder.AppendFormat(" status: {0} | {1}{2}", status, inactiveStatus, "\n");
         builder.AppendFormat(" isBreakdown: {0}{1}", isBreakdown, "\n");
         builder.AppendFormat(" Invisbility: {0}{1}", GameManager.i.playerScript.Invisibility, "\n");
-        builder.AppendFormat(" Renown: {0}{1}", GameManager.i.dataScript.CheckAIResourcePool(globalResistance), "\n");
+        builder.AppendFormat(" Power: {0}{1}", GameManager.i.dataScript.CheckAIResourcePool(globalResistance), "\n");
         builder.AppendFormat(" Doom Timer: {0}{1}", GameManager.i.actorScript.doomTimer, "\n");
         builder.AppendFormat(" Capture Timer: {0}{1}", GameManager.i.actorScript.captureTimerPlayer, "\n");
         builder.AppendFormat(" Gear Pool: {0}{1}", gearPool, "\n");

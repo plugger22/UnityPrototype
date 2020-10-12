@@ -22,8 +22,8 @@ public class Trait : ScriptableObject
     public TraitCategory category;
 
     [Header("HQ Traits")]
-    [Tooltip("Multiplier to renown gain/loss while at HQ (default 0). NOTE: can only be one HQ trait option")]
-    public int hqRenownMultiplier = 0;
+    [Tooltip("Multiplier to Power gain/loss while at HQ (default 0). NOTE: can only be one HQ trait option")]
+    public int hqPowerMultiplier = 0;
     [Tooltip("Multiplier to chance of a Major event (random/leave HQ) occuring, default 0). NOTE: can only be one HQ trait option")]
     public float hqMajorMultiplier = 0f;
     [Tooltip("Multiplier to chance of a Minor Good event (success good/ fail bad event) occuring, default 0). NOTE: can only be one HQ trait option")]

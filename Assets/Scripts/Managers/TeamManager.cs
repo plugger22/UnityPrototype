@@ -1668,7 +1668,7 @@ public class TeamManager : MonoBehaviour
                 isError = true;
                 break;
         }
-        //assign renown to originating actor if all O.K
+        //assign Power to originating actor if all O.K
         if (isError == false && actor != null)
         { actor.Power++; }
     }

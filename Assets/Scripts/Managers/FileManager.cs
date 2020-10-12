@@ -357,7 +357,7 @@ public class FileManager : MonoBehaviour
         write.optionData.debugData = GameManager.i.optionScript.debugData;
         write.optionData.noAI = GameManager.i.optionScript.noAI;
         write.optionData.showContacts = GameManager.i.optionScript.showContacts;
-        write.optionData.showRenown = GameManager.i.optionScript.showPower;
+        write.optionData.showPower = GameManager.i.optionScript.showPower;
         write.optionData.connectorTooltips = GameManager.i.optionScript.connectorTooltips;
         write.optionData.fullMoodInfo = GameManager.i.optionScript.fullMoodInfo;
         write.optionData.colourScheme = GameManager.i.optionScript.ColourOption;
@@ -383,7 +383,7 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void WritePlayerData()
     {
-        write.playerData.renown = GameManager.i.playerScript.Power;
+        write.playerData.power = GameManager.i.playerScript.Power;
         write.playerData.status = GameManager.i.playerScript.status;
         write.playerData.sex = GameManager.i.playerScript.sex;
         write.playerData.Invisibility = GameManager.i.playerScript.Invisibility;
@@ -473,11 +473,11 @@ public class FileManager : MonoBehaviour
             write.metaGameData.objectiveStatus = info.objectiveStatus;
             write.metaGameData.listOfEndLevelData = info.listOfEndLevelData;
             //HQ status
-            write.metaGameData.listOfHqRenown = info.listOfHqPower;
+            write.metaGameData.listOfHqPower = info.listOfHqPower;
             write.metaGameData.listOfHqTitles = info.listOfHqTitles;
             write.metaGameData.listOfHqEvents = info.listOfHqEvents;
             write.metaGameData.listOfHqTooltips = info.listOfHqTooltips;
-            write.metaGameData.listOfWorkerRenown = info.listOfWorkerPower;
+            write.metaGameData.listOfWorkerPower = info.listOfWorkerPower;
             write.metaGameData.listOfWorkerArcs = info.listOfWorkerArcs;
             write.metaGameData.listOfWorkerTooltips = info.listOfWorkerTooltips;
             //sprites -> hq
@@ -1653,7 +1653,7 @@ public class FileManager : MonoBehaviour
                     saveGear.statTimesGiven = gear.Value.statTimesGiven;
                     saveGear.statTimesCompromised = gear.Value.statTimesCompromised;
                     saveGear.statTimesSaved = gear.Value.statTimesSaved;
-                    saveGear.statRenownSpent = gear.Value.statRenownSpent;
+                    saveGear.statPowerSpent = gear.Value.statPowerSpent;
                     //add to list
                     write.gearData.listOfGear.Add(saveGear);
                 }
@@ -2080,7 +2080,7 @@ public class FileManager : MonoBehaviour
         GameManager.i.optionScript.debugData = read.optionData.debugData;
         GameManager.i.optionScript.noAI = read.optionData.noAI;
         GameManager.i.optionScript.showContacts = read.optionData.showContacts;
-        GameManager.i.optionScript.showPower = read.optionData.showRenown;
+        GameManager.i.optionScript.showPower = read.optionData.showPower;
         GameManager.i.optionScript.connectorTooltips = read.optionData.connectorTooltips;
         GameManager.i.optionScript.fullMoodInfo = read.optionData.fullMoodInfo;
         GameManager.i.optionScript.ColourOption = read.optionData.colourScheme;
@@ -2093,8 +2093,8 @@ public class FileManager : MonoBehaviour
         { GameManager.i.debugScript.optionConnectorTooltips = "Conn tooltips OFF"; }
         if (read.optionData.debugData == true)
         { GameManager.i.debugScript.optionDebugData = "Debug Data OFF"; }
-        if (read.optionData.showRenown == false)
-        { GameManager.i.debugScript.optionRenownUI = "Renown UI ON"; }
+        if (read.optionData.showPower == false)
+        { GameManager.i.debugScript.optionRenownUI = "Power UI ON"; }
         if (read.optionData.showContacts == true)
         { GameManager.i.debugScript.optionContacts = "Contacts OFF"; }
     }
@@ -2107,7 +2107,7 @@ public class FileManager : MonoBehaviour
     /// </summary>
     private void ReadPlayerData()
     {
-        GameManager.i.playerScript.Power = read.playerData.renown;
+        GameManager.i.playerScript.Power = read.playerData.power;
         GameManager.i.playerScript.Invisibility = read.playerData.Invisibility;
         GameManager.i.playerScript.Innocence = read.playerData.Innocence;
         GameManager.i.playerScript.sex = read.playerData.sex;
@@ -2202,11 +2202,11 @@ public class FileManager : MonoBehaviour
 
         #region HQ Status
         //Hq -> standard lists
-        info.listOfHqPower = read.metaGameData.listOfHqRenown;
+        info.listOfHqPower = read.metaGameData.listOfHqPower;
         info.listOfHqTitles = read.metaGameData.listOfHqTitles;
         info.listOfHqEvents = read.metaGameData.listOfHqEvents;
         info.listOfHqTooltips = read.metaGameData.listOfHqTooltips;
-        info.listOfWorkerPower = read.metaGameData.listOfWorkerRenown;
+        info.listOfWorkerPower = read.metaGameData.listOfWorkerPower;
         info.listOfWorkerArcs = read.metaGameData.listOfWorkerArcs;
         info.listOfWorkerTooltips = read.metaGameData.listOfWorkerTooltips;
         //sprites -> hq
@@ -3751,7 +3751,7 @@ public class FileManager : MonoBehaviour
                             gear.statTimesGiven = saveGear.statTimesGiven;
                             gear.statTimesCompromised = saveGear.statTimesCompromised;
                             gear.statTimesSaved = saveGear.statTimesSaved;
-                            gear.statRenownSpent = saveGear.statRenownSpent;
+                            gear.statPowerSpent = saveGear.statPowerSpent;
                         }
                         else { Debug.LogWarningFormat("Invalid gear (Null) in dict for gearID {0}", saveGear.gearName); }
                     }
@@ -4168,7 +4168,7 @@ public class FileManager : MonoBehaviour
         //update actor UI Panel
         GameManager.i.actorPanelScript.UpdateActorPanel();
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
-        //loop each OnMap actor and update alpha and renown
+        //loop each OnMap actor and update alpha and Power
         Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(playerSide);
         if (arrayOfActors != null)
         {
@@ -4185,14 +4185,14 @@ public class FileManager : MonoBehaviour
                         { GameManager.i.actorPanelScript.UpdateActorAlpha(i, alphaActive); }
                         else
                         { GameManager.i.actorPanelScript.UpdateActorAlpha(i, alphaInactive); }
-                        //update renown & compatibiliyt
+                        //update Power & compatibility
                         GameManager.i.actorPanelScript.UpdateActorPowerUI(i, actor.Power);
                         GameManager.i.actorPanelScript.UpdateActorCompatibilityUI(i, actor.GetPersonality().GetCompatibilityWithPlayer());
                     }
                 }
                 else
                 {
-                    //actor not present in slot, reset renown and compatibility to 0
+                    //actor not present in slot, reset Power and compatibility to 0
                     GameManager.i.actorPanelScript.UpdateActorPowerUI(i, 0);
                     GameManager.i.actorPanelScript.UpdateActorCompatibilityUI(i, 0);
                 }
@@ -4421,7 +4421,7 @@ public class FileManager : MonoBehaviour
         //data which can be ignored (default values O.K) if actor is in the recruit pool
         if (actor.Status != ActorStatus.RecruitPool)
         {
-            saveActor.Renown = actor.Power;
+            saveActor.Power = actor.Power;
             saveActor.unhappyTimer = actor.unhappyTimer;
             saveActor.blackmailTimer = actor.blackmailTimer;
             saveActor.captureTimer = actor.captureTimer;
@@ -4501,11 +4501,11 @@ public class FileManager : MonoBehaviour
             if (listOfTraitEffects != null)
             { saveActor.listOfTraitEffects.AddRange(listOfTraitEffects); }
             else { Debug.LogError("Invalid listOfTraitEffects (Null)"); }
-            //Hq renown data
-            List<HqPowerData> listOfRenownData = actor.GetListOfHqPowerData();
-            if (listOfRenownData != null)
-            { saveActor.listOfHqRenownData.AddRange(listOfRenownData); }
-            else { Debug.LogError("Invalid listOfHqRenownData (Null)"); }
+            //Hq Power data
+            List<HqPowerData> listOfPowerData = actor.GetListOfHqPowerData();
+            if (listOfPowerData != null)
+            { saveActor.listOfHqPowerData.AddRange(listOfPowerData); }
+            else { Debug.LogError("Invalid listOfHqPowerData (Null)"); }
             //Actor History data
             List<HistoryActor> listOfHistory = actor.GetListOfHistory();
             if (listOfHistory != null)
@@ -4549,7 +4549,7 @@ public class FileManager : MonoBehaviour
             saveData.priority = metaData.priority;
             saveData.tabSide = metaData.tabSide;
             saveData.tabTop = metaData.tabTop;
-            saveData.renownCost = metaData.powerCost;
+            saveData.powerCost = metaData.powerCost;
             saveData.sideLevel = metaData.sideLevel;
             saveData.isActive = metaData.isActive;
             saveData.isRecommended = metaData.isRecommended;
@@ -4636,7 +4636,7 @@ public class FileManager : MonoBehaviour
             metaData.priority = saveMetaData.priority;
             metaData.tabSide = saveMetaData.tabSide;
             metaData.tabTop = saveMetaData.tabTop;
-            metaData.powerCost = saveMetaData.renownCost;
+            metaData.powerCost = saveMetaData.powerCost;
             metaData.sideLevel = saveMetaData.sideLevel;
             metaData.isActive = saveMetaData.isActive;
             metaData.isRecommended = saveMetaData.isRecommended;
@@ -4786,7 +4786,7 @@ public class FileManager : MonoBehaviour
         //data which can be ignored (default values O.K) if actor is in the Recruit Pool
         if (actor.Status != ActorStatus.RecruitPool)
         {
-            actor.Power = readActor.Renown;
+            actor.Power = readActor.Power;
             actor.unhappyTimer = readActor.unhappyTimer;
             actor.blackmailTimer = readActor.blackmailTimer;
             actor.captureTimer = readActor.captureTimer;
@@ -4878,8 +4878,8 @@ public class FileManager : MonoBehaviour
                 }
             }
             else { Debug.LogError("Invalid listOfConditions (Null)"); }
-            //Hq Renown data
-            actor.SetHqPowerData(readActor.listOfHqRenownData);
+            //Hq Power data
+            actor.SetHqPowerData(readActor.listOfHqPowerData);
             //Actor History
             actor.SetHistory(readActor.listOfHistory);
             //topic data

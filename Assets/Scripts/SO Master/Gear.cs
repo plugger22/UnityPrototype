@@ -33,7 +33,7 @@ public class Gear : ScriptableObject
 
     #region Save Data Compatible
     [HideInInspector] public int timesUsed;                     //# of times used in any given turn (reset to zero each turn)
-    [HideInInspector] public bool isCompromised;                //tested at end of turn (GearManager.cs -> CheckForCompromisedGear) reset if renown spent to retain
+    [HideInInspector] public bool isCompromised;                //tested at end of turn (GearManager.cs -> CheckForCompromisedGear) reset if Power spent to retain
     [HideInInspector] public string reasonUsed;                 //tag showing reason gear used (reset each turn), set by GearManager.cs -> SetGearUsed
     [HideInInspector] public int chanceOfCompromise;            //set at time of use, cleared with a new turn
     [HideInInspector] public int statTurnObtained;              //turn gear was first obtained
@@ -42,7 +42,7 @@ public class Gear : ScriptableObject
     [HideInInspector] public int statTimesGiven;                //times given to another actor
     [HideInInspector] public int statTimesCompromised;          //times compromised
     [HideInInspector] public int statTimesSaved;                //times compromised gear is Saved
-    [HideInInspector] public int statRenownSpent;               //total renown spent on gear
+    [HideInInspector] public int statPowerSpent;                //total power spent on gear
     #endregion
 
     /// <summary>
@@ -58,7 +58,7 @@ public class Gear : ScriptableObject
         statTimesGiven = 0;
         statTimesCompromised = 0;
         statTimesSaved = 0;
-        statRenownSpent = 0;
+        statPowerSpent = 0;
     }
 
 

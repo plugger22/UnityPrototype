@@ -22,7 +22,7 @@ public class ActorArc : ScriptableObject
     public TeamArc preferredTeam;
 
     //Preferences
-    [Tooltip("The type of Gear the actor prefers (you gain a renown transfer from them for giving them this type of gear)")]
+    [Tooltip("The type of Gear the actor prefers (you gain a Power transfer from them for giving them this type of gear)")]
     public GearType preferredGear;
 
 
