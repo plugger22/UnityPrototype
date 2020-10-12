@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d9bf8160387a664d800585e9347e94e, type: 3}
+  m_Name: PowerActorsLess
+  m_EditorClassIdentifier: 
+  description: 1+ Actor has less Power than Player
+  effectCriteria: {fileID: 11400000, guid: 7e0d51215b257354fa9efefe51b44556, type: 2}
+  comparison: {fileID: 0}
+  apply: {fileID: 11400000, guid: 462065f63e731b54aa985d8dac013d55, type: 2}

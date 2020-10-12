@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
+  m_Name: P_LosePowerHigh
+  m_EditorClassIdentifier: 
+  description: Power -3
+  ongoingTooltip: 
+  listOfCriteria: []
+  apply: {fileID: 11400000, guid: 7d70934aa1025f94196c12814a03f5d6, type: 2}
+  topicApply: {fileID: 0}
+  outcome: {fileID: 11400000, guid: 7c76320a8f113f5478bc9db61f9ddb29, type: 2}
+  operand: {fileID: 11400000, guid: 430402652e440cd4a8fb543d24a3f773, type: 2}
+  typeOfEffect: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
+  duration: {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
+  value: 3
+  ignoreEffect: 0
+  isMoodEffect: 0
+  belief: {fileID: 0}
