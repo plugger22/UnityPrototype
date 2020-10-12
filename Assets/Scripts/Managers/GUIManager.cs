@@ -684,7 +684,7 @@ public class GUIManager : MonoBehaviour
                     details.textTop = "Jacking into Authority AI. Initialising Icebreakers.";
                     details.textBottom = string.Format("{0}Wait one...{1}", colourNeutral, colourEnd);
                     break;
-                case AlertType.HackingInsufficientRenown:
+                case AlertType.HackingInsufficientPower:
                     details.textTop = string.Format("You have {0}{1}Insufficient Renown{2}{3}for a Hacking attempt", "\n", colourBad, colourEnd, "\n");
                     details.textBottom = string.Format("Check the colour of the Renown cost. If {0}Yellow{1} then just enough, {2}Green{3} then more than enough",
                         colourNeutral, colourEnd, colourGood, colourEnd);

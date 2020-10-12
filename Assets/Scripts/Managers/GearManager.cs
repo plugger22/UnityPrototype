@@ -424,7 +424,7 @@ public class GearManager : MonoBehaviour
                 if (isCompromisedGear == true)
                 {
                     //check Player has enough renown to save gear
-                    int playerRenown = GameManager.i.playerScript.Renown;
+                    int playerRenown = GameManager.i.playerScript.Power;
                     if (playerRenown >= gearSaveCurrentCost)
                     {
                         //initialise generic picker
@@ -1084,14 +1084,14 @@ public class GearManager : MonoBehaviour
             //deduct renown
             if (string.IsNullOrEmpty(data.optionName) == false)
             {
-                int renown = GameManager.i.playerScript.Renown;
+                int renown = GameManager.i.playerScript.Power;
                 renown -= gearSaveCurrentCost;
                 if (renown < 0)
                 {
                     Debug.LogWarning("Renown invalid (< 0)");
                     renown = 0;
                 }
-                GameManager.i.playerScript.Renown = renown;
+                GameManager.i.playerScript.Power = renown;
                 //retain saved gear, remove any unsaved gear
                 GameManager.i.playerScript.UpdateGear(gearSaveCurrentCost, data.optionName);
                 //stats

@@ -408,18 +408,18 @@ public class HQManager : MonoBehaviour
                             //Support Provided
                             Debug.LogFormat("[Rnd] HqManager.cs -> CheckHQRenownSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                             string msgText = string.Format("{0} provides SUPPORT (+1 Renown)", hQAuthority.tag);
-                            GameManager.i.messageScript.HqSupport(msgText, hQAuthority, _approvalAuthority, GameManager.i.playerScript.Renown, renownPerTurn);
+                            GameManager.i.messageScript.HqSupport(msgText, hQAuthority, _approvalAuthority, GameManager.i.playerScript.Power, renownPerTurn);
                             //random
                             GameManager.i.messageScript.GeneralRandom("HQ support GIVEN", "HQ Support", threshold, rnd);
                             //Support given
-                            GameManager.i.playerScript.Renown += renownPerTurn;
+                            GameManager.i.playerScript.Power += renownPerTurn;
                         }
                         else
                         {
                             //Support declined
                             Debug.LogFormat("[Rnd] HqManager.cs -> CheckHQRenownSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                             string msgText = string.Format("{0} declines support ({1} % chance of support)", hQAuthority.tag, threshold);
-                            GameManager.i.messageScript.HqSupport(msgText, hQAuthority, _approvalAuthority, GameManager.i.playerScript.Renown);
+                            GameManager.i.messageScript.HqSupport(msgText, hQAuthority, _approvalAuthority, GameManager.i.playerScript.Power);
                             //random
                             GameManager.i.messageScript.GeneralRandom("HQ support DECLINED", "HQ Support", threshold, rnd);
                         }
@@ -432,18 +432,18 @@ public class HQManager : MonoBehaviour
                             //Support Provided
                             Debug.LogFormat("[Rnd] HqManager.cs -> CheckHQRenownSupport: GIVEN need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                             string msgText = string.Format("{0} provides SUPPORT (+1 Renown)", hQResistance.tag);
-                            GameManager.i.messageScript.HqSupport(msgText, hQResistance, _approvalResistance, GameManager.i.playerScript.Renown, renownPerTurn);
+                            GameManager.i.messageScript.HqSupport(msgText, hQResistance, _approvalResistance, GameManager.i.playerScript.Power, renownPerTurn);
                             //random
                             GameManager.i.messageScript.GeneralRandom("HQ support GIVEN", "HQ Support", threshold, rnd, false, "rand_1");
                             //Support given
-                            GameManager.i.playerScript.Renown += renownPerTurn;
+                            GameManager.i.playerScript.Power += renownPerTurn;
                         }
                         else
                         {
                             //Support declined
                             Debug.LogFormat("[Rnd] HqManager.cs -> CheckHQRenownSupport: DECLINED need < {0}, rolled {1}{2}", threshold, rnd, "\n");
                             string msgText = string.Format("{0} declines support ({1} % chance of support)", hQResistance.tag, threshold);
-                            GameManager.i.messageScript.HqSupport(msgText, hQResistance, _approvalResistance, GameManager.i.playerScript.Renown);
+                            GameManager.i.messageScript.HqSupport(msgText, hQResistance, _approvalResistance, GameManager.i.playerScript.Power);
                             //random
                             GameManager.i.messageScript.GeneralRandom("HQ support DECLINED", "HQ Support", threshold, rnd, false, "rand_1");
                         }
@@ -1050,7 +1050,7 @@ public class HQManager : MonoBehaviour
                 //
                 Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqHierarchy: {0}, {1}, hqID {2} Minor Event{3}", actor.actorName, GetHqTitle(actor.statusHQ), actor.hqID, "\n");
                 //amount
-                renownBefore = actor.Renown;
+                renownBefore = actor.Power;
                 change = (int)(baseRenownChange * changeMultiplier);
                 if (actor.statusHQ != ActorHQ.Worker)
                 { change *= hierarchyFactor; }
@@ -1061,9 +1061,9 @@ public class HQManager : MonoBehaviour
                 if (rnd < chanceGood)
                 {
                     //good change
-                    actor.Renown += change;
+                    actor.Power += change;
                     text = hQMinorEventHierarchyGood.GetRandomRecord(false);
-                    reason = string.Format("gains +{0} renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Renown);
+                    reason = string.Format("gains +{0} renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Power);
                     actor.AddHistory(new HistoryActor() { text = string.Format("Gains Renown at HQ because of {0}", text) });
                     //add to list
                     eventText = string.Format("{0}{1}{2}, {3}{4}{5}{6}gains {7}+{8} Renown{9} due to {10}", colourNormal, actor.actorName, colourEnd, colourNeutral, GetHqTitle(actor.statusHQ),
@@ -1073,10 +1073,10 @@ public class HQManager : MonoBehaviour
                 else
                 {
                     //bad change
-                    actor.Renown -= change;
+                    actor.Power -= change;
                     text = hQMinorEventHierarchyBad.GetRandomRecord(false);
                     change *= -1;
-                    reason = string.Format("loses {0} renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Renown);
+                    reason = string.Format("loses {0} renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Power);
                     actor.AddHistory(new HistoryActor() { text = string.Format("Loses Renown at HQ because of {0}", text) });
                     //add to list
                     eventText = string.Format("{0}{1}{2}, {3}{4}{5}{6}loses {7}{8} Renown{9} because of {10}", colourNormal, actor.actorName, colourEnd, colourNeutral, GetHqTitle(actor.statusHQ),
@@ -1086,15 +1086,15 @@ public class HQManager : MonoBehaviour
                 Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqHierarchy: {0}, {1}, {2}{3}", actor.actorName, GetHqTitle(actor.statusHQ),
                     reason, "\n");
                 //Renown tracking
-                HqRenownData renownData = new HqRenownData()
+                HqPowerData renownData = new HqPowerData()
                 {
                     turn = 0,
                     scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex() + 1,
                     change = change,
-                    newRenown = actor.Renown,
+                    newPower = actor.Power,
                     reason = eventText
                 };
-                actor.AddHqRenownData(renownData);
+                actor.AddHqPowerData(renownData);
             }
             //limit of events exceeded?
             numOfEvents++;
@@ -1132,7 +1132,7 @@ public class HQManager : MonoBehaviour
             //
             Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqWorkers: {0}, {1}, hqID {2} Minor Event{3}", actor.actorName, GetHqTitle(actor.statusHQ), actor.hqID, "\n");
             //amount
-            renownBefore = actor.Renown;
+            renownBefore = actor.Power;
             change = (int)(baseRenownChange * changeMultiplier);
             if (actor.statusHQ != ActorHQ.Worker)
             { change *= hierarchyFactor; }
@@ -1143,9 +1143,9 @@ public class HQManager : MonoBehaviour
             if (rnd < chanceGood)
             {
                 //good change
-                actor.Renown += change;
+                actor.Power += change;
                 text = hQMinorEventWorkerGood.GetRandomRecord(false);
-                reason = string.Format("gains +{0} Renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Renown);
+                reason = string.Format("gains +{0} Renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Power);
                 actor.AddHistory(new HistoryActor() { text = string.Format("Gains Renown at HQ because of {0}", text) });
                 //add to list
                 eventText = string.Format("{0}{1}{2}, {3}{4}{5}{6}gains {7}+{8} Renown{9} due to {10}", colourNormal, actor.actorName, colourEnd, colourAlert, GetHqTitle(actor.statusHQ),
@@ -1155,10 +1155,10 @@ public class HQManager : MonoBehaviour
             else
             {
                 //bad change
-                actor.Renown -= change;
+                actor.Power -= change;
                 text = hQMinorEventWorkerBad.GetRandomRecord(false);
                 change *= -1;
-                reason = string.Format("loses {0} Renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Renown);
+                reason = string.Format("loses {0} Renown because of {1} (before {2}, now {3} renown)", change, text, renownBefore, actor.Power);
                 actor.AddHistory(new HistoryActor() { text = string.Format("Loses Renown at HQ because of {0}", text) });
                 //add to list
                 text = string.Format("{0}{1}{2}, {3}{4}{5}{6}loses {7}{8} Renown{9} due to {10}", colourNormal, actor.actorName, colourEnd, colourAlert, GetHqTitle(actor.statusHQ), colourEnd,
@@ -1168,15 +1168,15 @@ public class HQManager : MonoBehaviour
             Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqWorkers: {0}, {1}, {2}{3}", actor.actorName, GetHqTitle(actor.statusHQ),
                 reason, "\n");
             //Renown tracking
-            HqRenownData renownData = new HqRenownData()
+            HqPowerData renownData = new HqPowerData()
             {
                 turn = 0,
                 scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex() + 1,
                 change = change,
-                newRenown = actor.Renown,
+                newPower = actor.Power,
                 reason = eventText
             };
-            actor.AddHqRenownData(renownData);
+            actor.AddHqPowerData(renownData);
             //limit of events exceeded?
             numOfEvents++;
             if (isMetaLogs)
@@ -1242,20 +1242,20 @@ public class HQManager : MonoBehaviour
                     switch (currentStatus)
                     {
                         case ActorHQ.Boss: limitRenown = 999; break;
-                        case ActorHQ.SubBoss1: limitRenown = arrayOfHqActors[(int)ActorHQ.Boss].Renown; break;
-                        case ActorHQ.SubBoss2: limitRenown = arrayOfHqActors[(int)ActorHQ.SubBoss1].Renown; break;
-                        case ActorHQ.SubBoss3: limitRenown = arrayOfHqActors[(int)ActorHQ.SubBoss2].Renown; break;
+                        case ActorHQ.SubBoss1: limitRenown = arrayOfHqActors[(int)ActorHQ.Boss].Power; break;
+                        case ActorHQ.SubBoss2: limitRenown = arrayOfHqActors[(int)ActorHQ.SubBoss1].Power; break;
+                        case ActorHQ.SubBoss3: limitRenown = arrayOfHqActors[(int)ActorHQ.SubBoss2].Power; break;
                     }
                     //current actor holding down position
                     if (currentActor != null)
                     {
-                        Actor newActor = GetActorWithHighestRenown(listOfHqActors, currentActor.Renown, limitRenown);
+                        Actor newActor = GetActorWithHighestRenown(listOfHqActors, currentActor.Power, limitRenown);
                         if (newActor != null)
                         {
                             previousStatus = newActor.statusHQ;
                             Debug.LogFormat("[HQ] HQManager.cs -> CheckHqHierarchy: {0}, {1}, r{2}, Replaced by {3}, {4}, r{5}{6}",
-                                currentActor.actorName, GetHqTitle(currentActor.statusHQ), currentActor.Renown,
-                                newActor.actorName, GetHqTitle(newActor.statusHQ), newActor.Renown, "\n");
+                                currentActor.actorName, GetHqTitle(currentActor.statusHQ), currentActor.Power,
+                                newActor.actorName, GetHqTitle(newActor.statusHQ), newActor.Power, "\n");
                             //check if existing hierarchy actor
                             if (newActor.statusHQ != ActorHQ.Worker)
                             {
@@ -1278,7 +1278,7 @@ public class HQManager : MonoBehaviour
                         else
                         {
                             Debug.LogFormat("[HQ] HQManager.cs -> CheckHqHierarchy: {0}, {1}, renown {2} is secure in their position{3}", currentActor.actorName,
-                                GetHqTitle(currentActor.statusHQ), currentActor.Renown, "\n");
+                                GetHqTitle(currentActor.statusHQ), currentActor.Power, "\n");
                             if (GameManager.i.campaignScript.GetScenarioIndex() > GameManager.i.scenarioStartLevel)
                             { currentActor.AddHistory(new HistoryActor() { text = string.Format("Position secure at HQ as {0}{1}{2}", colourAlert, GetHqTitle(currentActor.statusHQ), colourEnd) }); }
                         }
@@ -1293,7 +1293,7 @@ public class HQManager : MonoBehaviour
                             //replace actor -> new actor into Hierarchy slot, current actor back to hqPool
                             arrayOfHqActors[index] = newActor;
                             Debug.LogFormat("[HQ] HQManager.cs -> CheckHqHierarchy: {0}, {1}, r{2}, assumes vacant role of {3}{4}",
-                                newActor.actorName, GetHqTitle(newActor.statusHQ), newActor.Renown, GetHqTitle((ActorHQ)index), "\n");
+                                newActor.actorName, GetHqTitle(newActor.statusHQ), newActor.Power, GetHqTitle((ActorHQ)index), "\n");
                             //check if existing hierarchy actor
                             if (newActor.statusHQ != ActorHQ.Worker)
                             {
@@ -1302,7 +1302,7 @@ public class HQManager : MonoBehaviour
                             }
                             //assign new position
                             newActor.statusHQ = (ActorHQ)index;
-                            if (newActor.Renown > 15 && newActor.statusHQ == ActorHQ.Worker)
+                            if (newActor.Power > 15 && newActor.statusHQ == ActorHQ.Worker)
                             {
                                 //had a higher position previously (can't say what it was 'cause when they were bumped they were sent back to the Worker pool)
                                 newActor.AddHistory(new HistoryActor() { text = string.Format("Reasssigned to {0}{1}{2} position at HQ", colourAlert, GetHqTitle(newActor.statusHQ), colourEnd) });
@@ -1344,13 +1344,13 @@ public class HQManager : MonoBehaviour
             actorTemp = GameManager.i.dataScript.GetHqActor(hqID);
             if (actorTemp != null)
             {
-                if (actorTemp.Renown > candidateHqRenown && actorTemp.Renown < limitRenown)
+                if (actorTemp.Power > candidateHqRenown && actorTemp.Power < limitRenown)
                 {
                     //viable candidate -> check if higher renown than any existing candidate
-                    if (actorTemp.Renown > candidateHqRenown)
+                    if (actorTemp.Power > candidateHqRenown)
                     {
                         candidateHqID = actorTemp.hqID;
-                        candidateHqRenown = actorTemp.Renown;
+                        candidateHqRenown = actorTemp.Power;
                     }
                 }
             }
@@ -1414,7 +1414,7 @@ public class HQManager : MonoBehaviour
                 {
                     builder.AppendFormat("{0}- {1}{2}", "\n", actor.statusHQ, "\n");
                     builder.AppendFormat(" {0}, {1}, ID {2}, Mot {3}, Comp {4}, R {5}{6}", actor.actorName, actor.arc.name, actor.actorID, actor.GetDatapoint(ActorDatapoint.Opinion1),
-                        actor.GetPersonality().GetCompatibilityWithPlayer(), actor.Renown, "\n");
+                        actor.GetPersonality().GetCompatibilityWithPlayer(), actor.Power, "\n");
                     builder.AppendFormat("  trait: {0}{1}  {2}{3}", actor.GetTrait().tag, "\n", actor.GetTrait().hqDescription, "\n");
                 }
                 else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActorsHQ[{0}]", i); }
@@ -1444,7 +1444,7 @@ public class HQManager : MonoBehaviour
                     foreach (Actor actor in listOfWorkers)
                     {
                         builder.AppendFormat(" {0}, {1}, ID {2}, Mot {3}, Comp {4}, R {5}{6}", actor.actorName, actor.arc.name, actor.actorID, actor.GetDatapoint(ActorDatapoint.Opinion1),
-                            actor.GetPersonality().GetCompatibilityWithPlayer(), actor.Renown, "\n");
+                            actor.GetPersonality().GetCompatibilityWithPlayer(), actor.Power, "\n");
                     }
                 }
                 else { builder.AppendFormat(" No records{0}", "\n"); }
@@ -1455,7 +1455,7 @@ public class HQManager : MonoBehaviour
                     foreach (Actor actor in listOfLeftHQ)
                     {
                         builder.AppendFormat(" {0}, {1}, ID {2}, Mot {3}, Comp {4}, R {5}{6}", actor.actorName, actor.arc.name, actor.actorID, actor.GetDatapoint(ActorDatapoint.Opinion1),
-                            actor.GetPersonality().GetCompatibilityWithPlayer(), actor.Renown, "\n");
+                            actor.GetPersonality().GetCompatibilityWithPlayer(), actor.Power, "\n");
                     }
                 }
                 else { builder.AppendFormat(" No records{0}", "\n"); }
@@ -1484,16 +1484,16 @@ public class HQManager : MonoBehaviour
                 Actor actor = arrayOfActors[i];
                 if (actor != null)
                 {
-                    List<HqRenownData> listOfRenownData = actor.GetListOfHqRenownData();
+                    List<HqPowerData> listOfRenownData = actor.GetListOfHqPowerData();
                     if (listOfRenownData != null && listOfRenownData.Count > 0)
                     {
                         builder.AppendFormat("{0}- {1}, {2}, {3}, ID {4}{5}", "\n", actor.statusHQ, actor.actorName, GetHqTitle(actor.statusHQ), actor.actorID, "\n");
                         builder.AppendFormat("  trait: {0}{1}  {2}{3}", actor.GetTrait().tag, "\n", actor.GetTrait().hqDescription, "\n");
                         for (int j = 0; j < listOfRenownData.Count; j++)
                         {
-                            HqRenownData data = listOfRenownData[j];
+                            HqPowerData data = listOfRenownData[j];
                             if (data != null)
-                            { builder.AppendFormat("  s{0}, t{1}: R {2}{3}, now {4}, {5}{6}", data.scenarioIndex, data.turn, data.change > 0 ? "+" : "", data.change, data.newRenown, data.reason, "\n"); }
+                            { builder.AppendFormat("  s{0}, t{1}: R {2}{3}, now {4}, {5}{6}", data.scenarioIndex, data.turn, data.change > 0 ? "+" : "", data.change, data.newPower, data.reason, "\n"); }
                             else
                             { Debug.LogWarningFormat("Invalid hqRenownData (Null) for listOfHqRenownData[{0}], actor {1}, {2}, ID {3}", j, actor.actorName, GetHqTitle(actor.statusHQ), actor.actorID); }
                         }
@@ -1522,15 +1522,15 @@ public class HQManager : MonoBehaviour
                     foreach (Actor actor in listOfWorkers)
                     {
                         builder.AppendFormat(" {0}, {1}, ID {2}, Mot {3}, Comp {4}, R {5}{6}", actor.actorName, actor.arc.name, actor.actorID, actor.GetDatapoint(ActorDatapoint.Opinion1),
-                            actor.GetPersonality().GetCompatibilityWithPlayer(), actor.Renown, "\n");
-                        List<HqRenownData> listOfRenownData = actor.GetListOfHqRenownData();
+                            actor.GetPersonality().GetCompatibilityWithPlayer(), actor.Power, "\n");
+                        List<HqPowerData> listOfRenownData = actor.GetListOfHqPowerData();
                         if (listOfRenownData != null && listOfRenownData.Count > 0)
                         {
                             for (int j = 0; j < listOfRenownData.Count; j++)
                             {
-                                HqRenownData data = listOfRenownData[j];
+                                HqPowerData data = listOfRenownData[j];
                                 if (data != null)
-                                { builder.AppendFormat("  s{0}, t{1}: R {2}{3}, now {4}, {5}{6}", data.scenarioIndex, data.turn, data.change > 0 ? "+" : "", data.change, data.newRenown, data.reason, "\n"); }
+                                { builder.AppendFormat("  s{0}, t{1}: R {2}{3}, now {4}, {5}{6}", data.scenarioIndex, data.turn, data.change > 0 ? "+" : "", data.change, data.newPower, data.reason, "\n"); }
                                 else { Debug.LogWarningFormat("Invalid hqRenownData (Null) for listOfHqRenownData[{0}], actor {1}, {2}, ID {3}", j, actor.actorName, actor.arc.name, actor.actorID); }
                             }
                         }
@@ -1623,10 +1623,10 @@ public class HQManager : MonoBehaviour
                     tally += num * factorThird;
                     //overall
                     overall = GetOverall(tally);
-                    data.renown = overall * factorBoss;
+                    data.power = overall * factorBoss;
                     data.medal = (EndlLevelMedal)overall;
                     //tooltips
-                    data.tooltipPortrait = GetEndLevelPortraitTooltip(actor, data.renown, factorOne, factorTwo, factorThree);
+                    data.tooltipPortrait = GetEndLevelPortraitTooltip(actor, data.power, factorOne, factorTwo, factorThree);
                     data.tooltipMedal = GetEndLevelMedalTooltip(data.medal);
                     break;
                 case ActorHQ.SubBoss1:
@@ -1667,10 +1667,10 @@ public class HQManager : MonoBehaviour
                     tally += num * factorThird;
                     //overall
                     overall = GetOverall(tally);
-                    data.renown = overall * factorSubBoss1;
+                    data.power = overall * factorSubBoss1;
                     data.medal = (EndlLevelMedal)overall;
                     //tooltips
-                    data.tooltipPortrait = GetEndLevelPortraitTooltip(actor, data.renown, factorOne, factorTwo, factorThree);
+                    data.tooltipPortrait = GetEndLevelPortraitTooltip(actor, data.power, factorOne, factorTwo, factorThree);
                     data.tooltipMedal = GetEndLevelMedalTooltip(data.medal);
                     break;
                 case ActorHQ.SubBoss2:
@@ -1711,10 +1711,10 @@ public class HQManager : MonoBehaviour
                     tally += num * factorThird;
                     //overall
                     overall = GetOverall(tally);
-                    data.renown = overall * factorSubBoss2;
+                    data.power = overall * factorSubBoss2;
                     data.medal = (EndlLevelMedal)overall;
                     //tooltips
-                    data.tooltipPortrait = GetEndLevelPortraitTooltip(actor, data.renown, factorOne, factorTwo, factorThree);
+                    data.tooltipPortrait = GetEndLevelPortraitTooltip(actor, data.power, factorOne, factorTwo, factorThree);
                     data.tooltipMedal = GetEndLevelMedalTooltip(data.medal);
                     break;
                 case ActorHQ.SubBoss3:
@@ -1756,10 +1756,10 @@ public class HQManager : MonoBehaviour
                     tally += num * factorThird;
                     //overall
                     overall = GetOverall(tally);
-                    data.renown = overall * factorSubBoss3;
+                    data.power = overall * factorSubBoss3;
                     data.medal = (EndlLevelMedal)overall;
                     //tooltips
-                    data.tooltipPortrait = GetEndLevelPortraitTooltip(actor, data.renown, factorOne, factorTwo, factorThree);
+                    data.tooltipPortrait = GetEndLevelPortraitTooltip(actor, data.power, factorOne, factorTwo, factorThree);
                     data.tooltipMedal = GetEndLevelMedalTooltip(data.medal);
                     break;
                 default: Debug.LogWarningFormat("Unrecognised actorHQ \"{0}\"", actorHQ); break;

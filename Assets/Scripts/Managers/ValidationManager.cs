@@ -2261,7 +2261,7 @@ public class ValidationManager : MonoBehaviour
                 CheckDictRange(actor.Value.GetDatapoint(ActorDatapoint.Datapoint0), 0, maxStatValue, "datapoint0", tag, key);
                 CheckDictRange(actor.Value.GetDatapoint(ActorDatapoint.Datapoint1), 0, maxStatValue, "datapoint1", tag, key);
                 CheckDictRange(actor.Value.GetDatapoint(ActorDatapoint.Datapoint2), 0, maxStatValue, "datapoint2", tag, key);
-                CheckDictRange(actor.Value.Renown, 0, 99, "Renown", tag, key);
+                CheckDictRange(actor.Value.Power, 0, 99, "Renown", tag, key);
                 CheckDictList(actor.Value.GetListOfTeams(), "listOfTeams", tag, key, false);
                 CheckDictList(actor.Value.GetListOfSecrets(), "listOfSecrets", tag, key);
                 CheckDictList(actor.Value.GetListOfConditions(), "listOfConditions", tag, key);
@@ -2309,10 +2309,10 @@ public class ValidationManager : MonoBehaviour
                 CheckDictRange(actor.Value.GetDatapoint(ActorDatapoint.Datapoint0), 0, maxStatValue, "datapoint0", tag, key);
                 CheckDictRange(actor.Value.GetDatapoint(ActorDatapoint.Datapoint1), 0, maxStatValue, "datapoint1", tag, key);
                 CheckDictRange(actor.Value.GetDatapoint(ActorDatapoint.Datapoint2), 0, maxStatValue, "datapoint2", tag, key);
-                CheckDictRange(actor.Value.Renown, 0, 999, "Renown", tag, key);
+                CheckDictRange(actor.Value.Power, 0, 999, "Renown", tag, key);
                 //renown data
-                if (actor.Value.GetListOfHqRenownData().Count > 0)
-                { CheckList(actor.Value.GetListOfHqRenownData(), "HqRenownData", tag); }
+                if (actor.Value.GetListOfHqPowerData().Count > 0)
+                { CheckList(actor.Value.GetListOfHqPowerData(), "HqRenownData", tag); }
                 //personality
                 Personality personality = actor.Value.GetPersonality();
                 if (personality != null)

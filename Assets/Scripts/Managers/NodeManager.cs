@@ -2115,7 +2115,7 @@ public class NodeManager : MonoBehaviour
                     cureActionDetails.side = globalResistance;
                     cureActionDetails.nodeID = nodeID;
                     cureActionDetails.actorDataID = GameManager.i.playerScript.actorID;
-                    cureActionDetails.renownCost = 0;
+                    cureActionDetails.powerCost = 0;
                     EventButtonDetails cureDetails = new EventButtonDetails()
                     {
                         buttonTitle = node.cure.cureName,

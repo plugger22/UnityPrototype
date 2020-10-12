@@ -55,13 +55,13 @@ namespace modalAPI
         public int actorDataID;                                         //for standard actor based node actions, ignore otherwise, Could be actorSlotID or actorID
         public EventType eventType;                                     //event that is triggered (Only used for Recruit Actors, ignore otherwise)
         public int modalLevel;                                          //modal level that the outcome window will be on (same as current), default 1
-        public ModalSubState modalState;                                   //modal level to return to once outcome window closes (only for modallevel's 2+, ignore for rest)
+        public ModalSubState modalState;                                //modal level to return to once outcome window closes (only for modallevel's 2+, ignore for rest)
         public ActionButtonDelegate handler;                            //method to call once button pressed, ignore if default null
         //special case fields
         public int level;                                               //Authority only: level of actor to recruit (1 to 3)
         public string gearName;                                         //Resistance only: special node gear actions
         public Action gearAction;                                       //Resistance only: Special node Gear actions, eg. gearKinetic
-        public int renownCost;                                          //renown cost of an action, eg. dismiss, dispose off
+        public int powerCost;                                           //power cost of an action, eg. dismiss, dispose off
 
         public ModalActionDetails()
         {
@@ -201,8 +201,8 @@ namespace modalAPI
     public class ModalDiceDetails
     {
         public int chance;
-        public int renownCost;
-        public bool isEnoughRenown;                             //true if player renown > 0
+        public int powerCost;
+        public bool isEnoughPower;                             //true if player renown > 0
         public string topText;
         public PassThroughDiceData passData;                    //ignore if no gear ivvolved
         
@@ -215,7 +215,7 @@ namespace modalAPI
     {
         public int nodeID;             
         public int gearID;
-        public int renownCost;
+        public int powerCost;
         public string text;
         public DiceType type;                                   //what is the dice being rolled for?
         public ModalOutcomeDetails outcome;                     //used for gear effect outcomes, ignore for rest
@@ -232,7 +232,7 @@ namespace modalAPI
     public class DiceReturnData
     {
         public bool isSuccess;                  //was result <= chance of Success
-        public bool isRenown;                   //did player spend renown?
+        public bool isPower;                   //did player spend power?
         public int result;                      //dice result (1d100)
         public DiceOutcome outcome;             //option chosen by Player at start
         public PassThroughDiceData passData;    //ignore if no gear involved

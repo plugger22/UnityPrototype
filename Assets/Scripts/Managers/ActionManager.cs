@@ -487,7 +487,7 @@ public class ActionManager : MonoBehaviour
         ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
 
         //renown (do prior to effects as Player renown will change)
-        int renownBefore = GameManager.i.playerScript.Renown;
+        int renownBefore = GameManager.i.playerScript.Power;
         //resolve action
         if (details != null)
         {
@@ -729,7 +729,7 @@ public class ActionManager : MonoBehaviour
     {
         bool errorFlag = false;
         string title, colourSide, criteriaText, tooltipText;
-        int renownCost = GameManager.i.actorScript.manageReserveRenown;
+        int renownCost = GameManager.i.actorScript.manageReservePower;
         int unhappyTimerBase = GameManager.i.actorScript.currentReserveTimer;
         int unhappyTimer;
         bool isResistance = true;
@@ -892,7 +892,7 @@ public class ActionManager : MonoBehaviour
     {
         bool errorFlag = false;
         string title, colourSide, criteriaText, tooltipText;
-        int renownCost = GameManager.i.actorScript.manageDismissRenown;
+        int renownCost = GameManager.i.actorScript.manageDismissPower;
         bool isResistance = true;
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"
@@ -959,8 +959,8 @@ public class ActionManager : MonoBehaviour
                                 builder.AppendFormat("{0}{1}", tooltipText, "\n");
                                 if (manageAction.isRenownCost == true)
                                 {
-                                    ManageRenownCost manageRenownCost = GameManager.i.actorScript.GetManageRenownCost(actor, renownCost);
-                                    builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, manageRenownCost.renownCost, colourEnd);
+                                    ManagePowerCost manageRenownCost = GameManager.i.actorScript.GetManagePowerCost(actor, renownCost);
+                                    builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, manageRenownCost.powerCost, colourEnd);
                                     if (string.IsNullOrEmpty(manageRenownCost.tooltip) == false)
                                     { builder.Append(manageRenownCost.tooltip); }
 
@@ -1049,7 +1049,7 @@ public class ActionManager : MonoBehaviour
     {
         bool errorFlag = false;
         string title, colourSide, criteriaText, tooltipText;
-        int renownCost = GameManager.i.actorScript.manageDisposeRenown;
+        int renownCost = GameManager.i.actorScript.manageDisposePower;
         bool isResistance = true;
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"
@@ -1120,8 +1120,8 @@ public class ActionManager : MonoBehaviour
                                     if (string.IsNullOrEmpty(manageRenownCost.tooltip) == false)
                                     { builder.Append(manageRenownCost.tooltip); }
                                     tooltip.textDetails = builder.ToString();*/
-                                    ManageRenownCost manageRenownCost = GameManager.i.actorScript.GetManageRenownCost(actor, renownCost);
-                                    builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, manageRenownCost.renownCost, colourEnd);
+                                    ManagePowerCost manageRenownCost = GameManager.i.actorScript.GetManagePowerCost(actor, renownCost);
+                                    builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, manageRenownCost.powerCost, colourEnd);
                                     if (string.IsNullOrEmpty(manageRenownCost.tooltip) == false)
                                     { builder.Append(manageRenownCost.tooltip); }
                                 }
@@ -1492,16 +1492,16 @@ public class ActionManager : MonoBehaviour
             GameManager.i.playerScript.tooltipStatus = ActorTooltip.Leave;
             GameManager.i.playerScript.isStressLeave = true;
             //deduct renown cost
-            int renown = GameManager.i.playerScript.Renown;
-            renown -= modalDetails.renownCost;
+            int renown = GameManager.i.playerScript.Power;
+            renown -= modalDetails.powerCost;
             if (renown < 0)
             {
                 renown = 0;
                 Debug.LogWarningFormat("Renown dropped below Zero");
             }
-            GameManager.i.playerScript.Renown = renown;
+            GameManager.i.playerScript.Power = renown;
             //popUp
-            GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Renown -{modalDetails.renownCost}");
+            GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Renown -{modalDetails.powerCost}");
             GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, "Stress Leave");
             //change alpha of actor to indicate inactive status
             GameManager.i.actorPanelScript.UpdatePlayerAlpha(GameManager.i.guiScript.alphaInactive);
@@ -1545,16 +1545,16 @@ public class ActionManager : MonoBehaviour
                 actor.tooltipStatus = ActorTooltip.Leave;
                 actor.isStressLeave = true;
                 //deduct renown cost
-                int renown = GameManager.i.playerScript.Renown;
-                renown -= modalDetails.renownCost;
+                int renown = GameManager.i.playerScript.Power;
+                renown -= modalDetails.powerCost;
                 if (renown < 0)
                 {
                     renown = 0;
                     Debug.LogWarningFormat("Renown dropped below Zero");
                 }
-                GameManager.i.playerScript.Renown = renown;
+                GameManager.i.playerScript.Power = renown;
                 //PopUpFixed
-                GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Renown -{modalDetails.renownCost}");
+                GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Renown -{modalDetails.powerCost}");
                 GameManager.i.popUpFixedScript.SetData(actor.slotID, "Stress Leave");
                 //change alpha of actor to indicate inactive status
                 GameManager.i.actorPanelScript.UpdateActorAlpha(actor.slotID, GameManager.i.guiScript.alphaInactive);
@@ -2077,7 +2077,7 @@ public class ActionManager : MonoBehaviour
                 //Give boost to Unhappy timer
                 actor.unhappyTimer += benefit;
                 //Deduct Player renown
-                GameManager.i.playerScript.Renown -= renownCost;
+                GameManager.i.playerScript.Power -= renownCost;
                 //history
                 actor.AddHistory(new HistoryActor() { text = "Threatened by you in Reserves" });
                 //message
@@ -2194,7 +2194,7 @@ public class ActionManager : MonoBehaviour
         bool errorFlag = false;
         int numOfTeams = 0;
         string moodText = "Unknown";
-        Debug.Assert(details.renownCost > 0, "Invalid renownCost (zero)");
+        Debug.Assert(details.powerCost > 0, "Invalid renownCost (zero)");
         StringBuilder builder = new StringBuilder();
         ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
         Actor actor = null;
@@ -2221,19 +2221,19 @@ public class ActionManager : MonoBehaviour
                 GameManager.i.secretScript.RemoveAllSecretsFromActor(actor);
 
                 //Renown cost
-                int playerRenown = GameManager.i.playerScript.Renown;
-                ManageRenownCost renownData = GameManager.i.actorScript.GetManageRenownCost(actor, GameManager.i.actorScript.manageDismissRenown);
-                playerRenown -= renownData.renownCost;
-                GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Renown -{renownData.renownCost}");
+                int playerRenown = GameManager.i.playerScript.Power;
+                ManagePowerCost renownData = GameManager.i.actorScript.GetManagePowerCost(actor, GameManager.i.actorScript.manageDismissPower);
+                playerRenown -= renownData.powerCost;
+                GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Renown -{renownData.powerCost}");
                 //min capped at Zero
                 playerRenown = Mathf.Max(0, playerRenown);
-                GameManager.i.playerScript.Renown = playerRenown;
+                GameManager.i.playerScript.Power = playerRenown;
                 if (renownData.tooltip.Length > 0)
                 {
                     builder.AppendLine(renownData.tooltip);
                     builder.AppendLine();
                 }
-                builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownData.renownCost, colourEnd);
+                builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownData.powerCost, colourEnd);
 
                 /*if (actor.isThreatening == true)
                 {

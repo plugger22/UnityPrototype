@@ -300,7 +300,7 @@ public class SideManager : MonoBehaviour
                 renown = GameManager.i.dataScript.CheckAIResourcePool(globalAuthority);
                 Debug.LogFormat("[Aim] SideManager.cs -> RevertToHumanPlayer: Authority has {0} Resources{1}", renown, "\n");
                 renown /= GameManager.i.aiScript.renownFactor;
-                GameManager.i.playerScript.Renown = renown;
+                GameManager.i.playerScript.Power = renown;
                 //update states
                 status = GameManager.i.aiScript.status;
                 inactiveStatus = GameManager.i.aiScript.inactiveStatus;
@@ -375,7 +375,7 @@ public class SideManager : MonoBehaviour
                 renown = GameManager.i.dataScript.CheckAIResourcePool(globalResistance);
                 Debug.LogFormat("[Rim] SideManager.cs -> RevertToHumanPlayer: Resistance has {0} Resources{1}", renown, "\n");
                 renown /= GameManager.i.aiRebelScript.renownFactor;
-                GameManager.i.playerScript.Renown = renown;
+                GameManager.i.playerScript.Power = renown;
                 //update states
                 status = GameManager.i.aiRebelScript.status;
                 inactiveStatus = GameManager.i.aiRebelScript.inactiveStatus;

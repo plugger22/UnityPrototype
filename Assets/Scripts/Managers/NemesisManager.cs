@@ -628,11 +628,11 @@ public class NemesisManager : MonoBehaviour
             if (node != null)
             {
                 //deduct renown cost for control
-                int renown = GameManager.i.playerScript.Renown;
+                int renown = GameManager.i.playerScript.Power;
                 renown -= controlRenownCost;
                 if (renown > -1)
                 {
-                    GameManager.i.playerScript.Renown = renown;
+                    GameManager.i.playerScript.Power = renown;
                     //change relevant fields
                     isPlayerControl = true;
                     controlNodeID = nodeID;

@@ -3912,12 +3912,12 @@ public class TopicManager : MonoBehaviour
                         break;
                     case "RenownActorsLess":
                         //need an actor with less renown than player
-                        listOfActors = GameManager.i.dataScript.GetActiveActorsSpecial(ActorCheck.RenownLess, GameManager.i.sideScript.PlayerSide);
+                        listOfActors = GameManager.i.dataScript.GetActiveActorsSpecial(ActorCheck.PowerLess, GameManager.i.sideScript.PlayerSide);
                         isSuccess = ProcessActorMatch(listOfActors, criteria.effectCriteria);
                         break;
                     case "RenownActorsMore":
                         //need an actor with more renown than player
-                        listOfActors = GameManager.i.dataScript.GetActiveActorsSpecial(ActorCheck.RenownMore, GameManager.i.sideScript.PlayerSide);
+                        listOfActors = GameManager.i.dataScript.GetActiveActorsSpecial(ActorCheck.PowerMore, GameManager.i.sideScript.PlayerSide);
                         isSuccess = ProcessActorMatch(listOfActors, criteria.effectCriteria);
                         break;
                     case "InvestigationNormal":

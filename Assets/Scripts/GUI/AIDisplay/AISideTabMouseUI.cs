@@ -38,8 +38,8 @@ public class AISideTabMouseUI : MonoBehaviour, IPointerClickHandler/*, IPointerE
                         case HackingStatus.Offline:
                             GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.HackingOffline);
                             break;
-                        case HackingStatus.InsufficientRenown:
-                            GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.HackingInsufficientRenown);
+                        case HackingStatus.InsufficientPower:
+                            GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.HackingInsufficientPower);
                             break;
                         case HackingStatus.Indisposed:
                             GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.HackingIndisposed);

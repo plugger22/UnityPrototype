@@ -482,7 +482,7 @@ public class ModalGenericPicker : MonoBehaviour
                             if (gear != null)
                             {
                                 text = string.Format("Save {0}{1}{2} for {3}{4} Renown{5} (have {6}{7}{8})", colourEffect, gear.tag.ToUpper(), colourEnd, 
-                                    colourNeutral, datapoint, colourEnd, colourGood, GameManager.i.playerScript.Renown, colourEnd);
+                                    colourNeutral, datapoint, colourEnd, colourGood, GameManager.i.playerScript.Power, colourEnd);
                                 Debug.LogFormat("[UI] -> ModalGenericPicker: gear {0} selected{1}", data.optionName, "\n");
                             }
                             else { Debug.LogErrorFormat("Invalid gear (Null) for gear {0}", data.optionName); }

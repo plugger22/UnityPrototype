@@ -1382,7 +1382,7 @@ public class AIRebelManager : MonoBehaviour
                 if (isPlayer == true)
                 {
                     string msgText = string.Format("{0} provides +{1} SUPPORT (now {2} Resource{3})", factionResistance.name, resourcesAllowance, resources, resources != 1 ? "s" : "");
-                    GameManager.i.messageScript.HqSupport(msgText, factionResistance, approvalResistance, GameManager.i.playerScript.Renown, renownPerTurn);
+                    GameManager.i.messageScript.HqSupport(msgText, factionResistance, approvalResistance, GameManager.i.playerScript.Power, renownPerTurn);
                     Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessResources: {0}", msgText);
                     //random
                     GameManager.i.messageScript.GeneralRandom("Faction support GIVEN", "Faction Support", threshold, rnd);
@@ -1395,7 +1395,7 @@ public class AIRebelManager : MonoBehaviour
                 if (isPlayer == true)
                 {
                     string msgText = string.Format("{0} faction declines support ({1} % chance of support)", factionResistance.name, threshold);
-                    GameManager.i.messageScript.HqSupport(msgText, factionResistance, approvalResistance, GameManager.i.playerScript.Renown);
+                    GameManager.i.messageScript.HqSupport(msgText, factionResistance, approvalResistance, GameManager.i.playerScript.Power);
                     Debug.LogFormat("[Rim] AIRebelManager.cs -> ProcessResources: No Support provided (now {0} Resource{1}){2}", resources, resources != 1 ? "s" : "", "\n");
                     //random
                     GameManager.i.messageScript.GeneralRandom("Faction support DECLINED", "Faction Support", threshold, rnd);
@@ -3963,7 +3963,7 @@ public class AIRebelManager : MonoBehaviour
         {
             //calc renown/resources cost (need to do prior to DismissActorAI as secrets will be removed
             int numOfSecrets = actor.CheckNumOfSecrets();
-            int cost = numOfSecrets * GameManager.i.actorScript.manageSecretRenown + GameManager.i.actorScript.manageDismissRenown;
+            int cost = numOfSecrets * GameManager.i.actorScript.manageSecretPower + GameManager.i.actorScript.manageDismissPower;
             cost *= 2;
             //check trait -> Connected/Unconnected
             if (actor.CheckTraitEffect(actorRemoveActionDoubled) == true)
@@ -4057,7 +4057,7 @@ public class AIRebelManager : MonoBehaviour
         else
         {
             //Actor
-            actor.Renown++;
+            actor.Power++;
         }
     }
 

@@ -649,7 +649,7 @@ public class TransitionUI : MonoBehaviour
                     if (endData != null)
                     {
                         //renown
-                        option.hqRenown.text = string.Format("{0}{1}{2}{3}", colourHeader, endData.renown > 0 ? "+" : "", endData.renown, colourEnd);
+                        option.hqRenown.text = string.Format("{0}{1}{2}{3}", colourHeader, endData.power > 0 ? "+" : "", endData.power, colourEnd);
                         //medal
                         switch (endData.medal)
                         {
@@ -684,18 +684,18 @@ public class TransitionUI : MonoBehaviour
 
             //renown tooltip
             string posRenown = "<pos=70%>";
-            int playerRenown = GameManager.i.playerScript.Renown;
-            int renownTotal = playerRenown + data.listOfEndLevelData.Select(x => x.renown).Sum();
+            int playerRenown = GameManager.i.playerScript.Power;
+            int renownTotal = playerRenown + data.listOfEndLevelData.Select(x => x.power).Sum();
             StringBuilder builder = new StringBuilder();
             builder.AppendFormat("{0}<align=\"left\">Carried Over</align>{1}{2}{3}{4}{5}{6}", colourNormal, colourEnd, posRenown, colourNeutral, playerRenown, colourEnd, "\n");
             builder.AppendFormat("{0}<align=\"left\">{1}</align>{2}{3}{4}{5}{6}{7}", colourNormal, GameManager.i.hqScript.GetHqTitle(ActorHQ.Boss), colourEnd, posRenown, colourNeutral, 
-                data.listOfEndLevelData[(int)ActorHQ.Boss - 1].renown, colourEnd, "\n");
+                data.listOfEndLevelData[(int)ActorHQ.Boss - 1].power, colourEnd, "\n");
             builder.AppendFormat("{0}<align=\"left\">{1}</align>{2}{3}{4}{5}{6}{7}", colourNormal, GameManager.i.hqScript.GetHqTitle(ActorHQ.SubBoss1), colourEnd, posRenown, colourNeutral,
-                data.listOfEndLevelData[(int)ActorHQ.SubBoss1 - 1].renown, colourEnd, "\n");
+                data.listOfEndLevelData[(int)ActorHQ.SubBoss1 - 1].power, colourEnd, "\n");
             builder.AppendFormat("{0}<align=\"left\">{1}</align>{2}{3}{4}{5}{6}{7}", colourNormal, GameManager.i.hqScript.GetHqTitle(ActorHQ.SubBoss2), colourEnd, posRenown, colourNeutral,
-                data.listOfEndLevelData[(int)ActorHQ.SubBoss2 - 1].renown, colourEnd, "\n");
+                data.listOfEndLevelData[(int)ActorHQ.SubBoss2 - 1].power, colourEnd, "\n");
             builder.AppendFormat("{0}<align=\"left\">{1}</align>{2}{3}{4}{5}{6}{7}", colourNormal, GameManager.i.hqScript.GetHqTitle(ActorHQ.SubBoss3), colourEnd, posRenown, colourNeutral,
-                data.listOfEndLevelData[(int)ActorHQ.SubBoss3 - 1].renown, colourEnd, "\n");
+                data.listOfEndLevelData[(int)ActorHQ.SubBoss3 - 1].power, colourEnd, "\n");
             tooltipEndRenown.tooltipHeader = string.Format("{0}Player Renown{1}", colourAlert, colourEnd);
             tooltipEndRenown.tooltipMain = builder.ToString();
             tooltipEndRenown.tooltipDetails = string.Format("{0}Total Renown{1}{2}{3}{4}{5}", colourNormal, colourEnd, posRenown, colourNeutral, renownTotal, colourEnd);
@@ -703,7 +703,7 @@ public class TransitionUI : MonoBehaviour
             tooltipEndRenown.y_offset = -50;
             //renown -> update player for renown granted by HQ and update renown display
             renownText.text = renownTotal.ToString();
-            GameManager.i.playerScript.Renown = renownTotal;
+            GameManager.i.playerScript.Power = renownTotal;
             //special tooltip
             specialTooltipEndLevel = new TooltipData()
             {
@@ -741,8 +741,8 @@ public class TransitionUI : MonoBehaviour
             int x_offset = 50;
             int y_offset = 100;
             //hq options -> Populate
-            Debug.AssertFormat(data.listOfHqSprites.Count == data.listOfHqRenown.Count, "Mismatch on count for listOfHqSprites ({0} records) and listOfHqCompatibility ({1} records)",
-                data.listOfHqSprites.Count, data.listOfHqRenown.Count);
+            Debug.AssertFormat(data.listOfHqSprites.Count == data.listOfHqPower.Count, "Mismatch on count for listOfHqSprites ({0} records) and listOfHqCompatibility ({1} records)",
+                data.listOfHqSprites.Count, data.listOfHqPower.Count);
             Debug.AssertFormat(data.listOfHqSprites.Count == data.listOfHqTitles.Count, "Mismatch on count for listOfHqSprites ({0} records) and listOfHqTitles ({1} records)",
                 data.listOfHqSprites.Count, data.listOfHqTitles.Count);
             Debug.AssertFormat(data.listOfHqSprites.Count == data.listOfHqTooltips.Count, "Mismatch on count for listOfHqSprites ({0} records) and listOfHqTooltips ({1} records)",
@@ -750,7 +750,7 @@ public class TransitionUI : MonoBehaviour
             for (int i = 0; i < data.listOfHqSprites.Count; i++)
             {
                 arrayOfHqOptions[i].optionImage.sprite = data.listOfHqSprites[i];
-                arrayOfHqOptions[i].textUpper.text = data.listOfHqRenown[i];
+                arrayOfHqOptions[i].textUpper.text = data.listOfHqPower[i];
                 arrayOfHqOptions[i].textLower.text = string.Format("{0}{1}{2}", colourHeader, data.listOfHqTitles[i], colourEnd);
                 //sprite tooltip
                 if (data.listOfHqTooltips[i] != null)
@@ -777,7 +777,7 @@ public class TransitionUI : MonoBehaviour
             for (int i = 0; i < data.listOfWorkerSprites.Count; i++)
             {
                 arrayOfWorkerOptions[i].optionImage.sprite = data.listOfWorkerSprites[i];
-                arrayOfWorkerOptions[i].textUpper.text = data.listOfWorkerRenown[i];
+                arrayOfWorkerOptions[i].textUpper.text = data.listOfWorkerPower[i];
                 arrayOfWorkerOptions[i].textLower.text = data.listOfWorkerArcs[i];
                 //sprite tooltip
                 if (data.listOfWorkerTooltips[i] != null)

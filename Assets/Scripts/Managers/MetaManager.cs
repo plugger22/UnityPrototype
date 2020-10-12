@@ -107,7 +107,7 @@ public class MetaManager : MonoBehaviour
         //Debug
         if (GameManager.i.testScript.bonusRenown > 0)
         {
-            GameManager.i.playerScript.Renown += GameManager.i.testScript.bonusRenown;
+            GameManager.i.playerScript.Power += GameManager.i.testScript.bonusRenown;
             Debug.LogFormat("[Met] MetaManager.cs -> InitialiseMetaGame: Player gains {0} bonus Renown (Debug){1}", GameManager.i.testScript.bonusRenown, "\n");
         }
     }
@@ -737,7 +737,7 @@ public class MetaManager : MonoBehaviour
                             isActive = metaOption.isActive,
                             isRecommended = metaOption.isRecommended,
                             isSelected = false,
-                            isRenownGain = metaOption.isRenownGain,
+                            isPowerGain = metaOption.isRenownGain,
                             help = 1,
                             tag0 = metaOption.help0,
                             tag1 = metaOption.help1,
@@ -762,7 +762,7 @@ public class MetaManager : MonoBehaviour
                         }
                         //RenownCost (base cost * relationship modifier which is default 1 in case where this doesn't apply)
                         cost *= metaOption.relationshipModifier;
-                        metaData.renownCost = cost;
+                        metaData.powerCost = cost;
                         //header texts
                         if (metaOption.isRenownGain == false)
                         {
@@ -855,7 +855,7 @@ public class MetaManager : MonoBehaviour
                             isRecommended = false,
                             isSelected = false,
                             isCriteria = false,
-                            isRenownGain = false,
+                            isPowerGain = false,
                             tabSide = (MetaTabSide)index,
                             priority = MetaPriority.Low,
                             help = 1,
@@ -918,7 +918,7 @@ public class MetaManager : MonoBehaviour
                         isRecommended = false,
                         isSelected = false,
                         isCriteria = false,
-                        isRenownGain = false,
+                        isPowerGain = false,
                         tabTop = MetaTabTop.Status,
                         priority = MetaPriority.Low,
                         help = 1,
@@ -940,7 +940,7 @@ public class MetaManager : MonoBehaviour
                     isRecommended = false,
                     isSelected = false,
                     isCriteria = false,
-                    isRenownGain = false,
+                    isPowerGain = false,
                     tabTop = MetaTabTop.Selected,
                     priority = MetaPriority.Low,
                     help = 1,
@@ -997,7 +997,7 @@ public class MetaManager : MonoBehaviour
             {
                 transitionInfoData.listOfHqSprites.Add(actor.sprite);
                 transitionInfoData.listOfHqTitles.Add(GameManager.i.hqScript.GetHqTitle(actor.statusHQ));
-                transitionInfoData.listOfHqRenown.Add(actor.Renown.ToString());
+                transitionInfoData.listOfHqPower.Add(actor.Power.ToString());
                 transitionInfoData.listOfHqTooltips.Add(GameManager.i.actorScript.GetHqTransitionTooltip(actor));
             }
             else { Debug.LogErrorFormat("Invalid Actor (Null) for {0}", (ActorHQ)i); }
@@ -1005,8 +1005,8 @@ public class MetaManager : MonoBehaviour
         //error checks
         Debug.AssertFormat(transitionInfoData.listOfHqSprites.Count == count, "Mismatch on listOfHqSprites.Count (has {0} records, should be {1})", transitionInfoData.listOfHqSprites.Count, count);
         Debug.AssertFormat(transitionInfoData.listOfHqTitles.Count == count, "Mismatch on listOfHqTitles.Count (has {0} records, should be {1})", transitionInfoData.listOfHqTitles.Count, count);
-        Debug.AssertFormat(transitionInfoData.listOfHqRenown.Count == count, "Mismatch on listOfHqCompatibility.Count (has {0} records, should be {1})",
-            transitionInfoData.listOfHqRenown.Count, count);
+        Debug.AssertFormat(transitionInfoData.listOfHqPower.Count == count, "Mismatch on listOfHqCompatibility.Count (has {0} records, should be {1})",
+            transitionInfoData.listOfHqPower.Count, count);
         Debug.AssertFormat(transitionInfoData.listOfHqTooltips.Count == count, "Mismatch on listOfHqTootips.Count (has {0} records, should be {1})", transitionInfoData.listOfHqTooltips.Count, count);
         //
         // - - - HQ workers
@@ -1027,7 +1027,7 @@ public class MetaManager : MonoBehaviour
                 {
                     transitionInfoData.listOfWorkerSprites.Add(actor.sprite);
                     transitionInfoData.listOfWorkerArcs.Add(actor.arc.name);
-                    transitionInfoData.listOfWorkerRenown.Add(actor.Renown.ToString());
+                    transitionInfoData.listOfWorkerPower.Add(actor.Power.ToString());
                     transitionInfoData.listOfWorkerTooltips.Add(GameManager.i.actorScript.GetHqTransitionTooltip(actor));
                 }
                 else { Debug.LogErrorFormat("Invalid actor (Null) for listOfWorkers[{0}]", i); }

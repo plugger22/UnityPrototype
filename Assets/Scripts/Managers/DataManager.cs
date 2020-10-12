@@ -4343,7 +4343,7 @@ public class DataManager : MonoBehaviour
             case ActorStatus.Promoted:
             case ActorStatus.Killed:
             case ActorStatus.RecruitPool:
-                //lose secrets (keep record of how many there were to enable accurate renown cost calc's)
+                //lose secrets (keep record of how many there were to enable accurate power cost calc's)
                 actor.departedNumOfSecrets = actor.CheckNumOfSecrets();
                 GameManager.i.secretScript.RemoveAllSecretsFromActor(actor);
                 break;
@@ -5282,13 +5282,13 @@ public class DataManager : MonoBehaviour
                                 //At least one active actor has less than their max allowed number of contacts
                                 if (actor.CheckNewContactAllowed() == true) { numOfActors++; }
                                 break;
-                            case ActorCheck.RenownMore:
+                            case ActorCheck.PowerMore:
                                 //At least one active actor with MORE renown than Player
-                                if (actor.Renown > GameManager.i.playerScript.Renown) { numOfActors++; }
+                                if (actor.Power > GameManager.i.playerScript.Power) { numOfActors++; }
                                 break;
-                            case ActorCheck.RenownLess:
+                            case ActorCheck.PowerLess:
                                 //At least one active actor with LESS renown than Player
-                                if (actor.Renown < GameManager.i.playerScript.Renown) { numOfActors++; }
+                                if (actor.Power < GameManager.i.playerScript.Power) { numOfActors++; }
                                 break;
                             case ActorCheck.KnowsSecret:
                                 //At least one active actor knows at least one of the Player's secrets who doesn't have Blackmailer trait
@@ -5348,13 +5348,13 @@ public class DataManager : MonoBehaviour
                                 //actor with less than max. num of contacts allowed
                                 if (actor.CheckNewContactAllowed() == true) { listOfActors.Add(actor); }
                                 break;
-                            case ActorCheck.RenownMore:
+                            case ActorCheck.PowerMore:
                                 //At least one active actor with MORE renown than Player
-                                if (actor.Renown > GameManager.i.playerScript.Renown) { listOfActors.Add(actor); }
+                                if (actor.Power > GameManager.i.playerScript.Power) { listOfActors.Add(actor); }
                                 break;
-                            case ActorCheck.RenownLess:
+                            case ActorCheck.PowerLess:
                                 //At least one active actor with LESS renown than Player
-                                if (actor.Renown < GameManager.i.playerScript.Renown) { listOfActors.Add(actor); }
+                                if (actor.Power < GameManager.i.playerScript.Power) { listOfActors.Add(actor); }
                                 break;
                             case ActorCheck.KnowsSecret:
                                 //At least one active actor knows at least one of the Player's secrets who doesn't have Blackmailer trait
@@ -5618,13 +5618,13 @@ public class DataManager : MonoBehaviour
                     {
                         builder.Append(string.Format(" ID {0}, {1}, L{2}, {3}-{4}-{5} Un {6}, R{7} {8}{9}", actor.actorID, actor.arc.name, actor.level,
                             actor.GetDatapoint(ActorDatapoint.Datapoint0), actor.GetDatapoint(ActorDatapoint.Datapoint1), actor.GetDatapoint(ActorDatapoint.Datapoint2), actor.unhappyTimer,
-                            actor.Renown, actor.Status, "\n"));
+                            actor.Power, actor.Status, "\n"));
                     }
                     else
                     {
                         builder.Append(string.Format(" hID {0}, {1}, L{2}, {3}-{4}-{5} Un {6}, R{7} {8} {9}{10}", actor.hqID, GameManager.i.hqScript.GetHqTitle(actor.statusHQ), actor.level,
                             actor.GetDatapoint(ActorDatapoint.Datapoint0), actor.GetDatapoint(ActorDatapoint.Datapoint1), actor.GetDatapoint(ActorDatapoint.Datapoint2),
-                            actor.unhappyTimer, actor.Renown, actor.Status, actor.sex, "\n"));
+                            actor.unhappyTimer, actor.Power, actor.Status, actor.sex, "\n"));
                     }
                 }
                 else

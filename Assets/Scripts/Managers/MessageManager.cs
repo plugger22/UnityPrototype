@@ -537,7 +537,7 @@ public class MessageManager : MonoBehaviour
             Message message = new Message();
             message.text = text;
             message.type = MessageType.PLAYER;
-            message.subType = MessageSubType.Plyr_Renown;
+            message.subType = MessageSubType.Plyr_Power;
             message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.data0 = amount;
             message.data1 = dataID;
@@ -4252,7 +4252,7 @@ public class MessageManager : MonoBehaviour
             message.sideLevel = factionHQ.side.level;
             message.isPublic = true;
             message.data0 = GameManager.i.hqScript.GetHqApproval();
-            message.data1 = GameManager.i.playerScript.Renown;
+            message.data1 = GameManager.i.playerScript.Power;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} Support Unavailable", factionHQ.tag);

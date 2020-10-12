@@ -69,7 +69,7 @@ public class ActorRenownTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
             //do once
             while (GameManager.i.tooltipGenericScript.CheckTooltipActive() == false)
             {
-                data = GameManager.i.actorScript.GetRenownActorTooltip();
+                data = GameManager.i.actorScript.GetPowerActorTooltip();
                 data.screenPos = transform.position;
                 if (data != null)
                 { GameManager.i.tooltipGenericScript.SetTooltip(data); }

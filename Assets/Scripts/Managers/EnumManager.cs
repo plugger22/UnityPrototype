@@ -46,7 +46,7 @@
         SomethingWrong,
         PlayerStatus, SideStatus, ActorStatus,
         DebugAI, DebugPlayer,
-        HackingRebootInProgress, HackingInsufficientRenown, HackingInitialising, HackingIndisposed, HackingOffline
+        HackingRebootInProgress, HackingInsufficientPower, HackingInitialising, HackingIndisposed, HackingOffline
     }
 
     //
@@ -138,7 +138,7 @@
         None, CompatibilityNOTZero, NodeActionsNOTZero, TeamActionsNOTZero,
         PersonalGearYes, PersonalGearNo,
         ActorContactMin, ActorContactNOTMax, ActorConflictNOTZero,
-        RenownMore, RenownLess, KnowsSecret, KnowsNothing
+        PowerMore, PowerLess, KnowsSecret, KnowsNothing
     }
     public enum ActorRelationship { None, Friend, Enemy }                                       //relationships between subordinate actors, NOT with the player
 
@@ -170,7 +170,7 @@
     public enum AITaskType { None, Team, Decision, Move, LieLow, StressLeave, Idle, ActorArc, Target, Cure, Dismiss, HQ, Count }  //used for both AI Authority and Rebel sides. Not all options apply to each side.
     public enum AIDebugData { None, Task, Node, Spider, Erasure, Decision}                                      //used for toggling debugGUI.cs  AI data
     public enum AINodeCriteria { None }                                                                         //AIResistanceManager.cs -> ActorArc node task (find node with this criteria)
-    public enum HackingStatus { Offline, Initialising, Rebooting, InsufficientRenown, Indisposed, Possible}     //determines what happens when player clicks AISideTabUI
+    public enum HackingStatus { Offline, Initialising, Rebooting, InsufficientPower, Indisposed, Possible}     //determines what happens when player clicks AISideTabUI
     public enum NemesisMode { Inactive, NORMAL, HUNT }
     public enum NemesisGoal { IDLE, MOVE, LOITER, AMBUSH, SEARCH}
     public enum NpcStatus { Standby, Active, Departed }
@@ -263,7 +263,7 @@
         General_Random,
         //Player
         Plyr_Move,
-        Plyr_Renown,
+        Plyr_Power,
         Plyr_Secret,
         Plyr_Damage,
         Plyr_Escapes,

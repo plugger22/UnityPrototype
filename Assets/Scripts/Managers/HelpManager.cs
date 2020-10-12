@@ -259,15 +259,15 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "transitionEnd_0";
         data.header = "Overview";
-        data.text = string.Format("Each HQ member will grant you {0}Renown{1} according to their {2}assessment{3}. Each assesses you on {4}three criteria{5}", 
+        data.text = string.Format("Each HQ member will grant you {0}Power{1} according to their {2}assessment{3}. Each assesses you on {4}three criteria{5}", 
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
-        //renown
+        //power
         data = new HelpData();
         data.tag = "transitionEnd_1";
-        data.header = "Renown";
-        data.text = string.Format("Their {0}Overall{1} assessment ({2}weighted{3} average of all three criteria) determines how much renown you are given. {4}Senior{5} HQ members will can grant" +
-            ", potentially, {6}more renown{7} than junior members", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        data.header = "Power";
+        data.text = string.Format("Their {0}Overall{1} assessment ({2}weighted{3} average of all three criteria) determines how much Power you are given. {4}Senior{5} HQ members will can grant" +
+            ", potentially, {6}more Power{7} than junior members", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //factors
         data = new HelpData();
@@ -299,14 +299,14 @@ public class HelpManager : MonoBehaviour
         data.tag = "transitionEnd_3";
         data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
         data.text = string.Format("Pay attention to the {0}criteria{1}. The first criteria is {2}3 times more important{3} (weighting) than the last. HQ {4}seniority{5} counts. " +
-            "Each {6}Overall{7} star from the most senior member is worth {8}4x more renown{9} than a star from the most junior member", 
+            "Each {6}Overall{7} star from the most senior member is worth {8}4x more Power{9} than a star from the most junior member", 
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Objective Overview
         data = new HelpData();
         data.tag = "transitionEnd_4";
         data.header = "Overview";
-        data.text = string.Format("{0}Completing{1} Objectives is how you gain the {2}greatest renown{3}. They are the first criteria of the most senior HQ member and are, as a consequence, worth the most",
+        data.text = string.Format("{0}Completing{1} Objectives is how you gain the {2}greatest Power{3}. They are the first criteria of the most senior HQ member and are, as a consequence, worth the most",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Objective pop-up
@@ -326,7 +326,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "transitionHq_0";
         data.header = "HQ Events";
-        data.text = string.Format("Things happen and change people's {0}renown{1} which, in turn, {2}determines{3}, who has what {4}position{5} in the hierarchy ({6}highest to lowest{7})",
+        data.text = string.Format("Things happen and change people's {0}Power{1} which, in turn, {2}determines{3}, who has what {4}position{5} in the hierarchy ({6}highest to lowest{7})",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Type of Event
@@ -339,7 +339,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "transitionHq_2";
         data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
-        data.text = string.Format("These happen in the background and are {0}outside of your control{1} however you can {2}influence{3} who gains or loses renown through {4}HQ events{5}" +
+        data.text = string.Format("These happen in the background and are {0}outside of your control{1} however you can {2}influence{3} who gains or loses Power through {4}HQ events{5}" +
             " which can shake up the hierarchy", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Hq main overview
@@ -353,7 +353,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "transitionHq_4";
         data.header = "Promotion";
-        data.text = string.Format("Promotion is based around {0}renown{1}. The person with the most renown gets the job. The {2}hierarchy{3} are those with the highest renown, in " +
+        data.text = string.Format("Promotion is based around {0}Power{1}. The person with the most Power gets the job. The {2}hierarchy{3} are those with the highest Power, in " +
             "{4}descending order of importance{5}", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //workers
@@ -387,7 +387,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "transitionPlayer_1";
         data.header = "How do Get Rid of Them?";
-        data.text = string.Format("You will be given the {0}opportunity{1} by various HQ Hierarchy members to take care of your problems (it'll {2}cost you{3} Renown) {4}before{5} your next mission",
+        data.text = string.Format("You will be given the {0}opportunity{1} by various HQ Hierarchy members to take care of your problems (it'll {2}cost you{3} Power) {4}before{5} your next mission",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
@@ -449,14 +449,14 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "metaGameUI_2";
         data.header = "How many can I select?";
-        data.text = string.Format("You can select up to {0}{1} options{2} of any type, provided you have {3}enough renown{4} to pay for them",
+        data.text = string.Format("You can select up to {0}{1} options{2} of any type, provided you have {3}enough Power{4} to pay for them",
             colourAlert, GameManager.i.metaScript.numOfChoices, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
-        //Carry Over Renown
+        //Carry Over Power
         data = new HelpData();
         data.tag = "metaGameUI_3";
         data.header = string.Format("{0}Do I have to?{1}", colourTip, colourEnd);
-        data.text = string.Format("You don't have to select any options. Any {0}renown{1} you have will {2}carry over{3} to your {4}next assignment{5}",
+        data.text = string.Format("You don't have to select any options. Any {0}Power{1} you have will {2}carry over{3} to your {4}next assignment{5}",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Reset button
@@ -469,26 +469,26 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "metaGameUI_5";
         data.header = string.Format("{0}Why would I Reset?{1}", colourTip, colourEnd);
-        data.text = string.Format("It will give you a {0}blank slate{1} from which to choose options again, or allow you to exit (press CONFIRM) and {2}save your renown{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("It will give you a {0}blank slate{1} from which to choose options again, or allow you to exit (press CONFIRM) and {2}save your Power{3}", colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Confirm button
         data = new HelpData();
         data.tag = "metaGameUI_6";
         data.header = "Confirm Button";
-        data.text = string.Format("{0}Selected{1} Options will be {2}locked in{3} and any {4}remaining renown{5} will carry over to your {6}next assignment{7}",
+        data.text = string.Format("{0}Selected{1} Options will be {2}locked in{3} and any {4}remaining Power{5} will carry over to your {6}next assignment{7}",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Confirm button tip
         data = new HelpData();
         data.tag = "metaGameUI_7";
         data.header = string.Format("{0}Can I press this if I haven't selected anything?{1}", colourTip, colourEnd);
-        data.text = string.Format("Yes you can. You'll exit the HQ Options and your {0}renown{1} will carry over to your {2}next assignment{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("Yes you can. You'll exit the HQ Options and your {0}Power{1} will carry over to your {2}next assignment{3}", colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Recommended button
         data = new HelpData();
         data.tag = "metaGameUI_8";
         data.header = "Recommended Button";
-        data.text = string.Format("Recommended options will be selected, within your Renown allowance, and {0}all other options deselected{1}", colourAlert, colourEnd);
+        data.text = string.Format("Recommended options will be selected, within your Power allowance, and {0}all other options deselected{1}", colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Recommended button tip
         data = new HelpData();
@@ -528,17 +528,17 @@ public class HelpManager : MonoBehaviour
         data.header = string.Format("{0}What can I do here?{1}", colourTip, colourEnd);
         data.text = string.Format("You can {0}do anything here{1} that you would normally do in any other tab", colourAlert, colourEnd);
         listOfHelp.Add(data);
-        //Renown
+        //Power
         data = new HelpData();
         data.tag = "metaGameUI_15";
-        data.header = "Renown";
-        data.text = string.Format("Shows the amount of Renown you have {0}available to spend{1} on options. It goes {2}up and down{3} as you make select and deselect options", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.header = "Power";
+        data.text = string.Format("Shows the amount of Power you have {0}available to spend{1} on options. It goes {2}up and down{3} as you make select and deselect options", colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
-        //Remaining Renown
+        //Remaining Power
         data = new HelpData();
         data.tag = "metaGameUI_16";
         data.header = string.Format("{0}Do I have to spend it all?{1}", colourTip, colourEnd);
-        data.text = string.Format("No. You can spend {0}nothing{1} (press CONFIRM to exit) if you wish. Any renown you have will {2}carry over{3} to your next assignment", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("No. You can spend {0}nothing{1} (press CONFIRM to exit) if you wish. Any Power you have will {2}carry over{3} to your next assignment", colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 
@@ -1081,7 +1081,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "questionable_3";
         data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
-        data.text = string.Format("You can ask Rebel HQ to quietly {0}Dispose Of{1} a QUESTIONABLE subordinate at {2}no cost{3} in Renown if you suspect that they might be a traitor",
+        data.text = string.Format("You can ask Rebel HQ to quietly {0}Dispose Of{1} a QUESTIONABLE subordinate at {2}no cost{3} in Power if you suspect that they might be a traitor",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
@@ -1161,14 +1161,14 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "addict_1";
         data.header = "Feeding your Habit";
-        data.text = string.Format("If you fail your Addiction Check you will need to spend {0}{1} Renown{2} to obtain enough {3}{4}{5} to feed your Addiction. ",
-            colourAlert, GameManager.i.actorScript.playerAddictedRenownCost, colourEnd, colourAlert, GameManager.i.globalScript.tagGlobalDrug, colourEnd);
+        data.text = string.Format("If you fail your Addiction Check you will need to spend {0}{1} Power{2} to obtain enough {3}{4}{5} to feed your Addiction. ",
+            colourAlert, GameManager.i.actorScript.playerAddictedPowerCost, colourEnd, colourAlert, GameManager.i.globalScript.tagGlobalDrug, colourEnd);
         listOfHelp.Add(data);
         //Chance of Breakdowns
         data = new HelpData();
         data.tag = "addict_2";
-        data.header = "Insufficient Renown";
-        data.text = string.Format("If you don't have enough Renown on hand you are assumed to suffer {0}withdrawal symptoms{1}. HQ will notice and express their disapproval ({2}Approval -1{3})",
+        data.header = "Insufficient Power";
+        data.text = string.Format("If you don't have enough Power on hand you are assumed to suffer {0}withdrawal symptoms{1}. HQ will notice and express their disapproval ({2}Approval -1{3})",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Recovering from Addiction
@@ -1240,9 +1240,9 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "stressLeave_1";
         data.header = "Taking Stress Leave";
-        data.text = string.Format("It's {0}quicker{1} (one turn) than Lying Low but costs {2}{3}{4} Renown. You are {5}Safe{6} while taking Stress Leave",
+        data.text = string.Format("It's {0}quicker{1} (one turn) than Lying Low but costs {2}{3}{4} Power. You are {5}Safe{6} while taking Stress Leave",
             colourAlert, colourEnd, colourAlert,
-            GameManager.i.sideScript.PlayerSide.level == 1 ? GameManager.i.actorScript.stressLeaveRenownCostAuthority : GameManager.i.actorScript.stressLeaveRenownCostResistance,
+            GameManager.i.sideScript.PlayerSide.level == 1 ? GameManager.i.actorScript.stressLeavePowerCostAuthority : GameManager.i.actorScript.stressLeavePowerCostResistance,
             colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Chance of Breakdowns
@@ -1350,7 +1350,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "hq_over_1";
         data.header = "HQ's Opinion of You";
-        data.text = string.Format("The level of {0}HQ Approval{1} (top centre) reflects your standing with your HQ as a whole. Each HQ member has a personal opinion of you according to their {2}Opinion{3}",
+        data.text = string.Format("The level of {0}HQ Approval{1} (top centre) reflects your standing with your HQ as a whole. Each HQ member has a personal {2}Opinion{3} of you",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Hierarchy
@@ -1412,7 +1412,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "hq_supp_0";
         data.header = "HQ Support";
         builder = new StringBuilder();
-        builder.AppendFormat("At the start of each turn your HQ decides whether to provide you with assistance ({0}+1 Renown{1}) or not. ", colourAlert, colourEnd);
+        builder.AppendFormat("At the start of each turn your HQ decides whether to provide you with assistance ({0}+1 Power{1}) or not. ", colourAlert, colourEnd);
         builder.AppendFormat("The chance of it doing so depends on your level of {0}HQ Approval{1}. ", colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
@@ -1430,8 +1430,8 @@ public class HelpManager : MonoBehaviour
         data.tag = "hq_supp_2";
         data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
         builder = new StringBuilder();
-        builder.AppendFormat("Renown is the {0}currency{1} of the game. The more you have the more you can do. ", colourAlert, colourEnd);
-        builder.AppendFormat("Your main source of Renown is from the support of your HQ. Aim to keep a {0}positive relationship{1} with them where ever possible.", colourAlert, colourEnd);
+        builder.AppendFormat("Power is the {0}currency{1} of the game. The more you have the more you can do. ", colourAlert, colourEnd);
+        builder.AppendFormat("Your main source of Power is from the support of your HQ. Aim to keep a {0}positive relationship{1} with them where ever possible.", colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
         #endregion
@@ -1484,7 +1484,7 @@ public class HelpManager : MonoBehaviour
         int approval = 5;
         data.header = string.Format("{0}HQ Support{1}", colourTip, colourEnd);
         builder = new StringBuilder();
-        builder.AppendFormat("HQ make a decision, each turn, whether to offer you support ({0}+1 Renown{1}). ", colourAlert, colourEnd);
+        builder.AppendFormat("HQ make a decision, each turn, whether to offer you support ({0}+1 Power{1}). ", colourAlert, colourEnd);
         builder.AppendFormat("Your {0}chance{1} of receiving support is equal to your level of {2}HQ Approval x 10{3}, eg. Approval {4} so {5}% chance", colourAlert, colourEnd,
             colourAlert, colourEnd, approval, approval * 10);
         data.text = builder.ToString();
@@ -1586,7 +1586,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "metaDevice_1";
         data.header = "Variable Cost";
         data.text = string.Format("The {0}cost{1} of this option {2}varies{3} dependant on your superior's current {4}opinion{5} of you. The better their opinion ({6}Opinion{7}) " +
-            "the less Renown it will cost", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+            "the less Power it will cost", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Poor Relationship
         data = new HelpData();
@@ -1612,7 +1612,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "metaActive_0";
         data.header = "Active Option";
-        data.text = string.Format("This is a live option that you can {0}select{1} if you have {2}enough renown{3} available", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("This is a live option that you can {0}select{1} if you have {2}enough Power{3} available", colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //limit
         data = new HelpData();
@@ -1642,7 +1642,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "metaInactive_1";
         data.header = "Why?";
-        data.text = string.Format("Options can have {0}criteria{1} that need to be met or it could be that you {2}don't have enough Renown{3} to pay for it", colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("Options can have {0}criteria{1} that need to be met or it could be that you {2}don't have enough Power{3} to pay for it", colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Are all inActive options shown?
         data = new HelpData();
@@ -1790,7 +1790,7 @@ public class HelpManager : MonoBehaviour
         data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
         builder = new StringBuilder();
         builder.AppendFormat("Avoid {0}conflicts{1} with any of your subordinates that know of your secrets. It's too risky. ", colourAlert, colourEnd);
-        builder.AppendFormat("If you are thinking of removing them, try and do so {0}before{1} they know your secrets as it costs less Renown", colourAlert, colourEnd);
+        builder.AppendFormat("If you are thinking of removing them, try and do so {0}before{1} they know your secrets as it costs less Power", colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
         //Revealed
@@ -1823,7 +1823,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "cure_2";
         data.header = "Details";
-        data.text = string.Format("There is {0}no Renown or Invisibilty penalty{1} for a cure but an {2}Action{3} will be used. Cures, once available, do not {4}time out{5}", colourAlert, colourEnd,
+        data.text = string.Format("There is {0}no Power or Invisibilty penalty{1} for a cure but an {2}Action{3} will be used. Cures, once available, do not {4}time out{5}", colourAlert, colourEnd,
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Tip
@@ -2202,11 +2202,11 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("{0}Left Click{1} on the {2}District{3} if you have the correct subordinate, or you are in the District, and mouseover {4}Attempt Target{5} to see your chances of success",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
-        //Renown
+        //Power
         data = new HelpData();
         data.tag = "target_3";
-        data.header = "Renown";
-        data.text = string.Format("If there is Renown to be gained from {0}successfully{1} attempting the target, whoever attempts the target gets the Renown ({1}Player or Subordinate{2})",
+        data.header = "Power";
+        data.text = string.Format("If there is Power to be gained from {0}successfully{1} attempting the target, whoever attempts the target gets the Power ({1}Player or Subordinate{2})",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion

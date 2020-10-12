@@ -395,7 +395,7 @@ public class ItemDataManager : MonoBehaviour
         else
         {
             builder.AppendFormat("<b>{0}You did not have enough{1}Renown ({2} needed){3}{4}to buy more drugs{5}{6}HQ Approval -1</b>{7}{8}{9}", colourAlert, "\n",
-         GameManager.i.actorScript.playerAddictedRenownCost, colourEnd, "\n", "\n", colourBad, colourEnd, "\n", "\n");
+         GameManager.i.actorScript.playerAddictedPowerCost, colourEnd, "\n", "\n", colourBad, colourEnd, "\n", "\n");
         }
         builder.AppendFormat("<b>{0}You have Immunity from Stress{1}{2}for {3}{4} day{5}{6}", colourGood, colourEnd, "\n", colourNeutral, currentDays, currentDays != 1 ? "s" : "", colourEnd);
         return builder.ToString();

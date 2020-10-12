@@ -2848,7 +2848,7 @@ public class AIManager : MonoBehaviour
         //pass timer
         data.rebootTimer = rebootTimer;
         //decision test
-        data.renownDecision = string.Format("Hack AI for {0}{1}{2} Renown", colourNeutral, hackingModifiedCost, colourEnd);
+        data.powerDecision = string.Format("Hack AI for {0}{1}{2} Renown", colourNeutral, hackingModifiedCost, colourEnd);
         //if tasks are present, process into descriptor strings
         if (count > 0)
         {
@@ -3800,7 +3800,7 @@ public class AIManager : MonoBehaviour
                 case ActorStatus.Active:
                     int playerRenown = renown;
                     if (playerRenown == 0)
-                    { playerRenown = GameManager.i.playerScript.Renown; }
+                    { playerRenown = GameManager.i.playerScript.Power; }
                     if (isRebooting == true)
                     {
                         //AI Security System rebooting, Hacking is unavailable
@@ -3835,7 +3835,7 @@ public class AIManager : MonoBehaviour
                                 //insufficient renown -> Greyed out
                                 data.topText = string.Format("{0}A.I{1}", colourGrey, colourEnd);
                                 data.bottomText = string.Format("{0}{1}{2}", colourGrey, hackingModifiedCost, colourEnd);
-                                data.status = HackingStatus.InsufficientRenown;
+                                data.status = HackingStatus.InsufficientPower;
                                 builder.AppendFormat("You can hack the AI for {0}{1}{2}{3} Renown{4}{5}", "\n", colourBad, hackingModifiedCost, colourEnd, "\n", gearEffect);
                             }
                             //AI countermeasures
@@ -4388,7 +4388,7 @@ public class AIManager : MonoBehaviour
     public void UpdateHackingCost(bool isDetected, int attemptsDetected, int attemptsTotal)
     {
         //deduct cost
-        int renown = GameManager.i.playerScript.Renown;
+        int renown = GameManager.i.playerScript.Power;
         //ai gear effects?
         Tuple <int, string> results = GetHackingCost(true);
         hackingModifiedCost = results.Item1;
@@ -4396,7 +4396,7 @@ public class AIManager : MonoBehaviour
         //update Player renown
         renown -= hackingModifiedCost;
         Debug.Assert(renown >= 0, "Invalid Renown cost (below zero)");
-        GameManager.i.playerScript.Renown = renown;
+        GameManager.i.playerScript.Power = renown;
         //message
         GameManager.i.messageScript.AIHacked("AI has been hacked", hackingModifiedCost, isDetected, attemptsDetected, attemptsTotal);
     }
@@ -4493,7 +4493,7 @@ public class AIManager : MonoBehaviour
         int tempCost = 0;
         string gearEffect = "";
         //deduct cost
-        int renown = GameManager.i.playerScript.Renown;
+        int renown = GameManager.i.playerScript.Power;
         string textGear;
         //ai gear effects?
         if (CheckAIGearEffectPresent(cheapHackingEffectText) == true && CheckAIGearEffectPresent(freeHackingEffectText) == false)

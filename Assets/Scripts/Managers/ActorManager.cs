@@ -35,16 +35,16 @@ public class ActorManager : MonoBehaviour
     [Range(5, 15)] public int currentReserveTimer = 10;
     [Tooltip("Actor Recruited and placed in Reserves. Their unhappy timer will be set to this number of turns.")]
     [Range(1, 10)] public int recruitedReserveTimer = 5;
-    [Tooltip("Renown cost for threatening an actor in the Reserve Pool")]
-    [Range(1, 3)] public int renownCostThreaten = 1;
-    [Tooltip("Base Renown cost for carrying out Manage Reserve Actor actions")]
-    [Range(1, 5)] public int manageReserveRenown = 1;
-    [Tooltip("Base Renown cost for carrying out Manage Dismiss Actor actions")]
-    [Range(1, 5)] public int manageDismissRenown = 2;
-    [Tooltip("Extra renown cost to dismiss or displose per secret known, added to base  costs before other modifiers")]
-    [Range(0, 3)] public int manageSecretRenown = 2;
-    [Tooltip("Base Renown cost for carrying out Manage Dispose Actor actions")]
-    [Range(1, 5)] public int manageDisposeRenown = 3;
+    [Tooltip("Power cost for threatening an actor in the Reserve Pool")]
+    [Range(1, 3)] public int powerCostThreaten = 1;
+    [Tooltip("Base Power cost for carrying out Manage Reserve Actor actions")]
+    [Range(1, 5)] public int manageReservePower = 1;
+    [Tooltip("Base Power cost for carrying out Manage Dismiss Actor actions")]
+    [Range(1, 5)] public int manageDismissPower = 2;
+    [Tooltip("Extra Power cost to dismiss or displose per secret known, added to base  costs before other modifiers")]
+    [Range(0, 3)] public int manageSecretPower = 2;
+    [Tooltip("Base Power cost for carrying out Manage Dispose Actor actions")]
+    [Range(1, 5)] public int manageDisposePower = 3;
     [Tooltip("Once actor is unhappy, the chance per turn (1d100) of losing opinion -1")]
     [Range(1, 99)] public int unhappyLoseOpinionChance = 40;
     [Tooltip("Once actor in Reserves is unhappy and has opinion 0 the chance of them acting on their dissatisfaction / turn")]
@@ -69,8 +69,8 @@ public class ActorManager : MonoBehaviour
     [Range(1, 30)] public int dismissQuestionableChance = 15;
 
     [Header("Assorted")]
-    [Tooltip("Renown cost for negating a bad gear use roll")]
-    [Range(1, 3)] public int renownCostGear = 1;
+    [Tooltip("Power cost for negating a bad gear use roll")]
+    [Range(1, 3)] public int powerCostGear = 1;
 
     [Header("Condition Related")]
     [Tooltip("Chance of a character with the Stressed condition having a breakdown and missing a turn")]
@@ -91,10 +91,10 @@ public class ActorManager : MonoBehaviour
     [Range(1, 10)] public int playerDoomTimerValue = 8;
     [Tooltip("Doom timer value when a cure will automatically be provided, if none already")]
     [Range(1, 10)] public int playerDoomFailSafeValue = 4;
-    [Tooltip("Chance of an Addicted Player/Actor needing to spend renown to buy supplies of Dust to feed their addiction, % per turn")]
+    [Tooltip("Chance of an Addicted Player/Actor needing to spend Power to buy supplies of Dust to feed their addiction, % per turn")]
     [Range(0, 100)] public int playerAddictedChance = 20;
-    [Tooltip("Amount of Renown player needs to spend to feed their addiction every time chance comes up true. If not enough renown available then -1 HQ support")]
-    [Range(1, 10)] public int playerAddictedRenownCost = 2;
+    [Tooltip("Amount of Power player needs to spend to feed their addiction every time chance comes up true. If not enough Power available then -1 HQ support")]
+    [Range(1, 10)] public int playerAddictedPowerCost = 2;
     [Tooltip("Initial amount of time (# of turns) that an addicted player will be immune from stress after taking a shot of the drug")]
     [Range(1, 10)] public int playerAddictedImmuneStart = 6;
     [Tooltip("Minimum amount of time (# of turns) that taking the drug will provide immunity from stress for")]
@@ -103,10 +103,10 @@ public class ActorManager : MonoBehaviour
     [Range(0, 5)] public int playerAddictedExempt = 2;
 
     [Header("Stress Leave")]
-    [Tooltip("Renown cost for Authority player or actor to take stress leave")]
-    [Range(0, 5)] public int stressLeaveRenownCostAuthority = 2;
-    [Tooltip("Renown cost for Resistance player or actor to take stress leave")]
-    [Range(0, 5)] public int stressLeaveRenownCostResistance = 2;
+    [Tooltip("Power cost for Authority player or actor to take stress leave")]
+    [Range(0, 5)] public int stressLeavePowerCostAuthority = 2;
+    [Tooltip("Power cost for Resistance player or actor to take stress leave")]
+    [Range(0, 5)] public int stressLeavePowerCostResistance = 2;
     [Tooltip("Stress leave can only be taken with the approval of HQ (default true). Human player side only (AI ignores)")]
     public bool stressLeaveHQApproval = true;
 
@@ -115,11 +115,11 @@ public class ActorManager : MonoBehaviour
     [Range(1, 10)] public int lieLowCooldownPeriod = 5;
 
     [Header("MetaGame")]
-    [Tooltip("Renown multiplier, when actor joins HQ, for Promoted actor")]
-    [Range(1, 5)] public int renownFactorPromoted = 3;
-    [Tooltip("Renown multiplier, if actor joins HQ, for all other Actors (OnMap / Resigned / Dismissed")]
-    [Range(1, 5)] public int renownFactorOthers = 2;
-    [Tooltip("Base amount added to renown (adjusted by multiplier above) to determine % chance of actor being promoted to HQ")]
+    [Tooltip("Power multiplier, when actor joins HQ, for Promoted actor")]
+    [Range(1, 5)] public int powerFactorPromoted = 3;
+    [Tooltip("Power multiplier, if actor joins HQ, for all other Actors (OnMap / Resigned / Dismissed")]
+    [Range(1, 5)] public int powerFactorOthers = 2;
+    [Tooltip("Base amount added to Power (adjusted by multiplier above) to determine % chance of actor being promoted to HQ")]
     [Range(0, 50)] public int baseHqAmount = 15;
 
     [Header("Actor to Actor Relations")]
@@ -895,7 +895,7 @@ public class ActorManager : MonoBehaviour
                         {
                             //Update actor Panel
                             GameManager.i.actorPanelScript.UpdateActorPanel();
-                            //Update renown data
+                            //Update Power data
                             for (int i = 0; i < maxNumOfOnMapActors; i++)
                             {
                                 //check actor is present in slot (not vacant)
@@ -903,7 +903,7 @@ public class ActorManager : MonoBehaviour
                                 {
                                     Actor actor = GameManager.i.dataScript.GetCurrentActor(i, side);
                                     if (actor != null)
-                                    { GameManager.i.actorPanelScript.UpdateActorRenownUI(i, actor.Renown); }
+                                    { GameManager.i.actorPanelScript.UpdateActorPowerUI(i, actor.Power); }
                                 }
                             }
                         }
@@ -1087,7 +1087,7 @@ public class ActorManager : MonoBehaviour
     {
         int numOfArcs, level;
         int numOfActors = GameManager.i.hqScript.numOfActorsHQ;
-        int renownFactor = GameManager.i.hqScript.renownFactor;
+        int powerFactor = GameManager.i.hqScript.renownFactor;
         int[] arrayOfLevels = new int[] { 3, 3, 3, 3, 2, 2, 2, 1, 1 }; //weighted towards higher calibre actors
         List<ActorArc> listOfArcs;
         List<Actor> listOfActors = new List<Actor>();
@@ -1224,11 +1224,11 @@ public class ActorManager : MonoBehaviour
                     { counter--; }
                     //assign to actor
                     actor.statusHQ = statusHQ;
-                    //assign renown (Boss has highest, rest get progressively less, closer to the boss you are the more important the position)
-                    actor.Renown = (numOfActors + 2 - counter) * renownFactor;
+                    //assign Power (Boss has highest, rest get progressively less, closer to the boss you are the more important the position)
+                    actor.Power = (numOfActors + 2 - counter) * powerFactor;
                     actor.AddHistory(new HistoryActor() { text = string.Format("Assigned to {0} position at HQ", GameManager.i.hqScript.GetHqTitle(actor.statusHQ)) });
-                    Debug.LogFormat("[HQ] ActorManager.cs -> InitialiseHqActors: {0}, {1}, hqID {2}, renown {3} assigned to Hierarchy{4}", actor.actorName,
-                        GameManager.i.hqScript.GetHqTitle(actor.statusHQ), actor.hqID, actor.Renown, "\n");
+                    Debug.LogFormat("[HQ] ActorManager.cs -> InitialiseHqActors: {0}, {1}, hqID {2}, Power {3} assigned to Hierarchy{4}", actor.actorName,
+                        GameManager.i.hqScript.GetHqTitle(actor.statusHQ), actor.hqID, actor.Power, "\n");
                 }
             }
             else { Debug.LogError("Invalid arrayOfActorsHQ (Null)"); }
@@ -1252,13 +1252,13 @@ public class ActorManager : MonoBehaviour
             if (actor != null)
             {
                 actor.statusHQ = ActorHQ.Worker;
-                actor.Renown = Random.Range(1, 6);
+                actor.Power = Random.Range(1, 6);
                 //NOTE: need to add to Dictionary BEFORE adding to Pool (Debug.Assert checks dictOfActors.Count in AddActorToPool)
                 if (GameManager.i.dataScript.AddHqActor(actor) == true)
                 {
                     GameManager.i.dataScript.AddActorToHqPool(actor.hqID);
                     actor.AddHistory(new HistoryActor() { text = string.Format("Assigned to HQ as a {0}", GameManager.i.hqScript.GetHqTitle(actor.statusHQ)) });
-                    Debug.LogFormat("[HQ] ActorManager.cs -> InitialiseHqWorkers: {0}, {1}, hqID {2}, renown {3}, WORKER, added to hq Pool{4}", actor.actorName, actor.arc.name, actor.hqID, actor.Renown, "\n");
+                    Debug.LogFormat("[HQ] ActorManager.cs -> InitialiseHqWorkers: {0}, {1}, hqID {2}, Power {3}, WORKER, added to hq Pool{4}", actor.actorName, actor.arc.name, actor.hqID, actor.Power, "\n");
                 }
             }
             else { Debug.LogWarning(string.Format("Invalid Authority actorOne (Null) for actorArc \"{0}\"", arc.name)); }
@@ -1364,7 +1364,7 @@ public class ActorManager : MonoBehaviour
                 // - - - OnMap actor (pool actors already in dictionary)
                 if (slotID > -1)
                 {
-                    actor.Renown = 0;
+                    actor.Power = 0;
                     //add to data collections
                     GameManager.i.dataScript.AddCurrentActor(side, actor, slotID);
                     GameManager.i.dataScript.AddActor(actor);
@@ -1589,15 +1589,15 @@ public class ActorManager : MonoBehaviour
                                                     {
                                                         //Effect criteria O.K -> tool tip text
                                                         if (builder.Length > 0) { builder.AppendLine(); }
-                                                        if (effect.outcome.name.Equals("Renown", StringComparison.Ordinal) == false && effect.outcome.name.Equals("Invisibility", StringComparison.Ordinal) == false)
+                                                        if (effect.outcome.name.Equals("Power", StringComparison.Ordinal) == false && effect.outcome.name.Equals("Invisibility", StringComparison.Ordinal) == false)
                                                         { builder.AppendFormat("{0}{1}{2}", colourEffect, effect.description, colourEnd); }
                                                         else
                                                         {
-                                                            //handle renown & invisibility situations - players or actors?
+                                                            //handle Power & invisibility situations - players or actors?
                                                             if (nodeID == playerID)
                                                             {
-                                                                //player affected (good for renown, bad for invisibility)
-                                                                if (effect.outcome.name.Equals("Renown", StringComparison.Ordinal))
+                                                                //player affected (good for Power, bad for invisibility)
+                                                                if (effect.outcome.name.Equals("Power", StringComparison.Ordinal))
                                                                 { builder.AppendFormat("{0}Player {1}{2}", colourGood, effect.description, colourEnd); }
                                                                 else
                                                                 {
@@ -1863,7 +1863,7 @@ public class ActorManager : MonoBehaviour
                                             {
                                                 //Effect criteria O.K -> tool tip text
                                                 if (builder.Length > 0) { builder.AppendLine(); }
-                                                if (effect.outcome.name.Equals("Renown", StringComparison.Ordinal) == false)
+                                                if (effect.outcome.name.Equals("Power", StringComparison.Ordinal) == false)
                                                 {
                                                     //sort out colour, remember effect.typeOfEffect is from POV of resistance so good will be bad for authority
                                                     if (effect.typeOfEffect != null)
@@ -1900,7 +1900,7 @@ public class ActorManager : MonoBehaviour
                                                         }
                                                     }
                                                 }
-                                                //actor automatically accumulates renown for their faction
+                                                //actor automatically accumulates Power for their faction
                                                 else
                                                 { builder.AppendFormat("{0}{1} {2}{3}", colourAuthority, actor.arc.name, effect.description, colourEnd); }
 
@@ -2145,8 +2145,8 @@ public class ActorManager : MonoBehaviour
                             //
                             if (actor.CheckConditionPresent(conditionStressed) == true)
                             {
-                                //must be stressed and have enough renown
-                                if (GameManager.i.playerScript.Renown >= stressLeaveRenownCostResistance)
+                                //must be stressed and have enough Power
+                                if (GameManager.i.playerScript.Power >= stressLeavePowerCostResistance)
                                 {
                                     //can't take Stress Leave if a Surveillance Crackdown is in place
                                     if (securityState != AuthoritySecurityState.SurveillanceCrackdown)
@@ -2158,7 +2158,7 @@ public class ActorManager : MonoBehaviour
                                                 ModalActionDetails leaveActionDetails = new ModalActionDetails() { };
                                                 leaveActionDetails.side = playerSide;
                                                 leaveActionDetails.actorDataID = actor.actorID;
-                                                leaveActionDetails.renownCost = stressLeaveRenownCostResistance;
+                                                leaveActionDetails.powerCost = stressLeavePowerCostResistance;
                                                 tooltipText = "Stress is a debilitating condition which can chew a person up into little pieces if left untreated";
                                                 EventButtonDetails leaveDetails = new EventButtonDetails()
                                                 {
@@ -2193,8 +2193,8 @@ public class ActorManager : MonoBehaviour
                                 else
                                 {
                                     if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                    infoBuilder.AppendFormat("{0}Insufficient Renown for Stress Leave (need {1}{2}{3}{4}{5}){6}", colourAlert, colourEnd, colourNeutral,
-                                        stressLeaveRenownCostResistance, colourEnd, colourAlert, colourEnd);
+                                    infoBuilder.AppendFormat("{0}Insufficient Power for Stress Leave (need {1}{2}{3}{4}{5}){6}", colourAlert, colourEnd, colourNeutral,
+                                        stressLeavePowerCostResistance, colourEnd, colourAlert, colourEnd);
                                 }
                             }
                         }
@@ -2411,7 +2411,7 @@ public class ActorManager : MonoBehaviour
                     {
                         if (actor.CheckConditionPresent(conditionStressed) == true)
                         {
-                            if (GameManager.i.playerScript.Renown >= stressLeaveRenownCostAuthority)
+                            if (GameManager.i.playerScript.Power >= stressLeavePowerCostAuthority)
                             {
                                 //
                                 // - - - Stress Leave - - -
@@ -2419,7 +2419,7 @@ public class ActorManager : MonoBehaviour
                                 ModalActionDetails leaveActionDetails = new ModalActionDetails() { };
                                 leaveActionDetails.side = playerSide;
                                 leaveActionDetails.actorDataID = actor.actorID;
-                                leaveActionDetails.renownCost = stressLeaveRenownCostAuthority;
+                                leaveActionDetails.powerCost = stressLeavePowerCostAuthority;
                                 tooltipText = "Stress is a debilitating condition which can chew a person up into little pieces if left untreated";
                                 EventButtonDetails leaveDetails = new EventButtonDetails()
                                 {
@@ -2434,7 +2434,7 @@ public class ActorManager : MonoBehaviour
                                 tempList.Add(leaveDetails);
                             }
                             else
-                            { infoBuilder.AppendFormat("Stress Leave requires {0}{1}{2} Renown", colourNeutral, stressLeaveRenownCostAuthority, colourEnd); }
+                            { infoBuilder.AppendFormat("Stress Leave requires {0}{1}{2} Power", colourNeutral, stressLeavePowerCostAuthority, colourEnd); }
                         }
                         else
                         { infoBuilder.AppendFormat("Need to be {0}Stressed{1} in order to take Leave", colourNeutral, colourEnd); }
@@ -2791,8 +2791,8 @@ public class ActorManager : MonoBehaviour
                         //
                         if (GameManager.i.playerScript.CheckConditionPresent(conditionStressed, playerSide) == true)
                         {
-                            //must be stressed and have enough renown
-                            if (GameManager.i.playerScript.Renown >= stressLeaveRenownCostResistance)
+                            //must be stressed and have enough Power
+                            if (GameManager.i.playerScript.Power >= stressLeavePowerCostResistance)
                             {
                                 //can't take Stress Leave if a Surveillance Crackdown is in place
                                 if (securityState != AuthoritySecurityState.SurveillanceCrackdown)
@@ -2804,7 +2804,7 @@ public class ActorManager : MonoBehaviour
                                             ModalActionDetails leaveActionDetails = new ModalActionDetails();
                                             leaveActionDetails.side = playerSide;
                                             leaveActionDetails.actorDataID = GameManager.i.playerScript.actorID;
-                                            leaveActionDetails.renownCost = stressLeaveRenownCostResistance;
+                                            leaveActionDetails.powerCost = stressLeavePowerCostResistance;
                                             tooltipText = "It's a wise person who knows when to step back for a moment and gather their thoughts";
                                             EventButtonDetails leaveDetails = new EventButtonDetails()
                                             {
@@ -2839,7 +2839,7 @@ public class ActorManager : MonoBehaviour
                             else
                             {
                                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                                infoBuilder.AppendFormat("{0}Insufficient Renown for Stress Leave (need {1}{2}{3}{4}{5}){6}", colourAlert, colourEnd, colourNeutral, stressLeaveRenownCostResistance,
+                                infoBuilder.AppendFormat("{0}Insufficient Power for Stress Leave (need {1}{2}{3}{4}{5}){6}", colourAlert, colourEnd, colourNeutral, stressLeavePowerCostResistance,
                                     colourEnd, colourAlert, colourEnd);
                             }
                         }
@@ -2932,15 +2932,15 @@ public class ActorManager : MonoBehaviour
             //Player is stressed
             if (GameManager.i.playerScript.CheckConditionPresent(conditionStressed, GameManager.i.sideScript.PlayerSide) == true)
             {
-                //Player has enough renown
-                if (GameManager.i.playerScript.Renown >= stressLeaveRenownCostAuthority)
+                //Player has enough Power
+                if (GameManager.i.playerScript.Power >= stressLeavePowerCostAuthority)
                 {
                     if (GameManager.i.hqScript.isHqRelocating == false)
                     {
                         ModalActionDetails leaveActionDetails = new ModalActionDetails();
                         leaveActionDetails.side = playerSide;
                         leaveActionDetails.actorDataID = GameManager.i.playerScript.actorID;
-                        leaveActionDetails.renownCost = stressLeaveRenownCostAuthority;
+                        leaveActionDetails.powerCost = stressLeavePowerCostAuthority;
                         tooltipText = "It's a wise person who knows when to step back for a moment and gather their thoughts";
                         EventButtonDetails leaveDetails = new EventButtonDetails()
                         {
@@ -2960,7 +2960,7 @@ public class ActorManager : MonoBehaviour
                         infoBuilder.AppendFormat("{0}Lie Low unavailable as HQ Relocating{1}", colourAlert, colourEnd);
                     }
                 }
-                else { infoBuilder.AppendFormat("{0}Stress Leave requires {1} Renown{2}", colourAlert, stressLeaveRenownCostAuthority, colourEnd); }
+                else { infoBuilder.AppendFormat("{0}Stress Leave requires {1} Power{2}", colourAlert, stressLeavePowerCostAuthority, colourEnd); }
             }
             else
             { infoBuilder.AppendFormat("{0}No Leave possible as not Stressed{1}", colourAlert, colourEnd); }
@@ -3313,8 +3313,8 @@ public class ActorManager : MonoBehaviour
         StringBuilder infoBuilder = new StringBuilder();
         string sideColour;
         string cancelText = null;
-        int playerRenown = GameManager.i.playerScript.Renown;
-        int renownCost = 0;
+        int playerPower = GameManager.i.playerScript.Power;
+        int powerCost = 0;
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"ss
         if (playerSide.level == globalAuthority.level)
@@ -3501,16 +3501,16 @@ public class ActorManager : MonoBehaviour
             {
                 if (actor.CheckTraitEffect(actorReserveActionNone) == false)
                 {
-                    renownCost = actor.numOfTimesBullied + 1;
-                    if (playerRenown >= renownCost)
+                    powerCost = actor.numOfTimesBullied + 1;
+                    if (playerPower >= powerCost)
                     {
 
                         StringBuilder builder = new StringBuilder();
                         builder.AppendFormat("{0}{1}'s Unhappy Timer +{2}{3}", colourGood, actor.actorName, unhappyBullyBoost, colourEnd);
                         builder.AppendLine();
-                        builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
+                        builder.AppendFormat("{0}Player Power -{1}{2}", colourBad, powerCost, colourEnd);
                         builder.AppendLine();
-                        builder.AppendFormat("{0}Can be Bullied again{1}{2}{3}(Renown cost +1){4}", colourNeutral, colourEnd, "\n", colourBad, colourEnd);
+                        builder.AppendFormat("{0}Can be Bullied again{1}{2}{3}(Power cost +1){4}", colourNeutral, colourEnd, "\n", colourBad, colourEnd);
                         //mood info
                         string moodText = GameManager.i.personScript.GetMoodTooltip(MoodType.ReserveBully, actor.arc.name);
                         builder.AppendFormat("{0}{1}", "\n", moodText);
@@ -3529,9 +3529,9 @@ public class ActorManager : MonoBehaviour
                     }
                     else
                     {
-                        //not enough renown
+                        //not enough Power
                         if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                        infoBuilder.AppendFormat("{0}Insufficient Renown to Bully (need {1}, currently have {2}{3})", colourBad, renownCost, playerRenown, colourEnd);
+                        infoBuilder.AppendFormat("{0}Insufficient Power to Bully (need {1}, currently have {2}{3})", colourBad, powerCost, playerPower, colourEnd);
                     }
                 }
                 else
@@ -3555,22 +3555,22 @@ public class ActorManager : MonoBehaviour
             // - - - Fire (Dismiss) - - -
             //
             //allow for secrets and threats
-            ManageRenownCost manageRenownCost = GetManageRenownCost(actor, manageDismissRenown);
-            renownCost = manageRenownCost.renownCost;
-            //only show button if player has enough renown to cover the cost of firing
-            if (playerRenown >= renownCost)
+            ManagePowerCost managePowerCost = GetManagePowerCost(actor, manageDismissPower);
+            powerCost = managePowerCost.powerCost;
+            //only show button if player has enough Power to cover the cost of firing
+            if (playerPower >= powerCost)
             {
                 //generic tooltip (depends if actor is threatening or not)
                 StringBuilder builderTooltip = new StringBuilder();
                 //tooltip
-                builderTooltip.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
-                if (string.IsNullOrEmpty(manageRenownCost.tooltip) == false)
-                { builderTooltip.Append(manageRenownCost.tooltip); }
+                builderTooltip.AppendFormat("{0}Player Power -{1}{2}", colourBad, powerCost, colourEnd);
+                if (string.IsNullOrEmpty(managePowerCost.tooltip) == false)
+                { builderTooltip.Append(managePowerCost.tooltip); }
                 //mood info
                 string moodText = GameManager.i.personScript.GetMoodTooltip(MoodType.ReserveFire, actor.arc.name);
                 builderTooltip.AppendFormat("{0}{1}", "\n", moodText);
-                //pass through renown cost
-                actorActionDetails.renownCost = renownCost;
+                //pass through Power cost
+                actorActionDetails.powerCost = powerCost;
                 //action button
                 EventButtonDetails actorDetails = new EventButtonDetails()
                 {
@@ -3586,9 +3586,9 @@ public class ActorManager : MonoBehaviour
             }
             else
             {
-                //not enough renown
+                //not enough Power
                 if (infoBuilder.Length > 0) { infoBuilder.AppendLine(); }
-                infoBuilder.AppendFormat("{0}Insufficient Renown to Dismiss (need {1}, currently have {2}{3})", colourBad, renownCost, playerRenown, colourEnd);
+                infoBuilder.AppendFormat("{0}Insufficient Power to Dismiss (need {1}, currently have {2}{3})", colourBad, powerCost, playerPower, colourEnd);
             }
             #endregion
 
@@ -4041,12 +4041,12 @@ public class ActorManager : MonoBehaviour
                         GenericTooltipDetails tooltipDetailsSprite = new GenericTooltipDetails();
                         tooltipDetailsSprite.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, title.ToUpper(), colourEnd);
                         if (actor.GetTrait().isHqTrait == false)
-                        { tooltipDetailsSprite.textMain = string.Format("Renown  {0}{1}{2}", colourNeutral, actor.Renown, colourEnd); }
+                        { tooltipDetailsSprite.textMain = string.Format("Power  {0}{1}{2}", colourNeutral, actor.Power, colourEnd); }
                         else
                         {
                             //actor has an HQ relevant trait
-                            tooltipDetailsSprite.textMain = string.Format("Renown  {0}{1}{2}{3}{4}{5}<size=120%>{6}</size>{7}{8}", colourNeutral, actor.Renown, colourEnd, "\n", "<font=\"Bangers SDF\">", "<cspace=0.6em>",
-                                 actor.GetTrait().tagFormatted, "</cspace>", "</font>");
+                            tooltipDetailsSprite.textMain = string.Format("Power  {0}{1}{2}{3}{4}{5}<size=120%>{6}</size>{7}{8}", colourNeutral, actor.Power, colourEnd, "\n", 
+                                "<font=\"Bangers SDF\">", "<cspace=0.6em>", actor.GetTrait().tagFormatted, "</cspace>", "</font>");
                         }
                         if (isBoss == true)
                         { tooltipDetailsSprite.textDetails = string.Format("Opinion of your{0}Decisions{1}{2}", "\n", "\n", GameManager.i.hqScript.GetBossOpinionFormatted()); }
@@ -7423,39 +7423,39 @@ public class ActorManager : MonoBehaviour
                         //immunity period must be zero, eg. effect of previous dose has worn off (there is an initial 2 turn buffer after becoming addicted)
                         if (GameManager.i.playerScript.stressImmunityCurrent == 0 && GameManager.i.playerScript.addictedTally > playerAddictedExempt)
                         {
-                            int renownCost = 0;
+                            int powerCost = 0;
                             int approvalCost = 0;
-                            //chance of having to spend renown to buy supplies
+                            //chance of having to spend Power to buy supplies
                             rnd = Random.Range(0, 100);
                             if (rnd < playerAddictedChance)
                             {
                                 //random message
                                 text = string.Format("[Rnd] ActorManager.cs -> CheckPlayerHuman: Addiction check SUCCEEDED, need < {0}, rolled {1}{2}", playerAddictedChance, rnd, "\n");
                                 GameManager.i.messageScript.GeneralRandom("Player ADDICTION check SUCCEEDED", "Addiction", playerAddictedChance, rnd, true, "rand_2");
-                                //need to spend renown
-                                int renown = GameManager.i.playerScript.Renown;
-                                if (renown < playerAddictedRenownCost)
+                                //need to spend Power
+                                int power = GameManager.i.playerScript.Power;
+                                if (power < playerAddictedPowerCost)
                                 {
-                                    //insufficient renown, HQ support -1
+                                    //insufficient Power, HQ support -1
                                     GameManager.i.hqScript.ChangeHqApproval(-1, playerSide, "Player Addiction");
                                     //feed the need text
-                                    text = string.Format("[Msg] ActorManager.cs -> CheckPlayerHuman: Player has to FEED the NEED, Insufficient Renown, -1 HQ Approval{0}", "\n");
+                                    text = string.Format("[Msg] ActorManager.cs -> CheckPlayerHuman: Player has to FEED the NEED, Insufficient Power, -1 HQ Approval{0}", "\n");
                                     approvalCost = 1;
                                 }
                                 else
                                 {
-                                    //enough renown, lose some to pay for addiction
-                                    renown -= playerAddictedRenownCost;
-                                    GameManager.i.playerScript.Renown = renown;
+                                    //enough Power, lose some to pay for addiction
+                                    power -= playerAddictedPowerCost;
+                                    GameManager.i.playerScript.Power = power;
                                     //feed the need text
-                                    text = string.Format("[Msg] ActorManager.cs -> CheckPlayerHuman: Player has to FEED the NEED and pays {0} Renown (now {1}) for drugs{2}", playerAddictedRenownCost,
-                                        renown, "\n");
-                                    renownCost = playerAddictedRenownCost;
+                                    text = string.Format("[Msg] ActorManager.cs -> CheckPlayerHuman: Player has to FEED the NEED and pays {0} Power (now {1}) for drugs{2}", playerAddictedPowerCost,
+                                        power, "\n");
+                                    powerCost = playerAddictedPowerCost;
                                 }
                                 //take the drugs
                                 GameManager.i.playerScript.TakeDrugs();
                                 //feed the need message
-                                GameManager.i.messageScript.PlayerAddicted(text, renownCost, approvalCost, GameManager.i.playerScript.stressImmunityCurrent - 1);
+                                GameManager.i.messageScript.PlayerAddicted(text, powerCost, approvalCost, GameManager.i.playerScript.stressImmunityCurrent - 1);
                             }
                             else
                             {
@@ -8680,14 +8680,14 @@ public class ActorManager : MonoBehaviour
     /// fixed colour formatted tooltip
     /// </summary>
     /// <returns></returns>
-    public GenericTooltipData GetRenownActorTooltip()
+    public GenericTooltipData GetPowerActorTooltip()
     {
         GenericTooltipData data = new GenericTooltipData();
-        data.header = "Renown";
+        data.header = "Power";
         data.main = string.Format("{0}Is a measure of how well known a person is within the Organisation{1}", colourNormal, colourEnd);
-        /*data.details = string.Format("{0}Somebody with high renown gains {1}{2}influential friends{3}{4} and is harder to {5}{6}Dismiss{7}{8} or {9}{10}Dispose Off{11}",
+        /*data.details = string.Format("{0}Somebody with high Power gains {1}{2}influential friends{3}{4} and is harder to {5}{6}Dismiss{7}{8} or {9}{10}Dispose Off{11}",
             colourAlert, colourEnd, colourNeutral, colourEnd, colourAlert, colourEnd, colourBad, colourEnd, colourAlert, colourEnd, colourBad, colourEnd);*/
-        data.details = string.Format("{0}The higher a Subordinates Renown, the greater their chance of joining HQ. If Promoted they will be your friends, if Dismissed, your enemies{1}", colourAlert, colourEnd);
+        data.details = string.Format("{0}The higher a Subordinates Poewr, the greater their chance of joining HQ. If Promoted they will be your friends, if Dismissed, your enemies{1}", colourAlert, colourEnd);
         data.tooltipType = GenericTooltipType.ActorInfo;
         return data;
     }
@@ -8696,12 +8696,12 @@ public class ActorManager : MonoBehaviour
     /// fixed colour formatted tooltip
     /// </summary>
     /// <returns></returns>
-    public GenericTooltipData GetRenownPlayerTooltip()
+    public GenericTooltipData GetPowerPlayerTooltip()
     {
         GenericTooltipData data = new GenericTooltipData();
-        data.header = "Renown";
+        data.header = "Power";
         data.main = string.Format("{0}The more the better{1}", colourNeutral, colourEnd);
-        data.details = string.Format("{0}Renown is the currency you use to do things. It represents money, goodwill, accrued favours and reputation{1}", colourNormal, colourEnd);
+        data.details = string.Format("{0}Power is the currency you use to do things. It represents money, goodwill, accrued favours and reputation{1}", colourNormal, colourEnd);
         return data;
     }
 
@@ -8792,8 +8792,8 @@ public class ActorManager : MonoBehaviour
                         colourAlert, actor.actorName, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
                     break;
             }
-            string status = string.Format("{0}{1}{2}{3} {4} Renown {5}{6}{7}{8} {9} Opinion {10}  (current opinion of you)",
-                colourAlert, actor.actorName, colourEnd, "\n", bullet, colourAlert, actor.Renown, colourEnd, "\n", bullet, GameManager.i.guiScript.GetNormalStars(opinion));
+            string status = string.Format("{0}{1}{2}{3} {4} Power {5}{6}{7}{8} {9} Opinion {10}  (current opinion of you)",
+                colourAlert, actor.actorName, colourEnd, "\n", bullet, colourAlert, actor.Power, colourEnd, "\n", bullet, GameManager.i.guiScript.GetNormalStars(opinion));
             //title and name
             HelpData data0 = new HelpData()
             {
@@ -8841,10 +8841,10 @@ public class ActorManager : MonoBehaviour
         //header
         builderHeader.AppendFormat("{0}<size=110%>{1}{2}{3}{4}</size>{5}", actor.actorName, "\n", colourAlert, title.ToUpper(), colourEnd, "\n");
         builderHeader.AppendFormat("{0}{1}<size=120%>{2}</size>{3}{4}{5}", "<font=\"Bangers SDF\">", "<cspace=0.6em>", actor.GetTrait().tagFormatted, "</cspace>", "</font>", "\n");
-        builderHeader.AppendFormat("<size=110%>Renown  {0}{1}{2}</size>", colourNeutral, actor.Renown, colourEnd);
+        builderHeader.AppendFormat("<size=110%>Power  {0}{1}{2}</size>", colourNeutral, actor.Power, colourEnd);
         //main
         if (actor.GetTrait().isHqTrait == false)
-        { data.main = string.Format("Renown  {0}{1}{2}", colourNeutral, actor.Renown, colourEnd); }
+        { data.main = string.Format("Power  {0}{1}{2}", colourNeutral, actor.Power, colourEnd); }
         else
         {
             //actor has an HQ relevant trait
@@ -8852,15 +8852,15 @@ public class ActorManager : MonoBehaviour
             builderMain.AppendFormat("Compatibility<pos=57%>{0}", GameManager.i.guiScript.GetCompatibilityStars(actor.GetPersonality().GetCompatibilityWithPlayer()));
         }
 
-        //details -> renown event, otherwise actor history -> EDIT June '20, not working as different formats
-        HqRenownData renownData = actor.GetMostRecentHqRenownData();
-        if (renownData != null)
+        //details -> Power event, otherwise actor history -> EDIT June '20, not working as different formats
+        HqPowerData powerData = actor.GetMostRecentHqPowerData();
+        if (powerData != null)
         {
-            /*string colourRenown = colourGood;   EDIT: Obsolete code June '20
-            if (renownData.change < 0) { colourRenown = colourBad; }
-            data.details = string.Format("{0}Renown {1}{2}{3}{4}{5}Due to {6}{7}", colourRenown, renownData.change > 0 ? "+" : "", renownData.change,
-                colourEnd, "\n", colourNormal, renownData.reason, colourEnd);*/
-            data.details = renownData.reason;
+            /*string colourPower = colourGood;   EDIT: Obsolete code June '20
+            if (powerData.change < 0) { colourPower = colourBad; }
+            data.details = string.Format("{0}Power {1}{2}{3}{4}{5}Due to {6}{7}", colourPower, powerData.change > 0 ? "+" : "", powerData.change,
+                colourEnd, "\n", colourNormal, powerData.reason, colourEnd);*/
+            data.details = powerData.reason;
         }
         else
         {
@@ -8876,19 +8876,19 @@ public class ActorManager : MonoBehaviour
 
 
     /// <summary>
-    /// sub method used to calculate adjusted renown cost for dismissing, firing , disposing off actors (where a cost is involved) due to actor threatening player and/or knowing secrets
-    /// Returns a ManageRenown data package giving adjusted cost and a colour formatted tooltip string (starts on next line) explaining why, eg. '(HEAVY knows 1 secret, +1 Renown cost)'
+    /// sub method used to calculate adjusted Power cost for dismissing, firing , disposing off actors (where a cost is involved) due to actor threatening player and/or knowing secrets
+    /// Returns a ManagePower data package giving adjusted cost and a colour formatted tooltip string (starts on next line) explaining why, eg. '(HEAVY knows 1 secret, +1 Power cost)'
     /// Returns baseCost and null for tooltip if no change
     /// </summary>
     /// <param name="actor"></param>
     /// <param name="baseCost"></param>
     /// <returns></returns>
-    public ManageRenownCost GetManageRenownCost(Actor actor, int baseCost)
+    public ManagePowerCost GetManagePowerCost(Actor actor, int baseCost)
     {
-        ManageRenownCost manageRenown = new ManageRenownCost();
+        ManagePowerCost managePower = new ManagePowerCost();
         //default values returned
-        manageRenown.tooltip = "";
-        manageRenown.renownCost = baseCost;
+        managePower.tooltip = "";
+        managePower.powerCost = baseCost;
         //proceed with a valid actor
         if (actor != null)
         {
@@ -8908,46 +8908,46 @@ public class ActorManager : MonoBehaviour
                     break;
             }
             int extraSecretCost = 0;
-            //calculate adjusted renown cost
+            //calculate adjusted Power cost
             if (numOfSecrets > 0)
             {
-                extraSecretCost = numOfSecrets * manageSecretRenown;
-                manageRenown.renownCost += extraSecretCost;
+                extraSecretCost = numOfSecrets * manageSecretPower;
+                managePower.powerCost += extraSecretCost;
             }
-            if (actor.isThreatening == true) { manageRenown.renownCost *= 2; }
+            if (actor.isThreatening == true) { managePower.powerCost *= 2; }
             //generate tooltip
             StringBuilder builder = new StringBuilder();
             if (numOfSecrets > 0)
             {
                 builder.AppendLine();
-                builder.AppendFormat("{0}({1} knows {2} secret{3}, +{4} Renown cost){5}", colourBad, actor.arc.name, numOfSecrets,
+                builder.AppendFormat("{0}({1} knows {2} secret{3}, +{4} Power cost){5}", colourBad, actor.arc.name, numOfSecrets,
                     numOfSecrets != 1 ? "s" : "", extraSecretCost, colourEnd);
             }
             if (actor.isThreatening == true)
             {
                 builder.AppendLine();
-                builder.AppendFormat("{0}(Double Renown cost as {1} is Threatening you){2}", colourBad, actor.arc.name, colourEnd);
+                builder.AppendFormat("{0}(Double Power cost as {1} is Threatening you){2}", colourBad, actor.arc.name, colourEnd);
             }
             //traits -> Connected / Unconnected (done last as effect is a global multiplier of all other effect)
             if (actor.CheckTraitEffect(actorRemoveActionDoubled) == true)
             {
-                manageRenown.renownCost *= 2;
+                managePower.powerCost *= 2;
                 builder.AppendLine();
-                builder.AppendFormat("{0}(Double overall Renown cost as {1} has {2}{3}{4}{5}{6} trait){7}", colourBad, actor.arc.name, colourEnd, colourAlert, actor.GetTrait().tag, colourEnd,
+                builder.AppendFormat("{0}(Double overall Power cost as {1} has {2}{3}{4}{5}{6} trait){7}", colourBad, actor.arc.name, colourEnd, colourAlert, actor.GetTrait().tag, colourEnd,
                     colourBad, colourEnd);
             }
             if (actor.CheckTraitEffect(actorRemoveActionHalved) == true)
             {
-                manageRenown.renownCost /= 2;
+                managePower.powerCost /= 2;
                 builder.AppendLine();
-                builder.AppendFormat("{0}(Halved overall Renown cost as {1} has {2}{3}{4}{5}{6} trait){7}", colourGood, actor.arc.name, colourEnd, colourAlert, actor.GetTrait().tag, colourEnd,
+                builder.AppendFormat("{0}(Halved overall Power cost as {1} has {2}{3}{4}{5}{6} trait){7}", colourGood, actor.arc.name, colourEnd, colourAlert, actor.GetTrait().tag, colourEnd,
                     colourGood, colourEnd);
             }
             //tooltip
-            manageRenown.tooltip = builder.ToString();
+            managePower.tooltip = builder.ToString();
         }
         else { Debug.LogWarning("Invalid Actor (Null)"); }
-        return manageRenown;
+        return managePower;
     }
 
     /// <summary>
@@ -9205,7 +9205,7 @@ public class ActorManager : MonoBehaviour
                 { highestHqID = listOfWorkers[i].hqID; }
             }
             //
-            // - - - Promoted actors (auto go to HQ, replace workers with lowest renown)
+            // - - - Promoted actors (auto go to HQ, replace workers with lowest Power)
             //
             List<int> listOfPromotedActors = GameManager.i.dataScript.GetListOfPromotedActors(playerSide);
             if (listOfPromotedActors != null)
@@ -9217,7 +9217,7 @@ public class ActorManager : MonoBehaviour
                     {
                         Actor actorPromoted = GameManager.i.dataScript.GetActor(listOfPromotedActors[i]);
                         if (actorPromoted != null)
-                        { PromoteActorToHQ(actorPromoted, listOfWorkers, maxWorkersAllowed, renownFactorPromoted, highestHqID, true); }
+                        { PromoteActorToHQ(actorPromoted, listOfWorkers, maxWorkersAllowed, powerFactorPromoted, highestHqID, true); }
                         else { Debug.LogErrorFormat("Invalid Promoted actor (Null) for actorID {0}", listOfPromotedActors[i]); }
                     }
                 }
@@ -9239,18 +9239,18 @@ public class ActorManager : MonoBehaviour
                         Actor actorOnMap = arrayOfCurrentActors[i];
                         if (actorOnMap != null)
                         {
-                            //must have renown > 0
-                            if (actorOnMap.Renown > 0)
+                            //must have Power > 0
+                            if (actorOnMap.Power > 0)
                             {
                                 //can't have Questionable condition
                                 if (actorOnMap.CheckConditionPresent(conditionQuestionable) == false)
                                 {
                                     //add to HQ 
-                                    threshold = actorOnMap.Renown * renownFactorOthers + baseHqAmount;
+                                    threshold = actorOnMap.Power * powerFactorOthers + baseHqAmount;
                                     rnd = Random.Range(0, 100);
                                     if (rnd < threshold)
                                     {
-                                        if (PromoteActorToHQ(actorOnMap, listOfWorkers, maxWorkersAllowed, renownFactorOthers, highestHqID) == true)
+                                        if (PromoteActorToHQ(actorOnMap, listOfWorkers, maxWorkersAllowed, powerFactorOthers, highestHqID) == true)
                                         {
                                             isSuccess = true;
                                             Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessMetaActors: OnMap promotion of {0}, {1}, SUCCEEDED (need < {2}, rolled {3}){4}",
@@ -9266,13 +9266,15 @@ public class ActorManager : MonoBehaviour
                                 else
                                 {
                                     if (isMetaGame)
-                                    { Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} is QUESTIONABLE, can't go to HQ{3}", actorOnMap.actorName, actorOnMap.arc.name, actorOnMap.Status, "\n"); }
+                                    { Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} is QUESTIONABLE, can't go to HQ{3}", 
+                                        actorOnMap.actorName, actorOnMap.arc.name, actorOnMap.Status, "\n"); }
                                 }
                             }
                             else
                             {
                                 if (isMetaGame)
-                                { Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} has ZERO Renown, can't go to HQ{3}", actorOnMap.actorName, actorOnMap.arc.name, actorOnMap.Status, "\n"); }
+                                { Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} has ZERO Power, can't go to HQ{3}", 
+                                    actorOnMap.actorName, actorOnMap.arc.name, actorOnMap.Status, "\n"); }
                             }
                             if (isSuccess == false)
                             {
@@ -9348,18 +9350,18 @@ public class ActorManager : MonoBehaviour
                         Actor actorResigned = GameManager.i.dataScript.GetActor(actorID);
                         if (actorResigned != null)
                         {
-                            //must have renown > 0
-                            if (actorResigned.Renown > 0)
+                            //must have Power > 0
+                            if (actorResigned.Power > 0)
                             {
                                 //can't have Questionable condition
                                 if (actorResigned.CheckConditionPresent(conditionQuestionable) == false)
                                 {
                                     //add to HQ 
-                                    threshold = actorResigned.Renown * renownFactorOthers + baseHqAmount;
+                                    threshold = actorResigned.Power * powerFactorOthers + baseHqAmount;
                                     rnd = Random.Range(0, 100);
                                     if (rnd < threshold)
                                     {
-                                        if (PromoteActorToHQ(actorResigned, listOfWorkers, maxWorkersAllowed, renownFactorOthers, highestHqID) == true)
+                                        if (PromoteActorToHQ(actorResigned, listOfWorkers, maxWorkersAllowed, powerFactorOthers, highestHqID) == true)
                                         {
                                             isSuccess = true;
                                             Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessMetaActors: Resigned actor promotion of {0}, {1}, SUCCEEDED (need < {2}, rolled {3}){4}",
@@ -9385,7 +9387,7 @@ public class ActorManager : MonoBehaviour
                             {
                                 if (isMetaGame)
                                 {
-                                    Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} has ZERO Renown, can't go to HQ{3}",
+                                    Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} has ZERO Power, can't go to HQ{3}",
                                       actorResigned.actorName, actorResigned.arc.name, actorResigned.Status, "\n");
                                 }
                             }
@@ -9415,18 +9417,18 @@ public class ActorManager : MonoBehaviour
                         Actor actorDismissed = GameManager.i.dataScript.GetActor(actorID);
                         if (actorDismissed != null)
                         {
-                            //must have renown > 0
-                            if (actorDismissed.Renown > 0)
+                            //must have Power > 0
+                            if (actorDismissed.Power > 0)
                             {
                                 //can't have Questionable condition
                                 if (actorDismissed.CheckConditionPresent(conditionQuestionable) == false)
                                 {
                                     //add to HQ 
-                                    threshold = actorDismissed.Renown * renownFactorOthers + baseHqAmount;
+                                    threshold = actorDismissed.Power * powerFactorOthers + baseHqAmount;
                                     rnd = Random.Range(0, 100);
                                     if (rnd < threshold)
                                     {
-                                        if (PromoteActorToHQ(actorDismissed, listOfWorkers, maxWorkersAllowed, renownFactorOthers, highestHqID) == true)
+                                        if (PromoteActorToHQ(actorDismissed, listOfWorkers, maxWorkersAllowed, powerFactorOthers, highestHqID) == true)
                                         {
                                             isSuccess = true;
                                             Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessMetaActors: Dismissed actor promotion of {0}, {1}, SUCCEEDED (need < {2}, rolled {3}){4}",
@@ -9452,7 +9454,7 @@ public class ActorManager : MonoBehaviour
                             {
                                 if (isMetaGame)
                                 {
-                                    Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} has ZERO Renown, can't go to HQ{3}",
+                                    Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} has ZERO Power, can't go to HQ{3}",
                                       actorDismissed.actorName, actorDismissed.arc.name, actorDismissed.Status, "\n");
                                 }
                             }
@@ -9477,69 +9479,69 @@ public class ActorManager : MonoBehaviour
     /// <summary>
     /// subMethod for ProcessMetaGame to have an actor promoted to HQ. Handles all details. Returns true if actor promoted to HQ, false otherwise
     /// If workers maxxed out then can replace an existing worker (eg. worker.hqID less than or equal to highestHqID)
-    /// but only if have more renown than existing worker (isPriority true then this condition is ignored, eg. actor who has been promoted)
+    /// but only if have more Power than existing worker (isPriority true then this condition is ignored, eg. actor who has been promoted)
     /// NOTE: actor and listOfWorkers checked for null by parent method
     /// </summary>
     /// <param name="actor"></param>
-    private bool PromoteActorToHQ(Actor actor, List<Actor> listOfWorkers, int maxWorkersAllowed, int renownFactor, int highestHqID, bool isPriority = false)
+    private bool PromoteActorToHQ(Actor actor, List<Actor> listOfWorkers, int maxWorkersAllowed, int powerFactor, int highestHqID, bool isPriority = false)
     {
         bool isSuccess = true;
         //add actor to HQ (if limit reached will have to displace an existing worker)
         if (listOfWorkers.Count >= maxWorkersAllowed)
         {
-            //Get existing worker with lowest renown (tuple 1 is index of listOfWorkers, tuple 2 is renown of worker)
-            Tuple<int, int> results = GetWorkerWithLowestRenown(listOfWorkers, highestHqID);
+            //Get existing worker with lowest Power (tuple 1 is index of listOfWorkers, tuple 2 is Power of worker)
+            Tuple<int, int> results = GetWorkerWithLowestPower(listOfWorkers, highestHqID);
             if (results.Item1 > -1)
             {
                 bool isProceed = true;
                 if (isPriority == false)
                 {
-                    if (actor.Renown * renownFactor <= results.Item2)
+                    if (actor.Power * powerFactor <= results.Item2)
                     {
                         isProceed = false;
                         if (isMetaGame)
                         {
-                            Debug.LogFormat("[Tst] ActorManager.cs -> PromoteActorToHQ: {0}, {1}, {2} unable to bump Worker (renown {3}, needed {4}){5}", actor.actorName, actor.arc.name, actor.Status,
-                              actor.Renown, results.Item2, "\n");
+                            Debug.LogFormat("[Tst] ActorManager.cs -> PromoteActorToHQ: {0}, {1}, {2} unable to bump Worker (Power {3}, needed {4}){5}", actor.actorName, actor.arc.name, actor.Status,
+                              actor.Power, results.Item2, "\n");
                         }
                     }
                     else
                     {
                         if (isMetaGame)
                         {
-                            Debug.LogFormat("[Tst] ActorManager.cs -> PromoteActorToHQ: {0}, {1}, {2} BUMPS Worker (renown {3}, needed {4}){5}", actor.actorName, actor.arc.name, actor.Status,
-                                actor.Renown, results.Item2, "\n");
+                            Debug.LogFormat("[Tst] ActorManager.cs -> PromoteActorToHQ: {0}, {1}, {2} BUMPS Worker (Power {3}, needed {4}){5}", actor.actorName, actor.arc.name, actor.Status,
+                                actor.Power, results.Item2, "\n");
                         }
                     }
                 }
                 if (isProceed == true)
                 {
-                    int oldRenown = actor.Renown;
-                    actor.Renown *= renownFactor;
-                    //renown history
-                    HqRenownData renownData = new HqRenownData()
+                    int oldPower = actor.Power;
+                    actor.Power *= powerFactor;
+                    //Power history
+                    HqPowerData powerData = new HqPowerData()
                     {
                         turn = 0,
                         scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex() + 1,
-                        change = actor.Renown - oldRenown,
-                        newRenown = actor.Renown,
+                        change = actor.Power - oldPower,
+                        newPower = actor.Power,
                         reason = string.Format("{0}, {1}{2}{3}, Promoted to HQ", actor.actorName, colourAlert, actor.arc.name, colourEnd)
                     };
-                    actor.AddHqRenownData(renownData);
+                    actor.AddHqPowerData(powerData);
                     //remove any secrets and conditions
                     actor.RemoveAllSecrets();
                     actor.RemoveAllConditions();
                     //remove worker
                     Actor worker = GameManager.i.dataScript.GetHqActor(listOfWorkers[results.Item1].hqID);
-                    Debug.LogFormat("[HQ] ActorManager.cs -> ProcessMetaActors: {0}, {1}, hqID {2}, renown {3}, Demoted from HQ (Bumped){4}", worker.actorName,
-                        GameManager.i.hqScript.GetHqTitle(worker.statusHQ), worker.hqID, worker.Renown, "\n");
+                    Debug.LogFormat("[HQ] ActorManager.cs -> ProcessMetaActors: {0}, {1}, hqID {2}, Power {3}, Demoted from HQ (Bumped){4}", worker.actorName,
+                        GameManager.i.hqScript.GetHqTitle(worker.statusHQ), worker.hqID, worker.Power, "\n");
                     worker.statusHQ = ActorHQ.LeftHQ;
                     listOfWorkers.RemoveAt(results.Item1);
                     //add actor
                     listOfWorkers.Add(actor);
                     actor.AddHistory(new HistoryActor() { text = "Promoted to HQ (Worker)" });
-                    Debug.LogFormat("[HQ] ActorManager.cs -> ProcessMetaActors: {0}, {1}, actorID {2}, renown {3}, PROMOTED to HQ{4}", actor.actorName, actor.arc.name,
-                        actor.actorID, actor.Renown, "\n");
+                    Debug.LogFormat("[HQ] ActorManager.cs -> ProcessMetaActors: {0}, {1}, actorID {2}, Power {3}, PROMOTED to HQ{4}", actor.actorName, actor.arc.name,
+                        actor.actorID, actor.Power, "\n");
                 }
                 else { isSuccess = false; }
             }
@@ -9549,22 +9551,22 @@ public class ActorManager : MonoBehaviour
             //add to worker list
             listOfWorkers.Add(actor);
             actor.AddHistory(new HistoryActor() { text = "Promoted to HQ (Worker)" });
-            Debug.LogFormat("[HQ] ActorManager.cs -> ProcessMetaActors: {0}, {1}, actorID {2}, renown {3}, PROMOTED to HQ{4}", actor.actorName, actor.arc.name,
-                actor.actorID, actor.Renown, "\n");
+            Debug.LogFormat("[HQ] ActorManager.cs -> ProcessMetaActors: {0}, {1}, actorID {2}, Power {3}, PROMOTED to HQ{4}", actor.actorName, actor.arc.name,
+                actor.actorID, actor.Power, "\n");
         }
         return isSuccess;
     }
 
     /// <summary>
-    /// Submethod of PromoteActorToHQ which returns a tuple, index of worker in listOfWorkers, renown of worker. Default values of -1 for index and 999 for renown
+    /// Submethod of PromoteActorToHQ which returns a tuple, index of worker in listOfWorkers, Power of worker. Default values of -1 for index and 999 for Power
     /// Only checks existing workers (determined if their hqID is less than or equal to highestHqID)
     /// </summary>
     /// <param name="listOfWorkers"></param>
     /// <returns></returns>
-    private Tuple<int, int> GetWorkerWithLowestRenown(List<Actor> listOfWorkers, int highestHqID)
+    private Tuple<int, int> GetWorkerWithLowestPower(List<Actor> listOfWorkers, int highestHqID)
     {
         int index = -1;
-        int lowestRenown = 999;
+        int lowestPower = 999;
         if (listOfWorkers != null)
         {
             for (int i = 0; i < listOfWorkers.Count; i++)
@@ -9572,20 +9574,20 @@ public class ActorManager : MonoBehaviour
                 //extra condition (hqID > -1) to filter out any recently added OnMap actors (don't get assigned an HqID until end of process)
                 if (listOfWorkers[i].hqID <= highestHqID && listOfWorkers[i].hqID > -1)
                 {
-                    if (listOfWorkers[i].Renown < lowestRenown)
+                    if (listOfWorkers[i].Power < lowestPower)
                     {
                         index = i;
-                        lowestRenown = listOfWorkers[i].Renown;
+                        lowestPower = listOfWorkers[i].Power;
                     }
                 }
             }
         }
         else { Debug.LogError("Invalid listOfWorkers (Null)"); }
-        return new Tuple<int, int>(index, lowestRenown);
+        return new Tuple<int, int>(index, lowestPower);
     }
 
     /// <summary>
-    /// SubMethod for ProcessMetaActors to handle all admin for sending actor back to Recruit Pool. Renown is retained. 'whereFrom' is the actor source, eg. 'Reserves / OnMap / Dismissed / Resigned'
+    /// SubMethod for ProcessMetaActors to handle all admin for sending actor back to Recruit Pool. Power is retained. 'whereFrom' is the actor source, eg. 'Reserves / OnMap / Dismissed / Resigned'
     /// </summary>
     /// <param name="actor"></param>
     /// <param name="side"></param>

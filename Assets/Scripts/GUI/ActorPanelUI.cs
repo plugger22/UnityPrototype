@@ -434,7 +434,7 @@ public class ActorPanelUI : MonoBehaviour
     {
         //player mood UI
         playerMoodTooltip.tooltipHeader = "Mood";
-        playerMoodTooltip.tooltipMain = string.Format("{0}  {1}", GameManager.i.guiScript.motivationIcon, GameManager.Formatt("0 to 3 Stars", ColourType.neutralText));
+        playerMoodTooltip.tooltipMain = string.Format("{0}  {1}", GameManager.i.guiScript.opinionIcon, GameManager.Formatt("0 to 3 Stars", ColourType.neutralText));
         string details = string.Format("You will become STRESSED if your mood goes below zero");
         playerMoodTooltip.tooltipDetails = GameManager.Formatt(details, ColourType.moccasinText);
         playerMoodTooltip.y_offset = 100;
@@ -532,7 +532,7 @@ public class ActorPanelUI : MonoBehaviour
                 else
                 {
                     arrayOfRenownCircles[index].gameObject.SetActive(false);
-                    UpdateActorRenownUI(index, 0);
+                    UpdateActorPowerUI(index, 0);
                 }
             }
             else
@@ -570,7 +570,7 @@ public class ActorPanelUI : MonoBehaviour
     /// </summary>
     /// <param name="actorSlotID"></param>
     /// <param name="renown"></param>
-    public void UpdateActorRenownUI(int actorSlotID, int renown)
+    public void UpdateActorPowerUI(int actorSlotID, int renown)
     {
         Debug.Assert(actorSlotID > -1 && actorSlotID < GameManager.i.actorScript.maxNumOfOnMapActors, "Invalid actorSlotID (< 0 or >= maxNumOfOnMapActors");
         Debug.Assert(renown > -1, "Invalid renown (< 0)");

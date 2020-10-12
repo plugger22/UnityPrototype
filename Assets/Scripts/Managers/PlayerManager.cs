@@ -72,8 +72,8 @@ public class PlayerManager : MonoBehaviour
     /*[HideInInspector] public bool isOrgActivatedCurePresent;*/
 
     //private backing fields, need to track separately to handle AI playing both sides
-    private int _renownResistance;
-    private int _renownAuthority;
+    private int _powerResistance;
+    private int _powerAuthority;
     private string _playerNameResistance;
     private string _playerNameAuthority;
     private string _firstName;
@@ -124,48 +124,48 @@ public class PlayerManager : MonoBehaviour
     public string FirstName
     { get { return _firstName; } }
 
-    public int Renown
+    public int Power
     {
         get
         {
-            if (GameManager.i.sideScript.PlayerSide.level == globalResistance.level) { return _renownResistance; }
-            else if (GameManager.i.sideScript.PlayerSide.level == globalAuthority.level) { return _renownAuthority; }
+            if (GameManager.i.sideScript.PlayerSide.level == globalResistance.level) { return _powerResistance; }
+            else if (GameManager.i.sideScript.PlayerSide.level == globalAuthority.level) { return _powerAuthority; }
             else
             {
                 //AI control of both side
                 if (GameManager.i.turnScript.currentSide.level == globalResistance.level)
-                { return _renownResistance; }
-                else { return _renownAuthority; }
+                { return _powerResistance; }
+                else { return _powerAuthority; }
             }
         }
         set
         {
             if (GameManager.i.sideScript.PlayerSide.level == globalResistance.level)
             {
-                Debug.LogFormat("[Sta] -> PlayerManager.cs: Player (Resistance) Renown changed from {0} to {1}{2}", _renownResistance, value, "\n");
-                _renownResistance = value;
+                Debug.LogFormat("[Sta] -> PlayerManager.cs: Player (Resistance) Power changed from {0} to {1}{2}", _powerResistance, value, "\n");
+                _powerResistance = value;
 
                 //update AI side tab (not using an Event here) -> no updates for the first turn
                 if (GameManager.i.turnScript.Turn > 0 && GameManager.i.sideScript.resistanceOverall == SideState.Human)
-                { GameManager.i.aiScript.UpdateSideTabData(_renownResistance); }
-                //update renown UI (regardless of whether on or off
-                GameManager.i.actorPanelScript.UpdatePlayerRenownUI(_renownResistance);
+                { GameManager.i.aiScript.UpdateSideTabData(_powerResistance); }
+                //update Power UI (regardless of whether on or off
+                GameManager.i.actorPanelScript.UpdatePlayerRenownUI(_powerResistance);
             }
             else if (GameManager.i.sideScript.PlayerSide.level == globalAuthority.level)
             {
 
                 /*value = Mathf.Clamp(value, 0, GameManager.instance.actorScript.maxStatValue);*/
 
-                Debug.LogFormat("[Sta] -> PlayerManager.cs: Player (Authority) Renown changed from {0} to {1}{2}", _renownAuthority, value, "\n");
-                _renownAuthority = value;
-                //update renown UI (regardless of whether on or off
-                GameManager.i.actorPanelScript.UpdatePlayerRenownUI(_renownAuthority);
+                Debug.LogFormat("[Sta] -> PlayerManager.cs: Player (Authority) Power changed from {0} to {1}{2}", _powerAuthority, value, "\n");
+                _powerAuthority = value;
+                //update Power UI (regardless of whether on or off
+                GameManager.i.actorPanelScript.UpdatePlayerRenownUI(_powerAuthority);
             }
             else
             {
                 //AI control of both side
-                if (GameManager.i.turnScript.currentSide.level == globalResistance.level) { _renownResistance = value; }
-                else { _renownAuthority = value; }
+                if (GameManager.i.turnScript.currentSide.level == globalResistance.level) { _powerResistance = value; }
+                else { _powerAuthority = value; }
             }
         }
     }
@@ -367,7 +367,7 @@ public class PlayerManager : MonoBehaviour
         //place Player in a random start location (Sprawl node) -> AFTER Level and Session Initialisation
         InitialisePlayerStartNode();
         //Comes at end AFTER all other initialisations
-        Renown = 0;
+        Power = 0;
         //give the player a random secret (PLACEHOLDER -> should be player choice)
         GetRandomStartSecret();
     }
@@ -838,7 +838,7 @@ public class PlayerManager : MonoBehaviour
     /// called by GearManager.cs -> ProcessCompromisedGear. Tidies up gear at end of turn. gearSaveName is the compromised gear that the player chose to save. Resets all gear
     /// returns name of gear saved (UPPER) [assumes only one piece of gear can be saved per turn], if any. Otherwise returns Empty string
     /// </summary>
-    public void UpdateGear(int renownUsed = -1, string gearSaveName = null)
+    public void UpdateGear(int powerUsed = -1, string gearSaveName = null)
     {
         if (listOfGear.Count > 0)
         {
@@ -865,7 +865,7 @@ public class PlayerManager : MonoBehaviour
                                 //gear saved
                                 ResetGearItem(gear);
                                 string msgText = string.Format("{0} ({1}), has been COMPROMISED and SAVED", gear.tag, gear.type.name);
-                                GameManager.i.messageScript.GearCompromised(msgText, gear, renownUsed);
+                                GameManager.i.messageScript.GearCompromised(msgText, gear, powerUsed);
                             }
                         }
                         else
@@ -907,7 +907,7 @@ public class PlayerManager : MonoBehaviour
                             ResetGearItem(gear);
                             gearSavedName = gear.tag.ToUpper();
                             string msgText = string.Format("{0} ({1}), has been COMPROMISED and SAVED", gear.tag, gear.type.name);
-                            GameManager.instance.messageScript.GearCompromised(msgText, gear, renownUsed);
+                            GameManager.instance.messageScript.GearCompromised(msgText, gear, powerUsed);
                         }
                     }
                     else
@@ -2417,7 +2417,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Player captured and ransomed off, eg. Bounty Hunter nemesis. All gear and all renown lost
+    /// Player captured and ransomed off, eg. Bounty Hunter nemesis. All gear and all power lost
     /// </summary>
     public void RansomPlayer()
     {
@@ -2438,11 +2438,11 @@ public class PlayerManager : MonoBehaviour
                         else { Debug.LogWarningFormat("Invalid gearName (Null or Empty) for listOfGear[{0}]", i); }
                     }
                 }
-                //renown -> remove all
-                Renown = 0;
+                //power -> remove all
+                Power = 0;
                 break;
             case SideState.AI:
-                //renown
+                //Power
                 GameManager.i.dataScript.SetAIResources(GameManager.i.globalScript.sideResistance, 0);
                 //gear
                 GameManager.i.aiRebelScript.ResetGearPool();
@@ -2487,7 +2487,7 @@ public class PlayerManager : MonoBehaviour
         builder.AppendFormat("- Stats{0}", "\n");
         if (playerSide.level == globalResistance.level)
         { builder.AppendFormat(" Invisibility {0}{1}", Invisibility, "\n"); }
-        builder.AppendFormat(" Renown {0}{1}", Renown, "\n");
+        builder.AppendFormat(" Power {0}{1}", Power, "\n");
         builder.AppendFormat(" Mood {0}{1}", mood, "\n");
         builder.AppendFormat(" Innocence {0}{1}", Innocence, "\n");
         if (GameManager.i.actorScript.doomTimer > 0) { builder.AppendFormat(" Doom Timer {0}{1}", GameManager.i.actorScript.doomTimer, "\n"); }
@@ -2689,12 +2689,12 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Gives player +10 renown
+    /// Gives player +10 Power
     /// </summary>
-    public void DebugGiveRenown()
+    public void DebugGivePower()
     {
-        Renown += 10;
-        GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, "Renown +10");
+        Power += 10;
+        GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, "Power +10");
         GameManager.i.popUpFixedScript.ExecuteFixed();
     }
 

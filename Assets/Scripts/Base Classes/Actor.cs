@@ -50,7 +50,7 @@ namespace gameAPI
         [HideInInspector] public int numOfTimesBreakdown;       //tally of times actor suffered a breakdown
         [HideInInspector] public int numOfTimesStressLeave;     //tally of times actor took stress leave (one day duration)
         [HideInInspector] public int numOfTimesConflict;        //tally of number of relationship conflicts with the Player that the actor has had
-        [HideInInspector] public int departedNumOfSecrets;      //used to record the number of secrets known at time of dismissal, etc. (needed to work out accurate renown cost as secrets removed when actor leaves)
+        [HideInInspector] public int departedNumOfSecrets;      //used to record the number of secrets known at time of dismissal, etc. (needed to work out accurate power cost as secrets removed when actor leaves)
         [HideInInspector] public int numOfDaysStressed;         //tally of days spent stressed (excludes breakdown & stress leave days)
         [HideInInspector] public int numOfDaysLieLow;           //tally of days spent lying low
         //sprite
@@ -75,7 +75,7 @@ namespace gameAPI
         private Dictionary<int, Contact> dictOfContacts = new Dictionary<int, Contact>();   //key -> nodeID where contact is, Value -> contact
         private List<NodeActionData> listOfNodeActions = new List<NodeActionData>();        //Actor district topics
         private List<TeamActionData> listOfTeamActions = new List<TeamActionData>();        //Authority team topics
-        private List<HqRenownData> listOfHqRenownData = new List<HqRenownData>();           //Hq actors only, tracks all changes to renown
+        private List<HqPowerData> listOfHqPowerData = new List<HqPowerData>();           //Hq actors only, tracks all changes to power
         private List<HistoryActor> listOfHistory = new List<HistoryActor>();                //tracks major events affecting actor, carries across levels
         #endregion
 
@@ -94,7 +94,7 @@ namespace gameAPI
 
         //private backing field
         private ActorStatus _status;
-        private int _renown;
+        private int _power;
 
         public ActorStatus Status
         {
@@ -111,17 +111,17 @@ namespace gameAPI
             }
         }
 
-        public int Renown
+        public int Power
         {
-            get { return _renown; }
+            get { return _power; }
             set
             {
-                _renown = value;
-                //need this here to prevent UpdateActorRenownUI choking on a negative renown
-                _renown = Mathf.Max(0, _renown);
-                //update renownUI regardless of whether it is on or off (check in place for load save game purposes as the RenownUI is updated later due to sequencing issues)
+                _power = value;
+                //need this here to prevent UpdateActorPowerUI choking on a negative power
+                _power = Mathf.Max(0, _power);
+                //update powerUI regardless of whether it is on or off (check in place for load save game purposes as the PowerUI is updated later due to sequencing issues)
                 if (slotID > -1)
-                { GameManager.i.actorPanelScript.UpdateActorRenownUI(slotID, _renown); }
+                { GameManager.i.actorPanelScript.UpdateActorPowerUI(slotID, _power); }
             }
         }
 
@@ -132,7 +132,7 @@ namespace gameAPI
         {
             hqID = -1;
             nodeCaptured = -1;
-            Renown = 0;
+            Power = 0;
             gearName = null;
             gearTimer = 0;
             gearTimesTaken = 0;
@@ -1407,50 +1407,50 @@ namespace gameAPI
         // - - - HQ actors
         //
 
-        public List<HqRenownData> GetListOfHqRenownData()
-        { return listOfHqRenownData; }
+        public List<HqPowerData> GetListOfHqPowerData()
+        { return listOfHqPowerData; }
 
         /// <summary>
-        /// Adds data record of HQ actor's renown change, returns true if successful, false if not
+        /// Adds data record of HQ actor's power change, returns true if successful, false if not
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public bool AddHqRenownData(HqRenownData data)
+        public bool AddHqPowerData(HqPowerData data)
         {
             if (data != null)
             {
-                listOfHqRenownData.Add(data);
+                listOfHqPowerData.Add(data);
                 return true;
             }
-            else { Debug.LogError("Invalid hqRenownData (Null)"); }
+            else { Debug.LogError("Invalid hqPowerData (Null)"); }
             return false;
         }
 
         /// <summary>
-        /// Returns most recent hqRenownData, null if none
+        /// Returns most recent hqPowerData, null if none
         /// </summary>
         /// <returns></returns>
-        public HqRenownData GetMostRecentHqRenownData()
+        public HqPowerData GetMostRecentHqPowerData()
         {
-            HqRenownData data = null;
-            int count = listOfHqRenownData.Count;
+            HqPowerData data = null;
+            int count = listOfHqPowerData.Count;
             if (count > 0)
-            { data = listOfHqRenownData[count - 1]; }
+            { data = listOfHqPowerData[count - 1]; }
             return data;
         }
 
         /// <summary>
-        /// refresh HQ renown data list for Save/Load data
+        /// refresh HQ power data list for Save/Load data
         /// </summary>
         /// <param name="tempList"></param>
-        public void SetHqRenownData(List<HqRenownData> tempList)
+        public void SetHqPowerData(List<HqPowerData> tempList)
         {
             if (tempList != null)
             {
-                listOfHqRenownData.Clear();
-                listOfHqRenownData.AddRange(tempList);
+                listOfHqPowerData.Clear();
+                listOfHqPowerData.AddRange(tempList);
             }
-            else { Debug.LogError("Invalid listOfHqRenownData (Null)"); }
+            else { Debug.LogError("Invalid listOfHqPowerData (Null)"); }
         }
 
         //

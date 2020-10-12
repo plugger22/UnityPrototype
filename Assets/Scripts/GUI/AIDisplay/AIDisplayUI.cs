@@ -306,7 +306,7 @@ public class AIDisplayUI : MonoBehaviour
         {
             //timer & renown details
             rebootTimer = data.rebootTimer;
-            decisionText.text = data.renownDecision;
+            decisionText.text = data.powerDecision;
             //reset isFree at beginning of each turn
             isFree = false;
             //

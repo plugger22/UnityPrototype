@@ -385,9 +385,9 @@ namespace packageAPI
     {
         public string metaName;                     //metaOption.name for reference and debugging purposes
         public string itemText;                     //what is shown for the item
-        public string textSelect;                   //top text RHS if not yet selected ("Cost 2 Renown")
-        public string textDeselect;                 //top text RHS if already selected and can be deselected ("Gain 2 Renown")
-        public string textInsufficient;             //top text RHS if can't afford the renown required ("Not enough renown (need 2)")
+        public string textSelect;                   //top text RHS if not yet selected ("Cost 2 Power")
+        public string textDeselect;                 //top text RHS if already selected and can be deselected ("Gain 2 Power")
+        public string textInsufficient;             //top text RHS if can't afford the power required ("Not enough power (need 2)")
         public string bottomText;
         public string inactiveText;                 //text shown if option isActive.False
         public Sprite sprite;                       //ItemData must have a sprite.
@@ -395,14 +395,14 @@ namespace packageAPI
         public MetaPriority priority;
         public MetaTabSide tabSide;                 //specify a side or top tab
         public MetaTabTop tabTop;                   //specify a side or top tab
-        public int renownCost;                      //cost for option based on priority
+        public int powerCost;                      //cost for option based on priority
         public int sideLevel;                       //GlobalSide.level
         public bool isActive;                       //displayed greyed out if not (for metaOption.isAlways = true)
         public bool isRecommended;                  //if true part of recommended selection of options
         public bool isCriteria;                     //true if any criteria involved, false otherwise
         public bool isSelected;                     //used within MetaGameUI (if true has been selected by player)
-        public bool isRenownGain;                   //true if there is a renown GAIN, not cost (gain equal to 'renownCost')
-        public MetaPriority recommendedPriority;    //recommendations selected on priority until renown runs out
+        public bool isPowerGain;                   //true if there is a power GAIN, not cost (gain equal to 'powerCost')
+        public MetaPriority recommendedPriority;    //recommendations selected on priority until power runs out
         public List<Effect> listOfEffects;          //effects that happen as a result of metaData being selected
         public int data;                            //used to iplement outcome (where a number is needed) 
         public string dataName;                     //used to implement outcome (where a name is needed)
@@ -422,11 +422,11 @@ namespace packageAPI
     }
 
     /// <summary>
-    /// Used to return data from ActorManager.cs -> GetManageRenownCost for extra costs incurred due to actor knowing secrets and/ or threatening player
+    /// Used to return data from ActorManager.cs -> GetManagePowerCost for extra costs incurred due to actor knowing secrets and/ or threatening player
     /// </summary>
-    public class ManageRenownCost
+    public class ManagePowerCost
     {
-        public int renownCost;
+        public int powerCost;
         public string tooltip;
     }
 
@@ -865,7 +865,7 @@ namespace packageAPI
         public string task_3_tooltipMain;
         public string task_3_tooltipDetails;
         public string aiDetails;
-        public string renownDecision;
+        public string powerDecision;
         public int nodeID_1;                   //used for highlighting node or connection referred to by task
         public int connID_1;
         public int nodeID_2;
@@ -901,7 +901,7 @@ namespace packageAPI
     public class AISideTabData
     {
         public string topText;              //eg. 'A.I' but colour formatted
-        public string bottomText;           //eg. Renown cost to hack or 'X' if not possible, greyed out if not enough renown
+        public string bottomText;           //eg. Power cost to hack or 'X' if not possible, greyed out if not enough power
         public string tooltipMain;
         public string tooltipDetails;
         public HackingStatus status;        //used to determine what happens when player clicks AI Side Tab UI
@@ -1142,18 +1142,18 @@ namespace packageAPI
     }
 
     /// <summary>
-    /// Tracks anything that changes an HQ actors renown
+    /// Tracks anything that changes an HQ actors power
     /// </summary>
     [System.Serializable]
-    public class HqRenownData
+    public class HqPowerData
     {
         public int turn;
         public int scenarioIndex;           //taken care of automatically in constructor
-        public int change;                  //amount renown is changing by
-        public int newRenown;               //what renown is after change
+        public int change;                  //amount power is changing by
+        public int newPower;               //what power is after change
         public string reason;               //if a metaGame event then 'due to ...'
 
-        public HqRenownData()
+        public HqPowerData()
         { scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex(); }
     }
 
@@ -1225,11 +1225,11 @@ namespace packageAPI
         //
         //NOTE: indexes of all relevant lists refer to the same actor
         public List<Sprite> listOfHqSprites = new List<Sprite>();
-        public List<string> listOfHqRenown = new List<string>();
+        public List<string> listOfHqPower = new List<string>();
         public List<string> listOfHqTitles = new List<string>();
         public List<TooltipData> listOfHqTooltips = new List<TooltipData>();
         public List<Sprite> listOfWorkerSprites = new List<Sprite>();
-        public List<string> listOfWorkerRenown = new List<string>();
+        public List<string> listOfWorkerPower = new List<string>();
         public List<string> listOfWorkerArcs = new List<string>();
         public List<TooltipData> listOfWorkerTooltips = new List<TooltipData>();
         public List<string> listOfHqEvents = new List<string>();
@@ -1277,11 +1277,11 @@ namespace packageAPI
 
                 #region HQ Status
                 listOfHqSprites.AddRange(data.listOfHqSprites);
-                listOfHqRenown.AddRange(data.listOfHqRenown);
+                listOfHqPower.AddRange(data.listOfHqPower);
                 listOfHqTitles.AddRange(data.listOfHqTitles);
                 listOfHqTooltips.AddRange(data.listOfHqTooltips);
                 listOfWorkerSprites.AddRange(data.listOfWorkerSprites);
-                listOfWorkerRenown.AddRange(data.listOfWorkerRenown);
+                listOfWorkerPower.AddRange(data.listOfWorkerPower);
                 listOfWorkerArcs.AddRange(data.listOfWorkerArcs);
                 listOfWorkerTooltips.AddRange(data.listOfWorkerTooltips);
                 listOfHqEvents.AddRange(data.listOfHqEvents);
@@ -1318,11 +1318,11 @@ namespace packageAPI
 
             #region HQ status
             listOfHqSprites.Clear();
-            listOfHqRenown.Clear();
+            listOfHqPower.Clear();
             listOfHqTitles.Clear();
             listOfHqTooltips.Clear();
             listOfWorkerSprites.Clear();
-            listOfWorkerRenown.Clear();
+            listOfWorkerPower.Clear();
             listOfWorkerArcs.Clear();
             listOfWorkerTooltips.Clear();
             listOfHqEvents.Clear();
@@ -1351,7 +1351,7 @@ namespace packageAPI
     {
         public string assessmentText;                               //Assessment text
         public EndlLevelMedal medal;                                //type of medal awarded
-        public int renown;                                          //renown given
+        public int power;                                          //power given
         public TooltipData tooltipPortrait = new TooltipData();     //Hq portrait tooltip data
         public TooltipData tooltipMedal = new TooltipData();        //Medal tooltip data
 

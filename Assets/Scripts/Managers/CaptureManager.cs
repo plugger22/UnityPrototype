@@ -222,7 +222,7 @@ public class CaptureManager : MonoBehaviour
                 {
                     Actor actor = GameManager.i.dataScript.GetCurrentActor(details.team.actorSlotID, GameManager.i.globalScript.sideAuthority);
                     if (actor != null)
-                    { actor.Renown++; }
+                    { actor.Power++; }
                     else { Debug.LogError(string.Format("Invalid actor (null) from team.ActorSlotID {0}", details.team.actorSlotID)); }
                 }
             }
