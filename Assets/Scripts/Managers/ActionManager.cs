@@ -486,8 +486,8 @@ public class ActionManager : MonoBehaviour
         Action action = null;
         ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
 
-        //renown (do prior to effects as Player renown will change)
-        int renownBefore = GameManager.i.playerScript.Power;
+        //Power (do prior to effects as Player Power will change)
+        int powerBefore = GameManager.i.playerScript.Power;
         //resolve action
         if (details != null)
         {
@@ -729,7 +729,7 @@ public class ActionManager : MonoBehaviour
     {
         bool errorFlag = false;
         string title, colourSide, criteriaText, tooltipText;
-        int renownCost = GameManager.i.actorScript.manageReservePower;
+        int powerCost = GameManager.i.actorScript.manageReservePower;
         int unhappyTimerBase = GameManager.i.actorScript.currentReserveTimer;
         int unhappyTimer;
         bool isResistance = true;
@@ -804,10 +804,10 @@ public class ActionManager : MonoBehaviour
                                 tooltipText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
                                 builder.AppendFormat("{0}{1}", tooltipText, "\n");
                                 builder.AppendFormat("{0}Unhappy in {1} turn{2}{3}{4}{5}", colourAlert, unhappyTimer, unhappyTimer != 1 ? "s" : "", traitText, colourEnd, "\n");
-                                if (manageAction.isRenownCost == true)
-                                { builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd); }
+                                if (manageAction.isPowerCost == true)
+                                { builder.AppendFormat("{0}Player Power -{1}{2}", colourBad, powerCost, colourEnd); }
                                 else
-                                { builder.AppendFormat("{0}No Renown Cost{1}", colourGood, colourEnd); }
+                                { builder.AppendFormat("{0}No Power Cost{1}", colourGood, colourEnd); }
                             }
                             else
                             {
@@ -816,10 +816,10 @@ public class ActionManager : MonoBehaviour
                                 //tooltip
                                 tooltip.textHeader = string.Format("{0}Option Unavailable{1}", colourSide, colourEnd);
                                 tooltip.textMain = manageAction.tooltipMain;
-                                if (manageAction.isRenownCost == true)
+                                if (manageAction.isPowerCost == true)
                                 { builder.AppendFormat("{0}{1}{2}", colourInvalid, criteriaText, colourEnd); }
                                 else
-                                { builder.AppendFormat("{0}{1}{2}{3}{4}No Renown Cost{5}", colourInvalid, criteriaText, colourEnd, "\n", colourGood, colourEnd); }
+                                { builder.AppendFormat("{0}{1}{2}{3}{4}No Power Cost{5}", colourInvalid, criteriaText, colourEnd, "\n", colourGood, colourEnd); }
                             }
                         }
                         else
@@ -833,10 +833,10 @@ public class ActionManager : MonoBehaviour
                             tooltipText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
                             builder.AppendFormat("{0}{1}", tooltipText, "\n");
                             builder.AppendFormat("{0}Unhappy in {1} turn{2}{3}{4}{5}", colourAlert, unhappyTimer, unhappyTimer != 1 ? "s" : "", traitText, colourEnd, "\n");
-                            if (manageAction.isRenownCost == true)
-                            { builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd); }
+                            if (manageAction.isPowerCost == true)
+                            { builder.AppendFormat("{0}Player Power -{1}{2}", colourBad, powerCost, colourEnd); }
                             else
-                            { builder.AppendFormat("{0}No Renown Cost{1}", colourGood, colourEnd); }
+                            { builder.AppendFormat("{0}No Power Cost{1}", colourGood, colourEnd); }
                         }
                         //Mood tooltip
                         string textMood = "Unknown";
@@ -892,7 +892,7 @@ public class ActionManager : MonoBehaviour
     {
         bool errorFlag = false;
         string title, colourSide, criteriaText, tooltipText;
-        int renownCost = GameManager.i.actorScript.manageDismissPower;
+        int powerCost = GameManager.i.actorScript.manageDismissPower;
         bool isResistance = true;
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"
@@ -957,16 +957,16 @@ public class ActionManager : MonoBehaviour
                                 //tooltip details
                                 tooltipText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
                                 builder.AppendFormat("{0}{1}", tooltipText, "\n");
-                                if (manageAction.isRenownCost == true)
+                                if (manageAction.isPowerCost == true)
                                 {
-                                    ManagePowerCost manageRenownCost = GameManager.i.actorScript.GetManagePowerCost(actor, renownCost);
-                                    builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, manageRenownCost.powerCost, colourEnd);
-                                    if (string.IsNullOrEmpty(manageRenownCost.tooltip) == false)
-                                    { builder.Append(manageRenownCost.tooltip); }
+                                    ManagePowerCost managePowerCost = GameManager.i.actorScript.GetManagePowerCost(actor, powerCost);
+                                    builder.AppendFormat("{0}Player Power -{1}{2}", colourBad, managePowerCost.powerCost, colourEnd);
+                                    if (string.IsNullOrEmpty(managePowerCost.tooltip) == false)
+                                    { builder.Append(managePowerCost.tooltip); }
 
                                 }
                                 else
-                                { builder.AppendFormat("{0}No Renown Cost{1}", colourGood, colourEnd); }
+                                { builder.AppendFormat("{0}No Power Cost{1}", colourGood, colourEnd); }
                             }
                             else
                             {
@@ -975,10 +975,10 @@ public class ActionManager : MonoBehaviour
                                 //tooltip (effectmanager handles extras)
                                 tooltip.textHeader = string.Format("{0}Option Unavailable{1}", colourSide, colourEnd);
                                 tooltip.textMain = manageAction.tooltipMain;
-                                if (manageAction.isRenownCost == true)
+                                if (manageAction.isPowerCost == true)
                                 { builder.AppendFormat("{0}{1}{2}", colourInvalid, criteriaText, colourEnd); }
                                 else
-                                { builder.AppendFormat("{0}{1}{2}{3}{4}No Renown Cost{5}", colourInvalid, criteriaText, colourEnd, "\n", colourGood, colourEnd); }
+                                { builder.AppendFormat("{0}{1}{2}{3}{4}No Power Cost{5}", colourInvalid, criteriaText, colourEnd, "\n", colourGood, colourEnd); }
                             }
                         }
                         else
@@ -990,10 +990,10 @@ public class ActionManager : MonoBehaviour
                             tooltip.textMain = manageAction.tooltipMain;
                             tooltipText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
                             builder.AppendFormat("{0}{1}", tooltipText, "\n");
-                            if (manageAction.isRenownCost == true)
-                            { builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd); }
+                            if (manageAction.isPowerCost == true)
+                            { builder.AppendFormat("{0}Player Power -{1}{2}", colourBad, powerCost, colourEnd); }
                             else
-                            { builder.AppendFormat("{0}No Renown Cost{1}", colourGood, colourEnd); }
+                            { builder.AppendFormat("{0}No Power Cost{1}", colourGood, colourEnd); }
                         }
                         //mood details
                         string textMood = "Unknown";
@@ -1049,7 +1049,7 @@ public class ActionManager : MonoBehaviour
     {
         bool errorFlag = false;
         string title, colourSide, criteriaText, tooltipText;
-        int renownCost = GameManager.i.actorScript.manageDisposePower;
+        int powerCost = GameManager.i.actorScript.manageDisposePower;
         bool isResistance = true;
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         //color code for button tooltip header text, eg. "Operator"
@@ -1112,23 +1112,23 @@ public class ActionManager : MonoBehaviour
                                 //tooltip details
                                 tooltipText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
                                 builder.AppendFormat("{0}{1}", tooltipText, "\n");
-                                if (manageAction.isRenownCost == true)
+                                if (manageAction.isPowerCost == true)
                                 {
                                     /*StringBuilder builder = new StringBuilder();
-                                    ManageRenownCost manageRenownCost = GameManager.instance.actorScript.GetManageRenownCost(actor, renownCost);
-                                    builder.AppendFormat("{0}{1}{2}Player Renown -{3}{4}", tooltipText, "\n", colourBad, manageRenownCost.renownCost, colourEnd);
-                                    if (string.IsNullOrEmpty(manageRenownCost.tooltip) == false)
-                                    { builder.Append(manageRenownCost.tooltip); }
+                                    ManagePowerCost managePowerCost = GameManager.instance.actorScript.GetManagePowerCost(actor, powerCost);
+                                    builder.AppendFormat("{0}{1}{2}Player Power -{3}{4}", tooltipText, "\n", colourBad, managePowerCost.powerCost, colourEnd);
+                                    if (string.IsNullOrEmpty(managePowerCost.tooltip) == false)
+                                    { builder.Append(managePowerCost.tooltip); }
                                     tooltip.textDetails = builder.ToString();*/
-                                    ManagePowerCost manageRenownCost = GameManager.i.actorScript.GetManagePowerCost(actor, renownCost);
-                                    builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, manageRenownCost.powerCost, colourEnd);
-                                    if (string.IsNullOrEmpty(manageRenownCost.tooltip) == false)
-                                    { builder.Append(manageRenownCost.tooltip); }
+                                    ManagePowerCost managePowerCost = GameManager.i.actorScript.GetManagePowerCost(actor, powerCost);
+                                    builder.AppendFormat("{0}Player Power -{1}{2}", colourBad, managePowerCost.powerCost, colourEnd);
+                                    if (string.IsNullOrEmpty(managePowerCost.tooltip) == false)
+                                    { builder.Append(managePowerCost.tooltip); }
                                 }
                                 else
                                 {
-                                    /*tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}", tooltipText, "\n", colourGood, colourEnd);*/
-                                    builder.AppendFormat("{0}No Renown Cost{1}", colourGood, colourEnd);
+                                    /*tooltip.textDetails = string.Format("{0}{1}{2}No Power Cost{3}", tooltipText, "\n", colourGood, colourEnd);*/
+                                    builder.AppendFormat("{0}No Power Cost{1}", colourGood, colourEnd);
                                 }
                             }
                             else
@@ -1138,11 +1138,11 @@ public class ActionManager : MonoBehaviour
                                 //tooltip
                                 tooltip.textHeader = string.Format("{0}Option Unavailable{1}", colourSide, colourEnd);
                                 tooltip.textMain = manageAction.tooltipMain;
-                                if (manageAction.isRenownCost == true)
+                                if (manageAction.isPowerCost == true)
                                 { builder.AppendFormat("{0}{1}{2}", colourInvalid, criteriaText, colourEnd); }
                                 else
                                 {
-                                    builder.AppendFormat("{0}{1}{2}{3}{4}No Renown Cost{5}", colourInvalid, criteriaText, colourEnd, "\n", colourGood,
+                                    builder.AppendFormat("{0}{1}{2}{3}{4}No Power Cost{5}", colourInvalid, criteriaText, colourEnd, "\n", colourGood,
                                       colourEnd);
                                 }
                             }
@@ -1157,15 +1157,15 @@ public class ActionManager : MonoBehaviour
                             //tooltip details
                             tooltipText = string.Format("{0}{1} {2}{3}", colourNeutral, actor.actorName, manageAction.tooltipDetails, colourEnd);
                             builder.AppendFormat("{0}{1}", tooltipText, "\n");
-                            if (manageAction.isRenownCost == true)
+                            if (manageAction.isPowerCost == true)
                             {
-                                /*tooltip.textDetails = string.Format("{0}{1}{2}Player Renown -{3}{4}", tooltipText, "\n", colourBad, renownCost, colourEnd);*/
-                                builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
+                                /*tooltip.textDetails = string.Format("{0}{1}{2}Player Power -{3}{4}", tooltipText, "\n", colourBad, powerCost, colourEnd);*/
+                                builder.AppendFormat("{0}Player Power -{1}{2}", colourBad, powerCost, colourEnd);
                             }
                             else
                             {
-                                /*tooltip.textDetails = string.Format("{0}{1}{2}No Renown Cost{3}", tooltipText, "\n", colourGood, colourEnd);*/
-                                builder.AppendFormat("{0}No Renown Cost{1}", colourGood, colourEnd);
+                                /*tooltip.textDetails = string.Format("{0}{1}{2}No Power Cost{3}", tooltipText, "\n", colourGood, colourEnd);*/
+                                builder.AppendFormat("{0}No Power Cost{1}", colourGood, colourEnd);
                             }
                         }
                         //mood details
@@ -1491,21 +1491,21 @@ public class ActionManager : MonoBehaviour
             GameManager.i.playerScript.inactiveStatus = ActorInactive.StressLeave;
             GameManager.i.playerScript.tooltipStatus = ActorTooltip.Leave;
             GameManager.i.playerScript.isStressLeave = true;
-            //deduct renown cost
-            int renown = GameManager.i.playerScript.Power;
-            renown -= modalDetails.powerCost;
-            if (renown < 0)
+            //deduct power cost
+            int power = GameManager.i.playerScript.Power;
+            power -= modalDetails.powerCost;
+            if (power < 0)
             {
-                renown = 0;
-                Debug.LogWarningFormat("Renown dropped below Zero");
+                power = 0;
+                Debug.LogWarningFormat("Power dropped below Zero");
             }
-            GameManager.i.playerScript.Power = renown;
+            GameManager.i.playerScript.Power = power;
             //popUp
-            GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Renown -{modalDetails.powerCost}");
+            GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Power -{modalDetails.powerCost}");
             GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, "Stress Leave");
             //change alpha of actor to indicate inactive status
             GameManager.i.actorPanelScript.UpdatePlayerAlpha(GameManager.i.guiScript.alphaInactive);
-            GameManager.i.actorPanelScript.UpdatePlayerRenownUI(renown);
+            GameManager.i.actorPanelScript.UpdatePlayerPowerUI(power);
             //message (public)
             string playerName = GameManager.i.playerScript.GetPlayerName(modalDetails.side);
             string text = string.Format("Player, {0}, has gone on Stress Leave", playerName);
@@ -1544,21 +1544,21 @@ public class ActionManager : MonoBehaviour
                 actor.inactiveStatus = ActorInactive.StressLeave;
                 actor.tooltipStatus = ActorTooltip.Leave;
                 actor.isStressLeave = true;
-                //deduct renown cost
-                int renown = GameManager.i.playerScript.Power;
-                renown -= modalDetails.powerCost;
-                if (renown < 0)
+                //deduct Power cost
+                int power = GameManager.i.playerScript.Power;
+                power -= modalDetails.powerCost;
+                if (power < 0)
                 {
-                    renown = 0;
-                    Debug.LogWarningFormat("Renown dropped below Zero");
+                    power = 0;
+                    Debug.LogWarningFormat("Power dropped below Zero");
                 }
-                GameManager.i.playerScript.Power = renown;
+                GameManager.i.playerScript.Power = power;
                 //PopUpFixed
-                GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Renown -{modalDetails.powerCost}");
+                GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Power -{modalDetails.powerCost}");
                 GameManager.i.popUpFixedScript.SetData(actor.slotID, "Stress Leave");
                 //change alpha of actor to indicate inactive status
                 GameManager.i.actorPanelScript.UpdateActorAlpha(actor.slotID, GameManager.i.guiScript.alphaInactive);
-                GameManager.i.actorPanelScript.UpdatePlayerRenownUI(renown);
+                GameManager.i.actorPanelScript.UpdatePlayerPowerUI(power);
                 //message (public)
                 string text = string.Format("{0}, {1}, has gone on Stress Leave", actor.actorName, actor.arc.name);
                 string itemText = "has gone on Stress LEAVE";
@@ -2034,7 +2034,7 @@ public class ActionManager : MonoBehaviour
 
     /// <summary>
     /// Reserve pool actor is Bullied via the right click action menu
-    /// NOTE: calling method checks unhappyTimer > 0 & that sufficient renown onhand
+    /// NOTE: calling method checks unhappyTimer > 0 & that sufficient power onhand
     /// </summary>
     /// <param name="actorID"></param>
     private void ProcessBullyActor(ModalActionDetails details)
@@ -2049,8 +2049,8 @@ public class ActionManager : MonoBehaviour
             actor = GameManager.i.dataScript.GetActor(details.actorDataID);
             if (actor != null)
             {
-                //renown Cost
-                int renownCost = actor.numOfTimesBullied + 1;
+                //Power Cost
+                int powerCost = actor.numOfTimesBullied + 1;
                 actor.numOfTimesBullied++;
                 //traits
                 string traitText = "";
@@ -2065,9 +2065,9 @@ public class ActionManager : MonoBehaviour
                 StringBuilder builder = new StringBuilder();
                 builder.AppendFormat("{0}{1}'s{2}Unhappy timer +{3}{4}{5}", colourGood, actor.actorName, "\n", benefit, traitText, colourEnd);
                 builder.AppendLine(); builder.AppendLine();
-                builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownCost, colourEnd);
+                builder.AppendFormat("{0}Player Power -{1}{2}", colourBad, powerCost, colourEnd);
                 builder.AppendLine(); builder.AppendLine();
-                builder.AppendFormat("{0}{1} can be Bullied again for {2} Renown{3}", colourNeutral, actor.actorName, actor.numOfTimesBullied + 1, colourEnd);
+                builder.AppendFormat("{0}{1} can be Bullied again for {2} Power{3}", colourNeutral, actor.actorName, actor.numOfTimesBullied + 1, colourEnd);
                 //mood text
                 moodText = GameManager.i.personScript.UpdateMood(MoodType.ReserveBully, actor.arc.name);
                 builder.AppendFormat("{0}{1}{2}", "\n", "\n", moodText);
@@ -2076,8 +2076,8 @@ public class ActionManager : MonoBehaviour
                 outcomeDetails.sprite = actor.sprite;
                 //Give boost to Unhappy timer
                 actor.unhappyTimer += benefit;
-                //Deduct Player renown
-                GameManager.i.playerScript.Power -= renownCost;
+                //Deduct Player Power
+                GameManager.i.playerScript.Power -= powerCost;
                 //history
                 actor.AddHistory(new HistoryActor() { text = "Threatened by you in Reserves" });
                 //message
@@ -2185,7 +2185,7 @@ public class ActionManager : MonoBehaviour
 
     /// <summary>
     /// Reserve pool actor is Fired via the right click action menu
-    /// NOTE: calling method checks that Player has enough renown
+    /// NOTE: calling method checks that Player has enough Power
     /// </summary>
     /// <param name="actorID"></param>
     private void ProcessFireReserveActor(ModalActionDetails details)
@@ -2194,7 +2194,7 @@ public class ActionManager : MonoBehaviour
         bool errorFlag = false;
         int numOfTeams = 0;
         string moodText = "Unknown";
-        Debug.Assert(details.powerCost > 0, "Invalid renownCost (zero)");
+        Debug.Assert(details.powerCost > 0, "Invalid powerCost (zero)");
         StringBuilder builder = new StringBuilder();
         ModalOutcomeDetails outcomeDetails = SetDefaultOutcome(details);
         Actor actor = null;
@@ -2216,24 +2216,24 @@ public class ActionManager : MonoBehaviour
                 //remove actor from reserve list
                 GameManager.i.dataScript.RemoveActorFromReservePool(details.side, actor);
                 GameManager.i.dataScript.AddActorToDismissed(actor.actorID, details.side);
-                //lose secrets (keep record of how many there were to enable accurate renown cost calc's)
+                //lose secrets (keep record of how many there were to enable accurate power cost calc's)
                 actor.departedNumOfSecrets = actor.CheckNumOfSecrets();
                 GameManager.i.secretScript.RemoveAllSecretsFromActor(actor);
 
-                //Renown cost
-                int playerRenown = GameManager.i.playerScript.Power;
-                ManagePowerCost renownData = GameManager.i.actorScript.GetManagePowerCost(actor, GameManager.i.actorScript.manageDismissPower);
-                playerRenown -= renownData.powerCost;
-                GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Renown -{renownData.powerCost}");
+                //Power cost
+                int playerPower = GameManager.i.playerScript.Power;
+                ManagePowerCost powerData = GameManager.i.actorScript.GetManagePowerCost(actor, GameManager.i.actorScript.manageDismissPower);
+                playerPower -= powerData.powerCost;
+                GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Power -{powerData.powerCost}");
                 //min capped at Zero
-                playerRenown = Mathf.Max(0, playerRenown);
-                GameManager.i.playerScript.Power = playerRenown;
-                if (renownData.tooltip.Length > 0)
+                playerPower = Mathf.Max(0, playerPower);
+                GameManager.i.playerScript.Power = playerPower;
+                if (powerData.tooltip.Length > 0)
                 {
-                    builder.AppendLine(renownData.tooltip);
+                    builder.AppendLine(powerData.tooltip);
                     builder.AppendLine();
                 }
-                builder.AppendFormat("{0}Player Renown -{1}{2}", colourBad, renownData.powerCost, colourEnd);
+                builder.AppendFormat("{0}Player Power -{1}{2}", colourBad, powerData.powerCost, colourEnd);
 
                 /*if (actor.isThreatening == true)
                 {

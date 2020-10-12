@@ -382,19 +382,19 @@ public class ItemDataManager : MonoBehaviour
     /// <summary>
     /// Player is addicted and has had to feed their need
     /// </summary>
-    /// <param name="renownCost"></param>
+    /// <param name="powerCost"></param>
     /// <param name="approvalCost"></param>
     /// <param name="currentDays"></param>
     /// <returns></returns>
-    public string GetPlayerAddictedDetails(int renownCost, int approvalCost, int currentDays)
+    public string GetPlayerAddictedDetails(int powerCost, int approvalCost, int currentDays)
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("<b>Your addiction to {0}{1}{2}{3} rages unabated</b>{4}{5}", colourNeutral, GameManager.i.globalScript.tagGlobalDrug, colourEnd, "\n", "\n", "\n");
-        if (renownCost > 0)
-        { builder.AppendFormat("<b>{0}You spend {1} Renown{2}{3}to buy more drugs</b>{4}{5}", colourBad, renownCost, colourEnd, "\n", "\n", "\n"); }
+        if (powerCost > 0)
+        { builder.AppendFormat("<b>{0}You spend {1} Power{2}{3}to buy more drugs</b>{4}{5}", colourBad, powerCost, colourEnd, "\n", "\n", "\n"); }
         else
         {
-            builder.AppendFormat("<b>{0}You did not have enough{1}Renown ({2} needed){3}{4}to buy more drugs{5}{6}HQ Approval -1</b>{7}{8}{9}", colourAlert, "\n",
+            builder.AppendFormat("<b>{0}You did not have enough{1}Power ({2} needed){3}{4}to buy more drugs{5}{6}HQ Approval -1</b>{7}{8}{9}", colourAlert, "\n",
          GameManager.i.actorScript.playerAddictedPowerCost, colourEnd, "\n", "\n", colourBad, colourEnd, "\n", "\n");
         }
         builder.AppendFormat("<b>{0}You have Immunity from Stress{1}{2}for {3}{4} day{5}{6}", colourGood, colourEnd, "\n", colourNeutral, currentDays, currentDays != 1 ? "s" : "", colourEnd);
@@ -1093,7 +1093,7 @@ public class ItemDataManager : MonoBehaviour
             {
                 if (coolDownTimer == 0)
                 {
-                    builder.AppendFormat("You can <b>TAKE CONTROL</b> at any time (<b>cost {0}{1} Renown</b>{2})", colourBad, GameManager.i.nemesisScript.controlRenownCost, colourEnd);
+                    builder.AppendFormat("You can <b>TAKE CONTROL</b> at any time (<b>cost {0}{1} Power</b>{2})", colourBad, GameManager.i.nemesisScript.controlRenownCost, colourEnd);
                     builder.AppendFormat("{0}{1}The <b>AI</b> will {2}<b>automatically manage</b>{3} the nemesis otherwise", "\n", "\n", colourAlert, colourEnd);
                 }
                 else
@@ -1164,19 +1164,19 @@ public class ItemDataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Gear Compromised -> Saved or Compromised depending on renownUsed (saved if > 0)
+    /// Gear Compromised -> Saved or Compromised depending on powerUsed (saved if > 0)
     /// </summary>
     /// <param name="gear"></param>
-    /// <param name="renownUsed"></param>
+    /// <param name="powerUsed"></param>
     /// <returns></returns>
-    public string GetGearCompromisedDetails(Gear gear, int renownUsed)
+    public string GetGearCompromisedDetails(Gear gear, int powerUsed)
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("{0}<b>{1}</b>{2} gear{3}", colourNeutral, gear.tag, colourEnd, "\n");
-        if (renownUsed > 0)
+        if (powerUsed > 0)
         {
             builder.AppendFormat("has been {0}<b>SAVED</b>{1}{2}{3}", colourGood, colourEnd, "\n", "\n");
-            builder.AppendFormat("{0}<b>{1}</b>{2} Renown used", colourNeutral, renownUsed, colourEnd);
+            builder.AppendFormat("{0}<b>{1}</b>{2} Power used", colourNeutral, powerUsed, colourEnd);
         }
         else
         {
@@ -1313,7 +1313,7 @@ public class ItemDataManager : MonoBehaviour
         {
             //support approved
             builder.AppendFormat("{0} HQ have agreed to your request for support{1}{2}", factionHQ.tag, "\n", "\n");
-            builder.AppendFormat("{0}<b>Renown +{1}</b>{2}{3}{4}", colourGood, supportGiven, colourEnd, "\n", "\n");
+            builder.AppendFormat("{0}<b>Power +{1}</b>{2}{3}{4}", colourGood, supportGiven, colourEnd, "\n", "\n");
             builder.AppendFormat("{0}<b>{1}% chance of Approval</b>{2}{3}HQ Approval <b>{4}</b> out of <b>{5}</b>", colourNeutral, hqApproval * 10, colourEnd, "\n",
                 hqApproval, GameManager.i.hqScript.maxHqApproval);
         }
@@ -1613,9 +1613,9 @@ public class ItemDataManager : MonoBehaviour
     /// <summary>
     /// AI hacked, detected or not
     /// </summary>
-    /// <param name="text"></param>
-    /// <param name="currentRenownCost"></param>
     /// <param name="isDetected"></param>
+    /// <param name="attemptsDetected"></param>
+    /// <param name="attemptsTotal"></param>
     /// <returns></returns>
     public string GetAIHackedDetails(bool isDetected, int attemptsDetected, int attemptsTotal)
     {
@@ -1649,7 +1649,7 @@ public class ItemDataManager : MonoBehaviour
     /// </summary>
     /// <param name="rebootTimer"></param>
     /// <returns></returns>
-    public string GetAIRebootDetails(int rebootTimer, int currentRenownCost)
+    public string GetAIRebootDetails(int rebootTimer, int currentPowerCost)
     {
         StringBuilder builder = new StringBuilder();
         if (rebootTimer > 0)
@@ -1663,7 +1663,7 @@ public class ItemDataManager : MonoBehaviour
         {
             //Completed
             builder.AppendFormat("AI Reboot {0}<b>COMPLETED</b>{1}{2}{3}AI is Online{4}{5}{6}", colourNeutral, colourEnd, "\n", colourGood, colourEnd, "\n", "\n");
-            builder.AppendFormat("Cost to hack AI now{0}{1}{2} Renown{3}{4}{5}", "\n", colourNeutral, currentRenownCost, colourEnd, "\n", "\n");
+            builder.AppendFormat("Cost to hack AI now{0}{1}{2} Power{3}{4}{5}", "\n", colourNeutral, currentPowerCost, colourEnd, "\n", "\n");
             builder.AppendFormat("AI Alert Status {0}<b>Low</b>{1}", colourGood, colourEnd);
         }
         return builder.ToString();

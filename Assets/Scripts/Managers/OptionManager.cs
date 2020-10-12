@@ -11,7 +11,7 @@ public class OptionManager : MonoBehaviour
 {
     #region Save Data Compatible
     //game options
-    [HideInInspector] public bool autoGearResolution = false;                     //if true then dice roller ignored whenever not enough renown to save gear
+    [HideInInspector] public bool autoGearResolution = false;                     //if true then dice roller ignored whenever not enough power to save gear
     [HideInInspector] public bool fogOfWar = false;                               //if true then one sides sees only the information that they should
     [HideInInspector] public bool fixedActorStats = false;                        //if true then actors will have varying stats according to level, if false then actors of the same level all have identical stats
     [HideInInspector] public bool billboard = true;                               //if true billboard shows between turns
@@ -22,7 +22,7 @@ public class OptionManager : MonoBehaviour
 
     //UI options
     [HideInInspector] public bool showContacts = false;                           //if true node tooltips will show contact as well as Actor Arcs for nodes where actors have contacts
-    [HideInInspector] public bool showRenown = true;                              //if true renown UI elements shown for actors and player, if false show compatibility instead
+    [HideInInspector] public bool showPower = true;                              //if true power UI elements shown for actors and player, if false show compatibility instead
     [HideInInspector] public bool connectorTooltips = false;                      //if true then connectors have tooltips
     [HideInInspector] public bool fullMoodInfo = false;
 
@@ -68,7 +68,7 @@ public class OptionManager : MonoBehaviour
             .AppendFormat(" Side -> {0}{1}", GameManager.i.sideScript.PlayerSide, "\n")
             .AppendFormat("{0}- Game Options{1}", "\n", "\n")
             .AppendFormat(" Fog Of War (Show from POV of Player) -> {0}{1}", fogOfWar, "\n")
-            .AppendFormat(" Auto Gear (Dice ignored if not enough renown) -> {0}{1}", autoGearResolution, "\n")
+            .AppendFormat(" Auto Gear (Dice ignored if not enough Power) -> {0}{1}", autoGearResolution, "\n")
             .AppendFormat(" Fixed Actor Stats -> {0}{1}", fixedActorStats, "\n")
             .AppendFormat(" Billboards -> {0}{1}", billboard, "\n")
             .AppendFormat("{0}- Debug Options{1}","\n", "\n")
@@ -78,7 +78,7 @@ public class OptionManager : MonoBehaviour
             .AppendFormat(" Connector Tooltips -> {0}{1}", connectorTooltips, "\n")
             .AppendFormat(" Full Mood Information -> {0}{1}", fullMoodInfo, "\n")
             .AppendFormat(" Show Contacts -> {0}{1}", showContacts, "\n")
-            .AppendFormat(" Show Renown -> {0}{1}", showRenown, "\n")
+            .AppendFormat(" Show Power -> {0}{1}", showPower, "\n")
             .ToString();
     }
 

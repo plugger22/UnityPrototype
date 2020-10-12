@@ -28443,16 +28443,16 @@ MonoBehaviour:
   compatibility1: {fileID: 898307081}
   compatibility2: {fileID: 1517522713}
   compatibility3: {fileID: 1351372490}
-  renownCircle0: {fileID: 1499294081}
-  renownCircle1: {fileID: 898307079}
-  renownCircle2: {fileID: 1517522711}
-  renownCircle3: {fileID: 1351372488}
-  renownCirclePlayer: {fileID: 90017175}
-  renownText0: {fileID: 1499294082}
-  renownText1: {fileID: 898307080}
-  renownText2: {fileID: 1517522712}
-  renownText3: {fileID: 1351372489}
-  renownTextPlayer: {fileID: 90017176}
+  powerCircle0: {fileID: 1499294081}
+  powerCircle1: {fileID: 898307079}
+  powerCircle2: {fileID: 1517522711}
+  powerCircle3: {fileID: 1351372488}
+  powerCirclePlayer: {fileID: 90017175}
+  powerText0: {fileID: 1499294082}
+  powerText1: {fileID: 898307080}
+  powerText2: {fileID: 1517522712}
+  powerText3: {fileID: 1351372489}
+  powerTextPlayer: {fileID: 90017176}
 --- !u!114 &615421591
 MonoBehaviour:
   m_ObjectHideFlags: 0

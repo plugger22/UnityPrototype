@@ -149,7 +149,7 @@ public class PlayerManager : MonoBehaviour
                 if (GameManager.i.turnScript.Turn > 0 && GameManager.i.sideScript.resistanceOverall == SideState.Human)
                 { GameManager.i.aiScript.UpdateSideTabData(_powerResistance); }
                 //update Power UI (regardless of whether on or off
-                GameManager.i.actorPanelScript.UpdatePlayerRenownUI(_powerResistance);
+                GameManager.i.actorPanelScript.UpdatePlayerPowerUI(_powerResistance);
             }
             else if (GameManager.i.sideScript.PlayerSide.level == globalAuthority.level)
             {
@@ -159,7 +159,7 @@ public class PlayerManager : MonoBehaviour
                 Debug.LogFormat("[Sta] -> PlayerManager.cs: Player (Authority) Power changed from {0} to {1}{2}", _powerAuthority, value, "\n");
                 _powerAuthority = value;
                 //update Power UI (regardless of whether on or off
-                GameManager.i.actorPanelScript.UpdatePlayerRenownUI(_powerAuthority);
+                GameManager.i.actorPanelScript.UpdatePlayerPowerUI(_powerAuthority);
             }
             else
             {

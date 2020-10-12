@@ -522,13 +522,13 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Player renown expended. 'dataID' is multipurpose (gearID if compromised, etc.) defaults to Player side. 'Reason' is a short text tag for ItemData giving a reason why renown was used. format 'to ....'
+    /// Player Power expended. 'dataID' is multipurpose (gearID if compromised, etc.) defaults to Player side. 'Reason' is a short text tag for ItemData giving a reason why Power was used. format 'to ....'
     /// </summary>
     /// <param name="text"></param>
     /// <param name="nodeID"></param>
     /// <param name="dataID"></param>
     /// <returns></returns>
-    public Message RenownUsedPlayer(string text, int amount, int dataID, int nodeID = -1)
+    public Message PowerUsedPlayer(string text, int amount, int dataID, int nodeID = -1)
     {
         Debug.Assert(dataID >= 0, string.Format("Invalid dataID {0}", dataID));
         Debug.Assert(amount > 0, "Invalid amount (<= 0)");
@@ -856,15 +856,15 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Addicted player has to feed their need with either renown or HQ Approval
+    /// Addicted player has to feed their need with either Power or HQ Approval
     /// </summary>
     /// <param name="text"></param>
-    /// <param name="renownCost"></param>
+    /// <param name="powerCost"></param>
     /// <param name="hqApprovalCost"></param>
     /// <returns></returns>
-    public Message PlayerAddicted(string text, int renownCost, int hqApprovalCost, int currentImmuneDays)
+    public Message PlayerAddicted(string text, int powerCost, int hqApprovalCost, int currentImmuneDays)
     {
-        Debug.Assert(renownCost > 0 || hqApprovalCost > 0, "Invalid renownCost and hqApprovalCost (one must be > Zero)");
+        Debug.Assert(powerCost > 0 || hqApprovalCost > 0, "Invalid powerCost and hqApprovalCost (one must be > Zero)");
         Debug.AssertFormat(currentImmuneDays > -1, "Invalid currentImmuneDays {0} (should be Zero or above)", currentImmuneDays);
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -874,13 +874,13 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Plyr_Addicted;
             message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.isPublic = true;
-            message.data0 = renownCost;
+            message.data0 = powerCost;
             message.data1 = hqApprovalCost;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = "You FEED your drug ADDICTION";
             data.topText = "Feed the Need";
-            data.bottomText = GameManager.i.itemDataScript.GetPlayerAddictedDetails(renownCost, hqApprovalCost, currentImmuneDays);
+            data.bottomText = GameManager.i.itemDataScript.GetPlayerAddictedDetails(powerCost, hqApprovalCost, currentImmuneDays);
             data.priority = ItemPriority.Medium;
             data.sprite = playerSprite;
             data.spriteName = data.sprite.name;
@@ -2746,10 +2746,10 @@ public class MessageManager : MonoBehaviour
     /// AI notification to one or both sides of AI being hacked
     /// </summary>
     /// <param name="text"></param>
-    /// <param name="currentRenownCost"></param>
+    /// <param name="currentPowerCost"></param>
     /// <param name="isDetected"></param>
     /// <returns></returns>
-    public Message AIHacked(string text, int currentRenownCost, bool isDetected, int attemptsDetected, int attemptsTotal)
+    public Message AIHacked(string text, int currentPowerCost, bool isDetected, int attemptsDetected, int attemptsTotal)
     {
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -2761,7 +2761,7 @@ public class MessageManager : MonoBehaviour
             { message.sideLevel = globalBoth.level; message.data1 = 1; message.isPublic = true; }
             else
             { message.sideLevel = globalResistance.level; message.data1 = 0; message.isPublic = false; }
-            message.data0 = currentRenownCost;
+            message.data0 = currentPowerCost;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = "Resistance HACKS AI";
@@ -2788,10 +2788,10 @@ public class MessageManager : MonoBehaviour
     /// AI notification to both sides of an AI Security System Reboot (commence / complete)
     /// </summary>
     /// <param name="text"></param>
-    /// <param name="currentRenownCost"></param>
+    /// <param name="currentPowerCost"></param>
     /// <param name="rebootTimer"></param>
     /// <returns></returns>
-    public Message AIReboot(string text, int currentRenownCost, int rebootTimer)
+    public Message AIReboot(string text, int currentPowerCost, int rebootTimer)
     {
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -2801,14 +2801,14 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.AI_Reboot;
             message.sideLevel = globalBoth.level;
             message.isPublic = true;
-            message.data0 = currentRenownCost;
+            message.data0 = currentPowerCost;
             message.data1 = rebootTimer;
             //ItemData
             ItemData data = new ItemData();
             if (rebootTimer > 0) { data.itemText = "AI REBOOTS Commences"; }
             else { data.itemText = "AI REBOOT Completed"; }
             data.topText = "AI Reboots";
-            data.bottomText = GameManager.i.itemDataScript.GetAIRebootDetails(rebootTimer, currentRenownCost);
+            data.bottomText = GameManager.i.itemDataScript.GetAIRebootDetails(rebootTimer, currentPowerCost);
             data.priority = ItemPriority.Medium;
             data.sprite = GameManager.i.guiScript.aiRebootSprite;
             data.spriteName = data.sprite.name;
@@ -3442,10 +3442,10 @@ public class MessageManager : MonoBehaviour
     /// Gear has been used and compromised. Returns null if text invalid
     /// </summary>
     /// <param name="text"></param>
-    /// <param name="nodeID"></param>
-    /// <param name="gearID"></param>
+    /// <param name="gear"></param>
+    /// <param name="powerUsed"></param>
     /// <returns></returns>
-    public Message GearCompromised(string text, Gear gear, int renownUsed, int nodeID = -1)
+    public Message GearCompromised(string text, Gear gear, int powerUsed, int nodeID = -1)
     {
         Debug.Assert(gear != null, "Invalid gear (Null)");
         if (string.IsNullOrEmpty(text) == false)
@@ -3456,14 +3456,14 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Gear_Comprised;
             message.sideLevel = globalResistance.level;
             message.isPublic = true;
-            message.data0 = renownUsed;
+            message.data0 = powerUsed;
             message.data1 = nodeID;
             message.dataName = gear.name;
             //ItemData
             ItemData data = new ItemData();
             data.itemText = string.Format("{0} gear Compromised", gear.tag);
             data.topText = "Gear Compromised";
-            data.bottomText = GameManager.i.itemDataScript.GetGearCompromisedDetails(gear, renownUsed);
+            data.bottomText = GameManager.i.itemDataScript.GetGearCompromisedDetails(gear, powerUsed);
             data.priority = ItemPriority.Low;
             data.sprite = gear.sprite;
             data.spriteName = data.sprite.name;
@@ -4173,18 +4173,18 @@ public class MessageManager : MonoBehaviour
     //
 
     /// <summary>
-    /// HQ support (renown) that is given/declined at the beginning of each turn
+    /// HQ support (Power) that is given/declined at the beginning of each turn
     /// </summary>
     /// <param name="text"></param>
     /// <param name="hqApprovalLevel"></param>
-    /// <param name="playerRenownBefore"></param>
+    /// <param name="playerPowerBefore"></param>
     /// <param name="supportGiven"></param>
     /// <returns></returns>
-    public Message HqSupport(string text, Hq factionHQ, int hqApprovalLevel, int playerRenownBefore, int supportGiven = -1)
+    public Message HqSupport(string text, Hq factionHQ, int hqApprovalLevel, int playerPowerBefore, int supportGiven = -1)
     {
         Debug.Assert(factionHQ != null, "Invalid HQ (Null)");
         Debug.Assert(hqApprovalLevel > -1, "Invalid hqSupportLevel ( < zero)");
-        Debug.Assert(playerRenownBefore > -1, "Invalid playerRenownBefore ( < zero)");
+        Debug.Assert(playerPowerBefore > -1, "Invalid playerPowerBefore ( < zero)");
         if (string.IsNullOrEmpty(text) == false)
         {
             Message message = new Message();
@@ -4194,7 +4194,7 @@ public class MessageManager : MonoBehaviour
             message.sideLevel = factionHQ.side.level;
             message.isPublic = true;
             message.data0 = hqApprovalLevel;
-            message.data1 = playerRenownBefore;
+            message.data1 = playerPowerBefore;
             message.data2 = supportGiven;
             //ItemData
             ItemData data = new ItemData();

@@ -202,7 +202,7 @@ namespace modalAPI
     {
         public int chance;
         public int powerCost;
-        public bool isEnoughPower;                             //true if player renown > 0
+        public bool isEnoughPower;                             //true if player power > 0
         public string topText;
         public PassThroughDiceData passData;                    //ignore if no gear ivvolved
         

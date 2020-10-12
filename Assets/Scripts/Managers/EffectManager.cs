@@ -64,11 +64,11 @@ public class EffectManager : MonoBehaviour
     [Tooltip("Chance of being spotted by a MegaCorp (if roll < chance then MegaCorp negative relations effect negated)")]
     [Range(0, 100)] public int chanceOfSpottedByMegaCorp = 50;
 
-    //hard coded renown amounts that correspond to effect Criteria equivalents (1/2/3/5)
-    private int renownLow = 1;
-    private int renownMed = 2;
-    private int renownHigh = 3;
-    private int renownExtreme = 5;
+    //hard coded Power amounts that correspond to effect Criteria equivalents (1/2/3/5)
+    private int powerLow = 1;
+    private int powerMed = 2;
+    private int powerHigh = 3;
+    private int powerExtreme = 5;
 
     //fast access -> spiders
     private int delayNoSpider;
@@ -83,7 +83,7 @@ public class EffectManager : MonoBehaviour
     private int teamArcErasure = -1;
     //fast access -> traits
     private string actorStressedOverInvisibility;
-    private string actorDoubleRenown;
+    private string actorDoublePower;
     private string actorBlackmailNone;
     private string actorConflictPoison;
     private string actorConflictKill;
@@ -159,7 +159,7 @@ public class EffectManager : MonoBehaviour
         delayNoSpider = GameManager.i.nodeScript.nodeNoSpiderDelay;
         delayYesSpider = GameManager.i.nodeScript.nodeYesSpiderDelay;
         actorStressedOverInvisibility = "ActorInvisibilityStress";
-        actorDoubleRenown = "ActorDoubleRenown";
+        actorDoublePower = "ActorDoublePower";
         actorBlackmailNone = "ActorBlackmailNone";
         actorConflictPoison = "ActorConflictPoison";
         actorConflictKill = "ActorConflictKill";
@@ -642,7 +642,7 @@ public class EffectManager : MonoBehaviour
                                     // - - - Current Actor / Player - - -
                                     //
                                     case "ActorCurrent":
-                                        int playerRenown;
+                                        int playerPower;
                                         switch (criteria.effectCriteria.name)
                                         {
                                             case "ConditionStressedYes":
@@ -934,47 +934,47 @@ public class EffectManager : MonoBehaviour
                                                 }
                                                 else { Debug.LogWarning("Invalid actor (Null) for OpinionNOTZero"); }
                                                 break;
-                                            case "RenownReserveMin":
+                                            case "PowerReserveMin":
                                                 //player
-                                                int renownReserve = GameManager.i.actorScript.manageReservePower;
-                                                playerRenown = GameManager.i.playerScript.Power;
-                                                if (playerRenown < renownReserve)
+                                                int powerReserve = GameManager.i.actorScript.manageReservePower;
+                                                playerPower = GameManager.i.playerScript.Power;
+                                                if (playerPower < powerReserve)
                                                 {
-                                                    BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownReserve,
-                                                      colourEnd, "\n", colourNeutral, playerRenown, colourEnd));
+                                                    BuildString(result, string.Format("You need at least {0}{1}{2}{3} Power {4}(currently {5}{6}{7})", "\n", colourNeutral, powerReserve,
+                                                      colourEnd, "\n", colourNeutral, playerPower, colourEnd));
                                                 }
                                                 break;
-                                            case "RenownDismissMin":
+                                            case "PowerDismissMin":
                                                 //player -> extra cost for actor knowing secrets and threatening player
                                                 ManagePowerCost manageDismissCost = GameManager.i.actorScript.GetManagePowerCost(actor, GameManager.i.actorScript.manageDismissPower);
-                                                int renownDismiss = manageDismissCost.powerCost;
-                                                playerRenown = GameManager.i.playerScript.Power;
-                                                if (playerRenown < renownDismiss)
+                                                int powerDismiss = manageDismissCost.powerCost;
+                                                playerPower = GameManager.i.playerScript.Power;
+                                                if (playerPower < powerDismiss)
                                                 {
-                                                    BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownDismiss,
-                                                      colourEnd, "\n", colourNeutral, playerRenown, colourEnd));
+                                                    BuildString(result, string.Format("You need at least {0}{1}{2}{3} Power {4}(currently {5}{6}{7})", "\n", colourNeutral, powerDismiss,
+                                                      colourEnd, "\n", colourNeutral, playerPower, colourEnd));
                                                     if (string.IsNullOrEmpty(manageDismissCost.tooltip) == false)
                                                     { result.Append(manageDismissCost.tooltip); }
                                                 }
                                                 break;
-                                            case "RenownDisposeMin":
+                                            case "PowerDisposeMin":
                                                 //player -> extra cost for actor knowing secrets and threatening player
                                                 ManagePowerCost manageDisposeCost = GameManager.i.actorScript.GetManagePowerCost(actor, GameManager.i.actorScript.manageDisposePower);
-                                                int renownDispose = manageDisposeCost.powerCost;
-                                                playerRenown = GameManager.i.playerScript.Power;
-                                                if (playerRenown < renownDispose)
+                                                int powerDispose = manageDisposeCost.powerCost;
+                                                playerPower = GameManager.i.playerScript.Power;
+                                                if (playerPower < powerDispose)
                                                 {
-                                                    BuildString(result, string.Format("You need at least {0}{1}{2}{3} Renown {4}(currently {5}{6}{7})", "\n", colourNeutral, renownDispose,
-                                                      colourEnd, "\n", colourNeutral, playerRenown, colourEnd));
+                                                    BuildString(result, string.Format("You need at least {0}{1}{2}{3} Power {4}(currently {5}{6}{7})", "\n", colourNeutral, powerDispose,
+                                                      colourEnd, "\n", colourNeutral, playerPower, colourEnd));
                                                     if (string.IsNullOrEmpty(manageDisposeCost.tooltip) == false)
                                                     { result.Append(manageDisposeCost.tooltip); }
                                                 }
                                                 break;
-                                            case "RenownNOTZeroActor":
+                                            case "PowerNOTZeroActor":
                                                 if (actor != null)
                                                 {
                                                     if (actor.Power == 0)
-                                                    { BuildString(result, "Renown Zero"); }
+                                                    { BuildString(result, "Power Zero"); }
                                                 }
                                                 break;
                                             case "NumRecruitsCurrent":
@@ -1134,30 +1134,30 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.i.playerScript.CheckPlayerSpecial(PlayerCheck.NodeActionsNOTZero) == false)
                                                 { BuildString(result, "Player has NO NodeActions"); }
                                                 break;
-                                            case "RenownPlayerLow":
-                                                //Player has Renown Low or better
-                                                if (GameManager.i.playerScript.Power < renownLow)
-                                                { BuildString(result, string.Format("Not enough Renown{0}(need {1})", "\n", renownLow)); }
+                                            case "PowerPlayerLow":
+                                                //Player has Power Low or better
+                                                if (GameManager.i.playerScript.Power < powerLow)
+                                                { BuildString(result, string.Format("Not enough Power{0}(need {1})", "\n", powerLow)); }
                                                 break;
-                                            case "RenownPlayerMed":
-                                                //Player has Renown Med or better
-                                                if (GameManager.i.playerScript.Power < renownMed)
-                                                { BuildString(result, string.Format("Not enough Renown{0}(need {1})", "\n", renownMed)); }
+                                            case "PowerPlayerMed":
+                                                //Player has Power Med or better
+                                                if (GameManager.i.playerScript.Power < powerMed)
+                                                { BuildString(result, string.Format("Not enough Power{0}(need {1})", "\n", powerMed)); }
                                                 break;
-                                            case "RenownPlayerHigh":
-                                                //Player has Renown High or better
-                                                if (GameManager.i.playerScript.Power < renownHigh)
-                                                { BuildString(result, string.Format("Not enough Renown{0}(need {1})", "\n", renownHigh)); }
+                                            case "PowerPlayerHigh":
+                                                //Player has Power High or better
+                                                if (GameManager.i.playerScript.Power < powerHigh)
+                                                { BuildString(result, string.Format("Not enough Power{0}(need {1})", "\n", powerHigh)); }
                                                 break;
-                                            case "RenownPlayerExt":
-                                                //Player has Renown Low or better
-                                                if (GameManager.i.playerScript.Power < renownExtreme)
-                                                { BuildString(result, string.Format("Not enough Renown{0}(need {1})", "\n", renownExtreme)); }
+                                            case "PowerPlayerExt":
+                                                //Player has Power Low or better
+                                                if (GameManager.i.playerScript.Power < powerExtreme)
+                                                { BuildString(result, string.Format("Not enough Power{0}(need {1})", "\n", powerExtreme)); }
                                                 break;
-                                            case "RenownNOTZeroPlayer":
+                                            case "PowerNOTZeroPlayer":
                                                 //Player
                                                 if (GameManager.i.playerScript.Power == 0)
-                                                { BuildString(result, "Renown Zero"); }
+                                                { BuildString(result, "Power Zero"); }
                                                 break;
                                             case "InvestigationNormal":
                                                 //Player has a current, normal, ongoing investigation that hasn't had intervention by orgHQ
@@ -1292,15 +1292,15 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.i.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.ActorContactNOTMax, playerSide) == 0)
                                                 { BuildString(result, "No actors with NodeActions OnMap"); }
                                                 break;
-                                            case "RenownActorsMore":
-                                                //at least one actor has more renown than player
+                                            case "PowerActorsMore":
+                                                //at least one actor has more Power than player
                                                 if (GameManager.i.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.PowerMore, playerSide) == 0)
-                                                { BuildString(result, "No actors with more Renown than Player"); }
+                                                { BuildString(result, "No actors with more Power than Player"); }
                                                 break;
-                                            case "RenownActorsLess":
-                                                //at least one actor has less renown than player
+                                            case "PowerActorsLess":
+                                                //at least one actor has less Power than player
                                                 if (GameManager.i.dataScript.CheckNumOfActiveActorsSpecial(ActorCheck.PowerLess, playerSide) == 0)
-                                                { BuildString(result, "No actors with less Renown than Player"); }
+                                                { BuildString(result, "No actors with less Power than Player"); }
                                                 break;
                                             case "ActorsKnowSecret":
                                                 //at least one actor knows at least one of the player's secrets
@@ -1921,7 +1921,7 @@ public class EffectManager : MonoBehaviour
 
     #region ProcessEffect
     /// <summary>
-    /// Processes effects and returns results in a class. Leave actor as Null for (Resistance?) Player effect (Invisibility, Renown etc. auto checks node for Player being present, so can provide Actor)
+    /// Processes effects and returns results in a class. Leave actor as Null for (Resistance?) Player effect (Invisibility, Power etc. auto checks node for Player being present, so can provide Actor)
     /// Use player node if an issue but check to see if node is used (often to determine who is affected, player or actor)
     /// </summary>
     /// <param name="effect"></param>
@@ -2065,9 +2065,9 @@ public class EffectManager : MonoBehaviour
                     case "ActorDisposedOff":
                     case "ActorPromoted":
                     case "ActorToReserves":
-                    case "ManageDismissRenown":
-                    case "ManageDisposeRenown":
-                    case "ManageReserveRenown":
+                    case "ManageDismissPower":
+                    case "ManageDisposePower":
+                    case "ManageReservePower":
                     case "UnhappyTimerCurrent":
                     case "ActorPromised":
                         if (actor != null)
@@ -2405,18 +2405,18 @@ public class EffectManager : MonoBehaviour
                             effectReturn.errorFlag = true;
                         }
                         break;
-                    //Note: Renown can be in increments of > 1
-                    case "Renown":
+                    //Note: Power can be in increments of > 1
+                    case "Power":
                         if (node != null)
                         {
                             //Player
                             if (node.nodeID == GameManager.i.nodeScript.GetPlayerNodeID())
-                            { effectReturn.bottomText = ExecutePlayerRenown(effect); }
+                            { effectReturn.bottomText = ExecutePlayerPower(effect); }
                             else
                             {
                                 //Actor effect
                                 if (actor != null)
-                                { effectReturn.bottomText = ExecuteActorRenown(effect, actor, dataInput); }
+                                { effectReturn.bottomText = ExecuteActorPower(effect, actor, dataInput); }
                                 else
                                 {
                                     Debug.LogErrorFormat("Invalid Actor (null) for EffectOutcome \"{0}\"", effect.outcome.name);
@@ -2681,20 +2681,20 @@ public class EffectManager : MonoBehaviour
                                             dataBefore, opinion, "\n");
                                     }
                                     break;
-                                case "Renown":
-                                    int renown = actor.Power;
+                                case "Power":
+                                    int power = actor.Power;
                                     switch (effect.operand.name)
                                     {
                                         case "Add":
-                                            renown += effect.value;
-                                            actor.Power = renown;
-                                            GameManager.i.popUpFixedScript.SetData(actor.slotID, $"Renown +{effect.value}");
+                                            power += effect.value;
+                                            actor.Power = power;
+                                            GameManager.i.popUpFixedScript.SetData(actor.slotID, $"Power +{effect.value}");
                                             break;
                                         case "Subtract":
-                                            renown -= effect.value;
-                                            renown = Mathf.Max(0, renown);
-                                            actor.Power = renown;
-                                            GameManager.i.popUpFixedScript.SetData(actor.slotID, $"Renown -{effect.value}");
+                                            power -= effect.value;
+                                            power = Mathf.Max(0, power);
+                                            actor.Power = power;
+                                            GameManager.i.popUpFixedScript.SetData(actor.slotID, $"Power -{effect.value}");
                                             break;
                                         default:
                                             Debug.LogWarningFormat("Invalid effect.operand \"{0}\"", effect.operand.name);
@@ -3841,33 +3841,33 @@ public class EffectManager : MonoBehaviour
                 effectResolve.bottomText = string.Format("{0}{1} killed{2}", colourEffect, actor.actorName, colourEnd);
                 GameManager.i.popUpFixedScript.SetData(actor.slotID, "Disposed Off");
                 break;
-            case "ManageReserveRenown":
+            case "ManageReservePower":
                 data = GameManager.i.actorScript.manageReservePower;
                 GameManager.i.playerScript.Power -= data;
-                effectResolve.bottomText = string.Format("{0}Player Renown -{1}{2}", colourEffect, data, colourEnd);
-                GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Renown -{data}");
+                effectResolve.bottomText = string.Format("{0}Player Power -{1}{2}", colourEffect, data, colourEnd);
+                GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Power -{data}");
                 break;
-            case "ManageDismissRenown":
+            case "ManageDismissPower":
                 ManagePowerCost manageDismissCost = GameManager.i.actorScript.GetManagePowerCost(actor, GameManager.i.actorScript.manageDismissPower);
                 data = manageDismissCost.powerCost;
                 GameManager.i.playerScript.Power -= data;
                 StringBuilder builderDismiss = new StringBuilder();
                 if (string.IsNullOrEmpty(manageDismissCost.tooltip) == false)
                 { builderDismiss.AppendLine(manageDismissCost.tooltip); builderDismiss.AppendLine(); }
-                builderDismiss.AppendFormat("{0}Player Renown -{1}{2}", colourEffect, data, colourEnd);
+                builderDismiss.AppendFormat("{0}Player Power -{1}{2}", colourEffect, data, colourEnd);
                 effectResolve.bottomText = builderDismiss.ToString();
-                GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Renown -{data}");
+                GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Power -{data}");
                 break;
-            case "ManageDisposeRenown":
+            case "ManageDisposePower":
                 ManagePowerCost manageDisposeCost = GameManager.i.actorScript.GetManagePowerCost(actor, GameManager.i.actorScript.manageDisposePower);
                 data = manageDisposeCost.powerCost;
                 GameManager.i.playerScript.Power -= data;
                 StringBuilder builderDispose = new StringBuilder();
                 if (string.IsNullOrEmpty(manageDisposeCost.tooltip) == false)
                 { builderDispose.AppendLine(manageDisposeCost.tooltip); builderDispose.AppendLine(); }
-                builderDispose.AppendFormat("{0}Player Renown -{1}{2}", colourEffect, data, colourEnd);
+                builderDispose.AppendFormat("{0}Player Power -{1}{2}", colourEffect, data, colourEnd);
                 effectResolve.bottomText = builderDispose.ToString();
-                GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Renown -{data}");
+                GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Power -{data}");
                 break;
             case "UnhappyTimerCurrent":
                 data = GameManager.i.actorScript.currentReserveTimer;
@@ -4394,8 +4394,8 @@ public class EffectManager : MonoBehaviour
         //outcome
         switch (effect.outcome.name)
         {
-            case "Renown":
-                effectResolve.bottomText = ExecuteActorRenown(effect, actor, dataInput, dataTopic.isHqActors);
+            case "Power":
+                effectResolve.bottomText = ExecuteActorPower(effect, actor, dataInput, dataTopic.isHqActors);
                 break;
             case "ContactGainLose":
             case "ContactStatus":
@@ -4537,9 +4537,9 @@ public class EffectManager : MonoBehaviour
                 //actor Other changes opinion
                 effectResolve.bottomText = ExecuteActorOpinion(effect, actorOther, dataInput, dataTopic);
                 break;
-            case "Renown":
-                //actor Other changes Renown
-                effectResolve.bottomText = ExecuteActorRenown(effect, actorOther, dataInput, dataTopic.isHqActors);
+            case "Power":
+                //actor Other changes Power
+                effectResolve.bottomText = ExecuteActorPower(effect, actorOther, dataInput, dataTopic.isHqActors);
                 break;
         }
         return effectResolve;
@@ -4569,22 +4569,22 @@ public class EffectManager : MonoBehaviour
         //outcome
         switch (effect.outcome.name)
         {
-            case "Renown":
+            case "Power":
                 //normal
                 if (dataInput.source != EffectSource.Target)
-                { effectResolve.bottomText = ExecutePlayerRenown(effect); }
-                //special case of story target -> could be Player or Actor renown
+                { effectResolve.bottomText = ExecutePlayerPower(effect); }
+                //special case of story target -> could be Player or Actor Power
                 else
                 {
                     //Player
                     if (dataInput.data1 == 999)
-                    { effectResolve.bottomText = ExecutePlayerRenown(effect); }
+                    { effectResolve.bottomText = ExecutePlayerPower(effect); }
                     else
                     {
                         //actor
                         Actor actor = GameManager.i.dataScript.GetActor(dataInput.data1);
                         if (actor != null)
-                        { effectResolve.bottomText = ExecuteActorRenown(effect, actor, dataInput); }
+                        { effectResolve.bottomText = ExecuteActorPower(effect, actor, dataInput); }
                         else { Debug.LogWarningFormat("Invalid Topic Target actor (Null) for actorID {0}", dataInput.data1); }
                     }
                 }
@@ -5186,46 +5186,46 @@ public class EffectManager : MonoBehaviour
     //
 
     /// <summary>
-    /// handles player renown, returns string for EffectDataResolve.bottomText
+    /// handles player Power, returns string for EffectDataResolve.bottomText
     /// NOTE: effect checked for Null by parent method (child of several parents, ProcessEffect and ResolveTopicPlayerEffect)
     /// </summary>
     /// <param name="effect"></param>
     /// <returns></returns>
-    private string ExecutePlayerRenown(Effect effect)
+    private string ExecutePlayerPower(Effect effect)
     {
         string bottomText = "Unknown";
         string popText = "Unknown";
-        int playerRenown = GameManager.i.playerScript.Power;
+        int playerPower = GameManager.i.playerScript.Power;
         //Player effect
         switch (effect.operand.name)
         {
             case "Add":
-                playerRenown += effect.value;
-                popText = $"Renown +{effect.value}";
+                playerPower += effect.value;
+                popText = $"Power +{effect.value}";
                 bottomText = string.Format("{0}Player {1}{2}", colourGoodSide, effect.description, colourEnd);
                 break;
             case "Subtract":
-                playerRenown -= effect.value;
-                playerRenown = Mathf.Max(0, playerRenown);
-                popText = $"Renown -{effect.value}";
+                playerPower -= effect.value;
+                playerPower = Mathf.Max(0, playerPower);
+                popText = $"Power -{effect.value}";
                 bottomText = string.Format("{0}Player {1}{2}", colourBadSide, effect.description, colourEnd);
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
         }
-        GameManager.i.playerScript.Power = playerRenown;
+        GameManager.i.playerScript.Power = playerPower;
         //popUp
         GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, popText);
         return bottomText;
     }
 
     /// <summary>
-    /// handles Actor renown, returns string for EffectDataResolve.bottomText
+    /// handles Actor Power, returns string for EffectDataResolve.bottomText
     /// NOTE: effect and actor checked for Null by parent method (child of several parents, ProcessEffect and ResolveTopicActorEffect)
     /// </summary>
     /// <param name="effect"></param>
     /// <param name="actor"></param>
     /// <returns></returns>
-    private string ExecuteActorRenown(Effect effect, Actor actor, EffectDataInput dataInput, bool isHqActor = false)
+    private string ExecuteActorPower(Effect effect, Actor actor, EffectDataInput dataInput, bool isHqActor = false)
     {
         string bottomText = "Unknown";
         string popText = "Unknown";
@@ -5236,16 +5236,16 @@ public class EffectManager : MonoBehaviour
             case "Add":
                 actor.Power += effect.value;
                 changeAmount += effect.value;
-                if (actor.CheckTraitEffect(actorDoubleRenown) == true)
+                if (actor.CheckTraitEffect(actorDoublePower) == true)
                 {
-                    //trait -> renown doubled (only for Add renown)
+                    //trait -> Power doubled (only for Add Power)
                     changeAmount += effect.value;
                     actor.Power += effect.value;
-                    bottomText = string.Format("{0}{1} Renown +{2}{3} ({4}{5}{6} trait)", isHqActor == false ? colourBad : colourGood,
+                    bottomText = string.Format("{0}{1} Power +{2}{3} ({4}{5}{6} trait)", isHqActor == false ? colourBad : colourGood,
                         isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ),
                         effect.value * 2, colourEnd, colourNeutral, actor.GetTrait().tag, colourEnd);
                     //logger
-                    GameManager.i.actorScript.TraitLogMessage(actor, "for increasing Renown", "to gain DOUBLE renown");
+                    GameManager.i.actorScript.TraitLogMessage(actor, "for increasing Power", "to gain DOUBLE Power");
                 }
                 else
                 {
@@ -5254,7 +5254,7 @@ public class EffectManager : MonoBehaviour
                         isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ),
                         effect.description, colourEnd);
                 }
-                popText = $"Renown +{changeAmount}";
+                popText = $"Power +{changeAmount}";
                 break;
             case "Subtract":
                 actor.Power -= effect.value;
@@ -5263,21 +5263,21 @@ public class EffectManager : MonoBehaviour
                 bottomText = string.Format("{0}{1} {2}{3}", isHqActor == false ? colourGood : colourBad,
                     isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ),
                     effect.description, colourEnd);
-                popText = $"Renown {changeAmount}";
+                popText = $"Power {changeAmount}";
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\" for effect {1}", effect.operand.name, effect.name); break;
         }
         //hq actor
         if (isHqActor == true && changeAmount != 0)
         {
-            HqPowerData dataRenown = new HqPowerData()
+            HqPowerData dataPower = new HqPowerData()
             {
                 turn = GameManager.i.turnScript.Turn,
                 change = changeAmount,
                 newPower = actor.Power,
                 reason = dataInput.originText
             };
-            actor.AddHqPowerData(dataRenown);
+            actor.AddHqPowerData(dataPower);
         }
         else
         {
@@ -5285,7 +5285,7 @@ public class EffectManager : MonoBehaviour
             GameManager.i.popUpFixedScript.SetData(actor.slotID, popText);
         }
         //admin
-        Debug.LogFormat("[Sta] -> EffectManager.cs: {0} {1} Renown changed from {2} to {3}{4}", actor.actorName, isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ),
+        Debug.LogFormat("[Sta] -> EffectManager.cs: {0} {1} Power changed from {2} to {3}{4}", actor.actorName, isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ),
             dataBefore, actor.Power, "\n");
         return bottomText;
     }

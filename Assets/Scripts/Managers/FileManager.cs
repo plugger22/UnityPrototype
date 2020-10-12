@@ -357,7 +357,7 @@ public class FileManager : MonoBehaviour
         write.optionData.debugData = GameManager.i.optionScript.debugData;
         write.optionData.noAI = GameManager.i.optionScript.noAI;
         write.optionData.showContacts = GameManager.i.optionScript.showContacts;
-        write.optionData.showRenown = GameManager.i.optionScript.showRenown;
+        write.optionData.showRenown = GameManager.i.optionScript.showPower;
         write.optionData.connectorTooltips = GameManager.i.optionScript.connectorTooltips;
         write.optionData.fullMoodInfo = GameManager.i.optionScript.fullMoodInfo;
         write.optionData.colourScheme = GameManager.i.optionScript.ColourOption;
@@ -2080,7 +2080,7 @@ public class FileManager : MonoBehaviour
         GameManager.i.optionScript.debugData = read.optionData.debugData;
         GameManager.i.optionScript.noAI = read.optionData.noAI;
         GameManager.i.optionScript.showContacts = read.optionData.showContacts;
-        GameManager.i.optionScript.showRenown = read.optionData.showRenown;
+        GameManager.i.optionScript.showPower = read.optionData.showRenown;
         GameManager.i.optionScript.connectorTooltips = read.optionData.connectorTooltips;
         GameManager.i.optionScript.fullMoodInfo = read.optionData.fullMoodInfo;
         GameManager.i.optionScript.ColourOption = read.optionData.colourScheme;

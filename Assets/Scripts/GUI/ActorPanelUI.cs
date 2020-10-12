@@ -38,17 +38,17 @@ public class ActorPanelUI : MonoBehaviour
     public TextMeshProUGUI compatibility3;
 
 
-    public Image renownCircle0;
-    public Image renownCircle1;
-    public Image renownCircle2;
-    public Image renownCircle3;
-    public Image renownCirclePlayer;
+    public Image powerCircle0;
+    public Image powerCircle1;
+    public Image powerCircle2;
+    public Image powerCircle3;
+    public Image powerCirclePlayer;
 
-    public TextMeshProUGUI renownText0;
-    public TextMeshProUGUI renownText1;
-    public TextMeshProUGUI renownText2;
-    public TextMeshProUGUI renownText3;
-    public TextMeshProUGUI renownTextPlayer;
+    public TextMeshProUGUI powerText0;
+    public TextMeshProUGUI powerText1;
+    public TextMeshProUGUI powerText2;
+    public TextMeshProUGUI powerText3;
+    public TextMeshProUGUI powerTextPlayer;
 
     private CanvasGroup canvas0;
     private CanvasGroup canvas1;
@@ -64,9 +64,9 @@ public class ActorPanelUI : MonoBehaviour
     private GenericTooltipUI playerMoodTooltip;
     private GenericTooltipUI playerStressedTooltip;
 
-    private bool isRenownUI;                                                     //gives status of Info UI display (true -> Shows RENOWN, false -> COMPATIBILITY)
+    private bool isPowerUI;                                                     //gives status of Info UI display (true -> Shows Power, false -> COMPATIBILITY)
 
-    private Image[] arrayOfRenownCircles = new Image[4];                        //used for more efficient access, populated in initialise. Actors only, index is actorSlotID (0 to 3)
+    private Image[] arrayOfPowerCircles = new Image[4];                        //used for more efficient access, populated in initialise. Actors only, index is actorSlotID (0 to 3)
     private TextMeshProUGUI[] arrayOfCompatibility = new TextMeshProUGUI[4];     //compatibility
     private GenericTooltipUI[] arrayOfCompatibilityTooltips = new GenericTooltipUI[4];    //compatibility tooltips
 
@@ -249,11 +249,11 @@ public class ActorPanelUI : MonoBehaviour
         if (GameManager.i.playerScript.sprite != null)
         { picturePlayer.sprite = GameManager.i.playerScript.sprite; }
         else { picturePlayer.sprite = GameManager.i.guiScript.errorSprite; }
-        //initialse arrayOfRenownCircles
-        arrayOfRenownCircles[0] = renownCircle0;
-        arrayOfRenownCircles[1] = renownCircle1;
-        arrayOfRenownCircles[2] = renownCircle2;
-        arrayOfRenownCircles[3] = renownCircle3;
+        //initialse arrayOfPowerCircles
+        arrayOfPowerCircles[0] = powerCircle0;
+        arrayOfPowerCircles[1] = powerCircle1;
+        arrayOfPowerCircles[2] = powerCircle2;
+        arrayOfPowerCircles[3] = powerCircle3;
         //initialise arrayOfCompatibility
         arrayOfCompatibility[0] = compatibility0;
         arrayOfCompatibility[1] = compatibility1;
@@ -262,7 +262,7 @@ public class ActorPanelUI : MonoBehaviour
         //array components and assignments
         for (int i = 0; i < 4; i++)
         {
-            Debug.AssertFormat(arrayOfRenownCircles[i] != null, "Invalid arrayOfRenownCircles[{0}]", i);
+            Debug.AssertFormat(arrayOfPowerCircles[i] != null, "Invalid arrayOfPowerCircles[{0}]", i);
             if (arrayOfCompatibility[i] != null)
             {
                 //font size
@@ -286,8 +286,8 @@ public class ActorPanelUI : MonoBehaviour
     #region SubInitialiseAll
     private void SubInitialiseAll()
     {
-        //renown UI (default true)
-        if (GameManager.i.optionScript.showRenown == true)
+        //Power UI (default true)
+        if (GameManager.i.optionScript.showPower == true)
         { SetActorInfoUI(true); }
         else { SetActorInfoUI(false); }
         //initialise starting line up
@@ -312,7 +312,7 @@ public class ActorPanelUI : MonoBehaviour
                 UpdateActorPanel();
                 break;
             case EventType.ActorInfo:
-                SetActorInfoUI(!isRenownUI);
+                SetActorInfoUI(!isPowerUI);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -362,8 +362,8 @@ public class ActorPanelUI : MonoBehaviour
                                 }
                             }
                         }
-                        //Update Renown/Compatibiliyt indicators (switches off for Vacant actors)
-                        if (GameManager.i.optionScript.showRenown == true)
+                        //Update Power/Compatibility indicators (switches off for Vacant actors)
+                        if (GameManager.i.optionScript.showPower == true)
                         { SetActorInfoUI(true); }
                         else { SetActorInfoUI(false); }
                     }
@@ -511,34 +511,34 @@ public class ActorPanelUI : MonoBehaviour
     }
 
     /// <summary>
-    /// toggles actor renown/compatibility display. If 'showRenown' true RENOWN, false COMPATIBILITY and no actor present in slot (Vacant) will auto switch off
+    /// toggles actor Power/compatibility display. If 'showPower' true POWER, false COMPATIBILITY and no actor present in slot (Vacant) will auto switch off
     /// </summary>
-    /// <param name="showRenown"></param>
-    public void SetActorInfoUI(bool showRenown)
+    /// <param name="showPower"></param>
+    public void SetActorInfoUI(bool showPower)
     {
-        //switch off any relevant tooltip (renown/compatibility)
+        //switch off any relevant tooltip (Power/compatibility)
         GameManager.i.tooltipGenericScript.CloseTooltip("ActorPanelUI", GenericTooltipType.ActorInfo);
         //toggle
-        GameManager.i.optionScript.showRenown = showRenown;
+        GameManager.i.optionScript.showPower = showPower;
         GlobalSide side = GameManager.i.sideScript.PlayerSide;
-        for (int index = 0; index < arrayOfRenownCircles.Length; index++)
+        for (int index = 0; index < arrayOfPowerCircles.Length; index++)
         {
-            if (showRenown == true)
+            if (showPower == true)
             {
-                //display RENOWN
+                //display POWER
                 arrayOfCompatibility[index].gameObject.SetActive(false);
                 if (GameManager.i.dataScript.CheckActorSlotStatus(index, side) == true)
-                { arrayOfRenownCircles[index].gameObject.SetActive(showRenown); }
+                { arrayOfPowerCircles[index].gameObject.SetActive(showPower); }
                 else
                 {
-                    arrayOfRenownCircles[index].gameObject.SetActive(false);
+                    arrayOfPowerCircles[index].gameObject.SetActive(false);
                     UpdateActorPowerUI(index, 0);
                 }
             }
             else
             {
                 //display COMPATIBILITY
-                arrayOfRenownCircles[index].gameObject.SetActive(false);
+                arrayOfPowerCircles[index].gameObject.SetActive(false);
                 if (GameManager.i.dataScript.CheckActorSlotStatus(index, side) == true)
                 { arrayOfCompatibility[index].gameObject.SetActive(true); }
                 else
@@ -549,37 +549,37 @@ public class ActorPanelUI : MonoBehaviour
             }
         }
 
-        /*//player is never vacant -> EDIT player renown shown regardless
-        renownCirclePlayer.gameObject.SetActive(showRenown);*/
+        /*//player is never vacant -> EDIT player Power shown regardless
+        powerCirclePlayer.gameObject.SetActive(showPower);*/
 
         //update flag
-        isRenownUI = showRenown;
+        isPowerUI = showPower;
         //logging
-        Debug.LogFormat("[UI] ActorPanelUI.cs -> ToggleActorInfoUI: {0}{1}", showRenown == true ? "RENOWN" : "COMPATIBILITY", "\n");
+        Debug.LogFormat("[UI] ActorPanelUI.cs -> ToggleActorInfoUI: {0}{1}", showPower == true ? "POWER" : "COMPATIBILITY", "\n");
     }
 
     /// <summary>
-    /// returns true if actor Info UI shows RENOWN, false if COMPATIBILITY
+    /// returns true if actor Info UI shows POWER, false if COMPATIBILITY
     /// </summary>
     /// <returns></returns>
     public bool CheckInfoUIStatus()
-    { return isRenownUI; }
+    { return isPowerUI; }
 
     /// <summary>
-    /// updates actor slot renown UI with current renown
+    /// updates actor slot Power UI with current Power
     /// </summary>
     /// <param name="actorSlotID"></param>
-    /// <param name="renown"></param>
-    public void UpdateActorPowerUI(int actorSlotID, int renown)
+    /// <param name="power"></param>
+    public void UpdateActorPowerUI(int actorSlotID, int power)
     {
         Debug.Assert(actorSlotID > -1 && actorSlotID < GameManager.i.actorScript.maxNumOfOnMapActors, "Invalid actorSlotID (< 0 or >= maxNumOfOnMapActors");
-        Debug.Assert(renown > -1, "Invalid renown (< 0)");
+        Debug.Assert(power > -1, "Invalid Power (< 0)");
         switch (actorSlotID)
         {
-            case 0: renownText0.text = Convert.ToString(renown); break;
-            case 1: renownText1.text = Convert.ToString(renown); break;
-            case 2: renownText2.text = Convert.ToString(renown); break;
-            case 3: renownText3.text = Convert.ToString(renown); break;
+            case 0: powerText0.text = Convert.ToString(power); break;
+            case 1: powerText1.text = Convert.ToString(power); break;
+            case 2: powerText2.text = Convert.ToString(power); break;
+            case 3: powerText3.text = Convert.ToString(power); break;
             default: Debug.LogWarningFormat("Invalid actorSlotID {0}", actorSlotID); break;
         }
     }
@@ -604,13 +604,11 @@ public class ActorPanelUI : MonoBehaviour
     }
 
     /// <summary>
-    /// updates renown UI with player's current renown
+    /// updates Power UI with player's current Power
     /// </summary>
-    /// <param name="renown"></param>
-    public void UpdatePlayerRenownUI(int renown)
-    {
-        renownTextPlayer.text = Convert.ToString(renown);
-    }
+    /// <param name="power"></param>
+    public void UpdatePlayerPowerUI(int power)
+    { powerTextPlayer.text = Convert.ToString(power); }
 
 
     //new methods above here
