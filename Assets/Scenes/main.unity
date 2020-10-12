@@ -28366,7 +28366,7 @@ MonoBehaviour:
   subTopPanel: {fileID: 1335161543}
   subMiddlePanel: {fileID: 1379466951}
   subBottomPanel: {fileID: 1368391082}
-  renownPanel: {fileID: 1208256438}
+  powerPanel: {fileID: 1208256438}
   textPanel: {fileID: 1334960536}
   buttonPanel: {fileID: 1449259481}
   cancelButton: {fileID: 488138439}
