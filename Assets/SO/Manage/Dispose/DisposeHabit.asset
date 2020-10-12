@@ -23,4 +23,4 @@ MonoBehaviour:
   listOfEffects:
   - {fileID: 11400000, guid: 89ed9ec4e9eaaaf498c6d01d466d1285, type: 2}
   - {fileID: 11400000, guid: 6c82000554015f346873680e1d087ba4, type: 2}
-  isRenownCost: 1
+  isPowerCost: 1

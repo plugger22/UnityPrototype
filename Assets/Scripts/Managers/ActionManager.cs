@@ -922,6 +922,9 @@ public class ActionManager : MonoBehaviour
                 GenericOptionDetails[] arrayOfGenericOptions = new GenericOptionDetails[3];
                 GenericTooltipDetails[] arrayOfTooltips = new GenericTooltipDetails[3];
                 int numOfOptions = Mathf.Min(3, listOfManageOptions.Count);
+                //
+                // - - - Options
+                //
                 for (int i = 0; i < numOfOptions; i++)
                 {
                     //tooltip details

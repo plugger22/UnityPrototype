@@ -2267,3 +2267,14 @@ UnityEngine.Debug:LogWarning(Object)
 	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:251)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:400)
 	
+Dev seed 28286 -> Tuesday, 13 October 2020 9:47 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 28286 -> Tuesday, 13 October 2020 10:00 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 28286 -> Tuesday, 13 October 2020 10:08 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 57392 -> Tuesday, 13 October 2020 10:17 AM
+City seed 5678 -> London, United Kingdom

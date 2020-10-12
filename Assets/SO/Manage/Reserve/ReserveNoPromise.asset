@@ -24,4 +24,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 304f0f8a220595b4f8b1f9ca668d3e78, type: 2}
   - {fileID: 11400000, guid: 55d743b81da2f9244b9c873d612fbb1a, type: 2}
   - {fileID: 11400000, guid: 80664cad9b2a79846b1a026c9fed3f78, type: 2}
-  isRenownCost: 1
+  isPowerCost: 1

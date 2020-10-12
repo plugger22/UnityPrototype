@@ -166,7 +166,7 @@ MonoBehaviour:
   aiSecurityProtocolMaxLevel: 4
   aiCounterMeasureTimer: 5
   aiPolicyTimer: 5
-  renownFactor: 2
+  powerFactor: 2
   immediateFlagAuthority: 0
   immediateFlagResistance: 0
   resourcesGainAuthority: 0
@@ -216,7 +216,7 @@ MonoBehaviour:
   gearPoolMaxSize: 6
   gearPoolThreshold: 3
   gearPoolTopUp: 2
-  gearRenownChance: 20
+  gearPowerChance: 20
   targetIntelMax: 6
   targetIntelTopUp: 1
   targetIntelExtra: 40
@@ -225,7 +225,7 @@ MonoBehaviour:
   actorNumThreshold: 3
   factionSupportThreshold: 4
   resourcesAllowance: 1
-  renownFactor: 2
+  powerFactor: 2
   status: 0
   inactiveStatus: 0
   isBreakdown: 0
@@ -568,7 +568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numOfChoices: 6
-  renownRecommendMin: 2
+  powerRecommendMin: 2
   maxNumOfGear: 3
   maxNumOfDevices: 3
   arrayOfOrganisationOptions:
@@ -5770,7 +5770,7 @@ MonoBehaviour:
   debugData: 0
   noAI: 0
   showContacts: 0
-  showRenown: 1
+  showPower: 1
   connectorTooltips: 0
   fullMoodInfo: 0
 --- !u!114 &114556544146557144
@@ -5808,7 +5808,7 @@ MonoBehaviour:
   debugTopicPool: {fileID: 0}
   numOfGearItems: -1
   numOfWorkers: 8
-  bonusRenown: 0
+  bonusPower: 0
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
@@ -5908,7 +5908,7 @@ MonoBehaviour:
   chanceTracerSpotZero: 100
   durationControlPeriod: 5
   durationControlCoolDown: 3
-  controlRenownCost: 1
+  controlPowerCost: 1
   nemesis: {fileID: 0}
   isShown: 0
 --- !u!114 &114621988062562700
@@ -6029,11 +6029,11 @@ MonoBehaviour:
   numOfQualities: 3
   currentReserveTimer: 10
   recruitedReserveTimer: 5
-  renownCostThreaten: 1
-  manageReserveRenown: 1
-  manageDismissRenown: 2
-  manageSecretRenown: 2
-  manageDisposeRenown: 4
+  powerCostThreaten: 1
+  manageReservePower: 1
+  manageDismissPower: 2
+  manageSecretPower: 2
+  manageDisposePower: 3
   unhappyLoseOpinionChance: 40
   unhappyTakeActionChance: 30
   unhappyRevealSecretChance: 50
@@ -6045,7 +6045,7 @@ MonoBehaviour:
   opinionLossFire: 2
   opinionGainActiveDuty: 2
   dismissQuestionableChance: 15
-  renownCostGear: 1
+  powerCostGear: 1
   breakdownChance: 20
   superStressChance: 80
   playerRecognisedChance: 20
@@ -6056,16 +6056,16 @@ MonoBehaviour:
   playerDoomTimerValue: 8
   playerDoomFailSafeValue: 4
   playerAddictedChance: 20
-  playerAddictedRenownCost: 2
+  playerAddictedPowerCost: 2
   playerAddictedImmuneStart: 6
   playerAddictedImmuneMin: 1
   playerAddictedExempt: 2
-  stressLeaveRenownCostAuthority: 2
-  stressLeaveRenownCostResistance: 2
+  stressLeavePowerCostAuthority: 2
+  stressLeavePowerCostResistance: 2
   stressLeaveHQApproval: 1
   lieLowCooldownPeriod: 5
-  renownFactorPromoted: 3
-  renownFactorOthers: 2
+  powerFactorPromoted: 3
+  powerFactorOthers: 2
   baseHqAmount: 15
   timerRelations: 999
   chanceRelationShift: 100
@@ -6170,10 +6170,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHqApproval: 10
-  renownPerTurn: 1
+  powerPerTurn: 1
   numOfActorsHQ: 4
   maxNumOfWorkers: 8
-  renownFactor: 10
+  powerFactor: 10
   factorBoss: 4
   factorSubBoss1: 3
   factorSubBoss2: 2
@@ -6184,7 +6184,7 @@ MonoBehaviour:
   chanceOfRandomEvent: 25
   chanceOfMajorEvent: 25
   maxNumOfEvents: 4
-  baseRenownChange: 6
+  basePowerChange: 6
   hierarchyFactor: 2
   hQApprovalActorResigns: 1
   hQFirePlayerTimer: 3
