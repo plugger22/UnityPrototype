@@ -5805,7 +5805,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testPersonality: {fileID: 0}
   campaign: {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
-  debugTopicPool: {fileID: 11400000, guid: 41913f810f38de54a99fa06d99df0b6d, type: 2}
+  debugTopicPool: {fileID: 0}
   numOfGearItems: -1
   numOfWorkers: 8
   bonusRenown: 0
@@ -6034,16 +6034,16 @@ MonoBehaviour:
   manageDismissRenown: 2
   manageSecretRenown: 2
   manageDisposeRenown: 4
-  unhappyLoseMotivationChance: 40
+  unhappyLoseOpinionChance: 40
   unhappyTakeActionChance: 30
   unhappyRevealSecretChance: 50
   unhappyResignChance: 25
   unhappyComplainChance: 60
   unhappyReassureBoost: 5
   unhappyBullyBoost: 5
-  motivationLossLetGo: 1
-  motivationLossFire: 2
-  motivationGainActiveDuty: 2
+  opinionLossLetGo: 1
+  opinionLossFire: 2
+  opinionGainActiveDuty: 2
   dismissQuestionableChance: 15
   renownCostGear: 1
   breakdownChance: 20
@@ -6419,7 +6419,7 @@ MonoBehaviour:
   supportChar: 0
   securityChar: 0
   invisibilityChar: 0
-  motivationChar: 0
+  opinionChar: 0
   connectionsChar: 0
   cityChar: 0
   compatibilityChar: 0
@@ -6430,7 +6430,7 @@ MonoBehaviour:
   supportIcon: 
   securityIcon: 
   invisibilityIcon: 
-  motivationIcon: 
+  opinionIcon: 
   connectionsIcon: 
   innocenceIcon: 
   cityIcon: 

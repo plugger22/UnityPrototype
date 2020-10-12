@@ -1707,3 +1707,23 @@ City seed 5678 -> London, United Kingdom
 
 Dev seed 57351 -> Monday, 12 October 2020 9:12 AM
 City seed 5678 -> London, United Kingdom
+
+Dev seed 11195 -> Monday, 12 October 2020 11:03 AM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 46042 -> Monday, 12 October 2020 11:17 AM
+City seed 5678 -> London, United Kingdom
+WARNING Invalid criteria.effectcriteria.name "OpNeutMinHqSubBoss1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EffectManager:CheckCriteria(CriteriaDataInput) (at Assets/Scripts/Managers/EffectManager.cs:1769)
+	TopicManager:CheckOptionCriteria(TopicOption) (at Assets/Scripts/Managers/TopicManager.cs:5243)
+	TopicManager:InitialiseTopicUI() (at Assets/Scripts/Managers/TopicManager.cs:3396)
+	TopicManager:ProcessTopic(GlobalSide) (at Assets/Scripts/Managers/TopicManager.cs:3170)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:344)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:428)
+	
+Dev seed 22900 -> Monday, 12 October 2020 11:19 AM
+City seed 5678 -> London, United Kingdom

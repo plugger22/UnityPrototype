@@ -1724,7 +1724,7 @@ public class EffectManager : MonoBehaviour
                                                 if (GameManager.i.hqScript.GetHqApproval() == 0)
                                                 { BuildString(result, "HQ Approval Zero"); }
                                                 break;
-                                            case "MotNeutMinHqBoss":
+                                            case "OpNeutMinHqBoss":
                                                 //Boss of HQ has opinion 2+
                                                 Actor actorBoss = GameManager.i.dataScript.GetHqHierarchyActor(ActorHQ.Boss);
                                                 if (actorBoss != null)
@@ -1734,7 +1734,7 @@ public class EffectManager : MonoBehaviour
                                                 }
                                                 else { Debug.LogWarning("Invalid HQ Boss (Null)"); }
                                                 break;
-                                            case "MotNeutMinHqSubBoss1":
+                                            case "OpNeutMinHqSubBoss1":
                                                 //subBoss 1 of HQ has opinion 2+
                                                 Actor actorSubBoss1 = GameManager.i.dataScript.GetHqHierarchyActor(ActorHQ.SubBoss1);
                                                 if (actorSubBoss1 != null)
@@ -1744,7 +1744,7 @@ public class EffectManager : MonoBehaviour
                                                 }
                                                 else { Debug.LogWarning("Invalid HQ SubBoss1 (Null)"); }
                                                 break;
-                                            case "MotNeutMinHqSubBoss2":
+                                            case "OpNeutMinHqSubBoss2":
                                                 //subBoss 2 of HQ has opinion 2+
                                                 Actor actorSubBoss2 = GameManager.i.dataScript.GetHqHierarchyActor(ActorHQ.SubBoss2);
                                                 if (actorSubBoss2 != null)
@@ -1754,7 +1754,7 @@ public class EffectManager : MonoBehaviour
                                                 }
                                                 else { Debug.LogWarning("Invalid HQ SubBoss2 (Null)"); }
                                                 break;
-                                            case "MotNeutMinHqSubBoss3":
+                                            case "OpNeutMinHqSubBoss3":
                                                 //subBoss 3 of HQ has opinion 2+
                                                 Actor actorSubBoss3 = GameManager.i.dataScript.GetHqHierarchyActor(ActorHQ.SubBoss3);
                                                 if (actorSubBoss3 != null)
