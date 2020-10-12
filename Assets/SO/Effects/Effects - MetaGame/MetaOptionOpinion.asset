@@ -9,15 +9,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
-  m_Name: LowerMotivationHigh
+  m_Name: MetaOptionOpinion
   m_EditorClassIdentifier: 
-  description: Motivation -3
+  description: excludes low Opinion subordinates
   ongoingTooltip: 
   listOfCriteria: []
-  apply: {fileID: 11400000, guid: cf69bb83af07d624abeace1bd52d53eb, type: 2}
-  outcome: {fileID: 11400000, guid: d4ea6b4ab62aeef42ac35ce3673ca036, type: 2}
-  operand: {fileID: 11400000, guid: 430402652e440cd4a8fb543d24a3f773, type: 2}
-  typeOfEffect: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
+  apply: {fileID: 11400000, guid: c3c5decf6d1d7954eaabb4494e9ebf9e, type: 2}
+  topicApply: {fileID: 0}
+  outcome: {fileID: 11400000, guid: 337f446332c04f64ca2f7983c8493047, type: 2}
+  operand: {fileID: 0}
+  typeOfEffect: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   duration: {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
-  value: 3
+  value: 0
   ignoreEffect: 0
+  isMoodEffect: 0
+  belief: {fileID: 0}

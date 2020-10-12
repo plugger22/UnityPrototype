@@ -9,6 +9,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 388824e1cb224e54eba0cf0741eca1fa, type: 3}
-  m_Name: MotivationNOTZero
+  m_Name: OpNeutMinHqSubBoss1
   m_EditorClassIdentifier: 
-  descriptor: Actor Motivation 1+
+  descriptor: Hq subBoss_1 Opinion 2+

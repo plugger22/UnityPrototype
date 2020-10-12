@@ -279,7 +279,7 @@ public class HelpManager : MonoBehaviour
             .AppendFormat("{0}City Support{1}{2}", colourAlert, colourEnd, "\n")
             .AppendFormat("The level of City Support for the Authority at the end of the level (lower the better){0}", "\n")
             .AppendFormat("{0}Opinion{1}{2}", colourAlert, colourEnd, "\n")
-            .AppendFormat("HQ Members personal opinion of you (<b>Motivation</b>){0}", "\n")
+            .AppendFormat("HQ Members personal view of you (<b>Opinion</b>){0}", "\n")
             .AppendFormat("{0}Targets{1}{2}", colourAlert, colourEnd, "\n")
             .AppendFormat("One star for each successfully completed Target{0}", "\n")
             .AppendFormat("{0}Exposure{1}{2}", colourAlert, colourEnd, "\n")
@@ -564,7 +564,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "review_2";
         data.header = "Head of HQ";
-        data.text = string.Format("Your Head of HQ votes once for his {0}personal opinion{1} of you (Motivation) and once for his view of the {2}decisions you have taken{3}",
+        data.text = string.Format("Your Head of HQ votes once for his {0}Opinion{1} of you and once for his judgment of the {2}decisions you have taken{3}",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Close
@@ -658,7 +658,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "gearInv_2";
         data.header = "Gifting Gear to Subordinates";
-        data.text = string.Format("Will give your subordinate a {0}Motivation{1} boost. You can {2}ask for the gear back{3} after {4}{5} turns{6}. Would you be happy about returning a gift?",
+        data.text = string.Format("Will give your subordinate a {0}Opinion{1} boost. You can {2}ask for the gear back{3} after {4}{5} turns{6}. Would you be happy about returning a gift?",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, GameManager.i.gearScript.actorGearGracePeriod, colourEnd);
         listOfHelp.Add(data);
         #endregion
@@ -679,7 +679,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "deviceInv_1";
         data.header = "Details";
         data.text = string.Format("Devices are {0}single use{1} items and {2}don't carry over{3} between cities. " +
-            "They are only available from your {4}HQ superiors{5} during a transition and are dependant on their having a good opinion of you ({6}Motivation){7}",
+            "They are only available from your {4}HQ superiors{5} during a transition and are dependant on their having a good {6}Opinion{7} of you",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Limits
@@ -794,7 +794,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "topicSub_25";
         data.header = "Good and Bad";
-        data.text = string.Format("The good and bad versions of each topic depend on your {0}Subordinates Motivation{1}", colourAlert, colourEnd);
+        data.text = string.Format("The good and bad versions of each topic depend on your {0}Subordinates Opinion{1}", colourAlert, colourEnd);
         listOfHelp.Add(data);
 
         //ActorDistrict -> Overview
@@ -807,7 +807,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "topicSub_5";
         data.header = "Good and Bad";
-        data.text = string.Format("The good and bad versions of each topic depend on your {0}Subordinates Motivation{1}", colourAlert, colourEnd);
+        data.text = string.Format("The good and bad versions of each topic depend on your {0}Subordinates Opinion{1}", colourAlert, colourEnd);
         listOfHelp.Add(data);
         //ActorDistrict -> Tracking
         data = new HelpData();
@@ -826,7 +826,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "topicSub_8";
         data.header = "Good and Bad";
-        data.text = string.Format("The good and bad versions of each topic depend on the {0}Subordinates Motivation{1}", colourAlert, colourEnd);
+        data.text = string.Format("The good and bad versions of each topic depend on the {0}Subordinates Opinion{1}", colourAlert, colourEnd);
         listOfHelp.Add(data);
         //ActorContact -> Networks
         data = new HelpData();
@@ -975,13 +975,13 @@ public class HelpManager : MonoBehaviour
         //
         // - - - Actor Compatibility
         //
-        //Motivation
+        //Opinion
         data = new HelpData();
         data.tag = "compatibility_0";
-        data.header = "Motivation";
+        data.header = "Opinion";
         data.text = new StringBuilder()
             .AppendFormat("Indicates how {0}Enthusiastic{1} a person is. It ranges from {2}0 to 3{3} stars, the more the better. ", colourAlert, colourEnd, colourAlert, colourEnd)
-            .AppendFormat("A person's Motivation effects many game mechanics and is something to {0}keep an eye on{1}. As in real life, a person who has lost all enthusiasm will be a problem",
+            .AppendFormat("A person's Opinion effects many game mechanics and is something to {0}keep an eye on{1}. As in real life, a person who has lost all enthusiasm will be a problem",
                 colourAlert, colourEnd)
             .ToString();
         listOfHelp.Add(data);
@@ -1003,7 +1003,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "compatibility_2";
         data.header = "Positive Compatibility";
         data.text = new StringBuilder()
-            .AppendFormat("An individual who has a positive opinion of you has a {0}chance of ignoring{1} any {2}BAD{3} Motivational outcomes. ", colourAlert, colourEnd, colourAlert, colourEnd)
+            .AppendFormat("An individual who has a positive feeling towards you has a {0}chance of ignoring{1} any {2}BAD{3} Opinion outcomes. ", colourAlert, colourEnd, colourAlert, colourEnd)
             .AppendFormat("The more {0}Green stars{1} (better your relationship), the more likely this is to happen", colourAlert, colourEnd)
             .ToString();
         listOfHelp.Add(data);
@@ -1012,7 +1012,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "compatibility_3";
         data.header = "Negative Compatibility";
         data.text = new StringBuilder()
-            .AppendFormat("An individual who has a negative opinion of you has a {0}chance of ignoring{1} any {2}GOOD{3} Motivational outcomes. ", colourAlert, colourEnd, colourAlert, colourEnd)
+            .AppendFormat("An individual who has a negative feeling towards you has a {0}chance of ignoring{1} any {2}GOOD{3} Opinion outcomes. ", colourAlert, colourEnd, colourAlert, colourEnd)
             .AppendFormat("The more {0}Red stars{1} (worse your relationship), the more likely this is to happen", colourAlert, colourEnd)
             .ToString();
         listOfHelp.Add(data);
@@ -1027,7 +1027,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "conflict_0";
         data.header = "Conflict";
         builder = new StringBuilder();
-        builder.AppendFormat("Anytime one of your subordinates {0}Motivation{1} falls {2}below Zero{3}, for any reason, they instigate a relationship conflict with you. ", colourAlert, colourEnd,
+        builder.AppendFormat("Anytime one of your subordinates {0}Opinion{1} falls {2}below Zero{3}, for any reason, they instigate a relationship conflict with you. ", colourAlert, colourEnd,
             colourAlert, colourEnd);
         builder.AppendFormat("Conflicts can have a {0}range of outcomes{1} such as your subordinate resigning, blackmailing you, becoming stressed, leaking against you or simply simmering away and doing nothing",
             colourAlert, colourEnd);
@@ -1350,7 +1350,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "hq_over_1";
         data.header = "HQ's Opinion of You";
-        data.text = string.Format("The level of {0}HQ Approval{1} (top centre) reflects your standing with your HQ as a whole. Each HQ member has a personal opinion of you according to their {2}Motivation{3}",
+        data.text = string.Format("The level of {0}HQ Approval{1} (top centre) reflects your standing with your HQ as a whole. Each HQ member has a personal opinion of you according to their {2}Opinion{3}",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Hierarchy
@@ -1365,7 +1365,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "hq_over_3";
         data.header = "HQ Boss";
         data.text = new StringBuilder()
-            .AppendFormat("The Boss (Director) has a {0}personal opinion{1} (Motivation) but they also have a view on the {2}Decisions{3} you have taken. ", colourAlert, colourEnd, colourAlert, colourEnd)
+            .AppendFormat("The Boss (Director) has an {0}Opinion{1} but they also have a view on the {2}Decisions{3} you have taken. ", colourAlert, colourEnd, colourAlert, colourEnd)
             .AppendFormat("When it comes time for a {0}REVIEW{1} the Boss gets {2}TWO{3} votes, one for each.", colourAlert, colourEnd, colourAlert, colourEnd)
             .ToString();
         listOfHelp.Add(data);
@@ -1473,9 +1473,9 @@ public class HelpManager : MonoBehaviour
         data.tag = "rand_0";
         data.header = string.Format("{0}Compatibility Check{1}", colourTip, colourEnd);
         builder = new StringBuilder();
-        builder.AppendFormat("The actor's {0}Compatibility{1} with you can {2}prevent{3} any change in motivation occurring. ", colourAlert, colourEnd, colourAlert, colourEnd);
-        builder.AppendFormat("If they have a good opinion of you {0}they may ignore{1} a drop in motivation and vice versa. ", colourAlert, colourEnd);
-        builder.AppendFormat("The {0}more{1} Compatible or Incompatibile they are, the {2}higher the chance{3} of them ignoring the change in motivation", colourAlert, colourEnd, colourAlert, colourEnd);
+        builder.AppendFormat("The actor's {0}Compatibility{1} with you can {2}prevent{3} any change in Opinion occurring. ", colourAlert, colourEnd, colourAlert, colourEnd);
+        builder.AppendFormat("If they have a good feeling about you {0}they may ignore{1} a drop in Opinion and vice versa. ", colourAlert, colourEnd);
+        builder.AppendFormat("The {0}more{1} Compatible or Incompatibile they are, the {2}higher the chance{3} of them ignoring the change in opinion", colourAlert, colourEnd, colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
         //HQ support
@@ -1513,14 +1513,14 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "rand_5";
         data.header = string.Format("{0}Evidence Type{1}", colourTip, colourEnd);
-        data.text = string.Format("Each turn there is a chance that the Lead Investigator will {0}uncover new evidence{1}. The type of evidence will have a {2}higher chance{3} of being in your {4}favour{5} if the Lead has a high {6}Motivation{7}",
+        data.text = string.Format("Each turn there is a chance that the Lead Investigator will {0}uncover new evidence{1}. The type of evidence will have a {2}higher chance{3} of being in your {4}favour{5} if the Lead has a high {6}Opinion{7}",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
-        //Relations Motivational shifts
+        //Relations Opinion shifts
         data = new HelpData();
         data.tag = "rand_6";
         data.header = string.Format("{0}Relationships{1}", colourTip, colourEnd);
-        data.text = string.Format("Whenever a {0}Friend or Enemy{1} relationship exists, any {2}change in Motivation{3} in one subordinate can affect the motivation of the {4}other subordinate{5}",
+        data.text = string.Format("Whenever a {0}Friend or Enemy{1} relationship exists, any {2}change in Opinion{3} in one subordinate can affect the opinion of the {4}other subordinate{5}",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //MegaCorp Spotting
@@ -1548,18 +1548,18 @@ public class HelpManager : MonoBehaviour
         data.header = "Special Gear";
         data.text = string.Format("Each HQ member has access to a particular piece of special gear {0}unavailable anywhere else{1}", colourAlert, colourEnd);
         listOfHelp.Add(data);
-        //motivation
+        //opinion
         data = new HelpData();
         data.tag = "metaGear_1";
         data.header = "Good Opinion";
-        data.text = string.Format("They will only {0}offer the gear{1} to you if their opinion of you is positive ({2}Motivation 2+ stars{3}). They don't offer their gear to just anyone. " +
+        data.text = string.Format("They will only {0}offer the gear{1} to you if their opinion of you is positive ({2}Opinion 2+ stars{3}). They don't offer their gear to just anyone. " +
             "The {4}cost depends{5} on how good their {6}opinion{7} of you is", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Max options
         data = new HelpData();
         data.tag = "metaGear_2";
         data.header = "Max Options";
-        data.text = string.Format("There is an {0}limit{1} to how many gear options will be presented to you ({2}{3} options{4}). Eligible HQ personnel (Motivation 2+) present options in {5}order of seniority{6}" +
+        data.text = string.Format("There is an {0}limit{1} to how many gear options will be presented to you ({2}{3} options{4}). Eligible HQ personnel (Opinion 2+) present options in {5}order of seniority{6}" +
             " (eg. Director first) until the limit is reached", colourAlert, colourEnd, colourAlert, GameManager.i.metaScript.maxNumOfGear, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //tip
@@ -1585,14 +1585,14 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "metaDevice_1";
         data.header = "Variable Cost";
-        data.text = string.Format("The {0}cost{1} of this option {2}varies{3} dependant on your superior's current {4}opinion{5} of you. The better their opinion ({6}Motivation{7}) " +
+        data.text = string.Format("The {0}cost{1} of this option {2}varies{3} dependant on your superior's current {4}opinion{5} of you. The better their opinion ({6}Opinion{7}) " +
             "the less Renown it will cost", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Poor Relationship
         data = new HelpData();
         data.tag = "metaDevice_2";
         data.header = "Poor Relationship";
-        data.text = string.Format("If your HQ Superior's opinion of you is poor ({0}Motivation 1, or less, stars{1}), they won't bother helping you and this {2}option won't be shown{3}",
+        data.text = string.Format("If your HQ Superior's opinion of you is poor ({0}Opinion 1, or less, stars{1}), they won't bother helping you and this {2}option won't be shown{3}",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Tip
@@ -2075,7 +2075,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "invest_2";
         data.header = "Evidence";
-        data.text = string.Format("New evidence will come to light as time progresses through {0}events{1} or as a result of the work of the {2}Lead Investigator{3} (Good evidence more likely if they have a high {4}Motivation{5}, and vice versa)",
+        data.text = string.Format("New evidence will come to light as time progresses through {0}events{1} or as a result of the work of the {2}Lead Investigator{3} (Good evidence more likely if they have a high {4}Opinion{5}, and vice versa)",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Outcome
@@ -2090,12 +2090,12 @@ public class HelpManager : MonoBehaviour
         data.tag = "invest_4";
         data.header = "Lead Investigator";
         data.text = new StringBuilder()
-        .AppendFormat("There is a {0}{1} %{2} chance of them finding new evidence {3}each turn{4}. The type of evidence depends on the Motivation of the Lead{5}",
+        .AppendFormat("There is a {0}{1} %{2} chance of them finding new evidence {3}each turn{4}. The type of evidence depends on the Opinion of the Lead{5}",
             colourAlert, GameManager.i.playerScript.chanceEvidence, colourEnd, colourAlert, colourEnd, "\n")
-        .AppendFormat("  {0} Motivation 3, {1}Good 80%{2}, Bad 20%{3}", bullet, colourAlert, colourEnd, "\n")
-        .AppendFormat("  {0} Motivation 2, {1}Good 60%{2}, Bad 40%{3}", bullet, colourAlert, colourEnd, "\n")
-        .AppendFormat("  {0} Motivation 1, Good 40%, {1}Bad 60%{2}{3}", bullet, colourAlert, colourEnd, "\n")
-        .AppendFormat("  {0} Motivation 0, Good 20%, {1}Bad 80%{2}", bullet, colourAlert, colourEnd)
+        .AppendFormat("  {0} Opinion 3, {1}Good 80%{2}, Bad 20%{3}", bullet, colourAlert, colourEnd, "\n")
+        .AppendFormat("  {0} Opinion 2, {1}Good 60%{2}, Bad 40%{3}", bullet, colourAlert, colourEnd, "\n")
+        .AppendFormat("  {0} Opinion 1, Good 40%, {1}Bad 60%{2}{3}", bullet, colourAlert, colourEnd, "\n")
+        .AppendFormat("  {0} Opinion 0, Good 20%, {1}Bad 80%{2}", bullet, colourAlert, colourEnd)
         .ToString();
         listOfHelp.Add(data);
         //Evidence Details
@@ -2154,25 +2154,25 @@ public class HelpManager : MonoBehaviour
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd)
             .ToString();
         listOfHelp.Add(data);
-        //Movitation
+        //Opinion
         data = new HelpData();
         data.tag = "relation_1";
-        data.header = "Motivation";
-        data.text = string.Format("If either party in a relationship experiences a {0}change in Motivation{1} then there is a {2}{3} % chance{4} of the other subordinate experiencing a change at the {5}same time{6}",
+        data.header = "Opinion";
+        data.text = string.Format("If either party in a relationship experiences a {0}change in Opinion{1} then there is a {2}{3} % chance{4} of the other subordinate experiencing a change at the {5}same time{6}",
             colourAlert, colourEnd, colourAlert, GameManager.i.actorScript.chanceRelationShift, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Friends
         data = new HelpData();
         data.tag = "relation_2";
         data.header = "Friends";
-        data.text = string.Format("In a Friends relationship the change in Motivation to one party is {0}identical{1} to the change in the other (they are happy when their friend is happy and vice versa)",
+        data.text = string.Format("In a Friends relationship the change in Opinion to one party is {0}identical{1} to the change in the other (they are happy when their friend is happy and vice versa)",
             colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Friends
         data = new HelpData();
         data.tag = "relation_3";
         data.header = "Enemies";
-        data.text = string.Format("In an Enemies relationship the change in Motivation to one party is the {0}opposite{1} to the change in the other (they are happy when their enemy is upset and vice versa)",
+        data.text = string.Format("In an Enemies relationship the change in Opinion to one party is the {0}opposite{1} to the change in the other (they are happy when their enemy is upset and vice versa)",
             colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion

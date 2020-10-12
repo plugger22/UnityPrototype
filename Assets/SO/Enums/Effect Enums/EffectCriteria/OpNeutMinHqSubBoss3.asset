@@ -9,6 +9,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 388824e1cb224e54eba0cf0741eca1fa, type: 3}
-  m_Name: MotNeutMinHqBoss
+  m_Name: OpNeutMinHqSubBoss3
   m_EditorClassIdentifier: 
-  descriptor: Hq Boss Motivation 2+
+  descriptor: Hq subBoss_3 Opinion 2+

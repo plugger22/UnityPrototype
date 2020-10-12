@@ -1283,7 +1283,7 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Actor blackmail outcome -> either drops threat (motivation max) or carries out reveal of a player secret. SecretID only if reveal, ignore otherwise
+    /// Actor blackmail outcome -> either drops threat (opinion max) or carries out reveal of a player secret. SecretID only if reveal, ignore otherwise
     /// 'isThreatDropped' true if no longer blackmailing and 'reason' is why in format '[The threat has been dropped because]...'
     /// </summary>
     /// <param name="text"></param>
@@ -1459,7 +1459,7 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Actor initiates a Relationship Conflict due to motivation dropping below zero (default playerSide). If 'Nothing Happens' then conflictID -1 and provide a reasonNoConflict (format '[because]...')
+    /// Actor initiates a Relationship Conflict due to opinion dropping below zero (default playerSide). If 'Nothing Happens' then conflictID -1 and provide a reasonNoConflict (format '[because]...')
     /// </summary>
     /// <param name="text"></param>
     /// <param name="actorID"></param>
@@ -1800,16 +1800,16 @@ public class MessageManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Actor negates a change in motivation due to their compatibility with the Player
+    /// Actor negates a change in opinion due to their compatibility with the Player
     /// </summary>
     /// <param name="text"></param>
     /// <param name="actor"></param>
-    /// <param name="motivationChangeNegated"></param>
+    /// <param name="opinionChangeNegated"></param>
     /// <returns></returns>
-    public Message ActorCompatibility(string text, Actor actor, int motivationChangeNegated, string reasonForChange)
+    public Message ActorCompatibility(string text, Actor actor, int opinionChangeNegated, string reasonForChange)
     {
         Debug.Assert(actor != null, "Invalid actor (Null)");
-        Debug.Assert(motivationChangeNegated != 0, "Invalid motivationChangeNegated (Zero)");
+        Debug.Assert(opinionChangeNegated != 0, "Invalid opinionChangeNegated (Zero)");
         Debug.Assert(string.IsNullOrEmpty(reasonForChange) == false, "Invalid reasonForChange (Null or Empty)");
         if (string.IsNullOrEmpty(text) == false)
         {
@@ -1819,14 +1819,14 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Actor_Compatibility;
             message.sideLevel = GameManager.i.sideScript.PlayerSide.level;
             message.data0 = actor.actorID;
-            message.data1 = motivationChangeNegated;
+            message.data1 = opinionChangeNegated;
             message.data2 = actor.GetPersonality().GetCompatibilityWithPlayer();
             message.dataName = reasonForChange;
             //ItemData
             ItemData data = new ItemData();
-            data.itemText = string.Format("{0} ignores change to MOTIVATION", actor.arc.name);
-            data.topText = "No change to Motivation";
-            data.bottomText = GameManager.i.itemDataScript.GetActorCompatibilityDetails(actor, motivationChangeNegated, reasonForChange);
+            data.itemText = string.Format("{0} ignores change to OPINION", actor.arc.name);
+            data.topText = "No change to Opinion";
+            data.bottomText = GameManager.i.itemDataScript.GetActorCompatibilityDetails(actor, opinionChangeNegated, reasonForChange);
             data.priority = ItemPriority.Medium;
             data.sprite = actor.sprite;
             data.spriteName = data.sprite.name;
@@ -3386,15 +3386,15 @@ public class MessageManager : MonoBehaviour
     //
 
     /// <summary>
-    /// Player gifts an actor with gear ('isGiven' defaults to true) and gains motivation in return (extra if it's the actor's preferred gear type)
-    /// Or player takes gear from actor('isGiven' set to false) and it costs a set amount of motivation (extra if preferred) to the actor to do so
+    /// Player gifts an actor with gear ('isGiven' defaults to true) and gains opinion in return (extra if it's the actor's preferred gear type)
+    /// Or player takes gear from actor('isGiven' set to false) and it costs a set amount of opinion (extra if preferred) to the actor to do so
     /// </summary>
     /// <param name="text"></param>
     /// <param name="actorID"></param>
     /// <param name="gearID"></param>
-    /// <param name="motivation"></param>
+    /// <param name="opinion"></param>
     /// <returns></returns>
-    public Message GearTakeOrGive(string text, Actor actor, Gear gear, int motivation, bool isGiven = true)
+    public Message GearTakeOrGive(string text, Actor actor, Gear gear, int opinion, bool isGiven = true)
     {
         Debug.Assert(actor != null, "Invalid actor (Null)");
         Debug.Assert(gear != null, "Invalid gear (Null)");
@@ -3406,7 +3406,7 @@ public class MessageManager : MonoBehaviour
             message.subType = MessageSubType.Gear_Given;
             message.sideLevel = globalResistance.level;
             message.data0 = actor.actorID;
-            message.data1 = motivation;
+            message.data1 = opinion;
             message.dataName = gear.name;
             //ItemData
             ItemData data = new ItemData();
@@ -3420,7 +3420,7 @@ public class MessageManager : MonoBehaviour
                 data.itemText = string.Format("{0} gear Taken", gear.tag);
                 data.topText = "Gear Taken";
             }
-            data.bottomText = GameManager.i.itemDataScript.GetGearTakeOrGiveDetails(actor, gear, motivation, isGiven);
+            data.bottomText = GameManager.i.itemDataScript.GetGearTakeOrGiveDetails(actor, gear, opinion, isGiven);
             data.priority = ItemPriority.Low;
             data.sprite = gear.sprite;
             data.spriteName = data.sprite.name;

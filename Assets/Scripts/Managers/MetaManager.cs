@@ -85,7 +85,7 @@ public class MetaManager : MonoBehaviour
         {
             metaGameOptions.isDismissed = GameManager.i.testScript.isDismissed;
             metaGameOptions.isResigned = GameManager.i.testScript.isResigned;
-            metaGameOptions.isLowMotivation = GameManager.i.testScript.isLowMotivation;
+            metaGameOptions.isLowOpinion = GameManager.i.testScript.isLowOpinion;
             metaGameOptions.isTraitor = GameManager.i.testScript.isTraitor;
             metaGameOptions.isLevelTwo = GameManager.i.testScript.isLevelTwo;
             metaGameOptions.isLevelThree = GameManager.i.testScript.isLevelThree;
@@ -95,13 +95,13 @@ public class MetaManager : MonoBehaviour
             //default -> level 1, include everybody
             metaGameOptions.isDismissed = true;
             metaGameOptions.isResigned = true;
-            metaGameOptions.isLowMotivation = true;
+            metaGameOptions.isLowOpinion = true;
             metaGameOptions.isTraitor = true;
             metaGameOptions.isLevelTwo = false;
         }*/
         metaGameOptions.isDismissed = true;
         metaGameOptions.isResigned = true;
-        metaGameOptions.isLowMotivation = true;
+        metaGameOptions.isLowOpinion = true;
         metaGameOptions.isTraitor = true;
         metaGameOptions.isLevelTwo = false;
         //Debug
@@ -239,7 +239,7 @@ public class MetaManager : MonoBehaviour
         {
             metaGameOptions.isDismissed = loadOptions.isDismissed;
             metaGameOptions.isResigned = loadOptions.isResigned;
-            metaGameOptions.isLowMotivation = loadOptions.isLowMotivation;
+            metaGameOptions.isLowOpinion = loadOptions.isLowOpinion;
             metaGameOptions.isTraitor = loadOptions.isTraitor;
             metaGameOptions.isLevelTwo = loadOptions.isLevelTwo;
         }
@@ -277,13 +277,13 @@ public class MetaManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Set metaGame setting, isLowMotivation
+    /// Set metaGame setting, isLowOpinion
     /// </summary>
     /// <param name="setting"></param>
-    public void SetMetaGameMotivation(bool setting)
+    public void SetMetaGameOpinion(bool setting)
     {
-        metaGameOptions.isLowMotivation = setting;
-        Debug.LogFormat("[Met] MetaManager.cs -> SetMetaOptionMotivation: Option isLowMotivation now {0}{1}", setting, "\n");
+        metaGameOptions.isLowOpinion = setting;
+        Debug.LogFormat("[Met] MetaManager.cs -> SetMetaOptionOpinion: Option isLowOpinion now {0}{1}", setting, "\n");
     }
 
     /// <summary>
@@ -354,7 +354,7 @@ public class MetaManager : MonoBehaviour
         Dictionary<string, MetaOption> dictOfMetaOptions = GameManager.i.dataScript.GetDictOfMetaOptions();
         if (dictOfMetaOptions != null)
         {
-            int count, index, motivation;
+            int count, index, opinion;
             bool isSuccess;
             string result;
             CriteriaDataInput data = new CriteriaDataInput();
@@ -561,9 +561,9 @@ public class MetaManager : MonoBehaviour
                                 {
                                     metaSpecial.dataName = gear.name;
                                     metaSpecial.dataTag = gear.tag;
-                                    motivation = actor.GetDatapoint(ActorDatapoint.Opinion1);
+                                    opinion = actor.GetDatapoint(ActorDatapoint.Opinion1);
                                     //option active and displayed only if actor has a good opinion of player
-                                    if (motivation >= 2)
+                                    if (opinion >= 2)
                                     {
                                         metaSpecial.isActive = true;
                                         numOfGearOptions++;
@@ -572,7 +572,7 @@ public class MetaManager : MonoBehaviour
                                         //customise descriptor
                                         metaSpecial.descriptor = string.Format("<b>{0}{1}{2}{3}</b>", GameManager.Formatt(gear.tag, ColourType.neutralText), "\n", "\n", gear.description);
                                         //modify cost according to relationship (Mot 3 -> use base cost, Mot 2 -> double base cost
-                                        if (motivation == 2) { metaSpecial.relationshipModifier = 2; }
+                                        if (opinion == 2) { metaSpecial.relationshipModifier = 2; }
                                         else { metaSpecial.relationshipModifier = 1; }
                                         if (isTestLog)
                                         {
@@ -643,8 +643,8 @@ public class MetaManager : MonoBehaviour
                                     metaSpecial.data = device.innocenceLevel;
                                     metaSpecial.dataTag = device.tag;
                                     //option active and displayed only if actor has a good opinion of player
-                                    motivation = actor.GetDatapoint(ActorDatapoint.Opinion1);
-                                    if (motivation >= 2)
+                                    opinion = actor.GetDatapoint(ActorDatapoint.Opinion1);
+                                    if (opinion >= 2)
                                     {
                                         metaSpecial.isActive = true;
                                         numOfDeviceOptions++;
@@ -654,7 +654,7 @@ public class MetaManager : MonoBehaviour
                                         metaSpecial.descriptor = string.Format("<b>{0}{1}{2}{3}{4}{5}Innocence</b> {6}", GameManager.Formatt(device.tag, ColourType.neutralText), "\n", "\n",
                                             device.descriptor, "\n", "\n", GameManager.i.guiScript.GetNormalStars(device.innocenceLevel));
                                         //modify cost according to relationship (Mot 3 -> use base cost, Mot 2 -> double base cost
-                                        if (motivation == 2)
+                                        if (opinion == 2)
                                         { metaSpecial.relationshipModifier = 2; }
                                         else { metaSpecial.relationshipModifier = 1; }
                                         if (isTestLog)

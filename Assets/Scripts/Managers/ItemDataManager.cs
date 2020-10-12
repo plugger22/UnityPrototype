@@ -502,7 +502,7 @@ public class ItemDataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Actor resolves blackmail -> either carries out threat or drops threat (isThreatDropped 'true' and 'reason' why) due to max. motivation
+    /// Actor resolves blackmail -> either carries out threat or drops threat (isThreatDropped 'true' and 'reason' why) due to max. opinion
     /// </summary>
     /// <param name="actor"></param>
     /// <param name="secretName"></param>
@@ -714,7 +714,7 @@ public class ItemDataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Actor negates a motivational shift due to their relationship with the player
+    /// Actor negates an opinion shift due to their relationship with the player
     /// </summary>
     /// <param name="actor"></param>
     /// <param name="difference"></param>
@@ -726,7 +726,7 @@ public class ItemDataManager : MonoBehaviour
         return new StringBuilder()
             .AppendFormat("<b>{0}, {1}{2}{3}</b>{4}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n")
             .AppendFormat("has ignored a{0}", "\n")
-            .AppendFormat("{0}<b>{1}{2}{3} change in {4}Motivation{5}</b>{6}", colourNeutral, difference > 0 ? "+" : "", difference, colourEnd, colourAlert, colourEnd, "\n")
+            .AppendFormat("{0}<b>{1}{2}{3} change in {4}Opinion{5}</b>{6}", colourNeutral, difference > 0 ? "+" : "", difference, colourEnd, colourAlert, colourEnd, "\n")
             .AppendFormat("due to <b>{0}</b>{1}{2}", reason, "\n", "\n")
             .AppendFormat("As a result of their{0}", "\n")
             .AppendFormat("{0}<b>{1} opinion of you</b>{2}", comp > 0 ? colourGood : colourBad, comp > 0 ? "Positive" : "Negative", colourEnd)
@@ -1237,10 +1237,10 @@ public class ItemDataManager : MonoBehaviour
     /// </summary>
     /// <param name="actor"></param>
     /// <param name="gear"></param>
-    /// <param name="motivation"></param>
+    /// <param name="opinion"></param>
     /// <param name="isGiven"></param>
     /// <returns></returns>
-    public string GetGearTakeOrGiveDetails(Actor actor, Gear gear, int motivation, bool isGiven)
+    public string GetGearTakeOrGiveDetails(Actor actor, Gear gear, int opinion, bool isGiven)
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("{0}<b>{1}</b>{2} gear{3}", colourNeutral, gear.tag, colourEnd, "\n");
@@ -1249,14 +1249,14 @@ public class ItemDataManager : MonoBehaviour
             //gear given
             builder.AppendFormat("has been given{0}", "\n");
             builder.AppendFormat("to <b>{0}, {1}{2}</b>{3}{4}{5}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n");
-            builder.AppendFormat("{0}{1} <b>Motivation +{2}</b>{3}", actor.actorName, colourGood, motivation, colourEnd);
+            builder.AppendFormat("{0}{1} <b>Opinion +{2}</b>{3}", actor.actorName, colourGood, opinion, colourEnd);
         }
         else
         {
             //gear Taken back from actor
             builder.AppendFormat("has been taken back{0}", "\n");
             builder.AppendFormat("from {0}, {1}{2}{3}{4}{5}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n");
-            builder.AppendFormat("{0} {1}<b>Motivation -{2}</b>{3}", actor.actorName, colourBad, motivation, colourEnd);
+            builder.AppendFormat("{0} {1}<b>Opinion -{2}</b>{3}", actor.actorName, colourBad, opinion, colourEnd);
         }
         return builder.ToString();
     }
@@ -2426,17 +2426,17 @@ public class ItemDataManager : MonoBehaviour
         Actor actor = GameManager.instance.dataScript.GetHQHierarchyActor(invest.lead);
         if (actor != null)
         {
-            int motivation = actor.GetDatapoint(ActorDatapoint.Motivation1);
-            switch (motivation)
+            int opinion = actor.GetDatapoint(ActorDatapoint.Opinion1);
+            switch (opinion)
             {
                 case 0: outcome = string.Format("{0}Very Bad{1}", colourBad, colourEnd); break;
                 case 1: outcome = string.Format("{0}Bad{1}", colourBad, colourEnd); break;
                 case 2: outcome = string.Format("{0}Neutral{1}", colourNeutral, colourEnd); break;
                 case 3: outcome = string.Format("{0}Good{1}", colourGood, colourEnd); break;
-                default: Debug.LogWarningFormat("Unrecognised motivation \"{0}\"", motivation); outcome = "Unclear"; break;
+                default: Debug.LogWarningFormat("Unrecognised opinion \"{0}\"", opinion); outcome = "Unclear"; break;
             }
             builder.AppendFormat("Lead Investigator{0}<b>{1}, {2}{3}{4}</b>{5}{6}", "\n", actor.actorName, colourAlert, GameManager.instance.dataScript.GetHQActorPosition(invest.lead), colourEnd, "\n", "\n");
-            builder.AppendFormat("<b>Lead Motivation {0}{1}{2}, {3}</b>{4}{5}", colourNeutral, motivation, colourEnd, outcome, "\n", "\n");
+            builder.AppendFormat("<b>Lead Opinion {0}{1}{2}, {3}</b>{4}{5}", colourNeutral, opinion, colourEnd, outcome, "\n", "\n");
         }
         else
         {
@@ -2476,9 +2476,9 @@ public class ItemDataManager : MonoBehaviour
         Actor actor = GameManager.i.dataScript.GetHqHierarchyActor(invest.lead);
         if (actor != null)
         {
-            int motivation = actor.GetDatapoint(ActorDatapoint.Opinion1);
+            int opinion = actor.GetDatapoint(ActorDatapoint.Opinion1);
             builder.AppendFormat("Lead Investigator{0}<b>{1}, {2}{3}{4}</b>{5}{6}", "\n", actor.actorName, colourAlert, GameManager.i.dataScript.GetHqActorPosition(invest.lead), colourEnd, "\n", "\n");
-            builder.AppendFormat("<b>Motivation</b><pos=57%>{0}{1}{2}", GameManager.i.guiScript.GetNormalStars(motivation), "\n", "\n");
+            builder.AppendFormat("<b>Opinion</b><pos=57%>{0}{1}{2}", GameManager.i.guiScript.GetNormalStars(opinion), "\n", "\n");
         }
         else
         {

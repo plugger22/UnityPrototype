@@ -102,7 +102,7 @@ public class TestManager : MonoBehaviour
     public bool isDismissed = true;
     [Tooltip("If true, actors who have previously resigned, will be included in the selection pool for the new level OnMap actors, if false, they'll be excluded")]
     public bool isResigned = true;
-    [Tooltip("If true, actors with all motivation values will be included, if false any with motivation Zero will be excluded")]
+    [Tooltip("If true, actors with all opinion values will be included, if false any with opinion Zero will be excluded")]
     public bool isLowMotivation = true;
     [Tooltip("If true, actors are included if they are traitors, if false then they are excluded")]
     public bool isTraitor = true;

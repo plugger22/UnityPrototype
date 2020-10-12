@@ -1622,7 +1622,7 @@ public class PlayerManager : MonoBehaviour
         {
             int rnd;
             int chance;
-            int motivation;
+            int opinion;
             bool isGood;
             string text;
             //loop investigations
@@ -1733,25 +1733,25 @@ public class PlayerManager : MonoBehaviour
                                 if (actor != null)
                                 {
                                     rnd = Random.Range(0, 100);
-                                    motivation = actor.GetDatapoint(ActorDatapoint.Opinion1);
-                                    switch (motivation)
+                                    opinion = actor.GetDatapoint(ActorDatapoint.Opinion1);
+                                    switch (opinion)
                                     {
                                         case 3: chance = 80; break;
                                         case 2: chance = 60; break;
                                         case 1: chance = 40; break;
                                         case 0: chance = 20; break;
-                                        default: Debug.LogWarningFormat("Unrecognised actor Motivation \"{0}\" for {1}", invest.lead); chance = 0; break;
+                                        default: Debug.LogWarningFormat("Unrecognised actor Opinion \"{0}\" for {1}", invest.lead); chance = 0; break;
                                     }
                                     if (rnd < chance)
                                     {
                                         isGood = true;
                                         Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\", new evidence, Good (needed {1}, rolled {2}), {3} Mot {4}, Ev {5}{6}",
-                                            invest.tag, chance, rnd, invest.lead, motivation, invest.evidence + 1, "\n");
+                                            invest.tag, chance, rnd, invest.lead, opinion, invest.evidence + 1, "\n");
                                     }
                                     else
                                     {
                                         Debug.LogFormat("[Inv] PlayerManager.cs -> ProcessInvestigation: Investigation \"{0}\", new evidence, Bad (needed {1}, rolled {2}), {3} Mot {4}, Ev {5}{6}",
-                                            invest.tag, chance, rnd, invest.lead, motivation, invest.evidence, "\n");
+                                            invest.tag, chance, rnd, invest.lead, opinion, invest.evidence, "\n");
                                     }
                                     text = string.Format("{0} Evidence Uncovered", invest.tag);
                                     GameManager.i.messageScript.GeneralRandom(text, "Type of Evidence", chance, rnd, false, "rand_5");

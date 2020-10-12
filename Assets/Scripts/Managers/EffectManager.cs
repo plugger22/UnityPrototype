@@ -95,7 +95,7 @@ public class EffectManager : MonoBehaviour
     private int neutralStatValue = -1;
     private int maxStatValue = -1;
     private int maxSecretsAllowed = -1;
-    private int chanceMotivationShift = -1;
+    private int chanceOpinionShift = -1;
     //fast access -> conditions
     private Condition conditionStressed;
     private Condition conditionCorrupt;
@@ -201,7 +201,7 @@ public class EffectManager : MonoBehaviour
         maxStatValue = GameManager.i.actorScript.maxStatValue;
         maxSecretsAllowed = GameManager.i.secretScript.secretMaxNum;
         neutralStatValue = GameManager.i.actorScript.neutralStatValue;
-        chanceMotivationShift = GameManager.i.actorScript.chanceRelationShift;
+        chanceOpinionShift = GameManager.i.actorScript.chanceRelationShift;
         Debug.Assert(teamArcCivil > -1, "Invalid teamArcCivil (-1)");
         Debug.Assert(teamArcControl > -1, "Invalid teamArcControl (-1)");
         Debug.Assert(teamArcMedia > -1, "Invalid teamArcMedia (-1)");
@@ -213,7 +213,7 @@ public class EffectManager : MonoBehaviour
         Debug.Assert(maxStatValue > -1, "Invalid maxStatValue (-1)");
         Debug.Assert(maxSecretsAllowed > -1, "Invalid maxSecretsAllowed (-1)");
         Debug.Assert(neutralStatValue > -1, "Invalid neutralStatValue (-1)");
-        Debug.Assert(chanceMotivationShift > -1, "Invalid chanceMotivationShift (-1)");
+        Debug.Assert(chanceOpinionShift > -1, "Invalid chanceOpinionShift (-1)");
     }
     #endregion
 
@@ -916,23 +916,23 @@ public class EffectManager : MonoBehaviour
                                                 else
                                                 { Debug.LogWarning("Invalid actor (Null) for TraitConflictKillYes"); }
                                                 break;
-                                            case "MotivationNeutralMin":
-                                                //Actor motivation is neutral (2) or better
+                                            case "OpinionNeutralMin":
+                                                //Actor opinion is neutral (2) or better
                                                 if (actor != null)
                                                 {
                                                     if (actor.GetDatapoint(ActorDatapoint.Opinion1) < neutralStatValue)
-                                                    { BuildString(result, string.Format(" {0} Low Motivation (need 2+)", actor.arc.name)); }
+                                                    { BuildString(result, string.Format(" {0} Low Opinion (need 2+)", actor.arc.name)); }
                                                 }
-                                                else { Debug.LogWarning("Invalid actor (Null) for MotivationNeutralMin"); }
+                                                else { Debug.LogWarning("Invalid actor (Null) for OpinionNeutralMin"); }
                                                 break;
-                                            case "MotivationNOTZero":
-                                                //Actor motivation is 1+
+                                            case "OpinionNOTZero":
+                                                //Actor opinion is 1+
                                                 if (actor != null)
                                                 {
                                                     if (actor.GetDatapoint(ActorDatapoint.Opinion1) == 0)
-                                                    { BuildString(result, string.Format(" {0} Motivation Zero", actor.arc.name)); }
+                                                    { BuildString(result, string.Format(" {0} Opinion Zero", actor.arc.name)); }
                                                 }
-                                                else { Debug.LogWarning("Invalid actor (Null) for MotivationNOTZero"); }
+                                                else { Debug.LogWarning("Invalid actor (Null) for OpinionNOTZero"); }
                                                 break;
                                             case "RenownReserveMin":
                                                 //player
@@ -1725,42 +1725,42 @@ public class EffectManager : MonoBehaviour
                                                 { BuildString(result, "HQ Approval Zero"); }
                                                 break;
                                             case "MotNeutMinHqBoss":
-                                                //Boss of HQ has motivation 2+
+                                                //Boss of HQ has opinion 2+
                                                 Actor actorBoss = GameManager.i.dataScript.GetHqHierarchyActor(ActorHQ.Boss);
                                                 if (actorBoss != null)
                                                 {
                                                     if (actorBoss.GetDatapoint(ActorDatapoint.Opinion1) < 2)
-                                                    { BuildString(result, string.Format("{0} Motivation < 2", GameManager.i.hqScript.GetHqTitle(ActorHQ.Boss))); }
+                                                    { BuildString(result, string.Format("{0} Opinion < 2", GameManager.i.hqScript.GetHqTitle(ActorHQ.Boss))); }
                                                 }
                                                 else { Debug.LogWarning("Invalid HQ Boss (Null)"); }
                                                 break;
                                             case "MotNeutMinHqSubBoss1":
-                                                //subBoss 1 of HQ has motivation 2+
+                                                //subBoss 1 of HQ has opinion 2+
                                                 Actor actorSubBoss1 = GameManager.i.dataScript.GetHqHierarchyActor(ActorHQ.SubBoss1);
                                                 if (actorSubBoss1 != null)
                                                 {
                                                     if (actorSubBoss1.GetDatapoint(ActorDatapoint.Opinion1) < 2)
-                                                    { BuildString(result, string.Format("{0} Motivation < 2", GameManager.i.hqScript.GetHqTitle(ActorHQ.SubBoss1))); }
+                                                    { BuildString(result, string.Format("{0} Opinion < 2", GameManager.i.hqScript.GetHqTitle(ActorHQ.SubBoss1))); }
                                                 }
                                                 else { Debug.LogWarning("Invalid HQ SubBoss1 (Null)"); }
                                                 break;
                                             case "MotNeutMinHqSubBoss2":
-                                                //subBoss 2 of HQ has motivation 2+
+                                                //subBoss 2 of HQ has opinion 2+
                                                 Actor actorSubBoss2 = GameManager.i.dataScript.GetHqHierarchyActor(ActorHQ.SubBoss2);
                                                 if (actorSubBoss2 != null)
                                                 {
                                                     if (actorSubBoss2.GetDatapoint(ActorDatapoint.Opinion1) < 2)
-                                                    { BuildString(result, string.Format("{0} Motivation < 2", GameManager.i.hqScript.GetHqTitle(ActorHQ.SubBoss2))); }
+                                                    { BuildString(result, string.Format("{0} Opinion < 2", GameManager.i.hqScript.GetHqTitle(ActorHQ.SubBoss2))); }
                                                 }
                                                 else { Debug.LogWarning("Invalid HQ SubBoss2 (Null)"); }
                                                 break;
                                             case "MotNeutMinHqSubBoss3":
-                                                //subBoss 3 of HQ has motivation 2+
+                                                //subBoss 3 of HQ has opinion 2+
                                                 Actor actorSubBoss3 = GameManager.i.dataScript.GetHqHierarchyActor(ActorHQ.SubBoss3);
                                                 if (actorSubBoss3 != null)
                                                 {
                                                     if (actorSubBoss3.GetDatapoint(ActorDatapoint.Opinion1) < 2)
-                                                    { BuildString(result, string.Format("{0} Motivation < 2", GameManager.i.hqScript.GetHqTitle(ActorHQ.SubBoss3))); }
+                                                    { BuildString(result, string.Format("{0} Opinion < 2", GameManager.i.hqScript.GetHqTitle(ActorHQ.SubBoss3))); }
                                                 }
                                                 else { Debug.LogWarning("Invalid HQ SubBoss3 (Null)"); }
                                                 break;
@@ -2211,15 +2211,15 @@ public class EffectManager : MonoBehaviour
                             effectReturn.errorFlag = true;
                         }
                         break;
-                    case "Motivation":
+                    case "Opinion":
                         switch (effect.apply.name)
                         {
                             case "ActorCurrent":
-                                //current actor has their motivation changed
-                                effectReturn.bottomText = ExecuteActorMotivation(effect, actor, dataInput);
+                                //current actor has their opinion changed
+                                effectReturn.bottomText = ExecuteActorOpinion(effect, actor, dataInput);
                                 break;
                             case "ActorAll":
-                                //all actors have their motivation changed
+                                //all actors have their opinion changed
                                 if (ResolveGroupActorEffect(effect, dataInput, actor) == true)
                                 { effectReturn.bottomText = string.Format("{0}{1}{2}", colourEffect, effect.description, colourEnd); }
                                 else { effectReturn.errorFlag = true; }
@@ -2621,7 +2621,7 @@ public class EffectManager : MonoBehaviour
 
 
     /// <summary>
-    /// Sub method to process group actor effects, eg. All actors Motivation +1. If actor != null then this actor is excluded from the effect. Returns true if successful, false otherwise
+    /// Sub method to process group actor effects, eg. All actors Opinion +1. If actor != null then this actor is excluded from the effect. Returns true if successful, false otherwise
     /// NOTE: Effect, dataInput and Actor are checked for null by the calling method
     /// </summary>
     /// <param name="datapoint"></param>
@@ -2653,32 +2653,32 @@ public class EffectManager : MonoBehaviour
                         {
                             switch (effect.outcome.name)
                             {
-                                case "Motivation":
-                                    int motivation = actor.GetDatapoint(ActorDatapoint.Opinion1);
+                                case "Opinion":
+                                    int opinion = actor.GetDatapoint(ActorDatapoint.Opinion1);
                                     int dataBefore = actor.GetDatapoint(ActorDatapoint.Opinion1);
                                     switch (effect.operand.name)
                                     {
                                         case "Add":
-                                            motivation += effect.value;
-                                            motivation = Mathf.Min(GameManager.i.actorScript.maxStatValue, motivation);
-                                            actor.SetDatapoint(ActorDatapoint.Opinion1, motivation, dataInput.originText);
-                                            GameManager.i.popUpFixedScript.SetData(actor.slotID, string.Format("Motivation +{0}", effect.value));
+                                            opinion += effect.value;
+                                            opinion = Mathf.Min(GameManager.i.actorScript.maxStatValue, opinion);
+                                            actor.SetDatapoint(ActorDatapoint.Opinion1, opinion, dataInput.originText);
+                                            GameManager.i.popUpFixedScript.SetData(actor.slotID, string.Format("Opinion +{0}", effect.value));
                                             break;
                                         case "Subtract":
-                                            motivation -= effect.value;
-                                            motivation = Mathf.Max(GameManager.i.actorScript.minStatValue, motivation);
-                                            actor.SetDatapoint(ActorDatapoint.Opinion1, motivation, dataInput.originText);
-                                            GameManager.i.popUpFixedScript.SetData(actor.slotID, string.Format("Motivation -{0}", effect.value));
+                                            opinion -= effect.value;
+                                            opinion = Mathf.Max(GameManager.i.actorScript.minStatValue, opinion);
+                                            actor.SetDatapoint(ActorDatapoint.Opinion1, opinion, dataInput.originText);
+                                            GameManager.i.popUpFixedScript.SetData(actor.slotID, string.Format("Opinion -{0}", effect.value));
                                             break;
                                         default:
                                             Debug.LogWarningFormat("Invalid effect.operand \"{0}\"", effect.operand.name);
                                             break;
                                     }
                                     //log
-                                    if (motivation != dataBefore)
+                                    if (opinion != dataBefore)
                                     {
-                                        Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Motivation changed from {2} to {3}{4}", actor.actorName, actor.arc.name,
-                                            dataBefore, motivation, "\n");
+                                        Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Opinion changed from {2} to {3}{4}", actor.actorName, actor.arc.name,
+                                            dataBefore, opinion, "\n");
                                     }
                                     break;
                                 case "Renown":
@@ -2730,8 +2730,8 @@ public class EffectManager : MonoBehaviour
                     else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfActors[{0}]", i); }
                 }
             }
-            //motivation shift, update topBarUI item
-            if (effect.outcome.name.Equals("Motivation") == true)
+            //opinion shift, update topBarUI item
+            if (effect.outcome.name.Equals("Opinion") == true)
             { GameManager.i.topBarScript.UpdateConflicts(GameManager.i.actorScript.CheckNumOfConflictActors()); }
         }
         else { Debug.LogWarning("Invalid arrayOfActors (Null)"); isSuccess = false; }
@@ -4175,9 +4175,9 @@ public class EffectManager : MonoBehaviour
                 GameManager.i.metaScript.SetMetaGameTraitor(false);
                 effectResolve.bottomText = string.Format("{0}Traitorous Subordinates are excluded{1}", colourEffect, colourEnd);
                 break;
-            case "MetaOptionMotivation":
-                GameManager.i.metaScript.SetMetaGameMotivation(false);
-                effectResolve.bottomText = string.Format("{0}Low Motivation Subordinates are excluded{1}", colourEffect, colourEnd);
+            case "MetaOptionOpinion":
+                GameManager.i.metaScript.SetMetaGameOpinion(false);
+                effectResolve.bottomText = string.Format("{0}Low Opinion Subordinates are excluded{1}", colourEffect, colourEnd);
                 break;
             case "MetaOptionLevel2":
                 //level 2 and 3 are binary choices
@@ -4402,8 +4402,8 @@ public class EffectManager : MonoBehaviour
             case "ContactEffectiveness":
                 effectResolve.bottomText = ExecuteActorContact(effect, actor, dataTopic, dataInput);
                 break;
-            case "Motivation":
-                effectResolve.bottomText = ExecuteActorMotivation(effect, actor, dataInput, dataTopic);
+            case "Opinion":
+                effectResolve.bottomText = ExecuteActorOpinion(effect, actor, dataInput, dataTopic);
                 break;
             case "Invisibility":
                 if (node != null)
@@ -4493,7 +4493,7 @@ public class EffectManager : MonoBehaviour
     }
 
     /// <summary>
-    /// private subMethod for ResolveTopicData that handles all custom dual actor effects (eg. ActorPolitic topics -> Friend/Enemy relationship, HQ topics -> actorOther Motivation shift)
+    /// private subMethod for ResolveTopicData that handles all custom dual actor effects (eg. ActorPolitic topics -> Friend/Enemy relationship, HQ topics -> actorOther Opinion shift)
     /// </summary>
     /// <param name="effect"></param>
     /// <param name="dataInput"></param>
@@ -4533,9 +4533,9 @@ public class EffectManager : MonoBehaviour
                     GameManager.i.popUpFixedScript.SetData(actorOther.slotID, "Friends");
                 }
                 break;
-            case "Motivation":
-                //actor Other changes motivation
-                effectResolve.bottomText = ExecuteActorMotivation(effect, actorOther, dataInput, dataTopic);
+            case "Opinion":
+                //actor Other changes opinion
+                effectResolve.bottomText = ExecuteActorOpinion(effect, actorOther, dataInput, dataTopic);
                 break;
             case "Renown":
                 //actor Other changes Renown
@@ -5390,25 +5390,25 @@ public class EffectManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Current Actor gains or loses motivation.
+    /// Current Actor gains or loses opinion
     /// NOTE: Parameters checked for null by parent method
     /// </summary>
     /// <param name="effect"></param>
     /// <param name="actor"></param>
     /// <returns></returns>
-    private string ExecuteActorMotivation(Effect effect, Actor actor, EffectDataInput dataInput, TopicEffectData dataTopic = null)
+    private string ExecuteActorOpinion(Effect effect, Actor actor, EffectDataInput dataInput, TopicEffectData dataTopic = null)
     {
         string bottomText = "Unknown";
         //only applies to OnMap actors, not HQ ones
         if (dataTopic == null || dataTopic.isHqActors == false)
         {
-            bottomText = ProcessActorMotivation(actor, effect.value, effect.operand.name, dataInput.originText, effect.description);
-            //relationship motivational shift in a friend or enemy
+            bottomText = ProcessActorOpinion(actor, effect.value, effect.operand.name, dataInput.originText, effect.description);
+            //relationship opinion shift in a friend or enemy
             RelationshipData data = GameManager.i.dataScript.GetRelationshipData(actor.slotID);
             if (data != null)
             {
                 if (data.relationship != ActorRelationship.None)
-                { bottomText = ExecuteActorRelationMotivation(actor, data, effect.operand.name, bottomText); }
+                { bottomText = ExecuteActorRelationOpinion(actor, data, effect.operand.name, bottomText); }
             }
             else { Debug.LogWarningFormat("Invalid RelationshipData (Null) for {0}, {1}, ID {2}, slotID {3}", actor.actorName, actor.arc.name, actor.actorID, actor.slotID); }
             //update topBarUI conflict
@@ -5417,21 +5417,21 @@ public class EffectManager : MonoBehaviour
         else
         {
             //HQ actor
-            bottomText = ProcessActorMotivation(actor, effect.value, effect.operand.name, dataInput.originText, effect.description, dataTopic.isHqActors);
+            bottomText = ProcessActorOpinion(actor, effect.value, effect.operand.name, dataInput.originText, effect.description, dataTopic.isHqActors);
         }
         return bottomText;
     }
 
 
     /// <summary>
-    /// handles motivation shifts for actor in the other end of a friend/enemy relationship
-    /// Originating actor is the actor with relationship who sparked the motivational shift in the RelationshipData actor
-    /// NOTE: originatingActor and data checked for Null by parent method, ExecuteActorMotivation
+    /// handles opinion shifts for actor in the other end of a friend/enemy relationship
+    /// Originating actor is the actor with relationship who sparked the opinion shift in the RelationshipData actor
+    /// NOTE: originatingActor and data checked for Null by parent method, ExecuteActorOpinion
     /// </summary>
     /// <param name="data"></param>
     /// <param name="bottomText"></param>
     /// <returns></returns>
-    private string ExecuteActorRelationMotivation(Actor originatingActor, RelationshipData data, string operandName, string bottomText)
+    private string ExecuteActorRelationOpinion(Actor originatingActor, RelationshipData data, string operandName, string bottomText)
     {
         string text = "";
         bool isGood = true;
@@ -5450,42 +5450,42 @@ public class EffectManager : MonoBehaviour
                         case ActorRelationship.Friend:
                             switch (operandName)
                             {
-                                case "Add": description = "Motivation +1"; isGood = false; break;
-                                case "Subtract": description = "Motivation -1"; isGood = true; break;
+                                case "Add": description = "Opinion +1"; isGood = false; break;
+                                case "Subtract": description = "Opinion -1"; isGood = true; break;
                                 default: Debug.LogWarningFormat("Unrecognised operandName \"{0}\"", operandName); break;
                             }
                             break;
                         case ActorRelationship.Enemy:
                             switch (operandName)
                             {
-                                case "Add": description = "Motivation -1"; newOperand = "Subtract"; isGood = true; break;
-                                case "Subtract": description = "Motivation +1"; newOperand = "Add"; isGood = false; break;
+                                case "Add": description = "Opinion -1"; newOperand = "Subtract"; isGood = true; break;
+                                case "Subtract": description = "Opinion +1"; newOperand = "Add"; isGood = false; break;
                                 default: Debug.LogWarningFormat("Unrecognised operandName \"{0}\"", operandName); break;
                             }
                             break;
                         default: Debug.LogWarningFormat("Unrecognised relationship \"{0}\"", data.relationship); break;
                     }
-                    //there is a chance of a motivational shift
+                    //there is a chance of a opinion shift
                     int rnd = Random.Range(0, 100);
                     //successful roll
-                    if (rnd < chanceMotivationShift)
+                    if (rnd < chanceOpinionShift)
                     {
-                        //process motivation of other actor in the relationship
-                        text = ProcessActorMotivation(actor, 1, newOperand, $"{data.relationship} relationship with {actor.arc.name}", description);
-                        if (chanceMotivationShift < 100)
-                        { Debug.LogFormat("[Rnd] EffectManager.cs -> ExecuteActorRelationMotivation: SUCCEEDED relation check, need < {0}, rolled {1}{2}", chanceMotivationShift, rnd, "\n"); }
+                        //process opinion of other actor in the relationship
+                        text = ProcessActorOpinion(actor, 1, newOperand, $"{data.relationship} relationship with {actor.arc.name}", description);
+                        if (chanceOpinionShift < 100)
+                        { Debug.LogFormat("[Rnd] EffectManager.cs -> ExecuteActorRelationOpinion: SUCCEEDED relation check, need < {0}, rolled {1}{2}", chanceOpinionShift, rnd, "\n"); }
                     }
                     else
                     {
                         //failed roll
-                        if (chanceMotivationShift < 100)
-                        { Debug.LogFormat("[Rnd] EffectManager.cs -> ExecuteActorRelationMotivation: FAILED relation check, need < {0}, rolled {1}{2}", chanceMotivationShift, rnd, "\n"); }
+                        if (chanceOpinionShift < 100)
+                        { Debug.LogFormat("[Rnd] EffectManager.cs -> ExecuteActorRelationOpinion: FAILED relation check, need < {0}, rolled {1}{2}", chanceOpinionShift, rnd, "\n"); }
                     }
                     //random msg
-                    if (chanceMotivationShift < 100)
+                    if (chanceOpinionShift < 100)
                     {
                         string msgText = string.Format("{0} is {1} {2}", actor.arc.name, data.relationship == ActorRelationship.Friend ? "Friends with" : "an Enemy of", originatingActor.arc.name);
-                        GameManager.i.messageScript.GeneralRandom(msgText, $"{data.relationship} Motivation", chanceMotivationShift, rnd, isGood, "rand_6");
+                        GameManager.i.messageScript.GeneralRandom(msgText, $"{data.relationship} Opinion", chanceOpinionShift, rnd, isGood, "rand_6");
                     }
                 }
             }
@@ -5497,7 +5497,7 @@ public class EffectManager : MonoBehaviour
 
 
     /// <summary>
-    /// subMethod for ExecuteActorMotivation/ExecuteActorRelationMotivation to handle motivation shift processing
+    /// subMethod for ExecuteActorOpinion/ExecuteActorRelationOpinion to handle opinion shift processing
     /// </summary>
     /// <param name="actor"></param>
     /// <param name="amount"></param>
@@ -5505,54 +5505,54 @@ public class EffectManager : MonoBehaviour
     /// <param name="originText"></param>
     /// <param name="description"></param>
     /// <returns></returns>
-    private string ProcessActorMotivation(Actor actor, int amount, string operandName, string originText, string description, bool isHqActor = false)
+    private string ProcessActorOpinion(Actor actor, int amount, string operandName, string originText, string description, bool isHqActor = false)
     {
         string bottomText = "Unknown";
         int dataBefore = actor.GetDatapoint(ActorDatapoint.Opinion1);
-        int motivation = actor.GetDatapoint(ActorDatapoint.Opinion1);
+        int opinion = actor.GetDatapoint(ActorDatapoint.Opinion1);
         switch (operandName)
         {
             case "Add":
-                motivation += Mathf.Abs(amount);
-                motivation = Mathf.Min(GameManager.i.actorScript.maxStatValue, motivation);
-                actor.SetDatapoint(ActorDatapoint.Opinion1, motivation, originText);
+                opinion += Mathf.Abs(amount);
+                opinion = Mathf.Min(GameManager.i.actorScript.maxStatValue, opinion);
+                actor.SetDatapoint(ActorDatapoint.Opinion1, opinion, originText);
                 bottomText = string.Format("{0}{1} {2}{3}", colourGood, isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ), description, colourEnd);
                 break;
             case "Subtract":
-                motivation -= Mathf.Abs(amount);
-                if (motivation < 0)
+                opinion -= Mathf.Abs(amount);
+                if (opinion < 0)
                 {
                     if (isHqActor == false)
                     {
-                        //relationship Conflict  (ActorConflict) -> Motivation change passes compatibility test
+                        //relationship Conflict  (ActorConflict) -> Opinion change passes compatibility test
                         StringBuilder builder = new StringBuilder();
-                        builder.AppendFormat("{0}{1}{2} Motivation too Low!{3}", "\n", colourAlert, actor.arc.name, colourEnd);
+                        builder.AppendFormat("{0}{1}{2} Opinion too Low!{3}", "\n", colourAlert, actor.arc.name, colourEnd);
                         builder.AppendFormat("{0}{1}RELATIONSHIP CONFLICT{2}", "\n", colourBad, colourEnd);
                         builder.AppendFormat("{0}{1}{2}", "\n", "\n", GameManager.i.actorScript.ProcessActorConflict(actor));
-                        motivation = Mathf.Max(0, motivation);
+                        opinion = Mathf.Max(0, opinion);
                         bottomText = builder.ToString();
                         GameManager.i.popUpFixedScript.SetData(actor.slotID, "CONFLICT!");
                     }
                     else
                     {
-                        motivation = Mathf.Max(0, motivation);
+                        opinion = Mathf.Max(0, opinion);
                         bottomText = string.Format("{0}{1} {2}{3}", colourBad, isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ), description, colourEnd);
 
                     }
                 }
                 else
                 { bottomText = string.Format("{0}{1} {2}{3}", colourBad, isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ), description, colourEnd); }
-                actor.SetDatapoint(ActorDatapoint.Opinion1, motivation, originText);
+                actor.SetDatapoint(ActorDatapoint.Opinion1, opinion, originText);
                 break;
             default: Debug.LogWarningFormat("Unrecognised operandName \"{0}\"", operandName); break;
         }
         //log entry
-        if (motivation != dataBefore)
+        if (opinion != dataBefore)
         {
-            Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Motivation changed from {2} to {3}{4}", actor.actorName, isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ),
-                dataBefore, motivation, "\n");
+            Debug.LogFormat("[Sta] -> EffectManger.cs: {0} {1} Opinion changed from {2} to {3}{4}", actor.actorName, isHqActor == false ? actor.arc.name : GameManager.i.hqScript.GetHqTitle(actor.statusHQ),
+                dataBefore, opinion, "\n");
             if (isHqActor == false)
-            { GameManager.i.popUpFixedScript.SetData(actor.slotID, string.Format("Motivation {0}{1}", string.Equals(operandName, "Add") == true ? "+" : "-", amount)); }
+            { GameManager.i.popUpFixedScript.SetData(actor.slotID, string.Format("Opinion {0}{1}", string.Equals(operandName, "Add") == true ? "+" : "-", amount)); }
         }
         return bottomText;
     }

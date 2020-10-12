@@ -11,12 +11,12 @@ public class Personality
 {
     private int[] arrayOfFactors;
     private int compatibilityWithPlayer;
-    private string profile;                                             //dict key name of profile
-    private string profileDescriptor;                                   //in-game descriptor, eg. 'Weak indication of a AntiSocial
-    private string profileExplanation;                                  //psychological explanation of profile
+    private string profile;                                                                     //dict key name of profile
+    private string profileDescriptor;                                                           //in-game descriptor, eg. 'Weak indication of a AntiSocial
+    private string profileExplanation;                                                          //psychological explanation of profile
     //collections
     private List<string> listOfDescriptors = new List<string>();                                //list of personality descriptors
-    private List<HistoryOpinion> listOfMotivation = new List<HistoryOpinion>();           //list of all motivational changes
+    private List<HistoryOpinion> listOfOpinion = new List<HistoryOpinion>();                    //list of all opinion changes
 
     /// <summary>
     /// constructor
@@ -179,16 +179,16 @@ public class Personality
 
 
     public List<HistoryOpinion> GetListOfMotivation()
-    { return listOfMotivation; }
+    { return listOfOpinion; }
 
 
     /// <summary>
-    /// returns list of pre-formatted strings, each being a item of motivational history, eg. 'Give HoloPorn gear +1' (coloured)
+    /// returns list of pre-formatted strings, each being a item of opinion history, eg. 'Give HoloPorn gear +1' (coloured)
     /// </summary>
     /// <returns></returns>
     public List<string> GetMotivationDescriptors()
     {
-        return listOfMotivation
+        return listOfOpinion
             .Select(x => x.descriptor)
             .ToList();
     }
@@ -200,7 +200,7 @@ public class Personality
     public void AddMotivation(HistoryOpinion history)
     {
         if (history != null)
-        { listOfMotivation.Add(history); }
+        { listOfOpinion.Add(history); }
         else { Debug.LogError("Invalid history (Null)"); }
     }
 
@@ -212,8 +212,8 @@ public class Personality
     {
         if (listOfMotivation != null)
         {
-            this.listOfMotivation.Clear();
-            this.listOfMotivation.AddRange(listOfMotivation);
+            this.listOfOpinion.Clear();
+            this.listOfOpinion.AddRange(listOfMotivation);
         }
         else { Debug.LogError("Invalid listOfMotivation (Null)"); }
     }

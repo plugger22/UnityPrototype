@@ -2190,7 +2190,7 @@ public class ActionManager : MonoBehaviour
     /// <param name="actorID"></param>
     private void ProcessFireReserveActor(ModalActionDetails details)
     {
-        /*int opinionLoss = GameManager.instance.actorScript.motivationLossFire;*/
+        /*int opinionLoss = GameManager.instance.actorScript.opinionLossFire;*/
         bool errorFlag = false;
         int numOfTeams = 0;
         string moodText = "Unknown";

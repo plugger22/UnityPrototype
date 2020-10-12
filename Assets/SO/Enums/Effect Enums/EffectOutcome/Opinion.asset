@@ -8,7 +8,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 388824e1cb224e54eba0cf0741eca1fa, type: 3}
-  m_Name: MotNeutMinHqSubBoss2
+  m_Script: {fileID: 11500000, guid: 57b1579be188f26488ce94fa178d2cd3, type: 3}
+  m_Name: Opinion
   m_EditorClassIdentifier: 
-  descriptor: Hq subBoss_2 Motivation 2+
+  descriptor: Actor Opinion

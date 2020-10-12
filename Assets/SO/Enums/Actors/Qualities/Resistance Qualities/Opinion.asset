@@ -9,8 +9,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05d0893dd085bb14ca46ef01a5bb8c0b, type: 3}
-  m_Name: Motivation
+  m_Name: Opinion
   m_EditorClassIdentifier: 
-  description: How dedicated and committed they are to the cause
+  description: Their opinion of you
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   order: 1
