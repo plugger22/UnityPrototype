@@ -20,6 +20,9 @@ MonoBehaviour:
   harbourDistrict: 
   districtNames: {fileID: 11400000, guid: b43cbfe86c95be04396264b8043c4696, type: 2}
   iconName: Kings College
+  cityPoolResistance: {fileID: 0}
+  cityPoolAuthority: {fileID: 0}
+  nameSet: {fileID: 11400000, guid: 854ab7ac874cecd418818e40bda1e9bf, type: 2}
   isTestOff: 1
   mayor: {fileID: 11400000, guid: c9c4daa74bb0b7c49be4032c06438c52, type: 2}
   faction: {fileID: 0}

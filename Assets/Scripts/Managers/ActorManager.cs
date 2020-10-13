@@ -9767,7 +9767,7 @@ public class ActorManager : MonoBehaviour
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         //special colour to match page header
         string colourHeader = colourNeutral;
-        Color color = GameManager.i.guiScript.colourTransitionHeader;
+        Color color = GameManager.i.uiScript.TransitionHeader;
         colourHeader = string.Format("<color=#{0}>", ColorUtility.ToHtmlStringRGB(color));
         //
         // - - - Resistance Player
@@ -9896,7 +9896,7 @@ public class ActorManager : MonoBehaviour
             GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
             //special colour to match page header
             string colourHeader = colourNeutral;
-            Color color = GameManager.i.guiScript.colourTransitionHeader;
+            Color color = GameManager.i.uiScript.TransitionHeader;
             colourHeader = string.Format("<color=#{0}>", ColorUtility.ToHtmlStringRGB(color));
             //
             // - - - Resistance Player
@@ -9946,7 +9946,7 @@ public class ActorManager : MonoBehaviour
             GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
             //special colour to match page header
             string colourHeader = colourNeutral;
-            Color color = GameManager.i.guiScript.colourTransitionHeader;
+            Color color = GameManager.i.uiScript.TransitionHeader;
             colourHeader = string.Format("<color=#{0}>", ColorUtility.ToHtmlStringRGB(color));
             //
             // - - - Resistance Player

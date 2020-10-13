@@ -3289,7 +3289,7 @@ public class TopicManager : MonoBehaviour
                 data.isBoss = turnTopic.subType.isBoss;
                 data.listOfOptions = turnTopic.listOfOptions;
                 data.listOfIgnoreEffects = turnTopic.listOfIgnoreEffects;
-                data.colour = GameManager.i.guiScript.colourTopicNormal;
+                data.colour = GameManager.i.uiScript.TopicNormal;
                 data.listOfHelp = GetTopicSubTypeHelp();
                 data.listOfStoryHelp = turnTopic.listOfStoryHelp.GetRange(0, Mathf.Min(2, turnTopic.listOfStoryHelp.Count));            //only takes the first two records, if present
                 //type
@@ -3464,7 +3464,7 @@ public class TopicManager : MonoBehaviour
                 data.isBoss = turnTopic.subType.isBoss;
                 data.listOfOptions = turnTopic.listOfOptions;
                 data.listOfIgnoreEffects = turnTopic.listOfIgnoreEffects;
-                data.colour = GameManager.i.guiScript.colourTopicCapture;
+                data.colour = GameManager.i.uiScript.TopicCapture;
                 data.listOfHelp = GetTopicSubTypeHelp();
                 //subSubType
                 turnTopicSubSubType = turnTopic.subSubType;

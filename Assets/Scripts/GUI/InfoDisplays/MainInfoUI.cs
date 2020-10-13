@@ -282,7 +282,7 @@ public class MainInfoUI : MonoBehaviour
         Debug.Assert(leftBackground != null, "Invalid leftBackground (Null)");
         Debug.Assert(rightBackground != null, "Invalid rightBackground (Null)");
         //assign backgrounds and active tab colours
-        Color colour = GameManager.i.guiScript.colourMainBackground;
+        Color colour = GameManager.i.uiScript.MainBackground;
         leftBackground.color = new Color(colour.r, colour.g, colour.b);
         rightBackground.color = new Color(colour.r, colour.g, colour.b);
         tab_active_0.color = new Color(colour.r, colour.g, colour.b);

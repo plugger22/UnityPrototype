@@ -172,11 +172,11 @@ public class WidgetTopUI : MonoBehaviour
         flashRedOuter.color = tempColor;
         isFading = false;
         //main widget sprite colour
-        tempColor = GameManager.i.guiScript.colourTopWidget;
+        tempColor = GameManager.i.uiScript.TopWidget;
         tempColor.a = 0.75f;
         widgetTopSprite.color = tempColor;
         //back bars
-        tempColor = GameManager.i.guiScript.colourTopWidgetBarBacks;
+        tempColor = GameManager.i.uiScript.TopWidgetBarBacks;
         tempColor.a = 0.4f;
         barCityBack.color = tempColor;
         barHqBack.color = tempColor;

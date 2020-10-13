@@ -20,7 +20,9 @@ MonoBehaviour:
   harbourDistrict: Ghangzou Port
   districtNames: {fileID: 11400000, guid: b43cbfe86c95be04396264b8043c4696, type: 2}
   iconName: Canton Tower
-  cityPool: {fileID: 0}
+  cityPoolResistance: {fileID: 0}
+  cityPoolAuthority: {fileID: 0}
+  nameSet: {fileID: 11400000, guid: f935e371ffa59e745bad0891ea7997dd, type: 2}
   isTestOff: 1
   mayor: {fileID: 11400000, guid: 9670168bff0305143be79f443d8fff1f, type: 2}
   faction: {fileID: 0}

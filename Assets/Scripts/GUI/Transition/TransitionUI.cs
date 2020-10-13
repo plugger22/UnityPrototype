@@ -503,9 +503,9 @@ public class TransitionUI : MonoBehaviour
         Debug.Assert(vacantActorSprite != null, "Invalid vacantActorSprite (Null)");
         Debug.Assert(string.IsNullOrEmpty(vacantActorCompatibility) == false, "Invalid vacantActorCompatibiity (Null or Empty)");
         //colors
-        colorHeader = GameManager.i.guiScript.colourTransitionHeader;
-        colorBackground = GameManager.i.guiScript.colourTransitionBackground;
-        colorText = GameManager.i.guiScript.colourTransitionText;
+        colorHeader = GameManager.i.uiScript.TransitionHeader;
+        colorBackground = GameManager.i.uiScript.TransitionBackground;
+        colorText = GameManager.i.uiScript.TransitionText;
     }
     #endregion
 

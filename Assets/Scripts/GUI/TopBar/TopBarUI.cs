@@ -147,9 +147,9 @@ public class TopBarUI : MonoBehaviour
     /// </summary>
     private void InitialiseComponents()
     {
-        colourIconDormant = GameManager.i.guiScript.colourIconDormant;
-        colourIconActiveGood = GameManager.i.guiScript.colourIconActiveGood;
-        colourIconActiveBad = GameManager.i.guiScript.colourIconActiveBad;
+        colourIconDormant = GameManager.i.uiScript.IconDormant;
+        colourIconActiveGood = GameManager.i.uiScript.IconActiveGood;
+        colourIconActiveBad = GameManager.i.uiScript.IconActiveBad;
         colourNumber = Color.white;
         //tooltips
         tipCommendation = commendations.tooltip.GetComponent<GenericTooltipUI>();
@@ -169,7 +169,7 @@ public class TopBarUI : MonoBehaviour
         Debug.Assert(tipBlackmail != null, "Invalid tipBlackmail (Null)");
         Debug.Assert(tipDoom != null, "Invalid tipDoom (Null)");
         //Set UI element colours
-        Color color = GameManager.i.guiScript.colourTopBarBackground;
+        Color color = GameManager.i.uiScript.TopBarBackground;
         topBarMainPanel.color = new Color(color.r, color.g, color.b, 0.65f);
         topBarLeft.color = new Color(color.r, color.g, color.b, 0.65f);
         topBarRight.color = new Color(color.r, color.g, color.b, 0.65f);

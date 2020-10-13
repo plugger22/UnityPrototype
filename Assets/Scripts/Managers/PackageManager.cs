@@ -983,7 +983,7 @@ namespace packageAPI
         public List<string> listOfHelp = new List<string>();                //list of help tags for, optional, second help mouseover down the bottom (not shown if listOfHelp is empty)
 
         public TopicUIData()
-        { colour = GameManager.i.guiScript.colourTopicNormal; }
+        { colour = GameManager.i.uiScript.TopicNormal; }
 
         public void Reset()
         {

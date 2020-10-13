@@ -219,31 +219,7 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Player mood 3 star")]
     public Sprite moodStar3;
 
-    [Header("Background Colours")]
-    [Tooltip("Topic UI, main background, for all normal topics")]
-    public Color colourTopicNormal;
-    [Tooltip("Topic UI, main background, for Capture topics")]
-    public Color colourTopicCapture;
-    [Tooltip("Main Info UI left and right backgrounds as well as colour of Active LHS tab")]
-    public Color colourMainBackground;
-    [Tooltip("Top Bar background")]
-    public Color colourTopBarBackground;
-    [Tooltip("Top Bar Icon Dormant colour")]
-    public Color colourIconDormant;
-    [Tooltip("Top Bar Icon Active Good colour")]
-    public Color colourIconActiveGood;
-    [Tooltip("Top Bar Icon Active Bad colour")]
-    public Color colourIconActiveBad;
-    [Tooltip("Top Widget sprite colour")]
-    public Color colourTopWidget;
-    [Tooltip("Top Widget bar backgrounds colour")]
-    public Color colourTopWidgetBarBacks;
-    [Tooltip("Transition background colour")]
-    public Color colourTransitionBackground;
-    [Tooltip("Transition Header and highlight text colour")]
-    public Color colourTransitionHeader;
-    [Tooltip("Transition background Text (that sits ontop of colourTransitionBackground")]
-    public Color colourTransitionText;
+    
 
     //font awesome icons (characters)
     [HideInInspector] public char bulletChar;

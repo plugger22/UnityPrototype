@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public DataManager dataScript;                    //Data Manager
     [HideInInspector] public StatisticManager statScript;               //Statistics Manager
     [HideInInspector] public GUIManager guiScript;                      //GUI Manager
+    [HideInInspector] public UIManager uiScript;                        //UI Manager
     [HideInInspector] public GlobalManager globalScript;                //Global Manager
     [HideInInspector] public TooltipManager tooltipScript;              //Tooltip Manager
     [HideInInspector] public CampaignManager campaignScript;            //Campaign Manager
@@ -197,6 +198,7 @@ public class GameManager : MonoBehaviour
         metaScript = GetComponent<MetaManager>();
         dataScript = GetComponent<DataManager>();
         guiScript = GetComponent<GUIManager>();
+        uiScript = GetComponent<UIManager>();
         globalScript = GetComponent<GlobalManager>();
         campaignScript = GetComponent<CampaignManager>();
         controlScript = GetComponent<ControlManager>();
@@ -283,6 +285,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(metaScript != null, "Invalid metaScript (Null)");
         Debug.Assert(dataScript != null, "Invalid dataScript (Null)");
         Debug.Assert(guiScript != null, "Invalid guiScript (Null)");
+        Debug.Assert(uiScript != null, "Invalid uiScript (Null)");
         Debug.Assert(globalScript != null, "Invalid globalScript (Null)");
         Debug.Assert(campaignScript != null, "Invalid campaignScript (Null)");
         Debug.Assert(controlScript != null, "Invalid controlScript (Null)");

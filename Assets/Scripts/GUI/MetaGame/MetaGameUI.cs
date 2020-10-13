@@ -430,7 +430,7 @@ public class MetaGameUI : MonoBehaviour
         Debug.Assert(backgroundCentre != null, "Invalid backgroundCentre (Null)");
         Debug.Assert(backgroundRight != null, "Invalid backgroundRight (Null)");
         //assign backgrounds and active tab colours
-        Color colour = GameManager.i.guiScript.colourMainBackground;
+        Color colour = GameManager.i.uiScript.MetaBackground;
         backgroundCentre.color = new Color(colour.r, colour.g, colour.b);
         backgroundRight.color = new Color(colour.r, colour.g, colour.b);
         //items

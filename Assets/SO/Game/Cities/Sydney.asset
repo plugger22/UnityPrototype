@@ -22,6 +22,7 @@ MonoBehaviour:
   iconName: Opera House
   cityPoolResistance: {fileID: 11400000, guid: 499d11e15bceaff4ebf4400fddc32237, type: 2}
   cityPoolAuthority: {fileID: 11400000, guid: d19d7870e5c903346b181c8414ce242d, type: 2}
+  nameSet: {fileID: 11400000, guid: 56b7e91ac8e6f3d449828205cc0d2f2a, type: 2}
   isTestOff: 0
   mayor: {fileID: 11400000, guid: d1858bef418cc7b49bd4d7f1cf133dbc, type: 2}
   faction: {fileID: 0}

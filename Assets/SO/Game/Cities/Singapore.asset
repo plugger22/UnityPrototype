@@ -20,6 +20,9 @@ MonoBehaviour:
   harbourDistrict: Jurong Port
   districtNames: {fileID: 11400000, guid: b43cbfe86c95be04396264b8043c4696, type: 2}
   iconName: Merlion
+  cityPoolResistance: {fileID: 0}
+  cityPoolAuthority: {fileID: 0}
+  nameSet: {fileID: 11400000, guid: f935e371ffa59e745bad0891ea7997dd, type: 2}
   isTestOff: 1
   mayor: {fileID: 11400000, guid: ab2076eb4bf30fa4e95af2473114bd5e, type: 2}
   faction: {fileID: 0}

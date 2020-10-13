@@ -22,6 +22,7 @@ MonoBehaviour:
   iconName: Foundation Van Gogh
   cityPoolResistance: {fileID: 11400000, guid: 499d11e15bceaff4ebf4400fddc32237, type: 2}
   cityPoolAuthority: {fileID: 11400000, guid: d19d7870e5c903346b181c8414ce242d, type: 2}
+  nameSet: {fileID: 11400000, guid: 544bfb4bf9f66cb48869c829e7173599, type: 2}
   isTestOff: 0
   mayor: {fileID: 11400000, guid: e48a18091be2462438cacdcd3c612b7d, type: 2}
   faction: {fileID: 0}

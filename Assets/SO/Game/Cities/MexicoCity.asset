@@ -22,6 +22,7 @@ MonoBehaviour:
   iconName: Angel of Independence
   cityPoolResistance: {fileID: 11400000, guid: 499d11e15bceaff4ebf4400fddc32237, type: 2}
   cityPoolAuthority: {fileID: 11400000, guid: d19d7870e5c903346b181c8414ce242d, type: 2}
+  nameSet: {fileID: 11400000, guid: 195743710f6a69f47acd502168cd250c, type: 2}
   isTestOff: 0
   mayor: {fileID: 11400000, guid: 603cd93ccd903aa4f9ae2a4be6c581b3, type: 2}
   faction: {fileID: 0}

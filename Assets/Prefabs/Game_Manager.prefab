@@ -29,6 +29,7 @@ GameObject:
   - component: {fileID: 114709307672004698}
   - component: {fileID: 114200138194279740}
   - component: {fileID: 114733366453475614}
+  - component: {fileID: 114714005015149874}
   - component: {fileID: 114235583355878038}
   - component: {fileID: 114656477723242970}
   - component: {fileID: 114160796570192384}
@@ -6269,6 +6270,33 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 22da6f390f1942a47ac201efce0a17ad, type: 2}
   - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
   - {fileID: 11400000, guid: 6e4d8554b9a93064b86083fd577aae7a, type: 2}
+--- !u!114 &114714005015149874
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1289370855557188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46821f4327fdad34286419a1f6b99800, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listOfColours:
+  - {r: 0.4359815, g: 0.251157, b: 0.6415094, a: 0}
+  - {r: 0.8679245, g: 0.36436453, b: 0.36436453, a: 0}
+  TopicNormal: {r: 0.078431375, g: 0.56078434, b: 0.9372549, a: 0}
+  TopicCapture: {r: 0.9372549, g: 0.078431375, b: 0.27058825, a: 0}
+  MainBackground: {r: 0.078431375, g: 0.56078434, b: 0.9372549, a: 0}
+  MetaBackground: {r: 0.078431375, g: 0.56078434, b: 0.9372549, a: 0}
+  TopBarBackground: {r: 0.2509804, g: 0.25490198, b: 0.3019608, a: 0}
+  IconDormant: {r: 0.96862745, g: 0.972549, b: 0.75686276, a: 0}
+  IconActiveGood: {r: 0.49803922, g: 1, b: 0, a: 0}
+  IconActiveBad: {r: 1, g: 0, b: 0, a: 0}
+  TopWidget: {r: 0.2509804, g: 0.25490198, b: 0.3019608, a: 0}
+  TopWidgetBarBacks: {r: 0.5568628, g: 0.80784315, b: 0.99215686, a: 1}
+  TransitionBackground: {r: 0.2509804, g: 0.25490198, b: 0.3019608, a: 0}
+  TransitionHeader: {r: 0.92156863, g: 0.93333334, b: 0.4, a: 0}
+  TransitionText: {r: 1, g: 1, b: 1, a: 0}
 --- !u!114 &114733366453475614
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6379,18 +6407,6 @@ MonoBehaviour:
   moodStar1: {fileID: 21300000, guid: 606a34bcb9ca8c24b9932f86c27c35f1, type: 3}
   moodStar2: {fileID: 21300000, guid: f4609c9dcf2472941b5bb98234380a97, type: 3}
   moodStar3: {fileID: 21300000, guid: 0d89fae1bc0ce67449f04ab3ec0adf61, type: 3}
-  colourTopicNormal: {r: 0.078431375, g: 0.56078434, b: 0.9372549, a: 0}
-  colourTopicCapture: {r: 0.9372549, g: 0.078431375, b: 0.27058825, a: 0}
-  colourMainBackground: {r: 0.078431375, g: 0.56078434, b: 0.9372549, a: 0}
-  colourTopBarBackground: {r: 0.2509804, g: 0.25490198, b: 0.3019608, a: 0}
-  colourIconDormant: {r: 0.96862745, g: 0.972549, b: 0.75686276, a: 0}
-  colourIconActiveGood: {r: 0.49803922, g: 1, b: 0, a: 0}
-  colourIconActiveBad: {r: 1, g: 0, b: 0, a: 0}
-  colourTopWidget: {r: 0.2509804, g: 0.25490198, b: 0.3019608, a: 0}
-  colourTopWidgetBarBacks: {r: 0.5568628, g: 0.80784315, b: 0.99215686, a: 1}
-  colourTransitionBackground: {r: 0.2509804, g: 0.25490198, b: 0.3019608, a: 0}
-  colourTransitionHeader: {r: 0.92156863, g: 0.93333334, b: 0.4, a: 1}
-  colourTransitionText: {r: 1, g: 1, b: 1, a: 0}
   bulletChar: 0
   starChar: 61445
   airportChar: 61554
@@ -6466,6 +6482,7 @@ MonoBehaviour:
   dataScript: {fileID: 0}
   statScript: {fileID: 0}
   guiScript: {fileID: 0}
+  uiScript: {fileID: 0}
   globalScript: {fileID: 0}
   tooltipScript: {fileID: 0}
   campaignScript: {fileID: 0}
@@ -6542,7 +6559,7 @@ MonoBehaviour:
   popUpFixedScript: {fileID: 0}
   billboardScript: {fileID: 0}
   seedDev: 0
-  autoRunTurns: 0
+  autoRunTurns: 20
   scenarioStartLevel: 0
   isPerformanceLog: 1
   isDataValidation: 1
