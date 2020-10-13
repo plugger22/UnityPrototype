@@ -17,6 +17,4 @@ public class Country : ScriptableObject
     [Tooltip("RGB colour that the city name and country are displayed as")]
     [Range(0, 255)] public byte colour_blue;
 
-    [Tooltip("Names of all cities in this country are derived from this name set")]
-    public NameSet nameSet;
 }

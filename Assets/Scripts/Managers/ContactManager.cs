@@ -186,7 +186,7 @@ public class ContactManager : MonoBehaviour
                 City city = GameManager.i.cityScript.GetCity();
                 if (city != null)
                 {
-                    nameSet = city.country.nameSet;
+                    nameSet = city.nameSet;
                     if (nameSet == null) { Debug.LogErrorFormat("Invalid NameSet (Null) for {0} in {1}", city.tag, city.country.name); }
                 }
                 else { Debug.LogError("Invalid City (Null)"); }

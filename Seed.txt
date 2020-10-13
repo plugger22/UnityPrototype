@@ -2357,3 +2357,22 @@ TransitionUI.InitialiseTransitionUI () (at Assets/Scripts/GUI/Transition/Transit
 Dev seed 10353 -> Tuesday, 13 October 2020 12:30 PM
 City seed 5678 -> London, United Kingdom
 City seed 765 -> New York, America
+
+Dev seed 17221 -> Tuesday, 13 October 2020 2:40 PM
+City seed 5678 -> London, United Kingdom
+City seed 765 -> New York, America
+
+Dev seed 27691 -> Tuesday, 13 October 2020 2:46 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 56854 -> Tuesday, 13 October 2020 2:46 PM
+City seed 5678 -> London, United Kingdom
+ERROR String too long for TextMeshGenerator. Cutting off characters.
+UnityEngine.GUI:Box(Rect, String, GUIStyle)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1748)
+	
+Dev seed 8623 -> Tuesday, 13 October 2020 3:20 PM
+City seed 5678 -> London, United Kingdom
+
+Dev seed 15990 -> Tuesday, 13 October 2020 3:21 PM
+City seed 5678 -> London, United Kingdom

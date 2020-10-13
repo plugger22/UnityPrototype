@@ -42,6 +42,10 @@ public class City : ScriptableObject
     [Tooltip("Topic pool of Authority decisions for City")]
     public TopicPool cityPoolAuthority;
 
+    [Header("Names")]
+    [Tooltip("Nameset to draw from for City")]
+    public NameSet nameSet;
+
     [Header("Debugging")]
     [Tooltip("Used for testing purposes only. If 'ON' the Mayor is ignored (DataManager.cs -> GetRandomMayor). Leave as OFF")]
     public bool isTestOff = false;
@@ -64,6 +68,7 @@ public class City : ScriptableObject
         Debug.AssertFormat(string.IsNullOrEmpty(iconName) == false, "Invalid iconName (Null or Empty) for {0}", name);
         Debug.AssertFormat(mayor != null, "Invalid mayor (Null) for {0}", name);
         Debug.AssertFormat(districtNames != null, "Invalid TextList of DistrictNames (Null) for {0}", name);
+        Debug.AssertFormat(nameSet != null, "Invalid nameSet (Null) for {0}", name);
         Debug.AssertFormat(districtNames.category.name.Equals("Districts", System.StringComparison.Ordinal) == true, "Invalid districtNames TextList (wrong Category) for {0}", name);
         
     }

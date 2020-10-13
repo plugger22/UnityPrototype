@@ -1244,7 +1244,7 @@ public class DebugGUI : MonoBehaviour
                     case 5:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.inputScript.DebugDisplayGameState();
-                        GUI.Box(new Rect(Screen.width - 255, 10, 250, 650), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 305, 10, 300, 800), analysis, customBackground);
                         break;
                     //actor Pools
                     case 6:

@@ -6542,7 +6542,7 @@ MonoBehaviour:
   popUpFixedScript: {fileID: 0}
   billboardScript: {fileID: 0}
   seedDev: 0
-  autoRunTurns: 20
+  autoRunTurns: 0
   scenarioStartLevel: 0
   isPerformanceLog: 1
   isDataValidation: 1

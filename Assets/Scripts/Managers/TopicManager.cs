@@ -6277,14 +6277,14 @@ public class TopicManager : MonoBehaviour
                     case "npc":
                         if (isValidate == false)
                         {
-                            if (Random.Range(0, 100) < 50) { replaceText = GameManager.i.cityScript.GetCity().country.nameSet.firstFemaleNames.GetRandomRecord(); }
-                            else { replaceText = GameManager.i.cityScript.GetCity().country.nameSet.firstMaleNames.GetRandomRecord(); }
+                            if (Random.Range(0, 100) < 50) { replaceText = GameManager.i.cityScript.GetCity().nameSet.firstFemaleNames.GetRandomRecord(); }
+                            else { replaceText = GameManager.i.cityScript.GetCity().nameSet.firstMaleNames.GetRandomRecord(); }
                             if (isColourHighlighting == true)
                             {
-                                replaceText += " " + GameManager.i.cityScript.GetCity().country.nameSet.lastNames.GetRandomRecord();
+                                replaceText += " " + GameManager.i.cityScript.GetCity().nameSet.lastNames.GetRandomRecord();
                                 replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, replaceText, colourEnd);
                             }
-                            else { replaceText += " " + GameManager.i.cityScript.GetCity().country.nameSet.lastNames.GetRandomRecord(); }
+                            else { replaceText += " " + GameManager.i.cityScript.GetCity().nameSet.lastNames.GetRandomRecord(); }
                         }
                         else { CountTextTag("npc", dictOfTags); }
                         break;
@@ -7676,9 +7676,9 @@ public class TopicManager : MonoBehaviour
                 {
                     int maxNodeID = GameManager.i.nodeScript.maxNodeValue;
                     tagOrgTag = GameManager.i.campaignScript.campaign.orgInfo.tag;
-                    if (Random.Range(0, 100) < 50) { tagRecruit = GameManager.i.cityScript.GetCity().country.nameSet.firstFemaleNames.GetRandomRecord(); }
-                    else { tagRecruit = GameManager.i.cityScript.GetCity().country.nameSet.firstMaleNames.GetRandomRecord(); }
-                    tagRecruit += " " + GameManager.i.cityScript.GetCity().country.nameSet.lastNames.GetRandomRecord();
+                    if (Random.Range(0, 100) < 50) { tagRecruit = GameManager.i.cityScript.GetCity().nameSet.firstFemaleNames.GetRandomRecord(); }
+                    else { tagRecruit = GameManager.i.cityScript.GetCity().nameSet.firstMaleNames.GetRandomRecord(); }
+                    tagRecruit += " " + GameManager.i.cityScript.GetCity().nameSet.lastNames.GetRandomRecord();
                     tagTeam = "ERASURE Team Alpha";
                     int count = listOfTopics.Count;
                     if (count > 0)

@@ -312,9 +312,9 @@ public class NewsManager : MonoBehaviour
                         case "npc":
                             if (data.isValidate == false)
                             {
-                                if (Random.Range(0, 100) < 50) { replaceText = GameManager.i.cityScript.GetCity().country.nameSet.firstFemaleNames.GetRandomRecord(); }
-                                else { replaceText = GameManager.i.cityScript.GetCity().country.nameSet.firstMaleNames.GetRandomRecord(); }
-                                replaceText += " " + GameManager.i.cityScript.GetCity().country.nameSet.lastNames.GetRandomRecord();
+                                if (Random.Range(0, 100) < 50) { replaceText = GameManager.i.cityScript.GetCity().nameSet.firstFemaleNames.GetRandomRecord(); }
+                                else { replaceText = GameManager.i.cityScript.GetCity().nameSet.firstMaleNames.GetRandomRecord(); }
+                                replaceText += " " + GameManager.i.cityScript.GetCity().nameSet.lastNames.GetRandomRecord();
                             }
                             break;
                         case "npcIs":
