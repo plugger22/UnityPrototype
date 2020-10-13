@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75137ae3da0caf74383d26d8e9c80713, type: 3}
-  m_Name: MetaOptionMotivation
+  m_Name: MetaOptionOpinion
   m_EditorClassIdentifier: 
   template: 
   text: If you're not smiling we don't want you (Motivation)
-  header: LOW MOTIVATION
-  descriptor: Ensures that any <b>Subordinates</b> who have<br><br><b>Zero Motivation</b><br><br>will
+  header: LOW OPINION
+  descriptor: Ensures that any <b>Subordinates</b> who have<br><br><b>Zero OPINION</b><br><br>will
     be <b>excluded</b> from joining you in the <b>next city</b>
   powerCost: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   hqPosition: {fileID: 11400000, guid: d23712d976bdd4d48aebd0d8c891e6e6, type: 2}

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Name: CashInSTAR
   m_EditorClassIdentifier: 
   template: 
-  text: Cash in your STAR status for bonus Renown
+  text: Cash in your STAR status for bonus Power
   header: STAR
   descriptor: You're a <b>STAR</b><br><br>It's time to trade your reputation for <b>bonus
-    Renown</b>
+    Power</b>
   powerCost: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   hqPosition: {fileID: 11400000, guid: 49b17439fb97b1d4e86200f567743fd1, type: 2}
   sprite: {fileID: 21300000, guid: b409a5bb3e60fe2449c54d6642ca4a19, type: 3}
