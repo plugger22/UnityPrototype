@@ -16,17 +16,25 @@ MonoBehaviour:
   header: Exclude TRAITORS
   descriptor: Ensures that any <b>Subordinates</b> who are secretly<br><br><b>Traitors</b><br><br>will
     be <b>excluded</b> from joining you in the <b>next city</b>
-  renownCost: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  powerCost: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   hqPosition: {fileID: 11400000, guid: d23712d976bdd4d48aebd0d8c891e6e6, type: 2}
   sprite: {fileID: 21300000, guid: 30a4aa77c76c0434eafa65c250252d3d, type: 3}
   isRecommended: 0
   recommendPriority: {fileID: 0}
+  isPlayerStatus: 0
   isAlways: 1
+  isPowerGain: 0
   textInactive: 
   listOfCriteria: []
   listOfEffects:
   - {fileID: 11400000, guid: 0ae52a64dee4e354ba9b37131ae95987, type: 2}
+  help0: 
+  help1: 
+  help2: 
+  help3: 
   statTimesSelected: 0
   isActive: 1
+  data: 0
   dataName: 
   dataTag: 
+  relationshipModifier: 0

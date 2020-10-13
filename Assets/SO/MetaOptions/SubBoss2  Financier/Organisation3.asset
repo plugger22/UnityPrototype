@@ -16,18 +16,25 @@ MonoBehaviour:
   header: ORGANISATION Links
   descriptor: It's officially <b>nothing to do with me</b> but I'll ensure that you<br><br><b>maintain
     contact</b><br><br>with the organisation whose name I can't mention
-  renownCost: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  powerCost: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   hqPosition: {fileID: 11400000, guid: 2ac2001f0a98dc245a2762e7dcc0899c, type: 2}
   sprite: {fileID: 21300000, guid: 54b08e6c19f29974aac8dafffa972789, type: 3}
   isRecommended: 0
   recommendPriority: {fileID: 0}
   isPlayerStatus: 1
   isAlways: 0
+  isPowerGain: 0
   textInactive: 
   listOfCriteria: []
   listOfEffects:
   - {fileID: 11400000, guid: 9fc0a5d7f5ec9a64993d38eb58c5b0d9, type: 2}
+  help0: 
+  help1: 
+  help2: 
+  help3: 
   statTimesSelected: 0
   isActive: 0
+  data: 0
   dataName: 
   dataTag: 
+  relationshipModifier: 0

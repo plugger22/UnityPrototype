@@ -21,13 +21,14 @@ MonoBehaviour:
 
 
     a <b>good opinion</b> of you (<b>Motivation 2+ stars</b>)'
-  renownCost: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
+  powerCost: {fileID: 11400000, guid: 3b295736ee738e644bc9a45fe0707a45, type: 2}
   hqPosition: {fileID: 11400000, guid: 3dd4e183cc8be274f88e86434d7a1e24, type: 2}
   sprite: {fileID: 21300000, guid: b409a5bb3e60fe2449c54d6642ca4a19, type: 3}
   isRecommended: 0
   recommendPriority: {fileID: 0}
   isPlayerStatus: 0
   isAlways: 0
+  isPowerGain: 0
   textInactive: 
   listOfCriteria: []
   listOfEffects:

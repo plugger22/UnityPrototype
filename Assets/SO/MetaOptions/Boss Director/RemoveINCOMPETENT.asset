@@ -16,19 +16,26 @@ MonoBehaviour:
   header: INCOMPETENCE Cure
   descriptor: Goodness me. Sit down while we jam <b>Management for Dummies</b> into
     your thick skull and remove your<br><br><b>Incompetent condition</b>
-  renownCost: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
+  powerCost: {fileID: 11400000, guid: b430ac0822d6a45418aa571ef69cd4c0, type: 2}
   hqPosition: {fileID: 11400000, guid: 49b17439fb97b1d4e86200f567743fd1, type: 2}
   sprite: {fileID: 21300000, guid: 1e2bcaaa7e6fbaf4da0bb00f2ceba3f6, type: 3}
   isRecommended: 1
   recommendPriority: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   isPlayerStatus: 1
   isAlways: 0
+  isPowerGain: 0
   textInactive: 
   listOfCriteria:
   - {fileID: 11400000, guid: fe8e0bbbdd022a64e9c7da898325a8dc, type: 2}
   listOfEffects:
   - {fileID: 11400000, guid: c0f19332bc46bae498cb37bfea57df89, type: 2}
+  help0: 
+  help1: 
+  help2: 
+  help3: 
   statTimesSelected: 0
   isActive: 1
+  data: 0
   dataName: 
   dataTag: 
+  relationshipModifier: 0

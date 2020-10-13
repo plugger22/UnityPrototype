@@ -16,14 +16,14 @@ MonoBehaviour:
   header: STAR
   descriptor: You're a <b>STAR</b><br><br>It's time to trade your reputation for <b>bonus
     Renown</b>
-  renownCost: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
+  powerCost: {fileID: 11400000, guid: d995d3ab116eeb147baa6afec3c1d270, type: 2}
   hqPosition: {fileID: 11400000, guid: 49b17439fb97b1d4e86200f567743fd1, type: 2}
   sprite: {fileID: 21300000, guid: b409a5bb3e60fe2449c54d6642ca4a19, type: 3}
   isRecommended: 0
   recommendPriority: {fileID: 0}
   isPlayerStatus: 1
   isAlways: 0
-  isRenownGain: 1
+  isPowerGain: 1
   textInactive: 
   listOfCriteria:
   - {fileID: 11400000, guid: e0b19eb9239649a4ca7e24ecfd383469, type: 2}
