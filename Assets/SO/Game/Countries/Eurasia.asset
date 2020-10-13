@@ -9,10 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6a504a81166ad548a7acdd6c804222d, type: 3}
-  m_Name: Australia
+  m_Name: Eurasia
   m_EditorClassIdentifier: 
-  colourName: Light Blue
-  colour_red: 102
-  colour_green: 178
-  colour_blue: 255
-  nameSet: {fileID: 11400000, guid: 56b7e91ac8e6f3d449828205cc0d2f2a, type: 2}
+  notes: Europe, United Kingdom and Russia
+  tag: Eurasia

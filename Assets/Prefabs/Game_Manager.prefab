@@ -5929,9 +5929,9 @@ MonoBehaviour:
   tagMegaCorpTwo: Orb
   tagMegaCorpThree: Eclipse
   tagMegaCorpFour: Dragon
-  tagResFactionOne: Americon
-  tagResFactionTwo: Eurasia
-  tagResFactionThree: Chinock
+  tagBlocOne: Americon
+  tagBlocTwo: Eurasia
+  tagBlocThree: Chinock
   tagSpaceHub: The Hub
   tagBrother: Tristan
   tagSister: Tessa
@@ -6284,6 +6284,9 @@ MonoBehaviour:
   listOfColours:
   - {r: 0.4359815, g: 0.251157, b: 0.6415094, a: 0}
   - {r: 0.8679245, g: 0.36436453, b: 0.36436453, a: 0}
+  Bloc1: {r: 0.9150943, g: 0.7812834, b: 0.8250634, a: 0}
+  Bloc2: {r: 0.8867924, g: 0.66118175, b: 0.3722855, a: 0}
+  Bloc3: {r: 0.9811321, g: 0.31007475, b: 0.31007475, a: 0}
   TopicNormal: {r: 0.078431375, g: 0.56078434, b: 0.9372549, a: 0}
   TopicCapture: {r: 0.9372549, g: 0.078431375, b: 0.27058825, a: 0}
   MainBackground: {r: 0.078431375, g: 0.56078434, b: 0.9372549, a: 0}
@@ -6311,7 +6314,7 @@ MonoBehaviour:
   pipelineWait: 0.1
   alphaActive: 1
   alphaInactive: 0.45
-  alphaBaseText: 135
+  alphaBaseText: 0.65
   numOfModalLevels: 2
   flashRedTime: 1
   flashAlertTime: 1

@@ -6925,7 +6925,7 @@ public class TopicManager : MonoBehaviour
                         //Resistance Americon faction 'Americon HQ'
                         if (isValidate == false)
                         {
-                            string factionName = string.Format("{0} HQ", GameManager.i.globalScript.tagResFactionOne);
+                            string factionName = string.Format("{0} HQ", GameManager.i.globalScript.tagBlocOne);
                             if (isColourHighlighting == true)
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, factionName, colourEnd); }
                             else { replaceText = factionName; }
@@ -6936,7 +6936,7 @@ public class TopicManager : MonoBehaviour
                         //Resistance Eurasia faction 'Eurasia HQ'
                         if (isValidate == false)
                         {
-                            string factionName = string.Format("{0} HQ", GameManager.i.globalScript.tagResFactionTwo);
+                            string factionName = string.Format("{0} HQ", GameManager.i.globalScript.tagBlocTwo);
                             if (isColourHighlighting == true)
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, factionName, colourEnd); }
                             else { replaceText = factionName; }
@@ -6947,7 +6947,7 @@ public class TopicManager : MonoBehaviour
                         //Resistance Chinock faction 'Chinock HQ'
                         if (isValidate == false)
                         {
-                            string factionName = string.Format("{0} HQ", GameManager.i.globalScript.tagResFactionThree);
+                            string factionName = string.Format("{0} HQ", GameManager.i.globalScript.tagBlocThree);
                             if (isColourHighlighting == true)
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, factionName, colourEnd); }
                             else { replaceText = factionName; }
@@ -6958,7 +6958,7 @@ public class TopicManager : MonoBehaviour
                         //power bloc -> 'Americon'
                         if (isValidate == false)
                         {
-                            string factionName = GameManager.i.globalScript.tagResFactionOne;
+                            string factionName = GameManager.i.globalScript.tagBlocOne;
                             if (isColourHighlighting == true)
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, factionName, colourEnd); }
                             else { replaceText = factionName; }
@@ -6969,7 +6969,7 @@ public class TopicManager : MonoBehaviour
                         //power bloc -> 'Eurasia'
                         if (isValidate == false)
                         {
-                            string factionName = GameManager.i.globalScript.tagResFactionTwo;
+                            string factionName = GameManager.i.globalScript.tagBlocTwo;
                             if (isColourHighlighting == true)
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, factionName, colourEnd); }
                             else { replaceText = factionName; }
@@ -6980,7 +6980,7 @@ public class TopicManager : MonoBehaviour
                         //power bloc -> 'Chinock'
                         if (isValidate == false)
                         {
-                            string factionName = GameManager.i.globalScript.tagResFactionThree;
+                            string factionName = GameManager.i.globalScript.tagBlocThree;
                             if (isColourHighlighting == true)
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, factionName, colourEnd); }
                             else { replaceText = factionName; }

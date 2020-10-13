@@ -10,7 +10,14 @@ public class UIManager : MonoBehaviour
     [Tooltip("Palette of colours from which all other colours derive (all UI elements must use a colour in the palette to ensure a consistent look)")]
     public List<Color> listOfColours;
 
-    
+    [Header("Power Bloc Texts")]
+    [Tooltip("Americon")]
+    public Color Bloc1;
+    [Tooltip("Eurasia")]
+    public Color Bloc2;
+    [Tooltip("Chinock")]
+    public Color Bloc3;
+
     [Header("Topic UI")]
     [Tooltip("Topic UI, main background, for all normal topics")]
     public Color TopicNormal;

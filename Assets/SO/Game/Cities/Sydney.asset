@@ -14,7 +14,7 @@ MonoBehaviour:
   tag: Sydney
   descriptor: Famous for it's beaches and Opera House
   Arc: {fileID: 11400000, guid: 9ceafc034aa45664a9c4b564298e540e, type: 2}
-  country: {fileID: 11400000, guid: cb6627e1333c21341a08bf4228c40d48, type: 2}
+  country: {fileID: 11400000, guid: efdd166b79958de4baa820d9f07de739, type: 2}
   iconDistrict: Bennelong
   airportDistrict: Mascot
   harbourDistrict: Botany

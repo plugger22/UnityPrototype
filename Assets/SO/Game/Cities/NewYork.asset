@@ -14,7 +14,7 @@ MonoBehaviour:
   tag: New York
   descriptor: Dark and riddled with crime.
   Arc: {fileID: 11400000, guid: 832662066512cc24695d36368d5b07f6, type: 2}
-  country: {fileID: 11400000, guid: 0a0d16d48cd153b45a6dd41315b28d83, type: 2}
+  country: {fileID: 11400000, guid: 348305286e9781647bb94d8dc1a11f2e, type: 2}
   iconDistrict: Liberty Island
   airportDistrict: LaGuardia
   harbourDistrict: Red Hook

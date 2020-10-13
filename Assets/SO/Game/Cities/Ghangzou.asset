@@ -14,7 +14,7 @@ MonoBehaviour:
   tag: Ghangzou
   descriptor: Factories, factories, factories
   Arc: {fileID: 11400000, guid: 6fe0e6932109b7f4fbc5a5821c63d7da, type: 2}
-  country: {fileID: 11400000, guid: c1dbc50598d0c7d499991f3461f9ba43, type: 2}
+  country: {fileID: 11400000, guid: efdd166b79958de4baa820d9f07de739, type: 2}
   iconDistrict: Guangdong Sheng
   airportDistrict: Baiyun International
   harbourDistrict: Ghangzou Port

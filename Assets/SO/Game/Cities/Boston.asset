@@ -14,7 +14,7 @@ MonoBehaviour:
   tag: Boston
   descriptor: University and Research hub
   Arc: {fileID: 11400000, guid: feb7adb53f679cd43b5de63683ef184a, type: 2}
-  country: {fileID: 11400000, guid: 0a0d16d48cd153b45a6dd41315b28d83, type: 2}
+  country: {fileID: 11400000, guid: 348305286e9781647bb94d8dc1a11f2e, type: 2}
   iconDistrict: Charlestown
   airportDistrict: Logan International
   harbourDistrict: Boston Harbour

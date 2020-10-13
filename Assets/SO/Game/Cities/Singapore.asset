@@ -14,7 +14,7 @@ MonoBehaviour:
   tag: Singapore
   descriptor: Trading hub of Asia
   Arc: {fileID: 11400000, guid: b2b30cdde8b5539419d4cba4e5000028, type: 2}
-  country: {fileID: 11400000, guid: 85a81e9bf4980c04aa689770bf6cc3ed, type: 2}
+  country: {fileID: 11400000, guid: efdd166b79958de4baa820d9f07de739, type: 2}
   iconDistrict: Merlion Park
   airportDistrict: Changia
   harbourDistrict: Jurong Port

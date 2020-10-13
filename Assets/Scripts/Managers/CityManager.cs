@@ -163,10 +163,12 @@ public class CityManager : MonoBehaviour
     {
         //initialise number of districts
         city.SetDistrictTotals(GameManager.i.dataScript.GetNodeTypeTotals());
+
         /*//organisations -> placeholder (should be a loop for all cities -> must be AFTER mayor and faction have been initialised
         GameManager.instance.orgScript.SetOrganisationsInCity(city);*/
+
         //set up base panel UI
-        GameManager.i.basePanelScript.SetNames(city.tag, city.country.name, city.country.colour_red, city.country.colour_green, city.country.colour_blue, GameManager.i.guiScript.alphaBaseText);
+        GameManager.i.basePanelScript.SetBaseNames(city);
     }
     #endregion
 

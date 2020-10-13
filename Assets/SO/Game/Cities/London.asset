@@ -14,7 +14,7 @@ MonoBehaviour:
   tag: London
   descriptor: Big business Incarnate. Financial capital of the world
   Arc: {fileID: 11400000, guid: 7477b2f0457361945bc8d4d50fe0c0da, type: 2}
-  country: {fileID: 11400000, guid: 06aba64a4706524499b9c130097e711f, type: 2}
+  country: {fileID: 11400000, guid: 72679b1bee298a844967ccd280533811, type: 2}
   iconDistrict: Westminister
   airportDistrict: Heathrow
   harbourDistrict: 

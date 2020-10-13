@@ -168,7 +168,7 @@ public class LoadManager : MonoBehaviour
     public MetaOption[] arrayOfSubBoss2Options;
     public MetaOption[] arrayOfSubBoss3Options;
 
-    [Header("InitialiseEarly")]
+    [Header("InitialiseLate")]
     public ManageActor[] arrayOfManageActors;
     public ManageAction[] arrayOfManageActions;
     public ActorConflict[] arrayOfActorConflicts;

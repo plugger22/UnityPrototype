@@ -21,12 +21,12 @@ public class GlobalManager : MonoBehaviour
     public string tagMegaCorpThree = "Eclipse";
     [Tooltip("Name of MegaCorp Four (first name only, eg. 'Eclipse' as you can add 'Corporation' yourself when needed")]
     public string tagMegaCorpFour = "Dragon";
-    [Tooltip("Name of American Resistance Faction")]
-    public string tagResFactionOne = "Americon";
-    [Tooltip("Name of European Resistance Faction")]
-    public string tagResFactionTwo = "Eurasia";
-    [Tooltip("Name of Chinese Resistance Faction")]
-    public string tagResFactionThree = "Chinock";
+    [Tooltip("Name of American Power Bloc")]
+    public string tagBlocOne = "Americon";
+    [Tooltip("Name of European Power Bloc")]
+    public string tagBlocTwo = "Eurasia";
+    [Tooltip("Name of Chinese Power Bloc")]
+    public string tagBlocThree = "Chinock";
     [Tooltip("Name of Luna space station and main shipbuilding facility in system")]
     public string tagSpaceHub = "The Hub";
     [Tooltip("First name of Player's Brother")]
