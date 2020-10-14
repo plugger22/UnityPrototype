@@ -2549,3 +2549,44 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:810)
 	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
 	
+Dev seed 18318 -> Thursday, 15 October 2020 9:03 AM
+City seed 765 -> New York, Americon
+
+Dev seed 12028 -> Thursday, 15 October 2020 9:20 AM
+City seed 765 -> New York, Americon
+
+Dev seed 2385 -> Thursday, 15 October 2020 9:58 AM
+City seed 765 -> New York, Americon
+
+Dev seed 39502 -> Thursday, 15 October 2020 10:14 AM
+City seed 765 -> New York, Americon
+
+Dev seed 22588 -> Thursday, 15 October 2020 10:16 AM
+City seed 765 -> New York, Americon
+
+Dev seed 61817 -> Thursday, 15 October 2020 10:19 AM
+City seed 765 -> New York, Americon
+
+Dev seed 45421 -> Thursday, 15 October 2020 10:22 AM
+City seed 765 -> New York, Americon
+
+Dev seed 34660 -> Thursday, 15 October 2020 10:23 AM
+City seed 765 -> New York, Americon
+
+Dev seed 5088 -> Thursday, 15 October 2020 10:24 AM
+City seed 765 -> New York, Americon
+
+Dev seed 29599 -> Thursday, 15 October 2020 10:26 AM
+City seed 765 -> New York, Americon
+
+Dev seed 31197 -> Thursday, 15 October 2020 10:27 AM
+City seed 765 -> New York, Americon
+
+Dev seed 30538 -> Thursday, 15 October 2020 10:27 AM
+City seed 765 -> New York, Americon
+
+Dev seed 37550 -> Thursday, 15 October 2020 10:28 AM
+City seed 765 -> New York, Americon
+
+Dev seed 57504 -> Thursday, 15 October 2020 10:28 AM
+City seed 765 -> New York, Americon
