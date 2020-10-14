@@ -4082,7 +4082,7 @@ public class ActorManager : MonoBehaviour
                         side = GameManager.i.sideScript.PlayerSide,
                         textTop = string.Format("{0}Something has gone pear shaped with your Administration{1}", colourAlert, colourEnd),
                         textBottom = "Phone calls are being made. Lots of them.",
-                        sprite = GameManager.i.guiScript.errorSprite,
+                        sprite = GameManager.i.spriteScript.errorSprite,
                         isAction = false
                     };
                     EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "ActorManager.cs -> InitialiseHqActorsInventory");
@@ -4101,7 +4101,7 @@ public class ActorManager : MonoBehaviour
                     side = GameManager.i.sideScript.PlayerSide,
                     textTop = string.Format("{0}HQ is currently unmanned{1}", colourInvalid, colourEnd),
                     textBottom = "Frantic phone calls are being made",
-                    sprite = GameManager.i.guiScript.infoSprite,
+                    sprite = GameManager.i.spriteScript.infoSprite,
                     isAction = false
                 };
                 EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "ActorManager.cs -> InitialiseHqActorsInventory");
@@ -4185,7 +4185,7 @@ public class ActorManager : MonoBehaviour
                     side = GameManager.i.sideScript.PlayerSide,
                     textTop = string.Format("{0}There is a mess on the floor. It's all turned to poo{1}", colourAlert, colourEnd),
                     textBottom = "Call the Cleaner, he'll fix it",
-                    sprite = GameManager.i.guiScript.errorSprite,
+                    sprite = GameManager.i.spriteScript.errorSprite,
                     isAction = false
                 };
                 EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "ActorManager.cs -> InitialiseDeviceInventory");
@@ -4367,7 +4367,7 @@ public class ActorManager : MonoBehaviour
                 else
                 {
                     //empty slot
-                    optionData.sprite = GameManager.i.guiScript.vacantActorSprite;
+                    optionData.sprite = GameManager.i.spriteScript.vacantActorSprite;
                     optionData.textUpper = string.Format("{0}<alpha=#88>Vacant{1}", colourAlert, colourEnd);
                     optionData.textLower = "";
                     optionData.optionID = -1;
@@ -4394,7 +4394,7 @@ public class ActorManager : MonoBehaviour
                 side = GameManager.i.sideScript.PlayerSide,
                 textTop = string.Format("{0}Peer Reviews are unavailable at this point in time{1}", colourAlert, colourEnd),
                 textBottom = "Phone calls are being made. Lots of them.",
-                sprite = GameManager.i.guiScript.errorSprite,
+                sprite = GameManager.i.spriteScript.errorSprite,
                 isAction = false
             };
             EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "ActorManager.cs -> InitialiseReview");
@@ -4587,7 +4587,7 @@ public class ActorManager : MonoBehaviour
                     side = GameManager.i.sideScript.PlayerSide,
                     textTop = string.Format("{0}Something has gone pear shaped with your Administration{1}", colourAlert, colourEnd),
                     textBottom = "Phone calls are being made. Lots of them.",
-                    sprite = GameManager.i.guiScript.errorSprite,
+                    sprite = GameManager.i.spriteScript.errorSprite,
                     isAction = false
                 };
                 EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "ActorManager.cs -> InitialiseReservePoolInventory");
@@ -4607,7 +4607,7 @@ public class ActorManager : MonoBehaviour
                 side = GameManager.i.sideScript.PlayerSide,
                 textTop = string.Format("{0}There are currently no Actors in your Reserve Pool{1}", colourInvalid, colourEnd),
                 textBottom = string.Format("You can have a maximum of {0} actors in your Reserves", maxNumOfReserveActors),
-                sprite = GameManager.i.guiScript.infoSprite,
+                sprite = GameManager.i.spriteScript.infoSprite,
                 isAction = false
             };
             EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "ActorManager.cs -> InitialiseReservePoolInventory");
@@ -4709,7 +4709,7 @@ public class ActorManager : MonoBehaviour
         int unhappyTimer = recruitedReserveTimer;
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
-        Sprite sprite = GameManager.i.guiScript.errorSprite;
+        Sprite sprite = GameManager.i.spriteScript.errorSprite;
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         if (data != null)
         {
@@ -4901,7 +4901,7 @@ public class ActorManager : MonoBehaviour
         int unhappyTimer = recruitedReserveTimer;
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
-        Sprite sprite = GameManager.i.guiScript.errorSprite;
+        Sprite sprite = GameManager.i.spriteScript.errorSprite;
         GlobalSide side = GameManager.i.sideScript.PlayerSide;
         if (data != null)
         {
@@ -6783,7 +6783,7 @@ public class ActorManager : MonoBehaviour
                     {
                         textTop = text,
                         textBottom = builder.ToString(),
-                        sprite = GameManager.i.guiScript.alertWarningSprite,
+                        sprite = GameManager.i.spriteScript.alertWarningSprite,
                         isAction = false,
                         side = GameManager.i.sideScript.PlayerSide,
                         type = MsgPipelineType.SecretRevealed,
@@ -7606,7 +7606,7 @@ public class ActorManager : MonoBehaviour
                               adjustment.value != 1 ? "s" : "");
                         }
                         detailsBottom = string.Format("Lasts for {0}<b>{1}{2} turn</b>{3}", colourNeutral, adjustment.timer, colourEnd, adjustment.timer != 1 ? "s" : "");
-                        GameManager.i.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, GameManager.i.guiScript.alarmSprite, 999);
+                        GameManager.i.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, GameManager.i.spriteScript.alarmSprite, 999);
                     }
                 }
             }
@@ -10084,7 +10084,7 @@ public class ActorManager : MonoBehaviour
                                         msgData.topText = "Relationship Exists";
                                         msgData.detailsTop = detailsTop;
                                         msgData.detailsBottom = detailsBottom;
-                                        msgData.sprite = data.relationship == ActorRelationship.Friend ? GameManager.i.guiScript.friendSprite : GameManager.i.guiScript.enemySprite;
+                                        msgData.sprite = data.relationship == ActorRelationship.Friend ? GameManager.i.spriteScript.friendSprite : GameManager.i.spriteScript.enemySprite;
                                         msgData.help0 = "relation_0";
                                         msgData.help1 = "relation_1";
                                         msgData.help2 = "relation_2";

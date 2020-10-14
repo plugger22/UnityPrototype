@@ -712,7 +712,7 @@ public class HQManager : MonoBehaviour
     /// <returns></returns>
     public Sprite GetHqMainSpirte()
     {
-        Sprite sprite = GameManager.i.guiScript.errorSprite;
+        Sprite sprite = GameManager.i.spriteScript.errorSprite;
         switch (GameManager.i.sideScript.PlayerSide.level)
         {
             case 1: sprite = hQAuthority.sprite; break;

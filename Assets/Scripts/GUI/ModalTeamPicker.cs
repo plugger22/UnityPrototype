@@ -511,7 +511,7 @@ public class ModalTeamPicker : MonoBehaviour
         {
             details.textTop = "There have been unexplained delays and no team has been inserted";
             details.textBottom = "As soon as you've identified who is at fault heads will roll";
-            details.sprite = GameManager.i.guiScript.errorSprite;
+            details.sprite = GameManager.i.spriteScript.errorSprite;
         }
         //action expended if successful
         if (successFlag == true)

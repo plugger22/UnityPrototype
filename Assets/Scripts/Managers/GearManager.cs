@@ -964,7 +964,7 @@ public class GearManager : MonoBehaviour
                         side = GameManager.i.sideScript.PlayerSide,
                         textTop = string.Format("{0}Something has gone wrong with your Inventory{1}", colourAlert, colourEnd),
                         textBottom = "Phone calls are being made. Lots of them.",
-                        sprite = GameManager.i.guiScript.errorSprite,
+                        sprite = GameManager.i.spriteScript.errorSprite,
                         isAction = false
                     };
                     EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "GearManager.cs -> InitialiseGearInventoryDisplay");
@@ -983,7 +983,7 @@ public class GearManager : MonoBehaviour
                     side = GameManager.i.sideScript.PlayerSide,
                     textTop = string.Format("{0}There is currently no gear in your inventory{1}", colourAlert, colourEnd),
                     textBottom = string.Format("You can have a maximum of {0} items of Gear in your inventtory", maxNumOfGear),
-                    sprite = GameManager.i.guiScript.infoSprite,
+                    sprite = GameManager.i.spriteScript.infoSprite,
                     isAction = false
                 };
                 EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "GearManager.cs -> InitialiseGearInventoryDisplay");
@@ -996,7 +996,7 @@ public class GearManager : MonoBehaviour
             {
                 side = GameManager.i.sideScript.PlayerSide,
                 textTop = string.Format("{0}Gear is only available when you are playing the Resistance side{1}", colourAlert, colourEnd),
-                sprite = GameManager.i.guiScript.infoSprite,
+                sprite = GameManager.i.spriteScript.infoSprite,
                 isAction = false
             };
             EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "GearManager.cs -> InitialiseGearInventoryDisplay");

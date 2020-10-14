@@ -250,7 +250,7 @@ public class CaptureManager : MonoBehaviour
             {
                 textTop = text,
                 textBottom = builder.ToString(),
-                sprite = GameManager.i.guiScript.capturedSprite,
+                sprite = GameManager.i.spriteScript.capturedSprite,
                 isAction = false,
                 side = GameManager.i.globalScript.sideResistance,
                 type = MsgPipelineType.CapturePlayer,
@@ -345,7 +345,7 @@ public class CaptureManager : MonoBehaviour
             {
                 textTop = text,
                 textBottom = builder.ToString(),
-                sprite = GameManager.i.guiScript.errorSprite,
+                sprite = GameManager.i.spriteScript.errorSprite,
                 isAction = false,
                 side = GameManager.i.globalScript.sideResistance
             };
@@ -426,7 +426,7 @@ public class CaptureManager : MonoBehaviour
                     {
                         textTop = text,
                         textBottom = builder.ToString(),
-                        sprite = GameManager.i.guiScript.errorSprite,
+                        sprite = GameManager.i.spriteScript.errorSprite,
                         isAction = false,
                         side = GameManager.i.globalScript.sideResistance,
                         type = MsgPipelineType.ReleasePlayer

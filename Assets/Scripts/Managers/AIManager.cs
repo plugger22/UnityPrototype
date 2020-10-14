@@ -5217,7 +5217,7 @@ public class AIManager : MonoBehaviour
                 detailsTop = string.Format("You can be <b>{0}Captured{1}</b> provided", colourNeutral, colourEnd);
                 detailsBottom = string.Format("{0}<b>Your Invisibility is {1}{2}Zero{3}{4}{5}{6}You are in the same District as an {7}{8}Erasure Team</b>{9}", colourAlert, colourEnd, colourBad, colourEnd, 
                     colourAlert, "\n", "\n", colourEnd, colourBad, colourEnd);
-                Sprite sprite = GameManager.i.guiScript.capturedSprite;
+                Sprite sprite = GameManager.i.spriteScript.capturedSprite;
                 if (GameManager.i.sideScript.PlayerSide.level == globalResistance.level)
                 { GameManager.i.messageScript.ActiveEffect(text, topText, detailsTop, detailsBottom, sprite, 999); }
                 break;

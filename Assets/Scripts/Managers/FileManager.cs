@@ -57,7 +57,7 @@ public class FileManager : MonoBehaviour
         globalResistance = GameManager.i.globalScript.sideResistance;
         alphaActive = GameManager.i.guiScript.alphaActive;
         alphaInactive = GameManager.i.guiScript.alphaInactive;
-        defaultSprite = GameManager.i.guiScript.alertInformationSprite;
+        defaultSprite = GameManager.i.spriteScript.alertInformationSprite;
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(alphaActive > -1, "Invalid alphaActive (-1)");

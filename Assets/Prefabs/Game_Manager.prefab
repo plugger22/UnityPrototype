@@ -30,6 +30,7 @@ GameObject:
   - component: {fileID: 114200138194279740}
   - component: {fileID: 114733366453475614}
   - component: {fileID: 114714005015149874}
+  - component: {fileID: 114653406933281592}
   - component: {fileID: 114235583355878038}
   - component: {fileID: 114656477723242970}
   - component: {fileID: 114160796570192384}
@@ -780,7 +781,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 7cf21711426ab8b44b8dc029878a4909, type: 2}
   - {fileID: 2100000, guid: f3d7e5a2f7823a54d8de41438a2b1137, type: 2}
   - {fileID: 2100000, guid: 8eae3615e6a3e8f40a978ae1de991f1b, type: 2}
-  - {fileID: 2100000, guid: c21a09b5e4730a543b29d78502a2660c, type: 2}
+  - {fileID: 2100000, guid: e627b327e59799847a9aa7a0c5cd69b5, type: 2}
   - {fileID: 2100000, guid: 8290b263c7ec738488ec931a79bf5beb, type: 2}
   - {fileID: 2100000, guid: 74f1698b3d662dd41884834f164c7449, type: 2}
   nodePrimaryChance: 20
@@ -5968,6 +5969,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aiTestRun: 10
+--- !u!114 &114653406933281592
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1289370855557188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e895864c39e35094aa312c8f08c173ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114653740805270716
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6494,6 +6506,7 @@ MonoBehaviour:
   statScript: {fileID: 0}
   guiScript: {fileID: 0}
   uiScript: {fileID: 0}
+  spriteScript: {fileID: 0}
   globalScript: {fileID: 0}
   tooltipScript: {fileID: 0}
   campaignScript: {fileID: 0}
@@ -6571,7 +6584,7 @@ MonoBehaviour:
   billboardScript: {fileID: 0}
   seedDev: 0
   autoRunTurns: 20
-  scenarioStartLevel: 0
+  scenarioStartLevel: 1
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1
