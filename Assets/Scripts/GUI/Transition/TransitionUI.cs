@@ -498,7 +498,7 @@ public class TransitionUI : MonoBehaviour
     /// </summary>
     private void SubInitialiseFastAccess()
     {
-        vacantActorSprite = GameManager.i.guiScript.vacantActorSprite;
+        vacantActorSprite = GameManager.i.spriteScript.vacantActorSprite;
         vacantActorCompatibility = GameManager.i.guiScript.GetCompatibilityStars(0);
         Debug.Assert(vacantActorSprite != null, "Invalid vacantActorSprite (Null)");
         Debug.Assert(string.IsNullOrEmpty(vacantActorCompatibility) == false, "Invalid vacantActorCompatibiity (Null or Empty)");
@@ -653,15 +653,15 @@ public class TransitionUI : MonoBehaviour
                         //medal
                         switch (endData.medal)
                         {
-                            case EndlLevelMedal.Gold: option.medal.sprite = GameManager.i.guiScript.medalGoldSprite; break;
-                            case EndlLevelMedal.Silver: option.medal.sprite = GameManager.i.guiScript.medalSilverSprite; break;
-                            case EndlLevelMedal.Bronze: option.medal.sprite = GameManager.i.guiScript.medalBronzeSprite; break;
+                            case EndlLevelMedal.Gold: option.medal.sprite = GameManager.i.spriteScript.medalGoldSprite; break;
+                            case EndlLevelMedal.Silver: option.medal.sprite = GameManager.i.spriteScript.medalSilverSprite; break;
+                            case EndlLevelMedal.Bronze: option.medal.sprite = GameManager.i.spriteScript.medalBronzeSprite; break;
                             case EndlLevelMedal.DeadDuck:
-                                option.medal.sprite = GameManager.i.guiScript.medalDuckSprite;
+                                option.medal.sprite = GameManager.i.spriteScript.medalDuckSprite;
                                 break;
                             default:
                                 Debug.LogWarningFormat("Unrecognised endData.medal \"{0}\"", endData.medal);
-                                option.medal.sprite = GameManager.i.guiScript.medalDuckSprite;
+                                option.medal.sprite = GameManager.i.spriteScript.medalDuckSprite;
                                 break;
                         }
                         //stat text
@@ -1240,7 +1240,7 @@ public class TransitionUI : MonoBehaviour
         details.side = GameManager.i.sideScript.PlayerSide;
         details.textTop = string.Format("{0}Recent HQ Events{1}", colourAlert, colourEnd);
         details.textBottom = builder.ToString();
-        details.sprite = GameManager.i.guiScript.infoSprite;
+        details.sprite = GameManager.i.spriteScript.infoSprite;
         details.modalLevel = 2;
         details.modalState = ModalSubState.Transition;
         details.help0 = "transitionHq_0";
@@ -1274,7 +1274,7 @@ public class TransitionUI : MonoBehaviour
         details.side = GameManager.i.sideScript.PlayerSide;
         details.textTop = string.Format("{0}Mission Objectives{1}", colourAlert, colourEnd);
         details.textBottom = transitionInfoData.objectiveStatus;
-        details.sprite = GameManager.i.guiScript.infoSprite;
+        details.sprite = GameManager.i.spriteScript.infoSprite;
         details.modalLevel = 2;
         details.modalState = ModalSubState.Transition;
         details.help0 = "transitionEnd_4";

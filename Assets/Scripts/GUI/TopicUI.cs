@@ -397,9 +397,9 @@ public class TopicUI : MonoBehaviour
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
     {
-        topicDefault = GameManager.i.guiScript.topicDefaultSprite;
-        topicOptionNormalValid = GameManager.i.guiScript.topicOptionNormalValidSprite;
-        topicOptionNormalInvalid = GameManager.i.guiScript.topicOptionNormalInvalidSprite;
+        topicDefault = GameManager.i.spriteScript.topicDefaultSprite;
+        topicOptionNormalValid = GameManager.i.spriteScript.topicOptionNormalValidSprite;
+        topicOptionNormalInvalid = GameManager.i.spriteScript.topicOptionNormalInvalidSprite;
         commsInterval = GameManager.i.guiScript.commsInterval;
         /*topicOptionOtherValid = GameManager.i.guiScript.topicOptionOtherValidSprite;
         topicOptionOtherInvalid = GameManager.i.guiScript.topicOptionOtherInvalidSprite;*/
@@ -659,7 +659,7 @@ public class TopicUI : MonoBehaviour
                     {
                         Debug.LogWarningFormat("Invalid data.sprite (Null or Empty) for topic \"{0}\"", data.topicName);
                         //use default sprite
-                        imageTopicNormal.sprite = GameManager.i.guiScript.topicDefaultSprite;
+                        imageTopicNormal.sprite = GameManager.i.spriteScript.topicDefaultSprite;
                     }
                     //story Help
                     if (data.listOfStoryHelp != null)
@@ -741,7 +741,7 @@ public class TopicUI : MonoBehaviour
                     {
                         Debug.LogWarningFormat("Invalid data.sprite (Null or Empty) for topic \"{0}\"", data.topicName);
                         //use default sprite
-                        imageTopicLetter.sprite = GameManager.i.guiScript.topicDefaultSprite;
+                        imageTopicLetter.sprite = GameManager.i.spriteScript.topicDefaultSprite;
                     }
                     //story Help
                     if (data.listOfStoryHelp != null)
@@ -805,7 +805,7 @@ public class TopicUI : MonoBehaviour
                     {
                         Debug.LogWarningFormat("Invalid data.sprite (Null or Empty) for topic \"{0}\"", data.topicName);
                         //use default sprite
-                        imageTopicComms.sprite = GameManager.i.guiScript.topicDefaultSprite;
+                        imageTopicComms.sprite = GameManager.i.spriteScript.topicDefaultSprite;
                     }
                     //story Help
                     if (data.listOfStoryHelp != null)

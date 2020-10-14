@@ -25,8 +25,10 @@ public class UIManager : MonoBehaviour
     public Color TopicCapture;
 
     [Header("MainInfoApp UI")]
-    [Tooltip("Main Info UI left and right backgrounds as well as colour of Active LHS tab")]
+    [Tooltip("Main Background")]
     public Color MainBackground;
+    [Tooltip("Main Info UI left and right inner backgrounds as well as colour of Active LHS tab")]
+    public Color InnerBackground;
 
     [Header("MetaGame UI")]
     [Tooltip("MetaGame main background colours")]

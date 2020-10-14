@@ -2455,3 +2455,87 @@ City seed 5678 -> London, Eurasia
 
 Dev seed 59037 -> Wednesday, 14 October 2020 12:34 PM
 City seed 5678 -> London, Eurasia
+
+Dev seed 39486 -> Wednesday, 14 October 2020 2:33 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 7673 -> Wednesday, 14 October 2020 2:46 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 51007 -> Wednesday, 14 October 2020 2:48 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 32881 -> Wednesday, 14 October 2020 2:49 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 33234 -> Wednesday, 14 October 2020 2:54 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 50981 -> Wednesday, 14 October 2020 2:59 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 16454 -> Wednesday, 14 October 2020 3:00 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 53820 -> Wednesday, 14 October 2020 3:06 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 8042 -> Wednesday, 14 October 2020 3:06 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 52496 -> Wednesday, 14 October 2020 3:07 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 51905 -> Wednesday, 14 October 2020 3:08 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 26102 -> Wednesday, 14 October 2020 3:10 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 4880 -> Wednesday, 14 October 2020 3:10 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 31118 -> Wednesday, 14 October 2020 3:11 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 43286 -> Wednesday, 14 October 2020 3:15 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 23535 -> Wednesday, 14 October 2020 3:16 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 2703 -> Wednesday, 14 October 2020 3:19 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 52471 -> Wednesday, 14 October 2020 3:32 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 1682 -> Wednesday, 14 October 2020 3:33 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 25307 -> Wednesday, 14 October 2020 3:34 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 5082 -> Wednesday, 14 October 2020 3:35 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 22321 -> Wednesday, 14 October 2020 3:36 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 54149 -> Wednesday, 14 October 2020 3:36 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 14824 -> Wednesday, 14 October 2020 3:37 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 1271 -> Wednesday, 14 October 2020 3:37 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 13624 -> Wednesday, 14 October 2020 3:37 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 17673 -> Wednesday, 14 October 2020 3:38 PM
+City seed 765 -> New York, Americon
+
+Dev seed 18642 -> Wednesday, 14 October 2020 3:41 PM
+City seed 765 -> New York, Americon

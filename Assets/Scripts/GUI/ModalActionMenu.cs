@@ -233,7 +233,7 @@ public class ModalActionMenu : MonoBehaviour
             //extra text if player is wounded
             if (GameManager.i.turnScript.CheckPlayerWounded() == true)
             { outcomeDetails.textBottom = "Maximum ONE Action allowed while WOUNDED"; }
-            outcomeDetails.sprite = GameManager.i.guiScript.infoSprite;
+            outcomeDetails.sprite = GameManager.i.spriteScript.infoSprite;
             outcomeDetails.modalLevel = details.modalLevel;
             outcomeDetails.modalState = details.modalState;
             EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ModalActionMenu.cs -> SetActionMenu");

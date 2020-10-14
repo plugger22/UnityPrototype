@@ -779,8 +779,8 @@ MonoBehaviour:
   arrayOfNodeMaterials:
   - {fileID: 2100000, guid: 7cf21711426ab8b44b8dc029878a4909, type: 2}
   - {fileID: 2100000, guid: f3d7e5a2f7823a54d8de41438a2b1137, type: 2}
-  - {fileID: 2100000, guid: e775ef34bd82c88438e614619163b088, type: 2}
-  - {fileID: 2100000, guid: e627b327e59799847a9aa7a0c5cd69b5, type: 2}
+  - {fileID: 2100000, guid: 8eae3615e6a3e8f40a978ae1de991f1b, type: 2}
+  - {fileID: 2100000, guid: c21a09b5e4730a543b29d78502a2660c, type: 2}
   - {fileID: 2100000, guid: 8290b263c7ec738488ec931a79bf5beb, type: 2}
   - {fileID: 2100000, guid: 74f1698b3d662dd41884834f164c7449, type: 2}
   nodePrimaryChance: 20
@@ -5982,9 +5982,9 @@ MonoBehaviour:
   arrayOfConnectionTypes:
   - {fileID: 2100000, guid: 8f27491b3a31d1f46adb5b141c02f8dc, type: 2}
   - {fileID: 2100000, guid: 7f4b99c270750174dbe3b365ad9c260f, type: 2}
+  - {fileID: 2100000, guid: b2b16d40939fe40449a5dd3b8b5d3b3c, type: 2}
   - {fileID: 2100000, guid: 08d40ab47bf9d7c47b9708251fead6df, type: 2}
   - {fileID: 2100000, guid: f419980abb0e05b4bb63e3185d702065, type: 2}
-  - {fileID: 2100000, guid: b2b16d40939fe40449a5dd3b8b5d3b3c, type: 2}
   resetConnections: 0
 --- !u!114 &114653768297724556
 MonoBehaviour:
@@ -6282,23 +6282,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   listOfColours:
-  - {r: 0.4359815, g: 0.251157, b: 0.6415094, a: 0}
-  - {r: 0.8679245, g: 0.36436453, b: 0.36436453, a: 0}
-  Bloc1: {r: 0.9150943, g: 0.7812834, b: 0.8250634, a: 0}
-  Bloc2: {r: 0.8867924, g: 0.66118175, b: 0.3722855, a: 0}
-  Bloc3: {r: 0.9811321, g: 0.31007475, b: 0.31007475, a: 0}
-  TopicNormal: {r: 0.078431375, g: 0.56078434, b: 0.9372549, a: 0}
+  - {r: 0.20392157, g: 0.21176471, b: 0.2, a: 0}
+  - {r: 0.8509804, g: 0.7921569, b: 0.7019608, a: 0}
+  - {r: 0.1764706, g: 0.32941177, b: 0.7019608, a: 0}
+  - {r: 0.33333334, g: 0.75686276, b: 1, a: 0}
+  - {r: 0.79607844, g: 0.6117647, b: 0.9490196, a: 0}
+  - {r: 0.92156863, g: 0.39215687, b: 0.14117648, a: 0}
+  - {r: 0.96862745, g: 0.09019608, b: 0.20784314, a: 0}
+  - {r: 0.9490196, g: 0.9137255, b: 0.30588236, a: 0}
+  - {r: 0.101960786, g: 1, b: 0.8352941, a: 0}
+  Bloc1: {r: 0.33333334, g: 0.75686276, b: 1, a: 0}
+  Bloc2: {r: 0.9490196, g: 0.9137255, b: 0.30588236, a: 0}
+  Bloc3: {r: 0.96862745, g: 0.09019608, b: 0.20784314, a: 0}
+  TopicNormal: {r: 0.33333334, g: 0.75686276, b: 1, a: 0}
   TopicCapture: {r: 0.9372549, g: 0.078431375, b: 0.27058825, a: 0}
-  MainBackground: {r: 0.078431375, g: 0.56078434, b: 0.9372549, a: 0}
+  MainBackground: {r: 0.33333334, g: 0.75686276, b: 1, a: 0.49411765}
+  InnerBackground: {r: 0.33333334, g: 0.75686276, b: 1, a: 0}
   MetaBackground: {r: 0.078431375, g: 0.56078434, b: 0.9372549, a: 0}
-  TopBarBackground: {r: 0.2509804, g: 0.25490198, b: 0.3019608, a: 0}
-  IconDormant: {r: 0.96862745, g: 0.972549, b: 0.75686276, a: 0}
-  IconActiveGood: {r: 0.49803922, g: 1, b: 0, a: 0}
-  IconActiveBad: {r: 1, g: 0, b: 0, a: 0}
-  TopWidget: {r: 0.2509804, g: 0.25490198, b: 0.3019608, a: 0}
-  TopWidgetBarBacks: {r: 0.5568628, g: 0.80784315, b: 0.99215686, a: 1}
-  TransitionBackground: {r: 0.2509804, g: 0.25490198, b: 0.3019608, a: 0}
-  TransitionHeader: {r: 0.92156863, g: 0.93333334, b: 0.4, a: 0}
+  TopBarBackground: {r: 0.20392157, g: 0.21176471, b: 0.2, a: 0}
+  IconDormant: {r: 0.9490196, g: 0.9137255, b: 0.30588236, a: 0}
+  IconActiveGood: {r: 0.101960786, g: 1, b: 0.8352941, a: 0}
+  IconActiveBad: {r: 0.96862745, g: 0.09019608, b: 0.20784314, a: 0}
+  TopWidget: {r: 0.20392157, g: 0.21176471, b: 0.2, a: 0}
+  TopWidgetBarBacks: {r: 0.33333334, g: 0.75686276, b: 1, a: 1}
+  TransitionBackground: {r: 0.20392157, g: 0.21176471, b: 0.2, a: 0}
+  TransitionHeader: {r: 0.9490196, g: 0.9137255, b: 0.30588236, a: 0}
   TransitionText: {r: 1, g: 1, b: 1, a: 0}
 --- !u!114 &114733366453475614
 MonoBehaviour:

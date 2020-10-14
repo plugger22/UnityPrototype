@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: node_Purple
+  m_Name: node_Aqua
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 2
@@ -82,8 +82,8 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0.79607844, g: 0.6117647, b: 0.9490196, a: 1}
-    - _EmissionColor: {r: 0.39803922, g: 0.30588236, b: 0.4745098, a: 1}
+    - _Color: {r: 0.101960786, g: 1, b: 0.8352941, a: 1}
+    - _EmissionColor: {r: 0.050980393, g: 0.5, b: 0.41764706, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}

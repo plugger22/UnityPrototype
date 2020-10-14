@@ -170,17 +170,17 @@ public class ActorPanelUI : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         //fast access
-        vacantAuthorityActor = GameManager.i.guiScript.vacantActorSprite;
-        vacantResistanceActor = GameManager.i.guiScript.vacantActorSprite;
+        vacantAuthorityActor = GameManager.i.spriteScript.vacantActorSprite;
+        vacantResistanceActor = GameManager.i.spriteScript.vacantActorSprite;
         starFontSize = GameManager.i.guiScript.actorFontSize;
         Debug.Assert(vacantAuthorityActor != null, "Invalid vacantAuthorityActor (Null)");
         Debug.Assert(vacantResistanceActor != null, "Invalid vacantResistanceActor (Null)");
         Debug.Assert(starFontSize > -1, "Invalid starFontSize (-1)");
         //mood stars
-        mood0 = GameManager.i.guiScript.moodStar0;
-        mood1 = GameManager.i.guiScript.moodStar1;
-        mood2 = GameManager.i.guiScript.moodStar2;
-        mood3 = GameManager.i.guiScript.moodStar3;
+        mood0 = GameManager.i.spriteScript.moodStar0;
+        mood1 = GameManager.i.spriteScript.moodStar1;
+        mood2 = GameManager.i.spriteScript.moodStar2;
+        mood3 = GameManager.i.spriteScript.moodStar3;
         Debug.Assert(mood0 != null, "Invalid mood0 (Null)");
         Debug.Assert(mood1 != null, "Invalid mood1 (Null)");
         Debug.Assert(mood2 != null, "Invalid mood2 (Null)");
@@ -248,7 +248,7 @@ public class ActorPanelUI : MonoBehaviour
         playerStressed.text = "STRESSED";
         if (GameManager.i.playerScript.sprite != null)
         { picturePlayer.sprite = GameManager.i.playerScript.sprite; }
-        else { picturePlayer.sprite = GameManager.i.guiScript.errorSprite; }
+        else { picturePlayer.sprite = GameManager.i.spriteScript.errorSprite; }
         //initialse arrayOfPowerCircles
         arrayOfPowerCircles[0] = powerCircle0;
         arrayOfPowerCircles[1] = powerCircle1;

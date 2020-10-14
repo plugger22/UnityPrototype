@@ -120,106 +120,7 @@ public class GUIManager : MonoBehaviour
     [Tooltip("% chance of a light beam flickering each frame")]
     [Range(0, 100)] public int billboardLightChance = 1;
 
-    [Header("Sprites")]
-    [Tooltip("Sprite to use for ActorGUI to show that the position is vacant")]
-    public Sprite vacantActorSprite;
-    [Tooltip("Universal Error sprite")]
-    public Sprite errorSprite;
-    [Tooltip("Universal Info sprite")]
-    public Sprite infoSprite;
-    [Tooltip("Alarm (spotted) sprite")]
-    public Sprite alarmSprite;
-    [Tooltip("Undetected (NOT spotted) sprite")]
-    public Sprite undetectedSprite;
-    [Tooltip("Used for Target attempts that succeed")]
-    public Sprite targetSuccessSprite;
-    [Tooltip("Used for Target attempts that fail")]
-    public Sprite targetFailSprite;
-    [Tooltip("Used for Generic Picker with Planner action to select target (maybe there could be three colour variations of the same sprite to indicate how much intel you will gain?")]
-    public Sprite targetInfoSprite;
-    [Tooltip("Used for Player or Actor having been captured (152 x 160 png)")]
-    public Sprite capturedSprite;
-    [Tooltip("Used for Player or Actor being released from captivity (152 x 160 png)")]
-    public Sprite releasedSprite;
-    [Tooltip("Used for Player being Fired by their HQ")]
-    public Sprite firedSprite;
-    [Tooltip("Default City Arc sprite (512 x 150 png)")]
-    public Sprite cityArcDefaultSprite;
-    [Tooltip("Used for message Information Alerts (152 x 160 png)")]
-    public Sprite alertInformationSprite;
-    [Tooltip("Used for message Warning Alerts (152 x 160 png)")]
-    public Sprite alertWarningSprite;
-    [Tooltip("Used for message Random (152 x 160 png)")]
-    public Sprite alertRandomSprite;
-    [Tooltip("Used for ai reboot messages (152 x 160 png)")]
-    public Sprite aiRebootSprite;
-    [Tooltip("Used for ai countermeasures (152 x 160 png)")]
-    public Sprite aiCountermeasureSprite;
-    [Tooltip("Used for ai alert status changes (152 x 160 png)")]
-    public Sprite aiAlertSprite;
-    [Tooltip("Used for Investigations (152 x 160 png")]
-    public Sprite investigationSprite;
-    [Tooltip("Used for Secrets (152 x 160 png")]
-    public Sprite secretSprite;
-    [Tooltip("Used for Organisations (152 x 160 png")]
-    public Sprite organisationSprite;
-    [Tooltip("Used for ongoing effects (152 x 160 png")]
-    public Sprite ongoingEffectSprite;
-    [Tooltip("Used for node Crisis (152 x 160 png")]
-    public Sprite nodeCrisisSprite;
-    [Tooltip("Used for city loyalty changes (152 x 160 png)")]
-    public Sprite cityLoyaltySprite;
-    [Tooltip("Used for action adjustment infoAPP effect notifications")]
-    public Sprite actionSprite;
-    [Tooltip("Used for Objectives")]
-    public Sprite objectiveSprite;
-    [Tooltip("Default topic sprite")]
-    public Sprite topicDefaultSprite;
-    [Tooltip("Default sprite used for Topic UI (normal valid option) if none specified")]
-    public Sprite topicOptionNormalValidSprite;
-    [Tooltip("Sprite used for a normal invalid topic option")]
-    public Sprite topicOptionNormalInvalidSprite;
-    [Tooltip("Sprite used for a valid Other format Topic UI option")]
-    public Sprite topicOptionOtherValidSprite;
-    [Tooltip("Sprite used for a invalid Other format Topic UI option")]
-    public Sprite topicOptionOtherInvalidSprite;
-    [Tooltip("Sprite used for Topic Reviews")]
-    public Sprite topicReviewSprite;
-    [Tooltip("Sprite for a Friendly relationship")]
-    public Sprite friendSprite;
-    [Tooltip("Sprite for an Enemy relationship")]
-    public Sprite enemySprite;
-    [Tooltip("Sprite for Gold medal")]
-    public Sprite medalGoldSprite;
-    [Tooltip("Sprite for Silver medal")]
-    public Sprite medalSilverSprite;
-    [Tooltip("Sprite for Bronze medal")]
-    public Sprite medalBronzeSprite;
-    [Tooltip("Sprite used for Dead Duck Award")]
-    public Sprite medalDuckSprite;
-
-
-    [Header("Priorities")]
-    [Tooltip("Used for itemData priority High in MainInfoUI (20 x 20 artboard with icon being 15 x 15 png)")]
-    public Sprite priorityHighSprite;
-    [Tooltip("Used for itemData priority Medium in MainInfoUI (20 x 20 artboard with icon being 15 x 15 png)")]
-    public Sprite priorityMediumSprite;
-    [Tooltip("Used for itemData priority Low in MainInfoUI (20 x 20 artboard with icon being 15 x 15 png)")]
-    public Sprite priorityLowSprite;
-    [Tooltip("Used for Items that are Inactive (MetaGameUI) (20 x 20 artboard with icon being 15 x 15 png")]
-    public Sprite priorityInactiveSprite;
-
-    [Header("Moods")]
-    [Tooltip("Player mood 0 star")]
-    public Sprite moodStar0;
-    [Tooltip("Player mood 1 star")]
-    public Sprite moodStar1;
-    [Tooltip("Player mood 2 star")]
-    public Sprite moodStar2;
-    [Tooltip("Player mood 3 star")]
-    public Sprite moodStar3;
-
-    
+      
 
     //font awesome icons (characters)
     [HideInInspector] public char bulletChar;
@@ -305,56 +206,7 @@ public class GUIManager : MonoBehaviour
 
     private string alpha = "<alpha=#66>";   //alpha transparency, used for stars (FF is 100%, CC / AA / 88 / 66 / 44 / 22)
 
-    public void Awake()
-    {
-        //Check sprites are present
-        Debug.Assert(vacantActorSprite != null, "Invalid vacantActorSprite (Null)");
-        Debug.Assert(errorSprite != null, "Invalid errorSprite (Null)");
-        Debug.Assert(infoSprite != null, "Invalid infoSprite (Null)");
-        Debug.Assert(alarmSprite != null, "Invalid alarmSprite (Null)");
-        Debug.Assert(undetectedSprite != null, "Invalid undetectedSprite (Null)");
-        Debug.Assert(targetSuccessSprite != null, "Invalid targetSuccessSprite (Null)");
-        Debug.Assert(targetFailSprite != null, "Invalid targetFailSprite (Null)");
-        Debug.Assert(capturedSprite != null, "Invalid capturedSprite (Null)");
-        Debug.Assert(releasedSprite != null, "Invalid releasedSprite (Null)");
-        Debug.Assert(firedSprite != null, "Invalid firedSprite (Null)");
-        Debug.Assert(cityArcDefaultSprite != null, "Invalid cityArcDefaultSprite (Null)");
-        Debug.Assert(alertInformationSprite != null, "Invalid alertInformationSprite (Null)");
-        Debug.Assert(alertWarningSprite != null, "Invalid alertWarningSprite (Null)");
-        Debug.Assert(alertRandomSprite != null, "Invalid alertRandomSprite (Null)");
-        Debug.Assert(aiRebootSprite != null, "Invalid aiRebootSpirte (Null)");
-        Debug.Assert(aiCountermeasureSprite != null, "Invalid aiCountermeasureSprite (Null)");
-        Debug.Assert(aiAlertSprite != null, "Invalid aiAlertSprite (Null)");
-        Debug.Assert(investigationSprite != null, "Invalid investigationSprite (Null)");
-        Debug.Assert(secretSprite != null, "Invalid secretSprite (Null)");
-        Debug.Assert(organisationSprite != null, "Invalid organisationSprite (Null)");
-        Debug.Assert(ongoingEffectSprite != null, "Invalid ongoingEffectSprite (Null)");
-        Debug.Assert(nodeCrisisSprite != null, "Invalid nodeCrisisSprite (Null)");
-        Debug.Assert(cityLoyaltySprite != null, "Invalid cityLoyaltySprite (Null)");
-        Debug.Assert(priorityHighSprite != null, "Invalid priorityHighSprite (Null)");
-        Debug.Assert(priorityMediumSprite != null, "Invalid priorityMediumSprite (Null)");
-        Debug.Assert(priorityLowSprite != null, "Invalid priorityLowSprite (Null)");
-        Debug.Assert(priorityInactiveSprite != null, "Invalid priorityInactiveSprite (Null)");
-        Debug.Assert(actionSprite != null, "Invalid actionSprite (Null)");
-        Debug.Assert(objectiveSprite != null, "Invalid objectiveSprite (Null)");
-        Debug.Assert(topicDefaultSprite != null, "Invalid topicDefaultSprite (Null)");
-        Debug.Assert(topicOptionNormalValidSprite != null, "Invalid topicOptionNormalValidSprite (Null)");
-        Debug.Assert(topicOptionNormalInvalidSprite != null, "Invalid topicOptionNormalInvalidSprite (Null)");
-        Debug.Assert(topicOptionOtherValidSprite != null, "Invalid topicOptionOtherValidSprite (Null)");
-        Debug.Assert(topicOptionOtherInvalidSprite != null, "Invalid topicOptionOtherInvalidSprite (Null)");
-        Debug.Assert(topicReviewSprite != null, "Invalid topicReviewSprite (Null)");
-        Debug.Assert(friendSprite != null, "Invalid friendSprite (Null)");
-        Debug.Assert(enemySprite != null, "Invalid enemySprite (Null)");
-        Debug.Assert(moodStar0 != null, "Invalid moodStar0 (Null)");
-        Debug.Assert(moodStar1 != null, "Invalid moodStar1 (Null)");
-        Debug.Assert(moodStar2 != null, "Invalid moodStar2 (Null)");
-        Debug.Assert(moodStar3 != null, "Invalid moodStar3 (Null)");
-        Debug.Assert(medalGoldSprite != null, "Invalid medalGoldSprite (Null)");
-        Debug.Assert(medalSilverSprite != null, "Invalid medalSilverSprite (Null)");
-        Debug.Assert(medalBronzeSprite != null, "Invalid medalBronzeSprite (Null)");
-        Debug.Assert(medalDuckSprite != null, "Invalid medalDuckSprite (Null)");
-
-    }
+    
 
     /// <summary>
     /// Initialises GUI with all relevant data
@@ -530,7 +382,7 @@ public class GUIManager : MonoBehaviour
     {
         ModalOutcomeDetails details = new ModalOutcomeDetails();
         //sprite can be override in case statements below
-        details.sprite = infoSprite;
+        details.sprite = GameManager.i.spriteScript.infoSprite;
         details.side = GameManager.i.sideScript.PlayerSide;
         details.modalState = subState;
         CreateAlertMessage(type, details, data);
@@ -545,7 +397,7 @@ public class GUIManager : MonoBehaviour
     {
         ModalOutcomeDetails details = new ModalOutcomeDetails();
         //sprite can be override in case statements below
-        details.sprite = infoSprite;
+        details.sprite = GameManager.i.spriteScript.infoSprite;
         details.side = GameManager.i.sideScript.PlayerSide;
         CreateAlertMessage(type, details, data);
     }
@@ -981,7 +833,7 @@ public class GUIManager : MonoBehaviour
         { EventManager.i.PostNotification(EventType.MainInfoOpen, this, data, "TurnManager.cs -> ProcessNewTurn"); }
         else
         {
-            Sprite sprite = GameManager.i.guiScript.errorSprite;
+            Sprite sprite = GameManager.i.spriteScript.errorSprite;
             string text = ""; //empty
             switch (playerStatus)
             {
@@ -990,7 +842,7 @@ public class GUIManager : MonoBehaviour
                     if (GameManager.i.turnScript.winReasonCampaign != WinReasonCampaign.Innocence)
                     {
                         text = string.Format("You have been {0}CAPTURED{1}", colourBad, colourEnd);
-                        sprite = GameManager.i.guiScript.capturedSprite;
+                        sprite = GameManager.i.spriteScript.capturedSprite;
                     }
                     break;
                 case ActorStatus.Inactive:
@@ -998,15 +850,15 @@ public class GUIManager : MonoBehaviour
                     {
                         case ActorInactive.Breakdown:
                             text = string.Format("You are undergoing a {0}STRESS BREAKDOWN{1}", colourBad, colourEnd);
-                            sprite = GameManager.i.guiScript.infoSprite;
+                            sprite = GameManager.i.spriteScript.infoSprite;
                             break;
                         case ActorInactive.LieLow:
                             text = string.Format("You are {0}LYING LOW{1}", colourNeutral, colourEnd);
-                            sprite = GameManager.i.guiScript.infoSprite;
+                            sprite = GameManager.i.spriteScript.infoSprite;
                             break;
                         case ActorInactive.StressLeave:
                             text = string.Format("You are on {0}STRESS LEAVE{1}", colourNeutral, colourEnd);
-                            sprite = GameManager.i.guiScript.infoSprite;
+                            sprite = GameManager.i.spriteScript.infoSprite;
                             break;
                     }
                     break;

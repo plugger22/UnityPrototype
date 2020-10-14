@@ -141,7 +141,7 @@ namespace modalAPI
             isAction = false;
             reason = "Unknown";
             side = GameManager.i.sideScript.PlayerSide;
-            sprite = GameManager.i.guiScript.infoSprite;
+            sprite = GameManager.i.spriteScript.infoSprite;
             type = MsgPipelineType.None;
             listOfNodes = new List<Node>();
             triggerEvent = EventType.None;

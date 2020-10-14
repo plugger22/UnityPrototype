@@ -294,7 +294,7 @@ public class CityInfoUI : MonoBehaviour
             //city image (uses arc sprite, GUIManager.cs default sprite if arc sprite is null)
             if (city.Arc.sprite != null)
             { cityImage.sprite = city.Arc.sprite; }
-            else { cityImage.sprite = GameManager.i.guiScript.cityArcDefaultSprite; }
+            else { cityImage.sprite = GameManager.i.spriteScript.cityArcDefaultSprite; }
             Debug.Assert(cityImage.sprite != null, "Invalid city Arc default sprite");
             //Organisation tooltip
             mayorTooltip.tooltipHeader = GameManager.i.cityScript.GetMayorNameFormatted();

@@ -520,7 +520,7 @@ public class ActionManager : MonoBehaviour
                         effectReturn = GameManager.i.effectScript.ProcessEffect(effect, node, dataInput);
                         if (effectReturn != null)
                         {
-                            outcomeDetails.sprite = GameManager.i.guiScript.errorSprite;
+                            outcomeDetails.sprite = GameManager.i.spriteScript.errorSprite;
                             //update stringBuilder texts
                             if (String.IsNullOrEmpty(effectReturn.topText) == false) { builderTop.AppendLine(); builderTop.AppendLine(); }
                             builderTop.Append(effectReturn.topText);
@@ -711,7 +711,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.side = playerSide;
             outcomeDetails.textTop = string.Format("{0}You are unable to send anyone to the Reserve Pool at this time{1}", colourAlert, colourEnd);
             outcomeDetails.textBottom = "Why is that so? Nobody knows.";
-            outcomeDetails.sprite = GameManager.i.guiScript.errorSprite;
+            outcomeDetails.sprite = GameManager.i.spriteScript.errorSprite;
             EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessManageActorAction");
         }
         else
@@ -874,7 +874,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.side = playerSide;
             outcomeDetails.textTop = string.Format("{0}You are unable to send anyone to the Reserve pool at this time{1}", colourAlert, colourEnd);
             outcomeDetails.textBottom = "Why is it so? Nobody knows.";
-            outcomeDetails.sprite = GameManager.i.guiScript.errorSprite;
+            outcomeDetails.sprite = GameManager.i.spriteScript.errorSprite;
             EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> InitialiseReserveActorAction");
         }
         else
@@ -1034,7 +1034,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.side = playerSide;
             outcomeDetails.textTop = string.Format("{0}You are unable to Dismiss of anyone at this time{1}", colourAlert, colourEnd);
             outcomeDetails.textBottom = "Why this is so is under investigation";
-            outcomeDetails.sprite = GameManager.i.guiScript.errorSprite;
+            outcomeDetails.sprite = GameManager.i.spriteScript.errorSprite;
             EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> InitialiseDismissActorAction");
         }
         else
@@ -1207,7 +1207,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.side = playerSide;
             outcomeDetails.textTop = string.Format("{0}You are unable to Dispose of anyone at this time{1}", colourAlert, colourEnd);
             outcomeDetails.textBottom = "Why this is so is under investigation";
-            outcomeDetails.sprite = GameManager.i.guiScript.errorSprite;
+            outcomeDetails.sprite = GameManager.i.spriteScript.errorSprite;
             EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> InitailiseDisposeActorAction");
         }
         else
@@ -2662,8 +2662,8 @@ public class ActionManager : MonoBehaviour
                     if (listOfHelpTags.Count > 0)
                     { ProcessOutcomeHelp(outcomeDetails, listOfHelpTags); }
                     //which sprite to use
-                    if (isSuccessful == true) { outcomeDetails.sprite = GameManager.i.guiScript.targetSuccessSprite; }
-                    else { outcomeDetails.sprite = GameManager.i.guiScript.targetFailSprite; }
+                    if (isSuccessful == true) { outcomeDetails.sprite = GameManager.i.spriteScript.targetSuccessSprite; }
+                    else { outcomeDetails.sprite = GameManager.i.spriteScript.targetFailSprite; }
                 }
                 //generate a create modal window event
                 EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessNodeTarget");
@@ -2712,7 +2712,7 @@ public class ActionManager : MonoBehaviour
         string moodText = "Unknown";
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
-        Sprite sprite = GameManager.i.guiScript.errorSprite;
+        Sprite sprite = GameManager.i.spriteScript.errorSprite;
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         if (data != null)
         {
@@ -2895,7 +2895,7 @@ public class ActionManager : MonoBehaviour
         int numOfTeams = 0;
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
-        Sprite sprite = GameManager.i.guiScript.errorSprite;
+        Sprite sprite = GameManager.i.spriteScript.errorSprite;
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         ActorStatus status = ActorStatus.Dismissed;
         if (data != null)
@@ -3071,7 +3071,7 @@ public class ActionManager : MonoBehaviour
         int numOfTeams = 0;
         StringBuilder builderTop = new StringBuilder();
         StringBuilder builderBottom = new StringBuilder();
-        Sprite sprite = GameManager.i.guiScript.errorSprite;
+        Sprite sprite = GameManager.i.spriteScript.errorSprite;
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         if (data != null)
         {
@@ -3322,7 +3322,7 @@ public class ActionManager : MonoBehaviour
             outcomeDetails.side = details.side;
             outcomeDetails.textTop = string.Format("{0}What, nothing happened?{1}", colourError, colourEnd);
             outcomeDetails.textBottom = string.Format("{0}No effect{1}", colourError, colourEnd);
-            outcomeDetails.sprite = GameManager.i.guiScript.errorSprite;
+            outcomeDetails.sprite = GameManager.i.spriteScript.errorSprite;
             outcomeDetails.modalLevel = details.modalLevel;
             outcomeDetails.modalState = details.modalState;
         }

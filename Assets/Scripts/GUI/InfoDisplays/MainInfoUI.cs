@@ -21,6 +21,7 @@ public class MainInfoUI : MonoBehaviour
     public GameObject mainInfoObject;
 
     [Header("Backgrounds")]
+    public Image mainBackground;
     public Image leftBackground;
     public Image rightBackground;
 
@@ -279,10 +280,21 @@ public class MainInfoUI : MonoBehaviour
         Debug.Assert(mainInfoObject != null, "Invalid mainInfoObject (Null)");
         mainInfoObject.SetActive(true);
         //backgrounds
+        Debug.Assert(mainBackground != null, "Invalid mainBackground (Null)");
         Debug.Assert(leftBackground != null, "Invalid leftBackground (Null)");
         Debug.Assert(rightBackground != null, "Invalid rightBackground (Null)");
         //assign backgrounds and active tab colours
-        Color colour = GameManager.i.uiScript.MainBackground;
+        mainBackground.color = GameManager.i.uiScript.MainBackground;
+        Color colour = GameManager.i.uiScript.InnerBackground;
+        leftBackground.color = colour;
+        rightBackground.color = colour;
+        tab_active_0.color = colour;
+        tab_active_1.color = colour;
+        tab_active_2.color = colour;
+        tab_active_3.color = colour;
+        tab_active_4.color = colour;
+        tab_active_5.color = colour;
+
         leftBackground.color = new Color(colour.r, colour.g, colour.b);
         rightBackground.color = new Color(colour.r, colour.g, colour.b);
         tab_active_0.color = new Color(colour.r, colour.g, colour.b);
@@ -548,9 +560,9 @@ public class MainInfoUI : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         //priority icons
-        priorityHigh = GameManager.i.guiScript.priorityHighSprite;
-        priorityMedium = GameManager.i.guiScript.priorityMediumSprite;
-        priorityLow = GameManager.i.guiScript.priorityLowSprite;
+        priorityHigh = GameManager.i.spriteScript.priorityHighSprite;
+        priorityMedium = GameManager.i.spriteScript.priorityMediumSprite;
+        priorityLow = GameManager.i.spriteScript.priorityLowSprite;
         Debug.Assert(priorityHigh != null, "Invalid priorityHigh (Null)");
         Debug.Assert(priorityMedium != null, "Invalid priorityMedium (Null)");
         Debug.Assert(priorityLow != null, "Invalid priorityLow (Null)");

@@ -597,10 +597,10 @@ public class MetaGameUI : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         //priority icons
-        priorityHigh = GameManager.i.guiScript.priorityHighSprite;
-        priorityMedium = GameManager.i.guiScript.priorityMediumSprite;
-        priorityLow = GameManager.i.guiScript.priorityLowSprite;
-        priorityInactive = GameManager.i.guiScript.priorityInactiveSprite;
+        priorityHigh = GameManager.i.spriteScript.priorityHighSprite;
+        priorityMedium = GameManager.i.spriteScript.priorityMediumSprite;
+        priorityLow = GameManager.i.spriteScript.priorityLowSprite;
+        priorityInactive = GameManager.i.spriteScript.priorityInactiveSprite;
         Debug.Assert(priorityHigh != null, "Invalid priorityHigh (Null)");
         Debug.Assert(priorityMedium != null, "Invalid priorityMedium (Null)");
         Debug.Assert(priorityLow != null, "Invalid priorityLow (Null)");
@@ -788,7 +788,7 @@ public class MetaGameUI : MonoBehaviour
                     {
                         //default error sprite if a problem
                         Debug.LogWarningFormat("Invalid actor (Null) for ActorHQ \"{0}\"", (ActorHQ)(index + offset));
-                        arrayOfSideTabItems[index].portrait.sprite = GameManager.i.guiScript.errorSprite;
+                        arrayOfSideTabItems[index].portrait.sprite = GameManager.i.spriteScript.errorSprite;
                     }
                     portraitColor = arrayOfSideTabItems[index].portrait.color;
                     //title
@@ -1801,7 +1801,7 @@ public class MetaGameUI : MonoBehaviour
                 textTop = string.Format("{0}LIMIT EXCEEDED{1}", colourAlert, colourEnd),
                 textBottom = string.Format("You have selected {0}{1}{2} option{3}<br><br>You have reached the {4}allowable limit{5} (max {6}{7}{8})<br><br>{9}Deselect{10} to free up more choices",
                     colourNeutral, numOfChoicesCurrent, colourEnd, numOfChoicesCurrent != 1 ? "s" : "", colourNeutral, colourEnd, colourNeutral, numOfChoicesMax, colourEnd, colourNeutral, colourEnd),
-                sprite = GameManager.i.guiScript.alertInformationSprite,
+                sprite = GameManager.i.spriteScript.alertInformationSprite,
                 modalLevel = 2,
                 modalState = ModalSubState.MetaGame,
                 reason = "Recommended pressed"
@@ -1998,7 +1998,7 @@ public class MetaGameUI : MonoBehaviour
                 side = GameManager.i.sideScript.PlayerSide,
                 textTop = string.Format("{0}RESET{1}", colourNeutral, colourEnd),
                 textBottom = "All available options are now ready for selection again",
-                sprite = GameManager.i.guiScript.infoSprite,
+                sprite = GameManager.i.spriteScript.infoSprite,
                 modalLevel = 2,
                 modalState = ModalSubState.MetaGame,
                 reason = "Reset pressed"
@@ -2071,7 +2071,7 @@ public class MetaGameUI : MonoBehaviour
                         textTop = string.Format("{0}RECOMMENDED{1}", colourAlert, colourEnd),
                         textBottom = string.Format("{0}{1}{2} recommended option{3} have been automatically selected for a cost of {4}{5}{6} Power<br><br>There is a {7}{8}{9} option {10}limit{11}",
                         colourNeutral, numSelected, colourEnd, numSelected != 1 ? "s" : "", colourNeutral, totalCost, colourEnd, colourNeutral, numOfChoicesMax, colourEnd, colourNeutral, colourEnd),
-                        sprite = GameManager.i.guiScript.alertInformationSprite,
+                        sprite = GameManager.i.spriteScript.alertInformationSprite,
                         modalLevel = 2,
                         modalState = ModalSubState.MetaGame,
                         reason = "Recommended pressed"
@@ -2085,7 +2085,7 @@ public class MetaGameUI : MonoBehaviour
                         side = GameManager.i.sideScript.PlayerSide,
                         textTop = string.Format("{0}RECOMMENDED{1}", colourAlert, colourEnd),
                         textBottom = string.Format("No recommendations have been selected as you had {0}insufficient Power{1} to pay for them", colourCancel, colourEnd),
-                        sprite = GameManager.i.guiScript.alertInformationSprite,
+                        sprite = GameManager.i.spriteScript.alertInformationSprite,
                         modalLevel = 2,
                         modalState = ModalSubState.MetaGame,
                         reason = "Recommended pressed"
@@ -2100,7 +2100,7 @@ public class MetaGameUI : MonoBehaviour
                     side = GameManager.i.sideScript.PlayerSide,
                     textTop = string.Format("{0}RECOMMENDED{1}", colourAlert, colourEnd),
                     textBottom = string.Format("No recommendations have been selected as you had {0}insufficient Power{1} to pay for them", colourCancel, colourEnd),
-                    sprite = GameManager.i.guiScript.alertInformationSprite,
+                    sprite = GameManager.i.spriteScript.alertInformationSprite,
                     modalLevel = 2,
                     modalState = ModalSubState.MetaGame,
                     reason = "Recommended pressed"
@@ -2115,7 +2115,7 @@ public class MetaGameUI : MonoBehaviour
                 side = GameManager.i.sideScript.PlayerSide,
                 textTop = string.Format("{0}RECOMMENDED{1}", colourAlert, colourEnd),
                 textBottom = string.Format("No recommendations have been selected as there are {0}no critical issues{1} that need your attention", colourCancel, colourEnd),
-                sprite = GameManager.i.guiScript.alertInformationSprite,
+                sprite = GameManager.i.spriteScript.alertInformationSprite,
                 modalLevel = 2,
                 modalState = ModalSubState.MetaGame,
                 reason = "Recommended pressed"
@@ -2201,7 +2201,7 @@ public class MetaGameUI : MonoBehaviour
                     side = GameManager.i.sideScript.PlayerSide,
                     textTop = string.Format("{0}HQ Outcomes{1}", colourCancel, colourEnd),
                     textBottom = builder.ToString(),
-                    sprite = GameManager.i.guiScript.infoSprite,
+                    sprite = GameManager.i.spriteScript.infoSprite,
                     modalLevel = 2,
                     modalState = ModalSubState.MetaGame,
                     reason = "Effect Outcomes"
