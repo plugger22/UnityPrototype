@@ -2406,3 +2406,52 @@ City seed 765 -> New York, Americon
 
 Dev seed 38758 -> Wednesday, 14 October 2020 10:17 AM
 City seed 234 -> Sydney, Chinock
+
+Dev seed 44385 -> Wednesday, 14 October 2020 12:01 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 5343 -> Wednesday, 14 October 2020 12:04 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 13820 -> Wednesday, 14 October 2020 12:08 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 32958 -> Wednesday, 14 October 2020 12:09 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 58362 -> Wednesday, 14 October 2020 12:10 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 61564 -> Wednesday, 14 October 2020 12:12 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 63323 -> Wednesday, 14 October 2020 12:15 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 43320 -> Wednesday, 14 October 2020 12:17 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 47524 -> Wednesday, 14 October 2020 12:19 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 61324 -> Wednesday, 14 October 2020 12:21 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 10754 -> Wednesday, 14 October 2020 12:25 PM
+City seed 5678 -> London, Eurasia
+City seed 765 -> New York, Americon
+
+Dev seed 26432 -> Wednesday, 14 October 2020 12:29 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 5307 -> Wednesday, 14 October 2020 12:30 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 15652 -> Wednesday, 14 October 2020 12:31 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 9392 -> Wednesday, 14 October 2020 12:31 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 59037 -> Wednesday, 14 October 2020 12:34 PM
+City seed 5678 -> London, Eurasia
