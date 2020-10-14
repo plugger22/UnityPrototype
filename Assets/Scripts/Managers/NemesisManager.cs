@@ -1556,7 +1556,7 @@ public class NemesisManager : MonoBehaviour
                 {
                     textTop = text,
                     textBottom = builder.ToString(),
-                    sprite = GameManager.i.guiScript.aiAlertSprite,
+                    sprite = GameManager.i.spriteScript.aiAlertSprite,
                     isAction = false,
                     side = sideWho,
                     type = MsgPipelineType.Nemesis

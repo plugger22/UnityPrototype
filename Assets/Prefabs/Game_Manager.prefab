@@ -5980,6 +5980,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e895864c39e35094aa312c8f08c173ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vacantActorSprite: {fileID: 21300000, guid: d7f77a0f40a944e4bafd0104b4e0b8b1, type: 3}
+  errorSprite: {fileID: 21300000, guid: b9bbb6ebf7eace84fa8f788ca4d7fc72, type: 3}
+  infoSprite: {fileID: 21300000, guid: 487d8e165f0c4564b8465f21c927f6b2, type: 3}
+  alarmSprite: {fileID: 21300000, guid: 1e2bcaaa7e6fbaf4da0bb00f2ceba3f6, type: 3}
+  undetectedSprite: {fileID: 21300000, guid: aacc92b8ed9e1a447b4a7c5e7162b428, type: 3}
+  targetSuccessSprite: {fileID: 21300000, guid: 3d2c635d61b7f234d9229ab32709ca48,
+    type: 3}
+  targetFailSprite: {fileID: 21300000, guid: ba64a13b5fa7f564291634b219db3f6d, type: 3}
+  targetInfoSprite: {fileID: 21300000, guid: ba64a13b5fa7f564291634b219db3f6d, type: 3}
+  capturedSprite: {fileID: 21300000, guid: da42b871045e63245a09d2a925187a26, type: 3}
+  releasedSprite: {fileID: 21300000, guid: 930c8db1522bddd4c8d966c644025449, type: 3}
+  firedSprite: {fileID: 21300000, guid: e39bfbb77fecee147bc22b86ea5c4567, type: 3}
+  cityArcDefaultSprite: {fileID: 21300000, guid: a100ee8d57c185f45a32ce9c1cb539e0,
+    type: 3}
+  alertInformationSprite: {fileID: 21300000, guid: 42c03af1cb861e0488783c72fc079146,
+    type: 3}
+  alertWarningSprite: {fileID: 21300000, guid: 30a4aa77c76c0434eafa65c250252d3d, type: 3}
+  alertRandomSprite: {fileID: 21300000, guid: e46ee5d62f8a0154084e64e612d3ae83, type: 3}
+  aiRebootSprite: {fileID: 21300000, guid: 0f4da56c64672a346a1a0364dd98c1e7, type: 3}
+  aiCountermeasureSprite: {fileID: 21300000, guid: 54b08e6c19f29974aac8dafffa972789,
+    type: 3}
+  aiAlertSprite: {fileID: 21300000, guid: 8138c1817c988d041833703c6b085f72, type: 3}
+  investigationSprite: {fileID: 21300000, guid: 1e2bcaaa7e6fbaf4da0bb00f2ceba3f6,
+    type: 3}
+  secretSprite: {fileID: 21300000, guid: aacc92b8ed9e1a447b4a7c5e7162b428, type: 3}
+  organisationSprite: {fileID: 21300000, guid: 54b08e6c19f29974aac8dafffa972789, type: 3}
+  ongoingEffectSprite: {fileID: 21300000, guid: c3ef60394b6a04c408365bc2a006231a,
+    type: 3}
+  nodeCrisisSprite: {fileID: 21300000, guid: b409a5bb3e60fe2449c54d6642ca4a19, type: 3}
+  cityLoyaltySprite: {fileID: 21300000, guid: 9c060f66520d9874297a5ed308585c4c, type: 3}
+  actionSprite: {fileID: 21300000, guid: 8138c1817c988d041833703c6b085f72, type: 3}
+  objectiveSprite: {fileID: 21300000, guid: 1e2bcaaa7e6fbaf4da0bb00f2ceba3f6, type: 3}
+  topicDefaultSprite: {fileID: 21300000, guid: 0990750233d69384f832d111b8981353, type: 3}
+  topicOptionNormalValidSprite: {fileID: 21300000, guid: d9a90c3e37216bf4a8c6946eb464ade7,
+    type: 3}
+  topicOptionNormalInvalidSprite: {fileID: 21300000, guid: de4067097f073d341b79d0136225ba40,
+    type: 3}
+  topicOptionOtherValidSprite: {fileID: 21300000, guid: 2f3c5378750402347972293a67ccd38f,
+    type: 3}
+  topicOptionOtherInvalidSprite: {fileID: 21300000, guid: 41f9a23fa9cc0c4489f4ae61389d2ccf,
+    type: 3}
+  topicReviewSprite: {fileID: 21300000, guid: 4bc3f8ffc1e52f741ba6d5f9d475aa7c, type: 3}
+  friendSprite: {fileID: 21300000, guid: 8a947f318ba8ccf45895e42cc50c6af3, type: 3}
+  enemySprite: {fileID: 21300000, guid: f8252a05227cda24b978271c78b656b7, type: 3}
+  medalGoldSprite: {fileID: 21300000, guid: db7625210ca8398459d668c66eb2a6c6, type: 3}
+  medalSilverSprite: {fileID: 21300000, guid: 73a60e96b1405834dab9604ea5256079, type: 3}
+  medalBronzeSprite: {fileID: 21300000, guid: 58c60c5fdf23f5743bada266c20cf3a3, type: 3}
+  medalDuckSprite: {fileID: 21300000, guid: af5701f4978d44b4495eb6f6137f2523, type: 3}
+  priorityHighSprite: {fileID: 21300000, guid: 4c387499a0331884f95c8c367871611f, type: 3}
+  priorityMediumSprite: {fileID: 21300000, guid: ff0b496ae1f6f0d4c95c374cee7818ae,
+    type: 3}
+  priorityLowSprite: {fileID: 21300000, guid: 7417508bc8dc8c04b944767d032e7a5e, type: 3}
+  priorityInactiveSprite: {fileID: 21300000, guid: 4142fcd35bb12cd4c92a9994a0f8079b,
+    type: 3}
+  moodStar0: {fileID: 21300000, guid: 8f46e6ebee0e4b242984a8eac9da89bd, type: 3}
+  moodStar1: {fileID: 21300000, guid: 606a34bcb9ca8c24b9932f86c27c35f1, type: 3}
+  moodStar2: {fileID: 21300000, guid: f4609c9dcf2472941b5bb98234380a97, type: 3}
+  moodStar3: {fileID: 21300000, guid: 0d89fae1bc0ce67449f04ab3ec0adf61, type: 3}
 --- !u!114 &114653740805270716
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6372,64 +6430,6 @@ MonoBehaviour:
   billboardNameMax: 20
   billboardLightOff: 0.1
   billboardLightChance: 1
-  vacantActorSprite: {fileID: 21300000, guid: d7f77a0f40a944e4bafd0104b4e0b8b1, type: 3}
-  errorSprite: {fileID: 21300000, guid: b9bbb6ebf7eace84fa8f788ca4d7fc72, type: 3}
-  infoSprite: {fileID: 21300000, guid: 487d8e165f0c4564b8465f21c927f6b2, type: 3}
-  alarmSprite: {fileID: 21300000, guid: 1e2bcaaa7e6fbaf4da0bb00f2ceba3f6, type: 3}
-  undetectedSprite: {fileID: 21300000, guid: aacc92b8ed9e1a447b4a7c5e7162b428, type: 3}
-  targetSuccessSprite: {fileID: 21300000, guid: 3d2c635d61b7f234d9229ab32709ca48,
-    type: 3}
-  targetFailSprite: {fileID: 21300000, guid: ba64a13b5fa7f564291634b219db3f6d, type: 3}
-  targetInfoSprite: {fileID: 21300000, guid: ba64a13b5fa7f564291634b219db3f6d, type: 3}
-  capturedSprite: {fileID: 21300000, guid: da42b871045e63245a09d2a925187a26, type: 3}
-  releasedSprite: {fileID: 21300000, guid: 930c8db1522bddd4c8d966c644025449, type: 3}
-  firedSprite: {fileID: 21300000, guid: e39bfbb77fecee147bc22b86ea5c4567, type: 3}
-  cityArcDefaultSprite: {fileID: 21300000, guid: a100ee8d57c185f45a32ce9c1cb539e0,
-    type: 3}
-  alertInformationSprite: {fileID: 21300000, guid: 42c03af1cb861e0488783c72fc079146,
-    type: 3}
-  alertWarningSprite: {fileID: 21300000, guid: 30a4aa77c76c0434eafa65c250252d3d, type: 3}
-  alertRandomSprite: {fileID: 21300000, guid: e46ee5d62f8a0154084e64e612d3ae83, type: 3}
-  aiRebootSprite: {fileID: 21300000, guid: 0f4da56c64672a346a1a0364dd98c1e7, type: 3}
-  aiCountermeasureSprite: {fileID: 21300000, guid: 54b08e6c19f29974aac8dafffa972789,
-    type: 3}
-  aiAlertSprite: {fileID: 21300000, guid: 8138c1817c988d041833703c6b085f72, type: 3}
-  investigationSprite: {fileID: 21300000, guid: 1e2bcaaa7e6fbaf4da0bb00f2ceba3f6,
-    type: 3}
-  secretSprite: {fileID: 21300000, guid: aacc92b8ed9e1a447b4a7c5e7162b428, type: 3}
-  organisationSprite: {fileID: 21300000, guid: 54b08e6c19f29974aac8dafffa972789, type: 3}
-  ongoingEffectSprite: {fileID: 21300000, guid: c3ef60394b6a04c408365bc2a006231a,
-    type: 3}
-  nodeCrisisSprite: {fileID: 21300000, guid: b409a5bb3e60fe2449c54d6642ca4a19, type: 3}
-  cityLoyaltySprite: {fileID: 21300000, guid: 9c060f66520d9874297a5ed308585c4c, type: 3}
-  actionSprite: {fileID: 21300000, guid: 8138c1817c988d041833703c6b085f72, type: 3}
-  objectiveSprite: {fileID: 21300000, guid: 1e2bcaaa7e6fbaf4da0bb00f2ceba3f6, type: 3}
-  topicDefaultSprite: {fileID: 21300000, guid: 0990750233d69384f832d111b8981353, type: 3}
-  topicOptionNormalValidSprite: {fileID: 21300000, guid: d9a90c3e37216bf4a8c6946eb464ade7,
-    type: 3}
-  topicOptionNormalInvalidSprite: {fileID: 21300000, guid: de4067097f073d341b79d0136225ba40,
-    type: 3}
-  topicOptionOtherValidSprite: {fileID: 21300000, guid: 2f3c5378750402347972293a67ccd38f,
-    type: 3}
-  topicOptionOtherInvalidSprite: {fileID: 21300000, guid: 41f9a23fa9cc0c4489f4ae61389d2ccf,
-    type: 3}
-  topicReviewSprite: {fileID: 21300000, guid: 4bc3f8ffc1e52f741ba6d5f9d475aa7c, type: 3}
-  friendSprite: {fileID: 21300000, guid: 8a947f318ba8ccf45895e42cc50c6af3, type: 3}
-  enemySprite: {fileID: 21300000, guid: f8252a05227cda24b978271c78b656b7, type: 3}
-  medalGoldSprite: {fileID: 21300000, guid: db7625210ca8398459d668c66eb2a6c6, type: 3}
-  medalSilverSprite: {fileID: 21300000, guid: 73a60e96b1405834dab9604ea5256079, type: 3}
-  medalBronzeSprite: {fileID: 21300000, guid: 58c60c5fdf23f5743bada266c20cf3a3, type: 3}
-  medalDuckSprite: {fileID: 21300000, guid: af5701f4978d44b4495eb6f6137f2523, type: 3}
-  priorityHighSprite: {fileID: 21300000, guid: 4c387499a0331884f95c8c367871611f, type: 3}
-  priorityMediumSprite: {fileID: 21300000, guid: ff0b496ae1f6f0d4c95c374cee7818ae,
-    type: 3}
-  priorityLowSprite: {fileID: 21300000, guid: 7417508bc8dc8c04b944767d032e7a5e, type: 3}
-  priorityInactiveSprite: {fileID: 21300000, guid: 4142fcd35bb12cd4c92a9994a0f8079b,
-    type: 3}
-  moodStar0: {fileID: 21300000, guid: 8f46e6ebee0e4b242984a8eac9da89bd, type: 3}
-  moodStar1: {fileID: 21300000, guid: 606a34bcb9ca8c24b9932f86c27c35f1, type: 3}
-  moodStar2: {fileID: 21300000, guid: f4609c9dcf2472941b5bb98234380a97, type: 3}
-  moodStar3: {fileID: 21300000, guid: 0d89fae1bc0ce67449f04ab3ec0adf61, type: 3}
   bulletChar: 0
   starChar: 61445
   airportChar: 61554

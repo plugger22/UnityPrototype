@@ -1684,7 +1684,7 @@ public class PlayerManager : MonoBehaviour
                             {
                                 textTop = text,
                                 textBottom = bottomText,
-                                sprite = GameManager.i.guiScript.investigationSprite,
+                                sprite = GameManager.i.spriteScript.investigationSprite,
                                 isAction = false,
                                 side = GameManager.i.sideScript.PlayerSide,
                                 type = MsgPipelineType.InvestigationCompleted,

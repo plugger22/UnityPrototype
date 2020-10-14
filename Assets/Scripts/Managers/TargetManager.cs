@@ -1855,7 +1855,7 @@ public class TargetManager : MonoBehaviour
                                     /*optionDetails.optionID = target.targetID;*/
                                     optionDetails.optionName = target.name;
                                     optionDetails.text = target.targetName.ToUpper();
-                                    optionDetails.sprite = GameManager.i.guiScript.targetInfoSprite;
+                                    optionDetails.sprite = GameManager.i.spriteScript.targetInfoSprite;
                                     //add to master arrays
                                     genericDetails.arrayOfOptions[i] = optionDetails;
                                     genericDetails.arrayOfTooltips[i] = tooltipDetails;

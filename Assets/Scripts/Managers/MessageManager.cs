@@ -234,7 +234,7 @@ public class MessageManager : MonoBehaviour
             data.topText = topText;
             data.bottomText = GameManager.i.itemDataScript.GetGeneralInfoDetails(reason, explanation, isBad);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.i.guiScript.alertInformationSprite;
+            data.sprite = GameManager.i.spriteScript.alertInformationSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -294,7 +294,7 @@ public class MessageManager : MonoBehaviour
             if (isHighPriority == true)
             { data.priority = ItemPriority.High; }
             else { data.priority = ItemPriority.Medium; }
-            data.sprite = GameManager.i.guiScript.alertWarningSprite;
+            data.sprite = GameManager.i.spriteScript.alertWarningSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -352,7 +352,7 @@ public class MessageManager : MonoBehaviour
             data.topText = GameManager.i.itemDataScript.GetRandomTopText(typeOfCheck, isReversed);
             data.bottomText = GameManager.i.itemDataScript.GetRandomDetails(numNeeded, numRolled, isReversed);
             data.priority = ItemPriority.Low;
-            data.sprite = GameManager.i.guiScript.alertRandomSprite;
+            data.sprite = GameManager.i.spriteScript.alertRandomSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.Random;
             data.type = message.type;
@@ -1588,7 +1588,7 @@ public class MessageManager : MonoBehaviour
             }
             data.bottomText = GameManager.i.itemDataScript.GetActorLieLowOngoingDetails(timer, isCrackdown);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.i.guiScript.infoSprite;
+            data.sprite = GameManager.i.spriteScript.infoSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.Effects;
             data.type = message.type;
@@ -1652,7 +1652,7 @@ public class MessageManager : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
             }
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.i.guiScript.capturedSprite;
+            data.sprite = GameManager.i.spriteScript.capturedSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -1772,7 +1772,7 @@ public class MessageManager : MonoBehaviour
                 else { Debug.LogWarningFormat("Invalid actor (Null) for actorID {0}", actorID); }
             }
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.i.guiScript.releasedSprite;
+            data.sprite = GameManager.i.spriteScript.releasedSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -1990,7 +1990,7 @@ public class MessageManager : MonoBehaviour
             data.topText = string.Format("{0} gets a CALL", actor.actorName);
             data.bottomText = GameManager.i.itemDataScript.GetContactNemesisSpottedDetails(actor, node, contact, nemesis, moveNumber);
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.i.guiScript.aiAlertSprite;
+            data.sprite = GameManager.i.spriteScript.aiAlertSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -2041,7 +2041,7 @@ public class MessageManager : MonoBehaviour
             data.topText = string.Format("{0} gets a CALL", actor.actorName);
             data.bottomText = GameManager.i.itemDataScript.GetContactNpcSpottedDetails(actor, node, contact, npc);
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.i.guiScript.aiAlertSprite;
+            data.sprite = GameManager.i.spriteScript.aiAlertSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -2276,7 +2276,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Threat Detected";
             data.bottomText = GameManager.i.itemDataScript.GetTracerNemesisSpottedDetails(node, nemesis, moveNumber);
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.i.guiScript.aiAlertSprite;
+            data.sprite = GameManager.i.spriteScript.aiAlertSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -2318,7 +2318,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Threat Detected";
             data.bottomText = GameManager.i.itemDataScript.GetTracerTeamSpottedDetails(node, team);
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.i.guiScript.aiAlertSprite;
+            data.sprite = GameManager.i.spriteScript.aiAlertSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -2403,7 +2403,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Nemesis Status";
             data.bottomText = GameManager.i.itemDataScript.GetNemesisOngoingEffectDetails(nemesis, message.data1);
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.i.guiScript.aiAlertSprite;
+            data.sprite = GameManager.i.spriteScript.aiAlertSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.Effects;
             data.type = message.type;
@@ -2445,7 +2445,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "New Nemesis Mode";
             data.bottomText = GameManager.i.itemDataScript.GetNemesisNewModeDetails(nemesis, message.data1);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.i.guiScript.aiAlertSprite;
+            data.sprite = GameManager.i.spriteScript.aiAlertSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -2509,7 +2509,7 @@ public class MessageManager : MonoBehaviour
             }
             data.bottomText = GameManager.i.itemDataScript.GetNemesisPlayerOngoingDetails(nemesis, isPlayerControl, coolDownTimer, controlTimer, nodeControl, nodeCurrent);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.i.guiScript.aiAlertSprite;
+            data.sprite = GameManager.i.spriteScript.aiAlertSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.Effects;
             data.type = message.type;
@@ -2561,7 +2561,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Connection Activity";
             data.bottomText = GameManager.i.itemDataScript.GetAIConnectionActivityDetails(destinationNode, delay);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.i.guiScript.aiAlertSprite;
+            data.sprite = GameManager.i.spriteScript.aiAlertSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -2609,7 +2609,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Resistance Activity";
             data.bottomText = GameManager.i.itemDataScript.GetAINodeActivityDetails(node, delay);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.i.guiScript.aiAlertSprite;
+            data.sprite = GameManager.i.spriteScript.aiAlertSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -2657,7 +2657,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Detected!";
             data.bottomText = GameManager.i.itemDataScript.GetAIDetectedDetails(nodeID, delay);
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.i.guiScript.aiCountermeasureSprite;
+            data.sprite = GameManager.i.spriteScript.aiCountermeasureSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -2725,7 +2725,7 @@ public class MessageManager : MonoBehaviour
                 }
             }
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.i.guiScript.aiAlertSprite;
+            data.sprite = GameManager.i.spriteScript.aiAlertSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -2769,7 +2769,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = GameManager.i.itemDataScript.GetAIHackedDetails(isDetected, attemptsDetected, attemptsTotal);
             if (isDetected == true) { data.priority = ItemPriority.Medium; }
             else { data.priority = ItemPriority.Low; }
-            data.sprite = GameManager.i.guiScript.alarmSprite;
+            data.sprite = GameManager.i.spriteScript.alarmSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -2810,7 +2810,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "AI Reboots";
             data.bottomText = GameManager.i.itemDataScript.GetAIRebootDetails(rebootTimer, currentPowerCost);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.i.guiScript.aiRebootSprite;
+            data.sprite = GameManager.i.spriteScript.aiRebootSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -2850,7 +2850,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "AI Countermeasures";
             data.bottomText = GameManager.i.itemDataScript.GetAICounterMeasureDetails(warning, timerStartValue, protocolLevelNew);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.i.guiScript.aiCountermeasureSprite;
+            data.sprite = GameManager.i.spriteScript.aiCountermeasureSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -3088,7 +3088,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Ongoing Effect";
             data.bottomText = GameManager.i.itemDataScript.GetDecisionOngoingEffectDetails(topText, middleText, bottomText);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.i.guiScript.aiAlertSprite;
+            data.sprite = GameManager.i.spriteScript.aiAlertSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.Effects;
             data.type = message.type;
@@ -3671,7 +3671,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Special Gear Used";
             data.bottomText = GameManager.i.itemDataScript.GetGearSpecialDetails(infoDump);
             data.priority = ItemPriority.Low;
-            data.sprite = GameManager.i.guiScript.infoSprite;
+            data.sprite = GameManager.i.spriteScript.infoSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -4016,7 +4016,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "District Ongoing Effect";
             data.bottomText = GameManager.i.itemDataScript.GetOngoingEffectDetails(ongoing);
             data.priority = ItemPriority.Low;
-            data.sprite = GameManager.i.guiScript.ongoingEffectSprite;
+            data.sprite = GameManager.i.spriteScript.ongoingEffectSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.Effects;
             data.type = message.type;
@@ -4402,7 +4402,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "District Crisis";
             data.bottomText = GameManager.i.itemDataScript.GetNodeCrisisDetails(node, reductionInCityLoyalty);
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.i.guiScript.nodeCrisisSprite;
+            data.sprite = GameManager.i.spriteScript.nodeCrisisSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -4437,7 +4437,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "District Immunity";
             data.bottomText = GameManager.i.itemDataScript.GetNodeOngoingEffectDetails(node);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.i.guiScript.nodeCrisisSprite;
+            data.sprite = GameManager.i.spriteScript.nodeCrisisSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.Effects;
             data.type = message.type;
@@ -4483,7 +4483,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "City Loyalty";
             data.bottomText = GameManager.i.itemDataScript.GetCityLoyaltyDetails(reason, newCityLoyalty, changeInLoyalty);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.i.guiScript.cityLoyaltySprite;
+            data.sprite = GameManager.i.spriteScript.cityLoyaltySprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -4541,7 +4541,7 @@ public class MessageManager : MonoBehaviour
             }
             data.bottomText = GameManager.i.itemDataScript.GetObjectiveProgressDetails(reason, adjustment, objective);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.i.guiScript.objectiveSprite;
+            data.sprite = GameManager.i.spriteScript.objectiveSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -4584,7 +4584,7 @@ public class MessageManager : MonoBehaviour
             {
                 if (GameManager.i.turnScript.CheckIsAutoRun() == false)
                 { Debug.LogWarning("Invalid sprite (Null)"); }
-                topicData.sprite = GameManager.i.guiScript.infoSprite;
+                topicData.sprite = GameManager.i.spriteScript.infoSprite;
             }
             if (string.IsNullOrEmpty(topicData.text) == false)
             {
@@ -4653,7 +4653,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = GameManager.i.itemDataScript.GetTopicReviewDetails(votesFor, votesAgainst, votesAbstain, outcome);
             data.itemText = "Performance REVIEW Outcome";
             data.priority = ItemPriority.Low;
-            data.sprite = GameManager.i.guiScript.topicReviewSprite;
+            data.sprite = GameManager.i.spriteScript.topicReviewSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -4785,7 +4785,7 @@ public class MessageManager : MonoBehaviour
                 data.topText = string.Format("{0} Direct Feed", org.tag);
                 data.bottomText = GameManager.i.itemDataScript.GetOrgNemesisDetails(node, nemesis, org, moveNumber);
                 data.priority = ItemPriority.High;
-                data.sprite = GameManager.i.guiScript.aiAlertSprite;
+                data.sprite = GameManager.i.spriteScript.aiAlertSprite;
                 data.spriteName = data.sprite.name;
                 data.tab = ItemTab.ALERTS;
                 data.type = message.type;
@@ -4836,7 +4836,7 @@ public class MessageManager : MonoBehaviour
                 data.topText = string.Format("{0} Direct Feed", org.tag);
                 data.bottomText = GameManager.i.itemDataScript.GetOrgErasureTeamDetails(node, team, org);
                 data.priority = ItemPriority.High;
-                data.sprite = GameManager.i.guiScript.aiAlertSprite;
+                data.sprite = GameManager.i.spriteScript.aiAlertSprite;
                 data.spriteName = data.sprite.name;
                 data.tab = ItemTab.ALERTS;
                 data.type = message.type;
@@ -4885,7 +4885,7 @@ public class MessageManager : MonoBehaviour
                 { isStealthMode = true; }
                 data.bottomText = GameManager.i.itemDataScript.GetOrgNpcDetails(node, npc, org, isStealthMode);
                 data.priority = ItemPriority.High;
-                data.sprite = GameManager.i.guiScript.aiAlertSprite;
+                data.sprite = GameManager.i.spriteScript.aiAlertSprite;
                 data.spriteName = data.sprite.name;
                 data.tab = ItemTab.ALERTS;
                 data.type = message.type;
@@ -5128,7 +5128,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Under Investigation";
             data.bottomText = GameManager.i.itemDataScript.GetInvestNewDetails(invest);
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.i.guiScript.investigationSprite;
+            data.sprite = GameManager.i.spriteScript.investigationSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -5172,7 +5172,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Ongoing Investigation";
             data.bottomText = GameManager.i.itemDataScript.GetInvestOngoingDetails(invest);
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.i.guiScript.investigationSprite;
+            data.sprite = GameManager.i.spriteScript.investigationSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.Effects;
             data.type = message.type;
@@ -5216,7 +5216,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "New Evidence";
             data.bottomText = GameManager.i.itemDataScript.GetInvestEvidenceDetails(invest, source);
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.i.guiScript.investigationSprite;
+            data.sprite = GameManager.i.spriteScript.investigationSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -5262,7 +5262,7 @@ public class MessageManager : MonoBehaviour
             data.bottomText = GameManager.i.itemDataScript.GetInvestResolutionDetails(invest);
             if (invest.evidence <= 0) { data.priority = ItemPriority.High; }
             else { data.priority = ItemPriority.Medium; }
-            data.sprite = GameManager.i.guiScript.investigationSprite;
+            data.sprite = GameManager.i.spriteScript.investigationSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -5306,7 +5306,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Verdict Enforced";
             data.bottomText = GameManager.i.itemDataScript.GetInvestCompletedDetails(invest);
             data.priority = ItemPriority.High;
-            data.sprite = GameManager.i.guiScript.investigationSprite;
+            data.sprite = GameManager.i.spriteScript.investigationSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;
@@ -5350,7 +5350,7 @@ public class MessageManager : MonoBehaviour
             data.topText = "Investigation Falters";
             data.bottomText = GameManager.i.itemDataScript.GetInvestDroppedDetails(invest);
             data.priority = ItemPriority.Medium;
-            data.sprite = GameManager.i.guiScript.investigationSprite;
+            data.sprite = GameManager.i.spriteScript.investigationSprite;
             data.spriteName = data.sprite.name;
             data.tab = ItemTab.ALERTS;
             data.type = message.type;

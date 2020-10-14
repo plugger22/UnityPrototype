@@ -2539,3 +2539,13 @@ City seed 765 -> New York, Americon
 
 Dev seed 18642 -> Wednesday, 14 October 2020 3:41 PM
 City seed 765 -> New York, Americon
+
+Dev seed 49596 -> Wednesday, 14 October 2020 8:08 PM
+City seed 765 -> New York, Americon
+WARNING tempList has 21 records for tab 0 -> INFO only
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:700)
+	GUIManager:InitialiseInfoApp(GlobalSide) (at Assets/Scripts/Managers/GUIManager.cs:829)
+	<MainInfoApp>c__Iterator3:MoveNext() (at Assets/Scripts/Managers/GUIManager.cs:810)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	

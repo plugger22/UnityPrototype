@@ -415,7 +415,7 @@ public class TurnManager : MonoBehaviour
         if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
         builderBottom.AppendFormat("{0}{1}{2}{3} has been LOST{4}", colourNeutral, "Work Permit", colourEnd, colourBad, colourEnd);
         details.textBottom = builderBottom.ToString();
-        details.sprite = GameManager.i.guiScript.aiCountermeasureSprite;
+        details.sprite = GameManager.i.spriteScript.aiCountermeasureSprite;
         //add to start of turn info Pipeline
         details.type = MsgPipelineType.Nemesis;
         if (GameManager.i.guiScript.InfoPipelineAdd(details) == false)
@@ -1018,7 +1018,7 @@ public class TurnManager : MonoBehaviour
         //set autorun to false (needed to allow ProcessWinState to generate an outcome message as isAutoRun true provides a global block on all ModalOutcome.cs -> SetModalOutcome)
         isAutoRun = false;
         //get approriate sprite
-        Sprite sprite = GameManager.i.guiScript.firedSprite;
+        Sprite sprite = GameManager.i.spriteScript.firedSprite;
         switch (reason)
         {
             case WinReasonLevel.CityLoyaltyMax:
@@ -1027,7 +1027,7 @@ public class TurnManager : MonoBehaviour
             case WinReasonLevel.HqSupportMin:
             case WinReasonLevel.MissionTimerMin:
             case WinReasonLevel.ObjectivesCompleted:
-                sprite = GameManager.i.guiScript.firedSprite;
+                sprite = GameManager.i.spriteScript.firedSprite;
                 break;
             default:
                 Debug.LogWarningFormat("Invalid reason \"{0}\"", reason);
@@ -1064,17 +1064,17 @@ public class TurnManager : MonoBehaviour
         //set autorun to false (needed to allow ProcessWinState to generate an outcome message as isAutoRun true provides a global block on all ModalOutcome.cs -> SetModalOutcome)
         isAutoRun = false;
         //get approriate sprite
-        Sprite sprite = GameManager.i.guiScript.firedSprite;
+        Sprite sprite = GameManager.i.spriteScript.firedSprite;
         switch (reason)
         {
             case WinReasonCampaign.BlackMarks:
             case WinReasonCampaign.Commendations:
             case WinReasonCampaign.DoomTimerMin:
             case WinReasonCampaign.MainGoal:
-                sprite = GameManager.i.guiScript.firedSprite;
+                sprite = GameManager.i.spriteScript.firedSprite;
                 break;
             case WinReasonCampaign.Innocence:
-                sprite = GameManager.i.guiScript.capturedSprite;
+                sprite = GameManager.i.spriteScript.capturedSprite;
                 break;
             default:
                 Debug.LogWarningFormat("Invalid reason \"{0}\"", reason);

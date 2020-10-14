@@ -2381,7 +2381,7 @@ public class NodeManager : MonoBehaviour
                 //Detected
                 outcomeDetails.textTop = string.Format("You have been {0}DETECTED{1} moving to", colourBad, colourEnd);
                 outcomeDetails.textBottom = data.text;
-                outcomeDetails.sprite = GameManager.i.guiScript.alarmSprite;
+                outcomeDetails.sprite = GameManager.i.spriteScript.alarmSprite;
                 outcomeDetails.isAction = true;
                 outcomeDetails.side = globalResistance;
                 outcomeDetails.reason = "Player Move";
@@ -2391,7 +2391,7 @@ public class NodeManager : MonoBehaviour
                 //Not detected
                 outcomeDetails.textTop = string.Format("You Move {0}without being Detected{1}", colourGood, colourEnd);
                 outcomeDetails.textBottom = data.text;
-                outcomeDetails.sprite = GameManager.i.guiScript.undetectedSprite;
+                outcomeDetails.sprite = GameManager.i.spriteScript.undetectedSprite;
                 outcomeDetails.isAction = true;
                 outcomeDetails.side = globalResistance;
                 outcomeDetails.reason = "Player Move";

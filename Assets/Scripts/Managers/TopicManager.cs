@@ -3850,7 +3850,7 @@ public class TopicManager : MonoBehaviour
     {
         string upperText, lowerText;
         //default sprite
-        if (sprite == null) { sprite = GameManager.i.guiScript.infoSprite; }
+        if (sprite == null) { sprite = GameManager.i.spriteScript.infoSprite; }
         if (top == null || top.Length == 0)
         {
             if (string.IsNullOrEmpty(turnOption.tag) == false)
@@ -7168,7 +7168,7 @@ public class TopicManager : MonoBehaviour
                     { data.imageTooltipDetails = resultsHQ.Item2; }
                     break;
                 case "Capture":
-                    turnSprite = GameManager.i.guiScript.capturedSprite;
+                    turnSprite = GameManager.i.spriteScript.capturedSprite;
                     tagSpriteName = "Prisoner";
                     string tooltipName = "Incarcerated";
                     //tooltip
@@ -7683,7 +7683,7 @@ public class TopicManager : MonoBehaviour
                     int count = listOfTopics.Count;
                     if (count > 0)
                     {
-                        Sprite debugSprite = GameManager.i.guiScript.topicDefaultSprite;
+                        Sprite debugSprite = GameManager.i.spriteScript.topicDefaultSprite;
                         coroutine = DisplayNews(listOfTopics, newsSnippet, debugSprite, maxNodeID);
                         StartCoroutine(coroutine);
                     }
@@ -7776,7 +7776,7 @@ public class TopicManager : MonoBehaviour
     {
         int count = listOfTopics.Count;
         string topicText, optionText, storyText;
-        Sprite debugSprite = GameManager.i.guiScript.topicDefaultSprite;
+        Sprite debugSprite = GameManager.i.spriteScript.topicDefaultSprite;
         Sprite topicSprite;
         //loop topics
         for (int i = 0; i < count; i++)

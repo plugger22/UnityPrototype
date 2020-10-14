@@ -1303,7 +1303,7 @@ public class TeamManager : MonoBehaviour
             outcomeDetails.side = globalResistance;
             outcomeDetails.textTop = "There has been an error in communication and No teams can be Neutralised.";
             outcomeDetails.textBottom = "Heads will roll!";
-            outcomeDetails.sprite = GameManager.i.guiScript.errorSprite;
+            outcomeDetails.sprite = GameManager.i.spriteScript.errorSprite;
             EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "TeamManager.cs -> InitialiseGenericPickerNeutralise");
         }
         else
