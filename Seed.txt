@@ -2725,3 +2725,24 @@ UnityEngine.Debug:LogWarning(Object)
 	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
 	UnityEngine.EventSystems.EventSystem:Update()
 	
+Dev seed 50919 -> Thursday, 15 October 2020 5:45 PM
+City seed 5678 -> London, Eurasia
+WARNING Invalid TopicUIData package (Null)
+UnityEngine.Debug:LogWarning(Object)
+	TopicUI:ProcessTopicIgnore() (at Assets/Scripts/GUI/TopicUI.cs:1307)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:459)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 54784 -> Thursday, 15 October 2020 5:46 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 6287 -> Thursday, 15 October 2020 6:01 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 18680 -> Thursday, 15 October 2020 6:04 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 44526 -> Thursday, 15 October 2020 6:05 PM
+City seed 5678 -> London, Eurasia
