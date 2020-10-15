@@ -6013,11 +6013,11 @@ MonoBehaviour:
   actionSprite: {fileID: 21300000, guid: 8138c1817c988d041833703c6b085f72, type: 3}
   objectiveSprite: {fileID: 21300000, guid: 1e2bcaaa7e6fbaf4da0bb00f2ceba3f6, type: 3}
   topicDefaultSprite: {fileID: 21300000, guid: 0990750233d69384f832d111b8981353, type: 3}
-  topicOptionNormalValidSprite: {fileID: 21300000, guid: d9a90c3e37216bf4a8c6946eb464ade7,
+  topicOptionNormalValidSprite: {fileID: 21300000, guid: e459323e7eb86954cac56ace0cc4d8ec,
     type: 3}
   topicOptionNormalInvalidSprite: {fileID: 21300000, guid: de4067097f073d341b79d0136225ba40,
     type: 3}
-  topicOptionOtherValidSprite: {fileID: 21300000, guid: 2f3c5378750402347972293a67ccd38f,
+  topicOptionOtherValidSprite: {fileID: 21300000, guid: e459323e7eb86954cac56ace0cc4d8ec,
     type: 3}
   topicOptionOtherInvalidSprite: {fileID: 21300000, guid: 41f9a23fa9cc0c4489f4ae61389d2ccf,
     type: 3}

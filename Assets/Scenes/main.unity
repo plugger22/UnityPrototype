@@ -19981,7 +19981,7 @@ Prefab:
         type: 2}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: d9a90c3e37216bf4a8c6946eb464ade7,
+      objectReference: {fileID: 21300000, guid: 1d34a869a9c4f3246b2c3c416e99721a,
         type: 3}
     - target: {fileID: 1488035410952364, guid: 63bb2d0f27d333142b0fa40622085c5f, type: 2}
       propertyPath: m_IsActive
@@ -20529,7 +20529,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &457294003
 RectTransform:
   m_ObjectHideFlags: 0
@@ -64184,7 +64184,7 @@ Prefab:
         type: 2}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 0f43b7d7276c7b54c9de569aab1ddf08,
+      objectReference: {fileID: 21300000, guid: 7ff1d3f49f465584fbd7e557d1de06c0,
         type: 3}
     - target: {fileID: 114652320604000822, guid: 1e4f0c2befdb31a4096d5b12f630938f,
         type: 2}
@@ -81095,14 +81095,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.078431375, g: 0.56078434, b: 0.9372549, a: 0.8862745}
+  m_Color: {r: 0.9622642, g: 0.9622642, b: 0.9622642, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: b2880357654437e40bd38711b99d0a69, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 49f7915dfc10a5e47add890237c880ef, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
