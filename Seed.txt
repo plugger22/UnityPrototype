@@ -2695,3 +2695,33 @@ City seed 765 -> New York, Americon
 
 Dev seed 39370 -> Thursday, 15 October 2020 4:02 PM
 City seed 765 -> New York, Americon
+
+Dev seed 11446 -> Thursday, 15 October 2020 4:24 PM
+City seed 765 -> New York, Americon
+
+Dev seed 41387 -> Thursday, 15 October 2020 4:26 PM
+City seed 765 -> New York, Americon
+
+Dev seed 9026 -> Thursday, 15 October 2020 4:27 PM
+City seed 765 -> New York, Americon
+
+Dev seed 61369 -> Thursday, 15 October 2020 4:47 PM
+City seed 5678 -> London, Eurasia
+WARNING Invalid TopicUIData package (Null)
+UnityEngine.Debug:LogWarning(Object)
+	TopicUI:ProcessTopicIgnore() (at Assets/Scripts/GUI/TopicUI.cs:1307)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:459)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 42716 -> Thursday, 15 October 2020 4:48 PM
+City seed 5678 -> London, Eurasia
+WARNING Invalid TopicUIData package (Null)
+UnityEngine.Debug:LogWarning(Object)
+	TopicUI:ProcessTopicIgnore() (at Assets/Scripts/GUI/TopicUI.cs:1307)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:459)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
