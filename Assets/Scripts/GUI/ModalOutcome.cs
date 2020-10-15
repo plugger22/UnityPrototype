@@ -163,6 +163,7 @@ public class ModalOutcome : MonoBehaviour
                 modalOutcomeWindow.SetActive(true);
                 //register action status
                 isAction = details.isAction;
+                /*
                 //set confirm button image and sprite states
                 switch (details.side.name)
                 {
@@ -190,6 +191,8 @@ public class ModalOutcome : MonoBehaviour
                 }
                 //set transition
                 confirmButton.transition = Selectable.Transition.SpriteSwap;
+                */
+
                 //Show Me
                 if (details.listOfNodes != null && details.listOfNodes.Count > 0)
                 {

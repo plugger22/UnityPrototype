@@ -2590,3 +2590,65 @@ City seed 765 -> New York, Americon
 
 Dev seed 57504 -> Thursday, 15 October 2020 10:28 AM
 City seed 765 -> New York, Americon
+
+Dev seed 53722 -> Thursday, 15 October 2020 10:46 AM
+City seed 765 -> New York, Americon
+WARNING tempList has 21 records for tab 0 -> INFO only
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:700)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:406)
+	
+Dev seed 29038 -> Thursday, 15 October 2020 10:52 AM
+City seed 765 -> New York, Americon
+
+Dev seed 39014 -> Thursday, 15 October 2020 10:52 AM
+City seed 765 -> New York, Americon
+
+Dev seed 43066 -> Thursday, 15 October 2020 10:53 AM
+City seed 765 -> New York, Americon
+
+Dev seed 55164 -> Thursday, 15 October 2020 11:36 AM
+City seed 765 -> New York, Americon
+
+Dev seed 37783 -> Thursday, 15 October 2020 11:38 AM
+City seed 765 -> New York, Americon
+
+Dev seed 35627 -> Thursday, 15 October 2020 11:42 AM
+City seed 765 -> New York, Americon
+
+Dev seed 26413 -> Thursday, 15 October 2020 11:44 AM
+City seed 765 -> New York, Americon
+
+Dev seed 31907 -> Thursday, 15 October 2020 11:47 AM
+City seed 765 -> New York, Americon
+
+Dev seed 40226 -> Thursday, 15 October 2020 11:50 AM
+City seed 765 -> New York, Americon
+
+Dev seed 15128 -> Thursday, 15 October 2020 11:57 AM
+City seed 765 -> New York, Americon
+
+Dev seed 23552 -> Thursday, 15 October 2020 12:00 PM
+City seed 765 -> New York, Americon
+
+Dev seed 19173 -> Thursday, 15 October 2020 12:01 PM
+City seed 765 -> New York, Americon
+
+Dev seed 18010 -> Thursday, 15 October 2020 12:05 PM
+City seed 765 -> New York, Americon
+
+Dev seed 36543 -> Thursday, 15 October 2020 12:06 PM
+City seed 765 -> New York, Americon
+
+Dev seed 17671 -> Thursday, 15 October 2020 12:13 PM
+City seed 765 -> New York, Americon
+
+Dev seed 55770 -> Thursday, 15 October 2020 12:16 PM
+City seed 765 -> New York, Americon
+
+Dev seed 22425 -> Thursday, 15 October 2020 12:17 PM
+City seed 765 -> New York, Americon
+
+Dev seed 64019 -> Thursday, 15 October 2020 12:38 PM
+City seed 765 -> New York, Americon

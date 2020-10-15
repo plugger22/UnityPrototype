@@ -5982,7 +5982,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vacantActorSprite: {fileID: 21300000, guid: d7f77a0f40a944e4bafd0104b4e0b8b1, type: 3}
   errorSprite: {fileID: 21300000, guid: b9bbb6ebf7eace84fa8f788ca4d7fc72, type: 3}
-  infoSprite: {fileID: 21300000, guid: 487d8e165f0c4564b8465f21c927f6b2, type: 3}
+  infoSprite: {fileID: 21300000, guid: db390f0e66282d04eb881c97923e9d06, type: 3}
   alarmSprite: {fileID: 21300000, guid: 1e2bcaaa7e6fbaf4da0bb00f2ceba3f6, type: 3}
   undetectedSprite: {fileID: 21300000, guid: aacc92b8ed9e1a447b4a7c5e7162b428, type: 3}
   targetSuccessSprite: {fileID: 21300000, guid: 3d2c635d61b7f234d9229ab32709ca48,
