@@ -2746,3 +2746,21 @@ City seed 5678 -> London, Eurasia
 
 Dev seed 44526 -> Thursday, 15 October 2020 6:05 PM
 City seed 5678 -> London, Eurasia
+
+Dev seed 25527 -> Thursday, 15 October 2020 8:17 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 38635 -> Friday, 16 October 2020 10:22 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 32435 -> Friday, 16 October 2020 12:06 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 30933 -> Friday, 16 October 2020 12:32 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 56251 -> Friday, 16 October 2020 12:34 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 33869 -> Friday, 16 October 2020 12:38 PM
+City seed 5678 -> London, Eurasia

@@ -67728,8 +67728,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: da9a09ceec0dedd4ca3ba63870ddf746, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 6b01a5e7d50dd7447ae07cecbc06c86d, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -82488,7 +82488,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2073812140
 RectTransform:
   m_ObjectHideFlags: 0
@@ -83376,12 +83376,12 @@ Prefab:
     - target: {fileID: 114183179448910338, guid: d086aed7d68115448ab4f87ee94f50bd,
         type: 2}
       propertyPath: m_havePropertiesChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114183179448910338, guid: d086aed7d68115448ab4f87ee94f50bd,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114183179448910338, guid: d086aed7d68115448ab4f87ee94f50bd,
         type: 2}
@@ -83481,7 +83481,7 @@ Prefab:
     - target: {fileID: 114183179448910338, guid: d086aed7d68115448ab4f87ee94f50bd,
         type: 2}
       propertyPath: m_firstOverflowCharacterIndex
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 224490200928296354, guid: d086aed7d68115448ab4f87ee94f50bd,
         type: 2}
@@ -83542,6 +83542,11 @@ Prefab:
         type: 2}
       propertyPath: m_Type
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114183179448910338, guid: d086aed7d68115448ab4f87ee94f50bd,
+        type: 2}
+      propertyPath: m_overflowMode
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d086aed7d68115448ab4f87ee94f50bd, type: 2}
@@ -85061,32 +85066,32 @@ Prefab:
     - target: {fileID: 114395408053451060, guid: d086aed7d68115448ab4f87ee94f50bd,
         type: 2}
       propertyPath: m_Colors.m_HighlightedColor.r
-      value: 0.91764706
+      value: 0.94509804
       objectReference: {fileID: 0}
     - target: {fileID: 114395408053451060, guid: d086aed7d68115448ab4f87ee94f50bd,
         type: 2}
       propertyPath: m_Colors.m_HighlightedColor.g
-      value: 0.8862745
+      value: 0.9254902
       objectReference: {fileID: 0}
     - target: {fileID: 114395408053451060, guid: d086aed7d68115448ab4f87ee94f50bd,
         type: 2}
       propertyPath: m_Colors.m_HighlightedColor.b
-      value: 0.8392157
+      value: 0.89411765
       objectReference: {fileID: 0}
     - target: {fileID: 114395408053451060, guid: d086aed7d68115448ab4f87ee94f50bd,
         type: 2}
       propertyPath: m_Colors.m_NormalColor.r
-      value: 0.8509804
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114395408053451060, guid: d086aed7d68115448ab4f87ee94f50bd,
         type: 2}
       propertyPath: m_Colors.m_NormalColor.g
-      value: 0.7921569
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114395408053451060, guid: d086aed7d68115448ab4f87ee94f50bd,
         type: 2}
       propertyPath: m_Colors.m_NormalColor.b
-      value: 0.7019608
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224040992118361858, guid: d086aed7d68115448ab4f87ee94f50bd,
         type: 2}
@@ -85152,7 +85157,7 @@ Prefab:
     - target: {fileID: 114395408053451060, guid: d086aed7d68115448ab4f87ee94f50bd,
         type: 2}
       propertyPath: m_Colors.m_NormalColor.a
-      value: 0.99215686
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224490200928296354, guid: d086aed7d68115448ab4f87ee94f50bd,
         type: 2}
@@ -85218,6 +85223,11 @@ Prefab:
         type: 2}
       propertyPath: m_Colors.m_PressedColor.b
       value: 0.26666668
+      objectReference: {fileID: 0}
+    - target: {fileID: 114183179448910338, guid: d086aed7d68115448ab4f87ee94f50bd,
+        type: 2}
+      propertyPath: m_overflowMode
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d086aed7d68115448ab4f87ee94f50bd, type: 2}
