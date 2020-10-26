@@ -1155,7 +1155,7 @@ public class MainInfoUI : MonoBehaviour
             {
                 //hide help and make button active
                 buttonInteractionItem.SetButton(EventType.MainInfoShowMe);
-                buttonItemText.text = "Show Me";
+                buttonItemText.text = "SHOW ME";
                 buttonItem.gameObject.SetActive(true);
                 buttonHelpCentre.gameObject.SetActive(false);
                 if (data.help > -1)
@@ -1194,7 +1194,7 @@ public class MainInfoUI : MonoBehaviour
                 { arrayItemText[highlightIndex].text = string.Format("{0}{1}{2}", colourDefault, listOfCurrentPageItemData[highlightIndex].itemText, colourEnd); }
                 highlightIndex = itemIndex;
                 //highlight item -> show as yellow
-                arrayItemText[itemIndex].text = string.Format("{0}<b>{1}</b>{2}", colourNeutral, listOfCurrentPageItemData[itemIndex].itemText, colourEnd);
+                arrayItemText[itemIndex].text = string.Format("{0}<b><size=110%>{1}</size></b>{2}", colourNeutral, listOfCurrentPageItemData[itemIndex].itemText, colourEnd);
             }
         }
         else
@@ -1257,7 +1257,9 @@ public class MainInfoUI : MonoBehaviour
                 textTop = "Incoming Messages";
                 builder.AppendFormat("{0}<b>Click</b>{1} on an {2}<b>Item</b>{3}{4}for more information", colourNeutral, colourEnd, colourNeutral, colourEnd, "\n");
                 builder.AppendLine(); builder.AppendLine();
-                builder.Append("Items are ordered by priority");
+                builder.AppendFormat("{0}<b>Scroll</b>{1} down with {2}<b>Mouse Wheel</b>{3}", colourNeutral, colourEnd, colourNeutral, colourEnd);
+                builder.AppendLine(); builder.AppendLine();
+                builder.Append("Items are <b>ordered by priority</b>");
                 builder.AppendLine(); builder.AppendLine();
                 builder.AppendFormat("{0}<b>No action required</b>{1}", colourNeutral, colourEnd);
                 break;

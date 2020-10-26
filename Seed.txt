@@ -2779,3 +2779,146 @@ City seed 5678 -> London, Eurasia
 
 Dev seed 20868 -> Friday, 16 October 2020 4:15 PM
 City seed 5678 -> London, Eurasia
+
+Dev seed 42250 -> Monday, 26 October 2020 9:08 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 3086 -> Monday, 26 October 2020 9:30 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 49116 -> Monday, 26 October 2020 9:33 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 11194 -> Monday, 26 October 2020 9:42 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 48621 -> Monday, 26 October 2020 10:08 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 34371 -> Monday, 26 October 2020 10:11 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 38432 -> Monday, 26 October 2020 10:11 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 8919 -> Monday, 26 October 2020 10:11 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 22316 -> Monday, 26 October 2020 10:15 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 27269 -> Monday, 26 October 2020 10:18 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 29826 -> Monday, 26 October 2020 10:23 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 24352 -> Monday, 26 October 2020 10:25 AM
+City seed 5678 -> London, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:238)
+	
+Dev seed 63826 -> Monday, 26 October 2020 10:32 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 15187 -> Monday, 26 October 2020 10:35 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 21610 -> Monday, 26 October 2020 10:36 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 44105 -> Monday, 26 October 2020 10:37 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 60626 -> Monday, 26 October 2020 10:39 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 27511 -> Monday, 26 October 2020 10:43 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 26542 -> Monday, 26 October 2020 10:45 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 9051 -> Monday, 26 October 2020 11:04 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 19560 -> Monday, 26 October 2020 11:12 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 26905 -> Monday, 26 October 2020 11:19 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 60250 -> Monday, 26 October 2020 11:22 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 58362 -> Monday, 26 October 2020 11:23 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 30027 -> Monday, 26 October 2020 11:29 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 10693 -> Monday, 26 October 2020 11:32 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 22097 -> Monday, 26 October 2020 11:38 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 26856 -> Monday, 26 October 2020 11:51 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 57288 -> Monday, 26 October 2020 11:55 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 22957 -> Monday, 26 October 2020 12:25 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 45704 -> Monday, 26 October 2020 12:28 PM
+City seed 5678 -> London, Eurasia
