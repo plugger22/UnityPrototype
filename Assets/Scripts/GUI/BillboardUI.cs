@@ -159,8 +159,8 @@ public class BillboardUI : MonoBehaviour
         Debug.Assert(billTransformLeft != null, "Invalid billTransformLeft (Null)");
         Debug.Assert(billTransformRight != null, "Invalid billTransformRight (Null)");
         //colours
-        colourRed = "<color=#ee043a>";
-        colourBlue = "<color=#58c1ef>";
+        colourRed = "<color=#f71735>";
+        colourBlue = "<color=#55C1FF>";
         endTag = "</color></size>";
         sizeLarge = "<size=130%>";
         //initialise billboard
