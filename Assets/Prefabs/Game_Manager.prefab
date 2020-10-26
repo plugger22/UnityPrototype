@@ -6421,7 +6421,7 @@ MonoBehaviour:
   maxInventoryOptions: 4
   billboardOffset: 135
   billboardFlash: 1.5
-  billboardChance: 100
+  billboardChance: 20
   billboardSpeed: 100
   billboardFontPause: 3
   billboardFontSpeed: 2

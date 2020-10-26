@@ -102,7 +102,7 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Billboard border flash speed, strobing in and out")]
     [Range(0.5f, 2.0f)] public float billboardFlash = 1.0f;
     [Tooltip("If billboard is switch 'ON' gives the % chance (less than) of a billboard being shown at the end of a turn (eg. determines frequency)")]
-    [Range(0, 100)] public int billboardChance = 10;
+    [Range(0, 100)] public int billboardChance = 20;
     [Tooltip("Speed at which billboard blinds open and shut (speed x Time.deltaTime)")]
     [Range(0f, 100f)] public float billboardSpeed = 100.0f;
     [Tooltip("Strobing of playerName font size. How will it pause at full size? (Time.deltaTime)")]
@@ -120,7 +120,7 @@ public class GUIManager : MonoBehaviour
     [Tooltip("% chance of a light beam flickering each frame")]
     [Range(0, 100)] public int billboardLightChance = 1;
 
-      
+
 
     //font awesome icons (characters)
     [HideInInspector] public char bulletChar;
@@ -206,7 +206,7 @@ public class GUIManager : MonoBehaviour
 
     private string alpha = "<alpha=#66>";   //alpha transparency, used for stars (FF is 100%, CC / AA / 88 / 66 / 44 / 22)
 
-    
+
 
     /// <summary>
     /// Initialises GUI with all relevant data
@@ -707,12 +707,11 @@ public class GUIManager : MonoBehaviour
             int rnd = UnityEngine.Random.Range(0, 100);
             Debug.LogFormat("[Rnd] -> GUIManager.cs -> InfoPipeline: Billboard {0}, need < {1}, rolled {2}{3}", rnd < billboardChance ? "True" : "False", billboardChance, rnd, "\n");
             if (rnd < billboardChance)
-            {
-                GameManager.i.billboardScript.RunBillboard();
-                yield return new WaitUntil(() => waitUntilDone == true);
-                waitUntilDone = false;
-                GameManager.i.billboardScript.ResetBillboard();
-            }
+            { GameManager.i.billboardScript.RunBillboard(true); }
+            else { GameManager.i.billboardScript.RunBillboard(false); }
+            yield return new WaitUntil(() => waitUntilDone == true);
+            waitUntilDone = false;
+            GameManager.i.billboardScript.ResetBillboard();
         }
         //loop through each message type and display in enum order, if present, one at a time.
         foreach (var msgType in Enum.GetValues(typeof(MsgPipelineType)))

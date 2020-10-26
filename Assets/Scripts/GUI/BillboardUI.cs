@@ -23,9 +23,11 @@ public class BillboardUI : MonoBehaviour
     public Image billLightRight;
     public Image billBeamLeft;
     public Image billBeamRight;
+    public Image billTurn;
     public TextMeshProUGUI billTextTop;
     public TextMeshProUGUI billTextBottom;
     public TextMeshProUGUI billTextName;
+    public TextMeshProUGUI billTextTurn;
 
     private RectTransform billTransformLeft;
     private RectTransform billTransformRight;
@@ -150,9 +152,11 @@ public class BillboardUI : MonoBehaviour
         Debug.Assert(billLightRight != null, "Invalid billLightRight (Null)");
         Debug.Assert(billBeamLeft != null, "Invalid billBeamLeft (Null)");
         Debug.Assert(billBeamRight != null, "Invalid billBeamRight (Null)");
+        Debug.Assert(billTurn != null, "Invalid billTurn (Null)");
         Debug.Assert(billTextTop != null, "Invalid billTextTop (Null)");
         Debug.Assert(billTextBottom != null, "Invalid billTextBottom (Null)");
         Debug.Assert(billTextName != null, "Invalid billTextName (Null)");
+        Debug.Assert(billTextTurn != null, "Invalid billTextTurn (Null)");
         //initialise components
         billTransformLeft = billLeft.GetComponent<RectTransform>();
         billTransformRight = billRight.GetComponent<RectTransform>();
@@ -241,31 +245,43 @@ public class BillboardUI : MonoBehaviour
         billLightRight.gameObject.SetActive(false);
         billBeamLeft.gameObject.SetActive(false);
         billBeamRight.gameObject.SetActive(false);
+        billTurn.gameObject.SetActive(false);
         billLeft.transform.localPosition = new Vector3(-screenDistance, 0, 0);
         billRight.transform.localPosition = new Vector3(screenDistance, 0, 0);
         Debug.LogFormat("[UI] BillboardUI.cs -> Reset: Reset Billboard{0}", "\n");
     }
 
     /// <summary>
-    /// Main billboard controller
+    /// Main billboard controller (true if billboard displayed for an advertisement, etc., false for a simple turn display)
     /// </summary>
-    public void RunBillboard()
+    public void RunBillboard(bool isBillboard)
     {
         /*string displayText = GameManager.i.newsScript.GetAdvert();*/
-        Billboard billboard = GameManager.i.dataScript.GetRandomBillboard();
-        if (billboard != null)
+        if (isBillboard == true)
         {
-            Debug.LogFormat("[UI] BillboardUI.cs -> RunBillboard: Start Billboard with \"{0}\"{1}", billboard.name, "\n");
-            StartCoroutine("BillOpen", billboard);
+            //full billboard display
+            Billboard billboard = GameManager.i.dataScript.GetRandomBillboard();
+            if (billboard != null)
+            {
+                Debug.LogFormat("[UI] BillboardUI.cs -> RunBillboard: Start BillboardMain with \"{0}\" display{1}", billboard.name, "\n");
+                StartCoroutine("BillOpenMain", billboard);
+            }
+            else { Debug.LogWarning("Invalid billboard (Null)"); }
         }
-        else { Debug.LogWarning("Invalid billboard (Null)"); }
+        else
+        {
+            //normal turn display
+            int dayNum = GameManager.i.turnScript.Turn;
+            Debug.LogFormat("[UI] BillboardUI.cs -> RunBillboard: Start BillboardTurn for Day {0} display{1}", dayNum, "\n");
+            StartCoroutine("BillOpenTurn", dayNum);
+        }
     }
 
     /// <summary>
-    /// coroutine to slide panels together then display billboard (strobes the neon border)
+    /// coroutine to slide panels together then display full billboard (strobes the neon border)
     /// </summary>
     /// <returns></returns>
-    private IEnumerator BillOpen(Billboard billboard)
+    private IEnumerator BillOpenMain(Billboard billboard)
     {
         /*lightIndex = 0;
         lightCounter = 0;*/
@@ -273,7 +289,7 @@ public class BillboardUI : MonoBehaviour
         screenCounter = 0;
         billTextTop.text = ProcessBillboardTextTop(billboard);
         billTextBottom.text = billboard.textBottom.ToUpper();
-        billTextName.text = GameManager.i.playerScript.FirstName.ToUpper(); ;
+        billTextName.text = GameManager.i.playerScript.FirstName.ToUpper();
         //any longer than set num of char's will cause issues with pulsing, use a default text instead
         if (billTextName.text.Length > maxNameChars)
         { billTextName.text = "Yes YOU!"; }
@@ -287,6 +303,7 @@ public class BillboardUI : MonoBehaviour
         isBeamRightOn = true;
         //modal state
         GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Billboard });
+        //slide blinds
         while (screenCounter < screenDistance)
         {
             screenCounter += screenSpeed * Time.deltaTime;
@@ -419,6 +436,29 @@ public class BillboardUI : MonoBehaviour
         return checkedText;
     }
 
+    /// <summary>
+    /// coroutine to slide panels together then display simple turn display
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator BillOpenTurn(int dayNum)
+    {
+        screenCounter = 0;
+        billTextTurn.text = string.Format("Day {0}{1}{2}", dayNum, "\n", GameManager.i.cityScript.GetCity().tag);
+        //modal state
+        GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Billboard });
+        //slide blinds
+        while (screenCounter < screenDistance)
+        {
+            screenCounter += screenSpeed * Time.deltaTime;
+            billLeft.transform.localPosition = new Vector3(-screenDistance + screenCounter, 0, 0);
+            billRight.transform.localPosition = new Vector3(screenDistance - screenCounter, 0, 0);
+            yield return null;
+        }
+        SetBillboardCentre(false);
+        SetBillboardTurn(true);
+        yield return null;
+    }
+
 
     /// <summary>
     /// Close billboard controller
@@ -441,6 +481,7 @@ public class BillboardUI : MonoBehaviour
         GameManager.i.inputScript.ResetStates();
         //disable centre elements
         SetBillboardCentre(false);
+        SetBillboardTurn(false);
         //open up side panels
         while (screenCounter > 0)
         {
@@ -480,6 +521,27 @@ public class BillboardUI : MonoBehaviour
         billLightRight.gameObject.SetActive(false);
         billBeamLeft.gameObject.SetActive(false);
         billBeamRight.gameObject.SetActive(false);
+        }
+    }
+
+
+    /// <summary>
+    /// Toggles billboard turn display elements on/off
+    /// </summary>
+    /// <param name="isSwitchOn"></param>
+    private void SetBillboardTurn(bool isSwitchOn)
+    {
+        if (isSwitchOn)
+        {
+            //enable turn display
+            billTurn.gameObject.SetActive(true);
+            billTextTurn.gameObject.SetActive(true);
+        }
+        else
+        {
+            //disable turn display
+            billTurn.gameObject.SetActive(false);
+            billTextTurn.gameObject.SetActive(false);
         }
     }
 
