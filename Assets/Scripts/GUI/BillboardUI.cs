@@ -24,6 +24,7 @@ public class BillboardUI : MonoBehaviour
     public Image billBeamLeft;
     public Image billBeamRight;
     public Image billTurn;
+    public Image billLogo;
     public TextMeshProUGUI billTextTop;
     public TextMeshProUGUI billTextBottom;
     public TextMeshProUGUI billTextName;
@@ -153,6 +154,7 @@ public class BillboardUI : MonoBehaviour
         Debug.Assert(billBeamLeft != null, "Invalid billBeamLeft (Null)");
         Debug.Assert(billBeamRight != null, "Invalid billBeamRight (Null)");
         Debug.Assert(billTurn != null, "Invalid billTurn (Null)");
+        Debug.Assert(billLogo != null, "Invalid billLogo (Null)");
         Debug.Assert(billTextTop != null, "Invalid billTextTop (Null)");
         Debug.Assert(billTextBottom != null, "Invalid billTextBottom (Null)");
         Debug.Assert(billTextName != null, "Invalid billTextName (Null)");
@@ -290,6 +292,12 @@ public class BillboardUI : MonoBehaviour
         billTextTop.text = ProcessBillboardTextTop(billboard);
         billTextBottom.text = billboard.textBottom.ToUpper();
         billTextName.text = GameManager.i.playerScript.FirstName.ToUpper();
+        if (billboard.sprite != null)
+        {
+            billLogo.sprite = billboard.sprite;
+            billLogo.gameObject.SetActive(true);
+        }
+        else { billLogo.gameObject.SetActive(false); }
         //any longer than set num of char's will cause issues with pulsing, use a default text instead
         if (billTextName.text.Length > maxNameChars)
         { billTextName.text = "Yes YOU!"; }

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Seed2
   m_EditorClassIdentifier: 
   category: {fileID: 11400000, guid: 77d10a28a59a81147ba25515edeeb451, type: 2}
+  sprite: {fileID: 21300000, guid: ea576dfc70678ba40bc9b6d38fa8a602, type: 3}
   textTop: Our pure, [organic] maggots [taste great] every time
   textBottom: Seedtronics, Protein for the People
   isRedHighlight: 0

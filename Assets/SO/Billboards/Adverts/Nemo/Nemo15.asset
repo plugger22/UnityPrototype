@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Nemo15
   m_EditorClassIdentifier: 
   category: {fileID: 11400000, guid: 77d10a28a59a81147ba25515edeeb451, type: 2}
+  sprite: {fileID: 21300000, guid: ba383bff69ba2354cb0ee5d0be4842da, type: 3}
   textTop: Why [risk] Super Storms at Sea? We keep you [safely] tied up to the dock
   textBottom: Nemo Luxury Cruises
   isRedHighlight: 1

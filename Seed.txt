@@ -2949,3 +2949,48 @@ City seed 5678 -> London, Eurasia
 
 Dev seed 50098 -> Monday, 26 October 2020 5:47 PM
 City seed 5678 -> London, Eurasia
+
+Dev seed 46567 -> Tuesday, 27 October 2020 9:04 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 6961 -> Tuesday, 27 October 2020 9:27 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 1731 -> Tuesday, 27 October 2020 11:31 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 52982 -> Tuesday, 27 October 2020 11:32 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 24642 -> Tuesday, 27 October 2020 11:34 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 52456 -> Tuesday, 27 October 2020 11:38 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 39605 -> Tuesday, 27 October 2020 11:53 AM
+WARNING Invalid sprite (Null) for listOfSprites[26]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	LoadManager:InitialiseEarly(GameState) (at Assets/Scripts/Managers/LoadManager.cs:1313)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:393)
+	City seed 5678 -> London, Eurasia
+
+Dev seed 64816 -> Tuesday, 27 October 2020 11:57 AM
+WARNING Invalid sprite (Null) for listOfSprites[26]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	LoadManager:InitialiseEarly(GameState) (at Assets/Scripts/Managers/LoadManager.cs:1313)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:393)
+	City seed 5678 -> London, Eurasia
+
+Dev seed 16625 -> Tuesday, 27 October 2020 12:02 PM
+WARNING Invalid sprite (Null) for listOfSprites[26]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	LoadManager:InitialiseEarly(GameState) (at Assets/Scripts/Managers/LoadManager.cs:1313)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:844)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:393)
+	City seed 5678 -> London, Eurasia
+
+Dev seed 3421 -> Tuesday, 27 October 2020 12:11 PM
+City seed 5678 -> London, Eurasia

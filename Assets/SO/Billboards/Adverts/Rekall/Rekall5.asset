@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Rekall5
   m_EditorClassIdentifier: 
   category: {fileID: 11400000, guid: 77d10a28a59a81147ba25515edeeb451, type: 2}
+  sprite: {fileID: 21300000, guid: a242d16d17e4c8c4fb15ffea4d735e7a, type: 3}
   textTop: Is your job [dragging] you down? We'll make you an [astronaut] and shoot
     you to the [stars]
   textBottom: Rekall, Memories that Last Forever

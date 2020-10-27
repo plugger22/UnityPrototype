@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Companion2
   m_EditorClassIdentifier: 
   category: {fileID: 11400000, guid: 77d10a28a59a81147ba25515edeeb451, type: 2}
+  sprite: {fileID: 21300000, guid: 837ccaaa7ed8d7f4e808b0e05cd7b9fb, type: 3}
   textTop: Our models are [always] ready for you, anytime, anywhere
   textBottom: Companions For Life, Automation Made Real
   isRedHighlight: 0

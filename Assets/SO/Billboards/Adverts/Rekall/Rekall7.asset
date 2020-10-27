@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Rekall7
   m_EditorClassIdentifier: 
   category: {fileID: 11400000, guid: 77d10a28a59a81147ba25515edeeb451, type: 2}
+  sprite: {fileID: 21300000, guid: a242d16d17e4c8c4fb15ffea4d735e7a, type: 3}
   textTop: Ever dreamed of going to [Mars?] We'll get you there, in [style]
   textBottom: Rekall, Memories that Last Forever
   isRedHighlight: 1

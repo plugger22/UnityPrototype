@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Boarsun7
   m_EditorClassIdentifier: 
   category: {fileID: 11400000, guid: 77d10a28a59a81147ba25515edeeb451, type: 2}
+  sprite: {fileID: 21300000, guid: 07b11645773de0b42aab956ddeb835af, type: 3}
   textTop: Tell the AI where to shove it with a course of premium [ThinkRite]
   textBottom: Boarsun Pharmaceuticals, Drugs for Life
   isRedHighlight: 1

@@ -161,6 +161,7 @@ public class LoadManager : MonoBehaviour
     public Sprite[] arrayOfPortraitSprites;
     public Sprite[] arrayOfTargetSprites;
     public Sprite[] arrayOfTeamSprites;
+    public Sprite[] arrayOfLogoSprites;
 
     [Header("MetaOptions")]
     public MetaOption[] arrayOfBossOptions;
@@ -1283,6 +1284,7 @@ public class LoadManager : MonoBehaviour
         Debug.Assert(arrayOfGearSprites.Length > 0, "Invalid arrayOfGearSprites (No records)");
         Debug.Assert(arrayOfGlobalSprites.Length > 0, "Invalid arrayOfGlobalSprites (No records)");
         Debug.Assert(arrayOfTeamSprites.Length > 0, "Invalid arrayOfTeamSprites (No records)");
+        Debug.Assert(arrayOfLogoSprites.Length > 0, "Invalid arrayOfLogoSprites (No records)");
         Debug.Assert(arrayOfNodeArcSprites.Length > 0, "Invalid arrayOfNodeArcSprites (No records)");
         Debug.Assert(arrayOfTargetSprites.Length > 0, "Invalid arrayOfTargetSprites (No records)");
         Debug.Assert(arrayOfPortraitSprites.Length > 0, "Invalid arrayOfPortraitSprites (No records)");
@@ -1295,6 +1297,7 @@ public class LoadManager : MonoBehaviour
             listOfSprites.AddRange(arrayOfGearSprites);
             listOfSprites.AddRange(arrayOfGlobalSprites);
             listOfSprites.AddRange(arrayOfTeamSprites);
+            listOfSprites.AddRange(arrayOfLogoSprites);
             listOfSprites.AddRange(arrayOfNodeArcSprites);
             listOfSprites.AddRange(arrayOfTargetSprites);
             listOfSprites.AddRange(arrayOfPortraitSprites);

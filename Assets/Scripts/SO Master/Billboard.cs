@@ -11,6 +11,8 @@ public class Billboard : ScriptableObject
     [Header("Main")]
     [Tooltip("Category of Billboard")]
     public BillboardType category;
+    [Tooltip("Sprite displayed with the Billboard")]
+    public Sprite sprite;
 
     [Tooltip("Main text, can use '[' & ']' tags for larger size and different colours")]
     [TextArea] public string textTop;
@@ -26,5 +28,6 @@ public class Billboard : ScriptableObject
         Debug.AssertFormat(string.IsNullOrEmpty(textTop) == false, "Invalid textTop (Null or Empty) for {0}", name);
         Debug.AssertFormat(string.IsNullOrEmpty(textBottom) == false, "Invalid textBottom (Null or Empty) for {0}", name);
         Debug.AssertFormat(category != null, "Invalid category (Null) for {0}", name);
+        Debug.AssertFormat(sprite != null, "Invalid Sprite (Null) for {0}", name);
     }
 }
