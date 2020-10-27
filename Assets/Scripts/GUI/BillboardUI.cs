@@ -68,6 +68,9 @@ public class BillboardUI : MonoBehaviour
     private float beamCounterMax;
     private int beamChance;
 
+    //assorted
+    private Coroutine myCoroutine;
+
     private static BillboardUI billboardUI;
 
     /// <summary>
@@ -266,7 +269,7 @@ public class BillboardUI : MonoBehaviour
             if (billboard != null)
             {
                 Debug.LogFormat("[UI] BillboardUI.cs -> RunBillboard: Start BillboardMain with \"{0}\" display{1}", billboard.name, "\n");
-                StartCoroutine("BillOpenMain", billboard);
+                myCoroutine = StartCoroutine("BillOpenMain", billboard);
             }
             else { Debug.LogWarning("Invalid billboard (Null)"); }
         }
@@ -275,7 +278,7 @@ public class BillboardUI : MonoBehaviour
             //normal turn display
             int dayNum = GameManager.i.turnScript.Turn;
             Debug.LogFormat("[UI] BillboardUI.cs -> RunBillboard: Start BillboardTurn for Day {0} display{1}", dayNum, "\n");
-            StartCoroutine("BillOpenTurn", dayNum);
+            myCoroutine = StartCoroutine("BillOpenTurn", dayNum);
         }
     }
 
@@ -474,8 +477,7 @@ public class BillboardUI : MonoBehaviour
     public void CloseBillboard()
     {
         Debug.LogFormat("[UI] BillboardUI.cs -> CloseBillboard: Close Billboard{0}", "\n");
-        StopCoroutine("BillOpen");
-        StartCoroutine("BillClose");
+        StopCoroutine(myCoroutine);
     }
 
     /// <summary>
