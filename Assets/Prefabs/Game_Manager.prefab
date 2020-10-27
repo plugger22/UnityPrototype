@@ -473,7 +473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43fb2197a869b8a4aac691aa8470c7f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  node: {fileID: 1899248245568038, guid: 02bbccd9c94d9c94daf64d6cf1203067, type: 2}
+  node: {fileID: 1701082086563798, guid: ec7f09add054f9746b8ec0c749ad8813, type: 2}
   connection: {fileID: 1469875037488358, guid: 4109dd209868d7d43acd916ee7b399e0, type: 2}
   blockingLayer:
     serializedVersion: 2
@@ -5783,6 +5783,7 @@ MonoBehaviour:
   billboard: 1
   debugData: 0
   noAI: 0
+  noNodes: 1
   showContacts: 0
   showPower: 1
   connectorTooltips: 0

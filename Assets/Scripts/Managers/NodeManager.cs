@@ -1255,11 +1255,14 @@ public class NodeManager : MonoBehaviour
             foreach (Node node in listOfNodes)
             {
                 node.SetMaterial(materialNormal);
-                if (node.defaultChar != '\0')
-                { node.faceText.text = string.Format("{0}", node.defaultChar); }
-                else { node.faceText.text = ""; }
-                //colourNormal
-                node.faceText.color = new Color32(255, 255, 224, 202);
+                if (GameManager.i.optionScript.noNodes == false)
+                {
+                    if (node.defaultChar != '\0')
+                    { node.faceText.text = string.Format("{0}", node.defaultChar); }
+                    else { node.faceText.text = ""; }
+                    //colourNormal
+                    node.faceText.color = new Color32(255, 255, 224, 202);
+                }
             }
             //trigger an automatic redraw
             NodeRedraw = true;
@@ -1335,12 +1338,16 @@ public class NodeManager : MonoBehaviour
                                     data = node.GetNodeActivity(activityUI);
                                     if (data > -1)
                                     {
-                                        node.faceText.text = string.Format("<size=120%>{0}</size>", data.ToString());
-                                        node.faceText.color = GetActivityColour(activityUI, data);
+                                        if (GameManager.i.optionScript.noNodes == false)
+                                        {
+                                            node.faceText.text = string.Format("<size=120%>{0}</size>", data.ToString());
+                                            node.faceText.color = GetActivityColour(activityUI, data);
+                                        }
                                     }
                                     else
                                     {
-                                        node.faceText.text = "";
+                                        if (GameManager.i.optionScript.noNodes == false)
+                                        { node.faceText.text = ""; }
                                         node.SetMaterial(materialBackground);
                                     }
                                     break;
@@ -1379,8 +1386,11 @@ public class NodeManager : MonoBehaviour
                     if (node.faceObject != null)
                     {
                         data = node.nodeID;
-                        node.faceText.text = data.ToString();
-                        node.faceText.color = Color.yellow;
+                        if (GameManager.i.optionScript.noNodes == false)
+                        {
+                            node.faceText.text = data.ToString();
+                            node.faceText.color = Color.yellow;
+                        }
                     }
                     else { Debug.LogWarning(string.Format("Invalid node faceObject (Null) for nodeID {0}", node.nodeID)); }
                 }

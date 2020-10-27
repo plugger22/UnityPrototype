@@ -3030,3 +3030,43 @@ City seed 5678 -> London, Eurasia
 
 Dev seed 55142 -> Tuesday, 27 October 2020 3:51 PM
 City seed 5678 -> London, Eurasia
+
+Dev seed 6668 -> Tuesday, 27 October 2020 4:40 PM
+City seed 5678 -> London, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.ResetNodes () (at Assets/Scripts/Managers/NodeManager.cs:1259)
+	NodeManager.SubInitialiseAll () (at Assets/Scripts/Managers/NodeManager.cs:254)
+	NodeManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/NodeManager.cs:167)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:844)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:897)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:402)
+	
+Dev seed 12177 -> Tuesday, 27 October 2020 4:48 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 35711 -> Tuesday, 27 October 2020 4:50 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 60358 -> Tuesday, 27 October 2020 4:54 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 53084 -> Tuesday, 27 October 2020 5:01 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 21415 -> Tuesday, 27 October 2020 5:15 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 34721 -> Tuesday, 27 October 2020 5:17 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 14859 -> Tuesday, 27 October 2020 5:20 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 10992 -> Tuesday, 27 October 2020 5:29 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 52223 -> Tuesday, 27 October 2020 5:30 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 59094 -> Tuesday, 27 October 2020 5:41 PM
+City seed 5678 -> London, Eurasia

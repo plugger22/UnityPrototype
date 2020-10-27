@@ -200,7 +200,8 @@ public class Node : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Assert(faceObject != null, "Invalid faceObject (Null)");
+        /*Debug.Assert(faceObject != null, "Invalid faceObject (Null)");*/
+
         //collections
         listOfNeighbourPositions = new List<Vector3>();
         listOfNeighbourNodes = new List<Node>();
@@ -218,17 +219,21 @@ public class Node : MonoBehaviour
 
         //components
         launcher = GetComponent<ParticleLauncher>();
-        if (faceObject != null)
+        //faceText
+        if (GameManager.i.optionScript.noNodes == false)
         {
-            //node face text
-            faceText = faceObject.gameObject.GetComponent<TextMeshPro>();
-            faceText.text = "";
+            if (faceObject != null)
+            {
+                //node face text
+                faceText = faceObject.gameObject.GetComponent<TextMeshPro>();
+                faceText.text = "";
+            }
+            else { Debug.LogError("Invalid faceObject (Null)"); }
+            Debug.Assert(faceText != null, "Invalid faceText (Null)");
         }
-        else { Debug.LogError("Invalid faceObject (Null)"); }
         //renderer
         nodeRenderer = GetComponent<Renderer>();
         Debug.Assert(launcher != null, "Invalid Launcher (Null)");
-        Debug.Assert(faceText != null, "Invalid faceText (Null)");
         Debug.Assert(nodeRenderer != null, "Invalid renderer (Null)");
     }
 
@@ -800,7 +805,8 @@ public class Node : MonoBehaviour
     public void SetActive()
     {
         _Material = materialActive;
-        faceText.color = new Color32(0, 0, 0, 255);
+        if (GameManager.i.optionScript.noNodes == false)
+        { faceText.color = new Color32(0, 0, 0, 255); }
     }
 
     /// <summary>
@@ -809,7 +815,8 @@ public class Node : MonoBehaviour
     public void SetPlayerFlash()
     {
         _Material = materialPlayer;
-        faceText.color = new Color32(0, 0, 0, 255);
+        if (GameManager.i.optionScript.noNodes == false)
+        { faceText.color = new Color32(0, 0, 0, 255); }
     }
 
     /// <summary>
@@ -819,7 +826,8 @@ public class Node : MonoBehaviour
     public void SetPlayerNormal()
     {
         _Material = materialPlayer;
-        faceText.color = new Color32(255, 255, 224, 202);
+        if (GameManager.i.optionScript.noNodes == false)
+        { faceText.color = new Color32(255, 255, 224, 202); }
     }
 
     /// <summary>
@@ -828,7 +836,8 @@ public class Node : MonoBehaviour
     public void SetHighlight()
     {
         _Material = materialHighlight;
-        faceText.color = new Color32(0, 0, 0, 255);
+        if (GameManager.i.optionScript.noNodes == false)
+        { faceText.color = new Color32(0, 0, 0, 255); }
     }
 
     /// <summary>
@@ -837,7 +846,8 @@ public class Node : MonoBehaviour
     public void SetNemesis()
     {
         _Material = materialNemesis;
-        faceText.color = new Color32(255, 255, 224, 202);
+        if (GameManager.i.optionScript.noNodes == false)
+        { faceText.color = new Color32(255, 255, 224, 202); }
     }
 
     /// <summary>
@@ -847,7 +857,8 @@ public class Node : MonoBehaviour
     public void SetNormal()
     {
         _Material = materialNormal;
-        faceText.color = new Color32(255, 255, 224, 202);
+        if (GameManager.i.optionScript.noNodes == false)
+        { faceText.color = new Color32(255, 255, 224, 202); }
     }
 
     /// <summary>

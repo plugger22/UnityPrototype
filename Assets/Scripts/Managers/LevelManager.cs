@@ -1128,11 +1128,12 @@ public class LevelManager : MonoBehaviour
                     {
                         //Mayors Office (City Hall) -> sort dictionary from closest to grid centre to furtherst
                         var sortedDictMayor = from entry in tempDict orderby entry.Value ascending select entry;
-                        
+
                         /*//debug printout
                         foreach (var record in sortedDictMayor)
                         { Debug.LogFormat("Sorted -> Mayor: {0}, {1}, ID{2}, distance {3}{4}", record.Key.nodeName, record.Key.Arc.name, record.Key.nodeID, record.Value, "\n"); }*/
 
+                        bool noNodes = GameManager.i.optionScript.noNodes;
                         //find the first government node for City Hall (which will be closest to the centre)
                         foreach (var record in sortedDictMayor)
                         {
@@ -1144,7 +1145,10 @@ public class LevelManager : MonoBehaviour
                                 record.Key.specialName = "Town Hall";
                                 record.Key.defaultChar = GameManager.i.guiScript.cityHallChar;
                                 //make city hall a larger cylinder
-                                record.Key.transform.localScale += new Vector3() { x = 0.1f, y = 0.1f, z = 0.1f };
+                                if (noNodes == false)
+                                { record.Key.transform.localScale += new Vector3() { x = 0.1f, y = 0.1f, z = 0.1f }; }
+                                else
+                                { record.Key.transform.localScale += new Vector3() { x = 0.05f, y = 0.05f, z = 0.05f }; }
                                 //Mayor placed at CityHall at game start
                                 GameManager.i.cityScript.mayorDistrictID = record.Key.nodeID;
                                 GameManager.i.cityScript.cityHallDistrictID = record.Key.nodeID;
@@ -1172,7 +1176,10 @@ public class LevelManager : MonoBehaviour
                                     record.Key.specialName = "Airport";
                                     record.Key.defaultChar = GameManager.i.guiScript.airportChar;
                                     //make airport a larger cylinder
-                                    record.Key.transform.localScale += new Vector3() { x = 0.1f, y = 0.1f, z = 0.1f };
+                                    if (noNodes == false)
+                                    { record.Key.transform.localScale += new Vector3() { x = 0.1f, y = 0.1f, z = 0.1f }; }
+                                    else
+                                    { record.Key.transform.localScale += new Vector3() { x = 0.05f, y = 0.05f, z = 0.05f }; }
                                     GameManager.i.cityScript.airportDistrictID = record.Key.nodeID;
                                 }
                                 else { Debug.LogWarning("Missing airportDistrict name"); }
@@ -1187,7 +1194,10 @@ public class LevelManager : MonoBehaviour
                                     record.Key.specialName = "Harbour";
                                     record.Key.defaultChar = GameManager.i.guiScript.harbourChar;
                                     //make harbour a larger cylinder
-                                    record.Key.transform.localScale += new Vector3() { x = 0.1f, y = 0.1f, z = 0.1f };
+                                    if (noNodes == false)
+                                    { record.Key.transform.localScale += new Vector3() { x = 0.1f, y = 0.1f, z = 0.1f }; }
+                                    else
+                                    { record.Key.transform.localScale += new Vector3() { x = 0.05f, y = 0.05f, z = 0.05f }; }
                                     GameManager.i.cityScript.harbourDistrictID = record.Key.nodeID;
                                 }
                                 /*else { Debug.LogWarning("Missing harbourDistrict name (City may not have a Harbour)"); }*/

@@ -19,6 +19,7 @@ public class OptionManager : MonoBehaviour
     //Debug options
     [HideInInspector] public bool debugData = false;                              //if true debug data is displayed onscreen
     [HideInInspector] public bool noAI = false;                                   //if true AI is switched off for both sides (debug purposes)
+    [HideInInspector] public bool noNodes = true;                                 //if true node faceText is switched off and districts are used instead of nodes
 
     //UI options
     [HideInInspector] public bool showContacts = false;                           //if true node tooltips will show contact as well as Actor Arcs for nodes where actors have contacts
@@ -74,6 +75,7 @@ public class OptionManager : MonoBehaviour
             .AppendFormat("{0}- Debug Options{1}","\n", "\n")
             .AppendFormat(" Debug Data -> {0}{1}", debugData, "\n")
             .AppendFormat(" NO AI -> {0}{1}", noAI, "\n")
+            .AppendFormat(" NO Nodes -> {0}{1}", noNodes, "\n")
             .AppendFormat("{0}- UI Options{1}","\n", "\n")
             .AppendFormat(" Connector Tooltips -> {0}{1}", connectorTooltips, "\n")
             .AppendFormat(" Full Mood Information -> {0}{1}", fullMoodInfo, "\n")
