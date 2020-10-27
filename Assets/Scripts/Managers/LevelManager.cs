@@ -1148,7 +1148,7 @@ public class LevelManager : MonoBehaviour
                                 if (noNodes == false)
                                 { record.Key.transform.localScale += new Vector3() { x = 0.1f, y = 0.1f, z = 0.1f }; }
                                 else
-                                { record.Key.transform.localScale += new Vector3() { x = 0.05f, y = 0.05f, z = 0.05f }; }
+                                { record.Key.transform.localScale += new Vector3() { x = 0f, y = 0.05f, z = 0f }; }
                                 //Mayor placed at CityHall at game start
                                 GameManager.i.cityScript.mayorDistrictID = record.Key.nodeID;
                                 GameManager.i.cityScript.cityHallDistrictID = record.Key.nodeID;
@@ -1179,7 +1179,7 @@ public class LevelManager : MonoBehaviour
                                     if (noNodes == false)
                                     { record.Key.transform.localScale += new Vector3() { x = 0.1f, y = 0.1f, z = 0.1f }; }
                                     else
-                                    { record.Key.transform.localScale += new Vector3() { x = 0.05f, y = 0.05f, z = 0.05f }; }
+                                    { record.Key.transform.localScale += new Vector3() { x = 0f, y = 0.05f, z = 0f }; }
                                     GameManager.i.cityScript.airportDistrictID = record.Key.nodeID;
                                 }
                                 else { Debug.LogWarning("Missing airportDistrict name"); }
@@ -1197,7 +1197,7 @@ public class LevelManager : MonoBehaviour
                                     if (noNodes == false)
                                     { record.Key.transform.localScale += new Vector3() { x = 0.1f, y = 0.1f, z = 0.1f }; }
                                     else
-                                    { record.Key.transform.localScale += new Vector3() { x = 0.05f, y = 0.05f, z = 0.05f }; }
+                                    { record.Key.transform.localScale += new Vector3() { x = 0f, y = 0.05f, z = 0f }; }
                                     GameManager.i.cityScript.harbourDistrictID = record.Key.nodeID;
                                 }
                                 /*else { Debug.LogWarning("Missing harbourDistrict name (City may not have a Harbour)"); }*/
