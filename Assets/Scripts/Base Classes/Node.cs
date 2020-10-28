@@ -30,7 +30,7 @@ public class Node : MonoBehaviour
     [HideInInspector] public string specialName;        //eg. name of icon, airport, harbour, town hall, etc. if node is special, ignore otherwise
     [HideInInspector] public NodeArc Arc;               //archetype type
     [HideInInspector] public ParticleLauncher launcher; //attached script component that controls the smoke particle system
-    [HideInInspector] public Renderer nodeRenderer;     //renders node
+    [HideInInspector] public Renderer objectRenderer;   //renders node cylinder or base object depending on node/district setup
 
     #region Save Data Compatible
     [HideInInspector] public bool isTracer;             //has resistance tracer?
@@ -247,11 +247,19 @@ public class Node : MonoBehaviour
 
             }
             else { Debug.LogError("Invalid baseObject (Null)"); }
+            //cylinder renderer
+            objectRenderer = GetComponent<Renderer>();
+            Debug.Assert(objectRenderer != null, "Invalid Cylinder renderer (Null)");
+        }
+        else
+        {
+            objectRenderer = baseObject.GetComponent<Renderer>();
+            Debug.Assert(objectRenderer != null, "Invalid Base renderer (Null)");
         }
         //renderer
-        nodeRenderer = GetComponent<Renderer>();
         Debug.Assert(launcher != null, "Invalid Launcher (Null)");
-        Debug.Assert(nodeRenderer != null, "Invalid renderer (Null)");
+
+
     }
 
     private void OnEnable()
@@ -825,16 +833,56 @@ public class Node : MonoBehaviour
     public List<EffectDataOngoing> GetListOfOngoingEffects()
     { return listOfOngoingEffects; }
 
+    //
+    // - - - Node Display
+    //
+
     /// <summary>
-    /// Don't call this directly, instead use NodeManager.cs -> SetNodeMaterial
+    /// WARNING! DO NOT CALL this directly, instead use NodeManager.cs -> SetNodeMaterial
+    /// Allows selective changing of node/district components (Cylinder assumed to be a normal node cylinder, Base and Towers being part of a district)
     /// </summary>
     /// <param name="newMaterial"></param>
-    public void SetMaterial(Material newMaterial)
-    { _MaterialNode = newMaterial; }
+    public void SetMaterial(Material newMaterial, NodeComponent component)
+    {
+        switch (component)
+        {
+            case NodeComponent.Cylinder: _MaterialNode = newMaterial; break;
+            case NodeComponent.Base: _MaterialBase = newMaterial; break;
+            case NodeComponent.Towers:
+                _MaterialRear = newMaterial;
+                _MaterialRight = newMaterial;
+                _MaterialLeft = newMaterial;
+                break;
+            case NodeComponent.BaseAndTowers:
+                _MaterialBase = newMaterial;
+                _MaterialRear = newMaterial;
+                _MaterialRight = newMaterial;
+                _MaterialLeft = newMaterial;
+                break;
+            default: Debug.LogWarningFormat("Unrecognised NodeComponent \"{0}\"", component); break;
+        }
+        if (newMaterial != null)
+        { objectRenderer.material = newMaterial; }
+        else { Debug.LogError("Invalid newMaterial (Null)"); }
+    }
 
-
-    public Material GetMaterial()
-    { return _MaterialNode; }
+    /// <summary>
+    /// returns material of relevant node component, null if a problem
+    /// </summary>
+    /// <param name="component"></param>
+    /// <returns></returns>
+    public Material GetMaterial(NodeComponent component)
+    {
+        Material material = null;
+        switch (component)
+        {
+            case NodeComponent.Cylinder: material = _MaterialNode; break;
+            case NodeComponent.Base: material = _MaterialBase; break;
+            case NodeComponent.Towers: material = _MaterialRear; break;
+            default: Debug.LogWarningFormat("Unrecognised NodeComponent \"{0}\"", component); break;
+        }
+        return material;
+    }
 
     /// <summary>
     /// Sets node to active material with black, full opacity, face icon
@@ -842,9 +890,15 @@ public class Node : MonoBehaviour
     /// <param name="newMaterial"></param>
     public void SetActive()
     {
-        _MaterialNode = materialActive;
         if (GameManager.i.optionScript.noNodes == false)
-        { faceText.color = new Color32(0, 0, 0, 255); }
+        {
+            faceText.color = new Color32(0, 0, 0, 255);
+            _MaterialNode = materialActive;
+        }
+        else
+        {
+            _MaterialBase = materialActive;
+        }
     }
 
     /// <summary>
@@ -852,9 +906,12 @@ public class Node : MonoBehaviour
     /// </summary>
     public void SetPlayerFlash()
     {
-        _MaterialNode = materialPlayer;
         if (GameManager.i.optionScript.noNodes == false)
-        { faceText.color = new Color32(0, 0, 0, 255); }
+        {
+            faceText.color = new Color32(0, 0, 0, 255);
+            _MaterialNode = materialPlayer;
+        }
+        else { _MaterialBase = materialPlayer; }
     }
 
     /// <summary>
@@ -863,9 +920,12 @@ public class Node : MonoBehaviour
     /// <param name="newMaterial"></param>
     public void SetPlayerNormal()
     {
-        _MaterialNode = materialPlayer;
         if (GameManager.i.optionScript.noNodes == false)
-        { faceText.color = new Color32(255, 255, 224, 202); }
+        {
+            faceText.color = new Color32(255, 255, 224, 202);
+            _MaterialNode = materialPlayer;
+        }
+        else { _MaterialBase = materialPlayer; }
     }
 
     /// <summary>
@@ -873,9 +933,13 @@ public class Node : MonoBehaviour
     /// </summary>
     public void SetHighlight()
     {
-        _MaterialNode = materialHighlight;
         if (GameManager.i.optionScript.noNodes == false)
-        { faceText.color = new Color32(0, 0, 0, 255); }
+        {
+            faceText.color = new Color32(0, 0, 0, 255);
+            _MaterialNode = materialHighlight;
+        }
+        else
+        { _MaterialBase = materialHighlight; }
     }
 
     /// <summary>
@@ -883,9 +947,12 @@ public class Node : MonoBehaviour
     /// </summary>
     public void SetNemesis()
     {
-        _MaterialNode = materialNemesis;
         if (GameManager.i.optionScript.noNodes == false)
-        { faceText.color = new Color32(255, 255, 224, 202); }
+        {
+            faceText.color = new Color32(255, 255, 224, 202);
+            _MaterialNode = materialNemesis;
+        }
+        else { _MaterialBase = materialNemesis; }
     }
 
     /// <summary>
@@ -894,10 +961,17 @@ public class Node : MonoBehaviour
     /// <param name="newMaterial"></param>
     public void SetNormal()
     {
-        _MaterialNode = materialNormal;
         if (GameManager.i.optionScript.noNodes == false)
-        { faceText.color = new Color32(255, 255, 224, 202); }
+        {
+            faceText.color = new Color32(255, 255, 224, 202);
+            _MaterialNode = materialNormal;
+        }
+        else { _MaterialBase = materialNormal; }
     }
+
+    //
+    // - - - Hide and Seek
+    //
 
     /// <summary>
     /// Add Tracer

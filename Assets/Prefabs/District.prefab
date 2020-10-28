@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 199383062048061510}
   - component: {fileID: 222031251590451986}
   m_Layer: 8
-  m_Name: District1
+  m_Name: District
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1051,7 +1051,7 @@ public class NodeManager : MonoBehaviour
                             }
                             else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}, listOfInvisibleNodes[{1}]", listOfInvisibleNodes[i], i); }
                         }
-                        displayText = string.Format("{0}There {1} {2} District{3} where the Player is Known{4}", colourNeutral,  counter != 1 ? "are" : "is", counter, counter != 1 ? "s" : "", colourEnd);
+                        displayText = string.Format("{0}There {1} {2} District{3} where the Player is Known{4}", colourNeutral, counter != 1 ? "are" : "is", counter, counter != 1 ? "s" : "", colourEnd);
                     }
                     else { displayText = string.Format("{0}{1}{2}", colourNeutral, "There are NO Districts where the Player is Known", colourEnd); }
                 }
@@ -1180,20 +1180,43 @@ public class NodeManager : MonoBehaviour
     {
         bool proceedFlag = true;
         List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
+        bool noNodes = GameManager.i.optionScript.noNodes;
         if (listOfNodes != null)
         {
             //loop all nodes & assign current materials to their renderers (changes colour on screen)
             foreach (Node node in listOfNodes)
-            { node.nodeRenderer.material = node._MaterialNode; }
+            {
+                if (noNodes == false)
+                {
+                    /*node.nodeRenderer.material = node._MaterialNode;*/
+                    SetNodeMaterial(node, NodeType.Normal, NodeComponent.Cylinder);
+                }
+                else
+                {
+                    /*node.nodeRenderer.material = node._MaterialBase;*/
+                    SetNodeMaterial(node, NodeType.Normal, NodeComponent.Base);
+                }
+            }
             //highlighted node
             if (nodeHighlight > -1)
             {
                 Node node = GameManager.i.dataScript.GetNode(nodeHighlight);
                 if (node != null)
                 {
-                    //only do so if it's a normal node, otherwise ignore
-                    if (node.GetMaterial() == materialNormal)
-                    { node.nodeRenderer.material = materialHighlight; }
+                    if (noNodes == false)
+                    {
+                        //only do so if it's a normal node, otherwise ignore
+                        if (node.GetMaterial(NodeComponent.Cylinder) == materialNormal)
+                        {
+                            /*node.nodeRenderer.material = materialHighlight;*/
+                            SetNodeMaterial(node, NodeType.Highlight, NodeComponent.Cylinder);
+                        }
+                    }
+                    else
+                    {
+                        if (node.GetMaterial(NodeComponent.Base) == materialNormal)
+                        { SetNodeMaterial(node, NodeType.Highlight, NodeComponent.Base); }
+                    }
                 }
                 else { Debug.LogError("Invalid Node (null) returned from listOfNodes"); }
             }
@@ -1215,8 +1238,21 @@ public class NodeManager : MonoBehaviour
                         if (node != null)
                         {
                             //only do so if it's a normal node, otherwise ignore
-                            if (node.GetMaterial() == materialNormal)
-                            { node.nodeRenderer.material = materialPlayer; }
+                            if (noNodes == false)
+                            {
+                                if (node.GetMaterial(NodeComponent.Cylinder) == materialNormal)
+                                {
+                                    /*node.nodeRenderer.material = materialPlayer;*/
+                                    SetNodeMaterial(node, NodeType.Player, NodeComponent.Cylinder);
+                                }
+                            }
+                            else
+                            {
+                                if (node.GetMaterial(NodeComponent.Base) == materialNormal)
+                                {
+                                    SetNodeMaterial(node, NodeType.Player, NodeComponent.Base);
+                                }
+                            }
                         }
                     }
                 }
@@ -1232,15 +1268,29 @@ public class NodeManager : MonoBehaviour
                 }
                 if (proceedFlag == true)
                 {
-                    //Nemesis ndoe
+                    //Nemesis node
                     if (nodeNemesis > -1)
                     {
                         Node node = GameManager.i.dataScript.GetNode(nodeNemesis);
                         if (node != null)
                         {
                             //only do so if it's a normal node, otherwise ignore
-                            if (node.GetMaterial() == materialNormal)
-                            { node.nodeRenderer.material = materialNemesis; }
+                            if (noNodes == false)
+                            {
+                                if (node.GetMaterial(NodeComponent.Cylinder) == materialNormal)
+                                {
+                                    /*node.nodeRenderer.material = materialNemesis;*/
+                                    SetNodeMaterial(node, NodeType.Nemesis, NodeComponent.Cylinder);
+                                }
+                            }
+                            else
+                            {
+                                if (node.GetMaterial(NodeComponent.Base) == materialNormal)
+                                {
+                                    /*node.nodeRenderer.material = materialNemesis;*/
+                                    SetNodeMaterial(node, NodeType.Nemesis, NodeComponent.Base);
+                                }
+                            }
                         }
                     }
                 }
@@ -1250,6 +1300,101 @@ public class NodeManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfNodes (Null) returned from dataManager in RedrawNodes"); }
     }
+
+    #region RedrawNodesArchive
+    /// <summary>
+    /// Redraw any nodes. Show highlighted node, unless it's a non-normal node for the current redraw
+    /// </summary>
+    public void RedrawNodesArchive()
+    {
+        bool proceedFlag = true;
+        List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
+        bool noNodes = GameManager.i.optionScript.noNodes;
+        if (listOfNodes != null)
+        {
+            //loop all nodes & assign current materials to their renderers (changes colour on screen)
+            foreach (Node node in listOfNodes)
+            {
+                if (noNodes == false)
+                {
+                    node.objectRenderer.material = node._MaterialNode;
+                    SetNodeMaterial(node, NodeType.Normal, NodeComponent.Cylinder);
+                }
+                else { node.objectRenderer.material = node._MaterialBase; }
+            }
+            //highlighted node
+            if (nodeHighlight > -1)
+            {
+                Node node = GameManager.i.dataScript.GetNode(nodeHighlight);
+                if (node != null)
+                {
+                    if (noNodes == false)
+                    {
+                        //only do so if it's a normal node, otherwise ignore
+                        if (node.GetMaterial(NodeComponent.Cylinder) == materialNormal)
+                        { node.objectRenderer.material = materialHighlight; }
+                    }
+                    else
+                    {
+
+                    }
+                }
+                else { Debug.LogError("Invalid Node (null) returned from listOfNodes"); }
+            }
+            //show player node if flag is true (default condition -> would be false only in case of flashing player Node)
+            if (showPlayerNode == true)
+            {
+                //player's current node (Resistance side only if FOW ON)
+                if (GameManager.i.sideScript.PlayerSide.level == globalAuthority.level)
+                {
+                    if (GameManager.i.optionScript.fogOfWar == true)
+                    { proceedFlag = false; }
+                }
+                if (proceedFlag == true)
+                {
+                    //Player node
+                    if (nodePlayer > -1)
+                    {
+                        Node node = GameManager.i.dataScript.GetNode(nodePlayer);
+                        if (node != null)
+                        {
+                            //only do so if it's a normal node, otherwise ignore
+                            if (node.GetMaterial(NodeComponent.Cylinder) == materialNormal)
+                            { node.objectRenderer.material = materialPlayer; }
+                        }
+                    }
+                }
+                //Nemesis current node (Resistance side only if FOW ON & Nemesis present)
+                proceedFlag = true;
+                if (GameManager.i.sideScript.PlayerSide.level == globalResistance.level)
+                {
+                    //Nemesis has a separate FOW setting
+                    if (GameManager.i.nemesisScript.isShown == false)
+                    { proceedFlag = false; }
+                    else if (GameManager.i.nemesisScript.nemesis == null)
+                    { proceedFlag = false; }
+                }
+                if (proceedFlag == true)
+                {
+                    //Nemesis node
+                    if (nodeNemesis > -1)
+                    {
+                        Node node = GameManager.i.dataScript.GetNode(nodeNemesis);
+                        if (node != null)
+                        {
+                            //only do so if it's a normal node, otherwise ignore
+                            if (node.GetMaterial(NodeComponent.Cylinder) == materialNormal)
+                            { node.objectRenderer.material = materialNemesis; }
+                        }
+                    }
+                }
+            }
+            //reset flag to prevent constant redraws
+            NodeRedraw = false;
+        }
+        else { Debug.LogError("Invalid listOfNodes (Null) returned from dataManager in RedrawNodes"); }
+    }
+    #endregion
 
     /// <summary>
     /// Sets the material colour of all nodes to the default (doesn't change on screen, just sets them up). Call before making any changes to node colours
@@ -1263,10 +1408,10 @@ public class NodeManager : MonoBehaviour
         {
             foreach (Node node in listOfNodes)
             {
-                
+
                 if (noNodes == false)
                 {
-                    SetNodeMaterial(node, NodeType.Normal);
+                    SetNodeMaterial(node, NodeType.Normal, NodeComponent.Cylinder);
                     if (node.defaultChar != '\0')
                     { node.faceText.text = string.Format("{0}", node.defaultChar); }
                     else { node.faceText.text = ""; }
@@ -1276,7 +1421,8 @@ public class NodeManager : MonoBehaviour
                 else
                 {
                     //normal cylindrical nodes
-                    SetNodeMaterial(node, NodeType.Invisible);
+                    SetNodeMaterial(node, NodeType.Invisible, NodeComponent.Cylinder);
+                    SetNodeMaterial(node, NodeType.Normal, NodeComponent.Base);
                 }
             }
             //trigger an automatic redraw
@@ -1290,11 +1436,11 @@ public class NodeManager : MonoBehaviour
     /// </summary>
     /// <param name="node"></param>
     /// <param name="nodeType"></param>
-    private void SetNodeMaterial(Node node, NodeType nodeType)
+    private void SetNodeMaterial(Node node, NodeType nodeType, NodeComponent nodeComponent)
     {
         Material material = materialDefault;
         Debug.Assert(node != null, "Invalid node (Null)");
-            {
+        {
             switch (nodeType)
             {
                 case NodeType.Default: material = materialDefault; break;
@@ -1306,7 +1452,7 @@ public class NodeManager : MonoBehaviour
                 case NodeType.Invisible: material = materialInvisible; break;
                 default: Debug.LogFormat("Unrecognised NodeType \"{0}\"", nodeType); break;
             }
-            node.SetMaterial(material);
+            node.SetMaterial(material, nodeComponent);
         }
     }
 
@@ -1380,6 +1526,7 @@ public class NodeManager : MonoBehaviour
                                     {
                                         if (noNodes == false)
                                         {
+                                            //face text
                                             node.faceText.text = string.Format("<size=120%>{0}</size>", data.ToString());
                                             node.faceText.color = GetActivityColour(activityUI, data);
                                         }
@@ -1387,8 +1534,11 @@ public class NodeManager : MonoBehaviour
                                     else
                                     {
                                         if (noNodes == false)
-                                        { node.faceText.text = ""; }
-                                        SetNodeMaterial(node, NodeType.Background);
+                                        {
+                                            node.faceText.text = "";
+                                            SetNodeMaterial(node, NodeType.Background, NodeComponent.Cylinder);
+                                        }
+                                        else { SetNodeMaterial(node, NodeType.Background, NodeComponent.Base); }
                                     }
                                     break;
                                 default:
@@ -1695,7 +1845,7 @@ public class NodeManager : MonoBehaviour
                                         EventButtonDetails eventMoveDetails = new EventButtonDetails()
                                         {
                                             buttonTitle = string.Format("{0} Move", gear.tag),
-                                            buttonTooltipHeader = string.Format("Move using{0}{1}{2}{3}{4}{5}<size=90%>defeats</size> {6}{7}{8}{9} <size=90%>Security</size>{10}", "\n", 
+                                            buttonTooltipHeader = string.Format("Move using{0}{1}{2}{3}{4}{5}<size=90%>defeats</size> {6}{7}{8}{9} <size=90%>Security</size>{10}", "\n",
                                             colourNeutral, gear.tag, colourEnd, "\n", colourNormal, colourEnd, colourGearLevel, (ConnectionType)gear.data, colourEnd, colourNormal, colourEnd),
                                             buttonTooltipMain = moveMain,
                                             buttonTooltipDetail = builderDetail.ToString(),
@@ -2350,7 +2500,7 @@ public class NodeManager : MonoBehaviour
                 {
                     Gear gear = GameManager.i.dataScript.GetGear(moveDetails.gearName);
                     if (gear != null)
-                    { 
+                    {
                         //popUp
                         GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"{gear.tag} used");
                         //process move

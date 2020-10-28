@@ -8950,3 +8950,43 @@ City seed 5678 -> London, Eurasia
 
 Dev seed 17432 -> Wednesday, 28 October 2020 2:58 PM
 City seed 5678 -> London, Eurasia
+
+Dev seed 64454 -> Wednesday, 28 October 2020 3:11 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 5192 -> Wednesday, 28 October 2020 3:12 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 3452 -> Wednesday, 28 October 2020 3:13 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 15885 -> Wednesday, 28 October 2020 3:26 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 59623 -> Wednesday, 28 October 2020 3:27 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 38580 -> Wednesday, 28 October 2020 4:10 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 9863 -> Wednesday, 28 October 2020 4:21 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 2071 -> Wednesday, 28 October 2020 4:23 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 55970 -> Wednesday, 28 October 2020 4:40 PM
+City seed 5678 -> London, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.ShowAllContacts () (at Assets/Scripts/Managers/NodeManager.cs:1622)
+	NodeManager.ShowNodes (gameAPI.NodeUI nodeUI) (at Assets/Scripts/Managers/NodeManager.cs:682)
+	NodeManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/NodeManager.cs:369)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:326)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1149)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.ShowAllContacts () (at Assets/Scripts/Managers/NodeManager.cs:1622)
+	NodeManager.ShowNodes (gameAPI.NodeUI nodeUI) (at Assets/Scripts/Managers/NodeManager.cs:682)
+	NodeManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/NodeManager.cs:369)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:326)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1149)
+	
