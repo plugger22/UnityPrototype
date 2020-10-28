@@ -19,7 +19,7 @@ public class OptionManager : MonoBehaviour
     //Debug options
     [HideInInspector] public bool debugData = false;                              //if true debug data is displayed onscreen
     [HideInInspector] public bool noAI = false;                                   //if true AI is switched off for both sides (debug purposes)
-    [HideInInspector] public bool noNodes = true;                                 //if true node faceText is switched off and districts are used instead of nodes
+    [HideInInspector] public bool noNodes = false;                                //if true node faceText is switched off and districts are used instead of nodes
 
     //UI options
     [HideInInspector] public bool showContacts = false;                           //if true node tooltips will show contact as well as Actor Arcs for nodes where actors have contacts

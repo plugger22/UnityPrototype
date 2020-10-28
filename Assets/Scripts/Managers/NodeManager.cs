@@ -1250,12 +1250,13 @@ public class NodeManager : MonoBehaviour
     {
         //loop and assign
         List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
+        bool noNodes = GameManager.i.optionScript.noNodes;
         if (listOfNodes != null)
         {
             foreach (Node node in listOfNodes)
             {
                 node.SetMaterial(materialNormal);
-                if (GameManager.i.optionScript.noNodes == false)
+                if (noNodes == false)
                 {
                     if (node.defaultChar != '\0')
                     { node.faceText.text = string.Format("{0}", node.defaultChar); }
@@ -1325,6 +1326,7 @@ public class NodeManager : MonoBehaviour
             {
                 //loop nodes
                 bool errorFlag = false;
+                bool noNodes = GameManager.i.optionScript.noNodes;
                 foreach (Node node in listOfNodes)
                 {
                     if (node != null)
@@ -1338,7 +1340,7 @@ public class NodeManager : MonoBehaviour
                                     data = node.GetNodeActivity(activityUI);
                                     if (data > -1)
                                     {
-                                        if (GameManager.i.optionScript.noNodes == false)
+                                        if (noNodes == false)
                                         {
                                             node.faceText.text = string.Format("<size=120%>{0}</size>", data.ToString());
                                             node.faceText.color = GetActivityColour(activityUI, data);
@@ -1346,7 +1348,7 @@ public class NodeManager : MonoBehaviour
                                     }
                                     else
                                     {
-                                        if (GameManager.i.optionScript.noNodes == false)
+                                        if (noNodes == false)
                                         { node.faceText.text = ""; }
                                         node.SetMaterial(materialBackground);
                                     }
@@ -1378,6 +1380,7 @@ public class NodeManager : MonoBehaviour
         List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
         if (listOfNodes != null)
         {
+            bool noNodes = GameManager.i.optionScript.noNodes;
             //loop nodes
             foreach (Node node in listOfNodes)
             {
@@ -1386,7 +1389,7 @@ public class NodeManager : MonoBehaviour
                     if (node.faceObject != null)
                     {
                         data = node.nodeID;
-                        if (GameManager.i.optionScript.noNodes == false)
+                        if (noNodes == false)
                         {
                             node.faceText.text = data.ToString();
                             node.faceText.color = Color.yellow;

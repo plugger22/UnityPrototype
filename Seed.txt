@@ -8368,3 +8368,549 @@ City seed 5678 -> London, Eurasia
 
 Dev seed 26366 -> Wednesday, 28 October 2020 10:59 AM
 City seed 5678 -> London, Eurasia
+
+Dev seed 41566 -> Wednesday, 28 October 2020 11:32 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 51078 -> Wednesday, 28 October 2020 11:43 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 59060 -> Wednesday, 28 October 2020 11:44 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 24502 -> Wednesday, 28 October 2020 11:47 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 61127 -> Wednesday, 28 October 2020 11:49 AM
+City seed 5678 -> London, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:497)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	
+Dev seed 38943 -> Wednesday, 28 October 2020 11:52 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 53106 -> Wednesday, 28 October 2020 11:54 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 19358 -> Wednesday, 28 October 2020 11:54 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 51814 -> Wednesday, 28 October 2020 11:58 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 27290 -> Wednesday, 28 October 2020 12:03 PM
+City seed 5678 -> London, Eurasia
