@@ -8321,3 +8321,50 @@ City seed 5678 -> London, Eurasia
 
 Dev seed 16784 -> Wednesday, 28 October 2020 9:41 AM
 City seed 5678 -> London, Eurasia
+
+Dev seed 45140 -> Wednesday, 28 October 2020 10:43 AM
+City seed 5678 -> London, Eurasia
+ASSERT MissingComponentException: There is no 'BoxCollider' attached to the "District1(Clone)" game object, but a script is trying to access it.
+You probably need to add a BoxCollider to the game object "District1(Clone)". Or your script needs to check if the component is attached before using it.
+LevelManager.CheckForNodeCollision (System.Int32 indexStart, System.Int32 indexEnd, UnityEngine.Vector3 posStart, UnityEngine.Vector3 posEnd) (at Assets/Scripts/Managers/LevelManager.cs:541)
+	LevelManager.RemoveInvalidNodes () (at Assets/Scripts/Managers/LevelManager.cs:644)
+	LevelManager.SubInitialiseAll () (at Assets/Scripts/Managers/LevelManager.cs:117)
+	LevelManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/LevelManager.cs:83)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:844)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:897)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:402)
+	
+Dev seed 38018 -> Wednesday, 28 October 2020 10:47 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 56626 -> Wednesday, 28 October 2020 10:50 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 13195 -> Wednesday, 28 October 2020 10:51 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 35933 -> Wednesday, 28 October 2020 10:54 AM
+City seed 5678 -> London, Eurasia
+ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+LevelManager.InitialiseNodeArcs () (at Assets/Scripts/Managers/LevelManager.cs:904)
+	LevelManager.SubInitialiseAll () (at Assets/Scripts/Managers/LevelManager.cs:120)
+	LevelManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/LevelManager.cs:83)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:844)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:897)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:402)
+	
+Dev seed 34514 -> Wednesday, 28 October 2020 10:56 AM
+City seed 5678 -> London, Eurasia
+ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+LevelManager.InitialiseNodeArcs () (at Assets/Scripts/Managers/LevelManager.cs:904)
+	LevelManager.SubInitialiseAll () (at Assets/Scripts/Managers/LevelManager.cs:120)
+	LevelManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/LevelManager.cs:83)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:844)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:897)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:402)
+	
+Dev seed 46743 -> Wednesday, 28 October 2020 10:59 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 26366 -> Wednesday, 28 October 2020 10:59 AM
+City seed 5678 -> London, Eurasia
