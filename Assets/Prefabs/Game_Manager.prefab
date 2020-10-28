@@ -5783,11 +5783,11 @@ MonoBehaviour:
   billboard: 1
   debugData: 0
   noAI: 0
-  noNodes: 1
   showContacts: 0
   showPower: 1
   connectorTooltips: 0
   fullMoodInfo: 0
+  noNodes: 1
 --- !u!114 &114556544146557144
 MonoBehaviour:
   m_ObjectHideFlags: 1

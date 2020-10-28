@@ -12,7 +12,13 @@ using Random = UnityEngine.Random;
 public class Node : MonoBehaviour
 {
     [HideInInspector] public Material _Material { get; private set; }    //material renderer uses to draw node
-    public GameObject faceObject;                      //child object that has the textmesh component for writing text on top of the node (linked in Editor)
+
+    //child objects of node
+    public GameObject faceObject;                       //child object that has the textmesh component for writing text on top of the node (linked in Editor)
+    public GameObject baseObject;                       //child object -> base of buildings
+    public GameObject rearObject;                       //child object -> rear building
+    public GameObject rightObject;                      //child object -> right building
+    public GameObject leftObject;                       //child object -> left building
 
     [HideInInspector] public int nodeID;                //unique ID, sequentially derived from NodeManager nodeCounter, don't skip numbers, keep it sequential, 0+
     [HideInInspector] public Vector3 nodePosition;      //position

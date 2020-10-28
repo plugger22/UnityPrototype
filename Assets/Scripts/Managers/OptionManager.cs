@@ -19,7 +19,6 @@ public class OptionManager : MonoBehaviour
     //Debug options
     [HideInInspector] public bool debugData = false;                              //if true debug data is displayed onscreen
     [HideInInspector] public bool noAI = false;                                   //if true AI is switched off for both sides (debug purposes)
-    [HideInInspector] public bool noNodes = false;                                //if true node faceText is switched off and districts are used instead of nodes
 
     //UI options
     [HideInInspector] public bool showContacts = false;                           //if true node tooltips will show contact as well as Actor Arcs for nodes where actors have contacts
@@ -31,6 +30,8 @@ public class OptionManager : MonoBehaviour
     private ColourScheme _colourOption;
     #endregion
 
+    //Development -> special option for getting district prefabs up and running -> if true node faceText is switched off and districts are used instead of nodes
+    public bool noNodes = false;
 
     //ColourManager.cs ColourScheme enum (eg. 0 -> normal, 1 -> colourblind)
     public ColourScheme ColourOption                             
