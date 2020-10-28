@@ -30,7 +30,11 @@ public class Node : MonoBehaviour
     [HideInInspector] public string specialName;        //eg. name of icon, airport, harbour, town hall, etc. if node is special, ignore otherwise
     [HideInInspector] public NodeArc Arc;               //archetype type
     [HideInInspector] public ParticleLauncher launcher; //attached script component that controls the smoke particle system
-    [HideInInspector] public Renderer objectRenderer;   //renders node cylinder or base object depending on node/district setup
+    [HideInInspector] public Renderer nodeRenderer;   //renders node cylinder
+    [HideInInspector] public Renderer baseRenderer;   //renders base object
+    [HideInInspector] public Renderer rearRenderer;   //renders rear object
+    [HideInInspector] public Renderer rightRenderer;   //renders right object
+    [HideInInspector] public Renderer leftRenderer;   //renders left object
 
     #region Save Data Compatible
     [HideInInspector] public bool isTracer;             //has resistance tracer?
@@ -247,16 +251,24 @@ public class Node : MonoBehaviour
 
             }
             else { Debug.LogError("Invalid baseObject (Null)"); }
-            //cylinder renderer
-            objectRenderer = GetComponent<Renderer>();
-            Debug.Assert(objectRenderer != null, "Invalid Cylinder renderer (Null)");
         }
         else
         {
-            objectRenderer = baseObject.GetComponent<Renderer>();
-            Debug.Assert(objectRenderer != null, "Invalid Base renderer (Null)");
+            nodeRenderer = baseObject.GetComponent<Renderer>();
+            Debug.Assert(nodeRenderer != null, "Invalid Base renderer (Null)");
         }
-        //renderer
+        //renderers
+        nodeRenderer = GetComponent<Renderer>();
+        baseRenderer = baseObject.GetComponent<Renderer>();
+        rearRenderer = rearObject.GetComponent<Renderer>();
+        rightRenderer = rightObject.GetComponent<Renderer>();
+        leftRenderer = leftObject.GetComponent<Renderer>();
+        Debug.Assert(nodeRenderer != null, "Invalid Cylinder renderer (Null)");
+        Debug.Assert(baseRenderer != null, "Invalid Base renderer (Null)");
+        Debug.Assert(rearRenderer != null, "Invalid Rear renderer (Null)");
+        Debug.Assert(rightRenderer != null, "Invalid Right renderer (Null)");
+        Debug.Assert(leftRenderer != null, "Invalid Left renderer (Null)");
+        //launcher
         Debug.Assert(launcher != null, "Invalid Launcher (Null)");
 
 
@@ -442,9 +454,7 @@ public class Node : MonoBehaviour
                     }
                 }
             }
-            //
             // - - - Tool tip
-            //
             else
             {
                 onMouseFlag = true;
@@ -844,25 +854,26 @@ public class Node : MonoBehaviour
     /// <param name="newMaterial"></param>
     public void SetMaterial(Material newMaterial, NodeComponent component)
     {
-        switch (component)
-        {
-            case NodeComponent.Cylinder: _MaterialNode = newMaterial; break;
-            case NodeComponent.Base: _MaterialBase = newMaterial; break;
-            case NodeComponent.Towers:
-                _MaterialRear = newMaterial;
-                _MaterialRight = newMaterial;
-                _MaterialLeft = newMaterial;
-                break;
-            case NodeComponent.BaseAndTowers:
-                _MaterialBase = newMaterial;
-                _MaterialRear = newMaterial;
-                _MaterialRight = newMaterial;
-                _MaterialLeft = newMaterial;
-                break;
-            default: Debug.LogWarningFormat("Unrecognised NodeComponent \"{0}\"", component); break;
-        }
         if (newMaterial != null)
-        { objectRenderer.material = newMaterial; }
+        {
+            switch (component)
+            {
+                case NodeComponent.Cylinder: nodeRenderer.material = newMaterial; break;
+                case NodeComponent.Base: baseRenderer.material = newMaterial; break;
+                case NodeComponent.Towers:
+                    rearRenderer.material = newMaterial;
+                    rightRenderer.material = newMaterial;
+                    leftRenderer.material = newMaterial;
+                    break;
+                case NodeComponent.BaseAndTowers:
+                    baseRenderer.material = newMaterial;
+                    rearRenderer.material = newMaterial;
+                    rightRenderer.material = newMaterial;
+                    leftRenderer.material = newMaterial;
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised NodeComponent \"{0}\"", component); break;
+            }
+        }
         else { Debug.LogError("Invalid newMaterial (Null)"); }
     }
 
@@ -876,9 +887,10 @@ public class Node : MonoBehaviour
         Material material = null;
         switch (component)
         {
-            case NodeComponent.Cylinder: material = _MaterialNode; break;
-            case NodeComponent.Base: material = _MaterialBase; break;
-            case NodeComponent.Towers: material = _MaterialRear; break;
+            case NodeComponent.Cylinder: material = nodeRenderer.material; break;
+            case NodeComponent.Base: material = baseRenderer.material; break;
+            case NodeComponent.Towers: material = rearRenderer.material; break;
+            case NodeComponent.BaseAndTowers: material = baseRenderer.material; break;
             default: Debug.LogWarningFormat("Unrecognised NodeComponent \"{0}\"", component); break;
         }
         return material;

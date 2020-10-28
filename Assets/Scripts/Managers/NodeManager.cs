@@ -1317,10 +1317,10 @@ public class NodeManager : MonoBehaviour
             {
                 if (noNodes == false)
                 {
-                    node.objectRenderer.material = node._MaterialNode;
+                    node.nodeRenderer.material = node._MaterialNode;
                     SetNodeMaterial(node, NodeType.Normal, NodeComponent.Cylinder);
                 }
-                else { node.objectRenderer.material = node._MaterialBase; }
+                else { node.nodeRenderer.material = node._MaterialBase; }
             }
             //highlighted node
             if (nodeHighlight > -1)
@@ -1332,7 +1332,7 @@ public class NodeManager : MonoBehaviour
                     {
                         //only do so if it's a normal node, otherwise ignore
                         if (node.GetMaterial(NodeComponent.Cylinder) == materialNormal)
-                        { node.objectRenderer.material = materialHighlight; }
+                        { node.nodeRenderer.material = materialHighlight; }
                     }
                     else
                     {
@@ -1360,7 +1360,7 @@ public class NodeManager : MonoBehaviour
                         {
                             //only do so if it's a normal node, otherwise ignore
                             if (node.GetMaterial(NodeComponent.Cylinder) == materialNormal)
-                            { node.objectRenderer.material = materialPlayer; }
+                            { node.nodeRenderer.material = materialPlayer; }
                         }
                     }
                 }
@@ -1384,7 +1384,7 @@ public class NodeManager : MonoBehaviour
                         {
                             //only do so if it's a normal node, otherwise ignore
                             if (node.GetMaterial(NodeComponent.Cylinder) == materialNormal)
-                            { node.objectRenderer.material = materialNemesis; }
+                            { node.nodeRenderer.material = materialNemesis; }
                         }
                     }
                 }

@@ -8990,3 +8990,11 @@ NodeManager.ShowAllContacts () (at Assets/Scripts/Managers/NodeManager.cs:1622)
 	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:326)
 	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1149)
 	
+Dev seed 58605 -> Wednesday, 28 October 2020 6:00 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 3916 -> Wednesday, 28 October 2020 6:03 PM
+City seed 5678 -> London, Eurasia
+
+Dev seed 29811 -> Wednesday, 28 October 2020 6:06 PM
+City seed 5678 -> London, Eurasia
