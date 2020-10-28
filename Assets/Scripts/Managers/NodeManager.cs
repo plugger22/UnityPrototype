@@ -197,14 +197,14 @@ public class NodeManager : MonoBehaviour
         //fast access
         globalResistance = GameManager.i.globalScript.sideResistance;
         globalAuthority = GameManager.i.globalScript.sideAuthority;
-        materialDefault = GetNodeMaterial(NodeType.Default);
-        materialNormal = GetNodeMaterial(NodeType.Normal);
-        materialHighlight = GetNodeMaterial(NodeType.Highlight);
-        materialActive = GetNodeMaterial(NodeType.Active);
-        materialPlayer = GetNodeMaterial(NodeType.Player);
-        materialNemesis = GetNodeMaterial(NodeType.Nemesis);
-        materialBackground = GetNodeMaterial(NodeType.Background);
-        materialInvisible = GetNodeMaterial(NodeType.Invisible);
+        materialDefault = GetNodeMaterial(NodeColour.Default);
+        materialNormal = GetNodeMaterial(NodeColour.Normal);
+        materialHighlight = GetNodeMaterial(NodeColour.Highlight);
+        materialActive = GetNodeMaterial(NodeColour.Active);
+        materialPlayer = GetNodeMaterial(NodeColour.Player);
+        materialNemesis = GetNodeMaterial(NodeColour.Nemesis);
+        materialBackground = GetNodeMaterial(NodeColour.Background);
+        materialInvisible = GetNodeMaterial(NodeColour.Invisible);
         crisisBaseChanceDoubled = "NodeCrisisBaseChanceDoubled";
         crisisBaseChanceHalved = "NodeCrisisBaseChanceHalved";
         crisisTimerHigh = "NodeCrisisTimerHigh";
@@ -257,7 +257,7 @@ public class NodeManager : MonoBehaviour
         GameManager.i.contactScript.UpdateNodeContacts();
         GameManager.i.contactScript.UpdateNodeContacts(false);
         //check arrayOfNodeMaterials fully stocked
-        Debug.AssertFormat(arrayOfNodeMaterials.Length == (int)NodeType.Count, "Invalid arrayOfNodeMaterials (is {0} materials, should be {1})", arrayOfNodeMaterials.Length, NodeType.Count);
+        Debug.AssertFormat(arrayOfNodeMaterials.Length == (int)NodeColour.Count, "Invalid arrayOfNodeMaterials (is {0} materials, should be {1})", arrayOfNodeMaterials.Length, NodeColour.Count);
         //set default face text for nodes
         ResetNodes();
     }
@@ -485,7 +485,7 @@ public class NodeManager : MonoBehaviour
     /// </summary>
     /// <param name="nodeType"></param>
     /// <returns></returns>
-    public Material GetNodeMaterial(NodeType nodeType)
+    public Material GetNodeMaterial(NodeColour nodeType)
     { return arrayOfNodeMaterials[(int)nodeType]; }
 
 
@@ -1189,12 +1189,12 @@ public class NodeManager : MonoBehaviour
                 if (noNodes == false)
                 {
                     /*node.nodeRenderer.material = node._MaterialNode;*/
-                    SetNodeMaterial(node, NodeType.Normal, NodeComponent.Cylinder);
+                    SetNodeMaterial(node, node.colourNode, NodeComponent.Cylinder);
                 }
                 else
                 {
                     /*node.nodeRenderer.material = node._MaterialBase;*/
-                    SetNodeMaterial(node, NodeType.Normal, NodeComponent.Base);
+                    SetNodeMaterial(node, node.colourBase, NodeComponent.Base);
                 }
             }
             //highlighted node
@@ -1209,13 +1209,13 @@ public class NodeManager : MonoBehaviour
                         if (node.GetMaterial(NodeComponent.Cylinder) == materialNormal)
                         {
                             /*node.nodeRenderer.material = materialHighlight;*/
-                            SetNodeMaterial(node, NodeType.Highlight, NodeComponent.Cylinder);
+                            SetNodeMaterial(node, NodeColour.Highlight, NodeComponent.Cylinder);
                         }
                     }
                     else
                     {
                         if (node.GetMaterial(NodeComponent.Base) == materialNormal)
-                        { SetNodeMaterial(node, NodeType.Highlight, NodeComponent.Base); }
+                        { SetNodeMaterial(node, NodeColour.Highlight, NodeComponent.Base); }
                     }
                 }
                 else { Debug.LogError("Invalid Node (null) returned from listOfNodes"); }
@@ -1243,14 +1243,14 @@ public class NodeManager : MonoBehaviour
                                 if (node.GetMaterial(NodeComponent.Cylinder) == materialNormal)
                                 {
                                     /*node.nodeRenderer.material = materialPlayer;*/
-                                    SetNodeMaterial(node, NodeType.Player, NodeComponent.Cylinder);
+                                    SetNodeMaterial(node, NodeColour.Player, NodeComponent.Cylinder);
                                 }
                             }
                             else
                             {
                                 if (node.GetMaterial(NodeComponent.Base) == materialNormal)
                                 {
-                                    SetNodeMaterial(node, NodeType.Player, NodeComponent.Base);
+                                    SetNodeMaterial(node, NodeColour.Player, NodeComponent.Base);
                                 }
                             }
                         }
@@ -1280,7 +1280,7 @@ public class NodeManager : MonoBehaviour
                                 if (node.GetMaterial(NodeComponent.Cylinder) == materialNormal)
                                 {
                                     /*node.nodeRenderer.material = materialNemesis;*/
-                                    SetNodeMaterial(node, NodeType.Nemesis, NodeComponent.Cylinder);
+                                    SetNodeMaterial(node, NodeColour.Nemesis, NodeComponent.Cylinder);
                                 }
                             }
                             else
@@ -1288,7 +1288,7 @@ public class NodeManager : MonoBehaviour
                                 if (node.GetMaterial(NodeComponent.Base) == materialNormal)
                                 {
                                     /*node.nodeRenderer.material = materialNemesis;*/
-                                    SetNodeMaterial(node, NodeType.Nemesis, NodeComponent.Base);
+                                    SetNodeMaterial(node, NodeColour.Nemesis, NodeComponent.Base);
                                 }
                             }
                         }
@@ -1318,7 +1318,7 @@ public class NodeManager : MonoBehaviour
                 if (noNodes == false)
                 {
                     node.nodeRenderer.material = node._MaterialNode;
-                    SetNodeMaterial(node, NodeType.Normal, NodeComponent.Cylinder);
+                    SetNodeMaterial(node, NodeColour.Normal, NodeComponent.Cylinder);
                 }
                 else { node.nodeRenderer.material = node._MaterialBase; }
             }
@@ -1411,7 +1411,7 @@ public class NodeManager : MonoBehaviour
 
                 if (noNodes == false)
                 {
-                    SetNodeMaterial(node, NodeType.Normal, NodeComponent.Cylinder);
+                    node.colourNode = NodeColour.Normal;
                     if (node.defaultChar != '\0')
                     { node.faceText.text = string.Format("{0}", node.defaultChar); }
                     else { node.faceText.text = ""; }
@@ -1421,8 +1421,7 @@ public class NodeManager : MonoBehaviour
                 else
                 {
                     //normal cylindrical nodes
-                    SetNodeMaterial(node, NodeType.Invisible, NodeComponent.Cylinder);
-                    SetNodeMaterial(node, NodeType.Normal, NodeComponent.Base);
+                    node.colourBase = NodeColour.Normal;
                 }
             }
             //trigger an automatic redraw
@@ -1436,20 +1435,20 @@ public class NodeManager : MonoBehaviour
     /// </summary>
     /// <param name="node"></param>
     /// <param name="nodeType"></param>
-    private void SetNodeMaterial(Node node, NodeType nodeType, NodeComponent nodeComponent)
+    private void SetNodeMaterial(Node node, NodeColour nodeType, NodeComponent nodeComponent)
     {
         Material material = materialDefault;
         Debug.Assert(node != null, "Invalid node (Null)");
         {
             switch (nodeType)
             {
-                case NodeType.Default: material = materialDefault; break;
-                case NodeType.Normal: material = materialNormal; break;
-                case NodeType.Highlight: material = materialHighlight; break;
-                case NodeType.Active: material = materialActive; break;
-                case NodeType.Player: material = materialPlayer; break;
-                case NodeType.Background: material = materialBackground; break;
-                case NodeType.Invisible: material = materialInvisible; break;
+                case NodeColour.Default: material = materialDefault; break;
+                case NodeColour.Normal: material = materialNormal; break;
+                case NodeColour.Highlight: material = materialHighlight; break;
+                case NodeColour.Active: material = materialActive; break;
+                case NodeColour.Player: material = materialPlayer; break;
+                case NodeColour.Background: material = materialBackground; break;
+                case NodeColour.Invisible: material = materialInvisible; break;
                 default: Debug.LogFormat("Unrecognised NodeType \"{0}\"", nodeType); break;
             }
             node.SetMaterial(material, nodeComponent);
@@ -1536,9 +1535,9 @@ public class NodeManager : MonoBehaviour
                                         if (noNodes == false)
                                         {
                                             node.faceText.text = "";
-                                            SetNodeMaterial(node, NodeType.Background, NodeComponent.Cylinder);
+                                            SetNodeMaterial(node, NodeColour.Background, NodeComponent.Cylinder);
                                         }
-                                        else { SetNodeMaterial(node, NodeType.Background, NodeComponent.Base); }
+                                        else { SetNodeMaterial(node, NodeColour.Background, NodeComponent.Base); }
                                     }
                                     break;
                                 default:

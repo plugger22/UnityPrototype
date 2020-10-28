@@ -26,8 +26,8 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
         flashNodeTime = GameManager.i.guiScript.flashNodeTime;
         Debug.Assert(flashNodeTime > 0, "Invalid flashNodeTime (zero)");
         //materials
-        materialNormal = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Normal);
-        materialPlayer = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Player);
+        materialNormal = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Normal);
+        materialPlayer = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Player);
         Debug.Assert(materialNormal != null, "Invalid nodeNormal (Null)");
         Debug.Assert(materialPlayer != null, "Invalid nodePlayer (Null)");
     }

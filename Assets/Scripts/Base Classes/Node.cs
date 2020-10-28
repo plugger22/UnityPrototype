@@ -11,11 +11,11 @@ using Random = UnityEngine.Random;
 
 public class Node : MonoBehaviour
 {
-    [HideInInspector] public Material _MaterialNode { get; private set; }    //material renderer uses to draw node
-    [HideInInspector] public Material _MaterialBase { get; private set; }    //material renderer for child base object
-    [HideInInspector] public Material _MaterialRear { get; private set; }    //material renderer for child base object
-    [HideInInspector] public Material _MaterialRight { get; private set; }    //material renderer for child base object
-    [HideInInspector] public Material _MaterialLeft { get; private set; }    //material renderer for child base object
+    [HideInInspector] public Material _MaterialNode { get; private set; }    //material renderer uses to draw node (variable)
+    [HideInInspector] public Material _MaterialBase { get; private set; }    //material renderer for child base object (variable) 
+    [HideInInspector] public Material _MaterialRear { get; private set; }    //material renderer for child base object (variable)
+    [HideInInspector] public Material _MaterialRight { get; private set; }    //material renderer for child base object (variable)
+    [HideInInspector] public Material _MaterialLeft { get; private set; }    //material renderer for child base object (variable)
 
     //child objects of node
     public GameObject faceObject;                       //child object that has the textmesh component for writing text on top of the node (linked in Editor)
@@ -23,6 +23,13 @@ public class Node : MonoBehaviour
     public GameObject rearObject;                       //child object -> rear building
     public GameObject rightObject;                      //child object -> right building
     public GameObject leftObject;                       //child object -> left building
+
+    [HideInInspector] public NodeColour colourNode;     //used to assign a new colour to node cylinder
+    [HideInInspector] public NodeColour colourBase;     //used to assign a new colour to district base
+    [HideInInspector] public NodeColour colourRear;     //used to assign a new colour to district rear
+    [HideInInspector] public NodeColour colourRight;     //used to assign a new colour to district right
+    [HideInInspector] public NodeColour colourLeft;     //used to assign a new colour to district left
+
 
     [HideInInspector] public int nodeID;                //unique ID, sequentially derived from NodeManager nodeCounter, don't skip numbers, keep it sequential, 0+
     [HideInInspector] public Vector3 nodePosition;      //position
@@ -284,23 +291,29 @@ public class Node : MonoBehaviour
             Debug.Assert(rearObject != null, "Invalid rearObject (Null)");
             Debug.Assert(rightObject != null, "Invalid rightObject (Null)");
             Debug.Assert(leftObject != null, "Invalid leftObject (Null)");
-            _MaterialNode = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Invisible);
-            _MaterialBase = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Default);
-            _MaterialRear = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Default);
-            _MaterialRight = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Default);
-            _MaterialLeft = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Default);
+            _MaterialNode = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Invisible);
+            _MaterialBase = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Normal);
+            _MaterialRear = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Default);
+            _MaterialRight = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Default);
+            _MaterialLeft = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Default);
+            colourNode = NodeColour.Invisible;
+            colourBase = NodeColour.Default;
+            colourRear = NodeColour.Default;
+            colourRight = NodeColour.Default;
+            colourLeft = NodeColour.Default;
         }
         else
         {
             //Cylindrical Nodes in use, not districts
-            _MaterialNode = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Normal);
+            _MaterialNode = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Normal);
+            colourNode = NodeColour.Normal;
         }
         //fast access
-        materialNormal = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Normal);
-        materialActive = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Active);
-        materialHighlight = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Highlight);
-        materialNemesis = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Nemesis);
-        materialPlayer = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Player);
+        materialNormal = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Normal);
+        materialActive = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Active);
+        materialHighlight = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Highlight);
+        materialNemesis = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Nemesis);
+        materialPlayer = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Player);
         mouseOverDelay = GameManager.i.guiScript.tooltipDelay;
         /*fadeInTime = GameManager.instance.tooltipScript.tooltipFade;*/
         maxValue = GameManager.i.nodeScript.maxNodeValue;
@@ -878,7 +891,7 @@ public class Node : MonoBehaviour
     }
 
     /// <summary>
-    /// returns material of relevant node component, null if a problem
+    /// returns material of relevant node component, null if a problem. DO NOT use returned material for anything other than Comparisons (using renderer.sharedMaterial)
     /// </summary>
     /// <param name="component"></param>
     /// <returns></returns>
@@ -887,10 +900,10 @@ public class Node : MonoBehaviour
         Material material = null;
         switch (component)
         {
-            case NodeComponent.Cylinder: material = nodeRenderer.material; break;
-            case NodeComponent.Base: material = baseRenderer.material; break;
-            case NodeComponent.Towers: material = rearRenderer.material; break;
-            case NodeComponent.BaseAndTowers: material = baseRenderer.material; break;
+            case NodeComponent.Cylinder: material = nodeRenderer.sharedMaterial; break;
+            case NodeComponent.Base: material = baseRenderer.sharedMaterial; break;
+            case NodeComponent.Towers: material = rearRenderer.sharedMaterial; break;
+            case NodeComponent.BaseAndTowers: material = baseRenderer.sharedMaterial; break;
             default: Debug.LogWarningFormat("Unrecognised NodeComponent \"{0}\"", component); break;
         }
         return material;
@@ -905,11 +918,13 @@ public class Node : MonoBehaviour
         if (GameManager.i.optionScript.noNodes == false)
         {
             faceText.color = new Color32(0, 0, 0, 255);
-            _MaterialNode = materialActive;
+            /*_MaterialNode = materialActive;*/
+            colourNode = NodeColour.Active;
         }
         else
         {
-            _MaterialBase = materialActive;
+            /*_MaterialBase = materialActive;*/
+            colourBase = NodeColour.Active;
         }
     }
 
@@ -921,9 +936,15 @@ public class Node : MonoBehaviour
         if (GameManager.i.optionScript.noNodes == false)
         {
             faceText.color = new Color32(0, 0, 0, 255);
-            _MaterialNode = materialPlayer;
+            /*_MaterialNode = materialPlayer;*/
+            colourNode = NodeColour.Player;
+
         }
-        else { _MaterialBase = materialPlayer; }
+        else
+        {
+            /*_MaterialBase = materialPlayer;*/
+            colourBase = NodeColour.Player;
+        }
     }
 
     /// <summary>
@@ -935,9 +956,14 @@ public class Node : MonoBehaviour
         if (GameManager.i.optionScript.noNodes == false)
         {
             faceText.color = new Color32(255, 255, 224, 202);
-            _MaterialNode = materialPlayer;
+            /*_MaterialNode = materialPlayer;*/
+            colourNode = NodeColour.Player;
         }
-        else { _MaterialBase = materialPlayer; }
+        else
+        {
+            /*_MaterialBase = materialPlayer;*/
+            colourBase = NodeColour.Player;
+        }
     }
 
     /// <summary>
@@ -948,10 +974,14 @@ public class Node : MonoBehaviour
         if (GameManager.i.optionScript.noNodes == false)
         {
             faceText.color = new Color32(0, 0, 0, 255);
-            _MaterialNode = materialHighlight;
+            /*_MaterialNode = materialHighlight;*/
+            colourNode = NodeColour.Highlight;
         }
         else
-        { _MaterialBase = materialHighlight; }
+        {
+            /*_MaterialBase = materialHighlight;*/
+            colourBase = NodeColour.Highlight;
+        }
     }
 
     /// <summary>
@@ -962,9 +992,14 @@ public class Node : MonoBehaviour
         if (GameManager.i.optionScript.noNodes == false)
         {
             faceText.color = new Color32(255, 255, 224, 202);
-            _MaterialNode = materialNemesis;
+            /*_MaterialNode = materialNemesis;*/
+            colourNode = NodeColour.Nemesis;
         }
-        else { _MaterialBase = materialNemesis; }
+        else
+        {
+            /*_MaterialBase = materialNemesis;*/
+            colourBase = NodeColour.Nemesis;
+        }
     }
 
     /// <summary>
@@ -976,9 +1011,14 @@ public class Node : MonoBehaviour
         if (GameManager.i.optionScript.noNodes == false)
         {
             faceText.color = new Color32(255, 255, 224, 202);
-            _MaterialNode = materialNormal;
+            /*_MaterialNode = materialNormal;*/
+            colourNode = NodeColour.Normal;
         }
-        else { _MaterialBase = materialNormal; }
+        else
+        {
+            /*_MaterialBase = materialNormal;*/
+            colourBase = NodeColour.Normal;
+        }
     }
 
     //
