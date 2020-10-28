@@ -11,7 +11,11 @@ using Random = UnityEngine.Random;
 
 public class Node : MonoBehaviour
 {
-    [HideInInspector] public Material _Material { get; private set; }    //material renderer uses to draw node
+    [HideInInspector] public Material _MaterialNode { get; private set; }    //material renderer uses to draw node
+    [HideInInspector] public Material _MaterialBase { get; private set; }    //material renderer for child base object
+    [HideInInspector] public Material _MaterialRear { get; private set; }    //material renderer for child base object
+    [HideInInspector] public Material _MaterialRight { get; private set; }    //material renderer for child base object
+    [HideInInspector] public Material _MaterialLeft { get; private set; }    //material renderer for child base object
 
     //child objects of node
     public GameObject faceObject;                       //child object that has the textmesh component for writing text on top of the node (linked in Editor)
@@ -225,9 +229,10 @@ public class Node : MonoBehaviour
 
         //components
         launcher = GetComponent<ParticleLauncher>();
-        //faceText
+        //child objects
         if (GameManager.i.optionScript.noNodes == false)
         {
+            //face Text
             if (faceObject != null)
             {
                 //node face text
@@ -236,6 +241,12 @@ public class Node : MonoBehaviour
             }
             else { Debug.LogError("Invalid faceObject (Null)"); }
             Debug.Assert(faceText != null, "Invalid faceText (Null)");
+            //Base
+            if (baseObject != null)
+            {
+
+            }
+            else { Debug.LogError("Invalid baseObject (Null)"); }
         }
         //renderer
         nodeRenderer = GetComponent<Renderer>();
@@ -245,8 +256,26 @@ public class Node : MonoBehaviour
 
     private void OnEnable()
     {
+        //Materials and child objects
+        if (GameManager.i.optionScript.noNodes == true)
+        {
+            //Districts in use, not cylindrical nodes
+            Debug.Assert(baseObject != null, "Invalid baseObject (Null)");
+            Debug.Assert(rearObject != null, "Invalid rearObject (Null)");
+            Debug.Assert(rightObject != null, "Invalid rightObject (Null)");
+            Debug.Assert(leftObject != null, "Invalid leftObject (Null)");
+            _MaterialNode = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Invisible);
+            _MaterialBase = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Default);
+            _MaterialRear = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Default);
+            _MaterialRight = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Default);
+            _MaterialLeft = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Default);
+        }
+        else
+        {
+            //Cylindrical Nodes in use, not districts
+            _MaterialNode = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Normal);
+        }
         //fast access
-        _Material = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Normal);
         materialNormal = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Normal);
         materialActive = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Active);
         materialHighlight = GameManager.i.nodeScript.GetNodeMaterial(NodeType.Highlight);
@@ -796,13 +825,16 @@ public class Node : MonoBehaviour
     public List<EffectDataOngoing> GetListOfOngoingEffects()
     { return listOfOngoingEffects; }
 
-
+    /// <summary>
+    /// Don't call this directly, instead use NodeManager.cs -> SetNodeMaterial
+    /// </summary>
+    /// <param name="newMaterial"></param>
     public void SetMaterial(Material newMaterial)
-    { _Material = newMaterial; }
+    { _MaterialNode = newMaterial; }
 
 
     public Material GetMaterial()
-    { return _Material; }
+    { return _MaterialNode; }
 
     /// <summary>
     /// Sets node to active material with black, full opacity, face icon
@@ -810,7 +842,7 @@ public class Node : MonoBehaviour
     /// <param name="newMaterial"></param>
     public void SetActive()
     {
-        _Material = materialActive;
+        _MaterialNode = materialActive;
         if (GameManager.i.optionScript.noNodes == false)
         { faceText.color = new Color32(0, 0, 0, 255); }
     }
@@ -820,7 +852,7 @@ public class Node : MonoBehaviour
     /// </summary>
     public void SetPlayerFlash()
     {
-        _Material = materialPlayer;
+        _MaterialNode = materialPlayer;
         if (GameManager.i.optionScript.noNodes == false)
         { faceText.color = new Color32(0, 0, 0, 255); }
     }
@@ -831,7 +863,7 @@ public class Node : MonoBehaviour
     /// <param name="newMaterial"></param>
     public void SetPlayerNormal()
     {
-        _Material = materialPlayer;
+        _MaterialNode = materialPlayer;
         if (GameManager.i.optionScript.noNodes == false)
         { faceText.color = new Color32(255, 255, 224, 202); }
     }
@@ -841,7 +873,7 @@ public class Node : MonoBehaviour
     /// </summary>
     public void SetHighlight()
     {
-        _Material = materialHighlight;
+        _MaterialNode = materialHighlight;
         if (GameManager.i.optionScript.noNodes == false)
         { faceText.color = new Color32(0, 0, 0, 255); }
     }
@@ -851,7 +883,7 @@ public class Node : MonoBehaviour
     /// </summary>
     public void SetNemesis()
     {
-        _Material = materialNemesis;
+        _MaterialNode = materialNemesis;
         if (GameManager.i.optionScript.noNodes == false)
         { faceText.color = new Color32(255, 255, 224, 202); }
     }
@@ -862,7 +894,7 @@ public class Node : MonoBehaviour
     /// <param name="newMaterial"></param>
     public void SetNormal()
     {
-        _Material = materialNormal;
+        _MaterialNode = materialNormal;
         if (GameManager.i.optionScript.noNodes == false)
         { faceText.color = new Color32(255, 255, 224, 202); }
     }

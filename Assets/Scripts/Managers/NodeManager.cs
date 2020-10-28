@@ -100,12 +100,14 @@ public class NodeManager : MonoBehaviour
     //activity
     [HideInInspector] public ActivityUI activityState;
     //materials
+    private Material materialDefault;
     private Material materialNormal;
     private Material materialHighlight;
     private Material materialActive;
     private Material materialPlayer;
     private Material materialNemesis;
     private Material materialBackground;            //grey
+    private Material materialInvisible;
     //flash
     private float flashNodeTime;
 
@@ -195,12 +197,14 @@ public class NodeManager : MonoBehaviour
         //fast access
         globalResistance = GameManager.i.globalScript.sideResistance;
         globalAuthority = GameManager.i.globalScript.sideAuthority;
+        materialDefault = GetNodeMaterial(NodeType.Default);
         materialNormal = GetNodeMaterial(NodeType.Normal);
         materialHighlight = GetNodeMaterial(NodeType.Highlight);
         materialActive = GetNodeMaterial(NodeType.Active);
         materialPlayer = GetNodeMaterial(NodeType.Player);
         materialNemesis = GetNodeMaterial(NodeType.Nemesis);
         materialBackground = GetNodeMaterial(NodeType.Background);
+        materialInvisible = GetNodeMaterial(NodeType.Invisible);
         crisisBaseChanceDoubled = "NodeCrisisBaseChanceDoubled";
         crisisBaseChanceHalved = "NodeCrisisBaseChanceHalved";
         crisisTimerHigh = "NodeCrisisTimerHigh";
@@ -209,11 +213,13 @@ public class NodeManager : MonoBehaviour
         crisisWaitTimerHalved = "NodeCrisisWaitTimerHalved";
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
+        Debug.Assert(materialDefault != null, "Invalid materialDefault (Null)");
         Debug.Assert(materialNormal != null, "Invalid materialNormal (Null)");
         Debug.Assert(materialHighlight != null, "Invalid materialHighlight (Null)");
         Debug.Assert(materialActive != null, "Invalid materialActive (Null)");
         Debug.Assert(materialPlayer != null, "Invalid materialPlayer (Null)");
         Debug.Assert(materialNemesis != null, "Invalid materialNemesis (Null)");
+        Debug.Assert(materialInvisible != null, "Invalid materialInvisibile (Null)");
         Debug.Assert(materialBackground != null, "Invalid materialBackground (Null)");
         //gear node Action Fast access
         actionKinetic = GameManager.i.dataScript.GetAction("gearKinetic");
@@ -250,6 +256,8 @@ public class NodeManager : MonoBehaviour
         //Set node contact flags (player side & non-player side)
         GameManager.i.contactScript.UpdateNodeContacts();
         GameManager.i.contactScript.UpdateNodeContacts(false);
+        //check arrayOfNodeMaterials fully stocked
+        Debug.AssertFormat(arrayOfNodeMaterials.Length == (int)NodeType.Count, "Invalid arrayOfNodeMaterials (is {0} materials, should be {1})", arrayOfNodeMaterials.Length, NodeType.Count);
         //set default face text for nodes
         ResetNodes();
     }
@@ -1176,7 +1184,7 @@ public class NodeManager : MonoBehaviour
         {
             //loop all nodes & assign current materials to their renderers (changes colour on screen)
             foreach (Node node in listOfNodes)
-            { node.nodeRenderer.material = node._Material; }
+            { node.nodeRenderer.material = node._MaterialNode; }
             //highlighted node
             if (nodeHighlight > -1)
             {
@@ -1255,21 +1263,51 @@ public class NodeManager : MonoBehaviour
         {
             foreach (Node node in listOfNodes)
             {
-                node.SetMaterial(materialNormal);
+                
                 if (noNodes == false)
                 {
+                    SetNodeMaterial(node, NodeType.Normal);
                     if (node.defaultChar != '\0')
                     { node.faceText.text = string.Format("{0}", node.defaultChar); }
                     else { node.faceText.text = ""; }
                     //colourNormal
                     node.faceText.color = new Color32(255, 255, 224, 202);
                 }
+                else
+                {
+                    //normal cylindrical nodes
+                    SetNodeMaterial(node, NodeType.Invisible);
+                }
             }
             //trigger an automatic redraw
             NodeRedraw = true;
         }
         else { Debug.LogError("Invalid listOfNodes (Null) returned from dataManager in ResetNodes"); }
+    }
 
+    /// <summary>
+    /// Use this to change a node/districts material settings
+    /// </summary>
+    /// <param name="node"></param>
+    /// <param name="nodeType"></param>
+    private void SetNodeMaterial(Node node, NodeType nodeType)
+    {
+        Material material = materialDefault;
+        Debug.Assert(node != null, "Invalid node (Null)");
+            {
+            switch (nodeType)
+            {
+                case NodeType.Default: material = materialDefault; break;
+                case NodeType.Normal: material = materialNormal; break;
+                case NodeType.Highlight: material = materialHighlight; break;
+                case NodeType.Active: material = materialActive; break;
+                case NodeType.Player: material = materialPlayer; break;
+                case NodeType.Background: material = materialBackground; break;
+                case NodeType.Invisible: material = materialInvisible; break;
+                default: Debug.LogFormat("Unrecognised NodeType \"{0}\"", nodeType); break;
+            }
+            node.SetMaterial(material);
+        }
     }
 
     /// <summary>
@@ -1350,7 +1388,7 @@ public class NodeManager : MonoBehaviour
                                     {
                                         if (noNodes == false)
                                         { node.faceText.text = ""; }
-                                        node.SetMaterial(materialBackground);
+                                        SetNodeMaterial(node, NodeType.Background);
                                     }
                                     break;
                                 default:
