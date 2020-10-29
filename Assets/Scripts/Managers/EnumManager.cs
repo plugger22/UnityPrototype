@@ -78,7 +78,7 @@
     public enum NodeComponent { Cylinder, Base, Towers, BaseAndTowers }                     //Cylinder is the node cylinder, others are for base and/or towers
     public enum NodeType { Node, District }                                                 //Type of node display, cylindrical nodes or prefab tower districts
     public enum NodeData { Stability, Support, Security, Target, Probe, Spider, Erasure};   //NOTE: keep first 3 in order as they are used in tooltipNode.cs -> GetStatColour (matches node tooltip stat display seq)
-    public enum NodeText { None, ID, Icon, Contact }                                        //What to display on node/district faceText
+    public enum NodeText { None, ID, Icon, Contact, ActivityCount, ActivityTime }           //What to display on node/district faceText
     public enum NodeAction
     {                                                           //NodeActionData package
         None,

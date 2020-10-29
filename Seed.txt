@@ -127,3 +127,66 @@ City seed 5678 -> Londus, Eurasia
 
 Dev seed 46417 -> Thursday, 29 October 2020 2:58 PM
 City seed 5678 -> Londus, Eurasia
+
+Dev seed 53570 -> Thursday, 29 October 2020 3:34 PM
+City seed 5678 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	
+Dev seed 22736 -> Thursday, 29 October 2020 3:42 PM
+City seed 5678 -> Londus, Eurasia
+WARNING Invalid RelationshipData (Null) for Declan Gill, ANARCHIST, ID 2, slotID -1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EffectManager:ExecuteActorOpinion(Effect, Actor, EffectDataInput, TopicEffectData) (at Assets/Scripts/Managers/EffectManager.cs:5413)
+	EffectManager:ResolveTopicActorEffect(Effect, EffectDataInput, TopicEffectData, Actor) (at Assets/Scripts/Managers/EffectManager.cs:4406)
+	EffectManager:ResolveTopicData(Effect, EffectDataInput) (at Assets/Scripts/Managers/EffectManager.cs:4249)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:1975)
+	TopicManager:ProcessOption(Int32) (at Assets/Scripts/Managers/TopicManager.cs:3658)
+	TopicUI:ProcessTopicOption(Int32) (at Assets/Scripts/GUI/TopicUI.cs:1346)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:447)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 29434 -> Thursday, 29 October 2020 4:08 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 52918 -> Thursday, 29 October 2020 4:14 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 784 -> Thursday, 29 October 2020 4:16 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 57187 -> Thursday, 29 October 2020 4:22 PM
+City seed 5678 -> Londus, Eurasia

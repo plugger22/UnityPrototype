@@ -391,7 +391,12 @@ public class NodeManager : MonoBehaviour
                     case ActivityUI.Time:
                     case ActivityUI.Count:
                         if (NodeShowFlag > 0)
-                        { ResetAll(); }
+                        {
+                            if (GameManager.i.optionScript.noNodes == false)
+                            { ResetAll(); }
+                            else
+                            { SetDistrictFaceText(NodeText.None, false); }
+                        }
                         else { ShowActivity(activityUI); }
                         break;
                     default:
@@ -1490,7 +1495,7 @@ public class NodeManager : MonoBehaviour
                     foreach (Node node in listOfNodes)
                     {
                         node.faceText.text = "";
-                        SetNodeMaterial(node, NodeComponent.Cylinder, NodeColour.Invisible); 
+                        SetNodeMaterial(node, NodeComponent.Cylinder, NodeColour.Invisible);
                     }
                     break;
                 case NodeText.ID:
@@ -1556,6 +1561,52 @@ public class NodeManager : MonoBehaviour
                         else { Debug.LogError("Invalid node (Null) in listOfNodes"); }
                     }
                     break;
+                case NodeText.ActivityCount:
+                    //Resistance AI activity
+                    foreach (Node node in listOfNodes)
+                    {
+                        if (node != null)
+                        {
+                            if (node.faceObject != null)
+                            {
+                                data = node.GetNodeActivity(ActivityUI.Count);
+                                if (data > -1)
+                                {
+                                    //face text
+                                    node.faceText.text = string.Format("<size=120%>{0}</size>", data.ToString());
+                                    node.faceText.color = GetActivityColour(ActivityUI.Count, data);
+                                    if (isTransparent == true)
+                                    { SetNodeMaterial(node, NodeComponent.Cylinder, NodeColour.Transparent); }
+                                }
+                            }
+                            else { Debug.LogWarning(string.Format("Invalid node faceObject (Null) for nodeID {0}", node.nodeID)); }
+                        }
+                        else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", node.nodeID)); }
+                    }
+                    break;
+                case NodeText.ActivityTime:
+                    //Resistance AI activity
+                    foreach (Node node in listOfNodes)
+                    {
+                        if (node != null)
+                        {
+                            if (node.faceObject != null)
+                            {
+                                data = node.GetNodeActivity(ActivityUI.Time);
+                                if (data > -1)
+                                {
+                                    //face text
+                                    node.faceText.text = string.Format("<size=120%>{0}</size>", data.ToString());
+                                    node.faceText.color = GetActivityColour(ActivityUI.Time, data);
+                                    if (isTransparent == true)
+                                    { SetNodeMaterial(node, NodeComponent.Cylinder, NodeColour.Transparent); }
+                                }
+                            }
+                            else { Debug.LogWarning(string.Format("Invalid node faceObject (Null) for nodeID {0}", node.nodeID)); }
+                        }
+                        else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", node.nodeID)); }
+                    }
+                    break;
                 default: Debug.LogWarningFormat("Unrecogonised nodeText \"{0}\"", nodeText); break;
             }
         }
@@ -1601,11 +1652,17 @@ public class NodeManager : MonoBehaviour
         switch (activityUI)
         {
             case ActivityUI.Count:
+                if (GameManager.i.optionScript.noNodes == false)
+                { ShowNodeActivity(activityUI); }
+                else { SetDistrictFaceText(NodeText.ActivityCount); }
+                break;
             case ActivityUI.Time:
                 //change connections to reflect activity (also sets resetNeeded to True)
                 GameManager.i.connScript.ShowConnectionActivity(activityUI);
                 //activate face text on nodes to reflect activity levels
-                ShowNodeActivity(activityUI);
+                if (GameManager.i.optionScript.noNodes == false)
+                { ShowNodeActivity(activityUI); }
+                else { SetDistrictFaceText(NodeText.ActivityTime); }
                 break;
             default:
                 Debug.LogError(string.Format("Invalid activityUI \"{0}\"", activityUI));
@@ -1626,11 +1683,13 @@ public class NodeManager : MonoBehaviour
         //active AlertUI
         if (string.IsNullOrEmpty(displayText) == false)
         { GameManager.i.alertScript.SetAlertUI(displayText); }
-        NodeRedraw = true;
+        //redraw only if standard node representation
+        if (GameManager.i.optionScript.noNodes == false)
+        { NodeRedraw = true; }
     }
 
     /// <summary>
-    /// Highlight activity levels on node faces
+    /// Highlight activity levels on node faces. Assumes Node representation (OptionManager.cs -> noNodes FALSE)
     /// </summary>
     /// <param name="activityUI"></param>
     private void ShowNodeActivity(ActivityUI activityUI)
@@ -1643,49 +1702,45 @@ public class NodeManager : MonoBehaviour
             {
                 //loop nodes
                 bool errorFlag = false;
-                bool noNodes = GameManager.i.optionScript.noNodes;
-                foreach (Node node in listOfNodes)
+                if (GameManager.i.optionScript.noNodes == false)
                 {
-                    if (node != null)
+                    foreach (Node node in listOfNodes)
                     {
-                        if (node.faceObject != null)
+                        if (node != null)
                         {
-                            switch (activityUI)
+                            if (node.faceObject != null)
                             {
-                                case ActivityUI.Count:
-                                case ActivityUI.Time:
-                                    data = node.GetNodeActivity(activityUI);
-                                    if (data > -1)
-                                    {
-                                        if (noNodes == false)
+                                switch (activityUI)
+                                {
+                                    case ActivityUI.Count:
+                                    case ActivityUI.Time:
+                                        data = node.GetNodeActivity(activityUI);
+                                        if (data > -1)
                                         {
                                             //face text
                                             node.faceText.text = string.Format("<size=120%>{0}</size>", data.ToString());
                                             node.faceText.color = GetActivityColour(activityUI, data);
                                         }
-                                    }
-                                    else
-                                    {
-                                        if (noNodes == false)
+                                        else
                                         {
                                             node.faceText.text = "";
                                             SetNodeMaterial(node, NodeComponent.Cylinder, NodeColour.Background);
                                         }
-                                        else { SetNodeMaterial(node, NodeComponent.Base, NodeColour.Background); }
-                                    }
-                                    break;
-                                default:
-                                    Debug.LogError(string.Format("Invalid activityUI \"{0}\"", activityUI));
-                                    errorFlag = true;
-                                    break;
+                                        break;
+                                    default:
+                                        Debug.LogError(string.Format("Invalid activityUI \"{0}\"", activityUI));
+                                        errorFlag = true;
+                                        break;
+                                }
                             }
+                            else { Debug.LogWarning(string.Format("Invalid node faceObject (Null) for nodeID {0}", node.nodeID)); }
+                            if (errorFlag == true)
+                            { break; }
                         }
-                        else { Debug.LogWarning(string.Format("Invalid node faceObject (Null) for nodeID {0}", node.nodeID)); }
-                        if (errorFlag == true)
-                        { break; }
+                        else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", node.nodeID)); }
                     }
-                    else { Debug.LogWarning(string.Format("Invalid node (Null) for nodeID {0}", node.nodeID)); }
                 }
+                else { Debug.LogWarningFormat("Can't show activity as OptionManager.cs -> noNodes is {0}", GameManager.i.optionScript.noNodes); }
             }
             else { Debug.LogError("Invalid listOfNodes (Null)"); }
         }
