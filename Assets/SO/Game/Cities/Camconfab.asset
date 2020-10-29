@@ -9,9 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b75efcd146b11ff49b6e05dbc6248f10, type: 3}
-  m_Name: Cambridge
+  m_Name: Camconfab
   m_EditorClassIdentifier: 
-  tag: Cambridge
+  tag: Camconfab
+  realLife: Cambridge
   descriptor: University and Research hub
   Arc: {fileID: 11400000, guid: 26d83090982f6de4ea21b688a86b5fb9, type: 2}
   country: {fileID: 11400000, guid: 72679b1bee298a844967ccd280533811, type: 2}

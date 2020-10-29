@@ -9,9 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b75efcd146b11ff49b6e05dbc6248f10, type: 3}
-  m_Name: Ghangzou
+  m_Name: Ghangmetro
   m_EditorClassIdentifier: 
-  tag: Ghangzou
+  tag: Ghangmetro
+  realLife: Ghangzou
   descriptor: Factories, factories, factories
   Arc: {fileID: 11400000, guid: 6fe0e6932109b7f4fbc5a5821c63d7da, type: 2}
   country: {fileID: 11400000, guid: efdd166b79958de4baa820d9f07de739, type: 2}

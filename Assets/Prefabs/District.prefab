@@ -477,7 +477,7 @@ MonoBehaviour:
   m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -554,7 +554,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 23117302783733504}
@@ -596,6 +596,11 @@ MonoBehaviour:
   rearObject: {fileID: 1091177945602102}
   rightObject: {fileID: 1113289722106752}
   leftObject: {fileID: 1937892755684034}
+  colourNode: 0
+  colourBase: 0
+  colourRear: 0
+  colourRight: 0
+  colourLeft: 0
   nodeID: 0
   nodePosition: {x: 0, y: 0, z: 0}
   nodeName: 
@@ -603,6 +608,10 @@ MonoBehaviour:
   Arc: {fileID: 0}
   launcher: {fileID: 0}
   nodeRenderer: {fileID: 0}
+  baseRenderer: {fileID: 0}
+  rearRenderer: {fileID: 0}
+  rightRenderer: {fileID: 0}
+  leftRenderer: {fileID: 0}
   isTracer: 0
   isSpider: 0
   isContactResistance: 0

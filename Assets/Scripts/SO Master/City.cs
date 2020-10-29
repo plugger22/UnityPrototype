@@ -10,6 +10,8 @@ public class City : ScriptableObject
 {
     [Tooltip("In game name")]
     public string tag;
+    [Tooltip("Real life city that it's based on")]
+    public string realLife;
     [Tooltip("Short text summary that appears in city tooltip")]
     public string descriptor;
 
@@ -61,6 +63,9 @@ public class City : ScriptableObject
 
     public void OnEnable()
     {
+        Debug.Assert(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or empty)");
+        Debug.Assert(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or empty)");
+        Debug.Assert(string.IsNullOrEmpty(realLife) == false, "Invalid realLife (Null or empty)");
         Debug.AssertFormat(Arc != null, "Invalid CityArc (Null) for {0}", name);
         Debug.AssertFormat(country != null, "Invalid Country (Null) for {0}", name);
         Debug.AssertFormat(string.IsNullOrEmpty(iconDistrict) == false, "Invalid iconDistrict (Null or Empty) for {0}", name);

@@ -786,6 +786,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 8290b263c7ec738488ec931a79bf5beb, type: 2}
   - {fileID: 2100000, guid: 74f1698b3d662dd41884834f164c7449, type: 2}
   - {fileID: 2100000, guid: c3fbca2d66c48c4448b2ee8ecd9108de, type: 2}
+  - {fileID: 2100000, guid: f089666de8a9d1742b8e3a21ac225b85, type: 2}
   nodePrimaryChance: 20
   nodeActiveMinimum: 3
   moveInvisibilityDelay: 4

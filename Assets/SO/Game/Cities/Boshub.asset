@@ -9,9 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b75efcd146b11ff49b6e05dbc6248f10, type: 3}
-  m_Name: Boston
+  m_Name: Boshub
   m_EditorClassIdentifier: 
-  tag: Boston
+  tag: Boshub
+  realLife: Boston
   descriptor: University and Research hub
   Arc: {fileID: 11400000, guid: feb7adb53f679cd43b5de63683ef184a, type: 2}
   country: {fileID: 11400000, guid: 348305286e9781647bb94d8dc1a11f2e, type: 2}

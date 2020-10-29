@@ -11,12 +11,6 @@ using Random = UnityEngine.Random;
 
 public class Node : MonoBehaviour
 {
-    [HideInInspector] public Material _MaterialNode { get; private set; }    //material renderer uses to draw node (variable)
-    [HideInInspector] public Material _MaterialBase { get; private set; }    //material renderer for child base object (variable) 
-    [HideInInspector] public Material _MaterialRear { get; private set; }    //material renderer for child base object (variable)
-    [HideInInspector] public Material _MaterialRight { get; private set; }    //material renderer for child base object (variable)
-    [HideInInspector] public Material _MaterialLeft { get; private set; }    //material renderer for child base object (variable)
-
     //child objects of node
     public GameObject faceObject;                       //child object that has the textmesh component for writing text on top of the node (linked in Editor)
     public GameObject baseObject;                       //child object -> base of buildings
@@ -92,7 +86,7 @@ public class Node : MonoBehaviour
     private int _securityStart;
     private bool _isTracerKnown;                        //true if Authority knows of tracer coverage for this node
     private bool _isSpiderKnown;                        //does Resistance know of spider?
-    private bool _isContactKnown;                         //true if Authority knows of Actor contacts
+    private bool _isContactKnown;                       //true if Authority knows of Actor contacts
     private bool _isTeamKnown;                          //true if Resistance knows of teams (additional means other than tracer coverage or connections)
     private bool _isTargetKnown;                        //true if Authority knows of Active or Live target (if present)
     #endregion
@@ -233,37 +227,31 @@ public class Node : MonoBehaviour
 
         //vars
 
-        /*_Material = GameManager.instance.nodeScript.GetNodeMaterial(NodeType.Normal);
-        mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
+        /*mouseOverDelay = GameManager.instance.tooltipScript.tooltipDelay;
         maxValue = GameManager.instance.nodeScript.maxNodeValue;
         minValue = GameManager.instance.nodeScript.minNodeValue;*/
 
-        //components
+        //particle launcher
         launcher = GetComponent<ParticleLauncher>();
-        //child objects
-        if (GameManager.i.optionScript.noNodes == false)
+        //face Text
+        if (faceObject != null)
         {
-            //face Text
-            if (faceObject != null)
-            {
-                //node face text
-                faceText = faceObject.gameObject.GetComponent<TextMeshPro>();
-                faceText.text = "";
-            }
-            else { Debug.LogError("Invalid faceObject (Null)"); }
-            Debug.Assert(faceText != null, "Invalid faceText (Null)");
-            //Base
-            if (baseObject != null)
-            {
+            //node face text
+            faceText = faceObject.gameObject.GetComponent<TextMeshPro>();
+            faceText.text = "";
+        }
+        else { Debug.LogError("Invalid faceObject (Null)"); }
+        Debug.Assert(faceText != null, "Invalid faceText (Null)");
 
-            }
-            else { Debug.LogError("Invalid baseObject (Null)"); }
-        }
-        else
+        //district components
+        if (GameManager.i.optionScript.noNodes == true)
         {
-            nodeRenderer = baseObject.GetComponent<Renderer>();
-            Debug.Assert(nodeRenderer != null, "Invalid Base renderer (Null)");
+            if (baseObject == null) { Debug.LogError("Invalid baseObject (Null)"); }
+            if (rearObject == null) { Debug.LogError("Invalid rearObject (Null)"); }
+            if (rightObject == null) { Debug.LogError("Invalid rightObject (Null)"); }
+            if (leftObject == null) { Debug.LogError("Invalid leftObject (Null)"); }
         }
+
         //renderers
         nodeRenderer = GetComponent<Renderer>();
         baseRenderer = baseObject.GetComponent<Renderer>();
@@ -291,11 +279,6 @@ public class Node : MonoBehaviour
             Debug.Assert(rearObject != null, "Invalid rearObject (Null)");
             Debug.Assert(rightObject != null, "Invalid rightObject (Null)");
             Debug.Assert(leftObject != null, "Invalid leftObject (Null)");
-            _MaterialNode = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Invisible);
-            _MaterialBase = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Normal);
-            _MaterialRear = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Default);
-            _MaterialRight = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Default);
-            _MaterialLeft = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Default);
             colourNode = NodeColour.Invisible;
             colourBase = NodeColour.Default;
             colourRear = NodeColour.Default;
@@ -305,7 +288,6 @@ public class Node : MonoBehaviour
         else
         {
             //Cylindrical Nodes in use, not districts
-            _MaterialNode = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Normal);
             colourNode = NodeColour.Normal;
         }
         //fast access
@@ -918,14 +900,10 @@ public class Node : MonoBehaviour
         if (GameManager.i.optionScript.noNodes == false)
         {
             faceText.color = new Color32(0, 0, 0, 255);
-            /*_MaterialNode = materialActive;*/
             colourNode = NodeColour.Active;
         }
         else
-        {
-            /*_MaterialBase = materialActive;*/
-            colourBase = NodeColour.Active;
-        }
+        { colourBase = NodeColour.Active; }
     }
 
     /// <summary>
@@ -936,15 +914,11 @@ public class Node : MonoBehaviour
         if (GameManager.i.optionScript.noNodes == false)
         {
             faceText.color = new Color32(0, 0, 0, 255);
-            /*_MaterialNode = materialPlayer;*/
             colourNode = NodeColour.Player;
 
         }
         else
-        {
-            /*_MaterialBase = materialPlayer;*/
-            colourBase = NodeColour.Player;
-        }
+        { colourBase = NodeColour.Player; }
     }
 
     /// <summary>
@@ -956,14 +930,10 @@ public class Node : MonoBehaviour
         if (GameManager.i.optionScript.noNodes == false)
         {
             faceText.color = new Color32(255, 255, 224, 202);
-            /*_MaterialNode = materialPlayer;*/
             colourNode = NodeColour.Player;
         }
         else
-        {
-            /*_MaterialBase = materialPlayer;*/
-            colourBase = NodeColour.Player;
-        }
+        { colourBase = NodeColour.Player; }
     }
 
     /// <summary>
@@ -978,10 +948,7 @@ public class Node : MonoBehaviour
             colourNode = NodeColour.Highlight;
         }
         else
-        {
-            /*_MaterialBase = materialHighlight;*/
-            colourBase = NodeColour.Highlight;
-        }
+        { colourBase = NodeColour.Highlight; }
     }
 
     /// <summary>
@@ -992,14 +959,10 @@ public class Node : MonoBehaviour
         if (GameManager.i.optionScript.noNodes == false)
         {
             faceText.color = new Color32(255, 255, 224, 202);
-            /*_MaterialNode = materialNemesis;*/
             colourNode = NodeColour.Nemesis;
         }
         else
-        {
-            /*_MaterialBase = materialNemesis;*/
-            colourBase = NodeColour.Nemesis;
-        }
+        { colourBase = NodeColour.Nemesis; }
     }
 
     /// <summary>
@@ -1011,14 +974,10 @@ public class Node : MonoBehaviour
         if (GameManager.i.optionScript.noNodes == false)
         {
             faceText.color = new Color32(255, 255, 224, 202);
-            /*_MaterialNode = materialNormal;*/
             colourNode = NodeColour.Normal;
         }
         else
-        {
-            /*_MaterialBase = materialNormal;*/
-            colourBase = NodeColour.Normal;
-        }
+        { colourBase = NodeColour.Normal; }
     }
 
     //

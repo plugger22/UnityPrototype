@@ -4,3 +4,93 @@ City seed 5678 -> London, Eurasia
 
 Dev seed 43943 -> Thursday, 29 October 2020 9:39 AM
 City seed 5678 -> London, Eurasia
+
+Dev seed 38718 -> Thursday, 29 October 2020 10:08 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 17318 -> Thursday, 29 October 2020 10:09 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 21685 -> Thursday, 29 October 2020 10:10 AM
+City seed 5678 -> London, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.ShowAllNodeID () (at Assets/Scripts/Managers/NodeManager.cs:1581)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1107)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.ShowAllNodeID () (at Assets/Scripts/Managers/NodeManager.cs:1581)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1107)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.ShowAllNodeID () (at Assets/Scripts/Managers/NodeManager.cs:1581)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1107)
+	
+Dev seed 65211 -> Thursday, 29 October 2020 10:16 AM
+City seed 5678 -> London, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.ShowAllNodeID () (at Assets/Scripts/Managers/NodeManager.cs:1581)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1107)
+	
+Dev seed 18033 -> Thursday, 29 October 2020 10:21 AM
+City seed 5678 -> London, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.ShowAllNodeID () (at Assets/Scripts/Managers/NodeManager.cs:1581)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1107)
+	
+Dev seed 31253 -> Thursday, 29 October 2020 10:27 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 38678 -> Thursday, 29 October 2020 10:31 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 8074 -> Thursday, 29 October 2020 10:35 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 15516 -> Thursday, 29 October 2020 10:45 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 57358 -> Thursday, 29 October 2020 10:51 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 24658 -> Thursday, 29 October 2020 10:54 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 21774 -> Thursday, 29 October 2020 10:55 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 59651 -> Thursday, 29 October 2020 10:59 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 41866 -> Thursday, 29 October 2020 11:04 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 17418 -> Thursday, 29 October 2020 11:14 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 27449 -> Thursday, 29 October 2020 11:22 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 27106 -> Thursday, 29 October 2020 11:28 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 18000 -> Thursday, 29 October 2020 11:50 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 21387 -> Thursday, 29 October 2020 11:51 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 44220 -> Thursday, 29 October 2020 11:56 AM
+City seed 5678 -> London, Eurasia
+
+Dev seed 48724 -> Thursday, 29 October 2020 12:02 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 59605 -> Thursday, 29 October 2020 12:16 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 37913 -> Thursday, 29 October 2020 12:25 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 5082 -> Thursday, 29 October 2020 12:27 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 57477 -> Thursday, 29 October 2020 12:30 PM
+City seed 5678 -> Londus, Eurasia

@@ -2121,7 +2121,7 @@ public class ValidationManager : MonoBehaviour
                     CheckDictRange(node.Value.Security, 0, maxStatValue, "Security", tag, key);
                     //null checks
                     CheckDictString(node.Value.nodeName, "nodeName", tag, key);
-                    CheckDictObject(node.Value._MaterialNode, "_Material", tag, key);
+                    /*CheckDictObject(node.Value._MaterialNode, "_Material", tag, key);*/
                     CheckDictObject(node.Value.gameObject, "gameObject", tag, key);
                     CheckDictObject(node.Value.Arc, "node.Arc", tag, key);
                     CheckDictObject(node.Value.launcher, "launcher", tag, key);

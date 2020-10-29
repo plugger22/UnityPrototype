@@ -108,6 +108,7 @@ public class NodeManager : MonoBehaviour
     private Material materialNemesis;
     private Material materialBackground;            //grey
     private Material materialInvisible;
+    private Material materialTransparent;
     //flash
     private float flashNodeTime;
 
@@ -205,6 +206,7 @@ public class NodeManager : MonoBehaviour
         materialNemesis = GetNodeMaterial(NodeColour.Nemesis);
         materialBackground = GetNodeMaterial(NodeColour.Background);
         materialInvisible = GetNodeMaterial(NodeColour.Invisible);
+        materialTransparent = GetNodeMaterial(NodeColour.Transparent);
         crisisBaseChanceDoubled = "NodeCrisisBaseChanceDoubled";
         crisisBaseChanceHalved = "NodeCrisisBaseChanceHalved";
         crisisTimerHigh = "NodeCrisisTimerHigh";
@@ -221,6 +223,7 @@ public class NodeManager : MonoBehaviour
         Debug.Assert(materialNemesis != null, "Invalid materialNemesis (Null)");
         Debug.Assert(materialInvisible != null, "Invalid materialInvisibile (Null)");
         Debug.Assert(materialBackground != null, "Invalid materialBackground (Null)");
+        Debug.Assert(materialTransparent != null, "Invalid materialTransparent (Null)");
         //gear node Action Fast access
         actionKinetic = GameManager.i.dataScript.GetAction("gearKinetic");
         actionHacking = GameManager.i.dataScript.GetAction("gearHacking");
@@ -1187,15 +1190,9 @@ public class NodeManager : MonoBehaviour
             foreach (Node node in listOfNodes)
             {
                 if (noNodes == false)
-                {
-                    /*node.nodeRenderer.material = node._MaterialNode;*/
-                    SetNodeMaterial(node, node.colourNode, NodeComponent.Cylinder);
-                }
+                { SetNodeMaterial(node, NodeComponent.Cylinder, node.colourNode); }
                 else
-                {
-                    /*node.nodeRenderer.material = node._MaterialBase;*/
-                    SetNodeMaterial(node, node.colourBase, NodeComponent.Base);
-                }
+                { SetNodeMaterial(node, NodeComponent.Base, node.colourBase); }
             }
             //highlighted node
             if (nodeHighlight > -1)
@@ -1207,15 +1204,12 @@ public class NodeManager : MonoBehaviour
                     {
                         //only do so if it's a normal node, otherwise ignore
                         if (node.GetMaterial(NodeComponent.Cylinder) == materialNormal)
-                        {
-                            /*node.nodeRenderer.material = materialHighlight;*/
-                            SetNodeMaterial(node, NodeColour.Highlight, NodeComponent.Cylinder);
-                        }
+                        { SetNodeMaterial(node, NodeComponent.Cylinder, NodeColour.Highlight); }
                     }
                     else
                     {
                         if (node.GetMaterial(NodeComponent.Base) == materialNormal)
-                        { SetNodeMaterial(node, NodeColour.Highlight, NodeComponent.Base); }
+                        { SetNodeMaterial(node, NodeComponent.Base, NodeColour.Highlight); }
                     }
                 }
                 else { Debug.LogError("Invalid Node (null) returned from listOfNodes"); }
@@ -1241,17 +1235,12 @@ public class NodeManager : MonoBehaviour
                             if (noNodes == false)
                             {
                                 if (node.GetMaterial(NodeComponent.Cylinder) == materialNormal)
-                                {
-                                    /*node.nodeRenderer.material = materialPlayer;*/
-                                    SetNodeMaterial(node, NodeColour.Player, NodeComponent.Cylinder);
-                                }
+                                { SetNodeMaterial(node, NodeComponent.Cylinder, NodeColour.Player); }
                             }
                             else
                             {
                                 if (node.GetMaterial(NodeComponent.Base) == materialNormal)
-                                {
-                                    SetNodeMaterial(node, NodeColour.Player, NodeComponent.Base);
-                                }
+                                { SetNodeMaterial(node, NodeComponent.Base, NodeColour.Player); }
                             }
                         }
                     }
@@ -1278,18 +1267,12 @@ public class NodeManager : MonoBehaviour
                             if (noNodes == false)
                             {
                                 if (node.GetMaterial(NodeComponent.Cylinder) == materialNormal)
-                                {
-                                    /*node.nodeRenderer.material = materialNemesis;*/
-                                    SetNodeMaterial(node, NodeColour.Nemesis, NodeComponent.Cylinder);
-                                }
+                                { SetNodeMaterial(node, NodeComponent.Cylinder, NodeColour.Nemesis); }
                             }
                             else
                             {
                                 if (node.GetMaterial(NodeComponent.Base) == materialNormal)
-                                {
-                                    /*node.nodeRenderer.material = materialNemesis;*/
-                                    SetNodeMaterial(node, NodeColour.Nemesis, NodeComponent.Base);
-                                }
+                                { SetNodeMaterial(node, NodeComponent.Base, NodeColour.Nemesis); }
                             }
                         }
                     }
@@ -1302,7 +1285,7 @@ public class NodeManager : MonoBehaviour
     }
 
     #region RedrawNodesArchive
-    /// <summary>
+    /*/// <summary>
     /// Redraw any nodes. Show highlighted node, unless it's a non-normal node for the current redraw
     /// </summary>
     public void RedrawNodesArchive()
@@ -1393,7 +1376,7 @@ public class NodeManager : MonoBehaviour
             NodeRedraw = false;
         }
         else { Debug.LogError("Invalid listOfNodes (Null) returned from dataManager in RedrawNodes"); }
-    }
+    }*/
     #endregion
 
     /// <summary>
@@ -1431,11 +1414,96 @@ public class NodeManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Set's district face text
+    /// </summary>
+    /// <param name="nodeText"></param>
+    public void SetDistrictFaceText(NodeText nodeText)
+    {
+        int data;
+        List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
+        if (listOfNodes != null)
+        {
+            switch (nodeText)
+            {
+                case NodeText.None:
+                    foreach (Node node in listOfNodes)
+                    {
+                        node.faceText.text = "";
+                        SetNodeMaterial(node, NodeComponent.Cylinder, NodeColour.Invisible);
+                    }
+                    break;
+                case NodeText.ID:
+                    foreach (Node node in listOfNodes)
+                    {
+                        if (node != null)
+                        {
+                            data = node.nodeID;
+                            node.faceText.text = data.ToString();
+                            node.faceText.color = Color.yellow;
+                            //Set transparent
+                            SetNodeMaterial(node, NodeComponent.Cylinder, NodeColour.Transparent);
+                        }
+                        else { Debug.LogError("Invalid node (Null) in listOfNodes"); }
+                    }
+                    break;
+                case NodeText.Icon:
+                    foreach (Node node in listOfNodes)
+                    {
+                        if (node != null)
+                        {
+                            data = node.nodeID;
+                            node.colourNode = NodeColour.Normal;
+                            if (node.defaultChar != '\0')
+                            { node.faceText.text = string.Format("{0}", node.defaultChar); }
+                            else { node.faceText.text = ""; }
+                            //colourNormal
+                            node.faceText.color = new Color32(255, 255, 224, 202);
+                            SetNodeMaterial(node, NodeComponent.Cylinder, NodeColour.Transparent);
+                        }
+                        else { Debug.LogError("Invalid node (Null) in listOfNodes"); }
+                    }
+                    break;
+                case NodeText.Contact:
+                    List<Contact> listOfContacts = new List<Contact>();
+                    foreach (Node node in listOfNodes)
+                    {
+                        if (node != null)
+                        {
+                            //contact at node
+                            if (GameManager.i.dataScript.CheckActiveContactAtNode(node.nodeID, globalResistance) == true)
+                            {
+                                listOfContacts = GameManager.i.dataScript.GetListOfNodeContacts(node.nodeID);
+                                data = 0;
+                                //loop contacts (could be more than one at the same node), get highest effectiveness
+                                for (int i = 0; i < listOfContacts.Count; i++)
+                                {
+                                    Contact contact = listOfContacts[i];
+                                    if (contact != null)
+                                    {
+                                        if (contact.effectiveness > data) { data = contact.effectiveness; }
+                                    }
+                                    else { Debug.LogErrorFormat("Invalid contact (Null) for listOfContacts[{0}], nodeID {1}", i, node.nodeID); }
+                                }
+                                node.faceText.text = data.ToString();
+                                node.faceText.color = Color.yellow;
+                                SetNodeMaterial(node, NodeComponent.Cylinder, NodeColour.Transparent);
+                            }
+                        }
+                        else { Debug.LogError("Invalid node (Null) in listOfNodes"); }
+                    }
+                    break;
+                default: Debug.LogWarningFormat("Unrecogonised nodeText \"{0}\"", nodeText); break;
+            }
+        }
+        else { Debug.LogError("Invalid listOfNodes (Null) returned from dataManager in SetDistrictFaceText"); }
+    }
+
+    /// <summary>
     /// Use this to change a node/districts material settings
     /// </summary>
     /// <param name="node"></param>
     /// <param name="nodeType"></param>
-    private void SetNodeMaterial(Node node, NodeColour nodeType, NodeComponent nodeComponent)
+    private void SetNodeMaterial(Node node, NodeComponent nodeComponent, NodeColour nodeType)
     {
         Material material = materialDefault;
         Debug.Assert(node != null, "Invalid node (Null)");
@@ -1448,8 +1516,10 @@ public class NodeManager : MonoBehaviour
                 case NodeColour.Active: material = materialActive; break;
                 case NodeColour.Player: material = materialPlayer; break;
                 case NodeColour.Background: material = materialBackground; break;
+                case NodeColour.Nemesis: material = materialNemesis; break;
                 case NodeColour.Invisible: material = materialInvisible; break;
-                default: Debug.LogFormat("Unrecognised NodeType \"{0}\"", nodeType); break;
+                case NodeColour.Transparent: material = materialTransparent; break;
+                default: Debug.LogWarningFormat("Unrecognised NodeType \"{0}\"", nodeType); break;
             }
             node.SetMaterial(material, nodeComponent);
         }
@@ -1535,9 +1605,9 @@ public class NodeManager : MonoBehaviour
                                         if (noNodes == false)
                                         {
                                             node.faceText.text = "";
-                                            SetNodeMaterial(node, NodeColour.Background, NodeComponent.Cylinder);
+                                            SetNodeMaterial(node, NodeComponent.Cylinder, NodeColour.Background);
                                         }
-                                        else { SetNodeMaterial(node, NodeColour.Background, NodeComponent.Base); }
+                                        else { SetNodeMaterial(node, NodeComponent.Base, NodeColour.Background); }
                                     }
                                     break;
                                 default:
@@ -1591,7 +1661,7 @@ public class NodeManager : MonoBehaviour
     }
 
     /// <summary>
-    /// displays all contacts with the highest contact at the node displaying their effectiveness on the node face. Called by event via ShowNodes
+    /// displays all contacts with the highest contact at the node displaying their effectiveness on the node face. Called by event via ShowNodes (for option.noNodes false, SetDistrictText otherwise)
     /// </summary>
     private void ShowAllContacts()
     {

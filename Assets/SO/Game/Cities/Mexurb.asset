@@ -9,20 +9,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b75efcd146b11ff49b6e05dbc6248f10, type: 3}
-  m_Name: NewYork
+  m_Name: Mexurb
   m_EditorClassIdentifier: 
-  tag: New York
-  descriptor: Dark and riddled with crime.
+  tag: Mexurb
+  realLife: Mexico City
+  descriptor: Sprawling slums and barrios
   Arc: {fileID: 11400000, guid: 832662066512cc24695d36368d5b07f6, type: 2}
   country: {fileID: 11400000, guid: 348305286e9781647bb94d8dc1a11f2e, type: 2}
-  iconDistrict: Liberty Island
-  airportDistrict: LaGuardia
-  harbourDistrict: Red Hook
-  districtNames: {fileID: 11400000, guid: 87b85359d6eafcf42941c43b99a4c9d8, type: 2}
-  iconName: Statue of Liberty
+  iconDistrict: Insurgentes
+  airportDistrict: IATA Airport
+  harbourDistrict: 
+  districtNames: {fileID: 11400000, guid: b43cbfe86c95be04396264b8043c4696, type: 2}
+  iconName: Angel of Independence
   cityPoolResistance: {fileID: 11400000, guid: 499d11e15bceaff4ebf4400fddc32237, type: 2}
   cityPoolAuthority: {fileID: 11400000, guid: d19d7870e5c903346b181c8414ce242d, type: 2}
   nameSet: {fileID: 11400000, guid: 195743710f6a69f47acd502168cd250c, type: 2}
   isTestOff: 0
-  mayor: {fileID: 11400000, guid: 9768b5680a5445847b2a3e54b3577cc1, type: 2}
+  mayor: {fileID: 11400000, guid: 603cd93ccd903aa4f9ae2a4be6c581b3, type: 2}
   faction: {fileID: 0}

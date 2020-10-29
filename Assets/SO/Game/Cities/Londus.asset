@@ -9,20 +9,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b75efcd146b11ff49b6e05dbc6248f10, type: 3}
-  m_Name: Arles
+  m_Name: Londus
   m_EditorClassIdentifier: 
-  tag: Arles
-  descriptor: Art and culture in the south of France
-  Arc: {fileID: 11400000, guid: feb7adb53f679cd43b5de63683ef184a, type: 2}
+  tag: Londus
+  realLife: London
+  descriptor: Big business Incarnate. Financial capital of the world
+  Arc: {fileID: 11400000, guid: 7477b2f0457361945bc8d4d50fe0c0da, type: 2}
   country: {fileID: 11400000, guid: 72679b1bee298a844967ccd280533811, type: 2}
-  iconDistrict: Arles Centre
-  airportDistrict: Nimes
+  iconDistrict: Westminister
+  airportDistrict: Heathrow
   harbourDistrict: 
   districtNames: {fileID: 11400000, guid: b43cbfe86c95be04396264b8043c4696, type: 2}
-  iconName: Foundation Van Gogh
+  iconName: Big Ben
   cityPoolResistance: {fileID: 11400000, guid: 499d11e15bceaff4ebf4400fddc32237, type: 2}
   cityPoolAuthority: {fileID: 11400000, guid: d19d7870e5c903346b181c8414ce242d, type: 2}
-  nameSet: {fileID: 11400000, guid: 544bfb4bf9f66cb48869c829e7173599, type: 2}
+  nameSet: {fileID: 11400000, guid: 854ab7ac874cecd418818e40bda1e9bf, type: 2}
   isTestOff: 0
-  mayor: {fileID: 11400000, guid: e48a18091be2462438cacdcd3c612b7d, type: 2}
+  mayor: {fileID: 11400000, guid: 9670168bff0305143be79f443d8fff1f, type: 2}
   faction: {fileID: 0}
