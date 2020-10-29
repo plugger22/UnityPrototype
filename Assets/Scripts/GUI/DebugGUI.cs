@@ -1250,12 +1250,12 @@ public class DebugGUI : MonoBehaviour
                 switch (nodeDisplayToggle)
                 {
                     case 0:
-                        GameManager.i.optionScript.noNodes = false;
+                        GameManager.i.nodeScript.SetNodeType(NodeType.Node);
                         optionNodeDisplay = "Show DISTRICTS";
                         nodeDisplayToggle = 1;
                         break;
                     case 1:
-                        GameManager.i.optionScript.noNodes = true;
+                        GameManager.i.nodeScript.SetNodeType(NodeType.District);
                         optionNodeDisplay = "Show NODES";
                         nodeDisplayToggle = 0;
                         break;

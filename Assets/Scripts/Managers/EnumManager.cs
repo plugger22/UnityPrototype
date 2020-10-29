@@ -75,7 +75,8 @@
     public enum NodeInfo { Number, TargetsAll, TargetsLive, TargetsActive, Count }          //DataManager arrayOfNodes index
     public enum NodeArcTally { Current, Minimum, Count };                                   //used for indexing of arrayOfNodeArcTotals
     public enum NodeColour { Default, Normal, Highlight, Active, Player, Nemesis, Background, Invisible, Transparent, Count } //colour of node cylinder or district component (usually the base)
-    public enum NodeComponent { Cylinder, Base, Towers, BaseAndTowers }                     //Cylinder is the node cylinder, others are for base and/or towerss
+    public enum NodeComponent { Cylinder, Base, Towers, BaseAndTowers }                     //Cylinder is the node cylinder, others are for base and/or towers
+    public enum NodeType { Node, District }                                                 //Type of node display, cylindrical nodes or prefab tower districts
     public enum NodeData { Stability, Support, Security, Target, Probe, Spider, Erasure};   //NOTE: keep first 3 in order as they are used in tooltipNode.cs -> GetStatColour (matches node tooltip stat display seq)
     public enum NodeText { None, ID, Icon, Contact }                                        //What to display on node/district faceText
     public enum NodeAction

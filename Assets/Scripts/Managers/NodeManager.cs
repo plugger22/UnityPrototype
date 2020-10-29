@@ -1414,10 +1414,71 @@ public class NodeManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Set's district face text
+    /// Sets type of node display (node or district styles) and updates board
+    /// </summary>
+    /// <param name="nodeType"></param>
+    public void SetNodeType(NodeType nodeType)
+    {
+        List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
+        if (listOfNodes != null)
+        {
+            switch (nodeType)
+            {
+                case NodeType.Node:
+                    GameManager.i.optionScript.noNodes = false;
+                    //set all nodes to normal
+                    foreach (Node node in listOfNodes)
+                    {
+                        if (node != null)
+                        {
+                            SetNodeMaterial(node, NodeComponent.Cylinder, NodeColour.Normal);
+                        }
+                        else { Debug.LogError("Invalid node (Null) in listOfNodes"); }
+                    }
+                    //set player node
+                    if (nodePlayer > -1)
+                    {
+                        Node playerNode = GameManager.i.dataScript.GetNode(nodePlayer);
+                        if (playerNode != null)
+                        { SetNodeMaterial(playerNode, NodeComponent.Cylinder, NodeColour.Player); }
+                        else { Debug.LogErrorFormat("Invalid playerNode (Null) for nodeID {0}", nodePlayer); }
+                    }
+                    //set face text
+                    SetDistrictFaceText(NodeText.Icon, false);
+                    break;
+                case NodeType.District:
+                    GameManager.i.optionScript.noNodes = true;
+                    //set all district bases to normal
+                    foreach (Node node in listOfNodes)
+                    {
+                        if (node != null)
+                        {
+                            SetNodeMaterial(node, NodeComponent.Base, NodeColour.Normal);
+                            SetNodeMaterial(node, NodeComponent.Cylinder, NodeColour.Invisible);
+                        }
+                        else { Debug.LogError("Invalid node (Null) in listOfNodes"); }
+                        //set player node
+                        if (nodePlayer > -1)
+                        {
+                            Node playerNode = GameManager.i.dataScript.GetNode(nodePlayer);
+                            if (playerNode != null)
+                            { SetNodeMaterial(playerNode, NodeComponent.Base, NodeColour.Player); }
+                            else { Debug.LogErrorFormat("Invalid playerNode (Null) for nodeID {0}", nodePlayer); }
+                        }
+                        //clear any face text
+                        SetDistrictFaceText(NodeText.None, false);
+                    }
+                    break;
+            }
+        }
+        else { Debug.LogError("Invalid listOfNodes (Null)"); }
+    }
+
+    /// <summary>
+    /// Set's district face text. 'isTransparent' shows a transparent cylinder (default) to enhance readability
     /// </summary>
     /// <param name="nodeText"></param>
-    public void SetDistrictFaceText(NodeText nodeText)
+    public void SetDistrictFaceText(NodeText nodeText, bool isTransparent = true)
     {
         int data;
         List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
@@ -1429,7 +1490,7 @@ public class NodeManager : MonoBehaviour
                     foreach (Node node in listOfNodes)
                     {
                         node.faceText.text = "";
-                        SetNodeMaterial(node, NodeComponent.Cylinder, NodeColour.Invisible);
+                        SetNodeMaterial(node, NodeComponent.Cylinder, NodeColour.Invisible); 
                     }
                     break;
                 case NodeText.ID:
@@ -1441,7 +1502,8 @@ public class NodeManager : MonoBehaviour
                             node.faceText.text = data.ToString();
                             node.faceText.color = Color.yellow;
                             //Set transparent
-                            SetNodeMaterial(node, NodeComponent.Cylinder, NodeColour.Transparent);
+                            if (isTransparent == true)
+                            { SetNodeMaterial(node, NodeComponent.Cylinder, NodeColour.Transparent); }
                         }
                         else { Debug.LogError("Invalid node (Null) in listOfNodes"); }
                     }
@@ -1458,7 +1520,8 @@ public class NodeManager : MonoBehaviour
                             else { node.faceText.text = ""; }
                             //colourNormal
                             node.faceText.color = new Color32(255, 255, 224, 202);
-                            SetNodeMaterial(node, NodeComponent.Cylinder, NodeColour.Transparent);
+                            if (isTransparent == true)
+                            { SetNodeMaterial(node, NodeComponent.Cylinder, NodeColour.Transparent); }
                         }
                         else { Debug.LogError("Invalid node (Null) in listOfNodes"); }
                     }
@@ -1486,7 +1549,8 @@ public class NodeManager : MonoBehaviour
                                 }
                                 node.faceText.text = data.ToString();
                                 node.faceText.color = Color.yellow;
-                                SetNodeMaterial(node, NodeComponent.Cylinder, NodeColour.Transparent);
+                                if (isTransparent == true)
+                                { SetNodeMaterial(node, NodeComponent.Cylinder, NodeColour.Transparent); }
                             }
                         }
                         else { Debug.LogError("Invalid node (Null) in listOfNodes"); }
