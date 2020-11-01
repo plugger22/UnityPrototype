@@ -39,8 +39,11 @@ public class ActorHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public void OnPointerExit(PointerEventData eventData)
     {
         if (myCoroutine != null)
-        { StopCoroutine(myCoroutine); }
-        EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.Reset, "ActorHighlightUI.cs -> OnPointerExit");
+        {
+            StopCoroutine(myCoroutine);
+            EventManager.i.PostNotification(EventType.FlashNodesStop, this, null, "ActorHighlightUI.cs -> OnPointerExit");
+        }
+        /*EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.Reset, "ActorHighlightUI.cs -> OnPointerExit");*/
     }
     
 
@@ -51,7 +54,8 @@ public class ActorHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     IEnumerator ShowActiveNodes()
     {
         yield return new WaitForSeconds(mouseOverDelay);
-        GameManager.i.nodeScript.ShowActiveNodes(actorSlotID);
+        List<Node> listOfNodes = GameManager.i.nodeScript.ShowActiveNodes(actorSlotID);
+        EventManager.i.PostNotification(EventType.FlashNodesStart, this, listOfNodes, "ActorHighlightUI.cs -> OnPointerEnter");
     }
 
 
