@@ -369,7 +369,11 @@ public class NodeManager : MonoBehaviour
                     case NodeUI.PlayerKnown:
                         if (NodeShowFlag > 0)
                         { ResetAll(); }
-                        else { ShowNodes(nodeUI); }
+                        else
+                        {
+                            /*ShowNodes(nodeUI);*/
+                            FlashHighlightNodes(nodeUI);
+                        }
                         break;
 
                     default:
@@ -572,11 +576,22 @@ public class NodeManager : MonoBehaviour
         return nodeID;
     }
 
+    /// <summary>
+    /// Master method to flash highlighted nodes
+    /// </summary>
+    /// <param name="nodeUI"></param>
+    public void FlashHighlightNodes(NodeUI nodeUI)
+    {
+        List<Node> listOfNodes = ShowNodes(nodeUI);
+        if (listOfNodes.Count > 0)
+        { myCoroutine = StartCoroutine("FlashingNodes", listOfNodes); }
+    }
+
 
     /// <summary>
     /// highlights all nodes depening on the enum NodeUI criteria
     /// </summary>
-    public void ShowNodes(NodeUI nodeUI)
+    public List<Node> ShowNodes(NodeUI nodeUI)
     {
         int data = -1;
         int counter;
@@ -585,6 +600,7 @@ public class NodeManager : MonoBehaviour
         bool proceedFlag = false;
         string displayText = null;
         bool isFogOfWar = GameManager.i.optionScript.fogOfWar;
+        List<Node> listOfHighlighted = new List<Node>();
         //set all nodes to default colour first
         ResetNodes();
         if (GameManager.i.connScript.resetConnections == true)
@@ -610,7 +626,10 @@ public class NodeManager : MonoBehaviour
                         {
                             Node nodeTemp = GameManager.i.dataScript.GetNode(target.nodeID);
                             if (nodeTemp != null)
-                            { nodeTemp.SetActive(); }
+                            {
+                                nodeTemp.SetActive();
+                                listOfHighlighted.Add(nodeTemp);
+                            }
                             else { Debug.LogWarning(string.Format("Invalid node (Null) for target.nodeID {0}", target.nodeID)); }
                         }
                         displayText = string.Format("{0}{1}{2}{3} Target{4}{5} district{6}{7}", colourDefault, tempList.Count, colourEnd, colourHighlight, colourEnd,
@@ -1117,6 +1136,7 @@ public class NodeManager : MonoBehaviour
             if (string.IsNullOrEmpty(displayText) == false)
             { GameManager.i.alertScript.SetAlertUI(displayText, 999); }
         }
+        return listOfHighlighted;
     }
 
     /// <summary>
@@ -1448,6 +1468,12 @@ public class NodeManager : MonoBehaviour
     /// </summary>
     public void ResetNodes()
     {
+        //stop flashing node coroutine if running
+        if (myCoroutine != null)
+        {
+            StopCoroutine(myCoroutine);
+            myCoroutine = null;
+        }
         //loop and assign
         List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
         bool noNodes = GameManager.i.optionScript.noNodes;
