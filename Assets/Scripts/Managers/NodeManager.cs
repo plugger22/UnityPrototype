@@ -104,6 +104,7 @@ public class NodeManager : MonoBehaviour
     private Material materialNormal;
     private Material materialHighlight;
     private Material materialActive;
+    private Material materialTowerActive;
     private Material materialPlayer;
     private Material materialNemesis;
     private Material materialBackground;            //grey
@@ -202,6 +203,7 @@ public class NodeManager : MonoBehaviour
         materialNormal = GetNodeMaterial(NodeColour.Normal);
         materialHighlight = GetNodeMaterial(NodeColour.Highlight);
         materialActive = GetNodeMaterial(NodeColour.Active);
+        materialTowerActive = GetNodeMaterial(NodeColour.TowerActive);
         materialPlayer = GetNodeMaterial(NodeColour.Player);
         materialNemesis = GetNodeMaterial(NodeColour.Nemesis);
         materialBackground = GetNodeMaterial(NodeColour.Background);
@@ -650,7 +652,11 @@ public class NodeManager : MonoBehaviour
                             Node nodeTemp = GameManager.i.dataScript.GetNode(target.nodeID);
                             //only show if target isKnown
                             if (nodeTemp != null && nodeTemp.isTargetKnown == true)
-                            { nodeTemp.SetActive(); counter++; }
+                            {
+                                nodeTemp.SetActive();
+                                listOfHighlighted.Add(nodeTemp);
+                                counter++;
+                            }
                             else { Debug.LogWarning(string.Format("Invalid node (Null) for target.nodeID {0}", target.nodeID)); }
                         }
                         displayText = string.Format("{0}{1}{2}{3} Target{4}{5} district{6}{7}", colourDefault, counter, colourEnd, colourHighlight, colourEnd,
@@ -679,7 +685,10 @@ public class NodeManager : MonoBehaviour
                             foreach (Node node in nodeList)
                             {
                                 if (node != null && node.nodeID != nodeRef.nodeID)
-                                { node.SetActive(); }
+                                {
+                                    node.SetActive();
+                                    listOfHighlighted.Add(node);
+                                }
                             }
                             if (GameManager.i.playerScript.isSpecialMoveGear == false)
                             {
@@ -737,6 +746,7 @@ public class NodeManager : MonoBehaviour
                             if (proceedFlag == true)
                             {
                                 node.SetActive();
+                                listOfHighlighted.Add(node);
                                 count++;
                             }
                             //conditional -> only show if spider is known
@@ -745,6 +755,7 @@ public class NodeManager : MonoBehaviour
                                 if (node.isSpiderKnown == true)
                                 {
                                     node.SetActive();
+                                    listOfHighlighted.Add(node);
                                     count++;
                                 }
                             }
@@ -791,6 +802,7 @@ public class NodeManager : MonoBehaviour
                             if (proceedFlag == true)
                             {
                                 node.SetActive();
+                                listOfHighlighted.Add(node);
                                 count++;
                             }
                             //conditional -> only show if tracer is known
@@ -799,6 +811,7 @@ public class NodeManager : MonoBehaviour
                                 if (node.isTracerKnown == true)
                                 {
                                     node.SetActive();
+                                    listOfHighlighted.Add(node);
                                     count++;
                                 }
                             }
@@ -848,6 +861,7 @@ public class NodeManager : MonoBehaviour
                                 if (proceedFlag == true)
                                 {
                                     node.SetActive();
+                                    listOfHighlighted.Add(node);
                                     count++;
                                 }
                                 //conditional -> only show if team is known, actor has contacts or node within tracer coverage
@@ -856,6 +870,7 @@ public class NodeManager : MonoBehaviour
                                     if (node.isTeamKnown || node.isTracer || node.isContactResistance)
                                     {
                                         node.SetActive();
+                                        listOfHighlighted.Add(node);
                                         count++;
                                     }
                                 }
@@ -881,7 +896,10 @@ public class NodeManager : MonoBehaviour
                         foreach (Node node in connectedList)
                         {
                             if (node != null)
-                            { node.SetActive(); }
+                            {
+                                node.SetActive();
+                                listOfHighlighted.Add(node);
+                            }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
                         displayText = string.Format("{0}{1}{2}{3} Most Connected district{4}{5}", colourDefault, connectedList.Count, colourEnd, colourHighlight,
@@ -904,7 +922,10 @@ public class NodeManager : MonoBehaviour
                         foreach (Node node in loiterList)
                         {
                             if (node != null)
-                            { node.SetActive(); }
+                            {
+                                node.SetActive();
+                                listOfHighlighted.Add(node);
+                            }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
                         displayText = string.Format("{0}{1}{2}{3} Loiter district{4}{5}", colourDefault, loiterList.Count, colourEnd, colourHighlight,
@@ -931,7 +952,11 @@ public class NodeManager : MonoBehaviour
                             if (node != null)
                             {
                                 if (node.cure.isActive == true)
-                                { node.SetActive(); counter++; }
+                                {
+                                    node.SetActive();
+                                    listOfHighlighted.Add(node);
+                                    counter++;
+                                }
                             }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
@@ -955,7 +980,10 @@ public class NodeManager : MonoBehaviour
                         foreach (Node node in decisionList)
                         {
                             if (node != null)
-                            { node.SetActive(); }
+                            {
+                                node.SetActive();
+                                listOfHighlighted.Add(node);
+                            }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
                         displayText = string.Format("{0}{1}{2}{3} Decision district{4}{5}", colourDefault, decisionList.Count, colourEnd, colourHighlight,
@@ -981,6 +1009,7 @@ public class NodeManager : MonoBehaviour
                             if (node != null)
                             {
                                 node.SetActive();
+                                listOfHighlighted.Add(node);
                             }
                             else { Debug.LogWarning("Invalid node (Null)"); }
                         }
@@ -1009,6 +1038,7 @@ public class NodeManager : MonoBehaviour
                                 if (nodeTemp != null)
                                 {
                                     nodeTemp.SetActive();
+                                    listOfHighlighted.Add(nodeTemp);
                                 }
                                 else { Debug.LogWarning("Invalid nodeTemp (Null)"); }
                             }
@@ -1044,6 +1074,7 @@ public class NodeManager : MonoBehaviour
                                 if (node.isCentreNode == true)
                                 {
                                     node.SetActive();
+                                    listOfHighlighted.Add(node);
                                     counter++;
                                 }
                             }
@@ -1074,6 +1105,7 @@ public class NodeManager : MonoBehaviour
                             if (node != null)
                             {
                                 node.SetActive();
+                                listOfHighlighted.Add(node);
                                 counter++;
                             }
                             else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}, listOfInvisibleNodes[{1}]", listOfInvisibleNodes[i], i); }
@@ -1113,7 +1145,10 @@ public class NodeManager : MonoBehaviour
                     foreach (Node node in nodeList)
                     {
                         if (node != null)
-                        { node.SetActive(); }
+                        {
+                            node.SetActive();
+                            listOfHighlighted.Add(node);
+                        }
                     }
                     displayText = string.Format("{0}{1}{2} {3}{4}{5} {6}district{7}{8}", colourDefault, nodeList.Count, colourEnd,
                     colourHighlight, nodeArc.name, colourEnd, colourDefault, nodeList.Count != 1 ? "s" : "", colourEnd);
@@ -1717,6 +1752,7 @@ public class NodeManager : MonoBehaviour
                 case NodeColour.Normal: material = materialNormal; break;
                 case NodeColour.Highlight: material = materialHighlight; break;
                 case NodeColour.Active: material = materialActive; break;
+                case NodeColour.TowerActive: material = materialTowerActive; break;
                 case NodeColour.Player: material = materialPlayer; break;
                 case NodeColour.Background: material = materialBackground; break;
                 case NodeColour.Nemesis: material = materialNemesis; break;

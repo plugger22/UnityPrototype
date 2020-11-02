@@ -905,7 +905,7 @@ public class Node : MonoBehaviour
         else
         {
             colourBase = NodeColour.Active;
-            colourRear = NodeColour.Active;
+            colourRear = NodeColour.TowerActive;
             
         }
     }

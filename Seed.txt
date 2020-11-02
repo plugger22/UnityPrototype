@@ -280,3 +280,366 @@ UnityEngine.MonoBehaviour:StartCoroutine(String)
 	
 Dev seed 57300 -> Monday, 2 November 2020 3:25 PM
 City seed 5678 -> Londus, Eurasia
+
+Dev seed 65443 -> Tuesday, 3 November 2020 9:04 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 39113 -> Tuesday, 3 November 2020 9:14 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 37909 -> Tuesday, 3 November 2020 9:18 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 8489 -> Tuesday, 3 November 2020 9:23 AM
+City seed 5678 -> Londus, Eurasia
+WARNING Unrecognised NodeType "TowerActive"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	NodeManager:SetNodeMaterial(Node, NodeComponent, NodeColour) (at Assets/Scripts/Managers/NodeManager.cs:1758)
+	NodeManager:RedrawNodes() (at Assets/Scripts/Managers/NodeManager.cs:1305)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:347)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:425)
+	WARNING Unrecognised NodeType "TowerActive"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	NodeManager:SetNodeMaterial(Node, NodeComponent, NodeColour) (at Assets/Scripts/Managers/NodeManager.cs:1758)
+	NodeManager:RedrawNodes() (at Assets/Scripts/Managers/NodeManager.cs:1305)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:347)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:425)
+	WARNING Unrecognised NodeType "TowerActive"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	NodeManager:SetNodeMaterial(Node, NodeComponent, NodeColour) (at Assets/Scripts/Managers/NodeManager.cs:1758)
+	NodeManager:RedrawNodes() (at Assets/Scripts/Managers/NodeManager.cs:1305)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:347)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:425)
+	WARNING Unrecognised NodeType "TowerActive"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	NodeManager:SetNodeMaterial(Node, NodeComponent, NodeColour) (at Assets/Scripts/Managers/NodeManager.cs:1758)
+	NodeManager:RedrawNodes() (at Assets/Scripts/Managers/NodeManager.cs:1305)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:347)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:425)
+	WARNING Unrecognised NodeType "TowerActive"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	NodeManager:SetNodeMaterial(Node, NodeComponent, NodeColour) (at Assets/Scripts/Managers/NodeManager.cs:1758)
+	NodeManager:RedrawNodes() (at Assets/Scripts/Managers/NodeManager.cs:1305)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:347)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:425)
+	WARNING Unrecognised NodeType "TowerActive"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	NodeManager:SetNodeMaterial(Node, NodeComponent, NodeColour) (at Assets/Scripts/Managers/NodeManager.cs:1758)
+	NodeManager:RedrawNodes() (at Assets/Scripts/Managers/NodeManager.cs:1305)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:347)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:425)
+	WARNING Unrecognised NodeType "TowerActive"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	NodeManager:SetNodeMaterial(Node, NodeComponent, NodeColour) (at Assets/Scripts/Managers/NodeManager.cs:1758)
+	NodeManager:RedrawNodes() (at Assets/Scripts/Managers/NodeManager.cs:1305)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:347)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:425)
+	WARNING Unrecognised NodeType "TowerActive"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	NodeManager:SetNodeMaterial(Node, NodeComponent, NodeColour) (at Assets/Scripts/Managers/NodeManager.cs:1758)
+	NodeManager:RedrawNodes() (at Assets/Scripts/Managers/NodeManager.cs:1305)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:347)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:425)
+	WARNING Unrecognised NodeType "TowerActive"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	NodeManager:SetNodeMaterial(Node, NodeComponent, NodeColour) (at Assets/Scripts/Managers/NodeManager.cs:1758)
+	NodeManager:RedrawNodes() (at Assets/Scripts/Managers/NodeManager.cs:1305)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:347)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:425)
+	WARNING Unrecognised NodeType "TowerActive"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	NodeManager:SetNodeMaterial(Node, NodeComponent, NodeColour) (at Assets/Scripts/Managers/NodeManager.cs:1758)
+	NodeManager:RedrawNodes() (at Assets/Scripts/Managers/NodeManager.cs:1305)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:347)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:425)
+	WARNING Unrecognised NodeType "TowerActive"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	NodeManager:SetNodeMaterial(Node, NodeComponent, NodeColour) (at Assets/Scripts/Managers/NodeManager.cs:1758)
+	NodeManager:RedrawNodes() (at Assets/Scripts/Managers/NodeManager.cs:1305)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:347)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:425)
+	WARNING Unrecognised NodeType "TowerActive"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	NodeManager:SetNodeMaterial(Node, NodeComponent, NodeColour) (at Assets/Scripts/Managers/NodeManager.cs:1758)
+	NodeManager:RedrawNodes() (at Assets/Scripts/Managers/NodeManager.cs:1305)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:347)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:425)
+	WARNING Unrecognised NodeType "TowerActive"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	NodeManager:SetNodeMaterial(Node, NodeComponent, NodeColour) (at Assets/Scripts/Managers/NodeManager.cs:1758)
+	NodeManager:RedrawNodes() (at Assets/Scripts/Managers/NodeManager.cs:1305)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:347)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:425)
+	WARNING Unrecognised NodeType "TowerActive"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	NodeManager:SetNodeMaterial(Node, NodeComponent, NodeColour) (at Assets/Scripts/Managers/NodeManager.cs:1758)
+	NodeManager:RedrawNodes() (at Assets/Scripts/Managers/NodeManager.cs:1305)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:347)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:425)
+	WARNING Unrecognised NodeType "TowerActive"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	NodeManager:SetNodeMaterial(Node, NodeComponent, NodeColour) (at Assets/Scripts/Managers/NodeManager.cs:1758)
+	NodeManager:RedrawNodes() (at Assets/Scripts/Managers/NodeManager.cs:1305)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:347)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:425)
+	WARNING Unrecognised NodeType "TowerActive"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	NodeManager:SetNodeMaterial(Node, NodeComponent, NodeColour) (at Assets/Scripts/Managers/NodeManager.cs:1758)
+	NodeManager:RedrawNodes() (at Assets/Scripts/Managers/NodeManager.cs:1305)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:347)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:425)
+	WARNING Unrecognised NodeType "TowerActive"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	NodeManager:SetNodeMaterial(Node, NodeComponent, NodeColour) (at Assets/Scripts/Managers/NodeManager.cs:1758)
+	NodeManager:RedrawNodes() (at Assets/Scripts/Managers/NodeManager.cs:1305)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:347)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:425)
+	WARNING Unrecognised NodeType "TowerActive"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	NodeManager:SetNodeMaterial(Node, NodeComponent, NodeColour) (at Assets/Scripts/Managers/NodeManager.cs:1758)
+	NodeManager:RedrawNodes() (at Assets/Scripts/Managers/NodeManager.cs:1305)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:347)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:425)
+	
+Dev seed 53326 -> Tuesday, 3 November 2020 9:27 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 10402 -> Tuesday, 3 November 2020 9:29 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 41786 -> Tuesday, 3 November 2020 9:31 AM
+City seed 5678 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	
+Dev seed 16613 -> Tuesday, 3 November 2020 9:39 AM
+City seed 5678 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	
+Dev seed 21503 -> Tuesday, 3 November 2020 9:40 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 6854 -> Tuesday, 3 November 2020 9:40 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 55079 -> Tuesday, 3 November 2020 9:41 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 30546 -> Tuesday, 3 November 2020 9:42 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 16693 -> Tuesday, 3 November 2020 9:43 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 60794 -> Tuesday, 3 November 2020 9:44 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 46244 -> Tuesday, 3 November 2020 9:45 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 45752 -> Tuesday, 3 November 2020 9:46 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 21068 -> Tuesday, 3 November 2020 9:46 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 36024 -> Tuesday, 3 November 2020 9:49 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 5289 -> Tuesday, 3 November 2020 9:51 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 8366 -> Tuesday, 3 November 2020 9:51 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 53352 -> Tuesday, 3 November 2020 9:52 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 38707 -> Tuesday, 3 November 2020 9:52 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 57181 -> Tuesday, 3 November 2020 9:53 AM
+City seed 5678 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	
+Dev seed 63616 -> Tuesday, 3 November 2020 9:54 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 47094 -> Tuesday, 3 November 2020 9:56 AM
+City seed 5678 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	
+Dev seed 40448 -> Tuesday, 3 November 2020 9:56 AM
+City seed 5678 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	
+Dev seed 38730 -> Tuesday, 3 November 2020 9:57 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 7886 -> Tuesday, 3 November 2020 9:58 AM
+City seed 5678 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	
+Dev seed 6081 -> Tuesday, 3 November 2020 9:59 AM
+City seed 5678 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	
+Dev seed 14157 -> Tuesday, 3 November 2020 9:59 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 46697 -> Tuesday, 3 November 2020 10:00 AM
+City seed 5678 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:545)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	
+Dev seed 24785 -> Tuesday, 3 November 2020 10:01 AM
+City seed 5678 -> Londus, Eurasia
