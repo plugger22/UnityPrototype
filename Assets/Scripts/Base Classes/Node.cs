@@ -903,7 +903,11 @@ public class Node : MonoBehaviour
             colourNode = NodeColour.Active;
         }
         else
-        { colourBase = NodeColour.Active; }
+        {
+            colourBase = NodeColour.Active;
+            colourRear = NodeColour.Active;
+            
+        }
     }
 
     /// <summary>
@@ -918,7 +922,10 @@ public class Node : MonoBehaviour
 
         }
         else
-        { colourBase = NodeColour.Player; }
+        {
+            colourBase = NodeColour.Player;
+            colourRear = NodeColour.Active;
+        }
     }
 
     /// <summary>
@@ -933,7 +940,12 @@ public class Node : MonoBehaviour
             colourNode = NodeColour.Player;
         }
         else
-        { colourBase = NodeColour.Player; }
+        {
+            colourBase = NodeColour.Player;
+            colourRear = NodeColour.Default;
+            colourRight = NodeColour.Default;
+            colourLeft = NodeColour.Default;
+        }
     }
 
     /// <summary>
@@ -962,7 +974,10 @@ public class Node : MonoBehaviour
             colourNode = NodeColour.Nemesis;
         }
         else
-        { colourBase = NodeColour.Nemesis; }
+        {
+            colourBase = NodeColour.Nemesis;
+            colourRear = NodeColour.Default;
+        }
     }
 
     /// <summary>
@@ -977,7 +992,10 @@ public class Node : MonoBehaviour
             colourNode = NodeColour.Normal;
         }
         else
-        { colourBase = NodeColour.Normal; }
+        {
+            colourBase = NodeColour.Normal;
+            colourRear = NodeColour.Default;
+        }
     }
 
     //

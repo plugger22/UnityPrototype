@@ -211,3 +211,42 @@ City seed 5678 -> Londus, Eurasia
 
 Dev seed 60999 -> Monday, 2 November 2020 10:00 AM
 City seed 5678 -> Londus, Eurasia
+
+Dev seed 22807 -> Monday, 2 November 2020 2:06 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 47999 -> Monday, 2 November 2020 2:28 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 44111 -> Monday, 2 November 2020 2:36 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 38453 -> Monday, 2 November 2020 2:40 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 39293 -> Monday, 2 November 2020 2:42 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 40003 -> Monday, 2 November 2020 2:46 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 9814 -> Monday, 2 November 2020 2:50 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 41252 -> Monday, 2 November 2020 2:53 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 47768 -> Monday, 2 November 2020 2:54 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 49164 -> Monday, 2 November 2020 2:56 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 54632 -> Monday, 2 November 2020 2:57 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 47640 -> Monday, 2 November 2020 2:59 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 54775 -> Monday, 2 November 2020 2:59 PM
+City seed 5678 -> Londus, Eurasia

@@ -43,7 +43,6 @@ public class ActorHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
             StopCoroutine(myCoroutine);
             EventManager.i.PostNotification(EventType.FlashNodesStop, this, null, "ActorHighlightUI.cs -> OnPointerExit");
         }
-        /*EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.Reset, "ActorHighlightUI.cs -> OnPointerExit");*/
     }
     
 

@@ -1140,20 +1140,12 @@ public class NodeManager : MonoBehaviour
                 case 1:
                     //authority - contact status always Active
                     if (GameManager.i.dataScript.CheckActiveContactAtNode(node.nodeID, playerSide) == true)
-                    {
-                        activeNodes.Add(node);
-                        /*//change material for selected nodes & change face text to black, full opacity
-                        node.SetActive();*/
-                    }
+                    { activeNodes.Add(node); }
                     break;
                 case 2:
                     //resistance - contact status can change
                     if (GameManager.i.dataScript.CheckForActorContactActive(actor, node.nodeID) == true)
-                    {
-                        activeNodes.Add(node);
-                        /*//change material for selected nodes
-                        node.SetActive();*/
-                    }
+                    { activeNodes.Add(node); }
                     break;
             }
         }
@@ -1255,7 +1247,10 @@ public class NodeManager : MonoBehaviour
                 if (noNodes == false)
                 { SetNodeMaterial(node, NodeComponent.Cylinder, node.colourNode); }
                 else
-                { SetNodeMaterial(node, NodeComponent.Base, node.colourBase); }
+                {
+                    SetNodeMaterial(node, NodeComponent.Base, node.colourBase);
+                    SetNodeMaterial(node, NodeComponent.Towers, node.colourRear);
+                }
             }
             //highlighted node
             if (nodeHighlight > -1)
@@ -1272,7 +1267,10 @@ public class NodeManager : MonoBehaviour
                     else
                     {
                         if (node.GetMaterial(NodeComponent.Base) == materialNormal)
-                        { SetNodeMaterial(node, NodeComponent.Base, NodeColour.Highlight); }
+                        {
+                            SetNodeMaterial(node, NodeComponent.Base, NodeColour.Highlight);
+                            SetNodeMaterial(node, NodeComponent.Towers, NodeColour.Highlight);
+                        }
                     }
                 }
                 else { Debug.LogError("Invalid Node (null) returned from listOfNodes"); }
@@ -1303,7 +1301,10 @@ public class NodeManager : MonoBehaviour
                             else
                             {
                                 if (node.GetMaterial(NodeComponent.Base) == materialNormal)
-                                { SetNodeMaterial(node, NodeComponent.Base, NodeColour.Player); }
+                                {
+                                    SetNodeMaterial(node, NodeComponent.Base, NodeColour.Player);
+                                    SetNodeMaterial(node, NodeComponent.Towers, NodeColour.Default);
+                                }
                             }
                         }
                     }
@@ -1468,6 +1469,9 @@ public class NodeManager : MonoBehaviour
                 {
                     //normal cylindrical nodes
                     node.colourBase = NodeColour.Normal;
+                    node.colourRear = NodeColour.Default;
+                    node.colourRight = NodeColour.Default;
+                    node.colourLeft = NodeColour.Default;
                 }
             }
             //trigger an automatic redraw
