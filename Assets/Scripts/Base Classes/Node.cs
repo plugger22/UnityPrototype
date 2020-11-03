@@ -645,6 +645,9 @@ public class Node : MonoBehaviour
     // - - - Neighbours
     //
 
+    public List<Vector3> GetListOfNeighbourPositions()
+    { return listOfNeighbourPositions; }
+
     public int GetNumOfNeighbourPositions()
     { return listOfNeighbourPositions.Count; }
 
@@ -654,6 +657,28 @@ public class Node : MonoBehaviour
     public int GetNumOfNearNeighbouringNodes()
     { return listOfNearNeighbours.Count; }
 
+    /// <summary>
+    /// Used for updating list in LevelManager.cs -> InitialiseDistricts
+    /// </summary>
+    /// <param name="listOfConns"></param>
+    public void SetListOfConnections(List<Connection> listOfConns)
+    {
+        if (listOfConns != null)
+        {
+            listOfConnections.Clear();
+            listOfConnections.AddRange(listOfConnections);
+        }
+        else { Debug.LogError("Invalid listOfConns (Null)"); }
+    }
+
+    public void ClearListOfNeighbourPositions()
+    { listOfNeighbourPositions.Clear(); }
+
+    public void ClearListOfNeighbouringNodes()
+    { listOfNeighbourNodes.Clear(); }
+
+    public void ClearListOfNearNeighbours()
+    { listOfNearNeighbours.Clear(); }
 
     /// <summary>
     /// add neighbouring vector3 to list (can't null test a vector3)

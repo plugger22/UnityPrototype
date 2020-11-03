@@ -15,6 +15,10 @@ public class NodeDataTemp
     public int nodeID;
     public Vector3 nodePosition;
     public NodeArc arc;
+    /*public List<Vector3> listOfNeighbourPositions = new List<Vector3>();
+    public List<int> listOfNeighbourNodes = new List<int>();
+    public List<int> listOfNearNeighbours = new List<int>();*/
+    public List<Connection> listOfConnections = new List<Connection>();
 }
 
 
@@ -126,6 +130,7 @@ public class LevelManager : MonoBehaviour
         InitialiseGraph();
         InitialiseNodeArcs();
         InitialiseDistricts();
+        InitialiseDistrictNeighbours();
         AssignSecurityLevels();
         InitialiseDistrictNames();
         GameManager.i.RestoreRandomDevState();
@@ -394,7 +399,7 @@ public class LevelManager : MonoBehaviour
     private void InitialiseDistricts()
     {
         Node nodeTemp;
-        //gather data
+        //gather data from existing placeholder nodes prior to deletion
         List<NodeDataTemp> listOfNodeData = new List<NodeDataTemp>();
         for (int i = 0; i < listOfNodes.Count; i++)
         {
@@ -407,11 +412,45 @@ public class LevelManager : MonoBehaviour
                     nodePosition = node.nodePosition,
                     arc = node.Arc
                 };
+                tempData.listOfConnections.AddRange(node.GetListOfConnections());
+                //clear out neighbour lists
+                node.ClearListOfNeighbourPositions();
+                node.ClearListOfNeighbouringNodes();
+                node.ClearListOfNearNeighbours();
+
+                /*//neighbouring nodes
+                List<Node> listOfNeighbourNodes = node.GetNeighbouringNodes();
+                if (listOfNeighbourNodes != null)
+                {
+                    for (int j = 0; j < listOfNeighbourNodes.Count; j++)
+                    {
+                        Node nodeNeighbour = listOfNeighbourNodes[j];
+                        if (nodeNeighbour != null)
+                        { tempData.listOfNeighbourNodes.Add(nodeNeighbour.nodeID); }
+                        else { Debug.LogErrorFormat("Invalid node (Null) in listOfNeighbourNodes[{0}]", j); }
+                    }
+                }
+                else { Debug.LogError("Invalid node.ListOfNeighbourNodes (Null)"); }
+                //near neighbours
+                List<Node> listOfNearNeighbours = node.GetNearNeighbours();
+                if (listOfNearNeighbours != null)
+                {
+                    for (int j = 0; j < listOfNearNeighbours.Count; j++)
+                    {
+                        Node nodeNear = listOfNearNeighbours[j];
+                        if (nodeNear != null)
+                        { tempData.listOfNearNeighbours.Add(nodeNear.nodeID); }
+                        else { Debug.LogErrorFormat("Invalid node (Null) in listOfNearNeighbours[{0}]", j); }
+                    }
+                }
+                else { Debug.LogError("Invalid node.ListOfNearNeighbours (Null)"); }*/
+
+                //add to list
                 listOfNodeData.Add(tempData);
             }
             else { Debug.LogErrorFormat("Invalid node (Null) in listOfNodes[{0}]", i); }
         }
-        //delete nodes (reverse loop)
+        //delete placeholder nodes (reverse loop)
         for (int i = listOfNodeObjects.Count - 1; i >= 0; i--)
         {
             GameObject nodeObject = listOfNodeObjects[i];
@@ -447,6 +486,7 @@ public class LevelManager : MonoBehaviour
                     nodeTemp.nodeID = data.nodeID;
                     nodeTemp.Arc = data.arc;
                     nodeTemp.nodePosition = data.nodePosition;
+                    nodeTemp.SetListOfConnections(data.listOfConnections);
                     //add to arrays
                     listOfNodeObjects.Add(instanceNode);
                     listOfNodes.Add(nodeTemp);
@@ -456,6 +496,43 @@ public class LevelManager : MonoBehaviour
             }
             else { Debug.LogErrorFormat("Invalid nodeDataTemp (Null) for listOfNodeData[{0}]", i); }
         }
+    }
+
+    /// <summary>
+    /// used to redo neighbour data for updated districts
+    /// </summary>
+    private void InitialiseDistrictNeighbours()
+    {
+        int idOne, idTwo;
+        Vector3 vOne, vTwo;
+        List<Edge> listOfEdges = msTree.GetEdges();
+        if (listOfEdges != null)
+        {
+            for (int i = 0; i < listOfEdges.Count; i++)
+            {
+                Edge edge = listOfEdges[i];
+                if (edge != null)
+                {
+                    //get the two nodeID's
+                    idTwo = edge.GetEither();
+                    idOne = edge.GetOther(idTwo);
+                    //get the two node positions
+                    vOne = listOfCoordinates[idTwo];
+                    vTwo = listOfCoordinates[idOne];
+
+                    //add to neighbours list
+                    nodeStart = listOfNodeObjects[idOne].GetComponent<Node>();
+                    nodeEnd = listOfNodeObjects[idTwo].GetComponent<Node>();
+                    nodeStart.AddNeighbourPosition(vTwo);
+                    nodeStart.AddNeighbourNode(nodeEnd);
+                    nodeEnd.AddNeighbourPosition(vOne);
+                    nodeEnd.AddNeighbourNode(nodeStart);
+                }
+                else { Debug.LogErrorFormat("Invalid edge (Null) in listOfEdges[{0}]", i); }
+            }
+
+        }
+        else { Debug.LogError("Invalid listOfEdges (Null)"); }
     }
 
     /// <summary>
@@ -636,13 +713,6 @@ public class LevelManager : MonoBehaviour
     /// <param name="rotation"></param>
     private void PlaceConnection(int node1, int node2, Vector3 pos1, Vector3 pos2, ConnectionType secLvl)
     {
-
-        /*if (node1 == 17 || node2 == 17)
-        {
-            if (GameManager.instance.inputScript.GameState == GameState.MetaGame)
-            { Debug.LogFormat("[Tst] LevelManager.cs -> PlaceConnection: node1 {0} to node2 {1} method invoked{2}", node1, node2, "\n"); }
-        }*/
-
         //get the mid point between the two nodes
         Vector3 connectionPosition = Vector3.Lerp(pos1, pos2, 0.50f);
         //get the distance between the two nodes (cylinders are two units high and one unit wide, hence, if laid on side, need to divide distance by 2 to get actual scale y_length)
@@ -668,13 +738,6 @@ public class LevelManager : MonoBehaviour
         //add to collections
         if (GameManager.i.dataScript.AddConnection(connectionTemp) == true)
         {
-
-            /*if (node1 == 17 || node2 == 17)
-            {
-                if (GameManager.instance.inputScript.GameState == GameState.MetaGame)
-                { Debug.LogFormat("[Tst] LevelManager.cs -> PlaceConnection: node1 {0} to node2 {1} ADD CONNECTION{2}", node1, node2, "\n"); }
-            }*/
-
             listOfConnections.Add(instanceConnection);
             //add to neighbours list
             nodeStart = listOfNodeObjects[node1].GetComponent<Node>();
