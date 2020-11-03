@@ -1,15 +1,21 @@
-﻿using System;
-using System.Linq;
-using System.Collections;
+﻿using gameAPI;
+using GraphAPI;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
-using GraphAPI;
-using gameAPI;
-using dijkstraAPI;
-using System.Text;
-using System.IO;
 
+/// <summary>
+/// used to store node data prior to swapping placeholders over to districts according to arc type. Data is restored to appropriate new node/district
+/// </summary>
+public class NodeDataTemp
+{
+    public int nodeID;
+    public Vector3 nodePosition;
+    public NodeArc arc;
+}
 
 
 public class LevelManager : MonoBehaviour
@@ -21,7 +27,7 @@ public class LevelManager : MonoBehaviour
 
     [Header("Default City Setup")]
     [Tooltip("number of nodes (adjusted after use in InitialiseNodes() to reflect actual number). Set to CitySize 'Normal'")]
-    [Range(10, 30)] public int numOfNodesDefault = 20; 
+    [Range(10, 30)] public int numOfNodesDefault = 20;
     [Tooltip("minimum spacing (world units) between nodes (>=). Set to CitySpacing 'Normal'")]
     [Range(1f, 3f)] public float minSpacingDefault = 1.5f;
     [Tooltip("Random % chance of a node having additional connections, set to CityConnection 'Normal' value")]
@@ -51,7 +57,7 @@ public class LevelManager : MonoBehaviour
     private LazyPrimMST msTree;
 
     private BoxCollider boxColliderStart;
-    private BoxCollider boxColliderEnd;    
+    private BoxCollider boxColliderEnd;
 
     private List<NodeArc>[] listOfConnArcsDefault;      //Note that the array is indexed from 0 and that the node Connetions are from 1 (so -1 to numOfConnections to access correct list in array)
     private List<NodeArc>[] listOfConnArcsPreferred;    //Note that the array is indexed from 0 and that the node Connetions are from 1 (so -1 to numOfConnections to access correct list in array)
@@ -64,12 +70,12 @@ public class LevelManager : MonoBehaviour
     private List<Vector3> listOfCoordinates = new List<Vector3>();                  //used to provide a lookup to check spacing of nodes
     private List<List<int>> listOfSortedNodes = new List<List<int>>();              //each node has a sorted (closest to furthest) list of nodeID's of neighouring nodes
     private List<List<float>> listOfSortedDistances = new List<List<float>>();    //companion list to listOfSortedNodes (identical indexes) -> contains distances to node in other list in world units    
-     
+
     private int[,] arrayOfNodeArcTotals;            //array of how many of each node type there is on the map, index -> [(int)NodeArcTally, nodeArc.nodeArcID]
 
     //fast access
     private City city;
-    
+
     /// <summary>
     /// Master method that creates a level (city)
     /// </summary>
@@ -92,7 +98,7 @@ public class LevelManager : MonoBehaviour
             default:
                 Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
                 break;
-        }        
+        }
     }
 
 
@@ -100,7 +106,7 @@ public class LevelManager : MonoBehaviour
 
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
-    {        
+    {
         //fast access
         city = GameManager.i.cityScript.GetCity();
         Debug.Assert(city != null, "Invalid city (Null)");
@@ -119,6 +125,7 @@ public class LevelManager : MonoBehaviour
         InitialiseNodeArcArray();
         InitialiseGraph();
         InitialiseNodeArcs();
+        InitialiseDistricts();
         AssignSecurityLevels();
         InitialiseDistrictNames();
         GameManager.i.RestoreRandomDevState();
@@ -380,6 +387,77 @@ public class LevelManager : MonoBehaviour
         else { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseNodes: Initialised {0} nodes", numOfNodes); }
     }
 
+
+    /// <summary>
+    /// loops nodes, stores relevant data, deletes all nodes (placeholders) and generates new districts/nodes according to arc type and updates them with correct data
+    /// </summary>
+    private void InitialiseDistricts()
+    {
+        Node nodeTemp;
+        //gather data
+        List<NodeDataTemp> listOfNodeData = new List<NodeDataTemp>();
+        for (int i = 0; i < listOfNodes.Count; i++)
+        {
+            Node node = listOfNodes[i];
+            if (node != null)
+            {
+                NodeDataTemp tempData = new NodeDataTemp()
+                {
+                    nodeID = node.nodeID,
+                    nodePosition = node.nodePosition,
+                    arc = node.Arc
+                };
+                listOfNodeData.Add(tempData);
+            }
+            else { Debug.LogErrorFormat("Invalid node (Null) in listOfNodes[{0}]", i); }
+        }
+        //delete nodes (reverse loop)
+        for (int i = listOfNodeObjects.Count - 1; i >= 0; i--)
+        {
+            GameObject nodeObject = listOfNodeObjects[i];
+            if (nodeObject != null)
+            { GameManager.i.SafeDestroy(nodeObject); }
+            else { Debug.LogErrorFormat("Invalid gameObject (Null) in listOfNodeObjects[{0}]", i); }
+        }
+        //clean out arrays
+        listOfNodeObjects.Clear();
+        listOfNodes.Clear();
+        GameManager.i.dataScript.ClearDictOfNodeObjects();
+        //create new node/districts
+        for (int i = 0; i < listOfNodeData.Count; i++)
+        {
+            NodeDataTemp data = listOfNodeData[i];
+            if (data != null)
+            {
+                switch (data.arc.name)
+                {
+                    case "GOVERNMENT":
+                        instanceNode = Instantiate(nodeGovt, data.nodePosition, Quaternion.identity) as GameObject;
+                        break;
+                    default:
+                        instanceNode = Instantiate(node, data.nodePosition, Quaternion.identity) as GameObject;
+                        break;
+                }
+                //parent
+                instanceNode.transform.SetParent(nodeHolder);
+                //update data
+                nodeTemp = instanceNode.GetComponent<Node>();
+                if (nodeTemp != null)
+                {
+                    nodeTemp.nodeID = data.nodeID;
+                    nodeTemp.Arc = data.arc;
+                    nodeTemp.nodePosition = data.nodePosition;
+                    //add to arrays
+                    listOfNodeObjects.Add(instanceNode);
+                    listOfNodes.Add(nodeTemp);
+                    GameManager.i.dataScript.AddNodeObject(nodeTemp.nodeID, instanceNode);
+                }
+                else { Debug.LogErrorFormat("Invalid nodeTemp (Null) for listOfNodeData[{0}]", i); }
+            }
+            else { Debug.LogErrorFormat("Invalid nodeDataTemp (Null) for listOfNodeData[{0}]", i); }
+        }
+    }
+
     /// <summary>
     /// subMethod for InitialiseNodes to check a randomPosition against all existing nodes for minimum spacing. Returns true if O.K, false if not
     /// </summary>
@@ -434,12 +512,12 @@ public class LevelManager : MonoBehaviour
         Vector3 currentPos;
         //temp collections for sorting
         Dictionary<int, float> tempDict = new Dictionary<int, float>();     //key -> index, value -> distance
-                                       //stores relevant index to listOfNodes / listOfCoordinates
+                                                                            //stores relevant index to listOfNodes / listOfCoordinates
 
         //loop list of Nodes
         /*for (int index = 0; index < listOfNodeObjects.Count; index++)*/
         for (int index = 0; index < listOfNodes.Count; index++)
-            {
+        {
             //create a duplicate list
             List<Vector3> tempList = new List<Vector3>(listOfCoordinates);
             currentPos = listOfCoordinates[index];
@@ -468,7 +546,7 @@ public class LevelManager : MonoBehaviour
                 subListDistances.Add(pair.Value);
             }
             //add sublists to main list 
-            
+
             /*if (index == 17 && GameManager.instance.inputScript.GameState == GameState.MetaGame)
             { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseSortedDistances: nodeID {0}, there are {1} sortedNodes & {2} sortedDistances{3}", index, subListNodes.Count, subListDistances.Count, "\n"); }*/
 
@@ -476,7 +554,7 @@ public class LevelManager : MonoBehaviour
             listOfSortedDistances.Add(subListDistances);
 
             //Debug.Log("ListOfSortedDistance -> Index " + index + " added " + subList.Count + " entries -> " + subList[0] + ", " + subList[1] + ", " + subList[2] + ", " + subList[3] + ", " + subList[4]);
-            
+
             //clear collections
             tempDict.Clear();
         }
@@ -620,7 +698,7 @@ public class LevelManager : MonoBehaviour
     /// <param name="secLvl"></param>
     public void ChangeAllConnections(ConnectionType secLvl)
     {
-        foreach( GameObject connObject in listOfConnections)
+        foreach (GameObject connObject in listOfConnections)
         {
             Connection connection = connObject.GetComponent<Connection>();
             connection.ChangeSecurityLevel(secLvl);
@@ -688,8 +766,8 @@ public class LevelManager : MonoBehaviour
         if (dictOfNodeArcs != null)
         {
             //assign a minimum number of nodes that must be this nodeArc type
-            foreach(var nodeArc in dictOfNodeArcs)
-            {  arrayOfNodeArcTotals[(int)NodeArcTally.Minimum, nodeArc.Key] = minValue; }
+            foreach (var nodeArc in dictOfNodeArcs)
+            { arrayOfNodeArcTotals[(int)NodeArcTally.Minimum, nodeArc.Key] = minValue; }
         }
         else { Debug.LogError("Invalid dictOfNodeArcs (Null)"); }
     }
@@ -785,12 +863,12 @@ public class LevelManager : MonoBehaviour
         int node1, node2;
         DepthFirstPath path = new DepthFirstPath(graph, 0);
         List<int> pathList = path.GetPathTo(node);
-        for(int i = 0; i < pathList.Count; i++)
+        for (int i = 0; i < pathList.Count; i++)
         {
             Debug.Log(string.Format("Path -> {0}", pathList[i]));
         }
         //loop all connections and recolour any that are on the path
-        foreach(GameObject obj in listOfConnections)
+        foreach (GameObject obj in listOfConnections)
         {
             Connection conn = obj.GetComponent<Connection>();
             node1 = conn.VerticeOne;
@@ -849,7 +927,7 @@ public class LevelManager : MonoBehaviour
         //List of Edges
         List<Edge> tempList = msTree.GetEdges();
         //loop list of Edges and draw connections
-        foreach(Edge edge in tempList)
+        foreach (Edge edge in tempList)
         {
             //get the two nodeID's
             idTwo = edge.GetEither();
@@ -899,7 +977,7 @@ public class LevelManager : MonoBehaviour
             {
                 numConnections = node.GetNumOfNeighbourPositions();
                 numConnections = Mathf.Min(5, numConnections) - 1;
-                
+
                 /*if (GameManager.instance.inputScript.GameState == GameState.MetaGame)
                 {
                     Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseNodeArc: nodeID {0} has {1} Neighbours, {2} Near Neighbours, {3} Positions & {4} Connections{5}", node.nodeID, node.GetNumOfNeighbouringNodes(),
@@ -1276,10 +1354,10 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     /// <param name="numConnections"></param>
     /// <returns></returns>
-    private NodeArc GetNodeArcRandom(int numConnections) 
+    private NodeArc GetNodeArcRandom(int numConnections)
     {
         Debug.Assert(numConnections > 0, string.Format("Invalid nunConnections ({0})", numConnections));
-        NodeArc tempArc = null; 
+        NodeArc tempArc = null;
         List<NodeArc> tempList = new List<NodeArc>();
         int adjustedConnections = Mathf.Min(5, numConnections) - 1;
         tempList = listOfConnArcsDefault[adjustedConnections];
@@ -1339,5 +1417,5 @@ public class LevelManager : MonoBehaviour
 
 
 
-    
+
 }

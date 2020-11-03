@@ -2325,6 +2325,8 @@ public class DataManager : MonoBehaviour
         { Debug.LogError(string.Format("Invalid (duplicate) nodeID \"{0}\" for Node \"{1}\"", nodeID, nodeObj.name)); }
     }
 
+    public void ClearDictOfNodeObjects()
+    { dictOfNodeObjects.Clear(); }
 
     public Dictionary<int, Node> GetDictOfNodes()
     { return dictOfNodes; }
