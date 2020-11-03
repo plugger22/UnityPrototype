@@ -15,6 +15,7 @@ using System.IO;
 public class LevelManager : MonoBehaviour
 {
     public GameObject node;             //node prefab
+    public GameObject nodeGovt;
     public GameObject connection;       //connection prefab
     public LayerMask blockingLayer;     //nodes are on the blocking layer, not connections
 
@@ -376,6 +377,7 @@ public class LevelManager : MonoBehaviour
         numOfNodes = listOfNodes.Count;
         if (numOfNodes != number)
         { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseNodes: Mismatch on InitialiseNodes, {0} Nodes short", number - numOfNodes); }
+        else { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseNodes: Initialised {0} nodes", numOfNodes); }
     }
 
     /// <summary>
@@ -626,12 +628,13 @@ public class LevelManager : MonoBehaviour
     }
 
     /// <summary>
-    /// loops listOfSortedNodes and removes any node connections that are invalid due to collisions
+    /// loops listOfSortedNodes and removes any node CONNECTIONS that are invalid due to collisions
     /// </summary>
     private void RemoveInvalidNodes()
     {
         List<int> listOfIndexes = new List<int>();          //used to store indexes of all nodes to remove from lists
-        int start, end;
+        int start, end, counter;
+        counter = 0;
         for (int v = 0; v < listOfSortedNodes.Count; v++)
         {
             //clear out index every pass
@@ -645,6 +648,7 @@ public class LevelManager : MonoBehaviour
                 {
                     //invalid node
                     listOfIndexes.Add(w);
+                    counter++;
                 }
             }
             //check if any records need removing
@@ -653,6 +657,7 @@ public class LevelManager : MonoBehaviour
 
                 /*if (v == 17 && GameManager.instance.inputScript.GameState == GameState.MetaGame)
                 { Debug.LogFormat("[Tst] LevelManager.cs -> RemoveInvalidNodes: nodeID {0}, removing {1} sortedNodes & {2} sortedDistances{3}", v, listOfIndexes.Count, listOfIndexes.Count, "\n"); }*/
+
 
                 //reverse loop removing indexes
                 for (int i = listOfIndexes.Count - 1; i >= 0; i--)
@@ -663,6 +668,7 @@ public class LevelManager : MonoBehaviour
                 }
             }
         }
+        Debug.LogFormat("[Tst] LevelManager.cs -> RemoveInvalidNodes: Removed {0} invalid potential connections", counter);
     }
 
     /// <summary>
@@ -870,7 +876,7 @@ public class LevelManager : MonoBehaviour
 
 
     /// <summary>
-    /// Assign nodeArcs to nodes according to city data & in sequential order so that minimum and priority requirements are met. Any leftover nodes are random.
+    /// Assign nodeArcs to nodes according to city data and in sequential order so that minimum and priority requirements are met. Any leftover nodes are random.
     /// </summary>
     private void InitialiseNodeArcs()
     {

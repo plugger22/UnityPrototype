@@ -16,6 +16,7 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
     //fast access
     private Material materialNormal;
     private Material materialPlayer;
+    private Material materialDefault;
 
     /// <summary>
     /// constructor -> needs to be Start as GameManager hasn't initialised prior to this (UI elements initialise before normal gameObjects?)
@@ -28,8 +29,10 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
         //materials
         materialNormal = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Normal);
         materialPlayer = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Player);
-        Debug.Assert(materialNormal != null, "Invalid nodeNormal (Null)");
-        Debug.Assert(materialPlayer != null, "Invalid nodePlayer (Null)");
+        materialDefault = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Default);
+        Debug.Assert(materialNormal != null, "Invalid materialNormal (Null)");
+        Debug.Assert(materialPlayer != null, "Invalid materialPlayer (Null)");
+        Debug.Assert(materialDefault != null, "Invalid materialDefault (Null)");
     }
 
     /// <summary>
@@ -101,6 +104,9 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
                     {
                         node.SetPlayerNormal();
                         /*node.SetMaterial(materialPlayer);*/
+                        node.SetMaterial(materialPlayer, NodeComponent.Base);
+                        node.SetMaterial(materialDefault, NodeComponent.Towers);
+
                         GameManager.i.nodeScript.NodeRedraw = true;
                     }
                     break;

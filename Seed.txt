@@ -643,3 +643,32 @@ Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.
 	
 Dev seed 24785 -> Tuesday, 3 November 2020 10:01 AM
 City seed 5678 -> Londus, Eurasia
+
+Dev seed 39075 -> Tuesday, 3 November 2020 10:53 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 31657 -> Tuesday, 3 November 2020 11:45 AM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 38171 -> Tuesday, 3 November 2020 11:50 AM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 62986 -> Tuesday, 3 November 2020 11:52 AM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 20406 -> Tuesday, 3 November 2020 11:52 AM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 24475 -> Tuesday, 3 November 2020 12:25 PM
+City seed 1616 -> Mexurb, Americon
+WARNING tempList has 21 records for tab 0 -> INFO only
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:700)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:406)
+	
+Dev seed 28593 -> Tuesday, 3 November 2020 12:25 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 19699 -> Tuesday, 3 November 2020 12:31 PM
+City seed 1616 -> Mexurb, Americon

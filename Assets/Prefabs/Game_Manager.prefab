@@ -475,6 +475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   node: {fileID: 1892640816281318, guid: 28566bd0ccecd1a4e9d886b6df23673e, type: 2}
+  nodeGovt: {fileID: 1212862936100212, guid: ae985cdba7ef34945a4cfe72e8e06911, type: 2}
   connection: {fileID: 1469875037488358, guid: 4109dd209868d7d43acd916ee7b399e0, type: 2}
   blockingLayer:
     serializedVersion: 2
@@ -779,7 +780,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrayOfNodeMaterials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 429549476ae23f046b27b9f141fdffa5, type: 2}
   - {fileID: 2100000, guid: 7cf21711426ab8b44b8dc029878a4909, type: 2}
   - {fileID: 2100000, guid: f3d7e5a2f7823a54d8de41438a2b1137, type: 2}
   - {fileID: 2100000, guid: 8eae3615e6a3e8f40a978ae1de991f1b, type: 2}
@@ -6602,7 +6603,7 @@ MonoBehaviour:
   billboardScript: {fileID: 0}
   seedDev: 0
   autoRunTurns: 20
-  scenarioStartLevel: 0
+  scenarioStartLevel: 4
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1
