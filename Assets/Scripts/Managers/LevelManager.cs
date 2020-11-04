@@ -7,25 +7,10 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-/// <summary>
-/// used to store node data prior to swapping placeholders over to districts according to arc type. Data is restored to appropriate new node/district
-/// </summary>
-public class NodeDataTemp
-{
-    public int nodeID;
-    public Vector3 nodePosition;
-    public NodeArc arc;
-    /*public List<Vector3> listOfNeighbourPositions = new List<Vector3>();
-    public List<int> listOfNeighbourNodes = new List<int>();
-    public List<int> listOfNearNeighbours = new List<int>();*/
-    public List<Connection> listOfConnections = new List<Connection>();
-}
-
 
 public class LevelManager : MonoBehaviour
 {
     public GameObject node;             //node prefab
-    public GameObject nodeGovt;
     public GameObject connection;       //connection prefab
     public LayerMask blockingLayer;     //nodes are on the blocking layer, not connections
 
@@ -130,7 +115,7 @@ public class LevelManager : MonoBehaviour
         InitialiseGraph();
         InitialiseNodeArcs();
         InitialiseDistricts();
-        InitialiseDistrictNeighbours();
+        /*InitialiseDistrictConnections();*/
         AssignSecurityLevels();
         InitialiseDistrictNames();
         GameManager.i.RestoreRandomDevState();
@@ -392,148 +377,36 @@ public class LevelManager : MonoBehaviour
         else { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseNodes: Initialised {0} nodes", numOfNodes); }
     }
 
-
     /// <summary>
-    /// loops nodes, stores relevant data, deletes all nodes (placeholders) and generates new districts/nodes according to arc type and updates them with correct data
+    /// switch on/off gameobjects in district prefab to match arc type
     /// </summary>
     private void InitialiseDistricts()
     {
-        Node nodeTemp;
-        //gather data from existing placeholder nodes prior to deletion
-        List<NodeDataTemp> listOfNodeData = new List<NodeDataTemp>();
+
         for (int i = 0; i < listOfNodes.Count; i++)
         {
             Node node = listOfNodes[i];
             if (node != null)
             {
-                NodeDataTemp tempData = new NodeDataTemp()
+                switch (node.Arc.name)
                 {
-                    nodeID = node.nodeID,
-                    nodePosition = node.nodePosition,
-                    arc = node.Arc
-                };
-                tempData.listOfConnections.AddRange(node.GetListOfConnections());
-                //clear out neighbour lists
-                node.ClearListOfNeighbourPositions();
-                node.ClearListOfNeighbouringNodes();
-                node.ClearListOfNearNeighbours();
-
-                /*//neighbouring nodes
-                List<Node> listOfNeighbourNodes = node.GetNeighbouringNodes();
-                if (listOfNeighbourNodes != null)
-                {
-                    for (int j = 0; j < listOfNeighbourNodes.Count; j++)
-                    {
-                        Node nodeNeighbour = listOfNeighbourNodes[j];
-                        if (nodeNeighbour != null)
-                        { tempData.listOfNeighbourNodes.Add(nodeNeighbour.nodeID); }
-                        else { Debug.LogErrorFormat("Invalid node (Null) in listOfNeighbourNodes[{0}]", j); }
-                    }
+                    case "CORPORATE":
+                    case "RESEARCH":
+                    case "INDUSTRIAL":
+                    case "UTILITY":
+                    case "GOVERNMENT":
+                    case "GATED":
+                    case "SPRAWL":
+                        node.SetArcType();
+                        break;
+                    default:
+                        break;
                 }
-                else { Debug.LogError("Invalid node.ListOfNeighbourNodes (Null)"); }
-                //near neighbours
-                List<Node> listOfNearNeighbours = node.GetNearNeighbours();
-                if (listOfNearNeighbours != null)
-                {
-                    for (int j = 0; j < listOfNearNeighbours.Count; j++)
-                    {
-                        Node nodeNear = listOfNearNeighbours[j];
-                        if (nodeNear != null)
-                        { tempData.listOfNearNeighbours.Add(nodeNear.nodeID); }
-                        else { Debug.LogErrorFormat("Invalid node (Null) in listOfNearNeighbours[{0}]", j); }
-                    }
-                }
-                else { Debug.LogError("Invalid node.ListOfNearNeighbours (Null)"); }*/
-
-                //add to list
-                listOfNodeData.Add(tempData);
             }
             else { Debug.LogErrorFormat("Invalid node (Null) in listOfNodes[{0}]", i); }
         }
-        //delete placeholder nodes (reverse loop)
-        for (int i = listOfNodeObjects.Count - 1; i >= 0; i--)
-        {
-            GameObject nodeObject = listOfNodeObjects[i];
-            if (nodeObject != null)
-            { GameManager.i.SafeDestroy(nodeObject); }
-            else { Debug.LogErrorFormat("Invalid gameObject (Null) in listOfNodeObjects[{0}]", i); }
-        }
-        //clean out arrays
-        listOfNodeObjects.Clear();
-        listOfNodes.Clear();
-        GameManager.i.dataScript.ClearDictOfNodeObjects();
-        //create new node/districts
-        for (int i = 0; i < listOfNodeData.Count; i++)
-        {
-            NodeDataTemp data = listOfNodeData[i];
-            if (data != null)
-            {
-                switch (data.arc.name)
-                {
-                    case "GOVERNMENT":
-                        instanceNode = Instantiate(nodeGovt, data.nodePosition, Quaternion.identity) as GameObject;
-                        break;
-                    default:
-                        instanceNode = Instantiate(node, data.nodePosition, Quaternion.identity) as GameObject;
-                        break;
-                }
-                //parent
-                instanceNode.transform.SetParent(nodeHolder);
-                //update data
-                nodeTemp = instanceNode.GetComponent<Node>();
-                if (nodeTemp != null)
-                {
-                    nodeTemp.nodeID = data.nodeID;
-                    nodeTemp.Arc = data.arc;
-                    nodeTemp.nodePosition = data.nodePosition;
-                    nodeTemp.SetListOfConnections(data.listOfConnections);
-                    //add to arrays
-                    listOfNodeObjects.Add(instanceNode);
-                    listOfNodes.Add(nodeTemp);
-                    GameManager.i.dataScript.AddNodeObject(nodeTemp.nodeID, instanceNode);
-                }
-                else { Debug.LogErrorFormat("Invalid nodeTemp (Null) for listOfNodeData[{0}]", i); }
-            }
-            else { Debug.LogErrorFormat("Invalid nodeDataTemp (Null) for listOfNodeData[{0}]", i); }
-        }
     }
 
-    /// <summary>
-    /// used to redo neighbour data for updated districts
-    /// </summary>
-    private void InitialiseDistrictNeighbours()
-    {
-        int idOne, idTwo;
-        Vector3 vOne, vTwo;
-        List<Edge> listOfEdges = msTree.GetEdges();
-        if (listOfEdges != null)
-        {
-            for (int i = 0; i < listOfEdges.Count; i++)
-            {
-                Edge edge = listOfEdges[i];
-                if (edge != null)
-                {
-                    //get the two nodeID's
-                    idTwo = edge.GetEither();
-                    idOne = edge.GetOther(idTwo);
-                    //get the two node positions
-                    vOne = listOfCoordinates[idTwo];
-                    vTwo = listOfCoordinates[idOne];
-
-                    //add to neighbours list
-                    nodeStart = listOfNodeObjects[idOne].GetComponent<Node>();
-                    nodeEnd = listOfNodeObjects[idTwo].GetComponent<Node>();
-                    nodeStart.AddNeighbourPosition(vTwo);
-                    nodeStart.AddNeighbourNode(nodeEnd);
-                    nodeEnd.AddNeighbourPosition(vOne);
-                    nodeEnd.AddNeighbourNode(nodeStart);
-                }
-                else { Debug.LogErrorFormat("Invalid edge (Null) in listOfEdges[{0}]", i); }
-            }
-
-        }
-        else { Debug.LogError("Invalid listOfEdges (Null)"); }
-    }
 
     /// <summary>
     /// subMethod for InitialiseNodes to check a randomPosition against all existing nodes for minimum spacing. Returns true if O.K, false if not
@@ -977,11 +850,6 @@ public class LevelManager : MonoBehaviour
                 weight = listOfSortedDistances[v][w];
                 Edge e = new Edge(v, idOne, weight);
                 ewGraph.AddEdge(e);
-
-                /*if (v == 17 && GameManager.instance.inputScript.GameState == GameState.MetaGame)
-                { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseGraph: nodeID {0}, Edge added -> NodeID {1}, weight {2}{3}", v, idOne, weight, "\n"); }*/
-
-                //Debug.Log("Added -> " + e.GetString());
             }
         }
         Debug.Log("Nodes " + numOfNodes + "  Edges " + ewGraph.E_total);
@@ -998,13 +866,6 @@ public class LevelManager : MonoBehaviour
             //get the two node positions
             vOne = listOfCoordinates[idTwo];
             vTwo = listOfCoordinates[idOne];
-
-            /*if (idTwo == 17 || idOne == 17)
-            {
-                if (GameManager.instance.inputScript.GameState == GameState.MetaGame)
-                { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseGraph: node1 {0} to node2 {1} Call PlaceConnections{2}", idTwo, idOne, "\n"); }
-            }*/
-
             //draw connection
             PlaceConnection(idTwo, idOne, vOne, vTwo, ConnectionType.LOW);
         }

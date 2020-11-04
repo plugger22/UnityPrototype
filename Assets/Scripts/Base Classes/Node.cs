@@ -92,6 +92,7 @@ public class Node : MonoBehaviour
     #endregion
 
     private Coroutine myCoroutine;
+    private Transform nodeTransform;
 
     //generated collections
     private List<Vector3> listOfNeighbourPositions;     //list of neighbouring nodes that this node is connected to
@@ -216,7 +217,8 @@ public class Node : MonoBehaviour
     private void Awake()
     {
         /*Debug.Assert(faceObject != null, "Invalid faceObject (Null)");*/
-
+        nodeTransform = GetComponent<Transform>();
+        Debug.Assert(nodeTransform != null, "Invalid nodeTransform (Null)");
         //collections
         listOfNeighbourPositions = new List<Vector3>();
         listOfNeighbourNodes = new List<Node>();
@@ -251,6 +253,8 @@ public class Node : MonoBehaviour
             if (rightObject == null) { Debug.LogError("Invalid rightObject (Null)"); }
             if (leftObject == null) { Debug.LogError("Invalid leftObject (Null)"); }
         }
+
+
 
         //renderers
         nodeRenderer = GetComponent<Renderer>();
@@ -1824,11 +1828,86 @@ public class Node : MonoBehaviour
         return difference;
     }
 
-    /*/// <summary>
-    /// Called to destroy node instance (clone of prefab)
+    /// <summary>
+    /// Reconfigure tower objects to be of the required Arc type
     /// </summary>
-    public void DestroyNode()
-    { Destroy(this.gameObject); }*/
+    public void SetArcType()
+    {
+        GameObject rear = null;
+        GameObject right = null;
+        GameObject left = null;
+        //disable existing tower objects
+        rearObject.SetActive(false);
+        rightObject.SetActive(false);
+        leftObject.SetActive(false);
+
+        /*//remove existing object references
+        rearObject = leftObject = rightObject = null;*/
+
+        //activate new arc specific tower objects
+        switch (Arc.name)
+        {
+            case "CORPORATE":
+                rear = nodeTransform.Find("RearCorp").gameObject;
+                right = nodeTransform.Find("RightCorp").gameObject;
+                left = nodeTransform.Find("LeftCorp").gameObject;
+                break;
+            case "GOVERNMENT":
+                rear = nodeTransform.Find("RearGovt").gameObject;
+                right = nodeTransform.Find("RightGovt").gameObject;
+                left = nodeTransform.Find("LeftGovt").gameObject;
+                break;
+            case "UTILITY":
+                rear = nodeTransform.Find("RearUtil").gameObject;
+                right = nodeTransform.Find("RightUtil").gameObject;
+                left = nodeTransform.Find("LeftUtil").gameObject;
+                break;
+            case "INDUSTRIAL":
+                rear = nodeTransform.Find("RearInd").gameObject;
+                right = nodeTransform.Find("RightInd").gameObject;
+                left = nodeTransform.Find("LeftInd").gameObject;
+                break;
+            case "RESEARCH":
+                rear = nodeTransform.Find("RearRes").gameObject;
+                right = nodeTransform.Find("RightRes").gameObject;
+                left = nodeTransform.Find("LeftRes").gameObject;
+                break;
+            case "GATED":
+                rear = nodeTransform.Find("RearGate").gameObject;
+                right = nodeTransform.Find("RightGate").gameObject;
+                left = nodeTransform.Find("LeftGate").gameObject;
+                break;
+            case "SPRAWL":
+                rear = nodeTransform.Find("RearSprawl").gameObject;
+                right = nodeTransform.Find("RightSprawl").gameObject;
+                left = nodeTransform.Find("LeftSprawl").gameObject;
+                break;
+            default: Debug.LogWarningFormat("Unrecognised Arc \"{0}\"", Arc.name); break;
+        }
+        //apply new components
+        if (rear != null)
+        {
+            rearObject = rear;
+            rearObject.SetActive(true);
+        }
+        if (right != null)
+        {
+            rightObject = right;
+            rightObject.SetActive(true);
+        }
+        if (left != null)
+        {
+            leftObject = left;
+            leftObject.SetActive(true);
+        }
+        //update renderers 
+        rearRenderer = rearObject.GetComponent<Renderer>();
+        rightRenderer = rightObject.GetComponent<Renderer>();
+        leftRenderer = leftObject.GetComponent<Renderer>();
+        Debug.AssertFormat(rearRenderer != null, "Invalid rearRenderer (Null) for Node.Arc \"{0}\"", Arc.name);
+        Debug.AssertFormat(rightRenderer != null, "Invalid rightRenderer (Null) for Node.Arc \"{0}\"", Arc.name);
+        Debug.AssertFormat(leftRenderer != null, "Invalid leftRenderer (Null) for Node.Arc \"{0}\"", Arc.name);
+    }
 
     //place methods above here
 }
