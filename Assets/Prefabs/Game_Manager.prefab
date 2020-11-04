@@ -81,7 +81,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4565720453740776
 Transform:
   m_ObjectHideFlags: 1
@@ -480,6 +480,7 @@ MonoBehaviour:
   listOfTiles:
   - {fileID: 1677300706310448, guid: 36e42013a8db6ca4ea5813229dc3a3bb, type: 2}
   - {fileID: 1763245084365492, guid: 985fd3a17f4be4546a6af7bbc3c41080, type: 2}
+  - {fileID: 1003248987928876, guid: ebb0e89335a4f32479aa13b038682c52, type: 2}
   blockingLayer:
     serializedVersion: 2
     m_Bits: 256

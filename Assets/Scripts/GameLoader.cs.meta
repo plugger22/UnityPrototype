@@ -1,10 +1,11 @@
 fileFormatVersion: 2
 guid: be078e2520b0fbc4c8885be28086f278
-timeCreated: 1503204963
-licenseType: Free
 MonoImporter:
+  externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - gameManager: {instanceID: 0}
+  - eventManager: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

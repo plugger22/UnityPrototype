@@ -6628,3 +6628,1074 @@ City seed 1616 -> Mexurb, Americon
 
 Dev seed 27305 -> Wednesday, 4 November 2020 6:20 PM
 City seed 1616 -> Mexurb, Americon
+
+Dev seed 5503 -> Wednesday, 4 November 2020 8:29 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 62645 -> Wednesday, 4 November 2020 8:46 PM
+City seed 1616 -> Mexurb, Americon
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarLeftMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetCityMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetCityMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipNode.Start () (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:95)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipActor.Start () (at Assets/Scripts/GUI/Tooltips/TooltipActor.cs:126)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalActionMenu.Start () (at Assets/Scripts/GUI/ModalActionMenu.cs:59)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipGeneric.Start () (at Assets/Scripts/GUI/Tooltips/TooltipGeneric.cs:41)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+AlertUI.Start () (at Assets/Scripts/GUI/AlertUI.cs:23)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipPlayer.Start () (at Assets/Scripts/GUI/Tooltips/TooltipPlayer.cs:110)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipConnection.Start () (at Assets/Scripts/GUI/Tooltips/TooltipConnection.cs:54)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipHelp.Start () (at Assets/Scripts/GUI/Tooltips/TooltipHelp.cs:46)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalReviewUI.Start () (at Assets/Scripts/GUI/ModalReviewUI.cs:157)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipStory.Start () (at Assets/Scripts/GUI/Tooltips/TooltipStory.cs:48)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetStarsMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetStarsMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerHighlightUI.Start () (at Assets/Scripts/GUI/Player/PlayerHighlightUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetActionsMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetActionsMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerRenownTooltipUI.Start () (at Assets/Scripts/GUI/Player/PlayerRenownTooltipUI.cs:24)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetTurnMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetTurnMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarRightMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetBarRightMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetFactionMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetFactionMouseUI.cs:28)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerClickUI.Start () (at Assets/Scripts/GUI/Player/PlayerClickUI.cs:19)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerSpriteTooltipUI.Start () (at Assets/Scripts/GUI/Player/PlayerSpriteTooltipUI.cs:35)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarLeftMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetCityMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetCityMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipNode.Start () (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:95)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipActor.Start () (at Assets/Scripts/GUI/Tooltips/TooltipActor.cs:126)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalActionMenu.Start () (at Assets/Scripts/GUI/ModalActionMenu.cs:59)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipGeneric.Start () (at Assets/Scripts/GUI/Tooltips/TooltipGeneric.cs:41)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+AlertUI.Start () (at Assets/Scripts/GUI/AlertUI.cs:23)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipPlayer.Start () (at Assets/Scripts/GUI/Tooltips/TooltipPlayer.cs:110)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipConnection.Start () (at Assets/Scripts/GUI/Tooltips/TooltipConnection.cs:54)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipHelp.Start () (at Assets/Scripts/GUI/Tooltips/TooltipHelp.cs:46)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalReviewUI.Start () (at Assets/Scripts/GUI/ModalReviewUI.cs:157)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipStory.Start () (at Assets/Scripts/GUI/Tooltips/TooltipStory.cs:48)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetStarsMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetStarsMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerHighlightUI.Start () (at Assets/Scripts/GUI/Player/PlayerHighlightUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetActionsMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetActionsMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerRenownTooltipUI.Start () (at Assets/Scripts/GUI/Player/PlayerRenownTooltipUI.cs:24)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetTurnMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetTurnMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarRightMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetBarRightMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetFactionMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetFactionMouseUI.cs:28)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerClickUI.Start () (at Assets/Scripts/GUI/Player/PlayerClickUI.cs:19)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerSpriteTooltipUI.Start () (at Assets/Scripts/GUI/Player/PlayerSpriteTooltipUI.cs:35)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarLeftMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetCityMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetCityMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipNode.Start () (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:95)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipActor.Start () (at Assets/Scripts/GUI/Tooltips/TooltipActor.cs:126)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalActionMenu.Start () (at Assets/Scripts/GUI/ModalActionMenu.cs:59)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipGeneric.Start () (at Assets/Scripts/GUI/Tooltips/TooltipGeneric.cs:41)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+AlertUI.Start () (at Assets/Scripts/GUI/AlertUI.cs:23)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipPlayer.Start () (at Assets/Scripts/GUI/Tooltips/TooltipPlayer.cs:110)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipConnection.Start () (at Assets/Scripts/GUI/Tooltips/TooltipConnection.cs:54)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipHelp.Start () (at Assets/Scripts/GUI/Tooltips/TooltipHelp.cs:46)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalReviewUI.Start () (at Assets/Scripts/GUI/ModalReviewUI.cs:157)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipStory.Start () (at Assets/Scripts/GUI/Tooltips/TooltipStory.cs:48)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetStarsMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetStarsMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerHighlightUI.Start () (at Assets/Scripts/GUI/Player/PlayerHighlightUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetActionsMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetActionsMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerRenownTooltipUI.Start () (at Assets/Scripts/GUI/Player/PlayerRenownTooltipUI.cs:24)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetTurnMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetTurnMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarRightMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetBarRightMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetFactionMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetFactionMouseUI.cs:28)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerClickUI.Start () (at Assets/Scripts/GUI/Player/PlayerClickUI.cs:19)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerSpriteTooltipUI.Start () (at Assets/Scripts/GUI/Player/PlayerSpriteTooltipUI.cs:35)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarLeftMouseUI.OnPointerEnter (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:36)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerEnterHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:22)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarLeftMouseUI.OnPointerExit (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:58)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerExitHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:29)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarLeftMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetCityMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetCityMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipNode.Start () (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:95)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipActor.Start () (at Assets/Scripts/GUI/Tooltips/TooltipActor.cs:126)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalActionMenu.Start () (at Assets/Scripts/GUI/ModalActionMenu.cs:59)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipGeneric.Start () (at Assets/Scripts/GUI/Tooltips/TooltipGeneric.cs:41)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+AlertUI.Start () (at Assets/Scripts/GUI/AlertUI.cs:23)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipPlayer.Start () (at Assets/Scripts/GUI/Tooltips/TooltipPlayer.cs:110)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipConnection.Start () (at Assets/Scripts/GUI/Tooltips/TooltipConnection.cs:54)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipHelp.Start () (at Assets/Scripts/GUI/Tooltips/TooltipHelp.cs:46)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalReviewUI.Start () (at Assets/Scripts/GUI/ModalReviewUI.cs:157)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipStory.Start () (at Assets/Scripts/GUI/Tooltips/TooltipStory.cs:48)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetStarsMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetStarsMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerHighlightUI.Start () (at Assets/Scripts/GUI/Player/PlayerHighlightUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetActionsMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetActionsMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerRenownTooltipUI.Start () (at Assets/Scripts/GUI/Player/PlayerRenownTooltipUI.cs:24)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetTurnMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetTurnMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarRightMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetBarRightMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetFactionMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetFactionMouseUI.cs:28)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerClickUI.Start () (at Assets/Scripts/GUI/Player/PlayerClickUI.cs:19)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerSpriteTooltipUI.Start () (at Assets/Scripts/GUI/Player/PlayerSpriteTooltipUI.cs:35)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarLeftMouseUI.OnPointerEnter (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:36)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerEnterHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:22)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarLeftMouseUI.OnPointerExit (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:58)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerExitHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:29)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarLeftMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetCityMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetCityMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipNode.Start () (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:95)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipActor.Start () (at Assets/Scripts/GUI/Tooltips/TooltipActor.cs:126)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalActionMenu.Start () (at Assets/Scripts/GUI/ModalActionMenu.cs:59)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipGeneric.Start () (at Assets/Scripts/GUI/Tooltips/TooltipGeneric.cs:41)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+AlertUI.Start () (at Assets/Scripts/GUI/AlertUI.cs:23)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipPlayer.Start () (at Assets/Scripts/GUI/Tooltips/TooltipPlayer.cs:110)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipConnection.Start () (at Assets/Scripts/GUI/Tooltips/TooltipConnection.cs:54)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipHelp.Start () (at Assets/Scripts/GUI/Tooltips/TooltipHelp.cs:46)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalReviewUI.Start () (at Assets/Scripts/GUI/ModalReviewUI.cs:157)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipStory.Start () (at Assets/Scripts/GUI/Tooltips/TooltipStory.cs:48)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetStarsMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetStarsMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerHighlightUI.Start () (at Assets/Scripts/GUI/Player/PlayerHighlightUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetActionsMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetActionsMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerRenownTooltipUI.Start () (at Assets/Scripts/GUI/Player/PlayerRenownTooltipUI.cs:24)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetTurnMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetTurnMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarRightMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetBarRightMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetFactionMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetFactionMouseUI.cs:28)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerClickUI.Start () (at Assets/Scripts/GUI/Player/PlayerClickUI.cs:19)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerSpriteTooltipUI.Start () (at Assets/Scripts/GUI/Player/PlayerSpriteTooltipUI.cs:35)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetTurnMouseUI.OnPointerEnter (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetTurnMouseUI.cs:36)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerEnterHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:22)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetTurnMouseUI.OnPointerExit (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetTurnMouseUI.cs:58)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerExitHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:29)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarLeftMouseUI.OnPointerEnter (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:36)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerEnterHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:22)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarLeftMouseUI.OnPointerExit (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:58)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerExitHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:29)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarLeftMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetCityMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetCityMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipNode.Start () (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:95)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipActor.Start () (at Assets/Scripts/GUI/Tooltips/TooltipActor.cs:126)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalActionMenu.Start () (at Assets/Scripts/GUI/ModalActionMenu.cs:59)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipGeneric.Start () (at Assets/Scripts/GUI/Tooltips/TooltipGeneric.cs:41)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+AlertUI.Start () (at Assets/Scripts/GUI/AlertUI.cs:23)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipPlayer.Start () (at Assets/Scripts/GUI/Tooltips/TooltipPlayer.cs:110)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipConnection.Start () (at Assets/Scripts/GUI/Tooltips/TooltipConnection.cs:54)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipHelp.Start () (at Assets/Scripts/GUI/Tooltips/TooltipHelp.cs:46)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalReviewUI.Start () (at Assets/Scripts/GUI/ModalReviewUI.cs:157)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipStory.Start () (at Assets/Scripts/GUI/Tooltips/TooltipStory.cs:48)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetStarsMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetStarsMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerHighlightUI.Start () (at Assets/Scripts/GUI/Player/PlayerHighlightUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetActionsMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetActionsMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerRenownTooltipUI.Start () (at Assets/Scripts/GUI/Player/PlayerRenownTooltipUI.cs:24)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetTurnMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetTurnMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarRightMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetBarRightMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetFactionMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetFactionMouseUI.cs:28)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerClickUI.Start () (at Assets/Scripts/GUI/Player/PlayerClickUI.cs:19)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerSpriteTooltipUI.Start () (at Assets/Scripts/GUI/Player/PlayerSpriteTooltipUI.cs:35)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarLeftMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetCityMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetCityMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipNode.Start () (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:95)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipActor.Start () (at Assets/Scripts/GUI/Tooltips/TooltipActor.cs:126)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalActionMenu.Start () (at Assets/Scripts/GUI/ModalActionMenu.cs:59)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipGeneric.Start () (at Assets/Scripts/GUI/Tooltips/TooltipGeneric.cs:41)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+AlertUI.Start () (at Assets/Scripts/GUI/AlertUI.cs:23)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipPlayer.Start () (at Assets/Scripts/GUI/Tooltips/TooltipPlayer.cs:110)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipConnection.Start () (at Assets/Scripts/GUI/Tooltips/TooltipConnection.cs:54)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipHelp.Start () (at Assets/Scripts/GUI/Tooltips/TooltipHelp.cs:46)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalReviewUI.Start () (at Assets/Scripts/GUI/ModalReviewUI.cs:157)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipStory.Start () (at Assets/Scripts/GUI/Tooltips/TooltipStory.cs:48)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetStarsMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetStarsMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerHighlightUI.Start () (at Assets/Scripts/GUI/Player/PlayerHighlightUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetActionsMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetActionsMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerRenownTooltipUI.Start () (at Assets/Scripts/GUI/Player/PlayerRenownTooltipUI.cs:24)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetTurnMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetTurnMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarRightMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetBarRightMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetFactionMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetFactionMouseUI.cs:28)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerClickUI.Start () (at Assets/Scripts/GUI/Player/PlayerClickUI.cs:19)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerSpriteTooltipUI.Start () (at Assets/Scripts/GUI/Player/PlayerSpriteTooltipUI.cs:35)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarLeftMouseUI.OnPointerEnter (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:36)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerEnterHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:22)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarLeftMouseUI.OnPointerExit (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:58)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerExitHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:29)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarLeftMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetCityMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetCityMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipNode.Start () (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:95)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipActor.Start () (at Assets/Scripts/GUI/Tooltips/TooltipActor.cs:126)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalActionMenu.Start () (at Assets/Scripts/GUI/ModalActionMenu.cs:59)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipGeneric.Start () (at Assets/Scripts/GUI/Tooltips/TooltipGeneric.cs:41)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+AlertUI.Start () (at Assets/Scripts/GUI/AlertUI.cs:23)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipPlayer.Start () (at Assets/Scripts/GUI/Tooltips/TooltipPlayer.cs:110)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipConnection.Start () (at Assets/Scripts/GUI/Tooltips/TooltipConnection.cs:54)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipHelp.Start () (at Assets/Scripts/GUI/Tooltips/TooltipHelp.cs:46)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalReviewUI.Start () (at Assets/Scripts/GUI/ModalReviewUI.cs:157)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipStory.Start () (at Assets/Scripts/GUI/Tooltips/TooltipStory.cs:48)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetStarsMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetStarsMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerHighlightUI.Start () (at Assets/Scripts/GUI/Player/PlayerHighlightUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetActionsMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetActionsMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerRenownTooltipUI.Start () (at Assets/Scripts/GUI/Player/PlayerRenownTooltipUI.cs:24)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetTurnMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetTurnMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarRightMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetBarRightMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetFactionMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetFactionMouseUI.cs:28)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerClickUI.Start () (at Assets/Scripts/GUI/Player/PlayerClickUI.cs:19)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerSpriteTooltipUI.Start () (at Assets/Scripts/GUI/Player/PlayerSpriteTooltipUI.cs:35)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarLeftMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetCityMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetCityMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipNode.Start () (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:95)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipActor.Start () (at Assets/Scripts/GUI/Tooltips/TooltipActor.cs:126)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalActionMenu.Start () (at Assets/Scripts/GUI/ModalActionMenu.cs:59)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipGeneric.Start () (at Assets/Scripts/GUI/Tooltips/TooltipGeneric.cs:41)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+AlertUI.Start () (at Assets/Scripts/GUI/AlertUI.cs:23)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipPlayer.Start () (at Assets/Scripts/GUI/Tooltips/TooltipPlayer.cs:110)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipConnection.Start () (at Assets/Scripts/GUI/Tooltips/TooltipConnection.cs:54)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipHelp.Start () (at Assets/Scripts/GUI/Tooltips/TooltipHelp.cs:46)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalReviewUI.Start () (at Assets/Scripts/GUI/ModalReviewUI.cs:157)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipStory.Start () (at Assets/Scripts/GUI/Tooltips/TooltipStory.cs:48)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetStarsMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetStarsMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerHighlightUI.Start () (at Assets/Scripts/GUI/Player/PlayerHighlightUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetActionsMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetActionsMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerRenownTooltipUI.Start () (at Assets/Scripts/GUI/Player/PlayerRenownTooltipUI.cs:24)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetTurnMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetTurnMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarRightMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetBarRightMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetFactionMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetFactionMouseUI.cs:28)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerClickUI.Start () (at Assets/Scripts/GUI/Player/PlayerClickUI.cs:19)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerSpriteTooltipUI.Start () (at Assets/Scripts/GUI/Player/PlayerSpriteTooltipUI.cs:35)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarLeftMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetCityMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetCityMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipNode.Start () (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:95)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipActor.Start () (at Assets/Scripts/GUI/Tooltips/TooltipActor.cs:126)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalActionMenu.Start () (at Assets/Scripts/GUI/ModalActionMenu.cs:59)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipGeneric.Start () (at Assets/Scripts/GUI/Tooltips/TooltipGeneric.cs:41)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+AlertUI.Start () (at Assets/Scripts/GUI/AlertUI.cs:23)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipPlayer.Start () (at Assets/Scripts/GUI/Tooltips/TooltipPlayer.cs:110)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipConnection.Start () (at Assets/Scripts/GUI/Tooltips/TooltipConnection.cs:54)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipHelp.Start () (at Assets/Scripts/GUI/Tooltips/TooltipHelp.cs:46)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalReviewUI.Start () (at Assets/Scripts/GUI/ModalReviewUI.cs:157)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipStory.Start () (at Assets/Scripts/GUI/Tooltips/TooltipStory.cs:48)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetStarsMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetStarsMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerHighlightUI.Start () (at Assets/Scripts/GUI/Player/PlayerHighlightUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetActionsMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetActionsMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerRenownTooltipUI.Start () (at Assets/Scripts/GUI/Player/PlayerRenownTooltipUI.cs:24)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetTurnMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetTurnMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarRightMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetBarRightMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetFactionMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetFactionMouseUI.cs:28)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerClickUI.Start () (at Assets/Scripts/GUI/Player/PlayerClickUI.cs:19)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerSpriteTooltipUI.Start () (at Assets/Scripts/GUI/Player/PlayerSpriteTooltipUI.cs:35)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:36)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorRenownTooltipUI.Start () (at Assets/Scripts/GUI/Actor/ActorRenownTooltipUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.Start () (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:20)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarLeftMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetCityMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetCityMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.Start () (at Assets/Scripts/GUI/GenericTooltipUI.cs:62)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipNode.Start () (at Assets/Scripts/GUI/Tooltips/TooltipNode.cs:95)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipActor.Start () (at Assets/Scripts/GUI/Tooltips/TooltipActor.cs:126)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalActionMenu.Start () (at Assets/Scripts/GUI/ModalActionMenu.cs:59)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipGeneric.Start () (at Assets/Scripts/GUI/Tooltips/TooltipGeneric.cs:41)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+AlertUI.Start () (at Assets/Scripts/GUI/AlertUI.cs:23)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipPlayer.Start () (at Assets/Scripts/GUI/Tooltips/TooltipPlayer.cs:110)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipConnection.Start () (at Assets/Scripts/GUI/Tooltips/TooltipConnection.cs:54)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipHelp.Start () (at Assets/Scripts/GUI/Tooltips/TooltipHelp.cs:46)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalReviewUI.Start () (at Assets/Scripts/GUI/ModalReviewUI.cs:157)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+TooltipStory.Start () (at Assets/Scripts/GUI/Tooltips/TooltipStory.cs:48)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetStarsMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetStarsMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerHighlightUI.Start () (at Assets/Scripts/GUI/Player/PlayerHighlightUI.cs:27)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetActionsMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetActionsMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerRenownTooltipUI.Start () (at Assets/Scripts/GUI/Player/PlayerRenownTooltipUI.cs:24)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetTurnMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetTurnMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarRightMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetBarRightMouseUI.cs:26)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetFactionMouseUI.Start () (at Assets/Scripts/GUI/WidgetTop/WidgetFactionMouseUI.cs:28)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerClickUI.Start () (at Assets/Scripts/GUI/Player/PlayerClickUI.cs:19)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+PlayerSpriteTooltipUI.Start () (at Assets/Scripts/GUI/Player/PlayerSpriteTooltipUI.cs:35)
+	
+Dev seed 50649 -> Wednesday, 4 November 2020 9:13 PM
+City seed 1616 -> Mexurb, Americon
