@@ -7699,3 +7699,42 @@ PlayerSpriteTooltipUI.Start () (at Assets/Scripts/GUI/Player/PlayerSpriteTooltip
 	
 Dev seed 50649 -> Wednesday, 4 November 2020 9:13 PM
 City seed 1616 -> Mexurb, Americon
+
+Dev seed 25420 -> Wednesday, 4 November 2020 9:18 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 6824 -> Wednesday, 4 November 2020 9:18 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 47921 -> Wednesday, 4 November 2020 9:19 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 25588 -> Wednesday, 4 November 2020 9:22 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 26676 -> Wednesday, 4 November 2020 9:25 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 16300 -> Wednesday, 4 November 2020 9:29 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 25056 -> Wednesday, 4 November 2020 9:30 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 21606 -> Wednesday, 4 November 2020 9:30 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 12246 -> Wednesday, 4 November 2020 9:31 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 36541 -> Wednesday, 4 November 2020 9:33 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 54597 -> Wednesday, 4 November 2020 9:34 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 43077 -> Wednesday, 4 November 2020 9:36 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 19214 -> Wednesday, 4 November 2020 9:39 PM
+City seed 1616 -> Mexurb, Americon
