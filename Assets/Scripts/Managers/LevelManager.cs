@@ -12,7 +12,8 @@ public class LevelManager : MonoBehaviour
 {
     public GameObject node;             //node prefab
     public GameObject connection;       //connection prefab
-    public GameObject tile;             //background tile
+    public GameObject tile;             //background tile (used for where nodes are)
+    public List<GameObject> listOfTiles;
     public LayerMask blockingLayer;     //nodes are on the blocking layer, not connections
 
     [Header("Default City Setup")]
@@ -116,6 +117,7 @@ public class LevelManager : MonoBehaviour
         Debug.Assert(node != null, "Invalid node (Null)");
         Debug.Assert(connection != null, "Invalid connection (Null)");
         Debug.Assert(tile != null, "Invalid tile (Null)");
+        Debug.Assert(listOfTiles.Count > 0, "Invalid listOfTiles (Empty)");
     }
     #endregion
 
@@ -280,6 +282,7 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     private void InitialiseTiles()
     {
+        int rnd;
         float lowerLimit = -5.0f;
         float upperLimit = 5.5f;
         Vector3 position = Vector3.zero;
@@ -295,8 +298,25 @@ public class LevelManager : MonoBehaviour
             {
                 position.x = i;
                 position.z = j;
-                instanceTile = Instantiate(tile, position, Quaternion.identity) as GameObject;
+                //check if a node is on this tile (use low profile tile0)
+                if (CheckPositionValid(position, 0f) == false)
+                { instanceTile = Instantiate(tile, position, Quaternion.identity) as GameObject; }
+                else
+                {
+                    //get a random tile from list (higher profile tiles)
+                    instanceTile = Instantiate(listOfTiles[Random.Range(0, listOfTiles.Count)], position, Quaternion.identity) as GameObject;
+                }
+                //assign to hierarchy
                 instanceTile.transform.SetParent(tileHolder);
+                //randomly rotate tile
+                rnd = Random.Range(0, 4);
+                switch (rnd)
+                {
+                    case 0: instanceTile.transform.Rotate(0f, 90f, 0f); break;
+                    case 1: instanceTile.transform.Rotate(0f, -90f, 0f); break;
+                    case 2: instanceTile.transform.Rotate(0f, 180f, 0f); break;
+                    default: /*leave as is break;*/ break;
+                }
             }
         }
     }
