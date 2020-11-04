@@ -6568,3 +6568,45 @@ Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.
 	
 Dev seed 49703 -> Wednesday, 4 November 2020 12:43 PM
 City seed 1616 -> Mexurb, Americon
+
+Dev seed 38360 -> Wednesday, 4 November 2020 2:47 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 40464 -> Wednesday, 4 November 2020 2:57 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 32324 -> Wednesday, 4 November 2020 2:58 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 44393 -> Wednesday, 4 November 2020 3:17 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 2601 -> Wednesday, 4 November 2020 3:19 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 18568 -> Wednesday, 4 November 2020 3:20 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 11071 -> Wednesday, 4 November 2020 3:22 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 57696 -> Wednesday, 4 November 2020 3:22 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 40565 -> Wednesday, 4 November 2020 3:23 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 21872 -> Wednesday, 4 November 2020 3:25 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 60525 -> Wednesday, 4 November 2020 3:26 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 18573 -> Wednesday, 4 November 2020 3:32 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 3055 -> Wednesday, 4 November 2020 3:33 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 45460 -> Wednesday, 4 November 2020 3:37 PM
+City seed 1616 -> Mexurb, Americon

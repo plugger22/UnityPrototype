@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour
 {
     public GameObject node;             //node prefab
     public GameObject connection;       //connection prefab
+    public GameObject tile;             //background tile
     public LayerMask blockingLayer;     //nodes are on the blocking layer, not connections
 
     [Header("Default City Setup")]
@@ -39,6 +40,7 @@ public class LevelManager : MonoBehaviour
     private GameObject instanceConnection;
     private Transform nodeHolder;
     private Transform connectionHolder;
+    private Transform tileHolder;
     private Node nodeStart;
     private Node nodeEnd;
     private Graph graph;                //used for analysis and pathing
@@ -75,12 +77,14 @@ public class LevelManager : MonoBehaviour
             case GameState.NewInitialisation:
             case GameState.FollowOnInitialisation:
                 SubInitialiseFastAccess();
+                SubInitialiseChecks();
                 SubInitialiseRandomSeed(); //needs to be before SubInitialiseAll
                 SubInitialiseAll();
                 break;
             case GameState.LoadAtStart:
             case GameState.LoadGame:
                 SubInitialiseFastAccess();
+                SubInitialiseChecks();
                 SubInitialiseLoadedSeed(); //needs to be before SubInitialiseAll
                 SubInitialiseAll();
                 break;
@@ -102,12 +106,26 @@ public class LevelManager : MonoBehaviour
     }
     #endregion
 
+    /// <summary>
+    /// Assert checks
+    /// </summary>
+    #region SubInitialiseChecks
+
+    private void SubInitialiseChecks()
+    {
+        Debug.Assert(node != null, "Invalid node (Null)");
+        Debug.Assert(connection != null, "Invalid connection (Null)");
+        Debug.Assert(tile != null, "Invalid tile (Null)");
+    }
+    #endregion
+
     #region SubInitialiseAll
     private void SubInitialiseAll()
     {
         RandomSeedFileOps();
         //ProcGen level
         InitialiseData();
+        InitialiseTiles();
         InitialiseNodes(numOfNodes, minSpacing);
         InitialiseSortedDistances();
         RemoveInvalidNodes();
@@ -256,6 +274,34 @@ public class LevelManager : MonoBehaviour
     //
     // --- Graph construction ---
     //
+
+    /// <summary>
+    /// Set up background tiles
+    /// </summary>
+    private void InitialiseTiles()
+    {
+        float lowerLimit = -5.0f;
+        float upperLimit = 5.5f;
+        Vector3 position = Vector3.zero;
+        GameObject instanceTile;
+        position.y = 0f;
+        if (tileHolder == null)
+        { tileHolder = new GameObject("MasterTile").transform; }
+        //x_coord
+        for (float i = lowerLimit; i < upperLimit; i++)
+        {
+            //y_coord
+            for (float j = lowerLimit; j < upperLimit; j++)
+            {
+                position.x = i;
+                position.z = j;
+                instanceTile = Instantiate(tile, position, Quaternion.identity) as GameObject;
+                instanceTile.transform.SetParent(tileHolder);
+            }
+        }
+    }
+
+
     /// <summary>
     /// place 'x' num nodes randomly within a 11 x 11 grid (world units) with a minimum spacing between them all
     /// </summary>
