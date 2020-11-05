@@ -12,9 +12,12 @@ public class LevelManager : MonoBehaviour
 {
     public GameObject node;             //node prefab
     public GameObject connection;       //connection prefab
-    public GameObject tile;             //background tile (used for where nodes are)
-    public List<GameObject> listOfTiles;
-    public LayerMask blockingLayer;     //nodes are on the blocking layer, not connections
+    [Tooltip("Tile that is used wherever there is a node present (Low profile tile that won't bleed through node base")]
+    public GameObject tile;            
+    [Tooltip("Place all tile prefabs here that can be used for a background. Multiple copies of a tile are O.K in order to tweak frequencies")]
+    public List<GameObject> listOfTilePrefabs;
+    [Tooltip("Nodes are on the blocking layer, not connections")]
+    public LayerMask blockingLayer;     
 
     [Header("Default City Setup")]
     [Tooltip("number of nodes (adjusted after use in InitialiseNodes() to reflect actual number). Set to CitySize 'Normal'")]
@@ -39,6 +42,7 @@ public class LevelManager : MonoBehaviour
 
     private GameObject instanceNode;
     private GameObject instanceConnection;
+    private GameObject instanceTile;
     private Transform nodeHolder;
     private Transform connectionHolder;
     private Transform tileHolder;
@@ -59,6 +63,7 @@ public class LevelManager : MonoBehaviour
     private List<GameObject> listOfNodeObjects = new List<GameObject>();
     private List<Node> listOfNodes = new List<Node>();                              //mirror list to listOfNodeObjects but Nodes instead of GO's for speed of use
     private List<GameObject> listOfConnections = new List<GameObject>();
+    private List<GameObject> listOfTiles = new List<GameObject>();
     private List<Vector3> listOfCoordinates = new List<Vector3>();                  //used to provide a lookup to check spacing of nodes
     private List<List<int>> listOfSortedNodes = new List<List<int>>();              //each node has a sorted (closest to furthest) list of nodeID's of neighouring nodes
     private List<List<float>> listOfSortedDistances = new List<List<float>>();    //companion list to listOfSortedNodes (identical indexes) -> contains distances to node in other list in world units    
@@ -117,7 +122,7 @@ public class LevelManager : MonoBehaviour
         Debug.Assert(node != null, "Invalid node (Null)");
         Debug.Assert(connection != null, "Invalid connection (Null)");
         Debug.Assert(tile != null, "Invalid tile (Null)");
-        Debug.Assert(listOfTiles.Count > 0, "Invalid listOfTiles (Empty)");
+        Debug.Assert(listOfTilePrefabs.Count > 0, "Invalid listOfTilePrefabs (Empty)");
     }
     #endregion
 
@@ -127,10 +132,10 @@ public class LevelManager : MonoBehaviour
         RandomSeedFileOps();
         //ProcGen level
         InitialiseData();
-        InitialiseTiles();
         InitialiseNodes(numOfNodes, minSpacing);
         InitialiseSortedDistances();
         RemoveInvalidNodes();
+        InitialiseTiles();     
         InitialiseNodeArcArray();
         InitialiseGraph();
         InitialiseNodeArcs();
@@ -198,7 +203,7 @@ public class LevelManager : MonoBehaviour
         graph = null;
         ewGraph = null;
         msTree = null;
-        //remove any prefab node and connection clones from previous level
+        //remove any prefab node clones from previous level
         if (nodeHolder != null)
         {
             if (nodeHolder.childCount > 0 && listOfNodes.Count > 0)
@@ -207,6 +212,7 @@ public class LevelManager : MonoBehaviour
                 { GameManager.i.SafeDestroy(listOfNodes[i].gameObject); }
             }
         }
+        //remove any prefab connection clones from previous level
         if (connectionHolder != null)
         {
             if (connectionHolder.childCount > 0 && listOfConnections.Count > 0)
@@ -215,14 +221,25 @@ public class LevelManager : MonoBehaviour
                 { GameManager.i.SafeDestroy(listOfConnections[i]); }
             }
         }
+        //remove any prefab node tile from previous level
+        if (tileHolder != null)
+        {
+            if (tileHolder.childCount > 0 && listOfTiles.Count > 0)
+            {
+                for (int i = listOfTiles.Count - 1; i >= 0; i--)
+                { GameManager.i.SafeDestroy(listOfTiles[i].gameObject); }
+            }
+        }
         instanceNode = null;
         instanceConnection = null;
+        instanceTile = null;
         nodeStart = null;
         nodeEnd = null;
         //levelManager collections
         listOfNodeObjects.Clear();
         listOfNodes.Clear();
         listOfConnections.Clear();
+        listOfTiles.Clear();
         listOfCoordinates.Clear();
         listOfSortedNodes.Clear();
         listOfSortedDistances.Clear();
@@ -286,7 +303,6 @@ public class LevelManager : MonoBehaviour
         float lowerLimit = -5.0f;
         float upperLimit = 5.5f;
         Vector3 position = Vector3.zero;
-        GameObject instanceTile;
         position.y = 0f;
         if (tileHolder == null)
         { tileHolder = new GameObject("MasterTile").transform; }
@@ -299,15 +315,17 @@ public class LevelManager : MonoBehaviour
                 position.x = i;
                 position.z = j;
                 //check if a node is on this tile (use low profile tile0)
-                if (CheckPositionValid(position, 0f) == false)
+                if (CheckPositionValid(position, 0.5f) == false)
                 { instanceTile = Instantiate(tile, position, Quaternion.identity) as GameObject; }
                 else
                 {
                     //get a random tile from list (higher profile tiles)
-                    instanceTile = Instantiate(listOfTiles[Random.Range(0, listOfTiles.Count)], position, Quaternion.identity) as GameObject;
+                    instanceTile = Instantiate(listOfTilePrefabs[Random.Range(0, listOfTilePrefabs.Count)], position, Quaternion.identity) as GameObject;
                 }
                 //assign to hierarchy
                 instanceTile.transform.SetParent(tileHolder);
+                //add to list
+                listOfTiles.Add(instanceTile);
                 //randomly rotate tile
                 rnd = Random.Range(0, 4);
                 switch (rnd)
@@ -664,6 +682,16 @@ public class LevelManager : MonoBehaviour
         //tweak length 
         Vector3 instanceScale = instanceConnection.transform.localScale;
         instanceConnection.transform.localScale = new Vector3(instanceScale.x, distance, instanceScale.z);
+        //reset ball scale back to normal (it scaled up along with parent)
+        instanceConnection.GetComponent<Connection>().ball.transform.localScale = new Vector3(1.1f, instanceScale.y, 1.1f);
+        
+        Vector3 instanceScaleNew = instanceConnection.transform.localScale;
+        Debug.LogFormat("[Tst] LevelManager.cs -> PlaceConnection: Connection previous scale {0}, {1}, {2} new scale {3}, {4}, {5}{6}", instanceScale.x, instanceScale.y, instanceScale.z,
+            instanceScaleNew.x, instanceScaleNew.y, instanceScaleNew.z, "\n");
+        Vector3 instanceBall = instanceConnection.GetComponent<Connection>().ball.transform.position;
+        Debug.LogFormat("[Tst] LevelManager.cs -> PlaceConnection: Ball x {0}, y {1}, z {2}{3}", instanceBall.x, instanceBall.y, instanceBall.z, "\n");
+        instanceConnection.GetComponent<Connection>().ball.transform.localPosition = new Vector3(instanceBall.x, instanceBall.y, 0.2f);
+
         //set up Connection fields
         Connection connectionTemp = instanceConnection.GetComponent<Connection>();
         connectionTemp.connID = GameManager.i.nodeScript.connIDCounter++;
@@ -1404,7 +1432,8 @@ public class LevelManager : MonoBehaviour
     public List<Node> GetListOfNodes()
     { return listOfNodes; }
 
-
+    public int GetNumOfTiles()
+    { return listOfTiles.Count; }
 
 
 

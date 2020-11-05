@@ -7403,7 +7403,8 @@ public class DataManager : MonoBehaviour
             { Debug.LogError(" Graph is Null -> no analysis available"); }
             //base stats
             builder.Append(" NumNodes:  " + Convert.ToString(listOfNodes.Count) + "\n");
-            builder.Append(" NumConns:  " + Convert.ToString(listOfConnections.Count) + "\n\n");
+            builder.Append(" NumConns:  " + Convert.ToString(listOfConnections.Count) + "\n");
+            builder.Append(" NumTiles:  " + GameManager.i.levelScript.GetNumOfTiles() + "\n\n");
             builder.AppendFormat(" {0}", GraphConnectedSearch());
         }
         else { builder.Append("Invalid data"); }

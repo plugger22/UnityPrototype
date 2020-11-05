@@ -29,7 +29,7 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
         //materials
         materialNormal = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Normal);
         materialPlayer = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Player);
-        materialDefault = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Default);
+        materialDefault = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.TowerDark);
         Debug.Assert(materialNormal != null, "Invalid materialNormal (Null)");
         Debug.Assert(materialPlayer != null, "Invalid materialPlayer (Null)");
         Debug.Assert(materialDefault != null, "Invalid materialDefault (Null)");

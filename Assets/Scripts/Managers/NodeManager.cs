@@ -14,7 +14,7 @@ using Random = UnityEngine.Random;
 public class NodeManager : MonoBehaviour
 {
     [Header("Materials")]
-    [Tooltip("Node Colour Types")]
+    [Tooltip("Node Colour Types. Indexes correspond to enum.NodeColour")]
     public Material[] arrayOfNodeMaterials;
 
     [Header("Active Nodes")]
@@ -100,7 +100,8 @@ public class NodeManager : MonoBehaviour
     //activity
     [HideInInspector] public ActivityUI activityState;
     //materials
-    private Material materialDefault;
+    private Material materialTowerDark;
+    private Material materialTowerLight;
     private Material materialNormal;
     private Material materialHighlight;
     private Material materialActive;
@@ -199,7 +200,8 @@ public class NodeManager : MonoBehaviour
         //fast access
         globalResistance = GameManager.i.globalScript.sideResistance;
         globalAuthority = GameManager.i.globalScript.sideAuthority;
-        materialDefault = GetNodeMaterial(NodeColour.Default);
+        materialTowerDark = GetNodeMaterial(NodeColour.TowerDark);
+        materialTowerLight = GetNodeMaterial(NodeColour.TowerLight);
         materialNormal = GetNodeMaterial(NodeColour.Normal);
         materialHighlight = GetNodeMaterial(NodeColour.Highlight);
         materialActive = GetNodeMaterial(NodeColour.Active);
@@ -217,7 +219,8 @@ public class NodeManager : MonoBehaviour
         crisisWaitTimerHalved = "NodeCrisisWaitTimerHalved";
         Debug.Assert(globalResistance != null, "Invalid globalResistance (Null)");
         Debug.Assert(globalAuthority != null, "Invalid globalAuthority (Null)");
-        Debug.Assert(materialDefault != null, "Invalid materialDefault (Null)");
+        Debug.Assert(materialTowerDark != null, "Invalid materialTowerDark (Null)");
+        Debug.Assert(materialTowerLight != null, "Invalid materialTowerLight (Null)");
         Debug.Assert(materialNormal != null, "Invalid materialNormal (Null)");
         Debug.Assert(materialHighlight != null, "Invalid materialHighlight (Null)");
         Debug.Assert(materialActive != null, "Invalid materialActive (Null)");
@@ -1358,7 +1361,7 @@ public class NodeManager : MonoBehaviour
                                 if (node.GetMaterial(NodeComponent.Base) == materialNormal)
                                 {
                                     SetNodeMaterial(node, NodeComponent.Base, NodeColour.Player);
-                                    SetNodeMaterial(node, NodeComponent.Towers, NodeColour.Default);
+                                    SetNodeMaterial(node, NodeComponent.Towers, NodeColour.TowerDark);
                                 }
                             }
                         }
@@ -1530,9 +1533,9 @@ public class NodeManager : MonoBehaviour
                 {
                     //normal cylindrical nodes
                     node.colourBase = NodeColour.Normal;
-                    node.colourRear = NodeColour.Default;
-                    node.colourRight = NodeColour.Default;
-                    node.colourLeft = NodeColour.Default;
+                    node.colourRear = NodeColour.TowerDark;
+                    node.colourRight = NodeColour.TowerLight;
+                    node.colourLeft = NodeColour.TowerLight;
                 }
             }
             //trigger an automatic redraw
@@ -1743,16 +1746,17 @@ public class NodeManager : MonoBehaviour
     /// <param name="nodeType"></param>
     private void SetNodeMaterial(Node node, NodeComponent nodeComponent, NodeColour nodeType)
     {
-        Material material = materialDefault;
+        Material material = materialTowerDark;
         Debug.Assert(node != null, "Invalid node (Null)");
         {
             switch (nodeType)
             {
-                case NodeColour.Default: material = materialDefault; break;
+                case NodeColour.TowerDark: material = materialTowerDark; break;
+                case NodeColour.TowerLight: material = materialTowerLight; break;
+                case NodeColour.TowerActive: material = materialTowerActive; break;
                 case NodeColour.Normal: material = materialNormal; break;
                 case NodeColour.Highlight: material = materialHighlight; break;
                 case NodeColour.Active: material = materialActive; break;
-                case NodeColour.TowerActive: material = materialTowerActive; break;
                 case NodeColour.Player: material = materialPlayer; break;
                 case NodeColour.Background: material = materialBackground; break;
                 case NodeColour.Nemesis: material = materialNemesis; break;
@@ -1760,7 +1764,13 @@ public class NodeManager : MonoBehaviour
                 case NodeColour.Transparent: material = materialTransparent; break;
                 default: Debug.LogWarningFormat("Unrecognised NodeType \"{0}\"", nodeType); break;
             }
-            node.SetMaterial(material, nodeComponent);
+            //special case of setting towers back to normal (requires a binary colour scheme)
+            if (nodeComponent == NodeComponent.Towers && nodeType == NodeColour.TowerDark)
+            {
+                node.SetMaterial(materialTowerDark, NodeComponent.TowerRear);
+                node.SetMaterial(materialTowerLight, NodeComponent.TowerLeftRight);
+            }
+            else { node.SetMaterial(material, nodeComponent); }
         }
     }
 

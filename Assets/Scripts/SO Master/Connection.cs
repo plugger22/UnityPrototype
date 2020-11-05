@@ -8,6 +8,9 @@ using System.Text;
 public class Connection : MonoBehaviour
 {
 
+    [Tooltip("Internal ball (sphere) used to represent movement within connection")]
+    public GameObject ball;
+
     //private ConnectionType securityLevel;
 
     private int v1;                                         //vertice nodeID's for either end of the connection
@@ -35,6 +38,7 @@ public class Connection : MonoBehaviour
 
     [HideInInspector] public int activityCount = -1;       //# times rebel activity occurred (invis-1, player movement)
     [HideInInspector] public int activityTime = -1;        //most recent turn when rebel activity occurred
+
 
 
     //Security property -> a bit tricky but needed to handle the difference between the enum (None/High/Med/Low) and the int backing field.
@@ -99,11 +103,12 @@ public class Connection : MonoBehaviour
         }
     }
 
-    /*public void Awake()
+    public void Awake()
     {
-        /renderer = GetComponent<Renderer>();
-        Debug.AssertFormat(renderer != null, "Invalid renderer (Null) for connID {0}", connID);
-    }*/
+        /*renderer = GetComponent<Renderer>();
+        Debug.AssertFormat(renderer != null, "Invalid renderer (Null) for connID {0}", connID);*/
+        Debug.Assert(ball != null, "Invalid ball (Null)");
+    }
 
     public void Start()
     {

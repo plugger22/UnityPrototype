@@ -284,10 +284,10 @@ public class Node : MonoBehaviour
             Debug.Assert(rightObject != null, "Invalid rightObject (Null)");
             Debug.Assert(leftObject != null, "Invalid leftObject (Null)");
             colourNode = NodeColour.Invisible;
-            colourBase = NodeColour.Default;
-            colourRear = NodeColour.Default;
-            colourRight = NodeColour.Default;
-            colourLeft = NodeColour.Default;
+            colourBase = NodeColour.TowerDark;
+            colourRear = NodeColour.TowerDark;
+            colourRight = NodeColour.TowerLight;
+            colourLeft = NodeColour.TowerLight;
         }
         else
         {
@@ -889,6 +889,11 @@ public class Node : MonoBehaviour
                     rightRenderer.material = newMaterial;
                     leftRenderer.material = newMaterial;
                     break;
+                case NodeComponent.TowerRear: rearRenderer.material = newMaterial; break;
+                case NodeComponent.TowerLeftRight:
+                    rightRenderer.material = newMaterial;
+                    leftRenderer.material = newMaterial;
+                    break;
                 case NodeComponent.BaseAndTowers:
                     baseRenderer.material = newMaterial;
                     rearRenderer.material = newMaterial;
@@ -971,9 +976,9 @@ public class Node : MonoBehaviour
         else
         {
             colourBase = NodeColour.Player;
-            colourRear = NodeColour.Default;
-            colourRight = NodeColour.Default;
-            colourLeft = NodeColour.Default;
+            colourRear = NodeColour.TowerDark;
+            colourRight = NodeColour.TowerLight;
+            colourLeft = NodeColour.TowerLight;
         }
     }
 
@@ -1005,7 +1010,7 @@ public class Node : MonoBehaviour
         else
         {
             colourBase = NodeColour.Nemesis;
-            colourRear = NodeColour.Default;
+            colourRear = NodeColour.TowerDark;
         }
     }
 
@@ -1023,7 +1028,7 @@ public class Node : MonoBehaviour
         else
         {
             colourBase = NodeColour.Normal;
-            colourRear = NodeColour.Default;
+            colourRear = NodeColour.TowerDark;
         }
     }
 

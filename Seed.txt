@@ -7738,3 +7738,285 @@ City seed 1616 -> Mexurb, Americon
 
 Dev seed 19214 -> Wednesday, 4 November 2020 9:39 PM
 City seed 1616 -> Mexurb, Americon
+
+Dev seed 8468 -> Wednesday, 4 November 2020 9:42 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 52554 -> Thursday, 5 November 2020 8:38 AM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 648 -> Thursday, 5 November 2020 8:39 AM
+City seed 1616 -> Mexurb, Americon
+ASSERT ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument argument, System.ExceptionResource resource) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.ThrowHelper.ThrowArgumentOutOfRangeException () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].get_Item (System.Int32 index) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	ActorManager.DebugCreateNodeActionResistanceData (System.Int32 numOfActions) (at Assets/Scripts/Managers/ActorManager.cs:5701)
+	SideManager.RevertToHumanPlayer () (at Assets/Scripts/Managers/SideManager.cs:478)
+	TurnManager.SetAutoRun (System.Int32 autoTurns) (at Assets/Scripts/Managers/TurnManager.cs:266)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:406)
+	
+Dev seed 32670 -> Thursday, 5 November 2020 8:52 AM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 23522 -> Thursday, 5 November 2020 8:53 AM
+City seed 5678 -> Londus, Eurasia
+City seed 765 -> Newpolis, Americon
+
+Dev seed 38806 -> Thursday, 5 November 2020 9:19 AM
+City seed 5678 -> Londus, Eurasia
+WARNING metaOption name "MetaOptionMotivation", not found in dictOfMetaOptions
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetMetaOption(String) (at Assets/Scripts/Managers/DataManager.cs:9714)
+	DataManager:LoadMetaOptionData(SaveMetaOption) (at Assets/Scripts/Managers/DataManager.cs:9730)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2556)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:220)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid metaOption (Null) for "MetaOptionMotivation"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:LoadMetaOptionData(SaveMetaOption) (at Assets/Scripts/Managers/DataManager.cs:9735)
+	FileManager:ReadDataData() (at Assets/Scripts/Managers/FileManager.cs:2556)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:220)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	City seed 1616 -> Mexurb, Americon
+ERROR Invalid connection (Null) for connID 43
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	FileManager:ReadConnectionData() (at Assets/Scripts/Managers/FileManager.cs:3714)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:229)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid connection (Null) for connID 44
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	FileManager:ReadConnectionData() (at Assets/Scripts/Managers/FileManager.cs:3714)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:229)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid connection (Null) for connID 45
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	FileManager:ReadConnectionData() (at Assets/Scripts/Managers/FileManager.cs:3714)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:229)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid connection (Null) for connID 46
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	FileManager:ReadConnectionData() (at Assets/Scripts/Managers/FileManager.cs:3714)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:229)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid connection (Null) for connID 47
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	FileManager:ReadConnectionData() (at Assets/Scripts/Managers/FileManager.cs:3714)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:229)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid connection (Null) for connID 48
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	FileManager:ReadConnectionData() (at Assets/Scripts/Managers/FileManager.cs:3714)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:229)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid connection (Null) for connID 49
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	FileManager:ReadConnectionData() (at Assets/Scripts/Managers/FileManager.cs:3714)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:229)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid connection (Null) for connID 50
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	FileManager:ReadConnectionData() (at Assets/Scripts/Managers/FileManager.cs:3714)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:229)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid connection (Null) for connID 51
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	FileManager:ReadConnectionData() (at Assets/Scripts/Managers/FileManager.cs:3714)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:229)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid connection (Null) for connID 52
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	FileManager:ReadConnectionData() (at Assets/Scripts/Managers/FileManager.cs:3714)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:229)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid connection (Null) for connID 53
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	FileManager:ReadConnectionData() (at Assets/Scripts/Managers/FileManager.cs:3714)
+	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:229)
+	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:372)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:57)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	ModalMainMenu:<InitialiseMainMenu>m__2() (at Assets/Scripts/GUI/ModalMainMenu.cs:415)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 13432 -> Thursday, 5 November 2020 9:28 AM
+City seed 5678 -> Londus, Eurasia
+City seed 765 -> Newpolis, Americon
+
+Dev seed 27589 -> Thursday, 5 November 2020 10:26 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 39258 -> Thursday, 5 November 2020 10:39 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 4141 -> Thursday, 5 November 2020 10:42 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 57608 -> Thursday, 5 November 2020 10:47 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 21934 -> Thursday, 5 November 2020 10:49 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 11841 -> Thursday, 5 November 2020 11:02 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 12411 -> Thursday, 5 November 2020 11:06 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 38580 -> Thursday, 5 November 2020 11:12 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 24273 -> Thursday, 5 November 2020 11:14 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 5151 -> Thursday, 5 November 2020 11:16 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 59624 -> Thursday, 5 November 2020 11:16 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 31439 -> Thursday, 5 November 2020 11:36 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 11083 -> Thursday, 5 November 2020 11:36 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 40091 -> Thursday, 5 November 2020 11:42 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 48849 -> Thursday, 5 November 2020 11:47 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 22945 -> Thursday, 5 November 2020 11:49 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 29463 -> Thursday, 5 November 2020 11:54 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 21882 -> Thursday, 5 November 2020 11:59 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 19458 -> Thursday, 5 November 2020 11:59 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 12191 -> Thursday, 5 November 2020 12:08 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 50344 -> Thursday, 5 November 2020 12:20 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 27696 -> Thursday, 5 November 2020 12:20 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 36640 -> Thursday, 5 November 2020 12:21 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 10920 -> Thursday, 5 November 2020 12:21 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 41559 -> Thursday, 5 November 2020 12:22 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 37660 -> Thursday, 5 November 2020 12:24 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 49285 -> Thursday, 5 November 2020 12:25 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 43157 -> Thursday, 5 November 2020 12:26 PM
+City seed 5678 -> Londus, Eurasia
+WARNING Maximum number of teams already present at Node Chiswick Park, ID 0 (Info Only)
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	Node:AddTeam(Team, Int32) (at Assets/Scripts/Base Classes/Node.cs:1194)
+	TeamManager:MoveTeamAI(TeamPool, Int32, Node) (at Assets/Scripts/Managers/TeamManager.cs:897)
+	AIManager:ExecuteTeamTask(AITask) (at Assets/Scripts/Managers/AIManager.cs:3278)
+	AIManager:ExecuteTasks(Int32) (at Assets/Scripts/Managers/AIManager.cs:3138)
+	AIManager:ProcessAISideAuthority() (at Assets/Scripts/Managers/AIManager.cs:647)
+	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:577)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:321)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:251)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:406)
+	WARNING Maximum number of teams already present at Node Chiswick Park, ID 0 (Info Only)
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	Node:AddTeam(Team, Int32) (at Assets/Scripts/Base Classes/Node.cs:1194)
+	TeamManager:MoveTeamAI(TeamPool, Int32, Node) (at Assets/Scripts/Managers/TeamManager.cs:897)
+	AIManager:ExecuteTeamTask(AITask) (at Assets/Scripts/Managers/AIManager.cs:3278)
+	AIManager:ExecuteTasks(Int32) (at Assets/Scripts/Managers/AIManager.cs:3138)
+	AIManager:ProcessAISideAuthority() (at Assets/Scripts/Managers/AIManager.cs:647)
+	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:577)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:321)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:251)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:406)
+	
+Dev seed 31281 -> Thursday, 5 November 2020 12:33 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 36743 -> Thursday, 5 November 2020 12:37 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 49167 -> Thursday, 5 November 2020 12:40 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 37676 -> Thursday, 5 November 2020 12:43 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 63054 -> Thursday, 5 November 2020 12:44 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 43016 -> Thursday, 5 November 2020 12:44 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 46263 -> Thursday, 5 November 2020 12:45 PM
+City seed 5678 -> Londus, Eurasia
