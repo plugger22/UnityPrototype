@@ -545,7 +545,7 @@ public class Connection : MonoBehaviour
             ball.transform.localPosition = new Vector3(0, y_pos, 0);
             yield return null;
         }
-        while (y_pos >= 1.0f || y_pos <= -1.0f);
+        while (y_pos <= 1.0f && y_pos >= -1.0f);
         ball.SetActive(false);
         isMoving = false;
     }
