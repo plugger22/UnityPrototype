@@ -519,12 +519,10 @@ public class Connection : MonoBehaviour
     /// Moves ball along connection
     /// </summary>
     /// <returns></returns>
-    IEnumerator MoveBall()
+    IEnumerator MoveBall(float speed)
     {
-        
         bool isForward = false;    //determines direction
         float y_pos = 0.0f;
-        float distance = 0.5f;
         float amount = 0.0f;
         if (Random.Range(0, 100) > 50)
         {
@@ -537,15 +535,15 @@ public class Connection : MonoBehaviour
         do
         {
             //move ball
-            amount += Time.deltaTime / distance;
+            amount += Time.deltaTime / speed;
             if (isForward == true)
-            { amount *= -1; }
-            y_pos += amount;
-            Debug.LogFormat("[Tst] Connection.SO -> MoveBall: connID {0}, amount {1}{2}, y_pos now {3}{4}", connID, isForward == false ? "+" : "", amount, y_pos, "\n");
+            { y_pos -= amount; }
+            else { y_pos += amount; }
+            /*Debug.LogFormat("[Tst] Connection.SO -> MoveBall: connID {0}, adjust {1}, amount {2}{3}, y_pos now {4}{5}", connID, adjust, isForward == false ? "+" : "", amount, y_pos, "\n");*/
             ball.transform.localPosition = new Vector3(0, y_pos, 0);
             yield return null;
         }
-        while (y_pos <= 1.0f && y_pos >= -1.0f);
+        while (y_pos <= 0.95f && y_pos >= -0.95f);
         ball.SetActive(false);
         isMoving = false;
     }

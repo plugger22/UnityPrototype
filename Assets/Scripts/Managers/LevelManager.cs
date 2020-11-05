@@ -458,7 +458,7 @@ public class LevelManager : MonoBehaviour
         numOfNodes = listOfNodes.Count;
         if (numOfNodes != number)
         { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseNodes: Mismatch on InitialiseNodes, {0} Nodes short", number - numOfNodes); }
-        else { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseNodes: Initialised {0} nodes", numOfNodes); }
+        /*else { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseNodes: Initialised {0} nodes", numOfNodes); }*/
     }
 
     /// <summary>
@@ -776,7 +776,7 @@ public class LevelManager : MonoBehaviour
                 }
             }
         }
-        Debug.LogFormat("[Tst] LevelManager.cs -> RemoveInvalidNodes: Removed {0} invalid potential connections", counter);
+        /*Debug.LogFormat("[Tst] LevelManager.cs -> RemoveInvalidNodes: Removed {0} invalid potential connections", counter);*/
     }
 
     /// <summary>

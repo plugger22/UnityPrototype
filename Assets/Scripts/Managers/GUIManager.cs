@@ -40,6 +40,12 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Flash interval (in real seconds) for InfoApp alerts over the top of Request and Meeting tabs")]
     [Range(0.1f, 1.0f)] public float flashInfoTabTime = 0.4f;
 
+    [Header("Connections")]
+    [Tooltip("Speed at which the 'ball' moves along a connection (higher the number, the slower)")]
+    [Range(0f, 5f)] public float connectionSpeed = 2.5f;
+    [Tooltip("The delay in seconds between successive connection movement sequences, eg. there is a pause after one connection coroutine finishes and the next starts")]
+    [Range(0f, 2f)] public float connectionDelay = 0.5f;
+
     [Header("PopUp Texts")]
     [Tooltip("How long the full animation cycle lasts (seconds)")]
     [Range(1f, 3f)] public float timerMax = 2.0f;

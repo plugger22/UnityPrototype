@@ -71,6 +71,8 @@ public class TurnManager : MonoBehaviour
     private int teamArcErasure = -1;
     private int scenarioTimer = -1;
     private Condition conditionWounded;
+    private float connectionSpeed = -1;
+    private float connectionDelay = -1;
 
 
     /*private string colourRebel;
@@ -157,8 +159,12 @@ public class TurnManager : MonoBehaviour
         //fast access
         teamArcErasure = GameManager.i.dataScript.GetTeamArcID("ERASURE");
         conditionWounded = GameManager.i.dataScript.GetCondition("WOUNDED");
+        connectionSpeed = GameManager.i.guiScript.connectionSpeed;
+        connectionDelay = GameManager.i.guiScript.connectionDelay;
         Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure (-1)");
         Debug.Assert(conditionWounded != null, "Invalid conditionWounded (Null)");
+        Debug.Assert(connectionSpeed > -1, "Invalid connectionSpeed (-1)");
+        Debug.Assert(connectionDelay > -1, "Invalid connectionDelay (-1)");
     }
     #endregion
 
@@ -1257,11 +1263,12 @@ public class TurnManager : MonoBehaviour
     {
         while (true)
         {
+            yield return new WaitForSeconds(connectionDelay);
             Connection connection = GameManager.i.dataScript.GetRandomConnection();
             if (connection != null)
             {
                 if (connection.CheckBallMoving() == false)
-                { yield return connection.StartCoroutine("MoveBall"); }
+                { yield return connection.StartCoroutine("MoveBall", connectionSpeed); }
             }
             else { Debug.LogError("Invalid random Connection (Null)"); }
             yield return null;
