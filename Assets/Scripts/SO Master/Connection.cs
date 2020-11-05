@@ -23,6 +23,7 @@ public class Connection : MonoBehaviour
     private float mouseOverDelay;                       //tooltip
     private float mouseOverFade;                        //tooltip
     private Coroutine myCoroutine;
+    private Coroutine ballCoroutine;
     /*private Renderer renderer;*/
 
 
@@ -105,9 +106,12 @@ public class Connection : MonoBehaviour
 
     public void Awake()
     {
-        /*renderer = GetComponent<Renderer>();
-        Debug.AssertFormat(renderer != null, "Invalid renderer (Null) for connID {0}", connID);*/
-        Debug.Assert(ball != null, "Invalid ball (Null)");
+        if (ball != null)
+        {
+            //deactivate ball
+            ball.gameObject.SetActive(false);
+        }
+        else { Debug.LogError("Invalid ball (Null)"); }
     }
 
     public void Start()
@@ -508,6 +512,56 @@ public class Connection : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Move ball along connector if not already doing so
+    /// </summary>
+    public void InitialiseMoveBall()
+    {
+        if (ballCoroutine == null)
+        {
+            ballCoroutine = StartCoroutine("MoveBall");
+        }
+    }
+
+    /// <summary>
+    /// Moves ball along connection
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator MoveBall()
+    {
+        bool isForward = false;    //determines direction
+        float y_pos = 0.0f;
+        float distance = 0.5f;
+        float amount = 0.0f;
+        if (Random.Range(0, 100) > 50)
+        {
+            isForward = true;
+            y_pos = 1.0f;
+        }
+        ball.transform.localPosition = new Vector3(0, y_pos, 0);
+        ball.SetActive(true);
+        do
+        {
+            //move ball
+            amount += Time.deltaTime / distance;
+            if (isForward == true)
+            { amount *= -1; }
+            y_pos += amount;
+            Debug.LogFormat("[Tst] Connection.SO -> MoveBall: amount {0}{1}, y_pos now {2}{3}", isForward == false ? "+" : "", amount, y_pos, "\n");
+            ball.transform.localPosition = new Vector3(0, y_pos, 0);
+            yield return null;
+        }
+        while (y_pos >= 1.0f || y_pos <= -1.0f);
+        ball.SetActive(false);
+    }
+
+    /// <summary>
+    /// returns true if ball coroutine still running
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckBallMoving()
+    { return (ballCoroutine != null ? true : false); }
 
 
     /*/// <summary>

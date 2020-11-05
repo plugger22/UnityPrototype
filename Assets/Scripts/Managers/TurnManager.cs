@@ -50,6 +50,7 @@ public class TurnManager : MonoBehaviour
 
     private bool allowQuitting = false;
     private Coroutine myCoroutineStartPipeline;
+    private Coroutine myCoroutineAnimation;
 
     //autorun
     private int numOfTurns = 0;
@@ -304,9 +305,14 @@ public class TurnManager : MonoBehaviour
             //only process new turn if a win State hasn't already been acheived
             if (isLevelOver == false && isCampaignOver == false)
             {
-                //AutoSave (not during autoRun) -> Do so at now so player, when save reloads can still do things prior to end of turn processing
-                if (isAutoRun == false && GameManager.i.isAutoSave == true)
-                { GameManager.i.controlScript.ProcessAutoSave(GameState.PlayGame); }
+                if (isAutoRun == false)
+                {
+                    //AutoSave (not during autoRun) -> Do so at now so player, when save reloads can still do things prior to end of turn processing
+                    if (GameManager.i.isAutoSave == true)
+                    { GameManager.i.controlScript.ProcessAutoSave(GameState.PlayGame); }
+                    //stop animation
+                    StopAnimations();
+                }
 
                 //set flag to prevent multiple calls to new turn (Set false at end of coroutine.StartPipeline)
                 isNewTurn = true;
@@ -317,6 +323,7 @@ public class TurnManager : MonoBehaviour
                 {
                     //pre-processing admin
                     haltExecution = false;
+
                     //end the current turn
                     EndTurnAI();
                     EndTurnEarly();
@@ -339,7 +346,6 @@ public class TurnManager : MonoBehaviour
                             Debug.LogFormat("TurnManager.cs : - - - Start Info Pipeline - - - turn {0}{1}", Turn, "\n");
                             //switch off any node Alerts
                             GameManager.i.alertScript.CloseAlertUI(true);
-
                             //generate topic
                             GameManager.i.topicScript.ProcessTopic(playerSide);
 
@@ -1217,6 +1223,51 @@ public class TurnManager : MonoBehaviour
             _actionsTotal = data.actionsTotal;
         }
         else { Debug.LogError("Invalid TurnActionData (Null)"); }
+    }
+
+
+    //
+    // - - - Animation
+    //
+
+    /// <summary>
+    /// Starts all in-game background animations (connections, flashing tiles, flying vehicles) at beginning of the turn
+    /// Activated from GUIManager.cs -> IEnumerator.MainInfoApp
+    /// </summary>
+    public void StartAnimations()
+    {
+        myCoroutineAnimation = StartCoroutine("AnimateConnections");
+    }
+
+    /// <summary>
+    /// Ceases all on-map animations at the end of a turn
+    /// </summary>
+    private void StopAnimations()
+    {
+        if (myCoroutineAnimation != null)
+        { StopCoroutine(myCoroutineAnimation); }
+    }
+
+    /// <summary>
+    /// run a continuous series of animated connections
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator AnimateConnections()
+    {
+        while (true)
+        {
+            Connection connection = GameManager.i.dataScript.GetRandomConnection();
+            if (connection != null)
+            {
+                do
+                {
+                    connection.InitialiseMoveBall();
+                }
+                while (connection.CheckBallMoving() == true);
+            }
+            else { Debug.LogError("Invalid random Connection (Null)"); }
+            yield return null;
+        }
     }
 
 

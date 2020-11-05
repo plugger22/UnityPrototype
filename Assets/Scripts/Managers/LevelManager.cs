@@ -685,12 +685,12 @@ public class LevelManager : MonoBehaviour
         //reset ball scale back to normal (it scaled up along with parent)
         instanceConnection.GetComponent<Connection>().ball.transform.localScale = new Vector3(1.1f, instanceScale.y, 1.1f);
         
-        Vector3 instanceScaleNew = instanceConnection.transform.localScale;
+        /*Vector3 instanceScaleNew = instanceConnection.transform.localScale;
         Debug.LogFormat("[Tst] LevelManager.cs -> PlaceConnection: Connection previous scale {0}, {1}, {2} new scale {3}, {4}, {5}{6}", instanceScale.x, instanceScale.y, instanceScale.z,
             instanceScaleNew.x, instanceScaleNew.y, instanceScaleNew.z, "\n");
         Vector3 instanceBall = instanceConnection.GetComponent<Connection>().ball.transform.position;
         Debug.LogFormat("[Tst] LevelManager.cs -> PlaceConnection: Ball x {0}, y {1}, z {2}{3}", instanceBall.x, instanceBall.y, instanceBall.z, "\n");
-        instanceConnection.GetComponent<Connection>().ball.transform.localPosition = new Vector3(instanceBall.x, instanceBall.y, 0.2f);
+        instanceConnection.GetComponent<Connection>().ball.transform.localPosition = new Vector3(0, 0.5f, 0);*/
 
         //set up Connection fields
         Connection connectionTemp = instanceConnection.GetComponent<Connection>();

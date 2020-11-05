@@ -809,6 +809,7 @@ public class GUIManager : MonoBehaviour
         InitialiseInfoApp(playerSide);
         yield return null;
         GameManager.i.turnScript.AllowNewTurn();
+        GameManager.i.turnScript.StartAnimations();
     }
 
     /// <summary>

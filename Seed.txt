@@ -8020,3 +8020,353 @@ City seed 5678 -> Londus, Eurasia
 
 Dev seed 46263 -> Thursday, 5 November 2020 12:45 PM
 City seed 5678 -> Londus, Eurasia
+
+Dev seed 14006 -> Thursday, 5 November 2020 2:36 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 18917 -> Thursday, 5 November 2020 2:37 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 59179 -> Thursday, 5 November 2020 2:38 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 3740 -> Thursday, 5 November 2020 2:38 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 44627 -> Thursday, 5 November 2020 2:39 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 7728 -> Thursday, 5 November 2020 2:40 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 7939 -> Thursday, 5 November 2020 2:40 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 49736 -> Thursday, 5 November 2020 2:41 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 11940 -> Thursday, 5 November 2020 2:41 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 11703 -> Thursday, 5 November 2020 2:46 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 43512 -> Thursday, 5 November 2020 2:48 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 4745 -> Thursday, 5 November 2020 2:50 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 18780 -> Thursday, 5 November 2020 3:46 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 49774 -> Thursday, 5 November 2020 3:46 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 905 -> Thursday, 5 November 2020 3:49 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 43583 -> Thursday, 5 November 2020 3:59 PM
+City seed 5678 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.OnPointerExit (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/GenericTooltipUI.cs:107)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerExitHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:29)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseExit () (at Assets/Scripts/Base Classes/Node.cs:389)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.OnPointerEnter (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerEnterHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:22)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.OnPointerEnter (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:30)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerEnterHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:22)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.OnPointerExit (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:82)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerExitHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:29)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.OnPointerEnter (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerEnterHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:22)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.OnPointerExit (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:82)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerExitHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:29)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.OnPointerEnter (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerEnterHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:22)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorHighlightUI.OnPointerEnter (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Actor/ActorHighlightUI.cs:30)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerEnterHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:22)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.OnPointerExit (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:82)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerExitHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:29)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.OnPointerEnter (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerEnterHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:22)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorTooltipUI.OnPointerExit (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Actor/ActorTooltipUI.cs:82)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerExitHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:29)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseExit () (at Assets/Scripts/Base Classes/Node.cs:389)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseExit () (at Assets/Scripts/Base Classes/Node.cs:389)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseExit () (at Assets/Scripts/Base Classes/Node.cs:389)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarLeftMouseUI.OnPointerEnter (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:36)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerEnterHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:22)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarLeftMouseUI.OnPointerExit (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:58)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerExitHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:29)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetCityMouseUI.OnPointerEnter (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetCityMouseUI.cs:36)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerEnterHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:22)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetCityMouseUI.OnPointerExit (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetCityMouseUI.cs:53)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerExitHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:29)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+GenericTooltipUI.OnPointerExit (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/GenericTooltipUI.cs:107)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerExitHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:29)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetActionsMouseUI.OnPointerEnter (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetActionsMouseUI.cs:36)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerEnterHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:22)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetActionsMouseUI.OnPointerExit (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetActionsMouseUI.cs:60)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerExitHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:29)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarRightMouseUI.OnPointerEnter (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetBarRightMouseUI.cs:36)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerEnterHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:22)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarRightMouseUI.OnPointerExit (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetBarRightMouseUI.cs:60)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerExitHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:29)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseExit () (at Assets/Scripts/Base Classes/Node.cs:389)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseExit () (at Assets/Scripts/Base Classes/Node.cs:389)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ButtonInteraction.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseExit () (at Assets/Scripts/Base Classes/Node.cs:389)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseExit () (at Assets/Scripts/Base Classes/Node.cs:389)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseExit () (at Assets/Scripts/Base Classes/Node.cs:389)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseExit () (at Assets/Scripts/Base Classes/Node.cs:389)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ButtonInteraction.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:404)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseExit () (at Assets/Scripts/Base Classes/Node.cs:389)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarLeftMouseUI.OnPointerEnter (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:36)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerEnterHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:22)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+WidgetBarLeftMouseUI.OnPointerExit (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/WidgetTop/WidgetBarLeftMouseUI.cs:58)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerExitHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:29)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:601)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActionManager.OnDisable () (at Assets/Scripts/Managers/ActionManager.cs:258)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:468)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:130)
+	
+Dev seed 49499 -> Thursday, 5 November 2020 4:05 PM
+City seed 5678 -> Londus, Eurasia
+ASSERT NullReferenceException: routine is null
+UnityEngine.MonoBehaviour.StopCoroutine (UnityEngine.Coroutine routine) (at C:/buildslave/unity/build/Runtime/Export/MonoBehaviour.bindings.cs:116)
+	TurnManager.StopAnimations () (at Assets/Scripts/Managers/TurnManager.cs:1249)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:314)
+	TurnManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TurnManager.cs:190)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:326)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:434)
+	ASSERT NullReferenceException: routine is null
+UnityEngine.MonoBehaviour.StopCoroutine (UnityEngine.Coroutine routine) (at C:/buildslave/unity/build/Runtime/Export/MonoBehaviour.bindings.cs:116)
+	TurnManager.StopAnimations () (at Assets/Scripts/Managers/TurnManager.cs:1249)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:314)
+	TurnManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TurnManager.cs:190)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:326)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:434)
+	ASSERT NullReferenceException: routine is null
+UnityEngine.MonoBehaviour.StopCoroutine (UnityEngine.Coroutine routine) (at C:/buildslave/unity/build/Runtime/Export/MonoBehaviour.bindings.cs:116)
+	TurnManager.StopAnimations () (at Assets/Scripts/Managers/TurnManager.cs:1249)
+	TurnManager.ProcessNewTurn () (at Assets/Scripts/Managers/TurnManager.cs:314)
+	TurnManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/TurnManager.cs:190)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:326)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:321)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:434)
+	
+Dev seed 50964 -> Thursday, 5 November 2020 4:08 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 33871 -> Thursday, 5 November 2020 4:11 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 4890 -> Thursday, 5 November 2020 4:11 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 14930 -> Thursday, 5 November 2020 4:15 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 24791 -> Thursday, 5 November 2020 4:17 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 32147 -> Thursday, 5 November 2020 4:20 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 12522 -> Thursday, 5 November 2020 4:24 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 27358 -> Thursday, 5 November 2020 4:25 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 44096 -> Thursday, 5 November 2020 4:28 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 37553 -> Thursday, 5 November 2020 4:29 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 50620 -> Thursday, 5 November 2020 4:30 PM
+City seed 5678 -> Londus, Eurasia

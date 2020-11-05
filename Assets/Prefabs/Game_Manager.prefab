@@ -6076,7 +6076,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arrayOfConnectionTypes:
-  - {fileID: 2100000, guid: 8f27491b3a31d1f46adb5b141c02f8dc, type: 2}
+  - {fileID: 2100000, guid: 9046a7d502fa4404a87d35386ba7b356, type: 2}
   - {fileID: 2100000, guid: 7f4b99c270750174dbe3b365ad9c260f, type: 2}
   - {fileID: 2100000, guid: b2b16d40939fe40449a5dd3b8b5d3b3c, type: 2}
   - {fileID: 2100000, guid: 08d40ab47bf9d7c47b9708251fead6df, type: 2}

@@ -3048,6 +3048,16 @@ public class DataManager : MonoBehaviour
     { return dictOfConnections.Count; }
 
 
+    /// <summary>
+    /// returns a random connection
+    /// </summary>
+    /// <returns></returns>
+    public Connection GetRandomConnection()
+    {
+        return listOfConnections[Random.Range(0, listOfConnections.Count)];
+    }
+
+
 
 
     //
