@@ -20,6 +20,7 @@ public class Connection : MonoBehaviour
     private int securityLevelSave;               //stores existing security level prior to temporary changes
 
     private bool onMouseFlag;                           //flag indicates that onMouseOver is true (used for tooltip coroutine)
+    private bool isMoving;                              //true if ball moving coroutine running, false if not
     private float mouseOverDelay;                       //tooltip
     private float mouseOverFade;                        //tooltip
     private Coroutine myCoroutine;
@@ -513,16 +514,6 @@ public class Connection : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Move ball along connector if not already doing so
-    /// </summary>
-    public void InitialiseMoveBall()
-    {
-        if (ballCoroutine == null)
-        {
-            ballCoroutine = StartCoroutine("MoveBall");
-        }
-    }
 
     /// <summary>
     /// Moves ball along connection
@@ -530,6 +521,7 @@ public class Connection : MonoBehaviour
     /// <returns></returns>
     IEnumerator MoveBall()
     {
+        
         bool isForward = false;    //determines direction
         float y_pos = 0.0f;
         float distance = 0.5f;
@@ -541,6 +533,7 @@ public class Connection : MonoBehaviour
         }
         ball.transform.localPosition = new Vector3(0, y_pos, 0);
         ball.SetActive(true);
+        isMoving = true;
         do
         {
             //move ball
@@ -548,12 +541,13 @@ public class Connection : MonoBehaviour
             if (isForward == true)
             { amount *= -1; }
             y_pos += amount;
-            Debug.LogFormat("[Tst] Connection.SO -> MoveBall: amount {0}{1}, y_pos now {2}{3}", isForward == false ? "+" : "", amount, y_pos, "\n");
+            Debug.LogFormat("[Tst] Connection.SO -> MoveBall: connID {0}, amount {1}{2}, y_pos now {3}{4}", connID, isForward == false ? "+" : "", amount, y_pos, "\n");
             ball.transform.localPosition = new Vector3(0, y_pos, 0);
             yield return null;
         }
         while (y_pos >= 1.0f || y_pos <= -1.0f);
         ball.SetActive(false);
+        isMoving = false;
     }
 
     /// <summary>
@@ -561,7 +555,7 @@ public class Connection : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public bool CheckBallMoving()
-    { return (ballCoroutine != null ? true : false); }
+    { return isMoving; }
 
 
     /*/// <summary>

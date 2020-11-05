@@ -51,6 +51,7 @@ public class TurnManager : MonoBehaviour
     private bool allowQuitting = false;
     private Coroutine myCoroutineStartPipeline;
     private Coroutine myCoroutineAnimation;
+    private Coroutine myCoroutineConnection;
 
     //autorun
     private int numOfTurns = 0;
@@ -1259,11 +1260,8 @@ public class TurnManager : MonoBehaviour
             Connection connection = GameManager.i.dataScript.GetRandomConnection();
             if (connection != null)
             {
-                do
-                {
-                    connection.InitialiseMoveBall();
-                }
-                while (connection.CheckBallMoving() == true);
+                if (connection.CheckBallMoving() == false)
+                { yield return connection.StartCoroutine("MoveBall"); }
             }
             else { Debug.LogError("Invalid random Connection (Null)"); }
             yield return null;
