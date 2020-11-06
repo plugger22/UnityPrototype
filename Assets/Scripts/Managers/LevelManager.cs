@@ -63,7 +63,8 @@ public class LevelManager : MonoBehaviour
     private List<GameObject> listOfNodeObjects = new List<GameObject>();
     private List<Node> listOfNodes = new List<Node>();                              //mirror list to listOfNodeObjects but Nodes instead of GO's for speed of use
     private List<GameObject> listOfConnections = new List<GameObject>();
-    private List<GameObject> listOfTiles = new List<GameObject>();
+    private List<GameObject> listOfTiles = new List<GameObject>();                  //all tiles, used to delete tiles at end of level
+    private List<Tile> listOfTilesToAnimate = new List<Tile>();                     //all tiles excluding low profile ones placed wherever a node is. Used for background animation
     private List<Vector3> listOfCoordinates = new List<Vector3>();                  //used to provide a lookup to check spacing of nodes
     private List<List<int>> listOfSortedNodes = new List<List<int>>();              //each node has a sorted (closest to furthest) list of nodeID's of neighouring nodes
     private List<List<float>> listOfSortedDistances = new List<List<float>>();    //companion list to listOfSortedNodes (identical indexes) -> contains distances to node in other list in world units    
@@ -321,10 +322,12 @@ public class LevelManager : MonoBehaviour
                 {
                     //get a random tile from list (higher profile tiles)
                     instanceTile = Instantiate(listOfTilePrefabs[Random.Range(0, listOfTilePrefabs.Count)], position, Quaternion.identity) as GameObject;
+                    //add to list (excludes low profile tiles -> list used for animation, doesn't apply to low profile tiles)
+                    listOfTilesToAnimate.Add(instanceTile.GetComponent<Tile>());
                 }
                 //assign to hierarchy
                 instanceTile.transform.SetParent(tileHolder);
-                //add to list
+                //add to list (all tiles -> used for deleting tiles at end of level)
                 listOfTiles.Add(instanceTile);
                 //randomly rotate tile
                 rnd = Random.Range(0, 4);
@@ -337,6 +340,8 @@ public class LevelManager : MonoBehaviour
                 }
             }
         }
+        //add animation list to DataManager.cs (not saved but used for in-turn background animation)
+        GameManager.i.dataScript.AddTiles(listOfTilesToAnimate);
     }
 
 

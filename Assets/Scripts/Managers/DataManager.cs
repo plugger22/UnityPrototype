@@ -72,6 +72,9 @@ public class DataManager : MonoBehaviour
     //Connections
     private List<Connection> listOfConnections = new List<Connection>();                       //main list of connections used for iteration (rather than dictOfConnections)
 
+    //Tiles
+    private List<Tile> listOfTiles = new List<Tile>();                                          //main list of tiles used for iteration (not saved, generated anew each time)
+
     //team pools
     private List<int> teamPoolReserve = new List<int>();
     private List<int> teamPoolOnMap = new List<int>();
@@ -498,6 +501,7 @@ public class DataManager : MonoBehaviour
         //Node lists
         listOfNodes.Clear();
         listOfConnections.Clear();
+        listOfTiles.Clear();
         listOfNodesByType.Clear();
         listOfMostConnectedNodes.Clear();
         listOfDecisionNodes.Clear();
@@ -609,6 +613,7 @@ public class DataManager : MonoBehaviour
         //Node lists
         listOfNodes.Clear();
         listOfConnections.Clear();
+        listOfTiles.Clear();
         listOfNodesByType.Clear();
         listOfMostConnectedNodes.Clear();
         listOfDecisionNodes.Clear();
@@ -3056,6 +3061,37 @@ public class DataManager : MonoBehaviour
     {
         return listOfConnections[Random.Range(0, listOfConnections.Count)];
     }
+
+
+    //
+    // - - - Tiles
+    //
+
+    /// <summary>
+    /// Add Tiles (as a list)
+    /// </summary>
+    /// <param name="tempList"></param>
+    public void AddTiles(List<Tile> tempList)
+    {
+        if (tempList != null)
+        {
+            if (tempList.Count > 0)
+            {
+                listOfTiles.Clear();
+                listOfTiles.AddRange(tempList);
+            }
+            else { Debug.LogError("Invalid tempList of Tiles (Empty)"); }
+        }
+        else { Debug.LogError("Invalid tempList of Tiles (Null)"); }
+    }
+
+    /// <summary>
+    /// Returns a random tile from listOfTiles
+    /// </summary>
+    /// <returns></returns>
+    public Tile GetRandomTile()
+    { return listOfTiles[Random.Range(0, listOfTiles.Count)]; }
+
 
 
 

@@ -52,6 +52,7 @@ public class TurnManager : MonoBehaviour
     private Coroutine myCoroutineStartPipeline;
     private Coroutine myCoroutineAnimation;
     private Coroutine myCoroutineConnection;
+    private Coroutine myCoroutineTile;
 
     //autorun
     private int numOfTurns = 0;
@@ -1243,7 +1244,8 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     public void StartAnimations()
     {
-        myCoroutineAnimation = StartCoroutine("AnimateConnections");
+        myCoroutineConnection = StartCoroutine("AnimateConnections");
+        myCoroutineTile = StartCoroutine("AnimateTiles");
     }
 
     /// <summary>
@@ -1251,12 +1253,15 @@ public class TurnManager : MonoBehaviour
     /// </summary>
     private void StopAnimations()
     {
-        if (myCoroutineAnimation != null)
-        { StopCoroutine(myCoroutineAnimation); }
+        if (myCoroutineConnection != null)
+        {
+            StopCoroutine(myCoroutineConnection);
+            StopCoroutine(myCoroutineTile);
+        }
     }
 
     /// <summary>
-    /// run a continuous series of animated connections
+    /// run a continuous series of animated connections (one connection at a time)
     /// </summary>
     /// <returns></returns>
     IEnumerator AnimateConnections()
@@ -1271,6 +1276,26 @@ public class TurnManager : MonoBehaviour
                 { yield return connection.StartCoroutine("MoveBall", connectionSpeed); }
             }
             else { Debug.LogError("Invalid random Connection (Null)"); }
+            yield return null;
+        }
+    }
+
+    /// <summary>
+    /// run a continuous series of animated tiles (one tile at a time)
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator AnimateTiles()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(connectionDelay);
+            Tile tile = GameManager.i.dataScript.GetRandomTile();
+            if (tile != null)
+            {
+                if (tile.CheckIsAnimating() == false)
+                { yield return tile.StartCoroutine("AnimateTile"); }
+            }
+            else { Debug.LogError("Invalid random Tile (Null)"); }
             yield return null;
         }
     }

@@ -45,6 +45,8 @@ public class GUIManager : MonoBehaviour
     [Range(0f, 5f)] public float connectionSpeed = 2.5f;
     [Tooltip("The delay in seconds between successive connection movement sequences, eg. there is a pause after one connection coroutine finishes and the next starts")]
     [Range(0f, 2f)] public float connectionDelay = 0.5f;
+    [Tooltip("The chance (%) of a connection repeating the same movement. If fail roll then end of that connections animation, otherwise will keep repeating while roll keeps succeeding")]
+    [Range(0, 100)] public int connectionRepeat = 30;
 
     [Header("PopUp Texts")]
     [Tooltip("How long the full animation cycle lasts (seconds)")]

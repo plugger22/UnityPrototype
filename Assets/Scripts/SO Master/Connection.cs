@@ -41,6 +41,9 @@ public class Connection : MonoBehaviour
     [HideInInspector] public int activityCount = -1;       //# times rebel activity occurred (invis-1, player movement)
     [HideInInspector] public int activityTime = -1;        //most recent turn when rebel activity occurred
 
+    //fast access
+    private int connectionRepeat = -1;
+
 
 
     //Security property -> a bit tricky but needed to handle the difference between the enum (None/High/Med/Low) and the int backing field.
@@ -119,6 +122,8 @@ public class Connection : MonoBehaviour
     {
         mouseOverDelay = GameManager.i.guiScript.tooltipDelay;
         mouseOverFade = GameManager.i.guiScript.tooltipFade;
+        connectionRepeat = GameManager.i.guiScript.connectionRepeat;
+        Debug.Assert(connectionRepeat > -1, "Invalid connectionRepeat (-1)");
     }
 
     public void InitialiseConnection(int v1, int v2)
@@ -516,34 +521,51 @@ public class Connection : MonoBehaviour
 
 
     /// <summary>
-    /// Moves ball along connection
+    /// Moves ball along connection. Random direction. Has a chance to repeat (can repeat multiple times provided it succeeds in connectionRepeat roll)
     /// </summary>
     /// <returns></returns>
     IEnumerator MoveBall(float speed)
     {
         bool isForward = false;    //determines direction
-        float y_pos = 0.0f;
+        bool isRepeat = false;
+        float y_pos = -0.95f;
         float amount = 0.0f;
-        if (Random.Range(0, 100) > 50)
+        if (Random.Range(0, 100) < 50)
         {
             isForward = true;
-            y_pos = 1.0f;
+            y_pos = 0.95f;
         }
         ball.transform.localPosition = new Vector3(0, y_pos, 0);
         ball.SetActive(true);
         isMoving = true;
         do
         {
-            //move ball
-            amount += Time.deltaTime / speed;
-            if (isForward == true)
-            { y_pos -= amount; }
-            else { y_pos += amount; }
-            /*Debug.LogFormat("[Tst] Connection.SO -> MoveBall: connID {0}, adjust {1}, amount {2}{3}, y_pos now {4}{5}", connID, adjust, isForward == false ? "+" : "", amount, y_pos, "\n");*/
-            ball.transform.localPosition = new Vector3(0, y_pos, 0);
-            yield return null;
+            do
+            {
+                //move ball
+                amount += Time.deltaTime / speed;
+                if (isForward == true)
+                { y_pos -= amount; }
+                else { y_pos += amount; }
+                /*Debug.LogFormat("[Tst] Connection.SO -> MoveBall: connID {0}, adjust {1}, amount {2}{3}, y_pos now {4}{5}", connID, adjust, isForward == false ? "+" : "", amount, y_pos, "\n");*/
+                ball.transform.localPosition = new Vector3(0, y_pos, 0);
+                yield return null;
+            }
+            while (y_pos <= 0.95f && y_pos >= -0.95f);
+            //repeat
+            if (Random.Range(0, 100) < connectionRepeat)
+            {
+                isRepeat = true;
+                //reset ball
+                y_pos = -0.95f;
+                amount = 0.0f;
+                if (isForward == true)
+                { y_pos = 0.95f; }
+                ball.transform.localPosition = new Vector3(0, y_pos, 0);
+            }
+            else { isRepeat = false; }
         }
-        while (y_pos <= 0.95f && y_pos >= -0.95f);
+        while (isRepeat == true);
         ball.SetActive(false);
         isMoving = false;
     }
