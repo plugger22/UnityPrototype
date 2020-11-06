@@ -3086,14 +3086,18 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns a random tile from listOfTiles
+    /// Returns a random tile from listOfTiles (animation tiles only)
     /// </summary>
     /// <returns></returns>
     public Tile GetRandomTile()
     { return listOfTiles[Random.Range(0, listOfTiles.Count)]; }
 
-
-
+    /// <summary>
+    /// Returns a list of all tiles suitable for animation
+    /// </summary>
+    /// <returns></returns>
+    public List<Tile> GetListOfTiles()
+    { return listOfTiles; }
 
 
     //

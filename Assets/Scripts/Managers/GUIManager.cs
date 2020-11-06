@@ -48,6 +48,18 @@ public class GUIManager : MonoBehaviour
     [Tooltip("The chance (%) of a connection repeating the same movement. If fail roll then end of that connections animation, otherwise will keep repeating while roll keeps succeeding")]
     [Range(0, 100)] public int connectionRepeat = 30;
 
+    [Header("Tiles")]
+    [Tooltip("The delay in seconds between successive sphere0 tile animation sequences")]
+    [Range(0f, 2f)] public float tileDelay = 1.0f;
+    [Tooltip("The chance (%) of a tile sequence repeating")]
+    [Range(0, 100)] public int tileRepeat = 30;
+    [Tooltip("The minimum number of flashes to occur in a given sphere0 animation sequence")]
+    [Range(0, 10)] public int tileMinimum = 5;
+    [Tooltip("The random additional number flashes for sphere0 to be added to the minimum. This number will be Random.Range(0, number) + tileMinimum flashes")]
+    [Range(0, 20)] public int tileRandom = 20;
+    [Tooltip("Flash duration for sphere0 animation sequences")]
+    [Range(0, 1f)] public float tileDuration = 0.15f;
+
     [Header("PopUp Texts")]
     [Tooltip("How long the full animation cycle lasts (seconds)")]
     [Range(1f, 3f)] public float timerMax = 2.0f;

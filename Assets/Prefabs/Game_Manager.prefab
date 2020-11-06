@@ -767,6 +767,11 @@ MonoBehaviour:
   actionsAuthority: 2
   warningPeriod: 10
   showSplashTimeout: 1
+  listOfMaterials:
+  - {fileID: 2100000, guid: b3d560f1514d3804486d05d2c2c7e7e6, type: 2}
+  - {fileID: 2100000, guid: 98a0a60b4aa47734fadeb8c9095c16e5, type: 2}
+  - {fileID: 2100000, guid: 0a5ecd15ce398624297bfaca44615321, type: 2}
+  - {fileID: 2100000, guid: ca22b759d154e624da61179dde7497d6, type: 2}
   winStateLevel: 0
   winReasonLevel: 0
   winStateCampaign: 0
@@ -6428,6 +6433,10 @@ MonoBehaviour:
   connectionSpeed: 2.5
   connectionDelay: 0.5
   connectionRepeat: 30
+  tileDelay: 0.5
+  tileRepeat: 30
+  tileMinimum: 10
+  tileRandom: 20
   timerMax: 2
   moveSpeed: 0
   increaseScale: 1
