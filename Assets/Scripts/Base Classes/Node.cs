@@ -1949,7 +1949,7 @@ public class Node : MonoBehaviour
     {
         int chanceRepeat = 30;
         bool isFlashOn = true;
-        int numOfTimes = 3 + Random.Range(0, 10);
+        int numOfTimes = 10 + Random.Range(0, 10);
         int counter = 0;
         while (counter < numOfTimes)
         {
@@ -1978,7 +1978,7 @@ public class Node : MonoBehaviour
             {
                 ToggleSign();
                 counter++;
-                yield return new WaitForSeconds(0.2f);
+                yield return new WaitForSeconds(0.3f);
             }
             //leave sign On
             if (isSignOn == false)
