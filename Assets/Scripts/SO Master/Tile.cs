@@ -7,13 +7,15 @@ using UnityEngine;
 public class Tile : MonoBehaviour
 {
     [Tooltip("GameObject for animation. Should be called 'Neon0'")]
-    public GameObject sphere0;
-    public GameObject sphere1;
-    public GameObject sphere2;
+    public GameObject sphere0;  //animates in a coloured rapid blink sequence
+    public GameObject sphere1;  //animates in a on/off toggle between sphere1 & 2
+    public GameObject sphere2;  //animates in a on/off toggle between sphere1 & 2
+    public GameObject sphere3;  //on all time
+    public GameObject sphere4;  //on all time
 
-    private Renderer renderer0;
-    private Renderer renderer1;
-    private Renderer renderer2;
+    private Renderer renderer0;         //need renderer as you're changing materials
+    /*private Renderer renderer1;
+    private Renderer renderer2;*/
     private bool isOn0;
     private bool isOn1;
     private bool isOn2;
@@ -34,20 +36,29 @@ public class Tile : MonoBehaviour
             renderer0 = sphere0.GetComponent<Renderer>();
             Debug.Assert(renderer0 != null, "Invalid renderer0 (Null)");
         }
+        else { Debug.LogError("Invalid sphere0 (Null)"); }
         if (sphere1 != null)
         {
             isOn1 = false;
             sphere1.SetActive(false);
-            renderer1 = sphere1.GetComponent<Renderer>();
-            Debug.Assert(renderer1 != null, "Invalid renderer1 (Null)");
+            /*renderer1 = sphere1.GetComponent<Renderer>();
+            Debug.Assert(renderer1 != null, "Invalid renderer1 (Null)");*/
         }
+        else { Debug.LogError("Invalid sphere1 (Null)"); }
         if (sphere2 != null)
         {
             isOn2 = true;
             sphere2.SetActive(true);
-            renderer2 = sphere2.GetComponent<Renderer>();
-            Debug.Assert(renderer2 != null, "Invalid renderer2 (Null)");
+            /*renderer2 = sphere2.GetComponent<Renderer>();
+            Debug.Assert(renderer2 != null, "Invalid renderer2 (Null)");*/
         }
+        else { Debug.LogError("Invalid sphere2 (Null)"); }
+        if (sphere3 != null)
+        { sphere3.SetActive(true); }
+        else { Debug.LogError("Invalid sphere3 (Null)"); }
+        if (sphere4 != null)
+        { sphere4.SetActive(true); }
+        else { Debug.LogError("Invalid sphere4 (Null)"); }
     }
 
 
@@ -76,7 +87,7 @@ public class Tile : MonoBehaviour
     /// Coroutine to animate tile, sphere 0
     /// </summary>
     /// <returns></returns>
-    IEnumerator AnimateTile(Material material)
+    IEnumerator AnimateTile0(Material material)
     {
         //minimum num of flashes
         int numOfFlashes = tileMinimum + Random.Range(0, tileRandom);

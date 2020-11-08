@@ -17,6 +17,10 @@ public class Node : MonoBehaviour
     public GameObject rearObject;                       //child object -> rear building
     public GameObject rightObject;                      //child object -> right building
     public GameObject leftObject;                       //child object -> left building
+    //neon sign objects
+    public GameObject sign0;                            //child object of rear Object (indivdual)
+    public GameObject sign1;                            //child object of rear Object (grouped with sign2)
+    public GameObject sign2;                            //child object of rear Object (grouped with sign1)
 
     [HideInInspector] public NodeColour colourNode;     //used to assign a new colour to node cylinder
     [HideInInspector] public NodeColour colourBase;     //used to assign a new colour to district base
@@ -93,6 +97,7 @@ public class Node : MonoBehaviour
 
     private Coroutine myCoroutine;
     private Transform nodeTransform;
+    private bool isSignOn;
 
     //generated collections
     private List<Vector3> listOfNeighbourPositions;     //list of neighbouring nodes that this node is connected to
@@ -1912,6 +1917,73 @@ public class Node : MonoBehaviour
         Debug.AssertFormat(rearRenderer != null, "Invalid rearRenderer (Null) for Node.Arc \"{0}\"", Arc.name);
         Debug.AssertFormat(rightRenderer != null, "Invalid rightRenderer (Null) for Node.Arc \"{0}\"", Arc.name);
         Debug.AssertFormat(leftRenderer != null, "Invalid leftRenderer (Null) for Node.Arc \"{0}\"", Arc.name);
+    }
+
+    /// <summary>
+    /// Toggles signage (sign0 component only)
+    /// </summary>
+    public void ToggleSign()
+    {
+        if (isSignOn == true)
+        {
+            sign0.SetActive(false);
+            sign1.SetActive(false);
+            sign2.SetActive(false);
+            isSignOn = false;
+        }
+        else
+        {
+            sign0.SetActive(true);
+            sign1.SetActive(true);
+            sign2.SetActive(true);
+            isSignOn = true;
+        }
+
+    }
+
+    /// <summary>
+    /// Flash signage (toggles sign0 element on/off with a pause inbetween for a random number of times)
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator FlashSignage()
+    {
+        int chanceRepeat = 30;
+        bool isFlashOn = true;
+        int numOfTimes = 3 + Random.Range(0, 10);
+        int counter = 0;
+        while (counter < numOfTimes)
+        {
+            if (isFlashOn == true)
+            {
+                sign0.SetActive(false);
+                isFlashOn = false;
+
+            }
+            else
+            {
+                sign0.SetActive(true);
+                isFlashOn = true;
+            }
+            counter++;
+            yield return new WaitForSeconds(0.2f);
+        }
+        sign0.SetActive(true);
+        //chance to repeat sequence except with entire sign
+        if (Random.Range(0, 100) < chanceRepeat)
+        {
+            //toggle entire sign off/on
+            isSignOn = true;
+            counter = 0;
+            while (counter < numOfTimes)
+            {
+                ToggleSign();
+                counter++;
+                yield return new WaitForSeconds(0.2f);
+            }
+            //leave sign On
+            if (isSignOn == false)
+            { ToggleSign(); }
+        }
     }
 
     //place methods above here

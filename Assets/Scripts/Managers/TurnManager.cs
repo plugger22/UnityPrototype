@@ -58,6 +58,7 @@ public class TurnManager : MonoBehaviour
     private Coroutine myCoroutineConnection;
     private Coroutine myCoroutineTile0;
     private Coroutine myCoroutineTileOthers;
+    private Coroutine myCoroutineSignage;
 
     //autorun
     private int numOfTurns = 0;
@@ -1255,6 +1256,7 @@ public class TurnManager : MonoBehaviour
         myCoroutineConnection = StartCoroutine("AnimateConnections");
         myCoroutineTile0 = StartCoroutine("AnimateTile0");
         myCoroutineTileOthers = StartCoroutine("AnimateTileOthers");
+        myCoroutineSignage = StartCoroutine("AnimateSignage");
     }
 
     /// <summary>
@@ -1267,6 +1269,7 @@ public class TurnManager : MonoBehaviour
             StopCoroutine(myCoroutineConnection);
             StopCoroutine(myCoroutineTile0);
             StopCoroutine(myCoroutineTileOthers);
+            StopCoroutine(myCoroutineSignage);
         }
     }
 
@@ -1306,7 +1309,7 @@ public class TurnManager : MonoBehaviour
             if (tile != null)
             {
                 if (tile.CheckIsAnimating() == false)
-                { yield return tile.StartCoroutine("AnimateTile", material); }
+                { yield return tile.StartCoroutine("AnimateTile0", material); }
             }
             else { Debug.LogError("Invalid random Tile (Null)"); }
             yield return null;
@@ -1322,9 +1325,9 @@ public class TurnManager : MonoBehaviour
         Tile tile;
         int index;
         List<Tile> listOfTiles = GameManager.i.dataScript.GetListOfTiles();
-        int numOfTiles = listOfTiles.Count;
         if (listOfTiles != null)
         {
+            int numOfTiles = listOfTiles.Count;
             while (true)
             {
                 index = Random.Range(0, numOfTiles);
@@ -1338,6 +1341,30 @@ public class TurnManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid listOfTiles (Null)"); }
+    }
+
+    /// <summary>
+    /// Animates signage on districts
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator AnimateSignage()
+    {
+        int index;
+        Node node;
+        List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
+        if (listOfNodes != null)
+        {
+            int numOfNodes = listOfNodes.Count;
+            while (true)
+            {
+                index = Random.Range(0, numOfNodes);
+                node = listOfNodes[index];
+                if (node != null)
+                { yield return node.FlashSignage(); }
+                else { Debug.LogErrorFormat("Invalid node (Null) in listOfNodes[{0}]", index); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfNodes (Null)"); }
     }
 
 

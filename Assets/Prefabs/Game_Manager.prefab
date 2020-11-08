@@ -474,7 +474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43fb2197a869b8a4aac691aa8470c7f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  node: {fileID: 1524475934457304, guid: 70668350d45bd654bbef7c2371d98778, type: 2}
+  node: {fileID: 1943190347943120, guid: 458bed096b73b1147ae19f95d784b61f, type: 2}
   connection: {fileID: 1469875037488358, guid: 4109dd209868d7d43acd916ee7b399e0, type: 2}
   tile: {fileID: 1865369039604778, guid: 476ab98caaeaff146a52c912c97cafb0, type: 2}
   listOfTilePrefabs:
@@ -6437,6 +6437,7 @@ MonoBehaviour:
   tileRepeat: 30
   tileMinimum: 10
   tileRandom: 20
+  tileDuration: 0.15
   timerMax: 2
   moveSpeed: 0
   increaseScale: 1
