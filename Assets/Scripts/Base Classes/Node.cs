@@ -12,15 +12,19 @@ using Random = UnityEngine.Random;
 public class Node : MonoBehaviour
 {
     //child objects of node
+    public GameObject parentObject;                     //parent object
     public GameObject faceObject;                       //child object that has the textmesh component for writing text on top of the node (linked in Editor)
     public GameObject baseObject;                       //child object -> base of buildings
-    public GameObject rearObject;                       //child object -> rear building
-    public GameObject rightObject;                      //child object -> right building
-    public GameObject leftObject;                       //child object -> left building
+
+    //tower objects
+    private GameObject rearObject;                       //child object -> rear building
+    private GameObject rightObject;                      //child object -> right building
+    private GameObject leftObject;                       //child object -> left building
+
     //neon sign objects
-    public GameObject sign0;                            //child object of rear Object (indivdual)
-    public GameObject sign1;                            //child object of rear Object (grouped with sign2)
-    public GameObject sign2;                            //child object of rear Object (grouped with sign1)
+    private GameObject sign0;                            //child object of rear Object (indivdual)
+    private GameObject sign1;                            //child object of rear Object (grouped with sign2)
+    private GameObject sign2;                            //child object of rear Object (grouped with sign1)
 
     [HideInInspector] public NodeColour colourNode;     //used to assign a new colour to node cylinder
     [HideInInspector] public NodeColour colourBase;     //used to assign a new colour to district base
@@ -97,6 +101,7 @@ public class Node : MonoBehaviour
 
     private Coroutine myCoroutine;
     private Transform nodeTransform;
+    private GameObject parent;
     private bool isSignOn;
 
     //generated collections
@@ -116,12 +121,11 @@ public class Node : MonoBehaviour
     //fast access fields
     private int maxValue;                               //max and min node datapoint values (derive from NodeManager.cs)
     private int minValue;
-
-    private Material materialNormal;
-    private Material materialActive;
-    private Material materialHighlight;
-    private Material materialPlayer;
-    private Material materialNemesis;
+    //signage
+    private float signDelay = -1;
+    private int signMinimum = -1;
+    private int signRandom = -1;
+    private int signRepeat = -1;
 
     private int stabilityTeamEffect = 999;
     private int securityTeamEffect = 999;
@@ -223,6 +227,7 @@ public class Node : MonoBehaviour
     {
         /*Debug.Assert(faceObject != null, "Invalid faceObject (Null)");*/
         nodeTransform = GetComponent<Transform>();
+        Debug.Assert(parentObject != null, "Invalid parentObject (Null)");
         Debug.Assert(nodeTransform != null, "Invalid nodeTransform (Null)");
         //collections
         listOfNeighbourPositions = new List<Vector3>();
@@ -252,26 +257,12 @@ public class Node : MonoBehaviour
 
         //district components
         if (GameManager.i.optionScript.noNodes == true)
-        {
-            if (baseObject == null) { Debug.LogError("Invalid baseObject (Null)"); }
-            if (rearObject == null) { Debug.LogError("Invalid rearObject (Null)"); }
-            if (rightObject == null) { Debug.LogError("Invalid rightObject (Null)"); }
-            if (leftObject == null) { Debug.LogError("Invalid leftObject (Null)"); }
-        }
-
-
-
+        { if (baseObject == null) { Debug.LogError("Invalid baseObject (Null)"); }  }
         //renderers
         nodeRenderer = GetComponent<Renderer>();
         baseRenderer = baseObject.GetComponent<Renderer>();
-        rearRenderer = rearObject.GetComponent<Renderer>();
-        rightRenderer = rightObject.GetComponent<Renderer>();
-        leftRenderer = leftObject.GetComponent<Renderer>();
         Debug.Assert(nodeRenderer != null, "Invalid Cylinder renderer (Null)");
         Debug.Assert(baseRenderer != null, "Invalid Base renderer (Null)");
-        Debug.Assert(rearRenderer != null, "Invalid Rear renderer (Null)");
-        Debug.Assert(rightRenderer != null, "Invalid Right renderer (Null)");
-        Debug.Assert(leftRenderer != null, "Invalid Left renderer (Null)");
         //launcher
         Debug.Assert(launcher != null, "Invalid Launcher (Null)");
 
@@ -285,35 +276,26 @@ public class Node : MonoBehaviour
         {
             //Districts in use, not cylindrical nodes
             Debug.Assert(baseObject != null, "Invalid baseObject (Null)");
-            Debug.Assert(rearObject != null, "Invalid rearObject (Null)");
-            Debug.Assert(rightObject != null, "Invalid rightObject (Null)");
-            Debug.Assert(leftObject != null, "Invalid leftObject (Null)");
             colourNode = NodeColour.Invisible;
             colourBase = NodeColour.TowerDark;
-            colourRear = NodeColour.TowerDark;
-            colourRight = NodeColour.TowerLight;
-            colourLeft = NodeColour.TowerLight;
         }
         else
         {
             //Cylindrical Nodes in use, not districts
             colourNode = NodeColour.Normal;
         }
+
         //fast access
-        materialNormal = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Normal);
-        materialActive = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Active);
-        materialHighlight = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Highlight);
-        materialNemesis = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Nemesis);
-        materialPlayer = GameManager.i.nodeScript.GetNodeMaterial(NodeColour.Player);
         mouseOverDelay = GameManager.i.guiScript.tooltipDelay;
+        //signage
+        signDelay = GameManager.i.guiScript.signageDelay;
+        signMinimum = GameManager.i.guiScript.signageMinimum;
+        signRandom = GameManager.i.guiScript.signageRandom;
+        signRepeat = GameManager.i.guiScript.signageRepeat;
+        Debug.Assert(signDelay > -1, "Invalid signDelay (-1)");
         /*fadeInTime = GameManager.instance.tooltipScript.tooltipFade;*/
         maxValue = GameManager.i.nodeScript.maxNodeValue;
         minValue = GameManager.i.nodeScript.minNodeValue;
-        Debug.Assert(materialNormal != null, "Invalid materialNormal (Null)");
-        Debug.Assert(materialActive != null, "Invalid materialActive (Null)");
-        Debug.Assert(materialHighlight != null, "Invalid materialHighlight (Null)");
-        Debug.Assert(materialNemesis != null, "Invalid materialNemesis (Null)");
-        Debug.Assert(materialPlayer != null, "Invalid materialPlayer (Null)");
     }
 
     private void Start()
@@ -995,7 +977,6 @@ public class Node : MonoBehaviour
         if (GameManager.i.optionScript.noNodes == false)
         {
             faceText.color = new Color32(0, 0, 0, 255);
-            /*_MaterialNode = materialHighlight;*/
             colourNode = NodeColour.Highlight;
         }
         else
@@ -1846,51 +1827,79 @@ public class Node : MonoBehaviour
         GameObject rear = null;
         GameObject right = null;
         GameObject left = null;
-        //disable existing tower objects
-        rearObject.SetActive(false);
-        rightObject.SetActive(false);
-        leftObject.SetActive(false);
-
-        /*//remove existing object references
-        rearObject = leftObject = rightObject = null;*/
 
         //activate new arc specific tower objects
         switch (Arc.name)
         {
             case "CORPORATE":
-                rear = nodeTransform.Find("RearCorp").gameObject;
-                right = nodeTransform.Find("RightCorp").gameObject;
-                left = nodeTransform.Find("LeftCorp").gameObject;
+                //towers
+                rear = parentObject.transform.Find("Corporate/RearCorp").gameObject;
+                right = parentObject.transform.Find("Corporate/RightCorp").gameObject;
+                left = parentObject.transform.Find("Corporate/LeftCorp").gameObject;
+                //signage
+                sign0 = parentObject.transform.Find("Corporate/RearCorp/sign0Corp").gameObject;
+                sign1 = parentObject.transform.Find("Corporate/RearCorp/sign1Corp").gameObject;
+                sign2 = parentObject.transform.Find("Corporate/RearCorp/sign2Corp").gameObject;
                 break;
             case "GOVERNMENT":
-                rear = nodeTransform.Find("RearGovt").gameObject;
-                right = nodeTransform.Find("RightGovt").gameObject;
-                left = nodeTransform.Find("LeftGovt").gameObject;
+                //towers
+                rear = parentObject.transform.Find("Government/RearGovt").gameObject;
+                right = parentObject.transform.Find("Government/RightGovt").gameObject;
+                left = parentObject.transform.Find("Government/LeftGovt").gameObject;
+                //signage
+                sign0 = parentObject.transform.Find("Government/RearGovt/sign0Govt").gameObject;
+                sign1 = parentObject.transform.Find("Government/RearGovt/sign1Govt").gameObject;
+                sign2 = parentObject.transform.Find("Government/RearGovt/sign2Govt").gameObject;
                 break;
             case "UTILITY":
-                rear = nodeTransform.Find("RearUtil").gameObject;
-                right = nodeTransform.Find("RightUtil").gameObject;
-                left = nodeTransform.Find("LeftUtil").gameObject;
+                //towers
+                rear = parentObject.transform.Find("Utility/RearUtil").gameObject;
+                right = parentObject.transform.Find("Utility/RightUtil").gameObject;
+                left = parentObject.transform.Find("Utility/LeftUtil").gameObject;
+                //signage
+                sign0 = parentObject.transform.Find("Utility/RearUtil/sign0Util").gameObject;
+                sign1 = parentObject.transform.Find("Utility/RearUtil/sign1Util").gameObject;
+                sign2 = parentObject.transform.Find("Utility/RearUtil/sign2Util").gameObject;
                 break;
             case "INDUSTRIAL":
-                rear = nodeTransform.Find("RearInd").gameObject;
-                right = nodeTransform.Find("RightInd").gameObject;
-                left = nodeTransform.Find("LeftInd").gameObject;
+                //towers
+                rear = parentObject.transform.Find("Industrial/RearInd").gameObject;
+                right = parentObject.transform.Find("Industrial/RightInd").gameObject;
+                left = parentObject.transform.Find("Industrial/LeftInd").gameObject;
+                //signage
+                sign0 = parentObject.transform.Find("Industrial/RearInd/sign0Ind").gameObject;
+                sign1 = parentObject.transform.Find("Industrial/RearInd/sign1Ind").gameObject;
+                sign2 = parentObject.transform.Find("Industrial/RearInd/sign2Ind").gameObject;
                 break;
             case "RESEARCH":
-                rear = nodeTransform.Find("RearRes").gameObject;
-                right = nodeTransform.Find("RightRes").gameObject;
-                left = nodeTransform.Find("LeftRes").gameObject;
+                //towers
+                rear = parentObject.transform.Find("Research/RearRes").gameObject;
+                right = parentObject.transform.Find("Research/RightRes").gameObject;
+                left = parentObject.transform.Find("Research/LeftRes").gameObject;
+                //signage
+                sign0 = parentObject.transform.Find("Research/RearRes/sign0Res").gameObject;
+                sign1 = parentObject.transform.Find("Research/RearRes/sign1Res").gameObject;
+                sign2 = parentObject.transform.Find("Research/RearRes/sign2Res").gameObject;
                 break;
             case "GATED":
-                rear = nodeTransform.Find("RearGate").gameObject;
-                right = nodeTransform.Find("RightGate").gameObject;
-                left = nodeTransform.Find("LeftGate").gameObject;
+                //towers
+                rear = parentObject.transform.Find("Gated/RearGate").gameObject;
+                right = parentObject.transform.Find("Gated/RightGate").gameObject;
+                left = parentObject.transform.Find("Gated/LeftGate").gameObject;
+                //signage
+                sign0 = parentObject.transform.Find("Gated/RearGate/sign0Gate").gameObject;
+                sign1 = parentObject.transform.Find("Gated/RearGate/sign1Gate").gameObject;
+                sign2 = parentObject.transform.Find("Gated/RearGate/sign2Gate").gameObject;
                 break;
             case "SPRAWL":
-                rear = nodeTransform.Find("RearSprawl").gameObject;
-                right = nodeTransform.Find("RightSprawl").gameObject;
-                left = nodeTransform.Find("LeftSprawl").gameObject;
+                //towers
+                rear = parentObject.transform.Find("Sprawl/RearSprawl").gameObject;
+                right = parentObject.transform.Find("Sprawl/RightSprawl").gameObject;
+                left = parentObject.transform.Find("Sprawl/LeftSprawl").gameObject;
+                //signage
+                sign0 = parentObject.transform.Find("Sprawl/RearSprawl/sign0Sprawl").gameObject;
+                sign1 = parentObject.transform.Find("Sprawl/RearSprawl/sign1Sprawl").gameObject;
+                sign2 = parentObject.transform.Find("Sprawl/RearSprawl/sign2Sprawl").gameObject;
                 break;
             default: Debug.LogWarningFormat("Unrecognised Arc \"{0}\"", Arc.name); break;
         }
@@ -1917,6 +1926,14 @@ public class Node : MonoBehaviour
         Debug.AssertFormat(rearRenderer != null, "Invalid rearRenderer (Null) for Node.Arc \"{0}\"", Arc.name);
         Debug.AssertFormat(rightRenderer != null, "Invalid rightRenderer (Null) for Node.Arc \"{0}\"", Arc.name);
         Debug.AssertFormat(leftRenderer != null, "Invalid leftRenderer (Null) for Node.Arc \"{0}\"", Arc.name);
+        //towers
+        colourRear = NodeColour.TowerDark;
+        colourRight = NodeColour.TowerLight;
+        colourLeft = NodeColour.TowerLight;
+        //signage
+        Debug.Assert(sign0 != null, "Invalid sign0 (Null)");
+        Debug.Assert(sign1 != null, "Invalid sign1 (Null)");
+        Debug.Assert(sign2 != null, "Invalid sign2 (Null)");
     }
 
     /// <summary>
@@ -1947,9 +1964,8 @@ public class Node : MonoBehaviour
     /// <returns></returns>
     public IEnumerator FlashSignage()
     {
-        int chanceRepeat = 30;
         bool isFlashOn = true;
-        int numOfTimes = 10 + Random.Range(0, 10);
+        int numOfTimes = signMinimum + Random.Range(0, signRandom);
         int counter = 0;
         while (counter < numOfTimes)
         {
@@ -1957,7 +1973,6 @@ public class Node : MonoBehaviour
             {
                 sign0.SetActive(false);
                 isFlashOn = false;
-
             }
             else
             {
@@ -1965,11 +1980,11 @@ public class Node : MonoBehaviour
                 isFlashOn = true;
             }
             counter++;
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(signDelay);
         }
         sign0.SetActive(true);
         //chance to repeat sequence except with entire sign
-        if (Random.Range(0, 100) < chanceRepeat)
+        if (Random.Range(0, 100) < signRepeat)
         {
             //toggle entire sign off/on
             isSignOn = true;
@@ -1978,7 +1993,7 @@ public class Node : MonoBehaviour
             {
                 ToggleSign();
                 counter++;
-                yield return new WaitForSeconds(0.3f);
+                yield return new WaitForSeconds(signDelay);
             }
             //leave sign On
             if (isSignOn == false)

@@ -60,6 +60,16 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Flash duration for sphere0 animation sequences")]
     [Range(0, 1f)] public float tileDuration = 0.15f;
 
+    [Header("Signage")]
+    [Tooltip("Delay between signage animation sequence flashes (sign0 on/off or all sign on/off)")]
+    [Range(0f, 2f)] public float signageDelay = 0.2f;
+    [Tooltip("Base number of times that signage animation will run (both types) -> gives the minimum number of sequences")]
+    [Range(0, 20)] public int signageMinimum = 10;
+    [Tooltip("The random additional number of iterations for the signage animation sequences (both types) that is added to the base")]
+    [Range(0, 20)] public int signageRandom = 10;
+    [Tooltip("The chance (%) of an initial signage sequence (sign0 animation) morphing into follow on sequence (all of sign toggled on/off")]
+    [Range(0, 100)] public int signageRepeat = 50;
+
     [Header("PopUp Texts")]
     [Tooltip("How long the full animation cycle lasts (seconds)")]
     [Range(1f, 3f)] public float timerMax = 2.0f;
