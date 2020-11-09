@@ -760,6 +760,99 @@ public class DijkstraManager : MonoBehaviour
         return node;
     }
 
+
+    /// <summary>
+    /// new version that gets a true random node selected from all nodes that meet the distance criteria (Same as other but takes nodes at required distance, OR GREATER)
+    /// </summary>
+    /// <param name="sourceNode"></param>
+    /// <param name="requiredDistance"></param>
+    /// <param name="listOfExclusion"></param>
+    /// <returns></returns>
+    public Node GetRandomNodeAtMaxDistance(Node sourceNode, int requiredDistance, List<int> listOfExclusion = null)
+    {
+        int nodeID = -1;
+        int index;
+        int furthestDistance = 0;
+        int actualDistance = 0;
+        Node node = null;
+        List<int> selectionList = new List<int>();
+        Debug.Assert(requiredDistance > 0, "Invalid cure.requiredDistance (must be > 0)");
+        if (sourceNode != null)
+        {
+            PathData data = GameManager.i.dataScript.GetDijkstraPathUnweighted(sourceNode.nodeID);
+            if (data != null)
+            {
+                if (data.distanceArray != null)
+                {
+                    int[] arrayOfDistances = data.distanceArray;
+                    //get max distance possible from source node
+                    furthestDistance = arrayOfDistances.Max();
+                    //adjust distance required to furthest available (if required in case map size, or player position, doesn't accomodate the requested distance)
+                    actualDistance = Mathf.Min(furthestDistance, requiredDistance);
+                    //loop distance Array and find first node that is that distance, or greater, and one that isn't on exclusion list
+                    for (index = 0; index < arrayOfDistances.Length; index++)
+                    {
+                        if (arrayOfDistances[index] >= actualDistance)
+                        {
+                            nodeID = CheckForMatch(index, actualDistance, listOfExclusion);
+                            if (nodeID > -1) { selectionList.Add(nodeID); }
+                        }
+                    }
+                    //if not successful scale up distance until you get a hit. If you max out, scale down distance until you get a hit.
+                    if (selectionList.Count == 0)
+                    {
+                        int tempDistance = actualDistance;
+                        if (actualDistance < furthestDistance)
+                        {
+                            //gradually increase distance until you find a suitable node
+                            do
+                            {
+                                tempDistance++;
+                                //search on new distance criteria
+                                for (index = 0; index < arrayOfDistances.Length; index++)
+                                {
+                                    if (arrayOfDistances[index] == tempDistance)
+                                    { nodeID = CheckForMatch(index, actualDistance, listOfExclusion); }
+                                }
+                                if (nodeID > -1) { selectionList.Add(nodeID); }
+                            }
+                            while (tempDistance < furthestDistance);
+                        }
+                        //if unsuccessful (or already maxxed out on distance) decrease distance until a suitable node is found
+                        if (selectionList.Count == 0)
+                        {
+                            tempDistance = actualDistance;
+                            do
+                            {
+                                tempDistance--;
+                                //search on new distance criteria
+                                for (index = 0; index < arrayOfDistances.Length; index++)
+                                {
+                                    if (arrayOfDistances[index] == tempDistance)
+                                    { nodeID = CheckForMatch(index, actualDistance, listOfExclusion); }
+                                }
+                                if (nodeID > -1) { selectionList.Add(nodeID); }
+                            }
+                            while (tempDistance > 0);
+                        }
+                    }
+                }
+                else { Debug.LogError("Invalid distanceArray (Null)"); }
+            }
+            else { Debug.LogError("Invalid PathData (Null)"); }
+        }
+        else { Debug.LogError("Invalid sourceNode (Null)"); }
+        //return
+        if (selectionList.Count > 0)
+        {
+            nodeID = selectionList[Random.Range(0, selectionList.Count)];
+            node = GameManager.i.dataScript.GetNode(nodeID);
+            if (node == null) { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", nodeID); }
+        }
+        else { Debug.LogWarning("Invalid selectionList (Empty)"); }
+        return node;
+    }
+
     /// <summary>
     /// Sub method to check for a match (handles exclusion list, if present), returns nodeID or -1 if a problem
     /// </summary>

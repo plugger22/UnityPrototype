@@ -20240,3 +20240,108 @@ City seed 5678 -> Londus, Eurasia
 
 Dev seed 47732 -> Monday, 9 November 2020 12:29 PM
 City seed 5678 -> Londus, Eurasia
+
+Dev seed 17748 -> Monday, 9 November 2020 2:51 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 390 -> Monday, 9 November 2020 2:55 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 15239 -> Monday, 9 November 2020 3:31 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 39704 -> Monday, 9 November 2020 3:37 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 33504 -> Monday, 9 November 2020 3:38 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 26660 -> Monday, 9 November 2020 3:44 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 4785 -> Monday, 9 November 2020 3:45 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 18790 -> Monday, 9 November 2020 4:25 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 17029 -> Monday, 9 November 2020 4:26 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 11799 -> Monday, 9 November 2020 4:27 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 49410 -> Monday, 9 November 2020 4:28 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 45214 -> Monday, 9 November 2020 4:29 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 27833 -> Monday, 9 November 2020 4:32 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 689 -> Monday, 9 November 2020 4:41 PM
+City seed 5678 -> Londus, Eurasia
+ASSERT FormatException: Index (zero based) must be greater than or equal to zero and less than the size of the argument list.
+System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.String.FormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.String.Format (System.String format, System.Object[] args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	UnityEngine.DebugLogHandler.LogFormat (UnityEngine.LogType logType, UnityEngine.Object context, System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Logger/DebugLogHandler.cs:9)
+	UnityEngine.Logger.LogFormat (UnityEngine.LogType logType, System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Logger/Logger.cs:113)
+	UnityEngine.Debug.LogFormat (System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Debug.bindings.cs:108)
+	Car+<MoveCar>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Car.cs:60)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:269)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 17279 -> Monday, 9 November 2020 4:43 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 7159 -> Monday, 9 November 2020 4:46 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 3715 -> Monday, 9 November 2020 4:51 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 7964 -> Monday, 9 November 2020 4:52 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 28102 -> Monday, 9 November 2020 5:02 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 35517 -> Monday, 9 November 2020 5:10 PM
+City seed 5678 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Car+<MoveCar>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Car.cs:58)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	
+Dev seed 24136 -> Monday, 9 November 2020 5:13 PM
+City seed 5678 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object.
+Car+<MoveCar>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Car.cs:58)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	
+Dev seed 19833 -> Monday, 9 November 2020 5:15 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 32622 -> Monday, 9 November 2020 5:20 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 9359 -> Monday, 9 November 2020 5:20 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 7937 -> Monday, 9 November 2020 5:22 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 57300 -> Monday, 9 November 2020 5:25 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 2486 -> Monday, 9 November 2020 5:28 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 49636 -> Monday, 9 November 2020 5:30 PM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 20579 -> Monday, 9 November 2020 5:33 PM
+City seed 5678 -> Londus, Eurasia

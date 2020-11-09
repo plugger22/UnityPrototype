@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ConnectionManager connScript;              //Connection Manager
     [HideInInspector] public MissionManager missionScript;              //Mission Manager
     [HideInInspector] public ColourManager colourScript;                //Colour Manager
+    [HideInInspector] public AnimationManager animateScript;            //Animation Manager
     [HideInInspector] public TestManager testScript;                    //Test Manager
     [HideInInspector] public TextManager textScript;                    //Text Manager
     //GUI
@@ -244,6 +245,7 @@ public class GameManager : MonoBehaviour
         rebelScript = GetComponent<ResistanceManager>();
         authorityScript = GetComponent<AuthorityManager>();
         debugScript = GetComponent<DebugGUI>();
+        animateScript = GetComponent<AnimationManager>();
         //Get UI static references -> from PanelManager
         tooltipNodeScript = TooltipNode.Instance();
         tooltipConnScript = TooltipConnection.Instance();
@@ -332,6 +334,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(rebelScript != null, "Invalid rebelScript (Null)");
         Debug.Assert(authorityScript != null, "Invalid authorityScript (Null)");
         Debug.Assert(debugScript != null, "Invalid debugScript (Null)");
+        Debug.Assert(animateScript != null, "Invalid animateScript (Null)");
         //singletons
         Debug.Assert(tooltipNodeScript != null, "Invalid tooltipNodeScript (Null)");
         Debug.Assert(tooltipConnScript != null, "Invalid tooltipConnScript (Null)");
@@ -707,6 +710,11 @@ public class GameManager : MonoBehaviour
         startMethod.className = "TopicManager";
         listOfLevelMethods.Add(startMethod);
         listOfLoadMethods.Add(startMethod);
+        //Animation Manager
+        startMethod.handler = animateScript.Initialise;
+        startMethod.className = "AnimationManager";
+        listOfLevelMethods.Add(startMethod);
+        listOfLoadMethods.Add(startMethod);
         #endregion
 
         #region GUI Methods
@@ -990,6 +998,7 @@ public class GameManager : MonoBehaviour
         if (isSession == true)
         {
             levelScript.Reset();
+            animateScript.Reset();
             if (state != GameState.LoadGame)
             {
                 //follow on level / new game

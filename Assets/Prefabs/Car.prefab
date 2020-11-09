@@ -37,6 +37,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4643995291993474}
+  - component: {fileID: 114670721884864454}
   m_Layer: 0
   m_Name: Car
   m_TagString: Untagged
@@ -185,7 +186,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 7f17d8265f1ff7c479ae9fbed0437dae, type: 2}
+  - {fileID: 2100000, guid: ca22b759d154e624da61179dde7497d6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -220,7 +221,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 77f55f7a8989ed74b9057a4be4087090, type: 2}
+  - {fileID: 2100000, guid: 0a5ecd15ce398624297bfaca44615321, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -285,6 +286,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114670721884864454
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1555588515855226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4234e31e18ad934aa64a6c7b8473b0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  carObject: {fileID: 1555588515855226}
+  lightObject: {fileID: 1268290479288892}
 --- !u!135 &135996591525234172
 SphereCollider:
   m_ObjectHideFlags: 1

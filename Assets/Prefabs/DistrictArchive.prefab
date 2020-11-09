@@ -782,7 +782,7 @@ GameObject:
   - component: {fileID: 199856603281207556}
   - component: {fileID: 222003847866901654}
   m_Layer: 8
-  m_Name: District
+  m_Name: DistrictArchive
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3675,14 +3675,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 756e7a62ef6704245be73d8d4df20cc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentObject: {fileID: 0}
   faceObject: {fileID: 1314737087608750}
   baseObject: {fileID: 1816139679168514}
-  rearObject: {fileID: 1335431284762698}
-  rightObject: {fileID: 1690055102462144}
-  leftObject: {fileID: 1382434780814272}
-  sign0: {fileID: 1865610113155752}
-  sign1: {fileID: 1899704268761484}
-  sign2: {fileID: 1860822157481712}
   colourNode: 0
   colourBase: 0
   colourRear: 0

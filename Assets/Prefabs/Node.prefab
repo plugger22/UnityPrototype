@@ -254,7 +254,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 756e7a62ef6704245be73d8d4df20cc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentObject: {fileID: 1899248245568038}
   faceObject: {fileID: 1799996947758502}
+  baseObject: {fileID: 0}
+  colourNode: 0
+  colourBase: 0
+  colourRear: 0
+  colourRight: 0
+  colourLeft: 0
   nodeID: 0
   nodePosition: {x: 0, y: 0, z: 0}
   nodeName: 
@@ -262,6 +269,10 @@ MonoBehaviour:
   Arc: {fileID: 0}
   launcher: {fileID: 0}
   nodeRenderer: {fileID: 0}
+  baseRenderer: {fileID: 0}
+  rearRenderer: {fileID: 0}
+  rightRenderer: {fileID: 0}
+  leftRenderer: {fileID: 0}
   isTracer: 0
   isSpider: 0
   isContactResistance: 0

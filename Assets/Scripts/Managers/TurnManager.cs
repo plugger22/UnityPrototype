@@ -30,9 +30,6 @@ public class TurnManager : MonoBehaviour
     [Tooltip("Number of seconds to show finish splash screen for")]
     public float showSplashTimeout = 1.0f;
 
-    [Header("Materials (Animation")]
-    [Tooltip("Place any material in here that would be suitable for background animations. Materials are randomly chosen from list")]
-    public List<Material> listOfMaterials;
 
     #region Save Compatible Data
     [HideInInspector] public WinStateLevel winStateLevel = WinStateLevel.None;            //set if somebody has won
@@ -54,11 +51,6 @@ public class TurnManager : MonoBehaviour
 
     private bool allowQuitting = false;
     private Coroutine myCoroutineStartPipeline;
-    private Coroutine myCoroutineAnimation;
-    private Coroutine myCoroutineConnection;
-    private Coroutine myCoroutineTile0;
-    private Coroutine myCoroutineTileOthers;
-    private Coroutine myCoroutineSignage;
 
     //autorun
     private int numOfTurns = 0;
@@ -78,9 +70,6 @@ public class TurnManager : MonoBehaviour
     private int teamArcErasure = -1;
     private int scenarioTimer = -1;
     private Condition conditionWounded;
-    private float connectionSpeed = -1;
-    private float connectionDelay = -1;
-    private float tileDelay = -1;
 
     /*private string colourRebel;
     private string colourAuthority;*/
@@ -163,18 +152,11 @@ public class TurnManager : MonoBehaviour
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
     {
-        Debug.Assert(listOfMaterials != null && listOfMaterials.Count > 0, "Invalid listOfMaterials (Null or Empty)");
         //fast access
         teamArcErasure = GameManager.i.dataScript.GetTeamArcID("ERASURE");
         conditionWounded = GameManager.i.dataScript.GetCondition("WOUNDED");
-        connectionSpeed = GameManager.i.guiScript.connectionSpeed;
-        connectionDelay = GameManager.i.guiScript.connectionDelay;
-        tileDelay = GameManager.i.guiScript.tileDelay;
         Debug.Assert(teamArcErasure > -1, "Invalid teamArcErasure (-1)");
         Debug.Assert(conditionWounded != null, "Invalid conditionWounded (Null)");
-        Debug.Assert(connectionSpeed > -1, "Invalid connectionSpeed (-1)");
-        Debug.Assert(connectionDelay > -1, "Invalid connectionDelay (-1)");
-        Debug.Assert(tileDelay > -1, "Invalid tileDelay (-1)");
     }
     #endregion
 
@@ -328,7 +310,7 @@ public class TurnManager : MonoBehaviour
                     if (GameManager.i.isAutoSave == true)
                     { GameManager.i.controlScript.ProcessAutoSave(GameState.PlayGame); }
                     //stop animation
-                    StopAnimations();
+                    GameManager.i.animateScript.StopAnimations();
                 }
 
                 //set flag to prevent multiple calls to new turn (Set false at end of coroutine.StartPipeline)
@@ -1240,131 +1222,6 @@ public class TurnManager : MonoBehaviour
             _actionsTotal = data.actionsTotal;
         }
         else { Debug.LogError("Invalid TurnActionData (Null)"); }
-    }
-
-
-    //
-    // - - - Animation
-    //
-
-    /// <summary>
-    /// Starts all in-game background animations (connections, flashing tiles, flying vehicles) at beginning of the turn
-    /// Activated from GUIManager.cs -> IEnumerator.MainInfoApp
-    /// </summary>
-    public void StartAnimations()
-    {
-        myCoroutineConnection = StartCoroutine("AnimateConnections");
-        myCoroutineTile0 = StartCoroutine("AnimateTile0");
-        myCoroutineTileOthers = StartCoroutine("AnimateTileOthers");
-        myCoroutineSignage = StartCoroutine("AnimateSignage");
-    }
-
-    /// <summary>
-    /// Ceases all on-map animations at the end of a turn
-    /// </summary>
-    private void StopAnimations()
-    {
-        if (myCoroutineConnection != null)
-        {
-            StopCoroutine(myCoroutineConnection);
-            StopCoroutine(myCoroutineTile0);
-            StopCoroutine(myCoroutineTileOthers);
-            StopCoroutine(myCoroutineSignage);
-        }
-    }
-
-    /// <summary>
-    /// run a continuous series of animated connections (one connection at a time)
-    /// </summary>
-    /// <returns></returns>
-    IEnumerator AnimateConnections()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(connectionDelay);
-            Connection connection = GameManager.i.dataScript.GetRandomConnection();
-            if (connection != null)
-            {
-                if (connection.CheckBallMoving() == false)
-                { yield return connection.StartCoroutine("MoveBall", connectionSpeed); }
-            }
-            else { Debug.LogError("Invalid random Connection (Null)"); }
-            yield return null;
-        }
-    }
-
-    /// <summary>
-    /// run a continuous series of animated tiles (one tile at a time) for sphere0 on all tiles (flash individually)s
-    /// </summary>
-    /// <returns></returns>
-    IEnumerator AnimateTile0()
-    {
-        Material material;
-        int numOfMaterials = listOfMaterials.Count;
-        while (true)
-        {
-            yield return new WaitForSeconds(tileDelay);
-            Tile tile = GameManager.i.dataScript.GetRandomTile();
-            material = listOfMaterials[Random.Range(0, numOfMaterials)];
-            if (tile != null)
-            {
-                if (tile.CheckIsAnimating() == false)
-                { yield return tile.StartCoroutine("AnimateTile0", material); }
-            }
-            else { Debug.LogError("Invalid random Tile (Null)"); }
-            yield return null;
-        }
-    }
-
-    /// <summary>
-    /// Animates sphere's 1 and 2 on all suitable tiles. Blinks them on/off
-    /// </summary>
-    /// <returns></returns>
-    IEnumerator AnimateTileOthers()
-    {
-        Tile tile;
-        int index;
-        List<Tile> listOfTiles = GameManager.i.dataScript.GetListOfTiles();
-        if (listOfTiles != null)
-        {
-            int numOfTiles = listOfTiles.Count;
-            while (true)
-            {
-                index = Random.Range(0, numOfTiles);
-                tile = listOfTiles[index];
-                if (tile != null)
-                {
-                    tile.ToggleLights();
-                    yield return new WaitForSeconds(0.1f);
-                }
-                else { Debug.LogErrorFormat("Invalid tile (Null) in listOfTiles[{0}]", index); }
-            }
-        }
-        else { Debug.LogError("Invalid listOfTiles (Null)"); }
-    }
-
-    /// <summary>
-    /// Animates signage on districts
-    /// </summary>
-    /// <returns></returns>
-    IEnumerator AnimateSignage()
-    {
-        int index;
-        Node node;
-        List<Node> listOfNodes = GameManager.i.dataScript.GetListOfAllNodes();
-        if (listOfNodes != null)
-        {
-            int numOfNodes = listOfNodes.Count;
-            while (true)
-            {
-                index = Random.Range(0, numOfNodes);
-                node = listOfNodes[index];
-                if (node != null)
-                { yield return node.FlashSignage(); }
-                else { Debug.LogErrorFormat("Invalid node (Null) in listOfNodes[{0}]", index); }
-            }
-        }
-        else { Debug.LogError("Invalid listOfNodes (Null)"); }
     }
 
 
