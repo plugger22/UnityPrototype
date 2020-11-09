@@ -125,14 +125,12 @@ public class AnimationManager : MonoBehaviour
     /// </summary>
     public void StopAnimations()
     {
-        if (myCoroutineConnection != null)
-        {
-            StopCoroutine(myCoroutineConnection);
-            StopCoroutine(myCoroutineTile0);
-            StopCoroutine(myCoroutineTileOthers);
-            StopCoroutine(myCoroutineSignage);
-            StopCoroutine(myCoroutineTraffic);
-        }
+        if (myCoroutineConnection != null) { StopCoroutine(myCoroutineConnection); }
+        if (myCoroutineTile0 != null) { StopCoroutine(myCoroutineTile0); }
+        if (myCoroutineTileOthers != null) { StopCoroutine(myCoroutineTileOthers); }
+        if (myCoroutineSignage != null) { StopCoroutine(myCoroutineSignage); }
+        if (myCoroutineTraffic != null) { StopCoroutine(myCoroutineTraffic); }
+        ResetTraffic();
     }
 
     /// <summary>
@@ -236,7 +234,7 @@ public class AnimationManager : MonoBehaviour
     IEnumerator AnimateTraffic()
     {
         //set starting position
-        float minTrafficHeight = 1.05f;
+        float minTrafficHeight = 1.00f;
         Vector3 startPos = posAirport;
         startPos.y = minTrafficHeight;
         GameObject instanceCar;
@@ -268,6 +266,8 @@ public class AnimationManager : MonoBehaviour
                             //run car animation sequence (moves from airport to destination node with vertical lift/ease at start and finish)
                             yield return new WaitForSeconds(2.0f);
                             yield return car.MoveCar(startPos);
+                            GameManager.i.SafeDestroy(instanceCar);
+                            listOfCars.Clear();
                         }
                         else
                         {
@@ -285,6 +285,29 @@ public class AnimationManager : MonoBehaviour
             }
 
             yield return null;
+        }
+    }
+
+    /// <summary>
+    /// Reset traffic at end of turn
+    /// </summary>
+    private void ResetTraffic()
+    {
+        if (listOfCars.Count > 0)
+        {
+            //reverse loop, delete all cars
+            for (int i = listOfCars.Count - 1; i >= 0; i--)
+            {
+                Car car = listOfCars[i];
+                if (car != null)
+                {
+                    //destroy
+                    GameManager.i.SafeDestroy(car.carObject);
+                }
+                else { Debug.LogErrorFormat("Invalid car (Null) for listOfCars[{0}]", i); }
+            }
+            //empty list
+            listOfCars.Clear();
         }
     }
 

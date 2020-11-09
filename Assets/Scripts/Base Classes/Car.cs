@@ -57,13 +57,15 @@ public class Car : MonoBehaviour
         isFlightAltitude = false;
         float startAltitude = startPosition.y;
         float flightAltitude = 3.0f;
-        float speedHorizontal = 1.0f;
-        float speedVertical = 1.0f;
-        float hoverWaitTime = 1.5f;
+        float speedHorizontal = 0.5f;
+        float speedVertical = 0.5f;
+        float hoverWaitTime = 1.0f;
+        /*Quaternion quaternion = new Quaternion();*/
+        Quaternion quaternionTarget = new Quaternion();
         //Vector3 destination = new Vector3(nodeDestination.nodePosition.x, nodeDestination.nodePosition.y, nodeDestination.nodePosition.z);
         Vector3 destination = new Vector3(nodeDestination.nodePosition.x, flightAltitude, nodeDestination.nodePosition.z);
         /*Debug.LogFormat("[Tst] Car.cs -> MoveCar: Destination x_cord {0}, y_cord {1}, z_cord {2}{3}", destination.x, destination.y, destination.z, "\n");*/
-        float x_pos, z_pos, step;
+        float x_pos, z_pos, step/*, angle*/;
         altitude = startPosition.y;
         x_pos = startPosition.x;
         z_pos = startPosition.z;
@@ -78,6 +80,23 @@ public class Car : MonoBehaviour
         }
         while (altitude < flightAltitude);
         isFlightAltitude = true;
+
+        //target rotation
+        quaternionTarget = Quaternion.LookRotation(destination - carObject.transform.position, Vector3.up);
+        
+        /*//rotate
+        quaternion.SetFromToRotation(carObject.transform.position, destination);
+        do
+        {
+            carObject.transform.position = Vector3.Lerp(carObject.transform.position, destination, Time.deltaTime / speedHorizontal);
+            carObject.transform.rotation = quaternion * carObject.transform.rotation;
+            angle = Quaternion.Angle(carObject.transform.rotation, quaternionTarget);
+            Debug.LogFormat("[Tst] Car.cs -> MoveCar: angle {0}{1}", angle, "\n");
+            yield return null;
+        }
+        while (angle > 0);*/
+
+        carObject.transform.rotation = quaternionTarget;
         //hover for a bit
         yield return new WaitForSeconds(hoverWaitTime);
         //move towards destination
