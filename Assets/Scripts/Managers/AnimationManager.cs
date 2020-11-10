@@ -373,10 +373,10 @@ public class AnimationManager : MonoBehaviour
     {
         CarType carType = CarType.Normal;
         int rnd = Random.Range(0, 100);
-        if (rnd < 20) { carType = CarType.Police; }
-        else if (rnd > 80)
+        if (rnd < 10) { carType = CarType.Police; }
+        else if (rnd > 85)
         {
-            if (rnd > 90)
+            if (rnd > 95)
             { carType = CarType.Rogue; }
             else { carType = CarType.Bus; }
         }
