@@ -5697,7 +5697,7 @@ public class ActorManager : MonoBehaviour
                                             case "PLANNER":
                                                 //get random target name
                                                 List<Target> listOfTargets = GameManager.i.dataScript.GetTargetPool(Status.Live);
-                                                if (listOfTargets != null)
+                                                if (listOfTargets != null && listOfTargets.Count > 0)
                                                 { data.dataName = listOfTargets[Random.Range(0, listOfTargets.Count)].targetName; }
                                                 break;
                                             case "OPERATOR":

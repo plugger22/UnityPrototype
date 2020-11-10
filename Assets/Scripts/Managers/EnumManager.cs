@@ -50,6 +50,11 @@
     }
 
     //
+    // - - - Animation - - -
+    //
+    public enum CarType { Normal, Police, Rogue, Bus }
+
+    //
     // - - - ItemData / MetaData - - -
     //
     public enum ItemPriority { Low, Medium, High, Count }                                           //DataManager.cs -> arrayOfItemsByDataPriority is keyed off ItemPriority & ItemTab 'Count'

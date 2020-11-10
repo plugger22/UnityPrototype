@@ -1390,6 +1390,18 @@ namespace packageAPI
         public RestorePoint restorePoint;
     }
 
+    /// <summary>
+    /// Data package for different types of 'Cars' (aerial traffic background animations)
+    /// </summary>
+    public class CarData
+    {
+        public float cruiseAltitude;
+        public float verticalSpeed;
+        public float horizontalSpeed;
+        public float hoverDelay;
+        public bool isSiren;
+    }
+
 
     //new classes above here
 }

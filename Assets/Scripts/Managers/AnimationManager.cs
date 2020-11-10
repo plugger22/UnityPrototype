@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using packageAPI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,10 @@ public class AnimationManager : MonoBehaviour
 {
     [Header("Car Prefab")]
     [Tooltip("Standard car prefab")]
-    public GameObject carPrefab;
+    public GameObject carNormal;
+    public GameObject carPolice;
+    public GameObject carBus;
+    public GameObject carRogue;
 
     [Header("Materials (Animation")]
     [Tooltip("Place any material in here that would be suitable for background tile animations (tile0 flashing sequence). Materials are randomly chosen from list")]
@@ -65,7 +69,10 @@ public class AnimationManager : MonoBehaviour
     #region SubInitialiseLevelStart
     private void SubInitialiseLevelStart()
     {
-        Debug.Assert(carPrefab != null, "Invalid carPrefab (Null)");
+        Debug.Assert(carNormal != null, "Invalid carNormal (Null)");
+        Debug.Assert(carPolice != null, "Invalid carPolice (Null)");
+        Debug.Assert(carBus != null, "Invalid carBus (Null)");
+        Debug.Assert(carRogue != null, "Invalid carRogue (Null)");
         //Get airport position
         int nodeID = GameManager.i.cityScript.airportDistrictID;
         nodeAirport = GameManager.i.dataScript.GetNode(nodeID);
@@ -233,55 +240,60 @@ public class AnimationManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator AnimateTraffic()
     {
+        CarType carType;
         //set starting position
         float minTrafficHeight = 1.00f;
         Vector3 startPos = posAirport;
         startPos.y = minTrafficHeight;
         GameObject instanceCar;
         Car car;
+        CarData data;
         //parent -> you only want one instance
         if (carHolder == null)
         { carHolder = new GameObject("MasterCar").transform; }
-
+        //initial pause
+        yield return new WaitForSeconds(2.0f);
         while (true)
         {
-            if (listOfCars.Count == 0)
+            if (listOfCars.Count < 2)
             {
-                //generate a new car instance if none currently onMap
-                instanceCar = Instantiate(carPrefab, startPos, Quaternion.identity) as GameObject;
-                instanceCar.SetActive(false);
-                if (instanceCar != null)
+                if (Random.Range(0, 100) < 1)
                 {
-                    //Select node for destination
-                    Node node = GameManager.i.dijkstraScript.GetRandomNodeAtMaxDistance(nodeAirport, 5);
-                    if (node != null)
+                    carType = GetCarType();
+                    //generate a new car instance if none currently onMap
+                    instanceCar = Instantiate(GetCarPrefab(carType), startPos, Quaternion.identity) as GameObject;
+                    instanceCar.SetActive(false);
+                    if (instanceCar != null)
                     {
-                        //add to list
-                        listOfCars.Add(instanceCar.GetComponent<Car>());
-                        car = instanceCar.GetComponent<Car>();
-                        if (car != null)
+                        //Select node for destination
+                        Node node = GameManager.i.dijkstraScript.GetRandomNodeAtMaxDistance(nodeAirport, 5);
+                        if (node != null)
                         {
-                            instanceCar.SetActive(true);
-                            car.SetDestination(node);
-                            //run car animation sequence (moves from airport to destination node with vertical lift/ease at start and finish)
-                            yield return new WaitForSeconds(2.0f);
-                            yield return car.MoveCar(startPos);
-                            GameManager.i.SafeDestroy(instanceCar);
-                            listOfCars.Clear();
+                            car = instanceCar.GetComponent<Car>();
+                            data = GetCarData(carType);
+                            car.InitialiseCar(node, data);
+                            //add to list
+                            AddCar(car);
+                            if (car != null && instanceCar != null)
+                            {
+                                instanceCar.SetActive(true);
+                                //run car animation sequence (moves from airport to destination node with vertical lift/ease at start and finish)
+                                car.StartCoroutines(startPos);
+                            }
+                            else
+                            {
+                                Debug.LogError("Invalid car component (Null)");
+                                GameManager.i.SafeDestroy(instanceCar);
+                            }
                         }
                         else
                         {
-                            Debug.LogError("Invalid car component (Null)");
+                            Debug.LogError("Invalid random destination node (Null)");
                             GameManager.i.SafeDestroy(instanceCar);
                         }
                     }
-                    else
-                    {
-                        Debug.LogError("Invalid random destination node (Null)");
-                        GameManager.i.SafeDestroy(instanceCar);
-                    }
+                    else { Debug.LogWarning("Invalid car (Null)"); }
                 }
-                else { Debug.LogWarning("Invalid car (Null)"); }
             }
 
             yield return null;
@@ -290,8 +302,8 @@ public class AnimationManager : MonoBehaviour
 
     /// <summary>
     /// Reset traffic at end of turn
-    /// </summary>
     private void ResetTraffic()
+    /// </summary>
     {
         if (listOfCars.Count > 0)
         {
@@ -302,13 +314,129 @@ public class AnimationManager : MonoBehaviour
                 if (car != null)
                 {
                     //destroy
+                    car.StopCoroutines();
                     GameManager.i.SafeDestroy(car.carObject);
+                    /*Debug.LogFormat("[Tst] AnimationManager.cs -> ResetTraffic: car destinationID {0} DESTROYED{1}", car.destinationID, "\n");*/
                 }
                 else { Debug.LogErrorFormat("Invalid car (Null) for listOfCars[{0}]", i); }
             }
             //empty list
             listOfCars.Clear();
         }
+    }
+
+    /// <summary>
+    /// Add car to listOfCars
+    /// </summary>
+    /// <param name="car"></param>
+    public void AddCar(Car car)
+    {
+        if (car != null)
+        {
+            listOfCars.Add(car);
+            /*Debug.LogFormat("[Tst] AnimationManager.cs -> AddCar: Car ADDED to list, destinationID {0}{1}", car.destinationID, "\n");*/
+        }
+    }
+
+    /// <summary>
+    /// Remove car from listOfCars
+    /// </summary>
+    /// <param name="nodeID"></param>
+    public void DeleteCar(int nodeID)
+    {
+        int index = listOfCars.FindIndex(x => x.destinationID == nodeID);
+        if (index > -1)
+        {
+            listOfCars.RemoveAt(index);
+            /*Debug.LogFormat("[Tst] AnimationManager.cs -> RemoveCar: Car REMOVED from list, destinationID {0}{1}", nodeID, "\n");*/
+        }
+    }
+
+    /// <summary>
+    /// Randomly chooses a car type
+    /// </summary>
+    /// <returns></returns>
+    private CarType GetCarType()
+    {
+        CarType carType = CarType.Normal;
+        int rnd = Random.Range(0, 100);
+        if (rnd < 20) { carType = CarType.Police; }
+        else if (rnd > 80)
+        {
+            if (rnd > 90)
+            { carType = CarType.Rogue; }
+            else { carType = CarType.Bus; }
+        }
+        return carType;
+    }
+
+    /// <summary>
+    /// Returns an appropriate CarType prefab
+    /// </summary>
+    /// <param name="carType"></param>
+    /// <returns></returns>
+    private GameObject GetCarPrefab(CarType carType)
+    {
+        GameObject carObject = carNormal;
+        switch (carType)
+        {
+            case CarType.Normal: carObject = carNormal; break;
+            case CarType.Police: carObject = carPolice; break;
+            case CarType.Bus: carObject = carBus; break;
+            case CarType.Rogue: carObject = carRogue; break;
+            default: Debug.LogWarningFormat("Unrecognised carType \"{0}\"", carType); break;
+        }
+        return carObject;
+    }
+
+    /// <summary>
+    /// returns a data package appropriate for the carType
+    /// </summary>
+    /// <param name="carType"></param>
+    /// <returns></returns>
+    private CarData GetCarData(CarType carType)
+    {
+        CarData data = new CarData();
+        switch (carType)
+        {
+            case CarType.Normal:
+                data.cruiseAltitude = 3.0f;
+                data.verticalSpeed = 0.5f;
+                data.horizontalSpeed = 0.5f;
+                data.hoverDelay = 1.0f;
+                data.isSiren = true;
+                break;
+            case CarType.Police:
+                data.cruiseAltitude = 2.0f;
+                data.verticalSpeed = 0.25f;
+                data.horizontalSpeed = 0.25f;
+                data.hoverDelay = 0.5f;
+                data.isSiren = true;
+                break;
+            case CarType.Bus:
+                data.cruiseAltitude = 2.5f;
+                data.verticalSpeed = 0.75f;
+                data.horizontalSpeed = 0.75f;
+                data.hoverDelay = 1.0f;
+                data.isSiren = true;
+                break;
+            case CarType.Rogue:
+                data.cruiseAltitude = 1.5f;
+                data.verticalSpeed = 0.15f;
+                data.horizontalSpeed = 0.15f;
+                data.hoverDelay = 0.25f;
+                data.isSiren = false;
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised carType \"{0}\"", carType);
+                //provide default data
+                data.cruiseAltitude = 3.0f;
+                data.verticalSpeed = 0.5f;
+                data.horizontalSpeed = 0.5f;
+                data.hoverDelay = 1.0f;
+                break;
+        }
+        return data;
     }
 
     //new methods above here

@@ -1080,6 +1080,8 @@ public class MainInfoUI : MonoBehaviour
         isRunning = false;
         GameManager.i.inputScript.ResetStates();
         Debug.LogFormat("[UI] MainInfoUI.cs -> CloseMainInfo{0}", "\n");
+        //start background animations
+        GameManager.i.animateScript.StartAnimations();
     }
 
 
