@@ -7,8 +7,8 @@ using UnityEngine;
 /// </summary>
 public class Car : MonoBehaviour
 {
-    public GameObject carObject;
-    public GameObject lightObject;
+    public GameObject carObject;        //master car object
+    public GameObject lightObject;      //siren
 
     private Node nodeDestination;
     [HideInInspector] public int destinationID = -1;     //ID used to find item in listOfCars
@@ -21,6 +21,7 @@ public class Car : MonoBehaviour
 
     private bool isSiren;
     private bool isFlashOn;
+    private bool isLampOn;
 
     private Coroutine myCoroutineCar;
 
@@ -71,12 +72,10 @@ public class Car : MonoBehaviour
             if (isSiren == true)
             { StartCoroutine("FlashSiren"); }
             float startAltitude = startPosition.y;
-            /*Quaternion quaternion = new Quaternion();*/
             Quaternion quaternionTarget = new Quaternion();
-            //Vector3 destination = new Vector3(nodeDestination.nodePosition.x, nodeDestination.nodePosition.y, nodeDestination.nodePosition.z);
             Vector3 destination = new Vector3(nodeDestination.nodePosition.x, flightAltitude, nodeDestination.nodePosition.z);
             /*Debug.LogFormat("[Tst] Car.cs -> MoveCar: Destination x_cord {0}, y_cord {1}, z_cord {2}{3}", destination.x, destination.y, destination.z, "\n");*/
-            float x_pos, z_pos, step/*, angle*/;
+            float x_pos, z_pos, step;
             altitude = startPosition.y;
             x_pos = startPosition.x;
             z_pos = startPosition.z;
@@ -91,6 +90,7 @@ public class Car : MonoBehaviour
             }
             while (altitude < flightAltitude);
 
+            #region archiveSmoothRotation
             /*//target rotation
             quaternionTarget = Quaternion.LookRotation(destination - carObject.transform.position, Vector3.up);
             //rotate
@@ -104,7 +104,7 @@ public class Car : MonoBehaviour
                 yield return null;
             }
             while (angle > 0);*/
-
+            #endregion
 
             //target rotation
             quaternionTarget = Quaternion.LookRotation(destination - carObject.transform.position, Vector3.up);
@@ -177,6 +177,7 @@ public class Car : MonoBehaviour
         }
     }
 
+
     /// <summary>
     /// Start Coroutines
     /// </summary>
@@ -196,6 +197,8 @@ public class Car : MonoBehaviour
         StopCoroutine(myCoroutineCar);
         if (isSiren == true)
         { StopCoroutine("FlashSiren"); }
+        /*if (isHeadlamps == true)
+        { StopCoroutine("FlashHeadlamps"); }*/
     }
 
 }

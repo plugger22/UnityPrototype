@@ -6624,7 +6624,7 @@ MonoBehaviour:
   billboardScript: {fileID: 0}
   seedDev: 0
   autoRunTurns: 20
-  scenarioStartLevel: 0
+  scenarioStartLevel: 3
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1
@@ -6780,10 +6780,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a8deef10e26106468e64007e2359f1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carNormal: {fileID: 1135492019293974, guid: 5cecb16224873744987f34af6f5af689, type: 2}
-  carPolice: {fileID: 1390460596910254, guid: d94e3212f7528f44d8c7655a8d8a99cf, type: 2}
-  carBus: {fileID: 1915026089837572, guid: 34372b78d5cc21741a8e768723d8f85f, type: 2}
-  carRogue: {fileID: 1038323892736708, guid: b8e3af32ef081514aad8551b058de313, type: 2}
+  carNormal: {fileID: 1544790630397048, guid: 5cecb16224873744987f34af6f5af689, type: 2}
+  carPolice: {fileID: 1831232830008390, guid: d94e3212f7528f44d8c7655a8d8a99cf, type: 2}
+  carBus: {fileID: 1175669282745626, guid: 34372b78d5cc21741a8e768723d8f85f, type: 2}
+  carRogue: {fileID: 1314145651636492, guid: b8e3af32ef081514aad8551b058de313, type: 2}
   listOfMaterials:
   - {fileID: 2100000, guid: b3d560f1514d3804486d05d2c2c7e7e6, type: 2}
   - {fileID: 2100000, guid: 98a0a60b4aa47734fadeb8c9095c16e5, type: 2}

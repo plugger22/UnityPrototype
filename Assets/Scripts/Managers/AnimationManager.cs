@@ -37,6 +37,7 @@ public class AnimationManager : MonoBehaviour
     private Coroutine myCoroutineTraffic;
 
     private List<Car> listOfCars = new List<Car>();        //holds all active instances of Cars
+    private List<int> listOfCarNumbers = new List<int> { 1, 1, 1, 1, 2, 2, 5, 5 };
 
     /// <summary>
     /// Initialisation
@@ -241,8 +242,12 @@ public class AnimationManager : MonoBehaviour
     IEnumerator AnimateTraffic()
     {
         CarType carType;
+        bool isWait = false;
         //set starting position
+        float waitInterval = 2.0f;
         float minTrafficHeight = 1.00f;
+        //each turn has a variable number of cars in flight at any one time to give variety
+        int maxNumOfCars = GetRandomTrafficNumber();
         Vector3 startPos = posAirport;
         startPos.y = minTrafficHeight;
         GameObject instanceCar;
@@ -252,13 +257,21 @@ public class AnimationManager : MonoBehaviour
         if (carHolder == null)
         { carHolder = new GameObject("MasterCar").transform; }
         //initial pause
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(waitInterval);
         while (true)
         {
-            if (listOfCars.Count < 2)
+            if (listOfCars.Count < maxNumOfCars)
             {
+                //introduce random dead periods -> ignore at start of turn
+                if (isWait == true)
+                {
+                    if (Random.Range(0, 1000) < 3)
+                    { yield return new WaitForSeconds(waitInterval); }
+                }
+                //generate new traffic at random intervals
                 if (Random.Range(0, 100) < 1)
                 {
+                    isWait = true;
                     carType = GetCarType();
                     //generate a new car instance if none currently onMap
                     instanceCar = Instantiate(GetCarPrefab(carType), startPos, Quaternion.identity) as GameObject;
@@ -266,7 +279,7 @@ public class AnimationManager : MonoBehaviour
                     if (instanceCar != null)
                     {
                         //Select node for destination
-                        Node node = GameManager.i.dijkstraScript.GetRandomNodeAtMaxDistance(nodeAirport, 5);
+                        Node node = GameManager.i.dijkstraScript.GetRandomNodeAtMaxDistance(nodeAirport, 4);
                         if (node != null)
                         {
                             car = instanceCar.GetComponent<Car>();
@@ -422,9 +435,9 @@ public class AnimationManager : MonoBehaviour
                 break;
             case CarType.Rogue:
                 data.cruiseAltitude = 1.5f;
-                data.verticalSpeed = 0.15f;
-                data.horizontalSpeed = 0.15f;
-                data.hoverDelay = 0.25f;
+                data.verticalSpeed = 0.25f;
+                data.horizontalSpeed = 0.25f;
+                data.hoverDelay = 0.5f;
                 data.isSiren = false;
                 break;
             default:
@@ -438,6 +451,13 @@ public class AnimationManager : MonoBehaviour
         }
         return data;
     }
+
+    /// <summary>
+    /// Returns a random number of cars to have airborne at any one time. The list is designed to give extremes rather than a linear sample 
+    /// </summary>
+    /// <returns></returns>
+    private int GetRandomTrafficNumber()
+    { return listOfCarNumbers[Random.Range(0, listOfCarNumbers.Count)]; }
 
     //new methods above here
 }
