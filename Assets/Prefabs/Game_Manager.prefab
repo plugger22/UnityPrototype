@@ -491,6 +491,8 @@ MonoBehaviour:
   minSpacingDefault: 1
   connectionFrequencyDefault: 50
   connectionSecurityDefault: 25
+  materialDefault: {fileID: 2100000, guid: d772f088efdc5b84b90700a8e354f4c3, type: 2}
+  materialHighlight: {fileID: 2100000, guid: 98a0a60b4aa47734fadeb8c9095c16e5, type: 2}
   seed: 0
 --- !u!114 &114258654278774664
 MonoBehaviour:
@@ -6624,7 +6626,7 @@ MonoBehaviour:
   billboardScript: {fileID: 0}
   seedDev: 0
   autoRunTurns: 20
-  scenarioStartLevel: 3
+  scenarioStartLevel: 4
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1

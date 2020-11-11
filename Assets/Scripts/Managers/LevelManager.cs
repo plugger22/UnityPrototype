@@ -13,11 +13,11 @@ public class LevelManager : MonoBehaviour
     public GameObject node;             //node prefab
     public GameObject connection;       //connection prefab
     [Tooltip("Tile that is used wherever there is a node present (Low profile tile that won't bleed through node base")]
-    public GameObject tile;            
+    public GameObject tile;
     [Tooltip("Place all tile prefabs here that can be used for a background. Multiple copies of a tile are O.K in order to tweak frequencies")]
     public List<GameObject> listOfTilePrefabs;
     [Tooltip("Nodes are on the blocking layer, not connections")]
-    public LayerMask blockingLayer;     
+    public LayerMask blockingLayer;
 
     [Header("Default City Setup")]
     [Tooltip("number of nodes (adjusted after use in InitialiseNodes() to reflect actual number). Set to CitySize 'Normal'")]
@@ -28,6 +28,12 @@ public class LevelManager : MonoBehaviour
     [Range(0, 100)] public int connectionFrequencyDefault = 50;
     [Tooltip("Chance of a connection having a high security level (more than 'None'). Set to CitySecurity 'Normal' value")]
     [Range(0, 100)] public int connectionSecurityDefault = 25;
+
+    [Header("Debugging")]
+    [Tooltip("Default base material for tiles")]
+    public Material materialDefault;
+    [Tooltip("Highlight material for tiles")]
+    public Material materialHighlight;
 
     [HideInInspector] public int seed;      //random seed used for level generation (different for each level. Save/Loaded)
 
@@ -68,6 +74,7 @@ public class LevelManager : MonoBehaviour
     private List<Vector3> listOfCoordinates = new List<Vector3>();                  //used to provide a lookup to check spacing of nodes
     private List<List<int>> listOfSortedNodes = new List<List<int>>();              //each node has a sorted (closest to furthest) list of nodeID's of neighouring nodes
     private List<List<float>> listOfSortedDistances = new List<List<float>>();    //companion list to listOfSortedNodes (identical indexes) -> contains distances to node in other list in world units    
+    private List<Vector3> listOfSurveillanceTiles = new List<Vector3>();            //tiles suitable for surveillance animation (no nodes or overlying connections)
 
     private int[,] arrayOfNodeArcTotals;            //array of how many of each node type there is on the map, index -> [(int)NodeArcTally, nodeArc.nodeArcID]
 
@@ -136,7 +143,7 @@ public class LevelManager : MonoBehaviour
         InitialiseNodes(numOfNodes, minSpacing);
         InitialiseSortedDistances();
         RemoveInvalidNodes();
-        InitialiseTiles();     
+        InitialiseTiles();
         InitialiseNodeArcArray();
         InitialiseGraph();
         InitialiseNodeArcs();
@@ -144,6 +151,7 @@ public class LevelManager : MonoBehaviour
         /*InitialiseDistrictConnections();*/
         AssignSecurityLevels();
         InitialiseDistrictNames();
+        InitialiseSurveillanceTiles();
         GameManager.i.RestoreRandomDevState();
     }
     #endregion
@@ -689,7 +697,7 @@ public class LevelManager : MonoBehaviour
         instanceConnection.transform.localScale = new Vector3(instanceScale.x, distance, instanceScale.z);
         //reset ball scale back to normal (it scaled up along with parent)
         instanceConnection.GetComponent<Connection>().ball.transform.localScale = new Vector3(1.1f, instanceScale.y, 1.1f);
-        
+
         /*Vector3 instanceScaleNew = instanceConnection.transform.localScale;
         Debug.LogFormat("[Tst] LevelManager.cs -> PlaceConnection: Connection previous scale {0}, {1}, {2} new scale {3}, {4}, {5}{6}", instanceScale.x, instanceScale.y, instanceScale.z,
             instanceScaleNew.x, instanceScaleNew.y, instanceScaleNew.z, "\n");
@@ -1440,6 +1448,135 @@ public class LevelManager : MonoBehaviour
     public int GetNumOfTiles()
     { return listOfTiles.Count; }
 
+    /// <summary>
+    /// Generates a list of tiles suitable for surveillance animations (tiles have no nodes and no connections crossing them)
+    /// </summary>
+    private void InitialiseSurveillanceTiles()
+    {
+        int index, count;
+        float lineDistance;
+        List<Vector3> listOfSuitableTiles = new List<Vector3>();
+        float lowerLimit = -5.0f;
+        float upperLimit = 5.5f;
+        Vector3 position = Vector3.zero;
+        position.y = 0f;
+        //x_coord
+        for (float i = lowerLimit; i < upperLimit; i++)
+        {
+            //y_coord
+            for (float j = lowerLimit; j < upperLimit; j++)
+            {
+                position.x = i;
+                position.z = j;
+                Vector3 vector = new Vector3(position.x, position.y, position.z);
+                //Generate list that contains all possible tiles
+                listOfSuitableTiles.Add(vector);
+            }
+        }
+        //
+        // - - - Remove tiles where a node exist
+        //
+        for (int i = 0; i < listOfNodeObjects.Count; i++)
+        {
+            position = listOfNodeObjects[i].transform.position;
+            index = listOfSuitableTiles.FindIndex(0, tile => tile.x == position.x && tile.z == position.z);
+            if (index > -1)
+            { listOfSuitableTiles.RemoveAt(index); }
+        }
+        //
+        // - - - Remove tiles where a connection crosses
+        //
+        List<GameObject> listOfNodesStart = new List<GameObject>(listOfNodeObjects);
+        List<GameObject> listOfNodesEnd = new List<GameObject>(listOfNodeObjects);
+        List<int> tempList = new List<int>();
+        Vector3 startPosition, endPosition, tilePosition;
+        for (int i = 0; i < listOfNodesStart.Count; i++)
+        {
+            startPosition = listOfNodesStart[i].transform.position;
+            for (int j = i + 1; j < listOfNodesEnd.Count; j++)
+            {
+                //check there is at least one viable tile remaining
+                count = listOfSuitableTiles.Count;
+                if (count > 0)
+                {
+                    endPosition = listOfNodesEnd[j].transform.position;
+                    lineDistance = Vector3.Distance(startPosition, endPosition);
+                    for (int k = 0; k < listOfSuitableTiles.Count; k++)
+                    {
+                        tilePosition = listOfSuitableTiles[k];
+                        //if collision exists add index to tempList (ready for deletion)
+                        if (CheckForTileCollision(lineDistance, startPosition, endPosition, tilePosition) == true)
+                        { tempList.Add(k); }
+                    }
+                    //delete any tiles where collisions have been detected
+                    if (tempList.Count > 0)
+                    {
+                        for (int m = 0; m < tempList.Count; m++)
+                        { listOfSuitableTiles.RemoveAt(tempList[m]); }
+                    }
+                    //clear list
+                    tempList.Clear();
+                }
+                else { Debug.LogFormat("[Tst] LevelManager.cs -> InitialiseSurveillanceTiles: listOfSuitableTiles EMPTY"); }
+            }
+        }
+        //update master list
+        listOfSurveillanceTiles = listOfSuitableTiles;
+    }
+
+    /// <summary>
+    /// Returns True if collision detected within tolerance value
+    /// </summary>
+    /// <param name="startPos"></param>
+    /// <param name="endPos"></param>
+    /// <param name="tilePos"></param>
+    /// <param name="tolerance"></param>
+    /// <returns></returns>
+    private bool CheckForTileCollision(float distance, Vector3 startPos, Vector3 endPos, Vector3 tilePos, float tolerance = 0.4f)
+    {
+        float distanceToStart = Vector3.Distance(startPos, tilePos);
+        float distanceToEnd = Vector3.Distance(endPos, tilePos);
+        float difference = distance - distanceToStart - distanceToEnd;
+        return Mathf.Abs(difference) <= tolerance;
+    }
+
+    /// <summary>
+    /// Toggles surveillance tiles on/off
+    /// </summary>
+    public void DebugDisplaySurveillanceTiles(bool isHighlightOn)
+    {
+        Vector3 positionTile, positionCheck;
+        int count = listOfSurveillanceTiles.Count();
+        Renderer renderer;
+        if (count > 0)
+        {
+            //loop list of Tiles
+            for (int i = 0; i < listOfTiles.Count; i++)
+            {
+                positionTile = listOfTiles[i].transform.position;
+                //look for a match
+                for (int k = 0; k < count; k++)
+                {
+                    positionCheck = listOfSurveillanceTiles[k];
+                    if (positionTile.x == positionCheck.x && positionTile.z == positionCheck.z)
+                    {
+                        //match found
+                        GameObject tile = listOfTiles[k];
+                        renderer = tile.GetComponent<Renderer>();
+                        if (renderer != null)
+                        {
+                            if (isHighlightOn == true)
+                            { renderer.material = materialHighlight; }
+                            else { renderer.material = materialDefault; }
+                        }
+                        else { Debug.LogErrorFormat("Invalid renderer (Null) for listOfTiles[{0}]", i); }
+                        break;
+                    }
+                }
+            }
+        }
+    }
 
 
+    //new methods above here
 }

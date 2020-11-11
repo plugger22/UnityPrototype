@@ -20652,3 +20652,62 @@ City seed 234 -> Sydsprawl, Chinock
 
 Dev seed 11377 -> Tuesday, 10 November 2020 4:27 PM
 City seed 890 -> Arlarc, Eurasia
+
+Dev seed 59560 -> Wednesday, 11 November 2020 9:49 AM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 57452 -> Wednesday, 11 November 2020 10:07 AM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 62185 -> Wednesday, 11 November 2020 10:09 AM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 10885 -> Wednesday, 11 November 2020 10:10 AM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 21904 -> Wednesday, 11 November 2020 10:11 AM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 51922 -> Wednesday, 11 November 2020 10:11 AM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 61879 -> Wednesday, 11 November 2020 10:12 AM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 22284 -> Wednesday, 11 November 2020 10:16 AM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 56273 -> Wednesday, 11 November 2020 10:55 AM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 1937 -> Wednesday, 11 November 2020 11:03 AM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 64792 -> Wednesday, 11 November 2020 11:03 AM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 53590 -> Wednesday, 11 November 2020 11:53 AM
+City seed 1616 -> Mexurb, Americon
+ASSERT ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument argument, System.ExceptionResource resource) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.ThrowHelper.ThrowArgumentOutOfRangeException () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].RemoveAt (System.Int32 index) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	LevelManager.InitialiseSurveillanceTiles () (at Assets/Scripts/Managers/LevelManager.cs:1508)
+	LevelManager.SubInitialiseAll () (at Assets/Scripts/Managers/LevelManager.cs:147)
+	LevelManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/LevelManager.cs:89)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:852)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:905)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:405)
+	
+Dev seed 63962 -> Wednesday, 11 November 2020 11:55 AM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 12126 -> Wednesday, 11 November 2020 12:32 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 14284 -> Wednesday, 11 November 2020 12:33 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 1133 -> Wednesday, 11 November 2020 12:40 PM
+City seed 1616 -> Mexurb, Americon

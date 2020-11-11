@@ -9463,9 +9463,9 @@ public class DataManager : MonoBehaviour
                                                         }
                                                         /*else { Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: actorOther, {0}, not Active, for slotID {1}, {2} check{3}", actorOther.arc.name, i, actor.arc.name, "\n"); }*/
                                                     }
-                                                    else { Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: Invalid actor (Null) for slotID {0}{1}", j, "\n"); }
+                                                    else { Debug.LogWarningFormat("DataManager.cs -> GetPossibleRelationData: Invalid actor (Null) for slotID {0}{1}", j, "\n"); }
                                                 }
-                                                else { Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: No actor in slotID {0}, for compatibility check with slotID {1}, {2}{3}", j, i, actor.arc.name, "\n"); }
+                                                /*else { Debug.LogFormat("[Tst] DataManager.cs -> GetPossibleRelationData: No actor in slotID {0}, for compatibility check with slotID {1}, {2}{3}", j, i, actor.arc.name, "\n"); }*/
                                             }
                                             else
                                             {

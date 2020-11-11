@@ -63,6 +63,7 @@ public class DebugGUI : MonoBehaviour
     private int hqToggle = 0;
     private int showNodesToggle = 0;
     private int nodeDisplayToggle = 0;
+    private int tileDisplayToggle = 0;
     private int analyseToggle = 0;
     private int statisticsToggle = 0;
     private string textInput_0 = "what";
@@ -77,6 +78,7 @@ public class DebugGUI : MonoBehaviour
     private string optionNoAI;
     private string optionNodes;
     private string optionNodeDisplay;
+    private string optionTileDisplay;
     /*private string optionAIOffline;*/
     /*private string optionAITraceback;*/
     /*private string optionAIScreamer;*/
@@ -111,6 +113,7 @@ public class DebugGUI : MonoBehaviour
         optionMoodInfo = "Mood Info ON";
         optionBillboardInfo = "Billboard OFF";
         optionNodeDisplay = "Show NODES";
+        optionTileDisplay = "Show SURV Tiles";
     }
 
     // Update is called once per frame
@@ -147,8 +150,8 @@ public class DebugGUI : MonoBehaviour
             GUI.Box(new Rect(box_info, box_y, box_width, box_height + 290), "Info Menu", customBackground);
             //background box (Actions)
             GUI.Box(new Rect(box_action, box_y, box_width, box_height + 340), "Action Menu", customBackground);
-            //background box (Level)
-            GUI.Box(new Rect(box_level, box_y, box_width, box_height / 2 + 110), "Map Menu", customBackground);
+            //background box (Map)
+            GUI.Box(new Rect(box_level, box_y, box_width, box_height / 2 + 140), "Map Menu", customBackground);
             //background box (File Ops)
             GUI.Box(new Rect(box_file, box_y, box_width, box_height / 2 + 60), "File Menu", customBackground);
             //
@@ -1262,12 +1265,32 @@ public class DebugGUI : MonoBehaviour
                 }
             }
 
-                //
-                // - - - File Menu - - -
-                //
+            //thirteenth button
+            offset = 12;
+            if (GUI.Button(new Rect(box_level + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), optionTileDisplay))
+            {
+                Debug.Log("[Dbg] Button -> Toggle Surveillance Nodes On/Off");
+                switch (tileDisplayToggle)
+                {
+                    case 0:
+                        GameManager.i.levelScript.DebugDisplaySurveillanceTiles(true);
+                        optionTileDisplay = "Show Surv Tiles";
+                        tileDisplayToggle = 1;
+                        break;
+                    case 1:
+                        GameManager.i.levelScript.DebugDisplaySurveillanceTiles(false);
+                        optionTileDisplay = "Restore Tiles";
+                        tileDisplayToggle = 0;
+                        break;
+                }
+            }
 
-                //first button
-                offset = 0;
+            //
+            // - - - File Menu - - -
+            //
+
+            //first button
+            offset = 0;
             if (GUI.Button(new Rect(box_file + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), "Export TextLists"))
             {
                 Debug.Log("[Dbg] Button -> Export TextLists");
