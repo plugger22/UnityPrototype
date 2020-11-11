@@ -14,6 +14,7 @@ public class Car : MonoBehaviour
 
     private Node nodeDestination;
     private Vector3 destinationPos;
+    private Transform lightTransform;                   //only used if lightObject present (carSurveil), ignored otherwise
     [HideInInspector] public int destinationID = -1;     //ID used to find item in listOfCars
 
     private float altitude;             //y coord
@@ -34,6 +35,11 @@ public class Car : MonoBehaviour
     {
         Debug.Assert(carObject != null, "Invalid carObject (Null)");
         Debug.Assert(sirenObject != null, "Invalid sirenObject (Null)");
+        if (lightObject != null)
+        {
+            lightTransform = lightObject.GetComponent<Transform>();
+            Debug.Assert(lightTransform != null, "Invalid lightTransform (Null)");
+        }
     }
 
 
@@ -253,10 +259,31 @@ public class Car : MonoBehaviour
     {
         float timeElapsed = 0.0f;
         float timeLimit = 6.0f;
+        float lowerLimit = -3f;
+        float upperLimit = 3f;
+        float x_angle = 0f;
+        float adjust;
+        float speed = 2.0f;
+        bool isGrowing = true;
+        Vector3 axis = Vector3.right;
         lightObject.SetActive(true);
         do
         {
             timeElapsed += Time.deltaTime;
+            adjust = Time.deltaTime / speed;
+            if (isGrowing == true)
+            {
+                x_angle += adjust;
+                if (x_angle >= upperLimit)
+                { isGrowing = false; }
+            }
+            else
+            {
+                x_angle -= adjust;
+                if (x_angle <= lowerLimit)
+                { isGrowing = true; }
+            }
+            lightTransform.Rotate(Vector3.right, Mathf.Abs(x_angle), Space.World);
             yield return null;
         }
         while (timeElapsed < timeLimit);

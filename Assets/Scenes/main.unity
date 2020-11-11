@@ -9374,11 +9374,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 207163850}
   m_CullTransparentMesh: 0
---- !u!1 &209852580 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1694241124820906, guid: 1edcf9f8a1dcd2747ba2256103c5f32f,
-    type: 2}
-  m_PrefabInternal: {fileID: 1911271839}
 --- !u!114 &210027071 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114183179448910338, guid: 3a4adbf33b13e3e499908367387ad592,
@@ -12261,11 +12256,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1835622502121980, guid: 297a32040a7a14548a9913b93f63f547,
     type: 2}
   m_PrefabInternal: {fileID: 1409061339}
---- !u!1 &301146662 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1541533808786112, guid: 1edcf9f8a1dcd2747ba2256103c5f32f,
-    type: 2}
-  m_PrefabInternal: {fileID: 1911271839}
 --- !u!1001 &303005212
 Prefab:
   m_ObjectHideFlags: 0
@@ -77148,22 +77138,8 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1483042934796056, guid: 1edcf9f8a1dcd2747ba2256103c5f32f, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1694241124820906, guid: 1edcf9f8a1dcd2747ba2256103c5f32f, type: 2}
-      propertyPath: m_Name
-      value: Searchlight
-      objectReference: {fileID: 0}
-    - target: {fileID: 114417324699491674, guid: 1edcf9f8a1dcd2747ba2256103c5f32f,
-        type: 2}
-      propertyPath: sirenObject
-      value: 
-      objectReference: {fileID: 301146662}
-    - target: {fileID: 114417324699491674, guid: 1edcf9f8a1dcd2747ba2256103c5f32f,
-        type: 2}
-      propertyPath: lightObject
-      value: 
-      objectReference: {fileID: 209852580}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1edcf9f8a1dcd2747ba2256103c5f32f, type: 2}
   m_IsPrefabAsset: 0

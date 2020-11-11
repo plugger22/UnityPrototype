@@ -21122,3 +21122,27 @@ Car+<FlashSiren>c__Iterator3.MoveNext () (at Assets/Scripts/Base Classes/Car.cs:
 	
 Dev seed 33699 -> Wednesday, 11 November 2020 5:20 PM
 City seed 234 -> Sydsprawl, Chinock
+
+Dev seed 38775 -> Wednesday, 11 November 2020 8:34 PM
+City seed 234 -> Sydsprawl, Chinock
+
+Dev seed 64864 -> Wednesday, 11 November 2020 8:36 PM
+City seed 765 -> Newpolis, Americon
+
+Dev seed 11798 -> Wednesday, 11 November 2020 8:44 PM
+City seed 765 -> Newpolis, Americon
+
+Dev seed 27101 -> Wednesday, 11 November 2020 8:49 PM
+City seed 765 -> Newpolis, Americon
+
+Dev seed 2969 -> Wednesday, 11 November 2020 8:51 PM
+City seed 765 -> Newpolis, Americon
+
+Dev seed 11708 -> Wednesday, 11 November 2020 8:56 PM
+City seed 765 -> Newpolis, Americon
+
+Dev seed 33900 -> Wednesday, 11 November 2020 8:57 PM
+City seed 765 -> Newpolis, Americon
+
+Dev seed 7326 -> Wednesday, 11 November 2020 8:58 PM
+City seed 765 -> Newpolis, Americon

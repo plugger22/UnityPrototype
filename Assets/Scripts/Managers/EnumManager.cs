@@ -52,7 +52,7 @@
     //
     // - - - Animation - - -
     //
-    public enum CarType { Normal, Police, Rogue, Bus }
+    public enum CarType { Normal, Police, Rogue, Bus, Surveil }
 
     //
     // - - - ItemData / MetaData - - -

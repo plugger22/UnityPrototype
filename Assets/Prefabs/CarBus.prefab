@@ -384,7 +384,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carObject: {fileID: 1175669282745626}
-  lightObject: {fileID: 1781136554859284}
+  sirenObject: {fileID: 1781136554859284}
+  lightObject: {fileID: 0}
   destinationID: -1
 --- !u!135 &135143491930193930
 SphereCollider:

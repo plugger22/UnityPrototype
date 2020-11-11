@@ -252,7 +252,7 @@ public class AnimationManager : MonoBehaviour
         float waitInterval = 2.0f;
         float minTrafficHeight = 1.00f;
         //each turn has a variable number of cars in flight at any one time to give variety
-        int maxNumOfCars = GetRandomTrafficNumber();
+        int maxNumOfCars = GetRandomTrafficNumber() + 1;
         Vector3 startPos = posAirport;
         startPos.y = minTrafficHeight;
         GameObject instanceCar;
@@ -347,7 +347,7 @@ public class AnimationManager : MonoBehaviour
                     //add to list
                     listOfCars.Add(car);
                     //flight profile
-                    CarData data = GetCarData(CarType.Police);
+                    CarData data = GetCarData(CarType.Surveil);
                     //turn off light
                     car.lightObject.SetActive(false);
                     while (true)
@@ -517,6 +517,13 @@ public class AnimationManager : MonoBehaviour
                 data.horizontalSpeed = 0.25f;
                 data.hoverDelay = 0.5f;
                 data.isSiren = false;
+                break;
+            case CarType.Surveil:
+                data.cruiseAltitude = 2.25f;
+                data.verticalSpeed = 0.4f;
+                data.horizontalSpeed = 0.4f;
+                data.hoverDelay = 0.75f;
+                data.isSiren = true;
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised carType \"{0}\"", carType);
