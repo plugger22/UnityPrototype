@@ -151,7 +151,7 @@ public class DebugGUI : MonoBehaviour
             //background box (Actions)
             GUI.Box(new Rect(box_action, box_y, box_width, box_height + 340), "Action Menu", customBackground);
             //background box (Map)
-            GUI.Box(new Rect(box_level, box_y, box_width, box_height / 2 + 140), "Map Menu", customBackground);
+            GUI.Box(new Rect(box_level, box_y, box_width, box_height / 2 + 130), "Map Menu", customBackground);
             //background box (File Ops)
             GUI.Box(new Rect(box_file, box_y, box_width, box_height / 2 + 60), "File Menu", customBackground);
             //

@@ -15,6 +15,7 @@ public class AnimationManager : MonoBehaviour
     public GameObject carPolice;
     public GameObject carBus;
     public GameObject carRogue;
+    public GameObject carSurveil;
 
     [Header("Materials (Animation")]
     [Tooltip("Place any material in here that would be suitable for background tile animations (tile0 flashing sequence). Materials are randomly chosen from list")]
@@ -35,6 +36,7 @@ public class AnimationManager : MonoBehaviour
     private Coroutine myCoroutineTileOthers;
     private Coroutine myCoroutineSignage;
     private Coroutine myCoroutineTraffic;
+    private Coroutine myCoroutineSurveil;
 
     private List<Car> listOfCars = new List<Car>();        //holds all active instances of Cars
     private List<int> listOfCarNumbers = new List<int> { 1, 1, 1, 1, 2, 2, 5, 5 };
@@ -74,6 +76,7 @@ public class AnimationManager : MonoBehaviour
         Debug.Assert(carPolice != null, "Invalid carPolice (Null)");
         Debug.Assert(carBus != null, "Invalid carBus (Null)");
         Debug.Assert(carRogue != null, "Invalid carRogue (Null)");
+        Debug.Assert(carSurveil != null, "Invalid carSurveil (Null)");
         //Get airport position
         int nodeID = GameManager.i.cityScript.airportDistrictID;
         nodeAirport = GameManager.i.dataScript.GetNode(nodeID);
@@ -126,6 +129,7 @@ public class AnimationManager : MonoBehaviour
         myCoroutineTileOthers = StartCoroutine("AnimateTileOthers");
         myCoroutineSignage = StartCoroutine("AnimateSignage");
         myCoroutineTraffic = StartCoroutine("AnimateTraffic");
+        myCoroutineSurveil = StartCoroutine("AnimateSurveillance");
     }
 
     /// <summary>
@@ -138,6 +142,7 @@ public class AnimationManager : MonoBehaviour
         if (myCoroutineTileOthers != null) { StopCoroutine(myCoroutineTileOthers); }
         if (myCoroutineSignage != null) { StopCoroutine(myCoroutineSignage); }
         if (myCoroutineTraffic != null) { StopCoroutine(myCoroutineTraffic); }
+        if (myCoroutineSurveil != null) { StopCoroutine(myCoroutineSurveil); }
         ResetTraffic();
     }
 
@@ -291,7 +296,7 @@ public class AnimationManager : MonoBehaviour
                             {
                                 instanceCar.SetActive(true);
                                 //run car animation sequence (moves from airport to destination node with vertical lift/ease at start and finish)
-                                car.StartCoroutines(startPos);
+                                car.StartCoroutineTraffic(startPos);
                             }
                             else
                             {
@@ -314,6 +319,79 @@ public class AnimationManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Generates a single surveillance car which randomly moves around map (surveillance tiles -> no nodes/no connection overlays), inspecting tiles with a searchlight
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator AnimateSurveillance()
+    {
+        GameObject instanceCar;
+        Car car;
+        float waitInterval = 1.5f;
+        float searchInterval = 2.0f;
+        float minTrafficHeight = 1.00f;
+        Vector3 startPos = posAirport;
+        startPos.y = minTrafficHeight;
+        List<Vector3> listOfPositions = GameManager.i.levelScript.GetListOfSurveillanceTiles();
+        Vector3 destination;
+        if (listOfPositions != null)
+        {
+            yield return new WaitForSeconds(waitInterval);
+            //generate a new car instance if none currently onMap
+            instanceCar = Instantiate(carSurveil, startPos, Quaternion.identity) as GameObject;
+            instanceCar.SetActive(false);
+            if (instanceCar != null)
+            {
+                car = instanceCar.GetComponent<Car>();
+                if (car != null)
+                {
+                    //add to list
+                    listOfCars.Add(car);
+                    //flight profile
+                    CarData data = GetCarData(CarType.Police);
+                    //turn off light
+                    car.lightObject.SetActive(false);
+                    while (true)
+                    {
+                        //Select node for destination
+                        destination = listOfPositions[Random.Range(0, listOfPositions.Count)];
+                        //new destination?
+                        if (car.CheckIfCurrentDestination(destination) == false)
+                        {
+                            //initialise flight plan
+                            car.InitialiseCar(destination, data);
+                            //animation sequence
+                            instanceCar.SetActive(true);
+                            //move car
+                            yield return car.StartCoroutine("MoveCarSurveil", startPos);
+                            //activate searchlight
+                            yield return car.StartCoroutine("ShowSearchlight");
+                            //update startPosition
+                            startPos = car.GetCurrentPosition();
+                        }
+                        else
+                        {
+                            //existing destination -> wait
+                            yield return new WaitForSeconds(searchInterval);
+                        }
+                    }
+                }
+                else
+                {
+                    Debug.LogError("CarSurveil has an invalid car component (Null)");
+                    GameManager.i.SafeDestroy(instanceCar);
+                }
+
+            }
+        }
+        else { Debug.LogError("Invalid listOfSurveillanceTiles (Null)"); }
+    }
+
+
+    //
+    // - - - Utilities
+    //
+
+    /// <summary>
     /// Reset traffic at end of turn
     private void ResetTraffic()
     /// </summary>
@@ -327,7 +405,7 @@ public class AnimationManager : MonoBehaviour
                 if (car != null)
                 {
                     //destroy
-                    car.StopCoroutines();
+                    car.StopCoroutineTraffic();
                     GameManager.i.SafeDestroy(car.carObject);
                     /*Debug.LogFormat("[Tst] AnimationManager.cs -> ResetTraffic: car destinationID {0} DESTROYED{1}", car.destinationID, "\n");*/
                 }

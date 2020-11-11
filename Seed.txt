@@ -20711,3 +20711,414 @@ City seed 1616 -> Mexurb, Americon
 
 Dev seed 1133 -> Wednesday, 11 November 2020 12:40 PM
 City seed 1616 -> Mexurb, Americon
+
+Dev seed 26252 -> Wednesday, 11 November 2020 2:32 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 28265 -> Wednesday, 11 November 2020 2:33 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 10962 -> Wednesday, 11 November 2020 2:34 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 35250 -> Wednesday, 11 November 2020 2:38 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 17390 -> Wednesday, 11 November 2020 2:39 PM
+City seed 890 -> Arlarc, Eurasia
+ASSERT ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument argument, System.ExceptionResource resource) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.ThrowHelper.ThrowArgumentOutOfRangeException () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].RemoveAt (System.Int32 index) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	LevelManager.InitialiseSurveillanceTiles () (at Assets/Scripts/Managers/LevelManager.cs:1518)
+	LevelManager.SubInitialiseAll () (at Assets/Scripts/Managers/LevelManager.cs:154)
+	LevelManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/LevelManager.cs:96)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:852)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:905)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:405)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node+<ShowTooltip>c__Iterator0.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:476)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	
+Dev seed 39474 -> Wednesday, 11 November 2020 2:52 PM
+City seed 890 -> Arlarc, Eurasia
+
+Dev seed 56029 -> Wednesday, 11 November 2020 3:20 PM
+City seed 890 -> Arlarc, Eurasia
+
+Dev seed 50031 -> Wednesday, 11 November 2020 3:21 PM
+City seed 890 -> Arlarc, Eurasia
+
+Dev seed 30615 -> Wednesday, 11 November 2020 3:34 PM
+City seed 890 -> Arlarc, Eurasia
+
+Dev seed 24583 -> Wednesday, 11 November 2020 3:35 PM
+City seed 890 -> Arlarc, Eurasia
+
+Dev seed 43771 -> Wednesday, 11 November 2020 3:36 PM
+City seed 890 -> Arlarc, Eurasia
+
+Dev seed 62191 -> Wednesday, 11 November 2020 3:37 PM
+City seed 890 -> Arlarc, Eurasia
+
+Dev seed 4746 -> Wednesday, 11 November 2020 3:48 PM
+City seed 234 -> Sydsprawl, Chinock
+
+Dev seed 3721 -> Wednesday, 11 November 2020 5:07 PM
+City seed 234 -> Sydsprawl, Chinock
+ERROR Coroutine 'MoveCarSurveil' couldn't be started because the the game object 'CarSurveil(Clone)' is inactive!
+UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<AnimateSurveillance>c__Iterator5:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:362)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ERROR Coroutine 'ShowSearchlight' couldn't be started because the the game object 'CarSurveil(Clone)' is inactive!
+UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<AnimateSurveillance>c__Iterator5:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:364)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 57745 -> Wednesday, 11 November 2020 5:09 PM
+City seed 234 -> Sydsprawl, Chinock
+ERROR Failed to call function MoveCarSurveil of class Car
+Calling function MoveCarSurveil with no parameters but the function requires 1.
+UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<AnimateSurveillance>c__Iterator5:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:362)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 50525 -> Wednesday, 11 November 2020 5:10 PM
+City seed 234 -> Sydsprawl, Chinock
+ASSERT UnassignedReferenceException: The variable sirenObject of Car has not been assigned.
+You probably need to assign the sirenObject variable of the Car script in the inspector.
+Car+<FlashSiren>c__Iterator3.MoveNext () (at Assets/Scripts/Base Classes/Car.cs:298)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<MoveCar>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Car.cs:92)
+	UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+	Car:StartCoroutineTraffic(Vector3) (at Assets/Scripts/Base Classes/Car.cs:313)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:299)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ASSERT UnassignedReferenceException: The variable sirenObject of Car has not been assigned.
+You probably need to assign the sirenObject variable of the Car script in the inspector.
+Car+<FlashSiren>c__Iterator3.MoveNext () (at Assets/Scripts/Base Classes/Car.cs:298)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<MoveCar>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Car.cs:92)
+	UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+	Car:StartCoroutineTraffic(Vector3) (at Assets/Scripts/Base Classes/Car.cs:313)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:299)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ASSERT UnassignedReferenceException: The variable sirenObject of Car has not been assigned.
+You probably need to assign the sirenObject variable of the Car script in the inspector.
+Car+<FlashSiren>c__Iterator3.MoveNext () (at Assets/Scripts/Base Classes/Car.cs:298)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<MoveCar>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Car.cs:92)
+	UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+	Car:StartCoroutineTraffic(Vector3) (at Assets/Scripts/Base Classes/Car.cs:313)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:299)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ASSERT UnassignedReferenceException: The variable sirenObject of Car has not been assigned.
+You probably need to assign the sirenObject variable of the Car script in the inspector.
+Car+<FlashSiren>c__Iterator3.MoveNext () (at Assets/Scripts/Base Classes/Car.cs:298)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<MoveCar>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Car.cs:92)
+	UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+	Car:StartCoroutineTraffic(Vector3) (at Assets/Scripts/Base Classes/Car.cs:313)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:299)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ASSERT UnassignedReferenceException: The variable sirenObject of Car has not been assigned.
+You probably need to assign the sirenObject variable of the Car script in the inspector.
+Car+<FlashSiren>c__Iterator3.MoveNext () (at Assets/Scripts/Base Classes/Car.cs:298)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<MoveCar>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Car.cs:92)
+	UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+	Car:StartCoroutineTraffic(Vector3) (at Assets/Scripts/Base Classes/Car.cs:313)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:299)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ASSERT UnassignedReferenceException: The variable sirenObject of Car has not been assigned.
+You probably need to assign the sirenObject variable of the Car script in the inspector.
+Car+<FlashSiren>c__Iterator3.MoveNext () (at Assets/Scripts/Base Classes/Car.cs:298)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<MoveCar>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Car.cs:92)
+	UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+	Car:StartCoroutineTraffic(Vector3) (at Assets/Scripts/Base Classes/Car.cs:313)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:299)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ASSERT UnassignedReferenceException: The variable sirenObject of Car has not been assigned.
+You probably need to assign the sirenObject variable of the Car script in the inspector.
+Car+<FlashSiren>c__Iterator3.MoveNext () (at Assets/Scripts/Base Classes/Car.cs:298)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<MoveCar>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Car.cs:92)
+	UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+	Car:StartCoroutineTraffic(Vector3) (at Assets/Scripts/Base Classes/Car.cs:313)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:299)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ASSERT UnassignedReferenceException: The variable sirenObject of Car has not been assigned.
+You probably need to assign the sirenObject variable of the Car script in the inspector.
+Car+<FlashSiren>c__Iterator3.MoveNext () (at Assets/Scripts/Base Classes/Car.cs:298)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<MoveCar>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Car.cs:92)
+	UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+	Car:StartCoroutineTraffic(Vector3) (at Assets/Scripts/Base Classes/Car.cs:313)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:299)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ASSERT UnassignedReferenceException: The variable sirenObject of Car has not been assigned.
+You probably need to assign the sirenObject variable of the Car script in the inspector.
+Car+<FlashSiren>c__Iterator3.MoveNext () (at Assets/Scripts/Base Classes/Car.cs:298)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<MoveCar>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Car.cs:92)
+	UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+	Car:StartCoroutineTraffic(Vector3) (at Assets/Scripts/Base Classes/Car.cs:313)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:299)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ASSERT UnassignedReferenceException: The variable sirenObject of Car has not been assigned.
+You probably need to assign the sirenObject variable of the Car script in the inspector.
+Car+<FlashSiren>c__Iterator3.MoveNext () (at Assets/Scripts/Base Classes/Car.cs:298)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<MoveCar>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Car.cs:92)
+	UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+	Car:StartCoroutineTraffic(Vector3) (at Assets/Scripts/Base Classes/Car.cs:313)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:299)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ASSERT UnassignedReferenceException: The variable sirenObject of Car has not been assigned.
+You probably need to assign the sirenObject variable of the Car script in the inspector.
+Car+<FlashSiren>c__Iterator3.MoveNext () (at Assets/Scripts/Base Classes/Car.cs:298)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<MoveCar>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Car.cs:92)
+	UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+	Car:StartCoroutineTraffic(Vector3) (at Assets/Scripts/Base Classes/Car.cs:313)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:299)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ASSERT UnassignedReferenceException: The variable sirenObject of Car has not been assigned.
+You probably need to assign the sirenObject variable of the Car script in the inspector.
+Car+<FlashSiren>c__Iterator3.MoveNext () (at Assets/Scripts/Base Classes/Car.cs:298)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<MoveCar>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Car.cs:92)
+	UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+	Car:StartCoroutineTraffic(Vector3) (at Assets/Scripts/Base Classes/Car.cs:313)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:299)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ASSERT UnassignedReferenceException: The variable sirenObject of Car has not been assigned.
+You probably need to assign the sirenObject variable of the Car script in the inspector.
+Car+<FlashSiren>c__Iterator3.MoveNext () (at Assets/Scripts/Base Classes/Car.cs:298)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<MoveCar>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Car.cs:92)
+	UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+	Car:StartCoroutineTraffic(Vector3) (at Assets/Scripts/Base Classes/Car.cs:313)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:299)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ASSERT UnassignedReferenceException: The variable sirenObject of Car has not been assigned.
+You probably need to assign the sirenObject variable of the Car script in the inspector.
+Car+<FlashSiren>c__Iterator3.MoveNext () (at Assets/Scripts/Base Classes/Car.cs:298)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<MoveCar>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Car.cs:92)
+	UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+	Car:StartCoroutineTraffic(Vector3) (at Assets/Scripts/Base Classes/Car.cs:313)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:299)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ASSERT UnassignedReferenceException: The variable sirenObject of Car has not been assigned.
+You probably need to assign the sirenObject variable of the Car script in the inspector.
+Car+<FlashSiren>c__Iterator3.MoveNext () (at Assets/Scripts/Base Classes/Car.cs:298)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	UnityEngine.MonoBehaviour:StartCoroutine(String)
+	<MoveCar>c__Iterator0:MoveNext() (at Assets/Scripts/Base Classes/Car.cs:92)
+	UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+	Car:StartCoroutineTraffic(Vector3) (at Assets/Scripts/Base Classes/Car.cs:313)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:299)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 33699 -> Wednesday, 11 November 2020 5:20 PM
+City seed 234 -> Sydsprawl, Chinock
