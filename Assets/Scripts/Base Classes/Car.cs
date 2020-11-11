@@ -12,7 +12,7 @@ public class Car : MonoBehaviour
     [Tooltip("Searchlight (carSurveil) ignore for all others")]
     public GameObject lightObject;      //searchLight -> not all cars have this, only carSurveil
 
-    private Node nodeDestination;
+    /*private Node nodeDestination;*/
     private Vector3 destinationPos;
     private Transform lightTransform;                   //only used if lightObject present (carSurveil), ignored otherwise
     [HideInInspector] public int destinationID = -1;     //ID used to find item in listOfCars
@@ -51,7 +51,7 @@ public class Car : MonoBehaviour
     {
         if (node != null)
         {
-            nodeDestination = node;
+            /*nodeDestination = node;*/
             destinationPos = node.nodePosition;
             destinationID = node.nodeID;
             flightAltitude = data.cruiseAltitude;
@@ -190,7 +190,6 @@ public class Car : MonoBehaviour
             //siren
             if (isSiren == true)
             { StartCoroutine("FlashSiren"); }
-            float startAltitude = startPosition.y;
             Quaternion quaternionTarget = new Quaternion();
             Vector3 destination = new Vector3(destinationPos.x, flightAltitude, destinationPos.z);
             /*Debug.LogFormat("[Tst] Car.cs -> MoveCar: Destination x_cord {0}, y_cord {1}, z_cord {2}{3}", destination.x, destination.y, destination.z, "\n");*/
@@ -259,35 +258,51 @@ public class Car : MonoBehaviour
     {
         float timeElapsed = 0.0f;
         float timeLimit = 6.0f;
-        float lowerLimit = -3f;
-        float upperLimit = 3f;
-        float x_angle = 0f;
-        float adjust;
-        float speed = 2.0f;
+        float limit = 0.035f;           //no relation to value in inspector -> weird number, something to do with Eulers
+        float adjust = 0f;
+        float speed = 6.0f;
         bool isGrowing = true;
-        Vector3 axis = Vector3.right;
+        Quaternion originalRotation = lightTransform.rotation;
         lightObject.SetActive(true);
+        float difference;
+        float start = Mathf.Abs(lightTransform.rotation.x);
         do
         {
             timeElapsed += Time.deltaTime;
-            adjust = Time.deltaTime / speed;
+            adjust = Time.deltaTime * speed;
+
             if (isGrowing == true)
             {
-                x_angle += adjust;
-                if (x_angle >= upperLimit)
-                { isGrowing = false; }
+                lightTransform.Rotate(Vector3.right, adjust);
+                difference = Mathf.Abs(lightTransform.rotation.x) - start;
+                if (difference > limit)
+                {
+                    isGrowing = false;
+                    difference = 0.0f;
+                    start = Mathf.Abs(lightTransform.rotation.x);
+                }
             }
             else
             {
-                x_angle -= adjust;
-                if (x_angle <= lowerLimit)
-                { isGrowing = true; }
+                lightTransform.Rotate(Vector3.right * -1, adjust);
+                difference = Mathf.Abs(lightTransform.rotation.x) - start;
+                if (difference > limit)
+                {
+                    isGrowing = true;
+                    difference = 0.0f;
+                    start = Mathf.Abs(lightTransform.rotation.x);
+                }
             }
-            lightTransform.Rotate(Vector3.right, Mathf.Abs(x_angle), Space.World);
+ 
+            Debug.LogFormat("[Tst] Car.cs -> ShowSearchlight: isGrowing {0}, rotation.x {1}, diff {2}{3}", isGrowing, lightTransform.rotation.x, difference, "\n");
             yield return null;
         }
         while (timeElapsed < timeLimit);
+        //switch off light
         lightObject.SetActive(false);
+        //restore original rotation
+        lightTransform.rotation = originalRotation;
+        Debug.LogFormat("[Tst] Car.cs -> ShowSearchlight: End coroutine - - - - - - {0}", "\n");
     }
 
     /// <summary>
