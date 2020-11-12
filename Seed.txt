@@ -21203,3 +21203,15 @@ City seed 765 -> Newpolis, Americon
 
 Dev seed 344 -> Thursday, 12 November 2020 11:33 AM
 City seed 765 -> Newpolis, Americon
+
+Dev seed 57315 -> Thursday, 12 November 2020 12:31 PM
+City seed 765 -> Newpolis, Americon
+
+Dev seed 55506 -> Thursday, 12 November 2020 3:05 PM
+City seed 765 -> Newpolis, Americon
+
+Dev seed 41800 -> Thursday, 12 November 2020 3:14 PM
+City seed 890 -> Arlarc, Eurasia
+
+Dev seed 9121 -> Thursday, 12 November 2020 3:17 PM
+City seed 890 -> Arlarc, Eurasia

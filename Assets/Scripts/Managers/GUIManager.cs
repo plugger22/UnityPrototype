@@ -42,7 +42,7 @@ public class GUIManager : MonoBehaviour
 
     [Header("Connections")]
     [Tooltip("Speed at which the 'ball' moves along a connection (higher the number, the slower)")]
-    [Range(0f, 5f)] public float connectionSpeed = 2.5f;
+    [Range(0f, 5f)] public float connectionSpeed = 3.5f;
     [Tooltip("The delay in seconds between successive connection movement sequences, eg. there is a pause after one connection coroutine finishes and the next starts")]
     [Range(0f, 2f)] public float connectionDelay = 0.5f;
     [Tooltip("The chance (%) of a connection repeating the same movement. If fail roll then end of that connections animation, otherwise will keep repeating while roll keeps succeeding")]
@@ -69,6 +69,28 @@ public class GUIManager : MonoBehaviour
     [Range(0, 20)] public int signageRandom = 10;
     [Tooltip("The chance (%) of an initial signage sequence (sign0 animation) morphing into follow on sequence (all of sign toggled on/off")]
     [Range(0, 100)] public int signageRepeat = 50;
+
+    [Header("Traffic")]
+    [Tooltip("Initial pause and same for random pauses in generating new cars due animation sequence (seconds)")]
+    [Range(0f, 5f)] public float trafficWaitTime = 2.0f;
+    [Tooltip("Altitude at which cars are instantiated above a node and destroyed")]
+    [Range(0f, 2.0f)] public float trafficHeightMin = 1.0f;
+    [Tooltip("Chance (1d1000) of a dead period happening during sequence and nothing happens for trafficWaitTime")]
+    [Range(0, 20)] public int trafficChancePause = 3;
+    [Tooltip("Basic chance (1d100) of a new car being generated every iteration")]
+    [Range(1, 20)] public int trafficChanceCar = 1;
+    [Tooltip("Minimum distance (in connection links) that a destination node must be (>=) from Airport before being placed in the selection pool")]
+    [Range(1, 10)] public int trafficNodeDistanceMin = 4;
+
+    [Header("Surveillance")]
+    [Tooltip("Altitude at which surveillance occus")]
+    [Range(0.5f, 1.5f)] public float surveilAltitude = 1.0f;
+    [Tooltip("Initial pause (multiplied by a random amount of surveilWaitFactor) prior to sequence commencing at start of turn")]
+    [Range(0f, 3.0f)] public float surveilWaitInterval = 1.5f;
+    [Tooltip("Factor by which surveilWaitInterval is multiplied by a random1dFactor to get initial wait time prior to starting sequence")]
+    [Range(0, 10)] public int surveilWaitFactor = 5;
+    [Tooltip("Altitude at which carSurveil is initiated at Airport")]
+    [Range(0.5f, 1.5f)] public float surveilHeightStart = 1.0f;
 
     [Header("PopUp Texts")]
     [Tooltip("How long the full animation cycle lasts (seconds)")]

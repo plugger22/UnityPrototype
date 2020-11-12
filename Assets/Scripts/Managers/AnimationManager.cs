@@ -25,6 +25,15 @@ public class AnimationManager : MonoBehaviour
     private float connectionSpeed = -1;
     private float connectionDelay = -1;
     private float tileDelay = -1;
+    private float trafficWaitTime = -1;
+    private float trafficHeightMin = -1;
+    private int trafficPauseChance = -1;
+    private int trafficCarChance = -1;
+    private int trafficNodeDistanceMin = -1;
+    private float surveilAltitude = -1;
+    private float surveilWaitInterval = -1;
+    private int surveilWaitFactor = -1;
+    private float surveilHeightStart = -1;
 
     private Transform carHolder;
     private Vector3 posAirport;
@@ -97,9 +106,27 @@ public class AnimationManager : MonoBehaviour
         connectionSpeed = GameManager.i.guiScript.connectionSpeed;
         connectionDelay = GameManager.i.guiScript.connectionDelay;
         tileDelay = GameManager.i.guiScript.tileDelay;
+        trafficWaitTime = GameManager.i.guiScript.trafficWaitTime;
+        trafficHeightMin = GameManager.i.guiScript.trafficHeightMin;
+        trafficPauseChance = GameManager.i.guiScript.trafficChancePause;
+        trafficCarChance = GameManager.i.guiScript.trafficChanceCar;
+        trafficNodeDistanceMin = GameManager.i.guiScript.trafficNodeDistanceMin;
+        surveilAltitude = GameManager.i.guiScript.surveilAltitude;
+        surveilWaitInterval = GameManager.i.guiScript.surveilWaitInterval;
+        surveilWaitFactor = GameManager.i.guiScript.surveilWaitFactor;
+        surveilHeightStart = GameManager.i.guiScript.surveilHeightStart;
         Debug.Assert(connectionSpeed > -1, "Invalid connectionSpeed (-1)");
         Debug.Assert(connectionDelay > -1, "Invalid connectionDelay (-1)");
         Debug.Assert(tileDelay > -1, "Invalid tileDelay (-1)");
+        Debug.Assert(trafficWaitTime > -1, "Invalid trafficWaitTime (-1)");
+        Debug.Assert(trafficHeightMin > -1, "Invalid trafficHeightMin (-1)");
+        Debug.Assert(trafficPauseChance > -1, "Invalid trafficPauseChance (-1)");
+        Debug.Assert(trafficCarChance > -1, "Invalid trafficCarChance (-1)");
+        Debug.Assert(trafficNodeDistanceMin > -1, "Invalid trafficNodeDistanceMin (-1)");
+        Debug.Assert(surveilAltitude > -1, "Invalid surveilAltitude (-1)");
+        Debug.Assert(surveilWaitInterval > -1, "Invalid surveilWaitInterval (-1)");
+        Debug.Assert(surveilWaitFactor > -1, "Invalid surveilWaitFactor (-1)");
+        Debug.Assert(surveilHeightStart > -1, "Invalid surveilHeightStart (-1)");
     }
     #endregion
 
@@ -155,6 +182,7 @@ public class AnimationManager : MonoBehaviour
         if (myCoroutineTraffic != null) { StopCoroutine(myCoroutineTraffic); }
         if (myCoroutineSurveil != null) { StopCoroutine(myCoroutineSurveil); }
         ResetTraffic();
+        ResetSurveillance();
     }
 
     /// <summary>
@@ -260,12 +288,10 @@ public class AnimationManager : MonoBehaviour
         CarType carType;
         bool isWait = false;
         //set starting position
-        float waitInterval = 2.0f;
-        float minTrafficHeight = 1.00f;
         //each turn has a variable number of cars in flight at any one time to give variety
         int maxNumOfCars = GetRandomTrafficNumber();
         Vector3 startPos = posAirport;
-        startPos.y = minTrafficHeight;
+        startPos.y = trafficHeightMin;
         GameObject instanceCar;
         Car car;
         CarData data;
@@ -273,7 +299,7 @@ public class AnimationManager : MonoBehaviour
         if (carHolder == null)
         { carHolder = new GameObject("MasterCar").transform; }
         //initial pause
-        yield return new WaitForSeconds(waitInterval);
+        yield return new WaitForSeconds(trafficWaitTime);
         while (true)
         {
             if (listOfCarsTraffic.Count < maxNumOfCars)
@@ -281,11 +307,11 @@ public class AnimationManager : MonoBehaviour
                 //introduce random dead periods -> ignore at start of turn
                 if (isWait == true)
                 {
-                    if (Random.Range(0, 1000) < 3)
-                    { yield return new WaitForSeconds(waitInterval); }
+                    if (Random.Range(0, 1000) < trafficPauseChance)
+                    { yield return new WaitForSeconds(trafficWaitTime); }
                 }
                 //generate new traffic at random intervals
-                if (Random.Range(0, 100) < 1)
+                if (Random.Range(0, 100) < trafficCarChance)
                 {
                     isWait = true;
                     carType = GetCarTypeTraffic();
@@ -295,7 +321,7 @@ public class AnimationManager : MonoBehaviour
                     if (instanceCar != null)
                     {
                         //Select node for destination
-                        Node node = GameManager.i.dijkstraScript.GetRandomNodeAtMaxDistance(nodeAirport, 4);
+                        Node node = GameManager.i.dijkstraScript.GetRandomNodeAtMaxDistance(nodeAirport, trafficNodeDistanceMin);
                         if (node != null)
                         {
                             car = instanceCar.GetComponent<Car>();
@@ -337,11 +363,9 @@ public class AnimationManager : MonoBehaviour
     {
         GameObject instanceCar;
         Car car;
-        float waitInterval = 1.5f * (1 + Random.Range(0, 5));
-        float searchInterval = 2.0f;
-        float minTrafficHeight = 1.00f;
+        float waitInterval = surveilWaitInterval * (1 + Random.Range(0, surveilWaitFactor));
         Vector3 startPos = posAirport;
-        startPos.y = minTrafficHeight;
+        startPos.y = surveilHeightStart;
         List<Vector3> listOfPositions = GameManager.i.levelScript.GetListOfSurveillanceTiles();
         Vector3 destination;
         if (listOfPositions != null)
@@ -359,6 +383,8 @@ public class AnimationManager : MonoBehaviour
                     listOfCarsSurveillance.Add(car);
                     //flight profile
                     CarData data = GetCarData(CarType.Surveil);
+                    //animation sequence
+                    instanceCar.SetActive(true);
                     //turn off light
                     car.lightObject.SetActive(false);
                     while (true)
@@ -370,20 +396,19 @@ public class AnimationManager : MonoBehaviour
                         {
                             //initialise flight plan
                             car.InitialiseCar(destination, data);
-                            //animation sequence
-                            instanceCar.SetActive(true);
                             //move car
                             yield return car.StartCoroutine("MoveCarSurveil", startPos);
                             //activate searchlight
                             yield return car.StartCoroutine("ShowSearchlight");
-                            //update startPosition
-                            startPos = car.GetCurrentPosition();
                         }
                         else
                         {
-                            //existing destination -> wait
-                            yield return new WaitForSeconds(searchInterval);
+                            //activate searchlight
+                            yield return car.StartCoroutine("ShowSearchlight");
+
                         }
+                        //update startPosition
+                        startPos = car.GetCurrentPosition();
                     }
                 }
                 else
@@ -404,8 +429,8 @@ public class AnimationManager : MonoBehaviour
 
     /// <summary>
     /// Reset traffic at end of turn
-    private void ResetTraffic()
     /// </summary>
+    private void ResetTraffic()
     {
         //Traffic
         if (listOfCarsTraffic.Count > 0)
@@ -426,6 +451,14 @@ public class AnimationManager : MonoBehaviour
             //empty list
             listOfCarsTraffic.Clear();
         }
+    }
+
+
+    /// <summary>
+    /// Reset surveillance at end of turn
+    /// </summary>
+    private void ResetSurveillance()
+    {
         //Surveillance
         if (listOfCarsSurveillance.Count > 0)
         {
@@ -552,6 +585,7 @@ public class AnimationManager : MonoBehaviour
                 break;
             case CarType.Surveil:
                 data.cruiseAltitude = 2.25f;
+                data.surveilAltitude = surveilAltitude;
                 data.verticalSpeed = 0.6f;
                 data.horizontalSpeed = 0.5f;
                 data.hoverDelay = 0.75f;

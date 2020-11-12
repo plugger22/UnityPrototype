@@ -19,7 +19,7 @@ public class Car : MonoBehaviour
 
     private float altitude;             //y coord
     private float flightAltitude;
-    private float surveilAltitude = 1.0f;
+    private float surveilAltitude;
     private float speedVertical;
     private float speedHorizontal;
     private float hoverDelay;
@@ -73,6 +73,7 @@ public class Car : MonoBehaviour
         destinationPos = pos;
         destinationID = 555;            //indicates surveil operation
         flightAltitude = data.cruiseAltitude;
+        surveilAltitude = data.surveilAltitude;
         speedHorizontal = data.horizontalSpeed;
         speedVertical = data.verticalSpeed;
         hoverDelay = data.hoverDelay;
