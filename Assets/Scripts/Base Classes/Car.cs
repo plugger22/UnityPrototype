@@ -19,7 +19,7 @@ public class Car : MonoBehaviour
 
     private float altitude;             //y coord
     private float flightAltitude;
-    private float surveilAltitude = 1.2f;
+    private float surveilAltitude = 1.0f;
     private float speedVertical;
     private float speedHorizontal;
     private float hoverDelay;
@@ -172,7 +172,7 @@ public class Car : MonoBehaviour
             }
             while (altitude > startAltitude);
             //remove from list
-            GameManager.i.animateScript.DeleteCar(destinationID);
+            GameManager.i.animateScript.DeleteCarTraffic(destinationID);
             //destroy car
             GameManager.i.SafeDestroy(carObject);
         }
@@ -257,11 +257,12 @@ public class Car : MonoBehaviour
     public IEnumerator ShowSearchlight()
     {
         float timeElapsed = 0.0f;
-        float timeLimit = 6.0f;
+        float timeLimit = (1 + Random.Range(0, 2)) * 6.0f;
         float limit = 0.035f;           //no relation to value in inspector -> weird number, something to do with Eulers
         float adjust = 0f;
         float speed = 6.0f;
         bool isGrowing = true;
+        //retain original rotation so it can be restored at end
         Quaternion originalRotation = lightTransform.rotation;
         lightObject.SetActive(true);
         float difference;
@@ -273,9 +274,10 @@ public class Car : MonoBehaviour
 
             if (isGrowing == true)
             {
+                //rotate light to the rear
                 lightTransform.Rotate(Vector3.right, adjust);
                 difference = Mathf.Abs(lightTransform.rotation.x) - start;
-                if (difference > limit)
+                if (Mathf.Abs(difference) > limit)
                 {
                     isGrowing = false;
                     difference = 0.0f;
@@ -284,17 +286,17 @@ public class Car : MonoBehaviour
             }
             else
             {
+                //rotate light forward
                 lightTransform.Rotate(Vector3.right * -1, adjust);
                 difference = Mathf.Abs(lightTransform.rotation.x) - start;
-                if (difference > limit)
+                if (Mathf.Abs(difference) > limit)
                 {
                     isGrowing = true;
                     difference = 0.0f;
                     start = Mathf.Abs(lightTransform.rotation.x);
                 }
             }
- 
-            Debug.LogFormat("[Tst] Car.cs -> ShowSearchlight: isGrowing {0}, rotation.x {1}, diff {2}{3}", isGrowing, lightTransform.rotation.x, difference, "\n");
+            /*Debug.LogFormat("[Tst] Car.cs -> ShowSearchlight: isGrowing {0}, rot.x {1}, diff {2}, start {3}{4}", isGrowing, lightTransform.rotation.x, difference, start, "\n");*/
             yield return null;
         }
         while (timeElapsed < timeLimit);
@@ -302,7 +304,7 @@ public class Car : MonoBehaviour
         lightObject.SetActive(false);
         //restore original rotation
         lightTransform.rotation = originalRotation;
-        Debug.LogFormat("[Tst] Car.cs -> ShowSearchlight: End coroutine - - - - - - {0}", "\n");
+        /*Debug.LogFormat("[Tst] Car.cs -> ShowSearchlight: End coroutine - - - - - - {0}", "\n");*/
     }
 
     /// <summary>

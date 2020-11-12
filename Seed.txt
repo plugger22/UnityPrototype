@@ -21176,3 +21176,30 @@ City seed 765 -> Newpolis, Americon
 
 Dev seed 56957 -> Thursday, 12 November 2020 10:16 AM
 City seed 765 -> Newpolis, Americon
+
+Dev seed 35805 -> Thursday, 12 November 2020 10:33 AM
+City seed 765 -> Newpolis, Americon
+
+Dev seed 48011 -> Thursday, 12 November 2020 10:33 AM
+City seed 765 -> Newpolis, Americon
+
+Dev seed 4151 -> Thursday, 12 November 2020 10:35 AM
+City seed 765 -> Newpolis, Americon
+
+Dev seed 13952 -> Thursday, 12 November 2020 10:40 AM
+City seed 765 -> Newpolis, Americon
+
+Dev seed 49789 -> Thursday, 12 November 2020 10:49 AM
+City seed 765 -> Newpolis, Americon
+
+Dev seed 36146 -> Thursday, 12 November 2020 11:04 AM
+City seed 765 -> Newpolis, Americon
+
+Dev seed 6041 -> Thursday, 12 November 2020 11:08 AM
+City seed 765 -> Newpolis, Americon
+
+Dev seed 39190 -> Thursday, 12 November 2020 11:28 AM
+City seed 765 -> Newpolis, Americon
+
+Dev seed 344 -> Thursday, 12 November 2020 11:33 AM
+City seed 765 -> Newpolis, Americon

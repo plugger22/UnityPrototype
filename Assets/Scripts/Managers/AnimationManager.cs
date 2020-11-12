@@ -38,7 +38,8 @@ public class AnimationManager : MonoBehaviour
     private Coroutine myCoroutineTraffic;
     private Coroutine myCoroutineSurveil;
 
-    private List<Car> listOfCars = new List<Car>();        //holds all active instances of Cars
+    private List<Car> listOfCarsTraffic = new List<Car>();        //holds all active instances of Cars involved in traffic animation
+    private List<Car> listOfCarsSurveillance = new List<Car>();   //holds active instance of (single) car involved in surveillance animation
     private List<int> listOfCarNumbers = new List<int> { 1, 1, 1, 1, 2, 2, 5, 5 };
 
     /// <summary>
@@ -110,10 +111,20 @@ public class AnimationManager : MonoBehaviour
         //remove any prefab car clones from previous level
         if (carHolder != null)
         {
-            if (carHolder.childCount > 0 && listOfCars.Count > 0)
+            if (carHolder.childCount > 0)
             {
-                for (int i = listOfCars.Count - 1; i >= 0; i--)
-                { GameManager.i.SafeDestroy(listOfCars[i].gameObject); }
+                //traffic
+                if (listOfCarsTraffic.Count > 0)
+                {
+                    for (int i = listOfCarsTraffic.Count - 1; i >= 0; i--)
+                    { GameManager.i.SafeDestroy(listOfCarsTraffic[i].gameObject); }
+                }
+                //surveillance
+                if (listOfCarsSurveillance.Count > 0)
+                {
+                    for (int i = listOfCarsSurveillance.Count - 1; i >= 0; i--)
+                    { GameManager.i.SafeDestroy(listOfCarsSurveillance[i].gameObject); }
+                }
             }
         }
     }
@@ -252,7 +263,7 @@ public class AnimationManager : MonoBehaviour
         float waitInterval = 2.0f;
         float minTrafficHeight = 1.00f;
         //each turn has a variable number of cars in flight at any one time to give variety
-        int maxNumOfCars = GetRandomTrafficNumber() + 1;
+        int maxNumOfCars = GetRandomTrafficNumber();
         Vector3 startPos = posAirport;
         startPos.y = minTrafficHeight;
         GameObject instanceCar;
@@ -265,7 +276,7 @@ public class AnimationManager : MonoBehaviour
         yield return new WaitForSeconds(waitInterval);
         while (true)
         {
-            if (listOfCars.Count < maxNumOfCars)
+            if (listOfCarsTraffic.Count < maxNumOfCars)
             {
                 //introduce random dead periods -> ignore at start of turn
                 if (isWait == true)
@@ -277,9 +288,9 @@ public class AnimationManager : MonoBehaviour
                 if (Random.Range(0, 100) < 1)
                 {
                     isWait = true;
-                    carType = GetCarType();
+                    carType = GetCarTypeTraffic();
                     //generate a new car instance if none currently onMap
-                    instanceCar = Instantiate(GetCarPrefab(carType), startPos, Quaternion.identity) as GameObject;
+                    instanceCar = Instantiate(GetCarPrefabTraffic(carType), startPos, Quaternion.identity) as GameObject;
                     instanceCar.SetActive(false);
                     if (instanceCar != null)
                     {
@@ -291,7 +302,7 @@ public class AnimationManager : MonoBehaviour
                             data = GetCarData(carType);
                             car.InitialiseCar(node, data);
                             //add to list
-                            AddCar(car);
+                            AddCarTraffic(car);
                             if (car != null && instanceCar != null)
                             {
                                 instanceCar.SetActive(true);
@@ -326,7 +337,7 @@ public class AnimationManager : MonoBehaviour
     {
         GameObject instanceCar;
         Car car;
-        float waitInterval = 1.5f;
+        float waitInterval = 1.5f * (1 + Random.Range(0, 5));
         float searchInterval = 2.0f;
         float minTrafficHeight = 1.00f;
         Vector3 startPos = posAirport;
@@ -345,7 +356,7 @@ public class AnimationManager : MonoBehaviour
                 if (car != null)
                 {
                     //add to list
-                    listOfCars.Add(car);
+                    listOfCarsSurveillance.Add(car);
                     //flight profile
                     CarData data = GetCarData(CarType.Surveil);
                     //turn off light
@@ -396,12 +407,13 @@ public class AnimationManager : MonoBehaviour
     private void ResetTraffic()
     /// </summary>
     {
-        if (listOfCars.Count > 0)
+        //Traffic
+        if (listOfCarsTraffic.Count > 0)
         {
             //reverse loop, delete all cars
-            for (int i = listOfCars.Count - 1; i >= 0; i--)
+            for (int i = listOfCarsTraffic.Count - 1; i >= 0; i--)
             {
-                Car car = listOfCars[i];
+                Car car = listOfCarsTraffic[i];
                 if (car != null)
                 {
                     //destroy
@@ -409,36 +421,56 @@ public class AnimationManager : MonoBehaviour
                     GameManager.i.SafeDestroy(car.carObject);
                     /*Debug.LogFormat("[Tst] AnimationManager.cs -> ResetTraffic: car destinationID {0} DESTROYED{1}", car.destinationID, "\n");*/
                 }
-                else { Debug.LogErrorFormat("Invalid car (Null) for listOfCars[{0}]", i); }
+                else { Debug.LogErrorFormat("Invalid car (Null) for listOfCarsTraffic[{0}]", i); }
             }
             //empty list
-            listOfCars.Clear();
+            listOfCarsTraffic.Clear();
+        }
+        //Surveillance
+        if (listOfCarsSurveillance.Count > 0)
+        {
+            //reverse loop, delete all cars
+            for (int i = listOfCarsSurveillance.Count - 1; i >= 0; i--)
+            {
+                Car car = listOfCarsSurveillance[i];
+                if (car != null)
+                {
+                    //destroy
+                    car.StopCoroutine("MoveCarSurveil");
+                    car.StopCoroutine("ShowSearchlight");
+                    GameManager.i.SafeDestroy(car.carObject);
+                    /*Debug.LogFormat("[Tst] AnimationManager.cs -> ResetTraffic: car destinationID {0} DESTROYED{1}", car.destinationID, "\n");*/
+                }
+                else { Debug.LogErrorFormat("Invalid car (Null) for listOfCarsSurveillance[{0}]", i); }
+            }
+            //empty list
+            listOfCarsSurveillance.Clear();
         }
     }
 
     /// <summary>
-    /// Add car to listOfCars
+    /// Add car to listOfCarsTraffic
     /// </summary>
     /// <param name="car"></param>
-    public void AddCar(Car car)
+    public void AddCarTraffic(Car car)
     {
         if (car != null)
         {
-            listOfCars.Add(car);
+            listOfCarsTraffic.Add(car);
             /*Debug.LogFormat("[Tst] AnimationManager.cs -> AddCar: Car ADDED to list, destinationID {0}{1}", car.destinationID, "\n");*/
         }
     }
 
     /// <summary>
-    /// Remove car from listOfCars
+    /// Remove car from listOfCarsTraffic
     /// </summary>
     /// <param name="nodeID"></param>
-    public void DeleteCar(int nodeID)
+    public void DeleteCarTraffic(int nodeID)
     {
-        int index = listOfCars.FindIndex(x => x.destinationID == nodeID);
+        int index = listOfCarsTraffic.FindIndex(x => x.destinationID == nodeID);
         if (index > -1)
         {
-            listOfCars.RemoveAt(index);
+            listOfCarsTraffic.RemoveAt(index);
             /*Debug.LogFormat("[Tst] AnimationManager.cs -> RemoveCar: Car REMOVED from list, destinationID {0}{1}", nodeID, "\n");*/
         }
     }
@@ -447,7 +479,7 @@ public class AnimationManager : MonoBehaviour
     /// Randomly chooses a car type
     /// </summary>
     /// <returns></returns>
-    private CarType GetCarType()
+    private CarType GetCarTypeTraffic()
     {
         CarType carType = CarType.Normal;
         int rnd = Random.Range(0, 100);
@@ -466,7 +498,7 @@ public class AnimationManager : MonoBehaviour
     /// </summary>
     /// <param name="carType"></param>
     /// <returns></returns>
-    private GameObject GetCarPrefab(CarType carType)
+    private GameObject GetCarPrefabTraffic(CarType carType)
     {
         GameObject carObject = carNormal;
         switch (carType)
@@ -492,15 +524,15 @@ public class AnimationManager : MonoBehaviour
         {
             case CarType.Normal:
                 data.cruiseAltitude = 3.0f;
-                data.verticalSpeed = 0.5f;
+                data.verticalSpeed = 0.6f;
                 data.horizontalSpeed = 0.5f;
                 data.hoverDelay = 1.0f;
                 data.isSiren = true;
                 break;
             case CarType.Police:
                 data.cruiseAltitude = 2.0f;
-                data.verticalSpeed = 0.25f;
-                data.horizontalSpeed = 0.25f;
+                data.verticalSpeed = 0.5f;
+                data.horizontalSpeed = 0.4f;
                 data.hoverDelay = 0.5f;
                 data.isSiren = true;
                 break;
@@ -513,15 +545,15 @@ public class AnimationManager : MonoBehaviour
                 break;
             case CarType.Rogue:
                 data.cruiseAltitude = 1.5f;
-                data.verticalSpeed = 0.25f;
-                data.horizontalSpeed = 0.25f;
+                data.verticalSpeed = 0.3f;
+                data.horizontalSpeed = 0.3f;
                 data.hoverDelay = 0.5f;
                 data.isSiren = false;
                 break;
             case CarType.Surveil:
                 data.cruiseAltitude = 2.25f;
-                data.verticalSpeed = 0.4f;
-                data.horizontalSpeed = 0.4f;
+                data.verticalSpeed = 0.6f;
+                data.horizontalSpeed = 0.5f;
                 data.hoverDelay = 0.75f;
                 data.isSiren = true;
                 break;
