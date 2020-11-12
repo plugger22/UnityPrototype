@@ -714,6 +714,7 @@ public class GameManager : MonoBehaviour
         startMethod.handler = animateScript.Initialise;
         startMethod.className = "AnimationManager";
         listOfLevelMethods.Add(startMethod);
+        listOfLoadMethods.Add(startMethod);
         #endregion
 
         #region GUI Methods

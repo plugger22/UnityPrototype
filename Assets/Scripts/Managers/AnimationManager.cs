@@ -66,6 +66,7 @@ public class AnimationManager : MonoBehaviour
             case GameState.NewInitialisation:
                 SubInitialiseFastAccess();
                 SubInitialiseLevelStart();
+                SubInitialiseAll();
                 break;
             case GameState.FollowOnInitialisation:
                 SubInitialiseLevelStart();
@@ -73,8 +74,10 @@ public class AnimationManager : MonoBehaviour
             case GameState.LoadAtStart:
                 SubInitialiseFastAccess();
                 SubInitialiseLevelStart();
+                SubInitialiseAll();
                 break;
             case GameState.LoadGame:
+                SubInitialiseAll();
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
@@ -92,6 +95,14 @@ public class AnimationManager : MonoBehaviour
         Debug.Assert(carBus != null, "Invalid carBus (Null)");
         Debug.Assert(carRogue != null, "Invalid carRogue (Null)");
         Debug.Assert(carSurveil != null, "Invalid carSurveil (Null)");
+
+
+    }
+    #endregion
+
+    #region SubInitialiseAll
+    private void SubInitialiseAll()
+    {
         //Get airport position
         int nodeID = GameManager.i.cityScript.airportDistrictID;
         nodeAirport = GameManager.i.dataScript.GetNode(nodeID);

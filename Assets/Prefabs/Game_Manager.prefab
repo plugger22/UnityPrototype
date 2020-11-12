@@ -6440,6 +6440,20 @@ MonoBehaviour:
   signageMinimum: 10
   signageRandom: 10
   signageRepeat: 50
+  trafficWaitTime: 2
+  trafficHeightMin: 1
+  trafficChancePause: 3
+  trafficChanceCar: 1
+  trafficNodeDistanceMin: 4
+  sirenFlashInterval: 0.15
+  surveilAltitude: 1
+  surveilWaitInterval: 1.5
+  surveilWaitFactor: 5
+  surveilHeightStart: 1
+  searchlightLimit: 0.035
+  searchlightFactor: 6
+  searchlightRandom: 3
+  searchlightSpeed: 6
   timerMax: 2
   moveSpeed: 0
   increaseScale: 1
@@ -6626,7 +6640,7 @@ MonoBehaviour:
   billboardScript: {fileID: 0}
   seedDev: 0
   autoRunTurns: 20
-  scenarioStartLevel: 1
+  scenarioStartLevel: 0
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1

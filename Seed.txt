@@ -4166,3 +4166,24 @@ UnityEngine.Debug:LogError(Object)
 	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:357)
 	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
 	
+Dev seed 60022 -> Thursday, 12 November 2020 8:05 PM
+City seed 5678 -> Londus, Eurasia
+City seed 765 -> Newpolis, Americon
+ERROR Invalid sourceNode (Null)
+UnityEngine.Debug:LogError(Object)
+	DijkstraManager:GetRandomNodeAtMaxDistance(Node, Int32, List`1) (at Assets/Scripts/Managers/DijkstraManager.cs:844)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:346)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid selectionList (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	DijkstraManager:GetRandomNodeAtMaxDistance(Node, Int32, List`1) (at Assets/Scripts/Managers/DijkstraManager.cs:852)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:346)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ERROR Invalid random destination node (Null)
+UnityEngine.Debug:LogError(Object)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:368)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 12475 -> Thursday, 12 November 2020 8:08 PM
+City seed 5678 -> Londus, Eurasia
+City seed 765 -> Newpolis, Americon
