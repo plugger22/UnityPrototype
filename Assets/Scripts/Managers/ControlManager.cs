@@ -208,6 +208,8 @@ public class ControlManager : MonoBehaviour
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessEndLevel: ProcessEndLevel selected{0}", "\n");
         //save existing game state
         gameState = GameManager.i.inputScript.GameState;
+        //stop animations
+        GameManager.i.animateScript.StopAnimations();
         //close all tooltips
         GameManager.i.guiScript.SetTooltipsOff();
         //modal block
@@ -339,6 +341,8 @@ public class ControlManager : MonoBehaviour
     private void ProcessLoadGame(GameState state)
     {
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessLoadGame: LOAD game option selected{0}", "\n");
+        //shutdown animations
+        GameManager.i.animateScript.StopAnimations();
         //save existing game state
         gameState = state;
         //toggle on modal block
@@ -541,6 +545,8 @@ public class ControlManager : MonoBehaviour
     private void CloseGame()
     {
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessResumeGame: QUIT game option selected{0}", "\n");
+        //shutdown animations
+        GameManager.i.animateScript.StopAnimations();
         //save existing game state
         gameState = GameManager.i.inputScript.GameState;
         //quit game

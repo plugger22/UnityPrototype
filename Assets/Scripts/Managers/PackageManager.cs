@@ -1396,11 +1396,17 @@ namespace packageAPI
     public class CarData
     {
         public float cruiseAltitude;
-        public float surveilAltitude;               //surveilCar only, ignore for rest
         public float verticalSpeed;
         public float horizontalSpeed;
         public float hoverDelay;
+        public float sirenFlashInterval;
         public bool isSiren;
+        //specific to Surveillance (surveilCar, ignore for rest)
+        public float surveilAltitude;
+        public float searchlightLimit;
+        public float searchlightFactor;
+        public float searchlightRandom;
+        public float searchlightSpeed;
     }
 
 

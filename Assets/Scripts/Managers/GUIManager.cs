@@ -82,6 +82,10 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Minimum distance (in connection links) that a destination node must be (>=) from Airport before being placed in the selection pool")]
     [Range(1, 10)] public int trafficNodeDistanceMin = 4;
 
+    [Header("Car Siren")]
+    [Tooltip("Time (seconds) for siren flash sequence intervals")]
+    [Range(0.1f, 1.0f)] public float sirenFlashInterval = 0.15f;
+
     [Header("Surveillance")]
     [Tooltip("Altitude at which surveillance occus")]
     [Range(0.5f, 1.5f)] public float surveilAltitude = 1.0f;
@@ -91,6 +95,16 @@ public class GUIManager : MonoBehaviour
     [Range(0, 10)] public int surveilWaitFactor = 5;
     [Tooltip("Altitude at which carSurveil is initiated at Airport")]
     [Range(0.5f, 1.5f)] public float surveilHeightStart = 1.0f;
+
+    [Header("Car Searchlight")]
+    [Tooltip("Searchlight limit of movement in one direction before reversing (this is a weird number due to Eular/Quaternions and is determined by observation")]
+    [Range(0.01f, 0.1f)] public float searchlightLimit = 0.035f;
+    [Tooltip("Searchlight sequence time factor (in seconds) (multiplied by searchlightRandom to give a time limit for sequence")]
+    [Range(1.0f, 10.0f)] public float searchlightFactor = 6.0f;
+    [Tooltip("Searchlight random factor (1dRandom) multiplied by factor above to give total time period for sequence")]
+    [Range(1, 5)] public int searchlightRandom = 3;
+    [Tooltip("Searchlight speed of movement across the ground (higher the faster)")]
+    [Range(1f, 10f)] public float searchlightSpeed = 6.0f;
 
     [Header("PopUp Texts")]
     [Tooltip("How long the full animation cycle lasts (seconds)")]

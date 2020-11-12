@@ -34,6 +34,11 @@ public class AnimationManager : MonoBehaviour
     private float surveilWaitInterval = -1;
     private int surveilWaitFactor = -1;
     private float surveilHeightStart = -1;
+    private float sirenFlashInterval = -1;
+    private float searchlightLimit = -1;
+    private float searchlightFactor = -1;
+    private int searchlightRandom = -1;
+    private float searchlightSpeed = -1;
 
     private Transform carHolder;
     private Vector3 posAirport;
@@ -115,6 +120,11 @@ public class AnimationManager : MonoBehaviour
         surveilWaitInterval = GameManager.i.guiScript.surveilWaitInterval;
         surveilWaitFactor = GameManager.i.guiScript.surveilWaitFactor;
         surveilHeightStart = GameManager.i.guiScript.surveilHeightStart;
+        sirenFlashInterval = GameManager.i.guiScript.sirenFlashInterval;
+        searchlightLimit = GameManager.i.guiScript.searchlightLimit;
+        searchlightFactor = GameManager.i.guiScript.searchlightFactor;
+        searchlightRandom = GameManager.i.guiScript.searchlightRandom;
+        searchlightSpeed = GameManager.i.guiScript.searchlightSpeed;
         Debug.Assert(connectionSpeed > -1, "Invalid connectionSpeed (-1)");
         Debug.Assert(connectionDelay > -1, "Invalid connectionDelay (-1)");
         Debug.Assert(tileDelay > -1, "Invalid tileDelay (-1)");
@@ -127,6 +137,7 @@ public class AnimationManager : MonoBehaviour
         Debug.Assert(surveilWaitInterval > -1, "Invalid surveilWaitInterval (-1)");
         Debug.Assert(surveilWaitFactor > -1, "Invalid surveilWaitFactor (-1)");
         Debug.Assert(surveilHeightStart > -1, "Invalid surveilHeightStart (-1)");
+        Debug.Assert(sirenFlashInterval > -1, "Invalid sirenFlashInterval (-1)");
     }
     #endregion
 
@@ -585,11 +596,16 @@ public class AnimationManager : MonoBehaviour
                 break;
             case CarType.Surveil:
                 data.cruiseAltitude = 2.25f;
-                data.surveilAltitude = surveilAltitude;
                 data.verticalSpeed = 0.6f;
                 data.horizontalSpeed = 0.5f;
                 data.hoverDelay = 0.75f;
                 data.isSiren = true;
+                //specific to surveillance, ignore for the rest
+                data.surveilAltitude = surveilAltitude;
+                data.searchlightLimit = searchlightLimit;
+                data.searchlightFactor = searchlightFactor;
+                data.searchlightRandom = searchlightRandom;
+                data.searchlightSpeed = searchlightSpeed;
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised carType \"{0}\"", carType);
@@ -600,6 +616,8 @@ public class AnimationManager : MonoBehaviour
                 data.hoverDelay = 1.0f;
                 break;
         }
+        //globals
+        data.sirenFlashInterval = sirenFlashInterval;
         return data;
     }
 

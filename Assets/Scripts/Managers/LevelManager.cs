@@ -69,7 +69,7 @@ public class LevelManager : MonoBehaviour
     private List<GameObject> listOfNodeObjects = new List<GameObject>();
     private List<Node> listOfNodes = new List<Node>();                              //mirror list to listOfNodeObjects but Nodes instead of GO's for speed of use
     private List<GameObject> listOfConnections = new List<GameObject>();
-    private List<GameObject> listOfTiles = new List<GameObject>();                  //all tiles, used to delete tiles at end of level
+    private List<GameObject> listOfTileObjects = new List<GameObject>();            //all tiles, used to delete tiles at end of level
     private List<Tile> listOfTilesToAnimate = new List<Tile>();                     //all tiles excluding low profile ones placed wherever a node is. Used for background animation
     private List<Vector3> listOfCoordinates = new List<Vector3>();                  //used to provide a lookup to check spacing of nodes
     private List<List<int>> listOfSortedNodes = new List<List<int>>();              //each node has a sorted (closest to furthest) list of nodeID's of neighouring nodes
@@ -233,10 +233,10 @@ public class LevelManager : MonoBehaviour
         //remove any prefab node tile from previous level
         if (tileHolder != null)
         {
-            if (tileHolder.childCount > 0 && listOfTiles.Count > 0)
+            if (tileHolder.childCount > 0 && listOfTileObjects.Count > 0)
             {
-                for (int i = listOfTiles.Count - 1; i >= 0; i--)
-                { GameManager.i.SafeDestroy(listOfTiles[i].gameObject); }
+                for (int i = listOfTileObjects.Count - 1; i >= 0; i--)
+                { GameManager.i.SafeDestroy(listOfTileObjects[i].gameObject); }
             }
         }
         instanceNode = null;
@@ -248,7 +248,8 @@ public class LevelManager : MonoBehaviour
         listOfNodeObjects.Clear();
         listOfNodes.Clear();
         listOfConnections.Clear();
-        listOfTiles.Clear();
+        listOfTileObjects.Clear();
+        listOfTilesToAnimate.Clear();
         listOfCoordinates.Clear();
         listOfSortedNodes.Clear();
         listOfSortedDistances.Clear();
@@ -336,7 +337,7 @@ public class LevelManager : MonoBehaviour
                 //assign to hierarchy
                 instanceTile.transform.SetParent(tileHolder);
                 //add to list (all tiles -> used for deleting tiles at end of level)
-                listOfTiles.Add(instanceTile);
+                listOfTileObjects.Add(instanceTile);
                 //randomly rotate tile
                 rnd = Random.Range(0, 4);
                 switch (rnd)
@@ -1446,7 +1447,7 @@ public class LevelManager : MonoBehaviour
     { return listOfNodes; }
 
     public int GetNumOfTiles()
-    { return listOfTiles.Count; }
+    { return listOfTileObjects.Count; }
 
     /// <summary>
     /// Generates a list of tiles suitable for surveillance animations (tiles have no nodes and no connections crossing them)
@@ -1570,9 +1571,9 @@ public class LevelManager : MonoBehaviour
         if (count > 0)
         {
             //loop list of Tiles
-            for (int i = 0; i < listOfTiles.Count; i++)
+            for (int i = 0; i < listOfTileObjects.Count; i++)
             {
-                positionTile = listOfTiles[i].transform.position;
+                positionTile = listOfTileObjects[i].transform.position;
                 //look for a match
                 for (int k = 0; k < count; k++)
                 {
@@ -1580,7 +1581,7 @@ public class LevelManager : MonoBehaviour
                     if (positionTile.x == positionCheck.x && positionTile.z == positionCheck.z)
                     {
                         //match found
-                        GameObject tile = listOfTiles[i];
+                        GameObject tile = listOfTileObjects[i];
                         renderer = tile.GetComponent<Renderer>();
                         if (renderer != null)
                         {

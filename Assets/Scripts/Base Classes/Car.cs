@@ -23,6 +23,11 @@ public class Car : MonoBehaviour
     private float speedVertical;
     private float speedHorizontal;
     private float hoverDelay;
+    private float sirenFlashInterval;
+    private float searchlightLimit;
+    private float searchlightFactor;
+    private float searchlightRandom;
+    private float searchlightSpeed;
 
     private bool isSiren;
     private bool isFlashOn;
@@ -59,12 +64,13 @@ public class Car : MonoBehaviour
             speedVertical = data.verticalSpeed;
             hoverDelay = data.hoverDelay;
             isSiren = data.isSiren;
+            sirenFlashInterval = data.sirenFlashInterval;
         }
         else { Debug.LogError("Invalid node (Null)"); }
     }
 
     /// <summary>
-    /// Used by carSurveil (no need for node)
+    /// Used by carSurveil (additional data)
     /// </summary>
     /// <param name="pos"></param>
     /// <param name="data"></param>
@@ -78,6 +84,11 @@ public class Car : MonoBehaviour
         speedVertical = data.verticalSpeed;
         hoverDelay = data.hoverDelay;
         isSiren = data.isSiren;
+        sirenFlashInterval = data.sirenFlashInterval;
+        searchlightLimit = data.searchlightLimit;
+        searchlightFactor = data.searchlightFactor;
+        searchlightRandom = data.searchlightRandom;
+        searchlightSpeed = data.searchlightSpeed;
     }
 
     /// <summary>
@@ -258,10 +269,8 @@ public class Car : MonoBehaviour
     public IEnumerator ShowSearchlight()
     {
         float timeElapsed = 0.0f;
-        float timeLimit = (1 + Random.Range(0, 2)) * 6.0f;
-        float limit = 0.035f;           //no relation to value in inspector -> weird number, something to do with Eulers
+        float timeLimit = (1 + Random.Range(0, searchlightRandom)) * searchlightFactor;
         float adjust = 0f;
-        float speed = 6.0f;
         bool isGrowing = true;
         //retain original rotation so it can be restored at end
         Quaternion originalRotation = lightTransform.rotation;
@@ -271,14 +280,14 @@ public class Car : MonoBehaviour
         do
         {
             timeElapsed += Time.deltaTime;
-            adjust = Time.deltaTime * speed;
+            adjust = Time.deltaTime * searchlightSpeed;
 
             if (isGrowing == true)
             {
                 //rotate light to the rear
                 lightTransform.Rotate(Vector3.right, adjust);
                 difference = Mathf.Abs(lightTransform.rotation.x) - start;
-                if (Mathf.Abs(difference) > limit)
+                if (Mathf.Abs(difference) > searchlightLimit)
                 {
                     isGrowing = false;
                     difference = 0.0f;
@@ -290,7 +299,7 @@ public class Car : MonoBehaviour
                 //rotate light forward
                 lightTransform.Rotate(Vector3.right * -1, adjust);
                 difference = Mathf.Abs(lightTransform.rotation.x) - start;
-                if (Mathf.Abs(difference) > limit)
+                if (Mathf.Abs(difference) > searchlightLimit)
                 {
                     isGrowing = true;
                     difference = 0.0f;
@@ -314,7 +323,6 @@ public class Car : MonoBehaviour
     /// <returns></returns>
     private IEnumerator FlashSiren()
     {
-        float sirenTime = 0.15f;
         isFlashOn = false;
         while (true)
         {
@@ -322,13 +330,13 @@ public class Car : MonoBehaviour
             {
                 sirenObject.SetActive(false);
                 isFlashOn = false;
-                yield return new WaitForSeconds(sirenTime);
+                yield return new WaitForSeconds(sirenFlashInterval);
             }
             else
             {
                 sirenObject.SetActive(true);
                 isFlashOn = true;
-                yield return new WaitForSeconds(sirenTime);
+                yield return new WaitForSeconds(sirenFlashInterval);
             }
         }
     }
