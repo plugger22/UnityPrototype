@@ -28,6 +28,9 @@ public class Car : MonoBehaviour
     private float searchlightFactor;
     private float searchlightRandom;
     private float searchlightSpeed;
+    private float decelerationHorizontal;
+    private float decelerationVertical;
+    private float speedLimit;
 
     private bool isSiren;
     private bool isFlashOn;
@@ -65,6 +68,9 @@ public class Car : MonoBehaviour
             hoverDelay = data.hoverDelay;
             isSiren = data.isSiren;
             sirenFlashInterval = data.sirenFlashInterval;
+            decelerationHorizontal = data.decelerationHorizontal;
+            decelerationVertical = data.decelerationVertical;
+            speedLimit = data.speedLimit;
         }
         else { Debug.LogError("Invalid node (Null)"); }
     }
@@ -89,6 +95,9 @@ public class Car : MonoBehaviour
         searchlightFactor = data.searchlightFactor;
         searchlightRandom = data.searchlightRandom;
         searchlightSpeed = data.searchlightSpeed;
+        decelerationHorizontal = data.decelerationHorizontal;
+        decelerationVertical = data.decelerationVertical;
+        speedLimit = data.speedLimit;
     }
 
     /// <summary>
@@ -107,9 +116,11 @@ public class Car : MonoBehaviour
     {
         if (carObject != null)
         {
+            float speedActual;
             //siren
             if (isSiren == true)
             { StartCoroutine("FlashSiren"); }
+            //create at this altitude (clear of underlying district)
             float startAltitude = startPosition.y;
             Quaternion quaternionTarget = new Quaternion();
             Vector3 destination = new Vector3(destinationPos.x, flightAltitude, destinationPos.z);
@@ -119,10 +130,16 @@ public class Car : MonoBehaviour
             x_pos = startPosition.x;
             z_pos = startPosition.z;
             //initial lift from airport to flight altitude
+            speedActual = speedVertical;
             do
             {
-                //carPosition.y += liftAmount;
-                altitude += Time.deltaTime / speedVertical;
+                if (speedActual < speedLimit)
+                {
+                    //adjust speed -> decelerate
+                    speedActual += Time.deltaTime * decelerationVertical;
+                }
+                //adjust altitude
+                altitude += Time.deltaTime / speedActual;
                 /*Debug.LogFormat("[Tst] Car.cs -> MoveCar: x_cord {0}, y_cord {1}, z_cord {2}{3}", x_pos, altitude, z_pos, "\n");*/
                 carObject.transform.position = new Vector3(x_pos, altitude, z_pos);
                 yield return null;
@@ -153,11 +170,17 @@ public class Car : MonoBehaviour
             //hover for a bit
             yield return new WaitForSeconds(hoverDelay);
             //move towards destination
+            speedActual = speedHorizontal;
             do
             {
-                step = Time.deltaTime / speedHorizontal;
-
+                step = Time.deltaTime / speedActual;
+                //adjust position
                 carObject.transform.position = Vector3.MoveTowards(carObject.transform.position, destination, step);
+                if (speedActual < speedLimit)
+                {
+                    //adjust speed -> decelerate
+                    speedActual += Time.deltaTime * decelerationHorizontal;
+                }
                 /*Debug.LogFormat("[Tst] Car.cs -> MoveCar: x_cord {0}, y_cord {1}, z_cord {2}{3}", carObject.transform.position.x, carObject.transform.position.y,
                     carObject.transform.position.z, "\n");*/
                 yield return null;
@@ -176,9 +199,16 @@ public class Car : MonoBehaviour
             altitude = carObject.transform.position.y;
             x_pos = destination.x;
             z_pos = destination.z;
+            speedActual = speedVertical;
             do
             {
-                altitude -= Time.deltaTime / speedVertical;
+                if (speedActual < speedLimit)
+                {
+                    //adjust speed -> decelerate
+                    speedActual += Time.deltaTime * decelerationVertical;
+                }
+                //adjust altitude
+                altitude -= Time.deltaTime / speedActual;
                 carObject.transform.position = new Vector3(x_pos, altitude, z_pos);
                 yield return null;
             }
@@ -199,6 +229,7 @@ public class Car : MonoBehaviour
     {
         if (carObject != null)
         {
+            float speedActual;
             //siren
             if (isSiren == true)
             { StartCoroutine("FlashSiren"); }
@@ -210,10 +241,16 @@ public class Car : MonoBehaviour
             x_pos = startPosition.x;
             z_pos = startPosition.z;
             //initial lift from airport to flight altitude
+            speedActual = speedVertical;
             do
             {
-                //carPosition.y += liftAmount;
-                altitude += Time.deltaTime / speedVertical;
+                if (speedActual < speedLimit)
+                {
+                    //adjust speed -> decelerate
+                    speedActual += Time.deltaTime * decelerationVertical;
+                }
+                //adjust altitude
+                altitude += Time.deltaTime / speedActual;
                 /*Debug.LogFormat("[Tst] Car.cs -> MoveCar: x_cord {0}, y_cord {1}, z_cord {2}{3}", x_pos, altitude, z_pos, "\n");*/
                 carObject.transform.position = new Vector3(x_pos, altitude, z_pos);
                 yield return null;
@@ -228,10 +265,16 @@ public class Car : MonoBehaviour
             //hover for a bit
             yield return new WaitForSeconds(hoverDelay);
             //move towards destination
+            speedActual = speedHorizontal;
             do
             {
-                step = Time.deltaTime / speedHorizontal;
-
+                if (speedActual < speedLimit)
+                {
+                    //adjust speed -> decelerate
+                    speedActual += Time.deltaTime * decelerationHorizontal;
+                }
+                //adjust position
+                step = Time.deltaTime / speedActual;
                 carObject.transform.position = Vector3.MoveTowards(carObject.transform.position, destination, step);
                 /*Debug.LogFormat("[Tst] Car.cs -> MoveCar: x_cord {0}, y_cord {1}, z_cord {2}{3}", carObject.transform.position.x, carObject.transform.position.y,
                     carObject.transform.position.z, "\n");*/
@@ -251,9 +294,16 @@ public class Car : MonoBehaviour
             altitude = carObject.transform.position.y;
             x_pos = destination.x;
             z_pos = destination.z;
+            speedActual = speedVertical;
             do
             {
-                altitude -= Time.deltaTime / speedVertical;
+                if (speedActual < speedLimit)
+                {
+                    //adjust speed -> decelerate
+                    speedActual += Time.deltaTime * decelerationVertical;
+                }
+                //adjust altitude
+                altitude -= Time.deltaTime / speedActual;
                 carObject.transform.position = new Vector3(x_pos, altitude, z_pos);
                 yield return null;
             }

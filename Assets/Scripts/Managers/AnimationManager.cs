@@ -62,6 +62,12 @@ public class AnimationManager : MonoBehaviour
     [Range(1, 20)] public int trafficChanceCar = 1;
     [Tooltip("Minimum distance (in connection links) that a destination node must be (>=) from Airport before being placed in the selection pool")]
     [Range(1, 10)] public int trafficNodeDistanceMin = 4;
+    [Tooltip("Factor that decelerates traffic over time (including CarSurveil). Higher the number, faster the deceleration")]
+    [Range(0, 1.0f)] public float decelerationVertical = 0.4f;
+    [Tooltip("Factor that decelerates traffic over time (including CarSurveil). Higher the number, faster the deceleration")]
+    [Range(0, 1.0f)] public float decelerationHorizontal = 0.05f;
+    [Tooltip("Maximum value that actual speed can reach due to deceleration (higher the value the slower the car)")]
+    [Range(5f, 20f)] public float speedLimit = 10.0f;
 
     [Header("Car Siren")]
     [Tooltip("Time (seconds) for siren flash sequence intervals")]
@@ -631,7 +637,7 @@ public class AnimationManager : MonoBehaviour
                 data.cruiseAltitude = 2.25f;
                 data.verticalSpeed = 0.6f;
                 data.horizontalSpeed = 0.5f;
-                data.hoverDelay = 0.75f;
+                data.hoverDelay = 1.0f;
                 data.isSiren = true;
                 //specific to surveillance, ignore for the rest
                 data.surveilAltitude = surveilAltitude;
@@ -651,6 +657,9 @@ public class AnimationManager : MonoBehaviour
         }
         //globals
         data.sirenFlashInterval = sirenFlashInterval;
+        data.decelerationHorizontal = decelerationHorizontal;
+        data.decelerationVertical = decelerationVertical;
+        data.speedLimit = speedLimit;
         return data;
     }
 

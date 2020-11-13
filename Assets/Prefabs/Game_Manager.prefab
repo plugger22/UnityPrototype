@@ -6797,6 +6797,9 @@ MonoBehaviour:
   trafficChancePause: 3
   trafficChanceCar: 1
   trafficNodeDistanceMin: 4
+  decelerationVertical: 0.4
+  decelerationHorizontal: 0.05
+  speedLimit: 10
   sirenFlashInterval: 0.15
   surveilAltitude: 1
   surveilWaitInterval: 1.5

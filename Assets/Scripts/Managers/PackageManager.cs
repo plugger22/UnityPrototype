@@ -1407,6 +1407,10 @@ namespace packageAPI
         public float searchlightFactor;
         public float searchlightRandom;
         public float searchlightSpeed;
+        //applies to all cars
+        public float decelerationHorizontal;
+        public float decelerationVertical;
+        public float speedLimit;
     }
 
 
