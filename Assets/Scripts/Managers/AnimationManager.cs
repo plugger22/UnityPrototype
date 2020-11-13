@@ -21,24 +21,72 @@ public class AnimationManager : MonoBehaviour
     [Tooltip("Place any material in here that would be suitable for background tile animations (tile0 flashing sequence). Materials are randomly chosen from list")]
     public List<Material> listOfMaterials;
 
+    [Header("Connections")]
+    [Tooltip("Speed at which the 'ball' moves along a connection (higher the number, the slower)")]
+    [Range(0f, 5f)] public float connectionSpeed = 3.5f;
+    [Tooltip("The delay in seconds between successive connection movement sequences, eg. there is a pause after one connection coroutine finishes and the next starts")]
+    [Range(0f, 2f)] public float connectionDelay = 0.5f;
+    [Tooltip("The chance (%) of a connection repeating the same movement. If fail roll then end of that connections animation, otherwise will keep repeating while roll keeps succeeding")]
+    [Range(0, 100)] public int connectionRepeat = 30;
 
-    private float connectionSpeed = -1;
-    private float connectionDelay = -1;
-    private float tileDelay = -1;
-    private float trafficWaitTime = -1;
-    private float trafficHeightMin = -1;
-    private int trafficPauseChance = -1;
-    private int trafficCarChance = -1;
-    private int trafficNodeDistanceMin = -1;
-    private float surveilAltitude = -1;
-    private float surveilWaitInterval = -1;
-    private int surveilWaitFactor = -1;
-    private float surveilHeightStart = -1;
-    private float sirenFlashInterval = -1;
-    private float searchlightLimit = -1;
-    private float searchlightFactor = -1;
-    private int searchlightRandom = -1;
-    private float searchlightSpeed = -1;
+    [Header("Tiles")]
+    [Tooltip("The delay in seconds between successive sphere0 tile animation sequences")]
+    [Range(0f, 2f)] public float tileDelay = 1.0f;
+    [Tooltip("The chance (%) of a tile sequence repeating")]
+    [Range(0, 100)] public int tileRepeat = 30;
+    [Tooltip("The minimum number of flashes to occur in a given sphere0 animation sequence")]
+    [Range(0, 10)] public int tileMinimum = 5;
+    [Tooltip("The random additional number flashes for sphere0 to be added to the minimum. This number will be Random.Range(0, number) + tileMinimum flashes")]
+    [Range(0, 20)] public int tileRandom = 20;
+    [Tooltip("Flash duration for sphere0 animation sequences")]
+    [Range(0, 1f)] public float tileDuration = 0.15f;
+
+    [Header("Signage")]
+    [Tooltip("Delay between signage animation sequence flashes (sign0 on/off or all sign on/off)")]
+    [Range(0f, 2f)] public float signageDelay = 0.2f;
+    [Tooltip("Base number of times that signage animation will run (both types) -> gives the minimum number of sequences")]
+    [Range(0, 20)] public int signageMinimum = 10;
+    [Tooltip("The random additional number of iterations for the signage animation sequences (both types) that is added to the base")]
+    [Range(0, 20)] public int signageRandom = 10;
+    [Tooltip("The chance (%) of an initial signage sequence (sign0 animation) morphing into follow on sequence (all of sign toggled on/off")]
+    [Range(0, 100)] public int signageRepeat = 50;
+
+    [Header("Traffic")]
+    [Tooltip("Initial pause and same for random pauses in generating new cars due animation sequence (seconds)")]
+    [Range(0f, 5f)] public float trafficWaitTime = 2.0f;
+    [Tooltip("Altitude at which cars are instantiated above a node and destroyed")]
+    [Range(0f, 2.0f)] public float trafficHeightMin = 1.0f;
+    [Tooltip("Chance (1d1000) of a dead period happening during sequence and nothing happens for trafficWaitTime")]
+    [Range(0, 20)] public int trafficChancePause = 3;
+    [Tooltip("Basic chance (1d100) of a new car being generated every iteration")]
+    [Range(1, 20)] public int trafficChanceCar = 1;
+    [Tooltip("Minimum distance (in connection links) that a destination node must be (>=) from Airport before being placed in the selection pool")]
+    [Range(1, 10)] public int trafficNodeDistanceMin = 4;
+
+    [Header("Car Siren")]
+    [Tooltip("Time (seconds) for siren flash sequence intervals")]
+    [Range(0.1f, 1.0f)] public float sirenFlashInterval = 0.15f;
+
+    [Header("Surveillance")]
+    [Tooltip("Altitude at which surveillance occus")]
+    [Range(0.5f, 1.5f)] public float surveilAltitude = 1.0f;
+    [Tooltip("Initial pause (multiplied by a random amount of surveilWaitFactor) prior to sequence commencing at start of turn")]
+    [Range(0f, 3.0f)] public float surveilWaitInterval = 1.5f;
+    [Tooltip("Factor by which surveilWaitInterval is multiplied by a random1dFactor to get initial wait time prior to starting sequence")]
+    [Range(0, 10)] public int surveilWaitFactor = 5;
+    [Tooltip("Altitude at which carSurveil is initiated at Airport")]
+    [Range(0.5f, 1.5f)] public float surveilHeightStart = 1.0f;
+
+    [Header("Car Searchlight")]
+    [Tooltip("Searchlight limit of movement in one direction before reversing (this is a weird number due to Eular/Quaternions and is determined by observation")]
+    [Range(0.01f, 0.1f)] public float searchlightLimit = 0.035f;
+    [Tooltip("Searchlight sequence time factor (in seconds) (multiplied by searchlightRandom to give a time limit for sequence")]
+    [Range(1.0f, 10.0f)] public float searchlightFactor = 6.0f;
+    [Tooltip("Searchlight random factor (1dRandom) multiplied by factor above to give total time period for sequence")]
+    [Range(1, 5)] public int searchlightRandom = 2;
+    [Tooltip("Searchlight speed of movement across the ground (higher the faster)")]
+    [Range(1f, 10f)] public float searchlightSpeed = 6.0f;
+
 
     private Transform carHolder;
     private Vector3 posAirport;
@@ -118,37 +166,6 @@ public class AnimationManager : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         Debug.Assert(listOfMaterials != null && listOfMaterials.Count > 0, "Invalid listOfMaterials (Null or Empty)");
-        //fast access
-        connectionSpeed = GameManager.i.guiScript.connectionSpeed;
-        connectionDelay = GameManager.i.guiScript.connectionDelay;
-        tileDelay = GameManager.i.guiScript.tileDelay;
-        trafficWaitTime = GameManager.i.guiScript.trafficWaitTime;
-        trafficHeightMin = GameManager.i.guiScript.trafficHeightMin;
-        trafficPauseChance = GameManager.i.guiScript.trafficChancePause;
-        trafficCarChance = GameManager.i.guiScript.trafficChanceCar;
-        trafficNodeDistanceMin = GameManager.i.guiScript.trafficNodeDistanceMin;
-        surveilAltitude = GameManager.i.guiScript.surveilAltitude;
-        surveilWaitInterval = GameManager.i.guiScript.surveilWaitInterval;
-        surveilWaitFactor = GameManager.i.guiScript.surveilWaitFactor;
-        surveilHeightStart = GameManager.i.guiScript.surveilHeightStart;
-        sirenFlashInterval = GameManager.i.guiScript.sirenFlashInterval;
-        searchlightLimit = GameManager.i.guiScript.searchlightLimit;
-        searchlightFactor = GameManager.i.guiScript.searchlightFactor;
-        searchlightRandom = GameManager.i.guiScript.searchlightRandom;
-        searchlightSpeed = GameManager.i.guiScript.searchlightSpeed;
-        Debug.Assert(connectionSpeed > -1, "Invalid connectionSpeed (-1)");
-        Debug.Assert(connectionDelay > -1, "Invalid connectionDelay (-1)");
-        Debug.Assert(tileDelay > -1, "Invalid tileDelay (-1)");
-        Debug.Assert(trafficWaitTime > -1, "Invalid trafficWaitTime (-1)");
-        Debug.Assert(trafficHeightMin > -1, "Invalid trafficHeightMin (-1)");
-        Debug.Assert(trafficPauseChance > -1, "Invalid trafficPauseChance (-1)");
-        Debug.Assert(trafficCarChance > -1, "Invalid trafficCarChance (-1)");
-        Debug.Assert(trafficNodeDistanceMin > -1, "Invalid trafficNodeDistanceMin (-1)");
-        Debug.Assert(surveilAltitude > -1, "Invalid surveilAltitude (-1)");
-        Debug.Assert(surveilWaitInterval > -1, "Invalid surveilWaitInterval (-1)");
-        Debug.Assert(surveilWaitFactor > -1, "Invalid surveilWaitFactor (-1)");
-        Debug.Assert(surveilHeightStart > -1, "Invalid surveilHeightStart (-1)");
-        Debug.Assert(sirenFlashInterval > -1, "Invalid sirenFlashInterval (-1)");
     }
     #endregion
 
@@ -184,12 +201,16 @@ public class AnimationManager : MonoBehaviour
     /// </summary>
     public void StartAnimations()
     {
-        myCoroutineConnection = StartCoroutine("AnimateConnections");
-        myCoroutineTile0 = StartCoroutine("AnimateTile0");
-        myCoroutineTileOthers = StartCoroutine("AnimateTileOthers");
-        myCoroutineSignage = StartCoroutine("AnimateSignage");
-        myCoroutineTraffic = StartCoroutine("AnimateTraffic");
-        myCoroutineSurveil = StartCoroutine("AnimateSurveillance");
+        //run only during normal play mode
+        if (GameManager.i.inputScript.GameState == GameState.PlayGame)
+        {
+            myCoroutineConnection = StartCoroutine("AnimateConnections");
+            myCoroutineTile0 = StartCoroutine("AnimateTile0");
+            myCoroutineTileOthers = StartCoroutine("AnimateTileOthers");
+            myCoroutineSignage = StartCoroutine("AnimateSignage");
+            myCoroutineTraffic = StartCoroutine("AnimateTraffic");
+            myCoroutineSurveil = StartCoroutine("AnimateSurveillance");
+        }
     }
 
     /// <summary>
@@ -329,11 +350,11 @@ public class AnimationManager : MonoBehaviour
                 //introduce random dead periods -> ignore at start of turn
                 if (isWait == true)
                 {
-                    if (Random.Range(0, 1000) < trafficPauseChance)
+                    if (Random.Range(0, 1000) < trafficChancePause)
                     { yield return new WaitForSeconds(trafficWaitTime); }
                 }
                 //generate new traffic at random intervals
-                if (Random.Range(0, 100) < trafficCarChance)
+                if (Random.Range(0, 100) < trafficChanceCar)
                 {
                     isWait = true;
                     carType = GetCarTypeTraffic();

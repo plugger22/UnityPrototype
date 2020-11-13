@@ -122,7 +122,7 @@ public class Connection : MonoBehaviour
     {
         mouseOverDelay = GameManager.i.guiScript.tooltipDelay;
         mouseOverFade = GameManager.i.guiScript.tooltipFade;
-        connectionRepeat = GameManager.i.guiScript.connectionRepeat;
+        connectionRepeat = GameManager.i.animateScript.connectionRepeat;
         Debug.Assert(connectionRepeat > -1, "Invalid connectionRepeat (-1)");
     }
 

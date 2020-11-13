@@ -165,6 +165,8 @@ public class ControlManager : MonoBehaviour
         GameManager.i.modalGUIScript.CloseBackgrounds();
         //toggle of modal block
         GameManager.i.guiScript.SetIsBlocked(false);
+        //start animations
+        GameManager.i.animateScript.StartAnimations();
     }
 
 
@@ -419,6 +421,8 @@ public class ControlManager : MonoBehaviour
         { GameManager.i.validateScript.ExecuteIntegrityCheck(); }
         //change game state
         GameManager.i.inputScript.GameState = GameState.PlayGame;
+        //start animations
+        GameManager.i.animateScript.StartAnimations();
     }
 
     /// <summary>

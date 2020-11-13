@@ -4187,3 +4187,38 @@ UnityEngine.Debug:LogError(Object)
 Dev seed 12475 -> Thursday, 12 November 2020 8:08 PM
 City seed 5678 -> Londus, Eurasia
 City seed 765 -> Newpolis, Americon
+
+Dev seed 51975 -> Friday, 13 November 2020 10:33 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 44762 -> Friday, 13 November 2020 10:45 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 48975 -> Friday, 13 November 2020 10:54 AM
+City seed 5678 -> Londus, Eurasia
+
+Dev seed 50518 -> Friday, 13 November 2020 10:55 AM
+City seed 1616 -> Mexurb, Americon
+City seed 765 -> Newpolis, Americon
+
+Dev seed 1035 -> Friday, 13 November 2020 11:00 AM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 5270 -> Friday, 13 November 2020 11:09 AM
+City seed 890 -> Arlarc, Eurasia
+City seed 765 -> Newpolis, Americon
+
+Dev seed 25973 -> Friday, 13 November 2020 11:14 AM
+City seed 890 -> Arlarc, Eurasia
+
+Dev seed 41654 -> Friday, 13 November 2020 11:18 AM
+City seed 890 -> Arlarc, Eurasia
+
+Dev seed 25553 -> Friday, 13 November 2020 11:20 AM
+City seed 234 -> Sydsprawl, Chinock
+
+Dev seed 63137 -> Friday, 13 November 2020 11:27 AM
+City seed 234 -> Sydsprawl, Chinock
+
+Dev seed 54059 -> Friday, 13 November 2020 11:28 AM
+City seed 234 -> Sydsprawl, Chinock

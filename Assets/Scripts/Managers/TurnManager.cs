@@ -268,7 +268,8 @@ public class TurnManager : MonoBehaviour
             //Data Integrity check
             if (GameManager.i.isIntegrityCheck == true)
             { GameManager.i.validateScript.ExecuteIntegrityCheck(); }
-
+            //start animations
+            GameManager.i.animateScript.StartAnimations();
         }
         else { Debug.LogWarning("Invalid autoTurns (must be > 0)"); }
     }

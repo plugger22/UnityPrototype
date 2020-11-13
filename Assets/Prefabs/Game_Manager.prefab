@@ -6392,7 +6392,7 @@ MonoBehaviour:
   - {r: 0.101960786, g: 1, b: 0.8352941, a: 0}
   Bloc1: {r: 0.33333334, g: 0.75686276, b: 1, a: 0}
   Bloc2: {r: 0.9490196, g: 0.9137255, b: 0.30588236, a: 0}
-  Bloc3: {r: 0.96862745, g: 0.09019608, b: 0.20784314, a: 0}
+  Bloc3: {r: 0.9843137, g: 0.5372549, b: 0.59607846, a: 0}
   TopicNormal: {r: 0.33333334, g: 0.75686276, b: 1, a: 0}
   TopicCapture: {r: 0.9372549, g: 0.078431375, b: 0.27058825, a: 0}
   MainBackground: {r: 0.33333334, g: 0.75686276, b: 1, a: 0.49411765}
@@ -6428,32 +6428,6 @@ MonoBehaviour:
   flashNodeTime: 0.4
   flashConnectiontTime: 0.4
   flashInfoTabTime: 0.4
-  connectionSpeed: 2.5
-  connectionDelay: 0.5
-  connectionRepeat: 30
-  tileDelay: 0.5
-  tileRepeat: 30
-  tileMinimum: 10
-  tileRandom: 20
-  tileDuration: 0.15
-  signageDelay: 0.2
-  signageMinimum: 10
-  signageRandom: 10
-  signageRepeat: 50
-  trafficWaitTime: 2
-  trafficHeightMin: 1
-  trafficChancePause: 3
-  trafficChanceCar: 1
-  trafficNodeDistanceMin: 4
-  sirenFlashInterval: 0.15
-  surveilAltitude: 1
-  surveilWaitInterval: 1.5
-  surveilWaitFactor: 5
-  surveilHeightStart: 1
-  searchlightLimit: 0.035
-  searchlightFactor: 6
-  searchlightRandom: 3
-  searchlightSpeed: 6
   timerMax: 2
   moveSpeed: 0
   increaseScale: 1
@@ -6640,7 +6614,7 @@ MonoBehaviour:
   billboardScript: {fileID: 0}
   seedDev: 0
   autoRunTurns: 20
-  scenarioStartLevel: 0
+  scenarioStartLevel: 2
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1
@@ -6806,6 +6780,32 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 98a0a60b4aa47734fadeb8c9095c16e5, type: 2}
   - {fileID: 2100000, guid: ca22b759d154e624da61179dde7497d6, type: 2}
   - {fileID: 2100000, guid: 0a5ecd15ce398624297bfaca44615321, type: 2}
+  connectionSpeed: 3.5
+  connectionDelay: 0.5
+  connectionRepeat: 30
+  tileDelay: 1
+  tileRepeat: 30
+  tileMinimum: 5
+  tileRandom: 20
+  tileDuration: 0.15
+  signageDelay: 0.2
+  signageMinimum: 10
+  signageRandom: 10
+  signageRepeat: 50
+  trafficWaitTime: 2
+  trafficHeightMin: 1
+  trafficChancePause: 3
+  trafficChanceCar: 1
+  trafficNodeDistanceMin: 4
+  sirenFlashInterval: 0.15
+  surveilAltitude: 1
+  surveilWaitInterval: 1.5
+  surveilWaitFactor: 5
+  surveilHeightStart: 1
+  searchlightLimit: 0.035
+  searchlightFactor: 6
+  searchlightRandom: 2
+  searchlightSpeed: 6
 --- !u!114 &114912672506915200
 MonoBehaviour:
   m_ObjectHideFlags: 1

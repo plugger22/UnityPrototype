@@ -288,10 +288,10 @@ public class Node : MonoBehaviour
         //fast access
         mouseOverDelay = GameManager.i.guiScript.tooltipDelay;
         //signage
-        signDelay = GameManager.i.guiScript.signageDelay;
-        signMinimum = GameManager.i.guiScript.signageMinimum;
-        signRandom = GameManager.i.guiScript.signageRandom;
-        signRepeat = GameManager.i.guiScript.signageRepeat;
+        signDelay = GameManager.i.animateScript.signageDelay;
+        signMinimum = GameManager.i.animateScript.signageMinimum;
+        signRandom = GameManager.i.animateScript.signageRandom;
+        signRepeat = GameManager.i.animateScript.signageRepeat;
         Debug.Assert(signDelay > -1, "Invalid signDelay (-1)");
         /*fadeInTime = GameManager.instance.tooltipScript.tooltipFade;*/
         maxValue = GameManager.i.nodeScript.maxNodeValue;

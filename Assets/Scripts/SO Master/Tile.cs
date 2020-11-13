@@ -65,10 +65,10 @@ public class Tile : MonoBehaviour
     public void Start()
     {
         //fast access
-        tileRepeat = GameManager.i.guiScript.tileRepeat;
-        tileMinimum = GameManager.i.guiScript.tileMinimum;
-        tileRandom = GameManager.i.guiScript.tileRandom;
-        tileDuration = GameManager.i.guiScript.tileDuration;
+        tileRepeat = GameManager.i.animateScript.tileRepeat;
+        tileMinimum = GameManager.i.animateScript.tileMinimum;
+        tileRandom = GameManager.i.animateScript.tileRandom;
+        tileDuration = GameManager.i.animateScript.tileDuration;
         Debug.Assert(tileRepeat > -1, "Invalid tileRepeat (-1)");
         Debug.Assert(tileMinimum > -1, "Invalid tileMinimum (-1)");
         Debug.Assert(tileRandom > -1, "Invalid tileRandom (-1)");
