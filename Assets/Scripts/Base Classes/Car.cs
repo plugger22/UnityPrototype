@@ -14,6 +14,7 @@ public class Car : MonoBehaviour
 
     /*private Node nodeDestination;*/
     private Vector3 destinationPos;
+    private Transform carTransform;
     private Transform lightTransform;                   //only used if lightObject present (carSurveil), ignored otherwise
     [HideInInspector] public int destinationID = -1;     //ID used to find item in listOfCars
 
@@ -31,6 +32,7 @@ public class Car : MonoBehaviour
     private float decelerationHorizontal;
     private float decelerationVertical;
     private float speedLimit;
+    private float rotationSpeed;
 
     private bool isSiren;
     private bool isFlashOn;
@@ -41,8 +43,16 @@ public class Car : MonoBehaviour
 
     public void OnEnable()
     {
-        Debug.Assert(carObject != null, "Invalid carObject (Null)");
+        //car
+        if (carObject != null)
+        {
+            carTransform = carObject.GetComponent<Transform>();
+            Debug.Assert(carTransform != null, "Invalid carTransform (Null)");
+        }
+        else { Debug.LogError("Invalid carObject (Null)"); }
+        //siren
         Debug.Assert(sirenObject != null, "Invalid sirenObject (Null)");
+        //light -> not all cars have light objects, no need for an error condition here
         if (lightObject != null)
         {
             lightTransform = lightObject.GetComponent<Transform>();
@@ -71,6 +81,7 @@ public class Car : MonoBehaviour
             decelerationHorizontal = data.decelerationHorizontal;
             decelerationVertical = data.decelerationVertical;
             speedLimit = data.speedLimit;
+            rotationSpeed = data.rotationSpeed;
         }
         else { Debug.LogError("Invalid node (Null)"); }
     }
@@ -98,6 +109,7 @@ public class Car : MonoBehaviour
         decelerationHorizontal = data.decelerationHorizontal;
         decelerationVertical = data.decelerationVertical;
         speedLimit = data.speedLimit;
+        rotationSpeed = data.rotationSpeed;
     }
 
     /// <summary>
@@ -141,31 +153,15 @@ public class Car : MonoBehaviour
                 //adjust altitude
                 altitude += Time.deltaTime / speedActual;
                 /*Debug.LogFormat("[Tst] Car.cs -> MoveCar: x_cord {0}, y_cord {1}, z_cord {2}{3}", x_pos, altitude, z_pos, "\n");*/
-                carObject.transform.position = new Vector3(x_pos, altitude, z_pos);
+                carTransform.position = new Vector3(x_pos, altitude, z_pos);
                 yield return null;
             }
             while (altitude < flightAltitude);
 
-            #region archiveSmoothRotation
-            /*//target rotation
-            quaternionTarget = Quaternion.LookRotation(destination - carObject.transform.position, Vector3.up);
-            //rotate
-            quaternion.SetFromToRotation(carObject.transform.position, destination);
-            do
-            {
-                carObject.transform.position = Vector3.Lerp(carObject.transform.position, destination, Time.deltaTime / speedHorizontal);
-                carObject.transform.rotation = quaternion * carObject.transform.rotation;
-                angle = Quaternion.Angle(carObject.transform.rotation, quaternionTarget);
-                Debug.LogFormat("[Tst] Car.cs -> MoveCar: angle {0}{1}", angle, "\n");
-                yield return null;
-            }
-            while (angle > 0);*/
-            #endregion
-
             //target rotation
-            quaternionTarget = Quaternion.LookRotation(destination - carObject.transform.position, Vector3.up);
-            //rotate car
-            carObject.transform.rotation = quaternionTarget;
+            quaternionTarget = Quaternion.LookRotation(destination - carTransform.position, Vector3.up);
+            //rotate car gradually
+            yield return StartCoroutine("RotateTo", quaternionTarget);
 
             //hover for a bit
             yield return new WaitForSeconds(hoverDelay);
@@ -175,7 +171,7 @@ public class Car : MonoBehaviour
             {
                 step = Time.deltaTime / speedActual;
                 //adjust position
-                carObject.transform.position = Vector3.MoveTowards(carObject.transform.position, destination, step);
+                carTransform.position = Vector3.MoveTowards(carTransform.position, destination, step);
                 if (speedActual < speedLimit)
                 {
                     //adjust speed -> decelerate
@@ -192,11 +188,11 @@ public class Car : MonoBehaviour
                     yield break;
                 }
             }
-            while (carObject.transform.position != destination);
+            while (carTransform.position != destination);
             //hover for a bit
             yield return new WaitForSeconds(hoverDelay);
             //drop down vertically to target destination
-            altitude = carObject.transform.position.y;
+            altitude = carTransform.position.y;
             x_pos = destination.x;
             z_pos = destination.z;
             speedActual = speedVertical;
@@ -209,7 +205,7 @@ public class Car : MonoBehaviour
                 }
                 //adjust altitude
                 altitude -= Time.deltaTime / speedActual;
-                carObject.transform.position = new Vector3(x_pos, altitude, z_pos);
+                carTransform.position = new Vector3(x_pos, altitude, z_pos);
                 yield return null;
             }
             while (altitude > startAltitude);
@@ -252,15 +248,16 @@ public class Car : MonoBehaviour
                 //adjust altitude
                 altitude += Time.deltaTime / speedActual;
                 /*Debug.LogFormat("[Tst] Car.cs -> MoveCar: x_cord {0}, y_cord {1}, z_cord {2}{3}", x_pos, altitude, z_pos, "\n");*/
-                carObject.transform.position = new Vector3(x_pos, altitude, z_pos);
+                carTransform.position = new Vector3(x_pos, altitude, z_pos);
                 yield return null;
             }
             while (altitude < flightAltitude);
 
             //target rotation
-            quaternionTarget = Quaternion.LookRotation(destination - carObject.transform.position, Vector3.up);
-            //rotate car
-            carObject.transform.rotation = quaternionTarget;
+            quaternionTarget = Quaternion.LookRotation(destination - carTransform.position, Vector3.up);
+            //rotate car gradually
+            yield return StartCoroutine("RotateTo", quaternionTarget);
+            /*carTransform.rotation = quaternionTarget;*/
 
             //hover for a bit
             yield return new WaitForSeconds(hoverDelay);
@@ -275,9 +272,9 @@ public class Car : MonoBehaviour
                 }
                 //adjust position
                 step = Time.deltaTime / speedActual;
-                carObject.transform.position = Vector3.MoveTowards(carObject.transform.position, destination, step);
-                /*Debug.LogFormat("[Tst] Car.cs -> MoveCar: x_cord {0}, y_cord {1}, z_cord {2}{3}", carObject.transform.position.x, carObject.transform.position.y,
-                    carObject.transform.position.z, "\n");*/
+                carTransform.position = Vector3.MoveTowards(carTransform.position, destination, step);
+                /*Debug.LogFormat("[Tst] Car.cs -> MoveCar: x_cord {0}, y_cord {1}, z_cord {2}{3}", carTransform.position.x, carTransform.position.y,
+                    carTransform.position.z, "\n");*/
                 yield return null;
                 //failsafe check (had a bug, since resolved, have left this in, not needed
                 if (carObject == null)
@@ -287,11 +284,11 @@ public class Car : MonoBehaviour
                     yield break;
                 }
             }
-            while (carObject.transform.position != destination);
+            while (carTransform.position != destination);
             //hover for a bit
             yield return new WaitForSeconds(hoverDelay);
             //drop down vertically to target destination
-            altitude = carObject.transform.position.y;
+            altitude = carTransform.position.y;
             x_pos = destination.x;
             z_pos = destination.z;
             speedActual = speedVertical;
@@ -304,12 +301,28 @@ public class Car : MonoBehaviour
                 }
                 //adjust altitude
                 altitude -= Time.deltaTime / speedActual;
-                carObject.transform.position = new Vector3(x_pos, altitude, z_pos);
+                carTransform.position = new Vector3(x_pos, altitude, z_pos);
                 yield return null;
             }
             while (altitude > surveilAltitude);
         }
         else { Debug.LogWarningFormat("Invalid carObject (Null) for destinationID {0}", destinationID); }
+    }
+
+    /// <summary>
+    /// Rotates car towards a target direction
+    /// </summary>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    IEnumerator RotateTo(Quaternion target)
+    {
+        Quaternion from = carTransform.rotation;
+        for (float t = 0; t < 1f; t+= rotationSpeed * Time.deltaTime)
+        {
+            carTransform.rotation = Quaternion.Lerp(from, target, t);
+            yield return null;
+        }
+        carTransform.rotation = target;
     }
 
     /// <summary>

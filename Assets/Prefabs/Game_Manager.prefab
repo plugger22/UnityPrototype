@@ -6780,7 +6780,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 98a0a60b4aa47734fadeb8c9095c16e5, type: 2}
   - {fileID: 2100000, guid: ca22b759d154e624da61179dde7497d6, type: 2}
   - {fileID: 2100000, guid: 0a5ecd15ce398624297bfaca44615321, type: 2}
-  connectionSpeed: 3.5
+  connectionSpeed: 5
   connectionDelay: 0.5
   connectionRepeat: 30
   tileDelay: 1
@@ -6797,7 +6797,7 @@ MonoBehaviour:
   trafficChancePause: 3
   trafficChanceCar: 1
   trafficNodeDistanceMin: 4
-  decelerationVertical: 0.4
+  decelerationVertical: 0.8
   decelerationHorizontal: 0.05
   speedLimit: 10
   sirenFlashInterval: 0.15

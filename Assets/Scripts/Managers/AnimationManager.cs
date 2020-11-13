@@ -23,7 +23,7 @@ public class AnimationManager : MonoBehaviour
 
     [Header("Connections")]
     [Tooltip("Speed at which the 'ball' moves along a connection (higher the number, the slower)")]
-    [Range(0f, 5f)] public float connectionSpeed = 3.5f;
+    [Range(0f, 5f)] public float connectionSpeed = 5.0f;
     [Tooltip("The delay in seconds between successive connection movement sequences, eg. there is a pause after one connection coroutine finishes and the next starts")]
     [Range(0f, 2f)] public float connectionDelay = 0.5f;
     [Tooltip("The chance (%) of a connection repeating the same movement. If fail roll then end of that connections animation, otherwise will keep repeating while roll keeps succeeding")]
@@ -63,11 +63,13 @@ public class AnimationManager : MonoBehaviour
     [Tooltip("Minimum distance (in connection links) that a destination node must be (>=) from Airport before being placed in the selection pool")]
     [Range(1, 10)] public int trafficNodeDistanceMin = 4;
     [Tooltip("Factor that decelerates traffic over time (including CarSurveil). Higher the number, faster the deceleration")]
-    [Range(0, 1.0f)] public float decelerationVertical = 0.4f;
+    [Range(0, 1.0f)] public float decelerationVertical = 0.8f;
     [Tooltip("Factor that decelerates traffic over time (including CarSurveil). Higher the number, faster the deceleration")]
     [Range(0, 1.0f)] public float decelerationHorizontal = 0.05f;
     [Tooltip("Maximum value that actual speed can reach due to deceleration (higher the value the slower the car)")]
     [Range(5f, 20f)] public float speedLimit = 10.0f;
+    [Tooltip("Determines how fast a car (includes carSurveil) will rotate towards it's destination. Higher the number, faster the rotation")]
+    [Range(0.1f, 1.0f)] public float rotationSpeed = 0.75f;
 
     [Header("Car Siren")]
     [Tooltip("Time (seconds) for siren flash sequence intervals")]
@@ -660,6 +662,7 @@ public class AnimationManager : MonoBehaviour
         data.decelerationHorizontal = decelerationHorizontal;
         data.decelerationVertical = decelerationVertical;
         data.speedLimit = speedLimit;
+        data.rotationSpeed = rotationSpeed;
         return data;
     }
 
