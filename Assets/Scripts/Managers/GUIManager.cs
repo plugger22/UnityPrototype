@@ -619,7 +619,7 @@ public class GUIManager : MonoBehaviour
     }
 
     //
-    // - - - Start of End of Turn Information Pipeline
+    // - - - Information Pipeline
     //
 
     public Dictionary<MsgPipelineType, ModalOutcomeDetails> GetDictOfPipeline()

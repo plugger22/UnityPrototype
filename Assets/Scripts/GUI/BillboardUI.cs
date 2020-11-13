@@ -478,6 +478,7 @@ public class BillboardUI : MonoBehaviour
     {
         Debug.LogFormat("[UI] BillboardUI.cs -> CloseBillboard: Close Billboard{0}", "\n");
         StopCoroutine(myCoroutine);
+        StartCoroutine("BillClose");
     }
 
     /// <summary>

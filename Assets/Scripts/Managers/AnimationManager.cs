@@ -118,6 +118,7 @@ public class AnimationManager : MonoBehaviour
                 break;
             case GameState.FollowOnInitialisation:
                 SubInitialiseLevelStart();
+                SubInitialiseAll();
                 break;
             case GameState.LoadAtStart:
                 SubInitialiseFastAccess();

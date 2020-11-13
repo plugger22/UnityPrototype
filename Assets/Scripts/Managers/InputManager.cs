@@ -772,10 +772,10 @@ public class InputManager : MonoBehaviour
                                             EventManager.i.PostNotification(EventType.MetaGameButton, this, -1, "InputManager.cs -> ProcessKeyInput Multipurpose");
                                             Input.ResetInputAxes();
                                             break;
-                                        /*case ModalMetaSubState.EndScreen:
-                                            //close down overall metaGame
-                                            EventManager.i.PostNotification(EventType.CloseMetaOverall, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
-                                            break;*/
+                                            /*case ModalMetaSubState.EndScreen:
+                                                //close down overall metaGame
+                                                EventManager.i.PostNotification(EventType.CloseMetaOverall, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
+                                                break;*/
                                     }
                                 }
                             }

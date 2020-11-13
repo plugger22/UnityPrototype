@@ -276,6 +276,8 @@ public class ControlManager : MonoBehaviour
             GameManager.i.inputScript.GameState = GameState.PlayGame;
             //reset modal states back to normal
             GameManager.i.inputScript.ResetStates();
+            //start animations
+            GameManager.i.animateScript.StartAnimations();
         }
         else
         {
@@ -495,6 +497,7 @@ public class ControlManager : MonoBehaviour
         EventManager.i.PostNotification(EventType.ConfirmOpen, this, details, "MetaManager.cs -> ProcessMetaGame");
     }
 
+
     /// <summary>
     /// AutoSave file (TurnManager.cs -> ProcessNewTurn)
     /// </summary>
@@ -511,8 +514,6 @@ public class ControlManager : MonoBehaviour
 
 
 
-
-
     /// <summary>
     /// win/Loss state achieved for end of campaign -> summaries, etc before exiting
     /// </summary>
@@ -521,6 +522,8 @@ public class ControlManager : MonoBehaviour
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessEndCampaign: ProcessEndCampaign selected{0}", "\n");
         //close any Node tooltip
         GameManager.i.tooltipNodeScript.CloseTooltip("CityInfoUI.cs -> SetCityInfo");
+        //stop animations
+        GameManager.i.animateScript.StopAnimations();
         //modal block
         GameManager.i.guiScript.SetIsBlocked(true);
         //Open end level background

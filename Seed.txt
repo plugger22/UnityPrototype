@@ -4222,3 +4222,189 @@ City seed 234 -> Sydsprawl, Chinock
 
 Dev seed 54059 -> Friday, 13 November 2020 11:28 AM
 City seed 234 -> Sydsprawl, Chinock
+
+Dev seed 43869 -> Friday, 13 November 2020 11:29 AM
+City seed 234 -> Sydsprawl, Chinock
+City seed 890 -> Arlarc, Eurasia
+ERROR Invalid sourceNode (Null)
+UnityEngine.Debug:LogError(Object)
+	DijkstraManager:GetRandomNodeAtMaxDistance(Node, Int32, List`1) (at Assets/Scripts/Managers/DijkstraManager.cs:844)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:367)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid selectionList (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	DijkstraManager:GetRandomNodeAtMaxDistance(Node, Int32, List`1) (at Assets/Scripts/Managers/DijkstraManager.cs:852)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:367)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ERROR Invalid random destination node (Null)
+UnityEngine.Debug:LogError(Object)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:389)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ERROR Invalid sourceNode (Null)
+UnityEngine.Debug:LogError(Object)
+	DijkstraManager:GetRandomNodeAtMaxDistance(Node, Int32, List`1) (at Assets/Scripts/Managers/DijkstraManager.cs:844)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:367)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid selectionList (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	DijkstraManager:GetRandomNodeAtMaxDistance(Node, Int32, List`1) (at Assets/Scripts/Managers/DijkstraManager.cs:852)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:367)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ERROR Invalid random destination node (Null)
+UnityEngine.Debug:LogError(Object)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:389)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ERROR Invalid sourceNode (Null)
+UnityEngine.Debug:LogError(Object)
+	DijkstraManager:GetRandomNodeAtMaxDistance(Node, Int32, List`1) (at Assets/Scripts/Managers/DijkstraManager.cs:844)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:367)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid selectionList (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	DijkstraManager:GetRandomNodeAtMaxDistance(Node, Int32, List`1) (at Assets/Scripts/Managers/DijkstraManager.cs:852)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:367)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ERROR Invalid random destination node (Null)
+UnityEngine.Debug:LogError(Object)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:389)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ERROR Invalid sourceNode (Null)
+UnityEngine.Debug:LogError(Object)
+	DijkstraManager:GetRandomNodeAtMaxDistance(Node, Int32, List`1) (at Assets/Scripts/Managers/DijkstraManager.cs:844)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:367)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid selectionList (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	DijkstraManager:GetRandomNodeAtMaxDistance(Node, Int32, List`1) (at Assets/Scripts/Managers/DijkstraManager.cs:852)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:367)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ERROR Invalid random destination node (Null)
+UnityEngine.Debug:LogError(Object)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:389)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ERROR Invalid sourceNode (Null)
+UnityEngine.Debug:LogError(Object)
+	DijkstraManager:GetRandomNodeAtMaxDistance(Node, Int32, List`1) (at Assets/Scripts/Managers/DijkstraManager.cs:844)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:367)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid selectionList (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	DijkstraManager:GetRandomNodeAtMaxDistance(Node, Int32, List`1) (at Assets/Scripts/Managers/DijkstraManager.cs:852)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:367)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	ERROR Invalid random destination node (Null)
+UnityEngine.Debug:LogError(Object)
+	<AnimateTraffic>c__Iterator4:MoveNext() (at Assets/Scripts/Managers/AnimationManager.cs:389)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 3993 -> Friday, 13 November 2020 11:48 AM
+City seed 234 -> Sydsprawl, Chinock
+City seed 890 -> Arlarc, Eurasia
+
+Dev seed 50786 -> Friday, 13 November 2020 11:54 AM
+City seed 234 -> Sydsprawl, Chinock
+City seed 890 -> Arlarc, Eurasia
+
+Dev seed 9179 -> Friday, 13 November 2020 11:55 AM
+City seed 234 -> Sydsprawl, Chinock
+ERROR Duplicate entry exists for dictOfCampaign[scenarioIndex] "0"
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:InitialiseCampaignHistory() (at Assets/Scripts/Managers/DataManager.cs:9822)
+	CampaignManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/CampaignManager.cs:99)
+	CampaignManager:InitialiseEarly(GameState) (at Assets/Scripts/Managers/CampaignManager.cs:47)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:852)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:905)
+	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:159)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:72)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:288)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:437)
+	ERROR Duplicate entry exists for dictOfCampaign[scenarioIndex] "1"
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:InitialiseCampaignHistory() (at Assets/Scripts/Managers/DataManager.cs:9822)
+	CampaignManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/CampaignManager.cs:99)
+	CampaignManager:InitialiseEarly(GameState) (at Assets/Scripts/Managers/CampaignManager.cs:47)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:852)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:905)
+	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:159)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:72)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:288)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:437)
+	ERROR Duplicate entry exists for dictOfCampaign[scenarioIndex] "2"
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:InitialiseCampaignHistory() (at Assets/Scripts/Managers/DataManager.cs:9822)
+	CampaignManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/CampaignManager.cs:99)
+	CampaignManager:InitialiseEarly(GameState) (at Assets/Scripts/Managers/CampaignManager.cs:47)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:852)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:905)
+	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:159)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:72)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:288)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:437)
+	ERROR Duplicate entry exists for dictOfCampaign[scenarioIndex] "3"
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:InitialiseCampaignHistory() (at Assets/Scripts/Managers/DataManager.cs:9822)
+	CampaignManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/CampaignManager.cs:99)
+	CampaignManager:InitialiseEarly(GameState) (at Assets/Scripts/Managers/CampaignManager.cs:47)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:852)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:905)
+	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:159)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:72)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:288)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:437)
+	ERROR Duplicate entry exists for dictOfCampaign[scenarioIndex] "4"
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:InitialiseCampaignHistory() (at Assets/Scripts/Managers/DataManager.cs:9822)
+	CampaignManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/CampaignManager.cs:99)
+	CampaignManager:InitialiseEarly(GameState) (at Assets/Scripts/Managers/CampaignManager.cs:47)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:852)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:905)
+	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:159)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:72)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:326)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:288)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:437)
+	City seed 234 -> Sydsprawl, Chinock
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+MainInfoUI.InitialiseItems () (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:613)
+	MainInfoUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:554)
+	MainInfoUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:237)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:852)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:906)
+	ControlManager.CloseNewGameOptions () (at Assets/Scripts/Managers/ControlManager.cs:159)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:72)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:326)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:288)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:437)
+	ASSERT MissingReferenceException: The object of type 'GameObject' has been destroyed but you are still trying to access it.
+Your script should either check if it is null or you should not destroy the object.
+Node.ToggleSign () (at Assets/Scripts/Base Classes/Node.cs:1953)
+	Node+<FlashSignage>c__Iterator1.MoveNext () (at Assets/Scripts/Base Classes/Node.cs:1994)
+	UnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at C:/buildslave/unity/build/Runtime/Export/Coroutines.cs:17)
+	
+Dev seed 63818 -> Friday, 13 November 2020 12:14 PM
+City seed 234 -> Sydsprawl, Chinock
+
+Dev seed 18967 -> Friday, 13 November 2020 12:18 PM
+City seed 234 -> Sydsprawl, Chinock
+
+Dev seed 22196 -> Friday, 13 November 2020 12:19 PM
+City seed 234 -> Sydsprawl, Chinock
+
+Dev seed 6467 -> Friday, 13 November 2020 12:20 PM
+City seed 234 -> Sydsprawl, Chinock
+
+Dev seed 12683 -> Friday, 13 November 2020 12:24 PM
+City seed 234 -> Sydsprawl, Chinock
+
+Dev seed 24748 -> Friday, 13 November 2020 12:28 PM
+City seed 234 -> Sydsprawl, Chinock
+
+Dev seed 38531 -> Friday, 13 November 2020 12:30 PM
+City seed 234 -> Sydsprawl, Chinock
+
+Dev seed 27164 -> Friday, 13 November 2020 12:31 PM
+City seed 234 -> Sydsprawl, Chinock
