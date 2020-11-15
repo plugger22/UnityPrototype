@@ -562,7 +562,7 @@ public class DijkstraManager : MonoBehaviour
     public int GetDistanceUnweighted(int nodeSourceID, int nodeDestinationID)
     {
         int distance = -1;
-        Debug.Assert(nodeSourceID > -1 && nodeSourceID < numOfNodes, "Invalid sourceID (must be between Zero and numOfNodes)");
+        Debug.AssertFormat(nodeSourceID > -1 && nodeSourceID < numOfNodes, "Invalid sourceID (must be between Zero and numOfNodes) sourceID {0}, numOfNodes {1}", nodeSourceID, numOfNodes);
         Debug.AssertFormat(nodeDestinationID > -1 && nodeDestinationID < numOfNodes, "Invalid destinationID (must be between Zero and numOfNodes) destID {0}, numOfNodes {1}", nodeDestinationID, numOfNodes);
         if (nodeSourceID != nodeDestinationID)
         {

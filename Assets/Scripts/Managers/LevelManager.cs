@@ -146,10 +146,8 @@ public class LevelManager : MonoBehaviour
         InitialiseTiles();
         InitialiseNodeArcArray();
         InitialiseGraph();
-        InitialiseSpecialConnections();
         InitialiseNodeArcs();
         InitialiseDistricts();
-        /*InitialiseDistrictConnections();*/
         AssignSecurityLevels();
         InitialiseDistrictNames();
         InitialiseSurveillanceTiles();
@@ -1602,74 +1600,6 @@ public class LevelManager : MonoBehaviour
     public List<Vector3> GetListOfSurveillanceTiles()
     { return listOfSurveillanceTiles; }
 
-
-    /// <summary>
-    /// creates any special connections on the map (controlled by HQ)
-    /// </summary>
-    public void InitialiseSpecialConnections()
-    {
-        int distance;
-        int distanceMinimum = 3; //unweighted links
-        float distanceCrowMin = 3.5f; //straight distance as the crow flies
-        float distanceCrow;
-        List<Node> listOfSelectedNodes = new List<Node>();
-        List<Node> listOfNodesOneConn = new List<Node>();
-        List<Node> listOfNodesTwoConn = new List<Node>();
-        List<Node> listOfNodesTemp = new List<Node>();
-        //Get all nodes with 1 connections
-        for (int i = 0; i < listOfNodes.Count; i++)
-        {
-            Node node = listOfNodes[i];
-            if (node != null)
-            {
-                //Find nodes with one or two connections only
-                switch (node.CheckNumOfConnections())
-                {
-                    case 1: listOfNodesOneConn.Add(node); break;
-                    case 2: listOfNodesTwoConn.Add(node); break;
-                }
-            }
-            else { Debug.LogErrorFormat("Invalid node (Null) in listOfNodes[{0}]", i); }
-        }
-        //add all to selected nodes list, with one node connections first (priority)
-        listOfSelectedNodes.AddRange(listOfNodesOneConn);
-        listOfSelectedNodes.AddRange(listOfNodesTwoConn);
-        //
-        // - - - Master loop
-        //
-        for (int i = 0; i < listOfSelectedNodes.Count; i++)
-        {
-            Node node = listOfSelectedNodes[i];
-            //loop each node checking unweighted distance >= minDistance
-            for (int j = 0; j < listOfNodes.Count; j++)
-            {
-                Node nodeCheck = listOfNodes[j];
-                distance = GameManager.i.dijkstraScript.GetDistanceUnweighted(node.nodeID, nodeCheck.nodeID);
-                //distance >= minDistance
-                if (distance >= distanceMinimum)
-                {
-                    //check crow flies distance >= min Distance as Crow flies
-                    distanceCrow = Vector3.Distance(node.nodePosition, nodeCheck.nodePosition);
-                    if (distanceCrow >= distanceCrowMin)
-                    {
-                        //check a connection wouldn't intersect nodes
-
-
-                        //if pass all checks then add a data package to a Master list (nodeStart, nodeEnd, distanceCrows, links)
-
-                    }
-
-                }
-            }
-        }
-        
-        //go through master list and select the connections that have the greatest distanceCrow -> perhaps order list first and select 'x' number in order of greatest distances
-
-        //create connections (special ones)
-
-        //tweak dijkistra graph?
-    }
-}
 
 
     //new methods above here
