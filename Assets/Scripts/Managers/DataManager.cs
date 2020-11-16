@@ -8727,6 +8727,22 @@ public class DataManager : MonoBehaviour
     { return listOfTopicTypesLevel; }
 
     /// <summary>
+    /// Toggles a topic type on/off (used if isSubordinates option is true/false) to switch off Actor topicType
+    /// </summary>
+    /// <param name="topicTypeName"></param>
+    /// <param name="isDisabled"></param>
+    public void ToggleTopicType(string topicTypeName, bool isDisabled = true)
+    {
+        if (string.IsNullOrEmpty(topicTypeName) == false)
+        {
+            TopicType topicType = GetTopicType(topicTypeName);
+            topicType.isDisabled = isDisabled;
+            Debug.LogFormat("[Top] DataManager.cs -> ToggleTopicType: topicType \"{0}\" isDisabled {1}{2}", topicTypeName, isDisabled, "\n");
+        }
+        else { Debug.LogError("Invalid topicTypeName (Null or Empty)"); }
+    }
+
+    /// <summary>
     /// returns topicOption based on name of option, Null if not found
     /// </summary>
     /// <param name="optionName"></param>

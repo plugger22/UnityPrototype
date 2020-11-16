@@ -1076,6 +1076,7 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+
     #region InitialiseFeatures
     /// <summary>
     /// sets togglable features in optionManager.cs prior to running start up sequences
@@ -1088,8 +1089,10 @@ public class GameManager : MonoBehaviour
         optionScript.isDecisions = isDecisions;
         optionScript.isMainInfoApp = isMainInfoApp;
         optionScript.isNPC = isNPC;
+        optionScript.isSubordinates = isSubordinates;
     }
     #endregion
+
 
     #region Static Methods
 

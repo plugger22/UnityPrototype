@@ -5802,6 +5802,8 @@ MonoBehaviour:
   isNemesis: 1
   isDecisions: 1
   isMainInfoApp: 1
+  isNPC: 1
+  isSubordinates: 1
   showContacts: 0
   showPower: 1
   connectorTooltips: 0
@@ -6632,6 +6634,8 @@ MonoBehaviour:
   isFOW: 0
   isDecisions: 1
   isMainInfoApp: 1
+  isNPC: 1
+  isSubordinates: 0
   isSession: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:

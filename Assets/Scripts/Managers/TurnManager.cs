@@ -337,9 +337,12 @@ public class TurnManager : MonoBehaviour
                     {
                         if (winStateLevel == WinStateLevel.None)
                         {
-                            Debug.LogFormat("TurnManager.cs : - - - Select Topic - - - turn {0}{1}", Turn, "\n");
-                            //select topic
-                            GameManager.i.topicScript.SelectTopic(playerSide);
+                            if (GameManager.i.optionScript.isDecisions == true)
+                            {
+                                Debug.LogFormat("TurnManager.cs : - - - Select Topic - - - turn {0}{1}", Turn, "\n");
+                                //select topic
+                                GameManager.i.topicScript.SelectTopic(playerSide);
+                            }
                         }
                         //turn on info App (only if not autorunning)
                         if (isAutoRun == false)
@@ -347,8 +350,11 @@ public class TurnManager : MonoBehaviour
                             Debug.LogFormat("TurnManager.cs : - - - Start Info Pipeline - - - turn {0}{1}", Turn, "\n");
                             //switch off any node Alerts
                             GameManager.i.alertScript.CloseAlertUI(true);
-                            //generate topic
-                            GameManager.i.topicScript.ProcessTopic(playerSide);
+                            if (GameManager.i.optionScript.isDecisions == true)
+                            {
+                                //generate topic
+                                GameManager.i.topicScript.ProcessTopic(playerSide);
+                            }
 
                             /*//debug
                             DebugCreatePipelineMessages();*/

@@ -482,6 +482,7 @@ public class ActorManager : MonoBehaviour
     private void StartTurnLate()
     {
         bool isPlayer;
+        bool isSubordinates = GameManager.i.optionScript.isSubordinates;
         if (GameManager.i.sideScript.PlayerSide.level == globalResistance.level)
         {
             //run for Resistance Player
@@ -489,10 +490,12 @@ public class ActorManager : MonoBehaviour
             {
                 case SideState.Human:
                     CheckPlayerHuman();
-                    CheckInactiveResistanceActorsHuman();
-                    //needs to be AFTER CheckInactiveActors
-                    CheckActiveResistanceActorsHuman();
-
+                    if (isSubordinates == true)
+                    {
+                        CheckInactiveResistanceActorsHuman();
+                        //needs to be AFTER CheckInactiveActors
+                        CheckActiveResistanceActorsHuman();
+                    }
                     //end game checks
                     GameManager.i.hqScript.CheckHqFirePlayer();
                     GameManager.i.cityScript.CheckCityLoyaltyAtLimit();
@@ -504,22 +507,31 @@ public class ActorManager : MonoBehaviour
                         isPlayer = true;
                         if (GameManager.i.sideScript.PlayerSide.level != globalResistance.level) { isPlayer = false; }
                         CheckPlayerResistanceAI(isPlayer);
-                        CheckInactiveResistanceActorsAI(isPlayer);
-                        CheckActiveResistanceActorsAI(isPlayer);
+                        if (isSubordinates == true)
+                        {
+                            CheckInactiveResistanceActorsAI(isPlayer);
+                            CheckActiveResistanceActorsAI(isPlayer);
+                        }
                         //Authority -> sequence is Player / Inactive / Active
                         isPlayer = true;
                         if (GameManager.i.sideScript.PlayerSide.level != globalAuthority.level) { isPlayer = false; }
                         CheckPlayerAuthorityAI(isPlayer);
-                        CheckInactiveAuthorityActorsAI(isPlayer);
-                        CheckActiveAuthorityActorsAI(isPlayer);
+                        if (isSubordinates == true)
+                        {
+                            CheckInactiveAuthorityActorsAI(isPlayer);
+                            CheckActiveAuthorityActorsAI(isPlayer);
+                        }
                     }
                     else
                     {
                         //Resistance AI only
                         isPlayer = false;
                         CheckPlayerResistanceAI(isPlayer);
-                        CheckActiveResistanceActorsAI(isPlayer);
-                        CheckInactiveResistanceActorsAI(isPlayer);
+                        if (isSubordinates == true)
+                        {
+                            CheckActiveResistanceActorsAI(isPlayer);
+                            CheckInactiveResistanceActorsAI(isPlayer);
+                        }
                     }
                     break;
                 default:
@@ -534,9 +546,12 @@ public class ActorManager : MonoBehaviour
             {
                 case SideState.Human:
                     CheckPlayerHuman();
-                    CheckInactiveAuthorityActorsHuman();
-                    //needs to be AFTER CheckInactiveActors
-                    CheckActiveAuthorityActorsHuman();
+                    if (isSubordinates == true)
+                    {
+                        CheckInactiveAuthorityActorsHuman();
+                        //needs to be AFTER CheckInactiveActors
+                        CheckActiveAuthorityActorsHuman();
+                    }
                     //end game checks
                     GameManager.i.hqScript.CheckHqFirePlayer();
                     GameManager.i.cityScript.CheckCityLoyaltyAtLimit();
@@ -572,22 +587,25 @@ public class ActorManager : MonoBehaviour
                     break;
             }
         }
-        //count down relation timers
-        GameManager.i.dataScript.CheckRelations();
-        UpdateRelationMessages();
-        //Reserve actors
-        UpdateReserveActors();
-        GameManager.i.statScript.UpdateRatios();
-        //Lie Low cooldown timer
-        if (lieLowTimer > 0)
+        if (isSubordinates == true)
         {
-            lieLowTimer--;
-            //Resistance player (even if autorun)
-            if (GameManager.i.sideScript.PlayerSide.level == 2)
+            //count down relation timers
+            GameManager.i.dataScript.CheckRelations();
+            UpdateRelationMessages();
+            //Reserve actors
+            UpdateReserveActors();
+            GameManager.i.statScript.UpdateRatios();
+            //Lie Low cooldown timer
+            if (lieLowTimer > 0)
             {
-                //lie low timer message (InfoApp 'Effects' tab)
-                string text = string.Format("Lie Low Timer {0}", lieLowTimer);
-                GameManager.i.messageScript.ActorLieLowOngoing(text, lieLowTimer);
+                lieLowTimer--;
+                //Resistance player (even if autorun)
+                if (GameManager.i.sideScript.PlayerSide.level == 2)
+                {
+                    //lie low timer message (InfoApp 'Effects' tab)
+                    string text = string.Format("Lie Low Timer {0}", lieLowTimer);
+                    GameManager.i.messageScript.ActorLieLowOngoing(text, lieLowTimer);
+                }
             }
         }
     }
@@ -1368,6 +1386,16 @@ public class ActorManager : MonoBehaviour
                     //add to data collections
                     GameManager.i.dataScript.AddCurrentActor(side, actor, slotID);
                     GameManager.i.dataScript.AddActor(actor);
+                    //Subordinates toggled off
+                    if (GameManager.i.optionScript.isSubordinates == false)
+                    {
+                        //Set to Inactive
+                        actor.Status = ActorStatus.Inactive;
+                        actor.inactiveStatus = ActorInactive.LieLow;
+                        actor.tooltipStatus = ActorTooltip.LieLow;
+                        //history
+                        actor.AddHistory(new HistoryActor() { text = "Goes into hiding (Lies Low)" });
+                    }
                 }
                 //return actor
                 return actor;

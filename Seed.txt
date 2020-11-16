@@ -10048,3 +10048,274 @@ City seed 1616 -> Mexurb, Americon
 
 Dev seed 20873 -> Monday, 16 November 2020 12:29 PM
 City seed 1616 -> Mexurb, Americon
+
+Dev seed 43465 -> Monday, 16 November 2020 2:48 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 32821 -> Monday, 16 November 2020 2:51 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 18245 -> Monday, 16 November 2020 2:53 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 36130 -> Monday, 16 November 2020 3:18 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 21659 -> Monday, 16 November 2020 3:21 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 18047 -> Monday, 16 November 2020 3:23 PM
+City seed 1616 -> Mexurb, Americon
+WARNING Invalid HQ actor status "Inactive" (should be 'HQ') for actor Knightley Wright, hqID 0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddActorToHqPool(Int32) (at Assets/Scripts/Managers/DataManager.cs:4133)
+	ActorManager:InitialiseHqActors(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1192)
+	HQManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/HQManager.cs:198)
+	HQManager:Initialise(GameState) (at Assets/Scripts/Managers/HQManager.cs:169)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid HQ actor status "Inactive" (should be 'HQ') for actor Buster Torres, hqID 1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddActorToHqPool(Int32) (at Assets/Scripts/Managers/DataManager.cs:4133)
+	ActorManager:InitialiseHqActors(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1181)
+	HQManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/HQManager.cs:198)
+	HQManager:Initialise(GameState) (at Assets/Scripts/Managers/HQManager.cs:169)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid HQ actor status "Inactive" (should be 'HQ') for actor John Bailey, hqID 2
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddActorToHqPool(Int32) (at Assets/Scripts/Managers/DataManager.cs:4133)
+	ActorManager:InitialiseHqActors(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1203)
+	HQManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/HQManager.cs:198)
+	HQManager:Initialise(GameState) (at Assets/Scripts/Managers/HQManager.cs:169)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid HQ actor status "Inactive" (should be 'HQ') for actor Tommy Ventura, hqID 3
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddActorToHqPool(Int32) (at Assets/Scripts/Managers/DataManager.cs:4133)
+	ActorManager:InitialiseHqActors(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1203)
+	HQManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/HQManager.cs:198)
+	HQManager:Initialise(GameState) (at Assets/Scripts/Managers/HQManager.cs:169)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid HQ actor status "Inactive" (should be 'HQ') for actor Vigo Garcia, hqID 4
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddActorToHqPool(Int32) (at Assets/Scripts/Managers/DataManager.cs:4133)
+	ActorManager:InitialiseHqWorkers(Int32, GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1268)
+	HQManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/HQManager.cs:201)
+	HQManager:Initialise(GameState) (at Assets/Scripts/Managers/HQManager.cs:169)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid HQ actor status "Inactive" (should be 'HQ') for actor Lennox Barnes, hqID 5
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddActorToHqPool(Int32) (at Assets/Scripts/Managers/DataManager.cs:4133)
+	ActorManager:InitialiseHqWorkers(Int32, GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1268)
+	HQManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/HQManager.cs:201)
+	HQManager:Initialise(GameState) (at Assets/Scripts/Managers/HQManager.cs:169)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid HQ actor status "Inactive" (should be 'HQ') for actor Lyssa Ball, hqID 6
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddActorToHqPool(Int32) (at Assets/Scripts/Managers/DataManager.cs:4133)
+	ActorManager:InitialiseHqWorkers(Int32, GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1268)
+	HQManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/HQManager.cs:201)
+	HQManager:Initialise(GameState) (at Assets/Scripts/Managers/HQManager.cs:169)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid HQ actor status "Inactive" (should be 'HQ') for actor Elwood Foster, hqID 7
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddActorToHqPool(Int32) (at Assets/Scripts/Managers/DataManager.cs:4133)
+	ActorManager:InitialiseHqWorkers(Int32, GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1268)
+	HQManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/HQManager.cs:201)
+	HQManager:Initialise(GameState) (at Assets/Scripts/Managers/HQManager.cs:169)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid HQ actor status "Inactive" (should be 'HQ') for actor Kristal Ventura, hqID 8
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddActorToHqPool(Int32) (at Assets/Scripts/Managers/DataManager.cs:4133)
+	ActorManager:InitialiseHqWorkers(Int32, GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1268)
+	HQManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/HQManager.cs:201)
+	HQManager:Initialise(GameState) (at Assets/Scripts/Managers/HQManager.cs:169)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid HQ actor status "Inactive" (should be 'HQ') for actor Eugene Turner, hqID 9
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddActorToHqPool(Int32) (at Assets/Scripts/Managers/DataManager.cs:4133)
+	ActorManager:InitialiseHqWorkers(Int32, GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1268)
+	HQManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/HQManager.cs:201)
+	HQManager:Initialise(GameState) (at Assets/Scripts/Managers/HQManager.cs:169)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid HQ actor status "Inactive" (should be 'HQ') for actor Arik Brooks, hqID 10
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddActorToHqPool(Int32) (at Assets/Scripts/Managers/DataManager.cs:4133)
+	ActorManager:InitialiseHqWorkers(Int32, GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1268)
+	HQManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/HQManager.cs:201)
+	HQManager:Initialise(GameState) (at Assets/Scripts/Managers/HQManager.cs:169)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid HQ actor status "Inactive" (should be 'HQ') for actor Milford Edwards, hqID 11
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddActorToHqPool(Int32) (at Assets/Scripts/Managers/DataManager.cs:4133)
+	ActorManager:InitialiseHqWorkers(Int32, GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1268)
+	HQManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/HQManager.cs:201)
+	HQManager:Initialise(GameState) (at Assets/Scripts/Managers/HQManager.cs:169)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:421)
+	
+Dev seed 38460 -> Monday, 16 November 2020 3:24 PM
+City seed 1616 -> Mexurb, Americon
+WARNING Invalid HQ actor status "Inactive" (should be 'HQ') for actor Audie Evans, hqID 0
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddActorToHqPool(Int32) (at Assets/Scripts/Managers/DataManager.cs:4133)
+	ActorManager:InitialiseHqActors(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1181)
+	HQManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/HQManager.cs:198)
+	HQManager:Initialise(GameState) (at Assets/Scripts/Managers/HQManager.cs:169)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid HQ actor status "Inactive" (should be 'HQ') for actor Vigo Murphy, hqID 1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddActorToHqPool(Int32) (at Assets/Scripts/Managers/DataManager.cs:4133)
+	ActorManager:InitialiseHqActors(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1203)
+	HQManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/HQManager.cs:198)
+	HQManager:Initialise(GameState) (at Assets/Scripts/Managers/HQManager.cs:169)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid HQ actor status "Inactive" (should be 'HQ') for actor Tranter Barnes, hqID 2
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddActorToHqPool(Int32) (at Assets/Scripts/Managers/DataManager.cs:4133)
+	ActorManager:InitialiseHqActors(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1203)
+	HQManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/HQManager.cs:198)
+	HQManager:Initialise(GameState) (at Assets/Scripts/Managers/HQManager.cs:169)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid HQ actor status "Inactive" (should be 'HQ') for actor Paulie Bell, hqID 3
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddActorToHqPool(Int32) (at Assets/Scripts/Managers/DataManager.cs:4133)
+	ActorManager:InitialiseHqActors(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1181)
+	HQManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/HQManager.cs:198)
+	HQManager:Initialise(GameState) (at Assets/Scripts/Managers/HQManager.cs:169)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid HQ actor status "Inactive" (should be 'HQ') for actor Liv Nicholas, hqID 4
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddActorToHqPool(Int32) (at Assets/Scripts/Managers/DataManager.cs:4133)
+	ActorManager:InitialiseHqWorkers(Int32, GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1268)
+	HQManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/HQManager.cs:201)
+	HQManager:Initialise(GameState) (at Assets/Scripts/Managers/HQManager.cs:169)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid HQ actor status "Inactive" (should be 'HQ') for actor Katelin Lopez, hqID 5
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddActorToHqPool(Int32) (at Assets/Scripts/Managers/DataManager.cs:4133)
+	ActorManager:InitialiseHqWorkers(Int32, GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1268)
+	HQManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/HQManager.cs:201)
+	HQManager:Initialise(GameState) (at Assets/Scripts/Managers/HQManager.cs:169)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid HQ actor status "Inactive" (should be 'HQ') for actor Ladd Myers, hqID 6
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddActorToHqPool(Int32) (at Assets/Scripts/Managers/DataManager.cs:4133)
+	ActorManager:InitialiseHqWorkers(Int32, GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1268)
+	HQManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/HQManager.cs:201)
+	HQManager:Initialise(GameState) (at Assets/Scripts/Managers/HQManager.cs:169)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid HQ actor status "Inactive" (should be 'HQ') for actor Katelin Torres, hqID 7
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddActorToHqPool(Int32) (at Assets/Scripts/Managers/DataManager.cs:4133)
+	ActorManager:InitialiseHqWorkers(Int32, GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1268)
+	HQManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/HQManager.cs:201)
+	HQManager:Initialise(GameState) (at Assets/Scripts/Managers/HQManager.cs:169)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid HQ actor status "Inactive" (should be 'HQ') for actor Glad Rambo, hqID 8
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddActorToHqPool(Int32) (at Assets/Scripts/Managers/DataManager.cs:4133)
+	ActorManager:InitialiseHqWorkers(Int32, GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1268)
+	HQManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/HQManager.cs:201)
+	HQManager:Initialise(GameState) (at Assets/Scripts/Managers/HQManager.cs:169)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid HQ actor status "Inactive" (should be 'HQ') for actor Laquan Edwards, hqID 9
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddActorToHqPool(Int32) (at Assets/Scripts/Managers/DataManager.cs:4133)
+	ActorManager:InitialiseHqWorkers(Int32, GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1268)
+	HQManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/HQManager.cs:201)
+	HQManager:Initialise(GameState) (at Assets/Scripts/Managers/HQManager.cs:169)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid HQ actor status "Inactive" (should be 'HQ') for actor Jian Morgan, hqID 10
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddActorToHqPool(Int32) (at Assets/Scripts/Managers/DataManager.cs:4133)
+	ActorManager:InitialiseHqWorkers(Int32, GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1268)
+	HQManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/HQManager.cs:201)
+	HQManager:Initialise(GameState) (at Assets/Scripts/Managers/HQManager.cs:169)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:421)
+	WARNING Invalid HQ actor status "Inactive" (should be 'HQ') for actor Kyleigh Perez, hqID 11
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddActorToHqPool(Int32) (at Assets/Scripts/Managers/DataManager.cs:4133)
+	ActorManager:InitialiseHqWorkers(Int32, GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:1268)
+	HQManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/HQManager.cs:201)
+	HQManager:Initialise(GameState) (at Assets/Scripts/Managers/HQManager.cs:169)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:421)
+	
+Dev seed 29741 -> Monday, 16 November 2020 3:30 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 37119 -> Monday, 16 November 2020 3:32 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 6968 -> Monday, 16 November 2020 3:36 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 52765 -> Monday, 16 November 2020 3:50 PM
+City seed 1616 -> Mexurb, Americon
+
+Dev seed 3702 -> Monday, 16 November 2020 3:51 PM
+City seed 1616 -> Mexurb, Americon
+ERROR String too long for TextMeshGenerator. Cutting off characters.
+UnityEngine.GUI:Box(Rect, String, GUIStyle)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1884)
+	ERROR String too long for TextMeshGenerator. Cutting off characters.
+UnityEngine.GUI:Box(Rect, String, GUIStyle)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1884)
+	ERROR String too long for TextMeshGenerator. Cutting off characters.
+UnityEngine.GUI:Box(Rect, String, GUIStyle)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1884)
+	ERROR String too long for TextMeshGenerator. Cutting off characters.
+UnityEngine.GUI:Box(Rect, String, GUIStyle)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1884)
+	
+Dev seed 43849 -> Monday, 16 November 2020 3:58 PM
+City seed 1616 -> Mexurb, Americon
+ERROR String too long for TextMeshGenerator. Cutting off characters.
+UnityEngine.GUI:Box(Rect, String, GUIStyle)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:1884)
+	

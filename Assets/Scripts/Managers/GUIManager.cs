@@ -735,6 +735,7 @@ public class GUIManager : MonoBehaviour
         }
         if (GameManager.i.optionScript.isMainInfoApp == true)
         { yield return StartCoroutine("MainInfoApp", playerSide); }
+        else { GameManager.i.turnScript.AllowNewTurn(); }
     }
 
     /// <summary>

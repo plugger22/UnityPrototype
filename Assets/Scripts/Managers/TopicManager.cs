@@ -401,6 +401,10 @@ public class TopicManager : MonoBehaviour
         UpdateTopicPools();
         SetStoryGroupFlags();
         SetStoryIndexes();
+        //switch off actor topics if no subordinates, on otherwise
+        if (GameManager.i.optionScript.isSubordinates == false)
+        { GameManager.i.dataScript.ToggleTopicType("Actor"); }
+        else { GameManager.i.dataScript.ToggleTopicType("Actor", false); }
     }
     #endregion
 
