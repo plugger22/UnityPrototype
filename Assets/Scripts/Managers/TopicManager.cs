@@ -8277,22 +8277,29 @@ public class TopicManager : MonoBehaviour
     private bool DebugCheckValidType(TopicTypeData data)
     {
         int turn = GameManager.i.turnScript.Turn;
-        if (data != null)
+        TopicType topicType = GameManager.i.dataScript.GetTopicType(data.parent);
+        if (topicType != null)
         {
-            if (data.minInterval == 0)
+            if (topicType.isDisabled == true)
+            { return false; }
+            if (data != null)
             {
-                //global minInterval applies
-                if (turn - data.turnLastUsed >= minIntervalGlobal)
-                { return true; }
+                if (data.minInterval == 0)
+                {
+                    //global minInterval applies
+                    if (turn - data.turnLastUsed >= minIntervalGlobal)
+                    { return true; }
+                }
+                else
+                {
+                    //local minInterval applies
+                    if (turn - data.turnLastUsed >= data.minInterval)
+                    { return true; }
+                }
             }
-            else
-            {
-                //local minInterval applies
-                if (turn - data.turnLastUsed >= data.minInterval)
-                { return true; }
-            }
+            else { Debug.LogError("Invalid topictypeData (Null)"); }
         }
-        else { Debug.LogError("Invalid topictypeData (Null)"); }
+        else { Debug.LogErrorFormat("Invalid topicType (Null) for TopicTypeData.parent \"{0}\"", data.parent); }
         return false;
     }
 
