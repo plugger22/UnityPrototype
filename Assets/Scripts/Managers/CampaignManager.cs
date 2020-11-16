@@ -139,8 +139,11 @@ public class CampaignManager : MonoBehaviour
             // Nemesis -> may or may not be present
             if (scenario.challengeResistance.nemesisFirst != null)
             {
-                GameManager.i.nemesisScript.nemesis = scenario.challengeResistance.nemesisFirst;
-                GameManager.i.nemesisScript.Initialise();
+                if (GameManager.i.optionScript.isNemesis == true)
+                {
+                    GameManager.i.nemesisScript.nemesis = scenario.challengeResistance.nemesisFirst;
+                    GameManager.i.nemesisScript.Initialise();
+                }
             }
             else { Debug.LogFormat("[Nem] CampaignManager.cs -> InitialiseLate: No Nemesis present in Scenario{0}", "\n"); }
         }
@@ -217,7 +220,7 @@ public class CampaignManager : MonoBehaviour
         if (GameManager.i.scenarioStartLevel > 0)
         {
             scenarioIndex = GameManager.i.scenarioStartLevel;
-            Debug.LogFormat("[Tst] CampaignManager.cs -> Reset: Commence at ScenarioIndex {0}{1}", scenarioIndex, "\n");
+            /*Debug.LogFormat("[Tst] CampaignManager.cs -> Reset: Commence at ScenarioIndex {0}{1}", scenarioIndex, "\n");*/
         }
         else { scenarioIndex = 0; }
         commendations = 0;

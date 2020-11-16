@@ -95,7 +95,7 @@ public class SaveOptionData
     public bool debugData;
     public bool fixedActorStats;
     public bool billboard;
-    public bool noAI;
+    public bool isAI;
     public bool showContacts;
     public bool showPower;
     public bool connectorTooltips;

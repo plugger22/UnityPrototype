@@ -325,7 +325,8 @@ public class TurnManager : MonoBehaviour
                     haltExecution = false;
 
                     //end the current turn
-                    EndTurnAI();
+                    if (GameManager.i.optionScript.isAI == true)
+                    { EndTurnAI(); }
                     EndTurnEarly();
                     EndTurnLate();
                     //start the new turn

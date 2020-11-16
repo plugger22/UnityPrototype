@@ -77,8 +77,11 @@ public class MissionManager : MonoBehaviour
         GameManager.i.targetScript.Initialise();
         GameManager.i.targetScript.AssignTargets(mission);
         //Npc -> Human Resistance Player only
-        if (GameManager.i.campaignScript.campaign.side.level == 2)
-        { InitialiseNpc(); }
+        if (GameManager.i.optionScript.isNPC == true)
+        {
+            if (GameManager.i.campaignScript.campaign.side.level == 2)
+            { InitialiseNpc(); }
+        }
     }
     #endregion
 
@@ -154,25 +157,29 @@ public class MissionManager : MonoBehaviour
     /// </summary>
     private void StartTurnLate()
     {
-        if (mission.npc != null)
+        // - - - NPC
+        if (GameManager.i.optionScript.isNPC == true)
         {
-            ProcessNpc(mission.npc);
-            if (mission.npc.status == NpcStatus.Active)
+            if (mission.npc != null)
             {
-                //orgInfo not involved
-                if (GameManager.i.dataScript.CheckOrgInfoType(OrgInfoType.Npc) == false)
-                { ProcessContactInteraction(mission.npc); }
-                else
+                ProcessNpc(mission.npc);
+                if (mission.npc.status == NpcStatus.Active)
                 {
-                    //orgInfo automatically spots Npc
-                    Node node = mission.npc.currentNode;
-                    if (node != null)
+                    //orgInfo not involved
+                    if (GameManager.i.dataScript.CheckOrgInfoType(OrgInfoType.Npc) == false)
+                    { ProcessContactInteraction(mission.npc); }
+                    else
                     {
-                        string text = string.Format("{0} tracks {1} at {2}, {3}, ID {4}", GameManager.i.campaignScript.campaign.orgInfo.tag, mission.npc.tag, node.nodeName, node.Arc.name,
-                            node.nodeID);
-                        GameManager.i.messageScript.OrganisationNpc(text, node, mission.npc);
+                        //orgInfo automatically spots Npc
+                        Node node = mission.npc.currentNode;
+                        if (node != null)
+                        {
+                            string text = string.Format("{0} tracks {1} at {2}, {3}, ID {4}", GameManager.i.campaignScript.campaign.orgInfo.tag, mission.npc.tag, node.nodeName, node.Arc.name,
+                                node.nodeID);
+                            GameManager.i.messageScript.OrganisationNpc(text, node, mission.npc);
+                        }
+                        else { Debug.LogWarning("Invalid node (Null) for npc.CurrentNode"); }
                     }
-                    else { Debug.LogWarning("Invalid node (Null) for npc.CurrentNode"); }
                 }
             }
         }

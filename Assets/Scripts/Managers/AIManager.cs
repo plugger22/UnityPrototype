@@ -673,7 +673,8 @@ public class AIManager : MonoBehaviour
             ProcessFinalTasks(actionsPerTurn);
         }
         //Nemesis
-        ProcessNemesis();
+        if (GameManager.i.optionScript.isNemesis == true)
+        { ProcessNemesis(); }
         //reset flags
         immediateFlagResistance = false;
         isHacked = false;
@@ -1482,7 +1483,7 @@ public class AIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Determines the AITracker package (nodeID & turn) to be used as a focal point for Nemesis AI calculations. Returns null if none found. Called by AISideAuthority
+    /// Determines the AITracker package (nodeID and turn) to be used as a focal point for Nemesis AI calculations. Returns null if none found. Called by AISideAuthority
     /// </summary>
     private AITracker ProcessNemesisTarget()
     {

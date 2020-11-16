@@ -569,16 +569,16 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), optionFogOfWar))
             {
                 Debug.Log("[Dbg] Button -> Toggle Fog Of War");
-                if (GameManager.i.optionScript.fogOfWar == true)
+                if (GameManager.i.optionScript.isfogOfWar == true)
                 {
                     //sets both FOW and Nemesis settings in tandem
-                    GameManager.i.optionScript.fogOfWar = false;
+                    GameManager.i.optionScript.isfogOfWar = false;
                     GameManager.i.nemesisScript.isShown = true;
                     optionFogOfWar = "Fog Of War ON";
                 }
                 else
                 {
-                    GameManager.i.optionScript.fogOfWar = true;
+                    GameManager.i.optionScript.isfogOfWar = true;
                     GameManager.i.nemesisScript.isShown = false;
                     optionFogOfWar = "Fog Of War OFF";
                 }
@@ -636,7 +636,7 @@ public class DebugGUI : MonoBehaviour
                                 if (GameManager.i.sideScript.resistanceOverall == SideState.AI)
                                 {
                                     optionNoAI = "NO AI OFF";
-                                    GameManager.i.optionScript.noAI = true;
+                                    GameManager.i.optionScript.isAI = false;
                                     GameManager.i.sideScript.authorityCurrent = SideState.Human;
                                     GameManager.i.sideScript.resistanceCurrent = SideState.Human;
                                     GameManager.i.sideScript.authorityOverall = SideState.Human;
@@ -648,7 +648,7 @@ public class DebugGUI : MonoBehaviour
                                 else if (GameManager.i.sideScript.resistanceOverall == SideState.Human)
                                 {
                                     optionNoAI = "NO AI ON";
-                                    GameManager.i.optionScript.noAI = false;
+                                    GameManager.i.optionScript.isAI = true;
                                     GameManager.i.sideScript.authorityCurrent = SideState.Human;
                                     GameManager.i.sideScript.resistanceCurrent = SideState.AI;
                                     GameManager.i.sideScript.authorityOverall = SideState.Human;
@@ -663,7 +663,7 @@ public class DebugGUI : MonoBehaviour
                                 if (GameManager.i.sideScript.authorityOverall == SideState.AI)
                                 {
                                     optionNoAI = "NO AI OFF";
-                                    GameManager.i.optionScript.noAI = true;
+                                    GameManager.i.optionScript.isAI = false;
                                     GameManager.i.sideScript.authorityCurrent = SideState.Human;
                                     GameManager.i.sideScript.resistanceCurrent = SideState.Human;
                                     GameManager.i.sideScript.authorityOverall = SideState.Human;
@@ -675,7 +675,7 @@ public class DebugGUI : MonoBehaviour
                                 else if (GameManager.i.sideScript.authorityOverall == SideState.Human)
                                 {
                                     optionNoAI = "NO AI ON";
-                                    GameManager.i.optionScript.noAI = false;
+                                    GameManager.i.optionScript.isAI = true;
                                     GameManager.i.sideScript.authorityCurrent = SideState.AI;
                                     GameManager.i.sideScript.resistanceCurrent = SideState.Human;
                                     GameManager.i.sideScript.authorityOverall = SideState.AI;

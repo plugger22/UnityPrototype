@@ -5794,11 +5794,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoGearResolution: 0
-  fogOfWar: 0
   fixedActorStats: 0
   billboard: 1
   debugData: 0
-  noAI: 0
+  isfogOfWar: 0
+  isAI: 0
+  isNemesis: 1
+  isDecisions: 1
+  isMainInfoApp: 1
   showContacts: 0
   showPower: 1
   connectorTooltips: 0
@@ -6614,7 +6617,7 @@ MonoBehaviour:
   billboardScript: {fileID: 0}
   seedDev: 0
   autoRunTurns: 20
-  scenarioStartLevel: 2
+  scenarioStartLevel: 4
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1
@@ -6624,6 +6627,11 @@ MonoBehaviour:
   isEncrypted: 0
   isAutoSave: 0
   isLoadAutoSave: 0
+  isAI: 1
+  isNemesis: 1
+  isFOW: 0
+  isDecisions: 1
+  isMainInfoApp: 1
   isSession: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:
@@ -6781,9 +6789,9 @@ MonoBehaviour:
   - {fileID: 2100000, guid: ca22b759d154e624da61179dde7497d6, type: 2}
   - {fileID: 2100000, guid: 0a5ecd15ce398624297bfaca44615321, type: 2}
   connectionSpeed: 5
-  connectionDelay: 0.5
+  connectionDelay: 0.25
   connectionRepeat: 30
-  tileDelay: 1
+  tileDelay: 0.5
   tileRepeat: 30
   tileMinimum: 5
   tileRandom: 20
@@ -6792,7 +6800,7 @@ MonoBehaviour:
   signageMinimum: 10
   signageRandom: 10
   signageRepeat: 50
-  trafficWaitTime: 2
+  trafficWaitTime: 1
   trafficHeightMin: 1
   trafficChancePause: 3
   trafficChanceCar: 1
@@ -6800,6 +6808,7 @@ MonoBehaviour:
   decelerationVertical: 0.8
   decelerationHorizontal: 0.05
   speedLimit: 10
+  rotationSpeed: 0.75
   sirenFlashInterval: 0.15
   surveilAltitude: 1
   surveilWaitInterval: 1.5

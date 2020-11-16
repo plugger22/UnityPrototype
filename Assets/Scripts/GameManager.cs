@@ -149,6 +149,21 @@ public class GameManager : MonoBehaviour
     [Tooltip("If true then autoSave file is loaded instead of normal save file")]
     public bool isLoadAutoSave;
 
+    [Header("Features")]
+    [Tooltip("AI (both sides) on/off -> sets initial state only (can be adjusted by code later)")]
+    public bool isAI;
+    [Tooltip("Nemesis on/off (AI must be ON to use Nemesis) -> sets initial state only (can be adjusted by code later)")]
+    public bool isNemesis;
+    [Tooltip("Fog of War on/off -> sets initial state only (can be adjusted by code later)")]
+    public bool isFOW;
+    [Tooltip("Decisions on/off -> sets initial state only (can be adjusted by code later)")]
+    public bool isDecisions;
+    [Tooltip("MainInfoApp on/off -> sets initial state only (can be adjusted by code later)")]
+    public bool isMainInfoApp;
+    [Tooltip("NPC on/off -> sets initial state only (can be adjusted by code later)")]
+    public bool isNPC;
+    [Tooltip("Subordinates on/off -> sets initial state only (can be adjusted by code later)")]
+    public bool isSubordinates;
 
     private Random.State devState;                                                  //used to restore seedDev random sequence after any interlude, eg. level generation with a unique seed
     private long totalTime;                                                         //used for Performance monitoring on start up
@@ -382,6 +397,7 @@ public class GameManager : MonoBehaviour
         File.AppendAllText("Digital.txt", builder.ToString());*/
 
         inputScript.GameState = GameState.StartUp;
+        InitialiseFeatures();
         //global methods
         if (isPerformanceLog == false)
         {
@@ -1060,6 +1076,20 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    #region InitialiseFeatures
+    /// <summary>
+    /// sets togglable features in optionManager.cs prior to running start up sequences
+    /// </summary>
+    private void InitialiseFeatures()
+    {
+        optionScript.isAI = isAI;
+        optionScript.isNemesis = isNemesis;
+        optionScript.isfogOfWar = isFOW;
+        optionScript.isDecisions = isDecisions;
+        optionScript.isMainInfoApp = isMainInfoApp;
+        optionScript.isNPC = isNPC;
+    }
+    #endregion
 
     #region Static Methods
 

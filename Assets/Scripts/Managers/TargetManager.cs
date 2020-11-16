@@ -859,7 +859,7 @@ public class TargetManager : MonoBehaviour
                 {
                     case 1:
                         //Authority
-                        if (GameManager.i.optionScript.fogOfWar == true)
+                        if (GameManager.i.optionScript.isfogOfWar == true)
                         {
                             //only show if FOW on and target is known
                             if (isTargetKnown == true)
@@ -894,7 +894,7 @@ public class TargetManager : MonoBehaviour
                         break;
                     case 2:
                         //Resistance -> target LIVE & Completed
-                        if (GameManager.i.optionScript.fogOfWar == true)
+                        if (GameManager.i.optionScript.isfogOfWar == true)
                         {
                             //FOW On, only show Live and Completed
                             switch (target.targetStatus)

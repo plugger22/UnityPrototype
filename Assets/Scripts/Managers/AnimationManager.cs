@@ -25,13 +25,13 @@ public class AnimationManager : MonoBehaviour
     [Tooltip("Speed at which the 'ball' moves along a connection (higher the number, the slower)")]
     [Range(0f, 5f)] public float connectionSpeed = 5.0f;
     [Tooltip("The delay in seconds between successive connection movement sequences, eg. there is a pause after one connection coroutine finishes and the next starts")]
-    [Range(0f, 2f)] public float connectionDelay = 0.5f;
+    [Range(0f, 2f)] public float connectionDelay = 0.25f;
     [Tooltip("The chance (%) of a connection repeating the same movement. If fail roll then end of that connections animation, otherwise will keep repeating while roll keeps succeeding")]
     [Range(0, 100)] public int connectionRepeat = 30;
 
     [Header("Tiles")]
     [Tooltip("The delay in seconds between successive sphere0 tile animation sequences")]
-    [Range(0f, 2f)] public float tileDelay = 1.0f;
+    [Range(0f, 2f)] public float tileDelay = 0.5f;
     [Tooltip("The chance (%) of a tile sequence repeating")]
     [Range(0, 100)] public int tileRepeat = 30;
     [Tooltip("The minimum number of flashes to occur in a given sphere0 animation sequence")]
@@ -53,7 +53,7 @@ public class AnimationManager : MonoBehaviour
 
     [Header("Traffic")]
     [Tooltip("Initial pause and same for random pauses in generating new cars due animation sequence (seconds)")]
-    [Range(0f, 5f)] public float trafficWaitTime = 2.0f;
+    [Range(0f, 5f)] public float trafficWaitTime = 1.0f;
     [Tooltip("Altitude at which cars are instantiated above a node and destroyed")]
     [Range(0f, 2.0f)] public float trafficHeightMin = 1.0f;
     [Tooltip("Chance (1d1000) of a dead period happening during sequence and nothing happens for trafficWaitTime")]
@@ -360,7 +360,7 @@ public class AnimationManager : MonoBehaviour
                 if (isWait == true)
                 {
                     if (Random.Range(0, 1000) < trafficChancePause)
-                    { yield return new WaitForSeconds(trafficWaitTime); }
+                    { yield return new WaitForSeconds(trafficWaitTime * 2f); }
                 }
                 //generate new traffic at random intervals
                 if (Random.Range(0, 100) < trafficChanceCar)

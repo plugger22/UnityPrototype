@@ -41,7 +41,6 @@ public class GUIManager : MonoBehaviour
     [Range(0.1f, 1.0f)] public float flashInfoTabTime = 0.4f;
 
     
-
     [Header("PopUp Texts")]
     [Tooltip("How long the full animation cycle lasts (seconds)")]
     [Range(1f, 3f)] public float timerMax = 2.0f;
@@ -728,10 +727,14 @@ public class GUIManager : MonoBehaviour
         //only do topic if level or campaign win state is 'None' (level win state incorporates campaign win state where appropriate)
         if (GameManager.i.turnScript.winStateLevel == WinStateLevel.None)
         {
-            yield return StartCoroutine("Topic");
-            yield return new WaitForSecondsRealtime(pipelineWait);
+            if (GameManager.i.optionScript.isDecisions == true)
+            {
+                yield return StartCoroutine("Topic");
+                yield return new WaitForSecondsRealtime(pipelineWait);
+            }
         }
-        yield return StartCoroutine("MainInfoApp", playerSide);
+        if (GameManager.i.optionScript.isMainInfoApp == true)
+        { yield return StartCoroutine("MainInfoApp", playerSide); }
     }
 
     /// <summary>

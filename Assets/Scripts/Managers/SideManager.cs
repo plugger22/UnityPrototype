@@ -56,7 +56,7 @@ public class SideManager : MonoBehaviour
             {
                 case 1:
                     //Authority
-                    if (GameManager.i.optionScript.noAI == false)
+                    if (GameManager.i.optionScript.isAI == true)
                     {
                         resistanceCurrent = SideState.AI;
                         authorityCurrent = SideState.Human;
@@ -70,7 +70,7 @@ public class SideManager : MonoBehaviour
                     break;
                 case 2:
                     //Resistance
-                    if (GameManager.i.optionScript.noAI == false)
+                    if (GameManager.i.optionScript.isAI == true)
                     {
                         resistanceCurrent = SideState.Human;
                         authorityCurrent = SideState.AI;
@@ -218,7 +218,7 @@ public class SideManager : MonoBehaviour
     public bool CheckInteraction()
     {
         bool isPossible = true;
-        if (GameManager.i.optionScript.noAI == false)
+        if (GameManager.i.optionScript.isAI == true)
         {
             switch (_playerSide.level)
             {

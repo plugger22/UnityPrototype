@@ -1,24 +1,30 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using gameAPI;
+﻿using gameAPI;
 using System.Text;
+using UnityEngine;
 
 /// <summary>
-/// handles all game option matters
+/// handles all Player togglable game option matters
 /// </summary>
 public class OptionManager : MonoBehaviour
 {
     #region Save Data Compatible
     //game options
     [HideInInspector] public bool autoGearResolution = false;                     //if true then dice roller ignored whenever not enough power to save gear
-    [HideInInspector] public bool fogOfWar = false;                               //if true then one sides sees only the information that they should
     [HideInInspector] public bool fixedActorStats = false;                        //if true then actors will have varying stats according to level, if false then actors of the same level all have identical stats
     [HideInInspector] public bool billboard = true;                               //if true billboard shows between turns
-    
+
     //Debug options
-    [HideInInspector] public bool debugData = false;                              //if true debug data is displayed onscreen
-    [HideInInspector] public bool noAI = false;                                   //if true AI is switched off for both sides (debug purposes)
+    //
+    //NOTE: most of these are controlled by GameManager.cs -> InitialiseFeatures (set options in the GameManager.cs prefab under 'Features')
+    //
+    [HideInInspector] public bool debugData = false;                                //if true debug data is displayed onscreen
+    [HideInInspector] public bool isfogOfWar = false;                               //if true then one sides sees only the information that they should
+    [HideInInspector] public bool isAI = false;                                     //if false AI is switched off for both sides (debug purposes)
+    [HideInInspector] public bool isNemesis = true;                                 //if false Nemesis is switched off
+    [HideInInspector] public bool isDecisions = true;                               //if false Decisions are switched off
+    [HideInInspector] public bool isMainInfoApp = true;                             //if false MainInfoApp is switched off
+    [HideInInspector] public bool isNPC = true;                                     //if false NPC is switched off
+    [HideInInspector] public bool isSubordinates = true;                            //if false Subordinates are switched off
 
     //UI options
     [HideInInspector] public bool showContacts = false;                           //if true node tooltips will show contact as well as Actor Arcs for nodes where actors have contacts
@@ -34,7 +40,7 @@ public class OptionManager : MonoBehaviour
     public bool noNodes = false;
 
     //ColourManager.cs ColourScheme enum (eg. 0 -> normal, 1 -> colourblind)
-    public ColourScheme ColourOption                             
+    public ColourScheme ColourOption
     {
         get { return _colourOption; }
         set
@@ -47,7 +53,7 @@ public class OptionManager : MonoBehaviour
                 Debug.Log("OptionManager -> Colour Scheme: now " + _colourOption + "\n");
             }
         }
-    }  
+    }
 
 
     /*/// <summary>
@@ -69,15 +75,20 @@ public class OptionManager : MonoBehaviour
             .AppendFormat(" Current Option Settings{0}{1}", "\n", "\n")
             .AppendFormat(" Side -> {0}{1}", GameManager.i.sideScript.PlayerSide, "\n")
             .AppendFormat("{0}- Game Options{1}", "\n", "\n")
-            .AppendFormat(" Fog Of War (Show from POV of Player) -> {0}{1}", fogOfWar, "\n")
             .AppendFormat(" Auto Gear (Dice ignored if not enough Power) -> {0}{1}", autoGearResolution, "\n")
             .AppendFormat(" Fixed Actor Stats -> {0}{1}", fixedActorStats, "\n")
             .AppendFormat(" Billboards -> {0}{1}", billboard, "\n")
-            .AppendFormat("{0}- Debug Options{1}","\n", "\n")
+            .AppendFormat("{0}- Debug Options{1}", "\n", "\n")
             .AppendFormat(" Debug Data -> {0}{1}", debugData, "\n")
-            .AppendFormat(" NO AI -> {0}{1}", noAI, "\n")
+            .AppendFormat(" isFogOfWar -> {0}{1}", isfogOfWar, "\n")
+            .AppendFormat(" isAI -> {0}{1}", isAI, "\n")
+            .AppendFormat(" isNemesis -> {0}{1}", isNemesis, "\n")
+            .AppendFormat(" isDecisions -> {0}{1}", isDecisions, "\n")
+            .AppendFormat(" isMainInfoApp -> {0}{1}", isMainInfoApp, "\n")
+            .AppendFormat(" isNPC -> {0}{1}", isNPC, "\n")
+            .AppendFormat(" isSubordinates -> {0}{1}", isSubordinates, "\n")
             .AppendFormat(" NO Nodes -> {0}{1}", noNodes, "\n")
-            .AppendFormat("{0}- UI Options{1}","\n", "\n")
+            .AppendFormat("{0}- UI Options{1}", "\n", "\n")
             .AppendFormat(" Connector Tooltips -> {0}{1}", connectorTooltips, "\n")
             .AppendFormat(" Full Mood Information -> {0}{1}", fullMoodInfo, "\n")
             .AppendFormat(" Show Contacts -> {0}{1}", showContacts, "\n")

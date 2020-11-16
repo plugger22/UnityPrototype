@@ -351,11 +351,11 @@ public class FileManager : MonoBehaviour
     private void WriteOptionData()
     {
         write.optionData.autoGearResolution = GameManager.i.optionScript.autoGearResolution;
-        write.optionData.fogOfWar = GameManager.i.optionScript.fogOfWar;
+        write.optionData.fogOfWar = GameManager.i.optionScript.isfogOfWar;
         write.optionData.fixedActorStats = GameManager.i.optionScript.fixedActorStats;
         write.optionData.billboard = GameManager.i.optionScript.billboard;
         write.optionData.debugData = GameManager.i.optionScript.debugData;
-        write.optionData.noAI = GameManager.i.optionScript.noAI;
+        write.optionData.isAI = GameManager.i.optionScript.isAI;
         write.optionData.showContacts = GameManager.i.optionScript.showContacts;
         write.optionData.showPower = GameManager.i.optionScript.showPower;
         write.optionData.connectorTooltips = GameManager.i.optionScript.connectorTooltips;
@@ -2074,11 +2074,11 @@ public class FileManager : MonoBehaviour
     private void ReadOptionData()
     {
         GameManager.i.optionScript.autoGearResolution = read.optionData.autoGearResolution;
-        GameManager.i.optionScript.fogOfWar = read.optionData.fogOfWar;
+        GameManager.i.optionScript.isfogOfWar = read.optionData.fogOfWar;
         GameManager.i.optionScript.fixedActorStats = read.optionData.fixedActorStats;
         GameManager.i.optionScript.billboard = read.optionData.billboard;
         GameManager.i.optionScript.debugData = read.optionData.debugData;
-        GameManager.i.optionScript.noAI = read.optionData.noAI;
+        GameManager.i.optionScript.isAI = read.optionData.isAI;
         GameManager.i.optionScript.showContacts = read.optionData.showContacts;
         GameManager.i.optionScript.showPower = read.optionData.showPower;
         GameManager.i.optionScript.connectorTooltips = read.optionData.connectorTooltips;
