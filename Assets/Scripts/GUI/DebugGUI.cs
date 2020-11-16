@@ -1857,37 +1857,37 @@ public class DebugGUI : MonoBehaviour
                     case 62:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.topicScript.DebugDisplayTopicTypes();
-                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 750), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 505, 10, 500, 750), analysis, customBackground);
                         break;
                     //Topic Type lists
                     case 63:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.topicScript.DebugDisplayTopicTypeLists();
-                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 850), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 505, 10, 500, 850), analysis, customBackground);
                         break;
                     //Topic Pools
                     case 64:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.topicScript.DebugDisplayCurrentTopicPool();
-                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 850), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 505, 10, 500, 850), analysis, customBackground);
                         break;
                     //Topic Selection data
                     case 65:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.topicScript.DebugDisplayTopicSelectionData();
-                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 700), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 505, 10, 500, 700), analysis, customBackground);
                         break;
                     //Topic Profile data
                     case 66:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.topicScript.DebugDisplayTopicProfileData();
-                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 850), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 505, 10, 500, 850), analysis, customBackground);
                         break;
                     //Topic Criteria data
                     case 67:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.topicScript.DebugDisplayCriteria();
-                        GUI.Box(new Rect(Screen.width - 455, 10, 450, 850), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 505, 10, 500, 850), analysis, customBackground);
                         break;
                     //Actor NodeActionData
                     case 68:

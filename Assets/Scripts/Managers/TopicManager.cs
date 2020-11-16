@@ -8277,7 +8277,12 @@ public class TopicManager : MonoBehaviour
     private bool DebugCheckValidType(TopicTypeData data)
     {
         int turn = GameManager.i.turnScript.Turn;
-        TopicType topicType = GameManager.i.dataScript.GetTopicType(data.parent);
+        //needs to be able to handle topics and subTopics
+        string topicName = data.parent;
+        if (string.IsNullOrEmpty(topicName) == true)
+        { topicName = data.type; }
+        //get topictype
+        TopicType topicType = GameManager.i.dataScript.GetTopicType(topicName);
         if (topicType != null)
         {
             if (topicType.isDisabled == true)
@@ -8299,7 +8304,7 @@ public class TopicManager : MonoBehaviour
             }
             else { Debug.LogError("Invalid topictypeData (Null)"); }
         }
-        else { Debug.LogErrorFormat("Invalid topicType (Null) for TopicTypeData.parent \"{0}\"", data.parent); }
+        else { Debug.LogErrorFormat("Invalid topicType (Null) for TopicTypeData.parent \"{0}\"", topicName); }
         return false;
     }
 
