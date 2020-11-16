@@ -1406,6 +1406,7 @@ public class ActorManager : MonoBehaviour
         return null;
     }
 
+
     #region GetNodeActions
     /// <summary>
     /// Returns a list of all relevant Actor Actions for the  node to enable a ModalActionMenu to be put together (one button per action). 
@@ -4073,7 +4074,7 @@ public class ActorManager : MonoBehaviour
                         else
                         {
                             //actor has an HQ relevant trait
-                            tooltipDetailsSprite.textMain = string.Format("Power  {0}{1}{2}{3}{4}{5}<size=120%>{6}</size>{7}{8}", colourNeutral, actor.Power, colourEnd, "\n", 
+                            tooltipDetailsSprite.textMain = string.Format("Power  {0}{1}{2}{3}{4}{5}<size=120%>{6}</size>{7}{8}", colourNeutral, actor.Power, colourEnd, "\n",
                                 "<font=\"Bangers SDF\">", "<cspace=0.6em>", actor.GetTrait().tagFormatted, "</cspace>", "</font>");
                         }
                         if (isBoss == true)
@@ -9294,15 +9295,19 @@ public class ActorManager : MonoBehaviour
                                 else
                                 {
                                     if (isMetaGame)
-                                    { Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} is QUESTIONABLE, can't go to HQ{3}", 
-                                        actorOnMap.actorName, actorOnMap.arc.name, actorOnMap.Status, "\n"); }
+                                    {
+                                        Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} is QUESTIONABLE, can't go to HQ{3}",
+                                          actorOnMap.actorName, actorOnMap.arc.name, actorOnMap.Status, "\n");
+                                    }
                                 }
                             }
                             else
                             {
                                 if (isMetaGame)
-                                { Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} has ZERO Power, can't go to HQ{3}", 
-                                    actorOnMap.actorName, actorOnMap.arc.name, actorOnMap.Status, "\n"); }
+                                {
+                                    Debug.LogFormat("[Tst] ActorManager.cs -> ProcessMetaActors: {0}, {1}, {2} has ZERO Power, can't go to HQ{3}",
+                                      actorOnMap.actorName, actorOnMap.arc.name, actorOnMap.Status, "\n");
+                                }
                             }
                             if (isSuccess == false)
                             {
@@ -9803,7 +9808,7 @@ public class ActorManager : MonoBehaviour
         if (playerSide.level == 2)
         {
             //Innocence
-            builder.AppendFormat("{0}{1}Innocence</size>{2}{3}{4}{5}", colourHeader, briefingSize, colourEnd, briefingHeightOpen,  "\n", briefingHeightClose);
+            builder.AppendFormat("{0}{1}Innocence</size>{2}{3}{4}{5}", colourHeader, briefingSize, colourEnd, briefingHeightOpen, "\n", briefingHeightClose);
             builder.AppendFormat("{0} Authority views you as a {1}{2}", GameManager.i.guiScript.GetNormalStars(3), GameManager.i.playerScript.GetInnocenceDescriptor(ColourType.salmonText), "\n");
             //Conditions
             builder.AppendFormat("{0}{1}{2}Conditions</size>{3}{4}{5}{6}", "\n", colourHeader, briefingSize, colourEnd, briefingHeightOpen, "\n", briefingHeightClose);
@@ -9991,7 +9996,7 @@ public class ActorManager : MonoBehaviour
                         Objective objective = listOfObjectives[0];
                         if (objective != null)
                         {
-                            builder.AppendFormat("{0}{1}{2}</size>{3}{4}{5}{6}", colourHeader, briefingSize, objective.tag, colourEnd, briefingHeightOpen,"\n", briefingHeightClose);
+                            builder.AppendFormat("{0}{1}{2}</size>{3}{4}{5}{6}", colourHeader, briefingSize, objective.tag, colourEnd, briefingHeightOpen, "\n", briefingHeightClose);
                             builder.Append(GetBriefingNotes(mission.briefingObjOne, "Objective One"));
                             builder.AppendLine(); builder.AppendLine(); builder.AppendLine();
                         }
@@ -10175,6 +10180,50 @@ public class ActorManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid slotIDString (Null or Empty)"); }
         return reply;
+    }
+
+    /// <summary>
+    /// Toggles all onMap actors lie low / active (used for OptionManager.cs -> isSubordinates via DebugGUI). Resistance side only
+    /// </summary>
+    /// <param name="isLieLow"></param>
+    public void ToggleOnMapActors(bool isActive = true)
+    {
+        float alpha;
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalResistance);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.i.dataScript.CheckActorSlotStatus(i, globalResistance) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        if (isActive == true)
+                        {
+                            //Activate actor
+                            actor.Status = ActorStatus.Active;
+                            actor.inactiveStatus = ActorInactive.None;
+                            actor.tooltipStatus = ActorTooltip.None;
+                            alpha = GameManager.i.guiScript.alphaActive;
+
+                        }
+                        else
+                        {
+                            //Deactive actor
+                            actor.Status = ActorStatus.Inactive;
+                            actor.inactiveStatus = ActorInactive.LieLow;
+                            actor.tooltipStatus = ActorTooltip.LieLow;
+                            alpha = GameManager.i.guiScript.alphaInactive;
+                        }
+                        //update actor panel
+                        GameManager.i.actorPanelScript.UpdateActorAlpha(actor.slotID, alpha);
+                    }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
     }
 
     //new methods above here

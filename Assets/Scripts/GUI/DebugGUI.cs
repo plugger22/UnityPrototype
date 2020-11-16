@@ -34,7 +34,6 @@ public class DebugGUI : MonoBehaviour
     public int box_y;
     public int box_width;
     public int box_height;
-    public int modifier;
     [Tooltip("gap at start between header and first button")]
     public int gap_y;
 
@@ -70,23 +69,23 @@ public class DebugGUI : MonoBehaviour
     private string textInput_1 = "who";
     private string analysis = "Unknown";
     private string textOutput;
-    public string optionAutoGear;
-    public string optionFogOfWar;
+
     public string optionShowContacts;
     public string optionConnectorTooltips;
     public string optionDebugData;
-    private string optionNoAI;
-    private string optionNodes;
-    private string optionNodeDisplay;
-    private string optionTileDisplay;
-    /*private string optionAIOffline;*/
-    /*private string optionAITraceback;*/
-    /*private string optionAIScreamer;*/
+    public string optionNodes;
+    public string optionNodeDisplay;
+    public string optionTileDisplay;
     public string optionRenownUI;
-    private string optionPath;
+    public string optionPath;
     public string optionContacts;
-    private string optionMoodInfo;
-    private string optionBillboardInfo;
+    public string optionMoodInfo;
+    public string optionBillboardInfo;
+    public string optionAutoGear;
+    //public strings (can be changed by GameManager.cs -> InitialiseFeatures
+    public string optionFogOfWar;
+    public string optionNoAI;
+    public string optionMinionInfo;
 
     private void Awake()
     {
@@ -98,10 +97,8 @@ public class DebugGUI : MonoBehaviour
         box_file = box_x * 5 + box_width * 4;
         //option strings
         optionAutoGear = "Auto Gear ON";
-        optionFogOfWar = "Fog Of War ON";
         optionConnectorTooltips = "Conn tooltips ON";
         optionDebugData = "Debug Data ON";
-        optionNoAI = "NO AI ON";
         optionNodes = "Show IDs";
         /*optionAIOffline = "AIOffline ON";*/
         /*optionAITraceback = "AITraceback ON";*/
@@ -114,6 +111,9 @@ public class DebugGUI : MonoBehaviour
         optionBillboardInfo = "Billboard OFF";
         optionNodeDisplay = "Show NODES";
         optionTileDisplay = "Show SURV Tiles";
+        optionMinionInfo = "Minions OFF";
+        optionFogOfWar = "Fog of War ON";
+        optionNoAI = "AI OFF";
     }
 
     // Update is called once per frame
@@ -145,7 +145,7 @@ public class DebugGUI : MonoBehaviour
 
             customBackground.alignment = TextAnchor.UpperCenter;
             //background box (Options)
-            GUI.Box(new Rect(box_option, box_y, box_width, box_height / 2 + 90), "Option Menu", customBackground);
+            GUI.Box(new Rect(box_option, box_y, box_width, box_height / 2 + 150), "Option Menu", customBackground);
             //background box (Info)
             GUI.Box(new Rect(box_info, box_y, box_width, box_height + 290), "Info Menu", customBackground);
             //background box (Actions)
@@ -501,8 +501,8 @@ public class DebugGUI : MonoBehaviour
             }
 
             //twentyEigth button
-            modifier = 26;
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * modifier + button_height * modifier, button_width, button_height), "MetaGame Data"))
+            offset = 26;
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), "MetaGame Data"))
             {
                 Debug.Log("[Dbg] Button -> MetaGame Data");
                 if (debugDisplay != 105)
@@ -511,8 +511,8 @@ public class DebugGUI : MonoBehaviour
             }
 
             //twentyNinth button
-            modifier = 27;
-            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * modifier + button_height * modifier, button_width, button_height), "Story Data"))
+            offset = 27;
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), "Story Data"))
             {
                 Debug.Log("[Dbg] Button -> Story Data");
                 switch (storyToggle)
@@ -662,7 +662,7 @@ public class DebugGUI : MonoBehaviour
                                 //switch AI Off -> Manual player control for both sides
                                 if (GameManager.i.sideScript.authorityOverall == SideState.AI)
                                 {
-                                    optionNoAI = "NO AI OFF";
+                                    optionNoAI = "AI OFF";
                                     GameManager.i.optionScript.isAI = false;
                                     GameManager.i.sideScript.authorityCurrent = SideState.Human;
                                     GameManager.i.sideScript.resistanceCurrent = SideState.Human;
@@ -674,7 +674,7 @@ public class DebugGUI : MonoBehaviour
                                 //reverts back to Resistance Player, Authority AI
                                 else if (GameManager.i.sideScript.authorityOverall == SideState.Human)
                                 {
-                                    optionNoAI = "NO AI ON";
+                                    optionNoAI = "AI ON";
                                     GameManager.i.optionScript.isAI = true;
                                     GameManager.i.sideScript.authorityCurrent = SideState.AI;
                                     GameManager.i.sideScript.resistanceCurrent = SideState.Human;
@@ -752,6 +752,29 @@ public class DebugGUI : MonoBehaviour
                 {
                     GameManager.i.optionScript.billboard = true;
                     optionBillboardInfo = "Billboard OFF";
+                }
+            }
+
+            //Subordinates button
+            offset = 11;
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), optionMinionInfo))
+            {
+                Debug.Log("[Dbg] Button -> Toggle Subordinates option");
+                if (GameManager.i.optionScript.isSubordinates == true)
+                {
+                    //subordinates off
+                    GameManager.i.optionScript.isSubordinates = false;
+                    optionMinionInfo = "Minions ON";
+                    GameManager.i.dataScript.ToggleTopicType("Actor");
+                    GameManager.i.actorScript.ToggleOnMapActors(false);
+                }
+                else
+                {
+                    //subordinates on
+                    GameManager.i.optionScript.isSubordinates = true;
+                    optionMinionInfo = "Minions OFF";
+                    GameManager.i.dataScript.ToggleTopicType("Actor", false);
+                    GameManager.i.actorScript.ToggleOnMapActors();
                 }
             }
 
@@ -1453,7 +1476,7 @@ public class DebugGUI : MonoBehaviour
                     case 12:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.optionScript.DisplayOptions();
-                        GUI.Box(new Rect(Screen.width - 460, 10, 450, 300), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 460, 10, 450, 450), analysis, customBackground);
                         break;
                     //Help
                     case 13:
