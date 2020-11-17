@@ -95,11 +95,16 @@ public class SaveOptionData
     public bool debugData;
     public bool fixedActorStats;
     public bool billboard;
-    public bool isAI;
     public bool showContacts;
     public bool showPower;
     public bool connectorTooltips;
     public bool fullMoodInfo;
+    public bool isAI;
+    public bool isNemesis;
+    public bool isDecisions;
+    public bool isMainInfoApp;
+    public bool isNPC;
+    public bool isSubordinates;
     public ColourScheme colourScheme;
 }
 #endregion

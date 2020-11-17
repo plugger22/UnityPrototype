@@ -440,7 +440,10 @@ public class InputManager : MonoBehaviour
                     {
                         //only do so if new turn processing hasn't commenced -> Keyboard shortcut to open MainInfoApp between turns -> 'I'
                         if (GameManager.i.turnScript.CheckNewTurnBlocked() == false)
-                        { EventManager.i.PostNotification(EventType.MainInfoOpenInterim, this, null, string.Format("InputManager.cs -> ProcessKeyInput OpenMainInfo \"{0}\"", Input.inputString.ToUpper())); }
+                        {
+                            if (GameManager.i.optionScript.isMainInfoApp == true)
+                            { EventManager.i.PostNotification(EventType.MainInfoOpenInterim, this, null, string.Format("InputManager.cs -> ProcessKeyInput OpenMainInfo \"{0}\"", Input.inputString.ToUpper())); }
+                        }
                     }
                     break;
                 #endregion
@@ -638,6 +641,10 @@ public class InputManager : MonoBehaviour
                                         if (Input.GetButtonDown("Cancel") == true)
                                         {
                                             EventManager.i.PostNotification(EventType.MainInfoClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                                        }
+                                        else if (Input.GetButtonDown("OpenMainInfo") == true)
+                                        {
+                                            EventManager.i.PostNotification(EventType.MainInfoClose, this, null, "InputManager.cs -> ProcessKeyInput OpenMainInfo");
                                         }
                                         else if (Input.GetButtonDown("Vertical"))
                                         {

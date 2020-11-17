@@ -413,7 +413,9 @@ public class ActorManager : MonoBehaviour
             GetOnMapActorsFromPool(maxNumOfOnMapActors, GameManager.i.globalScript.sideAuthority, data);
         }
         //set actor alpha to active for all onMap slots
-        GameManager.i.actorPanelScript.SetActorsAlphaActive();
+        if (GameManager.i.optionScript.isSubordinates == true)
+        { GameManager.i.actorPanelScript.SetActorsAlphaActive(); }
+        else { GameManager.i.actorPanelScript.SetActorsAlphaInactive(); }
     }
     #endregion
 
@@ -1391,10 +1393,10 @@ public class ActorManager : MonoBehaviour
                     {
                         //Set to Inactive
                         actor.Status = ActorStatus.Inactive;
-                        actor.inactiveStatus = ActorInactive.LieLow;
-                        actor.tooltipStatus = ActorTooltip.LieLow;
+                        actor.inactiveStatus = ActorInactive.Dormant;
+                        actor.tooltipStatus = ActorTooltip.Dormant;
                         //history
-                        actor.AddHistory(new HistoryActor() { text = "Goes into hiding (Lies Low)" });
+                        actor.AddHistory(new HistoryActor() { text = "Dormant" });
                     }
                 }
                 //return actor
@@ -8678,7 +8680,15 @@ public class ActorManager : MonoBehaviour
                         colourNeutral, colourEnd, colourNormal, colourEnd);
                     data.details = string.Format("{0}{1} is expected to return, free of Stress, shortly{2}", colourAlert, actor.actorName, colourEnd);
                     break;
+                case ActorTooltip.Dormant:
+                    data.header = string.Format("{0}{1}{2}{3}{4}", colourSide, actor.arc.name, colourEnd, "\n", actor.actorName);
+                    data.main = string.Format("{0}<size=120%>Currently {1}{2}DORMANT{3}{4} and unavailable</size>{5}", colourNormal, colourEnd,
+                        colourNeutral, colourEnd, colourNormal, colourEnd);
+                    data.details = string.Format("{0}Subordinates have been temporarily disabled{1}",
+                        colourNeutral, colourEnd);
+                    break;
                 default:
+                    Debug.LogWarningFormat("Unrecognised actor.tooltipStatus \"{0}\"", actor.tooltipStatus);
                     data.main = "Unknown"; data.header = "Unknown"; data.details = "Unknown";
                     break;
             }
@@ -10202,20 +10212,29 @@ public class ActorManager : MonoBehaviour
                     {
                         if (isActive == true)
                         {
-                            //Activate actor
-                            actor.Status = ActorStatus.Active;
-                            actor.inactiveStatus = ActorInactive.None;
-                            actor.tooltipStatus = ActorTooltip.None;
-                            alpha = GameManager.i.guiScript.alphaActive;
-
+                            //Activate actor (only if dormant, eg. may be stressed or lying low)
+                            if (actor.inactiveStatus == ActorInactive.Dormant)
+                            {
+                                actor.Status = ActorStatus.Active;
+                                actor.inactiveStatus = ActorInactive.None;
+                                actor.tooltipStatus = ActorTooltip.None;
+                                //set sprite alpha
+                                alpha = GameManager.i.guiScript.alphaActive;
+                                //history
+                                actor.AddHistory(new HistoryActor() { text = "No longer Dormant" });
+                            }
+                            else { alpha = GameManager.i.guiScript.alphaInactive; }
                         }
                         else
                         {
-                            //Deactive actor
+                            //Deactive actor -> Dormant status regardless of current status
                             actor.Status = ActorStatus.Inactive;
-                            actor.inactiveStatus = ActorInactive.LieLow;
-                            actor.tooltipStatus = ActorTooltip.LieLow;
+                            actor.inactiveStatus = ActorInactive.Dormant;
+                            actor.tooltipStatus = ActorTooltip.Dormant;
+                            //set sprite alpha
                             alpha = GameManager.i.guiScript.alphaInactive;
+                            //history
+                            actor.AddHistory(new HistoryActor() { text = "Dormant" });
                         }
                         //update actor panel
                         GameManager.i.actorPanelScript.UpdateActorAlpha(actor.slotID, alpha);

@@ -85,7 +85,9 @@ public class DebugGUI : MonoBehaviour
     //public strings (can be changed by GameManager.cs -> InitialiseFeatures
     public string optionFogOfWar;
     public string optionNoAI;
-    public string optionMinionInfo;
+    public string optionSubordinates;
+    public string optionDecisions;
+    public string optionMainInfoApp;
 
     private void Awake()
     {
@@ -111,9 +113,11 @@ public class DebugGUI : MonoBehaviour
         optionBillboardInfo = "Billboard OFF";
         optionNodeDisplay = "Show NODES";
         optionTileDisplay = "Show SURV Tiles";
-        optionMinionInfo = "Minions OFF";
+        optionSubordinates = "Subordinates OFF";
         optionFogOfWar = "Fog of War ON";
         optionNoAI = "AI OFF";
+        optionDecisions = "Decisions OFF";
+        optionMainInfoApp = "InfoApp OFF";
     }
 
     // Update is called once per frame
@@ -757,14 +761,14 @@ public class DebugGUI : MonoBehaviour
 
             //Subordinates button
             offset = 11;
-            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), optionMinionInfo))
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), optionSubordinates))
             {
                 Debug.Log("[Dbg] Button -> Toggle Subordinates option");
                 if (GameManager.i.optionScript.isSubordinates == true)
                 {
                     //subordinates off
                     GameManager.i.optionScript.isSubordinates = false;
-                    optionMinionInfo = "Minions ON";
+                    optionSubordinates = "Subordinates ON";
                     GameManager.i.dataScript.ToggleTopicType("Actor");
                     GameManager.i.actorScript.ToggleOnMapActors(false);
                 }
@@ -772,9 +776,43 @@ public class DebugGUI : MonoBehaviour
                 {
                     //subordinates on
                     GameManager.i.optionScript.isSubordinates = true;
-                    optionMinionInfo = "Minions OFF";
+                    optionSubordinates = "Subordinates OFF";
                     GameManager.i.dataScript.ToggleTopicType("Actor", false);
                     GameManager.i.actorScript.ToggleOnMapActors();
+                }
+            }
+
+            //Decisions button
+            offset = 12;
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), optionDecisions))
+            {
+                Debug.Log("[Dbg] Button -> Toggle Decisions option");
+                if (GameManager.i.optionScript.isDecisions == true)
+                {
+                    GameManager.i.optionScript.isDecisions = false;
+                    optionDecisions = "Decisions ON";
+                }
+                else
+                {
+                    GameManager.i.optionScript.isDecisions = true;
+                    optionDecisions = "Decisions OFF";
+                }
+            }
+
+            //MainInfoApp button
+            offset = 13;
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), optionMainInfoApp))
+            {
+                Debug.Log("[Dbg] Button -> Toggle MainInfoApp option");
+                if (GameManager.i.optionScript.isMainInfoApp == true)
+                {
+                    GameManager.i.optionScript.isMainInfoApp = false;
+                    optionMainInfoApp = "InfoApp ON";
+                }
+                else
+                {
+                    GameManager.i.optionScript.isMainInfoApp = true;
+                    optionMainInfoApp = "InfoApp OFF";
                 }
             }
 

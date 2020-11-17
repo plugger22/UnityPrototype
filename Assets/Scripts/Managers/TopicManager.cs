@@ -8048,6 +8048,7 @@ public class TopicManager : MonoBehaviour
     /// <returns></returns>
     public string DebugDisplayCriteria()
     {
+        int counter = 0;
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- listOfTopicTypes -> Criteria{0}", "\n");
@@ -8057,11 +8058,15 @@ public class TopicManager : MonoBehaviour
         {
             foreach (TopicType topicType in listOfTopicTypes)
             {
+                counter++;
                 builder.AppendFormat("{0} {1}, pr: {2}, minInt {3}{4}", "\n", topicType.tag, topicType.priority.name, topicType.minInterval, "\n");
                 if (topicType.listOfCriteria.Count > 0)
                 {
                     foreach (Criteria criteria in topicType.listOfCriteria)
-                    { builder.AppendFormat("    \"{0}\", {1}{2}", criteria.name, criteria.description, "\n"); }
+                    {
+                        builder.AppendFormat("    \"{0}\", {1}{2}", criteria.name, criteria.description, "\n");
+                        counter++;
+                    }
                 }
                 else { builder.AppendFormat("No criteria{0}", "\n"); }
                 //loop subTypes
@@ -8071,14 +8076,21 @@ public class TopicManager : MonoBehaviour
                     if (subType.side.level == playerSide.level || subType.side.level == 3)
                     {
                         builder.AppendFormat("  -{0}, pr: {1}, minInt {2}{3}", subType.name, subType.priority.name, subType.minInterval, "\n");
+                        counter++;
                         if (subType.listOfCriteria.Count > 0)
                         {
                             foreach (Criteria criteria in subType.listOfCriteria)
-                            { builder.AppendFormat("    \"{0}\", {1}{2}", criteria.name, criteria.description, "\n"); }
+                            {
+                                builder.AppendFormat("    \"{0}\", {1}{2}", criteria.name, criteria.description, "\n");
+                                counter++;
+                            }
                         }
                     }
                     else { builder.AppendFormat("  -{0} -> Not Valid for this Side{1}", subType.name, "\n"); }
                 }
+                //limit text onscreen
+                if (counter > 50)
+                { break; }
             }
         }
         else { Debug.LogError("Invalid listOfTopicTypes (Null)"); }
@@ -8245,6 +8257,7 @@ public class TopicManager : MonoBehaviour
     /// <returns></returns>
     public string DebugDisplayTopicProfileData()
     {
+        int counter = 0;
         StringBuilder builder = new StringBuilder();
         Dictionary<string, Topic> dictOfTopics = GameManager.i.dataScript.GetDictOfTopics();
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
@@ -8260,9 +8273,13 @@ public class TopicManager : MonoBehaviour
                         builder.AppendFormat(" {0} -> {1} -> ts {2}, tr {3}, tw {4} -> D {5}, A {6}, L {7}, D {8} -> {9}{10}", topic.Value.name, topic.Value.profile.name, topic.Value.timerStart,
                             topic.Value.timerRepeat, topic.Value.timerWindow, topic.Value.turnsDormant, topic.Value.turnsActive, topic.Value.turnsLive,
                             topic.Value.turnsDone, topic.Value.isCurrent ? "true" : "FALSE", "\n");
+                        counter++;
                     }
                     else { builder.AppendFormat(" {0} -> Invalid Profile (Null){1}", topic.Value.name, "\n"); }
                 }
+                //limit text on screen
+                if (counter > 54)
+                { break; }
             }
         }
         else { Debug.LogError("Invalid dictOfTopics (Null)"); }

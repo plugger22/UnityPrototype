@@ -355,11 +355,16 @@ public class FileManager : MonoBehaviour
         write.optionData.fixedActorStats = GameManager.i.optionScript.fixedActorStats;
         write.optionData.billboard = GameManager.i.optionScript.billboard;
         write.optionData.debugData = GameManager.i.optionScript.debugData;
-        write.optionData.isAI = GameManager.i.optionScript.isAI;
         write.optionData.showContacts = GameManager.i.optionScript.showContacts;
         write.optionData.showPower = GameManager.i.optionScript.showPower;
         write.optionData.connectorTooltips = GameManager.i.optionScript.connectorTooltips;
         write.optionData.fullMoodInfo = GameManager.i.optionScript.fullMoodInfo;
+        write.optionData.isAI = GameManager.i.optionScript.isAI;
+        write.optionData.isNemesis = GameManager.i.optionScript.isNemesis;
+        write.optionData.isDecisions = GameManager.i.optionScript.isDecisions;
+        write.optionData.isMainInfoApp = GameManager.i.optionScript.isMainInfoApp;
+        write.optionData.isNPC = GameManager.i.optionScript.isNPC;
+        write.optionData.isSubordinates = GameManager.i.optionScript.isSubordinates;
         write.optionData.colourScheme = GameManager.i.optionScript.ColourOption;
     }
     #endregion
@@ -2078,25 +2083,51 @@ public class FileManager : MonoBehaviour
         GameManager.i.optionScript.fixedActorStats = read.optionData.fixedActorStats;
         GameManager.i.optionScript.billboard = read.optionData.billboard;
         GameManager.i.optionScript.debugData = read.optionData.debugData;
-        GameManager.i.optionScript.isAI = read.optionData.isAI;
         GameManager.i.optionScript.showContacts = read.optionData.showContacts;
         GameManager.i.optionScript.showPower = read.optionData.showPower;
         GameManager.i.optionScript.connectorTooltips = read.optionData.connectorTooltips;
         GameManager.i.optionScript.fullMoodInfo = read.optionData.fullMoodInfo;
+        GameManager.i.optionScript.isAI = read.optionData.isAI;
+        GameManager.i.optionScript.isNemesis = read.optionData.isNemesis;
+        GameManager.i.optionScript.isDecisions = read.optionData.isDecisions;
+        GameManager.i.optionScript.isMainInfoApp = read.optionData.isMainInfoApp;
+        GameManager.i.optionScript.isNPC = read.optionData.isNPC;
+        GameManager.i.optionScript.isSubordinates = read.optionData.isSubordinates;
         GameManager.i.optionScript.ColourOption = read.optionData.colourScheme;
         //Debug button texts
         if (read.optionData.autoGearResolution == true)
         { GameManager.i.debugScript.optionAutoGear = "Auto Gear OFF"; }
+        else { GameManager.i.debugScript.optionAutoGear = "Auto Gear ON"; }
         if (read.optionData.fogOfWar == true)
         { GameManager.i.debugScript.optionFogOfWar = "Fog Of War OFF"; }
+        else { GameManager.i.debugScript.optionFogOfWar = "Fog Of War ON"; }
         if (read.optionData.connectorTooltips == true)
         { GameManager.i.debugScript.optionConnectorTooltips = "Conn tooltips OFF"; }
+        else { GameManager.i.debugScript.optionConnectorTooltips = "Conn tooltips ON"; }
         if (read.optionData.debugData == true)
         { GameManager.i.debugScript.optionDebugData = "Debug Data OFF"; }
+            else { GameManager.i.debugScript.optionDebugData = "Debug Data ON"; }
         if (read.optionData.showPower == false)
         { GameManager.i.debugScript.optionRenownUI = "Power UI ON"; }
+        else { GameManager.i.debugScript.optionRenownUI = "Power UI OFF"; }
         if (read.optionData.showContacts == true)
         { GameManager.i.debugScript.optionContacts = "Contacts OFF"; }
+        else { GameManager.i.debugScript.optionContacts = "Contacts ON"; }
+        if (read.optionData.isSubordinates == true)
+        {
+            GameManager.i.debugScript.optionSubordinates = "Subordinates OFF";
+            GameManager.i.dataScript.ToggleTopicType("Actor", false);
+            GameManager.i.actorScript.ToggleOnMapActors();
+        }
+        else
+        {
+            GameManager.i.debugScript.optionSubordinates = "Subordinates ON";
+            GameManager.i.dataScript.ToggleTopicType("Actor");
+            GameManager.i.actorScript.ToggleOnMapActors(false);
+        }
+        if (read.optionData.isDecisions == true)
+        { GameManager.i.debugScript.optionDecisions = "Decisions OFF"; }
+        else { GameManager.i.debugScript.optionDecisions = "Decisions ON"; }
     }
     #endregion
 

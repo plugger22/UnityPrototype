@@ -413,10 +413,21 @@ public class ActorPanelUI : MonoBehaviour
     /// </summary>
     public void SetActorsAlphaActive()
     {
-        float activeAlpha = GameManager.i.guiScript.alphaActive;
+        float alpha = GameManager.i.guiScript.alphaActive;
         //set all actor alpha's to active (may still be set to inactive from previous level)
         for (int i = 0; i < GameManager.i.actorScript.maxNumOfOnMapActors; i++)
-        { UpdateActorAlpha(i, activeAlpha); }
+        { UpdateActorAlpha(i, alpha); }
+    }
+
+    /// <summary>
+    /// Sets actor alpha to inactive for all onMap slotID's
+    /// </summary>
+    public void SetActorsAlphaInactive()
+    {
+        float alpha = GameManager.i.guiScript.alphaInactive;
+        //set all actor alpha's to active (may still be set to inactive from previous level)
+        for (int i = 0; i < GameManager.i.actorScript.maxNumOfOnMapActors; i++)
+        { UpdateActorAlpha(i, alpha); }
     }
 
     /// <summary>

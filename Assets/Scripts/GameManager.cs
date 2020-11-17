@@ -1092,14 +1092,20 @@ public class GameManager : MonoBehaviour
         optionScript.isSubordinates = isSubordinates;
         //set button texts in DebugGUI.cs
         if (isSubordinates == true)
-        { debugScript.optionMinionInfo = "Minions OFF"; }
-        else { debugScript.optionMinionInfo = "Minions ON"; }
+        { debugScript.optionSubordinates = "Subordinates OFF"; }
+        else { debugScript.optionSubordinates = "Subordinates ON"; }
         if (isAI == true)
         { debugScript.optionNoAI = "AI OFF"; }
         else { debugScript.optionNoAI = "AI ON"; }
         if (isFOW == true)
         { debugScript.optionFogOfWar = "FOW OFF"; }
         else { debugScript.optionFogOfWar = "FOW ON"; }
+        if (isDecisions == true)
+        { debugScript.optionDecisions = "Decisions OFF"; }
+        else { debugScript.optionDecisions = "Decisions ON"; }
+        if (isMainInfoApp == true)
+        { debugScript.optionMainInfoApp = "InfoApp OFF"; }
+        else { debugScript.optionMainInfoApp = "InfoApp ON"; }
     }
     #endregion
 

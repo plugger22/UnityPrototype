@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using gameAPI;
+using packageAPI;
+using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using gameAPI;
-using packageAPI;
 
 /// <summary>
 /// Handles AI side tab data and logic matters (mouse interactions are handled by AISideTabMouseUI.cs)
@@ -89,29 +87,29 @@ public class AISideTabUI : MonoBehaviour
 
     #region SubInitialiseSessionStart
     private void SubInitialiseSessionStart()
-{
-    //tooltip
-    tooltip = sideTabImage.GetComponent<GenericTooltipUI>();
-    Debug.Assert(tooltip != null, "Invalid GenericTooltipUI component tooltip (Null)");
-    tooltip.isIgnoreClick = true;
-    tooltip.testTag = "AISideTabUI";
-    tooltip.tooltipMain = "We haven't yet broken the AI's Security systems";
-    tooltip.tooltipDetails = "Resistance HQ expect to do so by <b>NEXT TURN</b>";
-    //data
-    topText.text = "AI";
-    bottomText.text = "-";
-    hackingStatus = HackingStatus.Initialising;
-    myCoroutine = null;
-    isFading = false;
-    //set alert flasher to zero opacity
-    tempColour = alertFlasher.color;
-    tempColour.a = 0.0f;
-    alertFlasher.color = tempColour;
-    //set to Active
-    isActive = true;
-    //Set all components 
-    SetAllStatus(isActive);
-}
+    {
+        //tooltip
+        tooltip = sideTabImage.GetComponent<GenericTooltipUI>();
+        Debug.Assert(tooltip != null, "Invalid GenericTooltipUI component tooltip (Null)");
+        tooltip.isIgnoreClick = true;
+        tooltip.testTag = "AISideTabUI";
+        tooltip.tooltipMain = "We haven't yet broken the AI's Security systems";
+        tooltip.tooltipDetails = "Resistance HQ expect to do so by <b>NEXT TURN</b>";
+        //data
+        topText.text = "AI";
+        bottomText.text = "-";
+        hackingStatus = HackingStatus.Initialising;
+        myCoroutine = null;
+        isFading = false;
+        //set alert flasher to zero opacity
+        tempColour = alertFlasher.color;
+        tempColour.a = 0.0f;
+        alertFlasher.color = tempColour;
+        //set to Active
+        isActive = true;
+        //Set all components 
+        SetAllStatus(isActive);
+    }
     #endregion
 
     #region SubInitialiseFastAccess
