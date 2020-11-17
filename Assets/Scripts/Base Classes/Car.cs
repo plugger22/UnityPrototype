@@ -33,6 +33,7 @@ public class Car : MonoBehaviour
     private float decelerationVertical;
     private float speedLimit;
     private float rotationSpeed;
+    private float scaleTime;
 
     private bool isSiren;
     private bool isFlashOn;
@@ -82,6 +83,7 @@ public class Car : MonoBehaviour
             decelerationVertical = data.decelerationVertical;
             speedLimit = data.speedLimit;
             rotationSpeed = data.rotationSpeed;
+            scaleTime = data.scaleDownTime;
         }
         else { Debug.LogError("Invalid node (Null)"); }
     }
@@ -157,12 +159,10 @@ public class Car : MonoBehaviour
                 yield return null;
             }
             while (altitude < flightAltitude);
-
             //target rotation
             quaternionTarget = Quaternion.LookRotation(destination - carTransform.position, Vector3.up);
             //rotate car gradually
             yield return StartCoroutine("RotateTo", quaternionTarget);
-
             //hover for a bit
             yield return new WaitForSeconds(hoverDelay);
             //move towards destination
@@ -209,6 +209,17 @@ public class Car : MonoBehaviour
                 yield return null;
             }
             while (altitude > startAltitude);
+            //scale down car
+            float currentTime = 0.0f;
+            Vector3 originalScale = carTransform.localScale;
+            Vector3 destinationScale = new Vector3(0.1f, 0.1f, 0.1f);
+            do
+            {
+                carTransform.localScale = Vector3.Lerp(originalScale, destinationScale, currentTime / scaleTime);
+                currentTime += Time.deltaTime;
+                yield return null;
+            }
+            while (currentTime <= scaleTime);
             //remove from list
             GameManager.i.animateScript.DeleteCarTraffic(destinationID);
             //destroy car
@@ -257,8 +268,6 @@ public class Car : MonoBehaviour
             quaternionTarget = Quaternion.LookRotation(destination - carTransform.position, Vector3.up);
             //rotate car gradually
             yield return StartCoroutine("RotateTo", quaternionTarget);
-            /*carTransform.rotation = quaternionTarget;*/
-
             //hover for a bit
             yield return new WaitForSeconds(hoverDelay);
             //move towards destination

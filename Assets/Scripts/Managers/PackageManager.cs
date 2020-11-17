@@ -1412,6 +1412,7 @@ namespace packageAPI
         public float decelerationVertical;
         public float speedLimit;
         public float rotationSpeed;
+        public float scaleDownTime;
     }
 
 

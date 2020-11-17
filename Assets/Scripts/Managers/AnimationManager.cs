@@ -70,6 +70,8 @@ public class AnimationManager : MonoBehaviour
     [Range(5f, 20f)] public float speedLimit = 10.0f;
     [Tooltip("Determines how fast a car (includes carSurveil) will rotate towards it's destination. Higher the number, faster the rotation")]
     [Range(0.1f, 1.0f)] public float rotationSpeed = 0.75f;
+    [Tooltip("How long (seconds) it takes for a car to scale down to nothing at the completion of it's journey prior to being destroyed")]
+    [Range(0.5f, 3.0f)] public float scaleDownTime = 1.5f;
 
     [Header("Car Siren")]
     [Tooltip("Time (seconds) for siren flash sequence intervals")]
@@ -663,6 +665,7 @@ public class AnimationManager : MonoBehaviour
         data.decelerationVertical = decelerationVertical;
         data.speedLimit = speedLimit;
         data.rotationSpeed = rotationSpeed;
+        data.scaleDownTime = scaleDownTime;
         return data;
     }
 
