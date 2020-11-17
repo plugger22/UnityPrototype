@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor has a dubious personal habit and is a liability
   manage: {fileID: 11400000, guid: cf453464037bce94bae73feb20f00ea9, type: 2}
-  sprite: {fileID: 21300000, guid: 24c42dd665b1a4b4c848b17d8fac453d, type: 3}
+  sprite: {fileID: 21300000, guid: af5701f4978d44b4495eb6f6137f2523, type: 3}
   optionTitle: HABIT
   tooltipMain: Really, do you need an excuse? Get rid of them, now!
   tooltipDetails: will be killed by HQ at your request

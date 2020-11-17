@@ -639,7 +639,7 @@ public class DebugGUI : MonoBehaviour
                                 //switch AI Off -> Manual player control for both sides
                                 if (GameManager.i.sideScript.resistanceOverall == SideState.AI)
                                 {
-                                    optionNoAI = "NO AI OFF";
+                                    optionNoAI = "AI OFF";
                                     GameManager.i.optionScript.isAI = false;
                                     GameManager.i.sideScript.authorityCurrent = SideState.Human;
                                     GameManager.i.sideScript.resistanceCurrent = SideState.Human;
@@ -651,7 +651,7 @@ public class DebugGUI : MonoBehaviour
                                 //reverts back to Authority Player, Resistance AI
                                 else if (GameManager.i.sideScript.resistanceOverall == SideState.Human)
                                 {
-                                    optionNoAI = "NO AI ON";
+                                    optionNoAI = "AI ON";
                                     GameManager.i.optionScript.isAI = true;
                                     GameManager.i.sideScript.authorityCurrent = SideState.Human;
                                     GameManager.i.sideScript.resistanceCurrent = SideState.AI;
@@ -767,18 +767,14 @@ public class DebugGUI : MonoBehaviour
                 if (GameManager.i.optionScript.isSubordinates == true)
                 {
                     //subordinates off
-                    GameManager.i.optionScript.isSubordinates = false;
                     optionSubordinates = "Subordinates ON";
-                    GameManager.i.dataScript.ToggleTopicType("Actor");
-                    GameManager.i.actorScript.ToggleOnMapActors(false);
+                    GameManager.i.featureScript.ToggleOnMapActors(false);
                 }
                 else
                 {
                     //subordinates on
-                    GameManager.i.optionScript.isSubordinates = true;
                     optionSubordinates = "Subordinates OFF";
-                    GameManager.i.dataScript.ToggleTopicType("Actor", false);
-                    GameManager.i.actorScript.ToggleOnMapActors();
+                    GameManager.i.featureScript.ToggleOnMapActors(true);
                 }
             }
 

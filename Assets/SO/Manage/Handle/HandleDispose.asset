@@ -13,11 +13,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: dispose of Actor
   manage: {fileID: 11400000, guid: d6d39ff7a475f654b8a492055d712fc7, type: 2}
-  sprite: {fileID: 21300000, guid: 24c42dd665b1a4b4c848b17d8fac453d, type: 3}
+  sprite: {fileID: 21300000, guid: 502f8a8c8427da649868fe2a1eecb617, type: 3}
   optionTitle: DISPOSE
   tooltipMain: It has reached the point where a more permanent solution is needed
   tooltipDetails: can be killed (various options)
   order: 3
   listOfCriteria: []
   listOfEffects: []
-  isRenownCost: 0
+  isPowerCost: 0

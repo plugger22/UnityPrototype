@@ -79,6 +79,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public AnimationManager animateScript;            //Animation Manager
     [HideInInspector] public TestManager testScript;                    //Test Manager
     [HideInInspector] public TextManager textScript;                    //Text Manager
+    [HideInInspector] public FeatureManager featureScript;              //Feature Manager
     //GUI
     [HideInInspector] public TooltipNode tooltipNodeScript;             //node tooltip static instance
     [HideInInspector] public TooltipConnection tooltipConnScript;       //connection tooltip static instance
@@ -149,21 +150,6 @@ public class GameManager : MonoBehaviour
     [Tooltip("If true then autoSave file is loaded instead of normal save file")]
     public bool isLoadAutoSave;
 
-    [Header("Features")]
-    [Tooltip("AI (both sides) on/off -> sets initial state only (can be adjusted by code later)")]
-    public bool isAI;
-    [Tooltip("Nemesis on/off (AI must be ON to use Nemesis) -> sets initial state only (can be adjusted by code later)")]
-    public bool isNemesis;
-    [Tooltip("Fog of War on/off -> sets initial state only (can be adjusted by code later)")]
-    public bool isFOW;
-    [Tooltip("Decisions on/off -> sets initial state only (can be adjusted by code later)")]
-    public bool isDecisions;
-    [Tooltip("MainInfoApp on/off -> sets initial state only (can be adjusted by code later)")]
-    public bool isMainInfoApp;
-    [Tooltip("NPC on/off -> sets initial state only (can be adjusted by code later)")]
-    public bool isNPC;
-    [Tooltip("Subordinates on/off -> sets initial state only (can be adjusted by code later)")]
-    public bool isSubordinates;
 
     private Random.State devState;                                                  //used to restore seedDev random sequence after any interlude, eg. level generation with a unique seed
     private long totalTime;                                                         //used for Performance monitoring on start up
@@ -261,6 +247,7 @@ public class GameManager : MonoBehaviour
         authorityScript = GetComponent<AuthorityManager>();
         debugScript = GetComponent<DebugGUI>();
         animateScript = GetComponent<AnimationManager>();
+        featureScript = GetComponent<FeatureManager>();
         //Get UI static references -> from PanelManager
         tooltipNodeScript = TooltipNode.Instance();
         tooltipConnScript = TooltipConnection.Instance();
@@ -295,6 +282,7 @@ public class GameManager : MonoBehaviour
         popUpDynamicScript = PopUpDynamic.Instance();
         popUpFixedScript = PopUpFixed.Instance();
         billboardScript = BillboardUI.Instance();
+
         //Error Checking
         Debug.Assert(startScript != null, "Invalid startScript (Null)");
         Debug.Assert(levelScript != null, "Invalid levelScript (Null)");
@@ -350,6 +338,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(authorityScript != null, "Invalid authorityScript (Null)");
         Debug.Assert(debugScript != null, "Invalid debugScript (Null)");
         Debug.Assert(animateScript != null, "Invalid animateScript (Null)");
+        Debug.Assert(featureScript != null, "Invalid featureScript (Null)");
         //singletons
         Debug.Assert(tooltipNodeScript != null, "Invalid tooltipNodeScript (Null)");
         Debug.Assert(tooltipConnScript != null, "Invalid tooltipConnScript (Null)");
@@ -397,7 +386,7 @@ public class GameManager : MonoBehaviour
         File.AppendAllText("Digital.txt", builder.ToString());*/
 
         inputScript.GameState = GameState.StartUp;
-        InitialiseFeatures();
+        featureScript.InitialiseFeatures();
         //global methods
         if (isPerformanceLog == false)
         {
@@ -814,6 +803,10 @@ public class GameManager : MonoBehaviour
         startMethod.handler = debugGraphicsScript.Initialise;
         startMethod.className = "DebugGraphicManager";
         listOfDebugMethods.Add(startMethod);
+        //FeatureManager -> Last (toggles features))
+        startMethod.handler = featureScript.Initialise;
+        startMethod.className = "FeatureManager";
+        listOfDebugMethods.Add(startMethod);
         //data Validation (Last / Optional)
         if (isDataValidation == true)
         {
@@ -1077,37 +1070,9 @@ public class GameManager : MonoBehaviour
     #endregion
 
 
-    #region InitialiseFeatures
-    /// <summary>
-    /// sets togglable features in optionManager.cs prior to running start up sequences
-    /// </summary>
-    private void InitialiseFeatures()
-    {
-        optionScript.isAI = isAI;
-        optionScript.isNemesis = isNemesis;
-        optionScript.isfogOfWar = isFOW;
-        optionScript.isDecisions = isDecisions;
-        optionScript.isMainInfoApp = isMainInfoApp;
-        optionScript.isNPC = isNPC;
-        optionScript.isSubordinates = isSubordinates;
-        //set button texts in DebugGUI.cs
-        if (isSubordinates == true)
-        { debugScript.optionSubordinates = "Subordinates OFF"; }
-        else { debugScript.optionSubordinates = "Subordinates ON"; }
-        if (isAI == true)
-        { debugScript.optionNoAI = "AI OFF"; }
-        else { debugScript.optionNoAI = "AI ON"; }
-        if (isFOW == true)
-        { debugScript.optionFogOfWar = "FOW OFF"; }
-        else { debugScript.optionFogOfWar = "FOW ON"; }
-        if (isDecisions == true)
-        { debugScript.optionDecisions = "Decisions OFF"; }
-        else { debugScript.optionDecisions = "Decisions ON"; }
-        if (isMainInfoApp == true)
-        { debugScript.optionMainInfoApp = "InfoApp OFF"; }
-        else { debugScript.optionMainInfoApp = "InfoApp ON"; }
-    }
-    #endregion
+
+
+ 
 
 
     #region Static Methods

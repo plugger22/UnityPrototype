@@ -2087,12 +2087,12 @@ public class FileManager : MonoBehaviour
         GameManager.i.optionScript.showPower = read.optionData.showPower;
         GameManager.i.optionScript.connectorTooltips = read.optionData.connectorTooltips;
         GameManager.i.optionScript.fullMoodInfo = read.optionData.fullMoodInfo;
-        GameManager.i.optionScript.isAI = read.optionData.isAI;
         GameManager.i.optionScript.isNemesis = read.optionData.isNemesis;
         GameManager.i.optionScript.isDecisions = read.optionData.isDecisions;
         GameManager.i.optionScript.isMainInfoApp = read.optionData.isMainInfoApp;
         GameManager.i.optionScript.isNPC = read.optionData.isNPC;
         GameManager.i.optionScript.isSubordinates = read.optionData.isSubordinates;
+        GameManager.i.optionScript.isAI = read.optionData.isAI;
         GameManager.i.optionScript.ColourOption = read.optionData.colourScheme;
         //Debug button texts
         if (read.optionData.autoGearResolution == true)
@@ -2116,18 +2116,29 @@ public class FileManager : MonoBehaviour
         if (read.optionData.isSubordinates == true)
         {
             GameManager.i.debugScript.optionSubordinates = "Subordinates OFF";
-            GameManager.i.dataScript.ToggleTopicType("Actor", false);
-            GameManager.i.actorScript.ToggleOnMapActors();
+            GameManager.i.featureScript.ToggleOnMapActors(true);
         }
         else
         {
             GameManager.i.debugScript.optionSubordinates = "Subordinates ON";
-            GameManager.i.dataScript.ToggleTopicType("Actor");
-            GameManager.i.actorScript.ToggleOnMapActors(false);
+            GameManager.i.featureScript.ToggleOnMapActors(false);
         }
         if (read.optionData.isDecisions == true)
         { GameManager.i.debugScript.optionDecisions = "Decisions OFF"; }
         else { GameManager.i.debugScript.optionDecisions = "Decisions ON"; }
+        if (read.optionData.isMainInfoApp == true)
+        { GameManager.i.debugScript.optionMainInfoApp = "InfoApp OFF"; }
+        else { GameManager.i.debugScript.optionMainInfoApp = "InfoApp ON"; }
+        if (read.optionData.isAI == true)
+        {
+            GameManager.i.debugScript.optionNoAI = "AI OFF";
+            GameManager.i.featureScript.ToggleAISideWidget(true);
+        }
+        else
+        {
+            GameManager.i.debugScript.optionNoAI = "AI ON";
+            GameManager.i.featureScript.ToggleAISideWidget(false);
+        }
     }
     #endregion
 

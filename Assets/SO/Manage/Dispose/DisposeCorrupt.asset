@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Actor is corrupt
   manage: {fileID: 11400000, guid: cf453464037bce94bae73feb20f00ea9, type: 2}
-  sprite: {fileID: 21300000, guid: 24c42dd665b1a4b4c848b17d8fac453d, type: 3}
+  sprite: {fileID: 21300000, guid: af5701f4978d44b4495eb6f6137f2523, type: 3}
   optionTitle: CORRUPT
   tooltipMain: Corruption is an evil best cut off at the head
   tooltipDetails: will be killed. If there is evidence of corruption then HQ will
@@ -23,4 +23,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5e8fffab8be85344b8e9072f51ca7da1, type: 2}
   listOfEffects:
   - {fileID: 11400000, guid: 89ed9ec4e9eaaaf498c6d01d466d1285, type: 2}
-  isRenownCost: 0
+  isPowerCost: 0

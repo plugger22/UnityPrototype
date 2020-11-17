@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Fired for incompetence
   manage: {fileID: 11400000, guid: 26d41044020eece48a4f909569982bff, type: 2}
-  sprite: {fileID: 21300000, guid: 24c42dd665b1a4b4c848b17d8fac453d, type: 3}
+  sprite: {fileID: 21300000, guid: e39bfbb77fecee147bc22b86ea5c4567, type: 3}
   optionTitle: INCOMPETENT
   tooltipMain: Incompetence has no place in any organisation you run
   tooltipDetails: is INCOMPETENT and will be fired
@@ -22,4 +22,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fe8e0bbbdd022a64e9c7da898325a8dc, type: 2}
   listOfEffects:
   - {fileID: 11400000, guid: 997c8ab8995bc1d40a0a8c0b01330142, type: 2}
-  isRenownCost: 0
+  isPowerCost: 0

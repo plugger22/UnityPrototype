@@ -162,7 +162,7 @@ public class AISideTabUI : MonoBehaviour
     /// <summary>
     /// set all UI components (apart from main) to active. Run at level start to ensure no problems (something hasn't been switched off in the editor)
     /// </summary>
-    private void SetAllStatus(bool status)
+    public void SetAllStatus(bool status)
     {
         sideTabImage.gameObject.SetActive(status);
         topText.gameObject.SetActive(status);

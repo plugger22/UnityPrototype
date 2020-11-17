@@ -1028,7 +1028,6 @@ public class GUIManager : MonoBehaviour
         return tooltip;
     }
 
-
     //
     // - - - Debug - - -
     //

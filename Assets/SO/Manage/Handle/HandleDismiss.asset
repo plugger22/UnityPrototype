@@ -13,11 +13,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: dismiss actor
   manage: {fileID: 11400000, guid: d6d39ff7a475f654b8a492055d712fc7, type: 2}
-  sprite: {fileID: 21300000, guid: 24c42dd665b1a4b4c848b17d8fac453d, type: 3}
+  sprite: {fileID: 21300000, guid: 502f8a8c8427da649868fe2a1eecb617, type: 3}
   optionTitle: MOVE ON
   tooltipMain: They have to go. Dismissing or Promoting them is the only option
   tooltipDetails: can be moved on (various options)
   order: 2
   listOfCriteria: []
   listOfEffects: []
-  isRenownCost: 0
+  isPowerCost: 0

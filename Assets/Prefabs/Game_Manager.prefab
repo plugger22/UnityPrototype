@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4565720453740776}
   - component: {fileID: 114736970613289560}
+  - component: {fileID: 114171218366368758}
   - component: {fileID: 114558055555623972}
   - component: {fileID: 114678931324486554}
   - component: {fileID: 114680662969460860}
@@ -261,6 +262,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62242673b21f23042b952849bb450e21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114171218366368758
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1289370855557188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0969f4e27376957408c1d7e509c8a164, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAI: 1
+  isNemesis: 1
+  isFOW: 0
+  isDecisions: 1
+  isMainInfoApp: 1
+  isNPC: 1
+  isSubordinates: 1
 --- !u!114 &114177065037937216
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -403,15 +422,24 @@ MonoBehaviour:
   box_y: 10
   box_width: 130
   box_height: 400
-  modifier: 0
   gap_y: 20
-  optionAutoGear: 
-  optionFogOfWar: 
   optionShowContacts: 
   optionConnectorTooltips: 
   optionDebugData: 
+  optionNodes: 
+  optionNodeDisplay: 
+  optionTileDisplay: 
   optionRenownUI: 
+  optionPath: 
   optionContacts: 
+  optionMoodInfo: 
+  optionBillboardInfo: 
+  optionAutoGear: 
+  optionFogOfWar: 
+  optionNoAI: 
+  optionSubordinates: 
+  optionDecisions: 
+  optionMainInfoApp: 
 --- !u!114 &114230505564311274
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6584,6 +6612,7 @@ MonoBehaviour:
   animateScript: {fileID: 0}
   testScript: {fileID: 0}
   textScript: {fileID: 0}
+  featureScript: {fileID: 0}
   tooltipNodeScript: {fileID: 0}
   tooltipConnScript: {fileID: 0}
   tooltipActorScript: {fileID: 0}
@@ -6619,23 +6648,16 @@ MonoBehaviour:
   billboardScript: {fileID: 0}
   seedDev: 0
   autoRunTurns: 20
-  scenarioStartLevel: 4
+  scenarioStartLevel: 0
   isPerformanceLog: 1
   isDataValidation: 1
   isValidateSO: 1
   isIntegrityCheck: 1
-  isRandomLevel: 0
+  isRandomLevel: 1
   isRandomCity: 0
   isEncrypted: 0
   isAutoSave: 0
   isLoadAutoSave: 0
-  isAI: 1
-  isNemesis: 1
-  isFOW: 0
-  isDecisions: 1
-  isMainInfoApp: 1
-  isNPC: 1
-  isSubordinates: 0
   isSession: 0
 --- !u!114 &114762690547149900
 MonoBehaviour:
