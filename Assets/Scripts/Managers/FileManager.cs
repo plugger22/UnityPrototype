@@ -365,6 +365,7 @@ public class FileManager : MonoBehaviour
         write.optionData.isMainInfoApp = GameManager.i.optionScript.isMainInfoApp;
         write.optionData.isNPC = GameManager.i.optionScript.isNPC;
         write.optionData.isSubordinates = GameManager.i.optionScript.isSubordinates;
+        write.optionData.isReviews = GameManager.i.optionScript.isReviews;
         write.optionData.colourScheme = GameManager.i.optionScript.ColourOption;
     }
     #endregion
@@ -2093,6 +2094,7 @@ public class FileManager : MonoBehaviour
         GameManager.i.optionScript.isNPC = read.optionData.isNPC;
         GameManager.i.optionScript.isSubordinates = read.optionData.isSubordinates;
         GameManager.i.optionScript.isAI = read.optionData.isAI;
+        GameManager.i.optionScript.isReviews = read.optionData.isReviews;
         GameManager.i.optionScript.ColourOption = read.optionData.colourScheme;
         //Debug button texts
         if (read.optionData.autoGearResolution == true)
@@ -2129,6 +2131,9 @@ public class FileManager : MonoBehaviour
         if (read.optionData.isMainInfoApp == true)
         { GameManager.i.debugScript.optionMainInfoApp = "InfoApp OFF"; }
         else { GameManager.i.debugScript.optionMainInfoApp = "InfoApp ON"; }
+        if (read.optionData.isReviews == true)
+        { GameManager.i.debugScript.optionReviews = "Reviews OFF"; }
+        else { GameManager.i.debugScript.optionReviews = "Reviews ON"; }
         if (read.optionData.isAI == true)
         {
             GameManager.i.debugScript.optionNoAI = "AI OFF";

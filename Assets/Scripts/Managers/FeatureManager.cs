@@ -16,7 +16,7 @@ public class FeatureManager : MonoBehaviour
     public bool isNemesis;
     [Tooltip("Fog of War on/off -> sets initial state only (can be adjusted by code later)")]
     public bool isFOW;
-    [Tooltip("Decisions on/off -> sets initial state only (can be adjusted by code later)")]
+    [Tooltip("Decisions on/off (all forms) -> sets initial state only (can be adjusted by code later)")]
     public bool isDecisions;
     [Tooltip("MainInfoApp on/off -> sets initial state only (can be adjusted by code later)")]
     public bool isMainInfoApp;
@@ -24,6 +24,8 @@ public class FeatureManager : MonoBehaviour
     public bool isNPC;
     [Tooltip("Subordinates on/off -> sets initial state only (can be adjusted by code later)")]
     public bool isSubordinates;
+    [Tooltip("Review decisions on/off (auto off if isDecisions OFF) -> sets initial state only (can be adjusted by code later)")]
+    public bool isReviews;
 
 
     /// <summary>
@@ -76,6 +78,7 @@ public class FeatureManager : MonoBehaviour
         GameManager.i.optionScript.isMainInfoApp = isMainInfoApp;
         GameManager.i.optionScript.isNPC = isNPC;
         GameManager.i.optionScript.isSubordinates = isSubordinates;
+        GameManager.i.optionScript.isReviews = isReviews;
         //set button texts in DebugGUI.cs
         if (isSubordinates == true)
         { GameManager.i.debugScript.optionSubordinates = "Subordinates OFF"; }
@@ -92,6 +95,9 @@ public class FeatureManager : MonoBehaviour
         if (isMainInfoApp == true)
         { GameManager.i.debugScript.optionMainInfoApp = "InfoApp OFF"; }
         else { GameManager.i.debugScript.optionMainInfoApp = "InfoApp ON"; }
+        if (isReviews == true)
+        { GameManager.i.debugScript.optionReviews = "Reviews OFF"; }
+        else { GameManager.i.debugScript.optionReviews = "Reviews ON"; }
     }
 
 

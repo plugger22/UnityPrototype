@@ -1223,45 +1223,57 @@ public class TopicManager : MonoBehaviour
                 //
                 if (GameManager.i.playerScript.status != ActorStatus.Captured)
                 {
-                    //chance of Review topic if not captured
-                    if (reviewCountdown > 0) { reviewCountdown--; }
-                    if (isTestLog)
-                    { Debug.LogFormat("[Tst] TopicManager.cs -> SelectTopic: reviewCountdown {0}, reviewActivationMiss {1}{2}", reviewCountdown, reviewActivationMiss, "\n"); }
-                    if (reviewCountdown == 0)
+                    if (GameManager.i.optionScript.isReviews == true)
                     {
-                        //chance of activation on first turn of possible two turn window, automatic activation on second turn if first missed
-                        if (reviewActivationMiss == false)
+                        //chance of Performance Review topic if not captured
+                        if (reviewCountdown > 0) { reviewCountdown--; }
+                        if (isTestLog)
+                        { Debug.LogFormat("[Tst] TopicManager.cs -> SelectTopic: reviewCountdown {0}, reviewActivationMiss {1}{2}", reviewCountdown, reviewActivationMiss, "\n"); }
+                        if (reviewCountdown == 0)
                         {
-                            if (Random.Range(0, 100) < reviewActivationChance)
-                            { topicGlobal = TopicGlobal.Review; }
-                            else
+                            //chance of activation on first turn of possible two turn window, automatic activation on second turn if first missed
+                            if (reviewActivationMiss == false)
                             {
-                                //automatic activation next turn
-                                reviewActivationMiss = true;
-                                topicGlobal = TopicGlobal.Decision;
-                                //next turn message
+                                if (Random.Range(0, 100) < reviewActivationChance)
+                                { topicGlobal = TopicGlobal.Review; }
+                                else
+                                {
+                                    //automatic activation next turn
+                                    reviewActivationMiss = true;
+                                    topicGlobal = TopicGlobal.Decision;
+                                    //next turn message
+                                    string reason = string.Format("<b>A {0}Performance Review{1} is Pending</b>", colourAlert, colourEnd);
+                                    string explanation = string.Format("<b>Your peers will assess you, all being well, {0}tomorrow</b>{1}", colourNormal, colourEnd);
+                                    List<string> listOfHelp = new List<string>() { "review_0", "review_1", "review_2" };
+                                    GameManager.i.messageScript.GeneralInfo("Review Pending (next turn warning)", "Peer Review PENDING", "Peer Review", reason, explanation, false, listOfHelp);
+                                }
+                            }
+                            else { topicGlobal = TopicGlobal.Review; }
+                        }
+                        else
+                        {
+                            topicGlobal = TopicGlobal.Decision;
+                            //Decision pending message
+                            if (reviewCountdown == 1)
+                            {
                                 string reason = string.Format("<b>A {0}Performance Review{1} is Pending</b>", colourAlert, colourEnd);
-                                string explanation = string.Format("<b>Your peers will assess you, all being well, {0}tomorrow</b>{1}", colourNormal, colourEnd);
+                                string explanation = string.Format("<b>Your peers will assess you, all being well, {0}<b>within the next couple of days</b>{1}", colourNormal, colourEnd);
                                 List<string> listOfHelp = new List<string>() { "review_0", "review_1", "review_2" };
                                 GameManager.i.messageScript.GeneralInfo("Review Pending (next turn warning)", "Peer Review PENDING", "Peer Review", reason, explanation, false, listOfHelp);
                             }
                         }
-                        else { topicGlobal = TopicGlobal.Review; }
                     }
                     else
                     {
+                        //Performance Reviews toggled off
                         topicGlobal = TopicGlobal.Decision;
-                        //Decision pending message
-                        if (reviewCountdown == 1)
-                        {
-                            string reason = string.Format("<b>A {0}Performance Review{1} is Pending</b>", colourAlert, colourEnd);
-                            string explanation = string.Format("<b>Your peers will assess you, all being well, {0}<b>within the next couple of days</b>{1}", colourNormal, colourEnd);
-                            List<string> listOfHelp = new List<string>() { "review_0", "review_1", "review_2" };
-                            GameManager.i.messageScript.GeneralInfo("Review Pending (next turn warning)", "Peer Review PENDING", "Peer Review", reason, explanation, false, listOfHelp);
-                        }
                     }
                 }
-                else { topicGlobal = TopicGlobal.Decision; }
+                else
+                {
+                    //Captured
+                    topicGlobal = TopicGlobal.Decision;
+                }
                 //
                 // - - - Decision topic
                 //

@@ -82,12 +82,13 @@ public class DebugGUI : MonoBehaviour
     public string optionMoodInfo;
     public string optionBillboardInfo;
     public string optionAutoGear;
-    //public strings (can be changed by GameManager.cs -> InitialiseFeatures
+    //Strings that can be changed by GameManager.cs -> InitialiseFeatures
     public string optionFogOfWar;
     public string optionNoAI;
     public string optionSubordinates;
     public string optionDecisions;
     public string optionMainInfoApp;
+    public string optionReviews;
 
     private void Awake()
     {
@@ -118,6 +119,7 @@ public class DebugGUI : MonoBehaviour
         optionNoAI = "AI OFF";
         optionDecisions = "Decisions OFF";
         optionMainInfoApp = "InfoApp OFF";
+        optionReviews = "Reviews OFF";
     }
 
     // Update is called once per frame
@@ -149,7 +151,7 @@ public class DebugGUI : MonoBehaviour
 
             customBackground.alignment = TextAnchor.UpperCenter;
             //background box (Options)
-            GUI.Box(new Rect(box_option, box_y, box_width, box_height / 2 + 150), "Option Menu", customBackground);
+            GUI.Box(new Rect(box_option, box_y, box_width, box_height / 2 + 170), "Option Menu", customBackground);
             //background box (Info)
             GUI.Box(new Rect(box_info, box_y, box_width, box_height + 290), "Info Menu", customBackground);
             //background box (Actions)
@@ -809,6 +811,23 @@ public class DebugGUI : MonoBehaviour
                 {
                     GameManager.i.optionScript.isMainInfoApp = true;
                     optionMainInfoApp = "InfoApp OFF";
+                }
+            }
+
+            //Review button
+            offset = 14;
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), optionReviews))
+            {
+                Debug.Log("[Dbg] Button -> Toggle Review option");
+                if (GameManager.i.optionScript.isReviews == true)
+                {
+                    GameManager.i.optionScript.isReviews = false;
+                    optionReviews = "Reviews ON";
+                }
+                else
+                {
+                    GameManager.i.optionScript.isReviews = true;
+                    optionReviews = "Reviews OFF";
                 }
             }
 

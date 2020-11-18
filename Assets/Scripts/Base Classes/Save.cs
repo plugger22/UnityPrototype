@@ -105,6 +105,7 @@ public class SaveOptionData
     public bool isMainInfoApp;
     public bool isNPC;
     public bool isSubordinates;
+    public bool isReviews;
     public ColourScheme colourScheme;
 }
 #endregion

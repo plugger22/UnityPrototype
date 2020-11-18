@@ -25,6 +25,7 @@ public class OptionManager : MonoBehaviour
     [HideInInspector] public bool isMainInfoApp = true;                             //if false MainInfoApp is switched off
     [HideInInspector] public bool isNPC = true;                                     //if false NPC is switched off
     [HideInInspector] public bool isSubordinates = true;                            //if false Subordinates are switched off
+    [HideInInspector] public bool isReviews = true;                                 //if false Performance reviews are switched off
 
     //UI options
     [HideInInspector] public bool showContacts = false;                           //if true node tooltips will show contact as well as Actor Arcs for nodes where actors have contacts
@@ -87,6 +88,7 @@ public class OptionManager : MonoBehaviour
             .AppendFormat(" isMainInfoApp -> {0}{1}", isMainInfoApp, "\n")
             .AppendFormat(" isNPC -> {0}{1}", isNPC, "\n")
             .AppendFormat(" isSubordinates -> {0}{1}", isSubordinates, "\n")
+            .AppendFormat(" isReviews -> {0}{1}", isReviews, "\n")
             .AppendFormat(" NO Nodes -> {0}{1}", noNodes, "\n")
             .AppendFormat("{0}- UI Options{1}", "\n", "\n")
             .AppendFormat(" Connector Tooltips -> {0}{1}", connectorTooltips, "\n")
