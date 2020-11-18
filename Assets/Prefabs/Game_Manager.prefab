@@ -275,11 +275,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAI: 1
   isNemesis: 1
-  isFOW: 0
+  isFOW: 1
   isDecisions: 1
   isMainInfoApp: 1
   isNPC: 1
   isSubordinates: 1
+  isReviews: 1
 --- !u!114 &114177065037937216
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -440,6 +441,7 @@ MonoBehaviour:
   optionSubordinates: 
   optionDecisions: 
   optionMainInfoApp: 
+  optionReviews: 
 --- !u!114 &114230505564311274
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5832,6 +5834,7 @@ MonoBehaviour:
   isMainInfoApp: 1
   isNPC: 1
   isSubordinates: 1
+  isReviews: 1
   showContacts: 0
   showPower: 1
   connectorTooltips: 0
@@ -6835,6 +6838,7 @@ MonoBehaviour:
   decelerationHorizontal: 0.05
   speedLimit: 10
   rotationSpeed: 0.75
+  scaleDownTime: 1.5
   sirenFlashInterval: 0.15
   surveilAltitude: 1
   surveilWaitInterval: 1.5

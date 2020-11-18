@@ -269,7 +269,9 @@ public class TooltipNode : MonoBehaviour
             spiderTimer.gameObject.SetActive(false);
             spiderTimer.text = "";
         }
-        //show tracer if present and known
+        //
+        // - - - Tracer (if present and known)
+        //
         proceedFlag = false;
         if (data.isTracer == true)
         {

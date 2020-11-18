@@ -257,7 +257,7 @@ public class Node : MonoBehaviour
 
         //district components
         if (GameManager.i.optionScript.noNodes == true)
-        { if (baseObject == null) { Debug.LogError("Invalid baseObject (Null)"); }  }
+        { if (baseObject == null) { Debug.LogError("Invalid baseObject (Null)"); } }
         //renderers
         nodeRenderer = GetComponent<Renderer>();
         baseRenderer = baseObject.GetComponent<Renderer>();
@@ -601,8 +601,12 @@ public class Node : MonoBehaviour
                         if (isContactResistance == true)
                         { dataTooltip.isActiveContact = GameManager.i.dataScript.CheckActiveContactAtNode(nodeID, playerSide); }
                     }
-                    //if Authority contacts present then automatically active
-                    else { dataTooltip.isActiveContact = isContactAuthority; }
+                    else
+                    {
+
+                        //if Authority contacts present then automatically active
+                        dataTooltip.isActiveContact = isContactAuthority;
+                    }
                     GameManager.i.tooltipNodeScript.SetTooltip(dataTooltip);
                     yield return null;
                 }
@@ -927,7 +931,7 @@ public class Node : MonoBehaviour
         {
             colourBase = NodeColour.Active;
             colourRear = NodeColour.TowerActive;
-            
+
         }
     }
 
