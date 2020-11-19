@@ -206,22 +206,22 @@ public class ModalInventoryUI : MonoBehaviour
                     headerPanel.sprite = GameManager.i.sideScript.header_background_Authority;
                     //set button sprites
                     buttonCancel.GetComponent<Image>().sprite = GameManager.i.sideScript.button_Authority;
-                    //set sprite transitions
+                    /*//set sprite transitions
                     SpriteState spriteStateAuthority = new SpriteState();
                     spriteStateAuthority.highlightedSprite = GameManager.i.sideScript.button_highlight_Authority;
                     spriteStateAuthority.pressedSprite = GameManager.i.sideScript.button_Click;
-                    buttonCancel.spriteState = spriteStateAuthority;
+                    buttonCancel.spriteState = spriteStateAuthority;*/
                     break;
                 case "Resistance":
                     modalPanel.sprite = GameManager.i.sideScript.inventory_background_Resistance;
                     headerPanel.sprite = GameManager.i.sideScript.header_background_Resistance;
                     //set button sprites
                     buttonCancel.GetComponent<Image>().sprite = GameManager.i.sideScript.button_Resistance;
-                    //set sprite transitions
+                    /*//set sprite transitions
                     SpriteState spriteStateRebel = new SpriteState();
                     spriteStateRebel.highlightedSprite = GameManager.i.sideScript.button_highlight_Resistance;
                     spriteStateRebel.pressedSprite = GameManager.i.sideScript.button_Click;
-                    buttonCancel.spriteState = spriteStateRebel;
+                    buttonCancel.spriteState = spriteStateRebel;*/
                     break;
                 default:
                     Debug.LogError(string.Format("Invalid side \"{0}\"", details.side.name));

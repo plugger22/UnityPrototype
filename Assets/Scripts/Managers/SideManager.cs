@@ -19,15 +19,24 @@ public class SideManager : MonoBehaviour
     public Sprite outcome_backgroundRebel;
     public Sprite picker_background_Authority;
     public Sprite picker_background_Rebel;
+
+    [Header("Inventory Panel")]
+    [Tooltip("Inventory panel, main, Authority")]
     public Sprite inventory_background_Authority;
+    [Tooltip("Inventory panel, main, Resistance")]
     public Sprite inventory_background_Resistance;
+    [Tooltip("Inventory panel, header, Authority")]
+    public Sprite header_background_Authority;
+    [Tooltip("Inventory panel, header, Resistance")]
+    public Sprite header_background_Resistance;
+    [Tooltip("Inventory panel, button sprite, Authority")]
+    public Sprite button_Authority;
+    [Tooltip("Inventory panel, button sprite, Resistances")]
+    public Sprite button_Resistance;
+
     public Sprite info_background_Authority;
     public Sprite info_background_Resistance;
-    public Sprite header_background_Authority;
-    public Sprite header_background_Resistance;
-    public Sprite button_Authority;
     public Sprite button_highlight_Authority;
-    public Sprite button_Resistance;
     public Sprite button_highlight_Resistance;
     public Sprite button_Click;
 

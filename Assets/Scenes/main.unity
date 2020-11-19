@@ -7161,7 +7161,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: f94c1f8dd55928a48b4dcb91708b8840, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e5754074a151ff9429ca90b11d9fd4f1, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -35287,7 +35287,7 @@ Prefab:
     - target: {fileID: 224600551189022118, guid: e578a145b6adfd74382846bfa4b61b72,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 40
+      value: 44
       objectReference: {fileID: 0}
     - target: {fileID: 224600551189022118, guid: e578a145b6adfd74382846bfa4b61b72,
         type: 2}
@@ -35355,6 +35355,47 @@ Prefab:
       value: 
       objectReference: {fileID: 21300002, guid: 25317bedffad9084c85a2a1affae186d,
         type: 3}
+    - target: {fileID: 114837592937466690, guid: e578a145b6adfd74382846bfa4b61b72,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bdf199430dda37e46aeaec7d58a2857c,
+        type: 3}
+    - target: {fileID: 114388997623356696, guid: e578a145b6adfd74382846bfa4b61b72,
+        type: 2}
+      propertyPath: m_Transition
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114388997623356696, guid: e578a145b6adfd74382846bfa4b61b72,
+        type: 2}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 114388997623356696, guid: e578a145b6adfd74382846bfa4b61b72,
+        type: 2}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.75686276
+      objectReference: {fileID: 0}
+    - target: {fileID: 114388997623356696, guid: e578a145b6adfd74382846bfa4b61b72,
+        type: 2}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114388997623356696, guid: e578a145b6adfd74382846bfa4b61b72,
+        type: 2}
+      propertyPath: m_Colors.m_PressedColor.r
+      value: 0.1764706
+      objectReference: {fileID: 0}
+    - target: {fileID: 114388997623356696, guid: e578a145b6adfd74382846bfa4b61b72,
+        type: 2}
+      propertyPath: m_Colors.m_PressedColor.g
+      value: 0.32941177
+      objectReference: {fileID: 0}
+    - target: {fileID: 114388997623356696, guid: e578a145b6adfd74382846bfa4b61b72,
+        type: 2}
+      propertyPath: m_Colors.m_PressedColor.b
+      value: 0.7019608
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e578a145b6adfd74382846bfa4b61b72, type: 2}
   m_IsPrefabAsset: 0
@@ -36103,7 +36144,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &862342179
 RectTransform:
   m_ObjectHideFlags: 0
@@ -46438,7 +46479,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -638.25, y: -373.13885}
-  m_SizeDelta: {x: 205, y: 101.41}
+  m_SizeDelta: {x: 206, y: 101.41}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1111140692
 MonoBehaviour:
@@ -46472,7 +46513,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: f94c1f8dd55928a48b4dcb91708b8840, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e5754074a151ff9429ca90b11d9fd4f1, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1

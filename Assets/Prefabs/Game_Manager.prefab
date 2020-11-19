@@ -6704,22 +6704,22 @@ MonoBehaviour:
     type: 3}
   picker_background_Rebel: {fileID: 21300000, guid: 5d942fbb8d7db5845963444ec015b274,
     type: 3}
-  inventory_background_Authority: {fileID: 21300000, guid: c74da3acfd0b6ed468d6fe619d830b53,
+  inventory_background_Authority: {fileID: 21300000, guid: 5e58be6935be74943afaa868e1c3e13b,
     type: 3}
-  inventory_background_Resistance: {fileID: 21300000, guid: c2ac7359005a1bd4f961fc36e2799fe3,
+  inventory_background_Resistance: {fileID: 21300000, guid: 5e58be6935be74943afaa868e1c3e13b,
     type: 3}
+  header_background_Authority: {fileID: 21300000, guid: c46d57a04b53d7042ac5e9ae866cf681,
+    type: 3}
+  header_background_Resistance: {fileID: 21300000, guid: c46d57a04b53d7042ac5e9ae866cf681,
+    type: 3}
+  button_Authority: {fileID: 21300000, guid: bdf199430dda37e46aeaec7d58a2857c, type: 3}
+  button_Resistance: {fileID: 21300000, guid: bdf199430dda37e46aeaec7d58a2857c, type: 3}
   info_background_Authority: {fileID: 21300000, guid: 7f4fc6d32c81cf7409df3bb55cc9cffb,
     type: 3}
   info_background_Resistance: {fileID: 21300000, guid: 5d942fbb8d7db5845963444ec015b274,
     type: 3}
-  header_background_Authority: {fileID: 21300000, guid: da6f12d1a05818f43ae825ce77b68356,
-    type: 3}
-  header_background_Resistance: {fileID: 21300000, guid: 7d061e190604dc045aeb28ae20784b0b,
-    type: 3}
-  button_Authority: {fileID: 21300002, guid: b191421e418f03b40bc90c356593f467, type: 3}
   button_highlight_Authority: {fileID: 21300000, guid: 1824b016b1f6ae24ca034d9d7b9824c3,
     type: 3}
-  button_Resistance: {fileID: 21300000, guid: 71422af69eca06243a7750d305bbdff6, type: 3}
   button_highlight_Resistance: {fileID: 21300000, guid: 20a58138803019b41be30d481caaf3c0,
     type: 3}
   button_Click: {fileID: 21300002, guid: 25317bedffad9084c85a2a1affae186d, type: 3}
