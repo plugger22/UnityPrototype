@@ -161,6 +161,9 @@ public enum EventType
     DiceReturnGear,*/
     #endregion
 
+    //Tabbed UI
+    TabbedOpen,
+    TabbedClose,
     //Main Info
     MainInfoOpen,
     MainInfoOpenInterim,

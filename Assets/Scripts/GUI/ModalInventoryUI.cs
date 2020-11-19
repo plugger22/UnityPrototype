@@ -64,6 +64,7 @@ public class ModalInventoryUI : MonoBehaviour
             case GameState.NewInitialisation:
             case GameState.LoadAtStart:
                 SubInitialiseSessionStart();
+                SubInitialiseEvents();
                 break;
             case GameState.FollowOnInitialisation:
                 //do nothing
@@ -134,10 +135,8 @@ public class ModalInventoryUI : MonoBehaviour
     }
     #endregion
 
-    #endregion
-
-
-    private void Start()
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
     {
         //register listener
         EventManager.i.AddListener(EventType.InventoryOpenUI, OnEvent, "ModalInventoryUI");
@@ -145,6 +144,12 @@ public class ModalInventoryUI : MonoBehaviour
         EventManager.i.AddListener(EventType.InventoryShowMe, OnEvent, "ModalInventoryUI");
         EventManager.i.AddListener(EventType.InventoryRestore, OnEvent, "ModalInventoryUI");
     }
+    #endregion
+
+    #endregion
+
+
+
 
     /// <summary>
     /// Event Handler

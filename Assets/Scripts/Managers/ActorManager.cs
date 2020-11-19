@@ -1022,6 +1022,7 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
     }
 
+    #region InitialisePoolActors
     /// <summary>
     /// populate the pools to recruit from (one full set of actor arcs for each side and each level)
     /// </summary>
@@ -1099,7 +1100,10 @@ public class ActorManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid list of Resistance Actor Arcs (Null)"); }
     }
+    #endregion
 
+
+    #region InitialiseHQActors
     /// <summary>
     /// Initialises required number of actors to populate HQ hierarchy for player side
     /// </summary>
@@ -1255,7 +1259,10 @@ public class ActorManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfActors (Empty)"); }
     }
+    #endregion
 
+
+    #region InitialiseHqWorkers
     /// <summary>
     /// Add new actors to hqActorPool as workers (used at Campaign start and also during metaGame to fill any gaps for HQ actors who may leave)
     /// </summary>
@@ -1284,8 +1291,10 @@ public class ActorManager : MonoBehaviour
             else { Debug.LogWarning(string.Format("Invalid Authority actorOne (Null) for actorArc \"{0}\"", arc.name)); }
         }
     }
+    #endregion
 
 
+    #region CreateActor
     /// <summary>
     /// creates a new actor of the specified actor arc type, side and level (1 worst -> 3 best). SlotID (0 to 3) for current actor, default '-1' for reserve pool actor.
     /// adds actor to dataManager.cs ArrayOfActors if OnMap (slot ID > -1). NOT added to dictOfActors if slotID -1 (do so after actor is chosen in generic picker)
@@ -1407,6 +1416,7 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogError(string.Format("Invalid ActorArc (Null) for actorArc {0}", arcName)); }
         return null;
     }
+    #endregion
 
 
     #region GetNodeActions
@@ -3715,6 +3725,8 @@ public class ActorManager : MonoBehaviour
         InitialiseGenericPickerRecruit(details);
     }
 
+
+    #region InitialiseGenericPickerRecruit
     /// <summary>
     /// Choose Recruit (Both sides): sets up ModalGenericPicker class and triggers event: ModalGenericEvent.cs -> SetGenericPicker()
     /// </summary>
@@ -4015,7 +4027,10 @@ public class ActorManager : MonoBehaviour
         }
 
     }
+    #endregion
 
+
+    #region InitialiseHqHierarchyInventory
     /// <summary>
     /// sets up all needed data for HQ Hierarchy only Actors and triggers ModalInventoryUI to display such
     /// </summary>
@@ -4140,8 +4155,10 @@ public class ActorManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfHQActors (Null)"); }
     }
+    #endregion
 
 
+    #region InitialiseDeviceInventory
     /// <summary>
     /// sets up all needed data for Interrogation Devices Inventory and triggers ModalInventoryUI to display such
     /// Displays all devices with ones not in player's inventory greyed out
@@ -4230,8 +4247,10 @@ public class ActorManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfDevices (Null)"); }
     }
+    #endregion
 
 
+    #region InitialiseReview
     /// <summary>
     /// Initialises Peer ReviewUI
     /// </summary>
@@ -4437,6 +4456,46 @@ public class ActorManager : MonoBehaviour
         }
 
     }
+    #endregion
+
+
+    #region InitialseActorDetails
+    /// <summary>
+    /// Initialise Actor details and pass to ModalTabbedUI for display
+    /// </summary>
+    public void InitialiseActorDetails()
+    {
+        bool errorFlag = false;
+
+        TabbedUIData data = new TabbedUIData();
+        data.side = GameManager.i.sideScript.PlayerSide;
+
+        //
+        // - - - Execute
+        //
+
+        //data package has been populated, proceed if all O.K
+        if (errorFlag == true)
+        {
+            //error msg
+            ModalOutcomeDetails details = new ModalOutcomeDetails()
+            {
+                side = GameManager.i.sideScript.PlayerSide,
+                textTop = string.Format("{0}Actor details are unavailable at this point in time{1}", colourAlert, colourEnd),
+                textBottom = "Privacy Laws have been breached. Stay where you are, don't move",
+                sprite = GameManager.i.spriteScript.errorSprite,
+                isAction = false
+            };
+            EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "ActorManager.cs -> InitialiseActorDetails");
+        }
+        else
+        {
+            //open Tabbed UI
+            EventManager.i.PostNotification(EventType.TabbedOpen, this, data, "ActorManager.cs -> InitialiseActorDetails");
+        }
+
+    }
+    #endregion
 
     /// <summary>
     /// returns colour formatted review icon (fontAwesome) for a given opinion of decisions taken (values from 0 to 3)

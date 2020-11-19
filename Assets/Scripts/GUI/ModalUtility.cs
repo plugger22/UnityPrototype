@@ -370,7 +370,13 @@ namespace modalAPI
         public GenericTooltipDetails[] arrayOfTooltipsResult = new GenericTooltipDetails[9];                 //same [index] for both arrays. Keep in synch!! -> bottom text (Result) tooltip
     }
 
-
+    /// <summary>
+    /// Main class for passing data to TabbedUI, eg. Actor or Player info
+    /// </summary>
+    public class TabbedUIData
+    {
+        public GlobalSide side;
+    }
 
 
 }
