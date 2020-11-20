@@ -10,10 +10,33 @@ using UnityEngine.UI;
 /// </summary>
 public class ModalTabbedUI : MonoBehaviour
 {
+    [Header("Canvases")]
     public Canvas tabbedCanvasMain;
+
+    [Header("Control Objects")]
     public GameObject tabbedObjectMain;
 
+    [Header("Backgrounds")]
     public Image backgroundImage;
+
+    [Header("Actor Tabs")]
+    public GameObject tabActor0;
+    public GameObject tabActor1;
+    public GameObject tabActor2;
+    public GameObject tabActor3;
+
+
+    //tabs
+    private int currentSideTabIndex = -1;                           //side tabs (top to bottom)
+    private int currentTopTabIndex = -1;                            //top tabs (left to right)
+    private int maxSideTabIndex;                                    //side tabs only (used for keeping pgUP/DOWN movement within HQ side tabs)
+    private int maxTopTabIndex;                                     //top tabs only
+    private int numOfSideTabs;                                      //keyed off enum.MetaTabSide
+    private int numOfTopTabs;                                       //keyed off enum.MetaTabTop
+    private int offset = 1;                                         //used with '(ActorHQ)index + offset' to account for the ActorHQ.enum having index 0 being 'None'
+    private float sideTabAlpha = 0.30f;                             //alpha level of side tabs when inactive
+    private float topTabAlpha = 0.50f;                              //alpha level of top tabs when inactive
+
 
     public ButtonInteraction buttonInteractionCancel;
 
@@ -46,6 +69,7 @@ public class ModalTabbedUI : MonoBehaviour
             case GameState.LoadGame:
             case GameState.NewInitialisation:
             case GameState.LoadAtStart:
+                SubInitialiseAsserts();
                 SubInitialiseSessionStart();
                 SubInitialiseEvents();
                 break;
@@ -61,18 +85,34 @@ public class ModalTabbedUI : MonoBehaviour
 
     #region Initialise SubMethods
 
-    #region SubInitialiseSessionStart
-    /// <summary>
-    /// Session start
-    /// </summary>
-    private void SubInitialiseSessionStart()
+    #region SubInitialiseAsserts
+    private void SubInitialiseAsserts()
     {
+        //Asserts
         Debug.Assert(tabbedCanvasMain != null, "Invalid tabbedCanvasMain (Null)");
         Debug.Assert(tabbedObjectMain != null, "Invalid tabbedObjectMain (Null)");
         Debug.Assert(backgroundImage != null, "Invalid backgroundImage (Null)");
         if (buttonInteractionCancel != null)
         { buttonInteractionCancel.SetButton(EventType.TabbedClose); }
         else { Debug.LogError("Invalid buttonInteractionCancal (Null)"); }
+        //tabs
+        Debug.Assert(tabActor0 != null, "Invalid tabActor0 (Null)");
+        Debug.Assert(tabActor1 != null, "Invalid tabActor1 (Null)");
+        Debug.Assert(tabActor2 != null, "Invalid tabActor2 (Null)");
+        Debug.Assert(tabActor3 != null, "Invalid tabActor3 (Null)");
+    }
+    #endregion
+
+    #region SubInitialiseSessionStart
+    /// <summary>
+    /// Session start
+    /// </summary>
+    private void SubInitialiseSessionStart()
+    {
+        int index = 0;
+        numOfSideTabs = (int)ActorUISideTab.Count;
+
+
     }
     #endregion
 

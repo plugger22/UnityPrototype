@@ -63,6 +63,10 @@
     public enum MetaTabTop { Status, Selected, Count }                                              //MetaGameUI top tabs. NOTE: order needs to correspond to UI (arrays keyed off this)
     public enum MetaPriority { Low, Medium, High, Extreme, Count }
 
+    //
+    // - - - TabbedUI (Dossiers)
+    //
+    public enum ActorUISideTab { Actor0, Actor1, Actor2, Actor3, Count}                             //ModalTabbedUI side tabs. NOTE order needs to correspond to UI (arrays keyed off this)
 
     //
     // - - - Connections - - - 
