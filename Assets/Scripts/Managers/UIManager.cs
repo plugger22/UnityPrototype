@@ -57,4 +57,10 @@ public class UIManager : MonoBehaviour
     public Color TransitionHeader;
     [Tooltip("Transition background Text (that sits ontop of colourTransitionBackground")]
     public Color TransitionText;
+
+    [Header("Tabbed UI")]
+    [Tooltip("Active side tab colour")]
+    public Color TabbedSideTabActive;
+    [Tooltip("Dormant side tab colour")]
+    public Color TabbedSideTabDormant;
 }

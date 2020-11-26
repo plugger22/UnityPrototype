@@ -43,8 +43,12 @@ public class ModalTabbedUI : MonoBehaviour
     private int numOfSideTabs;                                      //keyed off enum.MetaTabSide
     private int numOfTopTabs;                                       //keyed off enum.MetaTabTop
     private int offset = 1;                                         //used with '(ActorHQ)index + offset' to account for the ActorHQ.enum having index 0 being 'None'
-    private float sideTabAlpha = 0.30f;                             //alpha level of side tabs when inactive
+    private float sideTabAlpha = 0.50f;                             //alpha level of side tabs when inactive
     private float topTabAlpha = 0.50f;                              //alpha level of top tabs when inactive
+
+    //colours
+    private Color sideTabActiveColour;
+    private Color sideTabDormantColour;
 
     //Input data
     TabbedUIData inputData;
@@ -168,7 +172,9 @@ public class ModalTabbedUI : MonoBehaviour
                 else { Debug.LogErrorFormat("Invalid TabbedInteraction (Null) for arrayOfSideTabObject[{0}]", i); }
             }
         }
-        //derived components -> Button interactions
+        //Miscellaneous
+        sideTabActiveColour = GameManager.i.uiScript.TabbedSideTabActive;
+        sideTabDormantColour = GameManager.i.uiScript.TabbedSideTabDormant;
 
     }
     #endregion
@@ -270,13 +276,18 @@ public class ModalTabbedUI : MonoBehaviour
                                 arrayOfSideTabItems[index].portrait.sprite = actor.sprite;
                                 arrayOfSideTabItems[index].title.text = actor.arc.name;
                                 //baseline colours
-                                backgroundColor = arrayOfSideTabItems[index].background.color;
                                 portraitColor = arrayOfSideTabItems[index].portrait.color;
                                 //first tab should be active on opening, rest passive
                                 if (index == data.slotID)
-                                { portraitColor.a = 1.0f; backgroundColor.a = 1.0f; }
+                                {
+                                    backgroundColor = sideTabActiveColour;
+                                    portraitColor.a = 1.0f; backgroundColor.a = 1.0f;
+                                }
                                 else
-                                { portraitColor.a = sideTabAlpha; backgroundColor.a = sideTabAlpha; }
+                                {
+                                    backgroundColor = sideTabDormantColour;
+                                    portraitColor.a = sideTabAlpha; backgroundColor.a = sideTabAlpha;
+                                }
                                 //set colors
                                 arrayOfSideTabItems[index].portrait.color = portraitColor;
                                 arrayOfSideTabItems[index].background.color = backgroundColor;
@@ -294,11 +305,29 @@ public class ModalTabbedUI : MonoBehaviour
                     //disable empty tabs
                     if (numOfSideTabs <= maxSideTabIndex)
                     {
-                        for (int i = numOfSideTabs - 1; i < maxSideTabIndex; i++)
+                        for (int i = numOfSideTabs; i <= maxSideTabIndex; i++)
                         { arrayOfSideTabObjects[i].SetActive(false); }
                     }
                     break;
-
+                case TabbedUIWho.Player:
+                    numOfSideTabs = 1;
+                    index = 0;
+                    //set up player tab
+                    arrayOfSideTabItems[index].portrait.sprite = GameManager.i.playerScript.sprite;
+                    arrayOfSideTabItems[index].title.text = GameManager.i.playerScript.FirstName;
+                    //colors
+                    portraitColor = arrayOfSideTabItems[index].portrait.color;
+                    backgroundColor = sideTabActiveColour;
+                    portraitColor.a = 1.0f; backgroundColor.a = 1.0f;
+                    //set colors
+                    arrayOfSideTabItems[index].portrait.color = portraitColor;
+                    arrayOfSideTabItems[index].background.color = backgroundColor;
+                    //activate tab
+                    arrayOfSideTabObjects[index].SetActive(true);
+                    //disable inactive tabs
+                    for (int i = numOfSideTabs; i <= maxSideTabIndex; i++)
+                    { arrayOfSideTabObjects[i].SetActive(false); }
+                    break;
                 case TabbedUIWho.HQ:
                     //assumes a full compliment of HQ actors present
                     numOfSideTabs = maxSideTabIndex + 1;
@@ -318,13 +347,18 @@ public class ModalTabbedUI : MonoBehaviour
                         //activate tab
                         arrayOfSideTabObjects[index].SetActive(true);
                         //baseline colours
-                        backgroundColor = arrayOfSideTabItems[index].background.color;
                         portraitColor = arrayOfSideTabItems[index].portrait.color;
                         //first tab should be active on opening, rest passive
                         if (index == data.slotID)
-                        { portraitColor.a = 1.0f; backgroundColor.a = 1.0f; }
+                        {
+                            backgroundColor = sideTabActiveColour;
+                            portraitColor.a = 1.0f; backgroundColor.a = 1.0f;
+                        }
                         else
-                        { portraitColor.a = sideTabAlpha; backgroundColor.a = sideTabAlpha; }
+                        {
+                            backgroundColor = sideTabDormantColour;
+                            portraitColor.a = sideTabAlpha; backgroundColor.a = sideTabAlpha;
+                        }
                         //set colors
                         arrayOfSideTabItems[index].portrait.color = portraitColor;
                         arrayOfSideTabItems[index].background.color = backgroundColor;
@@ -418,15 +452,16 @@ public class ModalTabbedUI : MonoBehaviour
         for (int index = 0; index < numOfSideTabs; index++)
         {
             portraitColor = arrayOfSideTabItems[index].portrait.color;
-            backgroundColor = arrayOfSideTabItems[index].background.color;
             //activate indicated tab and deactivate the rest
             if (index == tabIndex)
             {
+                backgroundColor = sideTabActiveColour;
                 portraitColor.a = 1.0f;
                 backgroundColor.a = 1.0f;
             }
             else
             {
+                backgroundColor = sideTabDormantColour;
                 portraitColor.a = sideTabAlpha;
                 backgroundColor.a = sideTabAlpha;
             }
