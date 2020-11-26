@@ -4884,16 +4884,38 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Get array of OnMap (active and inactive) actors for a specified side
+    /// Get array of OnMap (active and inactive) actors for a specified side. Fixed array size (includes nulls for empty actor slots)
     /// </summary>
     /// <returns></returns>
-    public Actor[] GetCurrentActors(GlobalSide side)
+    public Actor[] GetCurrentActorsFixed(GlobalSide side)
     {
         Debug.Assert(side != null, "Invalid side (Null)");
         int total = GameManager.i.actorScript.maxNumOfOnMapActors;
         Actor[] tempArray = new Actor[total];
         for (int i = 0; i < total; i++)
-        { tempArray[i] = arrayOfActors[side.level, i]; }
+        {  tempArray[i] = arrayOfActors[side.level, i]; }
+        return tempArray;
+    }
+
+    /// <summary>
+    /// Get array of OnMap (active and inactive) actors for a specified side. Variable array size (NO empty actor slots)
+    /// </summary>
+    /// <returns></returns>
+    public Actor[] GetCurrentActorsVariable(GlobalSide side)
+    {
+        int counter = 0;
+        Debug.Assert(side != null, "Invalid side (Null)");
+        int total = CheckNumOfOnMapActors(side);
+        Actor[] tempArray = new Actor[total];
+        for (int i = 0; i < GameManager.i.actorScript.maxNumOfOnMapActors; i++)
+        {
+            //check actor is present in slot (not vacant)
+            if (GameManager.i.dataScript.CheckActorSlotStatus(i, side) == true)
+            {
+                tempArray[counter] = arrayOfActors[side.level, i];
+                counter++;
+            }
+        }
         return tempArray;
     }
 
@@ -5529,7 +5551,7 @@ public class DataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.Append(string.Format(" Actor NodeActionData{0}{1}", "\n", "\n"));
 
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(playerSide);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(playerSide);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
@@ -5572,7 +5594,7 @@ public class DataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.Append(string.Format(" Actor TeamActionData{0}{1}", "\n", "\n"));
 
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(playerSide);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(playerSide);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
@@ -5615,7 +5637,7 @@ public class DataManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.Append(string.Format(" Actor Details{0}{1}", "\n", "\n"));
 
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(playerSide);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(playerSide);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
@@ -8264,7 +8286,7 @@ public class DataManager : MonoBehaviour
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         StringBuilder builder = new StringBuilder();
         //loop OnMap actors
-        Actor[] arrayOfActors = GetCurrentActors(playerSide);
+        Actor[] arrayOfActors = GetCurrentActorsFixed(playerSide);
         if (arrayOfActors != null)
         {
             builder.AppendFormat("- OnMap Actors History{0}{1}", "\n", "\n");

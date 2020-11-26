@@ -2449,7 +2449,7 @@ public class TopicManager : MonoBehaviour
             arrayOfOptionInactiveIDs[i] = -1;
         }
         //All topics based on current actor line up
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(playerSide);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(playerSide);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
@@ -2504,7 +2504,7 @@ public class TopicManager : MonoBehaviour
         List<Topic> listOfTopics = new List<Topic>();
         List<int> listOfActors = new List<int>();
         //All topics based on current actor line up
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(playerSide);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(playerSide);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
@@ -2607,7 +2607,7 @@ public class TopicManager : MonoBehaviour
         List<Topic> listOfTopics = new List<Topic>();
         List<int> listOfActors = new List<int>();
         //All topics based on current actor line up
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(playerSide);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(playerSide);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)

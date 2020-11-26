@@ -259,7 +259,7 @@ public class SecretManager : MonoBehaviour
             //Create a list of all current actors plus all actors in Reserve
             List<Actor> listOfActors = new List<Actor>();
             //add current actors
-            Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(side);
+            Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(side);
             if (arrayOfActors != null)
             {
                 for (int i = 0; i < arrayOfActors.Length; i++)

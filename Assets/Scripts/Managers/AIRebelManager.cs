@@ -1234,7 +1234,7 @@ public class AIRebelManager : MonoBehaviour
             }
         }
         //check  Resistance actors
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalResistance);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalResistance);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
@@ -1550,7 +1550,7 @@ public class AIRebelManager : MonoBehaviour
                         {
                             List<Actor> listOfActors = new List<Actor>();
                             //loop actors and check for any < lieLowThreshold
-                            Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalResistance);
+                            Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalResistance);
                             if (arrayOfActors != null)
                             {
                                 for (int i = 0; i < arrayOfActors.Length; i++)
@@ -2067,7 +2067,7 @@ public class AIRebelManager : MonoBehaviour
     private void ProcessAdminTask()
     {
         //create a list of all active, current, onMap actors (used for AI decision logic)
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalResistance);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalResistance);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
@@ -4681,7 +4681,7 @@ public class AIRebelManager : MonoBehaviour
     private int GetOnMapActor(string arcName)
     {
         int actorID = -1;
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalResistance);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalResistance);
         List<int> listOfActiveActorID = new List<int>();
         if (arrayOfActors != null)
         {

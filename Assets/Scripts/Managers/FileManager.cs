@@ -4216,7 +4216,7 @@ public class FileManager : MonoBehaviour
         GameManager.i.actorPanelScript.UpdateActorPanel();
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         //loop each OnMap actor and update alpha and Power
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(playerSide);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(playerSide);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)

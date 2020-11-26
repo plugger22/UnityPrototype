@@ -5393,7 +5393,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1403236724106400, guid: 55986510f8794d24793a2ebba6bc9af4, type: 2}
       propertyPath: m_Name
-      value: Image
+      value: Image3
       objectReference: {fileID: 0}
     - target: {fileID: 1937802753818170, guid: 55986510f8794d24793a2ebba6bc9af4, type: 2}
       propertyPath: m_Name
@@ -10029,7 +10029,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1403236724106400, guid: 55986510f8794d24793a2ebba6bc9af4, type: 2}
       propertyPath: m_Name
-      value: Image
+      value: Image1
       objectReference: {fileID: 0}
     - target: {fileID: 1937802753818170, guid: 55986510f8794d24793a2ebba6bc9af4, type: 2}
       propertyPath: m_Name
@@ -30872,6 +30872,10 @@ Prefab:
         type: 2}
       propertyPath: m_Color.b
       value: 0.7019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 1403236724106400, guid: 55986510f8794d24793a2ebba6bc9af4, type: 2}
+      propertyPath: m_Name
+      value: Image0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114701471163213306, guid: 55986510f8794d24793a2ebba6bc9af4, type: 2}
@@ -52930,7 +52934,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1198920978
 RectTransform:
   m_ObjectHideFlags: 0
@@ -86403,7 +86407,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1403236724106400, guid: 55986510f8794d24793a2ebba6bc9af4, type: 2}
       propertyPath: m_Name
-      value: Image
+      value: Image2
       objectReference: {fileID: 0}
     - target: {fileID: 1937802753818170, guid: 55986510f8794d24793a2ebba6bc9af4, type: 2}
       propertyPath: m_Name

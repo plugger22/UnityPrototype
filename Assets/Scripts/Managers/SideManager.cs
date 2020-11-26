@@ -338,7 +338,7 @@ public class SideManager : MonoBehaviour
                 //clear out debug NodeActionData records for Player
                 GameManager.i.playerScript.ClearAllNodeActions();
                 //loop actors and check for status
-                Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalAuthority);
+                Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalAuthority);
                 if (arrayOfActors != null)
                 {
                     for (int i = 0; i < arrayOfActors.Length; i++)
@@ -424,7 +424,7 @@ public class SideManager : MonoBehaviour
                 //clear out debug NodeActionData records for Player
                 GameManager.i.playerScript.ClearAllNodeActions();
                 //loop actors and check for status
-                arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalResistance);
+                arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalResistance);
                 if (arrayOfActors != null)
                 {
                     for (int i = 0; i < arrayOfActors.Length; i++)

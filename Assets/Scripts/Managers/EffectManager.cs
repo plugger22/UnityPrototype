@@ -2631,7 +2631,7 @@ public class EffectManager : MonoBehaviour
     {
         bool isSuccess = true;
         GlobalSide side = GameManager.i.sideScript.PlayerSide;
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(side);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(side);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)

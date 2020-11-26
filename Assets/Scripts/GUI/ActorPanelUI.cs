@@ -328,7 +328,7 @@ public class ActorPanelUI : MonoBehaviour
     {
         int numOfActors = GameManager.i.actorScript.maxNumOfOnMapActors;
         GlobalSide side = GameManager.i.sideScript.PlayerSide;
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(side);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(side);
         List<TextMeshProUGUI> listOfActorTypes = GameManager.i.dataScript.GetListOfActorTypes();
         List<Image> listOfActorPortraits = GameManager.i.dataScript.GetListOfActorPortraits();
         if (listOfActorTypes != null)

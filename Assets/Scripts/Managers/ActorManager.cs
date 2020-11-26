@@ -1008,7 +1008,7 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     public void InitialiseActorContacts(GlobalSide side)
     {
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(side);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(side);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
@@ -1549,7 +1549,7 @@ public class ActorManager : MonoBehaviour
                 // - - - Actors - - - 
                 //
                 //loop actors currently in game -> get Node actions (1 per Actor, if valid criteria)
-                arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalResistance);
+                arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalResistance);
                 if (GameManager.i.dataScript.CheckNumOfActiveActors(globalResistance) > 0)
                 {
                     foreach (Actor actor in arrayOfActors)
@@ -1846,7 +1846,7 @@ public class ActorManager : MonoBehaviour
 
                 //get a list pre-emptively as it's computationally expensive to do so on demand
                 List<string> tempTeamList = GameManager.i.dataScript.GetAvailableReserveTeams(node);
-                arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalAuthority);
+                arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalAuthority);
                 if (GameManager.i.dataScript.CheckNumOfActiveActors(globalAuthority) > 0)
                 {
                     //loop actors currently in game -> get Node actions (1 per Actor, if valid criteria)
@@ -3191,7 +3191,7 @@ public class ActorManager : MonoBehaviour
                 if (gear.timesUsed == 0)
                 {
                     //Loop current, onMap actors
-                    Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalResistance);
+                    Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalResistance);
                     if (arrayOfActors != null)
                     {
                         for (int i = 0; i < arrayOfActors.Length; i++)
@@ -4384,7 +4384,7 @@ public class ActorManager : MonoBehaviour
         //
         // - - - Subordinates
         //
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalResistance);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalResistance);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
@@ -5359,7 +5359,7 @@ public class ActorManager : MonoBehaviour
     {
         string outputMsg = "Unknown";
         GlobalSide side = GameManager.i.sideScript.PlayerSide;
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(side);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(side);
         if (arrayOfActors != null)
         {
             List<Actor> listOfActors = new List<Actor>();
@@ -5714,7 +5714,7 @@ public class ActorManager : MonoBehaviour
     {
         int turn;
         //loop OnMap actors
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalResistance);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalResistance);
         NameSet nameSet = GameManager.i.cityScript.GetNameSet();
         if (nameSet != null)
         {
@@ -5909,7 +5909,7 @@ public class ActorManager : MonoBehaviour
     {
         string gearName;
         // Resistance actors only
-        Actor[] arrayOfActorsResistance = GameManager.i.dataScript.GetCurrentActors(globalResistance);
+        Actor[] arrayOfActorsResistance = GameManager.i.dataScript.GetCurrentActorsFixed(globalResistance);
         if (arrayOfActorsResistance != null)
         {
             for (int i = 0; i < arrayOfActorsResistance.Length; i++)
@@ -6041,7 +6041,7 @@ public class ActorManager : MonoBehaviour
     private void CheckInactiveResistanceActorsAI(bool isPlayer)
     {
         // Resistance actors only
-        Actor[] arrayOfActorsResistance = GameManager.i.dataScript.GetCurrentActors(globalResistance);
+        Actor[] arrayOfActorsResistance = GameManager.i.dataScript.GetCurrentActorsFixed(globalResistance);
         if (arrayOfActorsResistance != null)
         {
             for (int i = 0; i < arrayOfActorsResistance.Length; i++)
@@ -6151,7 +6151,7 @@ public class ActorManager : MonoBehaviour
         //no checks are made if player is not Active
         if (GameManager.i.playerScript.status == ActorStatus.Active)
         {
-            Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalResistance);
+            Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalResistance);
             if (arrayOfActors != null)
             {
                 bool isSecrets = false;
@@ -6327,7 +6327,7 @@ public class ActorManager : MonoBehaviour
         //no checks are made if player is not Active
         if (isProceed == true)
         {
-            Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalResistance);
+            Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalResistance);
             if (arrayOfActors != null)
             {
                 //secrets only if reverts to human player
@@ -6438,7 +6438,7 @@ public class ActorManager : MonoBehaviour
         //no checks are made if player is not Active
         if (GameManager.i.playerScript.status == ActorStatus.Active)
         {
-            Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalAuthority);
+            Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalAuthority);
             if (arrayOfActors != null)
             {
                 //secrets
@@ -6566,7 +6566,7 @@ public class ActorManager : MonoBehaviour
         //no checks are made if player is not Active
         if (isProceed == true)
         {
-            Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalAuthority);
+            Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalAuthority);
             if (arrayOfActors != null)
             {
                 //secrets only if reverts to human control
@@ -6690,7 +6690,7 @@ public class ActorManager : MonoBehaviour
     private void CheckInactiveAuthorityActorsAI(bool isPlayer)
     {
         //Authority actors only
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalAuthority);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalAuthority);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
@@ -7008,7 +7008,7 @@ public class ActorManager : MonoBehaviour
     {
         int numTold = 0;
         GlobalSide sideCurrent = GameManager.i.turnScript.currentSide;
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(sideCurrent);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(sideCurrent);
         //loop all actors on Map
         for (int i = 0; i < arrayOfActors.Length; i++)
         {
@@ -7172,7 +7172,7 @@ public class ActorManager : MonoBehaviour
     private void CheckInactiveAuthorityActorsHuman()
     {
         // Authority actors only
-        Actor[] arrayOfActorsAuthority = GameManager.i.dataScript.GetCurrentActors(globalAuthority);
+        Actor[] arrayOfActorsAuthority = GameManager.i.dataScript.GetCurrentActorsFixed(globalAuthority);
         if (arrayOfActorsAuthority != null)
         {
             for (int i = 0; i < arrayOfActorsAuthority.Length; i++)
@@ -8369,7 +8369,7 @@ public class ActorManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(playerSide);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(playerSide);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
@@ -8402,7 +8402,7 @@ public class ActorManager : MonoBehaviour
     {
         int numOfOpinionZero = 0;
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(playerSide);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(playerSide);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
@@ -8433,7 +8433,7 @@ public class ActorManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(playerSide);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(playerSide);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
@@ -8467,7 +8467,7 @@ public class ActorManager : MonoBehaviour
     {
         int numOfBlackmailers = 0;
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(playerSide);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(playerSide);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
@@ -9324,7 +9324,7 @@ public class ActorManager : MonoBehaviour
             //
             // - - - OnMap actors, Player side (% chance of going to HQ , otherwise go back to actor Pool)
             //
-            Actor[] arrayOfCurrentActors = GameManager.i.dataScript.GetCurrentActors(playerSide);
+            Actor[] arrayOfCurrentActors = GameManager.i.dataScript.GetCurrentActorsFixed(playerSide);
             if (arrayOfCurrentActors != null)
             {
                 count = arrayOfCurrentActors.Length;
@@ -9398,7 +9398,7 @@ public class ActorManager : MonoBehaviour
                 case 2: otherSide = globalAuthority; break;
                 default: Debug.LogWarningFormat("Invalid playerSide {0}", playerSide.name); break;
             }
-            Actor[] arrayOfOtherActors = GameManager.i.dataScript.GetCurrentActors(otherSide);
+            Actor[] arrayOfOtherActors = GameManager.i.dataScript.GetCurrentActorsFixed(otherSide);
             if (arrayOfOtherActors != null)
             {
                 count = arrayOfOtherActors.Length;
@@ -10258,7 +10258,7 @@ public class ActorManager : MonoBehaviour
     public void ToggleOnMapActors(bool isActive = true)
     {
         float alpha;
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalResistance);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalResistance);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)

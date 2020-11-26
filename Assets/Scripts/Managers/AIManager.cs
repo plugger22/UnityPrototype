@@ -1672,7 +1672,7 @@ public class AIManager : MonoBehaviour
         else
         {
             //check for Authority actors being stressed
-            Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalAuthority);
+            Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalAuthority);
             if (arrayOfActors != null)
             {
                 for (int i = 0; i < arrayOfActors.Length; i++)

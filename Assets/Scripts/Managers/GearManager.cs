@@ -471,7 +471,7 @@ public class GearManager : MonoBehaviour
         int rnd, chance;
         string traitName;
         //loop OnMap actors
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalResistance);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalResistance);
         foreach (Actor actor in arrayOfActors)
         {
             //if invalid actor or vacant position then ignore

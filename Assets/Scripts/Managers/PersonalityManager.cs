@@ -165,7 +165,7 @@ public class PersonalityManager : MonoBehaviour
         //set compatibility of all current actors with each other
         SetAllActorsCompatibility();
         //update actorPanelUI for OnMap actors compatibility
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(GameManager.i.sideScript.PlayerSide);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(GameManager.i.sideScript.PlayerSide);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
@@ -1148,7 +1148,7 @@ public class PersonalityManager : MonoBehaviour
         builder.Append(DebugDisplayIndividualPersonality(GameManager.i.playerScript.GetPersonality()));
         builder.AppendLine();
         //OnMap actors
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalResistance);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalResistance);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
@@ -1354,7 +1354,7 @@ public class PersonalityManager : MonoBehaviour
         builder.AppendFormat("- Emotional History{0}{1}", "\n", "\n");
         //loop OnMap actors
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(playerSide);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(playerSide);
         if (arrayOfActors != null)
         {
             for (int i = 0; i < arrayOfActors.Length; i++)

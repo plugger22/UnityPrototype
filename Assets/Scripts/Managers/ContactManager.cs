@@ -635,7 +635,7 @@ public class ContactManager : MonoBehaviour
     private void InitialiseNetworkArrays()
     {
         //Need to set up actors and contacts ready for assignment
-        arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalResistance);
+        arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalResistance);
         //loop actors and create an int array containing tally of their contact network effectiveness, indexed to actorSlotID
         if (arrayOfActors != null)
         {
@@ -788,7 +788,7 @@ public class ContactManager : MonoBehaviour
     public string DebugDisplayContacts()
     {
         StringBuilder builder = new StringBuilder();
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalResistance);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalResistance);
         if (arrayOfActors != null)
         {
             Dictionary<int, Contact> dictOfContacts;

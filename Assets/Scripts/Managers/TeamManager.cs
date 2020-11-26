@@ -512,7 +512,7 @@ public class TeamManager : MonoBehaviour
         {
             case SideState.Human:
                 //Add extra teams ([edit] No, see below [/edit] 
-                Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalAuthority);
+                Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalAuthority);
                 if (arrayOfActors.Length > 0)
                 {
                     int numToDeploy, arcID;
@@ -1069,7 +1069,7 @@ public class TeamManager : MonoBehaviour
         StringBuilder builder = new StringBuilder();
         builder.Append(" OnMap Teams by Actor");
         builder.AppendLine();
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalAuthority);
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalAuthority);
         foreach (Actor actor in arrayOfActors)
         {
             if (actor != null)
@@ -1773,7 +1773,7 @@ public class TeamManager : MonoBehaviour
                 //make a list of actors (slotID) with spare slots for teams (each actor can only have one team per ability level)
                 List<int> listOfActorSlots = new List<int>();
                 //loop actors
-                Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(globalAuthority);
+                Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalAuthority);
                 if (arrayOfActors != null)
                 {
                     for (int i = 0; i < arrayOfActors.Length; i++)
