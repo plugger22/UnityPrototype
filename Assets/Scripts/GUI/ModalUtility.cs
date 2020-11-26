@@ -377,6 +377,7 @@ namespace modalAPI
     {
         public GlobalSide side;
         public TabbedUIWho who;             //who the tabbedUI is to be setup for, eg. Player/Subordinates/HQ
+        public int slotID;                  //slotID of selected actor (default 0)
     }
 
 

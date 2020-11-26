@@ -5239,6 +5239,7 @@ public class DataManager : MonoBehaviour
         return numOfActors;
     }
 
+
     /// <summary>
     /// returns number of Active, onMap actors, for the specified side, who meet the special enum criteria, Zero if a problem
     /// </summary>

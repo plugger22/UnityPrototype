@@ -165,6 +165,9 @@ public enum EventType
     TabbedOpen,
     TabbedClose,
     TabbedSideTabOpen,
+    TabbedSubordinates,
+    TabbedPlayer,
+    TabbedHq,
     //Main Info
     MainInfoOpen,
     MainInfoOpenInterim,

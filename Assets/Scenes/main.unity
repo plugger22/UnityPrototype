@@ -17802,7 +17802,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1286209991109580, guid: 55986510f8794d24793a2ebba6bc9af4,
     type: 2}
   m_PrefabInternal: {fileID: 616649736}
---- !u!114 &393589834
+--- !u!114 &393589835
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -30629,7 +30629,10 @@ MonoBehaviour:
   buttonSubordinates: {fileID: 1010369047}
   buttonPlayer: {fileID: 895567712}
   buttonHq: {fileID: 975017294}
-  buttonInteractionCancel: {fileID: 291513079}
+  innteractCancel: {fileID: 291513079}
+  interactSubordinates: {fileID: 1010369050}
+  interactPlayer: {fileID: 895567715}
+  interactHq: {fileID: 975017297}
 --- !u!1001 &616624063
 Prefab:
   m_ObjectHideFlags: 0
@@ -39924,6 +39927,7 @@ GameObject:
   - component: {fileID: 895567714}
   - component: {fileID: 895567713}
   - component: {fileID: 895567712}
+  - component: {fileID: 895567715}
   m_Layer: 5
   m_Name: ControllerMiddle
   m_TagString: Untagged
@@ -40025,6 +40029,17 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 895567710}
   m_CullTransparentMesh: 0
+--- !u!114 &895567715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 895567710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1dd9b4572e21ba4a8936a932a9b86a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &897299339 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1685218529275618, guid: 1e4f0c2befdb31a4096d5b12f630938f,
@@ -43600,6 +43615,7 @@ GameObject:
   - component: {fileID: 975017296}
   - component: {fileID: 975017295}
   - component: {fileID: 975017294}
+  - component: {fileID: 975017297}
   m_Layer: 5
   m_Name: ControllerRight
   m_TagString: Untagged
@@ -43701,6 +43717,17 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 975017292}
   m_CullTransparentMesh: 0
+--- !u!114 &975017297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 975017292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1dd9b4572e21ba4a8936a932a9b86a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &976242308
 Prefab:
   m_ObjectHideFlags: 0
@@ -44691,6 +44718,7 @@ GameObject:
   - component: {fileID: 1010369049}
   - component: {fileID: 1010369048}
   - component: {fileID: 1010369047}
+  - component: {fileID: 1010369050}
   m_Layer: 5
   m_Name: ControllerLeft
   m_TagString: Untagged
@@ -44792,6 +44820,17 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1010369045}
   m_CullTransparentMesh: 0
+--- !u!114 &1010369050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1010369045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1dd9b4572e21ba4a8936a932a9b86a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1013602394
 GameObject:
   m_ObjectHideFlags: 0
@@ -50867,7 +50906,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1286209991109580, guid: 55986510f8794d24793a2ebba6bc9af4,
     type: 2}
   m_PrefabInternal: {fileID: 107617523}
---- !u!114 &1138806930
+--- !u!114 &1138806931
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -52284,7 +52323,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1286209991109580, guid: 55986510f8794d24793a2ebba6bc9af4,
     type: 2}
   m_PrefabInternal: {fileID: 222460394}
---- !u!114 &1169560313
+--- !u!114 &1169560314
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58261,7 +58300,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1286209991109580, guid: 55986510f8794d24793a2ebba6bc9af4,
     type: 2}
   m_PrefabInternal: {fileID: 1982523404}
---- !u!114 &1324335930
+--- !u!114 &1324335931
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

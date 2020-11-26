@@ -27,9 +27,13 @@ public class ModalTabbedUI : MonoBehaviour
     public Button buttonSubordinates;
     public Button buttonPlayer;
     public Button buttonHq;
+    
 
-    [Header("Bottom Buttons")]
-    public ButtonInteraction buttonInteractionCancel;
+    [Header("Button Interactions")]
+    public ButtonInteraction innteractCancel;
+    public ButtonInteraction interactSubordinates;
+    public ButtonInteraction interactPlayer;
+    public ButtonInteraction interactHq;
 
     //tabs
     private int currentSideTabIndex = -1;                           //side tabs (top to bottom)
@@ -41,6 +45,9 @@ public class ModalTabbedUI : MonoBehaviour
     private int offset = 1;                                         //used with '(ActorHQ)index + offset' to account for the ActorHQ.enum having index 0 being 'None'
     private float sideTabAlpha = 0.30f;                             //alpha level of side tabs when inactive
     private float topTabAlpha = 0.50f;                              //alpha level of top tabs when inactive
+
+    //Input data
+    TabbedUIData inputData;
 
     //sideTab collections
     private GameObject[] arrayOfSideTabObjects;
@@ -103,9 +110,15 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tabbedCanvasMain != null, "Invalid tabbedCanvasMain (Null)");
         Debug.Assert(tabbedObjectMain != null, "Invalid tabbedObjectMain (Null)");
         Debug.Assert(backgroundImage != null, "Invalid backgroundImage (Null)");
-        if (buttonInteractionCancel != null)
-        { buttonInteractionCancel.SetButton(EventType.TabbedClose); }
-        else { Debug.LogError("Invalid buttonInteractionCancal (Null)"); }
+        //button interactions
+        if (innteractCancel != null) { innteractCancel.SetButton(EventType.TabbedClose); }
+        else { Debug.LogError("Invalid interactCancal (Null)"); }
+        if (interactSubordinates != null) { interactSubordinates.SetButton(EventType.TabbedSubordinates); }
+        else { Debug.LogError("Invalid interactSubordinates (Null)"); }
+        if (interactPlayer != null) { interactPlayer.SetButton(EventType.TabbedPlayer); }
+        else { Debug.LogError("Invalid interactPlayer (Null)"); }
+        if (interactHq != null) { interactHq.SetButton(EventType.TabbedHq); }
+        else { Debug.LogError("Invalid interactHq (Null)"); }
         //controller
         Debug.Assert(buttonSubordinates != null, "Invalid buttonSubordinates (Null)");
         Debug.Assert(buttonPlayer != null, "Invalid buttonPlayer (Null)");
@@ -155,6 +168,8 @@ public class ModalTabbedUI : MonoBehaviour
                 else { Debug.LogErrorFormat("Invalid TabbedInteraction (Null) for arrayOfSideTabObject[{0}]", i); }
             }
         }
+        //derived components -> Button interactions
+
     }
     #endregion
 
@@ -164,6 +179,10 @@ public class ModalTabbedUI : MonoBehaviour
         //register listener
         EventManager.i.AddListener(EventType.TabbedOpen, OnEvent, "ModalTabbedUI");
         EventManager.i.AddListener(EventType.TabbedClose, OnEvent, "ModalTabbedUI");
+        EventManager.i.AddListener(EventType.TabbedSideTabOpen, OnEvent, "ModalTabbedUI");
+        EventManager.i.AddListener(EventType.TabbedSubordinates, OnEvent, "ModalTabbedUI");
+        EventManager.i.AddListener(EventType.TabbedPlayer, OnEvent, "ModalTabbedUI");
+        EventManager.i.AddListener(EventType.TabbedHq, OnEvent, "ModalTabbedUI");
     }
     #endregion
 
@@ -191,6 +210,20 @@ public class ModalTabbedUI : MonoBehaviour
             case EventType.TabbedSideTabOpen:
                 OpenSideTab((int)Param);
                 break;
+            case EventType.TabbedSubordinates:
+                inputData.who = TabbedUIWho.Subordinates;
+                inputData.slotID = 0;
+                InitialiseSideTabs(inputData);
+                break;
+            case EventType.TabbedPlayer:
+                inputData.who = TabbedUIWho.Player;
+                InitialiseSideTabs(inputData);
+                break;
+            case EventType.TabbedHq:
+                inputData.who = TabbedUIWho.HQ;
+                inputData.slotID = 0;
+                InitialiseSideTabs(inputData);
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
@@ -201,60 +234,100 @@ public class ModalTabbedUI : MonoBehaviour
     /// <summary>
     /// run prior to every TabbedUI use. Run from SetTabbedUI
     /// </summary>
-    private void InitialiseTabbedUI(TabbedUIWho who)
+    private void InitialiseTabbedUI(TabbedUIData data)
     {
+
+    }
+
+    /// <summary>
+    /// Updates side tabs when necessary
+    /// </summary>
+    /// <param name=""></param>
+    private void InitialiseSideTabs(TabbedUIData data)
+    {
+        int index = 0;
         Actor actor;
         Color portraitColor, backgroundColor;
-        //initialise HQ side tabs'
-        for (int index = 0; index < numOfSideTabs; index++)
-        {
-            if (arrayOfSideTabItems[index] != null)
-            {
-                backgroundColor = arrayOfSideTabItems[index].background.color;
-                portraitColor = arrayOfSideTabItems[index].portrait.color;
-                //sprite
-                switch (who)
-                {
-                    case TabbedUIWho.Subordinates:
-                        actor = GameManager.i.dataScript.GetHqHierarchyActor((ActorHQ)(index + offset));
-                        if (actor != null)
-                        { arrayOfSideTabItems[index].portrait.sprite = actor.sprite; }
-                        else
-                        {
-                            //default error sprite if a problem
-                            Debug.LogWarningFormat("Invalid actor (Null) for ActorHQ \"{0}\"", (ActorHQ)(index + offset));
-                            arrayOfSideTabItems[index].portrait.sprite = GameManager.i.spriteScript.errorSprite;
-                        }
-                        //title
-                        arrayOfSideTabItems[index].title.text = GameManager.i.hqScript.GetHqTitle(actor.statusHQ);
-                        break;
-                    case TabbedUIWho.HQ:
-                        actor = GameManager.i.dataScript.GetHqHierarchyActor((ActorHQ)(index + offset));
-                        if (actor != null)
-                        { arrayOfSideTabItems[index].portrait.sprite = actor.sprite; }
-                        else
-                        {
-                            //default error sprite if a problem
-                            Debug.LogWarningFormat("Invalid actor (Null) for ActorHQ \"{0}\"", (ActorHQ)(index + offset));
-                            arrayOfSideTabItems[index].portrait.sprite = GameManager.i.spriteScript.errorSprite;
-                        }
-                        //title
-                        arrayOfSideTabItems[index].title.text = GameManager.i.hqScript.GetHqTitle(actor.statusHQ);
-                        break;
-                    default: Debug.LogWarningFormat("Unrecognised TabbedUIWho \"{0}\"", who); break;
 
-                }
-                //first tab (Boss) should be active on opening, rest passive
-                if (index == 0)
-                { portraitColor.a = 1.0f; backgroundColor.a = 1.0f; }
-                else
-                { portraitColor.a = sideTabAlpha; backgroundColor.a = sideTabAlpha; }
-                //set colors
-                arrayOfSideTabItems[index].portrait.color = portraitColor;
-                arrayOfSideTabItems[index].background.color = backgroundColor;
+        if (arrayOfSideTabItems[index] != null)
+        {
+            backgroundColor = arrayOfSideTabItems[index].background.color;
+            portraitColor = arrayOfSideTabItems[index].portrait.color;
+            //Update sideTabs for required actor set
+            switch (data.who)
+            {
+                case TabbedUIWho.Subordinates:
+                    //check how many actors OnMap
+                    Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActors(data.side);
+                    numOfSideTabs = arrayOfActors.Length;
+                    if (numOfSideTabs > 0)
+                    {
+                        for (index = 0; index < numOfSideTabs; index++)
+                        {
+                            actor = arrayOfActors[index];
+                            if (actor != null)
+                            {
+                                //sprite and arc
+                                arrayOfSideTabItems[index].portrait.sprite = actor.sprite;
+                                arrayOfSideTabItems[index].title.text = actor.arc.name;
+                                //set colors
+                                arrayOfSideTabItems[index].portrait.color = portraitColor;
+                                arrayOfSideTabItems[index].background.color = backgroundColor;
+                                //activate tab
+                                arrayOfSideTabObjects[index].SetActive(true);
+                                //first tab should be active on opening, rest passive
+                                if (index == data.slotID)
+                                { portraitColor.a = 1.0f; backgroundColor.a = 1.0f; }
+                                else
+                                { portraitColor.a = sideTabAlpha; backgroundColor.a = sideTabAlpha; }
+                            }
+                            else
+                            {
+                                //default error sprite if a problem
+                                Debug.LogWarningFormat("Invalid actor (Null) for ActorHQ \"{0}\"", (ActorHQ)(index + offset));
+                                arrayOfSideTabItems[index].portrait.sprite = GameManager.i.spriteScript.errorSprite;
+                            }
+                        }
+                    }
+                    //disable empty tabs
+                    if (numOfSideTabs < maxSideTabIndex)
+                    {
+                        for (int i = numOfSideTabs - 1; i < maxSideTabIndex; i++)
+                        { arrayOfSideTabObjects[i].SetActive(false); }
+                    }
+                    break;
+
+                case TabbedUIWho.HQ:
+                    //assumes a full compliment of HQ actors present
+                    numOfSideTabs = maxSideTabIndex;
+                    for (index = 0; index < maxSideTabIndex; index++)
+                    {
+                        actor = GameManager.i.dataScript.GetHqHierarchyActor((ActorHQ)(index + offset));
+                        if (actor != null)
+                        { arrayOfSideTabItems[index].portrait.sprite = actor.sprite; }
+                        else
+                        {
+                            //default error sprite if a problem
+                            Debug.LogWarningFormat("Invalid actor (Null) for ActorHQ \"{0}\"", (ActorHQ)(index + offset));
+                            arrayOfSideTabItems[index].portrait.sprite = GameManager.i.spriteScript.errorSprite;
+                        }
+                        //title
+                        arrayOfSideTabItems[index].title.text = GameManager.i.hqScript.GetHqTitle(actor.statusHQ);
+                        //activate tab
+                        arrayOfSideTabObjects[index].SetActive(true);
+                        //first tab should be active on opening, rest passive
+                        if (index == data.slotID)
+                        { portraitColor.a = 1.0f; backgroundColor.a = 1.0f; }
+                        else
+                        { portraitColor.a = sideTabAlpha; backgroundColor.a = sideTabAlpha; }
+                    }
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised TabbedUIWho \"{0}\"", data.who); break;
+
             }
-            else { Debug.LogErrorFormat("Invalid tabItems[{0}] (Null)", index); }
+
         }
+        else { Debug.LogErrorFormat("Invalid tabItems[{0}] (Null)", index); }
     }
 
     /// <summary>
@@ -267,8 +340,11 @@ public class ModalTabbedUI : MonoBehaviour
             bool errorFlag = false;
             //set modal status
             GameManager.i.guiScript.SetIsBlocked(true);
+            //store data
+            inputData = details;
             //initialise
-            InitialiseTabbedUI(details.who);
+            InitialiseSideTabs(details);
+            InitialiseTabbedUI(details);
             //tooltips off
             GameManager.i.guiScript.SetTooltipsOff();
             //activate main panel
