@@ -376,6 +376,7 @@ namespace modalAPI
     public class TabbedUIData
     {
         public GlobalSide side;
+        public TabbedUIWho who;             //who the tabbedUI is to be setup for, eg. Player/Subordinates/HQ
     }
 
 

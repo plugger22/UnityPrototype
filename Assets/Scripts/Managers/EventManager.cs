@@ -164,6 +164,7 @@ public enum EventType
     //Tabbed UI
     TabbedOpen,
     TabbedClose,
+    TabbedSideTabOpen,
     //Main Info
     MainInfoOpen,
     MainInfoOpenInterim,

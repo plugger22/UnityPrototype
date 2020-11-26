@@ -615,13 +615,17 @@ public class AnimationManager : MonoBehaviour
                 data.horizontalSpeed = 0.5f;
                 data.hoverDelay = 1.0f;
                 data.isSiren = true;
+                data.decelerationHorizontal = decelerationHorizontal;
+                data.decelerationVertical = decelerationVertical;
                 break;
             case CarType.Police:
                 data.cruiseAltitude = 2.0f;
                 data.verticalSpeed = 0.5f;
                 data.horizontalSpeed = 0.4f;
-                data.hoverDelay = 0.5f;
+                data.hoverDelay = 0.75f;
                 data.isSiren = true;
+                data.decelerationHorizontal = decelerationHorizontal;
+                data.decelerationVertical = decelerationVertical;
                 break;
             case CarType.Bus:
                 data.cruiseAltitude = 2.5f;
@@ -629,13 +633,17 @@ public class AnimationManager : MonoBehaviour
                 data.horizontalSpeed = 0.75f;
                 data.hoverDelay = 1.0f;
                 data.isSiren = true;
+                data.decelerationHorizontal = decelerationHorizontal;
+                data.decelerationVertical = decelerationVertical;
                 break;
             case CarType.Rogue:
                 data.cruiseAltitude = 1.5f;
                 data.verticalSpeed = 0.3f;
                 data.horizontalSpeed = 0.3f;
-                data.hoverDelay = 0.5f;
+                data.hoverDelay = 0.75f;
                 data.isSiren = false;
+                data.decelerationHorizontal = decelerationHorizontal * 1.5f;
+                data.decelerationVertical = decelerationVertical * 3.0f;
                 break;
             case CarType.Surveil:
                 data.cruiseAltitude = 2.25f;
@@ -649,6 +657,8 @@ public class AnimationManager : MonoBehaviour
                 data.searchlightFactor = searchlightFactor;
                 data.searchlightRandom = searchlightRandom;
                 data.searchlightSpeed = searchlightSpeed;
+                data.decelerationHorizontal = decelerationHorizontal;
+                data.decelerationVertical = decelerationVertical;
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised carType \"{0}\"", carType);
@@ -657,6 +667,8 @@ public class AnimationManager : MonoBehaviour
                 data.verticalSpeed = 0.5f;
                 data.horizontalSpeed = 0.5f;
                 data.hoverDelay = 1.0f;
+                data.decelerationHorizontal = decelerationHorizontal;
+                data.decelerationVertical = decelerationVertical;
                 break;
         }
         //globals

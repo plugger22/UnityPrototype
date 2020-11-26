@@ -66,7 +66,8 @@
     //
     // - - - TabbedUI (Dossiers)
     //
-    public enum ActorUISideTab { Actor0, Actor1, Actor2, Actor3, Count}                             //ModalTabbedUI side tabs. NOTE order needs to correspond to UI (arrays keyed off this)
+    public enum TabbedUISide { Tab0, Tab1, Tab2, Tab3, Count}                             //ModalTabbedUI side tabs. NOTE order needs to correspond to UI (arrays keyed off this)
+    public enum TabbedUIWho { Subordinates, Player, HQ }                                  //who the tabbedUI is to be setUp for
 
     //
     // - - - Connections - - - 
