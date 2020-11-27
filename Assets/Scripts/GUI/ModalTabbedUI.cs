@@ -1,6 +1,9 @@
 ﻿using gameAPI;
 using modalAPI;
+using packageAPI;
+using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,7 +32,9 @@ public class ModalTabbedUI : MonoBehaviour
     public Button buttonPlayer;
     public Button buttonHq;
     public Button buttonReserves;
-    
+
+    [Header("Help Buttons")]
+    public Button buttonHelpClose;
 
     [Header("Button Interactions")]
     public ButtonInteraction innteractCancel;
@@ -37,6 +42,12 @@ public class ModalTabbedUI : MonoBehaviour
     public ButtonInteraction interactPlayer;
     public ButtonInteraction interactHq;
     public ButtonInteraction interactReserves;
+
+    [Header("Texts")]
+    public TextMeshProUGUI textActorName;
+
+    //help
+    private GenericHelpTooltipUI helpClose;
 
     //tabs
     private int currentSideTabIndex = -1;                           //side tabs (top to bottom)
@@ -49,6 +60,10 @@ public class ModalTabbedUI : MonoBehaviour
     private float sideTabAlpha = 0.50f;                             //alpha level of side tabs when inactive
     private float topTabAlpha = 0.50f;                              //alpha level of top tabs when inactive
 
+    //help tooltips (I don't want this as a global, just a master private field)
+    private int x_offset = 200;
+    private int y_offset = 40;
+
     //colours
     private Color sideTabActiveColour;
     private Color sideTabDormantColour;
@@ -60,8 +75,7 @@ public class ModalTabbedUI : MonoBehaviour
     private GameObject[] arrayOfSideTabObjects;
     private TabbedInteraction[] arrayOfSideTabItems;
     private TabbedSideTabUI[] arrayOfSideTabInteractions;
-    private int[] arrayOfSideTabOptions;                            //count of how many ACTIVE options are available for this tab
-
+    private Actor[] arrayOfActorsTemp;                              //holds all actors for the current page (excludes Player -> not in array)
 
 
 
@@ -133,6 +147,15 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(buttonPlayer != null, "Invalid buttonPlayer (Null)");
         Debug.Assert(buttonHq != null, "Invalid buttonHq (Null)");
         Debug.Assert(buttonReserves != null, "Invalid buttonReserves (Null)");
+        //help
+        if (buttonHelpClose != null)
+        {
+            helpClose = buttonHelpClose.GetComponent<GenericHelpTooltipUI>();
+            Debug.Assert(helpClose != null, "Invalid helpClose (Null)");
+        }
+        else { Debug.LogError("Invalid buttonHelpClose (Null)"); }
+        //texts
+        Debug.Assert(textActorName != null, "Invalid textActorName (Null)");
     }
     #endregion
 
@@ -150,7 +173,7 @@ public class ModalTabbedUI : MonoBehaviour
         arrayOfSideTabObjects = new GameObject[numOfSideTabs];
         arrayOfSideTabItems = new TabbedInteraction[numOfSideTabs];
         arrayOfSideTabInteractions = new TabbedSideTabUI[numOfSideTabs];
-        arrayOfSideTabOptions = new int[numOfSideTabs];
+        arrayOfActorsTemp = new Actor[numOfSideTabs];
         //Side tab components
         if (sideTab0 != null) { arrayOfSideTabObjects[index++] = sideTab0; } else { Debug.LogError("Invalid sideTab0 (Null)"); }
         if (sideTab1 != null) { arrayOfSideTabObjects[index++] = sideTab1; } else { Debug.LogError("Invalid sideTab1 (Null)"); }
@@ -181,7 +204,8 @@ public class ModalTabbedUI : MonoBehaviour
         //Miscellaneous
         sideTabActiveColour = GameManager.i.uiScript.TabbedSideTabActive;
         sideTabDormantColour = GameManager.i.uiScript.TabbedSideTabDormant;
-
+        //Initialisations
+        InitialiseTooltips();
     }
     #endregion
 
@@ -196,6 +220,12 @@ public class ModalTabbedUI : MonoBehaviour
         EventManager.i.AddListener(EventType.TabbedPlayer, OnEvent, "ModalTabbedUI");
         EventManager.i.AddListener(EventType.TabbedHq, OnEvent, "ModalTabbedUI");
         EventManager.i.AddListener(EventType.TabbedReserves, OnEvent, "ModalTabbedUI");
+        EventManager.i.AddListener(EventType.TabbedUpArrow, OnEvent, "ModalTabbedUI");
+        EventManager.i.AddListener(EventType.TabbedDownArrow, OnEvent, "ModalTabbedUI");
+        EventManager.i.AddListener(EventType.TabbedRightArrow, OnEvent, "ModalTabbedUI");
+        EventManager.i.AddListener(EventType.TabbedLeftArrow, OnEvent, "ModalTabbedUI");
+        EventManager.i.AddListener(EventType.TabbedPageUp, OnEvent, "ModalTabbedUI");
+        EventManager.i.AddListener(EventType.TabbedPageDown, OnEvent, "ModalTabbedUI");
     }
     #endregion
 
@@ -242,6 +272,24 @@ public class ModalTabbedUI : MonoBehaviour
                 inputData.slotID = 0;
                 InitialiseSideTabs(inputData);
                 break;
+            case EventType.TabbedUpArrow:
+                ExecuteUpArrow();
+                break;
+            case EventType.TabbedDownArrow:
+                ExecuteDownArrow();
+                break;
+            case EventType.TabbedLeftArrow:
+                ExecuteLeftArrow();
+                break;
+            case EventType.TabbedRightArrow:
+                ExecuteRightArrow();
+                break;
+            case EventType.TabbedPageUp:
+                ExecutePageUp();
+                break;
+            case EventType.TabbedPageDown:
+                ExecutePageDown();
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
@@ -257,6 +305,8 @@ public class ModalTabbedUI : MonoBehaviour
 
     }
 
+
+    #region InitialiseSideTabs
     /// <summary>
     /// Updates side tabs when necessary
     /// </summary>
@@ -269,7 +319,8 @@ public class ModalTabbedUI : MonoBehaviour
 
         if (arrayOfSideTabItems[index] != null)
         {
-
+            //clear out actor array
+            Array.Clear(arrayOfActorsTemp, 0, arrayOfActorsTemp.Length);
             //Update sideTabs for required actor set
             switch (data.who)
             {
@@ -284,6 +335,8 @@ public class ModalTabbedUI : MonoBehaviour
                             actor = arrayOfActors[index];
                             if (actor != null)
                             {
+                                //populate array
+                                arrayOfActorsTemp[index] = actor;
                                 //sprite and arc
                                 arrayOfSideTabItems[index].portrait.sprite = actor.sprite;
                                 arrayOfSideTabItems[index].title.text = actor.arc.name;
@@ -294,6 +347,8 @@ public class ModalTabbedUI : MonoBehaviour
                                 {
                                     backgroundColor = sideTabActiveColour;
                                     portraitColor.a = 1.0f; backgroundColor.a = 1.0f;
+                                    textActorName.text = actor.actorName;
+                                    currentSideTabIndex = index;
                                 }
                                 else
                                 {
@@ -314,6 +369,11 @@ public class ModalTabbedUI : MonoBehaviour
                             }
                         }
                     }
+                    else
+                    {
+                        //clear out any residual actor name
+                        textActorName.text = "";
+                    }
                     //disable empty tabs
                     if (numOfSideTabs <= maxSideTabIndex)
                     {
@@ -333,6 +393,8 @@ public class ModalTabbedUI : MonoBehaviour
                                 actor = GameManager.i.dataScript.GetActor(listOfActors[index]);
                                 if (actor != null)
                                 {
+                                    //populate array
+                                    arrayOfActorsTemp[index] = actor;
                                     //sprite and arc
                                     arrayOfSideTabItems[index].portrait.sprite = actor.sprite;
                                     arrayOfSideTabItems[index].title.text = actor.arc.name;
@@ -343,6 +405,8 @@ public class ModalTabbedUI : MonoBehaviour
                                     {
                                         backgroundColor = sideTabActiveColour;
                                         portraitColor.a = 1.0f; backgroundColor.a = 1.0f;
+                                        textActorName.text = actor.actorName;
+                                        currentSideTabIndex = index;
                                     }
                                     else
                                     {
@@ -365,6 +429,11 @@ public class ModalTabbedUI : MonoBehaviour
                         }
                         else { Debug.LogErrorFormat("Invalid listOfReserveActors (Null) for \"{0}\"", data.side); }
                     }
+                    else
+                    {
+                        //clear out any residual actor name
+                        textActorName.text = "";
+                    }
                     //disable empty tabs
                     if (numOfSideTabs <= maxSideTabIndex)
                     {
@@ -375,6 +444,7 @@ public class ModalTabbedUI : MonoBehaviour
                 case TabbedUIWho.Player:
                     numOfSideTabs = 1;
                     index = 0;
+                    textActorName.text = GameManager.i.playerScript.PlayerName;
                     //set up player tab
                     arrayOfSideTabItems[index].portrait.sprite = GameManager.i.playerScript.sprite;
                     arrayOfSideTabItems[index].title.text = GameManager.i.playerScript.FirstName;
@@ -387,6 +457,7 @@ public class ModalTabbedUI : MonoBehaviour
                     arrayOfSideTabItems[index].background.color = backgroundColor;
                     //activate tab
                     arrayOfSideTabObjects[index].SetActive(true);
+                    currentSideTabIndex = index;
                     //disable inactive tabs
                     for (int i = numOfSideTabs; i <= maxSideTabIndex; i++)
                     { arrayOfSideTabObjects[i].SetActive(false); }
@@ -398,12 +469,18 @@ public class ModalTabbedUI : MonoBehaviour
                     {
                         actor = GameManager.i.dataScript.GetHqHierarchyActor((ActorHQ)(index + offset));
                         if (actor != null)
-                        { arrayOfSideTabItems[index].portrait.sprite = actor.sprite; }
+                        {
+                            //populate array
+                            arrayOfActorsTemp[index] = actor;
+                            //sprite
+                            arrayOfSideTabItems[index].portrait.sprite = actor.sprite;
+                        }
                         else
                         {
                             //default error sprite if a problem
                             Debug.LogWarningFormat("Invalid actor (Null) for ActorHQ \"{0}\"", (ActorHQ)(index + offset));
-                            arrayOfSideTabItems[index].portrait.sprite = GameManager.i.spriteScript.errorSprite;
+                            //deactivate tab
+                            arrayOfSideTabObjects[index].SetActive(false);
                         }
                         //title
                         arrayOfSideTabItems[index].title.text = GameManager.i.hqScript.GetHqTitle(actor.statusHQ);
@@ -416,6 +493,8 @@ public class ModalTabbedUI : MonoBehaviour
                         {
                             backgroundColor = sideTabActiveColour;
                             portraitColor.a = 1.0f; backgroundColor.a = 1.0f;
+                            textActorName.text = actor.actorName;
+                            currentSideTabIndex = index;
                         }
                         else
                         {
@@ -434,7 +513,24 @@ public class ModalTabbedUI : MonoBehaviour
         }
         else { Debug.LogErrorFormat("Invalid tabItems[{0}] (Null)", index); }
     }
+    #endregion
 
+
+    /// <summary>
+    /// Initialise fixed tooltips
+    /// </summary>
+    private void InitialiseTooltips()
+    {
+        List<HelpData> listOfHelp;
+        //main help button
+        listOfHelp = GameManager.i.helpScript.GetHelpData("metaGameUI_0", "metaGameUI_1", "metaGameUI_2", "metaGameUI_3");
+        if (listOfHelp != null)
+        { helpClose.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
+        else { Debug.LogWarning("Invalid listOfHelp for helpMain (Null)"); }
+    }
+
+
+    #region SetTabbedUI
     /// <summary>
     /// Initialise and open TabbedUI
     /// </summary>
@@ -481,8 +577,7 @@ public class ModalTabbedUI : MonoBehaviour
         }
         else { Debug.LogError("Invalid TabbedUIData (Null)"); }
     }
-
-
+    #endregion
 
 
 
@@ -504,6 +599,11 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.LogFormat("[UI] ModalTabbedUI.cs -> CloseTabbedUI{0}", "\n");
     }
 
+    #region Movement... 
+
+    //
+    // - - - Movement
+    //
 
     /// <summary>
     /// Open the designated Side tab and close whatever is open
@@ -523,6 +623,8 @@ public class ModalTabbedUI : MonoBehaviour
                 backgroundColor = sideTabActiveColour;
                 portraitColor.a = 1.0f;
                 backgroundColor.a = 1.0f;
+                //textActorName.text = actor.actorName;
+                textActorName.text = GetActorName(tabIndex);
             }
             else
             {
@@ -536,6 +638,119 @@ public class ModalTabbedUI : MonoBehaviour
         //update index
         currentSideTabIndex = tabIndex;
     }
+
+    /// <summary>
+    /// Up arrow -> Side Tabs
+    /// </summary>
+    private void ExecuteUpArrow()
+    {
+        //change tab
+        if (currentSideTabIndex > -1 && numOfSideTabs > 1)
+        {
+            if (currentSideTabIndex > 0)
+            {
+                currentSideTabIndex -= 1;
+                OpenSideTab(currentSideTabIndex);
+            }
+            else
+            {
+                //roll over
+                currentSideTabIndex = numOfSideTabs - 1;
+                OpenSideTab(currentSideTabIndex);
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// Down arrow -> Side Tabs
+    /// </summary>
+    private void ExecuteDownArrow()
+    {
+        if (currentSideTabIndex > -1 && numOfSideTabs > 1)
+        {
+            if (currentSideTabIndex < numOfSideTabs - 1)
+            {
+                currentSideTabIndex += 1;
+                OpenSideTab(currentSideTabIndex);
+            }
+            else
+            {
+                //roll over
+                currentSideTabIndex = 0;
+                OpenSideTab(currentSideTabIndex);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Right arrow
+    /// </summary>
+    private void ExecuteRightArrow()
+    {
+
+    }
+
+
+    /// <summary>
+    /// Left Arrow
+    /// </summary>
+    private void ExecuteLeftArrow()
+    {
+
+    }
+
+    /// <summary>
+    /// Page Up
+    /// </summary>
+    private void ExecutePageUp()
+    {
+
+    }
+
+    /// <summary>
+    /// Page Down
+    /// </summary>
+    private void ExecutePageDown()
+    {
+
+    }
+
+    #endregion
+
+
+    #region SubMethods...
+    //
+    // - - - SubMethods
+    //
+
+    /// <summary>
+    /// Returns actorName (normal or HQ) for header. Runs all needed checks
+    /// </summary>
+    /// <param name="tabIndex"></param>
+    /// <returns></returns>
+    private string GetActorName(int tabIndex)
+    {
+        string actorName = "Unknown";
+        switch (inputData.who)
+        {
+            case TabbedUIWho.Player:
+                actorName = GameManager.i.playerScript.PlayerName;
+                break;
+            default:
+                if (tabIndex <= maxSideTabIndex)
+                {
+                    if (arrayOfActorsTemp[tabIndex] != null)
+                    { actorName = arrayOfActorsTemp[tabIndex].actorName; }
+                    else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfActorsTemp[{0}]", tabIndex); }
+                }
+                else { Debug.LogWarningFormat("Invalid tabIndex (is {0}, should be <= {1})", tabIndex, maxSideTabIndex); }
+                break;
+        }
+        return actorName;
+    }
+
+    #endregion
 
 
     //new methods above here

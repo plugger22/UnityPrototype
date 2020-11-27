@@ -646,87 +646,154 @@ public class InputManager : MonoBehaviour
 
                         #region InfoDisplay
                         case ModalSubState.InfoDisplay:
-                            //info displays are all at ModalLevel 1. Ignore commands if level > 1, eg. outcome window open on top of an info display.
-                            if (GameManager.i.modalGUIScript.CheckModalLevel() == 1)
+                            switch (GameManager.i.modalGUIScript.CheckModalLevel())
                             {
-                                //what type of info display?
-                                switch (_modalInfoState)
-                                {
-                                    case ModalInfoSubState.CityInfo:
-                                        if (Input.GetButtonDown("Cancel") == true)
-                                        {
-                                            EventManager.i.PostNotification(EventType.CityInfoClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
-                                        }
-                                        break;
-                                    case ModalInfoSubState.AIInfo:
-                                        if (Input.GetButtonDown("Cancel") == true)
-                                        {
-                                            EventManager.i.PostNotification(EventType.AIDisplayClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
-                                        }
-                                        break;
-                                    case ModalInfoSubState.MainInfo:
-                                        if (Input.GetButtonDown("Cancel") == true)
-                                        {
-                                            EventManager.i.PostNotification(EventType.MainInfoClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
-                                        }
-                                        else if (Input.GetButtonDown("OpenMainInfo") == true)
-                                        {
-                                            EventManager.i.PostNotification(EventType.MainInfoClose, this, null, "InputManager.cs -> ProcessKeyInput OpenMainInfo");
-                                        }
-                                        else if (Input.GetButtonDown("Vertical"))
-                                        {
-                                            y_axis = Input.GetAxisRaw("Vertical");
-                                            if (y_axis > 0)
-                                            { EventManager.i.PostNotification(EventType.MainInfoUpArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical"); }
-                                            else if (y_axis < 0)
-                                            { EventManager.i.PostNotification(EventType.MainInfoDownArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical"); }
-                                        }
-                                        else if (Input.GetButtonDown("Horizontal"))
-                                        {
-                                            x_axis = Input.GetAxisRaw("Horizontal");
-                                            if (x_axis > 0)
-                                            { EventManager.i.PostNotification(EventType.MainInfoRightArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal"); }
-                                            else if (x_axis < 0)
-                                            { EventManager.i.PostNotification(EventType.MainInfoLeftArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal"); }
-                                        }
-                                        else if (Input.GetButtonDown("Multipurpose") == true)
-                                        {
-                                            //Space bar is keyboard shortcut for 'Show Me' button
-                                            EventManager.i.PostNotification(EventType.MainInfoShowMe, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
-                                            Input.ResetInputAxes();
-                                        }
-                                        else if (Input.GetButtonDown("PageUp") == true)
-                                        {
-                                            //Keyboard shortcut for forward a day -> PgUp
-                                            EventManager.i.PostNotification(EventType.MainInfoForward, this, null, string.Format("InputManager.cs -> ProcessKeyInput DayAhead (PageUp) \"{0}\"", Input.inputString.ToUpper()));
-                                        }
-                                        else if (Input.GetButtonDown("PageDown") == true)
-                                        {
-                                            //Keyboard shortcut for back a day -> PgDown
-                                            EventManager.i.PostNotification(EventType.MainInfoBack, this, null, string.Format("InputManager.cs -> ProcessKeyInput DayBehind (PageDown) \"{0}\"", Input.inputString.ToUpper()));
-                                        }
-                                        else if (Input.GetButtonDown("CurrentDay") == true)
-                                        {
-                                            //Keyboard shortcut for go to current day (Home) day -> Home
-                                            EventManager.i.PostNotification(EventType.MainInfoHome, this, null, string.Format("InputManager.cs -> ProcessKeyInput CurrentDay \"{0}\"", Input.inputString.ToUpper()));
-                                        }
-                                        else if (Input.GetButtonDown("StartDay") == true)
-                                        {
-                                            //Keyboard shortcut for go to start (day 1) -> End
-                                            EventManager.i.PostNotification(EventType.MainInfoEnd, this, null, string.Format("InputManager.cs -> ProcessKeyInput StartDay \"{0}\"", Input.inputString.ToUpper()));
-                                        }
-                                        else if (Input.GetButtonDown("Plus") == true)
-                                        {
-                                            //Keyboard shortcut to increase speed of ticker tape
-                                            EventManager.i.PostNotification(EventType.MainInfoTickerFaster, this, null, string.Format("InputManager.cs -> ProcessKeyInput Plus \"{0}\"", Input.inputString.ToUpper()));
-                                        }
-                                        else if (Input.GetButtonDown("Minus") == true)
-                                        {
-                                            //Keyboard shortcut to decrease speed of ticker tape
-                                            EventManager.i.PostNotification(EventType.MainInfoTickerSlower, this, null, string.Format("InputManager.cs -> ProcessKeyInput Minus \"{0}\"", Input.inputString.ToUpper()));
-                                        }
-                                        break;
-                                }
+                                //info displays are all at ModalLevel 1. Ignore most commands if level > 1, eg. outcome window open on top of an info display. Use duplicate controls for ModalLevel 2 if required
+                                case 1:
+                                    switch (_modalInfoState)
+                                    {
+                                        case ModalInfoSubState.CityInfo:
+                                            if (Input.GetButtonDown("Cancel") == true)
+                                            {
+                                                EventManager.i.PostNotification(EventType.CityInfoClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                                            }
+                                            break;
+                                        case ModalInfoSubState.AIInfo:
+                                            if (Input.GetButtonDown("Cancel") == true)
+                                            {
+                                                EventManager.i.PostNotification(EventType.AIDisplayClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                                            }
+                                            break;
+                                        case ModalInfoSubState.MainInfo:
+                                            if (Input.GetButtonDown("Cancel") == true)
+                                            {
+                                                EventManager.i.PostNotification(EventType.MainInfoClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                                            }
+                                            else if (Input.GetButtonDown("OpenMainInfo") == true)
+                                            {
+                                                EventManager.i.PostNotification(EventType.MainInfoClose, this, null, "InputManager.cs -> ProcessKeyInput OpenMainInfo");
+                                            }
+                                            else if (Input.GetButtonDown("Vertical"))
+                                            {
+                                                y_axis = Input.GetAxisRaw("Vertical");
+                                                if (y_axis > 0)
+                                                { EventManager.i.PostNotification(EventType.MainInfoUpArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical"); }
+                                                else if (y_axis < 0)
+                                                { EventManager.i.PostNotification(EventType.MainInfoDownArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical"); }
+                                            }
+                                            else if (Input.GetButtonDown("Horizontal"))
+                                            {
+                                                x_axis = Input.GetAxisRaw("Horizontal");
+                                                if (x_axis > 0)
+                                                { EventManager.i.PostNotification(EventType.MainInfoRightArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal"); }
+                                                else if (x_axis < 0)
+                                                { EventManager.i.PostNotification(EventType.MainInfoLeftArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal"); }
+                                            }
+                                            else if (Input.GetButtonDown("Multipurpose") == true)
+                                            {
+                                                //Space bar is keyboard shortcut for 'Show Me' button
+                                                EventManager.i.PostNotification(EventType.MainInfoShowMe, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
+                                                Input.ResetInputAxes();
+                                            }
+                                            else if (Input.GetButtonDown("PageUp") == true)
+                                            {
+                                                //Keyboard shortcut for forward a day -> PgUp
+                                                EventManager.i.PostNotification(EventType.MainInfoForward, this, null, string.Format("InputManager.cs -> ProcessKeyInput DayAhead (PageUp) \"{0}\"", Input.inputString.ToUpper()));
+                                            }
+                                            else if (Input.GetButtonDown("PageDown") == true)
+                                            {
+                                                //Keyboard shortcut for back a day -> PgDown
+                                                EventManager.i.PostNotification(EventType.MainInfoBack, this, null, string.Format("InputManager.cs -> ProcessKeyInput DayBehind (PageDown) \"{0}\"", Input.inputString.ToUpper()));
+                                            }
+                                            else if (Input.GetButtonDown("CurrentDay") == true)
+                                            {
+                                                //Keyboard shortcut for go to current day (Home) day -> Home
+                                                EventManager.i.PostNotification(EventType.MainInfoHome, this, null, string.Format("InputManager.cs -> ProcessKeyInput CurrentDay \"{0}\"", Input.inputString.ToUpper()));
+                                            }
+                                            else if (Input.GetButtonDown("StartDay") == true)
+                                            {
+                                                //Keyboard shortcut for go to start (day 1) -> End
+                                                EventManager.i.PostNotification(EventType.MainInfoEnd, this, null, string.Format("InputManager.cs -> ProcessKeyInput StartDay \"{0}\"", Input.inputString.ToUpper()));
+                                            }
+                                            else if (Input.GetButtonDown("Plus") == true)
+                                            {
+                                                //Keyboard shortcut to increase speed of ticker tape
+                                                EventManager.i.PostNotification(EventType.MainInfoTickerFaster, this, null, string.Format("InputManager.cs -> ProcessKeyInput Plus \"{0}\"", Input.inputString.ToUpper()));
+                                            }
+                                            else if (Input.GetButtonDown("Minus") == true)
+                                            {
+                                                //Keyboard shortcut to decrease speed of ticker tape
+                                                EventManager.i.PostNotification(EventType.MainInfoTickerSlower, this, null, string.Format("InputManager.cs -> ProcessKeyInput Minus \"{0}\"", Input.inputString.ToUpper()));
+                                            }
+                                            break;
+                                        case ModalInfoSubState.TabbedUI:
+                                            if (Input.GetButtonDown("Cancel") == true)
+                                            {
+                                                EventManager.i.PostNotification(EventType.TabbedClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                                            }
+                                            else if (Input.GetButtonDown("Vertical"))
+                                            {
+                                                y_axis = Input.GetAxisRaw("Vertical");
+                                                if (y_axis > 0)
+                                                { EventManager.i.PostNotification(EventType.TabbedUpArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical"); }
+                                                else if (y_axis < 0)
+                                                { EventManager.i.PostNotification(EventType.TabbedDownArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical"); }
+                                            }
+                                            else if (Input.GetButtonDown("Horizontal"))
+                                            {
+                                                x_axis = Input.GetAxisRaw("Horizontal");
+                                                if (x_axis > 0)
+                                                { EventManager.i.PostNotification(EventType.TabbedRightArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal"); }
+                                                else if (x_axis < 0)
+                                                { EventManager.i.PostNotification(EventType.TabbedLeftArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal"); }
+                                            }
+                                            else if (Input.GetButtonDown("PageUp") == true)
+                                            {
+                                                EventManager.i.PostNotification(EventType.TabbedPageUp, this, null, string.Format("InputManager.cs -> ProcessKeyInput DayAhead (PageUp) \"{0}\"", Input.inputString.ToUpper()));
+                                            }
+                                            else if (Input.GetButtonDown("PageDown") == true)
+                                            {
+                                                EventManager.i.PostNotification(EventType.TabbedPageDown, this, null, string.Format("InputManager.cs -> ProcessKeyInput DayBehind (PageDown) \"{0}\"", Input.inputString.ToUpper()));
+                                            }
+                                            break;
+                                    }
+                                    break;
+                                case 2:
+                                    switch (_modalInfoState)
+                                    {
+                                        //Only for UI elements that can be in ModalLevel 2
+                                        case ModalInfoSubState.TabbedUI:
+                                            if (Input.GetButtonDown("Cancel") == true)
+                                            {
+                                                EventManager.i.PostNotification(EventType.TabbedClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel");
+                                            }
+                                            else if (Input.GetButtonDown("Vertical"))
+                                            {
+                                                y_axis = Input.GetAxisRaw("Vertical");
+                                                if (y_axis > 0)
+                                                { EventManager.i.PostNotification(EventType.TabbedUpArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical"); }
+                                                else if (y_axis < 0)
+                                                { EventManager.i.PostNotification(EventType.TabbedDownArrow, this, null, "InputManager.cs -> ProcessKeyInput Vertical"); }
+                                            }
+                                            else if (Input.GetButtonDown("Horizontal"))
+                                            {
+                                                x_axis = Input.GetAxisRaw("Horizontal");
+                                                if (x_axis > 0)
+                                                { EventManager.i.PostNotification(EventType.TabbedRightArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal"); }
+                                                else if (x_axis < 0)
+                                                { EventManager.i.PostNotification(EventType.TabbedLeftArrow, this, null, "InputManager.cs -> ProcessKeyInput Horizontal"); }
+                                            }
+                                            else if (Input.GetButtonDown("PageUp") == true)
+                                            {
+                                                EventManager.i.PostNotification(EventType.TabbedPageUp, this, null, string.Format("InputManager.cs -> ProcessKeyInput DayAhead (PageUp) \"{0}\"", Input.inputString.ToUpper()));
+                                            }
+                                            else if (Input.GetButtonDown("PageDown") == true)
+                                            {
+                                                EventManager.i.PostNotification(EventType.TabbedPageDown, this, null, string.Format("InputManager.cs -> ProcessKeyInput DayBehind (PageDown) \"{0}\"", Input.inputString.ToUpper()));
+                                            }
+                                            break;
+                                    }
+                                    break;
                             }
                             break;
                         #endregion

@@ -169,6 +169,12 @@ public enum EventType
     TabbedPlayer,
     TabbedHq,
     TabbedReserves,
+    TabbedUpArrow,
+    TabbedDownArrow,
+    TabbedRightArrow,
+    TabbedLeftArrow,
+    TabbedPageUp,
+    TabbedPageDown,
     //Main Info
     MainInfoOpen,
     MainInfoOpenInterim,
