@@ -168,6 +168,7 @@ public enum EventType
     TabbedSubordinates,
     TabbedPlayer,
     TabbedHq,
+    TabbedReserves,
     //Main Info
     MainInfoOpen,
     MainInfoOpenInterim,

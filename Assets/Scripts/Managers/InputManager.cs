@@ -211,6 +211,33 @@ public class InputManager : MonoBehaviour
                 ModalInventoryState = ModalInventorySubState.None;
             }
         }
+        else
+        {
+            //reverting back from a modal2 element to a modal1 element
+            switch (modal)
+            {
+                case ModalSubState.InfoDisplay:
+                    ModalMetaState = ModalMetaSubState.None;
+                    ModalGenericPickerState = ModalGenericPickerSubState.None;
+                    ModalInventoryState = ModalInventorySubState.None;
+                    break;
+                case ModalSubState.MetaGame:
+                    ModalInfoState = ModalInfoSubState.None;
+                    ModalGenericPickerState = ModalGenericPickerSubState.None;
+                    ModalInventoryState = ModalInventorySubState.None;
+                    break;
+                case ModalSubState.GenericPicker:
+                    ModalInfoState = ModalInfoSubState.None;
+                    ModalMetaState = ModalMetaSubState.None;
+                    ModalInventoryState = ModalInventorySubState.None;
+                    break;
+                case ModalSubState.Inventory:
+                    ModalInfoState = ModalInfoSubState.None;
+                    ModalMetaState = ModalMetaSubState.None;
+                    ModalGenericPickerState = ModalGenericPickerSubState.None;
+                    break;
+            }
+        }
     }
     #endregion
 
@@ -912,6 +939,9 @@ public class InputManager : MonoBehaviour
         builder.AppendFormat(" ModalSubState -> {0}{1}", ModalSubState, "\n");
         builder.AppendFormat(" ModalLevel -> {0}{1}", modalLevel, "\n");
         builder.AppendFormat(" ModalInfo -> {0}{1}", ModalInfoState, "\n");
+        builder.AppendFormat(" ModalMeta -> {0}{1}", ModalMetaState, "\n");
+        builder.AppendFormat(" ModalPicker -> {0}{1}", ModalGenericPickerState, "\n");
+        builder.AppendFormat(" ModalInventory -> {0}{1}", ModalInventoryState, "\n");
         builder.AppendFormat(" isBlocked -> {0}{1}", GameManager.i.guiScript.CheckIsBlocked(modalLevel), "\n");
         builder.AppendFormat(" NodeShowFlag -> {0}{1}", GameManager.i.nodeScript.NodeShowFlag, "\n");
         builder.AppendFormat(" isHaltExecution -> {0}{1}", GameManager.i.turnScript.haltExecution, "\n");

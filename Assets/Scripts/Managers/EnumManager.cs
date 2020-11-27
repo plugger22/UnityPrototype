@@ -23,7 +23,8 @@
     //  - - - UI - - -
     //
     public enum ModalState { Normal, ModalUI}                                                                                //main modal state
-    public enum ModalSubState { None, Outcome, Confirm, GenericPicker, ActionMenu, MainMenu, Inventory, TeamPicker, DiceRoller, Topic, InfoDisplay, ShowMe, Review, Transition, MetaGame, Billboard, Debug } //ModalUI sub game states
+    public enum ModalSubState { None, Outcome, Confirm, GenericPicker, ActionMenu, MainMenu, Inventory, TeamPicker, DiceRoller, Topic, InfoDisplay, ShowMe, Review, Transition, MetaGame, Billboard,
+        TabbedActorUI, Debug } //ModalUI sub game states
     public enum ModalInfoSubState { None, CityInfo, AIInfo, MainInfo, TabbedUI }                                                                  //if ModalUI.InfoDisplay -> what type of info
     public enum ModalGenericPickerSubState { None, Normal, CompromisedGear }                                                            //if ModalUI.GenericPicker -> what type of picker
     public enum ModalMetaSubState { None, PlayerOptions, OptionsConfirm, EndScreen }                                                    //if ModalUI.MetaGame -> what type of meta UI
@@ -59,15 +60,15 @@
     //
     public enum ItemPriority { Low, Medium, High, Count }                                           //DataManager.cs -> arrayOfItemsByDataPriority is keyed off ItemPriority & ItemTab 'Count'
     public enum ItemTab { ALERTS, Request, Meeting, Effects, Traits, Random, Count }                //PackageManager.cs -> MainInfoData array keyed off this
-    public enum MetaTabSide { Boss, SubBoss1, SubBoss2, SubBoss3, Count }                            //MetaGameUI side tabs (HQ actors). NOTE: order needs to correspond to UI (arrays keyed off this)
+    public enum MetaTabSide { Boss, SubBoss1, SubBoss2, SubBoss3, Count }                           //MetaGameUI side tabs (HQ actors). NOTE: order needs to correspond to UI (arrays keyed off this)
     public enum MetaTabTop { Status, Selected, Count }                                              //MetaGameUI top tabs. NOTE: order needs to correspond to UI (arrays keyed off this)
     public enum MetaPriority { Low, Medium, High, Extreme, Count }
 
     //
     // - - - TabbedUI (Dossiers)
     //
-    public enum TabbedUISide { Tab0, Tab1, Tab2, Tab3, Count}                             //ModalTabbedUI side tabs. NOTE order needs to correspond to UI (arrays keyed off this)
-    public enum TabbedUIWho { Subordinates, Player, HQ }                                  //who the tabbedUI is to be setUp for
+    public enum TabbedUISide { Tab0, Tab1, Tab2, Tab3, Count}                                       //ModalTabbedUI side tabs. NOTE order needs to correspond to UI (arrays keyed off this)
+    public enum TabbedUIWho { Subordinates, Player, HQ, Reserves }                                  //who the tabbedUI is to be setUp for
 
     //
     // - - - Connections - - - 

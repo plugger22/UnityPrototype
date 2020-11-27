@@ -6443,6 +6443,8 @@ MonoBehaviour:
   TransitionBackground: {r: 0.20392157, g: 0.21176471, b: 0.2, a: 0}
   TransitionHeader: {r: 0.9490196, g: 0.9137255, b: 0.30588236, a: 0}
   TransitionText: {r: 1, g: 1, b: 1, a: 0}
+  TabbedSideTabActive: {r: 0.09411765, g: 0.1764706, b: 0.38431373, a: 0}
+  TabbedSideTabDormant: {r: 0.1764706, g: 0.32941177, b: 0.7019608, a: 0}
 --- !u!114 &114733366453475614
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6649,6 +6651,7 @@ MonoBehaviour:
   popUpDynamicScript: {fileID: 0}
   popUpFixedScript: {fileID: 0}
   billboardScript: {fileID: 0}
+  tabbedUIScript: {fileID: 0}
   seedDev: 0
   autoRunTurns: 20
   scenarioStartLevel: 0

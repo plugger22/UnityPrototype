@@ -25,7 +25,7 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
     [HideInInspector] public int optionData;                                            //multipurpose field to hold ID of actor, etc.
     [HideInInspector] public string optionName;                                         //multipurpose field for key name fields, eg. gear
     [HideInInspector] public ModalInventorySubState type;
-
+    [HideInInspector] public int actorSlotID;                                           //actor.slotID (passed in by GenericOptionData). Optional
 
     public void Awake()
     {
@@ -40,15 +40,41 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
     /// </summary>
     public void OnPointerClick(PointerEventData eventData)
     {
-        GlobalSide side = GameManager.i.sideScript.PlayerSide;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         bool proceedFlag = true;
         switch (eventData.button)
         {
             case PointerEventData.InputButton.Left:
-
-                //display gear info -> TO DO
-                Debug.LogFormat("[Tst] InventoryInteraction.cs -> OnPointerClick: LEFT BUTTON CLICKED{0}", "\n");
-
+                if (GameManager.i.guiScript.CheckIsBlocked(2) == false)
+                {
+                    switch (type)
+                    {
+                        case ModalInventorySubState.HQ:
+                            //HQ actor review
+                            TabbedUIData tabbedDetailsHq = new TabbedUIData()
+                            {
+                                side = playerSide,
+                                who = TabbedUIWho.HQ,
+                                slotID = actorSlotID,
+                                modalLevel = 2,
+                                modalState = ModalSubState.Inventory
+                            };
+                            EventManager.i.PostNotification(EventType.TabbedOpen, this, tabbedDetailsHq, "InventoryInteraction.cs -> OnPointerClick");
+                            break;
+                        case ModalInventorySubState.ReservePool:
+                            //Reserves actor review
+                            TabbedUIData tabbedDetailsReserves = new TabbedUIData()
+                            {
+                                side = playerSide,
+                                who = TabbedUIWho.Reserves,
+                                slotID = actorSlotID,
+                                modalLevel = 2,
+                                modalState = ModalSubState.Inventory
+                            };
+                            EventManager.i.PostNotification(EventType.TabbedOpen, this, tabbedDetailsReserves, "InventoryInteraction.cs -> OnPointerClick");
+                            break;
+                    }
+                }
                 break;
             case PointerEventData.InputButton.Right:
                 if (GameManager.i.guiScript.CheckIsBlocked(2) == false)

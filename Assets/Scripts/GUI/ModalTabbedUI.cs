@@ -1,5 +1,6 @@
 ﻿using gameAPI;
 using modalAPI;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,6 +28,7 @@ public class ModalTabbedUI : MonoBehaviour
     public Button buttonSubordinates;
     public Button buttonPlayer;
     public Button buttonHq;
+    public Button buttonReserves;
     
 
     [Header("Button Interactions")]
@@ -34,6 +36,7 @@ public class ModalTabbedUI : MonoBehaviour
     public ButtonInteraction interactSubordinates;
     public ButtonInteraction interactPlayer;
     public ButtonInteraction interactHq;
+    public ButtonInteraction interactReserves;
 
     //tabs
     private int currentSideTabIndex = -1;                           //side tabs (top to bottom)
@@ -123,10 +126,13 @@ public class ModalTabbedUI : MonoBehaviour
         else { Debug.LogError("Invalid interactPlayer (Null)"); }
         if (interactHq != null) { interactHq.SetButton(EventType.TabbedHq); }
         else { Debug.LogError("Invalid interactHq (Null)"); }
+        if (interactReserves != null) { interactReserves.SetButton(EventType.TabbedReserves); }
+        else { Debug.LogError("Invalid interactReserves (Null)"); }
         //controller
         Debug.Assert(buttonSubordinates != null, "Invalid buttonSubordinates (Null)");
         Debug.Assert(buttonPlayer != null, "Invalid buttonPlayer (Null)");
         Debug.Assert(buttonHq != null, "Invalid buttonHq (Null)");
+        Debug.Assert(buttonReserves != null, "Invalid buttonReserves (Null)");
     }
     #endregion
 
@@ -189,6 +195,7 @@ public class ModalTabbedUI : MonoBehaviour
         EventManager.i.AddListener(EventType.TabbedSubordinates, OnEvent, "ModalTabbedUI");
         EventManager.i.AddListener(EventType.TabbedPlayer, OnEvent, "ModalTabbedUI");
         EventManager.i.AddListener(EventType.TabbedHq, OnEvent, "ModalTabbedUI");
+        EventManager.i.AddListener(EventType.TabbedReserves, OnEvent, "ModalTabbedUI");
     }
     #endregion
 
@@ -227,6 +234,11 @@ public class ModalTabbedUI : MonoBehaviour
                 break;
             case EventType.TabbedHq:
                 inputData.who = TabbedUIWho.HQ;
+                inputData.slotID = 0;
+                InitialiseSideTabs(inputData);
+                break;
+            case EventType.TabbedReserves:
+                inputData.who = TabbedUIWho.Reserves;
                 inputData.slotID = 0;
                 InitialiseSideTabs(inputData);
                 break;
@@ -297,10 +309,61 @@ public class ModalTabbedUI : MonoBehaviour
                             else
                             {
                                 //missing Actor -> shouldn't occur
-                                Debug.LogWarningFormat("Invalid actor (Null) for ActorHQ \"{0}\"", (ActorHQ)(index + offset));
+                                Debug.LogWarningFormat("Invalid actor (Null) for arrayOfActors[{0}]", index);
                                 arrayOfSideTabObjects[index].SetActive(false);
                             }
                         }
+                    }
+                    //disable empty tabs
+                    if (numOfSideTabs <= maxSideTabIndex)
+                    {
+                        for (int i = numOfSideTabs; i <= maxSideTabIndex; i++)
+                        { arrayOfSideTabObjects[i].SetActive(false); }
+                    }
+                    break;
+                case TabbedUIWho.Reserves:
+                    numOfSideTabs = GameManager.i.dataScript.CheckNumOfActorsInReserve();
+                    if (numOfSideTabs > 0)
+                    {
+                        List<int> listOfActors = GameManager.i.dataScript.GetListOfReserveActors(data.side);
+                        if (listOfActors != null)
+                        {
+                            for (index = 0; index < numOfSideTabs; index++)
+                            {
+                                actor = GameManager.i.dataScript.GetActor(listOfActors[index]);
+                                if (actor != null)
+                                {
+                                    //sprite and arc
+                                    arrayOfSideTabItems[index].portrait.sprite = actor.sprite;
+                                    arrayOfSideTabItems[index].title.text = actor.arc.name;
+                                    //baseline colours
+                                    portraitColor = arrayOfSideTabItems[index].portrait.color;
+                                    //first tab should be active on opening, rest passive
+                                    if (index == data.slotID)
+                                    {
+                                        backgroundColor = sideTabActiveColour;
+                                        portraitColor.a = 1.0f; backgroundColor.a = 1.0f;
+                                    }
+                                    else
+                                    {
+                                        backgroundColor = sideTabDormantColour;
+                                        portraitColor.a = sideTabAlpha; backgroundColor.a = sideTabAlpha;
+                                    }
+                                    //set colors
+                                    arrayOfSideTabItems[index].portrait.color = portraitColor;
+                                    arrayOfSideTabItems[index].background.color = backgroundColor;
+                                    //activate tab
+                                    arrayOfSideTabObjects[index].SetActive(true);
+                                }
+                                else
+                                {
+                                    //missing Actor -> shouldn't occur
+                                    Debug.LogWarningFormat("Invalid actor (Null) for listOfActors[{0}], actorID \"{1}\"", index, listOfActors[index]);
+                                    arrayOfSideTabObjects[index].SetActive(false);
+                                }
+                            }
+                        }
+                        else { Debug.LogErrorFormat("Invalid listOfReserveActors (Null) for \"{0}\"", data.side); }
                     }
                     //disable empty tabs
                     if (numOfSideTabs <= maxSideTabIndex)
@@ -381,7 +444,7 @@ public class ModalTabbedUI : MonoBehaviour
         {
             bool errorFlag = false;
             //set modal status
-            GameManager.i.guiScript.SetIsBlocked(true);
+            GameManager.i.guiScript.SetIsBlocked(true, details.modalLevel);
             //store data
             inputData = details;
             //initialise
@@ -395,6 +458,7 @@ public class ModalTabbedUI : MonoBehaviour
 
             //Activate main canvas -> last
             tabbedCanvasMain.gameObject.SetActive(true);
+
 
             //error outcome message if there is a problem
             if (errorFlag == true)
@@ -429,13 +493,14 @@ public class ModalTabbedUI : MonoBehaviour
     {
         tabbedCanvasMain.gameObject.SetActive(false);
         tabbedObjectMain.SetActive(false);
-        GameManager.i.guiScript.SetIsBlocked(false);
+        //clear but not if sitting on top of another UI element, eg. InventoryUI (HQ / Reserve actors)
+        GameManager.i.guiScript.SetIsBlocked(false, inputData.modalLevel);
         //close generic tooltip (safety check)
         GameManager.i.tooltipGenericScript.CloseTooltip("ModalTabbedUI.cs -> CloseTabbedUI");
         //close help tooltip
         GameManager.i.tooltipHelpScript.CloseTooltip("ModalTabbedUI.cs -> CloseTabbedUI");
         //set game state
-        GameManager.i.inputScript.ResetStates();
+        GameManager.i.inputScript.ResetStates(inputData.modalState);
         Debug.LogFormat("[UI] ModalTabbedUI.cs -> CloseTabbedUI{0}", "\n");
     }
 

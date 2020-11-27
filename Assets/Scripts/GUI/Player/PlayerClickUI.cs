@@ -25,13 +25,21 @@ public class PlayerClickUI : MonoBehaviour, IPointerClickHandler
     /// </summary>
     public void OnPointerClick(PointerEventData eventData)
     {
-        GlobalSide side = GameManager.i.sideScript.PlayerSide;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         bool proceedFlag = true;
         AlertType alertType = AlertType.None;
 
         switch (eventData.button)
         {
             case PointerEventData.InputButton.Left:
+                //player review
+                TabbedUIData tabbedDetails = new TabbedUIData()
+                {
+                    side = playerSide,
+                    who = TabbedUIWho.Player,
+                    slotID = 0,
+                };
+                EventManager.i.PostNotification(EventType.TabbedOpen, this, tabbedDetails, "PlayerClickUI.cs -> OnPointerClick");
                 break;
             case PointerEventData.InputButton.Right:
                 if (GameManager.i.guiScript.CheckIsBlocked() == false)

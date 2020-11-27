@@ -4081,8 +4081,8 @@ public class ActorManager : MonoBehaviour
                         optionData.textUpper = string.Format("{0}{1}{2}", colourAlert, title, colourEnd);
                         //opinion stars
                         optionData.textLower = GameManager.i.guiScript.GetNormalStars(opinion);
-                        /*optionData.textLower = actor.actorName;*/
-                        optionData.optionID = actor.actorID;
+                        optionData.optionID = actor.hqID;       //changed to actor.hqID from actor.actorID Nov 27 '20
+                        optionData.slotID = (int)actor.statusHQ - 1;
                         //tooltip -> sprite
                         GenericTooltipDetails tooltipDetailsSprite = new GenericTooltipDetails();
                         tooltipDetailsSprite.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, title.ToUpper(), colourEnd);
@@ -4598,6 +4598,7 @@ public class ActorManager : MonoBehaviour
                             //combined text string
                             optionData.textLower = string.Format("{0}{1}{2}", actor.GetTrait().tagFormatted, "\n", unhappySituation);
                             optionData.optionID = actor.actorID;
+                            optionData.slotID = i;
                             //tooltip
                             GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
                             //arc type and name

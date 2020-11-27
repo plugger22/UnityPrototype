@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using gameAPI;
+using modalAPI;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using gameAPI;
-using modalAPI;
 
 
 /// <summary>
@@ -25,12 +23,12 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
     {
         if (GameManager.i.optionScript.isSubordinates == true)
         {
-            GlobalSide side = GameManager.i.sideScript.PlayerSide;
+            GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
             bool proceedFlag = true;
             int data = -1;
             AlertType alertType = AlertType.None;
             //is there an actor in this slot?
-            if (GameManager.i.dataScript.CheckActorSlotStatus(actorSlotID, side) == true)
+            if (GameManager.i.dataScript.CheckActorSlotStatus(actorSlotID, playerSide) == true)
             {
                 //close actor tooltip
                 GameManager.i.tooltipActorScript.CloseTooltip("ActorClickUI.cs -> OnPointerClick");
@@ -38,6 +36,14 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                 switch (eventData.button)
                 {
                     case PointerEventData.InputButton.Left:
+                        //actor review
+                        TabbedUIData tabbedDetails = new TabbedUIData()
+                        {
+                            side = playerSide,
+                            who = TabbedUIWho.Subordinates,
+                            slotID = actorSlotID,
+                        };
+                        EventManager.i.PostNotification(EventType.TabbedOpen, this, tabbedDetails, "ActorClickUI.cs -> OnPointerClick");
                         break;
                     case PointerEventData.InputButton.Right:
                         if (GameManager.i.guiScript.CheckIsBlocked() == false)
@@ -48,7 +54,7 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                             //Action Menu -> not valid if  Player inactive
                             else if (GameManager.i.playerScript.status != ActorStatus.Active)
                             { proceedFlag = false; alertType = AlertType.PlayerStatus; }
-                            Actor actor = GameManager.i.dataScript.GetCurrentActor(actorSlotID, side);
+                            Actor actor = GameManager.i.dataScript.GetCurrentActor(actorSlotID, playerSide);
                             if (actor != null)
                             {
                                 if (actor.Status != ActorStatus.Active)
@@ -62,7 +68,7 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                                     position.y -= 50;
                                     position = Camera.main.ScreenToWorldPoint(position);
                                     //actor
-                                    ModalGenericMenuDetails details = new ModalGenericMenuDetails()
+                                    ModalGenericMenuDetails genericDetails = new ModalGenericMenuDetails()
                                     {
                                         itemID = actor.slotID,
                                         itemName = actor.actorName,
@@ -72,7 +78,7 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                                         menuType = ActionMenuType.Actor
                                     };
                                     //activate menu
-                                    GameManager.i.actionMenuScript.SetActionMenu(details);
+                                    GameManager.i.actionMenuScript.SetActionMenu(genericDetails);
                                 }
                                 else
                                 {
