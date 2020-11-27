@@ -67,6 +67,8 @@ public class ModalTabbedUI : MonoBehaviour
     //colours
     private Color sideTabActiveColour;
     private Color sideTabDormantColour;
+    private Color portraitColor;
+    private Color backgroundColor;
 
     //Input data
     TabbedUIData inputData;
@@ -75,8 +77,12 @@ public class ModalTabbedUI : MonoBehaviour
     private GameObject[] arrayOfSideTabObjects;
     private TabbedInteraction[] arrayOfSideTabItems;
     private TabbedSideTabUI[] arrayOfSideTabInteractions;
-    private Actor[] arrayOfActorsTemp;                              //holds all actors for the current page (excludes Player -> not in array)
 
+    //cached Actor sets
+    private Actor[] arrayOfActorsTemp;                              //holds all actors for the current page (excludes Player -> not in array)
+    private Actor[] arrayOfSubordinates;
+    private Actor[] arrayOfHq;
+    private Actor[] arrayOfReserves;
 
 
     private static ModalTabbedUI modalTabbedUI;
@@ -232,6 +238,7 @@ public class ModalTabbedUI : MonoBehaviour
     #endregion
 
 
+    #region OnEvent
     /// <summary>
     /// Event Handler
     /// </summary>
@@ -295,6 +302,7 @@ public class ModalTabbedUI : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
 
     /// <summary>
@@ -302,7 +310,10 @@ public class ModalTabbedUI : MonoBehaviour
     /// </summary>
     private void InitialiseTabbedUI(TabbedUIData data)
     {
-
+        //clear out cached data
+        if (arrayOfSubordinates != null) { Array.Clear(arrayOfSubordinates, 0, arrayOfSubordinates.Length); }
+        if (arrayOfReserves != null) { Array.Clear(arrayOfReserves, 0, arrayOfReserves.Length); }
+        if (arrayOfHq != null) { Array.Clear(arrayOfHq, 0, arrayOfHq.Length); }
     }
 
 
@@ -314,9 +325,7 @@ public class ModalTabbedUI : MonoBehaviour
     private void InitialiseSideTabs(TabbedUIData data)
     {
         int index = 0;
-        Actor actor;
-        Color portraitColor, backgroundColor;
-
+        int length;
         if (arrayOfSideTabItems[index] != null)
         {
             //clear out actor array
@@ -330,43 +339,14 @@ public class ModalTabbedUI : MonoBehaviour
                     numOfSideTabs = arrayOfActors.Length;
                     if (numOfSideTabs > 0)
                     {
-                        for (index = 0; index < numOfSideTabs; index++)
+                        InitialiseSubordinate(numOfSideTabs, arrayOfActors);
+                        //Cached data
+                        if (arrayOfSubordinates == null)
                         {
-                            actor = arrayOfActors[index];
-                            if (actor != null)
-                            {
-                                //populate array
-                                arrayOfActorsTemp[index] = actor;
-                                //sprite and arc
-                                arrayOfSideTabItems[index].portrait.sprite = actor.sprite;
-                                arrayOfSideTabItems[index].title.text = actor.arc.name;
-                                //baseline colours
-                                portraitColor = arrayOfSideTabItems[index].portrait.color;
-                                //first tab should be active on opening, rest passive
-                                if (index == data.slotID)
-                                {
-                                    backgroundColor = sideTabActiveColour;
-                                    portraitColor.a = 1.0f; backgroundColor.a = 1.0f;
-                                    textActorName.text = actor.actorName;
-                                    currentSideTabIndex = index;
-                                }
-                                else
-                                {
-                                    backgroundColor = sideTabDormantColour;
-                                    portraitColor.a = sideTabAlpha; backgroundColor.a = sideTabAlpha;
-                                }
-                                //set colors
-                                arrayOfSideTabItems[index].portrait.color = portraitColor;
-                                arrayOfSideTabItems[index].background.color = backgroundColor;
-                                //activate tab
-                                arrayOfSideTabObjects[index].SetActive(true);
-                            }
-                            else
-                            {
-                                //missing Actor -> shouldn't occur
-                                Debug.LogWarningFormat("Invalid actor (Null) for arrayOfActors[{0}]", index);
-                                arrayOfSideTabObjects[index].SetActive(false);
-                            }
+                            //initialise cached Subordinates array
+                            length = arrayOfActorsTemp.Length;
+                            arrayOfSubordinates = new Actor[length];
+                            Array.Copy(arrayOfActorsTemp, arrayOfSubordinates, length);
                         }
                     }
                     else
@@ -388,43 +368,14 @@ public class ModalTabbedUI : MonoBehaviour
                         List<int> listOfActors = GameManager.i.dataScript.GetListOfReserveActors(data.side);
                         if (listOfActors != null)
                         {
-                            for (index = 0; index < numOfSideTabs; index++)
+                            InitialiseReserves(numOfSideTabs, listOfActors);
+                            //Cached data
+                            if (arrayOfReserves == null)
                             {
-                                actor = GameManager.i.dataScript.GetActor(listOfActors[index]);
-                                if (actor != null)
-                                {
-                                    //populate array
-                                    arrayOfActorsTemp[index] = actor;
-                                    //sprite and arc
-                                    arrayOfSideTabItems[index].portrait.sprite = actor.sprite;
-                                    arrayOfSideTabItems[index].title.text = actor.arc.name;
-                                    //baseline colours
-                                    portraitColor = arrayOfSideTabItems[index].portrait.color;
-                                    //first tab should be active on opening, rest passive
-                                    if (index == data.slotID)
-                                    {
-                                        backgroundColor = sideTabActiveColour;
-                                        portraitColor.a = 1.0f; backgroundColor.a = 1.0f;
-                                        textActorName.text = actor.actorName;
-                                        currentSideTabIndex = index;
-                                    }
-                                    else
-                                    {
-                                        backgroundColor = sideTabDormantColour;
-                                        portraitColor.a = sideTabAlpha; backgroundColor.a = sideTabAlpha;
-                                    }
-                                    //set colors
-                                    arrayOfSideTabItems[index].portrait.color = portraitColor;
-                                    arrayOfSideTabItems[index].background.color = backgroundColor;
-                                    //activate tab
-                                    arrayOfSideTabObjects[index].SetActive(true);
-                                }
-                                else
-                                {
-                                    //missing Actor -> shouldn't occur
-                                    Debug.LogWarningFormat("Invalid actor (Null) for listOfActors[{0}], actorID \"{1}\"", index, listOfActors[index]);
-                                    arrayOfSideTabObjects[index].SetActive(false);
-                                }
+                                //initialise cached Subordinates array
+                                length = arrayOfActorsTemp.Length;
+                                arrayOfReserves = new Actor[length];
+                                Array.Copy(arrayOfActorsTemp, arrayOfReserves, length);
                             }
                         }
                         else { Debug.LogErrorFormat("Invalid listOfReserveActors (Null) for \"{0}\"", data.side); }
@@ -465,45 +416,14 @@ public class ModalTabbedUI : MonoBehaviour
                 case TabbedUIWho.HQ:
                     //assumes a full compliment of HQ actors present
                     numOfSideTabs = maxSideTabIndex + 1;
-                    for (index = 0; index < numOfSideTabs; index++)
+                    InitialiseHq(numOfSideTabs);
+                    //Cached data
+                    if (arrayOfHq == null)
                     {
-                        actor = GameManager.i.dataScript.GetHqHierarchyActor((ActorHQ)(index + offset));
-                        if (actor != null)
-                        {
-                            //populate array
-                            arrayOfActorsTemp[index] = actor;
-                            //sprite
-                            arrayOfSideTabItems[index].portrait.sprite = actor.sprite;
-                        }
-                        else
-                        {
-                            //default error sprite if a problem
-                            Debug.LogWarningFormat("Invalid actor (Null) for ActorHQ \"{0}\"", (ActorHQ)(index + offset));
-                            //deactivate tab
-                            arrayOfSideTabObjects[index].SetActive(false);
-                        }
-                        //title
-                        arrayOfSideTabItems[index].title.text = GameManager.i.hqScript.GetHqTitle(actor.statusHQ);
-                        //activate tab
-                        arrayOfSideTabObjects[index].SetActive(true);
-                        //baseline colours
-                        portraitColor = arrayOfSideTabItems[index].portrait.color;
-                        //first tab should be active on opening, rest passive
-                        if (index == data.slotID)
-                        {
-                            backgroundColor = sideTabActiveColour;
-                            portraitColor.a = 1.0f; backgroundColor.a = 1.0f;
-                            textActorName.text = actor.actorName;
-                            currentSideTabIndex = index;
-                        }
-                        else
-                        {
-                            backgroundColor = sideTabDormantColour;
-                            portraitColor.a = sideTabAlpha; backgroundColor.a = sideTabAlpha;
-                        }
-                        //set colors
-                        arrayOfSideTabItems[index].portrait.color = portraitColor;
-                        arrayOfSideTabItems[index].background.color = backgroundColor;
+                        //initialise cached Subordinates array
+                        length = arrayOfActorsTemp.Length;
+                        arrayOfHq = new Actor[length];
+                        Array.Copy(arrayOfActorsTemp, arrayOfHq, length);
                     }
                     break;
                 default: Debug.LogWarningFormat("Unrecognised TabbedUIWho \"{0}\"", data.who); break;
@@ -639,6 +559,40 @@ public class ModalTabbedUI : MonoBehaviour
         currentSideTabIndex = tabIndex;
     }
 
+
+    /// <summary>
+    /// Open a new actor set, eg. Subordinates/Player/HQ/Reserves. Assumed that TabbedUI is already open
+    /// </summary>
+    /// <param name="who"></param>
+    private void OpenActorSet(TabbedUIWho who)
+    {
+        switch (who)
+        {
+            case TabbedUIWho.Subordinates:
+                //cached array available
+                if (arrayOfSubordinates != null)
+                {
+
+                }
+                else
+                {
+                    //generate data
+                }
+                break;
+
+            case TabbedUIWho.Player:
+
+                break;
+            case TabbedUIWho.HQ:
+
+                break;
+            case TabbedUIWho.Reserves:
+
+                break;
+            default: Debug.LogWarningFormat("Unrecognised who \"{0}\"", who); break;
+        }
+    }
+
     /// <summary>
     /// Up arrow -> Side Tabs
     /// </summary>
@@ -748,6 +702,152 @@ public class ModalTabbedUI : MonoBehaviour
                 break;
         }
         return actorName;
+    }
+
+
+    /// <summary>
+    /// Takes an arrayOfActors and initialises data for Subordinates actor set
+    /// </summary>
+    /// <param name="numOfSideTabs"></param>
+    /// <param name="arrayOfActors"></param>
+    private void InitialiseSubordinate(int numOfSideTabs, Actor[] arrayOfActors)
+    {
+        Actor actor;
+        for (int index = 0; index < numOfSideTabs; index++)
+        {
+            actor = arrayOfActors[index];
+            if (actor != null)
+            {
+                //populate array
+                arrayOfActorsTemp[index] = actor;
+                //sprite and arc
+                arrayOfSideTabItems[index].portrait.sprite = actor.sprite;
+                arrayOfSideTabItems[index].title.text = actor.arc.name;
+                //baseline colours
+                portraitColor = arrayOfSideTabItems[index].portrait.color;
+                //first tab should be active on opening, rest passive
+                if (index == inputData.slotID)
+                {
+                    backgroundColor = sideTabActiveColour;
+                    portraitColor.a = 1.0f; backgroundColor.a = 1.0f;
+                    textActorName.text = actor.actorName;
+                    currentSideTabIndex = index;
+                }
+                else
+                {
+                    backgroundColor = sideTabDormantColour;
+                    portraitColor.a = sideTabAlpha; backgroundColor.a = sideTabAlpha;
+                }
+                //set colors
+                arrayOfSideTabItems[index].portrait.color = portraitColor;
+                arrayOfSideTabItems[index].background.color = backgroundColor;
+                //activate tab
+                arrayOfSideTabObjects[index].SetActive(true);
+            }
+            else
+            {
+                //missing Actor -> shouldn't occur
+                Debug.LogWarningFormat("Invalid actor (Null) for arrayOfActors[{0}]", index);
+                arrayOfSideTabObjects[index].SetActive(false);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Takes a listOfActorID's and initialises data for Reserves actor set
+    /// </summary>
+    /// <param name="numOfSideTabs"></param>
+    /// <param name="listOfActors"></param>
+    private void InitialiseReserves(int numOfSideTabs, List<int> listOfActors)
+    {
+        Actor actor;
+        for (int index = 0; index < numOfSideTabs; index++)
+        {
+            actor = GameManager.i.dataScript.GetActor(listOfActors[index]);
+            if (actor != null)
+            {
+                //populate array
+                arrayOfActorsTemp[index] = actor;
+                //sprite and arc
+                arrayOfSideTabItems[index].portrait.sprite = actor.sprite;
+                arrayOfSideTabItems[index].title.text = actor.arc.name;
+                //baseline colours
+                portraitColor = arrayOfSideTabItems[index].portrait.color;
+                //first tab should be active on opening, rest passive
+                if (index == inputData.slotID)
+                {
+                    backgroundColor = sideTabActiveColour;
+                    portraitColor.a = 1.0f; backgroundColor.a = 1.0f;
+                    textActorName.text = actor.actorName;
+                    currentSideTabIndex = index;
+                }
+                else
+                {
+                    backgroundColor = sideTabDormantColour;
+                    portraitColor.a = sideTabAlpha; backgroundColor.a = sideTabAlpha;
+                }
+                //set colors
+                arrayOfSideTabItems[index].portrait.color = portraitColor;
+                arrayOfSideTabItems[index].background.color = backgroundColor;
+                //activate tab
+                arrayOfSideTabObjects[index].SetActive(true);
+            }
+            else
+            {
+                //missing Actor -> shouldn't occur
+                Debug.LogWarningFormat("Invalid actor (Null) for listOfActors[{0}], actorID \"{1}\"", index, listOfActors[index]);
+                arrayOfSideTabObjects[index].SetActive(false);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Initialises Hq data for Hq actor set
+    /// </summary>
+    /// <param name="numOfSideTabs"></param>
+    private void InitialiseHq(int numOfSideTabs)
+    {
+        Actor actor;
+        for (int index = 0; index < numOfSideTabs; index++)
+        {
+            actor = GameManager.i.dataScript.GetHqHierarchyActor((ActorHQ)(index + offset));
+            if (actor != null)
+            {
+                //populate array
+                arrayOfActorsTemp[index] = actor;
+                //sprite
+                arrayOfSideTabItems[index].portrait.sprite = actor.sprite;
+            }
+            else
+            {
+                //default error sprite if a problem
+                Debug.LogWarningFormat("Invalid actor (Null) for ActorHQ \"{0}\"", (ActorHQ)(index + offset));
+                //deactivate tab
+                arrayOfSideTabObjects[index].SetActive(false);
+            }
+            //title
+            arrayOfSideTabItems[index].title.text = GameManager.i.hqScript.GetHqTitle(actor.statusHQ);
+            //activate tab
+            arrayOfSideTabObjects[index].SetActive(true);
+            //baseline colours
+            portraitColor = arrayOfSideTabItems[index].portrait.color;
+            //first tab should be active on opening, rest passive
+            if (index == inputData.slotID)
+            {
+                backgroundColor = sideTabActiveColour;
+                portraitColor.a = 1.0f; backgroundColor.a = 1.0f;
+                textActorName.text = actor.actorName;
+                currentSideTabIndex = index;
+            }
+            else
+            {
+                backgroundColor = sideTabDormantColour;
+                portraitColor.a = sideTabAlpha; backgroundColor.a = sideTabAlpha;
+            }
+            //set colors
+            arrayOfSideTabItems[index].portrait.color = portraitColor;
+            arrayOfSideTabItems[index].background.color = backgroundColor;
+        }
     }
 
     #endregion
