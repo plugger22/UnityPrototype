@@ -4052,6 +4052,28 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Returns a list of all actors in HQ hierarchy (in ActorHQ.enum order so boss is at index 0), empty list if a problem
+    /// </summary>
+    /// <returns></returns>
+    public List<Actor> GetListOfHqHierarchy()
+    {
+        int numHierarchy = GameManager.i.hqScript.numOfActorsHQ;
+        int offset = 1;     //needed as ActorHQ.enum has index 0 as 'None'
+        List<Actor> tempList = new List<Actor>();
+        for (int i = 0; i < numHierarchy; i++)
+        {
+            Actor actor = GetHqHierarchyActor((ActorHQ)(i + offset));
+            if (actor != null)
+            {
+                //populate array
+                tempList.Add(actor);
+            }
+        }
+        Debug.AssertFormat(tempList.Count == GameManager.i.hqScript.numOfActorsHQ, "Invalid count for listOfHqHierarchy (is {0}, should be {1})", tempList.Count, numHierarchy);
+        return tempList;
+    }
+
+    /// <summary>
     /// Returns a list of all current Hq workers in actorHQPool, empty list if none
     /// </summary>
     /// <returns></returns>

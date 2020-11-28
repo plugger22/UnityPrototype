@@ -32,3 +32,470 @@ ModalTabbedUI.InitialiseTabbedUI (modalAPI.TabbedUIData data) (at Assets/Scripts
 	
 Dev seed 50680 -> Friday, 27 November 2020 6:07 PM
 City seed 47549 -> Londus, Eurasia
+
+Dev seed 17305 -> Saturday, 28 November 2020 11:51 AM
+City seed 33302 -> Londus, Eurasia
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid actor (Null) for arrayOfActors[2]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseReserves(Int32, Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:928)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:389)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:284)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[3]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseReserves(Int32, Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:928)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:389)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:284)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[0]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Int32, Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:832)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[1]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Int32, Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:832)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[2]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Int32, Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:832)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[3]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Int32, Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:832)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[2]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseReserves(Int32, Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:928)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:389)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:284)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[3]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseReserves(Int32, Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:928)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:389)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:284)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[0]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Int32, Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:832)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[1]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Int32, Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:832)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[2]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Int32, Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:832)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[3]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Int32, Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:832)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[0]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Int32, Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:832)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[1]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Int32, Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:832)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[2]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Int32, Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:832)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[3]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Int32, Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:832)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[2]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseReserves(Int32, Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:928)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:389)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:284)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[3]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseReserves(Int32, Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:928)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:389)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:284)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[0]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Int32, Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:832)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[1]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Int32, Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:832)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[2]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Int32, Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:832)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[3]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Int32, Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:832)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 9553 -> Saturday, 28 November 2020 12:02 PM
+City seed 13013 -> Londus, Eurasia
+WARNING Invalid actor (Null) for arrayOfActors[0]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:838)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[1]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:838)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[2]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:838)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[3]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:838)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 35953 -> Saturday, 28 November 2020 12:10 PM
+City seed 47022 -> Londus, Eurasia
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid actor (Null) for arrayOfActors[0]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:838)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[1]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:838)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[2]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:838)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[3]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:838)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 40364 -> Saturday, 28 November 2020 12:13 PM
+City seed 54846 -> Londus, Eurasia
+WARNING Invalid actor (Null) for arrayOfActors[0]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:838)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[1]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:838)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[2]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:838)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[3]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:838)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 50758 -> Saturday, 28 November 2020 12:17 PM
+City seed 15655 -> Londus, Eurasia
+WARNING Invalid actor (Null) for arrayOfActors[0]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:837)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[1]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:837)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[2]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:837)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[3]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:837)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid actor (Null) for arrayOfActors[0]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:837)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[1]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:837)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[2]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:837)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[3]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseSubordinate(Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:837)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:348)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:270)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 265 -> Saturday, 28 November 2020 12:20 PM
+City seed 44657 -> Londus, Eurasia
+
+Dev seed 42858 -> Saturday, 28 November 2020 12:24 PM
+City seed 21618 -> Londus, Eurasia
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 56661 -> Saturday, 28 November 2020 12:25 PM
+City seed 63452 -> Londus, Eurasia
+
+Dev seed 49869 -> Saturday, 28 November 2020 12:26 PM
+City seed 8771 -> Londus, Eurasia
+
+Dev seed 14293 -> Saturday, 28 November 2020 12:27 PM
+City seed 44210 -> Londus, Eurasia
+
+Dev seed 51513 -> Saturday, 28 November 2020 12:27 PM
+City seed 56442 -> Londus, Eurasia
+
+Dev seed 13817 -> Saturday, 28 November 2020 12:33 PM
+City seed 47427 -> Londus, Eurasia
+WARNING Invalid actor (Null) for arrayOfActors[2]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseReserves(Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:940)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:391)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:284)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[3]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseReserves(Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:940)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:391)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:284)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[2]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseReserves(Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:940)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:391)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:284)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid actor (Null) for arrayOfActors[3]
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:InitialiseReserves(Actor[]) (at Assets/Scripts/GUI/ModalTabbedUI.cs:940)
+	ModalTabbedUI:InitialiseSideTabs(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:391)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:284)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:340)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 44874 -> Saturday, 28 November 2020 12:38 PM
+City seed 27701 -> Londus, Eurasia
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 48986 -> Saturday, 28 November 2020 12:47 PM
+City seed 19101 -> Londus, Eurasia
+
+Dev seed 44757 -> Saturday, 28 November 2020 12:56 PM
+City seed 12587 -> Londus, Eurasia
+
+Dev seed 26484 -> Saturday, 28 November 2020 12:59 PM
+City seed 13722 -> Londus, Eurasia
+
+Dev seed 62845 -> Saturday, 28 November 2020 1:00 PM
+City seed 56620 -> Londus, Eurasia

@@ -3,6 +3,7 @@ using modalAPI;
 using packageAPI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -52,8 +53,10 @@ public class ModalTabbedUI : MonoBehaviour
     //tabs
     private int currentSideTabIndex = -1;                           //side tabs (top to bottom)
     private int currentTopTabIndex = -1;                            //top tabs (left to right)
+    private int currentSetIndex = -1;                               //actor sets
     private int maxSideTabIndex;                                    //side tabs only (used for keeping pgUP/DOWN movement within HQ side tabs)
     private int maxTopTabIndex;                                     //top tabs only
+    private int maxSetIndex;                                        //actor sets
     private int numOfSideTabs;                                      //keyed off enum.MetaTabSide
     private int numOfTopTabs;                                       //keyed off enum.MetaTabTop
     private int offset = 1;                                         //used with '(ActorHQ)index + offset' to account for the ActorHQ.enum having index 0 being 'None'
@@ -175,6 +178,7 @@ public class ModalTabbedUI : MonoBehaviour
         numOfSideTabs = (int)TabbedUISide.Count;
         //max tabs
         maxSideTabIndex = numOfSideTabs - 1;
+        maxSetIndex = (int)TabbedUIWho.Count - 1;
         //initialise Side Arrays -> tabs
         arrayOfSideTabObjects = new GameObject[numOfSideTabs];
         arrayOfSideTabItems = new TabbedInteraction[numOfSideTabs];
@@ -305,6 +309,8 @@ public class ModalTabbedUI : MonoBehaviour
     #endregion
 
 
+    #region Initialisation...
+
     /// <summary>
     /// run prior to every TabbedUI use. Run from SetTabbedUI
     /// </summary>
@@ -325,7 +331,6 @@ public class ModalTabbedUI : MonoBehaviour
     private void InitialiseSideTabs(TabbedUIData data)
     {
         int index = 0;
-        int length;
         if (arrayOfSideTabItems[index] != null)
         {
             //clear out actor array
@@ -334,26 +339,40 @@ public class ModalTabbedUI : MonoBehaviour
             switch (data.who)
             {
                 case TabbedUIWho.Subordinates:
-                    //check how many actors OnMap
-                    Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsVariable(data.side);
-                    numOfSideTabs = arrayOfActors.Length;
-                    if (numOfSideTabs > 0)
+                    //Cached data available
+                    if (arrayOfSubordinates != null)
                     {
-                        InitialiseSubordinate(numOfSideTabs, arrayOfActors);
-                        //Cached data
-                        if (arrayOfSubordinates == null)
-                        {
-                            //initialise cached Subordinates array
-                            length = arrayOfActorsTemp.Length;
-                            arrayOfSubordinates = new Actor[length];
-                            Array.Copy(arrayOfActorsTemp, arrayOfSubordinates, length);
-                        }
+                        numOfSideTabs = arrayOfSubordinates.Length;
+                        if (numOfSideTabs > 0)
+                        { InitialiseSubordinate(arrayOfSubordinates); }
+                        else
+                        { textActorName.text = ""; }
+                        /*Debug.LogFormat("[Tst] ModalTabbedUI.cs -> InitialiseSideTabs: Subordinates CACHED data used{0}", "\n");*/
                     }
                     else
                     {
-                        //clear out any residual actor name
-                        textActorName.text = "";
+                        //Generate Data -> check how many actors OnMap
+                        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsVariable(data.side);
+                        numOfSideTabs = arrayOfActors.Length;
+                        if (numOfSideTabs > 0)
+                        {
+                            InitialiseSubordinate(arrayOfActors);
+                            //store Cached data
+                            if (arrayOfSubordinates == null)
+                            {
+                                //initialise cached Subordinates array
+                                arrayOfSubordinates = new Actor[numOfSideTabs];
+                                Array.Copy(arrayOfActors, arrayOfSubordinates, numOfSideTabs);
+                            }
+                            /*Debug.LogFormat("[Tst] ModalTabbedUI.cs -> InitialiseSideTabs: Subordinates Generated data used{0}", "\n");*/
+                        }
+                        else
+                        {
+                            //clear out any residual actor name
+                            textActorName.text = "";
+                        }
                     }
+
                     //disable empty tabs
                     if (numOfSideTabs <= maxSideTabIndex)
                     {
@@ -362,28 +381,42 @@ public class ModalTabbedUI : MonoBehaviour
                     }
                     break;
                 case TabbedUIWho.Reserves:
-                    numOfSideTabs = GameManager.i.dataScript.CheckNumOfActorsInReserve();
-                    if (numOfSideTabs > 0)
+                    //Cached data available
+                    if (arrayOfReserves != null)
                     {
-                        List<int> listOfActors = GameManager.i.dataScript.GetListOfReserveActors(data.side);
-                        if (listOfActors != null)
-                        {
-                            InitialiseReserves(numOfSideTabs, listOfActors);
-                            //Cached data
-                            if (arrayOfReserves == null)
-                            {
-                                //initialise cached Subordinates array
-                                length = arrayOfActorsTemp.Length;
-                                arrayOfReserves = new Actor[length];
-                                Array.Copy(arrayOfActorsTemp, arrayOfReserves, length);
-                            }
-                        }
-                        else { Debug.LogErrorFormat("Invalid listOfReserveActors (Null) for \"{0}\"", data.side); }
+                        numOfSideTabs = arrayOfReserves.Length;
+                        if (numOfSideTabs > 0)
+                        { InitialiseReserves(arrayOfReserves); }
+                        else
+                        { textActorName.text = ""; }
+                        /*Debug.LogFormat("[Tst] ModalTabbedUI.cs -> InitialiseSideTabs: Reserves CACHED data used{0}", "\n");*/
                     }
                     else
                     {
-                        //clear out any residual actor name
-                        textActorName.text = "";
+                        //Generate Data -> how many actors in reserve
+                        numOfSideTabs = GameManager.i.dataScript.CheckNumOfActorsInReserve();
+                        if (numOfSideTabs > 0)
+                        {
+                            List<int> listOfActors = GameManager.i.dataScript.GetListOfReserveActors(data.side);
+                            if (listOfActors != null)
+                            {
+                                InitialiseReserves(listOfActors);
+                                //Cached data
+                                if (arrayOfReserves == null)
+                                {
+                                    //initialise cached Subordinates array
+                                    arrayOfReserves = new Actor[numOfSideTabs];
+                                    Array.Copy(arrayOfActorsTemp, arrayOfReserves, numOfSideTabs);
+                                }
+                                /*Debug.LogFormat("[Tst] ModalTabbedUI.cs -> InitialiseSideTabs: Reserves Generated data used{0}", "\n");*/
+                            }
+                            else { Debug.LogErrorFormat("Invalid listOfReserveActors (Null) for \"{0}\"", data.side); }
+                        }
+                        else
+                        {
+                            //clear out any residual actor name
+                            textActorName.text = "";
+                        }
                     }
                     //disable empty tabs
                     if (numOfSideTabs <= maxSideTabIndex)
@@ -414,16 +447,38 @@ public class ModalTabbedUI : MonoBehaviour
                     { arrayOfSideTabObjects[i].SetActive(false); }
                     break;
                 case TabbedUIWho.HQ:
-                    //assumes a full compliment of HQ actors present
-                    numOfSideTabs = maxSideTabIndex + 1;
-                    InitialiseHq(numOfSideTabs);
-                    //Cached data
-                    if (arrayOfHq == null)
+                    //Cached data available
+                    if (arrayOfHq != null)
                     {
-                        //initialise cached Subordinates array
-                        length = arrayOfActorsTemp.Length;
-                        arrayOfHq = new Actor[length];
-                        Array.Copy(arrayOfActorsTemp, arrayOfHq, length);
+                        numOfSideTabs = arrayOfHq.Length;
+                        if (numOfSideTabs > 0)
+                        { InitialiseHq(arrayOfHq); }
+                        else
+                        { textActorName.text = ""; }
+                        /*Debug.LogFormat("[Tst] ModalTabbedUI.cs -> InitialiseSideTabs: Hq CACHED data used{0}", "\n");*/
+                    }
+                    else
+                    {
+                        //Generate Data -> assumes a full compliment of HQ actors present
+                        List<Actor> listOfActors = GameManager.i.dataScript.GetListOfHqHierarchy();
+                        if (listOfActors != null)
+                        {
+
+                            /*numOfSideTabs = maxSideTabIndex + 1;*/
+
+                            numOfSideTabs = listOfActors.Count;
+                            arrayOfActorsTemp = listOfActors.ToArray();
+                            InitialiseHq(arrayOfActorsTemp);
+                            //Cached data
+                            if (arrayOfHq == null)
+                            {
+                                //initialise cached Subordinates array
+                                arrayOfHq = new Actor[numOfSideTabs];
+                                Array.Copy(arrayOfActorsTemp, arrayOfHq, numOfSideTabs);
+                            }
+                            /*Debug.LogFormat("[Tst] ModalTabbedUI.cs -> InitialiseSideTabs: Hq Generated data used{0}", "\n");*/
+                        }
+                        else { Debug.LogError("Invalid listOfHqHierarchyActors (Null)"); }
                     }
                     break;
                 default: Debug.LogWarningFormat("Unrecognised TabbedUIWho \"{0}\"", data.who); break;
@@ -448,6 +503,8 @@ public class ModalTabbedUI : MonoBehaviour
         { helpClose.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
         else { Debug.LogWarning("Invalid listOfHelp for helpMain (Null)"); }
     }
+    
+    #endregion
 
 
     #region SetTabbedUI
@@ -463,9 +520,11 @@ public class ModalTabbedUI : MonoBehaviour
             GameManager.i.guiScript.SetIsBlocked(true, details.modalLevel);
             //store data
             inputData = details;
-            //initialise
-            InitialiseSideTabs(details);
+            //initialise actorSetIndex
+            currentSetIndex = (int)details.who;
+            //initialise (order is important as InitialiseTabbedUI clears arrays that are filled with cached data in InitialiseSideTabs)
             InitialiseTabbedUI(details);
+            InitialiseSideTabs(details);
             //tooltips off
             GameManager.i.guiScript.SetTooltipsOff();
             //activate main panel
@@ -500,7 +559,7 @@ public class ModalTabbedUI : MonoBehaviour
     #endregion
 
 
-
+    #region CloseTabbedUI
     /// <summary>
     /// Close TabbedUI
     /// </summary>
@@ -518,6 +577,8 @@ public class ModalTabbedUI : MonoBehaviour
         GameManager.i.inputScript.ResetStates(inputData.modalState);
         Debug.LogFormat("[UI] ModalTabbedUI.cs -> CloseTabbedUI{0}", "\n");
     }
+    #endregion
+
 
     #region Movement... 
 
@@ -569,26 +630,14 @@ public class ModalTabbedUI : MonoBehaviour
         switch (who)
         {
             case TabbedUIWho.Subordinates:
-                //cached array available
-                if (arrayOfSubordinates != null)
-                {
-
-                }
-                else
-                {
-                    //generate data
-                }
-                break;
-
             case TabbedUIWho.Player:
-
-                break;
             case TabbedUIWho.HQ:
-
-                break;
             case TabbedUIWho.Reserves:
-
-                break;
+                inputData.who = who;
+                inputData.slotID = 0;
+                InitialiseSideTabs(inputData);
+                currentSetIndex = (int)who;
+            break;
             default: Debug.LogWarningFormat("Unrecognised who \"{0}\"", who); break;
         }
     }
@@ -655,19 +704,45 @@ public class ModalTabbedUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Page Up
+    /// Page Up -> next actor Set to the Left
     /// </summary>
     private void ExecutePageUp()
     {
-
+        if (currentSetIndex > -1)
+        {
+            if (currentSetIndex > 0)
+            {
+                currentSetIndex -= 1;
+                OpenActorSet((TabbedUIWho)currentSetIndex);
+            }
+            else
+            {
+                //roll over
+                currentSetIndex = maxSetIndex;
+                OpenActorSet((TabbedUIWho)currentSetIndex);
+            }
+        }
     }
 
     /// <summary>
-    /// Page Down
+    /// Page Down -> next actor Set to the Right
     /// </summary>
     private void ExecutePageDown()
     {
-
+        if (currentSetIndex > -1)
+        {
+            if (currentSetIndex < maxSetIndex)
+            {
+                currentSetIndex += 1;
+                OpenActorSet((TabbedUIWho)currentSetIndex);
+            }
+            else
+            {
+                //roll over
+                currentSideTabIndex = 0;
+                OpenActorSet((TabbedUIWho)currentSetIndex); ;
+            }
+        }
     }
 
     #endregion
@@ -710,7 +785,7 @@ public class ModalTabbedUI : MonoBehaviour
     /// </summary>
     /// <param name="numOfSideTabs"></param>
     /// <param name="arrayOfActors"></param>
-    private void InitialiseSubordinate(int numOfSideTabs, Actor[] arrayOfActors)
+    private void InitialiseSubordinate(Actor[] arrayOfActors)
     {
         Actor actor;
         for (int index = 0; index < numOfSideTabs; index++)
@@ -758,10 +833,16 @@ public class ModalTabbedUI : MonoBehaviour
     /// </summary>
     /// <param name="numOfSideTabs"></param>
     /// <param name="listOfActors"></param>
-    private void InitialiseReserves(int numOfSideTabs, List<int> listOfActors)
+    private void InitialiseReserves(List<int> listOfActors)
     {
         Actor actor;
-        for (int index = 0; index < numOfSideTabs; index++)
+        int limit = listOfActors.Count;
+        if (limit != numOfSideTabs)
+        {
+            limit = Mathf.Min(numOfSideTabs, limit);
+            Debug.LogWarningFormat("Mismatch between numOfSideTabs {0} and listOfActors.Count {1} (Should be identical)", numOfSideTabs, limit);
+        }
+        for (int index = 0; index < limit; index++)
         {
             actor = GameManager.i.dataScript.GetActor(listOfActors[index]);
             if (actor != null)
@@ -802,15 +883,63 @@ public class ModalTabbedUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Initialises Hq data for Hq actor set
+    /// Overloaded -> Takes an arrayOfActors and initialises data for Reserves actor set (used for cached data)
     /// </summary>
     /// <param name="numOfSideTabs"></param>
-    private void InitialiseHq(int numOfSideTabs)
+    /// <param name="listOfActors"></param>
+    private void InitialiseReserves(Actor[] arrayOfActors)
     {
         Actor actor;
         for (int index = 0; index < numOfSideTabs; index++)
         {
-            actor = GameManager.i.dataScript.GetHqHierarchyActor((ActorHQ)(index + offset));
+            actor = arrayOfActors[index];
+            if (actor != null)
+            {
+                //populate array
+                arrayOfActorsTemp[index] = actor;
+                //sprite and arc
+                arrayOfSideTabItems[index].portrait.sprite = actor.sprite;
+                arrayOfSideTabItems[index].title.text = actor.arc.name;
+                //baseline colours
+                portraitColor = arrayOfSideTabItems[index].portrait.color;
+                //first tab should be active on opening, rest passive
+                if (index == inputData.slotID)
+                {
+                    backgroundColor = sideTabActiveColour;
+                    portraitColor.a = 1.0f; backgroundColor.a = 1.0f;
+                    textActorName.text = actor.actorName;
+                    currentSideTabIndex = index;
+                }
+                else
+                {
+                    backgroundColor = sideTabDormantColour;
+                    portraitColor.a = sideTabAlpha; backgroundColor.a = sideTabAlpha;
+                }
+                //set colors
+                arrayOfSideTabItems[index].portrait.color = portraitColor;
+                arrayOfSideTabItems[index].background.color = backgroundColor;
+                //activate tab
+                arrayOfSideTabObjects[index].SetActive(true);
+            }
+            else
+            {
+                //missing Actor -> shouldn't occur
+                Debug.LogWarningFormat("Invalid actor (Null) for arrayOfActors[{0}]", index);
+                arrayOfSideTabObjects[index].SetActive(false);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Initialises Hq data for Hq actor set
+    /// </summary>
+    /// <param name="numOfSideTabs"></param>
+    private void InitialiseHq(Actor[] arrayOfActors)
+    {
+        Actor actor;
+        for (int index = 0; index < numOfSideTabs; index++)
+        {
+            actor = arrayOfActors[index];
             if (actor != null)
             {
                 //populate array

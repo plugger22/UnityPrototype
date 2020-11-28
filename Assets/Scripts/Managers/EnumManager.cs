@@ -68,7 +68,7 @@
     // - - - TabbedUI (Dossiers)
     //
     public enum TabbedUISide { Tab0, Tab1, Tab2, Tab3, Count}                                       //ModalTabbedUI side tabs. NOTE order needs to correspond to UI (arrays keyed off this)
-    public enum TabbedUIWho { Subordinates, Player, HQ, Reserves }                                  //who the tabbedUI is to be setUp for
+    public enum TabbedUIWho { Subordinates, Player, HQ, Reserves, Count }                           //who the tabbedUI is to be setUp for. NOTE order needs to correspond to UI (code keyed off this)
 
     //
     // - - - Connections - - - 
