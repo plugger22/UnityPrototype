@@ -61,6 +61,7 @@ public class ModalTabbedUI : MonoBehaviour
     private int offset = 1;                                         //used with '(ActorHQ)index + offset' to account for the ActorHQ.enum having index 0 being 'None'
     private float sideTabAlpha = 0.50f;                             //alpha level of side tabs when inactive
     private float topTabAlpha = 0.50f;                              //alpha level of top tabs when inactive
+    private bool isActive;                                          //true if UI open
 
     //help tooltips (I don't want this as a global, just a master private field)
     private int x_offset = 200;
@@ -173,6 +174,7 @@ public class ModalTabbedUI : MonoBehaviour
     /// </summary>
     private void SubInitialiseSessionStart()
     {
+        isActive = false;
         int index = 0;
         numOfSideTabs = (int)TabbedUISide.Count;
         //max tabs
@@ -346,7 +348,7 @@ public class ModalTabbedUI : MonoBehaviour
                         { InitialiseSubordinate(arrayOfSubordinates); }
                         else
                         { textActorName.text = ""; }
-                        /*Debug.LogFormat("[Tst] ModalTabbedUI.cs -> InitialiseSideTabs: Subordinates CACHED data used{0}", "\n");*/
+                        Debug.LogFormat("[Tst] ModalTabbedUI.cs -> InitialiseSideTabs: Subordinates CACHED data used{0}", "\n");
                     }
                     else
                     {
@@ -363,7 +365,7 @@ public class ModalTabbedUI : MonoBehaviour
                                 arrayOfSubordinates = new Actor[numOfSideTabs];
                                 Array.Copy(arrayOfActorsTemp, arrayOfSubordinates, numOfSideTabs);
                             }
-                            /*Debug.LogFormat("[Tst] ModalTabbedUI.cs -> InitialiseSideTabs: Subordinates Generated data used{0}", "\n");*/
+                            Debug.LogFormat("[Tst] ModalTabbedUI.cs -> InitialiseSideTabs: Subordinates Generated data used{0}", "\n");
                         }
                         else
                         {
@@ -512,47 +514,50 @@ public class ModalTabbedUI : MonoBehaviour
     /// </summary>
     private void SetTabbedUI(TabbedUIData details)
     {
-        if (details != null)
+        if (isActive == false)
         {
-            bool errorFlag = false;
-            //set modal status
-            GameManager.i.guiScript.SetIsBlocked(true, details.modalLevel);
-            //store data
-            inputData = details;
-            //initialise actorSetIndex
-            currentSetIndex = (int)details.who;
-            //initialise (order is important as InitialiseTabbedUI clears arrays that are filled with cached data in InitialiseSideTabs)
-            InitialiseTabbedUI(details);
-            OpenActorSet(details.who);
-            //tooltips off
-            GameManager.i.guiScript.SetTooltipsOff();
-            //activate main panel
-            tabbedObjectMain.SetActive(true);
-            //Activate main canvas -> last
-            tabbedCanvasMain.gameObject.SetActive(true);
-            //update button
-            UpdateControllerButton(details.who);
-
-            //error outcome message if there is a problem
-            if (errorFlag == true)
+            if (details != null)
             {
-                tabbedObjectMain.SetActive(false);
-                //create an outcome window to notify player
-                ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-                outcomeDetails.textTop = "There has been a hiccup and the information isn't available";
-                outcomeDetails.textBottom = "Sit tight, Thunderbirds are GO!";
-                outcomeDetails.side = details.side;
-                EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ModalInventoryUI.cs -> SetInventoryUI");
+                bool errorFlag = false;
+                //set modal status
+                GameManager.i.guiScript.SetIsBlocked(true, details.modalLevel);
+                //store data
+                inputData = details;
+                //initialise actorSetIndex
+                currentSetIndex = (int)details.who;
+                //initialise (order is important as InitialiseTabbedUI clears arrays that are filled with cached data in InitialiseSideTabs)
+                InitialiseTabbedUI(details);
+                //tooltips off
+                GameManager.i.guiScript.SetTooltipsOff();
+                //activate main panel
+                tabbedObjectMain.SetActive(true);
+                //Activate main canvas -> last
+                tabbedCanvasMain.gameObject.SetActive(true);
+                //Initialise selected set (do so AFTER main canvas activated, not before, otherwise controller button won't highlight for the specified actor set)
+                OpenActorSet(details.who);
+                //error outcome message if there is a problem
+                if (errorFlag == true)
+                {
+                    tabbedObjectMain.SetActive(false);
+                    //create an outcome window to notify player
+                    ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+                    outcomeDetails.textTop = "There has been a hiccup and the information isn't available";
+                    outcomeDetails.textBottom = "Sit tight, Thunderbirds are GO!";
+                    outcomeDetails.side = details.side;
+                    EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ModalInventoryUI.cs -> SetInventoryUI");
+                }
+                else
+                {
+                    //all good, set modal status
+                    isActive = true;
+                    ModalStateData package = new ModalStateData() { mainState = ModalSubState.InfoDisplay, infoState = ModalInfoSubState.TabbedUI };
+                    GameManager.i.inputScript.SetModalState(package);
+                    Debug.LogFormat("[UI] ModalTabbedUI.cs -> SetTabbedUI{0}", "\n");
+                }
             }
-            else
-            {
-                //all good, set modal status
-                ModalStateData package = new ModalStateData() { mainState = ModalSubState.InfoDisplay, infoState = ModalInfoSubState.TabbedUI };
-                GameManager.i.inputScript.SetModalState(package);
-                Debug.LogFormat("[UI] ModalTabbedUI.cs -> SetTabbedUI{0}", "\n");
-            }
+            else { Debug.LogError("Invalid TabbedUIData (Null)"); }
         }
-        else { Debug.LogError("Invalid TabbedUIData (Null)"); }
+        else { Debug.LogWarning("ModalTabbedUI.cs can't be opened as already ACTIVE -> Info only"); }
     }
     #endregion
 
@@ -577,6 +582,8 @@ public class ModalTabbedUI : MonoBehaviour
         GameManager.i.tooltipHelpScript.CloseTooltip("ModalTabbedUI.cs -> CloseTabbedUI");
         //set game state
         GameManager.i.inputScript.ResetStates(inputData.modalState);
+        //set inactive
+        isActive = false;
         Debug.LogFormat("[UI] ModalTabbedUI.cs -> CloseTabbedUI{0}", "\n");
     }
     #endregion
