@@ -348,7 +348,7 @@ public class ModalTabbedUI : MonoBehaviour
                         { InitialiseSubordinate(arrayOfSubordinates); }
                         else
                         { textActorName.text = ""; }
-                        Debug.LogFormat("[Tst] ModalTabbedUI.cs -> InitialiseSideTabs: Subordinates CACHED data used{0}", "\n");
+                        /*Debug.LogFormat("[Tst] ModalTabbedUI.cs -> InitialiseSideTabs: Subordinates CACHED data used{0}", "\n");*/
                     }
                     else
                     {
@@ -365,7 +365,7 @@ public class ModalTabbedUI : MonoBehaviour
                                 arrayOfSubordinates = new Actor[numOfSideTabs];
                                 Array.Copy(arrayOfActorsTemp, arrayOfSubordinates, numOfSideTabs);
                             }
-                            Debug.LogFormat("[Tst] ModalTabbedUI.cs -> InitialiseSideTabs: Subordinates Generated data used{0}", "\n");
+                            /*Debug.LogFormat("[Tst] ModalTabbedUI.cs -> InitialiseSideTabs: Subordinates Generated data used{0}", "\n");*/
                         }
                         else
                         {
@@ -534,7 +534,7 @@ public class ModalTabbedUI : MonoBehaviour
                 //Activate main canvas -> last
                 tabbedCanvasMain.gameObject.SetActive(true);
                 //Initialise selected set (do so AFTER main canvas activated, not before, otherwise controller button won't highlight for the specified actor set)
-                OpenActorSet(details.who);
+                OpenActorSet(details.who, false);
                 //error outcome message if there is a problem
                 if (errorFlag == true)
                 {
@@ -632,9 +632,10 @@ public class ModalTabbedUI : MonoBehaviour
 
     /// <summary>
     /// Open a new actor set, eg. Subordinates/Player/HQ/Reserves. Assumed that TabbedUI is already open
+    /// 'isResetSlotID' will set slotID to 0 if true and retain the original value, if false
     /// </summary>
     /// <param name="who"></param>
-    private void OpenActorSet(TabbedUIWho who)
+    private void OpenActorSet(TabbedUIWho who, bool isResetSlotID = true)
     {
         switch (who)
         {
@@ -643,7 +644,8 @@ public class ModalTabbedUI : MonoBehaviour
             case TabbedUIWho.HQ:
             case TabbedUIWho.Reserves:
                 inputData.who = who;
-                inputData.slotID = 0;
+                if (isResetSlotID == true)
+                { inputData.slotID = 0; }
                 currentSetIndex = (int)who;
                 InitialiseSideTabs();
                 break;

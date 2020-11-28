@@ -5104,6 +5104,31 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
+    /// returns position of actor in OnMap line up, eg. actor.slotID 3 may be position 2 if there is a vacant slot in slotID 0, 1 or 2, for example
+    /// returns literal position from the left, ignoring any vacant actor slots. Zero based. Returns 0 if a problem
+    /// </summary>
+    /// <param name="slotID"></param>
+    /// <returns></returns>
+    public int GetActorPosition(int slotID, GlobalSide side)
+    {
+        int position = 0;
+        if (slotID > -1 && slotID < GameManager.i.actorScript.maxNumOfOnMapActors)
+        {
+            if (slotID > 0)
+            {
+                for (int i = 0; i < slotID; i++)
+                {
+                    if (CheckActorSlotStatus(i, side) == true)
+                    { position++; }
+                }
+            }
+        }
+        else { Debug.LogWarningFormat("Invalid slotID \"{0}\"", slotID); }
+        return position;
+    }
+
+
+    /// <summary>
     /// returns a specific actor's action
     /// </summary>
     /// <param name="slotID"></param>

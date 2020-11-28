@@ -41,7 +41,7 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                         {
                             side = playerSide,
                             who = TabbedUIWho.Subordinates,
-                            slotID = actorSlotID,
+                            slotID = GameManager.i.dataScript.GetActorPosition(actorSlotID, playerSide),
                         };
                         EventManager.i.PostNotification(EventType.TabbedOpen, this, tabbedDetails, "ActorClickUI.cs -> OnPointerClick");
                         break;
