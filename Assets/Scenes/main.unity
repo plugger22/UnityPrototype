@@ -30786,7 +30786,7 @@ MonoBehaviour:
   buttonHq: {fileID: 1405302196}
   buttonReserves: {fileID: 975017294}
   buttonHelpClose: {fileID: 951819137}
-  innteractCancel: {fileID: 291513079}
+  interactClose: {fileID: 291513079}
   interactSubordinates: {fileID: 1010369050}
   interactPlayer: {fileID: 895567715}
   interactHq: {fileID: 1405302195}

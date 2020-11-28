@@ -3,7 +3,6 @@ using modalAPI;
 using packageAPI;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,7 +37,7 @@ public class ModalTabbedUI : MonoBehaviour
     public Button buttonHelpClose;
 
     [Header("Button Interactions")]
-    public ButtonInteraction innteractCancel;
+    public ButtonInteraction interactClose;
     public ButtonInteraction interactSubordinates;
     public ButtonInteraction interactPlayer;
     public ButtonInteraction interactHq;
@@ -141,8 +140,8 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tabbedObjectMain != null, "Invalid tabbedObjectMain (Null)");
         Debug.Assert(backgroundImage != null, "Invalid backgroundImage (Null)");
         //button interactions
-        if (innteractCancel != null) { innteractCancel.SetButton(EventType.TabbedClose); }
-        else { Debug.LogError("Invalid interactCancal (Null)"); }
+        if (interactClose != null) { interactClose.SetButton(EventType.TabbedClose); }
+        else { Debug.LogError("Invalid interactClose (Null)"); }
         if (interactSubordinates != null) { interactSubordinates.SetButton(EventType.TabbedSubordinates); }
         else { Debug.LogError("Invalid interactSubordinates (Null)"); }
         if (interactPlayer != null) { interactPlayer.SetButton(EventType.TabbedPlayer); }
@@ -267,21 +266,21 @@ public class ModalTabbedUI : MonoBehaviour
             case EventType.TabbedSubordinates:
                 inputData.who = TabbedUIWho.Subordinates;
                 inputData.slotID = 0;
-                InitialiseSideTabs(inputData);
+                OpenActorSet(TabbedUIWho.Subordinates);
                 break;
             case EventType.TabbedPlayer:
                 inputData.who = TabbedUIWho.Player;
-                InitialiseSideTabs(inputData);
+                InitialiseSideTabs();
                 break;
             case EventType.TabbedHq:
                 inputData.who = TabbedUIWho.HQ;
                 inputData.slotID = 0;
-                InitialiseSideTabs(inputData);
+                InitialiseSideTabs();
                 break;
             case EventType.TabbedReserves:
                 inputData.who = TabbedUIWho.Reserves;
                 inputData.slotID = 0;
-                InitialiseSideTabs(inputData);
+                InitialiseSideTabs();
                 break;
             case EventType.TabbedUpArrow:
                 ExecuteUpArrow();
@@ -316,7 +315,7 @@ public class ModalTabbedUI : MonoBehaviour
     /// </summary>
     private void InitialiseTabbedUI(TabbedUIData data)
     {
-        //clear out cached data
+        //Start with a clean slate -> empty out cached data
         if (arrayOfSubordinates != null) { Array.Clear(arrayOfSubordinates, 0, arrayOfSubordinates.Length); }
         if (arrayOfReserves != null) { Array.Clear(arrayOfReserves, 0, arrayOfReserves.Length); }
         if (arrayOfHq != null) { Array.Clear(arrayOfHq, 0, arrayOfHq.Length); }
@@ -328,7 +327,7 @@ public class ModalTabbedUI : MonoBehaviour
     /// Updates side tabs when necessary
     /// </summary>
     /// <param name=""></param>
-    private void InitialiseSideTabs(TabbedUIData data)
+    private void InitialiseSideTabs()
     {
         int index = 0;
         if (arrayOfSideTabItems[index] != null)
@@ -336,7 +335,7 @@ public class ModalTabbedUI : MonoBehaviour
             //clear out actor array
             Array.Clear(arrayOfActorsTemp, 0, arrayOfActorsTemp.Length);
             //Update sideTabs for required actor set
-            switch (data.who)
+            switch (inputData.who)
             {
                 case TabbedUIWho.Subordinates:
                     //Cached data available
@@ -352,17 +351,17 @@ public class ModalTabbedUI : MonoBehaviour
                     else
                     {
                         //Generate Data -> check how many actors OnMap
-                        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsVariable(data.side);
-                        numOfSideTabs = arrayOfActors.Length;
+                        arrayOfActorsTemp = GameManager.i.dataScript.GetCurrentActorsVariable(inputData.side);
+                        numOfSideTabs = arrayOfActorsTemp.Length;
                         if (numOfSideTabs > 0)
                         {
-                            InitialiseSubordinate(arrayOfActors);
+                            InitialiseSubordinate(arrayOfActorsTemp);
                             //store Cached data
                             if (arrayOfSubordinates == null)
                             {
                                 //initialise cached Subordinates array
                                 arrayOfSubordinates = new Actor[numOfSideTabs];
-                                Array.Copy(arrayOfActors, arrayOfSubordinates, numOfSideTabs);
+                                Array.Copy(arrayOfActorsTemp, arrayOfSubordinates, numOfSideTabs);
                             }
                             /*Debug.LogFormat("[Tst] ModalTabbedUI.cs -> InitialiseSideTabs: Subordinates Generated data used{0}", "\n");*/
                         }
@@ -397,7 +396,7 @@ public class ModalTabbedUI : MonoBehaviour
                         numOfSideTabs = GameManager.i.dataScript.CheckNumOfActorsInReserve();
                         if (numOfSideTabs > 0)
                         {
-                            List<int> listOfActors = GameManager.i.dataScript.GetListOfReserveActors(data.side);
+                            List<int> listOfActors = GameManager.i.dataScript.GetListOfReserveActors(inputData.side);
                             if (listOfActors != null)
                             {
                                 InitialiseReserves(listOfActors);
@@ -410,7 +409,7 @@ public class ModalTabbedUI : MonoBehaviour
                                 }
                                 /*Debug.LogFormat("[Tst] ModalTabbedUI.cs -> InitialiseSideTabs: Reserves Generated data used{0}", "\n");*/
                             }
-                            else { Debug.LogErrorFormat("Invalid listOfReserveActors (Null) for \"{0}\"", data.side); }
+                            else { Debug.LogErrorFormat("Invalid listOfReserveActors (Null) for \"{0}\"", inputData.side); }
                         }
                         else
                         {
@@ -481,7 +480,7 @@ public class ModalTabbedUI : MonoBehaviour
                         else { Debug.LogError("Invalid listOfHqHierarchyActors (Null)"); }
                     }
                     break;
-                default: Debug.LogWarningFormat("Unrecognised TabbedUIWho \"{0}\"", data.who); break;
+                default: Debug.LogWarningFormat("Unrecognised TabbedUIWho \"{0}\"", inputData.who); break;
 
             }
 
@@ -503,7 +502,7 @@ public class ModalTabbedUI : MonoBehaviour
         { helpClose.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
         else { Debug.LogWarning("Invalid listOfHelp for helpMain (Null)"); }
     }
-    
+
     #endregion
 
 
@@ -524,16 +523,15 @@ public class ModalTabbedUI : MonoBehaviour
             currentSetIndex = (int)details.who;
             //initialise (order is important as InitialiseTabbedUI clears arrays that are filled with cached data in InitialiseSideTabs)
             InitialiseTabbedUI(details);
-            InitialiseSideTabs(details);
+            OpenActorSet(details.who);
             //tooltips off
             GameManager.i.guiScript.SetTooltipsOff();
             //activate main panel
             tabbedObjectMain.SetActive(true);
-
-
             //Activate main canvas -> last
             tabbedCanvasMain.gameObject.SetActive(true);
-
+            //update button
+            UpdateControllerButton(details.who);
 
             //error outcome message if there is a problem
             if (errorFlag == true)
@@ -548,7 +546,7 @@ public class ModalTabbedUI : MonoBehaviour
             }
             else
             {
-                //all good, inventory window displayed
+                //all good, set modal status
                 ModalStateData package = new ModalStateData() { mainState = ModalSubState.InfoDisplay, infoState = ModalInfoSubState.TabbedUI };
                 GameManager.i.inputScript.SetModalState(package);
                 Debug.LogFormat("[UI] ModalTabbedUI.cs -> SetTabbedUI{0}", "\n");
@@ -567,6 +565,10 @@ public class ModalTabbedUI : MonoBehaviour
     {
         tabbedCanvasMain.gameObject.SetActive(false);
         tabbedObjectMain.SetActive(false);
+        //null out cached data (otherwise arrays will be empty but still valid and new data won't be generated next time UI opened)
+        arrayOfSubordinates = null;
+        arrayOfReserves = null;
+        arrayOfHq = null;
         //clear but not if sitting on top of another UI element, eg. InventoryUI (HQ / Reserve actors)
         GameManager.i.guiScript.SetIsBlocked(false, inputData.modalLevel);
         //close generic tooltip (safety check)
@@ -635,9 +637,26 @@ public class ModalTabbedUI : MonoBehaviour
             case TabbedUIWho.Reserves:
                 inputData.who = who;
                 inputData.slotID = 0;
-                InitialiseSideTabs(inputData);
                 currentSetIndex = (int)who;
-            break;
+                InitialiseSideTabs();
+                break;
+            default: Debug.LogWarningFormat("Unrecognised who \"{0}\"", who); break;
+        }
+        UpdateControllerButton(who);
+    }
+
+    /// <summary>
+    /// selects specified button (shows as highlighted). Other button automatically deselected
+    /// </summary>
+    /// <param name="who"></param>
+    private void UpdateControllerButton(TabbedUIWho who)
+    {
+        switch (who)
+        {
+            case TabbedUIWho.Subordinates: buttonSubordinates.Select(); break;
+            case TabbedUIWho.Player: buttonPlayer.Select(); break;
+            case TabbedUIWho.HQ: buttonHq.Select(); break;
+            case TabbedUIWho.Reserves: buttonReserves.Select(); break;
             default: Debug.LogWarningFormat("Unrecognised who \"{0}\"", who); break;
         }
     }
@@ -977,6 +996,14 @@ public class ModalTabbedUI : MonoBehaviour
             arrayOfSideTabItems[index].portrait.color = portraitColor;
             arrayOfSideTabItems[index].background.color = backgroundColor;
         }
+    }
+
+    /// <summary>
+    /// clear out cached data
+    /// </summary>
+    private void ClearCachedData()
+    {
+
     }
 
     #endregion
