@@ -739,7 +739,7 @@ public class ModalTabbedUI : MonoBehaviour
             else
             {
                 //roll over
-                currentSideTabIndex = 0;
+                currentSetIndex = 0;
                 OpenActorSet((TabbedUIWho)currentSetIndex); ;
             }
         }
