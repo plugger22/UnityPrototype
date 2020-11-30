@@ -267,22 +267,25 @@ public class ModalTabbedUI : MonoBehaviour
                 break;
             case EventType.TabbedSubordinates:
                 inputData.who = TabbedUIWho.Subordinates;
-                inputData.slotID = 0;
+                /*inputData.slotID = 0;*/
                 OpenActorSet(TabbedUIWho.Subordinates);
                 break;
             case EventType.TabbedPlayer:
                 inputData.who = TabbedUIWho.Player;
-                InitialiseSideTabs();
+                /*InitialiseSideTabs();*/
+                OpenActorSet(TabbedUIWho.Player);
                 break;
             case EventType.TabbedHq:
                 inputData.who = TabbedUIWho.HQ;
-                inputData.slotID = 0;
-                InitialiseSideTabs();
+                /*inputData.slotID = 0;
+                InitialiseSideTabs();*/
+                OpenActorSet(TabbedUIWho.HQ);
                 break;
             case EventType.TabbedReserves:
                 inputData.who = TabbedUIWho.Reserves;
-                inputData.slotID = 0;
-                InitialiseSideTabs();
+                /*inputData.slotID = 0;
+                InitialiseSideTabs();*/
+                OpenActorSet(TabbedUIWho.Reserves);
                 break;
             case EventType.TabbedUpArrow:
                 ExecuteUpArrow();
@@ -689,6 +692,8 @@ public class ModalTabbedUI : MonoBehaviour
                 currentSideTabIndex = numOfSideTabs - 1;
                 OpenSideTab(currentSideTabIndex);
             }
+            //highlight actorSet
+            UpdateControllerButton(inputData.who);
         }
     }
 
@@ -711,6 +716,8 @@ public class ModalTabbedUI : MonoBehaviour
                 currentSideTabIndex = 0;
                 OpenSideTab(currentSideTabIndex);
             }
+            //highlight actorSet
+            UpdateControllerButton(inputData.who);
         }
     }
 
@@ -1007,13 +1014,7 @@ public class ModalTabbedUI : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// clear out cached data
-    /// </summary>
-    private void ClearCachedData()
-    {
 
-    }
 
     #endregion
 
