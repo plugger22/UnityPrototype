@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// handles Actor tab interaction for TabbedUI
+/// handles Actor Side tab interaction for TabbedUI
 /// </summary>
 public class TabbedInteraction : MonoBehaviour
 {

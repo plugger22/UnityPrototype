@@ -175,6 +175,7 @@ public enum EventType
     TabbedLeftArrow,
     TabbedPageUp,
     TabbedPageDown,
+    TabbedOpenPage,
     //Main Info
     MainInfoOpen,
     MainInfoOpenInterim,

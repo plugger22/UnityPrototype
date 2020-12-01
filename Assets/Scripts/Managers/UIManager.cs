@@ -63,4 +63,12 @@ public class UIManager : MonoBehaviour
     public Color TabbedSideTabActive;
     [Tooltip("Dormant side tab colour")]
     public Color TabbedSideTabDormant;
+    [Tooltip("Active top tab colour")]
+    public Color TabbedTopTabActive;
+    [Tooltip("Dormant top tab colour")]
+    public Color TabbedTopTabDormant;
+    [Tooltip("Active Top and Controller text colour")]
+    public Color TabbedTextActive;
+    [Tooltip("Dormant Top and Controller text colour")]
+    public Color TabbedTextDormant;
 }
