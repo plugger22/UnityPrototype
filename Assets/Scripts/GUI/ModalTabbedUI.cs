@@ -58,6 +58,7 @@ public class ModalTabbedUI : MonoBehaviour
 
     [Header("Texts")]
     public TextMeshProUGUI textActorName;
+    public TextMeshProUGUI textPageMain;
 
     //help
     private GenericHelpTooltipUI helpClose;
@@ -193,6 +194,7 @@ public class ModalTabbedUI : MonoBehaviour
         else { Debug.LogError("Invalid buttonHelpClose (Null)"); }
         //texts
         Debug.Assert(textActorName != null, "Invalid textActorName (Null)");
+        Debug.Assert(textPageMain != null, "Invalid textPageMain (Null)");
     }
     #endregion
 
@@ -247,7 +249,12 @@ public class ModalTabbedUI : MonoBehaviour
                 if (interact != null)
                 {
                     if (interact.topTab != null) { arrayOfTopTabImages[i] = interact.topTab; } else { Debug.LogWarningFormat("Invalid interact.topTab (Null) for arrayOfTopTabObjects[{0}]", i); }
-                    if (interact.topTabUI != null) { arrayOfTopTabInteractions[i] = interact.topTabUI; } else { Debug.LogWarningFormat("Invalid interact.topTabUI (Null) for arrayOfTopTabObjects[{0}]", i); }
+                    if (interact.topTabUI != null)
+                    {
+                        arrayOfTopTabInteractions[i] = interact.topTabUI;
+                        arrayOfTopTabInteractions[i].SetTabIndex(i, maxTopTabIndex);
+                    }
+                    else { Debug.LogWarningFormat("Invalid interact.topTabUI (Null) for arrayOfTopTabObjects[{0}]", i); }
                     if (interact.text != null) { arrayOfTopTabTitles[i] = interact.text; } else { Debug.LogWarningFormat("Invalid interact.text (Null) for arrayOfTopTabObjects[{0}]", i); }
                 }
                 else { Debug.LogErrorFormat("Invalid tabbedInteractionTop (Null) for arrayOfTopTabObjects[{0}]", i); }
@@ -757,19 +764,62 @@ public class ModalTabbedUI : MonoBehaviour
         switch (who)
         {
             case TabbedUIWho.Subordinates:
-
+                arrayOfPages[0] = TabbedPage.Main;
+                arrayOfPages[1] = TabbedPage.Personality;
+                arrayOfPages[2] = TabbedPage.Contacts;
+                arrayOfPages[3] = TabbedPage.Secrets;
+                arrayOfPages[4] = TabbedPage.History;
+                maxTopTabIndex = 4;
+                arrayOfTopTabObjects[3].SetActive(true);
+                arrayOfTopTabObjects[4].SetActive(true);
+                arrayOfTopTabTitles[0].text = "Main";
+                arrayOfTopTabTitles[1].text = "Person";
+                arrayOfTopTabTitles[2].text = "Contacts";
+                arrayOfTopTabTitles[3].text = "Secrets";
+                arrayOfTopTabTitles[4].text = "History";
                 break;
             case TabbedUIWho.Player:
-
+                arrayOfPages[0] = TabbedPage.Main;
+                arrayOfPages[1] = TabbedPage.Personality;
+                arrayOfPages[2] = TabbedPage.Likes;
+                arrayOfPages[3] = TabbedPage.Investigations;
+                arrayOfPages[4] = TabbedPage.History;
+                maxTopTabIndex = 4;
+                arrayOfTopTabObjects[3].SetActive(true);
+                arrayOfTopTabObjects[4].SetActive(true);
+                arrayOfTopTabTitles[0].text = "Main";
+                arrayOfTopTabTitles[1].text = "Person";
+                arrayOfTopTabTitles[2].text = "Likes";
+                arrayOfTopTabTitles[3].text = "Invest";
+                arrayOfTopTabTitles[4].text = "History";
                 break;
             case TabbedUIWho.HQ:
-
+                arrayOfPages[0] = TabbedPage.Main;
+                arrayOfPages[1] = TabbedPage.Personality;
+                arrayOfPages[2] = TabbedPage.History;
+                arrayOfTopTabObjects[3].SetActive(false);
+                arrayOfTopTabObjects[4].SetActive(false);
+                maxTopTabIndex = 2;
+                arrayOfTopTabTitles[0].text = "Main";
+                arrayOfTopTabTitles[1].text = "Person";
+                arrayOfTopTabTitles[2].text = "History";
                 break;
             case TabbedUIWho.Reserves:
-
+                arrayOfPages[0] = TabbedPage.Main;
+                arrayOfPages[1] = TabbedPage.Personality;
+                arrayOfPages[2] = TabbedPage.History;
+                arrayOfTopTabObjects[3].SetActive(false);
+                arrayOfTopTabObjects[4].SetActive(false);
+                maxTopTabIndex = 2;
+                arrayOfTopTabTitles[0].text = "Main";
+                arrayOfTopTabTitles[1].text = "Person";
+                arrayOfTopTabTitles[2].text = "History";
                 break;
             default: Debug.LogWarningFormat("Unrecognised who \"{0}\"", who); break;
         }
+        //default to first tab (current tab may no longer be present, so always go back to first on changing actorSet)
+        currentTopTabIndex = 0;
+        UpdateTopTabs(0);
     }
 
     /// <summary>
@@ -818,24 +868,32 @@ public class ModalTabbedUI : MonoBehaviour
     /// <param name="top"></param>
     private void UpdateTopTabs(int tabIndex)
     {
-        //Update active/dormant tabs
-        for (int i = 0; i < numOfTopTabs; i++)
+        if (tabIndex > -1)
         {
-            if (i == tabIndex)
+            //Update active/dormant tabs
+            for (int i = 0; i < numOfTopTabs; i++)
             {
-                //active
-                arrayOfTopTabImages[i].color = topTabActiveColour;
-                arrayOfTopTabTitles[i].color = tabTextActiveColour;
+                if (i == tabIndex)
+                {
+                    //active
+                    arrayOfTopTabImages[i].color = topTabActiveColour;
+                    arrayOfTopTabTitles[i].color = tabTextActiveColour;
+                }
+                else
+                {
+                    //dormant
+                    arrayOfTopTabImages[i].color = topTabDormantColour;
+                    arrayOfTopTabTitles[i].color = tabTextDormantColour;
+                }
             }
-            else
-            {
-                //dormant
-                arrayOfTopTabImages[i].color = topTabDormantColour;
-                arrayOfTopTabTitles[i].color = tabTextDormantColour;
-            }
+            //update index (required for when player directly clicks on a tab)
+            currentTopTabIndex = tabIndex;
+            //main page text
+            textPageMain.text = Convert.ToString(arrayOfPages[tabIndex]);
+            //actorSet
+            UpdateControllerButton((TabbedUIWho)currentSetIndex);
         }
-        //update index (required for when player directly clicks on a tab)
-        currentTopTabIndex = tabIndex;
+        else { Debug.LogWarning("Invalid tabIndex (-1)"); }
     }
 
     /// <summary>

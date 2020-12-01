@@ -70,7 +70,7 @@
     public enum TabbedUISide { Tab0, Tab1, Tab2, Tab3, Count}                                       //ModalTabbedUI side tabs. NOTE order needs to correspond to UI (arrays keyed off this)
     public enum TabbedUIWho { Subordinates, Player, HQ, Reserves, Count }                           //who the tabbedUI is to be setUp for. NOTE order needs to correspond to UI (code keyed off this)
     public enum TabbedUITop { Tab0, Tab1, Tab2, Tab3, Tab4, Count}                                  //ModalTabbedUI top tabs. NOTE order needs to correspond to UI (arrays keyed off this)
-    public enum TabbedPage { Main, Personality, History0, History1, Contacts, Secrets, Investigations, Likes }  //list of all possible pages (which ones vary by actorSet)
+    public enum TabbedPage { Main, Personality, History, Contacts, Secrets, Investigations, Likes }  //list of all possible pages (which ones vary by actorSet)
 
     //
     // - - - Connections - - - 
