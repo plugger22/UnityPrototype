@@ -1779,3 +1779,48 @@ ModalTabbedUI.UpdateTopTabs (System.Int32 tabIndex) (at Assets/Scripts/GUI/Modal
 	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
 	UnityEngine.EventSystems.EventSystem:Update()
 	
+Dev seed 25530 -> Tuesday, 1 December 2020 2:48 PM
+City seed 32609 -> Londus, Eurasia
+WARNING ModalTabbedUI.cs can't be opened as already ACTIVE -> Info only
+UnityEngine.Debug:LogWarning(Object)
+	ModalTabbedUI:SetTabbedUI(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:625)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:319)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:341)
+	ActorClickUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Actor/ActorClickUI.cs:46)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 36795 -> Tuesday, 1 December 2020 2:53 PM
+City seed 46980 -> Londus, Eurasia
+
+Dev seed 45314 -> Tuesday, 1 December 2020 2:56 PM
+City seed 5337 -> Londus, Eurasia
+
+Dev seed 55625 -> Tuesday, 1 December 2020 3:06 PM
+City seed 59925 -> Londus, Eurasia
+
+Dev seed 55832 -> Tuesday, 1 December 2020 3:10 PM
+City seed 29767 -> Londus, Eurasia
+
+Dev seed 52419 -> Tuesday, 1 December 2020 3:12 PM
+City seed 20675 -> Londus, Eurasia
+
+Dev seed 15846 -> Tuesday, 1 December 2020 3:13 PM
+City seed 45522 -> Londus, Eurasia
+
+Dev seed 47953 -> Tuesday, 1 December 2020 3:14 PM
+City seed 47200 -> Londus, Eurasia
+
+Dev seed 41813 -> Tuesday, 1 December 2020 3:15 PM
+City seed 33928 -> Londus, Eurasia
+
+Dev seed 33189 -> Tuesday, 1 December 2020 3:17 PM
+City seed 3803 -> Londus, Eurasia
+
+Dev seed 43942 -> Tuesday, 1 December 2020 3:18 PM
+City seed 37545 -> Londus, Eurasia
+
+Dev seed 48132 -> Tuesday, 1 December 2020 3:20 PM
+City seed 30704 -> Londus, Eurasia
+
+Dev seed 51046 -> Tuesday, 1 December 2020 3:22 PM
+City seed 6784 -> Londus, Eurasia

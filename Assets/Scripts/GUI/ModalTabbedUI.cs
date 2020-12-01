@@ -40,6 +40,12 @@ public class ModalTabbedUI : MonoBehaviour
     public Button buttonHq;
     public Button buttonReserves;
 
+    [Header("Controller Texts")]
+    public TextMeshProUGUI textSubordinates;
+    public TextMeshProUGUI textPlayer;
+    public TextMeshProUGUI textHq;
+    public TextMeshProUGUI textReserves;
+
     [Header("Help Buttons")]
     public Button buttonHelpClose;
 
@@ -174,6 +180,10 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(buttonPlayer != null, "Invalid buttonPlayer (Null)");
         Debug.Assert(buttonHq != null, "Invalid buttonHq (Null)");
         Debug.Assert(buttonReserves != null, "Invalid buttonReserves (Null)");
+        Debug.Assert(textSubordinates != null, "Invalid textSubordinates (Null)");
+        Debug.Assert(textPlayer != null, "Invalid textPlayer (Null)");
+        Debug.Assert(textHq != null, "Invalid textHq (Null)");
+        Debug.Assert(textReserves != null, "Invalid textReserves (Null)");
         //help
         if (buttonHelpClose != null)
         {
@@ -232,29 +242,15 @@ public class ModalTabbedUI : MonoBehaviour
         {
             if (arrayOfTopTabObjects[i] != null)
             {
-                Image tabImage = arrayOfTopTabObjects[i].GetComponent<Image>();
-                arrayOfTopTabImages[i] = tabImage;
-                if (arrayOfTopTabImages[i] != null)
+                //populate top tab component arrays
+                TabbedInteractionTop interact = arrayOfTopTabObjects[i].GetComponent<TabbedInteractionTop>();
+                if (interact != null)
                 {
-                    //set tabs to dormant
-                    arrayOfTopTabImages[i].color = topTabDormantColour;
+                    if (interact.topTab != null) { arrayOfTopTabImages[i] = interact.topTab; } else { Debug.LogWarningFormat("Invalid interact.topTab (Null) for arrayOfTopTabObjects[{0}]", i); }
+                    if (interact.topTabUI != null) { arrayOfTopTabInteractions[i] = interact.topTabUI; } else { Debug.LogWarningFormat("Invalid interact.topTabUI (Null) for arrayOfTopTabObjects[{0}]", i); }
+                    if (interact.text != null) { arrayOfTopTabTitles[i] = interact.text; } else { Debug.LogWarningFormat("Invalid interact.text (Null) for arrayOfTopTabObjects[{0}]", i); }
                 }
-                else { Debug.LogErrorFormat("Invalid tabImage (Null) for arrayOfTopTabObjects[{0}]", i); }
-                //Interaction component
-                TabbedTopTabUI topTab = arrayOfTopTabObjects[i].GetComponent<TabbedTopTabUI>();
-                if (topTab != null)
-                {
-                    arrayOfTopTabInteractions[i] = topTab;
-                    //initialise indexes
-                    topTab.SetTabIndex(i, maxTopTabIndex);
-                }
-                else { Debug.LogErrorFormat("Invalid TabbedTopTabUI (Null) for arrayOfTopTabObjects[{0}]", i); }
-                //Text component
-                TextMeshProUGUI tabText = arrayOfTopTabObjects[i].GetComponent<TextMeshProUGUI>();
-                if (tabText != null)
-                { arrayOfTopTabTitles[i] = tabText; }
-                else { Debug.LogErrorFormat("Invalid tabText (Null) for arrayOfTopTabObjects[{0}]", i); }
-
+                else { Debug.LogErrorFormat("Invalid tabbedInteractionTop (Null) for arrayOfTopTabObjects[{0}]", i); }
             }
             else { Debug.LogErrorFormat("Invalid TopTabObject (Null) for arrayOfTopTabObjects[{0}]", i); }
         }
@@ -744,11 +740,36 @@ public class ModalTabbedUI : MonoBehaviour
                 if (isResetSlotID == true)
                 { inputData.slotID = 0; }
                 currentSetIndex = (int)who;
+                InitialiseTopTabs(who);
                 InitialiseSideTabs();
                 break;
             default: Debug.LogWarningFormat("Unrecognised who \"{0}\"", who); break;
         }
         UpdateControllerButton(who);
+    }
+
+    /// <summary>
+    /// Sets up top tabs and arrays whenever a new actorSet is opened
+    /// </summary>
+    /// <param name="who"></param>
+    private void InitialiseTopTabs(TabbedUIWho who)
+    {
+        switch (who)
+        {
+            case TabbedUIWho.Subordinates:
+
+                break;
+            case TabbedUIWho.Player:
+
+                break;
+            case TabbedUIWho.HQ:
+
+                break;
+            case TabbedUIWho.Reserves:
+
+                break;
+            default: Debug.LogWarningFormat("Unrecognised who \"{0}\"", who); break;
+        }
     }
 
     /// <summary>
@@ -759,10 +780,34 @@ public class ModalTabbedUI : MonoBehaviour
     {
         switch (who)
         {
-            case TabbedUIWho.Subordinates: buttonSubordinates.Select(); break;
-            case TabbedUIWho.Player: buttonPlayer.Select(); break;
-            case TabbedUIWho.HQ: buttonHq.Select(); break;
-            case TabbedUIWho.Reserves: buttonReserves.Select(); break;
+            case TabbedUIWho.Subordinates:
+                buttonSubordinates.Select();
+                textSubordinates.color = tabTextActiveColour;
+                textPlayer.color = tabTextDormantColour;
+                textHq.color = tabTextDormantColour;
+                textReserves.color = tabTextDormantColour;
+                break;
+            case TabbedUIWho.Player:
+                buttonPlayer.Select();
+                textSubordinates.color = tabTextDormantColour;
+                textPlayer.color = tabTextActiveColour;
+                textHq.color = tabTextDormantColour;
+                textReserves.color = tabTextDormantColour;
+                break;
+            case TabbedUIWho.HQ:
+                buttonHq.Select();
+                textSubordinates.color = tabTextDormantColour;
+                textPlayer.color = tabTextDormantColour;
+                textHq.color = tabTextActiveColour;
+                textReserves.color = tabTextDormantColour;
+                break;
+            case TabbedUIWho.Reserves:
+                buttonReserves.Select();
+                textSubordinates.color = tabTextDormantColour;
+                textPlayer.color = tabTextDormantColour;
+                textHq.color = tabTextDormantColour;
+                textReserves.color = tabTextActiveColour;
+                break;
             default: Debug.LogWarningFormat("Unrecognised who \"{0}\"", who); break;
         }
     }
