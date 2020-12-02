@@ -71,4 +71,6 @@ public class UIManager : MonoBehaviour
     public Color TabbedTextActive;
     [Tooltip("Dormant Top and Controller text colour")]
     public Color TabbedTextDormant;
+    [Tooltip("Sub header background sprite colour, eg. Status, Friends and Enemies")]
+    public Color TabbedSubHeader;
 }

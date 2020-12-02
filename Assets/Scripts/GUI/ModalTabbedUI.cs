@@ -107,6 +107,7 @@ public class ModalTabbedUI : MonoBehaviour
     private Color topTabActiveColour;
     private Color tabTextActiveColour;                                 //top tab and controller button text colours
     private Color tabTextDormantColour;                                //top tab and controller button text colours
+    private Color tabSubHeaderColour;
 
 
     //Input data
@@ -244,6 +245,7 @@ public class ModalTabbedUI : MonoBehaviour
         topTabDormantColour = GameManager.i.uiScript.TabbedTopTabDormant;
         tabTextActiveColour = GameManager.i.uiScript.TabbedTextActive;
         tabTextDormantColour = GameManager.i.uiScript.TabbedTextDormant;
+        tabSubHeaderColour = GameManager.i.uiScript.TabbedSubHeader;
         //Tabs and indexes
         currentTopTabIndex = 0;
         numOfSideTabs = (int)TabbedUISide.Count;
@@ -328,7 +330,11 @@ public class ModalTabbedUI : MonoBehaviour
                 else { Debug.LogErrorFormat("Invalid TabbedInteraction (Null) for arrayOfSideTabObject[{0}]", i); }
             }
         }
-
+        //Sub Header colours
+        tab0PanelStatus.color = tabSubHeaderColour;
+        tab0PanelConflicts.color = tabSubHeaderColour;
+        tab0PanelFriends.color = tabSubHeaderColour;
+        tab0PanelConditions.color = tabSubHeaderColour;
         //Initialisations
         InitialiseTooltips();
     }
