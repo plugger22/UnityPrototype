@@ -71,6 +71,10 @@ public class ModalTabbedUI : MonoBehaviour
     public TextMeshProUGUI tab0ActorName;
     public TextMeshProUGUI tab0ActorTitle;
     public Image tab0ActorImage;
+    public Image tab0PanelStatus;
+    public Image tab0PanelConflicts;
+    public Image tab0PanelFriends;
+    public Image tab0PanelConditions;
 
     //help
     private GenericHelpTooltipUI helpClose;
@@ -218,6 +222,10 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab0ActorName != null, "Invalid tab0ActorName (Null)");
         Debug.Assert(tab0ActorTitle != null, "Invalid tab0ActorTitle (Null)");
         Debug.Assert(tab0ActorImage != null, "Invalid tab0ActorImage (Null)");
+        Debug.Assert(tab0PanelStatus != null, "Invalid tab0PanelStatus (Null)");
+        Debug.Assert(tab0PanelConflicts != null, "Invalid tab0PanelConflicts (Null)");
+        Debug.Assert(tab0PanelFriends != null, "Invalid tab0PanelFriends (Null)");
+        Debug.Assert(tab0PanelConditions != null, "Invalid tab0PanelConditions (Null)");
     }
     #endregion
 
@@ -376,19 +384,15 @@ public class ModalTabbedUI : MonoBehaviour
                 OpenSideTab((int)Param);
                 break;
             case EventType.TabbedSubordinates:
-                inputData.who = TabbedUIWho.Subordinates;
                 OpenActorSet(TabbedUIWho.Subordinates);
                 break;
             case EventType.TabbedPlayer:
-                inputData.who = TabbedUIWho.Player;
                 OpenActorSet(TabbedUIWho.Player);
                 break;
             case EventType.TabbedHq:
-                inputData.who = TabbedUIWho.HQ;
                 OpenActorSet(TabbedUIWho.HQ);
                 break;
             case EventType.TabbedReserves:
-                inputData.who = TabbedUIWho.Reserves;
                 OpenActorSet(TabbedUIWho.Reserves);
                 break;
             case EventType.TabbedUpArrow:
@@ -645,7 +649,7 @@ public class ModalTabbedUI : MonoBehaviour
                 //Activate main canvas -> last
                 tabbedCanvasMain.gameObject.SetActive(true);
                 //Initialise selected set (do so AFTER main canvas activated, not before, otherwise controller button won't highlight for the specified actor set)
-                OpenActorSet(details.who, false);
+                OpenActorSetStart(details.who);
                 //Initialise default main top tab
                 OpenPage(0);
                 //error outcome message if there is a problem
@@ -703,7 +707,6 @@ public class ModalTabbedUI : MonoBehaviour
 
 
     #region Page and Tab Control... 
-
     //
     // - - - Page and Tab control
     //
@@ -715,39 +718,42 @@ public class ModalTabbedUI : MonoBehaviour
     private void OpenSideTab(int tabIndex)
     {
         Debug.AssertFormat(tabIndex > -1 && tabIndex < numOfSideTabs, "Invalid tab index {0}", tabIndex);
-        //reset Active tabs to reflect new status
-
-        /*Color portraitColor, backgroundColor, textColor;*/
-        for (int index = 0; index < numOfSideTabs; index++)
+        //check not opening current side tab
+        if (tabIndex != currentSideTabIndex)
         {
-            portraitColour = arrayOfSideTabItems[index].portrait.color;
-            textSideColour = arrayOfSideTabItems[index].title.color;
-            //activate indicated tab and deactivate the rest
-            if (index == tabIndex)
+            //reset Active tabs to reflect new status
+            for (int index = 0; index < numOfSideTabs; index++)
             {
-                backgroundColour = sideTabActiveColour;
-                portraitColour.a = 1.0f;
-                backgroundColour.a = 1.0f;
-                //textActorName.text = actor.actorName;
-                textActorName.text = GetActorName(tabIndex);
-                textSideColour.a = 1.0f;
+                portraitColour = arrayOfSideTabItems[index].portrait.color;
+                textSideColour = arrayOfSideTabItems[index].title.color;
+                //activate indicated tab and deactivate the rest
+                if (index == tabIndex)
+                {
+                    backgroundColour = sideTabActiveColour;
+                    portraitColour.a = 1.0f;
+                    backgroundColour.a = 1.0f;
+                    //textActorName.text = actor.actorName;
+                    textActorName.text = GetActorName(tabIndex);
+                    textSideColour.a = 1.0f;
+                }
+                else
+                {
+                    backgroundColour = sideTabDormantColour;
+                    portraitColour.a = sideTabAlpha;
+                    backgroundColour.a = sideTabAlpha;
+                    textSideColour.a = 0.5f;
+                }
+                arrayOfSideTabItems[index].portrait.color = portraitColour;
+                arrayOfSideTabItems[index].background.color = backgroundColour;
+                //update text colour (faded if inactive
+                arrayOfSideTabItems[index].title.color = textSideColour;
             }
-            else
-            {
-                backgroundColour = sideTabDormantColour;
-                portraitColour.a = sideTabAlpha;
-                backgroundColour.a = sideTabAlpha;
-                textSideColour.a = 0.5f;
-            }
-            arrayOfSideTabItems[index].portrait.color = portraitColour;
-            arrayOfSideTabItems[index].background.color = backgroundColour;
-            //update text colour (faded if inactive
-            arrayOfSideTabItems[index].title.color = textSideColour;
+            //update index
+            currentSideTabIndex = tabIndex;
+            UpdatePage();
         }
-        //update index
-        currentSideTabIndex = tabIndex;
+        //do so regardless
         UpdateControllerButton(inputData.who);
-        UpdatePage();
     }
 
     /// <summary>
@@ -758,18 +764,22 @@ public class ModalTabbedUI : MonoBehaviour
     {
         if (tabIndex > -1 && tabIndex < numOfTopTabs)
         {
-            //Active/Dormant tabs
-            UpdateTopTabs(tabIndex);
-            //toggle canvases on/off
-            for (int i = 0; i < arrayOfCanvas.Length; i++)
+            //check you're not opening the current page
+            if (tabIndex != currentTopTabIndex)
             {
-                if (i == tabIndex) { arrayOfCanvas[i].gameObject.SetActive(true); }
-                else { arrayOfCanvas[i].gameObject.SetActive(false); }
+                //Active/Dormant tabs
+                UpdateTopTabs(tabIndex);
+                //toggle canvases on/off
+                for (int i = 0; i < arrayOfCanvas.Length; i++)
+                {
+                    if (i == tabIndex) { arrayOfCanvas[i].gameObject.SetActive(true); }
+                    else { arrayOfCanvas[i].gameObject.SetActive(false); }
+                }
+                UpdatePage();
             }
-            UpdatePage();
         }
         else { Debug.LogErrorFormat("Invalid tabIndex \"{0}\" (should be > -1 and < {1})", tabIndex, numOfTopTabs); }
-
+        UpdateControllerButton(inputData.who);
     }
 
     /// <summary>
@@ -783,6 +793,35 @@ public class ModalTabbedUI : MonoBehaviour
                 tab0ActorName.text = GetActorName(currentSideTabIndex);
                 tab0ActorTitle.text = GetActorTitle(currentSideTabIndex);
                 tab0ActorImage.sprite = arrayOfSideTabItems[currentSideTabIndex].portrait.sprite;
+                //RHS panels
+                switch (inputData.who)
+                {
+                    case TabbedUIWho.Subordinates:
+                        tab0PanelStatus.gameObject.SetActive(true);
+                        tab0PanelConflicts.gameObject.SetActive(true);
+                        tab0PanelFriends.gameObject.SetActive(true);
+                        tab0PanelConditions.gameObject.SetActive(true);
+                        break;
+                    case TabbedUIWho.Player:
+                        tab0PanelStatus.gameObject.SetActive(true);
+                        tab0PanelConflicts.gameObject.SetActive(false);
+                        tab0PanelFriends.gameObject.SetActive(false);
+                        tab0PanelConditions.gameObject.SetActive(true);
+                        break;
+                    case TabbedUIWho.HQ:
+                        tab0PanelStatus.gameObject.SetActive(false);
+                        tab0PanelConflicts.gameObject.SetActive(false);
+                        tab0PanelFriends.gameObject.SetActive(false);
+                        tab0PanelConditions.gameObject.SetActive(false);
+                        break;
+                    case TabbedUIWho.Reserves:
+                        tab0PanelStatus.gameObject.SetActive(true);
+                        tab0PanelConflicts.gameObject.SetActive(false);
+                        tab0PanelFriends.gameObject.SetActive(false);
+                        tab0PanelConditions.gameObject.SetActive(true);
+                        break;
+                    default: Debug.LogWarningFormat("Unrecognised inputData.who \"{0}\"", inputData.who); break;
+                }
                 break;
             case 1:
 
@@ -808,6 +847,37 @@ public class ModalTabbedUI : MonoBehaviour
     /// <param name="who"></param>
     private void OpenActorSet(TabbedUIWho who, bool isResetSlotID = true)
     {
+        //check not opening current page
+        if (who != inputData.who)
+        {
+            switch (who)
+            {
+                case TabbedUIWho.Subordinates:
+                case TabbedUIWho.Player:
+                case TabbedUIWho.HQ:
+                case TabbedUIWho.Reserves:
+                    inputData.who = who;
+                    if (isResetSlotID == true)
+                    { inputData.slotID = 0; }
+                    currentSetIndex = (int)who;
+                    InitialiseTopTabs(who);
+                    InitialiseSideTabs();
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised who \"{0}\"", who); break;
+            }
+            UpdatePage();
+        }
+        //do so regardless
+        UpdateControllerButton(who);
+    }
+
+    /// <summary>
+    /// Used at startup to open first actor set (ignores opening current page check)
+    /// </summary>
+    /// <param name="who"></param>
+    /// <param name="isResetSlotID"></param>
+    private void OpenActorSetStart(TabbedUIWho who)
+    {
         switch (who)
         {
             case TabbedUIWho.Subordinates:
@@ -815,16 +885,14 @@ public class ModalTabbedUI : MonoBehaviour
             case TabbedUIWho.HQ:
             case TabbedUIWho.Reserves:
                 inputData.who = who;
-                if (isResetSlotID == true)
-                { inputData.slotID = 0; }
                 currentSetIndex = (int)who;
                 InitialiseTopTabs(who);
                 InitialiseSideTabs();
                 break;
             default: Debug.LogWarningFormat("Unrecognised who \"{0}\"", who); break;
         }
-        UpdateControllerButton(who);
         UpdatePage();
+        UpdateControllerButton(who);
     }
 
     /// <summary>
@@ -1184,7 +1252,6 @@ public class ModalTabbedUI : MonoBehaviour
 
 
     #region Initialisation SubMethods...
-
     //
     // - - - Initialisation SubMethods
     //
