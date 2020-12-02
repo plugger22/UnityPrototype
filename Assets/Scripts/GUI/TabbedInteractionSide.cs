@@ -7,7 +7,7 @@ using UnityEngine.UI;
 /// <summary>
 /// handles Actor Side tab interaction for TabbedUI
 /// </summary>
-public class TabbedInteraction : MonoBehaviour
+public class TabbedInteractionSide : MonoBehaviour
 {
 
     public Image background;

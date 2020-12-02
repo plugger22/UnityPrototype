@@ -21,6 +21,13 @@ public class ModalTabbedUI : MonoBehaviour
     [Header("Backgrounds")]
     public Image backgroundImage;
 
+    [Header("Page Canvases")]
+    public Canvas canvasTab0;
+    public Canvas canvasTab1;
+    public Canvas canvasTab2;
+    public Canvas canvasTab3;
+    public Canvas canvasTab4;
+
     [Header("Side Tabs")]
     public GameObject sideTab0;
     public GameObject sideTab1;
@@ -56,9 +63,14 @@ public class ModalTabbedUI : MonoBehaviour
     public ButtonInteraction interactHq;
     public ButtonInteraction interactReserves;
 
-    [Header("Texts")]
+    [Header("Texts -> Development Only")]
     public TextMeshProUGUI textActorName;
     public TextMeshProUGUI textPageMain;
+
+    [Header("Canvas0 -> Main")]
+    public TextMeshProUGUI tab0ActorName;
+    public TextMeshProUGUI tab0ActorTitle;
+    public Image tab0ActorImage;
 
     //help
     private GenericHelpTooltipUI helpClose;
@@ -95,10 +107,11 @@ public class ModalTabbedUI : MonoBehaviour
 
     //Input data
     TabbedUIData inputData;
-
+    //canvas collection
+    private Canvas[] arrayOfCanvas;
     //sideTab collections
     private GameObject[] arrayOfSideTabObjects;
-    private TabbedInteraction[] arrayOfSideTabItems;
+    private TabbedInteractionSide[] arrayOfSideTabItems;
     private TabbedSideTabUI[] arrayOfSideTabInteractions;
     //topTab collections
     private GameObject[] arrayOfTopTabObjects;
@@ -165,6 +178,12 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tabbedCanvasMain != null, "Invalid tabbedCanvasMain (Null)");
         Debug.Assert(tabbedObjectMain != null, "Invalid tabbedObjectMain (Null)");
         Debug.Assert(backgroundImage != null, "Invalid backgroundImage (Null)");
+        //Canvases
+        Debug.Assert(canvasTab0 != null, "Invalid canvasTab0 (Null)");
+        Debug.Assert(canvasTab1 != null, "Invalid canvasTab1 (Null)");
+        Debug.Assert(canvasTab2 != null, "Invalid canvasTab2 (Null)");
+        Debug.Assert(canvasTab3 != null, "Invalid canvasTab3 (Null)");
+        Debug.Assert(canvasTab4 != null, "Invalid canvasTab4 (Null)");
         //button interactions
         if (interactClose != null) { interactClose.SetButton(EventType.TabbedClose); }
         else { Debug.LogError("Invalid interactClose (Null)"); }
@@ -195,6 +214,10 @@ public class ModalTabbedUI : MonoBehaviour
         //texts
         Debug.Assert(textActorName != null, "Invalid textActorName (Null)");
         Debug.Assert(textPageMain != null, "Invalid textPageMain (Null)");
+        //tab0
+        Debug.Assert(tab0ActorName != null, "Invalid tab0ActorName (Null)");
+        Debug.Assert(tab0ActorTitle != null, "Invalid tab0ActorTitle (Null)");
+        Debug.Assert(tab0ActorImage != null, "Invalid tab0ActorImage (Null)");
     }
     #endregion
 
@@ -221,6 +244,8 @@ public class ModalTabbedUI : MonoBehaviour
         maxSideTabIndex = numOfSideTabs - 1;
         maxSetIndex = (int)TabbedUIWho.Count - 1;
         maxTopTabIndex = numOfTopTabs - 1;
+        //initialise Canvas array
+        arrayOfCanvas = new Canvas[numOfTopTabs];
         //initialise Top Tab Arrays
         arrayOfTopTabObjects = new GameObject[numOfTopTabs];
         arrayOfTopTabImages = new Image[numOfTopTabs];
@@ -229,9 +254,15 @@ public class ModalTabbedUI : MonoBehaviour
         arrayOfPages = new TabbedPage[numOfTopTabs];
         //initialise Side Tab Arrays
         arrayOfSideTabObjects = new GameObject[numOfSideTabs];
-        arrayOfSideTabItems = new TabbedInteraction[numOfSideTabs];
+        arrayOfSideTabItems = new TabbedInteractionSide[numOfSideTabs];
         arrayOfSideTabInteractions = new TabbedSideTabUI[numOfSideTabs];
         arrayOfActorsTemp = new Actor[numOfSideTabs];
+        //Canvas array
+        arrayOfCanvas[0] = canvasTab0;
+        arrayOfCanvas[1] = canvasTab1;
+        arrayOfCanvas[2] = canvasTab2;
+        arrayOfCanvas[3] = canvasTab3;
+        arrayOfCanvas[4] = canvasTab4;
         //Top tab components
         index = 0;
         if (topTab0 != null) { arrayOfTopTabObjects[index++] = topTab0; } else { Debug.LogError("Invalid topTab0 (Null)"); }
@@ -272,7 +303,7 @@ public class ModalTabbedUI : MonoBehaviour
         {
             if (arrayOfSideTabObjects[i] != null)
             {
-                TabbedInteraction tabbedInteract = arrayOfSideTabObjects[i].GetComponent<TabbedInteraction>();
+                TabbedInteractionSide tabbedInteract = arrayOfSideTabObjects[i].GetComponent<TabbedInteractionSide>();
                 if (tabbedInteract != null)
                 {
                     arrayOfSideTabItems[i] = tabbedInteract;
@@ -423,7 +454,7 @@ public class ModalTabbedUI : MonoBehaviour
                         if (numOfSideTabs > 0)
                         { InitialiseSubordinate(arrayOfSubordinates); }
                         else
-                        { textActorName.text = ""; }
+                        { textActorName.text = ""; tab0ActorName.text = ""; }
                         /*Debug.LogFormat("[Tst] ModalTabbedUI.cs -> InitialiseSideTabs: Subordinates CACHED data used{0}", "\n");*/
                     }
                     else
@@ -446,7 +477,7 @@ public class ModalTabbedUI : MonoBehaviour
                         else
                         {
                             //clear out any residual actor name
-                            textActorName.text = "";
+                            textActorName.text = ""; tab0ActorName.text = "";
                         }
                     }
 
@@ -465,7 +496,7 @@ public class ModalTabbedUI : MonoBehaviour
                         if (numOfSideTabs > 0)
                         { InitialiseReserves(arrayOfReserves); }
                         else
-                        { textActorName.text = ""; }
+                        { textActorName.text = ""; tab0ActorName.text = ""; }
                         /*Debug.LogFormat("[Tst] ModalTabbedUI.cs -> InitialiseSideTabs: Reserves CACHED data used{0}", "\n");*/
                     }
                     else
@@ -492,7 +523,7 @@ public class ModalTabbedUI : MonoBehaviour
                         else
                         {
                             //clear out any residual actor name
-                            textActorName.text = "";
+                            textActorName.text = ""; tab0ActorName.text = "";
                         }
                     }
                     //disable empty tabs
@@ -533,7 +564,7 @@ public class ModalTabbedUI : MonoBehaviour
                         if (numOfSideTabs > 0)
                         { InitialiseHq(arrayOfHq); }
                         else
-                        { textActorName.text = ""; }
+                        { textActorName.text = ""; tab0ActorName.text = ""; }
                         /*Debug.LogFormat("[Tst] ModalTabbedUI.cs -> InitialiseSideTabs: Hq CACHED data used{0}", "\n");*/
                     }
                     else
@@ -671,10 +702,10 @@ public class ModalTabbedUI : MonoBehaviour
     #endregion
 
 
-    #region Movement... 
+    #region Page and Tab Control... 
 
     //
-    // - - - Movement
+    // - - - Page and Tab control
     //
 
     /// <summary>
@@ -715,6 +746,8 @@ public class ModalTabbedUI : MonoBehaviour
         }
         //update index
         currentSideTabIndex = tabIndex;
+        UpdateControllerButton(inputData.who);
+        UpdatePage();
     }
 
     /// <summary>
@@ -723,10 +756,48 @@ public class ModalTabbedUI : MonoBehaviour
     /// <param name="tabIndex"></param>
     private void OpenPage(int tabIndex)
     {
-        Debug.AssertFormat(tabIndex > -1 && tabIndex < numOfTopTabs, "Invalid tabIndex {0}", tabIndex);
-        //Active/Dormant tabs
-        UpdateTopTabs(tabIndex);
+        if (tabIndex > -1 && tabIndex < numOfTopTabs)
+        {
+            //Active/Dormant tabs
+            UpdateTopTabs(tabIndex);
+            //toggle canvases on/off
+            for (int i = 0; i < arrayOfCanvas.Length; i++)
+            {
+                if (i == tabIndex) { arrayOfCanvas[i].gameObject.SetActive(true); }
+                else { arrayOfCanvas[i].gameObject.SetActive(false); }
+            }
+            UpdatePage();
+        }
+        else { Debug.LogErrorFormat("Invalid tabIndex \"{0}\" (should be > -1 and < {1})", tabIndex, numOfTopTabs); }
 
+    }
+
+    /// <summary>
+    /// Updates data in current page for different side tab actor
+    /// </summary>
+    private void UpdatePage()
+    {
+        switch (currentTopTabIndex)
+        {
+            case 0:
+                tab0ActorName.text = GetActorName(currentSideTabIndex);
+                tab0ActorTitle.text = GetActorTitle(currentSideTabIndex);
+                tab0ActorImage.sprite = arrayOfSideTabItems[currentSideTabIndex].portrait.sprite;
+                break;
+            case 1:
+
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+            case 4:
+
+                break;
+            default: Debug.LogWarningFormat("Unrecognised currentTopTabIndex \"{0}\"", currentTopTabIndex); break;
+        }
     }
 
 
@@ -753,6 +824,7 @@ public class ModalTabbedUI : MonoBehaviour
             default: Debug.LogWarningFormat("Unrecognised who \"{0}\"", who); break;
         }
         UpdateControllerButton(who);
+        UpdatePage();
     }
 
     /// <summary>
@@ -896,6 +968,15 @@ public class ModalTabbedUI : MonoBehaviour
         else { Debug.LogWarning("Invalid tabIndex (-1)"); }
     }
 
+    #endregion
+
+
+    #region Movement...
+
+    //
+    // - - - Movement
+    //
+
     /// <summary>
     /// Up arrow -> Side Tabs
     /// </summary>
@@ -917,6 +998,8 @@ public class ModalTabbedUI : MonoBehaviour
             }
             //highlight actorSet
             UpdateControllerButton(inputData.who);
+            //page
+            UpdatePage();
         }
     }
 
@@ -941,6 +1024,8 @@ public class ModalTabbedUI : MonoBehaviour
             }
             //highlight actorSet
             UpdateControllerButton(inputData.who);
+            //page
+            UpdatePage();
         }
     }
 
@@ -1063,6 +1148,46 @@ public class ModalTabbedUI : MonoBehaviour
         return actorName;
     }
 
+
+    /// <summary>
+    /// Returns actorTitle (arc name / Player / HQ title)
+    /// </summary>
+    /// <param name="tabIndex"></param>
+    /// <returns></returns>
+    private string GetActorTitle(int tabIndex)
+    {
+        string actorTitle = "Unknown";
+        if (tabIndex > -1 && tabIndex <= maxSideTabIndex)
+        {
+            switch (inputData.who)
+            {
+                case TabbedUIWho.Subordinates:
+                case TabbedUIWho.Reserves:
+                    actorTitle = arrayOfActorsTemp[tabIndex].arc.name;
+                    break;
+                case TabbedUIWho.Player:
+                    actorTitle = "Player";
+                    break;
+                case TabbedUIWho.HQ:
+                    actorTitle = GameManager.i.hqScript.GetHqTitle((ActorHQ)(tabIndex + 1));
+                    break;
+                default:
+                    Debug.LogWarningFormat("Unrecognised inputData.who \"{0}\"", inputData.who); break;
+            }
+        }
+        else { Debug.LogWarningFormat("Invalid currentSideIndex \"{0}\" (should be > -1 and <= {1})", tabIndex, maxSideTabIndex); }
+        return actorTitle;
+    }
+
+
+    #endregion
+
+
+    #region Initialisation SubMethods...
+
+    //
+    // - - - Initialisation SubMethods
+    //
 
     /// <summary>
     /// Takes an arrayOfActors and initialises data for Subordinates actor set
