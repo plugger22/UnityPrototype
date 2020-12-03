@@ -10,14 +10,14 @@ using UnityEngine.UI;
 public class TabbedItemInteraction : MonoBehaviour
 {
 
-    public TextMeshProUGUI text;
+    public TextMeshProUGUI tag;
     public Image image;
     public GenericHelpTooltipUI help;
 
 
     public void Awake()
     {
-        Debug.Assert(text != null, "Invalid text (Null)");
+        Debug.Assert(tag != null, "Invalid tag (Null)");
         Debug.Assert(image != null, "Invalid image (Null)");
         Debug.Assert(help != null, "Invalid help (Null)");
     }

@@ -2896,3 +2896,23 @@ City seed 28333 -> Londus, Eurasia
 
 Dev seed 60316 -> Thursday, 3 December 2020 3:02 PM
 City seed 63745 -> Londus, Eurasia
+
+Dev seed 31364 -> Thursday, 3 December 2020 4:09 PM
+City seed 37760 -> Londus, Eurasia
+
+Dev seed 26881 -> Thursday, 3 December 2020 4:36 PM
+City seed 52491 -> Londus, Eurasia
+
+Dev seed 23976 -> Thursday, 3 December 2020 4:57 PM
+City seed 3518 -> Londus, Eurasia
+
+Dev seed 29830 -> Thursday, 3 December 2020 4:58 PM
+City seed 41958 -> Londus, Eurasia
+
+Dev seed 23355 -> Thursday, 3 December 2020 5:06 PM
+City seed 40403 -> Londus, Eurasia
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	

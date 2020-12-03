@@ -833,7 +833,9 @@ public class ModalTabbedUI : MonoBehaviour
                         tab0PanelFriends.gameObject.SetActive(true);
                         tab0PanelConditions.gameObject.SetActive(true);
                         UpdateStatus();
-                        if (GetConditions() == true) { tab0Header3.text.color = tabSubHeaderTextActive; }  else { tab0Header3.text.color = tabSubHeaderTextDormant; }
+                        if (GetConflict() == true) { tab0Header1.text.color = tabSubHeaderTextActive; } else { tab0Header1.text.color = tabSubHeaderTextDormant; }
+                        if (GetRelationship() == true) { tab0Header2.text.color = tabSubHeaderTextActive; } else { tab0Header2.text.color = tabSubHeaderTextDormant; }
+                        if (GetConditions() == true) { tab0Header3.text.color = tabSubHeaderTextActive; } else { tab0Header3.text.color = tabSubHeaderTextDormant; }
                         break;
                     case TabbedUIWho.Player:
                         tab0PanelStatus.gameObject.SetActive(true);
@@ -1262,7 +1264,7 @@ public class ModalTabbedUI : MonoBehaviour
         if (isPlayer == true)
         {
             //Player
-            tab0Header0.listOfItems[0].text.text = GetStatus(GameManager.i.playerScript.status, GameManager.i.playerScript.inactiveStatus);
+            tab0Header0.listOfItems[0].tag.text = GetStatus(GameManager.i.playerScript.status, GameManager.i.playerScript.inactiveStatus);
 
         }
         else
@@ -1270,7 +1272,7 @@ public class ModalTabbedUI : MonoBehaviour
             //Actor
             Actor actor = arrayOfActorsTemp[currentSideTabIndex];
             if (actor != null)
-            { tab0Header0.listOfItems[0].text.text = GetStatus(actor.Status, actor.inactiveStatus); }
+            { tab0Header0.listOfItems[0].tag.text = GetStatus(actor.Status, actor.inactiveStatus); }
             else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActorsTemp[{0}]", currentSideTabIndex); }
         }
     }
@@ -1305,6 +1307,53 @@ public class ModalTabbedUI : MonoBehaviour
             default: Debug.LogWarningFormat("Unrecognised ActorStatus \"{0}\"", status); break;
         }
         return descriptor;
+    }
+
+    /// <summary>
+    /// If Subordinate actorSet opinion 0 highlights actor at risk of conflict by populating subHeader1 item.tag
+    /// </summary>
+    /// <returns></returns>
+    private bool GetConflict()
+    {
+        bool isPossibleConflict = false;
+        switch (arrayOfActorsTemp[currentSideTabIndex].GetDatapoint(ActorDatapoint.Opinion1))
+        {
+            case 0:
+                tab0Header1.listOfItems[0].tag.text = "ON THE EDGE";
+                isPossibleConflict = true;
+                break;
+            case 1:
+                tab0Header1.listOfItems[0].tag.text = "Unlikely";
+                break;
+            default: tab0Header1.listOfItems[0].tag.text = "Happy in the Service"; break;
+        }
+        return isPossibleConflict;
+    }
+
+    /// <summary>
+    /// Populates subHeader2 item.tag for friend/Enemy relationship. Returns true if a relationship exists, false otherwise
+    /// </summary>
+    /// <returns></returns>
+    private bool GetRelationship()
+    {
+        bool isRelationship = false;
+        RelationshipData data = GameManager.i.dataScript.GetRelationshipData(arrayOfActorsTemp[currentSideTabIndex].slotID);
+        if (data.relationship != ActorRelationship.None)
+        {
+            Actor actor = GameManager.i.dataScript.GetActor(data.actorID);
+            if (actor != null)
+            {
+                tab0Header2.listOfItems[0].tag.text = string.Format("{0} {1}", data.relationship == ActorRelationship.Friend ? "Friends with " : "Enemies with ", actor.arc.name);
+                isRelationship = true;
+            }
+            else
+            {
+                Debug.LogWarningFormat("Invalid actor (Null) for RelationshipData.actorID {0}", data.actorID);
+                tab0Header2.listOfItems[0].tag.text = "None";
+            }
+        }
+        else { tab0Header2.listOfItems[0].tag.text = "None"; }
+        return isRelationship;
     }
 
     /// <summary>
@@ -1350,14 +1399,14 @@ public class ModalTabbedUI : MonoBehaviour
                     if (condition != null)
                     {
                         tab0Header3.listOfItems[i].gameObject.SetActive(true);
-                        tab0Header3.listOfItems[i].text.text = condition.tag;
+                        tab0Header3.listOfItems[i].tag.text = condition.tag;
                         //turn on help
                         tab0Header3.listOfItems[0].image.gameObject.SetActive(true);
                     }
                     else
                     {
                         Debug.LogWarningFormat("Invalid condition (Null) for listOfConditions[{0}]", i);
-                        tab0Header3.listOfItems[i].text.text = "Unknown";
+                        tab0Header3.listOfItems[i].tag.text = "Unknown";
                     }
                 }
                 else
@@ -1370,10 +1419,12 @@ public class ModalTabbedUI : MonoBehaviour
         else
         {
             //No Conditions present
-            tab0Header3.listOfItems[0].text.text = "None";
+            tab0Header3.listOfItems[0].tag.text = "None";
             isConditions = false;
-            //switch off help
-            tab0Header3.listOfItems[0].image.gameObject.SetActive(false);
+
+            /*//switch off help
+            tab0Header3.listOfItems[0].image.gameObject.SetActive(false);*/
+
             for (int i = 1; i < maxNumOfConditions; i++)
             {
                 //disable all other items
