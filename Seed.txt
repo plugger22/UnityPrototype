@@ -2727,3 +2727,112 @@ ModalTabbedUI.CloseTabbedUI () (at Assets/Scripts/GUI/ModalTabbedUI.cs:701)
 	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
 	UnityEngine.EventSystems.EventSystem:Update()
 	
+Dev seed 35173 -> Thursday, 3 December 2020 10:41 AM
+City seed 22570 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.CloseTabbedUI () (at Assets/Scripts/GUI/ModalTabbedUI.cs:701)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI.cs:384)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:341)
+	ButtonInteraction.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 5747 -> Thursday, 3 December 2020 11:18 AM
+City seed 47137 -> Londus, Eurasia
+ERROR Invalid actor (Null) for arrayOfActorsTemp[0]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ModalTabbedUI:UpdateStatus() (at Assets/Scripts/GUI/ModalTabbedUI.cs:1246)
+	ModalTabbedUI:UpdatePage() (at Assets/Scripts/GUI/ModalTabbedUI.cs:825)
+	ModalTabbedUI:OpenActorSetStart(TabbedUIWho) (at Assets/Scripts/GUI/ModalTabbedUI.cs:911)
+	ModalTabbedUI:SetTabbedUI(TabbedUIData) (at Assets/Scripts/GUI/ModalTabbedUI.cs:666)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:389)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:341)
+	PlayerClickUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Player/PlayerClickUI.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ERROR Invalid actor (Null) for arrayOfActorsTemp[0]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ModalTabbedUI:UpdateStatus() (at Assets/Scripts/GUI/ModalTabbedUI.cs:1246)
+	ModalTabbedUI:UpdatePage() (at Assets/Scripts/GUI/ModalTabbedUI.cs:825)
+	ModalTabbedUI:OpenActorSet(TabbedUIWho, Boolean) (at Assets/Scripts/GUI/ModalTabbedUI.cs:885)
+	ModalTabbedUI:ExecutePageUp() (at Assets/Scripts/GUI/ModalTabbedUI.cs:1170)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:425)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:341)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:752)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
+	ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+(wrapper stelemref) System.Object.virt_stelemref_class_small_idepth(intptr,object)
+	ModalTabbedUI.InitialiseHq (gameAPI.Actor[] arrayOfActors) (at Assets/Scripts/GUI/ModalTabbedUI.cs:1464)
+	ModalTabbedUI.InitialiseSideTabs () (at Assets/Scripts/GUI/ModalTabbedUI.cs:583)
+	ModalTabbedUI.OpenActorSet (gameAPI.TabbedUIWho who, System.Boolean isResetSlotID) (at Assets/Scripts/GUI/ModalTabbedUI.cs:881)
+	ModalTabbedUI.ExecutePageUp () (at Assets/Scripts/GUI/ModalTabbedUI.cs:1170)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI.cs:425)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:341)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:752)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:445)
+	ERROR Invalid actor (Null) for arrayOfActorsTemp[0]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ModalTabbedUI:UpdateStatus() (at Assets/Scripts/GUI/ModalTabbedUI.cs:1246)
+	ModalTabbedUI:UpdatePage() (at Assets/Scripts/GUI/ModalTabbedUI.cs:825)
+	ModalTabbedUI:OpenActorSet(TabbedUIWho, Boolean) (at Assets/Scripts/GUI/ModalTabbedUI.cs:885)
+	ModalTabbedUI:ExecutePageUp() (at Assets/Scripts/GUI/ModalTabbedUI.cs:1170)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:425)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:341)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:752)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
+	ERROR Invalid actor (Null) for arrayOfActorsTemp[0]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ModalTabbedUI:UpdateStatus() (at Assets/Scripts/GUI/ModalTabbedUI.cs:1246)
+	ModalTabbedUI:UpdatePage() (at Assets/Scripts/GUI/ModalTabbedUI.cs:825)
+	ModalTabbedUI:OpenActorSet(TabbedUIWho, Boolean) (at Assets/Scripts/GUI/ModalTabbedUI.cs:885)
+	ModalTabbedUI:ExecutePageDown() (at Assets/Scripts/GUI/ModalTabbedUI.cs:1191)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:428)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:341)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:756)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
+	ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+(wrapper stelemref) System.Object.virt_stelemref_class_small_idepth(intptr,object)
+	ModalTabbedUI.InitialiseHq (gameAPI.Actor[] arrayOfActors) (at Assets/Scripts/GUI/ModalTabbedUI.cs:1464)
+	ModalTabbedUI.InitialiseSideTabs () (at Assets/Scripts/GUI/ModalTabbedUI.cs:583)
+	ModalTabbedUI.OpenActorSet (gameAPI.TabbedUIWho who, System.Boolean isResetSlotID) (at Assets/Scripts/GUI/ModalTabbedUI.cs:881)
+	ModalTabbedUI.ExecutePageDown () (at Assets/Scripts/GUI/ModalTabbedUI.cs:1191)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI.cs:428)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:341)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:756)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:445)
+	
+Dev seed 39666 -> Thursday, 3 December 2020 11:23 AM
+City seed 57587 -> Londus, Eurasia
+
+Dev seed 59968 -> Thursday, 3 December 2020 11:24 AM
+City seed 57355 -> Londus, Eurasia
+
+Dev seed 46696 -> Thursday, 3 December 2020 11:29 AM
+City seed 20095 -> Londus, Eurasia
+
+Dev seed 6978 -> Thursday, 3 December 2020 11:33 AM
+City seed 30443 -> Londus, Eurasia
+
+Dev seed 22668 -> Thursday, 3 December 2020 11:37 AM
+City seed 36952 -> Londus, Eurasia
+
+Dev seed 16777 -> Thursday, 3 December 2020 11:39 AM
+City seed 52215 -> Londus, Eurasia
+
+Dev seed 17633 -> Thursday, 3 December 2020 11:41 AM
+City seed 37301 -> Londus, Eurasia
+
+Dev seed 10254 -> Thursday, 3 December 2020 11:54 AM
+City seed 57970 -> Londus, Eurasia
+
+Dev seed 50486 -> Thursday, 3 December 2020 11:57 AM
+City seed 24674 -> Londus, Eurasia
+
+Dev seed 39681 -> Thursday, 3 December 2020 12:16 PM
+City seed 22528 -> Londus, Eurasia
+
+Dev seed 18916 -> Thursday, 3 December 2020 12:17 PM
+City seed 59113 -> Londus, Eurasia
+
+Dev seed 33574 -> Thursday, 3 December 2020 12:33 PM
+City seed 11774 -> Londus, Eurasia

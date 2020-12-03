@@ -75,11 +75,15 @@ public class ModalTabbedUI : MonoBehaviour
     public Image tab0PanelConflicts;
     public Image tab0PanelFriends;
     public Image tab0PanelConditions;
+    public TabbedSubHeaderInteraction tab0Header0;
+    public TabbedSubHeaderInteraction tab0Header1;
+    public TabbedSubHeaderInteraction tab0Header2;
+    public TabbedSubHeaderInteraction tab0Header3;
 
     //help
     private GenericHelpTooltipUI helpClose;
 
-    //tabs
+    //tabs (side/top/actorSet)
     private int currentSideTabIndex = -1;                           //side tabs (top to bottom)
     private int currentTopTabIndex = -1;                            //top tabs (left to right)
     private int currentSetIndex = -1;                               //actor sets
@@ -92,6 +96,9 @@ public class ModalTabbedUI : MonoBehaviour
     private float sideTabAlpha = 0.50f;                             //alpha level of side tabs when inactive
     private float topTabAlpha = 0.50f;                              //alpha level of top tabs when inactive
     private bool isActive;                                          //true if UI open
+
+    //Page0
+    private int maxNumOfConditions = 0;                              //max number of conditions allowed in tab0/page0 subHeader3 'Conditions'
 
     //help tooltips (I don't want this as a global, just a master private field)
     private int x_offset = 200;
@@ -227,6 +234,11 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab0PanelConflicts != null, "Invalid tab0PanelConflicts (Null)");
         Debug.Assert(tab0PanelFriends != null, "Invalid tab0PanelFriends (Null)");
         Debug.Assert(tab0PanelConditions != null, "Invalid tab0PanelConditions (Null)");
+        Debug.Assert(tab0Header0 != null, "Invalid tab0Header0 (Null)");
+        Debug.Assert(tab0Header1 != null, "Invalid tab0Header1 (Null)");
+        Debug.Assert(tab0Header2 != null, "Invalid tab0Header2 (Null)");
+        if (tab0Header3 != null) { maxNumOfConditions = tab0Header3.listOfItems.Count; }
+        else { Debug.LogError("Invalid tab0Header3 (Null)"); }
     }
     #endregion
 
@@ -384,10 +396,10 @@ public class ModalTabbedUI : MonoBehaviour
                 CloseTabbedUI();
                 break;
             case EventType.TabbedOpenPage:
-                OpenPage((int)Param);
+                OpenPage((int)Param, true);
                 break;
             case EventType.TabbedSideTabOpen:
-                OpenSideTab((int)Param);
+                OpenSideTab((int)Param, true);
                 break;
             case EventType.TabbedSubordinates:
                 OpenActorSet(TabbedUIWho.Subordinates);
@@ -719,13 +731,17 @@ public class ModalTabbedUI : MonoBehaviour
 
     /// <summary>
     /// Open the designated Side tab and close whatever is open
+    /// 'isMouseClick' true if user has clicked directly on the tab, false otherwise
     /// </summary>
     /// <param name="tabIndex"></param>
-    private void OpenSideTab(int tabIndex)
+    private void OpenSideTab(int tabIndex, bool isMouseClick = false)
     {
         Debug.AssertFormat(tabIndex > -1 && tabIndex < numOfSideTabs, "Invalid tab index {0}", tabIndex);
-        //check not opening current side tab
-        if (tabIndex != currentSideTabIndex)
+        bool isProceed = true;
+        //check not opening current side tab (mouse click only)
+        if (isMouseClick == true && tabIndex == currentSideTabIndex)
+        { isProceed = false; }
+        if (isProceed == true)
         {
             //reset Active tabs to reflect new status
             for (int index = 0; index < numOfSideTabs; index++)
@@ -763,15 +779,18 @@ public class ModalTabbedUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Open a tab page
+    /// Open a tab page. 'isMouseClick' true for when user directly clicking on a top tab to open a page (versus left/right arrow key activation)
     /// </summary>
     /// <param name="tabIndex"></param>
-    private void OpenPage(int tabIndex)
+    private void OpenPage(int tabIndex, bool isMouseClick = false)
     {
+        bool isProceed = true;
         if (tabIndex > -1 && tabIndex < numOfTopTabs)
         {
-            //check you're not opening the current page
-            if (tabIndex != currentTopTabIndex)
+            //check you're not opening the current page (mouse click only)
+            if (isMouseClick == true && tabIndex == currentTopTabIndex)
+            { isProceed = false; }
+            if (isProceed == true)
             {
                 //Active/Dormant tabs
                 UpdateTopTabs(tabIndex);
@@ -807,24 +826,31 @@ public class ModalTabbedUI : MonoBehaviour
                         tab0PanelConflicts.gameObject.SetActive(true);
                         tab0PanelFriends.gameObject.SetActive(true);
                         tab0PanelConditions.gameObject.SetActive(true);
+                        UpdateStatus();
+                        UpdateConditions();
                         break;
                     case TabbedUIWho.Player:
                         tab0PanelStatus.gameObject.SetActive(true);
                         tab0PanelConflicts.gameObject.SetActive(false);
                         tab0PanelFriends.gameObject.SetActive(false);
                         tab0PanelConditions.gameObject.SetActive(true);
+                        UpdateStatus(true);
+                        UpdateConditions(true);
                         break;
                     case TabbedUIWho.HQ:
-                        tab0PanelStatus.gameObject.SetActive(false);
+                        tab0PanelStatus.gameObject.SetActive(true);
                         tab0PanelConflicts.gameObject.SetActive(false);
                         tab0PanelFriends.gameObject.SetActive(false);
                         tab0PanelConditions.gameObject.SetActive(false);
+                        UpdateStatus();
                         break;
                     case TabbedUIWho.Reserves:
                         tab0PanelStatus.gameObject.SetActive(true);
                         tab0PanelConflicts.gameObject.SetActive(false);
                         tab0PanelFriends.gameObject.SetActive(false);
                         tab0PanelConditions.gameObject.SetActive(true);
+                        UpdateStatus();
+                        UpdateConditions();
                         break;
                     default: Debug.LogWarningFormat("Unrecognised inputData.who \"{0}\"", inputData.who); break;
                 }
@@ -1222,6 +1248,130 @@ public class ModalTabbedUI : MonoBehaviour
         return actorName;
     }
 
+    /// <summary>
+    /// Updates tabbedItem in Tab0 subHeader 'Status' for current actor
+    /// </summary>
+    private void UpdateStatus(bool isPlayer = false)
+    {
+        if (isPlayer == true)
+        {
+            //Player
+            tab0Header0.listOfItems[0].text.text = GetStatus(GameManager.i.playerScript.status, GameManager.i.playerScript.inactiveStatus);
+
+        }
+        else
+        {
+            //Actor
+            Actor actor = arrayOfActorsTemp[currentSideTabIndex];
+            if (actor != null)
+            { tab0Header0.listOfItems[0].text.text = GetStatus(actor.Status, actor.inactiveStatus); }
+            else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActorsTemp[{0}]", currentSideTabIndex); }
+        }
+    }
+
+    /// <summary>
+    /// Returns a user friendly string for actor/player status
+    /// </summary>
+    /// <param name="status"></param>
+    /// <param name="inactive"></param>
+    /// <returns></returns>
+    private string GetStatus(ActorStatus status, ActorInactive inactive)
+    {
+        string descriptor = "Unknown";
+        switch (status)
+        {
+            case ActorStatus.Active:
+                if (inputData.who != TabbedUIWho.Player) { descriptor = "Available"; }
+                else { descriptor = "On the Job"; }
+                break;
+            case ActorStatus.Reserve: descriptor = "Awaiting Assignment"; break;
+            case ActorStatus.HQ: descriptor = "At HQ"; break;
+            case ActorStatus.Captured: descriptor = "Captured"; break;
+            case ActorStatus.Inactive:
+                switch (inactive)
+                {
+                    case ActorInactive.Breakdown: descriptor = "Undergoing a Nervous Breakdown"; break;
+                    case ActorInactive.LieLow: descriptor = "Lying Low"; break;
+                    case ActorInactive.StressLeave: descriptor = "On Stress Leave"; break;
+                    default: Debug.LogWarningFormat("Unrecognised Inactive status \"{0}\"", inactive); break;
+                }
+                break;
+            default: Debug.LogWarningFormat("Unrecognised ActorStatus \"{0}\"", status); break;
+        }
+        return descriptor;
+    }
+
+    /// <summary>
+    /// Updates tabbedItem in Tab0 subHeader 'Conditions' for current actor. NOTE: Max of 10 conditions allowed
+    /// </summary>
+    /// <param name="isPlayer"></param>
+    private void UpdateConditions(bool isPlayer = false)
+    {
+        int numOfItems;
+        List<Condition> listOfConditions;
+        numOfItems = tab0Header3.listOfItems.Count;
+        if (isPlayer == true)
+        {
+            //Player
+            listOfConditions = GameManager.i.playerScript.GetListOfConditions(inputData.side);
+        }
+        else
+        {
+            //Actor
+            listOfConditions = arrayOfActorsTemp[currentSideTabIndex].GetListOfConditions();
+        }
+        ProcessConditions(listOfConditions);
+    }
+
+    /// <summary>
+    /// Handles condition processing for UpdateConditions
+    /// </summary>
+    /// <param name="listOfConditions"></param>
+    private void ProcessConditions(List<Condition> listOfConditions)
+    {
+        Condition condition;
+        int count = listOfConditions.Count;
+        if (count > 0)
+        {
+            for (int i = 0; i < maxNumOfConditions; i++)
+            {
+                if (i < count)
+                {
+                    //condition present
+                    condition = listOfConditions[i];
+                    if (condition != null)
+                    {
+                        tab0Header3.listOfItems[i].gameObject.SetActive(true);
+                        tab0Header3.listOfItems[i].text.text = condition.tag;
+                        //turn on help
+                        tab0Header3.listOfItems[0].image.gameObject.SetActive(true);
+                    }
+                    else
+                    {
+                        Debug.LogWarningFormat("Invalid condition (Null) for listOfConditions[{0}]", i);
+                        tab0Header3.listOfItems[i].text.text = "Unknown";
+                    }
+                }
+                else
+                {
+                    //disable all other items
+                    tab0Header3.listOfItems[i].gameObject.SetActive(false);
+                }
+            }
+        }
+        else
+        {
+            //No Conditions present
+            tab0Header3.listOfItems[0].text.text = "None";
+            //switch off help
+            tab0Header3.listOfItems[0].image.gameObject.SetActive(false);
+            for (int i = 1; i < maxNumOfConditions; i++)
+            {
+                //disable all other items
+                tab0Header3.listOfItems[i].gameObject.SetActive(false);
+            }
+        }
+    }
 
     /// <summary>
     /// Returns actorTitle (arc name / Player / HQ title)
