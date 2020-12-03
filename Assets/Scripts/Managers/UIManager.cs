@@ -73,4 +73,6 @@ public class UIManager : MonoBehaviour
     public Color TabbedTextDormant;
     [Tooltip("Sub header background sprite colour, eg. Status, Friends and Enemies")]
     public Color TabbedSubHeader;
+    [Tooltip("Sub header text colour (should be 100% alpha)")]
+    public Color TabbedSubHeaderText;
 }

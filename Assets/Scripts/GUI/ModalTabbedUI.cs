@@ -115,6 +115,8 @@ public class ModalTabbedUI : MonoBehaviour
     private Color tabTextActiveColour;                                 //top tab and controller button text colours
     private Color tabTextDormantColour;                                //top tab and controller button text colours
     private Color tabSubHeaderColour;
+    private Color tabSubHeaderTextActive;
+    private Color tabSubHeaderTextDormant;
 
 
     //Input data
@@ -258,6 +260,10 @@ public class ModalTabbedUI : MonoBehaviour
         tabTextActiveColour = GameManager.i.uiScript.TabbedTextActive;
         tabTextDormantColour = GameManager.i.uiScript.TabbedTextDormant;
         tabSubHeaderColour = GameManager.i.uiScript.TabbedSubHeader;
+        tabSubHeaderTextActive = GameManager.i.uiScript.TabbedSubHeaderText;
+        Color tempColour = tabSubHeaderTextActive;
+        tempColour.a = 0.65f;
+        tabSubHeaderTextDormant = tempColour;
         //Tabs and indexes
         currentTopTabIndex = 0;
         numOfSideTabs = (int)TabbedUISide.Count;
@@ -827,7 +833,7 @@ public class ModalTabbedUI : MonoBehaviour
                         tab0PanelFriends.gameObject.SetActive(true);
                         tab0PanelConditions.gameObject.SetActive(true);
                         UpdateStatus();
-                        UpdateConditions();
+                        if (GetConditions() == true) { tab0Header3.text.color = tabSubHeaderTextActive; }  else { tab0Header3.text.color = tabSubHeaderTextDormant; }
                         break;
                     case TabbedUIWho.Player:
                         tab0PanelStatus.gameObject.SetActive(true);
@@ -835,7 +841,7 @@ public class ModalTabbedUI : MonoBehaviour
                         tab0PanelFriends.gameObject.SetActive(false);
                         tab0PanelConditions.gameObject.SetActive(true);
                         UpdateStatus(true);
-                        UpdateConditions(true);
+                        if (GetConditions(true) == true) { tab0Header3.text.color = tabSubHeaderTextActive; } else { tab0Header3.text.color = tabSubHeaderTextDormant; }
                         break;
                     case TabbedUIWho.HQ:
                         tab0PanelStatus.gameObject.SetActive(true);
@@ -850,7 +856,7 @@ public class ModalTabbedUI : MonoBehaviour
                         tab0PanelFriends.gameObject.SetActive(false);
                         tab0PanelConditions.gameObject.SetActive(true);
                         UpdateStatus();
-                        UpdateConditions();
+                        if (GetConditions() == true) { tab0Header3.text.color = tabSubHeaderTextActive; } else { tab0Header3.text.color = tabSubHeaderTextDormant; }
                         break;
                     default: Debug.LogWarningFormat("Unrecognised inputData.who \"{0}\"", inputData.who); break;
                 }
@@ -1302,10 +1308,11 @@ public class ModalTabbedUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Updates tabbedItem in Tab0 subHeader 'Conditions' for current actor. NOTE: Max of 10 conditions allowed
+    /// Gets tabbedItems in Tab0 subHeader 'Conditions' for current actor. NOTE: Max of 10 conditions allowed
+    /// Returns true if any conditions, false if none
     /// </summary>
     /// <param name="isPlayer"></param>
-    private void UpdateConditions(bool isPlayer = false)
+    private bool GetConditions(bool isPlayer = false)
     {
         int numOfItems;
         List<Condition> listOfConditions;
@@ -1320,15 +1327,16 @@ public class ModalTabbedUI : MonoBehaviour
             //Actor
             listOfConditions = arrayOfActorsTemp[currentSideTabIndex].GetListOfConditions();
         }
-        ProcessConditions(listOfConditions);
+        return UpdateConditions(listOfConditions);
     }
 
     /// <summary>
-    /// Handles condition processing for UpdateConditions
+    /// Updates condition processing for GetConditions. Returns true if anyconditions, returns false if 'None'
     /// </summary>
     /// <param name="listOfConditions"></param>
-    private void ProcessConditions(List<Condition> listOfConditions)
+    private bool UpdateConditions(List<Condition> listOfConditions)
     {
+        bool isConditions = true;
         Condition condition;
         int count = listOfConditions.Count;
         if (count > 0)
@@ -1363,6 +1371,7 @@ public class ModalTabbedUI : MonoBehaviour
         {
             //No Conditions present
             tab0Header3.listOfItems[0].text.text = "None";
+            isConditions = false;
             //switch off help
             tab0Header3.listOfItems[0].image.gameObject.SetActive(false);
             for (int i = 1; i < maxNumOfConditions; i++)
@@ -1371,6 +1380,7 @@ public class ModalTabbedUI : MonoBehaviour
                 tab0Header3.listOfItems[i].gameObject.SetActive(false);
             }
         }
+        return isConditions;
     }
 
     /// <summary>

@@ -18926,7 +18926,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 12
   m_fontSizeMax: 20
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_textAlignment: 1025
   m_isAlignmentEnumConverted: 1
   m_characterSpacing: 0
@@ -18969,7 +18969,7 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -52313,7 +52313,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 12
   m_fontSizeMax: 20
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_textAlignment: 1025
   m_isAlignmentEnumConverted: 1
   m_characterSpacing: 0
@@ -52356,7 +52356,7 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -55220,7 +55220,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1198920978
 RectTransform:
   m_ObjectHideFlags: 0
@@ -65918,7 +65918,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 12
   m_fontSizeMax: 20
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_textAlignment: 1025
   m_isAlignmentEnumConverted: 1
   m_characterSpacing: 0
@@ -65961,7 +65961,7 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -84297,7 +84297,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 12
   m_fontSizeMax: 20
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_textAlignment: 1025
   m_isAlignmentEnumConverted: 1
   m_characterSpacing: 0
@@ -84340,7 +84340,7 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}

@@ -2836,3 +2836,63 @@ City seed 59113 -> Londus, Eurasia
 
 Dev seed 33574 -> Thursday, 3 December 2020 12:33 PM
 City seed 11774 -> Londus, Eurasia
+
+Dev seed 11281 -> Thursday, 3 December 2020 2:33 PM
+City seed 43992 -> Londus, Eurasia
+
+Dev seed 34092 -> Thursday, 3 December 2020 2:47 PM
+City seed 45826 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.GetConditions (System.Boolean isPlayer) (at Assets/Scripts/GUI/ModalTabbedUI.cs:1328)
+	ModalTabbedUI.UpdatePage () (at Assets/Scripts/GUI/ModalTabbedUI.cs:844)
+	ModalTabbedUI.OpenActorSetStart (gameAPI.TabbedUIWho who) (at Assets/Scripts/GUI/ModalTabbedUI.cs:932)
+	ModalTabbedUI.SetTabbedUI (modalAPI.TabbedUIData details) (at Assets/Scripts/GUI/ModalTabbedUI.cs:674)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI.cs:397)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:341)
+	PlayerClickUI.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Player/PlayerClickUI.cs:42)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.GetConditions (System.Boolean isPlayer) (at Assets/Scripts/GUI/ModalTabbedUI.cs:1328)
+	ModalTabbedUI.UpdatePage () (at Assets/Scripts/GUI/ModalTabbedUI.cs:844)
+	ModalTabbedUI.OpenActorSet (gameAPI.TabbedUIWho who, System.Boolean isResetSlotID) (at Assets/Scripts/GUI/ModalTabbedUI.cs:906)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI.cs:412)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:341)
+	ButtonInteraction.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.GetConditions (System.Boolean isPlayer) (at Assets/Scripts/GUI/ModalTabbedUI.cs:1328)
+	ModalTabbedUI.UpdatePage () (at Assets/Scripts/GUI/ModalTabbedUI.cs:844)
+	ModalTabbedUI.OpenActorSet (gameAPI.TabbedUIWho who, System.Boolean isResetSlotID) (at Assets/Scripts/GUI/ModalTabbedUI.cs:906)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI.cs:412)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:341)
+	ButtonInteraction.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 6397 -> Thursday, 3 December 2020 2:54 PM
+City seed 44833 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.GetConditions (System.Boolean isPlayer) (at Assets/Scripts/GUI/ModalTabbedUI.cs:1328)
+	ModalTabbedUI.UpdatePage () (at Assets/Scripts/GUI/ModalTabbedUI.cs:844)
+	ModalTabbedUI.OpenActorSetStart (gameAPI.TabbedUIWho who) (at Assets/Scripts/GUI/ModalTabbedUI.cs:932)
+	ModalTabbedUI.SetTabbedUI (modalAPI.TabbedUIData details) (at Assets/Scripts/GUI/ModalTabbedUI.cs:674)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI.cs:397)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:341)
+	PlayerClickUI.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Player/PlayerClickUI.cs:42)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 54116 -> Thursday, 3 December 2020 2:55 PM
+City seed 42677 -> Londus, Eurasia
+
+Dev seed 31334 -> Thursday, 3 December 2020 3:01 PM
+City seed 28333 -> Londus, Eurasia
+
+Dev seed 60316 -> Thursday, 3 December 2020 3:02 PM
+City seed 63745 -> Londus, Eurasia
