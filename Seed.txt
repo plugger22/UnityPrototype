@@ -2916,3 +2916,204 @@ UnityEngine.Debug:LogWarning(Object)
 	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
 	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
 	
+Dev seed 55012 -> Friday, 4 December 2020 9:42 AM
+City seed 49780 -> Londus, Eurasia
+
+Dev seed 22818 -> Friday, 4 December 2020 9:43 AM
+City seed 34843 -> Londus, Eurasia
+
+Dev seed 47894 -> Friday, 4 December 2020 10:10 AM
+City seed 55006 -> Londus, Eurasia
+ERROR Invalid topTab5 (Null)
+UnityEngine.Debug:LogError(Object)
+	ModalTabbedUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalTabbedUI.cs:303)
+	ModalTabbedUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalTabbedUI.cs:175)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:922)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	ERROR Invalid topTab6 (Null)
+UnityEngine.Debug:LogError(Object)
+	ModalTabbedUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalTabbedUI.cs:304)
+	ModalTabbedUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalTabbedUI.cs:175)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:922)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	ERROR Invalid TopTabObject (Null) for arrayOfTopTabObjects[5]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ModalTabbedUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalTabbedUI.cs:325)
+	ModalTabbedUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalTabbedUI.cs:175)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:922)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	ERROR Invalid TopTabObject (Null) for arrayOfTopTabObjects[6]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ModalTabbedUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalTabbedUI.cs:325)
+	ModalTabbedUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalTabbedUI.cs:175)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:922)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.InitialiseTopTabs (gameAPI.TabbedUIWho who) (at Assets/Scripts/GUI/ModalTabbedUI.cs:960)
+	ModalTabbedUI.OpenActorSetStart (gameAPI.TabbedUIWho who) (at Assets/Scripts/GUI/ModalTabbedUI.cs:933)
+	ModalTabbedUI.SetTabbedUI (modalAPI.TabbedUIData details) (at Assets/Scripts/GUI/ModalTabbedUI.cs:680)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI.cs:403)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:341)
+	ActorClickUI.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Actor/ActorClickUI.cs:46)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 40805 -> Friday, 4 December 2020 10:11 AM
+City seed 48749 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.OpenPage (System.Int32 tabIndex, System.Boolean isMouseClick) (at Assets/Scripts/GUI/ModalTabbedUI.cs:811)
+	ModalTabbedUI.SetTabbedUI (modalAPI.TabbedUIData details) (at Assets/Scripts/GUI/ModalTabbedUI.cs:682)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI.cs:403)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:341)
+	ActorClickUI.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Actor/ActorClickUI.cs:46)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 59738 -> Friday, 4 December 2020 10:27 AM
+City seed 33085 -> Londus, Eurasia
+ASSERT UnassignedReferenceException: The variable canvasTab5 of ModalTabbedUI has not been assigned.
+You probably need to assign the canvasTab5 variable of the ModalTabbedUI script in the inspector.
+ModalTabbedUI.OpenPage (System.Int32 tabIndex, System.Boolean isMouseClick) (at Assets/Scripts/GUI/ModalTabbedUI.cs:817)
+	ModalTabbedUI.SetTabbedUI (modalAPI.TabbedUIData details) (at Assets/Scripts/GUI/ModalTabbedUI.cs:688)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI.cs:409)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:341)
+	ActorClickUI.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Actor/ActorClickUI.cs:46)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 13114 -> Friday, 4 December 2020 10:28 AM
+City seed 23860 -> Londus, Eurasia
+WARNING Unrecognised currentTopTabIndex "5"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:UpdatePage() (at Assets/Scripts/GUI/ModalTabbedUI.cs:888)
+	ModalTabbedUI:OpenPage(Int32, Boolean) (at Assets/Scripts/GUI/ModalTabbedUI.cs:819)
+	ModalTabbedUI:ExecuteRightArrow() (at Assets/Scripts/GUI/ModalTabbedUI.cs:1176)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:442)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:341)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:746)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
+	WARNING Unrecognised currentTopTabIndex "6"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:UpdatePage() (at Assets/Scripts/GUI/ModalTabbedUI.cs:888)
+	ModalTabbedUI:OpenPage(Int32, Boolean) (at Assets/Scripts/GUI/ModalTabbedUI.cs:819)
+	ModalTabbedUI:ExecuteRightArrow() (at Assets/Scripts/GUI/ModalTabbedUI.cs:1176)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:442)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:341)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:746)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
+	WARNING Unrecognised currentTopTabIndex "6"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:UpdatePage() (at Assets/Scripts/GUI/ModalTabbedUI.cs:888)
+	ModalTabbedUI:OpenPage(Int32, Boolean) (at Assets/Scripts/GUI/ModalTabbedUI.cs:819)
+	ModalTabbedUI:ExecuteLeftArrow() (at Assets/Scripts/GUI/ModalTabbedUI.cs:1204)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:439)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:341)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:748)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
+	WARNING Unrecognised currentTopTabIndex "6"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:UpdatePage() (at Assets/Scripts/GUI/ModalTabbedUI.cs:888)
+	ModalTabbedUI:OpenSideTab(Int32, Boolean) (at Assets/Scripts/GUI/ModalTabbedUI.cs:791)
+	ModalTabbedUI:ExecuteDownArrow() (at Assets/Scripts/GUI/ModalTabbedUI.cs:1151)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:436)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:341)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:740)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
+	WARNING Unrecognised currentTopTabIndex "6"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:UpdatePage() (at Assets/Scripts/GUI/ModalTabbedUI.cs:888)
+	ModalTabbedUI:ExecuteDownArrow() (at Assets/Scripts/GUI/ModalTabbedUI.cs:1162)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:436)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:341)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:740)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
+	WARNING Unrecognised currentTopTabIndex "6"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:UpdatePage() (at Assets/Scripts/GUI/ModalTabbedUI.cs:888)
+	ModalTabbedUI:OpenPage(Int32, Boolean) (at Assets/Scripts/GUI/ModalTabbedUI.cs:819)
+	ModalTabbedUI:ExecuteLeftArrow() (at Assets/Scripts/GUI/ModalTabbedUI.cs:1204)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:439)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:341)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:748)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
+	WARNING Unrecognised currentTopTabIndex "5"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:UpdatePage() (at Assets/Scripts/GUI/ModalTabbedUI.cs:888)
+	ModalTabbedUI:OpenPage(Int32, Boolean) (at Assets/Scripts/GUI/ModalTabbedUI.cs:819)
+	ModalTabbedUI:ExecuteLeftArrow() (at Assets/Scripts/GUI/ModalTabbedUI.cs:1198)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI.cs:439)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:341)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:748)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
+	
+Dev seed 43449 -> Friday, 4 December 2020 10:41 AM
+City seed 30992 -> Londus, Eurasia
+
+Dev seed 27411 -> Friday, 4 December 2020 10:44 AM
+City seed 56078 -> Londus, Eurasia
+
+Dev seed 46481 -> Friday, 4 December 2020 10:50 AM
+City seed 59535 -> Londus, Eurasia
+
+Dev seed 64201 -> Friday, 4 December 2020 10:53 AM
+City seed 42990 -> Londus, Eurasia
+
+Dev seed 39770 -> Friday, 4 December 2020 11:03 AM
+City seed 2943 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.UpdatePower () (at Assets/Scripts/GUI/ModalTabbedUI.cs:1360)
+	ModalTabbedUI.UpdatePage () (at Assets/Scripts/GUI/ModalTabbedUI.cs:863)
+	ModalTabbedUI.OpenActorSet (gameAPI.TabbedUIWho who, System.Boolean isResetSlotID) (at Assets/Scripts/GUI/ModalTabbedUI.cs:935)
+	ModalTabbedUI.ExecutePageDown () (at Assets/Scripts/GUI/ModalTabbedUI.cs:1257)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI.cs:456)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:341)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:756)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:445)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.UpdatePower () (at Assets/Scripts/GUI/ModalTabbedUI.cs:1360)
+	ModalTabbedUI.UpdatePage () (at Assets/Scripts/GUI/ModalTabbedUI.cs:863)
+	ModalTabbedUI.OpenActorSet (gameAPI.TabbedUIWho who, System.Boolean isResetSlotID) (at Assets/Scripts/GUI/ModalTabbedUI.cs:935)
+	ModalTabbedUI.ExecutePageUp () (at Assets/Scripts/GUI/ModalTabbedUI.cs:1236)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI.cs:453)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:341)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:752)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:445)
+	
+Dev seed 55498 -> Friday, 4 December 2020 11:06 AM
+City seed 57680 -> Londus, Eurasia
+
+Dev seed 5450 -> Friday, 4 December 2020 11:31 AM
+City seed 44139 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.UpdateCompatibility (System.Boolean isPlayer) (at Assets/Scripts/GUI/ModalTabbedUI.cs:1382)
+	ModalTabbedUI.UpdatePage () (at Assets/Scripts/GUI/ModalTabbedUI.cs:854)
+	ModalTabbedUI.OpenActorSetStart (gameAPI.TabbedUIWho who) (at Assets/Scripts/GUI/ModalTabbedUI.cs:967)
+	ModalTabbedUI.SetTabbedUI (modalAPI.TabbedUIData details) (at Assets/Scripts/GUI/ModalTabbedUI.cs:696)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI.cs:419)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:341)
+	ActorClickUI.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Actor/ActorClickUI.cs:46)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 40879 -> Friday, 4 December 2020 11:34 AM
+City seed 49922 -> Londus, Eurasia
+
+Dev seed 10275 -> Friday, 4 December 2020 11:38 AM
+City seed 59571 -> Londus, Eurasia
+
+Dev seed 451 -> Friday, 4 December 2020 11:39 AM
+City seed 27774 -> Londus, Eurasia
+
+Dev seed 22161 -> Friday, 4 December 2020 11:41 AM
+City seed 11440 -> Londus, Eurasia
+
+Dev seed 38889 -> Friday, 4 December 2020 11:45 AM
+City seed 29997 -> Londus, Eurasia
