@@ -88,6 +88,13 @@ public class ModalTabbedUI : MonoBehaviour
     public TabbedSubHeaderInteraction tab0Header3;
     public TabbedSubHeaderInteraction tab0Header4;
 
+    [Header("Canvas1 -> Personality")]
+    public TabbedPersonInteraction tab1Person0;
+    public TabbedPersonInteraction tab1Person1;
+    public TabbedPersonInteraction tab1Person2;
+    public TabbedPersonInteraction tab1Person3;
+    public TabbedPersonInteraction tab1Person4;
+
     //help
     private GenericHelpTooltipUI helpClose;
 
@@ -259,6 +266,12 @@ public class ModalTabbedUI : MonoBehaviour
         else { Debug.LogError("Invalid tab0Header3 (Null)"); }
         if (tab0Header4 != null) { maxNumOfCures = tab0Header4.listOfItems.Count; }
         else { Debug.LogError("Invalid tab0Header4 (Null)"); }
+        //tab1
+        Debug.Assert(tab1Person0 != null, "Invalid tab1Person0 (Null)");
+        Debug.Assert(tab1Person1 != null, "Invalid tab1Person1 (Null)");
+        Debug.Assert(tab1Person2 != null, "Invalid tab1Person2 (Null)");
+        Debug.Assert(tab1Person3 != null, "Invalid tab1Person3 (Null)");
+        Debug.Assert(tab1Person4 != null, "Invalid tab1Person4 (Null)");
     }
     #endregion
 
