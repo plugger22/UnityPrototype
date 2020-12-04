@@ -81,10 +81,12 @@ public class ModalTabbedUI : MonoBehaviour
     public Image tab0PanelConflicts;
     public Image tab0PanelFriends;
     public Image tab0PanelConditions;
+    public Image tab0PanelCures;
     public TabbedSubHeaderInteraction tab0Header0;
     public TabbedSubHeaderInteraction tab0Header1;
     public TabbedSubHeaderInteraction tab0Header2;
     public TabbedSubHeaderInteraction tab0Header3;
+    public TabbedSubHeaderInteraction tab0Header4;
 
     //help
     private GenericHelpTooltipUI helpClose;
@@ -105,6 +107,7 @@ public class ModalTabbedUI : MonoBehaviour
 
     //Page0
     private int maxNumOfConditions = 0;                              //max number of conditions allowed in tab0/page0 subHeader3 'Conditions'
+    private int maxNumOfCures = 0;                                   //max number of cures allowed in tab0/page0 subHeader4 'Cures'
 
     //help tooltips (I don't want this as a global, just a master private field)
     private int x_offset = 200;
@@ -248,11 +251,14 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab0PanelConflicts != null, "Invalid tab0PanelConflicts (Null)");
         Debug.Assert(tab0PanelFriends != null, "Invalid tab0PanelFriends (Null)");
         Debug.Assert(tab0PanelConditions != null, "Invalid tab0PanelConditions (Null)");
+        Debug.Assert(tab0PanelCures != null, "Invalid tab0PanelCures (Null)");
         Debug.Assert(tab0Header0 != null, "Invalid tab0Header0 (Null)");
         Debug.Assert(tab0Header1 != null, "Invalid tab0Header1 (Null)");
         Debug.Assert(tab0Header2 != null, "Invalid tab0Header2 (Null)");
         if (tab0Header3 != null) { maxNumOfConditions = tab0Header3.listOfItems.Count; }
         else { Debug.LogError("Invalid tab0Header3 (Null)"); }
+        if (tab0Header4 != null) { maxNumOfCures = tab0Header4.listOfItems.Count; }
+        else { Debug.LogError("Invalid tab0Header4 (Null)"); }
     }
     #endregion
 
@@ -373,6 +379,7 @@ public class ModalTabbedUI : MonoBehaviour
         tab0PanelConflicts.color = tabSubHeaderColour;
         tab0PanelFriends.color = tabSubHeaderColour;
         tab0PanelConditions.color = tabSubHeaderColour;
+        tab0PanelCures.color = tabSubHeaderColour;
         //Initialisations
         InitialiseTooltips();
     }
@@ -851,6 +858,7 @@ public class ModalTabbedUI : MonoBehaviour
                         tab0PanelConflicts.gameObject.SetActive(true);
                         tab0PanelFriends.gameObject.SetActive(true);
                         tab0PanelConditions.gameObject.SetActive(true);
+                        tab0PanelCures.gameObject.SetActive(false);
                         UpdateCompatibility();
                         UpdatePower();
                         UpdateStatus();
@@ -862,10 +870,12 @@ public class ModalTabbedUI : MonoBehaviour
                         tab0PanelStatus.gameObject.SetActive(true);
                         tab0PanelConflicts.gameObject.SetActive(false);
                         tab0PanelFriends.gameObject.SetActive(false);
+                        tab0PanelCures.gameObject.SetActive(true);
                         tab0PanelConditions.gameObject.SetActive(true);
                         UpdateCompatibility(true);
                         UpdatePower(true);
                         UpdateStatus(true);
+                        if (GetCures() == true) { tab0Header4.text.color = tabSubHeaderTextActive; } else { tab0Header4.text.color = tabSubHeaderTextDormant; }
                         if (GetConditions(true) == true) { tab0Header3.text.color = tabSubHeaderTextActive; } else { tab0Header3.text.color = tabSubHeaderTextDormant; }
                         break;
                     case TabbedUIWho.HQ:
@@ -873,6 +883,7 @@ public class ModalTabbedUI : MonoBehaviour
                         tab0PanelConflicts.gameObject.SetActive(false);
                         tab0PanelFriends.gameObject.SetActive(false);
                         tab0PanelConditions.gameObject.SetActive(false);
+                        tab0PanelCures.gameObject.SetActive(false);
                         UpdateCompatibility();
                         UpdatePower();
                         UpdateStatus();
@@ -882,6 +893,7 @@ public class ModalTabbedUI : MonoBehaviour
                         tab0PanelConflicts.gameObject.SetActive(false);
                         tab0PanelFriends.gameObject.SetActive(false);
                         tab0PanelConditions.gameObject.SetActive(true);
+                        tab0PanelCures.gameObject.SetActive(false);
                         UpdateCompatibility();
                         UpdatePower();
                         UpdateStatus();
@@ -1513,6 +1525,62 @@ public class ModalTabbedUI : MonoBehaviour
             { tab0Header3.listOfItems[i].gameObject.SetActive(false); }
         }
         return isConditions;
+    }
+
+    /// <summary>
+    /// Player specific info -> Available Cures for active conditions, returns true if any cures, false if 'None'
+    /// </summary>
+    /// <returns></returns>
+    private bool GetCures()
+    {
+        bool isCure = false;
+        int numOfItems;
+        string cureName;
+        //Get cures
+        List<Node> listOfCures = GameManager.i.dataScript.GetListOfCureNodes();
+        numOfItems = tab0Header4.listOfItems.Count;
+        int count = listOfCures.Count;
+        if (count > 0)
+        {
+            isCure = true;
+            for (int i = 0; i < maxNumOfCures; i++)
+            {
+                if (i < count)
+                {
+                    //cure present
+                    cureName = string.Format("{0} at {1}", listOfCures[i].cure.cureName, listOfCures[i].nodeName);
+                    if (string.IsNullOrEmpty(cureName) == false)
+                    {
+                        tab0Header4.listOfItems[i].gameObject.SetActive(true);
+                        tab0Header4.listOfItems[i].descriptor.text = cureName;
+                        //turn on help
+                        tab0Header4.listOfItems[0].image.gameObject.SetActive(true);
+                        tab0Header4.listOfItems[0].image.color = tabItemHelpActive;
+                    }
+                    else
+                    {
+                        Debug.LogWarningFormat("Invalid cure (Null or Empty) for listOfCures[{0}]", i);
+                        tab0Header4.listOfItems[i].descriptor.text = "Unknown";
+                        tab0Header4.listOfItems[0].image.color = tabItemHelpDormant;
+                    }
+                }
+                else
+                {
+                    //disable all other items
+                    tab0Header4.listOfItems[i].gameObject.SetActive(false);
+                }
+            }
+        }
+        else
+        {
+            //No Cures present
+            tab0Header4.listOfItems[0].descriptor.text = "<alpha=#AA>None";
+            tab0Header4.listOfItems[0].image.color = tabItemHelpDormant;
+            //disable all other items
+            for (int i = 1; i < maxNumOfCures; i++)
+            { tab0Header4.listOfItems[i].gameObject.SetActive(false); }
+        }
+        return isCure;
     }
 
     /// <summary>

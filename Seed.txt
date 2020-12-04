@@ -3117,3 +3117,20 @@ City seed 11440 -> Londus, Eurasia
 
 Dev seed 38889 -> Friday, 4 December 2020 11:45 AM
 City seed 29997 -> Londus, Eurasia
+
+Dev seed 24122 -> Friday, 4 December 2020 11:53 AM
+City seed 64784 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.CloseTabbedUI () (at Assets/Scripts/GUI/ModalTabbedUI.cs:739)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI.cs:422)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:341)
+	ButtonInteraction.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 1599 -> Friday, 4 December 2020 12:18 PM
+City seed 34361 -> Londus, Eurasia
+
+Dev seed 53336 -> Friday, 4 December 2020 12:25 PM
+City seed 7039 -> Londus, Eurasia
