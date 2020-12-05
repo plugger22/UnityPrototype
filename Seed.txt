@@ -3297,3 +3297,2419 @@ City seed 65256 -> Londus, Eurasia
 
 Dev seed 30012 -> Saturday, 5 December 2020 12:30 PM
 City seed 59481 -> Londus, Eurasia
+
+Dev seed 62284 -> Saturday, 5 December 2020 3:13 PM
+City seed 8502 -> Londus, Eurasia
+
+Dev seed 18123 -> Saturday, 5 December 2020 3:21 PM
+City seed 10071 -> Londus, Eurasia
+
+Dev seed 45671 -> Saturday, 5 December 2020 3:29 PM
+City seed 4669 -> Londus, Eurasia
+ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	ERROR Invalid actor (Null) for slotID 2
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	PersonalityManager:DebugDisplayActorCompatibility() (at Assets/Scripts/Managers/PersonalityManager.cs:1606)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2124)
+	
+Dev seed 5069 -> Saturday, 5 December 2020 3:50 PM
+City seed 3769 -> Londus, Eurasia
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 15827 -> Saturday, 5 December 2020 4:12 PM
+City seed 52762 -> Londus, Eurasia
+
+Dev seed 41129 -> Saturday, 5 December 2020 4:15 PM
+City seed 33903 -> Londus, Eurasia
+
+Dev seed 16187 -> Saturday, 5 December 2020 4:25 PM
+City seed 46614 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:489)
+	ModalTabbedUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:211)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:868)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:922)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:413)
+	
+Dev seed 31723 -> Saturday, 5 December 2020 4:28 PM
+City seed 36197 -> Londus, Eurasia
+
+Dev seed 55874 -> Saturday, 5 December 2020 4:50 PM
+City seed 33051 -> Londus, Eurasia
+
+Dev seed 60774 -> Saturday, 5 December 2020 5:05 PM
+City seed 5553 -> Londus, Eurasia

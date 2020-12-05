@@ -32,6 +32,9 @@ public class TabbedPersonInteraction : MonoBehaviour
     public Image topRight;
     public Image topFarRight;
 
+    [Header("Help")]
+    public GenericHelpTooltipUI help;
+
 
     public void Awake()
     {
@@ -55,6 +58,8 @@ public class TabbedPersonInteraction : MonoBehaviour
         Debug.Assert(topFarLeft != null, "Invalid topFarLeft (Null)");
         Debug.Assert(topRight != null, "Invalid topRight (Null)");
         Debug.Assert(topFarRight != null, "Invalid topFarRight (Null)");
+        //help
+        Debug.Assert(help != null, "Invalid help (Null)");
     }
 
 }

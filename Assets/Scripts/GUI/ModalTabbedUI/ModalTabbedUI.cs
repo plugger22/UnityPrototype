@@ -77,11 +77,6 @@ public class ModalTabbedUI : MonoBehaviour
     public TextMeshProUGUI tab0PowerText;
     public TextMeshProUGUI tab0Compatibility;
     public Image tab0ActorImage;
-    public Image tab0PanelStatus;
-    public Image tab0PanelConflicts;
-    public Image tab0PanelFriends;
-    public Image tab0PanelConditions;
-    public Image tab0PanelCures;
     public TabbedSubHeaderInteraction tab0Header0;
     public TabbedSubHeaderInteraction tab0Header1;
     public TabbedSubHeaderInteraction tab0Header2;
@@ -94,6 +89,10 @@ public class ModalTabbedUI : MonoBehaviour
     public TabbedPersonInteraction tab1Person2;
     public TabbedPersonInteraction tab1Person3;
     public TabbedPersonInteraction tab1Person4;
+    public TabbedSubHeaderInteraction tab1Header0;
+    public TabbedSubHeaderInteraction tab1Header1;
+    public TabbedSubHeaderInteraction tab1Header2;
+    public TabbedSubHeaderInteraction tab1Header3;
 
     //help
     private GenericHelpTooltipUI helpClose;
@@ -167,6 +166,7 @@ public class ModalTabbedUI : MonoBehaviour
     private Actor[] arrayOfReserves;
     //Tab1
     private TabbedPersonInteraction[] arrayOfPersons;
+    private int[] arrayOfPlayerFactors;
 
 
     private static ModalTabbedUI modalTabbedUI;
@@ -265,11 +265,6 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab0PowerText != null, "Invalid tab0PowerText (Null)");
         Debug.Assert(tab0Compatibility != null, "Invalid tab0Compatibility (Null)");
         Debug.Assert(tab0ActorImage != null, "Invalid tab0ActorImage (Null)");
-        Debug.Assert(tab0PanelStatus != null, "Invalid tab0PanelStatus (Null)");
-        Debug.Assert(tab0PanelConflicts != null, "Invalid tab0PanelConflicts (Null)");
-        Debug.Assert(tab0PanelFriends != null, "Invalid tab0PanelFriends (Null)");
-        Debug.Assert(tab0PanelConditions != null, "Invalid tab0PanelConditions (Null)");
-        Debug.Assert(tab0PanelCures != null, "Invalid tab0PanelCures (Null)");
         Debug.Assert(tab0Header0 != null, "Invalid tab0Header0 (Null)");
         Debug.Assert(tab0Header1 != null, "Invalid tab0Header1 (Null)");
         Debug.Assert(tab0Header2 != null, "Invalid tab0Header2 (Null)");
@@ -283,6 +278,10 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab1Person2 != null, "Invalid tab1Person2 (Null)");
         Debug.Assert(tab1Person3 != null, "Invalid tab1Person3 (Null)");
         Debug.Assert(tab1Person4 != null, "Invalid tab1Person4 (Null)");
+        Debug.Assert(tab1Header0 != null, "Invalid tab1Header0 (Null)");
+        Debug.Assert(tab1Header1 != null, "Invalid tab1Header1 (Null)");
+        Debug.Assert(tab1Header2 != null, "Invalid tab1Header2 (Null)");
+        Debug.Assert(tab1Header3 != null, "Invalid tab1Header3 (Null)");
     }
     #endregion
 
@@ -326,7 +325,7 @@ public class ModalTabbedUI : MonoBehaviour
         maxSetIndex = (int)TabbedUIWho.Count - 1;
         maxTopTabIndex = numOfTopTabs - 1;
         //tab1
-        maxNumOfPersonalityFactors = 5;
+        maxNumOfPersonalityFactors = GameManager.i.personScript.numOfFactors;
         arrayOfPersons = new TabbedPersonInteraction[maxNumOfPersonalityFactors];
         //initialise Canvas array
         arrayOfCanvas = new Canvas[numOfTopTabs];
@@ -408,18 +407,26 @@ public class ModalTabbedUI : MonoBehaviour
                 else { Debug.LogErrorFormat("Invalid TabbedInteraction (Null) for arrayOfSideTabObject[{0}]", i); }
             }
         }
-        //Tab0 -> Sub Header colours
-        tab0PanelStatus.color = tabSubHeaderColour;
-        tab0PanelConflicts.color = tabSubHeaderColour;
-        tab0PanelFriends.color = tabSubHeaderColour;
-        tab0PanelConditions.color = tabSubHeaderColour;
-        tab0PanelCures.color = tabSubHeaderColour;
-        //Tab1 -> Personality Matrix setup
+        //
+        // - - - Tab0 -> Sub Header colours
+        //
+        tab0Header0.image.color = tabSubHeaderColour;
+        tab0Header1.image.color = tabSubHeaderColour;
+        tab0Header2.image.color = tabSubHeaderColour;
+        tab0Header3.image.color = tabSubHeaderColour;
+        tab0Header4.image.color = tabSubHeaderColour;
+        //
+        // - - - Tab1 -> Personality Matrix setup
+        //
         arrayOfPersons[0] = tab1Person0;
         arrayOfPersons[1] = tab1Person1;
         arrayOfPersons[2] = tab1Person2;
         arrayOfPersons[3] = tab1Person3;
         arrayOfPersons[4] = tab1Person4;
+        //player personality factors
+        arrayOfPlayerFactors = GameManager.i.playerScript.GetPersonality().GetFactors();
+        Debug.Assert(arrayOfPlayerFactors != null, "Invalid arrayOfPlayerFactors (Null)");
+        Debug.AssertFormat(arrayOfPlayerFactors.Length == maxNumOfPersonalityFactors, "Invalid arrayOfPlayerFactors (has {0} records, should be {1})", arrayOfPlayerFactors.Length, maxNumOfPersonalityFactors);
         //personality factors
         string[] arrayOfFactorTags = GameManager.i.dataScript.GetArrayOfFactorTags();
         if (arrayOfFactorTags != null)
@@ -460,6 +467,11 @@ public class ModalTabbedUI : MonoBehaviour
             else { Debug.LogErrorFormat("Mismatch on arrays (should be identical), arrayOfFactorsTags has {0} records, arrayOfPersons has {1} records", arrayOfFactorTags.Length, arrayOfPersons.Length); }
         }
         else { Debug.LogError("Invalid arrayOfFactorTags (Null)"); }
+        //subheaders
+        tab1Header0.image.color = tabSubHeaderColour;
+        tab1Header1.image.color = tabSubHeaderColour;
+        tab1Header2.image.color = tabSubHeaderColour;
+        tab1Header3.image.color = tabSubHeaderColour;
         //Initialisations
         InitialiseTooltips();
     }
@@ -934,12 +946,12 @@ public class ModalTabbedUI : MonoBehaviour
                 switch (inputData.who)
                 {
                     case TabbedUIWho.Subordinates:
-                        tab0PanelStatus.gameObject.SetActive(true);
-                        tab0PanelConflicts.gameObject.SetActive(true);
-                        tab0PanelFriends.gameObject.SetActive(true);
-                        tab0PanelConditions.gameObject.SetActive(true);
-                        tab0PanelCures.gameObject.SetActive(false);
-                        UpdateCompatibility();
+                        tab0Header0.image.gameObject.SetActive(true);
+                        tab0Header1.image.gameObject.SetActive(true);
+                        tab0Header2.image.gameObject.SetActive(true);
+                        tab0Header3.image.gameObject.SetActive(true);
+                        tab0Header4.image.gameObject.SetActive(false);
+                        UpdateCompatibility(tab0Compatibility.text);
                         UpdatePower();
                         UpdateStatus();
                         if (GetConflict() == true) { tab0Header1.text.color = tabSubHeaderTextActiveColour; } else { tab0Header1.text.color = tabSubHeaderTextDormantColour; }
@@ -947,34 +959,34 @@ public class ModalTabbedUI : MonoBehaviour
                         if (GetConditions() == true) { tab0Header3.text.color = tabSubHeaderTextActiveColour; } else { tab0Header3.text.color = tabSubHeaderTextDormantColour; }
                         break;
                     case TabbedUIWho.Player:
-                        tab0PanelStatus.gameObject.SetActive(true);
-                        tab0PanelConflicts.gameObject.SetActive(false);
-                        tab0PanelFriends.gameObject.SetActive(false);
-                        tab0PanelCures.gameObject.SetActive(true);
-                        tab0PanelConditions.gameObject.SetActive(true);
-                        UpdateCompatibility(true);
+                        tab0Header0.image.gameObject.SetActive(true);
+                        tab0Header1.image.gameObject.SetActive(false);
+                        tab0Header2.image.gameObject.SetActive(false);
+                        tab0Header3.image.gameObject.SetActive(true);
+                        tab0Header4.image.gameObject.SetActive(true);
+                        UpdateCompatibility(tab0Compatibility.text, true);
                         UpdatePower(true);
                         UpdateStatus(true);
                         if (GetCures() == true) { tab0Header4.text.color = tabSubHeaderTextActiveColour; } else { tab0Header4.text.color = tabSubHeaderTextDormantColour; }
                         if (GetConditions(true) == true) { tab0Header3.text.color = tabSubHeaderTextActiveColour; } else { tab0Header3.text.color = tabSubHeaderTextDormantColour; }
                         break;
                     case TabbedUIWho.HQ:
-                        tab0PanelStatus.gameObject.SetActive(true);
-                        tab0PanelConflicts.gameObject.SetActive(false);
-                        tab0PanelFriends.gameObject.SetActive(false);
-                        tab0PanelConditions.gameObject.SetActive(false);
-                        tab0PanelCures.gameObject.SetActive(false);
-                        UpdateCompatibility();
+                        tab0Header0.image.gameObject.SetActive(true);
+                        tab0Header1.image.gameObject.SetActive(false);
+                        tab0Header2.image.gameObject.SetActive(false);
+                        tab0Header3.image.gameObject.SetActive(false);
+                        tab0Header4.image.gameObject.SetActive(false);
+                        UpdateCompatibility(tab0Compatibility.text);
                         UpdatePower();
                         UpdateStatus();
                         break;
                     case TabbedUIWho.Reserves:
-                        tab0PanelStatus.gameObject.SetActive(true);
-                        tab0PanelConflicts.gameObject.SetActive(false);
-                        tab0PanelFriends.gameObject.SetActive(false);
-                        tab0PanelConditions.gameObject.SetActive(true);
-                        tab0PanelCures.gameObject.SetActive(false);
-                        UpdateCompatibility();
+                        tab0Header0.image.gameObject.SetActive(true);
+                        tab0Header1.image.gameObject.SetActive(false);
+                        tab0Header2.image.gameObject.SetActive(false);
+                        tab0Header3.image.gameObject.SetActive(true);
+                        tab0Header4.image.gameObject.SetActive(false);
+                        UpdateCompatibility(tab0Compatibility.text);
                         UpdatePower();
                         UpdateStatus();
                         if (GetConditions() == true) { tab0Header3.text.color = tabSubHeaderTextActiveColour; } else { tab0Header3.text.color = tabSubHeaderTextDormantColour; }
@@ -983,6 +995,18 @@ public class ModalTabbedUI : MonoBehaviour
                 }
                 break;
             case TabbedPage.Personality:
+                switch (inputData.who)
+                {
+                    case TabbedUIWho.Player:
+                        UpdateCompatibility(tab1Header0.text.text, true);
+                        break;
+                    case TabbedUIWho.Subordinates:
+                    case TabbedUIWho.HQ:
+                    case TabbedUIWho.Reserves:
+                        UpdateCompatibility(tab1Header0.text.text);
+                        break;
+                    default: Debug.LogWarningFormat("Unrecognised inputData.who \"{0}\"", inputData.who); break;
+                }
                 UpdatePersonality();
                 break;
             case TabbedPage.Contacts:
@@ -1471,14 +1495,14 @@ public class ModalTabbedUI : MonoBehaviour
     /// <summary>
     /// Updates Compatibility with Player in Tab0 for current actor
     /// </summary>
-    private void UpdateCompatibility(bool isPlayer = false)
+    private void UpdateCompatibility(string displayText, bool isPlayer = false)
     {
         if (isPlayer == true)
         { tab0Compatibility.text = ""; }
         else
         {
             int compatibility = arrayOfActorsTemp[currentSideTabIndex].GetPersonality().GetCompatibilityWithPlayer();
-            tab0Compatibility.text = GameManager.i.guiScript.GetCompatibilityStars(compatibility);
+            displayText = GameManager.i.guiScript.GetCompatibilityStars(compatibility);
         }
     }
 
@@ -1710,7 +1734,7 @@ public class ModalTabbedUI : MonoBehaviour
         int[] arrayOfFactors;
         //populate array
         if (inputData.who == TabbedUIWho.Player)
-        { arrayOfFactors = GameManager.i.playerScript.GetPersonality().GetFactors(); }
+        { arrayOfFactors = arrayOfPlayerFactors; }
         else { arrayOfFactors = arrayOfActorsTemp[currentSideTabIndex].GetPersonality().GetFactors(); }
         //update matrix
         if (arrayOfFactors != null)
@@ -1721,6 +1745,7 @@ public class ModalTabbedUI : MonoBehaviour
                 for (int i = 0; i < limit; i++)
                 {
                     TabbedPersonInteraction interact = arrayOfPersons[i];
+                    //Actor Personality
                     switch (arrayOfFactors[i])
                     {
                         case 2:
@@ -1794,6 +1819,59 @@ public class ModalTabbedUI : MonoBehaviour
                             interact.textMiddleFarRight.color = personMiddleTextDormantColour;
                             break;
                         default: Debug.LogWarningFormat("Unrecognised factor \"{0}\" in arrayOfFactors[{1}]", arrayOfFactors[i], i); break;
+                    }
+                    //top markers Player Personality
+                    if (inputData.who == TabbedUIWho.Player)
+                    {
+                        //don't show if Player
+                        interact.topFarLeft.gameObject.SetActive(false);
+                        interact.topLeft.gameObject.SetActive(false);
+                        interact.topCentre.gameObject.SetActive(false);
+                        interact.topRight.gameObject.SetActive(false);
+                        interact.topFarRight.gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        //show if actor
+                        switch (arrayOfPlayerFactors[i])
+                        {
+                            case 2:
+                                interact.topFarLeft.gameObject.SetActive(false);
+                                interact.topLeft.gameObject.SetActive(false);
+                                interact.topCentre.gameObject.SetActive(false);
+                                interact.topRight.gameObject.SetActive(false);
+                                interact.topFarRight.gameObject.SetActive(true);
+                                break;
+                            case 1:
+                                interact.topFarLeft.gameObject.SetActive(false);
+                                interact.topLeft.gameObject.SetActive(false);
+                                interact.topCentre.gameObject.SetActive(false);
+                                interact.topRight.gameObject.SetActive(true);
+                                interact.topFarRight.gameObject.SetActive(false);
+                                break;
+                            case 0:
+                                interact.topFarLeft.gameObject.SetActive(false);
+                                interact.topLeft.gameObject.SetActive(false);
+                                interact.topCentre.gameObject.SetActive(true);
+                                interact.topRight.gameObject.SetActive(false);
+                                interact.topFarRight.gameObject.SetActive(false);
+                                break;
+                            case -1:
+                                interact.topFarLeft.gameObject.SetActive(false);
+                                interact.topLeft.gameObject.SetActive(true);
+                                interact.topCentre.gameObject.SetActive(false);
+                                interact.topRight.gameObject.SetActive(false);
+                                interact.topFarRight.gameObject.SetActive(false);
+                                break;
+                            case -2:
+                                interact.topFarLeft.gameObject.SetActive(true);
+                                interact.topLeft.gameObject.SetActive(false);
+                                interact.topCentre.gameObject.SetActive(false);
+                                interact.topRight.gameObject.SetActive(false);
+                                interact.topFarRight.gameObject.SetActive(false);
+                                break;
+                            default: Debug.LogWarningFormat("Unrecognised factor \"{0}\" in arrayOfPLAYERFactors[{1}]", arrayOfPlayerFactors[i], i); break;
+                        }
                     }
                 }
             }
