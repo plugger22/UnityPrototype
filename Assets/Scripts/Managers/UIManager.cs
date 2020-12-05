@@ -63,16 +63,30 @@ public class UIManager : MonoBehaviour
     public Color TabbedSideTabActive;
     [Tooltip("Dormant side tab colour")]
     public Color TabbedSideTabDormant;
-    [Tooltip("Active top tab colour")]
+    [Tooltip("Active top tab colour (should be 100% alpha)")]
     public Color TabbedTopTabActive;
     [Tooltip("Dormant top tab colour")]
     public Color TabbedTopTabDormant;
-    [Tooltip("Active Top and Controller text colour")]
+    [Tooltip("Active Top and Controller text colour (should be 100% alpha)")]
     public Color TabbedTextActive;
-    [Tooltip("Dormant Top and Controller text colour")]
+    [Tooltip("Dormant Top and Controller text colour (should be 100% alpha)")]
     public Color TabbedTextDormant;
-    [Tooltip("Sub header background sprite colour, eg. Status, Friends and Enemies")]
+    [Tooltip("Sub header background sprite colour, eg. Status, Friends and Enemies, (should be 100% alpha)")]
     public Color TabbedSubHeader;
     [Tooltip("Sub header text colour (should be 100% alpha)")]
     public Color TabbedSubHeaderText;
+    [Tooltip("Personality Matrix prefab middle colour (should be 100% alpha)")]
+    public Color TabbedPersonMiddle;
+    [Tooltip("Personality Matrix prefab middle colour alternate (should be 100% alpha)")]
+    public Color TabbedPersonMiddleAlt;
+    [Tooltip("Personality Matrix prefab middle colour Active  (should be 100% alpha)")]
+    public Color TabbedPersonMiddleActive;
+    [Tooltip("Personality Matrix prefab bottom colour (should be 100% alpha")]
+    public Color TabbedPersonBottom;
+    [Tooltip("Personality Matrix prefab middle text dormant (should be 100% alpha")]
+    public Color TabbedPersonMiddleTextDormant;
+    [Tooltip("Personality Matrix prefab middle text active (should be 100% alpha")]
+    public Color TabbedPersonMiddleTextActive;
+    [Tooltip("Personality Matrix prefab bottom text (should be 100% alpha")]
+    public Color TabbedPersonBottomText;
 }

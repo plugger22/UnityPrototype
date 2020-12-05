@@ -116,6 +116,9 @@ public class ModalTabbedUI : MonoBehaviour
     private int maxNumOfConditions = 0;                              //max number of conditions allowed in tab0/page0 subHeader3 'Conditions'
     private int maxNumOfCures = 0;                                   //max number of cures allowed in tab0/page0 subHeader4 'Cures'
 
+    //Page1
+    private int maxNumOfPersonalityFactors;
+
     //help tooltips (I don't want this as a global, just a master private field)
     private int x_offset = 200;
     private int y_offset = 40;
@@ -131,11 +134,17 @@ public class ModalTabbedUI : MonoBehaviour
     private Color tabTextActiveColour;                                 //top tab and controller button text colours
     private Color tabTextDormantColour;                                //top tab and controller button text colours
     private Color tabSubHeaderColour;
-    private Color tabSubHeaderTextActive;
-    private Color tabSubHeaderTextDormant;
-    private Color tabItemHelpActive;
-    private Color tabItemHelpDormant;
-
+    private Color tabSubHeaderTextActiveColour;
+    private Color tabSubHeaderTextDormantColour;
+    private Color tabItemHelpActiveColour;
+    private Color tabItemHelpDormantColour;
+    private Color personMiddleColour;
+    private Color personMiddleAltColour;
+    private Color personMiddleActiveColour;
+    private Color personBottomColour;
+    private Color personBottomTextColour;
+    private Color personMiddleTextActiveColour;
+    private Color personMiddleTextDormantColour;
 
     //Input data
     TabbedUIData inputData;
@@ -156,6 +165,8 @@ public class ModalTabbedUI : MonoBehaviour
     private Actor[] arrayOfSubordinates;
     private Actor[] arrayOfHq;
     private Actor[] arrayOfReserves;
+    //Tab1
+    private TabbedPersonInteraction[] arrayOfPersons;
 
 
     private static ModalTabbedUI modalTabbedUI;
@@ -291,14 +302,21 @@ public class ModalTabbedUI : MonoBehaviour
         tabTextActiveColour = GameManager.i.uiScript.TabbedTextActive;
         tabTextDormantColour = GameManager.i.uiScript.TabbedTextDormant;
         tabSubHeaderColour = GameManager.i.uiScript.TabbedSubHeader;
-        tabSubHeaderTextActive = GameManager.i.uiScript.TabbedSubHeaderText;
-        Color tempColour = tabSubHeaderTextActive;
+        tabSubHeaderTextActiveColour = GameManager.i.uiScript.TabbedSubHeaderText;
+        personMiddleColour = GameManager.i.uiScript.TabbedPersonMiddle;
+        personMiddleAltColour = GameManager.i.uiScript.TabbedPersonMiddleAlt;
+        personMiddleActiveColour = GameManager.i.uiScript.TabbedPersonMiddleActive;
+        personBottomColour = GameManager.i.uiScript.TabbedPersonBottom;
+        personBottomTextColour = GameManager.i.uiScript.TabbedPersonBottomText;
+        personMiddleTextActiveColour = GameManager.i.uiScript.TabbedPersonMiddleTextActive;
+        personMiddleTextDormantColour = GameManager.i.uiScript.TabbedPersonMiddleTextDormant;
+        Color tempColour = tabSubHeaderTextActiveColour;
         tempColour.a = 0.60f;
-        tabSubHeaderTextDormant = tempColour;
+        tabSubHeaderTextDormantColour = tempColour;
         tempColour = tab0Header0.listOfItems[0].image.color;
-        tabItemHelpActive = tempColour;
+        tabItemHelpActiveColour = tempColour;
         tempColour.a = 0.60f;
-        tabItemHelpDormant = tempColour;
+        tabItemHelpDormantColour = tempColour;
         //Tabs and indexes
         currentTopTabIndex = 0;
         numOfSideTabs = (int)TabbedUISide.Count;
@@ -307,6 +325,9 @@ public class ModalTabbedUI : MonoBehaviour
         maxSideTabIndex = numOfSideTabs - 1;
         maxSetIndex = (int)TabbedUIWho.Count - 1;
         maxTopTabIndex = numOfTopTabs - 1;
+        //tab1
+        maxNumOfPersonalityFactors = 5;
+        arrayOfPersons = new TabbedPersonInteraction[maxNumOfPersonalityFactors];
         //initialise Canvas array
         arrayOfCanvas = new Canvas[numOfTopTabs];
         //initialise Top Tab Arrays
@@ -387,12 +408,58 @@ public class ModalTabbedUI : MonoBehaviour
                 else { Debug.LogErrorFormat("Invalid TabbedInteraction (Null) for arrayOfSideTabObject[{0}]", i); }
             }
         }
-        //Sub Header colours
+        //Tab0 -> Sub Header colours
         tab0PanelStatus.color = tabSubHeaderColour;
         tab0PanelConflicts.color = tabSubHeaderColour;
         tab0PanelFriends.color = tabSubHeaderColour;
         tab0PanelConditions.color = tabSubHeaderColour;
         tab0PanelCures.color = tabSubHeaderColour;
+        //Tab1 -> Personality Matrix setup
+        arrayOfPersons[0] = tab1Person0;
+        arrayOfPersons[1] = tab1Person1;
+        arrayOfPersons[2] = tab1Person2;
+        arrayOfPersons[3] = tab1Person3;
+        arrayOfPersons[4] = tab1Person4;
+        //personality factors
+        string[] arrayOfFactorTags = GameManager.i.dataScript.GetArrayOfFactorTags();
+        if (arrayOfFactorTags != null)
+        {
+            if (arrayOfFactorTags.Length == arrayOfPersons.Length)
+            {
+                //initialise matrixes
+                for (int i = 0; i < arrayOfPersons.Length; i++)
+                {
+                    TabbedPersonInteraction interact = arrayOfPersons[i];
+                    if (interact != null)
+                    {
+                        //background colours
+                        interact.middleFarLeft.color = personMiddleColour;
+                        interact.middleLeft.color = personMiddleAltColour;
+                        interact.middleCentre.color = personMiddleColour;
+                        interact.middleRight.color = personMiddleAltColour;
+                        interact.middleFarRight.color = personMiddleColour;
+                        interact.bottom.color = personBottomColour;
+                        interact.textMiddleFarLeft.color = personMiddleTextDormantColour;
+                        interact.textMiddleLeft.color = personMiddleTextDormantColour;
+                        interact.textMiddleCentre.color = personMiddleTextDormantColour;
+                        interact.textMiddleRight.color = personMiddleTextDormantColour;
+                        interact.textMiddleFarRight.color = personMiddleTextDormantColour;
+                        //switch off top
+                        interact.topFarLeft.gameObject.SetActive(false);
+                        interact.topLeft.gameObject.SetActive(false);
+                        interact.topCentre.gameObject.SetActive(false);
+                        interact.topRight.gameObject.SetActive(false);
+                        interact.topFarRight.gameObject.SetActive(false);
+                        //factor name
+                        interact.textBottom.text = arrayOfFactorTags[i];
+                        interact.textBottom.color = personBottomTextColour;
+                    }
+                    else { Debug.LogErrorFormat("Invalid tabbedPersonInteraction (Null) in arrayOfPersons[{0}]", i); }
+                }
+            }
+            else { Debug.LogErrorFormat("Mismatch on arrays (should be identical), arrayOfFactorsTags has {0} records, arrayOfPersons has {1} records", arrayOfFactorTags.Length, arrayOfPersons.Length); }
+        }
+        else { Debug.LogError("Invalid arrayOfFactorTags (Null)"); }
         //Initialisations
         InitialiseTooltips();
     }
@@ -857,9 +924,9 @@ public class ModalTabbedUI : MonoBehaviour
     /// </summary>
     private void UpdatePage()
     {
-        switch (currentTopTabIndex)
+        switch (arrayOfPages[currentTopTabIndex])
         {
-            case 0:
+            case TabbedPage.Main:
                 tab0ActorName.text = GetActorName(currentSideTabIndex);
                 tab0ActorTitle.text = GetActorTitle(currentSideTabIndex);
                 tab0ActorImage.sprite = arrayOfSideTabItems[currentSideTabIndex].portrait.sprite;
@@ -875,9 +942,9 @@ public class ModalTabbedUI : MonoBehaviour
                         UpdateCompatibility();
                         UpdatePower();
                         UpdateStatus();
-                        if (GetConflict() == true) { tab0Header1.text.color = tabSubHeaderTextActive; } else { tab0Header1.text.color = tabSubHeaderTextDormant; }
-                        if (GetRelationship() == true) { tab0Header2.text.color = tabSubHeaderTextActive; } else { tab0Header2.text.color = tabSubHeaderTextDormant; }
-                        if (GetConditions() == true) { tab0Header3.text.color = tabSubHeaderTextActive; } else { tab0Header3.text.color = tabSubHeaderTextDormant; }
+                        if (GetConflict() == true) { tab0Header1.text.color = tabSubHeaderTextActiveColour; } else { tab0Header1.text.color = tabSubHeaderTextDormantColour; }
+                        if (GetRelationship() == true) { tab0Header2.text.color = tabSubHeaderTextActiveColour; } else { tab0Header2.text.color = tabSubHeaderTextDormantColour; }
+                        if (GetConditions() == true) { tab0Header3.text.color = tabSubHeaderTextActiveColour; } else { tab0Header3.text.color = tabSubHeaderTextDormantColour; }
                         break;
                     case TabbedUIWho.Player:
                         tab0PanelStatus.gameObject.SetActive(true);
@@ -888,8 +955,8 @@ public class ModalTabbedUI : MonoBehaviour
                         UpdateCompatibility(true);
                         UpdatePower(true);
                         UpdateStatus(true);
-                        if (GetCures() == true) { tab0Header4.text.color = tabSubHeaderTextActive; } else { tab0Header4.text.color = tabSubHeaderTextDormant; }
-                        if (GetConditions(true) == true) { tab0Header3.text.color = tabSubHeaderTextActive; } else { tab0Header3.text.color = tabSubHeaderTextDormant; }
+                        if (GetCures() == true) { tab0Header4.text.color = tabSubHeaderTextActiveColour; } else { tab0Header4.text.color = tabSubHeaderTextDormantColour; }
+                        if (GetConditions(true) == true) { tab0Header3.text.color = tabSubHeaderTextActiveColour; } else { tab0Header3.text.color = tabSubHeaderTextDormantColour; }
                         break;
                     case TabbedUIWho.HQ:
                         tab0PanelStatus.gameObject.SetActive(true);
@@ -910,27 +977,33 @@ public class ModalTabbedUI : MonoBehaviour
                         UpdateCompatibility();
                         UpdatePower();
                         UpdateStatus();
-                        if (GetConditions() == true) { tab0Header3.text.color = tabSubHeaderTextActive; } else { tab0Header3.text.color = tabSubHeaderTextDormant; }
+                        if (GetConditions() == true) { tab0Header3.text.color = tabSubHeaderTextActiveColour; } else { tab0Header3.text.color = tabSubHeaderTextDormantColour; }
                         break;
                     default: Debug.LogWarningFormat("Unrecognised inputData.who \"{0}\"", inputData.who); break;
                 }
                 break;
-            case 1:
+            case TabbedPage.Personality:
+                UpdatePersonality();
+                break;
+            case TabbedPage.Contacts:
 
                 break;
-            case 2:
+            case TabbedPage.Gear:
 
                 break;
-            case 3:
+            case TabbedPage.Investigations:
 
                 break;
-            case 4:
+            case TabbedPage.Likes:
 
                 break;
-            case 5:
+            case TabbedPage.Secrets:
 
                 break;
-            case 6:
+            case TabbedPage.History:
+
+                break;
+            case TabbedPage.Stats:
 
                 break;
             default: Debug.LogWarningFormat("Unrecognised currentTopTabIndex \"{0}\"", currentTopTabIndex); break;
@@ -1071,9 +1144,10 @@ public class ModalTabbedUI : MonoBehaviour
                 break;
             default: Debug.LogWarningFormat("Unrecognised who \"{0}\"", who); break;
         }
-        //default to first tab (current tab may no longer be present, so always go back to first on changing actorSet)
-        currentTopTabIndex = 0;
-        UpdateTopTabs(0);
+        //default to first tab but only if current tab no longer be present, otherwise go back to first on changing actorSet
+        if (currentTopTabIndex >= maxTopTabIndex)
+        { currentTopTabIndex = 0; }
+        UpdateTopTabs(currentTopTabIndex);
     }
 
     /// <summary>
@@ -1419,16 +1493,16 @@ public class ModalTabbedUI : MonoBehaviour
         {
             case 0:
                 tab0Header1.listOfItems[0].descriptor.text = "ON THE EDGE";
-                tab0Header1.listOfItems[0].image.color = tabItemHelpActive;
+                tab0Header1.listOfItems[0].image.color = tabItemHelpActiveColour;
                 isPossibleConflict = true;
                 break;
             case 1:
                 tab0Header1.listOfItems[0].descriptor.text = "<alpha=#AA>Unlikely";
-                tab0Header1.listOfItems[0].image.color = tabItemHelpDormant;
+                tab0Header1.listOfItems[0].image.color = tabItemHelpDormantColour;
                 break;
             default:
                 tab0Header1.listOfItems[0].descriptor.text = "<alpha=#AA>Happy in the Service";
-                tab0Header1.listOfItems[0].image.color = tabItemHelpDormant;
+                tab0Header1.listOfItems[0].image.color = tabItemHelpDormantColour;
                 break;
         }
         return isPossibleConflict;
@@ -1454,13 +1528,13 @@ public class ModalTabbedUI : MonoBehaviour
             {
                 Debug.LogWarningFormat("Invalid actor (Null) for RelationshipData.actorID {0}", data.actorID);
                 tab0Header2.listOfItems[0].descriptor.text = "<alpha=#AA>None";
-                tab0Header2.listOfItems[0].image.color = tabItemHelpDormant;
+                tab0Header2.listOfItems[0].image.color = tabItemHelpDormantColour;
             }
         }
         else
         {
             tab0Header2.listOfItems[0].descriptor.text = "<alpha=#AA>None";
-            tab0Header2.listOfItems[0].image.color = tabItemHelpDormant;
+            tab0Header2.listOfItems[0].image.color = tabItemHelpDormantColour;
         }
         return isRelationship;
     }
@@ -1511,13 +1585,13 @@ public class ModalTabbedUI : MonoBehaviour
                         tab0Header3.listOfItems[i].descriptor.text = condition.tag;
                         //turn on help
                         tab0Header3.listOfItems[0].image.gameObject.SetActive(true);
-                        tab0Header3.listOfItems[0].image.color = tabItemHelpActive;
+                        tab0Header3.listOfItems[0].image.color = tabItemHelpActiveColour;
                     }
                     else
                     {
                         Debug.LogWarningFormat("Invalid condition (Null) for listOfConditions[{0}]", i);
                         tab0Header3.listOfItems[i].descriptor.text = "Unknown";
-                        tab0Header3.listOfItems[0].image.color = tabItemHelpDormant;
+                        tab0Header3.listOfItems[0].image.color = tabItemHelpDormantColour;
                     }
                 }
                 else
@@ -1531,7 +1605,7 @@ public class ModalTabbedUI : MonoBehaviour
         {
             //No Conditions present
             tab0Header3.listOfItems[0].descriptor.text = "<alpha=#AA>None";
-            tab0Header3.listOfItems[0].image.color = tabItemHelpDormant;
+            tab0Header3.listOfItems[0].image.color = tabItemHelpDormantColour;
             isConditions = false;
             //disable all other items
             for (int i = 1; i < maxNumOfConditions; i++)
@@ -1568,13 +1642,13 @@ public class ModalTabbedUI : MonoBehaviour
                         tab0Header4.listOfItems[i].descriptor.text = cureName;
                         //turn on help
                         tab0Header4.listOfItems[0].image.gameObject.SetActive(true);
-                        tab0Header4.listOfItems[0].image.color = tabItemHelpActive;
+                        tab0Header4.listOfItems[0].image.color = tabItemHelpActiveColour;
                     }
                     else
                     {
                         Debug.LogWarningFormat("Invalid cure (Null or Empty) for listOfCures[{0}]", i);
                         tab0Header4.listOfItems[i].descriptor.text = "Unknown";
-                        tab0Header4.listOfItems[0].image.color = tabItemHelpDormant;
+                        tab0Header4.listOfItems[0].image.color = tabItemHelpDormantColour;
                     }
                 }
                 else
@@ -1588,7 +1662,7 @@ public class ModalTabbedUI : MonoBehaviour
         {
             //No Cures present
             tab0Header4.listOfItems[0].descriptor.text = "<alpha=#AA>None";
-            tab0Header4.listOfItems[0].image.color = tabItemHelpDormant;
+            tab0Header4.listOfItems[0].image.color = tabItemHelpDormantColour;
             //disable all other items
             for (int i = 1; i < maxNumOfCures; i++)
             { tab0Header4.listOfItems[i].gameObject.SetActive(false); }
@@ -1624,6 +1698,108 @@ public class ModalTabbedUI : MonoBehaviour
         }
         else { Debug.LogWarningFormat("Invalid currentSideIndex \"{0}\" (should be > -1 and <= {1})", tabIndex, maxSideTabIndex); }
         return actorTitle;
+    }
+
+    /// <summary>
+    /// Tab1 Updates personality matrix for an actor or player
+    /// </summary>
+    private void UpdatePersonality()
+    {
+        int limit;
+        //personality matrix
+        int[] arrayOfFactors;
+        //populate array
+        if (inputData.who == TabbedUIWho.Player)
+        { arrayOfFactors = GameManager.i.playerScript.GetPersonality().GetFactors(); }
+        else { arrayOfFactors = arrayOfActorsTemp[currentSideTabIndex].GetPersonality().GetFactors(); }
+        //update matrix
+        if (arrayOfFactors != null)
+        {
+            limit = arrayOfFactors.Length;
+            if (limit == maxNumOfPersonalityFactors)
+            {
+                for (int i = 0; i < limit; i++)
+                {
+                    TabbedPersonInteraction interact = arrayOfPersons[i];
+                    switch (arrayOfFactors[i])
+                    {
+                        case 2:
+                            //backgrounds
+                            interact.middleFarLeft.color = personMiddleColour;
+                            interact.middleLeft.color = personMiddleAltColour;
+                            interact.middleCentre.color = personMiddleColour;
+                            interact.middleRight.color = personMiddleAltColour;
+                            interact.middleFarRight.color = personMiddleActiveColour;
+                            //middle texts
+                            interact.textMiddleFarLeft.color = personMiddleTextDormantColour;
+                            interact.textMiddleLeft.color = personMiddleTextDormantColour;
+                            interact.textMiddleCentre.color = personMiddleTextDormantColour;
+                            interact.textMiddleRight.color = personMiddleTextDormantColour;
+                            interact.textMiddleFarRight.color = personMiddleTextActiveColour;
+                            break;
+                        case 1:
+                            //backgrounds
+                            interact.middleFarLeft.color = personMiddleColour;
+                            interact.middleLeft.color = personMiddleAltColour;
+                            interact.middleCentre.color = personMiddleColour;
+                            interact.middleRight.color = personMiddleActiveColour;
+                            interact.middleFarRight.color = personMiddleColour;
+                            //middle texts
+                            interact.textMiddleFarLeft.color = personMiddleTextDormantColour;
+                            interact.textMiddleLeft.color = personMiddleTextDormantColour;
+                            interact.textMiddleCentre.color = personMiddleTextDormantColour;
+                            interact.textMiddleRight.color = personMiddleTextActiveColour;
+                            interact.textMiddleFarRight.color = personMiddleTextDormantColour;
+                            break;
+                        case 0:
+                            //backgrounds
+                            interact.middleFarLeft.color = personMiddleColour;
+                            interact.middleLeft.color = personMiddleAltColour;
+                            interact.middleCentre.color = personMiddleActiveColour;
+                            interact.middleRight.color = personMiddleAltColour;
+                            interact.middleFarRight.color = personMiddleColour;
+                            //middle texts
+                            interact.textMiddleFarLeft.color = personMiddleTextDormantColour;
+                            interact.textMiddleLeft.color = personMiddleTextDormantColour;
+                            interact.textMiddleCentre.color = personMiddleTextActiveColour;
+                            interact.textMiddleRight.color = personMiddleTextDormantColour;
+                            interact.textMiddleFarRight.color = personMiddleTextDormantColour;
+                            break;
+                        case -1:
+                            //backgrounds
+                            interact.middleFarLeft.color = personMiddleColour;
+                            interact.middleLeft.color = personMiddleActiveColour;
+                            interact.middleCentre.color = personMiddleColour;
+                            interact.middleRight.color = personMiddleAltColour;
+                            interact.middleFarRight.color = personMiddleColour;
+                            //middle texts
+                            interact.textMiddleFarLeft.color = personMiddleTextDormantColour;
+                            interact.textMiddleLeft.color = personMiddleTextActiveColour;
+                            interact.textMiddleCentre.color = personMiddleTextDormantColour;
+                            interact.textMiddleRight.color = personMiddleTextDormantColour;
+                            interact.textMiddleFarRight.color = personMiddleTextDormantColour;
+                            break;
+                        case -2:
+                            //backgrounds
+                            interact.middleFarLeft.color = personMiddleActiveColour;
+                            interact.middleLeft.color = personMiddleAltColour;
+                            interact.middleCentre.color = personMiddleColour;
+                            interact.middleRight.color = personMiddleAltColour;
+                            interact.middleFarRight.color = personMiddleColour;
+                            //middle texts
+                            interact.textMiddleFarLeft.color = personMiddleTextActiveColour;
+                            interact.textMiddleLeft.color = personMiddleTextDormantColour;
+                            interact.textMiddleCentre.color = personMiddleTextDormantColour;
+                            interact.textMiddleRight.color = personMiddleTextDormantColour;
+                            interact.textMiddleFarRight.color = personMiddleTextDormantColour;
+                            break;
+                        default: Debug.LogWarningFormat("Unrecognised factor \"{0}\" in arrayOfFactors[{1}]", arrayOfFactors[i], i); break;
+                    }
+                }
+            }
+            else { Debug.LogErrorFormat("Invalid arrayOfFactors (wrong size, should be {0}, is {1})", maxNumOfPersonalityFactors, limit); }
+        }
+        else { Debug.LogError("Invalid arrayOfFactors (Null)"); }
     }
 
 
