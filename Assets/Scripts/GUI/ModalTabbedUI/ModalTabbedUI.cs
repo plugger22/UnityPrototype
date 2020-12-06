@@ -951,7 +951,7 @@ public class ModalTabbedUI : MonoBehaviour
                         tab0Header2.image.gameObject.SetActive(true);
                         tab0Header3.image.gameObject.SetActive(true);
                         tab0Header4.image.gameObject.SetActive(false);
-                        UpdateCompatibility(tab0Compatibility.text);
+                        tab0Compatibility.text = GetCompatibility();
                         UpdatePower();
                         UpdateStatus();
                         if (GetConflict() == true) { tab0Header1.text.color = tabSubHeaderTextActiveColour; } else { tab0Header1.text.color = tabSubHeaderTextDormantColour; }
@@ -964,7 +964,7 @@ public class ModalTabbedUI : MonoBehaviour
                         tab0Header2.image.gameObject.SetActive(false);
                         tab0Header3.image.gameObject.SetActive(true);
                         tab0Header4.image.gameObject.SetActive(true);
-                        UpdateCompatibility(tab0Compatibility.text, true);
+                        tab0Compatibility.text = GetCompatibility(true);
                         UpdatePower(true);
                         UpdateStatus(true);
                         if (GetCures() == true) { tab0Header4.text.color = tabSubHeaderTextActiveColour; } else { tab0Header4.text.color = tabSubHeaderTextDormantColour; }
@@ -976,7 +976,7 @@ public class ModalTabbedUI : MonoBehaviour
                         tab0Header2.image.gameObject.SetActive(false);
                         tab0Header3.image.gameObject.SetActive(false);
                         tab0Header4.image.gameObject.SetActive(false);
-                        UpdateCompatibility(tab0Compatibility.text);
+                        tab0Compatibility.text = GetCompatibility();
                         UpdatePower();
                         UpdateStatus();
                         break;
@@ -986,7 +986,7 @@ public class ModalTabbedUI : MonoBehaviour
                         tab0Header2.image.gameObject.SetActive(false);
                         tab0Header3.image.gameObject.SetActive(true);
                         tab0Header4.image.gameObject.SetActive(false);
-                        UpdateCompatibility(tab0Compatibility.text);
+                        tab0Compatibility.text = GetCompatibility();
                         UpdatePower();
                         UpdateStatus();
                         if (GetConditions() == true) { tab0Header3.text.color = tabSubHeaderTextActiveColour; } else { tab0Header3.text.color = tabSubHeaderTextDormantColour; }
@@ -998,12 +998,18 @@ public class ModalTabbedUI : MonoBehaviour
                 switch (inputData.who)
                 {
                     case TabbedUIWho.Player:
-                        UpdateCompatibility(tab1Header0.text.text, true);
+                        tab1Header0.descriptor.text = GetCompatibility(true);
+                        tab1Header1.descriptor.text = GetTrait(true);
+                        tab1Header2.descriptor.text = GetPersonalityDescriptors(true);
+                        tab1Header3.descriptor.text = GetPersonalityAssessment(true);
                         break;
                     case TabbedUIWho.Subordinates:
                     case TabbedUIWho.HQ:
                     case TabbedUIWho.Reserves:
-                        UpdateCompatibility(tab1Header0.text.text);
+                        tab1Header0.descriptor.text = GetCompatibility();
+                        tab1Header1.descriptor.text = GetTrait();
+                        tab1Header2.descriptor.text = GetPersonalityDescriptors();
+                        tab1Header3.descriptor.text = GetPersonalityAssessment();
                         break;
                     default: Debug.LogWarningFormat("Unrecognised inputData.who \"{0}\"", inputData.who); break;
                 }
@@ -1493,17 +1499,18 @@ public class ModalTabbedUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Updates Compatibility with Player in Tab0 for current actor
+    /// Returns Compatibility string with Player for current actor
     /// </summary>
-    private void UpdateCompatibility(string displayText, bool isPlayer = false)
+    private string GetCompatibility(bool isPlayer = false)
     {
-        if (isPlayer == true)
-        { tab0Compatibility.text = ""; }
-        else
-        {
+        string displayText = "";
+        if (isPlayer == false)
+        { 
             int compatibility = arrayOfActorsTemp[currentSideTabIndex].GetPersonality().GetCompatibilityWithPlayer();
             displayText = GameManager.i.guiScript.GetCompatibilityStars(compatibility);
         }
+        else { displayText = "What's not to Like?"; }
+        return displayText;
     }
 
     /// <summary>
@@ -1878,6 +1885,81 @@ public class ModalTabbedUI : MonoBehaviour
             else { Debug.LogErrorFormat("Invalid arrayOfFactors (wrong size, should be {0}, is {1})", maxNumOfPersonalityFactors, limit); }
         }
         else { Debug.LogError("Invalid arrayOfFactors (Null)"); }
+    }
+
+    /// <summary>
+    /// Returns a list of descriptors (max 5, each on a new line) for the actor / player's personality
+    /// </summary>
+    /// <param name="isPlayer"></param>
+    /// <returns></returns>
+    private string GetPersonalityDescriptors(bool isPlayer = false)
+    {
+        string displayText = "Nothing stands out";
+        List<string> listOfDescriptors;
+        if (isPlayer == true)
+        { listOfDescriptors = GameManager.i.playerScript.GetPersonality().GetListOfDescriptors(); }
+        else
+        { listOfDescriptors = arrayOfActorsTemp[currentSideTabIndex].GetPersonality().GetListOfDescriptors(); }
+        if (listOfDescriptors != null)
+        {
+            switch (listOfDescriptors.Count)
+            {
+                case 5:
+                    displayText = string.Format("{0}{1}{2}{3}{4}{5}{6}{7}{8}", listOfDescriptors[0], "\n", listOfDescriptors[1], "\n", listOfDescriptors[2], "\n", listOfDescriptors[3], "\n", listOfDescriptors[4]);
+                    break;
+                case 4:
+                    displayText = string.Format("{0}{1}{2}{3}{4}{5}{6}", listOfDescriptors[0], "\n", listOfDescriptors[1], "\n", listOfDescriptors[2], "\n", listOfDescriptors[3]);
+                    break;
+                case 3:
+                    displayText = string.Format("{0}{1}{2}{3}{4}", listOfDescriptors[0], "\n", listOfDescriptors[1], "\n", listOfDescriptors[2]);
+                    break;
+                case 2:
+                    displayText = string.Format("{0}{1}{2}", listOfDescriptors[0], "\n", listOfDescriptors[1]);
+                    break;
+                case 1:
+                    displayText = listOfDescriptors[0];
+                    break;
+                default: break;
+            }
+        }
+        else { Debug.LogWarning("Invalid listOfDescriptors (Null)"); }
+        return displayText;
+    }
+
+    /// <summary>
+    /// Returns a personality profile
+    /// </summary>
+    /// <param name="isPlayer"></param>
+    /// <returns></returns>
+    private string GetPersonalityAssessment(bool isPlayer = false)
+    {
+        string displayText = "Doesn't fit any known profile";
+        if (isPlayer == true)
+        { displayText = GameManager.i.playerScript.GetPersonality().GetProfileDescriptor(); }
+        else { displayText = arrayOfActorsTemp[currentSideTabIndex].GetPersonality().GetProfileDescriptor(); }
+        if (string.IsNullOrEmpty(displayText) == true)
+        { displayText = "Further investigation recommended"; }
+        else { displayText = string.Format("{0} personality", displayText); }
+        return displayText;
+    }
+
+    /// <summary>
+    /// Returns a colour coded personality trait
+    /// </summary>
+    /// <returns></returns>
+    private string GetTrait(bool isPlayer = false)
+    {
+        string displayText = "";
+        if (isPlayer == true)
+        { displayText = "All round star"; }
+        else
+        {
+            Trait trait = arrayOfActorsTemp[currentSideTabIndex].GetTrait();
+            if (trait != null)
+            { displayText = trait.tagFormatted; }
+            else { Debug.LogWarningFormat("Invalid trait (Null) for arrayOfActorsTemp[{0}]", currentSideTabIndex); }
+        }
+        return displayText;
     }
 
 

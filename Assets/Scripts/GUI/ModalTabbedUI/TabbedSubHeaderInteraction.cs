@@ -22,8 +22,8 @@ public class TabbedSubHeaderInteraction : MonoBehaviour
     [Tooltip("Fill with TabbedItem prefabs is 'isItems' is true, ignore otherwise")]
     public List<TabbedItemInteraction> listOfItems;
 
-    //Use to display strings (supplied by code) when 'isItems' is false
-    private List<string> listOfStrings = new List<string>();
+    [Tooltip("Use to display strings (supplied by code) when 'isItems' is false, ignore otherwise. Field can be of varying size")]
+    public TextMeshProUGUI descriptor;
 
 
 
@@ -44,6 +44,11 @@ public class TabbedSubHeaderInteraction : MonoBehaviour
                 }
             }
             else { Debug.LogError("Invalid listOfItems (Empty)"); }
+        }
+        else
+        {
+            //validate descriptor field
+            Debug.Assert(descriptor != null, "Invalid descriptor (Null)");
         }
     }
 }

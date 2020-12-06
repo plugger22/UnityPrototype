@@ -6456,9 +6456,9 @@ MonoBehaviour:
   TabbedPersonMiddleAlt: {r: 0.36078432, g: 0.49411765, b: 0.8392157, a: 1}
   TabbedPersonMiddleActive: {r: 0.33333334, g: 0.75686276, b: 1, a: 1}
   TabbedPersonBottom: {r: 0.1764706, g: 0.32941177, b: 0.7019608, a: 1}
-  TabbedPersonMiddleTextDormant: {r: 0.9490196, g: 0.9137255, b: 0.30588236, a: 1}
+  TabbedPersonMiddleTextDormant: {r: 0.8509804, g: 0.7921569, b: 0.7019608, a: 1}
   TabbedPersonMiddleTextActive: {r: 0.1764706, g: 0.32941177, b: 0.7019608, a: 1}
-  TabbedPersonBottomText: {r: 0.9490196, g: 0.9137255, b: 0.30588236, a: 1}
+  TabbedPersonBottomText: {r: 0.8509804, g: 0.7921569, b: 0.7019608, a: 1}
 --- !u!114 &114733366453475614
 MonoBehaviour:
   m_ObjectHideFlags: 1
