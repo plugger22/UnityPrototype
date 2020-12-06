@@ -25,6 +25,8 @@ public class TabbedSubHeaderInteraction : MonoBehaviour
     [Tooltip("Use to display strings (supplied by code) when 'isItems' is false, ignore otherwise. Field can be of varying size")]
     public TextMeshProUGUI descriptor;
 
+    [Tooltip("Help (optional)")]
+    public GenericHelpTooltipUI help;
 
 
     public void Awake()
