@@ -176,6 +176,8 @@ public enum EventType
     TabbedPageUp,
     TabbedPageDown,
     TabbedOpenPage,
+    TabbedScrollUp,
+    TabbedScrollDown,
     //Main Info
     MainInfoOpen,
     MainInfoOpenInterim,

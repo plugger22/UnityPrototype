@@ -12,6 +12,8 @@ using UnityEngine.UI;
 /// </summary>
 public class ModalTabbedUI : MonoBehaviour
 {
+    #region public Components
+
     [Header("Canvases")]
     public Canvas tabbedCanvasMain;
 
@@ -130,9 +132,10 @@ public class ModalTabbedUI : MonoBehaviour
     public GameObject tab7item28;
     public GameObject tab7item29;
 
+    #endregion
+
     private ScrollRect tab7ScrollRect;                                  //needed to manually disable scrolling when not needed
     private Scrollbar tab7ScrollBar;
-
 
     //help
     private GenericHelpTooltipUI helpClose;
@@ -149,7 +152,6 @@ public class ModalTabbedUI : MonoBehaviour
     private int numOfPages;                                         //keyed off enum.TabbedPage
     private int offset = 1;                                         //used with '(ActorHQ)index + offset' to account for the ActorHQ.enum having index 0 being 'None'
     private float sideTabAlpha = 0.50f;                             //alpha level of side tabs when inactive
-    private float topTabAlpha = 0.50f;                              //alpha level of top tabs when inactive
     private bool isActive;                                          //true if UI open
 
     //Page0
@@ -161,6 +163,8 @@ public class ModalTabbedUI : MonoBehaviour
     private int maxNumOfScrollItems = 30;                              //max number of items in scrollable list
     private int numOfScrollItemsVisible = 11;                      //max number of items visible at any one time
     private int numOfScrollItemsCurrent;
+    private int scrollHighlightIndex = -1;
+    private int scrollMaxHighlightIndex = -1;
 
 
     //help tooltips (I don't want this as a global, just a master private field)
@@ -224,6 +228,7 @@ public class ModalTabbedUI : MonoBehaviour
     private static ModalTabbedUI modalTabbedUI;
 
 
+    #region Instance
     /// <summary>
     /// Static instance so the ModalTabbedUI can be accessed from any script
     /// </summary>
@@ -238,7 +243,10 @@ public class ModalTabbedUI : MonoBehaviour
         }
         return modalTabbedUI;
     }
+    #endregion
 
+
+    #region Initialise
     /// <summary>
     /// Initialise
     /// </summary>
@@ -262,6 +270,7 @@ public class ModalTabbedUI : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
 
     #region Initialise SubMethods
@@ -639,6 +648,8 @@ public class ModalTabbedUI : MonoBehaviour
         EventManager.i.AddListener(EventType.TabbedPageUp, OnEvent, "ModalTabbedUI");
         EventManager.i.AddListener(EventType.TabbedPageDown, OnEvent, "ModalTabbedUI");
         EventManager.i.AddListener(EventType.TabbedOpenPage, OnEvent, "ModalTabbedUI");
+        EventManager.i.AddListener(EventType.TabbedScrollUp, OnEvent, "ModalTabbedUI");
+        EventManager.i.AddListener(EventType.TabbedScrollDown, OnEvent, "ModalTabbedUI");
     }
     #endregion
 
@@ -699,6 +710,12 @@ public class ModalTabbedUI : MonoBehaviour
                 break;
             case EventType.TabbedPageDown:
                 ExecutePageDown();
+                break;
+            case EventType.TabbedScrollUp:
+                ExecuteScrollUp();
+                break;
+            case EventType.TabbedScrollDown:
+                ExecuteScrollDown();
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -998,6 +1015,7 @@ public class ModalTabbedUI : MonoBehaviour
     // - - - Page and Tab control
     //
 
+    #region OpenSideTab
     /// <summary>
     /// Open the designated Side tab and close whatever is open
     /// 'isMouseClick' true if user has clicked directly on the tab, false otherwise
@@ -1045,6 +1063,7 @@ public class ModalTabbedUI : MonoBehaviour
         //do so regardless
         UpdateControllerButton(inputData.who);
     }
+    #endregion
 
     /// <summary>
     /// Open a tab page. 'isMouseClick' true for when user directly clicking on a top tab to open a page (versus left/right arrow key activation)
@@ -1193,11 +1212,10 @@ public class ModalTabbedUI : MonoBehaviour
 
                 break;
             case TabbedPage.History:
-                //Get History -> NOT player
-                    GetHistory();
-
-                    //populate history and activate
-                    if (numOfScrollItemsCurrent > 0)
+                //Initialise data for scroll system
+                InitialiseHistory();
+                //populate history and activate
+                if (numOfScrollItemsCurrent > 0)
                     {
                         for (int i = 0; i < maxNumOfScrollItems; i++)
                         {
@@ -1207,7 +1225,7 @@ public class ModalTabbedUI : MonoBehaviour
                                 if (history != null)
                                 {
                                     arrayOfScrollObjects[i].SetActive(true);
-                                    arrayOfScrollInteractions[i].descriptor.text = string.Format("day {0}, {1}, {2}", history.turn, history.text, history.cityTag);
+                                    arrayOfScrollInteractions[i].descriptor.text = string.Format("day {0} {1}, {2}", history.turn, history.text, history.cityTag);
                                 }
                                 else { Debug.LogWarningFormat("Invalid history (Null) for listOfHistory[{0}]", i); }
                             }
@@ -1626,6 +1644,44 @@ public class ModalTabbedUI : MonoBehaviour
                 //roll over
                 currentSetIndex = 0;
                 OpenActorSet((TabbedUIWho)currentSetIndex); ;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Mouse wheel -> scroll up (page 7 History)
+    /// </summary>
+    private void ExecuteScrollUp()
+    {
+        if (scrollHighlightIndex > -1)
+        {
+            if (scrollHighlightIndex > 0)
+            {
+                //adjust scrolling
+                if (tab7ScrollRect.verticalNormalizedPosition != 1)
+                {
+                    float scrollPos = 1.0f - (float)scrollHighlightIndex / scrollMaxHighlightIndex;
+                    tab7ScrollRect.verticalNormalizedPosition = scrollPos;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Mouse wheel -> scroll down (page 7 History)
+    /// </summary>
+    private void ExecuteScrollDown()
+    {
+        if (scrollHighlightIndex > -1)
+        {
+            if (scrollHighlightIndex < scrollMaxHighlightIndex)
+            {
+                //if outside scroll view move scrollRect down one item
+                if (scrollHighlightIndex >= numOfScrollItemsVisible)
+                {
+                    float scrollPos = 1.0f - (float)scrollHighlightIndex / scrollMaxHighlightIndex;
+                    tab7ScrollRect.verticalNormalizedPosition = scrollPos;
+                }
             }
         }
     }
@@ -2204,20 +2260,34 @@ public class ModalTabbedUI : MonoBehaviour
     #region History subMethods...
 
     /// <summary>
-    /// Gets actor/player history, updates listOfHistory and numOfScrollItemsCurrent
+    /// Initialises actor/player history, updates listOfHistory and numerical indexes
     /// </summary>
-    private void GetHistory()
+    private void InitialiseHistory()
     {
         if (inputData.who == TabbedUIWho.Player)
-        { listOfHistory = GameManager.i.dataScript.GetListOfHistoryPlayer(); }
+        {
+            listOfHistory = GameManager.i.dataScript.GetListOfHistoryPlayer();
+            //debug
+            DebugGetExtraHistory();
+        }
         else { listOfHistory = arrayOfActorsTemp[currentSideTabIndex].GetListOfHistory(); }
         if (listOfHistory != null)
         { numOfScrollItemsCurrent = listOfHistory.Count; }
         else
         {
             numOfScrollItemsCurrent = 0;
+            scrollMaxHighlightIndex = numOfScrollItemsCurrent - 1;
             Debug.LogWarningFormat("Invalid listOfHistory (Null) for \"{0}\"", inputData.who);
         }
+    }
+
+    /// <summary>
+    /// Debug method to pump up history data in order to test scrolling system
+    /// </summary>
+    private void DebugGetExtraHistory()
+    {
+        for (int i = 0; i < 20; i++)
+        { listOfHistory.Add(new HistoryActor() { text = $"Debug History item {i}" }); }
     }
 
     /// <summary>

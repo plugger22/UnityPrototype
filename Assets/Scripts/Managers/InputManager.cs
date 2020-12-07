@@ -962,6 +962,12 @@ public class InputManager : MonoBehaviour
                                     else if (change < 0)
                                     { EventManager.i.PostNotification(EventType.MainInfoDownArrow, this, null, "InputManager.cs -> ProcessMouseWheelInput"); }
                                     break;
+                                case ModalInfoSubState.TabbedUI:
+                                    if (change > 0)
+                                    { EventManager.i.PostNotification(EventType.TabbedScrollUp, this, null, "InputManager.cs -> ProcessMouseWheelInput"); }
+                                    else if (change < 0)
+                                    { EventManager.i.PostNotification(EventType.TabbedScrollDown, this, null, "InputManager.cs -> ProcessMouseWheelInput"); }
+                                    break;
                             }
                         }
                         break;
