@@ -780,7 +780,24 @@ namespace gameAPI
                             GameManager.i.messageScript.ActorCondition(msgText, actorID, true, condition, reason);
                         }
                         //history
-                        AddHistory(new HistoryActor() { text = string.Format("Is now {0}{1} ({2})", condition.isNowA == true ? "a " : "", condition.tag, reason) });
+                        switch (condition.tag)
+                        {
+                            case "STRESSED":
+                                AddHistory(new HistoryActor() { text = string.Format("Has become {0}{1} ({2})", condition.isNowA == true ? "a " : "", condition.tag, reason) });
+                                break;
+                            case "STAR":
+                            case "BLACKMAILER":
+                                AddHistory(new HistoryActor() { text = string.Format("Is now a {0}{1} ({2})", condition.isNowA == true ? "a " : "", condition.tag, reason) });
+                                break;
+                            case "QUESTIONABLE":
+                            case "INCOMPETENT":
+                                AddHistory(new HistoryActor() { text = string.Format("Declared {0}{1} ({2})", condition.isNowA == true ? "a " : "", condition.tag, reason) });
+                                break;
+                            default:
+                                AddHistory(new HistoryActor() { text = string.Format("Is now {0}{1} ({2})", condition.isNowA == true ? "a " : "", condition.tag, reason) });
+
+                                break;
+                        }
                     }
                 }
             }

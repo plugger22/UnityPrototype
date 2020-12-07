@@ -97,6 +97,8 @@ public class ModalTabbedUI : MonoBehaviour
     public TabbedSubHeaderInteraction tab1Header3;
 
     [Header("Canvas7 -> History")]
+    public GameObject tab7ScrollBarObject;
+    public GameObject tab7ScrollBackground;                 //needed to get scrollRect component in order to manually disable scrolling when not needed
     public GameObject tab7item0;
     public GameObject tab7item1;
     public GameObject tab7item2;
@@ -128,6 +130,9 @@ public class ModalTabbedUI : MonoBehaviour
     public GameObject tab7item28;
     public GameObject tab7item29;
 
+    private ScrollRect tab7ScrollRect;                                  //needed to manually disable scrolling when not needed
+    private Scrollbar tab7ScrollBar;
+
 
     //help
     private GenericHelpTooltipUI helpClose;
@@ -150,9 +155,13 @@ public class ModalTabbedUI : MonoBehaviour
     //Page0
     private int maxNumOfConditions = 0;                              //max number of conditions allowed in tab0/page0 subHeader3 'Conditions'
     private int maxNumOfCures = 0;                                   //max number of cures allowed in tab0/page0 subHeader4 'Cures'
-
     //Page1
     private int maxNumOfPersonalityFactors;
+    //Page7
+    private int maxNumOfScrollItems = 30;                              //max number of items in scrollable list
+    private int numOfScrollItemsVisible = 11;                      //max number of items visible at any one time
+    private int numOfScrollItemsCurrent;
+
 
     //help tooltips (I don't want this as a global, just a master private field)
     private int x_offset = 200;
@@ -183,6 +192,10 @@ public class ModalTabbedUI : MonoBehaviour
 
     //Input data
     TabbedUIData inputData;
+
+    //
+    // - - - Collections
+    //
     //canvas collection
     private Canvas[] arrayOfCanvas;
     //sideTab collections
@@ -200,10 +213,13 @@ public class ModalTabbedUI : MonoBehaviour
     private Actor[] arrayOfSubordinates;
     private Actor[] arrayOfHq;
     private Actor[] arrayOfReserves;
-    //Tab1
+    //Page1 -> Personality
     private TabbedPersonInteraction[] arrayOfPersons;
     private int[] arrayOfPlayerFactors;
-
+    //Page7 -> History
+    private GameObject[] arrayOfScrollObjects;
+    private TabbedScrollInteraction[] arrayOfScrollInteractions;
+    private List<HistoryActor> listOfHistory = new List<HistoryActor>();
 
     private static ModalTabbedUI modalTabbedUI;
 
@@ -480,7 +496,7 @@ public class ModalTabbedUI : MonoBehaviour
             }
         }
         //
-        // - - - Tab0 -> Sub Header colours
+        // - - - Page0 -> Sub Header colours
         //
         tab0Header0.image.color = tabSubHeaderColour;
         tab0Header1.image.color = tabSubHeaderColour;
@@ -488,7 +504,7 @@ public class ModalTabbedUI : MonoBehaviour
         tab0Header3.image.color = tabSubHeaderColour;
         tab0Header4.image.color = tabSubHeaderColour;
         //
-        // - - - Tab1 -> Personality Matrix setup
+        // - - - Page1 -> Personality Matrix setup
         //
         arrayOfPersons[0] = tab1Person0;
         arrayOfPersons[1] = tab1Person1;
@@ -544,8 +560,64 @@ public class ModalTabbedUI : MonoBehaviour
         tab1Header1.image.color = tabSubHeaderColour;
         tab1Header2.image.color = tabSubHeaderColour;
         tab1Header3.image.color = tabSubHeaderColour;
-        //Initialisations
+        //
+        // - - - Page 7
+        //
+        arrayOfScrollObjects = new GameObject[maxNumOfScrollItems];
+        arrayOfScrollInteractions = new TabbedScrollInteraction[maxNumOfScrollItems];
+        //scrollRect & ScrollBar
+        Debug.Assert(tab7ScrollBackground != null, "Invalid tab7ScrollBackground (Null)");
+        Debug.Assert(tab7ScrollBarObject != null, "Invalid tab7ScrollBarObject (Null)");
+        tab7ScrollRect = tab7ScrollBackground.GetComponent<ScrollRect>();
+        tab7ScrollBar = tab7ScrollBarObject.GetComponent<Scrollbar>();
+        Debug.Assert(tab7ScrollRect != null, "Invalid tab7ScrollRect (Null)");
+        Debug.Assert(tab7ScrollBar != null, "Invalid tab7ScrollBar (Null)");
+        //populate arrays
+        arrayOfScrollObjects[0] = tab7item0; arrayOfScrollInteractions[0] = tab7item0.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[1] = tab7item1; arrayOfScrollInteractions[1] = tab7item1.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[2] = tab7item2; arrayOfScrollInteractions[2] = tab7item2.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[3] = tab7item3; arrayOfScrollInteractions[3] = tab7item3.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[4] = tab7item4; arrayOfScrollInteractions[4] = tab7item4.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[5] = tab7item5; arrayOfScrollInteractions[5] = tab7item5.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[6] = tab7item6; arrayOfScrollInteractions[6] = tab7item6.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[7] = tab7item7; arrayOfScrollInteractions[7] = tab7item7.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[8] = tab7item8; arrayOfScrollInteractions[8] = tab7item8.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[9] = tab7item9; arrayOfScrollInteractions[9] = tab7item9.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[10] = tab7item10; arrayOfScrollInteractions[10] = tab7item10.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[11] = tab7item11; arrayOfScrollInteractions[11] = tab7item11.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[12] = tab7item12; arrayOfScrollInteractions[12] = tab7item12.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[13] = tab7item13; arrayOfScrollInteractions[13] = tab7item13.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[14] = tab7item14; arrayOfScrollInteractions[14] = tab7item14.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[15] = tab7item15; arrayOfScrollInteractions[15] = tab7item15.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[16] = tab7item16; arrayOfScrollInteractions[16] = tab7item16.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[17] = tab7item17; arrayOfScrollInteractions[17] = tab7item17.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[18] = tab7item18; arrayOfScrollInteractions[18] = tab7item18.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[19] = tab7item19; arrayOfScrollInteractions[19] = tab7item19.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[20] = tab7item20; arrayOfScrollInteractions[20] = tab7item20.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[21] = tab7item21; arrayOfScrollInteractions[21] = tab7item21.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[22] = tab7item22; arrayOfScrollInteractions[22] = tab7item22.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[23] = tab7item23; arrayOfScrollInteractions[23] = tab7item23.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[24] = tab7item24; arrayOfScrollInteractions[24] = tab7item24.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[25] = tab7item25; arrayOfScrollInteractions[25] = tab7item25.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[26] = tab7item26; arrayOfScrollInteractions[26] = tab7item26.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[27] = tab7item27; arrayOfScrollInteractions[27] = tab7item27.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[28] = tab7item28; arrayOfScrollInteractions[28] = tab7item28.GetComponent<TabbedScrollInteraction>();
+        arrayOfScrollObjects[29] = tab7item29; arrayOfScrollInteractions[29] = tab7item29.GetComponent<TabbedScrollInteraction>();
+        //error check
+        for (int i = 0; i < arrayOfScrollObjects.Length; i++)
+        {
+            if (arrayOfScrollObjects[i] == null)
+            { Debug.LogErrorFormat("Invalid scroll Object (Null) in arrayOfScrollObjects[{0}]", i); }
+            if (arrayOfScrollInteractions[i] == null)
+            { Debug.LogErrorFormat("Invalid scroll Interaction (Null) in arrayOfScrollInteractions[{0}]", i); }
+        }
+        //disable all
+        DisableHistoryScrollItems();
+        //
+        // - - - Initialisations
+        //
         InitialiseTooltips();
+
     }
     #endregion
 
@@ -599,16 +671,16 @@ public class ModalTabbedUI : MonoBehaviour
                 OpenSideTab((int)Param, true);
                 break;
             case EventType.TabbedSubordinates:
-                OpenActorSet(TabbedUIWho.Subordinates);
+                OpenActorSetMouse(TabbedUIWho.Subordinates);
                 break;
             case EventType.TabbedPlayer:
-                OpenActorSet(TabbedUIWho.Player);
+                OpenActorSetMouse(TabbedUIWho.Player);
                 break;
             case EventType.TabbedHq:
-                OpenActorSet(TabbedUIWho.HQ);
+                OpenActorSetMouse(TabbedUIWho.HQ);
                 break;
             case EventType.TabbedReserves:
-                OpenActorSet(TabbedUIWho.Reserves);
+                OpenActorSetMouse(TabbedUIWho.Reserves);
                 break;
             case EventType.TabbedUpArrow:
                 ExecuteUpArrow();
@@ -990,14 +1062,6 @@ public class ModalTabbedUI : MonoBehaviour
             {
                 //Active/Dormant tabs
                 UpdateTopTabs(tabIndex);
-                
-                /*//toggle canvases on/off
-                for (int i = 0; i < arrayOfCanvas.Length; i++)
-                {
-                    if (i == tabIndex) { arrayOfCanvas[i].gameObject.SetActive(true); }
-                    else { arrayOfCanvas[i].gameObject.SetActive(false); }
-                }*/
-
                 //turn off all canvases
                 for (int i = 0; i < arrayOfCanvas.Length; i++)
                 { arrayOfCanvas[i].gameObject.SetActive(false); }
@@ -1015,7 +1079,6 @@ public class ModalTabbedUI : MonoBehaviour
                     case TabbedPage.Stats: arrayOfCanvas[8].gameObject.SetActive(true); break;
                     default: Debug.LogWarningFormat("Unrecognised arrayOfPages \"{0}\"", arrayOfPages[currentTopTabIndex]); break;
                 }
-
                 UpdatePage();
             }
         }
@@ -1025,7 +1088,7 @@ public class ModalTabbedUI : MonoBehaviour
 
     #region UpdatePage...
     /// <summary>
-    /// Updates data in current page for different side tab actor
+    /// SubMethod ONLY CALLED by OpenPage, never called directly (unless flipping between side tabs within same actorSet). Updates data in current page for different side tab actor
     /// </summary>
     private void UpdatePage()
     {
@@ -1130,7 +1193,43 @@ public class ModalTabbedUI : MonoBehaviour
 
                 break;
             case TabbedPage.History:
+                //Get History -> NOT player
+                    GetHistory();
 
+                    //populate history and activate
+                    if (numOfScrollItemsCurrent > 0)
+                    {
+                        for (int i = 0; i < maxNumOfScrollItems; i++)
+                        {
+                            if (i < numOfScrollItemsCurrent)
+                            {
+                                HistoryActor history = listOfHistory[i];
+                                if (history != null)
+                                {
+                                    arrayOfScrollObjects[i].SetActive(true);
+                                    arrayOfScrollInteractions[i].descriptor.text = string.Format("day {0}, {1}, {2}", history.turn, history.text, history.cityTag);
+                                }
+                                else { Debug.LogWarningFormat("Invalid history (Null) for listOfHistory[{0}]", i); }
+                            }
+                            else
+                            {
+                                //disable item
+                                arrayOfScrollObjects[i].SetActive(false);
+                            }
+                        }
+                    }
+                    else { DisableHistoryScrollItems(); }
+                    //manually activate / deactivate scrollBar as needed (because you've got deactivated objects in the scroll list the bar shows regardless unless you override here)
+                    if (numOfScrollItemsCurrent <= numOfScrollItemsVisible)
+                    {
+                        tab7ScrollRect.verticalScrollbar = null;
+                        tab7ScrollBarObject.SetActive(false);
+                    }
+                    else
+                    {
+                        tab7ScrollBarObject.SetActive(true);
+                        tab7ScrollRect.verticalScrollbar = tab7ScrollBar;
+                    }
                 break;
             case TabbedPage.Stats:
 
@@ -1166,7 +1265,38 @@ public class ModalTabbedUI : MonoBehaviour
                     break;
                 default: Debug.LogWarningFormat("Unrecognised who \"{0}\"", who); break;
             }
-            UpdatePage();
+            OpenPage(0);
+        }
+        //do so regardless
+        UpdateControllerButton(who);
+    }
+
+    /// <summary>
+    /// Open a new actor set by mouseClick, eg. Subordinates/Player/HQ/Reserves. Assumed that TabbedUI is already open
+    /// 'isResetSlotID' will set slotID to 0 if true and retain the original value, if false
+    /// </summary>
+    /// <param name="who"></param>
+    private void OpenActorSetMouse(TabbedUIWho who, bool isResetSlotID = true)
+    {
+        //check not opening current page
+        if (who != inputData.who)
+        {
+            switch (who)
+            {
+                case TabbedUIWho.Subordinates:
+                case TabbedUIWho.Player:
+                case TabbedUIWho.HQ:
+                case TabbedUIWho.Reserves:
+                    inputData.who = who;
+                    if (isResetSlotID == true)
+                    { inputData.slotID = 0; }
+                    currentSetIndex = (int)who;
+                    InitialiseTopTabs(who);
+                    InitialiseSideTabs();
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised who \"{0}\"", who); break;
+            }
+            OpenPage(0, true);
         }
         //do so regardless
         UpdateControllerButton(who);
@@ -1275,9 +1405,8 @@ public class ModalTabbedUI : MonoBehaviour
                 break;
             default: Debug.LogWarningFormat("Unrecognised who \"{0}\"", who); break;
         }
-        //default to first tab but only if current tab no longer be present, otherwise go back to first on changing actorSet
-        if (currentTopTabIndex >= maxTopTabIndex)
-        { currentTopTabIndex = 0; }
+        //default to first tab on changing actorSet
+        currentTopTabIndex = 0;
         UpdateTopTabs(currentTopTabIndex);
     }
     #endregion
@@ -1608,7 +1737,7 @@ public class ModalTabbedUI : MonoBehaviour
     {
         string displayText = "";
         if (isPlayer == false)
-        { 
+        {
             int compatibility = arrayOfActorsTemp[currentSideTabIndex].GetPersonality().GetCompatibilityWithPlayer();
             displayText = GameManager.i.guiScript.GetCompatibilityStars(compatibility);
         }
@@ -2075,14 +2204,29 @@ public class ModalTabbedUI : MonoBehaviour
     #region History subMethods...
 
     /// <summary>
-    /// Returns actor history (events)
+    /// Gets actor/player history, updates listOfHistory and numOfScrollItemsCurrent
     /// </summary>
-    /// <param name="isPlayer"></param>
-    private void GetActorHistory(bool isPlayer = false)
+    private void GetHistory()
     {
-        List<HistoryActor> listOfHistory;
-        if (isPlayer == false)
-        { listOfHistory = arrayOfActorsTemp[currentSideTabIndex].GetListOfHistory(); }
+        if (inputData.who == TabbedUIWho.Player)
+        { listOfHistory = GameManager.i.dataScript.GetListOfHistoryPlayer(); }
+        else { listOfHistory = arrayOfActorsTemp[currentSideTabIndex].GetListOfHistory(); }
+        if (listOfHistory != null)
+        { numOfScrollItemsCurrent = listOfHistory.Count; }
+        else
+        {
+            numOfScrollItemsCurrent = 0;
+            Debug.LogWarningFormat("Invalid listOfHistory (Null) for \"{0}\"", inputData.who);
+        }
+    }
+
+    /// <summary>
+    /// Disable all scroll items, History Page 7
+    /// </summary>
+    private void DisableHistoryScrollItems()
+    {
+        for (int i = 0; i < maxNumOfScrollItems; i++)
+        { arrayOfScrollObjects[i].SetActive(false); }
     }
 
     #endregion

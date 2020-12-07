@@ -460,6 +460,8 @@ public class PlayerManager : MonoBehaviour
                     //message
                     string text = string.Format("Player commences at \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
                     GameManager.i.messageScript.PlayerMove(text, node, 0, 0, true);
+                    //History
+                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "Arrives and takes charge" });
                 }
                 else { Debug.LogErrorFormat("Invalid playerNode (Null) for nodeID {0}", nodeID); }
             }

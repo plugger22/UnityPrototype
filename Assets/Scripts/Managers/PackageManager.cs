@@ -585,9 +585,9 @@ namespace packageAPI
     [Serializable]
     public class HistoryActor
     {
-        public int turn;
-        //automatic
         public string text;             //what happened
+        //automatic
+        public int turn;
         public string city;             //search city name, eg. 'NewYork', done automatically in constructor
         public string cityTag;          //display city name, eg. 'New York', onde automatically in constructor
 
