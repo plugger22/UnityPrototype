@@ -682,16 +682,16 @@ public class ModalTabbedUI : MonoBehaviour
                 OpenSideTab((int)Param, true);
                 break;
             case EventType.TabbedSubordinates:
-                OpenActorSetMouse(TabbedUIWho.Subordinates);
+                OpenActorSet(TabbedUIWho.Subordinates);
                 break;
             case EventType.TabbedPlayer:
-                OpenActorSetMouse(TabbedUIWho.Player);
+                OpenActorSet(TabbedUIWho.Player);
                 break;
             case EventType.TabbedHq:
-                OpenActorSetMouse(TabbedUIWho.HQ);
+                OpenActorSet(TabbedUIWho.HQ);
                 break;
             case EventType.TabbedReserves:
-                OpenActorSetMouse(TabbedUIWho.Reserves);
+                OpenActorSet(TabbedUIWho.Reserves);
                 break;
             case EventType.TabbedUpArrow:
                 ExecuteUpArrow();
@@ -1216,38 +1216,38 @@ public class ModalTabbedUI : MonoBehaviour
                 InitialiseHistory();
                 //populate history and activate
                 if (numOfScrollItemsCurrent > 0)
+                {
+                    for (int i = 0; i < maxNumOfScrollItems; i++)
                     {
-                        for (int i = 0; i < maxNumOfScrollItems; i++)
+                        if (i < numOfScrollItemsCurrent)
                         {
-                            if (i < numOfScrollItemsCurrent)
+                            HistoryActor history = listOfHistory[i];
+                            if (history != null)
                             {
-                                HistoryActor history = listOfHistory[i];
-                                if (history != null)
-                                {
-                                    arrayOfScrollObjects[i].SetActive(true);
-                                    arrayOfScrollInteractions[i].descriptor.text = string.Format("day {0} {1}, {2}", history.turn, history.text, history.cityTag);
-                                }
-                                else { Debug.LogWarningFormat("Invalid history (Null) for listOfHistory[{0}]", i); }
+                                arrayOfScrollObjects[i].SetActive(true);
+                                arrayOfScrollInteractions[i].descriptor.text = string.Format("day {0} {1}, {2}", history.turn, history.text, history.cityTag);
                             }
-                            else
-                            {
-                                //disable item
-                                arrayOfScrollObjects[i].SetActive(false);
-                            }
+                            else { Debug.LogWarningFormat("Invalid history (Null) for listOfHistory[{0}]", i); }
+                        }
+                        else
+                        {
+                            //disable item
+                            arrayOfScrollObjects[i].SetActive(false);
                         }
                     }
-                    else { DisableHistoryScrollItems(); }
-                    //manually activate / deactivate scrollBar as needed (because you've got deactivated objects in the scroll list the bar shows regardless unless you override here)
-                    if (numOfScrollItemsCurrent <= numOfScrollItemsVisible)
-                    {
-                        tab7ScrollRect.verticalScrollbar = null;
-                        tab7ScrollBarObject.SetActive(false);
-                    }
-                    else
-                    {
-                        tab7ScrollBarObject.SetActive(true);
-                        tab7ScrollRect.verticalScrollbar = tab7ScrollBar;
-                    }
+                }
+                else { DisableHistoryScrollItems(); }
+                //manually activate / deactivate scrollBar as needed (because you've got deactivated objects in the scroll list the bar shows regardless unless you override here)
+                if (numOfScrollItemsCurrent <= numOfScrollItemsVisible)
+                {
+                    tab7ScrollRect.verticalScrollbar = null;
+                    tab7ScrollBarObject.SetActive(false);
+                }
+                else
+                {
+                    tab7ScrollBarObject.SetActive(true);
+                    tab7ScrollRect.verticalScrollbar = tab7ScrollBar;
+                }
                 break;
             case TabbedPage.Stats:
 
@@ -1289,36 +1289,6 @@ public class ModalTabbedUI : MonoBehaviour
         UpdateControllerButton(who);
     }
 
-    /// <summary>
-    /// Open a new actor set by mouseClick, eg. Subordinates/Player/HQ/Reserves. Assumed that TabbedUI is already open
-    /// 'isResetSlotID' will set slotID to 0 if true and retain the original value, if false
-    /// </summary>
-    /// <param name="who"></param>
-    private void OpenActorSetMouse(TabbedUIWho who, bool isResetSlotID = true)
-    {
-        //check not opening current page
-        if (who != inputData.who)
-        {
-            switch (who)
-            {
-                case TabbedUIWho.Subordinates:
-                case TabbedUIWho.Player:
-                case TabbedUIWho.HQ:
-                case TabbedUIWho.Reserves:
-                    inputData.who = who;
-                    if (isResetSlotID == true)
-                    { inputData.slotID = 0; }
-                    currentSetIndex = (int)who;
-                    InitialiseTopTabs(who);
-                    InitialiseSideTabs();
-                    break;
-                default: Debug.LogWarningFormat("Unrecognised who \"{0}\"", who); break;
-            }
-            OpenPage(0, true);
-        }
-        //do so regardless
-        UpdateControllerButton(who);
-    }
 
     /// <summary>
     /// Used at startup to open first actor set (ignores opening current page check)
@@ -1653,16 +1623,14 @@ public class ModalTabbedUI : MonoBehaviour
     /// </summary>
     private void ExecuteScrollUp()
     {
-        if (scrollHighlightIndex > -1)
+        if (scrollHighlightIndex > 0)
         {
-            if (scrollHighlightIndex > 0)
+            scrollHighlightIndex--;
+            //adjust scrolling
+            if (tab7ScrollRect.verticalNormalizedPosition != 1)
             {
-                //adjust scrolling
-                if (tab7ScrollRect.verticalNormalizedPosition != 1)
-                {
-                    float scrollPos = 1.0f - (float)scrollHighlightIndex / scrollMaxHighlightIndex;
-                    tab7ScrollRect.verticalNormalizedPosition = scrollPos;
-                }
+                float scrollPos = 1.0f - (float)scrollHighlightIndex / scrollMaxHighlightIndex;
+                tab7ScrollRect.verticalNormalizedPosition = scrollPos;
             }
         }
     }
@@ -1672,16 +1640,14 @@ public class ModalTabbedUI : MonoBehaviour
     /// </summary>
     private void ExecuteScrollDown()
     {
-        if (scrollHighlightIndex > -1)
+        if (scrollHighlightIndex < scrollMaxHighlightIndex)
         {
-            if (scrollHighlightIndex < scrollMaxHighlightIndex)
+            scrollHighlightIndex++;
+            //if outside scroll view move scrollRect down one item
+            if (scrollHighlightIndex >= numOfScrollItemsVisible)
             {
-                //if outside scroll view move scrollRect down one item
-                if (scrollHighlightIndex >= numOfScrollItemsVisible)
-                {
-                    float scrollPos = 1.0f - (float)scrollHighlightIndex / scrollMaxHighlightIndex;
-                    tab7ScrollRect.verticalNormalizedPosition = scrollPos;
-                }
+                float scrollPos = 1.0f - (float)scrollHighlightIndex / scrollMaxHighlightIndex;
+                tab7ScrollRect.verticalNormalizedPosition = scrollPos;
             }
         }
     }
@@ -2271,14 +2237,23 @@ public class ModalTabbedUI : MonoBehaviour
             DebugGetExtraHistory();
         }
         else { listOfHistory = arrayOfActorsTemp[currentSideTabIndex].GetListOfHistory(); }
+        //current index
         if (listOfHistory != null)
         { numOfScrollItemsCurrent = listOfHistory.Count; }
         else
         {
             numOfScrollItemsCurrent = 0;
-            scrollMaxHighlightIndex = numOfScrollItemsCurrent - 1;
             Debug.LogWarningFormat("Invalid listOfHistory (Null) for \"{0}\"", inputData.who);
         }
+        //max index
+        scrollMaxHighlightIndex = numOfScrollItemsCurrent - 1;
+        scrollMaxHighlightIndex = Mathf.Max(0, scrollMaxHighlightIndex);
+        //highlight index
+        if (numOfScrollItemsCurrent > maxNumOfScrollItems)
+        { scrollHighlightIndex = numOfScrollItemsCurrent; }
+        else { scrollHighlightIndex = 0; }
+        //scroll view at default top
+        tab7ScrollRect.verticalNormalizedPosition = 1.0f;
     }
 
     /// <summary>
