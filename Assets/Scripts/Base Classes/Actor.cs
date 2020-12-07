@@ -75,7 +75,7 @@ namespace gameAPI
         private Dictionary<int, Contact> dictOfContacts = new Dictionary<int, Contact>();   //key -> nodeID where contact is, Value -> contact
         private List<NodeActionData> listOfNodeActions = new List<NodeActionData>();        //Actor district topics
         private List<TeamActionData> listOfTeamActions = new List<TeamActionData>();        //Authority team topics
-        private List<HqPowerData> listOfHqPowerData = new List<HqPowerData>();           //Hq actors only, tracks all changes to power
+        private List<HqPowerData> listOfHqPowerData = new List<HqPowerData>();              //Hq actors only, tracks all changes to power
         private List<HistoryActor> listOfHistory = new List<HistoryActor>();                //tracks major events affecting actor, carries across levels
         #endregion
 

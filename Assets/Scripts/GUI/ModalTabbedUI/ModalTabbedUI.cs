@@ -22,13 +22,15 @@ public class ModalTabbedUI : MonoBehaviour
     public Image backgroundImage;
 
     [Header("Page Canvases")]
-    public Canvas canvasTab0;
-    public Canvas canvasTab1;
-    public Canvas canvasTab2;
-    public Canvas canvasTab3;
-    public Canvas canvasTab4;
-    public Canvas canvasTab5;
-    public Canvas canvasTab6;
+    public Canvas canvasTab0;               //main page
+    public Canvas canvasTab1;               //personality
+    public Canvas canvasTab2;               //OnMap Actor contacts
+    public Canvas canvasTab3;               //secrets
+    public Canvas canvasTab4;               //Player investigations
+    public Canvas canvasTab5;               //Player Likes
+    public Canvas canvasTab6;               //Gear
+    public Canvas canvasTab7;               //history
+    public Canvas canvasTab8;               //stats
 
     [Header("Side Tabs")]
     public GameObject sideTab0;
@@ -94,6 +96,39 @@ public class ModalTabbedUI : MonoBehaviour
     public TabbedSubHeaderInteraction tab1Header2;
     public TabbedSubHeaderInteraction tab1Header3;
 
+    [Header("Canvas7 -> History")]
+    public GameObject tab7item0;
+    public GameObject tab7item1;
+    public GameObject tab7item2;
+    public GameObject tab7item3;
+    public GameObject tab7item4;
+    public GameObject tab7item5;
+    public GameObject tab7item6;
+    public GameObject tab7item7;
+    public GameObject tab7item8;
+    public GameObject tab7item9;
+    public GameObject tab7item10;
+    public GameObject tab7item11;
+    public GameObject tab7item12;
+    public GameObject tab7item13;
+    public GameObject tab7item14;
+    public GameObject tab7item15;
+    public GameObject tab7item16;
+    public GameObject tab7item17;
+    public GameObject tab7item18;
+    public GameObject tab7item19;
+    public GameObject tab7item20;
+    public GameObject tab7item21;
+    public GameObject tab7item22;
+    public GameObject tab7item23;
+    public GameObject tab7item24;
+    public GameObject tab7item25;
+    public GameObject tab7item26;
+    public GameObject tab7item27;
+    public GameObject tab7item28;
+    public GameObject tab7item29;
+
+
     //help
     private GenericHelpTooltipUI helpClose;
 
@@ -104,8 +139,9 @@ public class ModalTabbedUI : MonoBehaviour
     private int maxSideTabIndex;                                    //side tabs only (used for keeping pgUP/DOWN movement within HQ side tabs)
     private int maxTopTabIndex;                                     //top tabs only
     private int maxSetIndex;                                        //actor sets
-    private int numOfSideTabs;                                      //keyed off enum.MetaTabSide
-    private int numOfTopTabs;                                       //keyed off enum.MetaTabTop
+    private int numOfSideTabs;                                      //keyed off enum.TabbedUISide
+    private int numOfTopTabs;                                       //keyed off enum.TabbedUITop
+    private int numOfPages;                                         //keyed off enum.TabbedPage
     private int offset = 1;                                         //used with '(ActorHQ)index + offset' to account for the ActorHQ.enum having index 0 being 'None'
     private float sideTabAlpha = 0.50f;                             //alpha level of side tabs when inactive
     private float topTabAlpha = 0.50f;                              //alpha level of top tabs when inactive
@@ -229,6 +265,8 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(canvasTab4 != null, "Invalid canvasTab4 (Null)");
         Debug.Assert(canvasTab5 != null, "Invalid canvasTab5 (Null)");
         Debug.Assert(canvasTab6 != null, "Invalid canvasTab6 (Null)");
+        Debug.Assert(canvasTab7 != null, "Invalid canvasTab7 (Null)");
+        Debug.Assert(canvasTab8 != null, "Invalid canvasTab8 (Null)");
         //button interactions
         if (interactClose != null) { interactClose.SetButton(EventType.TabbedClose); }
         else { Debug.LogError("Invalid interactClose (Null)"); }
@@ -282,6 +320,37 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab1Header1 != null, "Invalid tab1Header1 (Null)");
         Debug.Assert(tab1Header2 != null, "Invalid tab1Header2 (Null)");
         Debug.Assert(tab1Header3 != null, "Invalid tab1Header3 (Null)");
+        //tab7
+        Debug.Assert(tab7item0 != null, "Invalid tab7item0 (Null)");
+        Debug.Assert(tab7item1 != null, "Invalid tab7item1 (Null)");
+        Debug.Assert(tab7item2 != null, "Invalid tab7item2 (Null)");
+        Debug.Assert(tab7item3 != null, "Invalid tab7item3 (Null)");
+        Debug.Assert(tab7item4 != null, "Invalid tab7item4 (Null)");
+        Debug.Assert(tab7item5 != null, "Invalid tab7item5 (Null)");
+        Debug.Assert(tab7item6 != null, "Invalid tab7item6 (Null)");
+        Debug.Assert(tab7item7 != null, "Invalid tab7item7 (Null)");
+        Debug.Assert(tab7item8 != null, "Invalid tab7item8 (Null)");
+        Debug.Assert(tab7item9 != null, "Invalid tab7item9 (Null)");
+        Debug.Assert(tab7item10 != null, "Invalid tab7item10 (Null)");
+        Debug.Assert(tab7item11 != null, "Invalid tab7item11 (Null)");
+        Debug.Assert(tab7item12 != null, "Invalid tab7item12 (Null)");
+        Debug.Assert(tab7item13 != null, "Invalid tab7item13 (Null)");
+        Debug.Assert(tab7item14 != null, "Invalid tab7item14 (Null)");
+        Debug.Assert(tab7item15 != null, "Invalid tab7item15 (Null)");
+        Debug.Assert(tab7item16 != null, "Invalid tab7item16 (Null)");
+        Debug.Assert(tab7item17 != null, "Invalid tab7item17 (Null)");
+        Debug.Assert(tab7item18 != null, "Invalid tab7item18 (Null)");
+        Debug.Assert(tab7item19 != null, "Invalid tab7item19 (Null)");
+        Debug.Assert(tab7item20 != null, "Invalid tab7item20 (Null)");
+        Debug.Assert(tab7item21 != null, "Invalid tab7item21 (Null)");
+        Debug.Assert(tab7item22 != null, "Invalid tab7item22 (Null)");
+        Debug.Assert(tab7item23 != null, "Invalid tab7item23 (Null)");
+        Debug.Assert(tab7item24 != null, "Invalid tab7item24 (Null)");
+        Debug.Assert(tab7item25 != null, "Invalid tab7item25 (Null)");
+        Debug.Assert(tab7item26 != null, "Invalid tab7item26 (Null)");
+        Debug.Assert(tab7item27 != null, "Invalid tab7item27 (Null)");
+        Debug.Assert(tab7item28 != null, "Invalid tab7item28 (Null)");
+        Debug.Assert(tab7item29 != null, "Invalid tab7item29 (Null)");
     }
     #endregion
 
@@ -320,6 +389,7 @@ public class ModalTabbedUI : MonoBehaviour
         currentTopTabIndex = 0;
         numOfSideTabs = (int)TabbedUISide.Count;
         numOfTopTabs = (int)TabbedUITop.Count;
+        numOfPages = (int)TabbedPage.Count;
         //max tabs
         maxSideTabIndex = numOfSideTabs - 1;
         maxSetIndex = (int)TabbedUIWho.Count - 1;
@@ -328,7 +398,7 @@ public class ModalTabbedUI : MonoBehaviour
         maxNumOfPersonalityFactors = GameManager.i.personScript.numOfFactors;
         arrayOfPersons = new TabbedPersonInteraction[maxNumOfPersonalityFactors];
         //initialise Canvas array
-        arrayOfCanvas = new Canvas[numOfTopTabs];
+        arrayOfCanvas = new Canvas[numOfPages];
         //initialise Top Tab Arrays
         arrayOfTopTabObjects = new GameObject[numOfTopTabs];
         arrayOfTopTabImages = new Image[numOfTopTabs];
@@ -348,6 +418,8 @@ public class ModalTabbedUI : MonoBehaviour
         arrayOfCanvas[4] = canvasTab4;
         arrayOfCanvas[5] = canvasTab5;
         arrayOfCanvas[6] = canvasTab6;
+        arrayOfCanvas[7] = canvasTab7;
+        arrayOfCanvas[8] = canvasTab8;
         //Top tab components
         index = 0;
         if (topTab0 != null) { arrayOfTopTabObjects[index++] = topTab0; } else { Debug.LogError("Invalid topTab0 (Null)"); }
@@ -918,12 +990,32 @@ public class ModalTabbedUI : MonoBehaviour
             {
                 //Active/Dormant tabs
                 UpdateTopTabs(tabIndex);
-                //toggle canvases on/off
+                
+                /*//toggle canvases on/off
                 for (int i = 0; i < arrayOfCanvas.Length; i++)
                 {
                     if (i == tabIndex) { arrayOfCanvas[i].gameObject.SetActive(true); }
                     else { arrayOfCanvas[i].gameObject.SetActive(false); }
+                }*/
+
+                //turn off all canvases
+                for (int i = 0; i < arrayOfCanvas.Length; i++)
+                { arrayOfCanvas[i].gameObject.SetActive(false); }
+                //open required canvas -> each one is assigned to a particular page
+                switch (arrayOfPages[currentTopTabIndex])
+                {
+                    case TabbedPage.Main: arrayOfCanvas[0].gameObject.SetActive(true); break;
+                    case TabbedPage.Personality: arrayOfCanvas[1].gameObject.SetActive(true); break;
+                    case TabbedPage.Contacts: arrayOfCanvas[2].gameObject.SetActive(true); break;
+                    case TabbedPage.Secrets: arrayOfCanvas[3].gameObject.SetActive(true); break;
+                    case TabbedPage.Investigations: arrayOfCanvas[4].gameObject.SetActive(true); break;
+                    case TabbedPage.Likes: arrayOfCanvas[5].gameObject.SetActive(true); break;
+                    case TabbedPage.Gear: arrayOfCanvas[6].gameObject.SetActive(true); break;
+                    case TabbedPage.History: arrayOfCanvas[7].gameObject.SetActive(true); break;
+                    case TabbedPage.Stats: arrayOfCanvas[8].gameObject.SetActive(true); break;
+                    default: Debug.LogWarningFormat("Unrecognised arrayOfPages \"{0}\"", arrayOfPages[currentTopTabIndex]); break;
                 }
+
                 UpdatePage();
             }
         }
@@ -931,6 +1023,7 @@ public class ModalTabbedUI : MonoBehaviour
         UpdateControllerButton(inputData.who);
     }
 
+    #region UpdatePage...
     /// <summary>
     /// Updates data in current page for different side tab actor
     /// </summary>
@@ -938,6 +1031,7 @@ public class ModalTabbedUI : MonoBehaviour
     {
         switch (arrayOfPages[currentTopTabIndex])
         {
+            #region Main
             case TabbedPage.Main:
                 tab0ActorName.text = GetActorName(currentSideTabIndex);
                 tab0ActorTitle.text = GetActorTitle(currentSideTabIndex);
@@ -994,6 +1088,9 @@ public class ModalTabbedUI : MonoBehaviour
                     default: Debug.LogWarningFormat("Unrecognised inputData.who \"{0}\"", inputData.who); break;
                 }
                 break;
+            #endregion
+
+            #region Personality
             case TabbedPage.Personality:
                 switch (inputData.who)
                 {
@@ -1015,6 +1112,8 @@ public class ModalTabbedUI : MonoBehaviour
                 }
                 UpdatePersonality();
                 break;
+            #endregion
+
             case TabbedPage.Contacts:
 
                 break;
@@ -1039,6 +1138,7 @@ public class ModalTabbedUI : MonoBehaviour
             default: Debug.LogWarningFormat("Unrecognised currentTopTabIndex \"{0}\"", currentTopTabIndex); break;
         }
     }
+    #endregion
 
 
     /// <summary>
@@ -1096,6 +1196,7 @@ public class ModalTabbedUI : MonoBehaviour
         UpdateControllerButton(who);
     }
 
+    #region InitialiseTopTabs
     /// <summary>
     /// Sets up top tabs and arrays whenever a new actorSet is opened
     /// </summary>
@@ -1179,6 +1280,7 @@ public class ModalTabbedUI : MonoBehaviour
         { currentTopTabIndex = 0; }
         UpdateTopTabs(currentTopTabIndex);
     }
+    #endregion
 
     /// <summary>
     /// selects specified button (shows as highlighted). Other button automatically deselected
@@ -1258,7 +1360,6 @@ public class ModalTabbedUI : MonoBehaviour
 
 
     #region Movement...
-
     //
     // - - - Movement
     //
@@ -1407,6 +1508,8 @@ public class ModalTabbedUI : MonoBehaviour
     //
     // - - - SubMethods
     //
+
+    #region Main subMethods...
 
     /// <summary>
     /// Returns actorName (normal or HQ) for header. Runs all needed checks
@@ -1730,6 +1833,9 @@ public class ModalTabbedUI : MonoBehaviour
         else { Debug.LogWarningFormat("Invalid currentSideIndex \"{0}\" (should be > -1 and <= {1})", tabIndex, maxSideTabIndex); }
         return actorTitle;
     }
+    #endregion
+
+    #region Personality subMethods...
 
     /// <summary>
     /// Tab1 Updates personality matrix for an actor or player
@@ -1887,6 +1993,9 @@ public class ModalTabbedUI : MonoBehaviour
         else { Debug.LogError("Invalid arrayOfFactors (Null)"); }
     }
 
+
+
+
     /// <summary>
     /// Returns a list of descriptors (max 5, each on a new line) for the actor / player's personality
     /// </summary>
@@ -1961,7 +2070,22 @@ public class ModalTabbedUI : MonoBehaviour
         }
         return displayText;
     }
+    #endregion
 
+    #region History subMethods...
+
+    /// <summary>
+    /// Returns actor history (events)
+    /// </summary>
+    /// <param name="isPlayer"></param>
+    private void GetActorHistory(bool isPlayer = false)
+    {
+        List<HistoryActor> listOfHistory;
+        if (isPlayer == false)
+        { listOfHistory = arrayOfActorsTemp[currentSideTabIndex].GetListOfHistory(); }
+    }
+
+    #endregion
 
     #endregion
 
