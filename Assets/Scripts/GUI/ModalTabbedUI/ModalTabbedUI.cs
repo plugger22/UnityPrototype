@@ -585,6 +585,7 @@ public class ModalTabbedUI : MonoBehaviour
         //
         // - - - Page 7 History
         //
+        historyOptionIndex = TabbedHistory.Events;
         arrayOfScrollObjects = new GameObject[maxNumOfScrollItems];
         arrayOfScrollInteractions = new TabbedScrollInteraction[maxNumOfScrollItems];
         //scrollRect & ScrollBar
@@ -1237,7 +1238,7 @@ public class ModalTabbedUI : MonoBehaviour
                 break;
             case TabbedPage.History:
                 //default to Events history on first opening
-                OpenHistory(TabbedHistory.Events);
+                OpenHistory(historyOptionIndex);
                 break;
             case TabbedPage.Stats:
 
@@ -1495,6 +1496,8 @@ public class ModalTabbedUI : MonoBehaviour
             case TabbedUIWho.Player: tab7Interaction1.title.text = "Mood"; break;
             default: tab7Interaction1.title.text = "Opinion"; break;
         }
+        //update index
+        historyOptionIndex = history;
         //reset controller buttons (they unselect once you click on a sprite 'button')
         UpdateControllerButton(inputData.who);
     }
