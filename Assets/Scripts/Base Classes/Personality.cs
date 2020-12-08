@@ -178,7 +178,7 @@ public class Personality
     { return arrayOfFactors[0] + arrayOfFactors[2]; }
 
 
-    public List<HistoryOpinion> GetListOfMotivation()
+    public List<HistoryOpinion> GetListOfOpinion()
     { return listOfOpinion; }
 
 
@@ -186,7 +186,7 @@ public class Personality
     /// returns list of pre-formatted strings, each being a item of opinion history, eg. 'Give HoloPorn gear +1' (coloured)
     /// </summary>
     /// <returns></returns>
-    public List<string> GetMotivationDescriptors()
+    public List<string> GetOpinionDescriptors()
     {
         return listOfOpinion
             .Select(x => x.descriptor)
@@ -194,28 +194,28 @@ public class Personality
     }
 
     /// <summary>
-    /// Add a record to the listOfMotivation (History)
+    /// Add a record to the listOfOpinion (History)
     /// </summary>
     /// <param name="history"></param>
-    public void AddMotivation(HistoryOpinion history)
+    public void AddOpinion(HistoryOpinion history)
     {
         if (history != null)
         { listOfOpinion.Add(history); }
-        else { Debug.LogError("Invalid history (Null)"); }
+        else { Debug.LogError("Invalid Opinion history (Null)"); }
     }
 
     /// <summary>
-    /// set listOfMotivation (History) from saved load game data. Clears any existing data beforehand.
+    /// set listOfOpinion (History) from saved load game data. Clears any existing data beforehand.
     /// </summary>
-    /// <param name="listOfMotivation"></param>
-    public void SetMotivation(List<HistoryOpinion> listOfMotivation)
+    /// <param name="listOfOpinion"></param>
+    public void SetOpinion(List<HistoryOpinion> listOfOpinion)
     {
-        if (listOfMotivation != null)
+        if (this.listOfOpinion != null)
         {
             this.listOfOpinion.Clear();
-            this.listOfOpinion.AddRange(listOfMotivation);
+            this.listOfOpinion.AddRange(listOfOpinion);
         }
-        else { Debug.LogError("Invalid listOfMotivation (Null)"); }
+        else { Debug.LogError("Invalid listOfOpinion (Null)"); }
     }
 
 }

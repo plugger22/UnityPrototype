@@ -366,7 +366,7 @@ namespace gameAPI
                                     else { history.descriptor = GameManager.Formatt(text, ColourType.badText); }
                                 }
                                 //add to list
-                                personality.AddMotivation(history);
+                                personality.AddOpinion(history);
                             }
                             else
                             {
@@ -388,7 +388,7 @@ namespace gameAPI
                             history.isNormal = true;
                             text = string.Format("Starting Opinion {0}", datapoint1);
                             history.descriptor = GameManager.Formatt(text, ColourType.neutralText);
-                            personality.AddMotivation(history);
+                            personality.AddOpinion(history);
                         }
                     }
                     else

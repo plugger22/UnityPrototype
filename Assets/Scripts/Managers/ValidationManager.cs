@@ -2281,7 +2281,7 @@ public class ValidationManager : MonoBehaviour
                         CheckDictString(personality.GetProfileDescriptor(), "profileDescriptor", tag, key);
                         CheckDictString(personality.GetProfileExplanation(), "profileExplanation", tag, key);
                         CheckList(personality.GetListOfDescriptors(), "personality.listOfDescriptors", tag);
-                        CheckList(personality.GetListOfMotivation(), "personality.listOfMotivation", tag);
+                        CheckList(personality.GetListOfOpinion(), "personality.listOfMotivation", tag);
                     }
                 }
                 else { Debug.LogFormat("{0}Invalid personality (Null) for actorID {1}{2}", tag, actor.Key, "\n"); }
@@ -2324,7 +2324,7 @@ public class ValidationManager : MonoBehaviour
                         CheckDictString(personality.GetProfileDescriptor(), "profileDescriptor", tag, key);
                         CheckDictString(personality.GetProfileExplanation(), "profileExplanation", tag, key);
                         CheckList(personality.GetListOfDescriptors(), "personality.listOfDescriptors", tag);
-                        CheckList(personality.GetListOfMotivation(), "personality.listOfMotivation", tag);
+                        CheckList(personality.GetListOfOpinion(), "personality.listOfMotivation", tag);
                     }
                 }
                 else { Debug.LogFormat("{0}Invalid personality (Null) for actorID {1}{2}", tag, actor.Key, "\n"); }
@@ -2956,7 +2956,7 @@ public class ValidationManager : MonoBehaviour
                 CheckString(personality.GetProfileDescriptor(), "profileDescriptor", tag);
                 CheckString(personality.GetProfileExplanation(), "profileExplanation", tag);
                 CheckList(personality.GetListOfDescriptors(), "personality.listOfDescriptors", tag);
-                CheckList(personality.GetListOfMotivation(), "personality.listOfMotivation", tag);
+                CheckList(personality.GetListOfOpinion(), "personality.listOfMotivation", tag);
             }
         }
         else { Debug.LogFormat("{0}Invalid personality (Null) for Player {1}", tag, "\n"); }

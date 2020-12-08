@@ -178,6 +178,8 @@ public enum EventType
     TabbedOpenPage,
     TabbedScrollUp,
     TabbedScrollDown,
+    TabbedHistoryEvents,
+    TabbedHistoryEmotions,          //mood or option history depending on actor or player
     //Main Info
     MainInfoOpen,
     MainInfoOpenInterim,

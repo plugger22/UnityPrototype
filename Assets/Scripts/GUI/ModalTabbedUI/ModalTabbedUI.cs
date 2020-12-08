@@ -101,6 +101,14 @@ public class ModalTabbedUI : MonoBehaviour
     [Header("Canvas7 -> History")]
     public GameObject tab7ScrollBarObject;
     public GameObject tab7ScrollBackground;                 //needed to get scrollRect component in order to manually disable scrolling when not needed
+    //option buttons
+    public Button tab7Button0;
+    public Button tab7Button1;
+    public TextMeshProUGUI tab7Button0Text;
+    public TextMeshProUGUI tab7Button1Text;
+    public ButtonInteraction tab7Button0Interaction;
+    public ButtonInteraction tab7Button1Interaction;
+    //scrollable items
     public GameObject tab7item0;
     public GameObject tab7item1;
     public GameObject tab7item2;
@@ -160,11 +168,11 @@ public class ModalTabbedUI : MonoBehaviour
     //Page1
     private int maxNumOfPersonalityFactors;
     //Page7
-    private int maxNumOfScrollItems = 30;                              //max number of items in scrollable list
-    private int numOfScrollItemsVisible = 11;                      //max number of items visible at any one time
-    private int numOfScrollItemsCurrent;
-    private int scrollHighlightIndex = -1;
-    private int scrollMaxHighlightIndex = -1;
+    private int maxNumOfScrollItems = 30;                           //max number of items in scrollable list
+    private int numOfScrollItemsVisible = 11;                       //max number of items visible at any one time
+    private int numOfScrollItemsCurrent;                            //number of active items
+    private int scrollHighlightIndex = -1;                          //current highlight index (doesn't matter if shown as highlighted or not)
+    private int scrollMaxHighlightIndex = -1;                       //numOfScrollItemsCurrent - 1
 
 
     //help tooltips (I don't want this as a global, just a master private field)
@@ -223,7 +231,7 @@ public class ModalTabbedUI : MonoBehaviour
     //Page7 -> History
     private GameObject[] arrayOfScrollObjects;
     private TabbedScrollInteraction[] arrayOfScrollInteractions;
-    private List<HistoryActor> listOfHistory = new List<HistoryActor>();
+    private List<string> listOfHistory = new List<string>();
 
     private static ModalTabbedUI modalTabbedUI;
 
@@ -335,7 +343,9 @@ public class ModalTabbedUI : MonoBehaviour
         else { Debug.LogError("Invalid tab0Header3 (Null)"); }
         if (tab0Header4 != null) { maxNumOfCures = tab0Header4.listOfItems.Count; }
         else { Debug.LogError("Invalid tab0Header4 (Null)"); }
-        //tab1
+        //
+        // - - - tab1
+        //
         Debug.Assert(tab1Person0 != null, "Invalid tab1Person0 (Null)");
         Debug.Assert(tab1Person1 != null, "Invalid tab1Person1 (Null)");
         Debug.Assert(tab1Person2 != null, "Invalid tab1Person2 (Null)");
@@ -345,7 +355,20 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab1Header1 != null, "Invalid tab1Header1 (Null)");
         Debug.Assert(tab1Header2 != null, "Invalid tab1Header2 (Null)");
         Debug.Assert(tab1Header3 != null, "Invalid tab1Header3 (Null)");
-        //tab7
+        //
+        // - - - tab7
+        //
+        Debug.Assert(tab7Button0 != null, "Invalid tab7Button0 (Null)");
+        Debug.Assert(tab7Button1 != null, "Invalid tab7Button1 (Null)");
+        Debug.Assert(tab7Button0Text != null, "Invalid tab7Button0Text (Null)");
+        Debug.Assert(tab7Button1Text != null, "Invalid tab7Button1Text (Null)");
+        if (tab7Button0Interaction != null)
+        { tab7Button0Interaction.SetButton(EventType.TabbedHistoryEvents); }
+        else { Debug.LogError("Invalid tab7Button0Interaction (Null)"); }
+        if (tab7Button1Interaction != null)
+        { tab7Button1Interaction.SetButton(EventType.TabbedHistoryEmotions); }
+        else { Debug.LogError("Invalid tab7Button1Interaction (Null)"); }
+        //scrollable items
         Debug.Assert(tab7item0 != null, "Invalid tab7item0 (Null)");
         Debug.Assert(tab7item1 != null, "Invalid tab7item1 (Null)");
         Debug.Assert(tab7item2 != null, "Invalid tab7item2 (Null)");
@@ -650,6 +673,8 @@ public class ModalTabbedUI : MonoBehaviour
         EventManager.i.AddListener(EventType.TabbedOpenPage, OnEvent, "ModalTabbedUI");
         EventManager.i.AddListener(EventType.TabbedScrollUp, OnEvent, "ModalTabbedUI");
         EventManager.i.AddListener(EventType.TabbedScrollDown, OnEvent, "ModalTabbedUI");
+        EventManager.i.AddListener(EventType.TabbedHistoryEvents, OnEvent, "ModalTabbedUI");
+        EventManager.i.AddListener(EventType.TabbedHistoryEmotions, OnEvent, "ModalTabbedUI");
     }
     #endregion
 
@@ -716,6 +741,12 @@ public class ModalTabbedUI : MonoBehaviour
                 break;
             case EventType.TabbedScrollDown:
                 ExecuteScrollDown();
+                break;
+            case EventType.TabbedHistoryEvents:
+                InitialiseHistory(TabbedHistory.Events);
+                break;
+            case EventType.TabbedHistoryEmotions:
+                InitialiseHistory(TabbedHistory.Emotions);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -1211,23 +1242,38 @@ public class ModalTabbedUI : MonoBehaviour
             case TabbedPage.Secrets:
 
                 break;
+
+            #region History
             case TabbedPage.History:
-                //Initialise data for scroll system
-                InitialiseHistory();
-                //populate history and activate
+                // - - - Initialise data for scroll system
+                listOfHistory = InitialiseHistory(TabbedHistory.Events);
+                // - - - Indexes and Initialisation
+                if (listOfHistory != null)
+                { numOfScrollItemsCurrent = listOfHistory.Count; }
+                else
+                {
+                    numOfScrollItemsCurrent = 0;
+                    Debug.LogWarningFormat("Invalid listOfHistory (Null) for \"{0}\"", inputData.who);
+                }
+                //max index
+                scrollMaxHighlightIndex = numOfScrollItemsCurrent - 1;
+                //highlight index
+                if (numOfScrollItemsCurrent > numOfScrollItemsVisible)
+                { scrollHighlightIndex = numOfScrollItemsVisible; }
+                else { scrollHighlightIndex = 0; }
+                // - - - populate history and activate
                 if (numOfScrollItemsCurrent > 0)
                 {
                     for (int i = 0; i < maxNumOfScrollItems; i++)
                     {
                         if (i < numOfScrollItemsCurrent)
                         {
-                            HistoryActor history = listOfHistory[i];
-                            if (history != null)
+                            if (listOfHistory[i] != null)
                             {
                                 arrayOfScrollObjects[i].SetActive(true);
-                                arrayOfScrollInteractions[i].descriptor.text = string.Format("day {0} {1}, {2}", history.turn, history.text, history.cityTag);
+                                arrayOfScrollInteractions[i].descriptor.text = listOfHistory[i];
                             }
-                            else { Debug.LogWarningFormat("Invalid history (Null) for listOfHistory[{0}]", i); }
+                            else { Debug.LogWarningFormat("Invalid text (Null) for listOfHistory[{0}]", i); }
                         }
                         else
                         {
@@ -1237,6 +1283,8 @@ public class ModalTabbedUI : MonoBehaviour
                     }
                 }
                 else { DisableHistoryScrollItems(); }
+                //scroll view at default position
+                tab7ScrollRect.verticalNormalizedPosition = 1.0f;
                 //manually activate / deactivate scrollBar as needed (because you've got deactivated objects in the scroll list the bar shows regardless unless you override here)
                 if (numOfScrollItemsCurrent <= numOfScrollItemsVisible)
                 {
@@ -1248,7 +1296,10 @@ public class ModalTabbedUI : MonoBehaviour
                     tab7ScrollBarObject.SetActive(true);
                     tab7ScrollRect.verticalScrollbar = tab7ScrollBar;
                 }
+                
                 break;
+            #endregion
+
             case TabbedPage.Stats:
 
                 break;
@@ -1626,8 +1677,7 @@ public class ModalTabbedUI : MonoBehaviour
         if (scrollHighlightIndex > 0)
         {
             scrollHighlightIndex--;
-            //adjust scrolling
-            if (tab7ScrollRect.verticalNormalizedPosition != 1)
+            if (tab7ScrollRect.verticalNormalizedPosition != 1.0f)
             {
                 float scrollPos = 1.0f - (float)scrollHighlightIndex / scrollMaxHighlightIndex;
                 tab7ScrollRect.verticalNormalizedPosition = scrollPos;
@@ -1643,12 +1693,8 @@ public class ModalTabbedUI : MonoBehaviour
         if (scrollHighlightIndex < scrollMaxHighlightIndex)
         {
             scrollHighlightIndex++;
-            //if outside scroll view move scrollRect down one item
-            if (scrollHighlightIndex >= numOfScrollItemsVisible)
-            {
-                float scrollPos = 1.0f - (float)scrollHighlightIndex / scrollMaxHighlightIndex;
-                tab7ScrollRect.verticalNormalizedPosition = scrollPos;
-            }
+            float scrollPos = 1.0f - (float)scrollHighlightIndex / scrollMaxHighlightIndex;
+            tab7ScrollRect.verticalNormalizedPosition = scrollPos;
         }
     }
 
@@ -2226,43 +2272,101 @@ public class ModalTabbedUI : MonoBehaviour
     #region History subMethods...
 
     /// <summary>
-    /// Initialises actor/player history, updates listOfHistory and numerical indexes
+    /// Gets actor/player history, returns list of text to display
+    /// NOTE: TabbedHistory.Events -> HistoryActor for all, TabbedHistory.Emotions -> HistoryOpinion for actors, HistoryMood for Player
     /// </summary>
-    private void InitialiseHistory()
+    private List<string> InitialiseHistory(TabbedHistory history)
     {
+        List<string> listOfText = new List<string>();
+        //
+        // - - - Get required History Data and convert to listOfStrings
+        //
         if (inputData.who == TabbedUIWho.Player)
         {
-            listOfHistory = GameManager.i.dataScript.GetListOfHistoryPlayer();
-            //debug
-            DebugGetExtraHistory();
+            //Player -> Events or Mood
+            if (history == TabbedHistory.Events)
+            {
+                //Events
+                List<HistoryActor> listOfEvents = GameManager.i.dataScript.GetListOfHistoryPlayer();
+                //debug
+                listOfEvents.AddRange(DebugGetExtraHistory());
+                //convert to text
+                if (listOfEvents != null)
+                {
+                    for (int i = 0; i < listOfEvents.Count; i++)
+                    {
+                        HistoryActor historyEvent = listOfEvents[i];
+                        if (historyEvent != null)
+                        { listOfText.Add(string.Format("day {0}  {1}, {2}", historyEvent.turn, historyEvent.text, historyEvent.cityTag)); }
+                        else { Debug.LogWarningFormat("Invalid HistoryActor (Null) for listOfEvents[{0}]", i); }
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid listOfEvents (Null) for TabbedHistory \"{0}\", Player", history); }
+            }
+            else
+            {
+                //Mood
+                List<HistoryMood> listOfMood = GameManager.i.playerScript.GetListOfMoodHistory();
+                if (listOfMood != null)
+                {
+                    for (int i = 0; i < listOfMood.Count; i++)
+                    {
+                        HistoryMood historyMood = listOfMood[i];
+                        if (historyMood != null)
+                        { listOfText.Add(string.Format("day {0}  {1} (Mood now {2}), {3}", historyMood.turn, historyMood.descriptor, historyMood.mood, historyMood.factor)); }
+                        else { Debug.LogWarningFormat("Invalid HistoryMood (Null) for listOfMood[{0}]", i); }
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid listOfMood (Null) for TabbedHistory \"{0}\", Player", history); }
+            }
         }
-        else { listOfHistory = arrayOfActorsTemp[currentSideTabIndex].GetListOfHistory(); }
-        //current index
-        if (listOfHistory != null)
-        { numOfScrollItemsCurrent = listOfHistory.Count; }
         else
         {
-            numOfScrollItemsCurrent = 0;
-            Debug.LogWarningFormat("Invalid listOfHistory (Null) for \"{0}\"", inputData.who);
+            //Actor -> Events or Opinion
+            if (history == TabbedHistory.Events)
+            {
+                List<HistoryActor> listOfEvents = arrayOfActorsTemp[currentSideTabIndex].GetListOfHistory();
+                if (listOfEvents != null)
+                {
+                    //convert to text
+                    for (int i = 0; i < listOfEvents.Count; i++)
+                    {
+                        HistoryActor historyEvent = listOfEvents[i];
+                        if (historyEvent != null)
+                        { listOfText.Add(string.Format("day {0}  {1}, {2}", historyEvent.turn, historyEvent.text, historyEvent.cityTag)); }
+                        else { Debug.LogWarningFormat("Invalid HistoryActor (Null) for listOfEvents[{0}]", i); }
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid listOfEvents (Null) for TabbedHistory \"{0}\", Actor", history); }
+            }
+            else
+            {
+                List<HistoryOpinion> listOfOpinion = arrayOfActorsTemp[currentSideTabIndex].GetPersonality().GetListOfOpinion();
+                if (listOfOpinion != null)
+                {
+                    for (int i = 0; i < listOfOpinion.Count; i++)
+                    {
+                        HistoryOpinion historyOpinion = listOfOpinion[i];
+                        if (historyOpinion != null)
+                        { listOfText.Add(string.Format("day {0}  {1} (Opinion now {2}){3}", historyOpinion.turn, historyOpinion.descriptor, historyOpinion.opinion, historyOpinion.isNormal == true ? "" : ", IGNORED")); }
+                        else { Debug.LogWarningFormat("Invalid HistoryOpinion (Null) for listOfOpinion[{0}]", i); }
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid listOfOpinion (Null) for TabbedHistory \"{0}\", Player", history); }
+            }
         }
-        //max index
-        scrollMaxHighlightIndex = numOfScrollItemsCurrent - 1;
-        scrollMaxHighlightIndex = Mathf.Max(0, scrollMaxHighlightIndex);
-        //highlight index
-        if (numOfScrollItemsCurrent > maxNumOfScrollItems)
-        { scrollHighlightIndex = numOfScrollItemsCurrent; }
-        else { scrollHighlightIndex = 0; }
-        //scroll view at default top
-        tab7ScrollRect.verticalNormalizedPosition = 1.0f;
+        return listOfText;
     }
 
     /// <summary>
     /// Debug method to pump up history data in order to test scrolling system
     /// </summary>
-    private void DebugGetExtraHistory()
+    private List<HistoryActor> DebugGetExtraHistory()
     {
+        List<HistoryActor> tempList = new List<HistoryActor>();
         for (int i = 0; i < 20; i++)
-        { listOfHistory.Add(new HistoryActor() { text = $"Debug History item {i}" }); }
+        { tempList.Add(new HistoryActor() { text = $"Debug History item {i}" }); }
+        return tempList;
     }
 
     /// <summary>
