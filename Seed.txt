@@ -8835,3 +8835,86 @@ System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument ar
 	
 Dev seed 53520 -> Tuesday, 8 December 2020 12:29 PM
 City seed 28008 -> Londus, Eurasia
+
+Dev seed 22805 -> Tuesday, 8 December 2020 2:40 PM
+City seed 14956 -> Londus, Eurasia
+
+Dev seed 31185 -> Tuesday, 8 December 2020 2:44 PM
+City seed 23633 -> Londus, Eurasia
+
+Dev seed 49116 -> Tuesday, 8 December 2020 3:04 PM
+City seed 16672 -> Londus, Eurasia
+
+Dev seed 20361 -> Tuesday, 8 December 2020 3:06 PM
+City seed 22484 -> Londus, Eurasia
+
+Dev seed 11010 -> Tuesday, 8 December 2020 3:15 PM
+City seed 18674 -> Londus, Eurasia
+
+Dev seed 17694 -> Tuesday, 8 December 2020 3:24 PM
+City seed 25357 -> Londus, Eurasia
+
+Dev seed 23325 -> Tuesday, 8 December 2020 3:53 PM
+City seed 47716 -> Londus, Eurasia
+ERROR Invalid tab7Interaction0 (Null)
+UnityEngine.Debug:LogError(Object)
+	ModalTabbedUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:593)
+	ModalTabbedUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:266)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:922)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	ERROR Invalid tab7Interaction1 (Null)
+UnityEngine.Debug:LogError(Object)
+	ModalTabbedUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:594)
+	ModalTabbedUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:266)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:922)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	
+Dev seed 53846 -> Tuesday, 8 December 2020 3:54 PM
+City seed 50115 -> Londus, Eurasia
+
+Dev seed 47337 -> Tuesday, 8 December 2020 4:16 PM
+City seed 27337 -> Londus, Eurasia
+WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "None"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:332)
+	TabbedHistoryOptionUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ModalTabbedUI/TabbedHistoryOptionUI.cs:49)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "None"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:332)
+	TabbedHistoryOptionUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ModalTabbedUI/TabbedHistoryOptionUI.cs:49)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "None"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:332)
+	TabbedHistoryOptionUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ModalTabbedUI/TabbedHistoryOptionUI.cs:49)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 4977 -> Tuesday, 8 December 2020 4:22 PM
+City seed 58679 -> Londus, Eurasia
+WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "None"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:332)
+	TabbedHistoryOptionUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ModalTabbedUI/TabbedHistoryOptionUI.cs:49)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "None"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:332)
+	TabbedHistoryOptionUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ModalTabbedUI/TabbedHistoryOptionUI.cs:49)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "None"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:332)
+	TabbedHistoryOptionUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ModalTabbedUI/TabbedHistoryOptionUI.cs:49)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 2170 -> Tuesday, 8 December 2020 4:23 PM
+City seed 52729 -> Londus, Eurasia
+
+Dev seed 18384 -> Tuesday, 8 December 2020 4:25 PM
+City seed 2265 -> Londus, Eurasia
+
+Dev seed 4297 -> Tuesday, 8 December 2020 4:29 PM
+City seed 23726 -> Londus, Eurasia

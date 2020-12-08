@@ -462,6 +462,17 @@ public class PlayerManager : MonoBehaviour
                     GameManager.i.messageScript.PlayerMove(text, node, 0, 0, true);
                     //History
                     GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "Arrives and takes charge" });
+                    //Mood
+                    HistoryMood record = new HistoryMood()
+                    {
+                        change = 0,
+                        descriptor = "Assuming Command",
+                        turn = GameManager.i.turnScript.Turn,
+                        mood = mood,
+                        factor = "All",
+                        isStressed = false
+                    };
+                    listOfMoodHistory.Add(record);
                 }
                 else { Debug.LogErrorFormat("Invalid playerNode (Null) for nodeID {0}", nodeID); }
             }

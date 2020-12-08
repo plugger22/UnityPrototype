@@ -20856,7 +20856,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 200, y: -20}
-  m_SizeDelta: {x: 260, y: 30}
+  m_SizeDelta: {x: 240, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &401497342
 MonoBehaviour:
@@ -34103,12 +34103,8 @@ MonoBehaviour:
   tab1Header3: {fileID: 1253664440}
   tab7ScrollBarObject: {fileID: 1727616099}
   tab7ScrollBackground: {fileID: 1326213366}
-  tab7Button0: {fileID: 1502509398}
-  tab7Button1: {fileID: 1026492820}
-  tab7Button0Text: {fileID: 1062898032}
-  tab7Button1Text: {fileID: 489316496}
-  tab7Button0Interaction: {fileID: 1502509397}
-  tab7Button1Interaction: {fileID: 1026492819}
+  tab7Interaction0: {fileID: 1502509397}
+  tab7Interaction1: {fileID: 1026492819}
   tab7item0: {fileID: 339561314}
   tab7item1: {fileID: 1950179540}
   tab7item2: {fileID: 861142427}
@@ -51775,7 +51771,6 @@ GameObject:
   - component: {fileID: 1026492818}
   - component: {fileID: 1026492822}
   - component: {fileID: 1026492821}
-  - component: {fileID: 1026492820}
   - component: {fileID: 1026492819}
   m_Layer: 5
   m_Name: optionRight
@@ -51800,8 +51795,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 130, y: 0}
-  m_SizeDelta: {x: 130, y: 30}
+  m_AnchoredPosition: {x: 120, y: 0}
+  m_SizeDelta: {x: 120, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1026492819
 MonoBehaviour:
@@ -51811,50 +51806,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1026492817}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1dd9b4572e21ba4a8936a932a9b86a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 15d076bf68f771249b5bcf0252a4f967, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1026492820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1026492817}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 0.36078432, g: 0.49411765, b: 0.8392157, a: 1}
-    m_HighlightedColor: {r: 0.33333334, g: 0.75686276, b: 1, a: 1}
-    m_PressedColor: {r: 0.96862745, g: 0.09019608, b: 0.20784314, a: 0}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1026492821}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  image: {fileID: 1026492821}
+  title: {fileID: 489316496}
 --- !u!114 &1026492821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51867,7 +51823,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.23137255, g: 0.39607844, b: 0.80784315, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -59574,7 +59530,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1198920978
 RectTransform:
   m_ObjectHideFlags: 0
@@ -65231,7 +65187,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 30, y: -30}
-  m_SizeDelta: {x: 800, y: 442}
+  m_SizeDelta: {x: 930, y: 442}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1326213368
 MonoBehaviour:
@@ -73529,7 +73485,6 @@ GameObject:
   - component: {fileID: 1502509396}
   - component: {fileID: 1502509400}
   - component: {fileID: 1502509399}
-  - component: {fileID: 1502509398}
   - component: {fileID: 1502509397}
   m_Layer: 5
   m_Name: optionLeft
@@ -73555,7 +73510,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 130, y: 30}
+  m_SizeDelta: {x: 120, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1502509397
 MonoBehaviour:
@@ -73565,50 +73520,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1502509395}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1dd9b4572e21ba4a8936a932a9b86a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 15d076bf68f771249b5bcf0252a4f967, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1502509398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1502509395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 0.23137255, g: 0.39607844, b: 0.80784315, a: 1}
-    m_HighlightedColor: {r: 0.33333334, g: 0.75686276, b: 1, a: 1}
-    m_PressedColor: {r: 0.96862745, g: 0.09019608, b: 0.20784314, a: 0}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1502509399}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  image: {fileID: 1502509399}
+  title: {fileID: 1062898032}
 --- !u!114 &1502509399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73621,7 +73537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.23137255, g: 0.39607844, b: 0.80784315, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

@@ -89,4 +89,8 @@ public class UIManager : MonoBehaviour
     public Color TabbedPersonMiddleTextActive;
     [Tooltip("Personality Matrix prefab bottom text (should be 100% alpha")]
     public Color TabbedPersonBottomText;
+    [Tooltip("History Option image/buttons Dormant colour")]
+    public Color TabbedHistoryOptionDormant;
+    [Tooltip("History Option image/buttons Active colour")]
+    public Color TabbedHistoryOptionActive;
 }
