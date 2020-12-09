@@ -1534,6 +1534,8 @@ public class NemesisManager : MonoBehaviour
                 builder.AppendFormat("{0}{1}{2}<b>{3}</b>{4}", "\n", "\n", colourAlert, nemesis.damage.effectResistance, colourEnd);
                 GameManager.i.messageScript.PlayerDamage(msgText, nemesis.damage.tag, nemesis.damage.effectResistance, nemesisNode.nodeID);
                 sideWho = GameManager.i.globalScript.sideResistance;
+                //history
+                GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "You've been found and Targeted by your NEMESIS", district = nemesisNode.nodeName });
             }
             else
             {
@@ -1545,6 +1547,8 @@ public class NemesisManager : MonoBehaviour
                 builder.AppendFormat("{0}{1}{2}<b>{3}</b>{4}", "\n", "\n", colourAlert, nemesis.damage.effectAuthority, colourEnd);
                 GameManager.i.messageScript.PlayerDamage(msgText, nemesis.damage.tag, nemesis.damage.effectAuthority, nemesisNode.nodeID);
                 sideWho = GameManager.i.globalScript.sideAuthority;
+                //history
+                GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "Resistance Leader has been found and Targeted by your NEMESIS", district = nemesisNode.nodeName });
             }
             //AutoRun Event
             if (GameManager.i.turnScript.CheckIsAutoRun() == true)

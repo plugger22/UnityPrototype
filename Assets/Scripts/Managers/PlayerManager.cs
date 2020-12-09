@@ -461,7 +461,7 @@ public class PlayerManager : MonoBehaviour
                     string text = string.Format("Player commences at \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
                     GameManager.i.messageScript.PlayerMove(text, node, 0, 0, true);
                     //History
-                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "Arrives and takes charge" });
+                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "Arrive and take charge" });
                     //Mood
                     HistoryMood record = new HistoryMood()
                     {
@@ -469,7 +469,7 @@ public class PlayerManager : MonoBehaviour
                         descriptor = "Assuming Command",
                         turn = GameManager.i.turnScript.Turn,
                         mood = mood,
-                        factor = "All",
+                        factor = "",
                         isStressed = false
                     };
                     listOfMoodHistory.Add(record);
@@ -998,6 +998,11 @@ public class PlayerManager : MonoBehaviour
             }
             if (listOfConditions != null)
             {
+                //node details
+                string nodeName = "Unknown";
+                Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
+                if (node != null) { nodeName = node.nodeName; }
+                else { Debug.LogWarningFormat("Invalid playerNode (Null) for nodeID {0}", GameManager.i.nodeScript.nodePlayer); }
                 //check that condition isn't already present
                 if (CheckConditionPresent(condition, side) == false)
                 {
@@ -1049,6 +1054,34 @@ public class PlayerManager : MonoBehaviour
                             //message
                             string msgText = string.Format("{0} Player, {1}, gains condition \"{2}\"", side.name, GetPlayerName(side), condition.tag);
                             GameManager.i.messageScript.ActorCondition(msgText, actorID, true, condition, reason, isResistance);
+                            //history
+                            string textHistory = "Uknown";
+                            switch (condition.tag)
+                            {
+                                case "DOOMED":
+                                    textHistory = "Recieved a Lethal Injection (DOOMED)";
+                                    break;
+                                case "TAGGED":
+                                    textHistory = "Is now TAGGED";
+                                    break;
+                                case "WOUNDED":
+                                    textHistory = "Is WOUNDED";
+                                    break;
+                                case "IMAGED":
+                                    textHistory = "Is IMAGED";
+                                    break;
+                                case "QUESTIONABLE":
+                                    textHistory = "Your loyalty is questioned (QUESTIONABLE)";
+                                    break;
+                                case "ADDICTED":
+                                    textHistory = "Has become ADDICTED";
+                                    break;
+                                case "STRESSED":
+                                    textHistory = "Is STRESSED";
+                                    break;
+                                default: textHistory = string.Format("Is {0}", condition.tag); break;
+                            }
+                            GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = textHistory, district = nodeName });
                         }
                     }
                 }
@@ -1061,6 +1094,8 @@ public class PlayerManager : MonoBehaviour
                             GameManager.i.dataScript.StatisticIncrement(StatType.PlayerSuperStressed);
                             //used to force a breakdown at the next opportunity
                             numOfSuperStress++;
+                            //history
+                            GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "Has become SUPER STRESSED", district = nodeName});
                             break;
                     }
             }
@@ -1157,7 +1192,7 @@ public class PlayerManager : MonoBehaviour
                                     GameManager.i.nodeScript.RemoveCureNode(conditionQuestionable.cure);
                                     break;
                                 case "STRESSED":
-                                    ChangeMood(moodReset, reason, "n.a");
+                                    ChangeMood(moodReset, reason, "");
                                     isStressed = false;
                                     numOfSuperStress = 0;
                                     //change UI mood sprite
@@ -1394,7 +1429,7 @@ public class PlayerManager : MonoBehaviour
     /// <returns></returns>
     public Secret GetSecret(string secretName)
     { return listOfSecrets.Find(x => x.name.Equals(secretName, StringComparison.Ordinal)); }
-    
+
     /// <summary>
     /// Add a new secret, checks for duplicates and won't add if one found (warning msg). Returns true if successful, false otherwise
     /// </summary>
@@ -2322,7 +2357,8 @@ public class PlayerManager : MonoBehaviour
                 reason = "Unknown";
                 Debug.LogWarning("Invalid reason (Null or Empty)");
             }
-            if (string.IsNullOrEmpty(factor) == true)
+            //factor can be EMPTY but not Null
+            if (factor == null)
             {
                 factor = "Unknown";
                 Debug.LogWarning("Invalid factor (Null or Empty)");
@@ -2423,7 +2459,7 @@ public class PlayerManager : MonoBehaviour
                 GameManager.i.dataScript.StatisticIncrement(StatType.PlayerDoNothing, unusedActions);
                 //only improve mood if there is room for improvement
                 if (mood < moodMax && isStressed == false)
-                { ChangeMood(unusedActions, "Watching SerialFlix", "n.a", false); }
+                { ChangeMood(unusedActions, "Watching SerialFlix", "", false); }
             }
         }
         else { Debug.LogWarning("Invalid unused Actions (Zero)"); }
@@ -2933,7 +2969,7 @@ public class PlayerManager : MonoBehaviour
     }
 
 
-    
+
 
 
     //
@@ -2953,7 +2989,7 @@ public class PlayerManager : MonoBehaviour
         //zero out arrayOfCaptureTools at end of level
         for (int i = 0; i < arrayOfCaptureTools.Length; i++)
         { arrayOfCaptureTools[i] = false; }
-        
+
     }
 
 

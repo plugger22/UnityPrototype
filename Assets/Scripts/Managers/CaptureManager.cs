@@ -381,8 +381,12 @@ public class CaptureManager : MonoBehaviour
                 //escapes (can only do so with help of OrgEmergency)
                 text = string.Format("{0}, Player, escapes from captivity at \"{1}\", {2}", GameManager.i.playerScript.GetPlayerNameResistance(), node.nodeName, node.Arc.name);
                 GameManager.i.messageScript.PlayerEscapes(text, node);
+                //history
+                GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "You ESCAPE from Captivity", district = node.nodeName });
             }
             Debug.LogFormat("[Ply] CaptureManager.cs -> ReleasePlayer: {0}{1}", text, "\n");
+            //history
+            GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "You are RELEASED from Captivity", district = node.nodeName });
             //actor gains condition questionable (do BEFORE updating nodeID's)
             GameManager.i.playerScript.AddCondition(conditionQuestionable, GameManager.i.globalScript.sideResistance, "Has been interrogated by Authority");
             //update nodeID's
@@ -577,6 +581,8 @@ public class CaptureManager : MonoBehaviour
                                     details = new CaptureDetails { node = node, team = team, actor = null };
                                     Debug.LogFormat("[Ply] CaptureManager.cs -> CheckCaptured: Resistance Player is captured by an Erasure team at {0}, {1}, id {2}{3}",
                                         node.nodeName, node.Arc.name, node.nodeID, "\n");
+                                    //history
+                                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "CAPTURED by an Erasure Team", district = node.nodeName });
                                 }
                                 else { Debug.LogError(string.Format("Invalid team (Null) for teamID {0}", teamID)); }
                             }
@@ -590,6 +596,8 @@ public class CaptureManager : MonoBehaviour
                                     details = new CaptureDetails { node = node, team = team, actor = null };
                                     Debug.LogFormat("[Ply] CaptureManager.cs -> CheckCaptured: Resistance Player is captured by an Erasure team at {0}, {1}, id {2}{3}",
                                         node.nodeName, node.Arc.name, node.nodeID, "\n");
+                                    //history
+                                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "CAPTURED by an Erasure Team", district = node.nodeName });
                                 }
                             }
                         }

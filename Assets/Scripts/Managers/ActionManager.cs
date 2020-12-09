@@ -430,6 +430,46 @@ public class ActionManager : MonoBehaviour
                                 //add to player's personal list
                                 GameManager.i.playerScript.AddNodeAction(nodeActionData);
                                 Debug.LogFormat("[Act] ActionManager.cs -> ProcessNodeAction: Player node Action \"{0}\"{1}", nodeActionPlayer, "\n");
+                                //history
+                                string textHistory = "Unknown";
+                                switch (nodeActionPlayer)
+                                {
+                                    case NodeAction.PlayerBlowStuffUp:
+                                        textHistory = "You Blow Stuff Up (ANARCHIST)";
+                                        break;
+                                    case NodeAction.PlayerCreateRiots:
+                                        textHistory = "You create a Riot (HEAVY)";
+                                        break;
+                                    case NodeAction.PlayerDeployTeam:
+                                        textHistory = "You deploy a Team";
+                                        break;
+                                    case NodeAction.PlayerGainTargetInfo:
+                                        textHistory = "You gain Target Intelligence (PLANNER)";
+                                        break;
+                                    case NodeAction.PlayerHackSecurity:
+                                        textHistory = "You Hack Security (HACKER)";
+                                        break;
+                                    case NodeAction.PlayerInsertTracer:
+                                        textHistory = "You insert a Tracer (OBSERVER)";
+                                        break;
+                                    case NodeAction.PlayerNeutraliseTeam:
+                                        textHistory = "You Neutralise a Team (OPERATOR)";
+                                        break;
+                                    case NodeAction.PlayerObtainGear:
+                                        textHistory = "You obtain Gear (FIXER)";
+                                        break;
+                                    case NodeAction.PlayerRecallTeam:
+                                        textHistory = "You Recall a Team";
+                                        break;
+                                    case NodeAction.PlayerRecruitActor:
+                                        textHistory = "You recruit a Subordinate (RECRUITER)";
+                                        break;
+                                    case NodeAction.PlayerSpreadFakeNews:
+                                        textHistory = "You spread Fake News (BLOGGER)";
+                                        break;
+                                    default: Debug.LogWarningFormat("Unrecognised NodeAction \"{0}\"", nodeActionPlayer); break;
+                                }
+                                GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = textHistory, district = node.nodeName });
                                 //statistics
                                 GameManager.i.dataScript.StatisticIncrement(StatType.PlayerNodeActions);
                             }
@@ -1305,6 +1345,10 @@ public class ActionManager : MonoBehaviour
             string text = string.Format("{0} is lying Low. Status: {1}", playerName, GameManager.i.playerScript.status);
             string reason = string.Format("is currently Lying Low and {0}{1}{2}<b>cut off from all communications</b>{3}", "\n", "\n", colourBad, colourEnd);
             GameManager.i.messageScript.ActorStatus(text, "is LYING LOW", reason, GameManager.i.playerScript.actorID, modalDetails.side, null, HelpType.LieLow);
+            //history
+            Node node = GameManager.i.dataScript.GetNode(modalDetails.nodeID);
+            if (node != null)
+            { GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "Commence Lying Low", district = node.nodeName }); }
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); errorFlag = true; }
         if (errorFlag == false)
@@ -1518,6 +1562,10 @@ public class ActionManager : MonoBehaviour
             GameManager.i.messageScript.ActorStatus(text, itemText, reason, modalDetails.actorDataID, modalDetails.side, details, HelpType.StressLeave);
             Debug.LogFormat("[Ply] ActionManager.cs -> ProcessLeavePlayerAction: {0}, {1} Player, commences STRESS LEAVE", GameManager.i.playerScript.GetPlayerName(modalDetails.side),
                 modalDetails.side.name);
+            //history
+            Node node = GameManager.i.dataScript.GetNode(modalDetails.nodeID);
+            if (node != null)
+            { GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "Takes Stress Leave", district = node.nodeName }); }
             //statistics
             StressLeaveStatistics(modalDetails.side);
             //action (if valid) expended -> must be BEFORE outcome window event

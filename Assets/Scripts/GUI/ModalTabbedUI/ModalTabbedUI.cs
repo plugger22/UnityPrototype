@@ -2335,7 +2335,7 @@ public class ModalTabbedUI : MonoBehaviour
                     {
                         HistoryActor historyEvent = listOfEvents[i];
                         if (historyEvent != null)
-                        { listOfText.Add(string.Format("day {0}  {1}, {2}", historyEvent.turn, historyEvent.text, historyEvent.cityTag)); }
+                        { listOfText.Add(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", " + historyEvent.district : "")); }
                         else { Debug.LogWarningFormat("Invalid HistoryActor (Null) for listOfEvents[{0}]", i); }
                     }
                 }
@@ -2351,8 +2351,8 @@ public class ModalTabbedUI : MonoBehaviour
                     {
                         HistoryMood historyMood = listOfMood[i];
                         if (historyMood != null)
-                        { listOfText.Add(string.Format("day {0}  {1} (Mood now {2} star{3}), influenced by {4}", historyMood.turn, historyMood.descriptor, historyMood.mood, 
-                            historyMood.mood != 1 ? "s" : "", historyMood.factor)); }
+                        { listOfText.Add(string.Format("day {0}  {1} (Mood now {2} star{3}){4}", historyMood.turn, historyMood.descriptor, historyMood.mood, 
+                            historyMood.mood != 1 ? "s" : "", historyMood.factor.Length > 0 ? string.Format(", influenced by <b>{0}</b>", historyMood.factor) : "")); }
                         else { Debug.LogWarningFormat("Invalid HistoryMood (Null) for listOfMood[{0}]", i); }
                     }
                 }
@@ -2372,7 +2372,7 @@ public class ModalTabbedUI : MonoBehaviour
                     {
                         HistoryActor historyEvent = listOfEvents[i];
                         if (historyEvent != null)
-                        { listOfText.Add(string.Format("day {0}  {1}, {2}", historyEvent.turn, historyEvent.text, historyEvent.cityTag)); }
+                        { listOfText.Add(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", " + historyEvent.district : "")); }
                         else { Debug.LogWarningFormat("Invalid HistoryActor (Null) for listOfEvents[{0}]", i); }
                     }
                 }

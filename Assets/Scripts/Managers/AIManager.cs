@@ -4059,6 +4059,8 @@ public class AIManager : MonoBehaviour
                     //AI DETECTS hacking attempt
                     Debug.LogFormat("[Rnd] AIManager.cs -> UpdateHackingStatus: Hacking attempt DETECTED, need < {0}, rolled {1}{2}", chance, rnd, "\n");
                     Debug.LogFormat("[Ply] AIManager.cs -> UpdateHackingStatus: Player HACKS AI and is DETECTED{0}", "\n");
+                    //History
+                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "DETECTED hacking the AI"});
                     GameManager.i.messageScript.GeneralRandom("Hacking attempt DETECTED", "Detection", chance, rnd, true);
                     isDetected = true;
                     hackingAttemptsDetected++;

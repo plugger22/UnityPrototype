@@ -561,7 +561,7 @@ namespace packageAPI
         public int turn;
         public int mood;                //mood AFTER the change
         public string descriptor;       //FORMATTED string, eg. "Disposed of FIXER -2"
-        public string factor;           //name of factor that determined the change
+        public string factor;           //name of factor that determined the change (If no factor applies then supply a blank string "" instead)
         public bool isStressed;         //true if mood has dropped below zero and player gained the Stressed conditoin
     }
 

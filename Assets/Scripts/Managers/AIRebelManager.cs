@@ -2924,6 +2924,11 @@ public class AIRebelManager : MonoBehaviour
             {
                 GameManager.i.dataScript.StatisticIncrement(StatType.PlayerLieLowTimes);
                 Debug.LogFormat("[Ply] AIRebelManager.cs -> ExecuteLieLowTask: Player commences LYING LOW at node ID {0}{1}", task.data0, "\n");
+                //history
+                Node node = GameManager.i.dataScript.GetNode(task.data0);
+                if (node != null)
+                { GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "Commence Lying Low", district = node.nodeName }); }
+                else { Debug.LogWarningFormat("Invalid node (Null) for nodeID \"{0}\"", task.data0); }
                 //message
                 string text = string.Format("{0} is lying Low. Status: {1}", playerName, status);
                 string reason = string.Format("is currently Lying Low and is{0}{1}<b>cut off from all communications</b>", "\n", "\n");

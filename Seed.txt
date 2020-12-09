@@ -8921,3 +8921,51 @@ City seed 23726 -> Londus, Eurasia
 
 Dev seed 18247 -> Tuesday, 8 December 2020 5:05 PM
 City seed 59418 -> Londus, Eurasia
+
+Dev seed 29075 -> Wednesday, 9 December 2020 4:25 PM
+City seed 10102 -> Londus, Eurasia
+WARNING Invalid node (Null) for nodeID "-1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	CaptureManager:CheckStartTurnCapture() (at Assets/Scripts/Managers/CaptureManager.cs:722)
+	CaptureManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/CaptureManager.cs:128)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:345)
+	TurnManager:StartTurnEarly() (at Assets/Scripts/Managers/TurnManager.cs:533)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:333)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:251)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:417)
+	WARNING Invalid playerNode (Null) for nodeID -1
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PlayerManager:AddCondition(Condition, GlobalSide, String) (at Assets/Scripts/Managers/PlayerManager.cs:1005)
+	CaptureManager:ReleasePlayer(Boolean, Boolean) (at Assets/Scripts/Managers/CaptureManager.cs:391)
+	ActorManager:CheckPlayerResistanceAI(Boolean) (at Assets/Scripts/Managers/ActorManager.cs:7778)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:511)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:448)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:345)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:550)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:334)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:251)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:417)
+	
+Dev seed 53421 -> Wednesday, 9 December 2020 4:29 PM
+City seed 38047 -> Londus, Eurasia
+
+Dev seed 57152 -> Wednesday, 9 December 2020 4:32 PM
+City seed 1476 -> Londus, Eurasia
+
+Dev seed 65509 -> Wednesday, 9 December 2020 4:36 PM
+City seed 10089 -> Londus, Eurasia
+
+Dev seed 19644 -> Wednesday, 9 December 2020 4:42 PM
+City seed 60321 -> Londus, Eurasia
+
+Dev seed 43979 -> Wednesday, 9 December 2020 4:48 PM
+City seed 41396 -> Londus, Eurasia
+
+Dev seed 31773 -> Wednesday, 9 December 2020 5:05 PM
+City seed 24891 -> Londus, Eurasia
+
+Dev seed 46156 -> Wednesday, 9 December 2020 5:09 PM
+City seed 42821 -> Londus, Eurasia
+
+Dev seed 6358 -> Wednesday, 9 December 2020 5:13 PM
+City seed 31362 -> Londus, Eurasia

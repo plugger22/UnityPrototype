@@ -7387,6 +7387,10 @@ public class ActorManager : MonoBehaviour
                             text = string.Format("{0} has automatically reactivated", playerName);
                             GameManager.i.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", playerID, globalResistance, null, HelpType.LieLow);
                             Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, is no longer Lying Low{1}", GameManager.i.playerScript.GetPlayerName(playerSide), "\n");
+                            //history
+                            Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
+                            if (node != null)
+                            { GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "Finishes Lying Low", district = node.nodeName }); }
                         }
                         else
                         {
@@ -7408,6 +7412,10 @@ public class ActorManager : MonoBehaviour
                             GameManager.i.messageScript.ActorStatus(text, "has Returned", "has returned from their Stress Leave", playerID, globalAuthority, null, HelpType.StressLeave);
                             GameManager.i.playerScript.RemoveCondition(conditionStressed, playerSide, "Finished Stress Leave");
                             Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, returns from Stress Leave{1}", GameManager.i.playerScript.GetPlayerName(playerSide), "\n");
+                            //history
+                            Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
+                            if (node != null)
+                            { GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "Returned from Stress Leave", district = node.nodeName }); }
                         }
                         else { GameManager.i.playerScript.isStressLeave = false; }
                         break;
@@ -7456,9 +7464,13 @@ public class ActorManager : MonoBehaviour
                                     breakdownChance, rnd, "\n");
                                 Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, undergoes a Stress BREAKDOWN{1}", GameManager.i.playerScript.GetPlayerName(playerSide), "\n");
                                 GameManager.i.messageScript.GeneralRandom("Player Stress check SUCCESS", "Stress Breakdown", breakdownChance, rnd, true);
+                                //history
+                                Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
+                                if (node != null)
+                                { GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "Suffers a Nervous Breakdown (STRESSED)", district = node.nodeName }); }
+                                //update AI side tab status
                                 if (playerSide.level == globalResistance.level)
                                 {
-                                    //update AI side tab status
                                     GameManager.i.aiScript.UpdateSideTabData();
                                 }
                             }
@@ -7491,6 +7503,10 @@ public class ActorManager : MonoBehaviour
                                     GameManager.i.messageScript.ActorStatus(text, itemText, reason, playerID, playerSide, details, HelpType.PlayerBreakdown);
                                     Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, undergoes a SUPER Stress BREAKDOWN{1}",
                                         GameManager.i.playerScript.GetPlayerName(playerSide), "\n");
+                                    //history
+                                    Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
+                                    if (node != null)
+                                    { GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "Suffers a Nervous Breakdown (SUPER STRESSED)", district = node.nodeName }); }
                                     //fake a successful roll (chance is superStressChance to make it appear as there are higher odds but in reality it is a forced breakdown)
                                     rnd = Random.Range(0, superStressChance);
                                     GameManager.i.messageScript.GeneralRandom("Player Stress check SUCCESS", "Stress Breakdown", superStressChance, rnd, true);
@@ -7798,6 +7814,11 @@ public class ActorManager : MonoBehaviour
                                 text = string.Format("{0} has automatically reactivated", playerName);
                                 GameManager.i.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", playerID, globalResistance);
                                 Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerResistanceAI: Player no longer Lying Low at node id {0}{1}", GameManager.i.nodeScript.GetPlayerNodeID(), "\n");
+                                //history
+                                Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
+                                if (node != null)
+                                { GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "Finished Lying Low", district = node.nodeName }); }
+                                else { Debug.LogWarningFormat("Invalid node (Null) for nodeID \"{0}\"", GameManager.i.nodeScript.GetPlayerNodeID()); }
                             }
                             //check if Player has stressed condition
                             if (GameManager.i.playerScript.CheckConditionPresent(conditionStressed, globalResistance) == true)
@@ -7857,6 +7878,11 @@ public class ActorManager : MonoBehaviour
                                     Debug.LogFormat("[Rnd] ActorManager.cs -> CheckPlayerResistanceAI: Stress check SUCCESS -> need < {0}, rolled {1}{2}",
                                     breakdownChance, rnd, "\n");
                                     GameManager.i.messageScript.GeneralRandom("Player Stress check SUCCESS", "Stress Breakdown", breakdownChance, rnd, true);
+                                    //History
+                                    Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
+                                    if (node != null)
+                                    { GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "Suffers a Nervous Breakdown (STRESSED)", district = node.nodeName }); }
+                                    else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", GameManager.i.nodeScript.nodePlayer); }
                                 }
                                 Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerResistanceAI: Stress BREAKDOWN occurs{0}", "\n");
                             }
@@ -7996,6 +8022,8 @@ public class ActorManager : MonoBehaviour
                                     Debug.LogFormat("[Rnd] ActorManager.cs -> CheckPlayerAuthorityAI: Stress check SUCCESS -> need < {0}, rolled {1}{2}",
                                     breakdownChance, rnd, "\n");
                                     GameManager.i.messageScript.GeneralRandom("Player Stress check SUCCESS", "Stress Breakdown", breakdownChance, rnd, true);
+                                    //History
+                                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "Suffers a Nervous Breakdown (STRESSED)" });
                                 }
                                 Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerAuthorityAI: Stress BREAKDOWN occurs{0}", "\n");
                             }
