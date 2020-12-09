@@ -5257,7 +5257,7 @@ public class ActorManager : MonoBehaviour
                             GameManager.i.dataScript.StatisticIncrement(StatType.ActorConflicts);
                             actor.numOfTimesConflict++;
                             //history
-                            actor.AddHistory(new HistoryActor() { text = string.Format("Relationship Conflict ({0})", threatMsg) });
+                            actor.AddHistory(new HistoryActor() { text = string.Format("Relationship Conflict with you ({0})", threatMsg) });
                             //Implement effect (if any, no effect for a 'do nothing')
                             if (actorConflict.effect != null)
                             {

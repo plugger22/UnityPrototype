@@ -590,7 +590,7 @@ namespace packageAPI
         public int turn;
         public string city;             //search city name, eg. 'NewYork', done automatically in constructor
         public string cityTag;          //display city name, eg. 'New York', onde automatically in constructor
-
+        public string district;         //district name, optional
 
         public HistoryActor()
         {

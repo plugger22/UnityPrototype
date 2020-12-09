@@ -2431,7 +2431,7 @@ public class ActionManager : MonoBehaviour
                     if (GameManager.i.playerScript.Invisibility == 0)
                     { isZeroInvisibility = true; }
                     //history
-                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("Attempts Target ({0})", target.descriptorResistance) });
+                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("Attempts Target ({0})", target.descriptorResistance), district = node.nodeName });
                 }
                 //Actor
                 else
@@ -2449,7 +2449,7 @@ public class ActionManager : MonoBehaviour
                             if (actor.GetDatapoint(ActorDatapoint.Invisibility2) == 0)
                             { isZeroInvisibility = true; }
                             //history
-                            actor.AddHistory(new HistoryActor() { text = string.Format("Attempts Target ({0})", target.descriptorResistance) });
+                            actor.AddHistory(new HistoryActor() { text = string.Format("Attempts Target ({0})", target.descriptorResistance), district = node.nodeName });
                         }
                         else
                         { Debug.LogErrorFormat("Invalid actor (Null) for slotID {0}", slotID); errorFlag = true; }

@@ -3795,7 +3795,7 @@ public class AIRebelManager : MonoBehaviour
                         {
                             isZeroInvisibility = true;
                             //history
-                            actor.AddHistory(new HistoryActor() { text = string.Format("Attempts target ({0})", target.descriptorResistance) });
+                            actor.AddHistory(new HistoryActor() { text = string.Format("Attempts target ({0})", target.descriptorResistance), district = node.nodeName });
                         }
                     }
                 }
