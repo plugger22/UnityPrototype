@@ -677,7 +677,7 @@ public class MissionManager : MonoBehaviour
             //bad effects
             string effectText = ProcessEffects(npc, false);
             string textTopString = string.Format("The {0}{1}{2} catches a shuttle out of {3}. You failed to {4}{5}{6}", colourNeutral, npc.tag, colourEnd,
-                GameManager.i.cityScript.GetCity().tag, colourBad, npc.action.activity, colourEnd);
+                GameManager.i.campaignScript.scenario.city.tag, colourBad, npc.action.activity, colourEnd);
             string textBottomString = effectText;
             //pipeline msg
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails

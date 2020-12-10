@@ -665,10 +665,11 @@ public class ActorManager : MonoBehaviour
             for (int i = 0; i < num; i++)
             {
                 Actor actor = CreateActor(side, tempActorArcs[i].name, 1, ActorStatus.Active, i);
-                //Debug actor summary
                 if (actor != null)
                 {
-                    actor.AddHistory(new HistoryActor() { text = string.Format("Reports for active duty") });
+                    //history
+                    actor.AddHistory(new HistoryActor() { text = string.Format("{0}Reports for active duty at <b>{1}</b>{2}", colourNeutral, GameManager.i.campaignScript.scenario.city.tag, colourEnd), isHighlight = true });
+                    //Debug actor summary
                     Debug.LogFormat("[Tor] ActorManager.cs -> InitialiseActors: OnMap {0}, {1}, {2} {3}, {4} {5}, {6} {7}, lvl {8}{9}", actor.actorName, actor.arc.name,
                         GameManager.i.dataScript.GetQuality(side, 0), actor.GetDatapoint(ActorDatapoint.Datapoint0),
                         GameManager.i.dataScript.GetQuality(side, 1), actor.GetDatapoint(ActorDatapoint.Datapoint1),
@@ -852,7 +853,11 @@ public class ActorManager : MonoBehaviour
                                         listOfArcs.Remove(actor.arc);
                                         //add actor
                                         GameManager.i.dataScript.AddMetaGameCurrentActor(side, actor, index);
-                                        actor.AddHistory(new HistoryActor() { text = string.Format("Reports for active duty") });
+                                        actor.AddHistory(new HistoryActor()
+                                        {
+                                            text = string.Format("{0}Reports for active duty at <b>{1}</b>{2}", colourNeutral, GameManager.i.campaignScript.scenario.city.tag, colourEnd),
+                                            isHighlight = true
+                                        });
                                         Debug.LogFormat("[Tor] ActorManager.cs -> GetOnMapActorsFromPool: OnMap {0}, {1}, ID {2}, slotID {3} Added from Recruit Pool{4}",
                                             actor.actorName, actor.arc.name, actor.actorID, actor.slotID, "\n");
                                         //remove from list
@@ -875,7 +880,11 @@ public class ActorManager : MonoBehaviour
                                                     listOfArcs.Remove(actor.arc);
                                                     //add actor
                                                     GameManager.i.dataScript.AddMetaGameCurrentActor(side, actor, index);
-                                                    actor.AddHistory(new HistoryActor() { text = string.Format("Reports for active duty") });
+                                                    actor.AddHistory(new HistoryActor()
+                                                    {
+                                                        text = string.Format("{0}Reports for active duty at <b>{1}</b>{2}", colourNeutral, GameManager.i.campaignScript.scenario.city.tag, colourEnd),
+                                                        isHighlight = true
+                                                    });
                                                     Debug.LogFormat("[Tor] ActorManager.cs -> GetOnMapActorsFromPool: OnMap {0}, {1}, ID {2}, slotID {3} Selected from Recruit Pool{4}",
                                                         actor.actorName, actor.arc.name, actor.actorID, actor.slotID, "\n");
                                                     //remove from list
@@ -905,7 +914,11 @@ public class ActorManager : MonoBehaviour
                                     isSuccess = true;
                                     Debug.LogFormat("[Tor] ActorManager.cs -> GetOnMapActorsFromPool: OnMap {0}, {1}, ID {2}, slotID {3} Pool empty, newly Created{4}",
                                         newActor.actorName, newActor.arc.name, newActor.actorID, newActor.slotID, "\n");
-                                    newActor.AddHistory(new HistoryActor() { text = string.Format("Reports for active duty") });
+                                    newActor.AddHistory(new HistoryActor()
+                                    {
+                                        text = string.Format("{0}Reports for active duty at <b>{1}</b>{2}", colourNeutral, GameManager.i.campaignScript.scenario.city.tag, colourEnd),
+                                        isHighlight = true
+                                    });
                                 }
                                 else { Debug.LogError("Invalid newActor (Null) MAJOR FAILURE as not enough OnMap actors at Level start"); }
                             }
@@ -1250,7 +1263,7 @@ public class ActorManager : MonoBehaviour
                     actor.statusHQ = statusHQ;
                     //assign Power (Boss has highest, rest get progressively less, closer to the boss you are the more important the position)
                     actor.Power = (numOfActors + 2 - counter) * powerFactor;
-                    actor.AddHistory(new HistoryActor() { text = string.Format("Assigned to <b>{0}</b> position at HQ", GameManager.i.hqScript.GetHqTitle(actor.statusHQ)) });
+                    actor.AddHistory(new HistoryActor() { text = string.Format("Assigned to <b>{0}</b> position at HQ", GameManager.i.hqScript.GetHqTitle(actor.statusHQ)), isHighlight = true });
                     Debug.LogFormat("[HQ] ActorManager.cs -> InitialiseHqActors: {0}, {1}, hqID {2}, Power {3} assigned to Hierarchy{4}", actor.actorName,
                         GameManager.i.hqScript.GetHqTitle(actor.statusHQ), actor.hqID, actor.Power, "\n");
                 }
@@ -1284,7 +1297,7 @@ public class ActorManager : MonoBehaviour
                 if (GameManager.i.dataScript.AddHqActor(actor) == true)
                 {
                     GameManager.i.dataScript.AddActorToHqPool(actor.hqID);
-                    actor.AddHistory(new HistoryActor() { text = string.Format("Assigned to HQ as a {0}", GameManager.i.hqScript.GetHqTitle(actor.statusHQ)) });
+                    actor.AddHistory(new HistoryActor() { text = string.Format("Assigned to HQ as a {0}", GameManager.i.hqScript.GetHqTitle(actor.statusHQ)), isHighlight = true });
                     Debug.LogFormat("[HQ] ActorManager.cs -> InitialiseHqWorkers: {0}, {1}, hqID {2}, Power {3}, WORKER, added to hq Pool{4}", actor.actorName, actor.arc.name, actor.hqID, actor.Power, "\n");
                 }
             }

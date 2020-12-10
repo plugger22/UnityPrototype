@@ -348,6 +348,20 @@ public class PlayerManager : MonoBehaviour
         mood = moodStart;
         //Update player mood
         GameManager.i.actorPanelScript.SetPlayerMoodUI(mood);
+        //History
+        string cityName = GameManager.i.campaignScript.scenario.city.tag;
+        GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = $"Arrive and take charge at <b>{cityName}</b>", isHighlight = true });
+        //Mood
+        HistoryMood record = new HistoryMood()
+        {
+            change = 0,
+            descriptor = string.Format("Assume Command at <b>{0}</b>", cityName),
+            mood = mood,
+            factor = "",
+            isStressed = false,
+            isHighlight = true
+        };
+        listOfMoodHistory.Add(record);
     }
     #endregion
 
@@ -460,20 +474,7 @@ public class PlayerManager : MonoBehaviour
                     //message
                     string text = string.Format("Player commences at \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
                     GameManager.i.messageScript.PlayerMove(text, node, 0, 0, true);
-                    string cityName = GameManager.i.cityScript.GetCity().tag;
-                    //History
-                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("Arrive and take charge at <b>{0}</b>", cityName) } );
-                    //Mood
-                    HistoryMood record = new HistoryMood()
-                    {
-                        change = 0,
-                        descriptor = string.Format("Assume Command at <b>{0}</b>", cityName),
-                        turn = GameManager.i.turnScript.Turn,
-                        mood = mood,
-                        factor = "",
-                        isStressed = false
-                    };
-                    listOfMoodHistory.Add(record);
+
                 }
                 else { Debug.LogErrorFormat("Invalid playerNode (Null) for nodeID {0}", nodeID); }
             }
@@ -1060,25 +1061,25 @@ public class PlayerManager : MonoBehaviour
                             switch (condition.tag)
                             {
                                 case "DOOMED":
-                                    textHistory = "Recieved a Lethal Injection (DOOMED)";
+                                    textHistory = "Received a Lethal Injection (DOOMED)";
                                     break;
                                 case "TAGGED":
-                                    textHistory = "Is now TAGGED";
+                                    textHistory = "You've been TAGGED";
                                     break;
                                 case "WOUNDED":
-                                    textHistory = "Is WOUNDED";
+                                    textHistory = "You're WOUNDED";
                                     break;
                                 case "IMAGED":
-                                    textHistory = "Is IMAGED";
+                                    textHistory = "You've been IMAGED";
                                     break;
                                 case "QUESTIONABLE":
                                     textHistory = "Your loyalty is in doubt (QUESTIONABLE)";
                                     break;
                                 case "ADDICTED":
-                                    textHistory = "Has become ADDICTED";
+                                    textHistory = "You've become ADDICTED";
                                     break;
                                 case "STRESSED":
-                                    textHistory = "Is STRESSED";
+                                    textHistory = "You're STRESSED";
                                     break;
                                 default: textHistory = string.Format("Is {0}", condition.tag); break;
                             }
@@ -2395,7 +2396,6 @@ public class PlayerManager : MonoBehaviour
             HistoryMood record = new HistoryMood()
             {
                 change = change,
-                turn = GameManager.i.turnScript.Turn,
                 mood = mood,
                 factor = factor,
                 isStressed = isStressed

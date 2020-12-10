@@ -1033,7 +1033,7 @@ public class HQManager : MonoBehaviour
                 // - - - MAJOR event -> hq actor leaves
                 //
                 reason = hQMajorEvent.GetRandomRecord(false);
-                actor.AddHistory(new HistoryActor() { text = string.Format("Leaves HQ due to {0}", reason) });
+                actor.AddHistory(new HistoryActor() { text = string.Format("Leaves HQ due to {0}, ex-{1}", reason, GameManager.i.campaignScript.scenario.city.tag) });
                 Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqHierarchy:{0}, {1}, hqID {2} MAJOR EVENT{3}", actor.actorName, GetHqTitle(actor.statusHQ), actor.hqID, "\n");
                 Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqHierarchy: {0}, {1}, leaves HQ due to {2}{3}", actor.actorName, GetHqTitle(actor.statusHQ),
                     reason, "\n");
@@ -1064,7 +1064,7 @@ public class HQManager : MonoBehaviour
                     actor.Power += change;
                     text = hQMinorEventHierarchyGood.GetRandomRecord(false);
                     reason = string.Format("gains +{0} Power because of {1} (before {2}, now {3} Power)", change, text, powerBefore, actor.Power);
-                    actor.AddHistory(new HistoryActor() { text = string.Format("Gains Power at HQ because of {0}", text) });
+                    actor.AddHistory(new HistoryActor() { text = string.Format("Gains Power at HQ because of {0}, ex-{1}", text, GameManager.i.campaignScript.scenario.city.tag) });
                     //add to list
                     eventText = string.Format("{0}{1}{2}, {3}{4}{5}{6}gains {7}+{8} Power{9} due to {10}", colourNormal, actor.actorName, colourEnd, colourNeutral, GetHqTitle(actor.statusHQ),
                         colourEnd, "\n", colourGood, change, colourEnd, text);
@@ -1077,7 +1077,7 @@ public class HQManager : MonoBehaviour
                     text = hQMinorEventHierarchyBad.GetRandomRecord(false);
                     change *= -1;
                     reason = string.Format("loses {0} Power because of {1} (before {2}, now {3} Power)", change, text, powerBefore, actor.Power);
-                    actor.AddHistory(new HistoryActor() { text = string.Format("Loses Power at HQ because of {0}", text) });
+                    actor.AddHistory(new HistoryActor() { text = string.Format("Loses Power at HQ because of {0}, ex-{1}", text, GameManager.i.campaignScript.scenario.city.tag) });
                     //add to list
                     eventText = string.Format("{0}{1}{2}, {3}{4}{5}{6}loses {7}{8} Power{9} because of {10}", colourNormal, actor.actorName, colourEnd, colourNeutral, GetHqTitle(actor.statusHQ),
                         colourEnd, "\n", colourBad, change, colourEnd, text);
@@ -1146,10 +1146,10 @@ public class HQManager : MonoBehaviour
                 actor.Power += change;
                 text = hQMinorEventWorkerGood.GetRandomRecord(false);
                 reason = string.Format("gains +{0} Power because of {1} (before {2}, now {3} Power)", change, text, powerBefore, actor.Power);
-                actor.AddHistory(new HistoryActor() { text = string.Format("Gains Power at HQ because of {0}", text) });
+                actor.AddHistory(new HistoryActor() { text = string.Format("Gains Power at HQ because of {0}, ex-{1}", text, GameManager.i.campaignScript.scenario.city.tag) });
                 //add to list
-                eventText = string.Format("{0}{1}{2}, {3}{4}{5}{6}gains {7}+{8} Power{9} due to {10}", colourNormal, actor.actorName, colourEnd, colourAlert, GetHqTitle(actor.statusHQ),
-                    colourEnd, "\n", colourGood, change, colourEnd, text);
+                eventText = string.Format("{0}{1}{2}, {3}{4}{5}{6}gains {7}+{8} Power{9} due to {10}, ex-{11}", colourNormal, actor.actorName, colourEnd, colourAlert, GetHqTitle(actor.statusHQ),
+                    colourEnd, "\n", colourGood, change, colourEnd, text, GameManager.i.campaignScript.scenario.city.tag);
                 GameManager.i.dataScript.AddHqEvent(eventText);
             }
             else
@@ -1268,11 +1268,12 @@ public class HQManager : MonoBehaviour
                             //bump current actor back to work status (they can then compete for lower level hierarchy positions)
                             currentActor.statusHQ = ActorHQ.Worker;
                             //history
-                            currentActor.AddHistory(new HistoryActor() { text = string.Format("Demoted from {0}{1}{2} position at HQ", colourAlert, GetHqTitle(newActor.statusHQ), colourEnd) });
+                            currentActor.AddHistory(new HistoryActor() { text = string.Format("Demoted from {0}{1}{2} position at HQ, ex-{3}", colourAlert, GetHqTitle(newActor.statusHQ), colourEnd, 
+                                GameManager.i.campaignScript.scenario.city.tag) });
                             newActor.AddHistory(new HistoryActor()
                             {
-                                text = string.Format("Promoted to {0}{1}{2} position at HQ (previously ({3}{4}{5})",
-                                colourAlert, GetHqTitle(newActor.statusHQ), colourEnd, colourAlert, GetHqTitle(previousStatus), colourEnd)
+                                text = string.Format("Promoted to {0}{1}{2} position at HQ (previously {3}{4}{5}), ex-{6}",
+                                colourAlert, GetHqTitle(newActor.statusHQ), colourEnd, colourAlert, GetHqTitle(previousStatus), colourEnd, GameManager.i.campaignScript.scenario.city.tag)
                             });
                         }
                         else
@@ -1280,7 +1281,8 @@ public class HQManager : MonoBehaviour
                             Debug.LogFormat("[HQ] HQManager.cs -> CheckHqHierarchy: {0}, {1}, Power {2} is secure in their position{3}", currentActor.actorName,
                                 GetHqTitle(currentActor.statusHQ), currentActor.Power, "\n");
                             if (GameManager.i.campaignScript.GetScenarioIndex() > GameManager.i.scenarioStartLevel)
-                            { currentActor.AddHistory(new HistoryActor() { text = string.Format("Position secure at HQ as {0}{1}{2}", colourAlert, GetHqTitle(currentActor.statusHQ), colourEnd) }); }
+                            { currentActor.AddHistory(new HistoryActor() { text = string.Format("Position secure at HQ as {0}{1}{2}, ex-{3}", colourAlert, GetHqTitle(currentActor.statusHQ), colourEnd, 
+                                GameManager.i.campaignScript.scenario.city.tag) }); }
                         }
                     }
                     else
@@ -1305,14 +1307,15 @@ public class HQManager : MonoBehaviour
                             if (newActor.Power > 15 && newActor.statusHQ == ActorHQ.Worker)
                             {
                                 //had a higher position previously (can't say what it was 'cause when they were bumped they were sent back to the Worker pool)
-                                newActor.AddHistory(new HistoryActor() { text = string.Format("Reasssigned to {0}{1}{2} position at HQ", colourAlert, GetHqTitle(newActor.statusHQ), colourEnd) });
+                                newActor.AddHistory(new HistoryActor() { text = string.Format("Reasssigned to {0}{1}{2} position at HQ, ex-{3}", colourAlert, GetHqTitle(newActor.statusHQ), colourEnd, 
+                                    GameManager.i.campaignScript.scenario.city.tag) });
                             }
                             else
                             {
                                 newActor.AddHistory(new HistoryActor()
                                 {
-                                    text = string.Format("Promoted to {0}{1}{2} position at HQ (previously {3}{4}{5})",
-                             colourAlert, GetHqTitle(newActor.statusHQ), colourEnd, colourAlert, GetHqTitle(previousStatus), colourEnd)
+                                    text = string.Format("Promoted to {0}{1}{2} position at HQ (previously {3}{4}{5}), ex-{6}",
+                             colourAlert, GetHqTitle(newActor.statusHQ), colourEnd, colourAlert, GetHqTitle(previousStatus), colourEnd, GameManager.i.campaignScript.scenario.city.tag)
                                 });
                             }
 

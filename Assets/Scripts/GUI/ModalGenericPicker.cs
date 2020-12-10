@@ -79,6 +79,14 @@ public class ModalGenericPicker : MonoBehaviour
     {
         //asserts
         Debug.Assert(modalPickerCanvas != null, "Invalid modalPickerCanvas (Null)");
+        Debug.Assert(modalGenericObject != null, "Invalid modalGenericObject (Null)");
+        Debug.Assert(modalPanelObject != null, "Invalid modalPanelObject (Null)");
+        Debug.Assert(modalPanel != null, "Invalid modalPanel (Null)");
+        Debug.Assert(modalHeader != null, "Invalid modalHeader (Null)");
+        Debug.Assert(topText != null, "Invalid topText (Null)");
+        Debug.Assert(middleText != null, "Invalid middleText (Null)");
+        Debug.Assert(bottomText != null, "Invalid bottomText (Null)");
+        Debug.Assert(headerText != null, "Invalid headerText (Null)");
         Debug.Assert(buttonCancel != null, "Invalid buttonCancel (Null)");
         Debug.Assert(buttonBack != null, "Invalid buttonBack (Null)");
         Debug.Assert(buttonConfirm != null, "Invalid buttonConfirm (Null)");

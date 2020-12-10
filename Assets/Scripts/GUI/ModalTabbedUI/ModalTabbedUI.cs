@@ -33,6 +33,7 @@ public class ModalTabbedUI : MonoBehaviour
     public Canvas canvasTab6;               //Gear
     public Canvas canvasTab7;               //history
     public Canvas canvasTab8;               //stats
+    public Canvas canvasTab9;               //no Actors (Subordinates or Reserves)
 
     [Header("Side Tabs")]
     public GameObject sideTab0;
@@ -302,6 +303,7 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(canvasTab6 != null, "Invalid canvasTab6 (Null)");
         Debug.Assert(canvasTab7 != null, "Invalid canvasTab7 (Null)");
         Debug.Assert(canvasTab8 != null, "Invalid canvasTab8 (Null)");
+        Debug.Assert(canvasTab9 != null, "Invalid canvasTab9 (Null)");
         //button interactions
         if (interactClose != null) { interactClose.SetButton(EventType.TabbedClose); }
         else { Debug.LogError("Invalid interactClose (Null)"); }
@@ -461,6 +463,7 @@ public class ModalTabbedUI : MonoBehaviour
         arrayOfCanvas[6] = canvasTab6;
         arrayOfCanvas[7] = canvasTab7;
         arrayOfCanvas[8] = canvasTab8;
+        arrayOfCanvas[9] = canvasTab9;
         //Top tab components
         index = 0;
         if (topTab0 != null) { arrayOfTopTabObjects[index++] = topTab0; } else { Debug.LogError("Invalid topTab0 (Null)"); }
@@ -1124,6 +1127,7 @@ public class ModalTabbedUI : MonoBehaviour
                     case TabbedPage.Gear: arrayOfCanvas[6].gameObject.SetActive(true); break;
                     case TabbedPage.History: arrayOfCanvas[7].gameObject.SetActive(true); break;
                     case TabbedPage.Stats: arrayOfCanvas[8].gameObject.SetActive(true); break;
+                    case TabbedPage.NoActors: arrayOfCanvas[9].gameObject.SetActive(true); break;
                     default: Debug.LogWarningFormat("Unrecognised arrayOfPages \"{0}\"", arrayOfPages[currentTopTabIndex]); break;
                 }
                 UpdatePage();
@@ -1246,6 +1250,9 @@ public class ModalTabbedUI : MonoBehaviour
             case TabbedPage.Stats:
 
                 break;
+            case TabbedPage.NoActors:
+
+                break;
             default: Debug.LogWarningFormat("Unrecognised currentTopTabIndex \"{0}\"", currentTopTabIndex); break;
         }
     }
@@ -1308,6 +1315,7 @@ public class ModalTabbedUI : MonoBehaviour
         UpdateControllerButton(who);
     }
 
+
     #region InitialiseTopTabs
     /// <summary>
     /// Sets up top tabs and arrays whenever a new actorSet is opened
@@ -1318,24 +1326,45 @@ public class ModalTabbedUI : MonoBehaviour
         switch (who)
         {
             case TabbedUIWho.Subordinates:
-                arrayOfPages[0] = TabbedPage.Main;
-                arrayOfPages[1] = TabbedPage.Personality;
-                arrayOfPages[2] = TabbedPage.Contacts;
-                arrayOfPages[3] = TabbedPage.Secrets;
-                arrayOfPages[4] = TabbedPage.Gear;
-                arrayOfPages[5] = TabbedPage.History;
-                arrayOfPages[6] = TabbedPage.Stats;
-                maxTopTabIndex = 6;
-                arrayOfTopTabObjects[4].SetActive(true);
-                arrayOfTopTabObjects[5].SetActive(true);
-                arrayOfTopTabObjects[6].SetActive(true);
-                arrayOfTopTabTitles[0].text = "Main";
-                arrayOfTopTabTitles[1].text = "Person";
-                arrayOfTopTabTitles[2].text = "Contacts";
-                arrayOfTopTabTitles[3].text = "Secrets";
-                arrayOfTopTabTitles[4].text = "Gear";
-                arrayOfTopTabTitles[5].text = "History";
-                arrayOfTopTabTitles[6].text = "Stats";
+                if (GameManager.i.dataScript.CheckNumOfOnMapActors(GameManager.i.sideScript.PlayerSide) > 0)
+                {
+                    arrayOfPages[0] = TabbedPage.Main;
+                    arrayOfPages[1] = TabbedPage.Personality;
+                    arrayOfPages[2] = TabbedPage.Contacts;
+                    arrayOfPages[3] = TabbedPage.Secrets;
+                    arrayOfPages[4] = TabbedPage.Gear;
+                    arrayOfPages[5] = TabbedPage.History;
+                    arrayOfPages[6] = TabbedPage.Stats;
+                    maxTopTabIndex = 6;
+                    arrayOfTopTabObjects[0].SetActive(true);
+                    arrayOfTopTabObjects[1].SetActive(true);
+                    arrayOfTopTabObjects[2].SetActive(true);
+                    arrayOfTopTabObjects[3].SetActive(true);
+                    arrayOfTopTabObjects[4].SetActive(true);
+                    arrayOfTopTabObjects[5].SetActive(true);
+                    arrayOfTopTabObjects[6].SetActive(true);
+                    arrayOfTopTabTitles[0].text = "Main";
+                    arrayOfTopTabTitles[1].text = "Person";
+                    arrayOfTopTabTitles[2].text = "Contacts";
+                    arrayOfTopTabTitles[3].text = "Secrets";
+                    arrayOfTopTabTitles[4].text = "Gear";
+                    arrayOfTopTabTitles[5].text = "History";
+                    arrayOfTopTabTitles[6].text = "Stats";
+                }
+                else
+                {
+                    //no subordinates present
+                    arrayOfPages[0] = TabbedPage.NoActors;
+                    maxTopTabIndex = 0;
+                    arrayOfTopTabObjects[0].SetActive(true);
+                    arrayOfTopTabObjects[1].SetActive(false);
+                    arrayOfTopTabObjects[2].SetActive(false);
+                    arrayOfTopTabObjects[3].SetActive(false);
+                    arrayOfTopTabObjects[4].SetActive(false);
+                    arrayOfTopTabObjects[5].SetActive(false);
+                    arrayOfTopTabObjects[6].SetActive(false);
+                    arrayOfTopTabTitles[0].text = "Main";
+                }
                 break;
             case TabbedUIWho.Player:
                 arrayOfPages[0] = TabbedPage.Main;
@@ -1346,6 +1375,10 @@ public class ModalTabbedUI : MonoBehaviour
                 arrayOfPages[5] = TabbedPage.History;
                 arrayOfPages[6] = TabbedPage.Stats;
                 maxTopTabIndex = 6;
+                arrayOfTopTabObjects[0].SetActive(true);
+                arrayOfTopTabObjects[1].SetActive(true);
+                arrayOfTopTabObjects[2].SetActive(true);
+                arrayOfTopTabObjects[3].SetActive(true);
                 arrayOfTopTabObjects[4].SetActive(true);
                 arrayOfTopTabObjects[5].SetActive(true);
                 arrayOfTopTabObjects[6].SetActive(true);
@@ -1362,6 +1395,10 @@ public class ModalTabbedUI : MonoBehaviour
                 arrayOfPages[1] = TabbedPage.Personality;
                 arrayOfPages[2] = TabbedPage.History;
                 arrayOfPages[3] = TabbedPage.Stats;
+                arrayOfTopTabObjects[0].SetActive(true);
+                arrayOfTopTabObjects[1].SetActive(true);
+                arrayOfTopTabObjects[2].SetActive(true);
+                arrayOfTopTabObjects[3].SetActive(true);
                 arrayOfTopTabObjects[4].SetActive(false);
                 arrayOfTopTabObjects[5].SetActive(false);
                 arrayOfTopTabObjects[6].SetActive(false);
@@ -1372,18 +1409,39 @@ public class ModalTabbedUI : MonoBehaviour
                 arrayOfTopTabTitles[3].text = "Stats";
                 break;
             case TabbedUIWho.Reserves:
-                arrayOfPages[0] = TabbedPage.Main;
-                arrayOfPages[1] = TabbedPage.Personality;
-                arrayOfPages[2] = TabbedPage.History;
-                arrayOfPages[3] = TabbedPage.Stats;
-                arrayOfTopTabObjects[4].SetActive(false);
-                arrayOfTopTabObjects[5].SetActive(false);
-                arrayOfTopTabObjects[6].SetActive(false);
-                maxTopTabIndex = 3;
-                arrayOfTopTabTitles[0].text = "Main";
-                arrayOfTopTabTitles[1].text = "Person";
-                arrayOfTopTabTitles[2].text = "History";
-                arrayOfTopTabTitles[3].text = "Stats";
+                if (GameManager.i.dataScript.CheckNumOfActorsInReserve() > 0)
+                {
+                    arrayOfPages[0] = TabbedPage.Main;
+                    arrayOfPages[1] = TabbedPage.Personality;
+                    arrayOfPages[2] = TabbedPage.History;
+                    arrayOfPages[3] = TabbedPage.Stats;
+                    arrayOfTopTabObjects[0].SetActive(true);
+                    arrayOfTopTabObjects[1].SetActive(true);
+                    arrayOfTopTabObjects[2].SetActive(true);
+                    arrayOfTopTabObjects[3].SetActive(true);
+                    arrayOfTopTabObjects[4].SetActive(false);
+                    arrayOfTopTabObjects[5].SetActive(false);
+                    arrayOfTopTabObjects[6].SetActive(false);
+                    maxTopTabIndex = 3;
+                    arrayOfTopTabTitles[0].text = "Main";
+                    arrayOfTopTabTitles[1].text = "Person";
+                    arrayOfTopTabTitles[2].text = "History";
+                    arrayOfTopTabTitles[3].text = "Stats";
+                }
+                else
+                {
+                    //no reserves present
+                    arrayOfPages[0] = TabbedPage.NoActors;
+                    maxTopTabIndex = 0;
+                    arrayOfTopTabObjects[0].SetActive(true);
+                    arrayOfTopTabObjects[1].SetActive(false);
+                    arrayOfTopTabObjects[2].SetActive(false);
+                    arrayOfTopTabObjects[3].SetActive(false);
+                    arrayOfTopTabObjects[4].SetActive(false);
+                    arrayOfTopTabObjects[5].SetActive(false);
+                    arrayOfTopTabObjects[6].SetActive(false);
+                    arrayOfTopTabTitles[0].text = "Main";
+                }
                 break;
             default: Debug.LogWarningFormat("Unrecognised who \"{0}\"", who); break;
         }
@@ -1392,6 +1450,7 @@ public class ModalTabbedUI : MonoBehaviour
         UpdateTopTabs(currentTopTabIndex);
     }
     #endregion
+
 
     /// <summary>
     /// selects specified button (shows as highlighted). Other button automatically deselected
@@ -2344,7 +2403,13 @@ public class ModalTabbedUI : MonoBehaviour
                     {
                         HistoryActor historyEvent = listOfEvents[i];
                         if (historyEvent != null)
-                        { listOfText.Add(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", at " + historyEvent.district : "")); }
+                        {
+                            //highlight any special entries, eg. start of level, in yellow
+                            if (historyEvent.isHighlight == true)
+                            { listOfText.Add(GameManager.Formatt(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", at " + historyEvent.district : ""), 
+                                ColourType.neutralText )); }
+                            else { listOfText.Add(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", at " + historyEvent.district : "")); }
+                        }
                         else { Debug.LogWarningFormat("Invalid HistoryActor (Null) for listOfEvents[{0}]", i); }
                     }
                 }
@@ -2364,8 +2429,18 @@ public class ModalTabbedUI : MonoBehaviour
                     {
                         HistoryMood historyMood = listOfMood[i];
                         if (historyMood != null)
-                        { listOfText.Add(string.Format("day {0}  {1} (Mood now {2} star{3}){4}", historyMood.turn, historyMood.descriptor, historyMood.mood, 
-                            historyMood.mood != 1 ? "s" : "", historyMood.factor.Length > 0 ? string.Format(", influenced by <b>{0}</b>", historyMood.factor) : "")); }
+                        {
+                            if (historyMood.isHighlight == true)
+                            {
+                                listOfText.Add(GameManager.Formatt(string.Format("day {0}  {1} (Mood now {2} star{3}){4}", historyMood.turn, historyMood.descriptor, historyMood.mood,
+                                historyMood.mood != 1 ? "s" : "", historyMood.factor.Length > 0 ? string.Format(", influenced by <b>{0}</b>", historyMood.factor) : ""), ColourType.neutralText));
+                            }
+                            else
+                            {
+                                listOfText.Add(string.Format("day {0}  {1} (Mood now {2} star{3}){4}", historyMood.turn, historyMood.descriptor, historyMood.mood,
+                                historyMood.mood != 1 ? "s" : "", historyMood.factor.Length > 0 ? string.Format(", influenced by <b>{0}</b>", historyMood.factor) : ""));
+                            }
+                        }
                         else { Debug.LogWarningFormat("Invalid HistoryMood (Null) for listOfMood[{0}]", i); }
                     }
                 }
@@ -2388,7 +2463,13 @@ public class ModalTabbedUI : MonoBehaviour
                     {
                         HistoryActor historyEvent = listOfEvents[i];
                         if (historyEvent != null)
-                        { listOfText.Add(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", at " + historyEvent.district : "")); }
+                        {
+                            //highlight any special entries, eg. start of level, in yellow
+                            if (historyEvent.isHighlight == true)
+                            { listOfText.Add(GameManager.Formatt(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", at " + historyEvent.district : ""), 
+                                ColourType.neutralText)); }
+                            else { listOfText.Add(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", at " + historyEvent.district : "")); }
+                        }
                         else { Debug.LogWarningFormat("Invalid HistoryActor (Null) for listOfEvents[{0}]", i); }
                     }
                 }
@@ -2427,7 +2508,7 @@ public class ModalTabbedUI : MonoBehaviour
         //make sure it's a one off
         isAddDebugRecords = true;
         List<HistoryActor> tempList = new List<HistoryActor>();
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 12; i++)
         { tempList.Add(new HistoryActor() { text = $"Debug History item {i}" }); }
         return tempList;
     }

@@ -2176,6 +2176,8 @@ public class EffectManager : MonoBehaviour
                                         effectReturn.listOfHelpTags.Add("org_1");
                                         /*Debug.LogFormat("[Org] EffectManager.cs -> ProcessEffect: Organisation \"{0}\" no longer in contact with Player (secret revealed){1}", org.tag, "\n");*/
                                         Debug.LogFormat("[Org] EffectManager.cs -> ProcessEffect: Organisation \"{0}\" now in CONTACT with Player{1}", org.tag, "\n");
+                                        //History
+                                        GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("Establish Contact with the {0} organisation", org.tag), district = node.nodeName });
                                         break;
                                     case "Subtract":
                                         //break off contact
@@ -2184,6 +2186,8 @@ public class EffectManager : MonoBehaviour
                                         effectReturn.listOfHelpTags.Add("org_2");
                                         /*Debug.LogFormat("[Org] EffectManager.cs -> ProcessEffect: Organisation \"{0}\" in contact with Player{1}", org.tag, "\n");*/
                                         Debug.LogFormat("[Org] EffectManager.cs -> ProcessEffect: Organisation \"{0}\" no longer in contact with Player{1}", org.tag, "\n");
+                                        //History
+                                        GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("Lose Contact with the {0} organisation", org.tag), district = node.nodeName });
                                         break;
                                     default:
                                         Debug.LogWarningFormat("Unrecognised effect.operand \"{0}\"", effect.operand.name); break;

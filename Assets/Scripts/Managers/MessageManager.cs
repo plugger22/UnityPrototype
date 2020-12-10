@@ -4938,7 +4938,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.topText = "HQ Notification";
             data.bottomText = GameManager.i.itemDataScript.GetNpcArrivalDetails(npc);
-            data.itemText = string.Format("The {0} arrives in {1}", npc.tag.ToUpper(), GameManager.i.cityScript.GetCity().tag);
+            data.itemText = string.Format("The {0} arrives in {1}", npc.tag.ToUpper(), GameManager.i.campaignScript.scenario.city.tag);
             data.priority = ItemPriority.Medium;
             data.sprite = npc.sprite;
             data.spriteName = data.sprite.name;
@@ -4987,7 +4987,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.topText = "HQ Notification";
             data.bottomText = GameManager.i.itemDataScript.GetNpcDepartDetails(npc);
-            data.itemText = string.Format("The {0} has departed {1}", npc.tag.ToUpper(), GameManager.i.cityScript.GetCity().tag);
+            data.itemText = string.Format("The {0} has departed {1}", npc.tag.ToUpper(), GameManager.i.campaignScript.scenario.city.tag);
             data.priority = ItemPriority.Medium;
             data.sprite = npc.sprite;
             data.spriteName = data.sprite.name;
@@ -5031,7 +5031,7 @@ public class MessageManager : MonoBehaviour
             ItemData data = new ItemData();
             data.topText = string.Format("{0} Departs", npc.tag);
             data.bottomText = GameManager.i.itemDataScript.GetNpcInteractDetails(npc);
-            data.itemText = string.Format("The {0} has departed {1}", npc.tag.ToUpper(), GameManager.i.cityScript.GetCity().tag);
+            data.itemText = string.Format("The {0} has departed {1}", npc.tag.ToUpper(), GameManager.i.campaignScript.scenario.city.tag);
             data.priority = ItemPriority.Medium;
             data.sprite = npc.sprite;
             data.spriteName = data.sprite.name;

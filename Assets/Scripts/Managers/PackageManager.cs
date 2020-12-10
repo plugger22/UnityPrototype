@@ -547,8 +547,15 @@ namespace packageAPI
         public int change;              //positive change is good, negative bad
         public int turn;
         public int opinion;             //opinion AFTER then change
+        public int scenarioIndex;
         public bool isNormal;           //True if opinion change occured normally, False if negated by actor's compatibility with player
         public string descriptor;       //FORMATTED string, eg. 'Gear HoloPorn Given +1' displayed in green, red if negative, grey if negated
+
+        public HistoryOpinion()
+        {
+            scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex();
+            turn = GameManager.i.turnScript.Turn;
+        }
     }
 
     /// <summary>
@@ -560,9 +567,17 @@ namespace packageAPI
         public int change;              //positive change is good, negative bad
         public int turn;
         public int mood;                //mood AFTER the change
+        public int scenarioIndex;
         public string descriptor;       //FORMATTED string, eg. "Disposed of FIXER -2"
         public string factor;           //name of factor that determined the change (If no factor applies then supply a blank string "" instead)
-        public bool isStressed;         //true if mood has dropped below zero and player gained the Stressed conditoin
+        public bool isStressed;         //true if mood has dropped below zero and player gained the Stressed condition
+        public bool isHighlight;        //if true item shown as a different highlight colour (eg. start of a new level entry), default false
+
+        public HistoryMood()
+        {
+            scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex();
+            turn = GameManager.i.turnScript.Turn;
+        }
     }
 
     /// <summary>
@@ -586,8 +601,10 @@ namespace packageAPI
     public class HistoryActor
     {
         public string text;             //what happened
+        public bool isHighlight;        //if true item shown as a different highlight colour (eg. start of a new level entry), default false
         //automatic
         public int turn;
+        public int scenarioIndex;
         public string city;             //search city name, eg. 'NewYork', done automatically in constructor
         public string cityTag;          //display city name, eg. 'New York', onde automatically in constructor
         public string district;         //district name, optional
@@ -598,6 +615,7 @@ namespace packageAPI
             if (GameManager.i.inputScript.GameState != GameState.LoadAtStart)
             {
                 turn = GameManager.i.turnScript.Turn;
+                scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex();
                 city = GameManager.i.campaignScript.scenario.city.name;
                 cityTag = GameManager.i.campaignScript.scenario.city.tag;
             }

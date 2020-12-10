@@ -354,7 +354,6 @@ namespace gameAPI
                                 //opinion History
                                 HistoryOpinion history = new HistoryOpinion();
                                 history.change = value;
-                                history.turn = turn;
                                 history.opinion = datapoint1;
                                 history.isNormal = isProceed;
                                 text = string.Format("{0} {1}{2}", reasonForChange, difference > 0 ? "+" : "", difference);
@@ -383,10 +382,9 @@ namespace gameAPI
                             //Starting Opinion
                             HistoryOpinion history = new HistoryOpinion();
                             history.change = 0;
-                            history.turn = turn;
                             history.opinion = datapoint1;
                             history.isNormal = true;
-                            text = string.Format("Starting Opinion {0}", datapoint1);
+                            text = string.Format("Starting Opinion {0}, {1}", datapoint1, GameManager.i.campaignScript.scenario.city.tag);
                             history.descriptor = GameManager.Formatt(text, ColourType.neutralText);
                             personality.AddOpinion(history);
                         }
