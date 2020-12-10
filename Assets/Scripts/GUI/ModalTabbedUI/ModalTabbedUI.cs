@@ -171,6 +171,9 @@ public class ModalTabbedUI : MonoBehaviour
     private int scrollMaxHighlightIndex = -1;                       //numOfScrollItemsCurrent - 1
     private TabbedHistory historyOptionIndex;                       //which history option is currently selected, eg. Events / Emotions (Mood/Opinion)
 
+    //debug
+    private bool isAddDebugRecords;                                 //true if a set of debug player history event records have been addeds
+
 
     //help tooltips (I don't want this as a global, just a master private field)
     private int x_offset = 200;
@@ -2315,6 +2318,7 @@ public class ModalTabbedUI : MonoBehaviour
     /// </summary>
     private List<string> GetHistory(TabbedHistory history)
     {
+        int max, count, limit;
         List<string> listOfText = new List<string>();
         //
         // - - - Get required History Data and convert to listOfStrings
@@ -2326,16 +2330,21 @@ public class ModalTabbedUI : MonoBehaviour
             {
                 //Events
                 List<HistoryActor> listOfEvents = GameManager.i.dataScript.GetListOfHistoryPlayer();
-                //debug
-                listOfEvents.AddRange(DebugGetExtraHistory());
+                //debug -> flag prevents multiple occurences
+                if (isAddDebugRecords == false)
+                { listOfEvents.AddRange(DebugGetExtraHistory()); }
                 //convert to text
                 if (listOfEvents != null)
                 {
-                    for (int i = 0; i < listOfEvents.Count; i++)
+                    //limit to last 'x' events
+                    count = listOfEvents.Count;
+                    max = Mathf.Min(maxNumOfScrollItems, count);
+                    limit = count - max;
+                    for (int i = count - 1; i >= limit; i--)
                     {
                         HistoryActor historyEvent = listOfEvents[i];
                         if (historyEvent != null)
-                        { listOfText.Add(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", " + historyEvent.district : "")); }
+                        { listOfText.Add(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", at " + historyEvent.district : "")); }
                         else { Debug.LogWarningFormat("Invalid HistoryActor (Null) for listOfEvents[{0}]", i); }
                     }
                 }
@@ -2347,7 +2356,11 @@ public class ModalTabbedUI : MonoBehaviour
                 List<HistoryMood> listOfMood = GameManager.i.playerScript.GetListOfMoodHistory();
                 if (listOfMood != null)
                 {
-                    for (int i = 0; i < listOfMood.Count; i++)
+                    //limit to last 'x' events
+                    count = listOfMood.Count;
+                    max = Mathf.Min(maxNumOfScrollItems, count);
+                    limit = count - max;
+                    for (int i = count - 1; i >= limit; i--)
                     {
                         HistoryMood historyMood = listOfMood[i];
                         if (historyMood != null)
@@ -2367,12 +2380,15 @@ public class ModalTabbedUI : MonoBehaviour
                 List<HistoryActor> listOfEvents = arrayOfActorsTemp[currentSideTabIndex].GetListOfHistory();
                 if (listOfEvents != null)
                 {
-                    //convert to text
-                    for (int i = 0; i < listOfEvents.Count; i++)
+                    //limit to last 'x' events
+                    count = listOfEvents.Count;
+                    max = Mathf.Min(maxNumOfScrollItems, count);
+                    limit = count - max;
+                    for (int i = count - 1; i >= limit; i--)
                     {
                         HistoryActor historyEvent = listOfEvents[i];
                         if (historyEvent != null)
-                        { listOfText.Add(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", " + historyEvent.district : "")); }
+                        { listOfText.Add(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", at " + historyEvent.district : "")); }
                         else { Debug.LogWarningFormat("Invalid HistoryActor (Null) for listOfEvents[{0}]", i); }
                     }
                 }
@@ -2383,7 +2399,11 @@ public class ModalTabbedUI : MonoBehaviour
                 List<HistoryOpinion> listOfOpinion = arrayOfActorsTemp[currentSideTabIndex].GetPersonality().GetListOfOpinion();
                 if (listOfOpinion != null)
                 {
-                    for (int i = 0; i < listOfOpinion.Count; i++)
+                    //limit to last 'x' events
+                    count = listOfOpinion.Count;
+                    max = Mathf.Min(maxNumOfScrollItems, count);
+                    limit = count - max;
+                    for (int i = count - 1; i >= limit; i--)
                     {
                         HistoryOpinion historyOpinion = listOfOpinion[i];
                         if (historyOpinion != null)
@@ -2404,6 +2424,8 @@ public class ModalTabbedUI : MonoBehaviour
     /// </summary>
     private List<HistoryActor> DebugGetExtraHistory()
     {
+        //make sure it's a one off
+        isAddDebugRecords = true;
         List<HistoryActor> tempList = new List<HistoryActor>();
         for (int i = 0; i < 20; i++)
         { tempList.Add(new HistoryActor() { text = $"Debug History item {i}" }); }

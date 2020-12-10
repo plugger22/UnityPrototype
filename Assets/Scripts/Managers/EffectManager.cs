@@ -5814,10 +5814,6 @@ public class EffectManager : MonoBehaviour
         //resolve effect outcome
         if (condition != null)
         {
-            /*//assign condition to player if at their node, otherwise actor
-            if (node.nodeID == GameManager.instance.nodeScript.nodePlayer)
-            {*/
-
             //Player Condition
             switch (effect.operand.name)
             {

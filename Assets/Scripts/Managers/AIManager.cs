@@ -4109,27 +4109,7 @@ public class AIManager : MonoBehaviour
                             //Player loses a level of invisiblity
                             int invisibility = GameManager.i.playerScript.Invisibility;
                             invisibility -= 1;
-
-                            /*if (invisibility < 0)
-                            {
-                                //AI knows immediately
-                                traceBackDelay = 0;
-                                invisibility = 0;
-                            }*/
-
                             GameManager.i.playerScript.Invisibility = invisibility;
-                            //immediate flag activity
-
-                            /*if (traceBackDelay == 0)
-                            {
-                                immediateFlagResistance = true;
-                                text = "AI Hacking attempt Detected (IMMEDIATE TraceBack)";
-                                GameManager.instance.messageScript.AIImmediateActivity(text, "AI Traceback", GameManager.instance.nodeScript.nodePlayer, -1);
-                            }
-                            //AI notification
-                            text = "AI Hacking attempt detected (TraceBack)";
-                            GameManager.instance.messageScript.AIDetected(text, GameManager.instance.nodeScript.nodePlayer, traceBackDelay);*/
-
                             //Detected by AITrackback results in immediate notification regardless of circumstances (unless detection negated by Gear)
                             immediateFlagResistance = true;
                             text = "AI Hacking attempt Detected (IMMEDIATE TraceBack)";

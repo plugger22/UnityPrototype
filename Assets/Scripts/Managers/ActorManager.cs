@@ -1250,7 +1250,7 @@ public class ActorManager : MonoBehaviour
                     actor.statusHQ = statusHQ;
                     //assign Power (Boss has highest, rest get progressively less, closer to the boss you are the more important the position)
                     actor.Power = (numOfActors + 2 - counter) * powerFactor;
-                    actor.AddHistory(new HistoryActor() { text = string.Format("Assigned to {0} position at HQ", GameManager.i.hqScript.GetHqTitle(actor.statusHQ)) });
+                    actor.AddHistory(new HistoryActor() { text = string.Format("Assigned to <b>{0}</b> position at HQ", GameManager.i.hqScript.GetHqTitle(actor.statusHQ)) });
                     Debug.LogFormat("[HQ] ActorManager.cs -> InitialiseHqActors: {0}, {1}, hqID {2}, Power {3} assigned to Hierarchy{4}", actor.actorName,
                         GameManager.i.hqScript.GetHqTitle(actor.statusHQ), actor.hqID, actor.Power, "\n");
                 }
@@ -4857,6 +4857,7 @@ public class ActorManager : MonoBehaviour
                             GameManager.i.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited, actorRecruited.unhappyTimer);
                             //history
                             actorRecruited.AddHistory(new HistoryActor() { text = "Recruited (Reserves)" });
+                            GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("Recruited {0}, {1} (Reserves)", actorRecruited.actorName, actorRecruited.arc.name) });
                             //stats
                             GameManager.i.dataScript.StatisticIncrement(StatType.ActorsRecruited);
                             //Process any other effects, if acquisition was successfull, ignore otherwise
@@ -5032,6 +5033,7 @@ public class ActorManager : MonoBehaviour
                         GameManager.i.messageScript.ActorRecruited(textMsg, data.nodeID, actorRecruited, actorRecruited.unhappyTimer);
                         //history
                         actorRecruited.AddHistory(new HistoryActor() { text = "Recruited (Reserves)" });
+                        GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("Recruited {0}, {1} (Reserves)", actorRecruited.actorName, actorRecruited.arc.name) });
                         //actor successfully recruited
                         builderTop.AppendFormat("{0}The interview went well!{1}", colourNormal, colourEnd);
                         builderBottom.AppendFormat("{0}{1}{2}, {3}\"{4}\", has been recruited and is available in the Reserve List{5}", colourArc,
@@ -5258,6 +5260,7 @@ public class ActorManager : MonoBehaviour
                             actor.numOfTimesConflict++;
                             //history
                             actor.AddHistory(new HistoryActor() { text = string.Format("Relationship Conflict with you ({0})", threatMsg) });
+                            GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("Relationship conflict with {0}, {1} ({2})", actor.actorName, actor.arc.name, threatMsg) });
                             //Implement effect (if any, no effect for a 'do nothing')
                             if (actorConflict.effect != null)
                             {
@@ -6841,6 +6844,7 @@ public class ActorManager : MonoBehaviour
                     builder.AppendFormat("{0}{1}{2}", colourNeutral, secret.tag, colourEnd);
                     //history
                     actor.AddHistory(new HistoryActor() { text = string.Format("Reveals your {0} secret", secret.tag) });
+                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("{0}, {1} reveals your Secret ({2})", actor.actorName, actor.arc.name, secret.tag) });
                     //carry out effects
                     if (secret.listOfEffects != null)
                     {
@@ -6956,6 +6960,7 @@ public class ActorManager : MonoBehaviour
                                     actor.AddSecret(secret);
                                     secret.AddActor(actor.actorID);
                                     actor.AddHistory(new HistoryActor() { text = string.Format("Learnt one of your Secrets ({0})", secret.tag) });
+                                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("{0}, {1} learns your Secret ({2})", actor.actorName, actor.arc.name, secret.tag) });
                                     //popUp
                                     GameManager.i.popUpFixedScript.SetData(actor.slotID, "Learns Secret");
                                     //Admin
@@ -7091,6 +7096,7 @@ public class ActorManager : MonoBehaviour
                                     Debug.LogFormat("[Tor] ActorManager.cs -> ProcessCompatibility: {0}, {1}, Resigns in disgust{2}", actor.actorName, actor.arc.name, "\n");
                                     //history
                                     actor.AddHistory(new HistoryActor() { text = string.Format("Resigns due to your {0}", conditionUpsetOver.resignTag) });
+                                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("{0}, {1} Resigns due to your {2}", actor.actorName, actor.arc.name, conditionUpsetOver.resignTag) });
                                 }
                                 else { Debug.LogWarning("Invalid conditionUpsetOver.resignTag (Null or empty)"); }
                             }
@@ -7100,6 +7106,7 @@ public class ActorManager : MonoBehaviour
                             {
                                 string textAutoRun = string.Format("{0}{1}{2}, {3}Resigns{4}", colourAlert, actor.arc.name, colourEnd, colourBad, colourEnd);
                                 GameManager.i.dataScript.AddHistoryAutoRun(textAutoRun);
+                                GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("{0}, {1} Resigns due to your {2}", actor.actorName, actor.arc.name, conditionUpsetOver.resignTag) });
                             }
                             //statistics
                             if (side.level == globalResistance.level)
@@ -7382,13 +7389,13 @@ public class ActorManager : MonoBehaviour
                             if (GameManager.i.playerScript.isStressed == true)
                             { GameManager.i.playerScript.RemoveCondition(conditionStressed, playerSide, "Lying Low removes Stress"); }
                             //improve mood
-                            GameManager.i.playerScript.ChangeMood(GameManager.i.playerScript.moodReset, "Finished Lying Low", "n.a", false);
+                            GameManager.i.playerScript.ChangeMood(GameManager.i.playerScript.moodReset, "Finished Lying Low", "", false);
                             //message -> status change
                             text = string.Format("{0} has automatically reactivated", playerName);
                             GameManager.i.messageScript.ActorStatus(text, "is now Active", "has finished Lying Low", playerID, globalResistance, null, HelpType.LieLow);
                             Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, is no longer Lying Low{1}", GameManager.i.playerScript.GetPlayerName(playerSide), "\n");
                             //history
-                            Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
+                            Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
                             if (node != null)
                             { GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "Finishes Lying Low", district = node.nodeName }); }
                         }
@@ -7413,7 +7420,7 @@ public class ActorManager : MonoBehaviour
                             GameManager.i.playerScript.RemoveCondition(conditionStressed, playerSide, "Finished Stress Leave");
                             Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, returns from Stress Leave{1}", GameManager.i.playerScript.GetPlayerName(playerSide), "\n");
                             //history
-                            Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
+                            Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
                             if (node != null)
                             { GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "Returned from Stress Leave", district = node.nodeName }); }
                         }
@@ -7465,7 +7472,7 @@ public class ActorManager : MonoBehaviour
                                 Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, undergoes a Stress BREAKDOWN{1}", GameManager.i.playerScript.GetPlayerName(playerSide), "\n");
                                 GameManager.i.messageScript.GeneralRandom("Player Stress check SUCCESS", "Stress Breakdown", breakdownChance, rnd, true);
                                 //history
-                                Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
+                                Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
                                 if (node != null)
                                 { GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "Suffers a Nervous Breakdown (STRESSED)", district = node.nodeName }); }
                                 //update AI side tab status
@@ -7504,7 +7511,7 @@ public class ActorManager : MonoBehaviour
                                     Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerHuman: {0}, Player, undergoes a SUPER Stress BREAKDOWN{1}",
                                         GameManager.i.playerScript.GetPlayerName(playerSide), "\n");
                                     //history
-                                    Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
+                                    Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
                                     if (node != null)
                                     { GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "Suffers a Nervous Breakdown (SUPER STRESSED)", district = node.nodeName }); }
                                     //fake a successful roll (chance is superStressChance to make it appear as there are higher odds but in reality it is a forced breakdown)
@@ -7879,10 +7886,10 @@ public class ActorManager : MonoBehaviour
                                     breakdownChance, rnd, "\n");
                                     GameManager.i.messageScript.GeneralRandom("Player Stress check SUCCESS", "Stress Breakdown", breakdownChance, rnd, true);
                                     //History
-                                    Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodePlayer);
+                                    Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
                                     if (node != null)
                                     { GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "Suffers a Nervous Breakdown (STRESSED)", district = node.nodeName }); }
-                                    else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", GameManager.i.nodeScript.nodePlayer); }
+                                    else { Debug.LogWarningFormat("Invalid node (Null) for nodeID {0}", GameManager.i.nodeScript.GetPlayerNodeID()); }
                                 }
                                 Debug.LogFormat("[Ply] ActorManager.cs -> CheckPlayerResistanceAI: Stress BREAKDOWN occurs{0}", "\n");
                             }
@@ -9214,6 +9221,7 @@ public class ActorManager : MonoBehaviour
                                         Debug.LogFormat("[Rim] ActorManager.cs -> AddNewActorOnMapAI: {0}, {1}, ID {2} RECRUITED{3}", actorNew.actorName, actorNew.arc.name, actorNew.actorID, "\n");
                                         string textAutoRun = string.Format("{0}{1}{2} {3}Recruited{4}", colourAlert, actorNew.arc.name, colourEnd, colourGood, colourEnd);
                                         GameManager.i.dataScript.AddHistoryAutoRun(textAutoRun);
+                                        GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("Enrolled for Active Service {0}, {1}", actorNew.actorName, actorNew.arc.name) });
                                     }
                                     else { Debug.LogErrorFormat("Invalid actor (Null) for actorID {0}", actorID); }
                                 }
@@ -9280,6 +9288,7 @@ public class ActorManager : MonoBehaviour
                     GameManager.i.dataScript.StatisticIncrement(StatType.ActorsRecruited);
                     //history
                     actor.AddHistory(new HistoryActor() { text = "Recruited (Reserves)" });
+                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("Recruited {0}, {1} (Reserves)", actor.actorName, actor.arc.name) });
                 }
                 else { Debug.LogWarningFormat("Actor unable to be added to Reserve Pool"); }
                 //admin

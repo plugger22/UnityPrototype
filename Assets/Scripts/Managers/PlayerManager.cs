@@ -460,13 +460,14 @@ public class PlayerManager : MonoBehaviour
                     //message
                     string text = string.Format("Player commences at \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
                     GameManager.i.messageScript.PlayerMove(text, node, 0, 0, true);
+                    string cityName = GameManager.i.cityScript.GetCity().tag;
                     //History
-                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "Arrive and take charge" });
+                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("Arrive and take charge at <b>{0}</b>", cityName) } );
                     //Mood
                     HistoryMood record = new HistoryMood()
                     {
                         change = 0,
-                        descriptor = "Assuming Command",
+                        descriptor = string.Format("Assume Command at <b>{0}</b>", cityName),
                         turn = GameManager.i.turnScript.Turn,
                         mood = mood,
                         factor = "",
@@ -1071,7 +1072,7 @@ public class PlayerManager : MonoBehaviour
                                     textHistory = "Is IMAGED";
                                     break;
                                 case "QUESTIONABLE":
-                                    textHistory = "Your loyalty is questioned (QUESTIONABLE)";
+                                    textHistory = "Your loyalty is in doubt (QUESTIONABLE)";
                                     break;
                                 case "ADDICTED":
                                     textHistory = "Has become ADDICTED";
@@ -1652,6 +1653,8 @@ public class PlayerManager : MonoBehaviour
             GameManager.i.dataScript.AddInvestigationCompleted(invest);
             //Add to list of services provided by orgHQ
             GameManager.i.dataScript.AddOrgData(new OrgData() { text = invest.tag, turn = GameManager.i.turnScript.Turn }, OrganisationType.HQ);
+            //history
+            GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("Investigation Dropped ({0})", invest.tag) });
             //return
             return GameManager.Formatt(string.Format("{0} investigation DROPPED", invest.tag), ColourType.goodText);
         }
@@ -1697,6 +1700,8 @@ public class PlayerManager : MonoBehaviour
                                 case 3:
                                     //player found innocent
                                     invest.outcome = InvestOutcome.Innocent;
+                                    //history
+                                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("Investigation Resolved - INNOCENT ({0})", invest.tag) });
                                     //gain HQ approval
                                     int approvalGain = GameManager.i.playerScript.investHQApproval;
                                     GameManager.i.hqScript.ChangeHqApproval(approvalGain, GameManager.i.sideScript.PlayerSide, string.Format("{0} Investigation", invest.tag));
@@ -1717,6 +1722,8 @@ public class PlayerManager : MonoBehaviour
                                     GameManager.i.turnScript.SetWinStateLevel(winner, WinReasonLevel.Investigation, "Player found Guilty", string.Format("{0} Investigation", invest.tag));
                                     //black marks
                                     GameManager.i.campaignScript.ChangeBlackmarks(GameManager.i.campaignScript.GetInvestigationBlackmarks(), string.Format("{0} Investigation", invest.tag));
+                                    //history
+                                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("Investigation Resolved - GUILTY ({0})", invest.tag) });
 
                                     /*//increase cost in blackMarks for future investigations EDIT -> fixed cost of 1 blackmark per investigation
                                     GameManager.instance.campaignScript.IncrementInvestigationBlackmarks();*/

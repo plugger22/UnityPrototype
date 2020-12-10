@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using packageAPI;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -385,6 +386,8 @@ public class CampaignManager : MonoBehaviour
         int previous = blackmarks;
         blackmarks += changeBy;
         Debug.LogFormat("[Cam] CampaignManager.cs -> ChangeBlackmarks: Black Marks now {0}, was {1} (due to {2}){3}", blackmarks, previous, reason, "\n");
+        //history
+        GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("Gained BLACK MARK ({0})", reason) });
         //update topBar
         GameManager.i.topBarScript.UpdateBlackmarks(blackmarks);
         //add to collection
@@ -401,6 +404,8 @@ public class CampaignManager : MonoBehaviour
         int previous = commendations;
         commendations += changeBy;
         Debug.LogFormat("[Cam] CampaignManager.cs -> ChangeCommendations: Commendations now {0}, was {1} (due to {2}){3}", commendations, previous, reason, "\n");
+        //history
+        GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("Gained COMMENDATION ({0})", reason) });
         //update topBar
         GameManager.i.topBarScript.UpdateCommendations(commendations);
         //add to collection

@@ -1,5 +1,6 @@
 ﻿using gameAPI;
 using modalAPI;
+using packageAPI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
@@ -342,6 +343,8 @@ public class SecretManager : MonoBehaviour
                         GameManager.i.messageScript.GeneralRandom(text, "Investigation", chance, rnd, true, "rand_4");
                         text = string.Format("Investigation into Player {0} launched by {1}", invest.tag, invest.lead);
                         GameManager.i.messageScript.InvestigationNew(text, invest);
+                        //history
+                        GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("Investigation Launched into your conduct ({0})", secret.investigationTag) });
                         //outcome (message pipeline)
                         text = string.Format("<size=120%>INVESTIGATION</size>{0}Launched into your{1}{2}", "\n", "\n", GameManager.Formatt(invest.tag, ColourType.neutralText));
                         string bottomText = "Unknown";

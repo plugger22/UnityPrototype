@@ -733,6 +733,8 @@ public class MissionManager : MonoBehaviour
                 Debug.LogFormat("[Npc] MissionManager.cs -> UpdateActiveNpc: Player INTERACTS with Npc \"{0}\" at {1}, {2}, ID {3}{4}", npc.tag, npc.currentNode.nodeName, npc.currentNode.Arc.name,
                                     npc.currentNode.nodeID, "\n");
                 GameManager.i.messageScript.NpcInteract("Npc interacted with", npc);
+                //history
+                GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("You {0} the {1}", npc.action.tag, npc.tag), district = npc.currentNode.nodeName });
                 //Npc departs map
                 ProcessNpcDepart(npc, true);
                 isSuccess = true;

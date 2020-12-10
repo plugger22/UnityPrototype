@@ -17,6 +17,7 @@ public class ModalGenericPicker : MonoBehaviour
     [Tooltip("Max number of options allowed in Modal Generic Picker")]
     [Range(3, 3)] public int maxOptions = 3;
 
+    public Canvas modalPickerCanvas;
     public GameObject modalGenericObject;
     public GameObject modalPanelObject;
     public Image modalPanel;
@@ -77,6 +78,7 @@ public class ModalGenericPicker : MonoBehaviour
     private void Awake()
     {
         //asserts
+        Debug.Assert(modalPickerCanvas != null, "Invalid modalPickerCanvas (Null)");
         Debug.Assert(buttonCancel != null, "Invalid buttonCancel (Null)");
         Debug.Assert(buttonBack != null, "Invalid buttonBack (Null)");
         Debug.Assert(buttonConfirm != null, "Invalid buttonConfirm (Null)");
@@ -219,6 +221,7 @@ public class ModalGenericPicker : MonoBehaviour
         else
         { modalHeader.gameObject.SetActive(false); }
         //activate dialogue window
+        modalPickerCanvas.gameObject.SetActive(true);
         modalGenericObject.SetActive(true);
         //confirm button should be switched off at the start
         buttonConfirm.gameObject.SetActive(false);
@@ -341,7 +344,10 @@ public class ModalGenericPicker : MonoBehaviour
         //if a problem then generate an outcome window instead
         if (errorFlag == true)
         {
-            modalGenericObject.SetActive(false);
+            modalPickerCanvas.gameObject.SetActive(false);
+
+            /*modalGenericObject.SetActive(false);*/
+
             //create an outcome window to notify player
             ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
             outcomeDetails.textTop = "There has been a SNAFU";
@@ -372,7 +378,9 @@ public class ModalGenericPicker : MonoBehaviour
     /// </summary>
     private void CloseGenericPicker()
     {
-        modalGenericObject.SetActive(false);
+        /*modalGenericObject.SetActive(false);*/
+
+        modalPickerCanvas.gameObject.SetActive(false);
         GameManager.i.guiScript.SetIsBlocked(false);
         //close generic tooltip (safety check)
         GameManager.i.tooltipGenericScript.CloseTooltip("ModalGenericPicker.cs -> CloseGenericPicker");
