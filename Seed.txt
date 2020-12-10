@@ -9361,3 +9361,6 @@ ModalTabbedUI.GetActorTitle (System.Int32 tabIndex) (at Assets/Scripts/GUI/Modal
 	
 Dev seed 33533 -> Thursday, 10 December 2020 5:12 PM
 City seed 31268 -> Londus, Eurasia
+
+Dev seed 49651 -> Thursday, 10 December 2020 8:11 PM
+City seed 19990 -> Londus, Eurasia
