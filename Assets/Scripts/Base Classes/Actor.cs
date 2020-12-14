@@ -87,7 +87,7 @@ namespace gameAPI
         [HideInInspector] public string actorBlackmailTimerHigh;
         [HideInInspector] public string actorBlackmailTimerLow;
         [HideInInspector] public int maxNumOfSecrets = -1;
-        [HideInInspector] public int contactsPerLevel = -1;
+        [HideInInspector] public int maxContacts = -1;
         [HideInInspector] public int compatibilityOne;
         [HideInInspector] public int compatibilityTwo;
         [HideInInspector] public int compatibilityThree;
@@ -151,12 +151,12 @@ namespace gameAPI
                 actorBlackmailTimerHigh = "ActorBlackmailTimerHigh";
                 actorBlackmailTimerLow = "ActorBlackmailTimerLow";
                 maxNumOfSecrets = GameManager.i.secretScript.secretMaxNum;
-                contactsPerLevel = GameManager.i.contactScript.contactsPerLevel;
+                maxContacts = GameManager.i.contactScript.maxContactsPerActor;
                 compatibilityOne = GameManager.i.personScript.compatibilityChanceOne;
                 compatibilityTwo = GameManager.i.personScript.compatibilityChanceTwo;
                 compatibilityThree = GameManager.i.personScript.compatibilityChanceThree;
                 Debug.AssertFormat(maxNumOfSecrets > -1, "Invalid maxNumOfSecrets (-1) for {0}", actorName);
-                Debug.AssertFormat(contactsPerLevel > -1, "Invalid contactsPerLevel (-1) for {0}", actorName);
+                Debug.AssertFormat(maxContacts > -1, "Invalid maxContacts (-1) for {0}", actorName);
                 Debug.AssertFormat(compatibilityOne > 0, "Invalid compatibilityOne (Zero) for {0}", actorName);
                 Debug.AssertFormat(compatibilityTwo > 0, "Invalid compatibilityTwo (Zero) for {0}", actorName);
                 Debug.AssertFormat(compatibilityThree > 0, "Invalid compatibilityThree (Zero) for {0}", actorName);
@@ -664,12 +664,19 @@ namespace gameAPI
         public int CheckNumOfContacts()
         { return dictOfContacts.Count; }
 
-        /// <summary>
+        /*/// <summary>
         /// returns true if actor has room for a new contact (less than max allowed which is datapoint * contactsPerLevel)
         /// </summary>
         /// <returns></returns>
         public bool CheckNewContactAllowed()
-        { return (dictOfContacts.Count < (datapoint0 * contactsPerLevel)); }
+        { return (dictOfContacts.Count < (datapoint0 * contactsPerLevel)); }*/
+
+        /// <summary>
+        /// returns true if actor has room for a new contact
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckNewContactAllowed()
+        { return (dictOfContacts.Count < maxContacts); }
 
         /// <summary>
         /// Returns true if actor has at least one Active contact present, false otherwise

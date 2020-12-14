@@ -163,6 +163,7 @@ public class ValidationManager : MonoBehaviour
                 SubInitialiseTopicTypes();
                 ValidateTargets();
                 ValidateGear();
+                ValidateContacts();
                 ValidateMissions();
                 ValidateTextLists();
                 ValidateCities();
@@ -610,6 +611,22 @@ public class ValidationManager : MonoBehaviour
                 }
                 else { Debug.LogFormat("[Val] ValidateGar: Invalid Gear (Null) for gearID {0}", gear.Key); }
             }
+        }
+    }
+    #endregion
+
+
+    #region ValidateContacts
+    /// <summary>
+    /// Checks contacts
+    /// </summary>
+    private void ValidateContacts()
+    {
+        //check max contacts per actor isn't exceeded
+        if (GameManager.i.actorScript.maxStatValue * GameManager.i.contactScript.contactsPerLevel != GameManager.i.contactScript.maxContactsPerActor)
+        {
+            Debug.LogFormat("[Val] ValidateContacts: Mismatch on MAX Contacts per actor (is {0}, should be equal to maxStatValue (datapoint0) {1} * contactsPerLevel {2})", GameManager.i.contactScript.maxContactsPerActor,
+              GameManager.i.actorScript.maxStatValue, GameManager.i.contactScript.contactsPerLevel);
         }
     }
     #endregion

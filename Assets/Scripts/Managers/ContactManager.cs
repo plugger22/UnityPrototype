@@ -12,10 +12,12 @@ using Random = UnityEngine.Random;
 public class ContactManager : MonoBehaviour
 {
     [Header("Base Data")]
-    [Tooltip("How many contacts per level of influence/connections that the actor has")]
+    [Tooltip("How many contacts per level of influence/connections that the actor has. NOTE: if you change this you need to reconsider maxContactsPerActor (which should be datapoint0 * contactsPerLevel)")]
     [Range(1, 3)] public int contactsPerLevel = 2;
     [Tooltip("Number of turns contact stays inactive once set to that status (global for all cases)")]
     [Range(1, 10)] public int timerInactive = 6;
+    [Tooltip("Hard limit for max number of contacts per actor (UI restrictions)")]
+    [Range(1, 10)] public int maxContactsPerActor = 6;
 
     [Header("Pools")]
     [Tooltip("Number of contacts to initially seed the contact pool with")]

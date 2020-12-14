@@ -9364,3 +9364,44 @@ City seed 31268 -> Londus, Eurasia
 
 Dev seed 49651 -> Thursday, 10 December 2020 8:11 PM
 City seed 19990 -> Londus, Eurasia
+
+Dev seed 10114 -> Tuesday, 15 December 2020 9:37 AM
+City seed 54735 -> Londus, Eurasia
+
+Dev seed 31900 -> Tuesday, 15 December 2020 9:42 AM
+City seed 7207 -> Londus, Eurasia
+
+Dev seed 11406 -> Tuesday, 15 December 2020 9:44 AM
+City seed 28994 -> Londus, Eurasia
+
+Dev seed 17709 -> Tuesday, 15 December 2020 9:51 AM
+City seed 36264 -> Londus, Eurasia
+
+Dev seed 6744 -> Tuesday, 15 December 2020 9:54 AM
+City seed 41114 -> Londus, Eurasia
+
+Dev seed 9979 -> Tuesday, 15 December 2020 9:56 AM
+City seed 24750 -> Londus, Eurasia
+
+Dev seed 25996 -> Tuesday, 15 December 2020 9:57 AM
+City seed 5046 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.CloseTabbedUI () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1030)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:701)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:345)
+	ButtonInteraction.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 26540 -> Tuesday, 15 December 2020 10:00 AM
+City seed 9652 -> Londus, Eurasia
+
+Dev seed 8070 -> Tuesday, 15 December 2020 10:00 AM
+City seed 41559 -> Londus, Eurasia
+
+Dev seed 32236 -> Tuesday, 15 December 2020 10:01 AM
+City seed 38272 -> Londus, Eurasia
+
+Dev seed 21456 -> Tuesday, 15 December 2020 10:43 AM
+City seed 59224 -> Londus, Eurasia
