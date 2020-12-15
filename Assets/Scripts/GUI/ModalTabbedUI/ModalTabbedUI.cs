@@ -99,6 +99,16 @@ public class ModalTabbedUI : MonoBehaviour
     public TabbedSubHeaderInteraction tab1Header2;
     public TabbedSubHeaderInteraction tab1Header3;
 
+    [Header("Canvas2 -> Contacts")]
+    public TextMeshProUGUI tab2NetworkStrength;
+    public GenericHelpTooltipUI tab2Help;
+    public TabbedContactInteraction tab2Contact0;
+    public TabbedContactInteraction tab2Contact1;
+    public TabbedContactInteraction tab2Contact2;
+    public TabbedContactInteraction tab2Contact3;
+    public TabbedContactInteraction tab2Contact4;
+    public TabbedContactInteraction tab2Contact5;
+
     [Header("Canvas7 -> History")]
     public GameObject tab7ScrollBarObject;
     public GameObject tab7ScrollBackground;                 //needed to get scrollRect component in order to manually disable scrolling when not needed
@@ -164,6 +174,8 @@ public class ModalTabbedUI : MonoBehaviour
     private int maxNumOfCures = 0;                                   //max number of cures allowed in tab0/page0 subHeader4 'Cures'
     //Page1
     private int maxNumOfPersonalityFactors;
+    //Page2
+    private int maxNumOfContacts;
     //Page7
     private int maxNumOfScrollItems = 30;                           //max number of items in scrollable list
     private int numOfScrollItemsVisible = 11;                       //max number of items visible at any one time
@@ -228,10 +240,12 @@ public class ModalTabbedUI : MonoBehaviour
     private Actor[] arrayOfSubordinates;
     private Actor[] arrayOfHq;
     private Actor[] arrayOfReserves;
-    //Page1 -> Personality
+    //Canvas1 -> Personality
     private TabbedPersonInteraction[] arrayOfPersons;
     private int[] arrayOfPlayerFactors;
-    //Page7 -> History
+    //Canvas2 -> Contacts
+    private TabbedContactInteraction[] arrayOfContacts;
+    //Canvas7 -> History
     private GameObject[] arrayOfScrollObjects;
     private TabbedScrollInteraction[] arrayOfScrollInteractions;
     private List<string> listOfHistory = new List<string>();
@@ -360,6 +374,17 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab1Header2 != null, "Invalid tab1Header2 (Null)");
         Debug.Assert(tab1Header3 != null, "Invalid tab1Header3 (Null)");
         //
+        // - - - tab2
+        //
+        Debug.Assert(tab2Contact0 != null, "Invalid tab2Contact0 (Null)");
+        Debug.Assert(tab2Contact1 != null, "Invalid tab2Contact1 (Null)");
+        Debug.Assert(tab2Contact2 != null, "Invalid tab2Contact2 (Null)");
+        Debug.Assert(tab2Contact3 != null, "Invalid tab2Contact3 (Null)");
+        Debug.Assert(tab2Contact4 != null, "Invalid tab2Contact4 (Null)");
+        Debug.Assert(tab2Contact5 != null, "Invalid tab2Contact5 (Null)");
+        Debug.Assert(tab2NetworkStrength != null, "Invalid tab2HeaderNetwork (Null)");
+        Debug.Assert(tab2Help != null, "Invalid tab2Help (Null)");
+        //
         // - - - tab7
         //
         Debug.Assert(tab7item0 != null, "Invalid tab7item0 (Null)");
@@ -437,9 +462,12 @@ public class ModalTabbedUI : MonoBehaviour
         maxSideTabIndex = numOfSideTabs - 1;
         maxSetIndex = (int)TabbedUIWho.Count - 1;
         maxTopTabIndex = numOfTopTabs - 1;
-        //tab1
+        //page1
         maxNumOfPersonalityFactors = GameManager.i.personScript.numOfFactors;
         arrayOfPersons = new TabbedPersonInteraction[maxNumOfPersonalityFactors];
+        //page2
+        maxNumOfContacts = GameManager.i.contactScript.maxContactsPerActor;
+        arrayOfContacts = new TabbedContactInteraction[maxNumOfContacts];
         //initialise Canvas array
         arrayOfCanvas = new Canvas[numOfPages];
         //initialise Top Tab Arrays
@@ -588,6 +616,15 @@ public class ModalTabbedUI : MonoBehaviour
         tab1Header1.image.color = tabSubHeaderColour;
         tab1Header2.image.color = tabSubHeaderColour;
         tab1Header3.image.color = tabSubHeaderColour;
+        //
+        // - - - Page 2 Contacts
+        //
+        arrayOfContacts[0] = tab2Contact0;
+        arrayOfContacts[1] = tab2Contact1;
+        arrayOfContacts[2] = tab2Contact2;
+        arrayOfContacts[3] = tab2Contact3;
+        arrayOfContacts[4] = tab2Contact4;
+        arrayOfContacts[5] = tab2Contact5;
         //
         // - - - Page 7 History
         //
@@ -1229,7 +1266,7 @@ public class ModalTabbedUI : MonoBehaviour
             #endregion
 
             case TabbedPage.Contacts:
-
+                OpenContacts();
                 break;
             case TabbedPage.Gear:
 
@@ -1622,6 +1659,79 @@ public class ModalTabbedUI : MonoBehaviour
             tab7ScrollRect.verticalScrollbar = tab7ScrollBar;
         }
         UpdateHistoryButtons(history);
+    }
+
+    /// <summary>
+    /// All in one open/update Contacts page (Subordinates actor set only)
+    /// </summary>
+    private void OpenContacts()
+    {
+        Node node;
+        Contact contact;
+        Actor actor = arrayOfActorsTemp[currentSideTabIndex];
+        if (actor != null)
+        {
+            tab2NetworkStrength.text = Convert.ToString(actor.GetContactNetworkEffectiveness());
+            Dictionary<int, Contact> dictOfContacts = actor.GetDictOfContacts();
+            if (dictOfContacts != null)
+            {
+                List<Contact> listOfContacts = new List<Contact>(dictOfContacts.Values);
+                int numOfContacts = listOfContacts.Count;
+                //limit check
+                if (numOfContacts > maxNumOfContacts)
+                {
+                    Debug.LogWarningFormat("Invalid numOfContacts (is {0}, max allowed {1})", numOfContacts, maxNumOfContacts);
+                    numOfContacts = maxNumOfContacts;
+                }
+                //toggle contacts
+                for (int i = 0; i < arrayOfContacts.Length; i++)
+                {
+                    if (i < numOfContacts)
+                    {
+                        //activate contacts
+                        arrayOfContacts[i].gameObject.SetActive(true);
+                        TabbedContactInteraction interact = arrayOfContacts[i];
+                        if (interact != null)
+                        {
+                            contact = listOfContacts[i];
+                            if (contact != null)
+                            {
+                                interact.portrait.gameObject.SetActive(true);
+                                interact.contactName.text = string.Format("{0} {1}", contact.nameFirst, contact.nameLast);
+                                interact.job.text = contact.job;
+                                //location
+                                node = GameManager.i.dataScript.GetNode(contact.nodeID);
+                                if (node != null)
+                                { interact.nodeName.text = node.nodeName; }
+                                else { Debug.LogWarningFormat("Invalid node (Null) for listOfContacts[{0}], contact.nodeID {1}", i, contact.nodeID); }
+                                //status
+                                switch (contact.status)
+                                {
+                                    case ContactStatus.Active:
+                                        interact.status.text = GameManager.Formatt(Convert.ToString(contact.status), ColourType.goodText);
+                                        break;
+                                    case ContactStatus.Inactive:
+                                        interact.status.text = GameManager.Formatt(Convert.ToString(contact.status), ColourType.badText);
+                                        break;
+                                    default: Debug.LogWarningFormat("Unrecognised contact.Status \"{0}\"", contact.status); break;
+                                }
+                                interact.effectiveness.text = GameManager.i.guiScript.GetNormalStars(contact.effectiveness);
+                            }
+                            //effectiveness
+                            else { Debug.LogWarningFormat("Invalid contact (Null) for listOfContacts[{0]]", i); }
+                        }
+                        else { Debug.LogWarningFormat("Invalid tabbedContactInteraction (Null) for arrayOfContacs[{0}]", i); }
+                    }
+                    else
+                    {
+                        //disable contact
+                        arrayOfContacts[i].gameObject.SetActive(false);
+                    }
+                }
+            }
+            else { Debug.LogWarningFormat("Invalid dictOfContacts for actor {0}, {1}, ID {2}, arrayOfActorsTemp[{3}]", actor.actorName, actor.arc.name, actor.actorID, currentSideTabIndex); }
+        }
+        else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[{0}]", currentSideTabIndex); }
     }
 
     #endregion
