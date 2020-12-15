@@ -9,7 +9,7 @@ using UnityEngine.UI;
 /// </summary>
 public class TabbedContactInteraction : MonoBehaviour
 {
-
+    public Image background;
     public Image portrait;
     public TextMeshProUGUI effectiveness;
     public TextMeshProUGUI contactName;
@@ -22,6 +22,7 @@ public class TabbedContactInteraction : MonoBehaviour
 
     public void Awake()
     {
+        Debug.Assert(background != null, "Invalid background (Null)");
         Debug.Assert(portrait != null, "Invalid portrait (Null)");
         Debug.Assert(effectiveness != null, "Invalid effectiveness (Null)");
         Debug.Assert(contactName != null, "Invalid contactName (Null)");

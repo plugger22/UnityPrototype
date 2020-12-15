@@ -81,16 +81,20 @@ public class UIManager : MonoBehaviour
     public Color TabbedPersonMiddleAlt;
     [Tooltip("Personality Matrix prefab middle colour Active  (should be 100% alpha)")]
     public Color TabbedPersonMiddleActive;
-    [Tooltip("Personality Matrix prefab bottom colour (should be 100% alpha")]
+    [Tooltip("Personality Matrix prefab bottom colour (should be 100% alpha)")]
     public Color TabbedPersonBottom;
-    [Tooltip("Personality Matrix prefab middle text dormant (should be 100% alpha")]
+    [Tooltip("Personality Matrix prefab middle text dormant (should be 100% alpha)")]
     public Color TabbedPersonMiddleTextDormant;
-    [Tooltip("Personality Matrix prefab middle text active (should be 100% alpha")]
+    [Tooltip("Personality Matrix prefab middle text active (should be 100% alpha)")]
     public Color TabbedPersonMiddleTextActive;
-    [Tooltip("Personality Matrix prefab bottom text (should be 100% alpha")]
+    [Tooltip("Personality Matrix prefab bottom text (should be 100% alpha)")]
     public Color TabbedPersonBottomText;
     [Tooltip("History Option image/buttons Dormant colour")]
     public Color TabbedHistoryOptionDormant;
     [Tooltip("History Option image/buttons Active colour")]
     public Color TabbedHistoryOptionActive;
+    [Tooltip("Contact prefab background, Active colour (should be 100% alpha)")]
+    public Color TabbedContactActive;
+    [Tooltip("Contact prefab background, Inactive colour (should be 100% alpha)")]
+    public Color TabbedContactInactive;
 }

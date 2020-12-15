@@ -85,7 +85,10 @@ public class SpriteManager : MonoBehaviour
     public Sprite medalBronzeSprite;
     [Tooltip("Sprite used for Dead Duck Award")]
     public Sprite medalDuckSprite;
-
+    [Tooltip("ModalTabbedUI male contact sprite")]
+    public Sprite tabbedContactMaleSprite;
+    [Tooltip("ModalTabbedUI female contact sprite")]
+    public Sprite tabbedContactFemaleSprite;
 
     [Header("Priorities")]
     [Tooltip("Used for itemData priority High in MainInfoUI (20 x 20 artboard with icon being 15 x 15 png)")]
@@ -156,6 +159,8 @@ public class SpriteManager : MonoBehaviour
         Debug.Assert(medalSilverSprite != null, "Invalid medalSilverSprite (Null)");
         Debug.Assert(medalBronzeSprite != null, "Invalid medalBronzeSprite (Null)");
         Debug.Assert(medalDuckSprite != null, "Invalid medalDuckSprite (Null)");
+        Debug.Assert(tabbedContactMaleSprite != null, "Invalid tabbedContactMaleSprite (Null)");
+        Debug.Assert(tabbedContactFemaleSprite != null, "Invalid tabbedContactFemaleSprite (Null)");
 
     }
 }

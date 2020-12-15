@@ -6094,6 +6094,10 @@ MonoBehaviour:
   medalSilverSprite: {fileID: 21300000, guid: 73a60e96b1405834dab9604ea5256079, type: 3}
   medalBronzeSprite: {fileID: 21300000, guid: 58c60c5fdf23f5743bada266c20cf3a3, type: 3}
   medalDuckSprite: {fileID: 21300000, guid: af5701f4978d44b4495eb6f6137f2523, type: 3}
+  tabbedContactMaleSprite: {fileID: 21300000, guid: 0990750233d69384f832d111b8981353,
+    type: 3}
+  tabbedContactFemaleSprite: {fileID: 21300000, guid: ffbf479d0e5373a48a1f87c69a6d797e,
+    type: 3}
   priorityHighSprite: {fileID: 21300000, guid: 4c387499a0331884f95c8c367871611f, type: 3}
   priorityMediumSprite: {fileID: 21300000, guid: 27148fc79bd879042b80d03c98fbfc4e,
     type: 3}
@@ -6461,6 +6465,8 @@ MonoBehaviour:
   TabbedPersonBottomText: {r: 0.8509804, g: 0.7921569, b: 0.7019608, a: 1}
   TabbedHistoryOptionDormant: {r: 0.23137255, g: 0.39607844, b: 0.80784315, a: 1}
   TabbedHistoryOptionActive: {r: 0.33333334, g: 0.75686276, b: 1, a: 1}
+  TabbedContactActive: {r: 0.1764706, g: 0.32941177, b: 0.7019608, a: 1}
+  TabbedContactInactive: {r: 0.09411765, g: 0.1764706, b: 0.38431373, a: 1}
 --- !u!114 &114733366453475614
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6793,6 +6799,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contactsPerLevel: 2
   timerInactive: 6
+  maxContactsPerActor: 6
   numOfPoolContacts: 50
   numOfPoolThreshold: 10
   numOfPoolTopUp: 20

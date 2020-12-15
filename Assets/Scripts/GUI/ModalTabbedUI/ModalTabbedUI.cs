@@ -216,6 +216,8 @@ public class ModalTabbedUI : MonoBehaviour
     private Color personMiddleTextDormantColour;
     private Color historyOptionActiveColour;
     private Color historyOptionDormantColour;
+    private Color contactActiveColour;
+    private Color contactInactiveColour;
 
     //Input data
     TabbedUIData inputData;
@@ -446,6 +448,8 @@ public class ModalTabbedUI : MonoBehaviour
         personMiddleTextDormantColour = GameManager.i.uiScript.TabbedPersonMiddleTextDormant;
         historyOptionActiveColour = GameManager.i.uiScript.TabbedHistoryOptionActive;
         historyOptionDormantColour = GameManager.i.uiScript.TabbedHistoryOptionDormant;
+        contactActiveColour = GameManager.i.uiScript.TabbedContactActive;
+        contactInactiveColour = GameManager.i.uiScript.TabbedContactInactive;
         Color tempColour = tabSubHeaderTextActiveColour;
         tempColour.a = 0.60f;
         tabSubHeaderTextDormantColour = tempColour;
@@ -1697,6 +1701,16 @@ public class ModalTabbedUI : MonoBehaviour
                             if (contact != null)
                             {
                                 interact.portrait.gameObject.SetActive(true);
+                                switch (contact.sex)
+                                {
+                                    case ActorSex.Male:
+                                        interact.portrait.sprite = GameManager.i.spriteScript.tabbedContactMaleSprite;
+                                        break;
+                                    case ActorSex.Female:
+                                        interact.portrait.sprite = GameManager.i.spriteScript.tabbedContactFemaleSprite;
+                                        break;
+                                    default: Debug.LogWarningFormat("Unrecognised contact.sex \"{0}\"", contact.sex); break;
+                                }
                                 interact.contactName.text = string.Format("{0} {1}", contact.nameFirst, contact.nameLast);
                                 interact.job.text = contact.job;
                                 //location
@@ -1709,9 +1723,11 @@ public class ModalTabbedUI : MonoBehaviour
                                 {
                                     case ContactStatus.Active:
                                         interact.status.text = GameManager.Formatt(Convert.ToString(contact.status), ColourType.goodText);
+                                        interact.background.color = contactActiveColour;
                                         break;
                                     case ContactStatus.Inactive:
                                         interact.status.text = GameManager.Formatt(Convert.ToString(contact.status), ColourType.badText);
+                                        interact.background.color = contactInactiveColour;
                                         break;
                                     default: Debug.LogWarningFormat("Unrecognised contact.Status \"{0}\"", contact.status); break;
                                 }
@@ -1719,6 +1735,9 @@ public class ModalTabbedUI : MonoBehaviour
                             }
                             //effectiveness
                             else { Debug.LogWarningFormat("Invalid contact (Null) for listOfContacts[{0]]", i); }
+                            //intel
+                            int intel = contact.statsNemesis + contact.statsNpc + contact.statsRumours + contact.statsTeams;
+                            interact.intel.text = Convert.ToString(intel);
                         }
                         else { Debug.LogWarningFormat("Invalid tabbedContactInteraction (Null) for arrayOfContacs[{0}]", i); }
                     }

@@ -9499,3 +9499,15 @@ ModalTabbedUI.CloseTabbedUI () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedU
 	
 Dev seed 680 -> Tuesday, 15 December 2020 3:57 PM
 City seed 38821 -> Londus, Eurasia
+
+Dev seed 17607 -> Tuesday, 15 December 2020 4:41 PM
+City seed 934 -> Londus, Eurasia
+
+Dev seed 30992 -> Tuesday, 15 December 2020 4:50 PM
+City seed 42016 -> Londus, Eurasia
+
+Dev seed 16598 -> Tuesday, 15 December 2020 5:10 PM
+City seed 23954 -> Londus, Eurasia
+
+Dev seed 30187 -> Tuesday, 15 December 2020 5:12 PM
+City seed 41427 -> Londus, Eurasia
