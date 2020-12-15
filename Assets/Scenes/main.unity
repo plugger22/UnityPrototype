@@ -21778,7 +21778,7 @@ GameObject:
   - component: {fileID: 402949626}
   - component: {fileID: 402949625}
   m_Layer: 5
-  m_Name: starsFixedHeader
+  m_Name: networkStars
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35291,6 +35291,7 @@ MonoBehaviour:
   tab1Header2: {fileID: 1418225113}
   tab1Header3: {fileID: 1253664440}
   tab2NetworkStrength: {fileID: 257450930}
+  tab2NetworkStars: {fileID: 402949625}
   tab2Help: {fileID: 325728266}
   tab2Contact0: {fileID: 1285968581}
   tab2Contact1: {fileID: 891913279}
@@ -94344,7 +94345,7 @@ GameObject:
   - component: {fileID: 1859646688}
   - component: {fileID: 1859646687}
   m_Layer: 5
-  m_Name: networkFixedHeader
+  m_Name: networkFixed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

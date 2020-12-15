@@ -101,6 +101,7 @@ public class ModalTabbedUI : MonoBehaviour
 
     [Header("Canvas2 -> Contacts")]
     public TextMeshProUGUI tab2NetworkStrength;
+    public TextMeshProUGUI tab2NetworkStars;
     public GenericHelpTooltipUI tab2Help;
     public TabbedContactInteraction tab2Contact0;
     public TabbedContactInteraction tab2Contact1;
@@ -384,7 +385,8 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab2Contact3 != null, "Invalid tab2Contact3 (Null)");
         Debug.Assert(tab2Contact4 != null, "Invalid tab2Contact4 (Null)");
         Debug.Assert(tab2Contact5 != null, "Invalid tab2Contact5 (Null)");
-        Debug.Assert(tab2NetworkStrength != null, "Invalid tab2HeaderNetwork (Null)");
+        Debug.Assert(tab2NetworkStrength != null, "Invalid tab2NetworkStrength (Null)");
+        Debug.Assert(tab2NetworkStars != null, "Invalid tab2NetworkStars (Null)");
         Debug.Assert(tab2Help != null, "Invalid tab2Help (Null)");
         //
         // - - - tab7
@@ -1675,7 +1677,13 @@ public class ModalTabbedUI : MonoBehaviour
         Actor actor = arrayOfActorsTemp[currentSideTabIndex];
         if (actor != null)
         {
-            tab2NetworkStrength.text = Convert.ToString(actor.GetContactNetworkEffectiveness());
+            //effectiveness
+            int effectiveness = actor.GetContactNetworkEffectiveness();
+            tab2NetworkStrength.text = Convert.ToString(effectiveness);
+            if (effectiveness == 1)
+            { tab2NetworkStars.text = "Star"; }
+            else { tab2NetworkStars.text = "Stars"; }
+            //contacts
             Dictionary<int, Contact> dictOfContacts = actor.GetDictOfContacts();
             if (dictOfContacts != null)
             {
