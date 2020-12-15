@@ -99,6 +99,7 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
             switch (GameManager.i.playerScript.status)
             {
                 case ActorStatus.Active:
+                case ActorStatus.Inactive:
                     node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
                     if (node != null)
                     {
@@ -156,5 +157,7 @@ public class PlayerHighlightUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
         }
         while (true);
     }
+
+
     //new methods above here
 }

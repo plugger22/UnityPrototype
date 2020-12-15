@@ -159,6 +159,7 @@ public class ValidationManager : MonoBehaviour
         {
             case GameState.NewInitialisation:
             case GameState.LoadAtStart:
+                Debug.LogFormat("[Val] ValidationManager.cs -> Initialise: Commence checks...{0}", "\n");
                 SubInitialiseFastAccess();
                 SubInitialiseTopicTypes();
                 ValidateTargets();
@@ -615,7 +616,6 @@ public class ValidationManager : MonoBehaviour
     }
     #endregion
 
-
     #region ValidateContacts
     /// <summary>
     /// Checks contacts
@@ -963,6 +963,9 @@ public class ValidationManager : MonoBehaviour
 
                             switch (topic.subType.name)
                             {
+
+                                /* -> DEBUG -> temporarily switched off -> Turn back on when dealing with Topics
+                                 
                                 case "StoryAlpha":
                                     //Comms Decision topics
                                     if (topic.comms != null)
@@ -985,6 +988,12 @@ public class ValidationManager : MonoBehaviour
                                     if (topic.comms != null)
                                     { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid Comms (Should be none) for topic \"{0}\"{1}", topicName, "\n"); }
                                     break;
+                                    */
+
+                                case "StoryAlpha":  //debug temp while code above disabled
+                                case "StoryBravo":  //debug temp while code above disabled
+                                    break;
+
                                 default:
                                     //Normal Decision Topics
                                     CheckTextLength(topic.text, "ValidateTopics", "Text", topic.name, maxTopicTextLength, true);
@@ -1194,56 +1203,6 @@ public class ValidationManager : MonoBehaviour
             else { Debug.LogError("Invalid arrayOfTopicOptions (Null)"); }
         }
         else { Debug.LogError("Invalid arrayOfTopics (Null)"); }
-        #endregion
-
-        #region Topic Profiles
-        /*TopicProfile[] arrayOfProfiles = GameManager.instance.loadScript.arrayOfTopicProfiles; [EDIT: Redundant code as all timers/delays are now factors of the GlobalMinInterval
-        if (arrayOfProfiles != null)
-        {
-            //get TopicManager.cs global minimum Interval
-            int minIntervalGlobal = GameManager.instance.topicScript.minIntervalGlobal;
-            Debug.Assert(minIntervalGlobal > 0, "Invalid minIntervalGlobal (Zero, should be at least One)");
-            //loop profiles
-            for (int i = 0; i < arrayOfProfiles.Length; i++)
-            {
-                TopicProfile profile = arrayOfProfiles[i];
-                if (profile != null)
-                {
-                    //delay Repeat (if non Zero)
-                    if (profile.delayRepeat > 0)
-                    {
-                        //repeat delay should be > global
-                        if (profile.delayRepeat <= minIntervalGlobal)
-                        {
-                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid profile \"{0}\" delayRepeat (is {1}, should be > {2}, the minIntervalGlobal){3}",
-                              profile.name, profile.delayRepeat, minIntervalGlobal, "\n");
-                        }
-                    }
-                    //delay Start (if non Zero)
-                    if (profile.delayStart > 0)
-                    {
-                        //start delay should be > global
-                        if (profile.delayStart <= minIntervalGlobal)
-                        {
-                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid profile \"{0}\" delayStart (is {1}, should be > {2}, the minIntervalGlobal){3}",
-                              profile.name, profile.delayStart, minIntervalGlobal, "\n");
-                        }
-                    }
-                    //Timer Window (if non Zero)
-                    if (profile.timerWindow > 0)
-                    {
-                        //timer Window should be > global
-                        if (profile.timerWindow <= minIntervalGlobal)
-                        {
-                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid profile \"{0}\" timerWindow (is {1}, should be > {2}, the minIntervalGlobal){3}",
-                              profile.name, profile.timerWindow, minIntervalGlobal, "\n");
-                        }
-                    }
-                }
-                else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Invalid topicProfile (Null) for arrayOfTopicProfiles[{0}]{1}", i, "\n"); }
-            }
-        }
-        else { Debug.LogError("Invalid arrayOfTopicProfiles (Null)"); }*/
         #endregion
 
         #region Topic Pools
@@ -2095,7 +2054,8 @@ public class ValidationManager : MonoBehaviour
             CheckStoryModuleData(prefix);
             CheckStoryHelpData(prefix);
             CheckTopicPoolData(prefix, highestScenario);
-            CheckStructuredTopicData(prefix, highestScenario);
+            //DEBUG -> temporarily switched OFF
+            /*CheckStructuredTopicData(prefix, highestScenario);*/
             CheckTraitData(prefix);
             CheckTextListData(prefix);
             CheckRelationsData(prefix);
