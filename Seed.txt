@@ -9511,3 +9511,21 @@ City seed 23954 -> Londus, Eurasia
 
 Dev seed 30187 -> Tuesday, 15 December 2020 5:12 PM
 City seed 41427 -> Londus, Eurasia
+
+Dev seed 36062 -> Tuesday, 15 December 2020 8:06 PM
+City seed 48018 -> Londus, Eurasia
+
+Dev seed 59466 -> Wednesday, 16 December 2020 9:05 AM
+City seed 10602 -> Londus, Eurasia
+
+Dev seed 26484 -> Wednesday, 16 December 2020 9:14 AM
+City seed 47527 -> Londus, Eurasia
+
+Dev seed 25826 -> Wednesday, 16 December 2020 9:17 AM
+City seed 33148 -> Londus, Eurasia
+
+Dev seed 23723 -> Wednesday, 16 December 2020 9:22 AM
+City seed 58804 -> Londus, Eurasia
+
+Dev seed 54089 -> Wednesday, 16 December 2020 9:47 AM
+City seed 14117 -> Londus, Eurasia
