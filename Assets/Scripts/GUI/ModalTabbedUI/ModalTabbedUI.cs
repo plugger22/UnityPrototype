@@ -110,6 +110,13 @@ public class ModalTabbedUI : MonoBehaviour
     public TabbedContactInteraction tab2Contact4;
     public TabbedContactInteraction tab2Contact5;
 
+    [Header("Canvas3 -> Secrets")]
+    public TextMeshProUGUI tab3Header;
+    public TabbedSecretInteraction tab3Secret0;
+    public TabbedSecretInteraction tab3Secret1;
+    public TabbedSecretInteraction tab3Secret2;
+    public TabbedSecretInteraction tab3Secret3;
+
     [Header("Canvas7 -> History")]
     public GameObject tab7ScrollBarObject;
     public GameObject tab7ScrollBackground;                 //needed to get scrollRect component in order to manually disable scrolling when not needed
@@ -177,6 +184,8 @@ public class ModalTabbedUI : MonoBehaviour
     private int maxNumOfPersonalityFactors;
     //Page2
     private int maxNumOfContacts;
+    //Page 3
+    private int maxNumOfSecrets;
     //Page7
     private int maxNumOfScrollItems = 30;                           //max number of items in scrollable list
     private int numOfScrollItemsVisible = 11;                       //max number of items visible at any one time
@@ -248,6 +257,8 @@ public class ModalTabbedUI : MonoBehaviour
     private int[] arrayOfPlayerFactors;
     //Canvas2 -> Contacts
     private TabbedContactInteraction[] arrayOfContacts;
+    //Canvas3 -> Secrets
+    private TabbedSecretInteraction[] arrayOfSecrets;
     //Canvas7 -> History
     private GameObject[] arrayOfScrollObjects;
     private TabbedScrollInteraction[] arrayOfScrollInteractions;
@@ -389,6 +400,14 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab2NetworkStars != null, "Invalid tab2NetworkStars (Null)");
         Debug.Assert(tab2Help != null, "Invalid tab2Help (Null)");
         //
+        // - - - tab3
+        //
+        Debug.Assert(tab3Header != null, "Invalid tab3Header (Null)");
+        Debug.Assert(tab3Secret0 != null, "Invalid tab3Secret0 (Null)");
+        Debug.Assert(tab3Secret1 != null, "Invalid tab3Secret1 (Null)");
+        Debug.Assert(tab3Secret2 != null, "Invalid tab3Secret2 (Null)");
+        Debug.Assert(tab3Secret3 != null, "Invalid tab3Secret3 (Null)");
+        //
         // - - - tab7
         //
         Debug.Assert(tab7item0 != null, "Invalid tab7item0 (Null)");
@@ -474,6 +493,9 @@ public class ModalTabbedUI : MonoBehaviour
         //page2
         maxNumOfContacts = GameManager.i.contactScript.maxContactsPerActor;
         arrayOfContacts = new TabbedContactInteraction[maxNumOfContacts];
+        //page 3
+        maxNumOfSecrets = GameManager.i.secretScript.secretMaxNum;
+        arrayOfSecrets = new TabbedSecretInteraction[maxNumOfSecrets];
         //initialise Canvas array
         arrayOfCanvas = new Canvas[numOfPages];
         //initialise Top Tab Arrays
@@ -631,6 +653,13 @@ public class ModalTabbedUI : MonoBehaviour
         arrayOfContacts[3] = tab2Contact3;
         arrayOfContacts[4] = tab2Contact4;
         arrayOfContacts[5] = tab2Contact5;
+        //
+        // - - - Page 3 Secrets
+        //
+        arrayOfSecrets[0] = tab3Secret0;
+        arrayOfSecrets[1] = tab3Secret1;
+        arrayOfSecrets[2] = tab3Secret2;
+        arrayOfSecrets[3] = tab3Secret3;
         //
         // - - - Page 7 History
         //
@@ -1284,7 +1313,7 @@ public class ModalTabbedUI : MonoBehaviour
 
                 break;
             case TabbedPage.Secrets:
-
+                OpenSecrets();
                 break;
             case TabbedPage.History:
                 //default to Events history on first opening
@@ -1667,6 +1696,7 @@ public class ModalTabbedUI : MonoBehaviour
         UpdateHistoryButtons(history);
     }
 
+    #region OpenContacts
     /// <summary>
     /// All in one open/update Contacts page (Subordinates actor set only)
     /// </summary>
@@ -1759,6 +1789,15 @@ public class ModalTabbedUI : MonoBehaviour
             else { Debug.LogWarningFormat("Invalid dictOfContacts for actor {0}, {1}, ID {2}, arrayOfActorsTemp[{3}]", actor.actorName, actor.arc.name, actor.actorID, currentSideTabIndex); }
         }
         else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[{0}]", currentSideTabIndex); }
+    }
+    #endregion
+
+    /// <summary>
+    /// All in one open/update Secrets page (Player/Subordinates actor sets only)
+    /// </summary>
+    private void OpenSecrets()
+    {
+
     }
 
     #endregion
