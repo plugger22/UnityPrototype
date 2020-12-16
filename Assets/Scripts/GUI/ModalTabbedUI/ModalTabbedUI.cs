@@ -118,6 +118,12 @@ public class ModalTabbedUI : MonoBehaviour
     public TabbedSecretInteraction tab3Secret2;
     public TabbedSecretInteraction tab3Secret3;
 
+    [Header("Canvas6 -> Gear")]
+    public TextMeshProUGUI tab6Header;
+    public TabbedGearInteraction tab6Gear0;
+    public TabbedGearInteraction tab6Gear1;
+    public TabbedGearInteraction tab6Gear2;
+
     [Header("Canvas7 -> History")]
     public GameObject tab7ScrollBarObject;
     public GameObject tab7ScrollBackground;                 //needed to get scrollRect component in order to manually disable scrolling when not needed
@@ -187,6 +193,8 @@ public class ModalTabbedUI : MonoBehaviour
     private int maxNumOfContacts;
     //Page 3
     private int maxNumOfSecrets;
+    //Page 6
+    private int maxNumOfGear;
     //Page7
     private int maxNumOfScrollItems = 30;                           //max number of items in scrollable list
     private int numOfScrollItemsVisible = 11;                       //max number of items visible at any one time
@@ -261,6 +269,8 @@ public class ModalTabbedUI : MonoBehaviour
     private TabbedContactInteraction[] arrayOfContacts;
     //Canvas3 -> Secrets
     private TabbedSecretInteraction[] arrayOfSecrets;
+    //Canvas6 -> Gear
+    private TabbedGearInteraction[] arrayOfGear;
     //Canvas7 -> History
     private GameObject[] arrayOfScrollObjects;
     private TabbedScrollInteraction[] arrayOfScrollInteractions;
@@ -378,7 +388,7 @@ public class ModalTabbedUI : MonoBehaviour
         if (tab0Header4 != null) { maxNumOfCures = tab0Header4.listOfItems.Count; }
         else { Debug.LogError("Invalid tab0Header4 (Null)"); }
         //
-        // - - - tab1
+        // - - - canvas1
         //
         Debug.Assert(tab1Person0 != null, "Invalid tab1Person0 (Null)");
         Debug.Assert(tab1Person1 != null, "Invalid tab1Person1 (Null)");
@@ -390,7 +400,7 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab1Header2 != null, "Invalid tab1Header2 (Null)");
         Debug.Assert(tab1Header3 != null, "Invalid tab1Header3 (Null)");
         //
-        // - - - tab2
+        // - - - canvas2
         //
         Debug.Assert(tab2Contact0 != null, "Invalid tab2Contact0 (Null)");
         Debug.Assert(tab2Contact1 != null, "Invalid tab2Contact1 (Null)");
@@ -402,7 +412,7 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab2NetworkStars != null, "Invalid tab2NetworkStars (Null)");
         Debug.Assert(tab2Help != null, "Invalid tab2Help (Null)");
         //
-        // - - - tab3
+        // - - - canvas3
         //
         Debug.Assert(tab3Header != null, "Invalid tab3Header (Null)");
         Debug.Assert(tab3Secret0 != null, "Invalid tab3Secret0 (Null)");
@@ -410,7 +420,14 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab3Secret2 != null, "Invalid tab3Secret2 (Null)");
         Debug.Assert(tab3Secret3 != null, "Invalid tab3Secret3 (Null)");
         //
-        // - - - tab7
+        // - - - canvas6
+        //
+        Debug.Assert(tab6Header != null, "Invalid tab6Header (Null)");
+        Debug.Assert(tab6Gear0 != null, "Invalid tab6Gear0 (Null)");
+        Debug.Assert(tab6Gear1 != null, "Invalid tab6Gear1 (Null)");
+        Debug.Assert(tab6Gear2 != null, "Invalid tab6Gear2 (Null)");
+        //
+        // - - - canvas7
         //
         Debug.Assert(tab7item0 != null, "Invalid tab7item0 (Null)");
         Debug.Assert(tab7item1 != null, "Invalid tab7item1 (Null)");
@@ -499,6 +516,9 @@ public class ModalTabbedUI : MonoBehaviour
         //page 3
         maxNumOfSecrets = GameManager.i.secretScript.secretMaxNum;
         arrayOfSecrets = new TabbedSecretInteraction[maxNumOfSecrets];
+        //page 6
+        maxNumOfGear = GameManager.i.gearScript.maxNumOfGear;
+        arrayOfGear = new TabbedGearInteraction[maxNumOfGear];
         //initialise Canvas array
         arrayOfCanvas = new Canvas[numOfPages];
         //initialise Top Tab Arrays
@@ -663,6 +683,12 @@ public class ModalTabbedUI : MonoBehaviour
         arrayOfSecrets[1] = tab3Secret1;
         arrayOfSecrets[2] = tab3Secret2;
         arrayOfSecrets[3] = tab3Secret3;
+        //
+        // - - - Page 6 Gear
+        //
+        arrayOfGear[0] = tab6Gear0;
+        arrayOfGear[1] = tab6Gear1;
+        arrayOfGear[2] = tab6Gear2;
         //
         // - - - Page 7 History
         //
@@ -1171,6 +1197,7 @@ public class ModalTabbedUI : MonoBehaviour
     }
     #endregion
 
+    #region OpenPage
     /// <summary>
     /// Open a tab page. 'isMouseClick' true for when user directly clicking on a top tab to open a page (versus left/right arrow key activation)
     /// </summary>
@@ -1211,6 +1238,7 @@ public class ModalTabbedUI : MonoBehaviour
         else { Debug.LogErrorFormat("Invalid tabIndex \"{0}\" (should be > -1 and < {1})", tabIndex, numOfTopTabs); }
         UpdateControllerButton(inputData.who);
     }
+    #endregion
 
     #region UpdatePage...
     /// <summary>
@@ -1307,7 +1335,8 @@ public class ModalTabbedUI : MonoBehaviour
                 OpenContacts();
                 break;
             case TabbedPage.Gear:
-
+                OpenGear();
+                break;
                 break;
             case TabbedPage.Investigations:
 
@@ -1333,7 +1362,7 @@ public class ModalTabbedUI : MonoBehaviour
     }
     #endregion
 
-
+    #region OpenActorSet
     /// <summary>
     /// Open a new actor set, eg. Subordinates/Player/HQ/Reserves. Assumed that TabbedUI is already open
     /// 'isResetSlotID' will set slotID to 0 if true and retain the original value, if false
@@ -1364,8 +1393,9 @@ public class ModalTabbedUI : MonoBehaviour
         //do so regardless
         UpdateControllerButton(who);
     }
+    #endregion
 
-
+    #region OpenActorSetStart
     /// <summary>
     /// Used at startup to open first actor set (ignores opening current page check)
     /// </summary>
@@ -1389,7 +1419,7 @@ public class ModalTabbedUI : MonoBehaviour
         UpdatePage();
         UpdateControllerButton(who);
     }
-
+    #endregion
 
     #region InitialiseTopTabs
     /// <summary>
@@ -1568,6 +1598,7 @@ public class ModalTabbedUI : MonoBehaviour
     }
     #endregion
 
+    #region UpdateTopTabs
     /// <summary>
     /// selects specified tab (shows as active). Other tabs set to dormant
     /// </summary>
@@ -1601,6 +1632,7 @@ public class ModalTabbedUI : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid tabIndex (-1)"); }
     }
+    #endregion
 
     #region UpdateHistoryButtons
     /// <summary>
@@ -1800,6 +1832,7 @@ public class ModalTabbedUI : MonoBehaviour
     }
     #endregion
 
+    #region OpenSecrets
     /// <summary>
     /// All in one open/update Secrets page (Player/Subordinates actor sets only)
     /// </summary>
@@ -1922,6 +1955,16 @@ public class ModalTabbedUI : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid listOfSecrets (Null)"); }
     }
+    #endregion
+
+    #region OpenGear
+
+    private void OpenGear()
+    {
+
+    }
+    #endregion
+
     #endregion
 
 

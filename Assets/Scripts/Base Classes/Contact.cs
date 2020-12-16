@@ -29,6 +29,7 @@ public class Contact
     public bool isTurned;               //working for Authority as an informant
 
     [HideInInspector] public int timerInactive;    //countdown timer set when contact becomes inactive. Flips to active once timer reaches zero (ContactManager.cs -> CheckContacts)
+
     //stats
     [HideInInspector] public int statsRumours;     //number of target rumours learnt
     [HideInInspector] public int statsNemesis;     //number of times spotted Nemesis
