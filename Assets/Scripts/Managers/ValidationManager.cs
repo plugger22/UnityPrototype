@@ -165,6 +165,7 @@ public class ValidationManager : MonoBehaviour
                 ValidateTargets();
                 ValidateGear();
                 ValidateContacts();
+                ValidateSecrets();
                 ValidateMissions();
                 ValidateTextLists();
                 ValidateCities();
@@ -627,6 +628,29 @@ public class ValidationManager : MonoBehaviour
         {
             Debug.LogFormat("[Val] ValidateContacts: Mismatch on MAX Contacts per actor (is {0}, should be equal to maxStatValue (datapoint0) {1} * contactsPerLevel {2})", GameManager.i.contactScript.maxContactsPerActor,
               GameManager.i.actorScript.maxStatValue, GameManager.i.contactScript.contactsPerLevel);
+        }
+    }
+    #endregion
+
+    #region ValidateSecrets
+    /// <summary>
+    /// Checks secrets
+    /// </summary>
+    private void ValidateSecrets()
+    {
+        int maxNumOfEffects = GameManager.i.secretScript.secretMaxEffects;
+        Secret[] arrayOfSecrets = GameManager.i.loadScript.arrayOfSecrets;
+        //loop secrets
+        for (int i = 0; i < arrayOfSecrets.Length; i++)
+        {
+            Secret secret = arrayOfSecrets[i];
+            if (secret != null)
+            {
+                //check number of effects
+                if (secret.listOfEffects.Count > maxNumOfEffects )
+                { Debug.LogFormat("[Val] ValidationSecrets.cs -> Too many effects for secret \"{0}\", (have {1}, max allowed {2}), listOfSecrets[{3}]", secret.name, secret.listOfEffects.Count, maxNumOfEffects, i); }
+            }
+            else { Debug.LogWarningFormat("[Val] ValidateSecrets: Invalid secret (Null) in arrayOfSecrets[{0}]", i); }
         }
     }
     #endregion
@@ -1775,6 +1799,7 @@ public class ValidationManager : MonoBehaviour
         else { Debug.LogError("Invalid dictOfMetaOptions (Null)"); }
     }
     #endregion
+
 
 
 

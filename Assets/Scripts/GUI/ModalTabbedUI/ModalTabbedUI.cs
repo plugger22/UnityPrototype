@@ -3,6 +3,7 @@ using modalAPI;
 using packageAPI;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -228,6 +229,7 @@ public class ModalTabbedUI : MonoBehaviour
     private Color historyOptionDormantColour;
     private Color contactActiveColour;
     private Color contactInactiveColour;
+    private Color secretColour;
 
     //Input data
     TabbedUIData inputData;
@@ -471,6 +473,7 @@ public class ModalTabbedUI : MonoBehaviour
         historyOptionDormantColour = GameManager.i.uiScript.TabbedHistoryOptionDormant;
         contactActiveColour = GameManager.i.uiScript.TabbedContactActive;
         contactInactiveColour = GameManager.i.uiScript.TabbedContactInactive;
+        secretColour = GameManager.i.uiScript.TabbedSecretAll;
         Color tempColour = tabSubHeaderTextActiveColour;
         tempColour.a = 0.60f;
         tabSubHeaderTextDormantColour = tempColour;
@@ -1457,8 +1460,8 @@ public class ModalTabbedUI : MonoBehaviour
                 arrayOfTopTabTitles[0].text = "Main";
                 arrayOfTopTabTitles[1].text = "Person";
                 arrayOfTopTabTitles[2].text = "Likes";
-                arrayOfTopTabTitles[3].text = "Invest";
-                arrayOfTopTabTitles[4].text = "Secrets";
+                arrayOfTopTabTitles[3].text = "Secrets";
+                arrayOfTopTabTitles[4].text = "Invest";
                 arrayOfTopTabTitles[5].text = "History";
                 arrayOfTopTabTitles[6].text = "Stats";
                 break;
@@ -1523,7 +1526,7 @@ public class ModalTabbedUI : MonoBehaviour
     }
     #endregion
 
-
+    #region UpdateControllerButton
     /// <summary>
     /// selects specified button (shows as highlighted). Other button automatically deselected
     /// </summary>
@@ -1563,6 +1566,7 @@ public class ModalTabbedUI : MonoBehaviour
             default: Debug.LogWarningFormat("Unrecognised who \"{0}\"", who); break;
         }
     }
+    #endregion
 
     /// <summary>
     /// selects specified tab (shows as active). Other tabs set to dormant
@@ -1598,6 +1602,7 @@ public class ModalTabbedUI : MonoBehaviour
         else { Debug.LogWarning("Invalid tabIndex (-1)"); }
     }
 
+    #region UpdateHistoryButtons
     /// <summary>
     /// Handles history page 7 option buttons texts and colours. Assumes that a button has been pressed (isPressed = true)
     /// </summary>
@@ -1635,7 +1640,9 @@ public class ModalTabbedUI : MonoBehaviour
         //reset controller buttons (they unselect once you click on a sprite 'button')
         UpdateControllerButton(inputData.who);
     }
+    #endregion
 
+    #region OpenHistory
     /// <summary>
     /// All in one open up a history / update a history page
     /// </summary>
@@ -1695,6 +1702,7 @@ public class ModalTabbedUI : MonoBehaviour
         }
         UpdateHistoryButtons(history);
     }
+    #endregion
 
     #region OpenContacts
     /// <summary>
@@ -1797,9 +1805,120 @@ public class ModalTabbedUI : MonoBehaviour
     /// </summary>
     private void OpenSecrets()
     {
-
+        int numOfSecrets, count;
+        Secret secret;
+        Actor actor;
+        Effect effect;
+        TabbedSecretInteraction interact;
+        List<Secret> listOfSecrets = new List<Secret>();
+        List<int> listOfActors = new List<int>();
+        string knowsHeader = GameManager.Formatt("Who Knows?", ColourType.neutralText);
+        string effectsHeader = GameManager.Formatt("Effects if Revealed", ColourType.neutralText);
+        switch (inputData.who)
+        {
+            case TabbedUIWho.Player:
+                tab3Header.text = "Your Secrets";
+                listOfSecrets = GameManager.i.playerScript.GetListOfSecrets();
+                break;
+            case TabbedUIWho.Subordinates:
+                tab3Header.text = "Secrets Known";
+                listOfSecrets = arrayOfActorsTemp[currentSideTabIndex].GetListOfSecrets();
+                break;
+            default: Debug.LogWarningFormat("Unrecognised inputData.who \"{0}\"", inputData.who); break;
+        }
+        if (listOfSecrets != null)
+        {
+            numOfSecrets = listOfSecrets.Count;
+            if (numOfSecrets > 0)
+            {
+                for (int i = 0; i < arrayOfSecrets.Length; i++)
+                {
+                    if (i < numOfSecrets)
+                    {
+                        secret = listOfSecrets[i];
+                        if (secret != null)
+                        {
+                            //activate secret
+                            arrayOfSecrets[i].gameObject.SetActive(true);
+                            interact = arrayOfSecrets[i];
+                            //populate prefab data
+                            interact.background.color = secretColour;
+                            //portrait
+                            interact.portrait.sprite = GameManager.i.spriteScript.secretSprite;
+                            //descriptor
+                            interact.descriptor.text = string.Format("{0}{1}<size=90%>{2}</size>", GameManager.Formatt(secret.tag, ColourType.neutralText), "\n", secret.descriptor);
+                            //Who knows?
+                            listOfActors = secret.GetListOfActors();
+                            count = listOfActors.Count;
+                            if (count > 0)
+                            {
+                                if (count > 1)
+                                {
+                                    //multiple actors know
+                                    StringBuilder builderKnow = new StringBuilder();
+                                    builderKnow.AppendFormat("{0}<size=90%>", knowsHeader);
+                                    for (int j = 0; j < count; j++)
+                                    {
+                                        actor = GameManager.i.dataScript.GetActor(listOfActors[j]);
+                                        if (actor != null)
+                                        {
+                                            builderKnow.AppendLine();
+                                            builderKnow.AppendFormat("{0}, {1}", actor.actorName, actor.arc.name);
+                                        }
+                                        else { Debug.LogWarningFormat("Invalid actor (Null) for secret {0} listOfActors[{1}], actorID {2}", secret.tag, j, listOfActors[j]); }
+                                    }
+                                    builderKnow.Append("</size>");
+                                    interact.known.text = builderKnow.ToString();
+                                }
+                                else
+                                {
+                                    //single actor knows
+                                    actor = GameManager.i.dataScript.GetActor(listOfActors[0]);
+                                    if (actor != null)
+                                    { interact.known.text = string.Format("{0}{1}<size=90%>{2}, {3}</size>", knowsHeader, "\n", actor.actorName, actor.arc.name); }
+                                    else { Debug.LogWarningFormat("Invalid actor (Null) for secret {0} listOfActors[{1}], actorID {2}", secret.tag, 0, listOfActors[0]); }
+                                }
+                            }
+                            else { interact.known.text = string.Format("{0}{1}<size=90%>Nobody apart from you</size>", knowsHeader, "\n"); }
+                            //effects
+                            StringBuilder builderEffect = new StringBuilder();
+                            builderEffect.AppendFormat("{0}<size=90%>", effectsHeader);
+                            for (int j = 0; j < secret.listOfEffects.Count; j++)
+                            {
+                                effect = secret.listOfEffects[j];
+                                if (effect != null)
+                                {
+                                    builderEffect.AppendLine();
+                                    switch (effect.typeOfEffect.name)
+                                    {
+                                        case "Good": builderEffect.AppendFormat("{0}", GameManager.Formatt(effect.description, ColourType.goodText)); break;
+                                        case "Bad": builderEffect.AppendFormat("{0}", GameManager.Formatt(effect.description, ColourType.badText)); break;
+                                        default: Debug.LogWarningFormat("Unrecognised effect.typeOfEffect.name \"{0}\" for effect {1}", effect.typeOfEffect.name, effect.name); break;
+                                    }
+                                }
+                                else { Debug.LogWarningFormat("Invalid effect (Null) in secret {0}, listOfEffects[{1}]", secret.tag, j); }
+                            }
+                            builderEffect.Append("</size>");
+                            interact.effects.text = builderEffect.ToString();
+                        }
+                        else { Debug.LogWarningFormat("Invalid secret (Null) in listOfSecrets[{0}], for {1}", i, inputData.who); }
+                    }
+                    else
+                    {
+                        //deactivate secret
+                        arrayOfSecrets[i].gameObject.SetActive(false);
+                    }
+                }
+            }
+            else
+            {
+                //no secrets, deactivate all
+                for (int i = 0; i < arrayOfSecrets.Length; i++)
+                { arrayOfSecrets[i].gameObject.SetActive(false); }
+            }
+        }
+        else { Debug.LogWarning("Invalid listOfSecrets (Null)"); }
     }
-
     #endregion
 
 
@@ -2582,8 +2701,10 @@ public class ModalTabbedUI : MonoBehaviour
                         {
                             //highlight any special entries, eg. start of level, in yellow
                             if (historyEvent.isHighlight == true)
-                            { listOfText.Add(GameManager.Formatt(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", at " + historyEvent.district : ""), 
-                                ColourType.neutralText )); }
+                            {
+                                listOfText.Add(GameManager.Formatt(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", at " + historyEvent.district : ""),
+                                  ColourType.neutralText));
+                            }
                             else { listOfText.Add(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", at " + historyEvent.district : "")); }
                         }
                         else { Debug.LogWarningFormat("Invalid HistoryActor (Null) for listOfEvents[{0}]", i); }
@@ -2642,8 +2763,10 @@ public class ModalTabbedUI : MonoBehaviour
                         {
                             //highlight any special entries, eg. start of level, in yellow
                             if (historyEvent.isHighlight == true)
-                            { listOfText.Add(GameManager.Formatt(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", at " + historyEvent.district : ""), 
-                                ColourType.neutralText)); }
+                            {
+                                listOfText.Add(GameManager.Formatt(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", at " + historyEvent.district : ""),
+                                  ColourType.neutralText));
+                            }
                             else { listOfText.Add(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", at " + historyEvent.district : "")); }
                         }
                         else { Debug.LogWarningFormat("Invalid HistoryActor (Null) for listOfEvents[{0}]", i); }
@@ -2664,8 +2787,10 @@ public class ModalTabbedUI : MonoBehaviour
                     {
                         HistoryOpinion historyOpinion = listOfOpinion[i];
                         if (historyOpinion != null)
-                        { listOfText.Add(string.Format("day {0}  {1} (Opinion now {2} star{3}){4}", historyOpinion.turn, historyOpinion.descriptor, historyOpinion.opinion, 
-                            historyOpinion.opinion != 1 ? "s" : "", historyOpinion.isNormal == true ? "" : ", IGNORED")); }
+                        {
+                            listOfText.Add(string.Format("day {0}  {1} (Opinion now {2} star{3}){4}", historyOpinion.turn, historyOpinion.descriptor, historyOpinion.opinion,
+                              historyOpinion.opinion != 1 ? "s" : "", historyOpinion.isNormal == true ? "" : ", IGNORED"));
+                        }
                         else { Debug.LogWarningFormat("Invalid HistoryOpinion (Null) for listOfOpinion[{0}]", i); }
                     }
                 }
@@ -2675,7 +2800,7 @@ public class ModalTabbedUI : MonoBehaviour
         return listOfText;
     }
 
-    
+
     /// <summary>
     /// Debug method to pump up history data in order to test scrolling system
     /// </summary>

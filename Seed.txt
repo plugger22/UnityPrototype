@@ -9607,3 +9607,48 @@ ModalTabbedUI.OpenContacts () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI
 	
 Dev seed 15995 -> Wednesday, 16 December 2020 10:35 AM
 City seed 58715 -> Londus, Eurasia
+
+Dev seed 39905 -> Wednesday, 16 December 2020 2:52 PM
+City seed 54370 -> Londus, Eurasia
+
+Dev seed 41269 -> Wednesday, 16 December 2020 3:27 PM
+City seed 49090 -> Londus, Eurasia
+
+Dev seed 8953 -> Wednesday, 16 December 2020 3:34 PM
+City seed 3659 -> Londus, Eurasia
+WARNING Maximum number of teams already present at Node Oxford Circus, ID 5 (Info Only)
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	Node:AddTeam(Team, Int32) (at Assets/Scripts/Base Classes/Node.cs:1184)
+	TeamManager:MoveTeamAI(TeamPool, Int32, Node) (at Assets/Scripts/Managers/TeamManager.cs:897)
+	AIManager:ExecuteTeamTask(AITask) (at Assets/Scripts/Managers/AIManager.cs:3279)
+	AIManager:ExecuteTasks(Int32) (at Assets/Scripts/Managers/AIManager.cs:3187)
+	AIManager:ProcessAISideAuthority() (at Assets/Scripts/Managers/AIManager.cs:647)
+	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:590)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:329)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:251)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:417)
+	
+Dev seed 49310 -> Wednesday, 16 December 2020 3:39 PM
+City seed 51419 -> Londus, Eurasia
+
+Dev seed 42217 -> Wednesday, 16 December 2020 3:42 PM
+City seed 64108 -> Londus, Eurasia
+
+Dev seed 21795 -> Wednesday, 16 December 2020 3:57 PM
+City seed 17239 -> Londus, Eurasia
+
+Dev seed 25529 -> Wednesday, 16 December 2020 4:08 PM
+City seed 13710 -> Londus, Eurasia
+
+Dev seed 58737 -> Wednesday, 16 December 2020 4:26 PM
+City seed 49778 -> Londus, Eurasia
+
+Dev seed 14882 -> Wednesday, 16 December 2020 4:29 PM
+City seed 59990 -> Londus, Eurasia
+
+Dev seed 1601 -> Wednesday, 16 December 2020 4:32 PM
+City seed 23670 -> Londus, Eurasia
+
+Dev seed 28529 -> Wednesday, 16 December 2020 4:37 PM
+City seed 4563 -> Londus, Eurasia

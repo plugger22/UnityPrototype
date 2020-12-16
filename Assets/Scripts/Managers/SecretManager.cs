@@ -18,6 +18,8 @@ public class SecretManager : MonoBehaviour
     [Range(2, 10)] public int secretBlackmailTimer = 5;
     [Tooltip("Max number of secrets allowed for a Player or Actor.Determined by capacity of InventoryUI")]
     [Range(0, 4)] public int secretMaxNum = 4;
+    [Tooltip("Max number of effects each secret can have (apply if secret revealed). Any effects in excess of this are ignored by code")]
+    [Range(1, 4)] public int secretMaxEffects = 4;
 
 
     //globals
@@ -233,6 +235,7 @@ public class SecretManager : MonoBehaviour
     }*/
 
 
+    #region RemoveSecretFromAll
     /// <summary>
     /// Removes a given secret from all actors (OnMap and Reserve) and player. If calling for a deleted secret then set to true, otherwise, for a normal revealed secret situation, default false
     /// This ensures that if a secret is deleted from an actor who is currently blackmailing then their blackmailer status is removed if they end up with no secrets remaining
@@ -391,7 +394,10 @@ public class SecretManager : MonoBehaviour
         }
         return isSuccess;
     }
+    #endregion
 
+
+    #region RemoveSecretsFromActor
     /// <summary>
     /// used when actor leaves map -> fired / dismissed / disposed off. Called by DataManager.cs -> RemoveActorAdmin
     /// </summary>
@@ -423,7 +429,7 @@ public class SecretManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid actor (Null)"); }
     }
-
+    #endregion
 
     //
     // - - - Debug - - -

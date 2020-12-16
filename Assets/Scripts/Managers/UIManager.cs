@@ -97,4 +97,6 @@ public class UIManager : MonoBehaviour
     public Color TabbedContactActive;
     [Tooltip("Contact prefab background, Inactive colour (should be 100% alpha)")]
     public Color TabbedContactInactive;
+    [Tooltip("Secret prefab background -> All (should be 100% alpha)")]
+    public Color TabbedSecretAll;
 }

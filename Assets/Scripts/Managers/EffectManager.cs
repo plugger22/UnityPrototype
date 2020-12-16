@@ -6097,10 +6097,20 @@ public class EffectManager : MonoBehaviour
                         {
                             if (secret.listOfEffects.Count > 0)
                             { builder.AppendFormat("{0}{1} Reveals Secret{2}", colourNormal, org.tag, colourEnd); }
-                            //loop effects
+                            
+                            /*//loop effects -> EDIT: Redundant code left in place until replacement code below is checked, Dec 16, '20
                             foreach (Effect effect in secret.listOfEffects)
                             {
                                 effectReturn = GameManager.i.effectScript.ProcessEffect(effect, node, effectInput);
+                                if (builder.Length > 0) { builder.AppendLine(); }
+                                builder.Append(effectReturn.bottomText);
+                            }*/
+
+                            //Process effects -> max number of Effects allowed for a secret
+                            int limit = Mathf.Min(GameManager.i.secretScript.secretMaxEffects, secret.listOfEffects.Count);
+                            for (int i = 0; i < limit; i++)
+                            {
+                                effectReturn = GameManager.i.effectScript.ProcessEffect(secret.listOfEffects[i], node, effectInput);
                                 if (builder.Length > 0) { builder.AppendLine(); }
                                 builder.Append(effectReturn.bottomText);
                             }

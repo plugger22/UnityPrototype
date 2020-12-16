@@ -9,6 +9,7 @@ using UnityEngine.UI;
 /// </summary>
 public class TabbedSecretInteraction : MonoBehaviour
 {
+    public Image background;                    //background sprite
     public Image portrait;
     public TextMeshProUGUI descriptor;         //tag and description
     public TextMeshProUGUI effects;             //effects if revealed        
@@ -17,6 +18,7 @@ public class TabbedSecretInteraction : MonoBehaviour
 
     public void Awake()
     {
+        Debug.Assert(background != null, "Invalid background (Null)");
         Debug.Assert(portrait != null, "Invalid portrait (Null)");
         Debug.Assert(descriptor != null, "Invalid descriptor (Null)");
         Debug.Assert(effects != null, "Invalid effects (Null)");

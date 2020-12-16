@@ -682,6 +682,8 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogWarning("Invalid number of Actors (Zero, or less)"); }
     }
 
+
+    #region GetOnMapActorsFromPool
     /// <summary>
     /// Sets up OnMap actors (all scenarios after first) by drawing from recruit pool. If there is a shortage a new actor is created
     /// </summary>
@@ -949,7 +951,9 @@ public class ActorManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid number of Actors (Zero, or less)"); }
     }
+    #endregion
 
+    
     /// <summary>
     /// retrieves a list of previously used actors in lists of actors with a level greater than 'higherThan', eg. if parameter is 1 then retrieves from actors level 2 and 3 lists. Returns EMPTY list if none
     /// NOTE: Previously used actors determined by actor.listOfHistory.Count > 0 (includes those who've been recruited to reserves but never used in anger)
@@ -6870,10 +6874,20 @@ public class ActorManager : MonoBehaviour
                         Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
                         if (node != null)
                         {
-                            //loop effects
-                            foreach (Effect effect in secret.listOfEffects)
+
+                            /*//loop effects
+                            foreach (Effect effect in secret.listOfEffects)   EDIT: Redundant code, left in to check if a problem with replacement code, Dec 17, '20
                             {
                                 effectReturn = GameManager.i.effectScript.ProcessEffect(effect, node, effectInput);
+                                if (effectReturn.errorFlag == false)
+                                { builder.AppendFormat("{0}{1}", "\n", effectReturn.bottomText); }
+                            }*/
+
+                            //Process effects -> max number of Effects allowed for a secret
+                            int limit = Mathf.Min(GameManager.i.secretScript.secretMaxEffects, secret.listOfEffects.Count);
+                            for (int i = 0; i < limit; i++)
+                            {
+                                effectReturn = GameManager.i.effectScript.ProcessEffect(secret.listOfEffects[i], node, effectInput);
                                 if (effectReturn.errorFlag == false)
                                 { builder.AppendFormat("{0}{1}", "\n", effectReturn.bottomText); }
                             }
