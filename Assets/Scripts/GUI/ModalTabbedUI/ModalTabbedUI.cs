@@ -1819,6 +1819,7 @@ public class ModalTabbedUI : MonoBehaviour
             case TabbedUIWho.Player:
                 tab3Header.text = "Your Secrets";
                 listOfSecrets = GameManager.i.playerScript.GetListOfSecrets();
+
                 break;
             case TabbedUIWho.Subordinates:
                 tab3Header.text = "Secrets Known";
@@ -1845,8 +1846,10 @@ public class ModalTabbedUI : MonoBehaviour
                             interact.background.color = secretColour;
                             //portrait
                             interact.portrait.sprite = GameManager.i.spriteScript.secretSprite;
-                            //descriptor
-                            interact.descriptor.text = string.Format("{0}{1}<size=90%>{2}</size>", GameManager.Formatt(secret.tag, ColourType.neutralText), "\n", secret.descriptor);
+                            //descriptor (different for Player or Subordinate)
+                            if (inputData.who == TabbedUIWho.Player)
+                            { interact.descriptor.text = string.Format("{0}{1}<size=90%>{2}</size>", GameManager.Formatt(secret.tag, ColourType.neutralText), "\n", secret.descriptor); }
+                            else { interact.descriptor.text = string.Format("{0}{1}<size=90%>{2}</size>", GameManager.Formatt(secret.tag, ColourType.neutralText), "\n", secret.descriptorOther); }
                             //Who knows?
                             listOfActors = secret.GetListOfActors();
                             count = listOfActors.Count;

@@ -10,8 +10,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Actor / Secret / Secret")]
 public class Secret : ScriptableObject
 {
-    [Tooltip("General purpose descriptor. Used for 'You Gain Secret' message RHS header")]
+    [Tooltip("General purpose descriptor. Used for 'You Gain Secret' message RHS header. PLAYER perspective")]
     public string descriptor;
+    [Tooltip("General purpose descriptor. Used for 'Boss Gain Secret' message RHS header. SUBORDINATE perspective")]
+    public string descriptorOther;
     [Tooltip("Used in tooltips, etc. Keep short. Three words max")]
     public string tag;
     [Tooltip("Which side does the secret apply to")]

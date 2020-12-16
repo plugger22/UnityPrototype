@@ -9652,3 +9652,11 @@ City seed 23670 -> Londus, Eurasia
 
 Dev seed 28529 -> Wednesday, 16 December 2020 4:37 PM
 City seed 4563 -> Londus, Eurasia
+
+Dev seed 35263 -> Wednesday, 16 December 2020 8:07 PM
+City seed 6939 -> Londus, Eurasia
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
