@@ -204,6 +204,10 @@ public class ModalTabbedUI : MonoBehaviour
     private int scrollMaxHighlightIndex = -1;                       //numOfScrollItemsCurrent - 1
     private TabbedHistory historyOptionIndex;                       //which history option is currently selected, eg. Events / Emotions (Mood/Opinion)
 
+    //optimisation
+    private StringBuilder builder;
+    private int currentTurn;
+
     //debug
     private bool isAddDebugRecords;                                 //true if a set of debug player history event records have been addeds
 
@@ -607,6 +611,10 @@ public class ModalTabbedUI : MonoBehaviour
             }
         }
         //
+        // - - - Optimisations
+        //
+        builder = new StringBuilder();
+        //
         // - - - Page0 -> Sub Header colours
         //
         tab0Header0.image.color = tabSubHeaderColour;
@@ -872,6 +880,8 @@ public class ModalTabbedUI : MonoBehaviour
         if (arrayOfSubordinates != null) { Array.Clear(arrayOfSubordinates, 0, arrayOfSubordinates.Length); }
         if (arrayOfReserves != null) { Array.Clear(arrayOfReserves, 0, arrayOfReserves.Length); }
         if (arrayOfHq != null) { Array.Clear(arrayOfHq, 0, arrayOfHq.Length); }
+        //optimisation
+        currentTurn = GameManager.i.turnScript.Turn;
     }
 
 
@@ -1902,20 +1912,20 @@ public class ModalTabbedUI : MonoBehaviour
                                 if (count > 1)
                                 {
                                     //multiple actors know
-                                    StringBuilder builderKnow = new StringBuilder();
-                                    builderKnow.AppendFormat("{0}<size=90%>", knowsHeader);
+                                    builder.Clear();
+                                    builder.AppendFormat("{0}<size=90%>", knowsHeader);
                                     for (int j = 0; j < count; j++)
                                     {
                                         actor = GameManager.i.dataScript.GetActor(listOfActors[j]);
                                         if (actor != null)
                                         {
-                                            builderKnow.AppendLine();
-                                            builderKnow.AppendFormat("{0}, {1}", actor.actorName, actor.arc.name);
+                                            builder.AppendLine();
+                                            builder.AppendFormat("{0}, {1}", actor.actorName, actor.arc.name);
                                         }
                                         else { Debug.LogWarningFormat("Invalid actor (Null) for secret {0} listOfActors[{1}], actorID {2}", secret.tag, j, listOfActors[j]); }
                                     }
-                                    builderKnow.Append("</size>");
-                                    interact.known.text = builderKnow.ToString();
+                                    builder.Append("</size>");
+                                    interact.known.text = builder.ToString();
                                 }
                                 else
                                 {
@@ -1928,25 +1938,25 @@ public class ModalTabbedUI : MonoBehaviour
                             }
                             else { interact.known.text = string.Format("{0}{1}<size=90%>Nobody apart from you</size>", knowsHeader, "\n"); }
                             //effects
-                            StringBuilder builderEffect = new StringBuilder();
-                            builderEffect.AppendFormat("{0}<size=90%>", effectsHeader);
+                            builder.Clear();
+                            builder.AppendFormat("{0}<size=90%>", effectsHeader);
                             for (int j = 0; j < secret.listOfEffects.Count; j++)
                             {
                                 effect = secret.listOfEffects[j];
                                 if (effect != null)
                                 {
-                                    builderEffect.AppendLine();
+                                    builder.AppendLine();
                                     switch (effect.typeOfEffect.name)
                                     {
-                                        case "Good": builderEffect.AppendFormat("{0}", GameManager.Formatt(effect.description, ColourType.goodText)); break;
-                                        case "Bad": builderEffect.AppendFormat("{0}", GameManager.Formatt(effect.description, ColourType.badText)); break;
+                                        case "Good": builder.AppendFormat("{0}", GameManager.Formatt(effect.description, ColourType.goodText)); break;
+                                        case "Bad": builder.AppendFormat("{0}", GameManager.Formatt(effect.description, ColourType.badText)); break;
                                         default: Debug.LogWarningFormat("Unrecognised effect.typeOfEffect.name \"{0}\" for effect {1}", effect.typeOfEffect.name, effect.name); break;
                                     }
                                 }
                                 else { Debug.LogWarningFormat("Invalid effect (Null) in secret {0}, listOfEffects[{1}]", secret.tag, j); }
                             }
-                            builderEffect.Append("</size>");
-                            interact.effects.text = builderEffect.ToString();
+                            builder.Append("</size>");
+                            interact.effects.text = builder.ToString();
                         }
                         else { Debug.LogWarningFormat("Invalid secret (Null) in listOfSecrets[{0}], for {1}", i, inputData.who); }
                     }
@@ -2026,7 +2036,7 @@ public class ModalTabbedUI : MonoBehaviour
                             interact.descriptor.text = string.Format("{0}{1}<size=90%>{2}{3}{4}</size>{5}{6}{7}", GameManager.Formatt(gear.tag.ToUpper(), ColourType.neutralText), "\n", gear.description, "\n", "\n", 
                                 gearName, "\n", GameManager.Formatt(gear.type.name, ColourType.salmonText));
                             // - - - Uses
-                            StringBuilder builder = new StringBuilder();
+                            builder.Clear();
                             builder.Append(GameManager.Formatt("Gear Uses", ColourType.neutralText));
                             builder.Append("<size=85%>");
                             //personal use
@@ -2076,7 +2086,7 @@ public class ModalTabbedUI : MonoBehaviour
                             builder.AppendFormat("Times gear Compromised  <b>{0}</b>{1}", gear.statTimesCompromised, "\n");
                             builder.AppendFormat("Power used to save Gear  <b>{0}</b>{1}", gear.statPowerSpent, "\n");
                             builder.AppendFormat("Times gear Gifted  <b>{0}</b>{1}", gear.statTimesGiven, "\n");
-                            builder.AppendFormat("Had gear for (days)  <b>{0}</b>", GameManager.i.turnScript.Turn - gear.statTurnObtained);
+                            builder.AppendFormat("Had gear for (days)  <b>{0}</b>", currentTurn - gear.statTurnObtained);
                             builder.Append("</size>");
                             interact.stats.text = builder.ToString();
                         }
