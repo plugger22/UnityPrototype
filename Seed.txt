@@ -9665,3 +9665,81 @@ City seed 16396 -> Londus, Eurasia
 
 Dev seed 23280 -> Thursday, 17 December 2020 9:09 AM
 City seed 58905 -> Londus, Eurasia
+
+Dev seed 63351 -> Thursday, 17 December 2020 10:27 AM
+City seed 29465 -> Londus, Eurasia
+
+Dev seed 63936 -> Thursday, 17 December 2020 10:32 AM
+City seed 28261 -> Londus, Eurasia
+
+Dev seed 44866 -> Thursday, 17 December 2020 10:33 AM
+City seed 957 -> Londus, Eurasia
+
+Dev seed 45378 -> Thursday, 17 December 2020 11:00 AM
+City seed 32699 -> Londus, Eurasia
+ERROR Invalid topTab7 (Null)
+UnityEngine.Debug:LogError(Object)
+	ModalTabbedUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:558)
+	ModalTabbedUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:315)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:922)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	ERROR Invalid TopTabObject (Null) for arrayOfTopTabObjects[7]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ModalTabbedUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:579)
+	ModalTabbedUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:315)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:922)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.InitialiseTopTabs (gameAPI.TabbedUIWho who) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1496)
+	ModalTabbedUI.OpenActorSetStart (gameAPI.TabbedUIWho who) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1417)
+	ModalTabbedUI.SetTabbedUI (modalAPI.TabbedUIData details) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1092)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:803)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:345)
+	PlayerClickUI.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Player/PlayerClickUI.cs:42)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 63525 -> Thursday, 17 December 2020 11:01 AM
+City seed 38399 -> Londus, Eurasia
+
+Dev seed 31161 -> Thursday, 17 December 2020 11:04 AM
+City seed 4824 -> Londus, Eurasia
+
+Dev seed 22694 -> Thursday, 17 December 2020 11:05 AM
+City seed 57777 -> Londus, Eurasia
+
+Dev seed 57586 -> Thursday, 17 December 2020 11:11 AM
+City seed 29731 -> Londus, Eurasia
+
+Dev seed 25424 -> Thursday, 17 December 2020 11:28 AM
+City seed 14711 -> Londus, Eurasia
+
+Dev seed 38244 -> Thursday, 17 December 2020 11:31 AM
+City seed 64568 -> Londus, Eurasia
+
+Dev seed 51695 -> Thursday, 17 December 2020 11:51 AM
+City seed 3306 -> Londus, Eurasia
+
+Dev seed 46692 -> Thursday, 17 December 2020 11:53 AM
+City seed 4917 -> Londus, Eurasia
+
+Dev seed 8595 -> Thursday, 17 December 2020 12:02 PM
+City seed 32640 -> Londus, Eurasia
+
+Dev seed 42501 -> Thursday, 17 December 2020 12:09 PM
+City seed 36619 -> Londus, Eurasia
+
+Dev seed 60806 -> Thursday, 17 December 2020 12:14 PM
+City seed 61461 -> Londus, Eurasia
+
+Dev seed 45415 -> Thursday, 17 December 2020 12:17 PM
+City seed 47109 -> Londus, Eurasia
+
+Dev seed 26880 -> Thursday, 17 December 2020 12:31 PM
+City seed 39928 -> Londus, Eurasia
+
+Dev seed 23879 -> Thursday, 17 December 2020 12:34 PM
+City seed 11270 -> Londus, Eurasia

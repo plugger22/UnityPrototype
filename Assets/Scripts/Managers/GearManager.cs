@@ -1431,39 +1431,36 @@ public class GearManager : MonoBehaviour
                     builderHeader.AppendFormat("{0}<size=90%>District use{1}", colourGrey, colourEnd);
                     break;
             }
-            //gear use
-            builderHeader.AppendLine();
-            builderHeader.AppendFormat("{0}Can be Gifted{1}", colourAlert, colourEnd);
             //personal use
             builderHeader.AppendLine();
             if (gear.listOfPersonalEffects != null && gear.listOfPersonalEffects.Count > 0)
             { builderHeader.AppendFormat("{0}Personal use{1}", colourAlert, colourEnd); }
             else
-            { builderHeader.AppendFormat("{0}Personal use{1}", colourGrey, colourEnd); }
+            { builderHeader.AppendFormat("{0}Personal use - No{1}", colourGrey, colourEnd); }
             //AI use
             builderHeader.AppendLine();
             if (gear.aiHackingEffect != null)
-            { builderHeader.AppendFormat("{0}AI use{1}", colourAlert, colourEnd); }
+            { builderHeader.AppendFormat("{0}Hack AI use{1}", colourAlert, colourEnd); }
             else
-            { builderHeader.AppendFormat("{0}AI use{1}", colourGrey, colourEnd); }
+            { builderHeader.AppendFormat("{0}Hack AI use - No{1}", colourGrey, colourEnd); }
             //move use
             builderHeader.AppendLine();
             if (gear.type.name.Equals("Movement", StringComparison.Ordinal) == true)
             { builderHeader.AppendFormat("{0}Movement{1}", colourAlert, colourEnd); }
             else
-            { builderHeader.AppendFormat("{0}Movement{1}", colourGrey, colourEnd); }
+            { builderHeader.AppendFormat("{0}Movement - No{1}", colourGrey, colourEnd); }
             //invisibility use
             builderHeader.AppendLine();
             if (gear.type.name.Equals("Invisibility", StringComparison.Ordinal) == true)
             { builderHeader.AppendFormat("{0}Invisibility{1}", colourAlert, colourEnd); }
             else
-            { builderHeader.AppendFormat("{0}Invisibility{1}", colourGrey, colourEnd); }
+            { builderHeader.AppendFormat("{0}Invisibility - No{1}", colourGrey, colourEnd); }
             //target use
             builderHeader.AppendLine();
             if (gear.type.name.Equals("Infiltration", StringComparison.Ordinal) == true)
-            { builderHeader.AppendFormat("{0}Target use{1}", colourAlert, colourEnd); }
+            { builderHeader.AppendFormat("{0}Targets - ALL{1}", colourAlert, colourEnd); }
             else
-            { builderHeader.AppendFormat("{0}Target use{1}", colourGrey, colourEnd); }
+            { builderHeader.AppendFormat("{0}Targets - Some{1}", colourAlert, colourEnd); }
             //has been used this turn
             if (gear.timesUsed > 0)
             {

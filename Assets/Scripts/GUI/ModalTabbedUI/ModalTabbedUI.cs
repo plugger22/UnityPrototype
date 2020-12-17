@@ -50,6 +50,7 @@ public class ModalTabbedUI : MonoBehaviour
     public GameObject topTab4;
     public GameObject topTab5;
     public GameObject topTab6;
+    public GameObject topTab7;
 
     [Header("Controller Buttons")]
     public Button buttonSubordinates;
@@ -238,6 +239,7 @@ public class ModalTabbedUI : MonoBehaviour
     private Color contactActiveColour;
     private Color contactInactiveColour;
     private Color secretColour;
+    private Color gearColour;
 
     //Input data
     TabbedUIData inputData;
@@ -491,6 +493,7 @@ public class ModalTabbedUI : MonoBehaviour
         contactActiveColour = GameManager.i.uiScript.TabbedContactActive;
         contactInactiveColour = GameManager.i.uiScript.TabbedContactInactive;
         secretColour = GameManager.i.uiScript.TabbedSecretAll;
+        gearColour = GameManager.i.uiScript.TabbedGearAll;
         Color tempColour = tabSubHeaderTextActiveColour;
         tempColour.a = 0.60f;
         tabSubHeaderTextDormantColour = tempColour;
@@ -552,6 +555,7 @@ public class ModalTabbedUI : MonoBehaviour
         if (topTab4 != null) { arrayOfTopTabObjects[index++] = topTab4; } else { Debug.LogError("Invalid topTab4 (Null)"); }
         if (topTab5 != null) { arrayOfTopTabObjects[index++] = topTab5; } else { Debug.LogError("Invalid topTab5 (Null)"); }
         if (topTab6 != null) { arrayOfTopTabObjects[index++] = topTab6; } else { Debug.LogError("Invalid topTab6 (Null)"); }
+        if (topTab7 != null) { arrayOfTopTabObjects[index++] = topTab7; } else { Debug.LogError("Invalid topTab7 (Null)"); }
         //initialise top tab arrays 
         for (int i = 0; i < numOfTopTabs; i++)
         {
@@ -1337,7 +1341,6 @@ public class ModalTabbedUI : MonoBehaviour
             case TabbedPage.Gear:
                 OpenGear();
                 break;
-                break;
             case TabbedPage.Investigations:
 
                 break;
@@ -1448,6 +1451,7 @@ public class ModalTabbedUI : MonoBehaviour
                     arrayOfTopTabObjects[4].SetActive(true);
                     arrayOfTopTabObjects[5].SetActive(true);
                     arrayOfTopTabObjects[6].SetActive(true);
+                    arrayOfTopTabObjects[7].SetActive(false);
                     arrayOfTopTabTitles[0].text = "Main";
                     arrayOfTopTabTitles[1].text = "Person";
                     arrayOfTopTabTitles[2].text = "Contacts";
@@ -1468,6 +1472,7 @@ public class ModalTabbedUI : MonoBehaviour
                     arrayOfTopTabObjects[4].SetActive(false);
                     arrayOfTopTabObjects[5].SetActive(false);
                     arrayOfTopTabObjects[6].SetActive(false);
+                    arrayOfTopTabObjects[7].SetActive(false);
                     arrayOfTopTabTitles[0].text = "Main";
                 }
                 break;
@@ -1476,10 +1481,11 @@ public class ModalTabbedUI : MonoBehaviour
                 arrayOfPages[1] = TabbedPage.Personality;
                 arrayOfPages[2] = TabbedPage.Likes;
                 arrayOfPages[3] = TabbedPage.Secrets;
-                arrayOfPages[4] = TabbedPage.Investigations;
-                arrayOfPages[5] = TabbedPage.History;
-                arrayOfPages[6] = TabbedPage.Stats;
-                maxTopTabIndex = 6;
+                arrayOfPages[4] = TabbedPage.Gear;
+                arrayOfPages[5] = TabbedPage.Investigations;
+                arrayOfPages[6] = TabbedPage.History;
+                arrayOfPages[7] = TabbedPage.Stats;
+                maxTopTabIndex = 7;
                 arrayOfTopTabObjects[0].SetActive(true);
                 arrayOfTopTabObjects[1].SetActive(true);
                 arrayOfTopTabObjects[2].SetActive(true);
@@ -1487,13 +1493,15 @@ public class ModalTabbedUI : MonoBehaviour
                 arrayOfTopTabObjects[4].SetActive(true);
                 arrayOfTopTabObjects[5].SetActive(true);
                 arrayOfTopTabObjects[6].SetActive(true);
+                arrayOfTopTabObjects[7].SetActive(true);
                 arrayOfTopTabTitles[0].text = "Main";
                 arrayOfTopTabTitles[1].text = "Person";
                 arrayOfTopTabTitles[2].text = "Likes";
                 arrayOfTopTabTitles[3].text = "Secrets";
-                arrayOfTopTabTitles[4].text = "Invest";
-                arrayOfTopTabTitles[5].text = "History";
-                arrayOfTopTabTitles[6].text = "Stats";
+                arrayOfTopTabTitles[4].text = "Gear";
+                arrayOfTopTabTitles[5].text = "Invest";
+                arrayOfTopTabTitles[6].text = "History";
+                arrayOfTopTabTitles[7].text = "Stats";
                 break;
             case TabbedUIWho.HQ:
                 arrayOfPages[0] = TabbedPage.Main;
@@ -1507,6 +1515,7 @@ public class ModalTabbedUI : MonoBehaviour
                 arrayOfTopTabObjects[4].SetActive(false);
                 arrayOfTopTabObjects[5].SetActive(false);
                 arrayOfTopTabObjects[6].SetActive(false);
+                arrayOfTopTabObjects[7].SetActive(false);
                 maxTopTabIndex = 3;
                 arrayOfTopTabTitles[0].text = "Main";
                 arrayOfTopTabTitles[1].text = "Person";
@@ -1527,6 +1536,7 @@ public class ModalTabbedUI : MonoBehaviour
                     arrayOfTopTabObjects[4].SetActive(false);
                     arrayOfTopTabObjects[5].SetActive(false);
                     arrayOfTopTabObjects[6].SetActive(false);
+                    arrayOfTopTabObjects[7].SetActive(false);
                     maxTopTabIndex = 3;
                     arrayOfTopTabTitles[0].text = "Main";
                     arrayOfTopTabTitles[1].text = "Person";
@@ -1545,6 +1555,7 @@ public class ModalTabbedUI : MonoBehaviour
                     arrayOfTopTabObjects[4].SetActive(false);
                     arrayOfTopTabObjects[5].SetActive(false);
                     arrayOfTopTabObjects[6].SetActive(false);
+                    arrayOfTopTabObjects[7].SetActive(false);
                     arrayOfTopTabTitles[0].text = "Main";
                 }
                 break;
@@ -1958,10 +1969,134 @@ public class ModalTabbedUI : MonoBehaviour
     #endregion
 
     #region OpenGear
-
+    /// <summary>
+    /// All in one open/update Gear page (Player/Subordinates actor sets only)
+    /// </summary>
     private void OpenGear()
     {
-
+        int numOfGear;
+        List<string> listOfGear = new List<string>();
+        string gearName;
+        Gear gear;
+        TabbedGearInteraction interact;
+        switch (inputData.who)
+        {
+            case TabbedUIWho.Player:
+                //can have multiple gear items
+                listOfGear = GameManager.i.playerScript.GetListOfGear();
+                break;
+            case TabbedUIWho.Subordinates:
+                //can only have a single item of gear
+                gearName = arrayOfActorsTemp[currentSideTabIndex].GetGearName();
+                if (string.IsNullOrEmpty(gearName) == false)
+                { listOfGear.Add(gearName); }
+                break;
+            default: Debug.LogWarningFormat("Unrecognised inputData.who \"{0}\"", inputData.who); break;
+        }
+        if (listOfGear != null)
+        {
+            numOfGear = listOfGear.Count;
+            if (numOfGear > 0)
+            {
+                for (int i = 0; i < arrayOfGear.Length; i++)
+                {
+                    if (i < numOfGear)
+                    {
+                        gear = GameManager.i.dataScript.GetGear(listOfGear[i]);
+                        if (gear != null)
+                        {
+                            //activate gear
+                            arrayOfGear[i].gameObject.SetActive(true);
+                            interact = arrayOfGear[i];
+                            //populate prefab data
+                            interact.background.color = gearColour;
+                            //portrait
+                            interact.portrait.sprite = gear.sprite;
+                            //rarity
+                            gearName = "Unknown";
+                            switch (gear.rarity.name)
+                            {
+                                case "Common": gearName = GameManager.Formatt(gear.rarity.name, ColourType.badText); break;
+                                case "Rare": gearName = GameManager.Formatt(gear.rarity.name, ColourType.neutralText); break;
+                                case "Unique": gearName = GameManager.Formatt(gear.rarity.name, ColourType.goodText); break;
+                                case "Special": gearName = GameManager.Formatt(gear.rarity.name, ColourType.goodText); break;
+                                default: Debug.LogWarningFormat("Unrecognised gear.rarity.name \"{0}\"", gear.rarity.name); break;
+                            }
+                            //descriptor (different for Player or Subordinate)
+                            interact.descriptor.text = string.Format("{0}{1}<size=90%>{2}{3}{4}</size>{5}{6}{7}", GameManager.Formatt(gear.tag.ToUpper(), ColourType.neutralText), "\n", gear.description, "\n", "\n", 
+                                gearName, "\n", GameManager.Formatt(gear.type.name, ColourType.salmonText));
+                            // - - - Uses
+                            StringBuilder builder = new StringBuilder();
+                            builder.Append(GameManager.Formatt("Gear Uses", ColourType.neutralText));
+                            builder.Append("<size=85%>");
+                            //personal use
+                            builder.AppendLine();
+                            if (gear.listOfPersonalEffects != null && gear.listOfPersonalEffects.Count > 0)
+                            { builder.Append(GameManager.Formatt("Personal use", ColourType.salmonText)); }
+                            else
+                            { builder.Append(GameManager.Formatt("Personal use - No", ColourType.greyText)); }
+                            //AI use
+                            builder.AppendLine();
+                            if (gear.aiHackingEffect != null)
+                            { builder.Append(GameManager.Formatt("Hack AI use", ColourType.salmonText)); }
+                            else
+                            { builder.Append(GameManager.Formatt("Hack AI use - No", ColourType.greyText)); }
+                            //move use
+                            builder.AppendLine();
+                            if (gear.type.name.Equals("Movement", StringComparison.Ordinal) == true)
+                            { builder.Append(GameManager.Formatt("Movement", ColourType.salmonText)); }
+                            else
+                            { builder.Append(GameManager.Formatt("Movement - No", ColourType.greyText)); }
+                            //invisibility use
+                            builder.AppendLine();
+                            if (gear.type.name.Equals("Invisibility", StringComparison.Ordinal) == true)
+                            { builder.Append(GameManager.Formatt("Invisibility", ColourType.salmonText)); }
+                            else
+                            { builder.Append(GameManager.Formatt("Invisibility - No", ColourType.greyText)); }
+                            //target use
+                            builder.AppendLine();
+                            if (gear.type.name.Equals("Infiltration", StringComparison.Ordinal) == true)
+                            { builder.Append(GameManager.Formatt("Targets - ALL", ColourType.salmonText)); }
+                            else
+                            { builder.Append("Targets - Some"); }
+                            //has been used this turn
+                            if (gear.timesUsed > 0)
+                            {
+                                builder.AppendLine();
+                                builder.Append(GameManager.Formatt("Already USED this Turn", ColourType.badText));
+                            }
+                            builder.Append("</size>");
+                            interact.uses.text = builder.ToString();
+                            // - - - Stats
+                            builder.Clear();
+                            builder.Append(GameManager.Formatt("Statistics", ColourType.neutralText));
+                            builder.AppendLine();
+                            builder.Append("<size=85%>");
+                            builder.AppendFormat("Times gear Used  <b>{0}</b>{1}", gear.statTimesUsed, "\n");
+                            builder.AppendFormat("Times gear Compromised  <b>{0}</b>{1}", gear.statTimesCompromised, "\n");
+                            builder.AppendFormat("Power used to save Gear  <b>{0}</b>{1}", gear.statPowerSpent, "\n");
+                            builder.AppendFormat("Times gear Gifted  <b>{0}</b>{1}", gear.statTimesGiven, "\n");
+                            builder.AppendFormat("Had gear for (days)  <b>{0}</b>", GameManager.i.turnScript.Turn - gear.statTurnObtained);
+                            builder.Append("</size>");
+                            interact.stats.text = builder.ToString();
+                        }
+                        else { Debug.LogWarningFormat("Invalid gear (Null) in listOfGear[{0}], for {1}", i, inputData.who); }
+                    }
+                    else
+                    {
+                        //deactivate gear
+                        arrayOfGear[i].gameObject.SetActive(false);
+                    }
+                }
+            }
+            else
+            {
+                //no gear, deactivate all
+                for (int i = 0; i < arrayOfGear.Length; i++)
+                { arrayOfGear[i].gameObject.SetActive(false); }
+            }
+        }
+        else { Debug.LogWarning("Invalid listOfGear (Null)"); }
     }
     #endregion
 

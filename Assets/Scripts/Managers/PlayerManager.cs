@@ -1334,36 +1334,6 @@ public class PlayerManager : MonoBehaviour
         return listOfConditions;
     }
 
-    /*/// <summary>
-    /// returns true if any current condition has a cure activated by an Org
-    /// </summary>
-    /// <param name="side"></param>
-    /// <returns></returns>
-    public bool CheckForOrgCure(GlobalSide side)
-    {
-        if (side != null)
-        {
-            List<Condition> listOfConditions = GetListOfConditionForSide(side);
-            if (listOfConditions != null)
-            {
-                if (listOfConditions.Count > 0)
-                {
-                    foreach (Condition condition in listOfConditions)
-                    {
-                        //only check conditions with valid cures
-                        if (condition.cure != null)
-                        {
-                            if (condition.cure.isOrgActivated == true)
-                            { return true; }
-                        }
-                    }
-                }
-            }
-            else { Debug.LogError("Invalid listOfConditions (Null)"); }
-        }
-        else { Debug.LogError("Invalid side (Null)"); }
-        return false;
-    }*/
 
     /// <summary>
     /// Follow on level -> if player has any existing conditions, new cures are created
