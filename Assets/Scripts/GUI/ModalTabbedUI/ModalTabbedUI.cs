@@ -2058,7 +2058,7 @@ public class ModalTabbedUI : MonoBehaviour
                             if (gear.type.name.Equals("Infiltration", StringComparison.Ordinal) == true)
                             { builder.Append(GameManager.Formatt("Targets - ALL", ColourType.salmonText)); }
                             else
-                            { builder.Append("Targets - Some"); }
+                            { builder.Append(GameManager.Formatt("Targets - Some", ColourType.salmonText)); }
                             //has been used this turn
                             if (gear.timesUsed > 0)
                             {
