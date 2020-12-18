@@ -119,6 +119,11 @@ public class ModalTabbedUI : MonoBehaviour
     public TabbedSecretInteraction tab3Secret2;
     public TabbedSecretInteraction tab3Secret3;
 
+    [Header("Canvas4 -> Investigations")]
+    public TabbedInvestInteraction tab4Invest0;
+    public TabbedInvestInteraction tab4Invest1;
+    public TabbedInvestInteraction tab4Invest2;
+
     [Header("Canvas6 -> Gear")]
     public TextMeshProUGUI tab6Header;
     public TabbedGearInteraction tab6Gear0;
@@ -194,6 +199,8 @@ public class ModalTabbedUI : MonoBehaviour
     private int maxNumOfContacts;
     //Page 3
     private int maxNumOfSecrets;
+    //Page 4
+    private int maxNumOfInvestigations;
     //Page 6
     private int maxNumOfGear;
     //Page7
@@ -204,18 +211,40 @@ public class ModalTabbedUI : MonoBehaviour
     private int scrollMaxHighlightIndex = -1;                       //numOfScrollItemsCurrent - 1
     private TabbedHistory historyOptionIndex;                       //which history option is currently selected, eg. Events / Emotions (Mood/Opinion)
 
-    //optimisation
+    #region Optimisations
+    //optimisation -> field for individual pages to keep garbage collection to a minimum
     private StringBuilder builder;
     private int currentTurn;
+    private Node nodeContact;
+    private Contact contact;
+    private Actor actorContact;
+    private Secret secret;
+    private Actor actorSecret;
+    private Effect effectSecret;
+    private Gear gear;
+    private Investigation investigation;
+    private List<Contact> listOfContacts;
+    private List<int> listOfSecretActors;
+    private List<Secret> listOfSecrets;
+    private List<string> listOfGear;
+    private List<Investigation> listOfInvestigations;
+    private TabbedContactInteraction interactContact;
+    private TabbedSecretInteraction interactSecret;
+    private TabbedGearInteraction interactGear;
+    private TabbedInvestInteraction interactInvest;
+    private string gearName;
+    private string knowsSecretHeader;
+    private string effectsSecretHeader;
+    #endregion
 
     //debug
     private bool isAddDebugRecords;                                 //true if a set of debug player history event records have been addeds
-
 
     //help tooltips (I don't want this as a global, just a master private field)
     private int x_offset = 200;
     private int y_offset = 40;
 
+    #region Colours
     //colours
     private Color sideTabActiveColour;
     private Color sideTabDormantColour;
@@ -244,10 +273,13 @@ public class ModalTabbedUI : MonoBehaviour
     private Color contactInactiveColour;
     private Color secretColour;
     private Color gearColour;
+    private Color investigationColour;
+    #endregion
 
     //Input data
     TabbedUIData inputData;
 
+    #region Collections
     //
     // - - - Collections
     //
@@ -275,12 +307,15 @@ public class ModalTabbedUI : MonoBehaviour
     private TabbedContactInteraction[] arrayOfContacts;
     //Canvas3 -> Secrets
     private TabbedSecretInteraction[] arrayOfSecrets;
+    //Canvas4 -> Investigations
+    private TabbedInvestInteraction[] arrayOfInvestigations;
     //Canvas6 -> Gear
     private TabbedGearInteraction[] arrayOfGear;
     //Canvas7 -> History
     private GameObject[] arrayOfScrollObjects;
     private TabbedScrollInteraction[] arrayOfScrollInteractions;
     private List<string> listOfHistory = new List<string>();
+    #endregion
 
     private static ModalTabbedUI modalTabbedUI;
 
@@ -426,6 +461,12 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab3Secret2 != null, "Invalid tab3Secret2 (Null)");
         Debug.Assert(tab3Secret3 != null, "Invalid tab3Secret3 (Null)");
         //
+        // - - - canvas4
+        //
+        Debug.Assert(tab4Invest0 != null, "Invalid tab4Invest0 (Null)");
+        Debug.Assert(tab4Invest1 != null, "Invalid tab4Invest1 (Null)");
+        Debug.Assert(tab4Invest2 != null, "Invalid tab4Invest2 (Null)");
+        //
         // - - - canvas6
         //
         Debug.Assert(tab6Header != null, "Invalid tab6Header (Null)");
@@ -498,6 +539,7 @@ public class ModalTabbedUI : MonoBehaviour
         contactInactiveColour = GameManager.i.uiScript.TabbedContactInactive;
         secretColour = GameManager.i.uiScript.TabbedSecretAll;
         gearColour = GameManager.i.uiScript.TabbedGearAll;
+        investigationColour = GameManager.i.uiScript.TabbedInvestigationAll;
         Color tempColour = tabSubHeaderTextActiveColour;
         tempColour.a = 0.60f;
         tabSubHeaderTextDormantColour = tempColour;
@@ -523,6 +565,9 @@ public class ModalTabbedUI : MonoBehaviour
         //page 3
         maxNumOfSecrets = GameManager.i.secretScript.secretMaxNum;
         arrayOfSecrets = new TabbedSecretInteraction[maxNumOfSecrets];
+        //page 4
+        maxNumOfInvestigations = GameManager.i.playerScript.maxInvestigations;
+        arrayOfInvestigations = new TabbedInvestInteraction[maxNumOfInvestigations];
         //page 6
         maxNumOfGear = GameManager.i.gearScript.maxNumOfGear;
         arrayOfGear = new TabbedGearInteraction[maxNumOfGear];
@@ -614,6 +659,13 @@ public class ModalTabbedUI : MonoBehaviour
         // - - - Optimisations
         //
         builder = new StringBuilder();
+        listOfContacts = new List<Contact>();
+        listOfSecretActors = new List<int>();
+        listOfSecrets = new List<Secret>();
+        listOfGear = new List<string>();
+        listOfInvestigations = new List<Investigation>();
+        knowsSecretHeader = GameManager.Formatt("Who Knows?", ColourType.neutralText);
+        effectsSecretHeader = GameManager.Formatt("Effects if Revealed", ColourType.neutralText);
         //
         // - - - Page0 -> Sub Header colours
         //
@@ -695,6 +747,12 @@ public class ModalTabbedUI : MonoBehaviour
         arrayOfSecrets[1] = tab3Secret1;
         arrayOfSecrets[2] = tab3Secret2;
         arrayOfSecrets[3] = tab3Secret3;
+        //
+        // - - - Page 4 Investigations
+        //
+        arrayOfInvestigations[0] = tab4Invest0;
+        arrayOfInvestigations[1] = tab4Invest1;
+        arrayOfInvestigations[2] = tab4Invest2;
         //
         // - - - Page 6 Gear
         //
@@ -1352,7 +1410,7 @@ public class ModalTabbedUI : MonoBehaviour
                 OpenGear();
                 break;
             case TabbedPage.Investigations:
-
+                OpenInvestigations();
                 break;
             case TabbedPage.Likes:
 
@@ -1763,22 +1821,21 @@ public class ModalTabbedUI : MonoBehaviour
     /// </summary>
     private void OpenContacts()
     {
-        Node node;
-        Contact contact;
-        Actor actor = arrayOfActorsTemp[currentSideTabIndex];
-        if (actor != null)
+        actorContact = arrayOfActorsTemp[currentSideTabIndex];
+        if (actorContact != null)
         {
             //effectiveness
-            int effectiveness = actor.GetContactNetworkEffectiveness();
+            int effectiveness = actorContact.GetContactNetworkEffectiveness();
             tab2NetworkStrength.text = Convert.ToString(effectiveness);
             if (effectiveness == 1)
             { tab2NetworkStars.text = "Star"; }
             else { tab2NetworkStars.text = "Stars"; }
             //contacts
-            Dictionary<int, Contact> dictOfContacts = actor.GetDictOfContacts();
+            Dictionary<int, Contact> dictOfContacts = actorContact.GetDictOfContacts();
             if (dictOfContacts != null)
             {
-                List<Contact> listOfContacts = new List<Contact>(dictOfContacts.Values);
+                listOfContacts.Clear();
+                listOfContacts.AddRange(dictOfContacts.Values);
                 int numOfContacts = listOfContacts.Count;
                 //limit check
                 if (numOfContacts > maxNumOfContacts)
@@ -1793,50 +1850,50 @@ public class ModalTabbedUI : MonoBehaviour
                     {
                         //activate contacts
                         arrayOfContacts[i].gameObject.SetActive(true);
-                        TabbedContactInteraction interact = arrayOfContacts[i];
-                        if (interact != null)
+                        interactContact = arrayOfContacts[i];
+                        if (interactContact != null)
                         {
                             contact = listOfContacts[i];
                             if (contact != null)
                             {
-                                interact.portrait.gameObject.SetActive(true);
+                                interactContact.portrait.gameObject.SetActive(true);
                                 switch (contact.sex)
                                 {
                                     case ActorSex.Male:
-                                        interact.portrait.sprite = GameManager.i.spriteScript.tabbedContactMaleSprite;
+                                        interactContact.portrait.sprite = GameManager.i.spriteScript.tabbedContactMaleSprite;
                                         break;
                                     case ActorSex.Female:
-                                        interact.portrait.sprite = GameManager.i.spriteScript.tabbedContactFemaleSprite;
+                                        interactContact.portrait.sprite = GameManager.i.spriteScript.tabbedContactFemaleSprite;
                                         break;
                                     default: Debug.LogWarningFormat("Unrecognised contact.sex \"{0}\"", contact.sex); break;
                                 }
-                                interact.contactName.text = string.Format("{0} {1}", contact.nameFirst, contact.nameLast);
-                                interact.job.text = contact.job;
+                                interactContact.contactName.text = string.Format("{0} {1}", contact.nameFirst, contact.nameLast);
+                                interactContact.job.text = contact.job;
                                 //location
-                                node = GameManager.i.dataScript.GetNode(contact.nodeID);
-                                if (node != null)
-                                { interact.nodeName.text = node.nodeName; }
+                                nodeContact = GameManager.i.dataScript.GetNode(contact.nodeID);
+                                if (nodeContact != null)
+                                { interactContact.nodeName.text = nodeContact.nodeName; }
                                 else { Debug.LogWarningFormat("Invalid node (Null) for listOfContacts[{0}], contact.nodeID {1}", i, contact.nodeID); }
                                 //status
                                 switch (contact.status)
                                 {
                                     case ContactStatus.Active:
-                                        interact.status.text = GameManager.Formatt(Convert.ToString(contact.status), ColourType.goodText);
-                                        interact.background.color = contactActiveColour;
+                                        interactContact.status.text = GameManager.Formatt(Convert.ToString(contact.status), ColourType.goodText);
+                                        interactContact.background.color = contactActiveColour;
                                         break;
                                     case ContactStatus.Inactive:
-                                        interact.status.text = GameManager.Formatt(Convert.ToString(contact.status), ColourType.badText);
-                                        interact.background.color = contactInactiveColour;
+                                        interactContact.status.text = GameManager.Formatt(Convert.ToString(contact.status), ColourType.badText);
+                                        interactContact.background.color = contactInactiveColour;
                                         break;
                                     default: Debug.LogWarningFormat("Unrecognised contact.Status \"{0}\"", contact.status); break;
                                 }
-                                interact.effectiveness.text = GameManager.i.guiScript.GetNormalStars(contact.effectiveness);
+                                interactContact.effectiveness.text = GameManager.i.guiScript.GetNormalStars(contact.effectiveness);
                             }
                             //effectiveness
                             else { Debug.LogWarningFormat("Invalid contact (Null) for listOfContacts[{0]]", i); }
                             //intel
                             int intel = contact.statsNemesis + contact.statsNpc + contact.statsRumours + contact.statsTeams;
-                            interact.intel.text = Convert.ToString(intel);
+                            interactContact.intel.text = Convert.ToString(intel);
                         }
                         else { Debug.LogWarningFormat("Invalid tabbedContactInteraction (Null) for arrayOfContacs[{0}]", i); }
                     }
@@ -1847,7 +1904,7 @@ public class ModalTabbedUI : MonoBehaviour
                     }
                 }
             }
-            else { Debug.LogWarningFormat("Invalid dictOfContacts for actor {0}, {1}, ID {2}, arrayOfActorsTemp[{3}]", actor.actorName, actor.arc.name, actor.actorID, currentSideTabIndex); }
+            else { Debug.LogWarningFormat("Invalid dictOfContacts for actor {0}, {1}, ID {2}, arrayOfActorsTemp[{3}]", actorContact.actorName, actorContact.arc.name, actorContact.actorID, currentSideTabIndex); }
         }
         else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[{0}]", currentSideTabIndex); }
     }
@@ -1860,14 +1917,8 @@ public class ModalTabbedUI : MonoBehaviour
     private void OpenSecrets()
     {
         int numOfSecrets, count;
-        Secret secret;
-        Actor actor;
-        Effect effect;
-        TabbedSecretInteraction interact;
-        List<Secret> listOfSecrets = new List<Secret>();
-        List<int> listOfActors = new List<int>();
-        string knowsHeader = GameManager.Formatt("Who Knows?", ColourType.neutralText);
-        string effectsHeader = GameManager.Formatt("Effects if Revealed", ColourType.neutralText);
+        listOfSecrets.Clear();
+        listOfSecretActors.Clear();
         switch (inputData.who)
         {
             case TabbedUIWho.Player:
@@ -1895,68 +1946,68 @@ public class ModalTabbedUI : MonoBehaviour
                         {
                             //activate secret
                             arrayOfSecrets[i].gameObject.SetActive(true);
-                            interact = arrayOfSecrets[i];
+                            interactSecret = arrayOfSecrets[i];
                             //populate prefab data
-                            interact.background.color = secretColour;
+                            interactSecret.background.color = secretColour;
                             //portrait
-                            interact.portrait.sprite = GameManager.i.spriteScript.secretSprite;
+                            interactSecret.portrait.sprite = GameManager.i.spriteScript.secretSprite;
                             //descriptor (different for Player or Subordinate)
                             if (inputData.who == TabbedUIWho.Player)
-                            { interact.descriptor.text = string.Format("{0}{1}<size=90%>{2}</size>", GameManager.Formatt(secret.tag, ColourType.neutralText), "\n", secret.descriptor); }
-                            else { interact.descriptor.text = string.Format("{0}{1}<size=90%>{2}</size>", GameManager.Formatt(secret.tag, ColourType.neutralText), "\n", secret.descriptorOther); }
+                            { interactSecret.descriptor.text = string.Format("{0}{1}<size=90%>{2}</size>", GameManager.Formatt(secret.tag, ColourType.neutralText), "\n", secret.descriptor); }
+                            else { interactSecret.descriptor.text = string.Format("{0}{1}<size=90%>{2}</size>", GameManager.Formatt(secret.tag, ColourType.neutralText), "\n", secret.descriptorOther); }
                             //Who knows?
-                            listOfActors = secret.GetListOfActors();
-                            count = listOfActors.Count;
+                            listOfSecretActors = secret.GetListOfActors();
+                            count = listOfSecretActors.Count;
                             if (count > 0)
                             {
                                 if (count > 1)
                                 {
                                     //multiple actors know
                                     builder.Clear();
-                                    builder.AppendFormat("{0}<size=90%>", knowsHeader);
+                                    builder.AppendFormat("{0}<size=90%>", knowsSecretHeader);
                                     for (int j = 0; j < count; j++)
                                     {
-                                        actor = GameManager.i.dataScript.GetActor(listOfActors[j]);
-                                        if (actor != null)
+                                        actorSecret = GameManager.i.dataScript.GetActor(listOfSecretActors[j]);
+                                        if (actorSecret != null)
                                         {
                                             builder.AppendLine();
-                                            builder.AppendFormat("{0}, {1}", actor.actorName, actor.arc.name);
+                                            builder.AppendFormat("{0}, {1}", actorSecret.actorName, actorSecret.arc.name);
                                         }
-                                        else { Debug.LogWarningFormat("Invalid actor (Null) for secret {0} listOfActors[{1}], actorID {2}", secret.tag, j, listOfActors[j]); }
+                                        else { Debug.LogWarningFormat("Invalid actor (Null) for secret {0} listOfSecretActors[{1}], actorID {2}", secret.tag, j, listOfSecretActors[j]); }
                                     }
                                     builder.Append("</size>");
-                                    interact.known.text = builder.ToString();
+                                    interactSecret.known.text = builder.ToString();
                                 }
                                 else
                                 {
                                     //single actor knows
-                                    actor = GameManager.i.dataScript.GetActor(listOfActors[0]);
-                                    if (actor != null)
-                                    { interact.known.text = string.Format("{0}{1}<size=90%>{2}, {3}</size>", knowsHeader, "\n", actor.actorName, actor.arc.name); }
-                                    else { Debug.LogWarningFormat("Invalid actor (Null) for secret {0} listOfActors[{1}], actorID {2}", secret.tag, 0, listOfActors[0]); }
+                                    actorSecret = GameManager.i.dataScript.GetActor(listOfSecretActors[0]);
+                                    if (actorSecret != null)
+                                    { interactSecret.known.text = string.Format("{0}{1}<size=90%>{2}, {3}</size>", knowsSecretHeader, "\n", actorSecret.actorName, actorSecret.arc.name); }
+                                    else { Debug.LogWarningFormat("Invalid actor (Null) for secret {0} listOfSecretActors[{1}], actorID {2}", secret.tag, 0, listOfSecretActors[0]); }
                                 }
                             }
-                            else { interact.known.text = string.Format("{0}{1}<size=90%>Nobody apart from you</size>", knowsHeader, "\n"); }
+                            else { interactSecret.known.text = string.Format("{0}{1}<size=90%>Nobody apart from you</size>", knowsSecretHeader, "\n"); }
                             //effects
                             builder.Clear();
-                            builder.AppendFormat("{0}<size=90%>", effectsHeader);
+                            builder.AppendFormat("{0}<size=90%>", effectsSecretHeader);
                             for (int j = 0; j < secret.listOfEffects.Count; j++)
                             {
-                                effect = secret.listOfEffects[j];
-                                if (effect != null)
+                                effectSecret = secret.listOfEffects[j];
+                                if (effectSecret != null)
                                 {
                                     builder.AppendLine();
-                                    switch (effect.typeOfEffect.name)
+                                    switch (effectSecret.typeOfEffect.name)
                                     {
-                                        case "Good": builder.AppendFormat("{0}", GameManager.Formatt(effect.description, ColourType.goodText)); break;
-                                        case "Bad": builder.AppendFormat("{0}", GameManager.Formatt(effect.description, ColourType.badText)); break;
-                                        default: Debug.LogWarningFormat("Unrecognised effect.typeOfEffect.name \"{0}\" for effect {1}", effect.typeOfEffect.name, effect.name); break;
+                                        case "Good": builder.AppendFormat("{0}", GameManager.Formatt(effectSecret.description, ColourType.goodText)); break;
+                                        case "Bad": builder.AppendFormat("{0}", GameManager.Formatt(effectSecret.description, ColourType.badText)); break;
+                                        default: Debug.LogWarningFormat("Unrecognised effect.typeOfEffect.name \"{0}\" for effect {1}", effectSecret.typeOfEffect.name, effectSecret.name); break;
                                     }
                                 }
                                 else { Debug.LogWarningFormat("Invalid effect (Null) in secret {0}, listOfEffects[{1}]", secret.tag, j); }
                             }
                             builder.Append("</size>");
-                            interact.effects.text = builder.ToString();
+                            interactSecret.effects.text = builder.ToString();
                         }
                         else { Debug.LogWarningFormat("Invalid secret (Null) in listOfSecrets[{0}], for {1}", i, inputData.who); }
                     }
@@ -1985,10 +2036,7 @@ public class ModalTabbedUI : MonoBehaviour
     private void OpenGear()
     {
         int numOfGear;
-        List<string> listOfGear = new List<string>();
-        string gearName;
-        Gear gear;
-        TabbedGearInteraction interact;
+        listOfGear.Clear();
         switch (inputData.who)
         {
             case TabbedUIWho.Player:
@@ -2017,11 +2065,11 @@ public class ModalTabbedUI : MonoBehaviour
                         {
                             //activate gear
                             arrayOfGear[i].gameObject.SetActive(true);
-                            interact = arrayOfGear[i];
+                            interactGear = arrayOfGear[i];
                             //populate prefab data
-                            interact.background.color = gearColour;
+                            interactGear.background.color = gearColour;
                             //portrait
-                            interact.portrait.sprite = gear.sprite;
+                            interactGear.portrait.sprite = gear.sprite;
                             //rarity
                             gearName = "Unknown";
                             switch (gear.rarity.name)
@@ -2033,7 +2081,7 @@ public class ModalTabbedUI : MonoBehaviour
                                 default: Debug.LogWarningFormat("Unrecognised gear.rarity.name \"{0}\"", gear.rarity.name); break;
                             }
                             //descriptor (different for Player or Subordinate)
-                            interact.descriptor.text = string.Format("{0}{1}<size=90%>{2}{3}{4}</size>{5}{6}{7}", GameManager.Formatt(gear.tag.ToUpper(), ColourType.neutralText), "\n", gear.description, "\n", "\n", 
+                            interactGear.descriptor.text = string.Format("{0}{1}<size=90%>{2}{3}{4}</size>{5}{6}{7}", GameManager.Formatt(gear.tag.ToUpper(), ColourType.neutralText), "\n", gear.description, "\n", "\n",
                                 gearName, "\n", GameManager.Formatt(gear.type.name, ColourType.salmonText));
                             // - - - Uses
                             builder.Clear();
@@ -2076,7 +2124,7 @@ public class ModalTabbedUI : MonoBehaviour
                                 builder.Append(GameManager.Formatt("Already USED this Turn", ColourType.badText));
                             }
                             builder.Append("</size>");
-                            interact.uses.text = builder.ToString();
+                            interactGear.uses.text = builder.ToString();
                             // - - - Stats
                             builder.Clear();
                             builder.Append(GameManager.Formatt("Statistics", ColourType.neutralText));
@@ -2088,7 +2136,7 @@ public class ModalTabbedUI : MonoBehaviour
                             builder.AppendFormat("Times gear Gifted  <b>{0}</b>{1}", gear.statTimesGiven, "\n");
                             builder.AppendFormat("Had gear for (days)  <b>{0}</b>", currentTurn - gear.statTurnObtained);
                             builder.Append("</size>");
-                            interact.stats.text = builder.ToString();
+                            interactGear.stats.text = builder.ToString();
                         }
                         else { Debug.LogWarningFormat("Invalid gear (Null) in listOfGear[{0}], for {1}", i, inputData.who); }
                     }
@@ -2107,6 +2155,56 @@ public class ModalTabbedUI : MonoBehaviour
             }
         }
         else { Debug.LogWarning("Invalid listOfGear (Null)"); }
+    }
+    #endregion
+
+    #region OpenInvestigations
+    /// <summary>
+    /// All in one open/update Investigation page (Player only)
+    /// </summary>
+    private void OpenInvestigations()
+    {
+        int count;
+        listOfInvestigations = GameManager.i.playerScript.GetListOfInvestigations();
+        if (listOfInvestigations != null)
+        {
+            count = listOfInvestigations.Count;
+            if (count > 0)
+            {
+                for (int i = 0; i < arrayOfInvestigations.Length; i++)
+                {
+                    if (i < count)
+                    {
+                        //activate investigation
+                        arrayOfInvestigations[i].gameObject.SetActive(true);
+                        investigation = listOfInvestigations[i];
+                        if (investigation != null)
+                        {
+                            interactInvest = arrayOfInvestigations[i];
+                            if (interactInvest != null)
+                            {
+                                //background
+                                interactInvest.background.color = investigationColour;
+                            }
+                            else { Debug.LogWarningFormat("Invalid interactInvest (Null) for arrayOfInvestigations[{0}]", i); }
+                        }
+                        else { Debug.LogWarningFormat("Invalid investigation (Null) for listOfInvestigations[{0}]", i); }
+                    }
+                    else
+                    {
+                        //deactivate investigation
+                        arrayOfInvestigations[i].gameObject.SetActive(false);
+                    }
+                }
+            }
+            else
+            {
+                //deactivate all
+                for (int i = 0; i < arrayOfInvestigations.Length; i++)
+                { arrayOfInvestigations[i].gameObject.SetActive(false); }
+            }
+        }
+        else { Debug.LogWarning("Invalid listOfInvestigations (Null)"); }
     }
     #endregion
 

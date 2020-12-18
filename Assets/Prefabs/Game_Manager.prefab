@@ -6470,6 +6470,7 @@ MonoBehaviour:
   TabbedContactInactive: {r: 0.09411765, g: 0.1764706, b: 0.38431373, a: 1}
   TabbedSecretAll: {r: 0.12941177, g: 0.23529412, b: 0.5137255, a: 1}
   TabbedGearAll: {r: 0.12941177, g: 0.23529412, b: 0.5137255, a: 1}
+  TabbedInvestigationAll: {r: 0.12941177, g: 0.23529412, b: 0.5137255, a: 1}
 --- !u!114 &114733366453475614
 MonoBehaviour:
   m_ObjectHideFlags: 1

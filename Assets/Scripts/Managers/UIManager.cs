@@ -101,4 +101,6 @@ public class UIManager : MonoBehaviour
     public Color TabbedSecretAll;
     [Tooltip("Gear prefab background -> All (should be 100% alpha)")]
     public Color TabbedGearAll;
+    [Tooltip("Investigation prefab background -> All (should be 100% alpha)")]
+    public Color TabbedInvestigationAll;
 }
