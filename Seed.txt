@@ -9761,3 +9761,94 @@ City seed 54367 -> Londus, Eurasia
 
 Dev seed 64029 -> Friday, 18 December 2020 11:18 AM
 City seed 50274 -> Londus, Eurasia
+
+Dev seed 58773 -> Friday, 18 December 2020 2:52 PM
+City seed 36220 -> Londus, Eurasia
+
+Dev seed 59569 -> Friday, 18 December 2020 3:07 PM
+City seed 54083 -> Londus, Eurasia
+
+Dev seed 41947 -> Friday, 18 December 2020 3:27 PM
+City seed 54992 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+TMPro.TMP_Text.FillCharacterVertexBuffers (System.Int32 i, System.Int32 index_X4) (at C:/Users/Owner/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMP_Text.cs:4958)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/Owner/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:3578)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/Owner/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2718)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/Owner/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2299)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/Owner/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2299)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/Owner/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2299)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/Owner/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2299)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/Owner/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2299)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/Owner/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2299)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/Owner/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2299)
+	TMPro.TextMeshProUGUI.GenerateTextMesh () (at C:/Users/Owner/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:2299)
+	TMPro.TextMeshProUGUI.OnPreRenderCanvas () (at C:/Users/Owner/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TMPro_UGUI_Private.cs:1641)
+	TMPro.TextMeshProUGUI.Rebuild (UnityEngine.UI.CanvasUpdate update) (at C:/Users/Owner/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.textmeshpro@1.2.4/Scripts/Runtime/TextMeshProUGUI.cs:209)
+	UnityEngine.UI.CanvasUpdateRegistry.PerformUpdate () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/CanvasUpdateRegistry.cs:150)
+	UnityEngine.Canvas:SendWillRenderCanvases()
+	
+Dev seed 54998 -> Friday, 18 December 2020 3:30 PM
+City seed 42875 -> Londus, Eurasia
+
+Dev seed 26696 -> Friday, 18 December 2020 3:37 PM
+City seed 1424 -> Londus, Eurasia
+
+Dev seed 14104 -> Friday, 18 December 2020 3:40 PM
+City seed 2192 -> Londus, Eurasia
+
+Dev seed 5849 -> Friday, 18 December 2020 3:48 PM
+City seed 14412 -> Londus, Eurasia
+
+Dev seed 40610 -> Friday, 18 December 2020 3:53 PM
+City seed 38103 -> Londus, Eurasia
+
+Dev seed 20802 -> Friday, 18 December 2020 3:55 PM
+City seed 53783 -> Londus, Eurasia
+
+Dev seed 40525 -> Friday, 18 December 2020 4:00 PM
+City seed 7700 -> Londus, Eurasia
+
+Dev seed 20441 -> Friday, 18 December 2020 4:03 PM
+City seed 55756 -> Londus, Eurasia
+
+Dev seed 46682 -> Friday, 18 December 2020 4:14 PM
+City seed 179 -> Londus, Eurasia
+
+Dev seed 10731 -> Friday, 18 December 2020 4:17 PM
+City seed 8872 -> Londus, Eurasia
+
+Dev seed 50968 -> Friday, 18 December 2020 4:20 PM
+City seed 3350 -> Londus, Eurasia
+
+Dev seed 33586 -> Friday, 18 December 2020 4:27 PM
+City seed 49637 -> Londus, Eurasia
+
+Dev seed 53583 -> Friday, 18 December 2020 4:29 PM
+City seed 5949 -> Londus, Eurasia
+
+Dev seed 38773 -> Friday, 18 December 2020 4:33 PM
+City seed 10835 -> Londus, Eurasia
+
+Dev seed 47691 -> Friday, 18 December 2020 4:35 PM
+City seed 14495 -> Londus, Eurasia
+
+Dev seed 33006 -> Friday, 18 December 2020 4:39 PM
+City seed 4956 -> Londus, Eurasia
+
+Dev seed 60714 -> Friday, 18 December 2020 4:43 PM
+City seed 63769 -> Londus, Eurasia
+
+Dev seed 24558 -> Friday, 18 December 2020 4:55 PM
+City seed 53542 -> Londus, Eurasia
+
+Dev seed 5268 -> Friday, 18 December 2020 4:56 PM
+City seed 53330 -> Londus, Eurasia
+
+Dev seed 15626 -> Friday, 18 December 2020 4:58 PM
+City seed 53162 -> Londus, Eurasia
+
+Dev seed 59697 -> Friday, 18 December 2020 5:00 PM
+City seed 20838 -> Londus, Eurasia
+
+Dev seed 52390 -> Friday, 18 December 2020 5:03 PM
+City seed 5789 -> Londus, Eurasia

@@ -656,7 +656,7 @@ public class TopBarUI : MonoBehaviour
     {
         if (value > 0)
         {
-            tipInvestigation.tooltipMain = string.Format("HQ currently pursuing the{0}{1}{2}into your behaviour", "\n",
+            tipInvestigation.tooltipMain = string.Format("HQ are pursuing the{0}{1}{2}into your behaviour", "\n",
                 GameManager.Formatt("following investigations", ColourType.salmonText), "\n");
             tipInvestigation.tooltipDetails = GameManager.i.playerScript.GetInvestigationTooltip();
         }

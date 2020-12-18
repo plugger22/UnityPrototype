@@ -218,9 +218,10 @@ public class ModalTabbedUI : MonoBehaviour
     private Node nodeContact;
     private Contact contact;
     private Actor actorContact;
-    private Secret secret;
+    private Actor actorInvest;
     private Actor actorSecret;
     private Effect effectSecret;
+    private Secret secret;
     private Gear gear;
     private Investigation investigation;
     private List<Contact> listOfContacts;
@@ -235,6 +236,7 @@ public class ModalTabbedUI : MonoBehaviour
     private string gearName;
     private string knowsSecretHeader;
     private string effectsSecretHeader;
+    private string investString;
     #endregion
 
     //debug
@@ -1923,12 +1925,11 @@ public class ModalTabbedUI : MonoBehaviour
         {
             case TabbedUIWho.Player:
                 tab3Header.text = "Your Secrets";
-                listOfSecrets = GameManager.i.playerScript.GetListOfSecrets();
-
+                listOfSecrets.AddRange(GameManager.i.playerScript.GetListOfSecrets());
                 break;
             case TabbedUIWho.Subordinates:
                 tab3Header.text = "Secrets Known";
-                listOfSecrets = arrayOfActorsTemp[currentSideTabIndex].GetListOfSecrets();
+                listOfSecrets.AddRange(arrayOfActorsTemp[currentSideTabIndex].GetListOfSecrets());
                 break;
             default: Debug.LogWarningFormat("Unrecognised inputData.who \"{0}\"", inputData.who); break;
         }
@@ -2041,7 +2042,7 @@ public class ModalTabbedUI : MonoBehaviour
         {
             case TabbedUIWho.Player:
                 //can have multiple gear items
-                listOfGear = GameManager.i.playerScript.GetListOfGear();
+                listOfGear.AddRange(GameManager.i.playerScript.GetListOfGear());
                 break;
             case TabbedUIWho.Subordinates:
                 //can only have a single item of gear
@@ -2165,7 +2166,8 @@ public class ModalTabbedUI : MonoBehaviour
     private void OpenInvestigations()
     {
         int count;
-        listOfInvestigations = GameManager.i.playerScript.GetListOfInvestigations();
+        listOfInvestigations.Clear();
+        listOfInvestigations.AddRange(GameManager.i.playerScript.GetListOfInvestigations());
         if (listOfInvestigations != null)
         {
             count = listOfInvestigations.Count;
@@ -2185,6 +2187,82 @@ public class ModalTabbedUI : MonoBehaviour
                             {
                                 //background
                                 interactInvest.background.color = investigationColour;
+                                //portrait -> lead investigator
+                                if (investigation.lead != ActorHQ.None)
+                                {
+                                    actorInvest = GameManager.i.dataScript.GetHqHierarchyActor(investigation.lead);
+                                    if (actorInvest != null)
+                                    { interactInvest.portrait.sprite = actorInvest.sprite; }
+                                    else { Debug.LogWarningFormat("Invalid sprite (Null) for lead {0},  investigation \"{1}\", ref {2}", investigation.lead, investigation.tag, investigation.reference); }
+                                }
+                                else { Debug.LogWarningFormat("Invalid lead (ActorHQ.None) for investigation \"{0}\", ref {1}", investigation.tag, investigation.reference); }
+                                //left text -> tag + status + originating city
+                                builder.Clear();
+                                builder.Append(GameManager.Formatt(investigation.tag, ColourType.neutralText));
+                                builder.AppendLine();
+                                builder.AppendLine();
+                                builder.Append("Lead Investigator");
+                                builder.AppendLine();
+                                builder.Append(GameManager.Formatt(actorInvest.actorName, ColourType.neutralText));
+                                builder.AppendLine();
+                                builder.Append(GameManager.Formatt(GameManager.i.hqScript.GetHqTitle(actorInvest.statusHQ), ColourType.salmonText));
+                                interactInvest.leftText.text = builder.ToString();
+                                //middle text -> evidence 
+                                builder.Clear();
+                                builder.Append("Evidence");
+                                builder.AppendLine();
+                                builder.Append(GameManager.i.guiScript.GetNormalStars(investigation.evidence));
+                                builder.AppendLine();
+                                builder.AppendLine();
+                                builder.Append("Status");
+                                builder.AppendLine();
+                                switch (investigation.status)
+                                {
+                                    case InvestStatus.Ongoing: builder.Append(GameManager.Formatt(Convert.ToString(investigation.status), ColourType.neutralText)); break;
+                                    case InvestStatus.Resolution: builder.Append(GameManager.Formatt(Convert.ToString(investigation.status), ColourType.badText)); break;
+                                    default: builder.Append(GameManager.Formatt(Convert.ToString(investigation.status), ColourType.normalText)); break;
+                                }
+                                interactInvest.middleText.text = builder.ToString();
+                                //right text -> duration and timer
+                                builder.Clear();
+                                if (investigation.timer > -1)
+                                {
+                                    builder.Append("Investigation will conclude");
+                                    builder.AppendLine();
+                                    investString = string.Format("in {0} day{1}", investigation.timer, investigation.timer != 1 ? "s" : "");
+                                    builder.Append(GameManager.Formatt(investString, ColourType.badText));
+                                    builder.AppendLine();
+                                    builder.AppendLine();
+                                    builder.Append("Expected outcome");
+                                    builder.AppendLine();
+                                    switch (investigation.outcome)
+                                    {
+                                        case InvestOutcome.Guilty: builder.Append(GameManager.Formatt("Guilty", ColourType.badText)); break;
+                                        case InvestOutcome.Innocent: builder.Append(GameManager.Formatt("Innocent", ColourType.goodText)); break;
+                                        default: builder.Append(GameManager.Formatt("Unknown", ColourType.whiteText)); break;
+                                    }
+                                }
+                                else
+                                {
+                                    builder.Append("You have been under investigation for");
+                                    builder.AppendLine();
+                                    int numOfDays = currentTurn - investigation.turnStart;
+                                    investString = string.Format("{0} day{1}", numOfDays, numOfDays != 1 ? "s" : "");
+                                    builder.Append(GameManager.Formatt(investString, ColourType.neutralText));
+                                    builder.AppendLine();
+                                    builder.AppendLine();
+                                    builder.Append("Expected outcome");
+                                    builder.AppendLine();
+                                    switch (investigation.evidence)
+                                    {
+                                        case 0: builder.Append(GameManager.Formatt("Guilty", ColourType.badText)); break;
+                                        case 1:
+                                        case 2: builder.Append(GameManager.Formatt("Uncertain", ColourType.neutralText)); break;
+                                        case 3: builder.Append(GameManager.Formatt("Innocent", ColourType.goodText)); break;
+                                        default: builder.Append(GameManager.Formatt("Unknown", ColourType.whiteText)); break;
+                                    }
+                                }
+                                interactInvest.rightText.text = builder.ToString();
                             }
                             else { Debug.LogWarningFormat("Invalid interactInvest (Null) for arrayOfInvestigations[{0}]", i); }
                         }

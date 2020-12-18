@@ -1097,7 +1097,7 @@ public class PlayerManager : MonoBehaviour
                             //used to force a breakdown at the next opportunity
                             numOfSuperStress++;
                             //history
-                            GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "Has become SUPER STRESSED", district = nodeName});
+                            GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = "Has become SUPER STRESSED", district = nodeName });
                             break;
                     }
             }
@@ -2022,11 +2022,35 @@ public class PlayerManager : MonoBehaviour
         {
             reference = $"{turn}Debug",
             city = GameManager.i.campaignScript.scenario.city.tag,
-            tag = "Debug",
-            turnStart = turn,
-            lead = ActorHQ.SubBoss1,
-            status = InvestStatus.Ongoing,
+            turnStart = turn
         };
+        switch (Random.Range(0, 3))
+        {
+            case 0: investigation.tag = "Bedwetting Drama"; break;
+            case 1: investigation.tag = "Rats in the Ranks"; break;
+            case 2: investigation.tag = "Born a Bastard"; break;
+        }
+        investigation.lead = (ActorHQ)Random.Range(1, 5);
+        if (Random.Range(0, 100) < 50)
+        {
+            investigation.status = InvestStatus.Ongoing;
+            investigation.evidence = Random.Range(0, 4);
+        }
+        else
+        {
+            investigation.status = InvestStatus.Resolution;
+            if (Random.Range(0, 100) < 50)
+            {
+                investigation.evidence = 3;
+                investigation.outcome = InvestOutcome.Innocent;
+            }
+            else
+            {
+                investigation.evidence = 0;
+                investigation.outcome = InvestOutcome.Guilty;
+            }
+            investigation.timer = Random.Range(1, 10);
+        }
         AddInvestigation(investigation);
     }
 
