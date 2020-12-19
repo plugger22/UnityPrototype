@@ -124,6 +124,12 @@ public class ModalTabbedUI : MonoBehaviour
     public TabbedInvestInteraction tab4Invest1;
     public TabbedInvestInteraction tab4Invest2;
 
+    [Header("Canvas5 -> Likes")]
+    public TabbedLikesInteraction tab5Likes0;       //strongly likes
+    public TabbedLikesInteraction tab5Likes1;       //likes
+    public TabbedLikesInteraction tab5Likes2;       //strong dislikes
+    public TabbedLikesInteraction tab5Likes3;       //dislikes
+
     [Header("Canvas6 -> Gear")]
     public TextMeshProUGUI tab6Header;
     public TabbedGearInteraction tab6Gear0;
@@ -201,6 +207,8 @@ public class ModalTabbedUI : MonoBehaviour
     private int maxNumOfSecrets;
     //Page 4
     private int maxNumOfInvestigations;
+    //Page 5
+    private int maxNumOfLikes;
     //Page 6
     private int maxNumOfGear;
     //Page7
@@ -311,6 +319,12 @@ public class ModalTabbedUI : MonoBehaviour
     private TabbedSecretInteraction[] arrayOfSecrets;
     //Canvas4 -> Investigations
     private TabbedInvestInteraction[] arrayOfInvestigations;
+    //Canvas5 -> Likes
+    private TabbedLikesInteraction[] arrayOfLikes;
+    private List<string> listOfStrongLikes;
+    private List<string> listOfLikes;
+    private List<string> listOfStrongDislikes;
+    private List<string> listOfDislikes;
     //Canvas6 -> Gear
     private TabbedGearInteraction[] arrayOfGear;
     //Canvas7 -> History
@@ -469,6 +483,13 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab4Invest1 != null, "Invalid tab4Invest1 (Null)");
         Debug.Assert(tab4Invest2 != null, "Invalid tab4Invest2 (Null)");
         //
+        // - - - canvas5
+        //
+        Debug.Assert(tab5Likes0 != null, "Invalid tab5Likes0 (Null)");
+        Debug.Assert(tab5Likes1 != null, "Invalid tab5Likes1 (Null)");
+        Debug.Assert(tab5Likes2 != null, "Invalid tab5Likes2 (Null)");
+        Debug.Assert(tab5Likes3 != null, "Invalid tab5Likes3 (Null)");
+        //
         // - - - canvas6
         //
         Debug.Assert(tab6Header != null, "Invalid tab6Header (Null)");
@@ -570,6 +591,13 @@ public class ModalTabbedUI : MonoBehaviour
         //page 4
         maxNumOfInvestigations = GameManager.i.playerScript.maxInvestigations;
         arrayOfInvestigations = new TabbedInvestInteraction[maxNumOfInvestigations];
+        //page 5
+        maxNumOfLikes = 4;
+        arrayOfLikes = new TabbedLikesInteraction[maxNumOfLikes];
+        listOfLikes = new List<string>();
+        listOfStrongLikes = new List<string>();
+        listOfDislikes = new List<string>();
+        listOfStrongDislikes = new List<string>();
         //page 6
         maxNumOfGear = GameManager.i.gearScript.maxNumOfGear;
         arrayOfGear = new TabbedGearInteraction[maxNumOfGear];
@@ -755,6 +783,13 @@ public class ModalTabbedUI : MonoBehaviour
         arrayOfInvestigations[0] = tab4Invest0;
         arrayOfInvestigations[1] = tab4Invest1;
         arrayOfInvestigations[2] = tab4Invest2;
+        //
+        // - - - Page 5 Likes
+        //
+        arrayOfLikes[0] = tab5Likes0;
+        arrayOfLikes[1] = tab5Likes1;
+        arrayOfLikes[2] = tab5Likes2;
+        arrayOfLikes[3] = tab5Likes3;
         //
         // - - - Page 6 Gear
         //
@@ -1415,7 +1450,7 @@ public class ModalTabbedUI : MonoBehaviour
                 OpenInvestigations();
                 break;
             case TabbedPage.Likes:
-
+                OpenLikesAndDislikes();
                 break;
             case TabbedPage.Secrets:
                 OpenSecrets();
@@ -2283,6 +2318,16 @@ public class ModalTabbedUI : MonoBehaviour
             }
         }
         else { Debug.LogWarning("Invalid listOfInvestigations (Null)"); }
+    }
+    #endregion
+
+    #region OpenLikesAndDislikes
+    /// <summary>
+    /// All in one open/update Likes page (Player only)
+    /// </summary>
+    private void OpenLikesAndDislikes()
+    {
+        
     }
     #endregion
 
