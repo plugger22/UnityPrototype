@@ -1132,6 +1132,148 @@ public class PersonalityManager : MonoBehaviour
     }
 
     //
+    // - - - Player Likes and Dislikes
+    //
+
+    /// <summary>
+    /// Generates a data package (4 x string lists) of player likes and dislikes. Lists are empty if a problem
+    /// </summary>
+    /// <returns></returns>
+    public PlayerLikesData GetPlayerLikes()
+    {
+        PlayerLikesData data = new PlayerLikesData();
+        StringBuilder builder = new StringBuilder();
+        //Get preferences
+        int factorValue;
+        for (int index = 0; index < numOfFactors; index++)
+        {
+            factorValue = playerPersonality.GetFactorValue(index);
+            Debug.AssertFormat(factorValue >= minPersonalityFactor && factorValue <= maxPersonalityFactor, "Invalid factorValue \"{0}\" (needs to be between {1} and {2}, inclusive)",
+                factorValue, minPersonalityFactor, maxPersonalityFactor);
+            switch (index)
+            {
+                case 0:
+                    //Openness
+                    switch (factorValue)
+                    {
+                        case 2:
+                            data.listOfStrongLikes.AddRange(listOfOpennessGood);
+                            data.listOfStrongDislikes.AddRange(listOfOpennessBad);
+                            break;
+                        case 1:
+                            data.listOfLikes.AddRange(listOfOpennessGood);
+                            data.listOfDislikes.AddRange(listOfOpennessBad);
+                            break;
+                        case 0: break;
+                        case -1:
+                            data.listOfLikes.AddRange(listOfOpennessBad);
+                            data.listOfDislikes.AddRange(listOfOpennessGood);
+                            break;
+                        case -2:
+                            data.listOfStrongLikes.AddRange(listOfOpennessBad);
+                            data.listOfStrongDislikes.AddRange(listOfOpennessGood);
+                            break;
+                    }
+                    break;
+                case 1:
+                    //Conscientiousness
+                    switch (factorValue)
+                    {
+                        case 2:
+                            data.listOfStrongLikes.AddRange(listOfConscientiousnessGood);
+                            data.listOfStrongDislikes.AddRange(listOfConscientiousnessBad);
+                            break;
+                        case 1:
+                            data.listOfLikes.AddRange(listOfConscientiousnessGood);
+                            data.listOfDislikes.AddRange(listOfConscientiousnessBad);
+                            break;
+                        case 0: break;
+                        case -1:
+                            data.listOfLikes.AddRange(listOfConscientiousnessBad);
+                            data.listOfDislikes.AddRange(listOfConscientiousnessGood);
+                            break;
+                        case -2:
+                            data.listOfStrongLikes.AddRange(listOfConscientiousnessBad);
+                            data.listOfStrongDislikes.AddRange(listOfConscientiousnessGood);
+                            break;
+                    }
+                    break;
+                case 2:
+                    //Extroversion
+                    switch (factorValue)
+                    {
+                        case 2:
+                            data.listOfStrongLikes.AddRange(listOfExtroversionGood);
+                            data.listOfStrongDislikes.AddRange(listOfExtroversionBad);
+                            break;
+                        case 1:
+                            data.listOfLikes.AddRange(listOfExtroversionGood);
+                            data.listOfDislikes.AddRange(listOfExtroversionBad);
+                            break;
+                        case 0: break;
+                        case -1:
+                            data.listOfLikes.AddRange(listOfExtroversionBad);
+                            data.listOfDislikes.AddRange(listOfExtroversionGood);
+                            break;
+                        case -2:
+                            data.listOfStrongLikes.AddRange(listOfExtroversionBad);
+                            data.listOfStrongDislikes.AddRange(listOfExtroversionGood);
+                            break;
+                    }
+                    break;
+                case 3:
+                    //Agreeableness
+                    switch (factorValue)
+                    {
+                        case 2:
+                            data.listOfStrongLikes.AddRange(listOfAgreeablenessGood);
+                            data.listOfStrongDislikes.AddRange(listOfAgreeablenessBad);
+                            break;
+                        case 1:
+                            data.listOfLikes.AddRange(listOfAgreeablenessGood);
+                            data.listOfDislikes.AddRange(listOfAgreeablenessBad);
+                            break;
+                        case 0: break;
+                        case -1:
+                            data.listOfLikes.AddRange(listOfAgreeablenessBad);
+                            data.listOfDislikes.AddRange(listOfAgreeablenessGood);
+                            break;
+                        case -2:
+                            data.listOfStrongLikes.AddRange(listOfAgreeablenessBad);
+                            data.listOfStrongDislikes.AddRange(listOfAgreeablenessGood);
+                            break;
+                    }
+                    break;
+                case 4:
+                    //Neurotiscism
+                    switch (factorValue)
+                    {
+                        case 2:
+                            data.listOfStrongLikes.AddRange(listOfNeurotiscismGood);
+                            data.listOfStrongDislikes.AddRange(listOfNeurotiscismBad);
+                            break;
+                        case 1:
+                            data.listOfLikes.AddRange(listOfNeurotiscismGood);
+                            data.listOfDislikes.AddRange(listOfNeurotiscismBad);
+                            break;
+                        case 0: break;
+                        case -1:
+                            data.listOfLikes.AddRange(listOfNeurotiscismBad);
+                            data.listOfDislikes.AddRange(listOfNeurotiscismGood);
+                            break;
+                        case -2:
+                            data.listOfStrongLikes.AddRange(listOfNeurotiscismBad);
+                            data.listOfStrongDislikes.AddRange(listOfNeurotiscismGood);
+                            break;
+                    }
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised index \"{0}\"", index); break;
+            }
+        }
+        return data;
+    }
+
+    //
     // - - - Debug - - -
     //
 
@@ -1397,175 +1539,49 @@ public class PersonalityManager : MonoBehaviour
     {
         int count;
         StringBuilder builder = new StringBuilder();
-        List<string> listOfLikes = new List<string>();
-        List<string> listOfDislikes = new List<string>();
-        List<string> listOfStrongLikes = new List<string>();
-        List<string> listOfStrongDislikes = new List<string>();
-        //Get preferences
-        int factorValue;
-        for (int index = 0; index < numOfFactors; index++)
+        PlayerLikesData data = GetPlayerLikes();
+        if (data != null)
         {
-            factorValue = playerPersonality.GetFactorValue(index);
-            Debug.AssertFormat(factorValue >= minPersonalityFactor && factorValue <= maxPersonalityFactor, "Invalid factorValue \"{0}\" (needs to be between {1} and {2}, inclusive)",
-                factorValue, minPersonalityFactor, maxPersonalityFactor);
-            switch (index)
+            //generate display
+            builder.AppendFormat("- Player Likes and Dislikes{0}", "\n");
+            //strong likes
+            builder.AppendFormat("{0}- Strongly Likes{1}", "\n", "\n");
+            count = data.listOfStrongLikes.Count;
+            if (count > 0)
             {
-                case 0:
-                    //Openness
-                    switch (factorValue)
-                    {
-                        case 2:
-                            listOfStrongLikes.AddRange(listOfOpennessGood);
-                            listOfStrongDislikes.AddRange(listOfOpennessBad);
-                            break;
-                        case 1:
-                            listOfLikes.AddRange(listOfOpennessGood);
-                            listOfDislikes.AddRange(listOfOpennessBad);
-                            break;
-                        case 0: break;
-                        case -1:
-                            listOfLikes.AddRange(listOfOpennessBad);
-                            listOfDislikes.AddRange(listOfOpennessGood);
-                            break;
-                        case -2:
-                            listOfStrongLikes.AddRange(listOfOpennessBad);
-                            listOfStrongDislikes.AddRange(listOfOpennessGood);
-                            break;
-                    }
-                    break;
-                case 1:
-                    //Conscientiousness
-                    switch (factorValue)
-                    {
-                        case 2:
-                            listOfStrongLikes.AddRange(listOfConscientiousnessGood);
-                            listOfStrongDislikes.AddRange(listOfConscientiousnessBad);
-                            break;
-                        case 1:
-                            listOfLikes.AddRange(listOfConscientiousnessGood);
-                            listOfDislikes.AddRange(listOfConscientiousnessBad);
-                            break;
-                        case 0: break;
-                        case -1:
-                            listOfLikes.AddRange(listOfConscientiousnessBad);
-                            listOfDislikes.AddRange(listOfConscientiousnessGood);
-                            break;
-                        case -2:
-                            listOfStrongLikes.AddRange(listOfConscientiousnessBad);
-                            listOfStrongDislikes.AddRange(listOfConscientiousnessGood);
-                            break;
-                    }
-                    break;
-                case 2:
-                    //Extroversion
-                    switch (factorValue)
-                    {
-                        case 2:
-                            listOfStrongLikes.AddRange(listOfExtroversionGood);
-                            listOfStrongDislikes.AddRange(listOfExtroversionBad);
-                            break;
-                        case 1:
-                            listOfLikes.AddRange(listOfExtroversionGood);
-                            listOfDislikes.AddRange(listOfExtroversionBad);
-                            break;
-                        case 0: break;
-                        case -1:
-                            listOfLikes.AddRange(listOfExtroversionBad);
-                            listOfDislikes.AddRange(listOfExtroversionGood);
-                            break;
-                        case -2:
-                            listOfStrongLikes.AddRange(listOfExtroversionBad);
-                            listOfStrongDislikes.AddRange(listOfExtroversionGood);
-                            break;
-                    }
-                    break;
-                case 3:
-                    //Agreeableness
-                    switch (factorValue)
-                    {
-                        case 2:
-                            listOfStrongLikes.AddRange(listOfAgreeablenessGood);
-                            listOfStrongDislikes.AddRange(listOfAgreeablenessBad);
-                            break;
-                        case 1:
-                            listOfLikes.AddRange(listOfAgreeablenessGood);
-                            listOfDislikes.AddRange(listOfAgreeablenessBad);
-                            break;
-                        case 0: break;
-                        case -1:
-                            listOfLikes.AddRange(listOfAgreeablenessBad);
-                            listOfDislikes.AddRange(listOfAgreeablenessGood);
-                            break;
-                        case -2:
-                            listOfStrongLikes.AddRange(listOfAgreeablenessBad);
-                            listOfStrongDislikes.AddRange(listOfAgreeablenessGood);
-                            break;
-                    }
-                    break;
-                case 4:
-                    //Neurotiscism
-                    switch (factorValue)
-                    {
-                        case 2:
-                            listOfStrongLikes.AddRange(listOfNeurotiscismGood);
-                            listOfStrongDislikes.AddRange(listOfNeurotiscismBad);
-                            break;
-                        case 1:
-                            listOfLikes.AddRange(listOfNeurotiscismGood);
-                            listOfDislikes.AddRange(listOfNeurotiscismBad);
-                            break;
-                        case 0: break;
-                        case -1:
-                            listOfLikes.AddRange(listOfNeurotiscismBad);
-                            listOfDislikes.AddRange(listOfNeurotiscismGood);
-                            break;
-                        case -2:
-                            listOfStrongLikes.AddRange(listOfNeurotiscismBad);
-                            listOfStrongDislikes.AddRange(listOfNeurotiscismGood);
-                            break;
-                    }
-                    break;
-                default: Debug.LogWarningFormat("Unrecognised index \"{0}\"", index); break;
+                foreach (string item in data.listOfStrongLikes)
+                { builder.AppendFormat(" {0}{1}", item, "\n"); }
             }
+            else { builder.AppendFormat(" no particular preferences{0}", "\n"); }
+            //Likes
+            builder.AppendFormat("{0}- Likes{1}", "\n", "\n");
+            count = data.listOfLikes.Count;
+            if (count > 0)
+            {
+                foreach (string item in data.listOfLikes)
+                { builder.AppendFormat(" {0}{1}", item, "\n"); }
+            }
+            else { builder.AppendFormat(" no particular preferences{0}", "\n"); }
+            //Dislikes
+            builder.AppendFormat("{0}- Dislikes{1}", "\n", "\n");
+            count = data.listOfDislikes.Count;
+            if (count > 0)
+            {
+                foreach (string item in data.listOfDislikes)
+                { builder.AppendFormat(" {0}{1}", item, "\n"); }
+            }
+            else { builder.AppendFormat(" no particular preferences{0}", "\n"); }
+            //strong Dislikes
+            builder.AppendFormat("{0}- Strongly Dislikes{1}", "\n", "\n");
+            count = data.listOfStrongDislikes.Count;
+            if (count > 0)
+            {
+                foreach (string item in data.listOfStrongDislikes)
+                { builder.AppendFormat(" {0}{1}", item, "\n"); }
+            }
+            else { builder.AppendFormat(" no particular preferences{0}", "\n"); }
         }
-        //generate display
-        builder.AppendFormat("- Player Likes and Dislikes{0}", "\n");
-        //strong likes
-        builder.AppendFormat("{0}- Strongly Likes{1}", "\n", "\n");
-        count = listOfStrongLikes.Count;
-        if (count > 0)
-        {
-            foreach (string item in listOfStrongLikes)
-            { builder.AppendFormat(" {0}{1}", item, "\n"); }
-        }
-        else { builder.AppendFormat(" no particular preferences{0}", "\n"); }
-        //Likes
-        builder.AppendFormat("{0}- Likes{1}", "\n", "\n");
-        count = listOfLikes.Count;
-        if (count > 0)
-        {
-            foreach (string item in listOfLikes)
-            { builder.AppendFormat(" {0}{1}", item, "\n"); }
-        }
-        else { builder.AppendFormat(" no particular preferences{0}", "\n"); }
-        //Dislikes
-        builder.AppendFormat("{0}- Dislikes{1}", "\n", "\n");
-        count = listOfDislikes.Count;
-        if (count > 0)
-        {
-            foreach (string item in listOfDislikes)
-            { builder.AppendFormat(" {0}{1}", item, "\n"); }
-        }
-        else { builder.AppendFormat(" no particular preferences{0}", "\n"); }
-        //strong Dislikes
-        builder.AppendFormat("{0}- Strongly Dislikes{1}", "\n", "\n");
-        count = listOfStrongDislikes.Count;
-        if (count > 0)
-        {
-            foreach (string item in listOfStrongDislikes)
-            { builder.AppendFormat(" {0}{1}", item, "\n"); }
-        }
-        else { builder.AppendFormat(" no particular preferences{0}", "\n"); }
+        else { Debug.LogError("Invalid PlayerLikesData package (Null)"); }
         return builder.ToString();
     }
 

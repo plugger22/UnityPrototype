@@ -1434,5 +1434,17 @@ namespace packageAPI
     }
 
 
+    /// <summary>
+    /// Data package for PersonalityManager.cs ->  GetPlayerLikes
+    /// </summary>
+    public class PlayerLikesData
+    {
+        public List<string> listOfLikes = new List<string>();
+        public List<string> listOfDislikes = new List<string>();
+        public List<string> listOfStrongLikes = new List<string>();
+        public List<string> listOfStrongDislikes = new List<string>();
+    }
+
+
     //new classes above here
 }
