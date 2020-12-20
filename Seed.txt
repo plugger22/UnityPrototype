@@ -9958,3 +9958,9 @@ ModalTabbedUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/ModalTabbedUI/
 	
 Dev seed 8524 -> Sunday, 20 December 2020 6:14 PM
 City seed 58545 -> Londus, Eurasia
+
+Dev seed 29180 -> Sunday, 20 December 2020 8:33 PM
+City seed 15182 -> Londus, Eurasia
+
+Dev seed 59650 -> Sunday, 20 December 2020 8:35 PM
+City seed 57881 -> Londus, Eurasia

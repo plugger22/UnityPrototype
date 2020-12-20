@@ -102346,6 +102346,13 @@ Prefab:
       propertyPath: m_Name
       value: textLikes1
       objectReference: {fileID: 0}
+    - target: {fileID: 114273839816453478, guid: 528c5a76c75573d4498474b84d7cd142,
+        type: 2}
+      propertyPath: m_text
+      value: 'Likes
+
+'
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 528c5a76c75573d4498474b84d7cd142, type: 2}
   m_IsPrefabAsset: 0
