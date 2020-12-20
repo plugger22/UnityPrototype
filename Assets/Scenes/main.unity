@@ -22201,26 +22201,6 @@ Prefab:
       propertyPath: m_Name
       value: tabbedLikes0
       objectReference: {fileID: 0}
-    - target: {fileID: 114687651657946490, guid: 528c5a76c75573d4498474b84d7cd142,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114687651657946490, guid: 528c5a76c75573d4498474b84d7cd142,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114273839816453478, guid: 528c5a76c75573d4498474b84d7cd142,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114273839816453478, guid: 528c5a76c75573d4498474b84d7cd142,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 528c5a76c75573d4498474b84d7cd142, type: 2}
   m_IsPrefabAsset: 0
@@ -62757,7 +62737,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1198920978
 RectTransform:
   m_ObjectHideFlags: 0
@@ -102357,6 +102337,14 @@ Prefab:
         type: 2}
       propertyPath: m_isInputParsingRequired
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1687564723574106, guid: 528c5a76c75573d4498474b84d7cd142, type: 2}
+      propertyPath: m_Name
+      value: headerLikes1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1015230767587994, guid: 528c5a76c75573d4498474b84d7cd142, type: 2}
+      propertyPath: m_Name
+      value: textLikes1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 528c5a76c75573d4498474b84d7cd142, type: 2}

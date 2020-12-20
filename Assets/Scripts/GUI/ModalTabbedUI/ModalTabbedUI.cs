@@ -3,6 +3,7 @@ using modalAPI;
 using packageAPI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -321,10 +322,6 @@ public class ModalTabbedUI : MonoBehaviour
     private TabbedInvestInteraction[] arrayOfInvestigations;
     //Canvas5 -> Likes
     private TabbedLikesInteraction[] arrayOfLikes;
-    private List<string> listOfStrongLikes;
-    private List<string> listOfLikes;
-    private List<string> listOfStrongDislikes;
-    private List<string> listOfDislikes;
     //Canvas6 -> Gear
     private TabbedGearInteraction[] arrayOfGear;
     //Canvas7 -> History
@@ -594,10 +591,40 @@ public class ModalTabbedUI : MonoBehaviour
         //page 5
         maxNumOfLikes = 4;
         arrayOfLikes = new TabbedLikesInteraction[maxNumOfLikes];
-        listOfLikes = new List<string>();
-        listOfStrongLikes = new List<string>();
-        listOfDislikes = new List<string>();
-        listOfStrongDislikes = new List<string>();
+        //cache likes data
+        PlayerLikesData data = GameManager.i.personScript.GetPlayerLikes();
+        if (data != null)
+        {
+            if (data.listOfLikes != null)
+            {
+                if (data.listOfLikes.Count > 0)
+                { tab5Likes0.preferences.text = data.listOfLikes.Aggregate((x, y) => x + "\n" + y); }
+                else { tab5Likes0.preferences.text = "None"; }
+            }
+            else { Debug.LogWarning("Invalid listOfLikes (Null)"); }
+            if (data.listOfStrongLikes != null)
+            {
+                if (data.listOfStrongLikes.Count > 0)
+                { tab5Likes1.preferences.text = data.listOfStrongLikes.Aggregate((x, y) => x + "\n" + y); }
+                else { tab5Likes1.preferences.text = "None"; }
+            }
+            else { Debug.LogWarning("Invalid listOfStrongLikes (Null)"); }
+            if (data.listOfDislikes != null)
+            {
+                if (data.listOfDislikes.Count > 0)
+                { tab5Likes2.preferences.text = data.listOfDislikes.Aggregate((x, y) => x + "\n" + y); }
+                else { tab5Likes2.preferences.text = "None"; }
+            }
+            else { Debug.LogWarning("Invalid listOfDislikes (Null)"); }
+            if (data.listOfStrongDislikes != null)
+            {
+                if (data.listOfStrongDislikes.Count > 0)
+                { tab5Likes3.preferences.text = data.listOfStrongDislikes.Aggregate((x, y) => x + "\n" + y); }
+                else { tab5Likes3.preferences.text = "None"; }
+            }
+            else { Debug.LogWarning("Invalid listOfDislikes (Null)"); }
+        }
+        else { Debug.LogError("Invalid PlayerLikesData (Null)"); }
         //page 6
         maxNumOfGear = GameManager.i.gearScript.maxNumOfGear;
         arrayOfGear = new TabbedGearInteraction[maxNumOfGear];
@@ -697,16 +724,18 @@ public class ModalTabbedUI : MonoBehaviour
         knowsSecretHeader = GameManager.Formatt("Who Knows?", ColourType.neutralText);
         effectsSecretHeader = GameManager.Formatt("Effects if Revealed", ColourType.neutralText);
         //
-        // - - - Page0 -> Sub Header colours
+        // - - - Page 0  
         //
+        //Sub Header colours
         tab0Header0.image.color = tabSubHeaderColour;
         tab0Header1.image.color = tabSubHeaderColour;
         tab0Header2.image.color = tabSubHeaderColour;
         tab0Header3.image.color = tabSubHeaderColour;
         tab0Header4.image.color = tabSubHeaderColour;
         //
-        // - - - Page1 -> Personality Matrix setup
+        // - - - Page 1  
         //
+        //Personality Matrix setup
         arrayOfPersons[0] = tab1Person0;
         arrayOfPersons[1] = tab1Person1;
         arrayOfPersons[2] = tab1Person2;
@@ -790,6 +819,9 @@ public class ModalTabbedUI : MonoBehaviour
         arrayOfLikes[1] = tab5Likes1;
         arrayOfLikes[2] = tab5Likes2;
         arrayOfLikes[3] = tab5Likes3;
+        //subheaders
+        for (int i = 0; i < arrayOfLikes.Length; i++)
+        { arrayOfLikes[i].background.color = tabSubHeaderColour; }
         //
         // - - - Page 6 Gear
         //
@@ -1450,7 +1482,7 @@ public class ModalTabbedUI : MonoBehaviour
                 OpenInvestigations();
                 break;
             case TabbedPage.Likes:
-                OpenLikesAndDislikes();
+                //cached data (InitialiseSessionStart) -> no need to do anything
                 break;
             case TabbedPage.Secrets:
                 OpenSecrets();
@@ -2321,15 +2353,6 @@ public class ModalTabbedUI : MonoBehaviour
     }
     #endregion
 
-    #region OpenLikesAndDislikes
-    /// <summary>
-    /// All in one open/update Likes page (Player only)
-    /// </summary>
-    private void OpenLikesAndDislikes()
-    {
-        
-    }
-    #endregion
 
     #endregion
 

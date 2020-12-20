@@ -733,7 +733,7 @@ MonoBehaviour:
   - Promoting subordinates
   - Reassuring subordinates in the Reserves
   listOfAgreeablenessBad:
-  - Not promising subordinates when you send them to the Reserves
+  - Not promising subordinates sent to the Reserves
   - Bullying subordinates in the Reserves
   - Personally coerciing  (drugs, money, etc.) district VIPs
   listOfConscientiousnessGood:
@@ -741,9 +741,9 @@ MonoBehaviour:
   listOfConscientiousnessBad:
   - Giving gear to subordinates
   listOfExtroversionGood:
-  - Disposing of (permanently) Corrupt subordinates
-  - Disposing of (permanently)Disloyal (Questionable) subordinates
-  - Personal use of stimulants (Jungle Juice, NZT, Nitro Pills, Stims)
+  - Disposing of Corrupt subordinates
+  - Disposing of Disloyal (Questionable) subordinates
+  - Personal drug use (Jungle Juice, NZT, NitroPills, Stims)
   listOfExtroversionBad:
   - Taking back gear that's already been given to a subordinate
   listOfNeurotiscismGood:

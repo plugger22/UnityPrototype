@@ -9900,3 +9900,61 @@ ModalTabbedUI.CloseTabbedUI () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedU
 	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
 	UnityEngine.EventSystems.EventSystem:Update()
 	
+Dev seed 11548 -> Sunday, 20 December 2020 6:03 PM
+City seed 35906 -> Londus, Eurasia
+ERROR Tag: None is not defined.
+UnityEngine.Component:set_tag(String)
+	ModalTabbedUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:602)
+	ModalTabbedUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:367)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:922)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	ERROR Tag: Personally hacking district security systems
+Taking back gear that's already been given to a subordinate
+Not promising subordinates when you send them to the Reserves
+Bullying subordinates in the Reserves
+Personally coerciing  (drugs, money, etc.) district VIPs is not defined.
+UnityEngine.Component:set_tag(String)
+	ModalTabbedUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:608)
+	ModalTabbedUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:367)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:922)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	ERROR Tag: Firing active subordinates for no particular reason
+Killing off subordinates because you don't like them
+Firing subordinates in the Reserves just because you can is not defined.
+UnityEngine.Component:set_tag(String)
+	ModalTabbedUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:615)
+	ModalTabbedUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:367)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:922)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	ERROR Tag: Giving gear to subordinates
+Disposing of (permanently) Corrupt subordinates
+Disposing of (permanently)Disloyal (Questionable) subordinates
+Personal use of stimulants (Jungle Juice, NZT, Nitro Pills, Stims)
+Promising subordinates when you send them to the Reserves
+Sending subordinates to the Reserves when they are Stressed
+Promoting subordinates
+Reassuring subordinates in the Reserves is not defined.
+UnityEngine.Component:set_tag(String)
+	ModalTabbedUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:622)
+	ModalTabbedUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:367)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:922)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	
+Dev seed 4177 -> Sunday, 20 December 2020 6:05 PM
+City seed 32813 -> Londus, Eurasia
+
+Dev seed 50695 -> Sunday, 20 December 2020 6:12 PM
+City seed 21118 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:630)
+	ModalTabbedUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:367)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:868)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:922)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:413)
+	
+Dev seed 8524 -> Sunday, 20 December 2020 6:14 PM
+City seed 58545 -> Londus, Eurasia
