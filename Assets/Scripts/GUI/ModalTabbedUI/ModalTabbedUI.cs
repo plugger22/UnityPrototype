@@ -252,6 +252,8 @@ public class ModalTabbedUI : MonoBehaviour
     private TabbedSecretInteraction interactSecret;
     private TabbedGearInteraction interactGear;
     private TabbedInvestInteraction interactInvest;
+    private TabbedStatInteraction interactStat;
+    private TabbedStatItemInteraction interactStatItem;
     private string gearName;
     private string knowsSecretHeader;
     private string effectsSecretHeader;
@@ -295,6 +297,7 @@ public class ModalTabbedUI : MonoBehaviour
     private Color secretColour;
     private Color gearColour;
     private Color investigationColour;
+    private Color statItemColour;
     #endregion
 
     //Input data
@@ -579,6 +582,7 @@ public class ModalTabbedUI : MonoBehaviour
         secretColour = GameManager.i.uiScript.TabbedSecretAll;
         gearColour = GameManager.i.uiScript.TabbedGearAll;
         investigationColour = GameManager.i.uiScript.TabbedInvestigationAll;
+        statItemColour = GameManager.i.uiScript.TabbedStatItem;
         Color tempColour = tabSubHeaderTextActiveColour;
         tempColour.a = 0.60f;
         tabSubHeaderTextDormantColour = tempColour;
@@ -925,9 +929,13 @@ public class ModalTabbedUI : MonoBehaviour
         arrayOfStats[3] = tab8Stat3;
         arrayOfStats[4] = tab8Stat4;
         arrayOfStats[5] = tab8Stat5;
-        //subheaders
+        //subheaders and statItem colours
         for (int i = 0; i < arrayOfStats.Length; i++)
-        { arrayOfStats[i].background.color = tabSubHeaderColour; }
+        {
+            arrayOfStats[i].background.color = tabSubHeaderColour;
+            for (int j = 0; j < arrayOfStats[i].listOfItems.Count; j++)
+            { arrayOfStats[i].listOfItems[j].background.color = statItemColour; }
+        }
         //
         // - - - Initialisations
         //
@@ -2418,6 +2426,19 @@ public class ModalTabbedUI : MonoBehaviour
                 arrayOfStats[3].gameObject.SetActive(false);
                 arrayOfStats[4].gameObject.SetActive(false);
                 arrayOfStats[5].gameObject.SetActive(false);
+                //Overview
+                interactStat = arrayOfStats[0];
+                interactStat.header.text = "Overview";
+                interactStatItem = interactStat.listOfItems[0];
+
+                
+                //Evasion
+                arrayOfStats[1].header.text = "Evasion";
+
+                //Mental State
+                arrayOfStats[2].header.text = "Mental State";
+
+
                 break;
             case TabbedUIWho.HQ:
                 arrayOfStats[0].gameObject.SetActive(true);

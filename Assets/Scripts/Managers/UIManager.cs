@@ -103,4 +103,6 @@ public class UIManager : MonoBehaviour
     public Color TabbedGearAll;
     [Tooltip("Investigation prefab background -> All (should be 100% alpha)")]
     public Color TabbedInvestigationAll;
+    [Tooltip("Statistics item background -> minimal alpha (25)")]
+    public Color TabbedStatItem;
 }
