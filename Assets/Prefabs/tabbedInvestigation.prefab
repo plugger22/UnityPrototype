@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 114103475697906530}
   - component: {fileID: 114150065496245576}
   m_Layer: 5
-  m_Name: tabbedInvestigation
+  m_Name: TabbedInvestigation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

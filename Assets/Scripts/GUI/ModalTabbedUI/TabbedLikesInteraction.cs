@@ -10,11 +10,13 @@ using UnityEngine.UI;
 public class TabbedLikesInteraction : MonoBehaviour
 {
     public Image background;
+    public TextMeshProUGUI subHeader;
     public TextMeshProUGUI preferences;
 
     public void Awake()
     {
         Debug.Assert(background != null, "Invalid background (Null)");
+        Debug.Assert(subHeader != null, "Invalid subHeader (Null)");
         Debug.Assert(preferences != null, "Invalid preferences (Null)");
     }
 }

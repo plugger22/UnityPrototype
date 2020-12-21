@@ -167,7 +167,7 @@ public class GUIManager : MonoBehaviour
     [HideInInspector] public string supportIcon;
     [HideInInspector] public string securityIcon;
     [HideInInspector] public string invisibilityIcon;
-    [HideInInspector] public string opinionIcon;
+    [HideInInspector] public string opinionIcon;       //also for Player MOOD
     [HideInInspector] public string connectionsIcon;
     [HideInInspector] public string innocenceIcon;
     [HideInInspector] public string cityIcon;

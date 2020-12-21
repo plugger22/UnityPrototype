@@ -175,6 +175,14 @@ public class ModalTabbedUI : MonoBehaviour
     public GameObject tab7item28;
     public GameObject tab7item29;
 
+    [Header("Canvas 8 -> Statistics")]
+    public TabbedStatInteraction tab8Stat0;
+    public TabbedStatInteraction tab8Stat1;
+    public TabbedStatInteraction tab8Stat2;
+    public TabbedStatInteraction tab8Stat3;
+    public TabbedStatInteraction tab8Stat4;
+    public TabbedStatInteraction tab8Stat5;
+
     #endregion
 
     private ScrollRect tab7ScrollRect;                                  //needed to manually disable scrolling when not needed
@@ -219,6 +227,8 @@ public class ModalTabbedUI : MonoBehaviour
     private int scrollHighlightIndex = -1;                          //current highlight index (doesn't matter if shown as highlighted or not)
     private int scrollMaxHighlightIndex = -1;                       //numOfScrollItemsCurrent - 1
     private TabbedHistory historyOptionIndex;                       //which history option is currently selected, eg. Events / Emotions (Mood/Opinion)
+    //Page 8
+    private int maxNumOfStatGroups = 6;                             //hardwired prefab instances on page
 
     #region Optimisations
     //optimisation -> field for individual pages to keep garbage collection to a minimum
@@ -328,6 +338,8 @@ public class ModalTabbedUI : MonoBehaviour
     private GameObject[] arrayOfScrollObjects;
     private TabbedScrollInteraction[] arrayOfScrollInteractions;
     private List<string> listOfHistory = new List<string>();
+    //Canvas8 -> Stats
+    private TabbedStatInteraction[] arrayOfStats;
     #endregion
 
     private static ModalTabbedUI modalTabbedUI;
@@ -526,6 +538,13 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab7item27 != null, "Invalid tab7item27 (Null)");
         Debug.Assert(tab7item28 != null, "Invalid tab7item28 (Null)");
         Debug.Assert(tab7item29 != null, "Invalid tab7item29 (Null)");
+        //canvas 8
+        Debug.Assert(tab8Stat0 != null, "Invalid tab8Stat0 (Null)");
+        Debug.Assert(tab8Stat1 != null, "Invalid tab8Stat1 (Null)");
+        Debug.Assert(tab8Stat2 != null, "Invalid tab8Stat2 (Null)");
+        Debug.Assert(tab8Stat3 != null, "Invalid tab8Stat3 (Null)");
+        Debug.Assert(tab8Stat4 != null, "Invalid tab8Stat4 (Null)");
+        Debug.Assert(tab8Stat5 != null, "Invalid tab8Stat5 (Null)");
     }
     #endregion
 
@@ -595,32 +614,41 @@ public class ModalTabbedUI : MonoBehaviour
         PlayerLikesData data = GameManager.i.personScript.GetPlayerLikes();
         if (data != null)
         {
-            if (data.listOfLikes != null)
-            {
-                if (data.listOfLikes.Count > 0)
-                { tab5Likes0.preferences.text = data.listOfLikes.Aggregate((x, y) => x + "\n" + y); }
-                else { tab5Likes0.preferences.text = "None"; }
-            }
-            else { Debug.LogWarning("Invalid listOfLikes (Null)"); }
             if (data.listOfStrongLikes != null)
             {
                 if (data.listOfStrongLikes.Count > 0)
-                { tab5Likes1.preferences.text = data.listOfStrongLikes.Aggregate((x, y) => x + "\n" + y); }
-                else { tab5Likes1.preferences.text = "None"; }
+                { tab5Likes0.preferences.text = data.listOfStrongLikes.Aggregate((x, y) => x + "\n" + y); }
+                else { tab5Likes0.preferences.text = "None"; }
+                //subHeader
+                tab5Likes0.subHeader.text = string.Format("Mood {0} +2", GameManager.i.guiScript.opinionIcon);
             }
             else { Debug.LogWarning("Invalid listOfStrongLikes (Null)"); }
-            if (data.listOfDislikes != null)
+            if (data.listOfLikes != null)
             {
-                if (data.listOfDislikes.Count > 0)
-                { tab5Likes2.preferences.text = data.listOfDislikes.Aggregate((x, y) => x + "\n" + y); }
-                else { tab5Likes2.preferences.text = "None"; }
+                if (data.listOfLikes.Count > 0)
+                { tab5Likes1.preferences.text = data.listOfLikes.Aggregate((x, y) => x + "\n" + y); }
+                else { tab5Likes1.preferences.text = "None"; }
+                //subHeader
+                tab5Likes1.subHeader.text = string.Format("Mood {0} +1", GameManager.i.guiScript.opinionIcon);
+
             }
-            else { Debug.LogWarning("Invalid listOfDislikes (Null)"); }
+            else { Debug.LogWarning("Invalid listOfLikes (Null)"); }
             if (data.listOfStrongDislikes != null)
             {
                 if (data.listOfStrongDislikes.Count > 0)
-                { tab5Likes3.preferences.text = data.listOfStrongDislikes.Aggregate((x, y) => x + "\n" + y); }
+                { tab5Likes2.preferences.text = data.listOfStrongDislikes.Aggregate((x, y) => x + "\n" + y); }
+                else { tab5Likes2.preferences.text = "None"; }
+                //subHeader
+                tab5Likes2.subHeader.text = string.Format("Mood {0} -2", GameManager.i.guiScript.opinionIcon);
+            }
+            else { Debug.LogWarning("Invalid listOfStrongDislikes (Null)"); }
+            if (data.listOfDislikes != null)
+            {
+                if (data.listOfDislikes.Count > 0)
+                { tab5Likes3.preferences.text = data.listOfDislikes.Aggregate((x, y) => x + "\n" + y); }
                 else { tab5Likes3.preferences.text = "None"; }
+                //subHeader
+                tab5Likes3.subHeader.text = string.Format("Mood {0} -1", GameManager.i.guiScript.opinionIcon);
             }
             else { Debug.LogWarning("Invalid listOfDislikes (Null)"); }
         }
@@ -628,6 +656,9 @@ public class ModalTabbedUI : MonoBehaviour
         //page 6
         maxNumOfGear = GameManager.i.gearScript.maxNumOfGear;
         arrayOfGear = new TabbedGearInteraction[maxNumOfGear];
+        //page 8
+        arrayOfStats = new TabbedStatInteraction[maxNumOfStatGroups];
+
         //initialise Canvas array
         arrayOfCanvas = new Canvas[numOfPages];
         //initialise Top Tab Arrays
@@ -885,6 +916,18 @@ public class ModalTabbedUI : MonoBehaviour
         }
         //disable all
         DisableHistoryScrollItems();
+        //
+        // - - - Page 8 Statistics
+        //
+        arrayOfStats[0] = tab8Stat0;
+        arrayOfStats[1] = tab8Stat1;
+        arrayOfStats[2] = tab8Stat2;
+        arrayOfStats[3] = tab8Stat3;
+        arrayOfStats[4] = tab8Stat4;
+        arrayOfStats[5] = tab8Stat5;
+        //subheaders
+        for (int i = 0; i < arrayOfStats.Length; i++)
+        { arrayOfStats[i].background.color = tabSubHeaderColour; }
         //
         // - - - Initialisations
         //
@@ -1492,7 +1535,7 @@ public class ModalTabbedUI : MonoBehaviour
                 OpenHistory(historyOptionIndex);
                 break;
             case TabbedPage.Stats:
-
+                OpenStats();
                 break;
             case TabbedPage.NoActors:
 
@@ -2353,6 +2396,49 @@ public class ModalTabbedUI : MonoBehaviour
     }
     #endregion
 
+    #region OpenStats
+    /// <summary>
+    /// All in one open page/update for Statistics (varies which ones depending on actorSet)
+    /// </summary>
+    private void OpenStats()
+    {
+        switch (inputData.who)
+        {
+            case TabbedUIWho.Player:
+                //toggle on all
+                for (int i = 0; i < arrayOfStats.Length; i++)
+                { arrayOfStats[i].gameObject.SetActive(true); }
+
+                break;
+            case TabbedUIWho.Subordinates:
+                //toggle on/off
+                arrayOfStats[0].gameObject.SetActive(true);
+                arrayOfStats[1].gameObject.SetActive(true);
+                arrayOfStats[2].gameObject.SetActive(true);
+                arrayOfStats[3].gameObject.SetActive(false);
+                arrayOfStats[4].gameObject.SetActive(false);
+                arrayOfStats[5].gameObject.SetActive(false);
+                break;
+            case TabbedUIWho.HQ:
+                arrayOfStats[0].gameObject.SetActive(true);
+                arrayOfStats[1].gameObject.SetActive(true);
+                arrayOfStats[2].gameObject.SetActive(false);
+                arrayOfStats[3].gameObject.SetActive(false);
+                arrayOfStats[4].gameObject.SetActive(false);
+                arrayOfStats[5].gameObject.SetActive(false);
+                break;
+            case TabbedUIWho.Reserves:
+                arrayOfStats[0].gameObject.SetActive(true);
+                arrayOfStats[1].gameObject.SetActive(false);
+                arrayOfStats[2].gameObject.SetActive(false);
+                arrayOfStats[3].gameObject.SetActive(false);
+                arrayOfStats[4].gameObject.SetActive(false);
+                arrayOfStats[5].gameObject.SetActive(false);
+                break;
+            default: Debug.LogWarningFormat("Unrecognised inputData.who \"{0}\"", inputData.who); break;
+        }
+    }
+    #endregion
 
     #endregion
 

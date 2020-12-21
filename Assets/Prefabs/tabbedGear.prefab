@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114831173626773480}
   - component: {fileID: 114708230199038036}
   m_Layer: 5
-  m_Name: tabbedGear
+  m_Name: TabbedGear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -452,7 +452,6 @@ MonoBehaviour:
   descriptor: {fileID: 114012138029558442}
   uses: {fileID: 114618335038225032}
   stats: {fileID: 114401821155660310}
-  usesHelp: {fileID: 0}
 --- !u!114 &114831173626773480
 MonoBehaviour:
   m_ObjectHideFlags: 1

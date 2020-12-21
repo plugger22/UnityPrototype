@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 224637228036274234}
   - component: {fileID: 114195604122484358}
   m_Layer: 5
-  m_Name: tabbedScrollLight
+  m_Name: TabbedScrollLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

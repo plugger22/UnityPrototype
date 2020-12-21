@@ -9964,3 +9964,918 @@ City seed 15182 -> Londus, Eurasia
 
 Dev seed 59650 -> Sunday, 20 December 2020 8:35 PM
 City seed 57881 -> Londus, Eurasia
+
+Dev seed 54039 -> Monday, 21 December 2020 9:28 AM
+City seed 20964 -> Londus, Eurasia
+
+Dev seed 45200 -> Monday, 21 December 2020 9:33 AM
+City seed 38297 -> Londus, Eurasia
+WARNING Assets/Scripts/Managers/PersonalityManager.cs(1145,23): warning CS0219: The variable `builder' is assigned but its value is never used
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:391)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseExit () (at Assets/Scripts/Base Classes/Node.cs:376)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:628)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:621)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActionManager.OnDisable () (at Assets/Scripts/Managers/ActionManager.cs:258)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:468)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:130)
+	
+Dev seed 32353 -> Monday, 21 December 2020 11:20 AM
+City seed 52510 -> Londus, Eurasia
+
+Dev seed 54039 -> Monday, 21 December 2020 11:29 AM
+City seed 31971 -> Londus, Eurasia
