@@ -45,14 +45,28 @@ namespace gameAPI
         [HideInInspector] public ActorHQ statusHQ;               //status if in HQ, otherwise 'None'
         [HideInInspector] public ActorSex sex;
         //stats
-        [HideInInspector] public int numOfTimesBullied;         //tracked in order to calculate cost of bullying
+        [HideInInspector] public int numOfTimesBullied;         //tracked in order to calculate cost of bullying -> reserve specific
+        [HideInInspector] public int numOfTimesReassured;       //reserve specific
+        [HideInInspector] public int numOfTimesPromised;        //reserve specific
         [HideInInspector] public int numOfTimesCaptured;        //chance of becoming a traitor increases for each time captured
         [HideInInspector] public int numOfTimesBreakdown;       //tally of times actor suffered a breakdown
         [HideInInspector] public int numOfTimesStressLeave;     //tally of times actor took stress leave (one day duration)
         [HideInInspector] public int numOfTimesConflict;        //tally of number of relationship conflicts with the Player that the actor has had
         [HideInInspector] public int departedNumOfSecrets;      //used to record the number of secrets known at time of dismissal, etc. (needed to work out accurate power cost as secrets removed when actor leaves)
         [HideInInspector] public int numOfDaysStressed;         //tally of days spent stressed (excludes breakdown & stress leave days)
+        [HideInInspector] public int numOfDaysUnhappy;          //reserve specific
         [HideInInspector] public int numOfDaysLieLow;           //tally of days spent lying low
+
+        [HideInInspector] public int numOfVotesFor;             //tally of review votes in favour of player
+        [HideInInspector] public int numOfVotesAbstained;       //tally of review votes -> abstained
+        [HideInInspector] public int numOfVotesAgainst;         //tally of review votes against the player
+        [HideInInspector] public int numOfDaysOnMap;            //tally of days OnMap
+        [HideInInspector] public int numOfDaysReserves;         //tally of days in Reserves
+        [HideInInspector] public int numOfCities;               //tally of cities where the actor has been OnMap or in the Reserves
+
+        [HideInInspector] public int powerGainedAtHQ;           //total power gain while at HQ
+        [HideInInspector] public int powerLostAtHQ;             //total power lost while at HQ
+
         //sprite
         [HideInInspector] [NonSerialized] public Sprite sprite;   //sprite used in-game (default copied from actorArc at present)
         [HideInInspector] public string spriteName;              //used for serialization (used to access sprite from dictOfSprites on load)
@@ -1442,6 +1456,9 @@ namespace gameAPI
             if (data != null)
             {
                 listOfHqPowerData.Add(data);
+                //stats
+                if (data.change > 0) { powerGainedAtHQ += data.change; }
+                else { powerLostAtHQ += Mathf.Abs(data.change); }
                 return true;
             }
             else { Debug.LogError("Invalid hqPowerData (Null)"); }

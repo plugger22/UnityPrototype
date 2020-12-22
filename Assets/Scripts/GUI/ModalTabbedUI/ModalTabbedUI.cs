@@ -239,6 +239,7 @@ public class ModalTabbedUI : MonoBehaviour
     private Actor actorContact;
     private Actor actorInvest;
     private Actor actorSecret;
+    private Actor actorStats;
     private Effect effectSecret;
     private Secret secret;
     private Gear gear;
@@ -253,7 +254,6 @@ public class ModalTabbedUI : MonoBehaviour
     private TabbedGearInteraction interactGear;
     private TabbedInvestInteraction interactInvest;
     private TabbedStatInteraction interactStat;
-    private TabbedStatItemInteraction interactStatItem;
     private string gearName;
     private string knowsSecretHeader;
     private string effectsSecretHeader;
@@ -2410,51 +2410,164 @@ public class ModalTabbedUI : MonoBehaviour
     /// </summary>
     private void OpenStats()
     {
+        actorStats = arrayOfActorsTemp[currentSideTabIndex];
         switch (inputData.who)
         {
             case TabbedUIWho.Player:
-                //toggle on all
+                //toggle modules on all
                 for (int i = 0; i < arrayOfStats.Length; i++)
                 { arrayOfStats[i].gameObject.SetActive(true); }
 
                 break;
             case TabbedUIWho.Subordinates:
-                //toggle on/off
+                //toggle modules on/off
                 arrayOfStats[0].gameObject.SetActive(true);
                 arrayOfStats[1].gameObject.SetActive(true);
                 arrayOfStats[2].gameObject.SetActive(true);
-                arrayOfStats[3].gameObject.SetActive(false);
+                arrayOfStats[3].gameObject.SetActive(true);
                 arrayOfStats[4].gameObject.SetActive(false);
                 arrayOfStats[5].gameObject.SetActive(false);
+
                 //Overview
                 interactStat = arrayOfStats[0];
-                interactStat.header.text = "Overview";
-                interactStatItem = interactStat.listOfItems[0];
+                interactStat.header.text = "Service";
+                interactStat.listOfItems[0].gameObject.SetActive(true);
+                interactStat.listOfItems[1].gameObject.SetActive(true);
+                interactStat.listOfItems[2].gameObject.SetActive(true);
+                interactStat.listOfItems[3].gameObject.SetActive(false);
+                interactStat.listOfItems[0].descriptor.text = "Days on the Job";
+                interactStat.listOfItems[0].result.text = Convert.ToString(actorStats.numOfDaysOnMap);
+                interactStat.listOfItems[1].descriptor.text = "Days in Reserves";
+                interactStat.listOfItems[1].result.text = Convert.ToString(actorStats.numOfDaysReserves);
+                interactStat.listOfItems[2].descriptor.text = "Cities";
+                interactStat.listOfItems[2].result.text = Convert.ToString(actorStats.numOfCities);
 
-                
                 //Evasion
                 arrayOfStats[1].header.text = "Evasion";
+                interactStat = arrayOfStats[1];
+                interactStat.listOfItems[0].gameObject.SetActive(true);
+                interactStat.listOfItems[1].gameObject.SetActive(true);
+                interactStat.listOfItems[2].gameObject.SetActive(false);
+                interactStat.listOfItems[3].gameObject.SetActive(false);
+                interactStat.listOfItems[0].descriptor.text = "Times Captured";
+                interactStat.listOfItems[0].result.text = Convert.ToString(actorStats.numOfTimesCaptured);
+                interactStat.listOfItems[1].descriptor.text = "Days spent Lying Low";
+                interactStat.listOfItems[1].result.text = Convert.ToString(actorStats.numOfDaysLieLow);
 
                 //Mental State
                 arrayOfStats[2].header.text = "Mental State";
+                interactStat = arrayOfStats[2];
+                interactStat.listOfItems[0].gameObject.SetActive(true);
+                interactStat.listOfItems[1].gameObject.SetActive(true);
+                interactStat.listOfItems[2].gameObject.SetActive(true);
+                interactStat.listOfItems[3].gameObject.SetActive(true);
+                interactStat.listOfItems[0].descriptor.text = "Number of Breakdowns";
+                interactStat.listOfItems[0].result.text = Convert.ToString(actorStats.numOfTimesBreakdown);
+                interactStat.listOfItems[1].descriptor.text = "Times Stress Leave taken";
+                interactStat.listOfItems[1].result.text = Convert.ToString(actorStats.numOfTimesStressLeave);
+                interactStat.listOfItems[2].descriptor.text = "Days spent Stressed";
+                interactStat.listOfItems[2].result.text = Convert.ToString(actorStats.numOfDaysStressed);
+                interactStat.listOfItems[3].descriptor.text = "Number of Relationship Conflicts";
+                interactStat.listOfItems[3].result.text = Convert.ToString(actorStats.numOfTimesConflict);
 
-
+                //Votes
+                arrayOfStats[3].header.text = "Reviews";
+                interactStat = arrayOfStats[3];
+                interactStat.listOfItems[0].gameObject.SetActive(true);
+                interactStat.listOfItems[1].gameObject.SetActive(true);
+                interactStat.listOfItems[2].gameObject.SetActive(true);
+                interactStat.listOfItems[3].gameObject.SetActive(false);
+                interactStat.listOfItems[0].descriptor.text = "Votes For";
+                interactStat.listOfItems[0].result.text = Convert.ToString(actorStats.numOfVotesFor);
+                interactStat.listOfItems[1].descriptor.text = "Votes Against";
+                interactStat.listOfItems[1].result.text = Convert.ToString(actorStats.numOfVotesAgainst);
+                interactStat.listOfItems[2].descriptor.text = "Votes Abstained";
+                interactStat.listOfItems[2].result.text = Convert.ToString(actorStats.numOfVotesAbstained);
                 break;
             case TabbedUIWho.HQ:
-                arrayOfStats[0].gameObject.SetActive(true);
-                arrayOfStats[1].gameObject.SetActive(true);
-                arrayOfStats[2].gameObject.SetActive(false);
-                arrayOfStats[3].gameObject.SetActive(false);
-                arrayOfStats[4].gameObject.SetActive(false);
-                arrayOfStats[5].gameObject.SetActive(false);
-                break;
-            case TabbedUIWho.Reserves:
+                //toggle modules on/off
                 arrayOfStats[0].gameObject.SetActive(true);
                 arrayOfStats[1].gameObject.SetActive(false);
                 arrayOfStats[2].gameObject.SetActive(false);
-                arrayOfStats[3].gameObject.SetActive(false);
+                arrayOfStats[3].gameObject.SetActive(true);
                 arrayOfStats[4].gameObject.SetActive(false);
                 arrayOfStats[5].gameObject.SetActive(false);
+                //Power
+                arrayOfStats[0].header.text = "Power";
+                interactStat = arrayOfStats[0];
+                interactStat.listOfItems[0].gameObject.SetActive(true);
+                interactStat.listOfItems[1].gameObject.SetActive(true);
+                interactStat.listOfItems[2].gameObject.SetActive(false);
+                interactStat.listOfItems[3].gameObject.SetActive(false);
+                interactStat.listOfItems[0].descriptor.text = "Power Gained while at HQ";
+                interactStat.listOfItems[0].result.text = Convert.ToString(actorStats.powerGainedAtHQ);
+                interactStat.listOfItems[1].descriptor.text = "Power Lost while at HQ";
+                interactStat.listOfItems[1].result.text = Convert.ToString(actorStats.powerLostAtHQ);
+                //Votes
+                arrayOfStats[3].header.text = "Reviews";
+                interactStat = arrayOfStats[3];
+                interactStat.listOfItems[0].gameObject.SetActive(true);
+                interactStat.listOfItems[1].gameObject.SetActive(true);
+                interactStat.listOfItems[2].gameObject.SetActive(true);
+                interactStat.listOfItems[3].gameObject.SetActive(false);
+                interactStat.listOfItems[0].descriptor.text = "Votes For";
+                interactStat.listOfItems[0].result.text = Convert.ToString(actorStats.numOfVotesFor);
+                interactStat.listOfItems[1].descriptor.text = "Votes Against";
+                interactStat.listOfItems[1].result.text = Convert.ToString(actorStats.numOfVotesAgainst);
+                interactStat.listOfItems[2].descriptor.text = "Votes Abstained";
+                interactStat.listOfItems[2].result.text = Convert.ToString(actorStats.numOfVotesAbstained);
+                break;
+            case TabbedUIWho.Reserves:
+                //toggle modules on/off
+                arrayOfStats[0].gameObject.SetActive(true);
+                arrayOfStats[1].gameObject.SetActive(true);
+                arrayOfStats[2].gameObject.SetActive(false);
+                arrayOfStats[3].gameObject.SetActive(true);
+                arrayOfStats[4].gameObject.SetActive(false);
+                arrayOfStats[5].gameObject.SetActive(false);
+
+                //Overview
+                interactStat = arrayOfStats[0];
+                interactStat.header.text = "Service";
+                interactStat.listOfItems[0].gameObject.SetActive(true);
+                interactStat.listOfItems[1].gameObject.SetActive(true);
+                interactStat.listOfItems[2].gameObject.SetActive(true);
+                interactStat.listOfItems[3].gameObject.SetActive(false);
+                interactStat.listOfItems[0].descriptor.text = "Days on the Job";
+                interactStat.listOfItems[0].result.text = Convert.ToString(actorStats.numOfDaysOnMap);
+                interactStat.listOfItems[1].descriptor.text = "Days in Reserves";
+                interactStat.listOfItems[1].result.text = Convert.ToString(actorStats.numOfDaysReserves);
+                interactStat.listOfItems[2].descriptor.text = "Cities";
+                interactStat.listOfItems[2].result.text = Convert.ToString(actorStats.numOfCities);
+
+                //Reserve specifics
+                interactStat = arrayOfStats[1];
+                interactStat.header.text = "Reserve Status";
+                interactStat.listOfItems[0].gameObject.SetActive(true);
+                interactStat.listOfItems[1].gameObject.SetActive(true);
+                interactStat.listOfItems[2].gameObject.SetActive(true);
+                interactStat.listOfItems[3].gameObject.SetActive(true);
+                interactStat.listOfItems[0].descriptor.text = "Times Promised";
+                interactStat.listOfItems[0].result.text = Convert.ToString(actorStats.numOfTimesPromised);
+                interactStat.listOfItems[1].descriptor.text = "Times Reassured";
+                interactStat.listOfItems[1].result.text = Convert.ToString(actorStats.numOfTimesReassured);
+                interactStat.listOfItems[2].descriptor.text = "Times Bullied";
+                interactStat.listOfItems[2].result.text = Convert.ToString(actorStats.numOfTimesBullied);
+                interactStat.listOfItems[3].descriptor.text = "Days spent Unhappy";
+                interactStat.listOfItems[3].result.text = Convert.ToString(actorStats.numOfDaysUnhappy);
+                //Votes
+                arrayOfStats[3].header.text = "Reviews";
+                interactStat = arrayOfStats[3];
+                interactStat.listOfItems[0].gameObject.SetActive(true);
+                interactStat.listOfItems[1].gameObject.SetActive(true);
+                interactStat.listOfItems[2].gameObject.SetActive(true);
+                interactStat.listOfItems[3].gameObject.SetActive(false);
+                interactStat.listOfItems[0].descriptor.text = "Votes For";
+                interactStat.listOfItems[0].result.text = Convert.ToString(actorStats.numOfVotesFor);
+                interactStat.listOfItems[1].descriptor.text = "Votes Against";
+                interactStat.listOfItems[1].result.text = Convert.ToString(actorStats.numOfVotesAgainst);
+                interactStat.listOfItems[2].descriptor.text = "Votes Abstained";
+                interactStat.listOfItems[2].result.text = Convert.ToString(actorStats.numOfVotesAbstained);
                 break;
             default: Debug.LogWarningFormat("Unrecognised inputData.who \"{0}\"", inputData.who); break;
         }

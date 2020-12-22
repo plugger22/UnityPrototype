@@ -4303,6 +4303,7 @@ public class DataManager : MonoBehaviour
             actor.ResetStates();
             actor.Status = ActorStatus.Active;
             actor.inactiveStatus = ActorInactive.None;
+            actor.numOfCities++;
         }
         else { Debug.LogError("Invalid actor (null)"); }
     }

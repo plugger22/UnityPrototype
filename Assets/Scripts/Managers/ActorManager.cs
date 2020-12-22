@@ -485,6 +485,7 @@ public class ActorManager : MonoBehaviour
     {
         bool isPlayer;
         bool isSubordinates = GameManager.i.optionScript.isSubordinates;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
         if (GameManager.i.sideScript.PlayerSide.level == globalResistance.level)
         {
             //run for Resistance Player
@@ -507,7 +508,7 @@ public class ActorManager : MonoBehaviour
                     {
                         //Both sides AI (autorun) -> Resistance first
                         isPlayer = true;
-                        if (GameManager.i.sideScript.PlayerSide.level != globalResistance.level) { isPlayer = false; }
+                        if (playerSide.level != globalResistance.level) { isPlayer = false; }
                         CheckPlayerResistanceAI(isPlayer);
                         if (isSubordinates == true)
                         {
@@ -516,7 +517,7 @@ public class ActorManager : MonoBehaviour
                         }
                         //Authority -> sequence is Player / Inactive / Active
                         isPlayer = true;
-                        if (GameManager.i.sideScript.PlayerSide.level != globalAuthority.level) { isPlayer = false; }
+                        if (playerSide.level != globalAuthority.level) { isPlayer = false; }
                         CheckPlayerAuthorityAI(isPlayer);
                         if (isSubordinates == true)
                         {
@@ -563,13 +564,13 @@ public class ActorManager : MonoBehaviour
                     {
                         //Both sides AI (autorun) -> Resistance first
                         isPlayer = true;
-                        if (GameManager.i.sideScript.PlayerSide.level != globalResistance.level) { isPlayer = false; }
+                        if (playerSide.level != globalResistance.level) { isPlayer = false; }
                         CheckPlayerResistanceAI(isPlayer);
                         CheckInactiveResistanceActorsAI(isPlayer);
                         CheckActiveResistanceActorsAI(isPlayer);
                         //Authority-> sequence is Player / Inactive / Active
                         isPlayer = true;
-                        if (GameManager.i.sideScript.PlayerSide.level != globalAuthority.level) { isPlayer = false; }
+                        if (playerSide.level != globalAuthority.level) { isPlayer = false; }
                         CheckPlayerAuthorityAI(isPlayer);
                         CheckInactiveAuthorityActorsAI(isPlayer);
                         CheckActiveAuthorityActorsAI(isPlayer);
@@ -594,6 +595,7 @@ public class ActorManager : MonoBehaviour
             //count down relation timers
             GameManager.i.dataScript.CheckRelations();
             UpdateRelationMessages();
+            UpdateActorStats(playerSide);
             //Reserve actors
             UpdateReserveActors();
             GameManager.i.statScript.UpdateRatios();
@@ -602,7 +604,7 @@ public class ActorManager : MonoBehaviour
             {
                 lieLowTimer--;
                 //Resistance player (even if autorun)
-                if (GameManager.i.sideScript.PlayerSide.level == 2)
+                if (playerSide.level == 2)
                 {
                     //lie low timer message (InfoApp 'Effects' tab)
                     string text = string.Format("Lie Low Timer {0}", lieLowTimer);
@@ -669,6 +671,8 @@ public class ActorManager : MonoBehaviour
                 {
                     //history
                     actor.AddHistory(new HistoryActor() { text = string.Format("{0}Reports for active duty at <b>{1}</b>{2}", colourNeutral, GameManager.i.campaignScript.scenario.city.tag, colourEnd), isHighlight = true });
+                    //city stat
+                    actor.numOfCities++;
                     //Debug actor summary
                     Debug.LogFormat("[Tor] ActorManager.cs -> InitialiseActors: OnMap {0}, {1}, {2} {3}, {4} {5}, {6} {7}, lvl {8}{9}", actor.actorName, actor.arc.name,
                         GameManager.i.dataScript.GetQuality(side, 0), actor.GetDatapoint(ActorDatapoint.Datapoint0),
@@ -953,7 +957,7 @@ public class ActorManager : MonoBehaviour
     }
     #endregion
 
-    
+
     /// <summary>
     /// retrieves a list of previously used actors in lists of actors with a level greater than 'higherThan', eg. if parameter is 1 then retrieves from actors level 2 and 3 lists. Returns EMPTY list if none
     /// NOTE: Previously used actors determined by actor.listOfHistory.Count > 0 (includes those who've been recruited to reserves but never used in anger)
@@ -4329,8 +4333,9 @@ public class ActorManager : MonoBehaviour
                             //tooltip -> result 
                             int opinionConverted = 2;
                             int opinionBoss = GameManager.i.hqScript.GetBossOpinion();
-                            if (opinionBoss > 1) { opinionConverted = 3; }
-                            else if (opinionBoss < -1) { opinionConverted = 1; }
+                            if (opinionBoss > 1) { opinionConverted = 3; actor.numOfVotesFor++; }
+                            else if (opinionBoss < -1) { opinionConverted = 1; actor.numOfVotesAgainst++; }
+                            else { actor.numOfVotesAbstained++; }
                             tooltipDetailsResult = new GenericTooltipDetails();
                             tooltipDetailsResult.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, title, colourEnd);
                             tooltipDetailsResult.textMain = string.Format("Thinks you are doing {0}{1}{2}{3}job", opinionConverted == 2 ? "an" : "a", "\n", GetOpinionText(opinionConverted), "\n");
@@ -4367,6 +4372,14 @@ public class ActorManager : MonoBehaviour
                             data.arrayOfOptions[i + 1 - offset] = optionData;
                             data.arrayOfTooltipsSprite[i + 1 - offset] = tooltipDetailsSprite;
                             data.arrayOfTooltipsResult[i + 1 - offset] = tooltipDetailsResult;
+                            //stats
+                            switch(actor.GetDatapoint(ActorDatapoint.Opinion1))
+                            {
+                                case 3: actor.numOfVotesFor++; break;
+                                case 2: actor.numOfVotesAbstained++; break;
+                                case 1: actor.numOfVotesAgainst++; break;
+                                default: Debug.LogWarningFormat("Unrecognised opinion \"{0}\" for actor {1}, ID {2}", actor.GetDatapoint(ActorDatapoint.Opinion1), actor.actorName, actor.actorID); break;
+                            }
                         }
                         else
                         {
@@ -4389,6 +4402,14 @@ public class ActorManager : MonoBehaviour
                             data.arrayOfOptions[i + 1 - offset] = optionData;
                             data.arrayOfTooltipsSprite[i + 1 - offset] = tooltipDetailsSprite;
                             data.arrayOfTooltipsResult[i + 1 - offset] = tooltipDetailsResult;
+                            //stats
+                            switch (actor.GetDatapoint(ActorDatapoint.Opinion1))
+                            {
+                                case 3: actor.numOfVotesFor++; break;
+                                case 2: actor.numOfVotesAbstained++; break;
+                                case 1: actor.numOfVotesAgainst++; break;
+                                default: Debug.LogWarningFormat("Unrecognised opinion \"{0}\" for actor {1}, ID {2}", actor.GetDatapoint(ActorDatapoint.Opinion1), actor.actorName, actor.actorID); break;
+                            }
                         }
                     }
                     else { Debug.LogWarningFormat("Invalid actor (Null) in arrayOfHqActors[{0}]", i); }
@@ -4428,6 +4449,14 @@ public class ActorManager : MonoBehaviour
                         tooltipDetailsResult.textHeader = string.Format("{0}{1}{2}<size=120%>{3}{4}", actor.actorName, "\n", colourAlert, actor.arc.name, colourEnd);
                         tooltipDetailsResult.textMain = string.Format("Thinks you are doing {0}{1}{2}{3}job", opinion == 2 ? "an" : "a", "\n", GetOpinionText(opinion), "\n");
                         tooltipDetailsResult.textDetails = string.Format("Their view of you{0}is based on their{1}{2}<size=110%>OPINION{3}", "\n", "\n", colourAlert, colourEnd);
+                        //stats
+                        switch (actor.GetDatapoint(ActorDatapoint.Opinion1))
+                        {
+                            case 3: actor.numOfVotesFor++; break;
+                            case 2: actor.numOfVotesAbstained++; break;
+                            case 1: actor.numOfVotesAgainst++; break;
+                            default: Debug.LogWarningFormat("Unrecognised opinion \"{0}\" for actor {1}, ID {2}", actor.GetDatapoint(ActorDatapoint.Opinion1), actor.actorName, actor.actorID); break;
+                        }
                     }
                     else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[i]", i); }
                 }
@@ -4451,7 +4480,6 @@ public class ActorManager : MonoBehaviour
         //
         // - - - Execute
         //
-
         //data package has been populated, proceed if all O.K
         if (errorFlag == true)
         {
@@ -4553,6 +4581,7 @@ public class ActorManager : MonoBehaviour
         return opinionText;
     }
 
+    #region InitialiseReservePoolInventory
     /// <summary>
     /// sets up all needed data for Reserve Actor pool and triggers ModalInventoryUI to display such
     /// </summary>
@@ -4721,8 +4750,13 @@ public class ActorManager : MonoBehaviour
             EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "ActorManager.cs -> InitialiseReservePoolInventory");
         }
     }
+    #endregion
 
-
+    #region RefreshRecruitPool
+    /// <summary>
+    /// Refresh Recruit pool
+    /// </summary>
+    /// <returns></returns>
     public InventoryInputData RefreshReservePool()
     {
         int numOfActors;
@@ -4805,7 +4839,9 @@ public class ActorManager : MonoBehaviour
         { Debug.LogError("Invalid listOfActors (Null)"); }
         return data;
     }
+    #endregion
 
+    #region ProcessRecruitChoiceResistance
     /// <summary>
     /// Processes choice of Recruit Resistance Actor
     /// </summary>
@@ -4868,6 +4904,8 @@ public class ActorManager : MonoBehaviour
                                 builderBottom.AppendFormat("{0}{1}{2}{3} will {4}NEVER{5} become Unhappy ({6}Jolly{7})", "\n", "\n", colourNeutral, actorRecruited.arc.name,
                                     colourNeutral, colourEnd, colourGood, colourEnd);
                             }
+                            //stats
+                            actorRecruited.numOfCities++;
                             //message
                             string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name,
                                 actorRecruited.actorID);
@@ -4999,7 +5037,9 @@ public class ActorManager : MonoBehaviour
         //generate a create modal window event
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActorManager.cs -> ProcessRecruitChoiceResistance");
     }
+    #endregion
 
+    #region ProcessRecruitChoiceAuthority
     /// <summary>
     /// Processes choice of Recruit Authority Actor
     /// </summary>
@@ -5044,6 +5084,8 @@ public class ActorManager : MonoBehaviour
                         //initialise unhappy timer
                         actorRecruited.unhappyTimer = unhappyTimer;
                         actorRecruited.isNewRecruit = true;
+                        //stats
+                        actorRecruited.numOfCities++;
                         //message
                         string textMsg = string.Format("{0}, {1}, ID {2} has been recruited", actorRecruited.actorName, actorRecruited.arc.name,
                             actorRecruited.actorID);
@@ -5120,7 +5162,9 @@ public class ActorManager : MonoBehaviour
         }
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "ActorManager.cs -> ProcessRecruitChoiceAuthority");
     }
+    #endregion
 
+    #region ProcessActorConflict
     /// <summary>
     /// When an actor's opinion drops below zero (before mincapping) they suffer a relationship conflict with the player. Returns two line text outcome (as well as applying effect).
     /// </summary>
@@ -5368,8 +5412,9 @@ public class ActorManager : MonoBehaviour
         //return two line outcome
         return builder.ToString();
     }
+    #endregion
 
-
+    #region ProcessKillRandomActor
     /// <summary>
     /// ActorKiller murders a random OnMap actor (in your line-up). Returns a formatted output string (one line). Psychopath trait
     /// NOTE: actorKiller checked for Null by calling method (EffectManager.cs -> ResolveManageData
@@ -5432,9 +5477,48 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogWarning("Invalid arrayOfActors (Null)"); }
         return outputMsg;
     }
+    #endregion
 
+    /// <summary>
+    /// Updates actor stats (big picture -> days OnMap/days Reserves)  (PlayerSide only)
+    /// </summary>
+    /// <param name="side"></param>
+    private void UpdateActorStats(GlobalSide side)
+    {
+        int count;
+        Actor actor;
+        //onMap
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(side);
+        if (arrayOfActors != null)
+        {
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                actor = arrayOfActors[i];
+                if (actor != null)
+                { actor.numOfDaysOnMap++; }
+                else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[{0}]", i); }
+            }
 
-
+        }
+        else { Debug.LogError("Invalid arrayOfActors (Null)"); }
+        //Reserves
+        List<int> listOfReserves = GameManager.i.dataScript.GetListOfReserveActors(side);
+        if (listOfReserves != null)
+        {
+            count = listOfReserves.Count;
+            if (count > 0)
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    actor = GameManager.i.dataScript.GetActor(listOfReserves[i]);
+                    if (actor != null)
+                    { actor.numOfDaysReserves++; }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for listOfReserves[{0}], actorID {1}", i, listOfReserves[i]); }
+                }
+            }
+        }
+        else { Debug.LogError("Invalid listOfReserves (Null)"); }
+    }
 
 
     //
@@ -9312,6 +9396,7 @@ public class ActorManager : MonoBehaviour
                     actor.unhappyTimer = unhappyTimer;
                     actor.isNewRecruit = true;
                     //stats
+                    actor.numOfCities++;
                     GameManager.i.dataScript.StatisticIncrement(StatType.ActorsRecruited);
                     //history
                     actor.AddHistory(new HistoryActor() { text = "Recruited (Reserves)" });

@@ -12,13 +12,13 @@ public class TabbedStatInteraction : MonoBehaviour
 
     public Image background;
     public TextMeshProUGUI header;
-    public List<TabbedStatItemInteraction> listOfItems;
+    public List<TabbedStatItemInteraction> listOfItems;         //should be 4
 
     public void Awake()
     {
         Debug.Assert(background != null, "Invalid background (Null)");
         Debug.Assert(header != null, "Invalid header (Null)");
-        Debug.Assert(listOfItems.Count > 0, "Invalid listOfItems (Empty)");
+        Debug.AssertFormat(listOfItems.Count == 4, "Invalid listOfItems (is {0}, should be {1})", listOfItems.Count, 4);
     }
 
 }
