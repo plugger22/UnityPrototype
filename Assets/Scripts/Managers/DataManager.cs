@@ -8492,8 +8492,18 @@ public class DataManager : MonoBehaviour
     public int StatisticGetCampaign(StatType statType)
     {
         int statValue = -1;
-        if (dictOfStatisticsCampaign.ContainsKey(statType) == true)
-        { statValue = dictOfStatisticsCampaign[statType]; }
+        if (GameManager.i.campaignScript.GetScenarioIndex() > 0)
+        {
+            //use campaign stats
+            if (dictOfStatisticsCampaign.ContainsKey(statType) == true)
+            { statValue = dictOfStatisticsCampaign[statType]; }
+        }
+        else
+        {
+            //first scenario, use level stats (campaign stats haven't yet been computed at end of first level)
+            if (dictOfStatisticsLevel.ContainsKey(statType) == true)
+            { statValue = dictOfStatisticsLevel[statType]; }
+        }
         return statValue;
     }
 

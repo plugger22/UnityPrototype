@@ -2410,16 +2410,103 @@ public class ModalTabbedUI : MonoBehaviour
     /// </summary>
     private void OpenStats()
     {
-        actorStats = arrayOfActorsTemp[currentSideTabIndex];
         switch (inputData.who)
         {
             case TabbedUIWho.Player:
                 //toggle modules on all
                 for (int i = 0; i < arrayOfStats.Length; i++)
                 { arrayOfStats[i].gameObject.SetActive(true); }
+                //Overview
+                interactStat = arrayOfStats[0];
+                interactStat.header.text = "Service";
+                interactStat.listOfItems[0].gameObject.SetActive(true);
+                interactStat.listOfItems[1].gameObject.SetActive(true);
+                interactStat.listOfItems[2].gameObject.SetActive(true);
+                interactStat.listOfItems[3].gameObject.SetActive(false);
+                interactStat.listOfItems[0].descriptor.text = "Days on the Job";
+                interactStat.listOfItems[0].result.text = Convert.ToString(GameManager.i.dataScript.StatisticGetCampaign(StatType.PlayerDaysOnJob));
+                interactStat.listOfItems[1].descriptor.text = "Cities";
+                interactStat.listOfItems[1].result.text = Convert.ToString(GameManager.i.campaignScript.GetScenarioIndex() + 1);
+                interactStat.listOfItems[2].descriptor.text = "Objectives Completed";
+                interactStat.listOfItems[2].result.text = Convert.ToString(GameManager.i.dataScript.StatisticGetCampaign(StatType.ObjectivesComplete));
+                //Evasion
+                arrayOfStats[1].header.text = "Evasion";
+                interactStat = arrayOfStats[1];
+                interactStat.listOfItems[0].gameObject.SetActive(true);
+                interactStat.listOfItems[1].gameObject.SetActive(true);
+                interactStat.listOfItems[2].gameObject.SetActive(true);
+                interactStat.listOfItems[3].gameObject.SetActive(true);
+                interactStat.listOfItems[0].descriptor.text = "Times Captured";
+                interactStat.listOfItems[0].result.text = Convert.ToString(GameManager.i.dataScript.StatisticGetCampaign(StatType.PlayerCaptured));
+                interactStat.listOfItems[1].descriptor.text = "Times Betrayed";
+                interactStat.listOfItems[1].result.text = Convert.ToString(GameManager.i.dataScript.StatisticGetCampaign(StatType.PlayerBetrayed));
+                interactStat.listOfItems[2].descriptor.text = "Times Lying Low";
+                interactStat.listOfItems[2].result.text = Convert.ToString(GameManager.i.dataScript.StatisticGetCampaign(StatType.PlayerLieLowTimes));
+                interactStat.listOfItems[3].descriptor.text = "Days spent Lying Low";
+                interactStat.listOfItems[3].result.text = Convert.ToString(GameManager.i.dataScript.StatisticGetCampaign(StatType.PlayerLieLowDays));
 
+                //Mental State
+                arrayOfStats[2].header.text = "Mental State";
+                interactStat = arrayOfStats[2];
+                interactStat.listOfItems[0].gameObject.SetActive(true);
+                interactStat.listOfItems[1].gameObject.SetActive(true);
+                interactStat.listOfItems[2].gameObject.SetActive(true);
+                interactStat.listOfItems[3].gameObject.SetActive(true);
+                interactStat.listOfItems[0].descriptor.text = "Number of Breakdowns";
+                interactStat.listOfItems[0].result.text = Convert.ToString(GameManager.i.dataScript.StatisticGetCampaign(StatType.PlayerBreakdown));
+                interactStat.listOfItems[1].descriptor.text = "Times Stressed";
+                interactStat.listOfItems[1].result.text = Convert.ToString(GameManager.i.dataScript.StatisticGetCampaign(StatType.PlayerTimesStressed));
+                interactStat.listOfItems[2].descriptor.text = "Times Super Stressed";
+                interactStat.listOfItems[2].result.text = Convert.ToString(GameManager.i.dataScript.StatisticGetCampaign(StatType.PlayerSuperStressed));
+                interactStat.listOfItems[3].descriptor.text = "Number of Relationship Conflicts";
+                interactStat.listOfItems[3].result.text = Convert.ToString(GameManager.i.dataScript.StatisticGetCampaign(StatType.ActorConflicts));
+
+                //Actions
+                arrayOfStats[3].header.text = "Actions";
+                interactStat = arrayOfStats[3];
+                interactStat.listOfItems[0].gameObject.SetActive(true);
+                interactStat.listOfItems[1].gameObject.SetActive(true);
+                interactStat.listOfItems[2].gameObject.SetActive(true);
+                interactStat.listOfItems[3].gameObject.SetActive(true);
+                interactStat.listOfItems[0].descriptor.text = "Number of Move Actions";
+                interactStat.listOfItems[0].result.text = Convert.ToString(GameManager.i.dataScript.StatisticGetCampaign(StatType.PlayerMoveActions));
+                interactStat.listOfItems[1].descriptor.text = "Number of District Actions";
+                interactStat.listOfItems[1].result.text = Convert.ToString(GameManager.i.dataScript.StatisticGetCampaign(StatType.PlayerNodeActions));
+                interactStat.listOfItems[2].descriptor.text = "Number of Manage Actions";
+                interactStat.listOfItems[2].result.text = Convert.ToString(GameManager.i.dataScript.StatisticGetCampaign(StatType.PlayerManageActions));
+                interactStat.listOfItems[3].descriptor.text = "Times you've Done Nothing";
+                interactStat.listOfItems[3].result.text = Convert.ToString(GameManager.i.dataScript.StatisticGetCampaign(StatType.PlayerDoNothing));
+
+                //Targets
+                interactStat = arrayOfStats[4];
+                interactStat.header.text = "Targets";
+                int attempts = GameManager.i.dataScript.StatisticGetCampaign(StatType.TargetAttempts);
+                int successes = GameManager.i.dataScript.StatisticGetCampaign(StatType.TargetSuccesses);
+                interactStat.listOfItems[0].gameObject.SetActive(true);
+                interactStat.listOfItems[1].gameObject.SetActive(true);
+                interactStat.listOfItems[2].gameObject.SetActive(true);
+                interactStat.listOfItems[3].gameObject.SetActive(false);
+                interactStat.listOfItems[0].descriptor.text = "Number of Target Attempts (All)";
+                interactStat.listOfItems[0].result.text = Convert.ToString(attempts);
+                interactStat.listOfItems[1].descriptor.text = "Successful Target Attempts";
+                interactStat.listOfItems[1].result.text = Convert.ToString(successes);
+                interactStat.listOfItems[2].descriptor.text = "Failed Target Attempts";
+                interactStat.listOfItems[2].result.text = Convert.ToString(attempts - successes);
+
+                //Crisis
+                interactStat = arrayOfStats[5];
+                interactStat.header.text = "District Crisis";
+                interactStat.listOfItems[0].gameObject.SetActive(true);
+                interactStat.listOfItems[1].gameObject.SetActive(true);
+                interactStat.listOfItems[2].gameObject.SetActive(false);
+                interactStat.listOfItems[3].gameObject.SetActive(false);
+                interactStat.listOfItems[0].descriptor.text = "Number of Crisis";
+                interactStat.listOfItems[0].result.text = Convert.ToString(GameManager.i.dataScript.StatisticGetCampaign(StatType.NodeCrisis));
+                interactStat.listOfItems[1].descriptor.text = "Crisis that have Exploded";
+                interactStat.listOfItems[1].result.text = Convert.ToString(GameManager.i.dataScript.StatisticGetCampaign(StatType.NodeCrisisExplodes));
                 break;
             case TabbedUIWho.Subordinates:
+                actorStats = arrayOfActorsTemp[currentSideTabIndex];
                 //toggle modules on/off
                 arrayOfStats[0].gameObject.SetActive(true);
                 arrayOfStats[1].gameObject.SetActive(true);
@@ -2427,7 +2514,6 @@ public class ModalTabbedUI : MonoBehaviour
                 arrayOfStats[3].gameObject.SetActive(true);
                 arrayOfStats[4].gameObject.SetActive(false);
                 arrayOfStats[5].gameObject.SetActive(false);
-
                 //Overview
                 interactStat = arrayOfStats[0];
                 interactStat.header.text = "Service";
@@ -2441,7 +2527,6 @@ public class ModalTabbedUI : MonoBehaviour
                 interactStat.listOfItems[1].result.text = Convert.ToString(actorStats.numOfDaysReserves);
                 interactStat.listOfItems[2].descriptor.text = "Cities";
                 interactStat.listOfItems[2].result.text = Convert.ToString(actorStats.numOfCities);
-
                 //Evasion
                 arrayOfStats[1].header.text = "Evasion";
                 interactStat = arrayOfStats[1];
@@ -2453,7 +2538,6 @@ public class ModalTabbedUI : MonoBehaviour
                 interactStat.listOfItems[0].result.text = Convert.ToString(actorStats.numOfTimesCaptured);
                 interactStat.listOfItems[1].descriptor.text = "Days spent Lying Low";
                 interactStat.listOfItems[1].result.text = Convert.ToString(actorStats.numOfDaysLieLow);
-
                 //Mental State
                 arrayOfStats[2].header.text = "Mental State";
                 interactStat = arrayOfStats[2];
@@ -2469,7 +2553,6 @@ public class ModalTabbedUI : MonoBehaviour
                 interactStat.listOfItems[2].result.text = Convert.ToString(actorStats.numOfDaysStressed);
                 interactStat.listOfItems[3].descriptor.text = "Number of Relationship Conflicts";
                 interactStat.listOfItems[3].result.text = Convert.ToString(actorStats.numOfTimesConflict);
-
                 //Votes
                 arrayOfStats[3].header.text = "Reviews";
                 interactStat = arrayOfStats[3];
@@ -2485,6 +2568,7 @@ public class ModalTabbedUI : MonoBehaviour
                 interactStat.listOfItems[2].result.text = Convert.ToString(actorStats.numOfVotesAbstained);
                 break;
             case TabbedUIWho.HQ:
+                actorStats = arrayOfActorsTemp[currentSideTabIndex];
                 //toggle modules on/off
                 arrayOfStats[0].gameObject.SetActive(true);
                 arrayOfStats[1].gameObject.SetActive(false);
@@ -2518,6 +2602,7 @@ public class ModalTabbedUI : MonoBehaviour
                 interactStat.listOfItems[2].result.text = Convert.ToString(actorStats.numOfVotesAbstained);
                 break;
             case TabbedUIWho.Reserves:
+                actorStats = arrayOfActorsTemp[currentSideTabIndex];
                 //toggle modules on/off
                 arrayOfStats[0].gameObject.SetActive(true);
                 arrayOfStats[1].gameObject.SetActive(true);
@@ -2525,7 +2610,6 @@ public class ModalTabbedUI : MonoBehaviour
                 arrayOfStats[3].gameObject.SetActive(true);
                 arrayOfStats[4].gameObject.SetActive(false);
                 arrayOfStats[5].gameObject.SetActive(false);
-
                 //Overview
                 interactStat = arrayOfStats[0];
                 interactStat.header.text = "Service";
@@ -2539,7 +2623,6 @@ public class ModalTabbedUI : MonoBehaviour
                 interactStat.listOfItems[1].result.text = Convert.ToString(actorStats.numOfDaysReserves);
                 interactStat.listOfItems[2].descriptor.text = "Cities";
                 interactStat.listOfItems[2].result.text = Convert.ToString(actorStats.numOfCities);
-
                 //Reserve specifics
                 interactStat = arrayOfStats[1];
                 interactStat.header.text = "Reserve Status";

@@ -527,6 +527,7 @@ public class TurnManager : MonoBehaviour
         currentSide = GameManager.i.sideScript.PlayerSide;
         //increment turn counter
         _turn++;
+        GameManager.i.dataScript.StatisticIncrement(StatType.PlayerDaysOnJob);
         Debug.LogFormat("[Trn] TurnManager: New Turn {0} -> Player: {1}, Current: {2}{3}",
             _turn, GameManager.i.sideScript.PlayerSide.name, currentSide.name, "\n");
         Debug.LogFormat("TurnManager: - - - StartTurnEarly - - - turn {0}{1}", _turn, "\n");
@@ -1155,6 +1156,10 @@ public class TurnManager : MonoBehaviour
             GameManager.i.messageScript.GeneralWarning(text, itemText, topText, reason, warning);
         }
     }
+
+
+    public WinStateLevel GetWinStateLevel()
+    { return winStateLevel; }
 
 
     /// <summary>

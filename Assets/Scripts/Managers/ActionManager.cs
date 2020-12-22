@@ -2049,6 +2049,7 @@ public class ActionManager : MonoBehaviour
                     benefit *= 2; traitText = string.Format(" ({0})", actor.GetTrait().tag);
                     GameManager.i.actorScript.TraitLogMessage(actor, "for being Reassured", "to DOUBLE effect of being Reassured");
                 }
+                actor.numOfTimesReassured++;
                 StringBuilder builder = new StringBuilder();
                 builder.AppendFormat("{0}{1} Unhappy timer +{2}{3}{4}{5}{6}{7}{8} can't be Reassured again{9}", colourGood, actor.actorName,
                     benefit, traitText, colourEnd, "\n", "\n", colourNeutral, actor.actorName, colourEnd);
@@ -2809,6 +2810,7 @@ public class ActionManager : MonoBehaviour
                                         colourNormal, actor.arc.name, actor.actorName, colourEnd);
                                     msgText = "Promised";
                                     moodText = GameManager.i.personScript.UpdateMood(MoodType.ReservePromise, actor.arc.name);
+                                    actor.numOfTimesPromised++;
                                     break;
                                 case "ReserveNoPromise":
                                     builderTop.AppendFormat("{0}{1} {2} is confused and doesn't understand why they are being cast aside{3}",

@@ -241,7 +241,7 @@
     {
         StressLeaveResistance, StressLeaveAuthority,  
         PlayerBreakdown, PlayerLieLowTimes, PlayerLieLowDays, PlayerCaptured, PlayerCapturedDays, PlayerBetrayed, PlayerTimesStressed, PlayerStressedDays, PlayerSuperStressed, PlayerDoNothing,
-        PlayerNodeActions, PlayerManageActions, PlayerMoveActions, PlayerTargetAttempts, PlayerGiveGear, PlayerAddictedDays, PlayerTimesCured,
+        PlayerNodeActions, PlayerManageActions, PlayerMoveActions, PlayerTargetAttempts, PlayerGiveGear, PlayerAddictedDays, PlayerTimesCured, PlayerDaysOnJob,
         LieLowDaysTotal, GearTotal,
         TargetAttempts, TargetSuccesses,
         ActorsResignedAuthority, ActorsResignedResistance, ActorResistanceTraitors, ActorsRecruited, ActorConflicts, ActorLearntSecret, ActorCompatibilityGood, ActorCompatibilityBad,
@@ -251,6 +251,7 @@
         OrgCures, OrgContractHits, OrgInfoHacks, OrgHQDropped, OrgEscapes,
         ReviewsTotal, ReviewCommendations, ReviewBlackmarks, ReviewInconclusive,
         DaysAPB, DaysAlert, DaysCrackdown, DaysErasureTeam,
+        ObjectivesComplete,
         HQRelocations
     }
 

@@ -168,16 +168,25 @@ public class ObjectiveManager : MonoBehaviour
             Objective objective = listOfObjectives.Find(x => x.name.Equals(objectiveName, StringComparison.Ordinal));
             if (objective != null)
             {
-                objective.progress += progressAdjust;
-                objective.progress = Mathf.Clamp(objective.progress, 0, 100);
-                Debug.LogFormat("[Obj] ObjectiveManager.cs -> UpdateObjectiveProgress: {0} now at progress {1} (adjust {2}){3}", objective.tag, objective.progress, progressAdjust, "\n");
-                //set appropriate star opacity in top widget UI
-                int index = listOfObjectives.FindIndex(x => x.name.Equals(objectiveName, StringComparison.Ordinal));
-                //objectives correspond to widget stars depending on their index position in the list ([0] is first, [1] is second, etc.)
-                SetObjectiveStar(index, objective.progress);
-                //message
-                string text = string.Format("{0} progressed +{1}% due to {2}, progress now {3}%", objective.tag, progressAdjust, reason, objective.progress);
-                GameManager.i.messageScript.ObjectiveProgress(text, reason, progressAdjust, objective);
+                //check you're not dealing with an already completed objective
+                if (objective.progress < 100)
+                {
+                    objective.progress += progressAdjust;
+                    objective.progress = Mathf.Clamp(objective.progress, 0, 100);
+                    //statistics
+                    if (objective.progress == 100)
+                    { GameManager.i.dataScript.StatisticIncrement(StatType.ObjectivesComplete); }
+                    //log
+                    Debug.LogFormat("[Obj] ObjectiveManager.cs -> UpdateObjectiveProgress: {0} now at progress {1} (adjust {2}){3}", objective.tag, objective.progress, progressAdjust, "\n");
+                    //set appropriate star opacity in top widget UI
+                    int index = listOfObjectives.FindIndex(x => x.name.Equals(objectiveName, StringComparison.Ordinal));
+                    //objectives correspond to widget stars depending on their index position in the list ([0] is first, [1] is second, etc.)
+                    SetObjectiveStar(index, objective.progress);
+                    //message
+                    string text = string.Format("{0} progressed +{1}% due to {2}, progress now {3}%", objective.tag, progressAdjust, reason, objective.progress);
+                    GameManager.i.messageScript.ObjectiveProgress(text, reason, progressAdjust, objective);
+                }
+                else { Debug.LogWarningFormat("Invalid objective Progress (already 100%) for {0}", objectiveName); }
             }
             else { Debug.LogWarningFormat("Objective \"{0}\" not found in listOfObjectives", objectiveName); }
         }

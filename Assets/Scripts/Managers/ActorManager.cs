@@ -5493,10 +5493,14 @@ public class ActorManager : MonoBehaviour
         {
             for (int i = 0; i < arrayOfActors.Length; i++)
             {
-                actor = arrayOfActors[i];
-                if (actor != null)
-                { actor.numOfDaysOnMap++; }
-                else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[{0}]", i); }
+                //check actor present
+                if (GameManager.i.dataScript.CheckActorSlotStatus(i, side) == true)
+                {
+                    actor = arrayOfActors[i];
+                    if (actor != null)
+                    { actor.numOfDaysOnMap++; }
+                    else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[{0}]", i); }
+                }
             }
 
         }
@@ -5521,6 +5525,7 @@ public class ActorManager : MonoBehaviour
     }
 
 
+    #region Debug methods...
     //
     // - - - Debug - - -
     //
@@ -5999,14 +6004,14 @@ public class ActorManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid City nameSet (Null)"); }
     }
-
+    #endregion
 
 
     //
     // - - - Inactive Actors - - -
     //
 
-
+    #region CheckInactiveResistanceActorsHuman
     /// <summary>
     /// Checks all OnMap Inactive Resistance actors, increments invisibility and returns any at max value back to Active status
     /// </summary>
@@ -6139,7 +6144,9 @@ public class ActorManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfActorsResistance (Null)"); }
     }
+    #endregion
 
+    #region CheckInactiveResistanceActorsAI
     /// <summary>
     /// Checks all OnMap Inactive AI Resistance actors, increments invisibility and returns any at max value back to Active status
     /// </summary>
@@ -6242,7 +6249,9 @@ public class ActorManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfActorsResistance (Null)"); }
     }
+    #endregion
 
+    #region CheckActiveResistanceActorsHuman
     /// <summary>
     /// Checks all active resistance actors (run AFTER checkInactiveResistanceActors). No checks are made if Player is not Active
     /// </summary>
@@ -6403,10 +6412,9 @@ public class ActorManager : MonoBehaviour
             else { Debug.LogError("Invalid arrayOfActors (Resistance) (Null)"); }
         }
     }
+    #endregion
 
-
-
-
+    #region CheckActiveResistanceActorsAI
     /// <summary>
     /// Checks all active resistance AI actors (run AFTER checkInactiveResistanceActors). No checks are made if Player is not Active
     /// </summary>
@@ -6531,7 +6539,9 @@ public class ActorManager : MonoBehaviour
             else { Debug.LogError("Invalid arrayOfActors (Resistance) (Null)"); }
         }
     }
+    #endregion
 
+    #region CheckActiveAuthorityActorsHuman
     /// <summary>
     /// Checks all active human player authority actors (run AFTER checkInactiveAuthorityActors). No checks are made if the player is not Active
     /// </summary>
@@ -6646,7 +6656,9 @@ public class ActorManager : MonoBehaviour
             else { Debug.LogError("Invalid arrayOfActors (Authority) (Null)"); }
         }
     }
+    #endregion
 
+    #region CheckActiveAuthorityActorsAI
     /// <summary>
     /// Checks all active Authority AI actors (run AFTER checkInactiveAuthorityActors). No checks are made if Player is not Active
     /// </summary>
@@ -6758,6 +6770,7 @@ public class ActorManager : MonoBehaviour
             else { Debug.LogError("Invalid arrayOfActors (Resistance) (Null)"); }
         }
     }
+#endregion
 
     /// <summary>
     /// subMtethod to handle a warning message. NOTE: it's assumed that the calling method has isPlayer set to true (for AI versions only)
@@ -8214,6 +8227,7 @@ public class ActorManager : MonoBehaviour
                     else
                     {
                         totalUnhappy++;
+                        actor.numOfDaysUnhappy++;
                         //unhappy timer has reached zero. Is actor's opinion > 0?
                         if (actor.GetDatapoint(ActorDatapoint.Opinion1) > 0)
                         {
@@ -8346,6 +8360,7 @@ public class ActorManager : MonoBehaviour
                     else
                     {
                         totalUnhappy++;
+                        actor.numOfDaysUnhappy++;
                         //unhappy timer has reached zero. Is actor's opinion > 0?
                         if (actor.GetDatapoint(ActorDatapoint.Opinion1) > 0)
                         {

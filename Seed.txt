@@ -11003,3 +11003,153 @@ City seed 64558 -> Londus, Eurasia
 
 Dev seed 19268 -> Tuesday, 22 December 2020 12:24 PM
 City seed 45127 -> Londus, Eurasia
+
+Dev seed 27466 -> Tuesday, 22 December 2020 2:44 PM
+City seed 54400 -> Londus, Eurasia
+ERROR Invalid actor (Null) for arrayOfActors[1]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ActorManager:UpdateActorStats(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:5499)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:598)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:448)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:345)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:550)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:334)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:345)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:348)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
+	ERROR Invalid actor (Null) for arrayOfActors[1]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ActorManager:UpdateActorStats(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:5499)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:598)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:448)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:345)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:550)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:334)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:345)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:348)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
+	ERROR Invalid actor (Null) for arrayOfActors[3]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ActorManager:UpdateActorStats(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:5499)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:598)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:448)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:345)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:550)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:334)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:345)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:348)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
+	ERROR Invalid actor (Null) for arrayOfActors[1]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ActorManager:UpdateActorStats(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:5499)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:598)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:448)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:345)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:550)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:334)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:345)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:348)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
+	ERROR Invalid actor (Null) for arrayOfActors[3]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ActorManager:UpdateActorStats(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:5499)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:598)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:448)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:345)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:550)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:334)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:345)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:348)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
+	ERROR Invalid actor (Null) for arrayOfActors[1]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ActorManager:UpdateActorStats(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:5499)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:598)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:448)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:345)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:550)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:334)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:345)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:348)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
+	ERROR Invalid actor (Null) for arrayOfActors[3]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ActorManager:UpdateActorStats(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:5499)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:598)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:448)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:345)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:550)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:334)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:345)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:348)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
+	ERROR Invalid actor (Null) for arrayOfActors[1]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ActorManager:UpdateActorStats(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:5499)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:598)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:448)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:345)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:550)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:334)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:345)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:348)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
+	ERROR Invalid actor (Null) for arrayOfActors[3]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	ActorManager:UpdateActorStats(GlobalSide) (at Assets/Scripts/Managers/ActorManager.cs:5499)
+	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:598)
+	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:448)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:345)
+	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:550)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:334)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:345)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:348)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
+	City seed 26419 -> Newpolis, Americon
+
+Dev seed 18107 -> Tuesday, 22 December 2020 3:00 PM
+City seed 56796 -> Londus, Eurasia
+
+Dev seed 42305 -> Tuesday, 22 December 2020 3:02 PM
+City seed 12231 -> Londus, Eurasia
+
+Dev seed 14646 -> Tuesday, 22 December 2020 3:47 PM
+City seed 58141 -> Londus, Eurasia
+ERROR Invalid car (Null) for listOfCarsTraffic[3]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	AnimationManager:ResetTraffic() (at Assets/Scripts/Managers/AnimationManager.cs:503)
+	AnimationManager:StopAnimations() (at Assets/Scripts/Managers/AnimationManager.cs:238)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:314)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:189)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:345)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:349)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
+	
+Dev seed 62253 -> Tuesday, 22 December 2020 3:53 PM
+City seed 47307 -> Londus, Eurasia
+
+Dev seed 55192 -> Tuesday, 22 December 2020 4:01 PM
+City seed 45729 -> Londus, Eurasia
+
+Dev seed 39176 -> Tuesday, 22 December 2020 4:03 PM
+City seed 2343 -> Londus, Eurasia
+
+Dev seed 19273 -> Tuesday, 22 December 2020 4:04 PM
+City seed 4608 -> Londus, Eurasia
+
+Dev seed 28560 -> Tuesday, 22 December 2020 4:14 PM
+City seed 15466 -> Londus, Eurasia
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	

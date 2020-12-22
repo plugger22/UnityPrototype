@@ -1142,7 +1142,6 @@ public class PersonalityManager : MonoBehaviour
     public PlayerLikesData GetPlayerLikes()
     {
         PlayerLikesData data = new PlayerLikesData();
-        StringBuilder builder = new StringBuilder();
         //Get preferences
         int factorValue;
         for (int index = 0; index < numOfFactors; index++)

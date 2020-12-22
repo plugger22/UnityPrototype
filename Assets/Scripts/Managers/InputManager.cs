@@ -277,7 +277,8 @@ public class InputManager : MonoBehaviour
                         switch (_gameState)
                         {
                             case GameState.PlayGame:
-                                EventManager.i.PostNotification(EventType.ExitLevel, this, null, string.Format("InputManager.cs -> ProcessKeyInput ExitLevel \"{0}\"", Input.inputString.ToUpper()));
+                                if (GameManager.i.turnScript.GetWinStateLevel() == WinStateLevel.None)
+                                { EventManager.i.PostNotification(EventType.ExitLevel, this, null, string.Format("InputManager.cs -> ProcessKeyInput ExitLevel \"{0}\"", Input.inputString.ToUpper())); }
                                 break;
                         }
                     }
