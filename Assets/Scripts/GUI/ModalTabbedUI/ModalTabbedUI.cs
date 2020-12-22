@@ -143,37 +143,8 @@ public class ModalTabbedUI : MonoBehaviour
     //option buttons
     public TabbedHistoryOptionUI tab7Interaction0;
     public TabbedHistoryOptionUI tab7Interaction1;
-    //scrollable items
-    public GameObject tab7item0;
-    public GameObject tab7item1;
-    public GameObject tab7item2;
-    public GameObject tab7item3;
-    public GameObject tab7item4;
-    public GameObject tab7item5;
-    public GameObject tab7item6;
-    public GameObject tab7item7;
-    public GameObject tab7item8;
-    public GameObject tab7item9;
-    public GameObject tab7item10;
-    public GameObject tab7item11;
-    public GameObject tab7item12;
-    public GameObject tab7item13;
-    public GameObject tab7item14;
-    public GameObject tab7item15;
-    public GameObject tab7item16;
-    public GameObject tab7item17;
-    public GameObject tab7item18;
-    public GameObject tab7item19;
-    public GameObject tab7item20;
-    public GameObject tab7item21;
-    public GameObject tab7item22;
-    public GameObject tab7item23;
-    public GameObject tab7item24;
-    public GameObject tab7item25;
-    public GameObject tab7item26;
-    public GameObject tab7item27;
-    public GameObject tab7item28;
-    public GameObject tab7item29;
+    [Tooltip("Place all tabbedScrollItems (Dark/Light) in here. NOTE: Make sure they are in the same order as your scroll list, eg. light0, dark0, light1, dark1, light2 ...")]
+    public List<GameObject> listOfTab7Items;
 
     [Header("Canvas 8 -> Statistics")]
     public TabbedStatInteraction tab8Stat0;
@@ -221,7 +192,7 @@ public class ModalTabbedUI : MonoBehaviour
     //Page 6
     private int maxNumOfGear;
     //Page7
-    private int maxNumOfScrollItems = 30;                           //max number of items in scrollable list
+    private int maxNumOfScrollItems;                           //max number of items in scrollable list
     private int numOfScrollItemsVisible = 11;                       //max number of items visible at any one time
     private int numOfScrollItemsCurrent;                            //number of active items
     private int scrollHighlightIndex = -1;                          //current highlight index (doesn't matter if shown as highlighted or not)
@@ -248,6 +219,7 @@ public class ModalTabbedUI : MonoBehaviour
     private List<int> listOfSecretActors;
     private List<Secret> listOfSecrets;
     private List<string> listOfGear;
+    private List<HelpData> listOfHelpData;
     private List<Investigation> listOfInvestigations;
     private TabbedContactInteraction interactContact;
     private TabbedSecretInteraction interactSecret;
@@ -511,36 +483,11 @@ public class ModalTabbedUI : MonoBehaviour
         //
         // - - - canvas7
         //
-        Debug.Assert(tab7item0 != null, "Invalid tab7item0 (Null)");
-        Debug.Assert(tab7item1 != null, "Invalid tab7item1 (Null)");
-        Debug.Assert(tab7item2 != null, "Invalid tab7item2 (Null)");
-        Debug.Assert(tab7item3 != null, "Invalid tab7item3 (Null)");
-        Debug.Assert(tab7item4 != null, "Invalid tab7item4 (Null)");
-        Debug.Assert(tab7item5 != null, "Invalid tab7item5 (Null)");
-        Debug.Assert(tab7item6 != null, "Invalid tab7item6 (Null)");
-        Debug.Assert(tab7item7 != null, "Invalid tab7item7 (Null)");
-        Debug.Assert(tab7item8 != null, "Invalid tab7item8 (Null)");
-        Debug.Assert(tab7item9 != null, "Invalid tab7item9 (Null)");
-        Debug.Assert(tab7item10 != null, "Invalid tab7item10 (Null)");
-        Debug.Assert(tab7item11 != null, "Invalid tab7item11 (Null)");
-        Debug.Assert(tab7item12 != null, "Invalid tab7item12 (Null)");
-        Debug.Assert(tab7item13 != null, "Invalid tab7item13 (Null)");
-        Debug.Assert(tab7item14 != null, "Invalid tab7item14 (Null)");
-        Debug.Assert(tab7item15 != null, "Invalid tab7item15 (Null)");
-        Debug.Assert(tab7item16 != null, "Invalid tab7item16 (Null)");
-        Debug.Assert(tab7item17 != null, "Invalid tab7item17 (Null)");
-        Debug.Assert(tab7item18 != null, "Invalid tab7item18 (Null)");
-        Debug.Assert(tab7item19 != null, "Invalid tab7item19 (Null)");
-        Debug.Assert(tab7item20 != null, "Invalid tab7item20 (Null)");
-        Debug.Assert(tab7item21 != null, "Invalid tab7item21 (Null)");
-        Debug.Assert(tab7item22 != null, "Invalid tab7item22 (Null)");
-        Debug.Assert(tab7item23 != null, "Invalid tab7item23 (Null)");
-        Debug.Assert(tab7item24 != null, "Invalid tab7item24 (Null)");
-        Debug.Assert(tab7item25 != null, "Invalid tab7item25 (Null)");
-        Debug.Assert(tab7item26 != null, "Invalid tab7item26 (Null)");
-        Debug.Assert(tab7item27 != null, "Invalid tab7item27 (Null)");
-        Debug.Assert(tab7item28 != null, "Invalid tab7item28 (Null)");
-        Debug.Assert(tab7item29 != null, "Invalid tab7item29 (Null)");
+        for (int i = 0; i < listOfTab7Items.Count; i++)
+        {
+            if (listOfTab7Items[i] == null)
+            { Debug.LogErrorFormat("Invalid tab7Item (Null) for listOfTab7Items[{0}]", i); }
+        }
         //canvas 8
         Debug.Assert(tab8Stat0 != null, "Invalid tab8Stat0 (Null)");
         Debug.Assert(tab8Stat1 != null, "Invalid tab8Stat1 (Null)");
@@ -614,6 +561,9 @@ public class ModalTabbedUI : MonoBehaviour
         //page 5
         maxNumOfLikes = 4;
         arrayOfLikes = new TabbedLikesInteraction[maxNumOfLikes];
+        //page 7
+        maxNumOfScrollItems = listOfTab7Items.Count;
+        Debug.Assert(maxNumOfScrollItems > 0, "Invalid maxNumOfScrollItems (Zero or less)");
         //cache likes data
         PlayerLikesData data = GameManager.i.personScript.GetPlayerLikes();
         if (data != null)
@@ -880,36 +830,11 @@ public class ModalTabbedUI : MonoBehaviour
         if (tab7Interaction0 != null) { tab7Interaction0.SetEvent(EventType.TabbedHistoryEvents); } else { Debug.LogError("Invalid tab7Interaction0 (Null)"); }
         if (tab7Interaction1 != null) { tab7Interaction1.SetEvent(EventType.TabbedHistoryEmotions); } else { Debug.LogError("Invalid tab7Interaction1 (Null)"); }
         //scrollable items-> populate arrays
-        arrayOfScrollObjects[0] = tab7item0; arrayOfScrollInteractions[0] = tab7item0.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[1] = tab7item1; arrayOfScrollInteractions[1] = tab7item1.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[2] = tab7item2; arrayOfScrollInteractions[2] = tab7item2.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[3] = tab7item3; arrayOfScrollInteractions[3] = tab7item3.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[4] = tab7item4; arrayOfScrollInteractions[4] = tab7item4.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[5] = tab7item5; arrayOfScrollInteractions[5] = tab7item5.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[6] = tab7item6; arrayOfScrollInteractions[6] = tab7item6.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[7] = tab7item7; arrayOfScrollInteractions[7] = tab7item7.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[8] = tab7item8; arrayOfScrollInteractions[8] = tab7item8.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[9] = tab7item9; arrayOfScrollInteractions[9] = tab7item9.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[10] = tab7item10; arrayOfScrollInteractions[10] = tab7item10.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[11] = tab7item11; arrayOfScrollInteractions[11] = tab7item11.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[12] = tab7item12; arrayOfScrollInteractions[12] = tab7item12.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[13] = tab7item13; arrayOfScrollInteractions[13] = tab7item13.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[14] = tab7item14; arrayOfScrollInteractions[14] = tab7item14.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[15] = tab7item15; arrayOfScrollInteractions[15] = tab7item15.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[16] = tab7item16; arrayOfScrollInteractions[16] = tab7item16.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[17] = tab7item17; arrayOfScrollInteractions[17] = tab7item17.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[18] = tab7item18; arrayOfScrollInteractions[18] = tab7item18.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[19] = tab7item19; arrayOfScrollInteractions[19] = tab7item19.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[20] = tab7item20; arrayOfScrollInteractions[20] = tab7item20.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[21] = tab7item21; arrayOfScrollInteractions[21] = tab7item21.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[22] = tab7item22; arrayOfScrollInteractions[22] = tab7item22.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[23] = tab7item23; arrayOfScrollInteractions[23] = tab7item23.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[24] = tab7item24; arrayOfScrollInteractions[24] = tab7item24.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[25] = tab7item25; arrayOfScrollInteractions[25] = tab7item25.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[26] = tab7item26; arrayOfScrollInteractions[26] = tab7item26.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[27] = tab7item27; arrayOfScrollInteractions[27] = tab7item27.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[28] = tab7item28; arrayOfScrollInteractions[28] = tab7item28.GetComponent<TabbedScrollInteraction>();
-        arrayOfScrollObjects[29] = tab7item29; arrayOfScrollInteractions[29] = tab7item29.GetComponent<TabbedScrollInteraction>();
+        for (int i = 0; i < listOfTab7Items.Count; i++)
+        {
+            arrayOfScrollObjects[i] = listOfTab7Items[i];
+            arrayOfScrollInteractions[i] = listOfTab7Items[i].GetComponent<TabbedScrollInteraction>();
+        }
         //error check
         for (int i = 0; i < arrayOfScrollObjects.Length; i++)
         {
@@ -2876,7 +2801,8 @@ public class ModalTabbedUI : MonoBehaviour
         {
             //Player
             tab0Header0.listOfItems[0].descriptor.text = GetStatus(GameManager.i.playerScript.status, GameManager.i.playerScript.inactiveStatus);
-
+            listOfHelpData = GameManager.i.helpScript.GetHelpData("compatibility_0", "compatibility_1", "compatibility_1");
+            tab0Header0.listOfItems[0].help.SetHelpTooltip(listOfHelpData);
         }
         else
         {
@@ -3547,7 +3473,7 @@ public class ModalTabbedUI : MonoBehaviour
         //make sure it's a one off
         isAddDebugRecords = true;
         List<HistoryActor> tempList = new List<HistoryActor>();
-        for (int i = 0; i < 12; i++)
+        for (int i = 0; i < 40; i++)
         { tempList.Add(new HistoryActor() { text = $"Debug History item {i}" }); }
         return tempList;
     }
