@@ -1654,6 +1654,48 @@ public class HelpManager : MonoBehaviour
 
         #endregion
 
+        #region Personality
+        //
+        // - - - Personality Factors
+        //
+        //Openness
+        data = new HelpData();
+        data.tag = "person_0";
+        data.header = "Openness";
+        data.text = string.Format("Reflects an individuals {0}imagination, feelings, actions{1} and {2}ideas{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //High Openness
+        data = new HelpData();
+        data.tag = "person_1";
+        data.header = "High Score";
+        data.text = string.Format("{0}Curious{1}, wide range of interests, independent", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Low Openness
+        data = new HelpData();
+        data.tag = "person_2";
+        data.header = "Low Score";
+        data.text = string.Format("Practical, {0}conventional{1}, prefers routine", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        data = new HelpData();
+        //Conscientiousness
+        data.tag = "person_3";
+        data.header = "Conscientiousness";
+        data.text = string.Format("Reflects an individuals {0}competence, self-discipline, thoughtfulness{1} and how {2}goal-driven{3} they are", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //High Openness
+        data = new HelpData();
+        data.tag = "person_4";
+        data.header = "High Score";
+        data.text = string.Format("Hardworking, dependable, {0}organised{1}", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Low Openness
+        data = new HelpData();
+        data.tag = "person_5";
+        data.header = "Low Score";
+        data.text = string.Format("Impulsive, {0}careless{1}, disorganised", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
         #region Player Betrayed
         //
         // - - - Player Betrayed

@@ -1170,6 +1170,13 @@ public class ModalTabbedUI : MonoBehaviour
         if (listOfHelp != null)
         { helpClose.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
         else { Debug.LogWarning("Invalid listOfHelp for helpMain (Null)"); }
+        //
+        // - - - Canvas 1 -> Personality
+        //
+        listOfHelpData = GameManager.i.helpScript.GetHelpData("person_0", "person_1", "person_2");
+        tab1Person0.help.SetHelpTooltip(listOfHelpData);
+        listOfHelpData = GameManager.i.helpScript.GetHelpData("person_3", "person_4", "person_5");
+        tab1Person1.help.SetHelpTooltip(listOfHelpData);
     }
     #endregion
 
@@ -2801,8 +2808,6 @@ public class ModalTabbedUI : MonoBehaviour
         {
             //Player
             tab0Header0.listOfItems[0].descriptor.text = GetStatus(GameManager.i.playerScript.status, GameManager.i.playerScript.inactiveStatus);
-            listOfHelpData = GameManager.i.helpScript.GetHelpData("compatibility_0", "compatibility_1", "compatibility_1");
-            tab0Header0.listOfItems[0].help.SetHelpTooltip(listOfHelpData);
         }
         else
         {
