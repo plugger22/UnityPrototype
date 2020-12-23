@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Name: Legend
   m_EditorClassIdentifier: 
   tag: Legend
-  description: Double Renown
+  description: Double Power gain
   typeOfTrait: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   category: {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}
-  hqRenownMultiplier: 2
-  hqMajorMultiplier: 0
+  hqPowerMultiplier: 0
+  hqMajorMultiplier: 1.5
   hqMinorMultiplier: 0
   listOfTraitEffects:
   - {fileID: 11400000, guid: 7947ea7f4cc85aa409d1475c4af50b5c, type: 2}
@@ -28,4 +28,4 @@ MonoBehaviour:
   neuroticism: 99
   tagFormatted: <color=#FF4500>Legend</color>
   isHqTrait: 1
-  hqDescription: Chance of a Good (change in renown) event 109.999990463257 % more
+  hqDescription: Chance of a Major (leave) event 50 % more

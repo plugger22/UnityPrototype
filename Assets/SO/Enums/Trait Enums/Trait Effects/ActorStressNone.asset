@@ -11,5 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd124632030b2f4aae9a6400fae2aea, type: 3}
   m_Name: ActorStressNone
   m_EditorClassIdentifier: 
-  descriptor: Immune to Stressed condition
-  teffID: 2
+  descriptor: Immune to becoming STRESSED

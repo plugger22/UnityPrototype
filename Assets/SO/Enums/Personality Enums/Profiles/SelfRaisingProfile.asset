@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Self Raising
   isAn: 0
-  descriptor: self-raising behaviour, cherishing pleasurable experiences and accepting
-    of help offered by others
+  descriptor: Experiences self-raising behaviour, cherishing pleasurable experiences
+    and accepting of help offered by others
   AgreePrimary: -2
   ConscPrimary: 1
   NeuroPrimary: -2
@@ -25,3 +25,5 @@ MonoBehaviour:
   NeuroSecondary: 0
   ExtraSecondary: 0
   OpenSecondary: 0
+  alpha: 1
+  beta: 0

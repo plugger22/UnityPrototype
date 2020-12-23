@@ -13,7 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Inconspicuous
   isAn: 1
-  descriptor: moderate behaviour, emotions are expressed in privacy
+  descriptor: Experiences only moderate behaviour and their emotions are expressed
+    only in privacy
   AgreePrimary: 0
   ConscPrimary: 1
   NeuroPrimary: 0
@@ -24,3 +25,5 @@ MonoBehaviour:
   NeuroSecondary: -1
   ExtraSecondary: 0
   OpenSecondary: 0
+  alpha: 3
+  beta: -3

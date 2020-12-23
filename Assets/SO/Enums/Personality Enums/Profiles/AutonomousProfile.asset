@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Autonomous
   isAn: 1
-  descriptor: psychologically independent of others to fulfill their own emotional
-    and physical needs
+  descriptor: Is psychologically independent of others and doesn't need them to fulfill
+    their own emotional and physical needs
   AgreePrimary: -2
   ConscPrimary: 0
   NeuroPrimary: -1
@@ -25,3 +25,5 @@ MonoBehaviour:
   NeuroSecondary: 0
   ExtraSecondary: 0
   OpenSecondary: 1
+  alpha: -1
+  beta: 2

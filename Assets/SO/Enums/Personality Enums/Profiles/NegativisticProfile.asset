@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Negativistic
   isAn: 0
-  descriptor: passive-aggressive attitudes plus passive resistance to demands manifesting
-    in social and occupational situations
+  descriptor: Displays passive-aggressive attitudes plus passive resistance to demands
+    manifesting in social and occupational situations
   AgreePrimary: -1
   ConscPrimary: 0
   NeuroPrimary: 2
@@ -25,3 +25,5 @@ MonoBehaviour:
   NeuroSecondary: 0
   ExtraSecondary: -1
   OpenSecondary: 0
+  alpha: -4
+  beta: -1

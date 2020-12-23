@@ -11,5 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd124632030b2f4aae9a6400fae2aea, type: 3}
   m_Name: ActorReserveTimerHalved
   m_EditorClassIdentifier: 
-  descriptor: When in Reserves will wait half the normal time before becoming Unhappy
-  teffID: 2
+  descriptor: When in Reserves will wait half the normal time before becoming UNHAPPY

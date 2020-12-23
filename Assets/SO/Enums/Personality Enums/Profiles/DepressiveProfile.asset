@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Depressive
   isAn: 0
-  descriptor: pattern of depressive cognitions and behaviours, pessimistic perceptions
-    involving self-concept and mood
+  descriptor: Displays a pattern of depressive cognitions and behaviours. Prone to
+    pessimistic perceptions involving self-concept and mood
   AgreePrimary: 0
   ConscPrimary: 0
   NeuroPrimary: 1
@@ -25,3 +25,5 @@ MonoBehaviour:
   NeuroSecondary: 0
   ExtraSecondary: 0
   OpenSecondary: 0
+  alpha: 0
+  beta: -2

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Avoidant
   isAn: 1
-  descriptor: social anxiety with feelings of inadequacy, despite a strong desire
-    for intimacy
+  descriptor: Experiences social anxiety with feelings of inadequacy, despite a strong
+    desire for intimacy
   AgreePrimary: 0
   ConscPrimary: 0
   NeuroPrimary: 1
@@ -25,3 +25,5 @@ MonoBehaviour:
   NeuroSecondary: 0
   ExtraSecondary: 0
   OpenSecondary: -1
+  alpha: 0
+  beta: -3

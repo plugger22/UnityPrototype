@@ -11,5 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd124632030b2f4aae9a6400fae2aea, type: 3}
   m_Name: ActorDoubleRenown
   m_EditorClassIdentifier: 
-  descriptor: Gains double the normal Renown due to their legendary status
-  teffID: 2
+  descriptor: Gains double the normal Power due to their legendary status

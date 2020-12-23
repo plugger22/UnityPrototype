@@ -11350,3 +11350,56 @@ City seed 52491 -> Londus, Eurasia
 
 Dev seed 36477 -> Wednesday, 23 December 2020 12:35 PM
 City seed 56670 -> Londus, Eurasia
+
+Dev seed 30360 -> Wednesday, 23 December 2020 2:51 PM
+City seed 48835 -> Londus, Eurasia
+
+Dev seed 13942 -> Wednesday, 23 December 2020 2:53 PM
+City seed 18232 -> Londus, Eurasia
+
+Dev seed 56955 -> Wednesday, 23 December 2020 3:20 PM
+City seed 62883 -> Londus, Eurasia
+
+Dev seed 26650 -> Wednesday, 23 December 2020 3:41 PM
+City seed 48704 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.UpdatePage () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1466)
+	ModalTabbedUI.OpenPage (System.Int32 tabIndex, System.Boolean isMouseClick) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1369)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:921)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:345)
+	TabbedTopTabUI.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ModalTabbedUI/TabbedTopTabUI.cs:42)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 47577 -> Wednesday, 23 December 2020 3:43 PM
+City seed 25245 -> Londus, Eurasia
+
+Dev seed 23843 -> Wednesday, 23 December 2020 4:16 PM
+City seed 28539 -> Londus, Eurasia
+
+Dev seed 12990 -> Wednesday, 23 December 2020 4:20 PM
+City seed 1025 -> Londus, Eurasia
+
+Dev seed 20742 -> Wednesday, 23 December 2020 4:23 PM
+City seed 65136 -> Londus, Eurasia
+
+Dev seed 25252 -> Wednesday, 23 December 2020 4:26 PM
+City seed 13751 -> Londus, Eurasia
+
+Dev seed 64696 -> Wednesday, 23 December 2020 5:00 PM
+City seed 39960 -> Londus, Eurasia
+
+Dev seed 53629 -> Wednesday, 23 December 2020 5:02 PM
+City seed 6279 -> Londus, Eurasia
+
+Dev seed 59442 -> Wednesday, 23 December 2020 5:04 PM
+City seed 62984 -> Londus, Eurasia

@@ -11,6 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd124632030b2f4aae9a6400fae2aea, type: 3}
   m_Name: ActorContactEffectLow
   m_EditorClassIdentifier: 
-  descriptor: All contacts controlled by this actor have their Effectiveness lowered
-    by -1 (min. value 1)
-  teffID: 2
+  descriptor: All Contacts controlled by this character have their Effectiveness lowered
+    by -1 (min value 1 star)

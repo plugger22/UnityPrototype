@@ -224,6 +224,7 @@ public class ModalTabbedUI : MonoBehaviour
     private TabbedInvestInteraction interactInvest;
     private TabbedStatInteraction interactStat;
     private PersonProfile interactProfile;
+    private Trait interactTrait;
     private string gearName;
     private string knowsSecretHeader;
     private string effectsSecretHeader;
@@ -1449,7 +1450,9 @@ public class ModalTabbedUI : MonoBehaviour
                         tab1Header1.descriptor.text = GetTrait(true);
                         tab1Header2.descriptor.text = GetPersonalityDescriptors(true);
                         tab1Header3.descriptor.text = GetPersonalityAssessment(true);
-                        listOfHelpData = GetPersonalityTooltip(true);
+                        GetTraitTooltip(true);
+                        tab1Header1.help.SetHelpTooltip(listOfHelpData);
+                        GetPersonalityTooltip(true);
                         tab1Header3.help.SetHelpTooltip(listOfHelpData);
                         break;
                     case TabbedUIWho.Subordinates:
@@ -1459,7 +1462,9 @@ public class ModalTabbedUI : MonoBehaviour
                         tab1Header1.descriptor.text = GetTrait();
                         tab1Header2.descriptor.text = GetPersonalityDescriptors();
                         tab1Header3.descriptor.text = GetPersonalityAssessment();
-                        listOfHelpData = GetPersonalityTooltip();
+                        GetTraitTooltip();
+                        tab1Header1.help.SetHelpTooltip(listOfHelpData);
+                        GetPersonalityTooltip();
                         tab1Header3.help.SetHelpTooltip(listOfHelpData);
                         break;
                     default: Debug.LogWarningFormat("Unrecognised inputData.who \"{0}\"", inputData.who); break;
@@ -3111,6 +3116,7 @@ public class ModalTabbedUI : MonoBehaviour
 
     #region Personality subMethods...
 
+    #region UpdatePersonality
     /// <summary>
     /// Tab1 Updates personality matrix for an actor or player
     /// </summary>
@@ -3266,9 +3272,7 @@ public class ModalTabbedUI : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfFactors (Null)"); }
     }
-
-
-
+    #endregion
 
     /// <summary>
     /// Returns a list of descriptors (max 5, each on a new line) for the actor / player's personality
@@ -3327,10 +3331,10 @@ public class ModalTabbedUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Tooltip for personality profile. Return empty string if a problem
+    /// Tooltip for personality profile. Populates listOfHelpData
     /// </summary>
     /// <returns></returns>
-    private List<HelpData> GetPersonalityTooltip(bool isPlayer = false)
+    private void GetPersonalityTooltip(bool isPlayer = false)
     {
         listOfHelpData.Clear();
         HelpData data = new HelpData();
@@ -3362,12 +3366,10 @@ public class ModalTabbedUI : MonoBehaviour
         }
         else
         {
-            data.header = "Nothing Conclusive";
+            data.header = "Inconclusive";
             data.text = "Psychological assessments have been unable to determine a profile for this individual";
             listOfHelpData.Add(data);
         }
-
-        return listOfHelpData;
     }
 
     /// <summary>
@@ -3381,13 +3383,90 @@ public class ModalTabbedUI : MonoBehaviour
         { displayText = "All round star"; }
         else
         {
-            Trait trait = arrayOfActorsTemp[currentSideTabIndex].GetTrait();
-            if (trait != null)
-            { displayText = trait.tagFormatted; }
-            else { Debug.LogWarningFormat("Invalid trait (Null) for arrayOfActorsTemp[{0}]", currentSideTabIndex); }
+            interactTrait = arrayOfActorsTemp[currentSideTabIndex].GetTrait();
+            if (interactTrait != null)
+            { displayText = interactTrait.tagFormatted; }
+            else { Debug.LogWarningFormat("Invalid interactTrait (Null) for arrayOfActorsTemp[{0}]", currentSideTabIndex); }
         }
         return displayText;
     }
+
+    /// <summary>
+    /// Returns tooltip for Trait (effect depends on whether a normal character or at HQ. Populates listOfHelpData
+    /// </summary>
+    /// <returns></returns>
+    private void GetTraitTooltip(bool isPlayer = false)
+    {
+        listOfHelpData.Clear();
+        HelpData data = new HelpData();
+        data.tag = "";
+        if (isPlayer == true)
+        {
+            data.header = "Player Trait";
+            data.text = "You don't, as a Player, have a defining Trait. Everybody else does. You are free to express yourself as you wish";
+            listOfHelpData.Add(data);
+        }
+        else
+        {
+            //overview
+            data.header = interactTrait.tag;
+            data.text = interactTrait.description;
+            listOfHelpData.Add(data);
+            if (inputData.who != TabbedUIWho.HQ)
+            {
+                //normal use
+                data = new HelpData();
+                data.header = "Effect";
+                data.text = interactTrait.listOfTraitEffects[0].descriptor;
+                listOfHelpData.Add(data);
+            }
+            else
+            {
+                //hq use
+                data = new HelpData();
+                data.header = "HQ Effect";
+                data.text = "This trait has no effect while the character is at HQ";
+                float multiplier = interactTrait.hqPowerMultiplier;
+                if (multiplier != 0f)
+                {
+                    if (multiplier > 1.0f)
+                    { data.text = string.Format("Any gains or loses of {0}, while at HQ, will be {1} more than normal", GameManager.Formatt("POWER", ColourType.salmonText),
+                        GameManager.Formatt(Convert.ToString(multiplier * 100f) + " %", ColourType.salmonText)); }
+                    else
+                    { data.text = string.Format("Any gains or loses of {0}, while at HQ, will be {1} LESS than normal", GameManager.Formatt("POWER", ColourType.salmonText),
+                        GameManager.Formatt(Convert.ToString(multiplier * 100f) + " %", ColourType.salmonText)); }
+                }
+                else
+                {
+                    multiplier = interactTrait.hqMajorMultiplier;
+                    if (multiplier != 0f)
+                    {
+                        if (multiplier > 1.0f)
+                        { data.text = string.Format("{0} (Leave HQ) events affecting this character, while at HQ, will be {1} more likely", GameManager.Formatt("MAJOR", ColourType.salmonText),
+                            GameManager.Formatt(Convert.ToString(multiplier * 100f) + " %", ColourType.salmonText)); }
+                        else
+                        { data.text = string.Format("{0} (Leave HQ) events affecting this character, while at HQ, will be {1} LESS likely", GameManager.Formatt("MAJOR", ColourType.salmonText),
+                            GameManager.Formatt(Convert.ToString(multiplier * 100f) + " %", ColourType.salmonText)); }
+                    }
+                    else
+                    {
+                        multiplier = interactTrait.hqMinorMultiplier;
+                        if (multiplier != 0f)
+                        {
+                            if (multiplier > 1.0f)
+                            { data.text = string.Format("Minor events (gain Power) affecting this character, while at HQ, will be {0} more likely", GameManager.Formatt(Convert.ToString(multiplier * 100f) + " %", ColourType.salmonText)); }
+                            else
+                            { data.text = string.Format("Minor events (gain Power) affecting this character, while at HQ, will be {0} LESS likely", GameManager.Formatt(Convert.ToString(multiplier * 100f) + " %", ColourType.salmonText)); }
+                        }
+                        else
+                        { Debug.LogWarningFormat("Invalid HQ trait tooltip (nothing applies -> something should) for trait \"{0}\"", interactTrait.tag); }
+                    }
+                }
+                listOfHelpData.Add(data);
+            }
+        }
+    }
+
     #endregion
 
     #region History subMethods...

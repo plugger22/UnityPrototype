@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Determined
   isAn: 0
-  descriptor: calm, stable relationships with society and other people
+  descriptor: Experiences calm, stable relationships with society and other people
   AgreePrimary: 1
   ConscPrimary: 1
   NeuroPrimary: -2
@@ -24,3 +24,5 @@ MonoBehaviour:
   NeuroSecondary: 0
   ExtraSecondary: -1
   OpenSecondary: -1
+  alpha: 4
+  beta: -2

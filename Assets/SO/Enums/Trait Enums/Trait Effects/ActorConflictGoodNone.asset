@@ -11,6 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd124632030b2f4aae9a6400fae2aea, type: 3}
   m_Name: ActorConflictGoodNone
   m_EditorClassIdentifier: 
-  descriptor: During a Relationship Conflict there will be no Good options placed
-    in the pool of possible outcomes.
-  teffID: 7
+  descriptor: During a Relationship Conflict Good outcomes aren't possible.

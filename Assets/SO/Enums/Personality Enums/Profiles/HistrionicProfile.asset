@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Histrionic
   isAn: 1
-  descriptor: pattern of attention-seeking emotions
+  descriptor: Shows a strong pattern of attention-seeking emotions and behaviour
   AgreePrimary: 0
   ConscPrimary: 0
   NeuroPrimary: 0
@@ -24,3 +24,5 @@ MonoBehaviour:
   NeuroSecondary: 1
   ExtraSecondary: 0
   OpenSecondary: 0
+  alpha: -2
+  beta: 3

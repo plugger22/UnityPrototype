@@ -13,7 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Imperturbable
   isAn: 0
-  descriptor: high self-directedness, attentive behaviour and/or inactive behaviour
+  descriptor: Displays high self-directedness, attentive behaviour and/or inactive
+    behaviour
   AgreePrimary: 1
   ConscPrimary: 2
   NeuroPrimary: -2
@@ -24,3 +25,5 @@ MonoBehaviour:
   NeuroSecondary: 0
   ExtraSecondary: 0
   OpenSecondary: 0
+  alpha: 5
+  beta: 0

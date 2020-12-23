@@ -11,6 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd124632030b2f4aae9a6400fae2aea, type: 3}
   m_Name: ActorResignHigh
   m_EditorClassIdentifier: 
-  descriptor: Triple (3x) chance of resigning whenever the Player is Corrupt, Incompetent
-    or of Questionable loyalty
-  teffID: 2
+  descriptor: Triple (3x) chance of resigning whenever you are CORRUPT, INCOMPETENT
+    or of QUESTIONABLE loyalty

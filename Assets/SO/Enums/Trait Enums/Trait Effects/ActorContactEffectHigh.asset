@@ -11,6 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd124632030b2f4aae9a6400fae2aea, type: 3}
   m_Name: ActorContactEffectHigh
   m_EditorClassIdentifier: 
-  descriptor: All contacts controlled by this actor have their Effectivenss raised
-    by +1 (max. value 3)
-  teffID: 2
+  descriptor: All Contacts controlled by this character have their Effectivenss raised
+    by +1 (capped at 3 stars)

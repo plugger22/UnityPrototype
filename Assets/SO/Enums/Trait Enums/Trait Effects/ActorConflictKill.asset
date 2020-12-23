@@ -11,7 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd124632030b2f4aae9a6400fae2aea, type: 3}
   m_Name: ActorConflictKill
   m_EditorClassIdentifier: 
-  descriptor: In a Relationship Conflict a special option is added to the pool of
-    options which involves the Actor killing a random other actor in a fit of psychopathic
-    rage
-  teffID: 8
+  descriptor: In a Relationship Conflict there is a chance of the character killing
+    another character in a fit of psychopathic rage

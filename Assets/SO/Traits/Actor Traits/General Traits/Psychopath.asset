@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Name: Psychopath
   m_EditorClassIdentifier: 
   tag: Psychopath
-  description: Random murder in a Relationship Conflict
+  description: Relationship Conflicts may turn violent
   typeOfTrait: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   category: {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}
-  hqRenownMultiplier: 0
+  hqPowerMultiplier: 0
   hqMajorMultiplier: 0.75
   hqMinorMultiplier: 0
   listOfTraitEffects:
@@ -28,4 +28,4 @@ MonoBehaviour:
   neuroticism: -1
   tagFormatted: <color=#FF4500>Psychopath</color>
   isHqTrait: 1
-  hqDescription: Chance of a Major (leave) event 25 % less
+  hqDescription: Chance of a Major (leave) event 75 % less

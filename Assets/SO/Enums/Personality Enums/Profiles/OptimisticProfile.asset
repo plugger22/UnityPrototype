@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Optimistic
   isAn: 1
-  descriptor: pattern of optimistic cognitions and behaviours, positive perceptions
-    involving self-concept and mood
+  descriptor: A strong pattern of optimistic cognitions and behaviours including positive
+    perceptions involving self-concept and mood
   AgreePrimary: 0
   ConscPrimary: 0
   NeuroPrimary: -1
@@ -25,3 +25,5 @@ MonoBehaviour:
   NeuroSecondary: 0
   ExtraSecondary: 0
   OpenSecondary: 0
+  alpha: 0
+  beta: 2

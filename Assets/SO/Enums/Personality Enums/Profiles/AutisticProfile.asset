@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Autisticform
   isAn: 1
-  descriptor: difficulties in establishing and maintaining relationships and conversations,
-    unusual behaviours
+  descriptor: Has difficulties in establishing and maintaining relationships and conversations.
+    Prone to unusual behaviours
   AgreePrimary: 0
   ConscPrimary: 0
   NeuroPrimary: 1

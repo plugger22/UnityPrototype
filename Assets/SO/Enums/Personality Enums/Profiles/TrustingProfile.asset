@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Trusting
   isAn: 0
-  descriptor: creduility, unsuspiciousness and generalized trust of others
+  descriptor: Displays creduility, unsuspiciousness and a generalized trust of others
   AgreePrimary: 2
   ConscPrimary: 0
   NeuroPrimary: 0
@@ -24,3 +24,5 @@ MonoBehaviour:
   NeuroSecondary: 0
   ExtraSecondary: 0
   OpenSecondary: 1
+  alpha: 1
+  beta: 2

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: ShizotypalProflie
   isAn: 0
-  descriptor: unconventional beliefs featured by social anxiety with paranoid ideation
+  descriptor: Displays unconventional beliefs, social anxiety and paranoid thoughts
   AgreePrimary: 0
   ConscPrimary: 0
   NeuroPrimary: 1
@@ -24,3 +24,5 @@ MonoBehaviour:
   NeuroSecondary: 0
   ExtraSecondary: 0
   OpenSecondary: 0
+  alpha: -3
+  beta: -2

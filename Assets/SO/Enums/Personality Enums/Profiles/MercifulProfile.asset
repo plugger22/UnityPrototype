@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Merciful
   isAn: 0
-  descriptor: humane gentleness, either mental or physical, to other people (or to
-    animals)
+  descriptor: Displays humane gentleness, either mental or physical, to other people
+    (or to animals)
   AgreePrimary: 2
   ConscPrimary: 1
   NeuroPrimary: 0
@@ -25,3 +25,5 @@ MonoBehaviour:
   NeuroSecondary: 0
   ExtraSecondary: 0
   OpenSecondary: -1
+  alpha: 3
+  beta: -3

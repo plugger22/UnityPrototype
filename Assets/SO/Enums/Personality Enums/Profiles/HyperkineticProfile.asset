@@ -13,7 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Hyperkinetic
   isAn: 0
-  descriptor: low self-directedness, inattentive behaviour and/or hyperactive behaviour
+  descriptor: Displays low self-directedness, inattentive behaviour and/or hyperactive
+    behaviour
   AgreePrimary: -1
   ConscPrimary: -2
   NeuroPrimary: 2
@@ -24,3 +25,5 @@ MonoBehaviour:
   NeuroSecondary: 0
   ExtraSecondary: 0
   OpenSecondary: 0
+  alpha: -5
+  beta: 0

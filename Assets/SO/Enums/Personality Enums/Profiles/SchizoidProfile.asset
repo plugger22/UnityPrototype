@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Schizoid
   isAn: 0
-  descriptor: lack of interest in social relationships, solitary lifestyle without
-    intimate attachments
+  descriptor: Displays a lack of interest in social relationships. Leads a solitary
+    lifestyle without intimate attachments
   AgreePrimary: 0
   ConscPrimary: 0
   NeuroPrimary: 0
@@ -25,3 +25,5 @@ MonoBehaviour:
   NeuroSecondary: 0
   ExtraSecondary: 0
   OpenSecondary: 0
+  alpha: -1
+  beta: -3

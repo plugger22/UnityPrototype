@@ -11,5 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd124632030b2f4aae9a6400fae2aea, type: 3}
   m_Name: ActorRemoveActionDoubled
   m_EditorClassIdentifier: 
-  descriptor: Politically connected. Renown cost to Remove doubled.
-  teffID: 47
+  descriptor: Politically connected. Power cost to remove them is doubled.

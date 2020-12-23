@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Positivistic
   isAn: 0
-  descriptor: active-positive attitudes plus active aiding to demands manifesting
+  descriptor: Shows active-positive attitudes plus active aiding to demands manifesting
     in social and occupational situations
   AgreePrimary: 1
   ConscPrimary: 0

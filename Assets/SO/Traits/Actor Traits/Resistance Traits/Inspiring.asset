@@ -12,12 +12,11 @@ MonoBehaviour:
   m_Name: Inspiring
   m_EditorClassIdentifier: 
   tag: Inspiring
-  description: Improves their Contacts Effectiveness
+  description: Gets the most out of their Contact Network
   typeOfTrait: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   category: {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}
-  isHqTrait: 1
-  hqRenownMultiplier: 0
+  hqPowerMultiplier: 0
   hqMajorMultiplier: 0
   hqMinorMultiplier: 1.5
   listOfTraitEffects:
@@ -28,3 +27,5 @@ MonoBehaviour:
   agreeableness: 2
   neuroticism: 99
   tagFormatted: <color=#7FFF00>Inspiring</color>
+  isHqTrait: 1
+  hqDescription: Chance of a Good (change in Power) event 50 % more

@@ -11,5 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd124632030b2f4aae9a6400fae2aea, type: 3}
   m_Name: ActorConflictNone
   m_EditorClassIdentifier: 
-  descriptor: The Actor willl never engage in an Relationship Conflict
-  teffID: 2
+  descriptor: The character willl never engage in an Relationship Conflict

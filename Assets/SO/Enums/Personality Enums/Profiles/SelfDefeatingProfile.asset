@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Self Defeating
   isAn: 0
-  descriptor: self-defeating behaviour, undermining of pleasurable experiences and
-    rejection of help offered by others
+  descriptor: Prone to self-defeating behaviour, undermining of pleasurable experiences
+    and a rejection of help offered by others
   AgreePrimary: 2
   ConscPrimary: -1
   NeuroPrimary: 2
@@ -25,3 +25,5 @@ MonoBehaviour:
   NeuroSecondary: 0
   ExtraSecondary: 0
   OpenSecondary: 1
+  alpha: -1
+  beta: 1

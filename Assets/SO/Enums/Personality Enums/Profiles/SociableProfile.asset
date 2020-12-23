@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Sociable
   isAn: 0
-  descriptor: high interest in social relationships, pro social lifestyle and benevolent
-    towards intiimate attachments
+  descriptor: Has a high interest in social relationships, a pro social lifestyle
+    a tendency towards intiimate attachments
   AgreePrimary: 0
   ConscPrimary: 0
   NeuroPrimary: 0
@@ -25,3 +25,5 @@ MonoBehaviour:
   NeuroSecondary: 0
   ExtraSecondary: 0
   OpenSecondary: 0
+  alpha: 1
+  beta: 3

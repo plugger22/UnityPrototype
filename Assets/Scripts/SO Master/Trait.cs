@@ -30,7 +30,7 @@ public class Trait : ScriptableObject
     public float hqMinorMultiplier = 0f;
 
     [Header("Effects")]
-    [Tooltip("Specific in-game effects of the trait")]
+    [Tooltip("Specific in-game effects of the trait. MAXIMUM of ONE effect allowed")]
     public List<TraitEffect> listOfTraitEffects;
 
     [Header("Personality")]

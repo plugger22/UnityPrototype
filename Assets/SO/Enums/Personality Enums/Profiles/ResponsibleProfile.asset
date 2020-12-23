@@ -13,7 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Responsible
   isAn: 0
-  descriptor: respecting the rights of others with a high moral sense and/or conscience
+  descriptor: Leans to respecting the rights of others with a high moral sense and/or
+    conscience
   AgreePrimary: 2
   ConscPrimary: 1
   NeuroPrimary: 0
@@ -24,3 +25,5 @@ MonoBehaviour:
   NeuroSecondary: 0
   ExtraSecondary: 0
   OpenSecondary: 0
+  alpha: 3
+  beta: -1

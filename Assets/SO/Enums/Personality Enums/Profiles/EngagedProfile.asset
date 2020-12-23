@@ -13,7 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Engaged
   isAn: 1
-  descriptor: social bravery, without feelings of inadequacy regarding needs for iintimacy
+  descriptor: Shows social bravery, without feelings of inadequacy regarding needs
+    for iintimacy
   AgreePrimary: 0
   ConscPrimary: 0
   NeuroPrimary: -1
@@ -24,3 +25,5 @@ MonoBehaviour:
   NeuroSecondary: 0
   ExtraSecondary: 0
   OpenSecondary: 1
+  alpha: 0
+  beta: 3

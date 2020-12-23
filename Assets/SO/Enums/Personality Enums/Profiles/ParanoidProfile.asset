@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Paranoid
   isAn: 0
-  descriptor: paranoia, suspiciousness and generalized mistrust of others
+  descriptor: Exhibits paranoia, suspiciousness and a generalized mistrust of others
   AgreePrimary: -2
   ConscPrimary: 0
   NeuroPrimary: 1
@@ -24,3 +24,5 @@ MonoBehaviour:
   NeuroSecondary: 0
   ExtraSecondary: 0
   OpenSecondary: 1
+  alpha: -2
+  beta: 0

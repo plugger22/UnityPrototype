@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Name: ActorConflictPoison
   m_EditorClassIdentifier: 
   descriptor: In a Relationship Conflict a special option is added to the pool of
-    options which involves the Actor poisoning your relations with all other On Map
-    actors (lowers their Motivation)
-  teffID: 8
+    options which involves the character poisoning your relations with other characters
+    (lowers their Opinion)

@@ -11,5 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dd124632030b2f4aae9a6400fae2aea, type: 3}
   m_Name: ActorAppeaseNone
   m_EditorClassIdentifier: 
-  descriptor: Can't be appeased (high motivation) when blackmailing
-  teffID: 2
+  descriptor: Can't be appeased when blackmailing you
