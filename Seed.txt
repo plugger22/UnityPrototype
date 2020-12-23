@@ -11345,3 +11345,8 @@ UnityEngine.Debug:LogWarning(Object)
 	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:741)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
 	
+Dev seed 40256 -> Wednesday, 23 December 2020 12:31 PM
+City seed 52491 -> Londus, Eurasia
+
+Dev seed 36477 -> Wednesday, 23 December 2020 12:35 PM
+City seed 56670 -> Londus, Eurasia

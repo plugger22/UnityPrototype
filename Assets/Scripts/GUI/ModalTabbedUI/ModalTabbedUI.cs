@@ -1449,6 +1449,8 @@ public class ModalTabbedUI : MonoBehaviour
                         tab1Header1.descriptor.text = GetTrait(true);
                         tab1Header2.descriptor.text = GetPersonalityDescriptors(true);
                         tab1Header3.descriptor.text = GetPersonalityAssessment(true);
+                        listOfHelpData = GetPersonalityTooltip(true);
+                        tab1Header3.help.SetHelpTooltip(listOfHelpData);
                         break;
                     case TabbedUIWho.Subordinates:
                     case TabbedUIWho.HQ:
@@ -3308,7 +3310,7 @@ public class ModalTabbedUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns a personality profile
+    /// Returns a personality profile descriptor
     /// </summary>
     /// <param name="isPlayer"></param>
     /// <returns></returns>
@@ -3328,31 +3330,43 @@ public class ModalTabbedUI : MonoBehaviour
     /// Tooltip for personality profile. Return empty string if a problem
     /// </summary>
     /// <returns></returns>
-    private List<HelpData> GetPersonalityTooltip()
+    private List<HelpData> GetPersonalityTooltip(bool isPlayer = false)
     {
         listOfHelpData.Clear();
-        actorGeneric = arrayOfActorsTemp[currentSideTabIndex];
-        if (actorGeneric != null)
+        HelpData data = new HelpData();
+        data.tag = "";
+        personString = "";
+        if (isPlayer == true)
+        { personString = GameManager.i.playerScript.GetPersonality().GetProfile(); }
+        else
         {
-            personString = actorGeneric.GetPersonality().GetProfile();
-            if (string.IsNullOrEmpty(personString) == false)
-            {
-                //create a dynamic, temporary HelpData package
-                HelpData data = new HelpData();
-                data.tag = "";
-                interactProfile = GameManager.i.dataScript.GetProfile(personString);
-                data.header = interactProfile.tag;
-                if (interactProfile != null)
-                { data.text = interactProfile.descriptor; }
-                else
-                {
-                    data.text = "Personality Profile data unavailable";
-                    Debug.LogWarningFormat("Invalid personality profile  (Null or Empty) for profile \"{0}\"", personString);
-                }
-                listOfHelpData.Add(data);
-            }
+            //default subordinate/reserve/HQ
+            actorGeneric = arrayOfActorsTemp[currentSideTabIndex];
+            if (actorGeneric != null)
+            { personString = actorGeneric.GetPersonality().GetProfile(); }
+            else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfActorsTemp[{0}]", currentSideTabIndex); }
         }
-        else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfActorsTemp[{0}]", currentSideTabIndex); }
+        if (string.IsNullOrEmpty(personString) == false)
+        {
+            //create a dynamic, temporary HelpData package
+            interactProfile = GameManager.i.dataScript.GetProfile(personString);
+            data.header = string.Format("{0} Personality", interactProfile.tag);
+            if (interactProfile != null)
+            { data.text = interactProfile.descriptor; }
+            else
+            {
+                data.text = "Personality Profile data unavailable";
+                Debug.LogWarningFormat("Invalid personality profile  (Null or Empty) for profile \"{0}\"", personString);
+            }
+            listOfHelpData.Add(data);
+        }
+        else
+        {
+            data.header = "Nothing Conclusive";
+            data.text = "Psychological assessments have been unable to determine a profile for this individual";
+            listOfHelpData.Add(data);
+        }
+
         return listOfHelpData;
     }
 
