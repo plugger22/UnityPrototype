@@ -3430,10 +3430,10 @@ public class ModalTabbedUI : MonoBehaviour
                 if (multiplier != 0f)
                 {
                     if (multiplier > 1.0f)
-                    { data.text = string.Format("Any gains or loses of {0}, while at HQ, will be {1} more than normal", GameManager.Formatt("POWER", ColourType.salmonText),
+                    { data.text = string.Format("Any gains or loses of {0} will be {1} more than normal", GameManager.Formatt("POWER", ColourType.salmonText),
                         GameManager.Formatt(Convert.ToString(multiplier * 100f) + " %", ColourType.salmonText)); }
                     else
-                    { data.text = string.Format("Any gains or loses of {0}, while at HQ, will be {1} LESS than normal", GameManager.Formatt("POWER", ColourType.salmonText),
+                    { data.text = string.Format("Any gains or loses of {0} will be {1} LESS than normal", GameManager.Formatt("POWER", ColourType.salmonText),
                         GameManager.Formatt(Convert.ToString(multiplier * 100f) + " %", ColourType.salmonText)); }
                 }
                 else
@@ -3442,10 +3442,10 @@ public class ModalTabbedUI : MonoBehaviour
                     if (multiplier != 0f)
                     {
                         if (multiplier > 1.0f)
-                        { data.text = string.Format("{0} (Leave HQ) events affecting this character, while at HQ, will be {1} more likely", GameManager.Formatt("MAJOR", ColourType.salmonText),
+                        { data.text = string.Format("Chance of {0} events affecting this character will be {1} more likely", GameManager.Formatt("LEAVE HQ", ColourType.salmonText),
                             GameManager.Formatt(Convert.ToString(multiplier * 100f) + " %", ColourType.salmonText)); }
                         else
-                        { data.text = string.Format("{0} (Leave HQ) events affecting this character, while at HQ, will be {1} LESS likely", GameManager.Formatt("MAJOR", ColourType.salmonText),
+                        { data.text = string.Format("Chance of {0} events affecting this character will be {1} LESS likely", GameManager.Formatt("LEAVE HQ", ColourType.salmonText),
                             GameManager.Formatt(Convert.ToString(multiplier * 100f) + " %", ColourType.salmonText)); }
                     }
                     else
@@ -3454,9 +3454,9 @@ public class ModalTabbedUI : MonoBehaviour
                         if (multiplier != 0f)
                         {
                             if (multiplier > 1.0f)
-                            { data.text = string.Format("Minor events (gain Power) affecting this character, while at HQ, will be {0} more likely", GameManager.Formatt(Convert.ToString(multiplier * 100f) + " %", ColourType.salmonText)); }
+                            { data.text = string.Format("GOOD events (gain Power) affecting this character will be {0} more likely", GameManager.Formatt(Convert.ToString(multiplier * 100f) + " %", ColourType.salmonText)); }
                             else
-                            { data.text = string.Format("Minor events (gain Power) affecting this character, while at HQ, will be {0} LESS likely", GameManager.Formatt(Convert.ToString(multiplier * 100f) + " %", ColourType.salmonText)); }
+                            { data.text = string.Format("Good events (gain Power) affecting this character will be {0} LESS likely", GameManager.Formatt(Convert.ToString(multiplier * 100f) + " %", ColourType.salmonText)); }
                         }
                         else
                         { Debug.LogWarningFormat("Invalid HQ trait tooltip (nothing applies -> something should) for trait \"{0}\"", interactTrait.tag); }
