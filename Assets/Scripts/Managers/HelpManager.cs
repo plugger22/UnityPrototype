@@ -1674,10 +1674,12 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "person_2";
         data.header = "Low Score";
-        data.text = string.Format("Practical, {0}conventional{1}, prefers routine", colourAlert, colourEnd);
+        data.text = string.Format("{0}Practical{1}, conventional, prefers routine", colourAlert, colourEnd);
         listOfHelp.Add(data);
         data = new HelpData();
+
         //Conscientiousness
+        data = new HelpData();
         data.tag = "person_3";
         data.header = "Conscientiousness";
         data.text = string.Format("Reflects an individuals {0}competence, self-discipline, thoughtfulness{1} and how {2}goal-driven{3} they are", colourAlert, colourEnd, colourAlert, colourEnd);
@@ -1686,13 +1688,70 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "person_4";
         data.header = "High Score";
-        data.text = string.Format("Hardworking, dependable, {0}organised{1}", colourAlert, colourEnd);
+        data.text = string.Format("{0}Organised{1}, hardworking, dependable", colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Low Openness
         data = new HelpData();
         data.tag = "person_5";
         data.header = "Low Score";
-        data.text = string.Format("Impulsive, {0}careless{1}, disorganised", colourAlert, colourEnd);
+        data.text = string.Format("{0}Impulsive{1}, careless, disorganised", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+
+        //Extroversion
+        data = new HelpData();
+        data.tag = "person_6";
+        data.header = "Extroversion";
+        data.text = string.Format("Reflects an individuals {0}sociability, assertiveness{1} and {2}emotional expression{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //High Openness
+        data = new HelpData();
+        data.tag = "person_7";
+        data.header = "High Score";
+        data.text = string.Format("{0}Outgoing{1}, warm, seeks adventure", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Low Openness
+        data = new HelpData();
+        data.tag = "person_8";
+        data.header = "Low Score";
+        data.text = string.Format("{0}Quiet{1}, reserved, withdrawn", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+
+        //Agreeableness
+        data = new HelpData();
+        data.tag = "person_9";
+        data.header = "Agreeableness";
+        data.text = string.Format("Reflects an individuals levels of {0}cooperation, trustworthiness{1},  and how {2}good natured{3} they are", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //High Openness
+        data = new HelpData();
+        data.tag = "person_10";
+        data.header = "High Score";
+        data.text = string.Format("{0}Helpful{1}, trusting, empathetic", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Low Openness
+        data = new HelpData();
+        data.tag = "person_11";
+        data.header = "Low Score";
+        data.text = string.Format("{0}Critical{1}, uncooperative, suspicious", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+
+        //Neuroticism
+        data = new HelpData();
+        data.tag = "person_12";
+        data.header = "Neuroticism";
+        data.text = string.Format("Reflects an individuals tendency towards {0}unstable emotions{1}", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //High Openness
+        data = new HelpData();
+        data.tag = "person_13";
+        data.header = "High Score";
+        data.text = string.Format("{0}Anxious{1}, unhappy, prone to negative emotions", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Low Openness
+        data = new HelpData();
+        data.tag = "person_14";
+        data.header = "Low Score";
+        data.text = string.Format("{0}Calm{1}, even-tempered, secure", colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 

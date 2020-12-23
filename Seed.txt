@@ -11203,3 +11203,145 @@ City seed 31304 -> Londus, Eurasia
 
 Dev seed 54790 -> Wednesday, 23 December 2020 10:37 AM
 City seed 25114 -> Londus, Eurasia
+
+Dev seed 39653 -> Wednesday, 23 December 2020 11:21 AM
+City seed 42437 -> Londus, Eurasia
+ERROR Invalid HelpData (duplicate) tag "person_6" for listOfHelp["170"]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	LoadManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/LoadManager.cs:2330)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	ERROR Invalid HelpData (duplicate) tag "person_9" for listOfHelp["173"]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	LoadManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/LoadManager.cs:2330)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	ERROR Invalid HelpData (duplicate) tag "person_12" for listOfHelp["176"]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	LoadManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/LoadManager.cs:2330)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	WARNING Not found, tag "person_5", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:8103)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:107)
+	ModalTabbedUI:InitialiseTooltips() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1178)
+	ModalTabbedUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:867)
+	ModalTabbedUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:354)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:922)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	WARNING Invalid HelpData (Null) for tag2 "person_5"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:110)
+	ModalTabbedUI:InitialiseTooltips() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1178)
+	ModalTabbedUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:867)
+	ModalTabbedUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:354)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:922)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	WARNING Not found, tag "person_8", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:8103)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:107)
+	ModalTabbedUI:InitialiseTooltips() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1180)
+	ModalTabbedUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:867)
+	ModalTabbedUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:354)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:922)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	WARNING Invalid HelpData (Null) for tag2 "person_8"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:110)
+	ModalTabbedUI:InitialiseTooltips() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1180)
+	ModalTabbedUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:867)
+	ModalTabbedUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:354)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:922)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	WARNING Not found, tag "person_11", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:8103)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:107)
+	ModalTabbedUI:InitialiseTooltips() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1182)
+	ModalTabbedUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:867)
+	ModalTabbedUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:354)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:922)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	WARNING Invalid HelpData (Null) for tag2 "person_11"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:110)
+	ModalTabbedUI:InitialiseTooltips() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1182)
+	ModalTabbedUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:867)
+	ModalTabbedUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:354)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:922)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	
+Dev seed 26922 -> Wednesday, 23 December 2020 11:24 AM
+City seed 37959 -> Londus, Eurasia
+
+Dev seed 57772 -> Wednesday, 23 December 2020 11:31 AM
+City seed 35149 -> Londus, Eurasia
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 36813 -> Wednesday, 23 December 2020 11:34 AM
+City seed 41319 -> Londus, Eurasia
+
+Dev seed 35205 -> Wednesday, 23 December 2020 11:38 AM
+City seed 27913 -> Londus, Eurasia
+
+Dev seed 30632 -> Wednesday, 23 December 2020 12:00 PM
+City seed 45356 -> Londus, Eurasia
+
+Dev seed 63238 -> Wednesday, 23 December 2020 12:07 PM
+City seed 41860 -> Londus, Eurasia
+WARNING Invalid listOfHelpData (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:39)
+	ModalTabbedUI:UpdatePage() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1461)
+	ModalTabbedUI:OpenSideTab(Int32, Boolean) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1326)
+	ModalTabbedUI:ExecuteDownArrow() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2648)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:941)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:345)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:741)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
+	WARNING Invalid listOfHelpData (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:39)
+	ModalTabbedUI:UpdatePage() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1461)
+	ModalTabbedUI:ExecuteDownArrow() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2659)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:941)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:345)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:741)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
+	WARNING Invalid listOfHelpData (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:39)
+	ModalTabbedUI:UpdatePage() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1461)
+	ModalTabbedUI:OpenSideTab(Int32, Boolean) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1326)
+	ModalTabbedUI:ExecuteDownArrow() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2648)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:941)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:345)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:741)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
+	WARNING Invalid listOfHelpData (Null or Empty)
+UnityEngine.Debug:LogWarning(Object)
+	GenericHelpTooltipUI:SetHelpTooltip(List`1, Int32, Int32) (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:39)
+	ModalTabbedUI:UpdatePage() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1461)
+	ModalTabbedUI:ExecuteDownArrow() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2659)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:941)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:345)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:741)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
+	

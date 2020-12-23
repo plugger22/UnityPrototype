@@ -207,10 +207,7 @@ public class ModalTabbedUI : MonoBehaviour
     private int currentTurn;
     private Node nodeContact;
     private Contact contact;
-    private Actor actorContact;
-    private Actor actorInvest;
-    private Actor actorSecret;
-    private Actor actorStats;
+    private Actor actorGeneric;
     private Effect effectSecret;
     private Secret secret;
     private Gear gear;
@@ -226,10 +223,13 @@ public class ModalTabbedUI : MonoBehaviour
     private TabbedGearInteraction interactGear;
     private TabbedInvestInteraction interactInvest;
     private TabbedStatInteraction interactStat;
+    private PersonProfile interactProfile;
     private string gearName;
     private string knowsSecretHeader;
     private string effectsSecretHeader;
     private string investString;
+    private string personString;
+
     #endregion
 
     //debug
@@ -1173,10 +1173,19 @@ public class ModalTabbedUI : MonoBehaviour
         //
         // - - - Canvas 1 -> Personality
         //
+        listOfHelpData = GameManager.i.helpScript.GetHelpData("compatibility_1", "compatibility_2", "compatibility_3");
+        tab1Header0.help.SetHelpTooltip(listOfHelpData);
+
         listOfHelpData = GameManager.i.helpScript.GetHelpData("person_0", "person_1", "person_2");
         tab1Person0.help.SetHelpTooltip(listOfHelpData);
         listOfHelpData = GameManager.i.helpScript.GetHelpData("person_3", "person_4", "person_5");
         tab1Person1.help.SetHelpTooltip(listOfHelpData);
+        listOfHelpData = GameManager.i.helpScript.GetHelpData("person_6", "person_7", "person_8");
+        tab1Person2.help.SetHelpTooltip(listOfHelpData);
+        listOfHelpData = GameManager.i.helpScript.GetHelpData("person_9", "person_10", "person_11");
+        tab1Person3.help.SetHelpTooltip(listOfHelpData);
+        listOfHelpData = GameManager.i.helpScript.GetHelpData("person_12", "person_13", "person_14");
+        tab1Person4.help.SetHelpTooltip(listOfHelpData);
     }
     #endregion
 
@@ -1448,6 +1457,8 @@ public class ModalTabbedUI : MonoBehaviour
                         tab1Header1.descriptor.text = GetTrait();
                         tab1Header2.descriptor.text = GetPersonalityDescriptors();
                         tab1Header3.descriptor.text = GetPersonalityAssessment();
+                        listOfHelpData = GetPersonalityTooltip();
+                        tab1Header3.help.SetHelpTooltip(listOfHelpData);
                         break;
                     default: Debug.LogWarningFormat("Unrecognised inputData.who \"{0}\"", inputData.who); break;
                 }
@@ -1873,17 +1884,17 @@ public class ModalTabbedUI : MonoBehaviour
     /// </summary>
     private void OpenContacts()
     {
-        actorContact = arrayOfActorsTemp[currentSideTabIndex];
-        if (actorContact != null)
+        actorGeneric = arrayOfActorsTemp[currentSideTabIndex];
+        if (actorGeneric != null)
         {
             //effectiveness
-            int effectiveness = actorContact.GetContactNetworkEffectiveness();
+            int effectiveness = actorGeneric.GetContactNetworkEffectiveness();
             tab2NetworkStrength.text = Convert.ToString(effectiveness);
             if (effectiveness == 1)
             { tab2NetworkStars.text = "Star"; }
             else { tab2NetworkStars.text = "Stars"; }
             //contacts
-            Dictionary<int, Contact> dictOfContacts = actorContact.GetDictOfContacts();
+            Dictionary<int, Contact> dictOfContacts = actorGeneric.GetDictOfContacts();
             if (dictOfContacts != null)
             {
                 listOfContacts.Clear();
@@ -1956,7 +1967,7 @@ public class ModalTabbedUI : MonoBehaviour
                     }
                 }
             }
-            else { Debug.LogWarningFormat("Invalid dictOfContacts for actor {0}, {1}, ID {2}, arrayOfActorsTemp[{3}]", actorContact.actorName, actorContact.arc.name, actorContact.actorID, currentSideTabIndex); }
+            else { Debug.LogWarningFormat("Invalid dictOfContacts for actor {0}, {1}, ID {2}, arrayOfActorsTemp[{3}]", actorGeneric.actorName, actorGeneric.arc.name, actorGeneric.actorID, currentSideTabIndex); }
         }
         else { Debug.LogErrorFormat("Invalid actor (Null) for arrayOfActors[{0}]", currentSideTabIndex); }
     }
@@ -2018,11 +2029,11 @@ public class ModalTabbedUI : MonoBehaviour
                                     builder.AppendFormat("{0}<size=90%>", knowsSecretHeader);
                                     for (int j = 0; j < count; j++)
                                     {
-                                        actorSecret = GameManager.i.dataScript.GetActor(listOfSecretActors[j]);
-                                        if (actorSecret != null)
+                                        actorGeneric = GameManager.i.dataScript.GetActor(listOfSecretActors[j]);
+                                        if (actorGeneric != null)
                                         {
                                             builder.AppendLine();
-                                            builder.AppendFormat("{0}, {1}", actorSecret.actorName, actorSecret.arc.name);
+                                            builder.AppendFormat("{0}, {1}", actorGeneric.actorName, actorGeneric.arc.name);
                                         }
                                         else { Debug.LogWarningFormat("Invalid actor (Null) for secret {0} listOfSecretActors[{1}], actorID {2}", secret.tag, j, listOfSecretActors[j]); }
                                     }
@@ -2032,9 +2043,9 @@ public class ModalTabbedUI : MonoBehaviour
                                 else
                                 {
                                     //single actor knows
-                                    actorSecret = GameManager.i.dataScript.GetActor(listOfSecretActors[0]);
-                                    if (actorSecret != null)
-                                    { interactSecret.known.text = string.Format("{0}{1}<size=90%>{2}, {3}</size>", knowsSecretHeader, "\n", actorSecret.actorName, actorSecret.arc.name); }
+                                    actorGeneric = GameManager.i.dataScript.GetActor(listOfSecretActors[0]);
+                                    if (actorGeneric != null)
+                                    { interactSecret.known.text = string.Format("{0}{1}<size=90%>{2}, {3}</size>", knowsSecretHeader, "\n", actorGeneric.actorName, actorGeneric.arc.name); }
                                     else { Debug.LogWarningFormat("Invalid actor (Null) for secret {0} listOfSecretActors[{1}], actorID {2}", secret.tag, 0, listOfSecretActors[0]); }
                                 }
                             }
@@ -2240,9 +2251,9 @@ public class ModalTabbedUI : MonoBehaviour
                                 //portrait -> lead investigator
                                 if (investigation.lead != ActorHQ.None)
                                 {
-                                    actorInvest = GameManager.i.dataScript.GetHqHierarchyActor(investigation.lead);
-                                    if (actorInvest != null)
-                                    { interactInvest.portrait.sprite = actorInvest.sprite; }
+                                    actorGeneric = GameManager.i.dataScript.GetHqHierarchyActor(investigation.lead);
+                                    if (actorGeneric != null)
+                                    { interactInvest.portrait.sprite = actorGeneric.sprite; }
                                     else { Debug.LogWarningFormat("Invalid sprite (Null) for lead {0},  investigation \"{1}\", ref {2}", investigation.lead, investigation.tag, investigation.reference); }
                                 }
                                 else { Debug.LogWarningFormat("Invalid lead (ActorHQ.None) for investigation \"{0}\", ref {1}", investigation.tag, investigation.reference); }
@@ -2253,9 +2264,9 @@ public class ModalTabbedUI : MonoBehaviour
                                 builder.AppendLine();
                                 builder.Append("Lead Investigator");
                                 builder.AppendLine();
-                                builder.Append(GameManager.Formatt(actorInvest.actorName, ColourType.neutralText));
+                                builder.Append(GameManager.Formatt(actorGeneric.actorName, ColourType.neutralText));
                                 builder.AppendLine();
-                                builder.Append(GameManager.Formatt(GameManager.i.hqScript.GetHqTitle(actorInvest.statusHQ), ColourType.salmonText));
+                                builder.Append(GameManager.Formatt(GameManager.i.hqScript.GetHqTitle(actorGeneric.statusHQ), ColourType.salmonText));
                                 interactInvest.leftText.text = builder.ToString();
                                 //middle text -> evidence 
                                 builder.Clear();
@@ -2438,7 +2449,7 @@ public class ModalTabbedUI : MonoBehaviour
                 interactStat.listOfItems[1].result.text = Convert.ToString(GameManager.i.dataScript.StatisticGetCampaign(StatType.NodeCrisisExplodes));
                 break;
             case TabbedUIWho.Subordinates:
-                actorStats = arrayOfActorsTemp[currentSideTabIndex];
+                actorGeneric = arrayOfActorsTemp[currentSideTabIndex];
                 //toggle modules on/off
                 arrayOfStats[0].gameObject.SetActive(true);
                 arrayOfStats[1].gameObject.SetActive(true);
@@ -2454,11 +2465,11 @@ public class ModalTabbedUI : MonoBehaviour
                 interactStat.listOfItems[2].gameObject.SetActive(true);
                 interactStat.listOfItems[3].gameObject.SetActive(false);
                 interactStat.listOfItems[0].descriptor.text = "Days on the Job";
-                interactStat.listOfItems[0].result.text = Convert.ToString(actorStats.numOfDaysOnMap);
+                interactStat.listOfItems[0].result.text = Convert.ToString(actorGeneric.numOfDaysOnMap);
                 interactStat.listOfItems[1].descriptor.text = "Days in Reserves";
-                interactStat.listOfItems[1].result.text = Convert.ToString(actorStats.numOfDaysReserves);
+                interactStat.listOfItems[1].result.text = Convert.ToString(actorGeneric.numOfDaysReserves);
                 interactStat.listOfItems[2].descriptor.text = "Cities";
-                interactStat.listOfItems[2].result.text = Convert.ToString(actorStats.numOfCities);
+                interactStat.listOfItems[2].result.text = Convert.ToString(actorGeneric.numOfCities);
                 //Evasion
                 arrayOfStats[1].header.text = "Evasion";
                 interactStat = arrayOfStats[1];
@@ -2467,9 +2478,9 @@ public class ModalTabbedUI : MonoBehaviour
                 interactStat.listOfItems[2].gameObject.SetActive(false);
                 interactStat.listOfItems[3].gameObject.SetActive(false);
                 interactStat.listOfItems[0].descriptor.text = "Times Captured";
-                interactStat.listOfItems[0].result.text = Convert.ToString(actorStats.numOfTimesCaptured);
+                interactStat.listOfItems[0].result.text = Convert.ToString(actorGeneric.numOfTimesCaptured);
                 interactStat.listOfItems[1].descriptor.text = "Days spent Lying Low";
-                interactStat.listOfItems[1].result.text = Convert.ToString(actorStats.numOfDaysLieLow);
+                interactStat.listOfItems[1].result.text = Convert.ToString(actorGeneric.numOfDaysLieLow);
                 //Mental State
                 arrayOfStats[2].header.text = "Mental State";
                 interactStat = arrayOfStats[2];
@@ -2478,13 +2489,13 @@ public class ModalTabbedUI : MonoBehaviour
                 interactStat.listOfItems[2].gameObject.SetActive(true);
                 interactStat.listOfItems[3].gameObject.SetActive(true);
                 interactStat.listOfItems[0].descriptor.text = "Number of Breakdowns";
-                interactStat.listOfItems[0].result.text = Convert.ToString(actorStats.numOfTimesBreakdown);
+                interactStat.listOfItems[0].result.text = Convert.ToString(actorGeneric.numOfTimesBreakdown);
                 interactStat.listOfItems[1].descriptor.text = "Times Stress Leave taken";
-                interactStat.listOfItems[1].result.text = Convert.ToString(actorStats.numOfTimesStressLeave);
+                interactStat.listOfItems[1].result.text = Convert.ToString(actorGeneric.numOfTimesStressLeave);
                 interactStat.listOfItems[2].descriptor.text = "Days spent Stressed";
-                interactStat.listOfItems[2].result.text = Convert.ToString(actorStats.numOfDaysStressed);
+                interactStat.listOfItems[2].result.text = Convert.ToString(actorGeneric.numOfDaysStressed);
                 interactStat.listOfItems[3].descriptor.text = "Number of Relationship Conflicts";
-                interactStat.listOfItems[3].result.text = Convert.ToString(actorStats.numOfTimesConflict);
+                interactStat.listOfItems[3].result.text = Convert.ToString(actorGeneric.numOfTimesConflict);
                 //Votes
                 arrayOfStats[3].header.text = "Reviews";
                 interactStat = arrayOfStats[3];
@@ -2493,14 +2504,14 @@ public class ModalTabbedUI : MonoBehaviour
                 interactStat.listOfItems[2].gameObject.SetActive(true);
                 interactStat.listOfItems[3].gameObject.SetActive(false);
                 interactStat.listOfItems[0].descriptor.text = "Votes For";
-                interactStat.listOfItems[0].result.text = Convert.ToString(actorStats.numOfVotesFor);
+                interactStat.listOfItems[0].result.text = Convert.ToString(actorGeneric.numOfVotesFor);
                 interactStat.listOfItems[1].descriptor.text = "Votes Against";
-                interactStat.listOfItems[1].result.text = Convert.ToString(actorStats.numOfVotesAgainst);
+                interactStat.listOfItems[1].result.text = Convert.ToString(actorGeneric.numOfVotesAgainst);
                 interactStat.listOfItems[2].descriptor.text = "Votes Abstained";
-                interactStat.listOfItems[2].result.text = Convert.ToString(actorStats.numOfVotesAbstained);
+                interactStat.listOfItems[2].result.text = Convert.ToString(actorGeneric.numOfVotesAbstained);
                 break;
             case TabbedUIWho.HQ:
-                actorStats = arrayOfActorsTemp[currentSideTabIndex];
+                actorGeneric = arrayOfActorsTemp[currentSideTabIndex];
                 //toggle modules on/off
                 arrayOfStats[0].gameObject.SetActive(true);
                 arrayOfStats[1].gameObject.SetActive(false);
@@ -2516,9 +2527,9 @@ public class ModalTabbedUI : MonoBehaviour
                 interactStat.listOfItems[2].gameObject.SetActive(false);
                 interactStat.listOfItems[3].gameObject.SetActive(false);
                 interactStat.listOfItems[0].descriptor.text = "Power Gained while at HQ";
-                interactStat.listOfItems[0].result.text = Convert.ToString(actorStats.powerGainedAtHQ);
+                interactStat.listOfItems[0].result.text = Convert.ToString(actorGeneric.powerGainedAtHQ);
                 interactStat.listOfItems[1].descriptor.text = "Power Lost while at HQ";
-                interactStat.listOfItems[1].result.text = Convert.ToString(actorStats.powerLostAtHQ);
+                interactStat.listOfItems[1].result.text = Convert.ToString(actorGeneric.powerLostAtHQ);
                 //Votes
                 arrayOfStats[3].header.text = "Reviews";
                 interactStat = arrayOfStats[3];
@@ -2527,14 +2538,14 @@ public class ModalTabbedUI : MonoBehaviour
                 interactStat.listOfItems[2].gameObject.SetActive(true);
                 interactStat.listOfItems[3].gameObject.SetActive(false);
                 interactStat.listOfItems[0].descriptor.text = "Votes For";
-                interactStat.listOfItems[0].result.text = Convert.ToString(actorStats.numOfVotesFor);
+                interactStat.listOfItems[0].result.text = Convert.ToString(actorGeneric.numOfVotesFor);
                 interactStat.listOfItems[1].descriptor.text = "Votes Against";
-                interactStat.listOfItems[1].result.text = Convert.ToString(actorStats.numOfVotesAgainst);
+                interactStat.listOfItems[1].result.text = Convert.ToString(actorGeneric.numOfVotesAgainst);
                 interactStat.listOfItems[2].descriptor.text = "Votes Abstained";
-                interactStat.listOfItems[2].result.text = Convert.ToString(actorStats.numOfVotesAbstained);
+                interactStat.listOfItems[2].result.text = Convert.ToString(actorGeneric.numOfVotesAbstained);
                 break;
             case TabbedUIWho.Reserves:
-                actorStats = arrayOfActorsTemp[currentSideTabIndex];
+                actorGeneric = arrayOfActorsTemp[currentSideTabIndex];
                 //toggle modules on/off
                 arrayOfStats[0].gameObject.SetActive(true);
                 arrayOfStats[1].gameObject.SetActive(true);
@@ -2550,11 +2561,11 @@ public class ModalTabbedUI : MonoBehaviour
                 interactStat.listOfItems[2].gameObject.SetActive(true);
                 interactStat.listOfItems[3].gameObject.SetActive(false);
                 interactStat.listOfItems[0].descriptor.text = "Days on the Job";
-                interactStat.listOfItems[0].result.text = Convert.ToString(actorStats.numOfDaysOnMap);
+                interactStat.listOfItems[0].result.text = Convert.ToString(actorGeneric.numOfDaysOnMap);
                 interactStat.listOfItems[1].descriptor.text = "Days in Reserves";
-                interactStat.listOfItems[1].result.text = Convert.ToString(actorStats.numOfDaysReserves);
+                interactStat.listOfItems[1].result.text = Convert.ToString(actorGeneric.numOfDaysReserves);
                 interactStat.listOfItems[2].descriptor.text = "Cities";
-                interactStat.listOfItems[2].result.text = Convert.ToString(actorStats.numOfCities);
+                interactStat.listOfItems[2].result.text = Convert.ToString(actorGeneric.numOfCities);
                 //Reserve specifics
                 interactStat = arrayOfStats[1];
                 interactStat.header.text = "Reserve Status";
@@ -2563,13 +2574,13 @@ public class ModalTabbedUI : MonoBehaviour
                 interactStat.listOfItems[2].gameObject.SetActive(true);
                 interactStat.listOfItems[3].gameObject.SetActive(true);
                 interactStat.listOfItems[0].descriptor.text = "Times Promised";
-                interactStat.listOfItems[0].result.text = Convert.ToString(actorStats.numOfTimesPromised);
+                interactStat.listOfItems[0].result.text = Convert.ToString(actorGeneric.numOfTimesPromised);
                 interactStat.listOfItems[1].descriptor.text = "Times Reassured";
-                interactStat.listOfItems[1].result.text = Convert.ToString(actorStats.numOfTimesReassured);
+                interactStat.listOfItems[1].result.text = Convert.ToString(actorGeneric.numOfTimesReassured);
                 interactStat.listOfItems[2].descriptor.text = "Times Bullied";
-                interactStat.listOfItems[2].result.text = Convert.ToString(actorStats.numOfTimesBullied);
+                interactStat.listOfItems[2].result.text = Convert.ToString(actorGeneric.numOfTimesBullied);
                 interactStat.listOfItems[3].descriptor.text = "Days spent Unhappy";
-                interactStat.listOfItems[3].result.text = Convert.ToString(actorStats.numOfDaysUnhappy);
+                interactStat.listOfItems[3].result.text = Convert.ToString(actorGeneric.numOfDaysUnhappy);
                 //Votes
                 arrayOfStats[3].header.text = "Reviews";
                 interactStat = arrayOfStats[3];
@@ -2578,11 +2589,11 @@ public class ModalTabbedUI : MonoBehaviour
                 interactStat.listOfItems[2].gameObject.SetActive(true);
                 interactStat.listOfItems[3].gameObject.SetActive(false);
                 interactStat.listOfItems[0].descriptor.text = "Votes For";
-                interactStat.listOfItems[0].result.text = Convert.ToString(actorStats.numOfVotesFor);
+                interactStat.listOfItems[0].result.text = Convert.ToString(actorGeneric.numOfVotesFor);
                 interactStat.listOfItems[1].descriptor.text = "Votes Against";
-                interactStat.listOfItems[1].result.text = Convert.ToString(actorStats.numOfVotesAgainst);
+                interactStat.listOfItems[1].result.text = Convert.ToString(actorGeneric.numOfVotesAgainst);
                 interactStat.listOfItems[2].descriptor.text = "Votes Abstained";
-                interactStat.listOfItems[2].result.text = Convert.ToString(actorStats.numOfVotesAbstained);
+                interactStat.listOfItems[2].result.text = Convert.ToString(actorGeneric.numOfVotesAbstained);
                 break;
             default: Debug.LogWarningFormat("Unrecognised inputData.who \"{0}\"", inputData.who); break;
         }
@@ -3311,6 +3322,38 @@ public class ModalTabbedUI : MonoBehaviour
         { displayText = "Further investigation recommended"; }
         else { displayText = string.Format("{0} personality", displayText); }
         return displayText;
+    }
+
+    /// <summary>
+    /// Tooltip for personality profile. Return empty string if a problem
+    /// </summary>
+    /// <returns></returns>
+    private List<HelpData> GetPersonalityTooltip()
+    {
+        listOfHelpData.Clear();
+        actorGeneric = arrayOfActorsTemp[currentSideTabIndex];
+        if (actorGeneric != null)
+        {
+            personString = actorGeneric.GetPersonality().GetProfile();
+            if (string.IsNullOrEmpty(personString) == false)
+            {
+                //create a dynamic, temporary HelpData package
+                HelpData data = new HelpData();
+                data.tag = "";
+                interactProfile = GameManager.i.dataScript.GetProfile(personString);
+                data.header = interactProfile.tag;
+                if (interactProfile != null)
+                { data.text = interactProfile.descriptor; }
+                else
+                {
+                    data.text = "Personality Profile data unavailable";
+                    Debug.LogWarningFormat("Invalid personality profile  (Null or Empty) for profile \"{0}\"", personString);
+                }
+                listOfHelpData.Add(data);
+            }
+        }
+        else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfActorsTemp[{0}]", currentSideTabIndex); }
+        return listOfHelpData;
     }
 
     /// <summary>
