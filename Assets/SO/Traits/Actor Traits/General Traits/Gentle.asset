@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Name: Gentle
   m_EditorClassIdentifier: 
   tag: Gentle
-  description: Suspectible to being Reassured or Bullied in Reserves
+  description: They have faith in the world around them
   typeOfTrait: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   category: {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}
-  hqRenownMultiplier: 0
+  hqPowerMultiplier: 0
   hqMajorMultiplier: 1.75
   hqMinorMultiplier: 0
   listOfTraitEffects:
@@ -28,4 +28,4 @@ MonoBehaviour:
   neuroticism: 99
   tagFormatted: <color=#7FFF00>Gentle</color>
   isHqTrait: 1
-  hqDescription: Chance of a Major (leave) event 150 % more
+  hqDescription: Chance of a Major (leave) event 75 % more

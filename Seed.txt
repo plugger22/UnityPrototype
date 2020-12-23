@@ -11406,3 +11406,29 @@ City seed 62984 -> Londus, Eurasia
 
 Dev seed 24485 -> Wednesday, 23 December 2020 6:02 PM
 City seed 13826 -> Londus, Eurasia
+
+Dev seed 16486 -> Thursday, 24 December 2020 10:10 AM
+City seed 50938 -> Londus, Eurasia
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 35967 -> Thursday, 24 December 2020 10:15 AM
+City seed 24386 -> Londus, Eurasia
+
+Dev seed 38794 -> Thursday, 24 December 2020 10:38 AM
+City seed 27752 -> Londus, Eurasia
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 2497 -> Thursday, 24 December 2020 10:39 AM
+City seed 16991 -> Londus, Eurasia
+
+Dev seed 3923 -> Thursday, 24 December 2020 10:41 AM
+City seed 19419 -> Londus, Eurasia
+
+Dev seed 56954 -> Thursday, 24 December 2020 10:42 AM
+City seed 2039 -> Londus, Eurasia

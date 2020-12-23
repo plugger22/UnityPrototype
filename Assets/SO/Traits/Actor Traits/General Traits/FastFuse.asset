@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: FastFuse
   m_EditorClassIdentifier: 
   tag: Fast Fuse
-  description: Blackmail attempts happen faster
+  description: Once angered, they act decisively
   typeOfTrait: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   category: {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}

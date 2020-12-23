@@ -12,12 +12,11 @@ MonoBehaviour:
   m_Name: Unconnected
   m_EditorClassIdentifier: 
   tag: Unconnected
-  description: Has no patron. Cheap to get rid of
+  description: Has no patron. Easy to get rid of
   typeOfTrait: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   category: {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}
-  isHqTrait: 1
-  hqRenownMultiplier: 0
+  hqPowerMultiplier: 0
   hqMajorMultiplier: 1.5
   hqMinorMultiplier: 0
   listOfTraitEffects:
@@ -28,3 +27,5 @@ MonoBehaviour:
   agreeableness: 99
   neuroticism: 99
   tagFormatted: <color=#7FFF00>Unconnected</color>
+  isHqTrait: 1
+  hqDescription: Chance of a Major (leave) event 50 % more

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Antsy
   m_EditorClassIdentifier: 
   tag: Antsy
-  description: Quickly becomes unhappy if left in the Reserves
+  description: Low patience and tolerance thresholds
   typeOfTrait: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   category: {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}

@@ -12,12 +12,11 @@ MonoBehaviour:
   m_Name: PackRat
   m_EditorClassIdentifier: 
   tag: Pack Rat
-  description: Refuses to give Gear back
+  description: An accumulator of stuff
   typeOfTrait: {fileID: 11400000, guid: e43ef2fa8828d704c9734d4c75658a11, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   category: {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}
-  isHqTrait: 1
-  hqRenownMultiplier: 0
+  hqPowerMultiplier: 0
   hqMajorMultiplier: 0
   hqMinorMultiplier: 0.5
   listOfTraitEffects:
@@ -28,3 +27,5 @@ MonoBehaviour:
   agreeableness: 99
   neuroticism: 99
   tagFormatted: <color=#FF4500>Pack Rat</color>
+  isHqTrait: 1
+  hqDescription: Chance of a Good (change in Power) event 50 % less

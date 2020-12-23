@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Patient
   m_EditorClassIdentifier: 
   tag: Patient
-  description: Takes longer to be Unhappy in Reserves
+  description: They are willing to take the long view
   typeOfTrait: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
   side: {fileID: 11400000, guid: 25abab1d6d3d63048b33951f18ae7ae7, type: 2}
   category: {fileID: 11400000, guid: efc627bd94b4d984ea9fb520ef13e99e, type: 2}

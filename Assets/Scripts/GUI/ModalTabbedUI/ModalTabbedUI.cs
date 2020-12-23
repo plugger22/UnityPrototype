@@ -1174,9 +1174,6 @@ public class ModalTabbedUI : MonoBehaviour
         //
         // - - - Canvas 1 -> Personality
         //
-        listOfHelpData = GameManager.i.helpScript.GetHelpData("compatibility_1", "compatibility_2", "compatibility_3");
-        tab1Header0.help.SetHelpTooltip(listOfHelpData);
-
         listOfHelpData = GameManager.i.helpScript.GetHelpData("person_0", "person_1", "person_2");
         tab1Person0.help.SetHelpTooltip(listOfHelpData);
         listOfHelpData = GameManager.i.helpScript.GetHelpData("person_3", "person_4", "person_5");
@@ -1450,6 +1447,7 @@ public class ModalTabbedUI : MonoBehaviour
                         tab1Header1.descriptor.text = GetTrait(true);
                         tab1Header2.descriptor.text = GetPersonalityDescriptors(true);
                         tab1Header3.descriptor.text = GetPersonalityAssessment(true);
+                        GetCompatibilityTooltip(true);
                         GetTraitTooltip(true);
                         tab1Header1.help.SetHelpTooltip(listOfHelpData);
                         GetPersonalityTooltip(true);
@@ -1462,6 +1460,7 @@ public class ModalTabbedUI : MonoBehaviour
                         tab1Header1.descriptor.text = GetTrait();
                         tab1Header2.descriptor.text = GetPersonalityDescriptors();
                         tab1Header3.descriptor.text = GetPersonalityAssessment();
+                        GetCompatibilityTooltip();
                         GetTraitTooltip();
                         tab1Header1.help.SetHelpTooltip(listOfHelpData);
                         GetPersonalityTooltip();
@@ -3430,11 +3429,15 @@ public class ModalTabbedUI : MonoBehaviour
                 if (multiplier != 0f)
                 {
                     if (multiplier > 1.0f)
-                    { data.text = string.Format("Any gains or loses of {0} will be {1} more than normal", GameManager.Formatt("POWER", ColourType.salmonText),
-                        GameManager.Formatt(Convert.ToString(multiplier * 100f) + " %", ColourType.salmonText)); }
+                    {
+                        data.text = string.Format("Any gains or loses of {0} will be {1} more than normal", GameManager.Formatt("POWER", ColourType.salmonText),
+                          GameManager.Formatt(Convert.ToString(multiplier * 100f) + " %", ColourType.salmonText));
+                    }
                     else
-                    { data.text = string.Format("Any gains or loses of {0} will be {1} LESS than normal", GameManager.Formatt("POWER", ColourType.salmonText),
-                        GameManager.Formatt(Convert.ToString(multiplier * 100f) + " %", ColourType.salmonText)); }
+                    {
+                        data.text = string.Format("Any gains or loses of {0} will be {1} LESS than normal", GameManager.Formatt("POWER", ColourType.salmonText),
+                          GameManager.Formatt(Convert.ToString(multiplier * 100f) + " %", ColourType.salmonText));
+                    }
                 }
                 else
                 {
@@ -3442,11 +3445,15 @@ public class ModalTabbedUI : MonoBehaviour
                     if (multiplier != 0f)
                     {
                         if (multiplier > 1.0f)
-                        { data.text = string.Format("Chance of {0} events affecting this character will be {1} more likely", GameManager.Formatt("LEAVE HQ", ColourType.salmonText),
-                            GameManager.Formatt(Convert.ToString(multiplier * 100f) + " %", ColourType.salmonText)); }
+                        {
+                            data.text = string.Format("Chance of {0} events affecting this character will be {1} more likely", GameManager.Formatt("LEAVE HQ", ColourType.salmonText),
+                              GameManager.Formatt(Convert.ToString(multiplier * 100f) + " %", ColourType.salmonText));
+                        }
                         else
-                        { data.text = string.Format("Chance of {0} events affecting this character will be {1} LESS likely", GameManager.Formatt("LEAVE HQ", ColourType.salmonText),
-                            GameManager.Formatt(Convert.ToString(multiplier * 100f) + " %", ColourType.salmonText)); }
+                        {
+                            data.text = string.Format("Chance of {0} events affecting this character will be {1} LESS likely", GameManager.Formatt("LEAVE HQ", ColourType.salmonText),
+                              GameManager.Formatt(Convert.ToString(multiplier * 100f) + " %", ColourType.salmonText));
+                        }
                     }
                     else
                     {
@@ -3465,6 +3472,32 @@ public class ModalTabbedUI : MonoBehaviour
                 listOfHelpData.Add(data);
             }
         }
+    }
+
+    /// <summary>
+    /// Compatibility tooltip depends on whether is Player or not
+    /// </summary>
+    /// <param name="isPlayer"></param>
+    private void GetCompatibilityTooltip(bool isPlayer = false)
+    {
+        listOfHelpData.Clear();
+        if (isPlayer == true)
+        {
+            //Player
+            HelpData data = new HelpData()
+            {
+                tag = "",
+                header = "Compatibility",
+                text = "Compatibility is a measure of another characters relationship with you based on your Personality differences. While their OPINION can VARY due to circumstances, their underlying COMPATIBILITY is CONSTANT"
+            };
+            listOfHelpData.Add(data);
+        }
+        else
+        {
+            //Other character
+            listOfHelpData = GameManager.i.helpScript.GetHelpData("compatibility_1", "compatibility_2", "compatibility_3");
+        }
+        tab1Header0.help.SetHelpTooltip(listOfHelpData);
     }
 
     #endregion
