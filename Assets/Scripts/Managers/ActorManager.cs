@@ -8947,7 +8947,7 @@ public class ActorManager : MonoBehaviour
         data.main = string.Format("{0}Is a measure of how well known a person is within the Organisation{1}", colourNormal, colourEnd);
         /*data.details = string.Format("{0}Somebody with high Power gains {1}{2}influential friends{3}{4} and is harder to {5}{6}Dismiss{7}{8} or {9}{10}Dispose Off{11}",
             colourAlert, colourEnd, colourNeutral, colourEnd, colourAlert, colourEnd, colourBad, colourEnd, colourAlert, colourEnd, colourBad, colourEnd);*/
-        data.details = string.Format("{0}The higher a Subordinates Power, the greater their chance of joining HQ. If Promoted they will be your friends, if Dismissed, your enemies{1}", colourAlert, colourEnd);
+        data.details = string.Format("{0}The higher a Subordinates Power, the greater their chance of joining HQ. If Promoted they will be your friend, if Dismissed, your enemy{1}", colourAlert, colourEnd);
         data.tooltipType = GenericTooltipType.ActorInfo;
         return data;
     }

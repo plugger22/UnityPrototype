@@ -90,6 +90,7 @@ public class ModalTabbedUI : MonoBehaviour
     public TabbedSubHeaderInteraction tab0Header2;
     public TabbedSubHeaderInteraction tab0Header3;
     public TabbedSubHeaderInteraction tab0Header4;
+    public TabbedActorInteraction interactActor;
 
     [Header("Canvas1 -> Personality")]
     public TabbedPersonInteraction tab1Person0;
@@ -429,6 +430,7 @@ public class ModalTabbedUI : MonoBehaviour
         else { Debug.LogError("Invalid tab0Header3 (Null)"); }
         if (tab0Header4 != null) { maxNumOfCures = tab0Header4.listOfItems.Count; }
         else { Debug.LogError("Invalid tab0Header4 (Null)"); }
+        Debug.Assert(interactActor != null, "Invalid interactActor (Null)");
         //
         // - - - canvas1
         //
@@ -1172,6 +1174,11 @@ public class ModalTabbedUI : MonoBehaviour
         { helpClose.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
         else { Debug.LogWarning("Invalid listOfHelp for helpMain (Null)"); }
         //
+        // - - - Canvas 0 -> Main
+        //
+        listOfHelpData = GameManager.i.helpScript.GetHelpData("power_0", "power_1", "power_2", "power_3");
+        interactActor.helpPower.SetHelpTooltip(listOfHelpData);
+        //
         // - - - Canvas 1 -> Personality
         //
         listOfHelpData = GameManager.i.helpScript.GetHelpData("person_0", "person_1", "person_2");
@@ -1400,6 +1407,8 @@ public class ModalTabbedUI : MonoBehaviour
                         tab0Header3.image.gameObject.SetActive(true);
                         tab0Header4.image.gameObject.SetActive(false);
                         tab0Compatibility.text = GetCompatibility();
+                        GetCompatibilityTooltip();
+                        interactActor.helpCompatibility.SetHelpTooltip(listOfHelpData);
                         UpdatePower();
                         UpdateStatus();
                         if (GetConflict() == true) { tab0Header1.text.color = tabSubHeaderTextActiveColour; } else { tab0Header1.text.color = tabSubHeaderTextDormantColour; }
@@ -1413,6 +1422,8 @@ public class ModalTabbedUI : MonoBehaviour
                         tab0Header3.image.gameObject.SetActive(true);
                         tab0Header4.image.gameObject.SetActive(true);
                         tab0Compatibility.text = GetCompatibility(true);
+                        GetCompatibilityTooltip(true);
+                        interactActor.helpCompatibility.SetHelpTooltip(listOfHelpData);
                         UpdatePower(true);
                         UpdateStatus(true);
                         if (GetCures() == true) { tab0Header4.text.color = tabSubHeaderTextActiveColour; } else { tab0Header4.text.color = tabSubHeaderTextDormantColour; }
@@ -1425,6 +1436,8 @@ public class ModalTabbedUI : MonoBehaviour
                         tab0Header3.image.gameObject.SetActive(false);
                         tab0Header4.image.gameObject.SetActive(false);
                         tab0Compatibility.text = GetCompatibility();
+                        GetCompatibilityTooltip();
+                        interactActor.helpCompatibility.SetHelpTooltip(listOfHelpData);
                         UpdatePower();
                         UpdateStatus();
                         break;
@@ -1435,6 +1448,8 @@ public class ModalTabbedUI : MonoBehaviour
                         tab0Header3.image.gameObject.SetActive(true);
                         tab0Header4.image.gameObject.SetActive(false);
                         tab0Compatibility.text = GetCompatibility();
+                        GetCompatibilityTooltip();
+                        interactActor.helpCompatibility.SetHelpTooltip(listOfHelpData);
                         UpdatePower();
                         UpdateStatus();
                         if (GetConditions() == true) { tab0Header3.text.color = tabSubHeaderTextActiveColour; } else { tab0Header3.text.color = tabSubHeaderTextDormantColour; }

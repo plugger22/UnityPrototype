@@ -21811,6 +21811,7 @@ GameObject:
   - component: {fileID: 365790191}
   - component: {fileID: 365790193}
   - component: {fileID: 365790192}
+  - component: {fileID: 365790194}
   m_Layer: 5
   m_Name: actorImage
   m_TagString: Untagged
@@ -21872,6 +21873,19 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 365790190}
   m_CullTransparentMesh: 0
+--- !u!114 &365790194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 365790190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 446d24ba54b232b47b6ca1e4caf1a616, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  helpPower: {fileID: 1376965730}
+  helpCompatibility: {fileID: 975242316}
 --- !u!1 &367820889
 GameObject:
   m_ObjectHideFlags: 0
@@ -37182,6 +37196,7 @@ MonoBehaviour:
   tab0Header2: {fileID: 248655460}
   tab0Header3: {fileID: 1228025679}
   tab0Header4: {fileID: 260849272}
+  interactActor: {fileID: 365790194}
   tab1Person0: {fileID: 1372338231}
   tab1Person1: {fileID: 628704750}
   tab1Person2: {fileID: 1219584908}
@@ -54781,25 +54796,14 @@ RectTransform:
 --- !u!114 &975242316
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 114267499380779636, guid: 8ce85c71c31c83d41a06a316c3e871ef,
-    type: 2}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 975242314}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca7d8d72305dd0342acffd3c30b3c77f, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a9ffc462656cc842975ce665d296215, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  x_offset: 0
-  y_offset: 0
-  nodeID: 0
-  connID: 0
-  testTag: 
-  isIgnoreClick: 0
-  tooltipType: 0
 --- !u!114 &975242317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74745,19 +74749,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1376965728}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca7d8d72305dd0342acffd3c30b3c77f, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a9ffc462656cc842975ce665d296215, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipHeader: 
-  tooltipMain: 
-  tooltipDetails: 
-  x_offset: 0
-  y_offset: 0
-  nodeID: 0
-  connID: 0
-  testTag: 
-  isIgnoreClick: 0
-  tooltipType: 0
 --- !u!114 &1376965731
 MonoBehaviour:
   m_ObjectHideFlags: 0

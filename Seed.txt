@@ -11456,3 +11456,47 @@ City seed 31013 -> Londus, Eurasia
 
 Dev seed 23775 -> Thursday, 24 December 2020 11:20 AM
 City seed 37942 -> Londus, Eurasia
+
+Dev seed 44368 -> Thursday, 24 December 2020 11:23 AM
+City seed 62311 -> Londus, Eurasia
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 38718 -> Thursday, 24 December 2020 11:28 AM
+City seed 13265 -> Londus, Eurasia
+
+Dev seed 63267 -> Thursday, 24 December 2020 11:57 AM
+City seed 18203 -> Londus, Eurasia
+ERROR Invalid HelpData (duplicate) tag "power_2" for listOfHelp["246"]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	LoadManager:InitialiseLate(GameState) (at Assets/Scripts/Managers/LoadManager.cs:2330)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:921)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	WARNING Not found, tag "power_1", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:8103)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:99)
+	ModalTabbedUI:InitialiseTooltips() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1179)
+	ModalTabbedUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:870)
+	ModalTabbedUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:356)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:922)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	WARNING Invalid HelpData (Null) for tag1 "power_1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:102)
+	ModalTabbedUI:InitialiseTooltips() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1179)
+	ModalTabbedUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:870)
+	ModalTabbedUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:356)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:922)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	

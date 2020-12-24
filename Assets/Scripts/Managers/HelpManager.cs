@@ -2312,6 +2312,36 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
+        #region Power
+        //
+        // - - - Power
+        //
+        //Overvew
+        data = new HelpData();
+        data.tag = "power_0";
+        data.header = "Overview";
+        data.text = string.Format("Is a measure of how {0}important{1} a person is within the Organisation", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Player Power
+        data = new HelpData();
+        data.tag = "power_2";
+        data.header = "Player Power";
+        data.text = string.Format("Power is the currency you {0}use to do things{1}. It represents reputation, money, goodwill and accrued favours", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Subordinate Power
+        data = new HelpData();
+        data.tag = "power_2";
+        data.header = "Subordinate Power";
+        data.text = string.Format("A subordinate with more Power than yourself might get {0}ideas above their station{1}. They also have a higher chance of being {2}promoted to HQ{3} at the end of the level", 
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //HQ Power
+        data = new HelpData();
+        data.tag = "power_3";
+        data.header = "HQ Power";
+        data.text = string.Format("Determines promotion. The {0}HQ hierarchy{1} are those with the highest Power, in {2}descending order of importance{3} ", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
 
         //
         // - - - Return
