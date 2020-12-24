@@ -1184,6 +1184,12 @@ public class ModalTabbedUI : MonoBehaviour
         tab1Person3.help.SetHelpTooltip(listOfHelpData);
         listOfHelpData = GameManager.i.helpScript.GetHelpData("person_12", "person_13", "person_14");
         tab1Person4.help.SetHelpTooltip(listOfHelpData);
+        //
+        // - - - Canvas 2 -> Contacts
+        //
+        listOfHelpData = GameManager.i.helpScript.GetHelpData("contact_1");
+        for (int i = 0; i < arrayOfContacts.Length; i++)
+        { arrayOfContacts[i].helpEffectiveness.SetHelpTooltip(listOfHelpData); }
     }
     #endregion
 
@@ -1963,6 +1969,22 @@ public class ModalTabbedUI : MonoBehaviour
                             //intel
                             int intel = contact.statsNemesis + contact.statsNpc + contact.statsRumours + contact.statsTeams;
                             interactContact.intel.text = Convert.ToString(intel);
+                            //tooltip -> intel
+                            builder.Clear();
+                            builder.AppendFormat("Total Rumours intel<pos=65%>{0}{1}", GameManager.Formatt(Convert.ToString(contact.statsRumours), ColourType.salmonText), "\n");
+                            builder.AppendFormat("Total Teams intel<pos=65%>{0}{1}", GameManager.Formatt(Convert.ToString(contact.statsTeams), ColourType.salmonText), "\n");
+                            builder.AppendFormat("Total Nemesis intel<pos=65%>{0}{1}", GameManager.Formatt(Convert.ToString(contact.statsNemesis), ColourType.salmonText), "\n");
+                            builder.AppendFormat("Total V.I.P intel<pos=65%>{0}", GameManager.Formatt(Convert.ToString(contact.statsNpc), ColourType.salmonText));
+                            HelpData data = new HelpData()
+                            {
+                                tag = "",
+                                header = "Intel Breakdown",
+                                text = builder.ToString()
+                            };
+                            listOfHelpData.Clear();
+                            listOfHelpData.Add(data);
+                            interactContact.help.SetHelpTooltip(listOfHelpData);
+                            //tooltip -> effectiveness -> taken care of in InitialiseTooltips (fixed)
                         }
                         else { Debug.LogWarningFormat("Invalid tabbedContactInteraction (Null) for arrayOfContacs[{0}]", i); }
                     }

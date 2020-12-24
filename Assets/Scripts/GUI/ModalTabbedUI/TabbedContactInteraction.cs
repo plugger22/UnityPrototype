@@ -18,6 +18,7 @@ public class TabbedContactInteraction : MonoBehaviour
     public TextMeshProUGUI status;
     public TextMeshProUGUI intel;
     public GenericHelpTooltipUI help;
+    public GenericHelpTooltipUI helpEffectiveness;
 
 
     public void Awake()
@@ -31,6 +32,7 @@ public class TabbedContactInteraction : MonoBehaviour
         Debug.Assert(status != null, "Invalid status (Null)");
         Debug.Assert(intel != null, "Invalid intel (Null)");
         Debug.Assert(help != null, "Invalid help (Null)");
+        Debug.Assert(helpEffectiveness != null, "Invalid helpEffectiveness (Null)");
     }
 
 

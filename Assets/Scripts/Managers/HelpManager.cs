@@ -2085,7 +2085,7 @@ public class HelpManager : MonoBehaviour
         data.header = "Effectiveness";
         builder = new StringBuilder();
         builder.AppendFormat("Effectiveness is a measure of the Contact's {0}ability{1} to source useful information.", colourAlert, colourEnd);
-        builder.AppendFormat("It ranges from {0}{1}  1{2} '...knows stuff' (worst){3}{4}  2{5} '...is networked'{6}{7}  3{8} '...is Wired-in' (best)",
+        builder.AppendFormat("It ranges from...{0}{1}  1 star{2}<pos=45%>...knows stuff (worst){3}{4}  2 stars{5}<pos=45%>...is networked{6}{7}  3 stars{8}<pos=45%>...is Wired-in (best)",
             "\n", colourAlert, colourEnd, "\n", colourAlert, colourEnd, "\n", colourAlert, colourEnd);
         data.text = builder.ToString();
         listOfHelp.Add(data);
