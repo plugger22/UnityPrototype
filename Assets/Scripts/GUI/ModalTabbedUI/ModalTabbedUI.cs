@@ -1178,6 +1178,7 @@ public class ModalTabbedUI : MonoBehaviour
         //
         listOfHelpData = GameManager.i.helpScript.GetHelpData("power_0", "power_1", "power_2", "power_3");
         interactActor.helpPower.SetHelpTooltip(listOfHelpData);
+        
         //
         // - - - Canvas 1 -> Personality
         //
@@ -1409,6 +1410,8 @@ public class ModalTabbedUI : MonoBehaviour
                         tab0Compatibility.text = GetCompatibility();
                         GetCompatibilityTooltip();
                         interactActor.helpCompatibility.SetHelpTooltip(listOfHelpData);
+                        GetConflictTooltip();
+                        GetRelationshipTooltip();
                         UpdatePower();
                         UpdateStatus();
                         if (GetConflict() == true) { tab0Header1.text.color = tabSubHeaderTextActiveColour; } else { tab0Header1.text.color = tabSubHeaderTextDormantColour; }
@@ -2874,7 +2877,7 @@ public class ModalTabbedUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns a user friendly string for actor/player status
+    /// Returns a user friendly string for actor/player status as well as initialising the help tooltip
     /// </summary>
     /// <param name="status"></param>
     /// <param name="inactive"></param>
@@ -2882,26 +2885,57 @@ public class ModalTabbedUI : MonoBehaviour
     private string GetStatus(ActorStatus status, ActorInactive inactive)
     {
         string descriptor = "Unknown";
+        //NOTE: every option should populate a listOfHelpData 
         switch (status)
         {
             case ActorStatus.Active:
-                if (inputData.who != TabbedUIWho.Player) { descriptor = "Available"; }
-                else { descriptor = "On the Job"; }
+                if (inputData.who != TabbedUIWho.Player)
+                {
+                    //subordinate
+                    descriptor = "Available";
+                    listOfHelpData = GameManager.i.helpScript.GetHelpData("active_1");
+                }
+                else
+                {
+                    //player
+                    descriptor = "On the Job";
+                    listOfHelpData = GameManager.i.helpScript.GetHelpData("active_0");
+                }
                 break;
-            case ActorStatus.Reserve: descriptor = "Awaiting Assignment"; break;
-            case ActorStatus.HQ: descriptor = "At HQ"; break;
-            case ActorStatus.Captured: descriptor = "Captured"; break;
+            case ActorStatus.Reserve:
+                descriptor = "Awaiting Assignment";
+                listOfHelpData = GameManager.i.helpScript.GetHelpData("reserveInv_0", "reserveInv_1");
+                break;
+            case ActorStatus.HQ:
+                descriptor = "At HQ";
+                listOfHelpData = GameManager.i.helpScript.GetHelpData("hq_over_0", "hq_over_1", "hq_over_2", "hq_over_3");
+                break;
+            case ActorStatus.Captured:
+                descriptor = "Captured";
+                listOfHelpData = GameManager.i.helpScript.GetHelpData("capture_4", "capture_5", "capture_6");
+                break;
             case ActorStatus.Inactive:
                 switch (inactive)
                 {
-                    case ActorInactive.Breakdown: descriptor = "Undergoing a Nervous Breakdown"; break;
-                    case ActorInactive.LieLow: descriptor = "Lying Low"; break;
-                    case ActorInactive.StressLeave: descriptor = "On Stress Leave"; break;
+                    case ActorInactive.Breakdown:
+                        descriptor = "Undergoing a Nervous Breakdown";
+                        listOfHelpData = GameManager.i.helpScript.GetHelpData("stressBreak_0", "stressBreak_1", "stressBreak_2");
+                        break;
+                    case ActorInactive.LieLow:
+                        descriptor = "Lying Low";
+                        listOfHelpData = GameManager.i.helpScript.GetHelpData("lielow_0", "lielow_1", "lielow_2", "lielow_3");
+                        break;
+                    case ActorInactive.StressLeave:
+                        descriptor = "On Stress Leave";
+                        listOfHelpData = GameManager.i.helpScript.GetHelpData("stressLeave_0", "stressLeave_1", "stressLeave_2", "stressLeave_3");
+                        break;
                     default: Debug.LogWarningFormat("Unrecognised Inactive status \"{0}\"", inactive); break;
                 }
                 break;
             default: Debug.LogWarningFormat("Unrecognised ActorStatus \"{0}\"", status); break;
         }
+        //help
+        tab0Header0.listOfItems[0].help.SetHelpTooltip(listOfHelpData);
         return descriptor;
     }
 
@@ -2988,6 +3022,20 @@ public class ModalTabbedUI : MonoBehaviour
         return isRelationship;
     }
 
+
+    /// <summary>
+    /// Sets friends and enemies tooltip
+    /// </summary>
+    private void GetRelationshipTooltip()
+    {
+        listOfHelpData = GameManager.i.helpScript.GetHelpData("relation_0", "relation_1", "relation_2", "relation_3");
+        tab0Header2.listOfItems[0].help.SetHelpTooltip(listOfHelpData);
+    }
+
+
+
+
+
     /// <summary>
     /// Gets tabbedItems in Tab0 subHeader 'Conditions' for current actor. NOTE: Max of 10 conditions allowed
     /// Returns true if any conditions, false if none
@@ -3072,6 +3120,8 @@ public class ModalTabbedUI : MonoBehaviour
         bool isCure = false;
         int numOfItems;
         string cureName;
+        //help
+        listOfHelpData = GameManager.i.helpScript.GetHelpData("cure_0", "cure_1", "cure_2", "cure_3");
         //Get cures
         List<Node> listOfCures = GameManager.i.dataScript.GetListOfCureNodes();
         numOfItems = tab0Header4.listOfItems.Count;
@@ -3092,6 +3142,8 @@ public class ModalTabbedUI : MonoBehaviour
                         //turn on help
                         tab0Header4.listOfItems[0].image.gameObject.SetActive(true);
                         tab0Header4.listOfItems[0].image.color = tabItemHelpActiveColour;
+                        //tooltip
+                        tab0Header4.listOfItems[0].help.SetHelpTooltip(listOfHelpData);
                     }
                     else
                     {
@@ -3112,12 +3164,15 @@ public class ModalTabbedUI : MonoBehaviour
             //No Cures present
             tab0Header4.listOfItems[0].descriptor.text = "<alpha=#AA>None";
             tab0Header4.listOfItems[0].image.color = tabItemHelpDormantColour;
+            //help
+            tab0Header4.listOfItems[0].help.SetHelpTooltip(listOfHelpData);
             //disable all other items
             for (int i = 1; i < maxNumOfCures; i++)
             { tab0Header4.listOfItems[i].gameObject.SetActive(false); }
         }
         return isCure;
     }
+
 
     /// <summary>
     /// Returns actorTitle (arc name / Player / HQ title)
@@ -3148,6 +3203,16 @@ public class ModalTabbedUI : MonoBehaviour
         else { Debug.LogWarningFormat("Invalid currentSideIndex \"{0}\" (should be > -1 and <= {1})", tabIndex, maxSideTabIndex); }
         return actorTitle;
     }
+
+    /// <summary>
+    /// Sets subordinate tooltip for 'conflict' subheader item
+    /// </summary>
+    private void GetConflictTooltip()
+    {
+        listOfHelpData = GameManager.i.helpScript.GetHelpData("conflict_0", "conflict_1", "conflict_2");
+        tab0Header1.listOfItems[0].help.SetHelpTooltip(listOfHelpData);
+    }
+
     #endregion
 
     #region Personality subMethods...

@@ -11500,3 +11500,95 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:922)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
 	
+Dev seed 9474 -> Thursday, 24 December 2020 2:48 PM
+City seed 35025 -> Londus, Eurasia
+WARNING Not found, tag "power_1", in dictOfHelpData 
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:GetHelpData(String) (at Assets/Scripts/Managers/DataManager.cs:8103)
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:99)
+	ModalTabbedUI:InitialiseTooltips() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1179)
+	ModalTabbedUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:870)
+	ModalTabbedUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:356)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:922)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	WARNING Invalid HelpData (Null) for tag1 "power_1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	HelpManager:GetHelpData(String, String, String, String) (at Assets/Scripts/Managers/HelpManager.cs:102)
+	ModalTabbedUI:InitialiseTooltips() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1179)
+	ModalTabbedUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:870)
+	ModalTabbedUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:356)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:922)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	
+Dev seed 53848 -> Thursday, 24 December 2020 3:00 PM
+City seed 62617 -> Londus, Eurasia
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 64645 -> Thursday, 24 December 2020 3:01 PM
+City seed 56931 -> Londus, Eurasia
+ASSERT ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument argument, System.ExceptionResource resource) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.ThrowHelper.ThrowArgumentOutOfRangeException () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].get_Item (System.Int32 index) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	ModalTabbedUI.GetConflictTooltip () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:3162)
+	ModalTabbedUI.UpdatePage () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1413)
+	ModalTabbedUI.OpenActorSetStart (gameAPI.TabbedUIWho who) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1582)
+	ModalTabbedUI.SetTabbedUI (modalAPI.TabbedUIData details) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1233)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:917)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:345)
+	ActorClickUI.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/Actor/ActorClickUI.cs:46)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 60208 -> Thursday, 24 December 2020 3:02 PM
+City seed 31047 -> Londus, Eurasia
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 26339 -> Thursday, 24 December 2020 3:08 PM
+City seed 16618 -> Londus, Eurasia
+
+Dev seed 21102 -> Thursday, 24 December 2020 3:14 PM
+City seed 7086 -> Londus, Eurasia
+
+Dev seed 62978 -> Thursday, 24 December 2020 4:22 PM
+City seed 29722 -> Londus, Eurasia
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	

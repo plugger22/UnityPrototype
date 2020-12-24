@@ -1020,12 +1020,12 @@ public class HelpManager : MonoBehaviour
 
         #region Actor Conflicts
         //
-        // - - - Actor Conflict
+        // - - - Relationship Conflicts
         //
         //Overview
         data = new HelpData();
         data.tag = "conflict_0";
-        data.header = "Conflict";
+        data.header = "Relationship Conflicts";
         builder = new StringBuilder();
         builder.AppendFormat("Anytime one of your subordinates {0}Opinion{1} falls {2}below Zero{3}, for any reason, they instigate a relationship conflict with you. ", colourAlert, colourEnd,
             colourAlert, colourEnd);
@@ -1236,7 +1236,7 @@ public class HelpManager : MonoBehaviour
             colourAlert, colourEnd, GameManager.i.actorScript.maxStatValue, colourAlert, colourEnd, colourAlert,
             GameManager.i.actorScript.stressLeaveHQApproval == true ? "Given" : "Denied", colourEnd);
         listOfHelp.Add(data);
-        //Breakdowns
+        //stress leave
         data = new HelpData();
         data.tag = "stressLeave_1";
         data.header = "Taking Stress Leave";
@@ -1256,6 +1256,31 @@ public class HelpManager : MonoBehaviour
         data.tag = "stressLeave_3";
         data.header = "Stress Leave Effects";
         data.text = "Removes Stress and improves your mood";
+        listOfHelp.Add(data);
+        #endregion
+
+        #region Nervous Breakdowns
+        //
+        // - - - Nervous Beakdown
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "stressBreak_0";
+        data.header = "Nervous Breakdowns";
+        data.text = string.Format("Whenever a character, or you the Player, is stressed, there is a {0}random chance, each turn{1}, that they may suffer a Nervous Breakdown", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Effects
+        data = new HelpData();
+        data.tag = "stressBreak_1";
+        data.header = "Effect of a Breakdown";
+        data.text = string.Format("The character, or you the Player, are fully occupied dealing with their issues and are {0}unable to do anything else{1}. The breakdown lasts for {2}one turn{3}", 
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Stress Removal
+        data = new HelpData();
+        data.tag = "stressBreak_2";
+        data.header = string.Format("{0}How do I get rid of Stress?{1}", colourTip, colourEnd);
+        data.text = string.Format("Have yourself, or the character, either {0}Lie Low{1} or take {2}Stress Leave{3} to remove the STRESSED condition", colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 
@@ -1828,6 +1853,32 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
+        #region Anyone Captured
+        //
+        // - - - Anyone Captured
+        //
+        //overview
+        data = new HelpData();
+        data.tag = "capture_4";
+        data.header = "Overview";
+        data.text = string.Format("Whenever a character, or you the Player, are released from capture you {0}automatically{1} gain the {2}QUESTIONABLE{3} loyalty condition", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //traitor
+        data = new HelpData();
+        data.tag = "capture_5";
+        data.header = "Subordinates";
+        data.text = string.Format("Whenever a character has been captured there is a chance that the Authority has {0}done a deal{1} with them and they turn into a {2}TRAITOR{3}. This is a {3}hidden{4} condition",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //traitor
+        data = new HelpData();
+        data.tag = "capture_6";
+        data.header = "Player";
+        data.text = string.Format("Whenever you are captured you receive a {0}special event{1}. Depending on what option you choose your {2}Innocence Level{3} may drop. If it ever falls to {4}ZERO{5} stars, " +
+            "you {6}Lose the Campaign{7}", colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
         #endregion
 
         #region Traitor
@@ -2241,7 +2292,7 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
-        #region Relations
+        #region Friends and Enemies
         //
         // - - - Relations
         //
@@ -2324,7 +2375,7 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         //Player Power
         data = new HelpData();
-        data.tag = "power_2";
+        data.tag = "power_1";
         data.header = "Player Power";
         data.text = string.Format("Power is the currency you {0}use to do things{1}. It represents reputation, money, goodwill and accrued favours", colourAlert, colourEnd);
         listOfHelp.Add(data);
@@ -2342,6 +2393,25 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("Determines promotion. The {0}HQ hierarchy{1} are those with the highest Power, in {2}descending order of importance{3} ", colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
+
+        #region Active Status
+        //
+        // - - - Active Status Player
+        //
+        //Overvew -> Player
+        data = new HelpData();
+        data.tag = "active_0";
+        data.header = "Player Active";
+        data.text = string.Format("What are doing here {0}wasting time?{1} Get to work, HQ are depending on you", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Overvew -> Player
+        data = new HelpData();
+        data.tag = "active_1";
+        data.header = "Subordinate Active";
+        data.text = string.Format("All systems are go. Your subordinate and their {0}network of contacts{1} are at your disposal", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
 
         //
         // - - - Return
