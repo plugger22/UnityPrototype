@@ -1112,11 +1112,30 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
+        #region Imaged Condition
+        //
+        // - - - Imaged Condition
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "imaged_0";
+        data.header = "Imaged Condition";
+        data.text = string.Format("The Authority has a copy of your facial likeness", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Effect
+        data = new HelpData();
+        data.tag = "imaged_1";
+        data.header = "Effect";
+        data.text = string.Format("There is a {0}random chance, each turn{1}, that you'll be picked up by Facial Recognition Software and suffer a {2}1 star drop in Invisibility{3}", 
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
         #region Stressed Condition
         //
         // - - - Stressed Condition
         //
-        //Overview
+        //Overview -> Player
         data = new HelpData();
         data.tag = "stress_0";
         data.header = "Stressed Condition";
@@ -1142,6 +1161,34 @@ public class HelpManager : MonoBehaviour
         data.tag = "stress_3";
         data.header = "Removing Stress";
         data.text = string.Format("{0}Lying Low and Stress Leave{1} both remove the Stressed Condition. Certain {2}stimulants{3} (Persuasion Gear) can also do so (Personal Use)",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Subordinate Stress
+        data = new HelpData();
+        data.tag = "stress_4";
+        data.header = "Stressed Condition";
+        data.text = string.Format("Subordinates can become stressed from a {0}variety of reasons{1}. For every turn that they are Stressed there is a {2}chance of a Breakdown{3}",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Breakdowns -> Subordinates
+        data = new HelpData();
+        data.tag = "stress_5";
+        data.header = "Breakdowns";
+        data.text = string.Format("A stress induced Nervous Breakdown {0}prevents your subordinate from doing anything that turn{1}. They are {2}vulnerable{3} and can be captured or worse",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Chance of Breakdowns -> Subordinates
+        data = new HelpData();
+        data.tag = "stress_6";
+        data.header = "Chance of Breakdowns";
+        data.text = string.Format("There is {0}{1} %{2} chance of a Breakdown each turn. Subordinates can have {3}traits{4} that modify this. If they become Stressed when they are already Stressed, the {5}odds increase{6}",
+            colourAlert, GameManager.i.actorScript.breakdownChance, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Recovering from Stress -> Subordinates
+        data = new HelpData();
+        data.tag = "stress_7";
+        data.header = "Removing Stress";
+        data.text = string.Format("{0}Lying Low{1} and sending your subordinate on {2}Stress Leave{3} will remove their Stressed Condition",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
@@ -1177,6 +1224,110 @@ public class HelpManager : MonoBehaviour
         data.header = "Overcoming your Addiction";
         data.text = string.Format("You'll need to find somewhere, or somebody, that offers a {0}cure{1}", colourAlert, colourEnd);
         listOfHelp.Add(data);
+        #endregion
+        
+        #region Star Condition
+        //
+        // - - - Star Condition
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "star_0";
+        data.header = "Star Condition";
+        data.text = string.Format("Your subordinate has performed {0}above and beyond expectations{1}. They are a STAR", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Effect
+        data = new HelpData();
+        data.tag = "star_1";
+        data.header = "Effect";
+        data.text = string.Format("Your subordinate can be {0}Promoted{1} (MANAGE Menu) at {2}no cost{3}. If so they will {4}join HQ{5} (at end of the Level) as a worker and will view you in a {6}positive light{7}", 
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Tip
+        data = new HelpData();
+        data.tag = "star_2";
+        data.header = "Why would I want to Promote them?";
+        data.text = string.Format("The more friends you have at HQ the {0}more assistance{1} they will give you over" +
+            " the course of the Campaign", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
+        #region Wounded Condition
+        //
+        // - - - Wounded condition
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "wounded_0";
+        data.header = "Wounded Condition";
+        data.text = string.Format("Applies {0}only to yourself{1}, the Player. You're badly hurt", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        data = new HelpData();
+        data.tag = "wounded_1";
+        data.header = "Effect";
+        data.text = string.Format("While ever you're Wounded you are {0}restricted to ONE Action per turn{1}", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
+        #region Incompetent Condition
+        //
+        // - - - Incompetent condition
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "incompetent_0";
+        data.header = "Incompetent Condition";
+        data.text = string.Format("Either yourself, or your subordinate, {0}didn't do their job{1} and have been shown to be {2}inept{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        data = new HelpData();
+        //Incompetent -> Player
+        data = new HelpData();
+        data.tag = "incompetent_1";
+        data.header = "Incompetent Player";
+        data.text = string.Format("If you're Incompetent your subordinates may {0}resign in disgust{1} at your ineptitude", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        data = new HelpData();
+        //Incompetent -> Subordinate
+        data = new HelpData();
+        data.tag = "incompetent_2";
+        data.header = "Incompetent Subordinate";
+        data.text = string.Format("Your subordinate can be {0}Disposed off{1} (MANAGE menu) at {2}no cost{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        data = new HelpData();
+        #endregion
+
+        #region Doomed Condition
+        //
+        // - - - Doomed condition
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "doom_0";
+        data.header = "Doomed Condition";
+        data.text = string.Format("The news isn't good. You're {0}destined to die. Soon. The {2}virus{3} is doing it's job", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        data = new HelpData();
+        //Effect
+        data = new HelpData();
+        data.tag = "doom_1";
+        data.header = "Effect";
+        data.text = string.Format("You'll die. {0}Level OVER{1} (but not your Campaign). Worm food. That's your future", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        data = new HelpData();
+        //Cure
+        data = new HelpData();
+        data.tag = "doom_2";
+        data.header = "Cure";
+        data.text = string.Format("If you don't access a {0}cure{1} to the Virus before the {2}countdown expires{3}, you are toast", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        data = new HelpData();
+        //Tip
+        data = new HelpData();
+        data.tag = "doom_3";
+        data.header = string.Format("{0}Advice{1}", colourTip, colourEnd);
+        data.text = string.Format("You are about to die. Find an {0}Antidote{1}. Nothing else matters", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        data = new HelpData();
         #endregion
 
         #region Bad Condition

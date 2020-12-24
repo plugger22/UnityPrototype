@@ -3033,9 +3033,6 @@ public class ModalTabbedUI : MonoBehaviour
     }
 
 
-
-
-
     /// <summary>
     /// Gets tabbedItems in Tab0 subHeader 'Conditions' for current actor. NOTE: Max of 10 conditions allowed
     /// Returns true if any conditions, false if none
@@ -3081,14 +3078,16 @@ public class ModalTabbedUI : MonoBehaviour
                         tab0Header3.listOfItems[i].gameObject.SetActive(true);
                         tab0Header3.listOfItems[i].descriptor.text = condition.tag;
                         //turn on help
-                        tab0Header3.listOfItems[0].image.gameObject.SetActive(true);
-                        tab0Header3.listOfItems[0].image.color = tabItemHelpActiveColour;
+                        tab0Header3.listOfItems[i].image.gameObject.SetActive(true);
+                        tab0Header3.listOfItems[i].image.color = tabItemHelpActiveColour;
+                        //tooltip
+                        tab0Header3.listOfItems[i].help.SetHelpTooltip(GetConditionHelp(condition));
                     }
                     else
                     {
                         Debug.LogWarningFormat("Invalid condition (Null) for listOfConditions[{0}]", i);
                         tab0Header3.listOfItems[i].descriptor.text = "Unknown";
-                        tab0Header3.listOfItems[0].image.color = tabItemHelpDormantColour;
+                        tab0Header3.listOfItems[i].image.color = tabItemHelpDormantColour;
                     }
                 }
                 else
@@ -3109,6 +3108,60 @@ public class ModalTabbedUI : MonoBehaviour
             { tab0Header3.listOfItems[i].gameObject.SetActive(false); }
         }
         return isConditions;
+    }
+
+    /// <summary>
+    /// Gets data for condition tooltip
+    /// </summary>
+    /// <param name="condition"></param>
+    /// <returns></returns>
+    private List<HelpData> GetConditionHelp(Condition condition)
+    {
+        listOfHelpData.Clear();
+        switch (condition.name)
+        {
+            case "ADDICTED":
+                listOfHelpData = GameManager.i.helpScript.GetHelpData("addict_0", "addict_1", "addict_2", "addict_3");
+                break;
+            case "BLACKMAILER":
+                listOfHelpData = GameManager.i.helpScript.GetHelpData("", "", "", "");
+                break;
+            case "CORRUPT":
+                listOfHelpData = GameManager.i.helpScript.GetHelpData("", "", "", "");
+                break;
+            case "DOOMED":
+                listOfHelpData = GameManager.i.helpScript.GetHelpData("doom_0", "doom_1", "doom_2", "doom_3");
+                break;
+            case "IMAGED":
+                listOfHelpData = GameManager.i.helpScript.GetHelpData("imaged_0", "imaged_1");
+                break;
+            case "INCOMPETENT":
+                listOfHelpData = GameManager.i.helpScript.GetHelpData("incompetent_0", "incompetent_1", "incompetent_2");
+                break;
+            case "QUESTIONABLE":
+                listOfHelpData = GameManager.i.helpScript.GetHelpData("questionable_0", "questionable_1", "questionable_2", "questionable_3");
+                break;
+            case "STAR":
+                listOfHelpData = GameManager.i.helpScript.GetHelpData("star_0", "star_1", "star_2");
+                break;
+            case "STRESSED":
+                if (inputData.who == TabbedUIWho.Player)
+                { listOfHelpData = GameManager.i.helpScript.GetHelpData("stress_0", "stress_1", "stress_2", "stress_3"); }
+                else
+                { listOfHelpData = GameManager.i.helpScript.GetHelpData("stress_4", "stress_5", "stress_6", "stress_7"); }
+                break;
+            case "TAGGED":
+                listOfHelpData = GameManager.i.helpScript.GetHelpData("tagged_0", "tagged_1", "tagged_2");
+                break;
+            case "UNHAPPY":
+                listOfHelpData = GameManager.i.helpScript.GetHelpData("reserveInv_0", "reserveInv_1");
+                break;
+            case "WOUNDED":
+                listOfHelpData = GameManager.i.helpScript.GetHelpData("wounded_0", "wounded_1");
+                break;
+            default: Debug.LogWarningFormat("Unrecognised condition \"{0}\"", condition.name); break;
+        }
+        return listOfHelpData;
     }
 
     /// <summary>
