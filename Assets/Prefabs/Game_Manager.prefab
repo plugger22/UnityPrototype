@@ -5882,7 +5882,7 @@ MonoBehaviour:
   condtionAuthority: {fileID: 0}
   conditionTurnResistance: 19
   conditionWhoResistance: 999
-  conditionResistance: {fileID: 11400000, guid: d80a46178c34f11438a36c56d5193b84,
+  conditionResistance: {fileID: 11400000, guid: 8a92e519a923a9640bf583dcb18ef65b,
     type: 2}
   playerInvisibility: -1
   actorSlotID: 2

@@ -11592,3 +11592,5 @@ UnityEngine.Debug:LogWarning(Object)
 	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
 	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
 	
+Dev seed 26110 -> Thursday, 24 December 2020 8:59 PM
+City seed 2618 -> Londus, Eurasia

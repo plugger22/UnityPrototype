@@ -3124,10 +3124,10 @@ public class ModalTabbedUI : MonoBehaviour
                 listOfHelpData = GameManager.i.helpScript.GetHelpData("addict_0", "addict_1", "addict_2", "addict_3");
                 break;
             case "BLACKMAILER":
-                listOfHelpData = GameManager.i.helpScript.GetHelpData("", "", "", "");
+                listOfHelpData = GameManager.i.helpScript.GetHelpData("blackmail_0", "blackmail_1", "blackmail_2");
                 break;
             case "CORRUPT":
-                listOfHelpData = GameManager.i.helpScript.GetHelpData("", "", "", "");
+                listOfHelpData = GameManager.i.helpScript.GetHelpData("corrupt_0", "corrupt_1", "corrupt_2");
                 break;
             case "DOOMED":
                 listOfHelpData = GameManager.i.helpScript.GetHelpData("doom_0", "doom_1", "doom_2", "doom_3");

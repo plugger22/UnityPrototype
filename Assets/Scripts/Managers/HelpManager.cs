@@ -1296,6 +1296,33 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         #endregion
 
+        #region Corrupt Condition
+        //
+        // - - - Corrupt condition
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "corrupt_0";
+        data.header = "Corrupt Condition";
+        data.text = string.Format("Either yourself, or your subordinate, {0}took money on the side{1} and have been shown to be {2}tainted{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        data = new HelpData();
+        //Corrupt -> Player
+        data = new HelpData();
+        data.tag = "corrupt_1";
+        data.header = "Corrupt Player";
+        data.text = string.Format("If you're Corrupt your subordinates may {0}resign in disgust{1} at your crooked ways", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        data = new HelpData();
+        //Corrupt -> Subordinate
+        data = new HelpData();
+        data.tag = "corrupt_2";
+        data.header = "Corrupt Subordinate";
+        data.text = string.Format("Your subordinate can be {0}Disposed off{1} (MANAGE menu) at {2}no cost{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        data = new HelpData();
+        #endregion
+
         #region Doomed Condition
         //
         // - - - Doomed condition
@@ -1326,6 +1353,36 @@ public class HelpManager : MonoBehaviour
         data.tag = "doom_3";
         data.header = string.Format("{0}Advice{1}", colourTip, colourEnd);
         data.text = string.Format("You are about to die. Find an {0}Antidote{1}. Nothing else matters", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        data = new HelpData();
+        #endregion
+
+        #region Blackmailer Condition
+        //
+        // - - - Blackmailer Condition
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "blackmail_0";
+        data.header = "Blackmailer Condition";
+        data.text = string.Format("Your subordinate is Blackmailing you as a result of a {0}Relationship Conflict{1}. They are threatening to {2}reveal{3} one of your {4}secrets{5}", 
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        data = new HelpData();
+        //Effect
+        data = new HelpData();
+        data.tag = "blackmail_1";
+        data.header = "Effect";
+        data.text = string.Format("There is a Blackmail {0}countdown{1}, which, if it ever gets to {2}Zero{3}, results in your subordinate carrying out their threat to {4}reveal your secret{5}",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        data = new HelpData();
+        //Removing Subordinate
+        data = new HelpData();
+        data.tag = "blackmail_2";
+        data.header = "Removing your Subordinate";
+        data.text = string.Format("It's possible to remove your subordinate (MANAGE menu) and {0}neutralise{1} their threat but the {2}cost{3} (Power) of doing so is {4}higher{5} than normal",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         data = new HelpData();
         #endregion
