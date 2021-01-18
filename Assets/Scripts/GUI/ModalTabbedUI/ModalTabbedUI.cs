@@ -14,6 +14,7 @@ using UnityEngine.UI;
 /// </summary>
 public class ModalTabbedUI : MonoBehaviour
 {
+
     #region public Components
 
     [Header("Canvases")]
@@ -102,11 +103,13 @@ public class ModalTabbedUI : MonoBehaviour
     public TabbedSubHeaderInteraction tab1Header1;
     public TabbedSubHeaderInteraction tab1Header2;
     public TabbedSubHeaderInteraction tab1Header3;
+    public GenericHelpTooltipUI tab1PageHelp;
 
     [Header("Canvas2 -> Contacts")]
     public TextMeshProUGUI tab2NetworkStrength;
     public TextMeshProUGUI tab2NetworkStars;
     public GenericHelpTooltipUI tab2Help;
+    public GenericHelpTooltipUI tab2PageHelp;
     public TabbedContactInteraction tab2Contact0;
     public TabbedContactInteraction tab2Contact1;
     public TabbedContactInteraction tab2Contact2;
@@ -120,23 +123,27 @@ public class ModalTabbedUI : MonoBehaviour
     public TabbedSecretInteraction tab3Secret1;
     public TabbedSecretInteraction tab3Secret2;
     public TabbedSecretInteraction tab3Secret3;
+    public GenericHelpTooltipUI tab3PageHelp;
 
     [Header("Canvas4 -> Investigations")]
     public TabbedInvestInteraction tab4Invest0;
     public TabbedInvestInteraction tab4Invest1;
     public TabbedInvestInteraction tab4Invest2;
+    public GenericHelpTooltipUI tab4PageHelp;
 
     [Header("Canvas5 -> Likes")]
     public TabbedLikesInteraction tab5Likes0;       //strongly likes
     public TabbedLikesInteraction tab5Likes1;       //likes
     public TabbedLikesInteraction tab5Likes2;       //strong dislikes
     public TabbedLikesInteraction tab5Likes3;       //dislikes
+    public GenericHelpTooltipUI tab5PageHelp;
 
     [Header("Canvas6 -> Gear")]
     public TextMeshProUGUI tab6Header;
     public TabbedGearInteraction tab6Gear0;
     public TabbedGearInteraction tab6Gear1;
     public TabbedGearInteraction tab6Gear2;
+    public GenericHelpTooltipUI tab6PageHelp;
 
     [Header("Canvas7 -> History")]
     public GameObject tab7ScrollBarObject;
@@ -146,6 +153,7 @@ public class ModalTabbedUI : MonoBehaviour
     public TabbedHistoryOptionUI tab7Interaction1;
     [Tooltip("Place all tabbedScrollItems (Dark/Light) in here. NOTE: Make sure they are in the same order as your scroll list, eg. light0, dark0, light1, dark1, light2 ...")]
     public List<GameObject> listOfTab7Items;
+    public GenericHelpTooltipUI tab7PageHelp;
 
     [Header("Canvas 8 -> Statistics")]
     public TabbedStatInteraction tab8Stat0;
@@ -154,6 +162,7 @@ public class ModalTabbedUI : MonoBehaviour
     public TabbedStatInteraction tab8Stat3;
     public TabbedStatInteraction tab8Stat4;
     public TabbedStatInteraction tab8Stat5;
+    public GenericHelpTooltipUI tab8PageHelp;
 
     #endregion
 
@@ -443,6 +452,7 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab1Header1 != null, "Invalid tab1Header1 (Null)");
         Debug.Assert(tab1Header2 != null, "Invalid tab1Header2 (Null)");
         Debug.Assert(tab1Header3 != null, "Invalid tab1Header3 (Null)");
+        Debug.Assert(tab1PageHelp != null, "Invalid tab1PageHelp (Null)");
         //
         // - - - canvas2
         //
@@ -455,6 +465,7 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab2NetworkStrength != null, "Invalid tab2NetworkStrength (Null)");
         Debug.Assert(tab2NetworkStars != null, "Invalid tab2NetworkStars (Null)");
         Debug.Assert(tab2Help != null, "Invalid tab2Help (Null)");
+        Debug.Assert(tab2PageHelp != null, "Invalid tab2PageHelp (Null)");
         //
         // - - - canvas3
         //
@@ -463,12 +474,14 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab3Secret1 != null, "Invalid tab3Secret1 (Null)");
         Debug.Assert(tab3Secret2 != null, "Invalid tab3Secret2 (Null)");
         Debug.Assert(tab3Secret3 != null, "Invalid tab3Secret3 (Null)");
+        Debug.Assert(tab3PageHelp != null, "Invalid tab3PageHelp (Null)");
         //
         // - - - canvas4
         //
         Debug.Assert(tab4Invest0 != null, "Invalid tab4Invest0 (Null)");
         Debug.Assert(tab4Invest1 != null, "Invalid tab4Invest1 (Null)");
         Debug.Assert(tab4Invest2 != null, "Invalid tab4Invest2 (Null)");
+        Debug.Assert(tab4PageHelp != null, "Invalid tab4PageHelp (Null)");
         //
         // - - - canvas5
         //
@@ -476,6 +489,7 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab5Likes1 != null, "Invalid tab5Likes1 (Null)");
         Debug.Assert(tab5Likes2 != null, "Invalid tab5Likes2 (Null)");
         Debug.Assert(tab5Likes3 != null, "Invalid tab5Likes3 (Null)");
+        Debug.Assert(tab5PageHelp != null, "Invalid tab5PageHelp (Null)");
         //
         // - - - canvas6
         //
@@ -483,6 +497,7 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab6Gear0 != null, "Invalid tab6Gear0 (Null)");
         Debug.Assert(tab6Gear1 != null, "Invalid tab6Gear1 (Null)");
         Debug.Assert(tab6Gear2 != null, "Invalid tab6Gear2 (Null)");
+        Debug.Assert(tab6PageHelp != null, "Invalid tab6PageHelp (Null)");
         //
         // - - - canvas7
         //
@@ -491,6 +506,7 @@ public class ModalTabbedUI : MonoBehaviour
             if (listOfTab7Items[i] == null)
             { Debug.LogErrorFormat("Invalid tab7Item (Null) for listOfTab7Items[{0}]", i); }
         }
+        Debug.Assert(tab7PageHelp != null, "Invalid tab7PageHelp (Null)");
         //canvas 8
         Debug.Assert(tab8Stat0 != null, "Invalid tab8Stat0 (Null)");
         Debug.Assert(tab8Stat1 != null, "Invalid tab8Stat1 (Null)");
@@ -498,6 +514,7 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab8Stat3 != null, "Invalid tab8Stat3 (Null)");
         Debug.Assert(tab8Stat4 != null, "Invalid tab8Stat4 (Null)");
         Debug.Assert(tab8Stat5 != null, "Invalid tab8Stat5 (Null)");
+        Debug.Assert(tab8PageHelp != null, "Invalid tab8PageHelp (Null)");
     }
     #endregion
 
@@ -1167,21 +1184,26 @@ public class ModalTabbedUI : MonoBehaviour
     /// </summary>
     private void InitialiseTooltips()
     {
-        List<HelpData> listOfHelp;
         //main help button
-        listOfHelp = GameManager.i.helpScript.GetHelpData("metaGameUI_0", "metaGameUI_1", "metaGameUI_2", "metaGameUI_3");
-        if (listOfHelp != null)
-        { helpClose.SetHelpTooltip(listOfHelp, x_offset, y_offset); }
-        else { Debug.LogWarning("Invalid listOfHelp for helpMain (Null)"); }
+        listOfHelpData = GameManager.i.helpScript.GetHelpData("tabbedUI_0", "tabbedUI_1");
+        if (listOfHelpData != null)
+        { helpClose.SetHelpTooltip(listOfHelpData, x_offset, y_offset); }
+        else { Debug.LogWarning("Invalid listOfHelpData for helpMain (Null)"); }
         //
         // - - - Canvas 0 -> Main
         //
         listOfHelpData = GameManager.i.helpScript.GetHelpData("power_0", "power_1", "power_2", "power_3");
         interactActor.helpPower.SetHelpTooltip(listOfHelpData);
-        
         //
         // - - - Canvas 1 -> Personality
         //
+        GenericHelpTooltipUI helpCompatibilityStars = tab1Header0.descriptor.GetComponent<GenericHelpTooltipUI>();
+        if (helpCompatibilityStars != null)
+        {
+            listOfHelpData = GameManager.i.helpScript.GetHelpData("compatibility_1", "compatibility_2", "compatibility_3");
+            helpCompatibilityStars.SetHelpTooltip(listOfHelpData);
+        }
+        else { Debug.LogWarning("Invalid helpCompatibilityStars (Null)"); }
         listOfHelpData = GameManager.i.helpScript.GetHelpData("person_0", "person_1", "person_2");
         tab1Person0.help.SetHelpTooltip(listOfHelpData);
         listOfHelpData = GameManager.i.helpScript.GetHelpData("person_3", "person_4", "person_5");
@@ -1192,12 +1214,48 @@ public class ModalTabbedUI : MonoBehaviour
         tab1Person3.help.SetHelpTooltip(listOfHelpData);
         listOfHelpData = GameManager.i.helpScript.GetHelpData("person_12", "person_13", "person_14");
         tab1Person4.help.SetHelpTooltip(listOfHelpData);
+        listOfHelpData = GameManager.i.helpScript.GetHelpData("person_15", "person_16", "person_17", "person_18");
+        tab1PageHelp.SetHelpTooltip(listOfHelpData);
         //
         // - - - Canvas 2 -> Contacts
         //
         listOfHelpData = GameManager.i.helpScript.GetHelpData("contact_1");
         for (int i = 0; i < arrayOfContacts.Length; i++)
         { arrayOfContacts[i].helpEffectiveness.SetHelpTooltip(listOfHelpData); }
+        listOfHelpData = GameManager.i.helpScript.GetHelpData("contact_11");
+        tab2Help.SetHelpTooltip(listOfHelpData);
+        listOfHelpData = GameManager.i.helpScript.GetHelpData("contact_0", "contact_1");
+        tab2PageHelp.SetHelpTooltip(listOfHelpData);
+        //
+        // - - - Canvas 3 -> Secrets
+        //
+        listOfHelpData = GameManager.i.helpScript.GetHelpData("secret_0", "secret_1", "secret_2", "secret_3");
+        tab3PageHelp.SetHelpTooltip(listOfHelpData);
+        //
+        // - - - Canvas 4 -> Investigations
+        //
+        listOfHelpData = GameManager.i.helpScript.GetHelpData("invest_0", "invest_1", "invest_2", "invest_3");
+        tab4PageHelp.SetHelpTooltip(listOfHelpData);
+        //
+        // - - - Canvas 5 -> Likes
+        //
+        listOfHelpData = GameManager.i.helpScript.GetHelpData("person_19", "person_20");
+        tab5PageHelp.SetHelpTooltip(listOfHelpData);
+        //
+        // - - - Canvas 6 -> Gear
+        //
+        listOfHelpData = GameManager.i.helpScript.GetHelpData("gear_0", "gear_1", "gear_2", "gear_4");
+        tab6PageHelp.SetHelpTooltip(listOfHelpData);
+        //
+        // - - - Canvas 7 -> History
+        //
+        listOfHelpData = GameManager.i.helpScript.GetHelpData("history_0");
+        tab7PageHelp.SetHelpTooltip(listOfHelpData);        
+        //
+        // - - - Canvas 8 -> Stats
+        //
+        listOfHelpData = GameManager.i.helpScript.GetHelpData("stat_0");
+        tab8PageHelp.SetHelpTooltip(listOfHelpData);
     }
     #endregion
 
@@ -2655,54 +2713,45 @@ public class ModalTabbedUI : MonoBehaviour
     //
 
     /// <summary>
-    /// Up arrow -> Side Tabs
+    /// Up arrow ->  next actor Set to the left
     /// </summary>
     private void ExecuteUpArrow()
     {
-        //change tab
-        if (currentSideTabIndex > -1 && numOfSideTabs > 1)
+        if (currentSetIndex > -1)
         {
-            if (currentSideTabIndex > 0)
+            if (currentSetIndex > 0)
             {
-                currentSideTabIndex -= 1;
-                OpenSideTab(currentSideTabIndex);
+                currentSetIndex -= 1;
+                OpenActorSet((TabbedUIWho)currentSetIndex);
             }
             else
             {
                 //roll over
-                currentSideTabIndex = numOfSideTabs - 1;
-                OpenSideTab(currentSideTabIndex);
+                currentSetIndex = maxSetIndex;
+                OpenActorSet((TabbedUIWho)currentSetIndex);
             }
-            //highlight actorSet
-            UpdateControllerButton(inputData.who);
-            //page
-            UpdatePage();
         }
     }
 
 
     /// <summary>
-    /// Down arrow -> Side Tabs
+    /// Down arrow ->  next actor Set to the Right
     /// </summary>
     private void ExecuteDownArrow()
     {
-        if (currentSideTabIndex > -1 && numOfSideTabs > 1)
+        if (currentSetIndex > -1)
         {
-            if (currentSideTabIndex < numOfSideTabs - 1)
+            if (currentSetIndex < maxSetIndex)
             {
-                currentSideTabIndex += 1;
-                OpenSideTab(currentSideTabIndex);
+                currentSetIndex += 1;
+                OpenActorSet((TabbedUIWho)currentSetIndex);
             }
             else
             {
                 //roll over
-                currentSideTabIndex = 0;
-                OpenSideTab(currentSideTabIndex);
+                currentSetIndex = 0;
+                OpenActorSet((TabbedUIWho)currentSetIndex); ;
             }
-            //highlight actorSet
-            UpdateControllerButton(inputData.who);
-            //page
-            UpdatePage();
         }
     }
 
@@ -2750,44 +2799,53 @@ public class ModalTabbedUI : MonoBehaviour
     }
 
     /// <summary>
-    /// Page Up -> next actor Set to the Left
+    /// Page Up -> Side tabs Up
     /// </summary>
     private void ExecutePageUp()
     {
-        if (currentSetIndex > -1)
+        //change tab
+        if (currentSideTabIndex > -1 && numOfSideTabs > 1)
         {
-            if (currentSetIndex > 0)
+            if (currentSideTabIndex > 0)
             {
-                currentSetIndex -= 1;
-                OpenActorSet((TabbedUIWho)currentSetIndex);
+                currentSideTabIndex -= 1;
+                OpenSideTab(currentSideTabIndex);
             }
             else
             {
                 //roll over
-                currentSetIndex = maxSetIndex;
-                OpenActorSet((TabbedUIWho)currentSetIndex);
+                currentSideTabIndex = numOfSideTabs - 1;
+                OpenSideTab(currentSideTabIndex);
             }
+            //highlight actorSet
+            UpdateControllerButton(inputData.who);
+            //page
+            UpdatePage();
         }
     }
 
     /// <summary>
-    /// Page Down -> next actor Set to the Right
+    /// Page Down -> Side tabs down
     /// </summary>
     private void ExecutePageDown()
     {
-        if (currentSetIndex > -1)
+        if (currentSideTabIndex > -1 && numOfSideTabs > 1)
         {
-            if (currentSetIndex < maxSetIndex)
+            if (currentSideTabIndex < numOfSideTabs - 1)
             {
-                currentSetIndex += 1;
-                OpenActorSet((TabbedUIWho)currentSetIndex);
+                currentSideTabIndex += 1;
+                OpenSideTab(currentSideTabIndex);
             }
             else
             {
                 //roll over
-                currentSetIndex = 0;
-                OpenActorSet((TabbedUIWho)currentSetIndex); ;
+                currentSideTabIndex = 0;
+                OpenSideTab(currentSideTabIndex);
             }
+            //highlight actorSet
+            UpdateControllerButton(inputData.who);
+            //page
+            UpdatePage();
         }
     }
 

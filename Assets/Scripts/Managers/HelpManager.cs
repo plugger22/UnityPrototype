@@ -542,6 +542,33 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
+        #region Tabbed UI
+        //
+        // - - - Tabbed UI
+        //
+        //overview
+        data = new HelpData();
+        data.tag = "tabbedUI_0";
+        data.header = "Character Dossier";
+        data.text = string.Format("A summary of all known {0}information{1} about important characters, including yourself. This is {2}confidential{3} and for your eyes only",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //controls
+        data = new HelpData();
+        data.tag = "tabbedUI_1";
+        data.header = "Controls";
+        data.text = new StringBuilder()
+            .AppendFormat("The following controls are available{0}", "\n")
+            .AppendFormat(" {0} {1}PgUp & PgDown{2}, cycles through the {3}Side Tabs{4}{5}", bullet, colourAlert, colourEnd, colourAlert, colourEnd, "\n")
+            .AppendFormat(" {0} {1} {2}Left{3} & {4} {5}Right Arrows{6}, cycles {7}Top Tabs{8}{9}", bullet, arrowLeft, colourAlert, colourEnd, arrowRight,
+            colourAlert, colourEnd, colourAlert, colourEnd, "\n")
+            .AppendFormat(" {0} {1}Up & Down Arrows{2} to switch character {3}Groups{4}", bullet, colourAlert, colourEnd, colourAlert, colourEnd, "\n")
+            .ToString();
+        listOfHelp.Add(data);
+        
+
+        #endregion
+
         #region Review UI
         //
         // - - - Review UI
@@ -615,51 +642,6 @@ public class HelpManager : MonoBehaviour
         data.tag = "reserveInv_2";
         data.header = string.Format("{0}Recruiting{1}", colourTip, colourEnd);
         data.text = string.Format("Your {0}RECRUITER{1} will always source {2}better candidates{3} than you can. Aim to source new subordinates with your RECRUITER if possible", colourAlert, colourEnd, colourAlert, colourEnd);
-        listOfHelp.Add(data);
-        #endregion
-
-        #region Gear Inventory
-        //
-        // - - - Gear UI
-        //
-        //Capabilities
-        data = new HelpData();
-        data.tag = "gearInv_0";
-        data.header = "Gear Capabilities";
-        data.text = new StringBuilder()
-                    .AppendFormat("{0}District use{1} indicates gear can be used in a district. Right Click on a district{2}", colourAlert, colourEnd, "\n")
-                    .AppendLine()
-                    .AppendFormat("{0}Can be Gifted{1} can be given to one of your subordinates. Right Click subordinate's portrait{2}", colourAlert, colourEnd, "\n")
-                    .AppendLine()
-                    .AppendFormat("{0}Personal use{1} indicates gear with a personal dimension. Right Click on your portrait{2}", colourAlert, colourEnd, "\n")
-                    .AppendLine()
-                    .AppendFormat("{0}AI use{1} provides a benefit when hacking the AI. Use the Left Hand side tab{2}", colourAlert, colourEnd, "\n")
-                    .AppendLine()
-                    .AppendFormat("{0}Movement{1} allows you to negate different levels of Connection security when moving between districts{2}", colourAlert, colourEnd, "\n")
-                    .AppendLine()
-                    .AppendFormat("{0}Invisibility{1} prevents detection whenever you do a district action{2}", colourAlert, colourEnd, "\n")
-                    .AppendLine()
-                    .AppendFormat("{0}Target Use{1} can be used on ANY target. Other gear may be usable on specific targets{2}", colourAlert, colourEnd, "\n")
-                    .ToString();
-        listOfHelp.Add(data);
-        //Rarity
-        data = new HelpData();
-        data.tag = "gearInv_1";
-        data.header = "Gear Rarity";
-        data.text = new StringBuilder()
-            .AppendFormat("Gear comes in {0}four levels{1} of rarity, in order of frequency and value{2}", colourAlert, colourEnd, "\n")
-            .AppendFormat("  {0} {1}Common{2}{3}", bullet, colourAlert, colourEnd, "\n")
-            .AppendFormat("  {0} {1}Rare{2}{3}", bullet, colourAlert, colourEnd, "\n")
-            .AppendFormat("  {0} {1}Unique{2}{3}", bullet, colourAlert, colourEnd, "\n")
-            .AppendFormat("  {0} {1}Special{2} Available only from HQ between missions{3}", bullet, colourAlert, colourEnd, "\n")
-            .ToString();
-        listOfHelp.Add(data);
-        //Gifting
-        data = new HelpData();
-        data.tag = "gearInv_2";
-        data.header = "Gifting Gear to Subordinates";
-        data.text = string.Format("Will give your subordinate a {0}Opinion{1} boost. You can {2}ask for the gear back{3} after {4}{5} turns{6}. Would you be happy about returning a gift?",
-            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, GameManager.i.gearScript.actorGearGracePeriod, colourEnd);
         listOfHelp.Add(data);
         #endregion
 
@@ -1986,6 +1968,58 @@ public class HelpManager : MonoBehaviour
         data.header = "Low Score";
         data.text = string.Format("{0}Calm{1}, even-tempered, secure", colourAlert, colourEnd);
         listOfHelp.Add(data);
+        //
+        // - - - Personality overview
+        //
+        //personality -> overview
+        data = new HelpData();
+        data.tag = "person_15";
+        data.header = "Personality";
+        data.text = string.Format("Every character has a {0}unique{1} personality that defines their behaviour and {2}compatibility{3} towards yourself. Your own personality determines your likes and dislikes.",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //personality -> compatibility
+        data = new HelpData();
+        data.tag = "person_16";
+        data.header = "Compatibility";
+        data.text = string.Format("A character's compatibility with yourself (one to three stars, red or green) is calculated based on the {0}interaction of your personalities{1}. The greater the similarities, " +
+            "the {2}more they like you{3} and vice versa",
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //personality -> Character Personalities
+        data = new HelpData();
+        data.tag = "person_17";
+        data.header = "Opinion and Mood";
+        data.text = string.Format("A character's personality and compatibility, with yourself, are {0}constant{1}. They don't change, unlike their {2}Opinion{3} of you which can {4}vary{5} due to circumstances," +
+            " as can your {6}mood{7}",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //personality -> Tip
+        data = new HelpData();
+        data.tag = "person_18";
+        data.header = string.Format("{0}Personality Tips{1}", colourTip, colourEnd);
+        data.text = string.Format("The more {0}compatible{1} a character is with you (green stars) the more they will {2}forgive{3} whereas characters who are {4}incompatible{5} (red stars) " +
+            "{6}don't readily{7} change their opinion of you for the better",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //
+        // - - - Likes and Dislikes
+        //
+        //personality -> likes overview
+        data = new HelpData();
+        data.tag = "person_19";
+        data.header = "Likes and Dislikes";
+        data.text = string.Format("Your personality may {0}predispose{1} you to liking, or disliking, certain things. Listed below are various actions and what {2}effect{3} they will have on your {4}mood{5}",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //personality -> tip
+        data = new HelpData();
+        data.tag = "person_20";
+        data.header = string.Format("{0}Tip{1}", colourTip, colourEnd);
+        data.text = string.Format("Your personality doesn't {0}prevent{1} you from taking specific actions. You can {2}do what you like{3} but be aware that if you do something that is in {4}opposition{5} to your " +
+            "{6}core beliefs{7} your mood will suffer and vice versa. We all have a {8}natural tendency{9} to do what we prefer",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
         #endregion
 
         #region Player Betrayed
@@ -2325,7 +2359,7 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
-        #region Contact
+        #region Contacts
         //
         // - - - Contact (Resistance)
         //
@@ -2411,6 +2445,13 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("A Contact who has returned will have their ears to the ground for {0}information{1} and will allow your subordinate to carry out {2}actions{3} in the Contact's district",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
+        //Network Rating
+        data = new HelpData();
+        data.tag = "contact_11";
+        data.header = "Network Rating";
+        data.text = string.Format("Is the {0}sum{1} of each individual contact's {2}effectiveness{3} (1 to 3 stars) and provides a big picture view of the {4}value{5} of a subordinates contact network",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
         #endregion
 
         #region Investigations
@@ -2435,7 +2476,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "invest_2";
         data.header = "Evidence";
-        data.text = string.Format("New evidence will come to light as time progresses through {0}events{1} or as a result of the work of the {2}Lead Investigator{3} (Good evidence more likely if they have a high {4}Opinion{5}, and vice versa)",
+        data.text = string.Format("New evidence will come to light as time progresses through {0}events{1} or as a result of the work of the {2}Lead Investigator{3} (Good evidence is more likely if they have a high {4}Opinion{5}, and vice versa)",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Outcome
@@ -2620,6 +2661,89 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
+        #region History
+        //
+        // - - - History
+        //
+        //Overvew 
+        data = new HelpData();
+        data.tag = "history_0";
+        data.header = "History";
+        data.text = string.Format("Shown is a history of all important events that have affected the character, or yourself. Any changes to your {0}Mood{1} or a character's {2}Opinion{3} of you are tracked as well", 
+            colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
+        #region Stats
+        //
+        // - - - Stats
+        //
+        //Overvew 
+        data = new HelpData();
+        data.tag = "stat_0";
+        data.header = "Statistics";
+        data.text = string.Format("Shown are a collection of statistics relevant to the character, or yourself. We know {0}EVERYTHING{1}", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
+        #region Gear
+        //
+        // - - - Gear
+        //
+        //Overvew 
+        data = new HelpData();
+        data.tag = "gear_0";
+        data.header = "Gear";
+        data.text = string.Format("Gear are {0}special{1} items that can confer many different {2}benefits{3}. You own the gear but you may {4}gift{5} an item to a subordinate and, perhaps, {6}recover{7} it from them later", 
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Capabilities
+        data = new HelpData();
+        data.tag = "gear_1";
+        data.header = "Gear Capabilities";
+        data.text = new StringBuilder()
+                    .AppendFormat("{0}District use{1} indicates gear can be used in a district. Right Click on a district{2}", colourAlert, colourEnd, "\n")
+                    .AppendLine()
+                    .AppendFormat("{0}Can be Gifted{1} can be given to one of your subordinates. Right Click subordinate's portrait{2}", colourAlert, colourEnd, "\n")
+                    .AppendLine()
+                    .AppendFormat("{0}Personal use{1} indicates gear with a personal dimension. Right Click on your portrait{2}", colourAlert, colourEnd, "\n")
+                    .AppendLine()
+                    .AppendFormat("{0}AI use{1} provides a benefit when hacking the AI. Use the Left Hand side tab{2}", colourAlert, colourEnd, "\n")
+                    .AppendLine()
+                    .AppendFormat("{0}Movement{1} allows you to negate different levels of Connection security when moving between districts{2}", colourAlert, colourEnd, "\n")
+                    .AppendLine()
+                    .AppendFormat("{0}Invisibility{1} prevents detection whenever you do a district action{2}", colourAlert, colourEnd, "\n")
+                    .AppendLine()
+                    .AppendFormat("{0}Target Use{1} can be used on ANY target. Other gear may be usable on specific targets{2}", colourAlert, colourEnd, "\n")
+                    .ToString();
+        listOfHelp.Add(data);
+        //Rarity
+        data = new HelpData();
+        data.tag = "gear_2";
+        data.header = "Gear Rarity";
+        data.text = new StringBuilder()
+            .AppendFormat("Gear comes in {0}four levels{1} of rarity, in order of frequency and value{2}", colourAlert, colourEnd, "\n")
+            .AppendFormat("  {0} {1}Common{2}{3}", bullet, colourAlert, colourEnd, "\n")
+            .AppendFormat("  {0} {1}Rare{2}{3}", bullet, colourAlert, colourEnd, "\n")
+            .AppendFormat("  {0} {1}Unique{2}{3}", bullet, colourAlert, colourEnd, "\n")
+            .AppendFormat("  {0} {1}Special{2} Available only from HQ between missions{3}", bullet, colourAlert, colourEnd, "\n")
+            .ToString();
+        listOfHelp.Add(data);
+        //Gifting
+        data = new HelpData();
+        data.tag = "gear_3";
+        data.header = "Gifting Gear to Subordinates";
+        data.text = string.Format("Will give your subordinate a {0}Opinion{1} boost. You can {2}ask for the gear back{3} after {4}{5} turns{6}. Would you be happy about returning a gift?",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, GameManager.i.gearScript.actorGearGracePeriod, colourEnd);
+        listOfHelp.Add(data);
+        //Overvew 
+        data = new HelpData();
+        data.tag = "gear_4";
+        data.header = "Capture Gear";
+        data.text = string.Format("These items can {0}only{1} be obtained from {2}HQ characters{3} between levels. They can {4}assist{5} you when you've been {6}captured{7}",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
 
         //
         // - - - Return
