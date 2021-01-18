@@ -16,7 +16,6 @@ public class ModalTabbedUI : MonoBehaviour
 {
 
     #region public Components
-
     [Header("Canvases")]
     public Canvas tabbedCanvasMain;
 
@@ -181,6 +180,7 @@ public class ModalTabbedUI : MonoBehaviour
 
     #endregion
 
+    #region private Components
     private ScrollRect tab7ScrollRect;                                  //needed to manually disable scrolling when not needed
     private Scrollbar tab7ScrollBar;
 
@@ -228,6 +228,13 @@ public class ModalTabbedUI : MonoBehaviour
     //Page 8
     private int maxNumOfStatGroups = 6;                             //hardwired prefab instances on page
 
+    //debug
+    private bool isAddDebugRecords;                                 //true if a set of debug player history event records have been addeds
+    //help tooltips (I don't want this as a global, just a master private field)
+    private int x_offset = 200;
+    private int y_offset = 40;
+    #endregion
+
     #region Optimisations
     //optimisation -> field for individual pages to keep garbage collection to a minimum
     private StringBuilder builder;
@@ -261,13 +268,6 @@ public class ModalTabbedUI : MonoBehaviour
     private int counter;
 
     #endregion
-
-    //debug
-    private bool isAddDebugRecords;                                 //true if a set of debug player history event records have been addeds
-
-    //help tooltips (I don't want this as a global, just a master private field)
-    private int x_offset = 200;
-    private int y_offset = 40;
 
     #region Colours
     //colours
