@@ -12206,3 +12206,70 @@ City seed 54669 -> Londus, Eurasia
 
 Dev seed 30084 -> Monday, 18 January 2021 5:07 PM
 City seed 61772 -> Londus, Eurasia
+
+Dev seed 52371 -> Monday, 18 January 2021 5:10 PM
+City seed 24096 -> Londus, Eurasia
+
+Dev seed 33282 -> Monday, 18 January 2021 5:29 PM
+City seed 59538 -> Londus, Eurasia
+
+Dev seed 36835 -> Monday, 18 January 2021 5:35 PM
+City seed 56613 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.OpenInvestigations () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2605)
+	ModalTabbedUI.UpdatePage () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1627)
+	ModalTabbedUI.OpenPage (System.Int32 tabIndex, System.Boolean isMouseClick) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1497)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:993)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:347)
+	TabbedTopTabUI.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ModalTabbedUI/TabbedTopTabUI.cs:42)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 19026 -> Monday, 18 January 2021 5:39 PM
+City seed 63954 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.OpenSecrets () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2259)
+	ModalTabbedUI.UpdatePage () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1635)
+	ModalTabbedUI.OpenPage (System.Int32 tabIndex, System.Boolean isMouseClick) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1499)
+	ModalTabbedUI.ExecuteRightArrow () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2931)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1022)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:347)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:747)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:445)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.OpenSecrets () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2171)
+	ModalTabbedUI.UpdatePage () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1635)
+	ModalTabbedUI.OpenPage (System.Int32 tabIndex, System.Boolean isMouseClick) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1499)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:995)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:347)
+	TabbedTopTabUI.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ModalTabbedUI/TabbedTopTabUI.cs:42)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 28358 -> Monday, 18 January 2021 5:42 PM
+City seed 18438 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.OpenSecrets () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2259)
+	ModalTabbedUI.UpdatePage () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1635)
+	ModalTabbedUI.OpenPage (System.Int32 tabIndex, System.Boolean isMouseClick) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1499)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:995)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:347)
+	TabbedTopTabUI.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ModalTabbedUI/TabbedTopTabUI.cs:42)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.OpenSecrets () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2171)
+	ModalTabbedUI.UpdatePage () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1635)
+	ModalTabbedUI.OpenPage (System.Int32 tabIndex, System.Boolean isMouseClick) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1499)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:995)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:347)
+	TabbedTopTabUI.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ModalTabbedUI/TabbedTopTabUI.cs:42)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 55992 -> Monday, 18 January 2021 5:46 PM
+City seed 41637 -> Londus, Eurasia

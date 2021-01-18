@@ -119,6 +119,7 @@ public class ModalTabbedUI : MonoBehaviour
 
     [Header("Canvas3 -> Secrets")]
     public TextMeshProUGUI tab3Header;
+    public TextMeshProUGUI tab3NonePresent;
     public TabbedSecretInteraction tab3Secret0;
     public TabbedSecretInteraction tab3Secret1;
     public TabbedSecretInteraction tab3Secret2;
@@ -130,6 +131,7 @@ public class ModalTabbedUI : MonoBehaviour
     public TabbedInvestInteraction tab4Invest1;
     public TabbedInvestInteraction tab4Invest2;
     public GenericHelpTooltipUI tab4PageHelp;
+    public TextMeshProUGUI tab4NonePresent;
 
     [Header("Canvas5 -> Likes")]
     public TabbedLikesInteraction tab5Likes0;       //strongly likes
@@ -140,6 +142,7 @@ public class ModalTabbedUI : MonoBehaviour
 
     [Header("Canvas6 -> Gear")]
     public TextMeshProUGUI tab6Header;
+    public TextMeshProUGUI tab6NonePresent;
     //gear
     public Image tab6GearPanel;
     public TabbedGearInteraction tab6Gear0;
@@ -255,6 +258,7 @@ public class ModalTabbedUI : MonoBehaviour
     private string effectsSecretHeader;
     private string investString;
     private string personString;
+    private int counter;
 
     #endregion
 
@@ -487,6 +491,7 @@ public class ModalTabbedUI : MonoBehaviour
         // - - - canvas3
         //
         Debug.Assert(tab3Header != null, "Invalid tab3Header (Null)");
+        Debug.Assert(tab3NonePresent != null, "Invalid tab3NonePresent (Null)");
         Debug.Assert(tab3Secret0 != null, "Invalid tab3Secret0 (Null)");
         Debug.Assert(tab3Secret1 != null, "Invalid tab3Secret1 (Null)");
         Debug.Assert(tab3Secret2 != null, "Invalid tab3Secret2 (Null)");
@@ -499,6 +504,7 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab4Invest1 != null, "Invalid tab4Invest1 (Null)");
         Debug.Assert(tab4Invest2 != null, "Invalid tab4Invest2 (Null)");
         Debug.Assert(tab4PageHelp != null, "Invalid tab4PageHelp (Null)");
+        Debug.Assert(tab4NonePresent != null, "Invalid tab4NonePresent (Null)");
         //
         // - - - canvas5
         //
@@ -511,6 +517,7 @@ public class ModalTabbedUI : MonoBehaviour
         // - - - canvas6
         //
         Debug.Assert(tab6Header != null, "Invalid tab6Header (Null)");
+        Debug.Assert(tab6NonePresent != null, "Invalid tab6NonePresent (Null)");
         Debug.Assert(tab6GearPanel != null, "Invalid tab6GearPanel (Null)");
         Debug.Assert(tab6Gear0 != null, "Invalid tab6Gear0 (Null)");
         Debug.Assert(tab6Gear1 != null, "Invalid tab6Gear1 (Null)");
@@ -2161,6 +2168,7 @@ public class ModalTabbedUI : MonoBehaviour
             numOfSecrets = listOfSecrets.Count;
             if (numOfSecrets > 0)
             {
+                tab3NonePresent.gameObject.SetActive(false);
                 for (int i = 0; i < arrayOfSecrets.Length; i++)
                 {
                     if (i < numOfSecrets)
@@ -2247,6 +2255,8 @@ public class ModalTabbedUI : MonoBehaviour
                 //no secrets, deactivate all
                 for (int i = 0; i < arrayOfSecrets.Length; i++)
                 { arrayOfSecrets[i].gameObject.SetActive(false); }
+                //none present
+                tab3NonePresent.gameObject.SetActive(true);
             }
         }
         else { Debug.LogWarning("Invalid listOfSecrets (Null)"); }
@@ -2295,6 +2305,7 @@ public class ModalTabbedUI : MonoBehaviour
     {
         int numOfGear;
         listOfGear.Clear();
+        tab6NonePresent.gameObject.SetActive(false);
         switch (gearType)
         {
             case TabbedGear.Normal:
@@ -2417,6 +2428,9 @@ public class ModalTabbedUI : MonoBehaviour
                         //no gear, deactivate all
                         for (int i = 0; i < arrayOfGear.Length; i++)
                         { arrayOfGear[i].gameObject.SetActive(false); }
+                        //none present
+                        tab6GearPanel.gameObject.SetActive(false);
+                        tab6NonePresent.gameObject.SetActive(true);
                     }
                 }
                 else { Debug.LogWarning("Invalid listOfGear (Null)"); }
@@ -2429,11 +2443,13 @@ public class ModalTabbedUI : MonoBehaviour
                 bool[] arrayOfBools = GameManager.i.playerScript.GetArrayOfCaptureTools();
                 if (arrayOfBools != null)
                 {
+                    counter = 0;
                     for (int i = 0; i < arrayOfBools.Length; i++)
                     {
                         if (arrayOfBools[i] == true)
                         {
                             //device present
+                            counter++;
                             arrayOfDevices[i].gameObject.SetActive(true);
                             interactDevice = arrayOfDevices[i];
                             if (interactDevice != null)
@@ -2452,6 +2468,13 @@ public class ModalTabbedUI : MonoBehaviour
                             //not present
                             arrayOfDevices[i].gameObject.SetActive(false);
                         }
+                    }
+                    if (counter == 0)
+                    {
+                        //none present
+                        tab6DevicePanel.gameObject.SetActive(false);
+                        tab6NonePresent.gameObject.SetActive(true);
+
                     }
                 }
                 else { Debug.LogError("Invalid arrayOfBools (Null)"); }
@@ -2475,6 +2498,7 @@ public class ModalTabbedUI : MonoBehaviour
             count = listOfInvestigations.Count;
             if (count > 0)
             {
+                tab4NonePresent.gameObject.SetActive(false);
                 for (int i = 0; i < arrayOfInvestigations.Length; i++)
                 {
                     if (i < count)
@@ -2582,6 +2606,8 @@ public class ModalTabbedUI : MonoBehaviour
                 //deactivate all
                 for (int i = 0; i < arrayOfInvestigations.Length; i++)
                 { arrayOfInvestigations[i].gameObject.SetActive(false); }
+                //none present
+                tab4NonePresent.gameObject.SetActive(true);
             }
         }
         else { Debug.LogWarning("Invalid listOfInvestigations (Null)"); }
