@@ -28,6 +28,8 @@ public class CaptureManager : MonoBehaviour
     [Range(1, 10)] public int captureTimerValue = 3;
 
     [Header("Capture Tools")]
+    [Tooltip("Maximum number of capture tools that the player can have at a time")]
+    public int maxCaptureTools = 4;
     [Tooltip("CaptureTool for dealing with Innocence level 3 InterroBots. Optional")]
     public CaptureTool innocence_3;
     [Tooltip("CaptureTool for dealing with Innocence level 2 Inquisitors. Optional")]

@@ -12166,3 +12166,43 @@ City seed 37811 -> Londus, Eurasia
 
 Dev seed 26191 -> Monday, 18 January 2021 12:20 PM
 City seed 47897 -> Londus, Eurasia
+
+Dev seed 21725 -> Monday, 18 January 2021 2:36 PM
+City seed 27072 -> Londus, Eurasia
+
+Dev seed 33770 -> Monday, 18 January 2021 2:43 PM
+City seed 35754 -> Londus, Eurasia
+
+Dev seed 54588 -> Monday, 18 January 2021 2:47 PM
+City seed 30514 -> Londus, Eurasia
+
+Dev seed 55064 -> Monday, 18 January 2021 3:20 PM
+City seed 7060 -> Londus, Eurasia
+
+Dev seed 56146 -> Monday, 18 January 2021 3:31 PM
+City seed 39270 -> Londus, Eurasia
+
+Dev seed 61533 -> Monday, 18 January 2021 3:33 PM
+City seed 46147 -> Londus, Eurasia
+
+Dev seed 40095 -> Monday, 18 January 2021 4:51 PM
+City seed 47927 -> Londus, Eurasia
+
+Dev seed 46014 -> Monday, 18 January 2021 4:53 PM
+City seed 53384 -> Londus, Eurasia
+ERROR Invalid innoceneString (Null or Empty)
+UnityEngine.Debug:LogError(Object)
+	PlayerManager:DebugAddCaptureTool(String) (at Assets/Scripts/Managers/PlayerManager.cs:2686)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2082)
+	
+Dev seed 21454 -> Monday, 18 January 2021 4:55 PM
+City seed 34468 -> Londus, Eurasia
+
+Dev seed 56220 -> Monday, 18 January 2021 4:58 PM
+City seed 32845 -> Londus, Eurasia
+
+Dev seed 43983 -> Monday, 18 January 2021 5:03 PM
+City seed 54669 -> Londus, Eurasia
+
+Dev seed 30084 -> Monday, 18 January 2021 5:07 PM
+City seed 61772 -> Londus, Eurasia

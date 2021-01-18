@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: InsanityImplant
   m_EditorClassIdentifier: 
   tag: Insanity Implant
-  descriptor: An implant that will turn you crazy on command. Designed to change you
-    into a drooling, twitching, ball of insanity for any Inquisitor
+  descriptor: An implant that will turn you crazy on command. It will change you into
+    a drooling, twitching, ball of insanity
   sprite: {fileID: 21300000, guid: d7f77a0f40a944e4bafd0104b4e0b8b1, type: 3}
   innocenceLevel: 2

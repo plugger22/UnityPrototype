@@ -259,7 +259,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "transitionEnd_0";
         data.header = "Overview";
-        data.text = string.Format("Each HQ member will grant you {0}Power{1} according to their {2}assessment{3}. Each assesses you on {4}three criteria{5}", 
+        data.text = string.Format("Each HQ member will grant you {0}Power{1} according to their {2}assessment{3}. Each assesses you on {4}three criteria{5}",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //power
@@ -283,7 +283,7 @@ public class HelpManager : MonoBehaviour
             .AppendFormat("{0}Targets{1}{2}", colourAlert, colourEnd, "\n")
             .AppendFormat("One star for each successfully completed Target{0}", "\n")
             .AppendFormat("{0}Exposure{1}{2}", colourAlert, colourEnd, "\n")
-            .AppendFormat("Your Innocence level at the end of the level{0}", "\n")
+            .AppendFormat("Your Innocence level {0} at the end of the level{1}", GameManager.i.guiScript.innocenceIcon, "\n")
             .AppendFormat("{0}District Crisis{1}{2}", colourAlert, colourEnd, "\n")
             .AppendFormat("One star for each crisis that explodes{0}", "\n")
             .AppendFormat("{0}HQ Approval{1}{2}", colourAlert, colourEnd, "\n")
@@ -299,7 +299,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "transitionEnd_3";
         data.header = string.Format("{0}Game Tip{1}", colourTip, colourEnd);
         data.text = string.Format("Pay attention to the {0}criteria{1}. The first criteria is {2}3 times more important{3} (weighting) than the last. HQ {4}seniority{5} counts. " +
-            "Each {6}Overall{7} star from the most senior member is worth {8}4x more Power{9} than a star from the most junior member", 
+            "Each {6}Overall{7} star from the most senior member is worth {8}4x more Power{9} than a star from the most junior member",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Objective Overview
@@ -412,7 +412,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "transitionTwo_0";
         data.header = "Objectives";
-        data.text = string.Format("HQ have specific {0}requirements{1} for what they would like you to {2}achieve{3}. Wild men or women who do their own thing {4}aren't welcome{5} in the Resistance", 
+        data.text = string.Format("HQ have specific {0}requirements{1} for what they would like you to {2}achieve{3}. Wild men or women who do their own thing {4}aren't welcome{5} in the Resistance",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
@@ -437,7 +437,7 @@ public class HelpManager : MonoBehaviour
         data.text = new StringBuilder()
             .AppendFormat("The following controls are available{0}", "\n")
             .AppendFormat(" {0} {1}PgUp & PgDown{2}, cycles through the {3}Side Tabs{4}{5}", bullet, colourAlert, colourEnd, colourAlert, colourEnd, "\n")
-            .AppendFormat(" {0} {1} {2}Left{3} & {4} {5}Right Arrows{6}, cycles {7}Top Tabs{8}{9}", bullet, arrowLeft, colourAlert, colourEnd, arrowRight, 
+            .AppendFormat(" {0} {1} {2}Left{3} & {4} {5}Right Arrows{6}, cycles {7}Top Tabs{8}{9}", bullet, arrowLeft, colourAlert, colourEnd, arrowRight,
             colourAlert, colourEnd, colourAlert, colourEnd, "\n")
             .AppendFormat(" {0} {1}Right Click{2} an Option to {3}Select/Deselect{4}{5}", bullet, colourAlert, colourEnd, colourAlert, colourEnd, "\n")
             .AppendFormat(" {0} {1}SPACE{2} to {3}Select/Deselect{4} highlighted Option{5}", bullet, colourAlert, colourEnd, colourAlert, colourEnd, "\n")
@@ -565,7 +565,7 @@ public class HelpManager : MonoBehaviour
             .AppendFormat(" {0} {1}Up & Down Arrows{2} to switch character {3}Groups{4}", bullet, colourAlert, colourEnd, colourAlert, colourEnd, "\n")
             .ToString();
         listOfHelp.Add(data);
-        
+
 
         #endregion
 
@@ -1108,7 +1108,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "imaged_1";
         data.header = "Effect";
-        data.text = string.Format("There is a {0}random chance, each turn{1}, that you'll be picked up by Facial Recognition Software and suffer a {2}1 star drop in Invisibility{3}", 
+        data.text = string.Format("There is a {0}random chance, each turn{1}, that you'll be picked up by Facial Recognition Software and suffer a {2}1 star drop in Invisibility{3}",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
@@ -1207,7 +1207,7 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("You'll need to find somewhere, or somebody, that offers a {0}cure{1}", colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
-        
+
         #region Star Condition
         //
         // - - - Star Condition
@@ -1222,7 +1222,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "star_1";
         data.header = "Effect";
-        data.text = string.Format("Your subordinate can be {0}Promoted{1} (MANAGE Menu) at {2}no cost{3}. If so they will {4}join HQ{5} (at end of the Level) as a worker and will view you in a {6}positive light{7}", 
+        data.text = string.Format("Your subordinate can be {0}Promoted{1} (MANAGE Menu) at {2}no cost{3}. If so they will {4}join HQ{5} (at end of the Level) as a worker and will view you in a {6}positive light{7}",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Tip
@@ -1347,7 +1347,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "blackmail_0";
         data.header = "Blackmailer Condition";
-        data.text = string.Format("Your subordinate is Blackmailing you as a result of a {0}Relationship Conflict{1}. They are threatening to {2}reveal{3} one of your {4}secrets{5}", 
+        data.text = string.Format("Your subordinate is Blackmailing you as a result of a {0}Relationship Conflict{1}. They are threatening to {2}reveal{3} one of your {4}secrets{5}",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         data = new HelpData();
@@ -1463,7 +1463,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "stressBreak_1";
         data.header = "Effect of a Breakdown";
-        data.text = string.Format("The character, or you the Player, are fully occupied dealing with their issues and are {0}unable to do anything else{1}. The breakdown lasts for {2}one turn{3}", 
+        data.text = string.Format("The character, or you the Player, are fully occupied dealing with their issues and are {0}unable to do anything else{1}. The breakdown lasts for {2}one turn{3}",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Stress Removal
@@ -1744,7 +1744,7 @@ public class HelpManager : MonoBehaviour
         data.header = string.Format("{0}MegaCorp Targets{1}", colourTip, colourEnd);
         data.text = string.Format("Whenever you {0}attempt{1} a MegaCorp target and {2}Fail{3} there is a {4}{5} %{6} chance that you'll be {7}spotted{8} and that your " +
             "{9}relations{10} with the MegaCorp will {11}deteroriate{12}",
-            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, GameManager.i.effectScript.chanceOfSpottedByMegaCorp, 
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, GameManager.i.effectScript.chanceOfSpottedByMegaCorp,
             colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
@@ -1975,13 +1975,13 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "person_15";
         data.header = "Personality";
-        data.text = string.Format("Every character has a {0}unique{1} personality that defines their behaviour and {2}compatibility{3} towards yourself. Your own personality determines your likes and dislikes.",
-            colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("Every character has a {0}unique{1} personality that defines their behaviour and {2}compatibility{3} {4} towards yourself. Your own personality determines your likes and dislikes.",
+            colourAlert, colourEnd, colourAlert, colourEnd, GameManager.i.guiScript.compatibilityIcon);
         listOfHelp.Add(data);
         //personality -> compatibility
         data = new HelpData();
         data.tag = "person_16";
-        data.header = "Compatibility";
+        data.header = string.Format("Compatibility {0}", GameManager.i.guiScript.compatibilityIcon);
         data.text = string.Format("A character's compatibility with yourself (one to three stars, red or green) is calculated based on the {0}interaction of your personalities{1}. The greater the similarities, " +
             "the {2}more they like you{3} and vice versa",
             colourAlert, colourEnd, colourAlert, colourEnd);
@@ -1990,17 +1990,17 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "person_17";
         data.header = "Opinion and Mood";
-        data.text = string.Format("A character's personality and compatibility, with yourself, are {0}constant{1}. They don't change, unlike their {2}Opinion{3} of you which can {4}vary{5} due to circumstances," +
-            " as can your {6}mood{7}",
-            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("A character's personality and compatibility, with yourself, are {0}constant{1}. They don't change, unlike their {2}Opinion{3} {4} of you which can {5}vary{6} due to circumstances," +
+            " as can your {7}mood{8} {9}",
+            colourAlert, colourEnd, colourAlert, colourEnd, GameManager.i.guiScript.opinionIcon, colourAlert, colourEnd, colourAlert, colourEnd, GameManager.i.guiScript.opinionIcon);
         listOfHelp.Add(data);
         //personality -> Tip
         data = new HelpData();
         data.tag = "person_18";
         data.header = string.Format("{0}Personality Tips{1}", colourTip, colourEnd);
-        data.text = string.Format("The more {0}compatible{1} a character is with you (green stars) the more they will {2}forgive{3} whereas characters who are {4}incompatible{5} (red stars) " +
-            "{6}don't readily{7} change their opinion of you for the better",
-            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("The more {0}compatible{1} {2} a character is with you (green stars) the more they will {3}forgive{4} whereas characters who are {5}incompatible{6} (red stars) " +
+            "{7}don't readily{8} change their opinion of you for the better",
+            colourAlert, colourEnd, GameManager.i.guiScript.compatibilityIcon, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //
         // - - - Likes and Dislikes
@@ -2009,8 +2009,8 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "person_19";
         data.header = "Likes and Dislikes";
-        data.text = string.Format("Your personality may {0}predispose{1} you to liking, or disliking, certain things. Listed below are various actions and what {2}effect{3} they will have on your {4}mood{5}",
-            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("Your personality may {0}predispose{1} you to liking, or disliking, certain things. Listed below are various actions and what {2}effect{3} they will have on your {4}mood{5} {6}",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, GameManager.i.guiScript.opinionIcon);
         listOfHelp.Add(data);
         //personality -> tip
         data = new HelpData();
@@ -2587,7 +2587,7 @@ public class HelpManager : MonoBehaviour
         data.tag = "target_0";
         data.header = "Overview";
         data.text = string.Format("Targets can be {0}attempted{1} by either the {2}Player{3} (you need to move to the {4}District{5} to do so) or by the {6}Subordinate{7} mentioned in the target description, eg. Blogger",
-            colourAlert, colourEnd, colourAlert,  colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Subordinate
         data = new HelpData();
@@ -2632,7 +2632,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "power_2";
         data.header = "Subordinate Power";
-        data.text = string.Format("A subordinate with more Power than yourself might get {0}ideas above their station{1}. They also have a higher chance of being {2}promoted to HQ{3} at the end of the level", 
+        data.text = string.Format("A subordinate with more Power than yourself might get {0}ideas above their station{1}. They also have a higher chance of being {2}promoted to HQ{3} at the end of the level",
             colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //HQ Power
@@ -2669,8 +2669,8 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "history_0";
         data.header = "History";
-        data.text = string.Format("Shown is a history of all important events that have affected the character, or yourself. Any changes to your {0}Mood{1} or a character's {2}Opinion{3} of you are tracked as well", 
-            colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("Shown is a history of all important events that have affected the character, or yourself. Any changes to your {0}Mood{1} {2} or a character's {3}Opinion{4} {5} of you are tracked as well",
+            colourAlert, colourEnd, GameManager.i.guiScript.opinionIcon, colourAlert, colourEnd, GameManager.i.guiScript.opinionIcon);
         listOfHelp.Add(data);
         #endregion
 
@@ -2694,7 +2694,7 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "gear_0";
         data.header = "Gear";
-        data.text = string.Format("Gear are {0}special{1} items that can confer many different {2}benefits{3}. You own the gear but you may {4}gift{5} an item to a subordinate and, perhaps, {6}recover{7} it from them later", 
+        data.text = string.Format("Gear are {0}special{1} items that can confer many different {2}benefits{3}. You own the gear but you may {4}gift{5} an item to a subordinate and, perhaps, {6}recover{7} it from them later",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Capabilities
@@ -2703,8 +2703,6 @@ public class HelpManager : MonoBehaviour
         data.header = "Gear Capabilities";
         data.text = new StringBuilder()
                     .AppendFormat("{0}District use{1} indicates gear can be used in a district. Right Click on a district{2}", colourAlert, colourEnd, "\n")
-                    .AppendLine()
-                    .AppendFormat("{0}Can be Gifted{1} can be given to one of your subordinates. Right Click subordinate's portrait{2}", colourAlert, colourEnd, "\n")
                     .AppendLine()
                     .AppendFormat("{0}Personal use{1} indicates gear with a personal dimension. Right Click on your portrait{2}", colourAlert, colourEnd, "\n")
                     .AppendLine()
@@ -2715,6 +2713,8 @@ public class HelpManager : MonoBehaviour
                     .AppendFormat("{0}Invisibility{1} prevents detection whenever you do a district action{2}", colourAlert, colourEnd, "\n")
                     .AppendLine()
                     .AppendFormat("{0}Target Use{1} can be used on ANY target. Other gear may be usable on specific targets{2}", colourAlert, colourEnd, "\n")
+                    .AppendLine()
+                    .AppendFormat("{0}Can be Gifted{1} ALL gear can be gifted to a subordinate. Right Click subordinate's portrait{2}", colourAlert, colourEnd, "\n")
                     .ToString();
         listOfHelp.Add(data);
         //Rarity
@@ -2739,8 +2739,8 @@ public class HelpManager : MonoBehaviour
         //Overvew 
         data = new HelpData();
         data.tag = "gear_4";
-        data.header = "Capture Gear";
-        data.text = string.Format("These items can {0}only{1} be obtained from {2}HQ characters{3} between levels. They can {4}assist{5} you when you've been {6}captured{7}",
+        data.header = "Devices";
+        data.text = string.Format("These special items can {0}only{1} be obtained from {2}HQ characters{3} between levels. They can help you resist {4}interrogation{5} when you've been {6}captured{7}",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
