@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Name: HQ
   m_EditorClassIdentifier: 
   tag: HQ
+  services: They have a virtual backdoor into your HQ

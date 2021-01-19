@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Name: Contract
   m_EditorClassIdentifier: 
   tag: Contract
+  services: Provide terminal contracts for troublesome employees

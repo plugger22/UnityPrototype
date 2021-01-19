@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Name: Cure
   m_EditorClassIdentifier: 
   tag: Cure
+  services: Able to source illegal cures that'll fix anything

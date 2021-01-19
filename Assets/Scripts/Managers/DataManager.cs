@@ -7629,6 +7629,13 @@ public class DataManager : MonoBehaviour
     { return listOfCurrentOrganisations.Where(x => x.isContact == false && x.isCutOff == false).ToList(); }
 
     /// <summary>
+    /// returns a list of all current Organisations IN contact with player and that haven't cut the player off. Returns null if none (?)
+    /// </summary>
+    /// <returns></returns>
+    public List<Organisation> GetListOfInContactOrganisations()
+    { return listOfCurrentOrganisations.Where(x => x.isContact == true && x.isCutOff == false).ToList(); }
+
+    /// <summary>
     /// returns Organisation, null if not found
     /// </summary>
     /// <param name="orgName"></param>

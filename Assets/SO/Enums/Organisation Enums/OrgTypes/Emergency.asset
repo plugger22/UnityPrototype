@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Name: Emergency
   m_EditorClassIdentifier: 
   tag: Emergency
+  services: When things get serious who are you going to call?

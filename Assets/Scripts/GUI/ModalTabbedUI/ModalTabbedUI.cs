@@ -181,6 +181,17 @@ public class ModalTabbedUI : MonoBehaviour
     public TabbedStatInteraction tab8Stat5;
     public GenericHelpTooltipUI tab8PageHelp;
 
+    [Header("Canvas 9 -> Organisations")]
+    public Image tab9OrgPanel;
+    public TextMeshProUGUI tab9Header;
+    public TextMeshProUGUI tab9NoneKnown;
+    public TabbedOrgInteraction tab9Org0;
+    public TabbedOrgInteraction tab9Org1;
+    public TabbedOrgInteraction tab9Org2;
+    public TabbedOrgInteraction tab9Org3;
+    public TabbedOrgInteraction tab9Org4;
+    public GenericHelpTooltipUI tab9PageHelp;
+
     #endregion
 
     #region private Components
@@ -221,8 +232,6 @@ public class ModalTabbedUI : MonoBehaviour
     //Page 6
     private int maxNumOfGear;
     private int maxNumOfDevices;
-    /*private TabbedGear gearOptionIndex;                             //which gear option is currently selected, eg. Normal / Capture*/
-
     //Page7
     private int maxNumOfScrollItems;                                //max number of items in scrollable list
     private int numOfScrollItemsVisible = 11;                       //max number of items visible at any one time
@@ -232,6 +241,8 @@ public class ModalTabbedUI : MonoBehaviour
     private TabbedHistory historyOptionIndex;                       //which history option is currently selected, eg. Events / Emotions (Mood/Opinion)
     //Page 8
     private int maxNumOfStatGroups = 6;                             //hardwired prefab instances on page
+    //Page 9
+    private int maxNumOfOrgs = 5;
 
     //debug
     private bool isAddDebugRecords;                                 //true if a set of debug player history event records have been addeds
@@ -250,10 +261,12 @@ public class ModalTabbedUI : MonoBehaviour
     private Effect effectSecret;
     private Secret secret;
     private Gear gear;
+    private Organisation organisation;
     private Investigation investigation;
     private List<Contact> listOfContacts;
     private List<int> listOfSecretActors;
     private List<Secret> listOfSecrets;
+    private List<Organisation> listOfOrganisations;
     private List<string> listOfGear;
     private List<HelpData> listOfHelpData;
     private List<Investigation> listOfInvestigations;
@@ -263,6 +276,7 @@ public class ModalTabbedUI : MonoBehaviour
     private TabbedDeviceInteraction interactDevice;
     private TabbedInvestInteraction interactInvest;
     private TabbedStatInteraction interactStat;
+    private TabbedOrgInteraction interactOrg;
     private PersonProfile interactProfile;
     private Trait interactTrait;
     private string gearName;
@@ -303,6 +317,7 @@ public class ModalTabbedUI : MonoBehaviour
     private Color contactInactiveColour;
     private Color secretColour;
     private Color gearColour;
+    private Color orgColour;
     private Color investigationColour;
     private Color statItemColour;
     #endregion
@@ -352,6 +367,8 @@ public class ModalTabbedUI : MonoBehaviour
     private List<string> listOfHistory = new List<string>();
     //Canvas8 -> Stats
     private TabbedStatInteraction[] arrayOfStats;
+    //Canvas9 -> Organisations
+    private TabbedOrgInteraction[] arrayOfOrgs;
     #endregion
 
     private static ModalTabbedUI modalTabbedUI;
@@ -544,7 +561,9 @@ public class ModalTabbedUI : MonoBehaviour
             { Debug.LogErrorFormat("Invalid tab7Item (Null) for listOfTab7Items[{0}]", i); }
         }
         Debug.Assert(tab7PageHelp != null, "Invalid tab7PageHelp (Null)");
-        //canvas 8
+        //
+        // - - - canvas 8
+        //
         Debug.Assert(tab8Stat0 != null, "Invalid tab8Stat0 (Null)");
         Debug.Assert(tab8Stat1 != null, "Invalid tab8Stat1 (Null)");
         Debug.Assert(tab8Stat2 != null, "Invalid tab8Stat2 (Null)");
@@ -552,6 +571,18 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab8Stat4 != null, "Invalid tab8Stat4 (Null)");
         Debug.Assert(tab8Stat5 != null, "Invalid tab8Stat5 (Null)");
         Debug.Assert(tab8PageHelp != null, "Invalid tab8PageHelp (Null)");
+        //
+        // - - - canvas 9
+        //
+        Debug.Assert(tab9OrgPanel != null, "Invalid tab9MainPanel (Null)");
+        Debug.Assert(tab9Header != null, "Invalid tab9Header (Null)");
+        Debug.Assert(tab9NoneKnown != null, "Invalid tab9NoneKnown (Null)");
+        Debug.Assert(tab9Org0 != null, "Invalid tab9Org0 (Null)");
+        Debug.Assert(tab9Org1 != null, "Invalid tab9Org1 (Null)");
+        Debug.Assert(tab9Org2 != null, "Invalid tab9Org2 (Null)");
+        Debug.Assert(tab9Org3 != null, "Invalid tab9Org3 (Null)");
+        Debug.Assert(tab9Org4 != null, "Invalid tab9Org4 (Null)");
+        Debug.Assert(tab9PageHelp != null, "Invalid tab9PageHelp (Null)");
     }
     #endregion
 
@@ -585,6 +616,7 @@ public class ModalTabbedUI : MonoBehaviour
         contactInactiveColour = GameManager.i.uiScript.TabbedContactInactive;
         secretColour = GameManager.i.uiScript.TabbedSecretAll;
         gearColour = GameManager.i.uiScript.TabbedGearAll;
+        orgColour = GameManager.i.uiScript.TabbedOrgAll;
         investigationColour = GameManager.i.uiScript.TabbedInvestigationAll;
         statItemColour = GameManager.i.uiScript.TabbedStatItem;
         Color tempColour = tabSubHeaderTextActiveColour;
@@ -673,6 +705,8 @@ public class ModalTabbedUI : MonoBehaviour
 
         //page 8
         arrayOfStats = new TabbedStatInteraction[maxNumOfStatGroups];
+        //page 9
+        arrayOfOrgs = new TabbedOrgInteraction[maxNumOfOrgs];
 
         //initialise Canvas array
         arrayOfCanvas = new Canvas[numOfPages];
@@ -768,6 +802,7 @@ public class ModalTabbedUI : MonoBehaviour
         listOfSecrets = new List<Secret>();
         listOfGear = new List<string>();
         listOfInvestigations = new List<Investigation>();
+        listOfOrganisations = new List<Organisation>();
         knowsSecretHeader = GameManager.Formatt("Who Knows?", ColourType.neutralText);
         effectsSecretHeader = GameManager.Formatt("Effects if Revealed", ColourType.neutralText);
         //
@@ -943,6 +978,14 @@ public class ModalTabbedUI : MonoBehaviour
             { arrayOfStats[i].listOfItems[j].background.color = statItemColour; }
         }
         //
+        // - - - Page 9 Organisations
+        //
+        arrayOfOrgs[0] = tab9Org0;
+        arrayOfOrgs[1] = tab9Org1;
+        arrayOfOrgs[2] = tab9Org2;
+        arrayOfOrgs[3] = tab9Org3;
+        arrayOfOrgs[4] = tab9Org4;
+        //
         // - - - Initialisations
         //
         InitialiseTooltips();
@@ -1077,6 +1120,7 @@ public class ModalTabbedUI : MonoBehaviour
         currentTurn = GameManager.i.turnScript.Turn;
     }
     #endregion
+
 
     #region InitialiseSideTabs
     /// <summary>
@@ -1342,6 +1386,11 @@ public class ModalTabbedUI : MonoBehaviour
         //
         listOfHelpData = GameManager.i.helpScript.GetHelpData("stat_0");
         tab8PageHelp.SetHelpTooltip(listOfHelpData);
+        //
+        // - - - Canvas 9 -> Organisations
+        //
+        listOfHelpData = GameManager.i.helpScript.GetHelpData("org_0", "org_1", "org_3", "org_4");
+        tab9PageHelp.SetHelpTooltip(listOfHelpData);
     }
     #endregion
 
@@ -1604,7 +1653,7 @@ public class ModalTabbedUI : MonoBehaviour
                 OpenStats();
                 break;
             case TabbedPage.Organisations:
-
+                OpenOrganisation();
                 break;
             default: Debug.LogWarningFormat("Unrecognised currentTopTabIndex \"{0}\"", currentTopTabIndex); break;
         }
@@ -2951,6 +3000,60 @@ public class ModalTabbedUI : MonoBehaviour
                 break;
             default: Debug.LogWarningFormat("Unrecognised inputData.who \"{0}\"", inputData.who); break;
         }
+    }
+    #endregion
+
+    #region OpenOrganisation
+    /// <summary>
+    /// Organisations -> Player only
+    /// </summary>
+    private void OpenOrganisation()
+    {
+        int numOfOrgs;
+        listOfOrganisations.Clear();
+        listOfOrganisations.AddRange(GameManager.i.dataScript.GetListOfInContactOrganisations());
+        if (listOfOrganisations != null)
+        {
+            //toggle off all
+            for (int i = 0; i < arrayOfOrgs.Length; i++)
+            { arrayOfOrgs[i].gameObject.SetActive(false); }
+            //how many orgs player currently in contact with
+            numOfOrgs = listOfOrganisations.Count;
+            if (numOfOrgs > 0)
+            {
+                //toggle on
+                tab9OrgPanel.gameObject.SetActive(true);
+                tab9NoneKnown.gameObject.SetActive(false);
+                //loop orgs
+                for (int i = 0; i < numOfOrgs; i++)
+                {
+                    organisation = listOfOrganisations[i];
+                    if (organisation != null)
+                    {
+                        //activate org prefab
+                        arrayOfOrgs[i].gameObject.SetActive(true);
+                        interactOrg = arrayOfOrgs[i];
+                        //populate prefab data
+                        interactOrg.background.color = orgColour;
+                        interactOrg.portrait.sprite = organisation.sprite;
+                        interactOrg.descriptor.text = string.Format("<size=110%>{0}</size>{1}{2}{3}",
+                                    GameManager.Formatt(organisation.tag, ColourType.neutralText), "\n", "\n", organisation.descriptor);
+                        interactOrg.stats.text = string.Format("Reputation{0}{1}{2}Freedom{3}{4}{5}", "\n", GameManager.i.guiScript.GetNormalStars(organisation.GetReputation()), "\n", "\n",
+                            GameManager.i.guiScript.GetNormalStars(organisation.GetFreedom()), "\n");
+                        interactOrg.services.text = string.Format("<size=90%>{0}</size>{1}{2}{3}",
+                                    GameManager.Formatt("Services", ColourType.neutralText), "\n", "\n", organisation.orgType.services);
+                    }
+                    else { Debug.LogWarningFormat("Invalid organisation (Null) for listOfOrganisations[{0}]", i); }
+                }
+            }
+            else
+            {
+                //none Known
+                tab9OrgPanel.gameObject.SetActive(false);
+                tab9NoneKnown.gameObject.SetActive(true);
+            }
+        }
+        else { Debug.LogWarningFormat("Invalid listOfCurrentOrganisations (Null)"); }
     }
     #endregion
 

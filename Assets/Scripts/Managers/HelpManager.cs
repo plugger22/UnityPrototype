@@ -1545,6 +1545,21 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("Once an Organisation breaks off contact with you this is {0}permanent for the remainder of the campaign{1}. They will no longer have anything to do with you",
             colourAlert, colourEnd);
         listOfHelp.Add(data);
+        //Reputation
+        data = new HelpData();
+        data.tag = "org_3";
+        data.header = "Reputation";
+        data.text = string.Format("A measure of your {0}reputation{1} with the Organisation (more stars the better). Organisations will help you regardless of your reputation but their {2}price{3} will {4}increase{5}",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Freedom
+        data = new HelpData();
+        data.tag = "org_4";
+        data.header = "Freedom";
+        data.text = string.Format("How much of an {0}obligation{1} you {2}owe{3} to the Organisation (the more stars, the less your debt). " +
+            "The more you ask of an Organisation the greater your debt. At {4}zero{5} Freedom {6}no more{7} assistance will be offered",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
         #endregion
 
         #endregion

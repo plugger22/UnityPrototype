@@ -11,8 +11,8 @@ public class TabbedDeviceInteraction : MonoBehaviour
 {
     public Image background;                    //background sprite
     public Image portrait;
-    public TextMeshProUGUI descriptor;         //tag and description
-    public TextMeshProUGUI usage;                //who knows the secret
+    public TextMeshProUGUI descriptor;          //tag and description
+    public TextMeshProUGUI usage;               //innocence level device can be used at
 
 
     public void Awake()
