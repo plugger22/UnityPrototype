@@ -171,6 +171,7 @@ public class ModalTabbedUI : MonoBehaviour
     [Tooltip("Place all tabbedScrollItems (Dark/Light) in here. NOTE: Make sure they are in the same order as your scroll list, eg. light0, dark0, light1, dark1, light2 ...")]
     public List<GameObject> listOfTab7Items;
     public GenericHelpTooltipUI tab7PageHelp;
+    public TextMeshProUGUI tab7Header;
 
     [Header("Canvas 8 -> Statistics")]
     public TabbedStatInteraction tab8Stat0;
@@ -561,6 +562,7 @@ public class ModalTabbedUI : MonoBehaviour
             { Debug.LogErrorFormat("Invalid tab7Item (Null) for listOfTab7Items[{0}]", i); }
         }
         Debug.Assert(tab7PageHelp != null, "Invalid tab7PageHelp (Null)");
+        Debug.Assert(tab7Header != null, "Invalid tab7Header (Null)");
         //
         // - - - canvas 8
         //
@@ -1968,6 +1970,8 @@ public class ModalTabbedUI : MonoBehaviour
                 //text colours
                 tab7Interaction0.title.color = tabTextActiveColour;
                 tab7Interaction1.title.color = tabTextDormantColour;
+                //header
+                tab7Header.text = "Events";
                 break;
             case TabbedHistory.Emotions:
                 //image button colours
@@ -1976,6 +1980,10 @@ public class ModalTabbedUI : MonoBehaviour
                 //text colours
                 tab7Interaction0.title.color = tabTextDormantColour;
                 tab7Interaction1.title.color = tabTextActiveColour;
+                //header
+                if (inputData.who == TabbedUIWho.Player)
+                { tab7Header.text = "Mood"; }
+                else { tab7Header.text = "Opinion"; }
                 break;
             default: Debug.LogWarningFormat("Unrecognised TabbedHistory \"{0}\"", history); break;
         }
@@ -2414,6 +2422,8 @@ public class ModalTabbedUI : MonoBehaviour
                 //text colours
                 tab6Interaction0.title.color = tabTextActiveColour;
                 tab6Interaction1.title.color = tabTextDormantColour;
+                //header
+                tab6Header.text = "Gear";
                 break;
             case TabbedGear.Capture:
                 //image button colours
@@ -2422,6 +2432,8 @@ public class ModalTabbedUI : MonoBehaviour
                 //text colours
                 tab6Interaction0.title.color = tabTextDormantColour;
                 tab6Interaction1.title.color = tabTextActiveColour;
+                //header
+                tab6Header.text = "Devices";
                 break;
             default: Debug.LogWarningFormat("Unrecognised TabbedHistory \"{0}\"", gear); break;
         }

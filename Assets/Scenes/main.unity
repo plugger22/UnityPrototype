@@ -37489,6 +37489,7 @@ MonoBehaviour:
   - {fileID: 1489419362}
   - {fileID: 1274847814}
   tab7PageHelp: {fileID: 1928327082}
+  tab7Header: {fileID: 1945461718}
   tab8Stat0: {fileID: 1964189366}
   tab8Stat1: {fileID: 984784498}
   tab8Stat2: {fileID: 62642237}
@@ -97513,8 +97514,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: a95b63384710edb4c8cadbf2671dad90, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 9a2644709652c8144a780962890ca0bf, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

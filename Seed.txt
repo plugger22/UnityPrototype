@@ -1536,3 +1536,55 @@ City seed 51510 -> Londus, Eurasia
 
 Dev seed 25882 -> Tuesday, 19 January 2021 5:37 PM
 City seed 32244 -> Londus, Eurasia
+
+Dev seed 4118 -> Wednesday, 20 January 2021 8:40 AM
+City seed 44254 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.UpdateHistoryButtons (gameAPI.TabbedHistory history) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1974)
+	ModalTabbedUI.OpenHistory (gameAPI.TabbedHistory history) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2173)
+	ModalTabbedUI.UpdatePage () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1652)
+	ModalTabbedUI.OpenPage (System.Int32 tabIndex, System.Boolean isMouseClick) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1577)
+	ModalTabbedUI.ExecuteRightArrow () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:3133)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1075)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:347)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:747)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:445)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.UpdateHistoryButtons (gameAPI.TabbedHistory history) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1985)
+	ModalTabbedUI.OpenHistory (gameAPI.TabbedHistory history) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2173)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1093)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:347)
+	TabbedHistoryOptionUI.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ModalTabbedUI/TabbedHistoryOptionUI.cs:49)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 41875 -> Wednesday, 20 January 2021 9:13 AM
+City seed 25332 -> Londus, Eurasia
+
+Dev seed 25407 -> Wednesday, 20 January 2021 9:14 AM
+City seed 21609 -> Londus, Eurasia
+
+Dev seed 8 -> Wednesday, 20 January 2021 9:18 AM
+City seed 37417 -> Londus, Eurasia
+
+Dev seed 8182 -> Wednesday, 20 January 2021 9:21 AM
+City seed 49791 -> Londus, Eurasia
+
+Dev seed 11298 -> Wednesday, 20 January 2021 9:22 AM
+City seed 58692 -> Londus, Eurasia
+
+Dev seed 45132 -> Wednesday, 20 January 2021 9:30 AM
+City seed 25427 -> Londus, Eurasia
+
+Dev seed 18962 -> Wednesday, 20 January 2021 9:34 AM
+City seed 35658 -> Londus, Eurasia
+
+Dev seed 4249 -> Wednesday, 20 January 2021 9:44 AM
+City seed 57484 -> Londus, Eurasia
+
+Dev seed 61153 -> Wednesday, 20 January 2021 9:46 AM
+City seed 29835 -> Londus, Eurasia
+
+Dev seed 43457 -> Wednesday, 20 January 2021 9:50 AM
+City seed 42542 -> Londus, Eurasia
