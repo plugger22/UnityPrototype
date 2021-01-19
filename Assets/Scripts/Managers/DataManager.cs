@@ -4921,7 +4921,7 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Get array of OnMap (active and inactive) actors for a specified side. Variable array size (NO empty actor slots)
+    /// Get array of OnMap (active and inactive) actors for a specified side. Variable array size (NO empty actor slots). Returns null if no actors present
     /// </summary>
     /// <returns></returns>
     public Actor[] GetCurrentActorsVariable(GlobalSide side)
@@ -4939,6 +4939,7 @@ public class DataManager : MonoBehaviour
                 counter++;
             }
         }
+        if (counter == 0) { return null; }
         return tempArray;
     }
 

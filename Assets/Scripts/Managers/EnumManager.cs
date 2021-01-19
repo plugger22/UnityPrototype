@@ -69,8 +69,8 @@
     //
     public enum TabbedUISide { Tab0, Tab1, Tab2, Tab3, Count}                                       //ModalTabbedUI side tabs. NOTE order needs to correspond to UI (arrays keyed off this)
     public enum TabbedUIWho { Subordinates, Player, HQ, Reserves, Count }                           //who the tabbedUI is to be setUp for. NOTE order needs to correspond to UI (code keyed off this)
-    public enum TabbedUITop { Tab0, Tab1, Tab2, Tab3, Tab4, Tab5, Tab6, Tab7, Count}                      //ModalTabbedUI top tabs. NOTE order needs to correspond to UI (arrays keyed off this)
-    public enum TabbedPage { Main, Personality, History, Contacts, Secrets, Investigations, Likes, Gear, Stats, NoActors, Count } //list of all possible pages (which ones vary by actorSet)
+    public enum TabbedUITop { Tab0, Tab1, Tab2, Tab3, Tab4, Tab5, Tab6, Tab7, Tab8, Count}          //ModalTabbedUI top tabs. NOTE order needs to correspond to UI (arrays keyed off this)
+    public enum TabbedPage { Main, Personality, History, Contacts, Secrets, Investigations, Likes, Gear, Stats, Organisations, Count } //list of all possible pages (which ones vary by actorSet)
     public enum TabbedHistory { Events, Emotions }                                                  //Events is HistoryActor, emotions is HistoryMood/HistoryOption depending on Player/Actor
     public enum TabbedGear { Normal, Capture }                                                      //Normal Gear page or Capture gear page
 
