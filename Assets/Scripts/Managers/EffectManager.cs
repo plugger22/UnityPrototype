@@ -5091,6 +5091,10 @@ public class EffectManager : MonoBehaviour
                 megaCorpName = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpFour);
                 megaCorpType = MegaCorpType.MegaCorpFour;
                 break;
+            case "MegaCorpFive":
+                megaCorpName = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpFive);
+                megaCorpType = MegaCorpType.MegaCorpFive;
+                break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome.name \"{0}\"", effect.outcome.name); isProceed = false;  break;
         }
         if (isProceed == true)

@@ -13,6 +13,7 @@ public class GlobalManager : MonoBehaviour
     public string tagGlobalAIName = "GOLIATH";
     [Tooltip("Name of drug that the ADDICTED Condition refers to, eg. 'Player addicted to ...'")]
     public string tagGlobalDrug = "Moon Dust";
+
     [Tooltip("Name of MegaCorp One (first name only, eg. 'Eclipse' as you can add 'Corporation' yourself when needed")]
     public string tagMegaCorpOne = "Crypticon";
     [Tooltip("Name of MegaCorp Two (first name only, eg. 'Eclipse' as you can add 'Corporation' yourself when needed")]
@@ -21,6 +22,9 @@ public class GlobalManager : MonoBehaviour
     public string tagMegaCorpThree = "Eclipse";
     [Tooltip("Name of MegaCorp Four (first name only, eg. 'Eclipse' as you can add 'Corporation' yourself when needed")]
     public string tagMegaCorpFour = "Dragon";
+    [Tooltip("Name of MegaCorp Five (first name only, eg. 'Eclipse' as you can add 'Corporation' yourself when needed")]
+    public string tagMegaCorpFive = "AntBot";
+
     [Tooltip("Name of American Power Bloc")]
     public string tagBlocOne = "Americon";
     [Tooltip("Name of European Power Bloc")]

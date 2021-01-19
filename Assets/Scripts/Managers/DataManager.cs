@@ -52,7 +52,7 @@ public class DataManager : MonoBehaviour
     private string[] arrayOfFactorTags;                                                         //personality factors with quick reference tags (indexes correspond to Actor/Player personality arrays)
     private Actor[] arrayOfActorsHQ;                                                            //array of Actors for player side HQ characters, index -> enum.ActorHQ (index 0 & last few are Null as 'None', etc)
     private bool[] arrayOfOrgInfo;                                                              //index maps to enum.OrgInfoType and if true, OrgInfo is currently providing player info on that type
-    private int[] arrayOfMegaCorpRelations;                                                     //tracks relations (0 to 5 stars) for the five MegaCorps in the game
+    private int[] arrayOfMegaCorpRelations;                                                     //tracks relations (0 to 3 stars) for the five MegaCorps in the game -> enum.MegaCorpType (0 -> None)
 
     private Graph graph;
 
@@ -411,10 +411,10 @@ public class DataManager : MonoBehaviour
         if (arrayOfMegaCorpRelations == null)
         {
             arrayOfMegaCorpRelations = new int[(int)MegaCorpType.Count];
-            for (int i = 0; i < arrayOfMegaCorpRelations.Length; i++)
+            for (int i = 1; i < arrayOfMegaCorpRelations.Length; i++)
             {
                 //set all relations to excellent at start of a new game
-                UpdateMegaCorpRelations((MegaCorpType)i, 5, "Starting Relationship");
+                UpdateMegaCorpRelations((MegaCorpType)i, 3, "Starting Relationship");
             }
         }
         //HQ Positions
@@ -10051,7 +10051,7 @@ public class DataManager : MonoBehaviour
     { return listOfHistoryMegaCorp; }
 
     /// <summary>
-    /// returns value (0 to 5) of current megaCorp Relations for specified corp. Returns -1 in the unlikely even that an incorrect MegaCorpType is entered,eg. 'Count'
+    /// returns value (0 to 3) of current megaCorp Relations for specified corp. Returns -1 in the unlikely even that an incorrect MegaCorpType is entered,eg. 'Count'
     /// </summary>
     /// <param name="megaCorp"></param>
     /// <returns></returns>
@@ -10064,7 +10064,7 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Update relations by an amount (positive or negative). Auto clamps the changed value within 0 to 5 range. 'reason' should be short and self-contained
+    /// Update relations by an amount (positive or negative). Auto clamps the changed value within 0 to 3 range. 'reason' should be short and self-contained
     /// </summary>
     /// <param name="megaCorp"></param>
     /// <param name="amountToChange"></param>
@@ -10074,7 +10074,7 @@ public class DataManager : MonoBehaviour
         {
             int current = arrayOfMegaCorpRelations[(int)megaCorp];
             int updated = current + amountToChange;
-            updated = Mathf.Clamp(updated, 0, 5);
+            updated = Mathf.Clamp(updated, 0, 3);
             arrayOfMegaCorpRelations[(int)megaCorp] = updated;
             Debug.LogFormat("[Meg] DataManager.cs -> UpdateMegaCorpRelations: {0} rel {1}{2} (was {3}, now {4}){5}", 
                 GetMegaCorpName(megaCorp), amountToChange > 0 ? "+" : "", amountToChange, current, updated, "\n");
@@ -10100,6 +10100,8 @@ public class DataManager : MonoBehaviour
                 case MegaCorpType.MegaCorpTwo: megaName = GameManager.i.globalScript.tagMegaCorpTwo; break;
                 case MegaCorpType.MegaCorpThree: megaName = GameManager.i.globalScript.tagMegaCorpThree; break;
                 case MegaCorpType.MegaCorpFour: megaName = GameManager.i.globalScript.tagMegaCorpFour; break;
+                case MegaCorpType.MegaCorpFive: megaName = GameManager.i.globalScript.tagMegaCorpFive; break;
+                default: Debug.LogWarningFormat("Unrecognised megaCorp \"{0}\"", megaCorp); break;
             }
             if (isCorp == true)
             { megaName = string.Format("{0} Corp", megaName); }
@@ -10176,7 +10178,7 @@ public class DataManager : MonoBehaviour
     {
         StringBuilder builder = new StringBuilder();
         builder.AppendFormat("- MegaCorpRelations{0}", "\n");
-        for (int i = 0; i < arrayOfMegaCorpRelations.Length; i++)
+        for (int i = 1; i < arrayOfMegaCorpRelations.Length; i++)
         { builder.AppendFormat(" {0}{1} -> {2} star{3}", "\n", GetMegaCorpName((MegaCorpType)i), arrayOfMegaCorpRelations[i], arrayOfMegaCorpRelations[i] != 1 ? "s" : ""); }
         //history
         builder.AppendFormat("{0}{1}- History", "\n", "\n");
