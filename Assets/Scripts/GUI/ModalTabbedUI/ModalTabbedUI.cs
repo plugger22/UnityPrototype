@@ -908,8 +908,8 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab7ScrollRect != null, "Invalid tab7ScrollRect (Null)");
         Debug.Assert(tab7ScrollBar != null, "Invalid tab7ScrollBar (Null)");
         //history options
-        if (tab7Interaction0 != null) { tab7Interaction0.SetEvent(EventType.TabbedGearNormal); } else { Debug.LogError("Invalid tab7Interaction0 (Null)"); }
-        if (tab7Interaction1 != null) { tab7Interaction1.SetEvent(EventType.TabbedGearCapture); } else { Debug.LogError("Invalid tab7Interaction1 (Null)"); }
+        if (tab7Interaction0 != null) { tab7Interaction0.SetEvent(EventType.TabbedHistoryEvents); } else { Debug.LogError("Invalid tab7Interaction0 (Null)"); }
+        if (tab7Interaction1 != null) { tab7Interaction1.SetEvent(EventType.TabbedHistoryEmotions); } else { Debug.LogError("Invalid tab7Interaction1 (Null)"); }
         //scrollable items-> populate arrays
         for (int i = 0; i < listOfTab7Items.Count; i++)
         {
@@ -1494,6 +1494,8 @@ public class ModalTabbedUI : MonoBehaviour
             { isProceed = false; }
             if (isProceed == true)
             {
+                //turn off help tooltip (may still be open)
+                GameManager.i.tooltipHelpScript.CloseTooltip();
                 //Active/Dormant tabs
                 UpdateTopTabs(tabIndex);
                 //turn off all canvases
@@ -1690,6 +1692,7 @@ public class ModalTabbedUI : MonoBehaviour
                     arrayOfTopTabObjects[5].SetActive(true);
                     arrayOfTopTabObjects[6].SetActive(true);
                     arrayOfTopTabObjects[7].SetActive(false);
+                    arrayOfTopTabObjects[8].SetActive(false);
                     arrayOfTopTabTitles[0].text = "Main";
                     arrayOfTopTabTitles[1].text = "Person";
                     arrayOfTopTabTitles[2].text = "Contacts";
@@ -1711,6 +1714,7 @@ public class ModalTabbedUI : MonoBehaviour
                     arrayOfTopTabObjects[5].SetActive(false);
                     arrayOfTopTabObjects[6].SetActive(false);
                     arrayOfTopTabObjects[7].SetActive(false);
+                    arrayOfTopTabObjects[8].SetActive(false);
                     arrayOfTopTabTitles[0].text = "Main";
                 }
                 break;
@@ -1722,9 +1726,10 @@ public class ModalTabbedUI : MonoBehaviour
                 arrayOfPages[3] = TabbedPage.Secrets;
                 arrayOfPages[4] = TabbedPage.Gear;
                 arrayOfPages[5] = TabbedPage.Investigations;
-                arrayOfPages[6] = TabbedPage.History;
-                arrayOfPages[7] = TabbedPage.Stats;
-                maxTopTabIndex = 7;
+                arrayOfPages[6] = TabbedPage.Organisations;
+                arrayOfPages[7] = TabbedPage.History;
+                arrayOfPages[8] = TabbedPage.Stats;
+                maxTopTabIndex = 8;
                 arrayOfTopTabObjects[0].SetActive(true);
                 arrayOfTopTabObjects[1].SetActive(true);
                 arrayOfTopTabObjects[2].SetActive(true);
@@ -1733,14 +1738,16 @@ public class ModalTabbedUI : MonoBehaviour
                 arrayOfTopTabObjects[5].SetActive(true);
                 arrayOfTopTabObjects[6].SetActive(true);
                 arrayOfTopTabObjects[7].SetActive(true);
+                arrayOfTopTabObjects[8].SetActive(true);
                 arrayOfTopTabTitles[0].text = "Main";
                 arrayOfTopTabTitles[1].text = "Person";
                 arrayOfTopTabTitles[2].text = "Likes";
                 arrayOfTopTabTitles[3].text = "Secrets";
                 arrayOfTopTabTitles[4].text = "Gear";
                 arrayOfTopTabTitles[5].text = "Invest";
-                arrayOfTopTabTitles[6].text = "History";
-                arrayOfTopTabTitles[7].text = "Stats";
+                arrayOfTopTabTitles[6].text = "Orgs";
+                arrayOfTopTabTitles[7].text = "History";
+                arrayOfTopTabTitles[8].text = "Stats";
                 break;
             case TabbedUIWho.HQ:
                 numOfActors = 4;
@@ -1756,6 +1763,7 @@ public class ModalTabbedUI : MonoBehaviour
                 arrayOfTopTabObjects[5].SetActive(false);
                 arrayOfTopTabObjects[6].SetActive(false);
                 arrayOfTopTabObjects[7].SetActive(false);
+                arrayOfTopTabObjects[8].SetActive(false);
                 maxTopTabIndex = 3;
                 arrayOfTopTabTitles[0].text = "Main";
                 arrayOfTopTabTitles[1].text = "Person";
@@ -1778,6 +1786,7 @@ public class ModalTabbedUI : MonoBehaviour
                     arrayOfTopTabObjects[5].SetActive(false);
                     arrayOfTopTabObjects[6].SetActive(false);
                     arrayOfTopTabObjects[7].SetActive(false);
+                    arrayOfTopTabObjects[8].SetActive(false);
                     maxTopTabIndex = 3;
                     arrayOfTopTabTitles[0].text = "Main";
                     arrayOfTopTabTitles[1].text = "Person";
@@ -1797,6 +1806,7 @@ public class ModalTabbedUI : MonoBehaviour
                     arrayOfTopTabObjects[5].SetActive(false);
                     arrayOfTopTabObjects[6].SetActive(false);
                     arrayOfTopTabObjects[7].SetActive(false);
+                    arrayOfTopTabObjects[8].SetActive(false);
                     arrayOfTopTabTitles[0].text = "Main";
                 }
                 break;

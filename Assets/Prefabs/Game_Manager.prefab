@@ -5856,6 +5856,7 @@ MonoBehaviour:
   actorReleased: 1
   releaseInvisibility: 3
   captureTimerValue: 3
+  maxCaptureTools: 4
   innocence_3: {fileID: 11400000, guid: 4cb717a7dbff3674fb2bdda52fc4d093, type: 2}
   innocence_2: {fileID: 11400000, guid: 955dc9ad811c9014fabb1f38513130e4, type: 2}
   innocence_1: {fileID: 11400000, guid: 550e26826e757814c92f41d36ab3c00f, type: 2}
@@ -5880,10 +5881,9 @@ MonoBehaviour:
   conditionTurnAuthority: -1
   conditionWhoAuthority: 999
   condtionAuthority: {fileID: 0}
-  conditionTurnResistance: 19
+  conditionTurnResistance: -1
   conditionWhoResistance: 999
-  conditionResistance: {fileID: 11400000, guid: 8a92e519a923a9640bf583dcb18ef65b,
-    type: 2}
+  conditionResistance: {fileID: 0}
   playerInvisibility: -1
   actorSlotID: 2
   actorType: {fileID: 0}
