@@ -32,3 +32,31 @@ ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
 	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:741)
 	GameManager.Update () (at Assets/Scripts/GameManager.cs:445)
 	
+Dev seed 48466 -> Tuesday, 19 January 2021 2:37 PM
+City seed 52706 -> Londus, Eurasia
+
+Dev seed 21362 -> Tuesday, 19 January 2021 2:42 PM
+City seed 52936 -> Londus, Eurasia
+ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+(wrapper stelemref) System.Object.virt_stelemref_class_small_idepth(intptr,object)
+	ModalTabbedUI.InitialiseSubordinate (gameAPI.Actor[] arrayOfActors) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:4146)
+	ModalTabbedUI.InitialiseSideTabs () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1101)
+	ModalTabbedUI.OpenActorSet (gameAPI.TabbedUIWho who, System.Boolean isResetSlotID) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1629)
+	ModalTabbedUI.ExecuteDownArrow () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2996)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1024)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:347)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:741)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:445)
+	ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+(wrapper stelemref) System.Object.virt_stelemref_class_small_idepth(intptr,object)
+	ModalTabbedUI.InitialiseSubordinate (gameAPI.Actor[] arrayOfActors) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:4146)
+	ModalTabbedUI.InitialiseSideTabs () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1101)
+	ModalTabbedUI.OpenActorSet (gameAPI.TabbedUIWho who, System.Boolean isResetSlotID) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1629)
+	ModalTabbedUI.ExecuteDownArrow () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2996)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1024)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:347)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:741)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:445)
+	
+Dev seed 51856 -> Tuesday, 19 January 2021 2:45 PM
+City seed 27822 -> Londus, Eurasia
