@@ -145,6 +145,12 @@ public class Campaign : ScriptableObject
             Debug.Assert(specialSubBoss1Gear != null, "Invalid specialSubBoss1Gear (Null)");
             Debug.Assert(specialSubBoss2Gear != null, "Invalid specialSubBoss2Gear (Null)");
             Debug.Assert(specialSubBoss3Gear != null, "Invalid specialSubBoss3Gear (Null)");
+
+            Debug.AssertFormat(megaCorpOne != null, "Invalid megaCorpOne (Null) for {0}", this);
+            Debug.AssertFormat(megaCorpTwo != null, "Invalid megaCorpTwo (Null) for {0}", this);
+            Debug.AssertFormat(megaCorpThree != null, "Invalid megaCorpThree (Null) for {0}", this);
+            Debug.AssertFormat(megaCorpFour != null, "Invalid megaCorpFour (Null) for {0}", this);
+            Debug.AssertFormat(megaCorpFive != null, "Invalid megaCorpFive (Null) for {0}", this);
         }
     }
 

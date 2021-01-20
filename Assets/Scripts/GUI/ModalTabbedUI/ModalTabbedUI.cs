@@ -158,16 +158,15 @@ public class ModalTabbedUI : MonoBehaviour
     public TabbedDeviceInteraction tab6Device3;
     //option buttons
     public Image tab6OptionBar;
-    public TabbedHistoryOptionUI tab6Interaction0;
-    public TabbedHistoryOptionUI tab6Interaction1;
+    public TabbedGenericOptionUI tab6Interaction0;
+    public TabbedGenericOptionUI tab6Interaction1;
     public GenericHelpTooltipUI tab6PageHelp;
 
     [Header("Canvas7 -> History")]
     public GameObject tab7ScrollBarObject;
     public GameObject tab7ScrollBackground;                 //needed to get scrollRect component in order to manually disable scrolling when not needed
-    //option buttons
-    public TabbedHistoryOptionUI tab7Interaction0;
-    public TabbedHistoryOptionUI tab7Interaction1;
+    public TabbedGenericOptionUI tab7Interaction0;
+    public TabbedGenericOptionUI tab7Interaction1;
     [Tooltip("Place all tabbedScrollItems (Dark/Light) in here. NOTE: Make sure they are in the same order as your scroll list, eg. light0, dark0, light1, dark1, light2 ...")]
     public List<GameObject> listOfTab7Items;
     public GenericHelpTooltipUI tab7PageHelp;
@@ -192,6 +191,14 @@ public class ModalTabbedUI : MonoBehaviour
     public TabbedOrgInteraction tab9Org3;
     public TabbedOrgInteraction tab9Org4;
     public GenericHelpTooltipUI tab9PageHelp;
+    public Image tab9CorpPanel;
+    public TabbedCorpInteraction tab9Corp0;
+    public TabbedCorpInteraction tab9Corp1;
+    public TabbedCorpInteraction tab9Corp2;
+    public TabbedCorpInteraction tab9Corp3;
+    public TabbedCorpInteraction tab9Corp4;
+    public TabbedGenericOptionUI tab9Interaction0;
+    public TabbedGenericOptionUI tab9Interaction1;
 
     #endregion
 
@@ -244,6 +251,13 @@ public class ModalTabbedUI : MonoBehaviour
     private int maxNumOfStatGroups = 6;                             //hardwired prefab instances on page
     //Page 9
     private int maxNumOfOrgs = 5;
+    private int maxNumOfCorps;
+
+    //Input data
+    private TabbedUIData inputData;
+
+    //static instance
+    private static ModalTabbedUI modalTabbedUI;
 
     //debug
     private bool isAddDebugRecords;                                 //true if a set of debug player history event records have been addeds
@@ -263,11 +277,13 @@ public class ModalTabbedUI : MonoBehaviour
     private Secret secret;
     private Gear gear;
     private Organisation organisation;
+    private MegaCorp megaCorp;
     private Investigation investigation;
     private List<Contact> listOfContacts;
     private List<int> listOfSecretActors;
     private List<Secret> listOfSecrets;
     private List<Organisation> listOfOrganisations;
+    private List<MegaCorp> listOfMegaCorps;
     private List<string> listOfGear;
     private List<HelpData> listOfHelpData;
     private List<Investigation> listOfInvestigations;
@@ -278,6 +294,7 @@ public class ModalTabbedUI : MonoBehaviour
     private TabbedInvestInteraction interactInvest;
     private TabbedStatInteraction interactStat;
     private TabbedOrgInteraction interactOrg;
+    private TabbedCorpInteraction interactCorp;
     private PersonProfile interactProfile;
     private Trait interactTrait;
     private string gearName;
@@ -318,13 +335,12 @@ public class ModalTabbedUI : MonoBehaviour
     private Color contactInactiveColour;
     private Color secretColour;
     private Color gearColour;
+    private Color deviceColour;
     private Color orgColour;
+    private Color corpColour;
     private Color investigationColour;
     private Color statItemColour;
     #endregion
-
-    //Input data
-    TabbedUIData inputData;
 
     #region Collections
     //
@@ -370,9 +386,10 @@ public class ModalTabbedUI : MonoBehaviour
     private TabbedStatInteraction[] arrayOfStats;
     //Canvas9 -> Organisations
     private TabbedOrgInteraction[] arrayOfOrgs;
+    private TabbedCorpInteraction[] arrayOfCorps;
+    private int[] arrayOfMegaCorpReputation;
     #endregion
 
-    private static ModalTabbedUI modalTabbedUI;
 
 
     #region Instance
@@ -391,7 +408,6 @@ public class ModalTabbedUI : MonoBehaviour
         return modalTabbedUI;
     }
     #endregion
-
 
     #region Initialise
     /// <summary>
@@ -585,6 +601,14 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab9Org3 != null, "Invalid tab9Org3 (Null)");
         Debug.Assert(tab9Org4 != null, "Invalid tab9Org4 (Null)");
         Debug.Assert(tab9PageHelp != null, "Invalid tab9PageHelp (Null)");
+        Debug.Assert(tab9CorpPanel != null, "Invalid tab9CorpPanel (Null)");
+        Debug.Assert(tab9Corp0 != null, "Invalid tab9Corp0 (Null)");
+        Debug.Assert(tab9Corp1 != null, "Invalid tab9Corp1 (Null)");
+        Debug.Assert(tab9Corp2 != null, "Invalid tab9Corp2 (Null)");
+        Debug.Assert(tab9Corp3 != null, "Invalid tab9Corp3 (Null)");
+        Debug.Assert(tab9Corp4 != null, "Invalid tab9Corp4 (Null)");
+        Debug.Assert(tab9Interaction0 != null, "Invalid tab9Interaction0 (Null)");
+        Debug.Assert(tab9Interaction1 != null, "Invalid tab9Interaction1 (Null)");
     }
     #endregion
 
@@ -618,7 +642,9 @@ public class ModalTabbedUI : MonoBehaviour
         contactInactiveColour = GameManager.i.uiScript.TabbedContactInactive;
         secretColour = GameManager.i.uiScript.TabbedSecretAll;
         gearColour = GameManager.i.uiScript.TabbedGearAll;
+        deviceColour = GameManager.i.uiScript.TabbedDeviceAll;
         orgColour = GameManager.i.uiScript.TabbedOrgAll;
+        corpColour = GameManager.i.uiScript.TabbedCorpAll;
         investigationColour = GameManager.i.uiScript.TabbedInvestigationAll;
         statItemColour = GameManager.i.uiScript.TabbedStatItem;
         Color tempColour = tabSubHeaderTextActiveColour;
@@ -708,8 +734,10 @@ public class ModalTabbedUI : MonoBehaviour
         //page 8
         arrayOfStats = new TabbedStatInteraction[maxNumOfStatGroups];
         //page 9
+        maxNumOfCorps = (int)MegaCorpType.Count;
         arrayOfOrgs = new TabbedOrgInteraction[maxNumOfOrgs];
-
+        arrayOfCorps = new TabbedCorpInteraction[maxNumOfCorps];
+        arrayOfMegaCorpReputation = new int[maxNumOfCorps];
         //initialise Canvas array
         arrayOfCanvas = new Canvas[numOfPages];
         //initialise Top Tab Arrays
@@ -805,6 +833,7 @@ public class ModalTabbedUI : MonoBehaviour
         listOfGear = new List<string>();
         listOfInvestigations = new List<Investigation>();
         listOfOrganisations = new List<Organisation>();
+        listOfMegaCorps = new List<MegaCorp>();
         knowsSecretHeader = GameManager.Formatt("Who Knows?", ColourType.neutralText);
         effectsSecretHeader = GameManager.Formatt("Effects if Revealed", ColourType.neutralText);
         //
@@ -980,13 +1009,42 @@ public class ModalTabbedUI : MonoBehaviour
             { arrayOfStats[i].listOfItems[j].background.color = statItemColour; }
         }
         //
-        // - - - Page 9 Organisations
+        // - - - Page 9
         //
+        //org options
+        if (tab9Interaction0 != null) { tab9Interaction0.SetEvent(EventType.TabbedOrganisation); } else { Debug.LogError("Invalid tab9Interaction0 (Null)"); }
+        if (tab9Interaction1 != null) { tab9Interaction1.SetEvent(EventType.TabbedMegaCorp); } else { Debug.LogError("Invalid tab9Interaction1 (Null)"); }
+        //Organisations
         arrayOfOrgs[0] = tab9Org0;
         arrayOfOrgs[1] = tab9Org1;
         arrayOfOrgs[2] = tab9Org2;
         arrayOfOrgs[3] = tab9Org3;
         arrayOfOrgs[4] = tab9Org4;
+        //MegaCorps
+        //NOTE: index [0] is a duplicate entry as it represent enum.MegaCorpType.None as is there to pad out the list
+        arrayOfCorps[0] = tab9Corp0;
+        arrayOfCorps[1] = tab9Corp0;
+        arrayOfCorps[2] = tab9Corp1;
+        arrayOfCorps[3] = tab9Corp2;
+        arrayOfCorps[4] = tab9Corp3;
+        arrayOfCorps[5] = tab9Corp4;
+        //cached list of MegaCorps (in order 0 -> 4)
+        //NOTE list[0] is a duplicate entry as it represent enum.MegaCorpType.None as is there to pad out the list
+        listOfMegaCorps.Add(GameManager.i.campaignScript.campaign.megaCorpOne);
+        listOfMegaCorps.Add(GameManager.i.campaignScript.campaign.megaCorpOne);
+        listOfMegaCorps.Add(GameManager.i.campaignScript.campaign.megaCorpTwo);
+        listOfMegaCorps.Add(GameManager.i.campaignScript.campaign.megaCorpThree);
+        listOfMegaCorps.Add(GameManager.i.campaignScript.campaign.megaCorpFour);
+        listOfMegaCorps.Add(GameManager.i.campaignScript.campaign.megaCorpFive);
+        //error check
+        for (int i = 0; i < listOfMegaCorps.Count; i++)
+        {
+            if (listOfMegaCorps[i] == null)
+            { Debug.LogErrorFormat("Invalid megaCorp (Null) for listOfMegaCorps[{0}]", i); }
+        }
+        //toggle all MegaCorps on (index[0] corresponds to enum.MegaCorpType.None and is ignored)
+        for (int i = 1; i < arrayOfCorps.Length; i++)
+        { arrayOfCorps[i].gameObject.SetActive(true); }
         //
         // - - - Initialisations
         //
@@ -1019,6 +1077,8 @@ public class ModalTabbedUI : MonoBehaviour
         EventManager.i.AddListener(EventType.TabbedHistoryEmotions, OnEvent, "ModalTabbedUI");
         EventManager.i.AddListener(EventType.TabbedGearNormal, OnEvent, "ModalTabbedUI");
         EventManager.i.AddListener(EventType.TabbedGearCapture, OnEvent, "ModalTabbedUI");
+        EventManager.i.AddListener(EventType.TabbedOrganisation, OnEvent, "ModalTabbedUI");
+        EventManager.i.AddListener(EventType.TabbedMegaCorp, OnEvent, "ModalTabbedUI");
     }
     #endregion
 
@@ -1098,6 +1158,12 @@ public class ModalTabbedUI : MonoBehaviour
             case EventType.TabbedGearCapture:
                 OpenGear(TabbedGear.Capture);
                 break;
+            case EventType.TabbedOrganisation:
+                OpenOrganisation(TabbedOrg.Organisation);
+                break;
+            case EventType.TabbedMegaCorp:
+                OpenOrganisation(TabbedOrg.MegaCorp);
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
@@ -1122,7 +1188,6 @@ public class ModalTabbedUI : MonoBehaviour
         currentTurn = GameManager.i.turnScript.Turn;
     }
     #endregion
-
 
     #region InitialiseSideTabs
     /// <summary>
@@ -1309,7 +1374,6 @@ public class ModalTabbedUI : MonoBehaviour
     }
     #endregion
 
-
     #region InitialiseTooltips
     /// <summary>
     /// Initialise fixed tooltips
@@ -1453,7 +1517,6 @@ public class ModalTabbedUI : MonoBehaviour
         else { Debug.LogWarning("ModalTabbedUI.cs can't be opened as already ACTIVE -> Info only"); }
     }
     #endregion
-
 
     #region CloseTabbedUI
     /// <summary>
@@ -1655,7 +1718,7 @@ public class ModalTabbedUI : MonoBehaviour
                 OpenStats();
                 break;
             case TabbedPage.Organisations:
-                OpenOrganisation();
+                OpenOrganisation(TabbedOrg.Organisation);
                 break;
             default: Debug.LogWarningFormat("Unrecognised currentTopTabIndex \"{0}\"", currentTopTabIndex); break;
         }
@@ -2602,7 +2665,7 @@ public class ModalTabbedUI : MonoBehaviour
                             interactDevice = arrayOfDevices[i];
                             if (interactDevice != null)
                             {
-                                interactDevice.background.color = gearColour;
+                                interactDevice.background.color = deviceColour;
                                 interactDevice.portrait.sprite = arrayOfCaptureTools[i].sprite;
                                 interactDevice.descriptor.text = string.Format("<size=110%>{0}</size>{1}{2}{3}",
                                     GameManager.Formatt(arrayOfCaptureTools[i].tag, ColourType.neutralText), "\n", "\n", arrayOfCaptureTools[i].descriptor);
@@ -3015,57 +3078,142 @@ public class ModalTabbedUI : MonoBehaviour
     }
     #endregion
 
+    #region UpdateOrgButtons
+    /// <summary>
+    /// Handles gear page 6 option buttons texts and colours. Assumes that a button has been pressed (isPressed = true)
+    /// </summary>
+    /// <param name="orgType"></param>
+    private void UpdateOrgButtons(TabbedOrg orgType)
+    {
+        switch (orgType)
+        {
+            case TabbedOrg.Organisation:
+                //image button colours
+                tab9Interaction0.image.color = pageOptionActiveColour;
+                tab9Interaction1.image.color = pageOptionDormantColour;
+                //text colours
+                tab9Interaction0.title.color = tabTextActiveColour;
+                tab9Interaction1.title.color = tabTextDormantColour;
+                //header
+                tab9Header.text = "Organisations";
+                break;
+            case TabbedOrg.MegaCorp:
+                //image button colours
+                tab9Interaction0.image.color = pageOptionDormantColour;
+                tab9Interaction1.image.color = pageOptionActiveColour;
+                //text colours
+                tab9Interaction0.title.color = tabTextDormantColour;
+                tab9Interaction1.title.color = tabTextActiveColour;
+                //header
+                tab9Header.text = "MegaCorps";
+                break;
+            default: Debug.LogWarningFormat("Unrecognised TabbedOrg \"{0}\"", orgType); break;
+        }
+        //reset controller buttons (they unselect once you click on a sprite 'button')
+        UpdateControllerButton(inputData.who);
+    }
+    #endregion
+
     #region OpenOrganisation
     /// <summary>
-    /// Organisations -> Player only
+    /// Organisations and MegaCorps -> Player only
     /// </summary>
-    private void OpenOrganisation()
+    private void OpenOrganisation(TabbedOrg orgType)
     {
         int numOfOrgs;
-        listOfOrganisations.Clear();
-        listOfOrganisations.AddRange(GameManager.i.dataScript.GetListOfInContactOrganisations());
-        if (listOfOrganisations != null)
+        if (orgType == TabbedOrg.Organisation)
         {
-            //toggle off all
-            for (int i = 0; i < arrayOfOrgs.Length; i++)
-            { arrayOfOrgs[i].gameObject.SetActive(false); }
-            //how many orgs player currently in contact with
-            numOfOrgs = listOfOrganisations.Count;
-            if (numOfOrgs > 0)
+            listOfOrganisations.Clear();
+            listOfOrganisations.AddRange(GameManager.i.dataScript.GetListOfInContactOrganisations());
+            if (listOfOrganisations != null)
             {
-                //toggle on
-                tab9OrgPanel.gameObject.SetActive(true);
-                tab9NoneKnown.gameObject.SetActive(false);
-                //loop orgs
-                for (int i = 0; i < numOfOrgs; i++)
+                //toggle off all
+                for (int i = 0; i < arrayOfOrgs.Length; i++)
+                { arrayOfOrgs[i].gameObject.SetActive(false); }
+                //how many orgs player currently in contact with
+                numOfOrgs = listOfOrganisations.Count;
+                if (numOfOrgs > 0)
                 {
-                    organisation = listOfOrganisations[i];
-                    if (organisation != null)
+                    //toggle on
+                    tab9OrgPanel.gameObject.SetActive(true);
+                    tab9CorpPanel.gameObject.SetActive(false);
+                    tab9NoneKnown.gameObject.SetActive(false);
+                    //loop MegaCorps (index 0 corresponds to enum.MegaCorpType.None)
+                    for (int i = 0; i < numOfOrgs; i++)
                     {
-                        //activate org prefab
-                        arrayOfOrgs[i].gameObject.SetActive(true);
-                        interactOrg = arrayOfOrgs[i];
-                        //populate prefab data
-                        interactOrg.background.color = orgColour;
-                        interactOrg.portrait.sprite = organisation.sprite;
-                        interactOrg.descriptor.text = string.Format("<size=110%>{0}</size>{1}{2}{3}",
-                                    GameManager.Formatt(organisation.tag, ColourType.neutralText), "\n", "\n", organisation.descriptor);
-                        interactOrg.stats.text = string.Format("Reputation{0}{1}{2}Freedom{3}{4}{5}", "\n", GameManager.i.guiScript.GetNormalStars(organisation.GetReputation()), "\n", "\n",
-                            GameManager.i.guiScript.GetNormalStars(organisation.GetFreedom()), "\n");
-                        interactOrg.services.text = string.Format("<size=90%>{0}</size>{1}{2}{3}",
-                                    GameManager.Formatt("Services", ColourType.neutralText), "\n", "\n", organisation.orgType.services);
+                        organisation = listOfOrganisations[i];
+                        if (organisation != null)
+                        {
+                            //activate org prefab
+                            arrayOfOrgs[i].gameObject.SetActive(true);
+                            interactOrg = arrayOfOrgs[i];
+                            //populate prefab data
+                            interactOrg.background.color = orgColour;
+                            interactOrg.portrait.sprite = organisation.sprite;
+                            interactOrg.descriptor.text = string.Format("<size=110%>{0}</size>{1}{2}{3}",
+                                        GameManager.Formatt(organisation.tag, ColourType.neutralText), "\n", "\n", organisation.descriptor);
+                            interactOrg.stats.text = string.Format("Reputation{0}{1}{2}Freedom{3}{4}{5}", "\n", GameManager.i.guiScript.GetNormalStars(organisation.GetReputation()), "\n", "\n",
+                                GameManager.i.guiScript.GetNormalStars(organisation.GetFreedom()), "\n");
+                            interactOrg.services.text = string.Format("<size=90%>{0}</size>{1}{2}{3}",
+                                        GameManager.Formatt("Services", ColourType.neutralText), "\n", "\n", organisation.orgType.services);
+                        }
+                        else { Debug.LogWarningFormat("Invalid organisation (Null) for listOfOrganisations[{0}]", i); }
                     }
-                    else { Debug.LogWarningFormat("Invalid organisation (Null) for listOfOrganisations[{0}]", i); }
+                }
+                else
+                {
+                    //none Known
+                    tab9OrgPanel.gameObject.SetActive(false);
+                    tab9CorpPanel.gameObject.SetActive(false);
+                    tab9NoneKnown.gameObject.SetActive(true);
                 }
             }
-            else
-            {
-                //none Known
-                tab9OrgPanel.gameObject.SetActive(false);
-                tab9NoneKnown.gameObject.SetActive(true);
-            }
+            else { Debug.LogWarningFormat("Invalid listOfCurrentOrganisations (Null)"); }
         }
-        else { Debug.LogWarningFormat("Invalid listOfCurrentOrganisations (Null)"); }
+        else
+        {
+            //MegaCorps
+            if (listOfMegaCorps != null)
+            {
+                //get current reputations
+                arrayOfMegaCorpReputation = GameManager.i.dataScript.GetArrayOfMegaCorpRelations();
+                if (arrayOfMegaCorpReputation != null)
+                {
+                    //check same as max
+                    numOfOrgs = listOfMegaCorps.Count;
+                    if (numOfOrgs == maxNumOfCorps)
+                    {
+                        //toggle on
+                        tab9OrgPanel.gameObject.SetActive(false);
+                        tab9CorpPanel.gameObject.SetActive(true);
+                        tab9NoneKnown.gameObject.SetActive(false);
+                        //loop corps
+                        for (int i = 1; i < numOfOrgs; i++)
+                        {
+                            megaCorp = listOfMegaCorps[i];
+                            if (megaCorp != null)
+                            {
+                                //activate megaCorp prefab
+                                interactCorp = arrayOfCorps[i];
+                                //populate prefab data
+                                interactCorp.background.color = corpColour;
+                                interactCorp.portrait.sprite = megaCorp.sprite;
+                                interactCorp.details.text = string.Format("<size=110%>{0}</size>{1}{2}{3}",
+                                            GameManager.Formatt(megaCorp.tag, ColourType.neutralText), "\n", "\n", megaCorp.field);
+                                interactCorp.descriptor.text = string.Format("<size=90%>{0}</size>{1}{2}", GameManager.Formatt("Background", ColourType.neutralText), "\n", megaCorp.descriptor);
+                                interactCorp.reputation.text = string.Format("Reputation{0}{1}{2}", "\n", "\n", GameManager.i.guiScript.GetNormalStars(arrayOfMegaCorpReputation[i]));
+                            }
+                            else { Debug.LogWarningFormat("Invalid megaCorp (Null) for listOfMegaCorps[{0}]", i); }
+                        }
+                    }
+                    else
+                    { Debug.LogWarningFormat("Mismatch in MegaCorps (numOfOrgs {0}, should be maxNumOfCorps {1})", numOfOrgs, maxNumOfCorps); }
+                }
+                else { Debug.LogErrorFormat("Invalid arrayOfMegaCorpReputation (Null)"); }
+            }
+            else { Debug.LogErrorFormat("Invalid listOfMegaCorps (Null)"); }
+        }
+        UpdateOrgButtons(orgType);
     }
     #endregion
 

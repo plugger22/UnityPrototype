@@ -6,9 +6,9 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
-/// Combined Interaction and UI script for History Option 'buttons'
+/// Combined Interaction and UI script for various page (gear/history/orgs) multi-Option 'buttons' -> ModalTabbedUI.cs
 /// </summary>
-public class TabbedHistoryOptionUI : MonoBehaviour, IPointerClickHandler
+public class TabbedGenericOptionUI : MonoBehaviour, IPointerClickHandler
 {
     [Header("Components")]
     public Image image;

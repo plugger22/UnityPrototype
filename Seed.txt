@@ -12901,3 +12901,91 @@ City seed 39826 -> Londus, Eurasia
 
 Dev seed 22887 -> Wednesday, 20 January 2021 12:34 PM
 City seed 10316 -> Londus, Eurasia
+
+Dev seed 38319 -> Wednesday, 20 January 2021 4:00 PM
+City seed 8329 -> Londus, Eurasia
+ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+ModalTabbedUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1037)
+	ModalTabbedUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:423)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:868)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:922)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:413)
+	
+Dev seed 52842 -> Wednesday, 20 January 2021 4:03 PM
+City seed 50528 -> Londus, Eurasia
+ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+ModalTabbedUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1039)
+	ModalTabbedUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:423)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:868)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:922)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:413)
+	
+Dev seed 27846 -> Wednesday, 20 January 2021 4:04 PM
+City seed 49595 -> Londus, Eurasia
+ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+ModalTabbedUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1039)
+	ModalTabbedUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:423)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:868)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:922)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:413)
+	
+Dev seed 47953 -> Wednesday, 20 January 2021 4:05 PM
+City seed 2905 -> Londus, Eurasia
+WARNING Mismatch in MegaCorps (numOfOrgs 0, should be maxNumOfCorps 6)
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:OpenOrganisation(TabbedOrg) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:3164)
+	ModalTabbedUI:UpdatePage() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1713)
+	ModalTabbedUI:OpenPage(Int32, Boolean) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1632)
+	ModalTabbedUI:ExecuteLeftArrow() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:3254)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1124)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:349)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:749)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:445)
+	
+Dev seed 52350 -> Wednesday, 20 January 2021 4:07 PM
+City seed 16273 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.OpenOrganisation (gameAPI.TabbedOrg orgType) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:3156)
+	ModalTabbedUI.UpdatePage () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1713)
+	ModalTabbedUI.OpenPage (System.Int32 tabIndex, System.Boolean isMouseClick) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1632)
+	ModalTabbedUI.ExecuteLeftArrow () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:3258)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1124)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:349)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:749)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:445)
+	
+Dev seed 11165 -> Wednesday, 20 January 2021 4:10 PM
+City seed 63287 -> Londus, Eurasia
+
+Dev seed 46953 -> Wednesday, 20 January 2021 4:14 PM
+City seed 54094 -> Londus, Eurasia
+
+Dev seed 9104 -> Wednesday, 20 January 2021 4:16 PM
+City seed 46200 -> Londus, Eurasia
+
+Dev seed 2613 -> Wednesday, 20 January 2021 4:28 PM
+City seed 32368 -> Londus, Eurasia
+
+Dev seed 59497 -> Wednesday, 20 January 2021 4:54 PM
+City seed 31202 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.OpenOrganisation (gameAPI.TabbedOrg orgType) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:3150)
+	ModalTabbedUI.UpdatePage () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1719)
+	ModalTabbedUI.OpenPage (System.Int32 tabIndex, System.Boolean isMouseClick) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1638)
+	ModalTabbedUI.ExecuteLeftArrow () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:3301)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1130)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:349)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:749)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:445)
+	
+Dev seed 23711 -> Wednesday, 20 January 2021 5:00 PM
+City seed 35557 -> Londus, Eurasia
+
+Dev seed 60000 -> Wednesday, 20 January 2021 5:07 PM
+City seed 18875 -> Londus, Eurasia
+WARNING Capture tool already present for InnocenceLevel 2
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	PlayerManager:AddCaptureTool(Int32) (at Assets/Scripts/Managers/PlayerManager.cs:2940)
+	PlayerManager:DebugAddCaptureTool(String) (at Assets/Scripts/Managers/PlayerManager.cs:2678)
+	DebugGUI:OnGUI() (at Assets/Scripts/GUI/DebugGUI.cs:2082)
+	

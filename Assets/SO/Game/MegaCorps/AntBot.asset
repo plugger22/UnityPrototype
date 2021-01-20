@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: AntBot
   field: Robotics
-  descriptor: An original backyard operation that has evolved into a horribly efficient
-    giant that has turned large parts of Africa into a toxic wasteland as a result
-    of their cheap labour manufacturing
+  descriptor: An original backyard operation that has evolved into a scarily efficient
+    giant. Large parts of Africa are now a toxic wasteland as a result of churning
+    out endless AB robots
   sprite: {fileID: 21300000, guid: c0ee7a164b5367642bfa40ce3b0703b8, type: 3}

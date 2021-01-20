@@ -73,6 +73,7 @@
     public enum TabbedPage { Main, Personality, History, Contacts, Secrets, Investigations, Likes, Gear, Stats, Organisations, Count } //list of all possible pages (which ones vary by actorSet)
     public enum TabbedHistory { Events, Emotions }                                                  //Events is HistoryActor, emotions is HistoryMood/HistoryOption depending on Player/Actor
     public enum TabbedGear { Normal, Capture }                                                      //Normal Gear page or Capture gear page
+    public enum TabbedOrg { Organisation, MegaCorp }                                                //Organisation page -> illegal organisation or MegaCorp
 
     //
     // - - - Connections - - - 

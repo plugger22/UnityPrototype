@@ -5996,11 +5996,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tagGlobalAIName: GOLIATH
   tagGlobalDrug: Moon Dust
-  tagMegaCorpOne: Crypticon
-  tagMegaCorpTwo: Orb
-  tagMegaCorpThree: Eclipse
-  tagMegaCorpFour: Dragon
-  tagMegaCorpFive: AntBot
   tagBlocOne: Americon
   tagBlocTwo: Eurasia
   tagBlocThree: Chinock
@@ -6474,8 +6469,10 @@ MonoBehaviour:
   TabbedContactInactive: {r: 0.09411765, g: 0.1764706, b: 0.38431373, a: 1}
   TabbedSecretAll: {r: 0.12941177, g: 0.23529412, b: 0.5137255, a: 1}
   TabbedGearAll: {r: 0.1764706, g: 0.32941177, b: 0.7019608, a: 1}
+  TabbedDeviceAll: {r: 0.12941177, g: 0.23529412, b: 0.5137255, a: 1}
   TabbedInvestigationAll: {r: 0.1764706, g: 0.32941177, b: 0.7019608, a: 1}
   TabbedOrgAll: {r: 0.1764706, g: 0.32941177, b: 0.7019608, a: 1}
+  TabbedCorpAll: {r: 0.12941177, g: 0.23529412, b: 0.5137255, a: 1}
   TabbedStatItem: {r: 0.1764706, g: 0.32941177, b: 0.7019608, a: 1}
 --- !u!114 &114733366453475614
 MonoBehaviour:

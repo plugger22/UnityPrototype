@@ -20,19 +20,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b7e132339626e434abe5fa17b83d647f, type: 2}
   - {fileID: 11400000, guid: 1075c32dcef44be49b4c3493a8875d3e, type: 2}
   story: {fileID: 11400000, guid: 4a3d16d5f29b52a48b74192c0bbd80d2, type: 2}
-  campaignAlphaPool: {fileID: 0}
-  campaignBravoPool: {fileID: 0}
-  campaignCharliePool: {fileID: 0}
-  familyAlphaPool: {fileID: 0}
-  familyBravoPool: {fileID: 0}
-  familyCharliePool: {fileID: 0}
-  authorityCampaignPool: {fileID: 11400000, guid: 97c7cf6be7b3c9644923da7eda622b65,
-    type: 2}
-  authorityGeneralPool: {fileID: 11400000, guid: 797a5c8b64ad0164bba95cdfa6aab7d9,
-    type: 2}
   teamPool: {fileID: 11400000, guid: f50e89292be7d9a468ea3ebfb5663e40, type: 2}
-  resistanceCampaignPool: {fileID: 0}
-  resistanceGeneralPool: {fileID: 0}
   actorContactPool: {fileID: 0}
   actorDistrictPool: {fileID: 11400000, guid: 203de2836f359ee45935cc9028ce1237, type: 2}
   actorGearPool: {fileID: 0}
@@ -55,6 +43,11 @@ MonoBehaviour:
   orgHQ: {fileID: 0}
   orgEmergency: {fileID: 0}
   orgInfo: {fileID: 0}
+  megaCorpOne: {fileID: 11400000, guid: dc32d52a3b247834880800023b02a3b9, type: 2}
+  megaCorpTwo: {fileID: 11400000, guid: e8651757d31bb994dacdc3f849353182, type: 2}
+  megaCorpThree: {fileID: 11400000, guid: 591b890de32167c4fae5d6128b60535f, type: 2}
+  megaCorpFour: {fileID: 11400000, guid: 91653de0f0bd9a346af0e12ad58cc879, type: 2}
+  megaCorpFive: {fileID: 11400000, guid: f8bbb18567e647e4cb8858d3d3f30d88, type: 2}
   specialBossGear: {fileID: 0}
   specialSubBoss1Gear: {fileID: 0}
   specialSubBoss2Gear: {fileID: 0}

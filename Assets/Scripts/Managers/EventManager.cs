@@ -180,6 +180,8 @@ public enum EventType
     TabbedScrollDown,
     TabbedGearNormal,
     TabbedGearCapture,
+    TabbedOrganisation,
+    TabbedMegaCorp,
     TabbedHistoryEvents,
     TabbedHistoryEmotions,          //mood or option history depending on actor or player
     //Main Info
