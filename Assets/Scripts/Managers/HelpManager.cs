@@ -1556,9 +1556,43 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "org_4";
         data.header = "Freedom";
-        data.text = string.Format("How much of an {0}obligation{1} you {2}owe{3} to the Organisation (the more stars, the less your debt). " +
-            "The more you ask of an Organisation the greater your debt. At {4}zero{5} Freedom {6}no more{7} assistance will be offered",
-            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("How much of an {0}obligation{1} you {2}owe{3} to the Organisation (the {4}more stars{5}, the less your debt, {6}the better{7}). " +
+            "The more you ask of an Organisation the greater your debt. At {8}zero{9} Freedom {10}no more{11} assistance will be offered",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
+        #region MegaCorps
+        //Overview
+        data = new HelpData();
+        data.tag = "megaCorp_0";
+        data.header = "MegaCorporations";
+        data.text = string.Format("There are a handful of {0}globe spanning{1} corporations that have risen to become {2}more powerful{3} than even the ruling Power Blocs. " +
+            "Their reach extends {4}beyond Earth{5} throughout known space",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Resistance
+        data = new HelpData();
+        data.tag = "megaCorp_1";
+        data.header = "Resistance";
+        data.text = string.Format("While the MegaCorps are {0}officially{1} on the side of the {2}Authority{3} and have an intense desire to maintain the, very profitable, " +
+            "status quo they are not averse to using the Resistance to handle {4}delicate{5} matters",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Reputation
+        data = new HelpData();
+        data.tag = "megaCorp_2";
+        data.header = "Reputation";
+        data.text = string.Format("Most of the time you are {0}irrelevant{1} to the MegaCorps, except when you're not. Then they take an interest. " +
+            "This is reflected by your {2}Reputation{3} (0 to 3 stars, {4}higher the better{5})",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Low Reputation
+        data = new HelpData();
+        data.tag = "megaCorp_3";
+        data.header = string.Format("{0}Tips{1}", colourTip, colourEnd);
+        data.text = string.Format("MegaCorps are {0}extremely powerful{1} organisations who don't take kindly to insignificant {2}insects{3} who annoy them. It doesn't generally {4}end{5} well for the insects",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 
@@ -2751,12 +2785,34 @@ public class HelpManager : MonoBehaviour
         data.text = string.Format("Will give your subordinate a {0}Opinion{1} boost. You can {2}ask for the gear back{3} after {4}{5} turns{6}. Would you be happy about returning a gift?",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, GameManager.i.gearScript.actorGearGracePeriod, colourEnd);
         listOfHelp.Add(data);
-        //Overvew 
+        //Gear Limits
         data = new HelpData();
         data.tag = "gear_4";
+        data.header = "Limits";
+        data.text = string.Format("You can have up to {0}{1} items{2} of {3}gear{4}. Any gear that you have {5}gifted{6} ('loaned') to Subordinates {7}doesn't count{8} towards your limit",
+            colourAlert, GameManager.i.gearScript.maxNumOfGear, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Devices
+        data = new HelpData();
+        data.tag = "gear_5";
         data.header = "Devices";
         data.text = string.Format("These special items can {0}only{1} be obtained from {2}HQ characters{3} between levels. They can help you resist {4}interrogation{5} when you've been {6}captured{7}",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Devices Use
+        data = new HelpData();
+        data.tag = "gear_6";
+        data.header = "Use";
+        data.text = string.Format("Devices are used to {0}resist interrogation{1} techniques by the Authority which will {2}vary{3} depending on how big a threat ({4}Innocence{5} {6}) they percieve you as. " +
+            "Devices are {7}specific{8} to a particular Innocence {9} level",
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, GameManager.i.guiScript.innocenceIcon, colourAlert, colourEnd, GameManager.i.guiScript.innocenceIcon);
+        listOfHelp.Add(data);
+        //Gifting
+        data = new HelpData();
+        data.tag = "gear_7";
+        data.header = "Devices";
+        data.text = string.Format("Devices {0}don't{1} count towards your gear limit ({2}{3}{4} items) and {5}cannot be gifted{6} to your Subordinates",
+            colourAlert, colourEnd, colourAlert, GameManager.i.gearScript.maxNumOfGear, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         #endregion
 

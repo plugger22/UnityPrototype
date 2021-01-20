@@ -145,22 +145,20 @@ public class ModalTabbedUI : MonoBehaviour
     [Header("Canvas6 -> Gear")]
     public TextMeshProUGUI tab6Header;
     public TextMeshProUGUI tab6NonePresent;
-    //gear
     public Image tab6GearPanel;
     public TabbedGearInteraction tab6Gear0;
     public TabbedGearInteraction tab6Gear1;
     public TabbedGearInteraction tab6Gear2;
-    //devices (capture)
     public Image tab6DevicePanel;
     public TabbedDeviceInteraction tab6Device0;
     public TabbedDeviceInteraction tab6Device1;
     public TabbedDeviceInteraction tab6Device2;
     public TabbedDeviceInteraction tab6Device3;
-    //option buttons
     public Image tab6OptionBar;
     public TabbedGenericOptionUI tab6Interaction0;
     public TabbedGenericOptionUI tab6Interaction1;
-    public GenericHelpTooltipUI tab6PageHelp;
+    public GenericHelpTooltipUI tab6PageHelpGear;
+    public GenericHelpTooltipUI tab6PageHelpDevices;
 
     [Header("Canvas7 -> History")]
     public GameObject tab7ScrollBarObject;
@@ -190,7 +188,8 @@ public class ModalTabbedUI : MonoBehaviour
     public TabbedOrgInteraction tab9Org2;
     public TabbedOrgInteraction tab9Org3;
     public TabbedOrgInteraction tab9Org4;
-    public GenericHelpTooltipUI tab9PageHelp;
+    public GenericHelpTooltipUI tab9PageHelpOrg;
+    public GenericHelpTooltipUI tab9PageHelpCorp;
     public Image tab9CorpPanel;
     public TabbedCorpInteraction tab9Corp0;
     public TabbedCorpInteraction tab9Corp1;
@@ -568,7 +567,8 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab6Device1 != null, "Invalid tab6Device1 (Null)");
         Debug.Assert(tab6Device2 != null, "Invalid tab6Device2 (Null)");
         Debug.Assert(tab6Device3 != null, "Invalid tab6Device3 (Null)");
-        Debug.Assert(tab6PageHelp != null, "Invalid tab6PageHelp (Null)");
+        Debug.Assert(tab6PageHelpGear != null, "Invalid tab6PageHelpGear (Null)");
+        Debug.Assert(tab6PageHelpDevices != null, "Invalid tab6PageHelpdevices (Null)");
         //
         // - - - canvas7
         //
@@ -600,7 +600,8 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab9Org2 != null, "Invalid tab9Org2 (Null)");
         Debug.Assert(tab9Org3 != null, "Invalid tab9Org3 (Null)");
         Debug.Assert(tab9Org4 != null, "Invalid tab9Org4 (Null)");
-        Debug.Assert(tab9PageHelp != null, "Invalid tab9PageHelp (Null)");
+        Debug.Assert(tab9PageHelpOrg != null, "Invalid tab9PageHelpOrg (Null)");
+        Debug.Assert(tab9PageHelpCorp != null, "Invalid tab9PageHelpCorp (Null)");
         Debug.Assert(tab9CorpPanel != null, "Invalid tab9CorpPanel (Null)");
         Debug.Assert(tab9Corp0 != null, "Invalid tab9Corp0 (Null)");
         Debug.Assert(tab9Corp1 != null, "Invalid tab9Corp1 (Null)");
@@ -1441,7 +1442,9 @@ public class ModalTabbedUI : MonoBehaviour
         // - - - Canvas 6 -> Gear
         //
         listOfHelpData = GameManager.i.helpScript.GetHelpData("gear_0", "gear_1", "gear_2", "gear_4");
-        tab6PageHelp.SetHelpTooltip(listOfHelpData);
+        tab6PageHelpGear.SetHelpTooltip(listOfHelpData);
+        listOfHelpData = GameManager.i.helpScript.GetHelpData("gear_5", "gear_6", "gear_7");
+        tab6PageHelpDevices.SetHelpTooltip(listOfHelpData);
         //
         // - - - Canvas 7 -> History
         //
@@ -1456,7 +1459,9 @@ public class ModalTabbedUI : MonoBehaviour
         // - - - Canvas 9 -> Organisations
         //
         listOfHelpData = GameManager.i.helpScript.GetHelpData("org_0", "org_1", "org_3", "org_4");
-        tab9PageHelp.SetHelpTooltip(listOfHelpData);
+        tab9PageHelpOrg.SetHelpTooltip(listOfHelpData);
+        listOfHelpData = GameManager.i.helpScript.GetHelpData("megaCorp_0", "megaCorp_1", "megaCorp_2", "megaCorp_3");
+        tab9PageHelpCorp.SetHelpTooltip(listOfHelpData);
     }
     #endregion
 
@@ -2485,6 +2490,9 @@ public class ModalTabbedUI : MonoBehaviour
                 //text colours
                 tab6Interaction0.title.color = tabTextActiveColour;
                 tab6Interaction1.title.color = tabTextDormantColour;
+                //help
+                tab6PageHelpGear.gameObject.SetActive(true);
+                tab6PageHelpDevices.gameObject.SetActive(false);
                 //header
                 tab6Header.text = "Gear";
                 break;
@@ -2495,6 +2503,9 @@ public class ModalTabbedUI : MonoBehaviour
                 //text colours
                 tab6Interaction0.title.color = tabTextDormantColour;
                 tab6Interaction1.title.color = tabTextActiveColour;
+                //help
+                tab6PageHelpGear.gameObject.SetActive(false);
+                tab6PageHelpDevices.gameObject.SetActive(true);
                 //header
                 tab6Header.text = "Devices";
                 break;
@@ -3094,6 +3105,9 @@ public class ModalTabbedUI : MonoBehaviour
                 //text colours
                 tab9Interaction0.title.color = tabTextActiveColour;
                 tab9Interaction1.title.color = tabTextDormantColour;
+                //help
+                tab9PageHelpOrg.gameObject.SetActive(true);
+                tab9PageHelpCorp.gameObject.SetActive(false);
                 //header
                 tab9Header.text = "Organisations";
                 break;
@@ -3104,6 +3118,9 @@ public class ModalTabbedUI : MonoBehaviour
                 //text colours
                 tab9Interaction0.title.color = tabTextDormantColour;
                 tab9Interaction1.title.color = tabTextActiveColour;
+                //help
+                tab9PageHelpOrg.gameObject.SetActive(false);
+                tab9PageHelpCorp.gameObject.SetActive(true);
                 //header
                 tab9Header.text = "MegaCorps";
                 break;
