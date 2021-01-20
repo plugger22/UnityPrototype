@@ -76,9 +76,9 @@ public class ModalTabbedUI : MonoBehaviour
     public ButtonInteraction interactHq;
     public ButtonInteraction interactReserves;
 
-    [Header("Texts -> Development Only")]
+    [Header("Texts")]
     public TextMeshProUGUI textActorName;
-    public TextMeshProUGUI textPageMain;
+    /*public TextMeshProUGUI textPageMain;*/
 
     [Header("Canvas0 -> Main")]
     public TextMeshProUGUI tab0ActorName;
@@ -484,7 +484,7 @@ public class ModalTabbedUI : MonoBehaviour
         else { Debug.LogError("Invalid buttonHelpClose (Null)"); }
         //texts
         Debug.Assert(textActorName != null, "Invalid textActorName (Null)");
-        Debug.Assert(textPageMain != null, "Invalid textPageMain (Null)");
+        /*Debug.Assert(textPageMain != null, "Invalid textPageMain (Null)");*/
         //tab0
         Debug.Assert(tab0ActorName != null, "Invalid tab0ActorName (Null)");
         Debug.Assert(tab0ActorTitle != null, "Invalid tab0ActorTitle (Null)");
@@ -2013,58 +2013,14 @@ public class ModalTabbedUI : MonoBehaviour
             }
             //update index (required for when player directly clicks on a tab)
             currentTopTabIndex = tabIndex;
-            //main page text
-            textPageMain.text = Convert.ToString(arrayOfPages[tabIndex]);
+            
+            /*//main page text
+            textPageMain.text = Convert.ToString(arrayOfPages[tabIndex]);*/
+
             //actorSet
             UpdateControllerButton((TabbedUIWho)currentSetIndex);
         }
         else { Debug.LogWarning("Invalid tabIndex (-1)"); }
-    }
-    #endregion
-
-    #region UpdateHistoryButtons
-    /// <summary>
-    /// Handles history page 7 option buttons texts and colours. Assumes that a button has been pressed (isPressed = true)
-    /// </summary>
-    /// <param name="history"></param>
-    private void UpdateHistoryButtons(TabbedHistory history)
-    {
-        switch (history)
-        {
-            case TabbedHistory.Events:
-                //image button colours
-                tab7Interaction0.image.color = pageOptionActiveColour;
-                tab7Interaction1.image.color = pageOptionDormantColour;
-                //text colours
-                tab7Interaction0.title.color = tabTextActiveColour;
-                tab7Interaction1.title.color = tabTextDormantColour;
-                //header
-                tab7Header.text = "Events";
-                break;
-            case TabbedHistory.Emotions:
-                //image button colours
-                tab7Interaction0.image.color = pageOptionDormantColour;
-                tab7Interaction1.image.color = pageOptionActiveColour;
-                //text colours
-                tab7Interaction0.title.color = tabTextDormantColour;
-                tab7Interaction1.title.color = tabTextActiveColour;
-                //header
-                if (inputData.who == TabbedUIWho.Player)
-                { tab7Header.text = "Mood"; }
-                else { tab7Header.text = "Opinion"; }
-                break;
-            default: Debug.LogWarningFormat("Unrecognised TabbedHistory \"{0}\"", history); break;
-        }
-        //text for Emotions button
-        switch (inputData.who)
-        {
-            case TabbedUIWho.Player: tab7Interaction1.title.text = "Mood"; break;
-            default: tab7Interaction1.title.text = "Opinion"; break;
-        }
-        //update index
-        historyOptionIndex = history;
-        //reset controller buttons (they unselect once you click on a sprite 'button')
-        UpdateControllerButton(inputData.who);
     }
     #endregion
 
@@ -2177,6 +2133,52 @@ public class ModalTabbedUI : MonoBehaviour
             default: Debug.LogWarningFormat("Unrecognised inputData.who \"{0}\"", inputData.who); break;
         }
 
+    }
+    #endregion
+ 
+    #region UpdateHistoryButtons
+    /// <summary>
+    /// Handles history page 7 option buttons texts and colours. Assumes that a button has been pressed (isPressed = true)
+    /// </summary>
+    /// <param name="history"></param>
+    private void UpdateHistoryButtons(TabbedHistory history)
+    {
+        switch (history)
+        {
+            case TabbedHistory.Events:
+                //image button colours
+                tab7Interaction0.image.color = pageOptionActiveColour;
+                tab7Interaction1.image.color = pageOptionDormantColour;
+                //text colours
+                tab7Interaction0.title.color = tabTextActiveColour;
+                tab7Interaction1.title.color = tabTextDormantColour;
+                //header
+                tab7Header.text = "Events";
+                break;
+            case TabbedHistory.Emotions:
+                //image button colours
+                tab7Interaction0.image.color = pageOptionDormantColour;
+                tab7Interaction1.image.color = pageOptionActiveColour;
+                //text colours
+                tab7Interaction0.title.color = tabTextDormantColour;
+                tab7Interaction1.title.color = tabTextActiveColour;
+                //header
+                if (inputData.who == TabbedUIWho.Player)
+                { tab7Header.text = "Mood"; }
+                else { tab7Header.text = "Opinion"; }
+                break;
+            default: Debug.LogWarningFormat("Unrecognised TabbedHistory \"{0}\"", history); break;
+        }
+        //text for Emotions button
+        switch (inputData.who)
+        {
+            case TabbedUIWho.Player: tab7Interaction1.title.text = "Mood"; break;
+            default: tab7Interaction1.title.text = "Opinion"; break;
+        }
+        //update index
+        historyOptionIndex = history;
+        //reset controller buttons (they unselect once you click on a sprite 'button')
+        UpdateControllerButton(inputData.who);
     }
     #endregion
 
