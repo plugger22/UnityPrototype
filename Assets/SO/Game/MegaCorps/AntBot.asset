@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 257a50b14d836624899cc4fb169ddcf4, type: 3}
+  m_Name: AntBot
+  m_EditorClassIdentifier: 
+  tag: AntBot
+  field: Robotics
+  descriptor: An original backyard operation that has evolved into a horribly efficient
+    giant that has turned large parts of Africa into a toxic wasteland as a result
+    of their cheap labour manufacturing
+  sprite: {fileID: 21300000, guid: c0ee7a164b5367642bfa40ce3b0703b8, type: 3}

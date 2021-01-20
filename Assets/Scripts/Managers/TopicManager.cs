@@ -6858,8 +6858,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.globalScript.tagMegaCorpOne, colourEnd); }
-                            else { replaceText = GameManager.i.globalScript.tagMegaCorpOne; }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpOne), colourEnd); }
+                            else { replaceText = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpOne); }
                         }
                         else { CountTextTag("mega1", dictOfTags); }
                         break;
@@ -6868,8 +6868,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.globalScript.tagMegaCorpTwo, colourEnd); }
-                            else { replaceText = GameManager.i.globalScript.tagMegaCorpTwo; }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpTwo), colourEnd); }
+                            else { replaceText = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpTwo); }
                         }
                         else { CountTextTag("mega2", dictOfTags); }
                         break;
@@ -6878,8 +6878,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.globalScript.tagMegaCorpThree, colourEnd); }
-                            else { replaceText = GameManager.i.globalScript.tagMegaCorpThree; }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpThree), colourEnd); }
+                            else { replaceText = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpThree); }
                         }
                         else { CountTextTag("mega3", dictOfTags); }
                         break;
@@ -6888,16 +6888,26 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.globalScript.tagMegaCorpFour, colourEnd); }
-                            else { replaceText = GameManager.i.globalScript.tagMegaCorpFour; }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpFour), colourEnd); }
+                            else { replaceText = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpFour); }
                         }
                         else { CountTextTag("mega4", dictOfTags); }
+                        break;
+                    case "mega5":
+                        //MegaCorporation Five -> first name only
+                        if (isValidate == false)
+                        {
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpFive), colourEnd); }
+                            else { replaceText = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpFive); }
+                        }
+                        else { CountTextTag("mega5", dictOfTags); }
                         break;
                     case "mega1Corp":
                         //MegaCorporation One plus 'Corp'
                         if (isValidate == false)
                         {
-                            string megaName = string.Format("{0} Corp", GameManager.i.globalScript.tagMegaCorpOne);
+                            string megaName = string.Format("{0} Corp", GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpOne));
                             if (isColourHighlighting == true)
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, megaName, colourEnd); }
                             else { replaceText = megaName; }
@@ -6908,7 +6918,7 @@ public class TopicManager : MonoBehaviour
                         //MegaCorporation Two plus 'Corp'
                         if (isValidate == false)
                         {
-                            string megaName = string.Format("{0} Corp", GameManager.i.globalScript.tagMegaCorpTwo);
+                            string megaName = string.Format("{0} Corp", GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpTwo));
                             if (isColourHighlighting == true)
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, megaName, colourEnd); }
                             else { replaceText = megaName; }
@@ -6919,7 +6929,7 @@ public class TopicManager : MonoBehaviour
                         //MegaCorporation Three plus 'Corp'
                         if (isValidate == false)
                         {
-                            string megaName = string.Format("{0} Corp", GameManager.i.globalScript.tagMegaCorpThree);
+                            string megaName = string.Format("{0} Corp", GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpThree));
                             if (isColourHighlighting == true)
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, megaName, colourEnd); }
                             else { replaceText = megaName; }
@@ -6930,12 +6940,23 @@ public class TopicManager : MonoBehaviour
                         //MegaCorporation Four plus 'Corp'
                         if (isValidate == false)
                         {
-                            string megaName = string.Format("{0} Corp", GameManager.i.globalScript.tagMegaCorpFour);
+                            string megaName = string.Format("{0} Corp", GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpFour));
                             if (isColourHighlighting == true)
                             { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, megaName, colourEnd); }
                             else { replaceText = megaName; }
                         }
                         else { CountTextTag("mega4Corp", dictOfTags); }
+                        break;
+                    case "mega5Corp":
+                        //MegaCorporation Five plus 'Corp'
+                        if (isValidate == false)
+                        {
+                            string megaName = string.Format("{0} Corp", GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpFive));
+                            if (isColourHighlighting == true)
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, megaName, colourEnd); }
+                            else { replaceText = megaName; }
+                        }
+                        else { CountTextTag("mega5Corp", dictOfTags); }
                         break;
                     case "facR1":
                         //Resistance Americon faction 'Americon HQ'

@@ -86,6 +86,18 @@ public class Campaign : ScriptableObject
     [Tooltip("Org that provides Information services such as location of Nemesis and the cleansing of secret evidence")]
     public Organisation orgInfo;
 
+    [Header("MegaCorporations")]
+    [Tooltip("Corresponds to enum.MegaCorpType -> MegaCorpOne")]
+    public MegaCorp megaCorpOne;
+    [Tooltip("Corresponds to enum.MegaCorpType -> MegaCorpTwo")]
+    public MegaCorp megaCorpTwo;
+    [Tooltip("Corresponds to enum.MegaCorpType -> MegaCorpThree")]
+    public MegaCorp megaCorpThree;
+    [Tooltip("Corresponds to enum.MegaCorpType -> MegaCorpFour")]
+    public MegaCorp megaCorpFour;
+    [Tooltip("Corresponds to enum.MegaCorpType -> MegaCorpFive")]
+    public MegaCorp megaCorpFive;
+
     [Header("Special Gear")]
     [Tooltip("Special gear that is available during MetaGame if Player's relationship with HQ Boss is 2+")]
     public Gear specialBossGear;

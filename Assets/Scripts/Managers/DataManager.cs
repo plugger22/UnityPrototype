@@ -10085,26 +10085,24 @@ public class DataManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns name of MegaCorp, if 'isCorp' true then adds that to the name, eg. 'Eclipse Corp'
+    /// returns name of MegaCorp
     /// </summary>
     /// <param name="megaCorp"></param>
     /// <returns></returns>
-    public string GetMegaCorpName(MegaCorpType megaCorp, bool isCorp = true)
+    public string GetMegaCorpName(MegaCorpType megaCorp)
     {
         string megaName = "Unknown";
         if (megaCorp != MegaCorpType.Count)
         {
             switch (megaCorp)
             {
-                case MegaCorpType.MegaCorpOne: megaName = GameManager.i.globalScript.tagMegaCorpOne; break;
-                case MegaCorpType.MegaCorpTwo: megaName = GameManager.i.globalScript.tagMegaCorpTwo; break;
-                case MegaCorpType.MegaCorpThree: megaName = GameManager.i.globalScript.tagMegaCorpThree; break;
-                case MegaCorpType.MegaCorpFour: megaName = GameManager.i.globalScript.tagMegaCorpFour; break;
-                case MegaCorpType.MegaCorpFive: megaName = GameManager.i.globalScript.tagMegaCorpFive; break;
+                case MegaCorpType.MegaCorpOne: megaName = GameManager.i.campaignScript.campaign.megaCorpOne.tag; break;
+                case MegaCorpType.MegaCorpTwo: megaName = GameManager.i.campaignScript.campaign.megaCorpTwo.tag; break;
+                case MegaCorpType.MegaCorpThree: megaName = GameManager.i.campaignScript.campaign.megaCorpThree.tag; break;
+                case MegaCorpType.MegaCorpFour: megaName = GameManager.i.campaignScript.campaign.megaCorpFour.tag; break;
+                case MegaCorpType.MegaCorpFive: megaName = GameManager.i.campaignScript.campaign.megaCorpFive.tag; break;
                 default: Debug.LogWarningFormat("Unrecognised megaCorp \"{0}\"", megaCorp); break;
             }
-            if (isCorp == true)
-            { megaName = string.Format("{0} Corp", megaName); }
         }
         else { Debug.LogWarning("Invalid MegaCorpType ('Count')"); }
         return megaName;
