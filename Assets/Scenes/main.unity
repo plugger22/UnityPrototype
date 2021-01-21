@@ -61056,36 +61056,6 @@ Prefab:
       propertyPath: m_Name
       value: tabbedMegaCorp0
       objectReference: {fileID: 0}
-    - target: {fileID: 114533670517871922, guid: 486598785b8e8eb47babd68dec0a9884,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114533670517871922, guid: 486598785b8e8eb47babd68dec0a9884,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114653184334241842, guid: 486598785b8e8eb47babd68dec0a9884,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114653184334241842, guid: 486598785b8e8eb47babd68dec0a9884,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114441344016644776, guid: 486598785b8e8eb47babd68dec0a9884,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114441344016644776, guid: 486598785b8e8eb47babd68dec0a9884,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 486598785b8e8eb47babd68dec0a9884, type: 2}
   m_IsPrefabAsset: 0

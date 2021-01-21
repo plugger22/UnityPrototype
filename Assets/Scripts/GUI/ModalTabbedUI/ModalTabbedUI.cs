@@ -331,7 +331,6 @@ public class ModalTabbedUI : MonoBehaviour
     private Color personBottomTextColour;
     private Color personMiddleTextActiveColour;
     private Color personMiddleTextDormantColour;
-    private Color pageOptionActiveColour;                           //history/gear page option selectors
     private Color pageOptionDormantColour;
     private Color contactActiveColour;
     private Color contactInactiveColour;
@@ -344,6 +343,7 @@ public class ModalTabbedUI : MonoBehaviour
     private Color statItemColour;
     private Color optionLightColour;
     private Color optionDarkColour;
+    private Color optionActiveColour;                           //history/gear page option selectors
     private Color optionInactiveColour;
     #endregion
 
@@ -644,7 +644,7 @@ public class ModalTabbedUI : MonoBehaviour
         personBottomTextColour = GameManager.i.uiScript.TabbedPersonBottomText;
         personMiddleTextActiveColour = GameManager.i.uiScript.TabbedPersonMiddleTextActive;
         personMiddleTextDormantColour = GameManager.i.uiScript.TabbedPersonMiddleTextDormant;
-        pageOptionActiveColour = GameManager.i.uiScript.TabbedHistoryOptionActive;
+        optionActiveColour = GameManager.i.uiScript.TabbedHistoryOptionActive;
         pageOptionDormantColour = GameManager.i.uiScript.TabbedHistoryOptionDormant;
         contactActiveColour = GameManager.i.uiScript.TabbedContactActive;
         contactInactiveColour = GameManager.i.uiScript.TabbedContactInactive;
@@ -2167,7 +2167,7 @@ public class ModalTabbedUI : MonoBehaviour
         {
             case TabbedHistory.Events:
                 //image button colours
-                tab7Interaction0.image.color = pageOptionActiveColour;
+                tab7Interaction0.image.color = optionActiveColour;
                 tab7Interaction1.image.color = optionLightColour;
                 tab7Interaction2.image.color = optionDarkColour;
                 tab7Interaction3.image.color = optionLightColour;
@@ -2199,7 +2199,7 @@ public class ModalTabbedUI : MonoBehaviour
             case TabbedHistory.Emotions:
                 //image button colours
                 tab7Interaction0.image.color = optionDarkColour;
-                tab7Interaction1.image.color = pageOptionActiveColour;
+                tab7Interaction1.image.color = optionActiveColour;
                 tab7Interaction2.image.color = optionDarkColour;
                 tab7Interaction3.image.color = optionLightColour;
                 //text colours
@@ -2233,7 +2233,7 @@ public class ModalTabbedUI : MonoBehaviour
                     //image button colours
                     tab7Interaction0.image.color = optionDarkColour;
                     tab7Interaction1.image.color = optionLightColour;
-                    tab7Interaction2.image.color = pageOptionActiveColour;
+                    tab7Interaction2.image.color = optionActiveColour;
                     tab7Interaction3.image.color = optionLightColour;
                     //text colours
                     tab7Interaction0.title.color = tabTextDormantColour;
@@ -2266,7 +2266,7 @@ public class ModalTabbedUI : MonoBehaviour
                     tab7Interaction0.image.color = optionDarkColour;
                     tab7Interaction1.image.color = optionLightColour;
                     tab7Interaction2.image.color = optionDarkColour;
-                    tab7Interaction3.image.color = pageOptionActiveColour;
+                    tab7Interaction3.image.color = optionActiveColour;
                     //text colours
                     tab7Interaction0.title.color = tabTextDormantColour;
                     tab7Interaction1.title.color = tabTextDormantColour;
@@ -2611,7 +2611,7 @@ public class ModalTabbedUI : MonoBehaviour
         {
             case TabbedGear.Normal:
                 //image button colours
-                tab6Interaction0.image.color = pageOptionActiveColour;
+                tab6Interaction0.image.color = optionActiveColour;
                 tab6Interaction1.image.color = pageOptionDormantColour;
                 //text colours
                 tab6Interaction0.title.color = tabTextActiveColour;
@@ -2625,7 +2625,7 @@ public class ModalTabbedUI : MonoBehaviour
             case TabbedGear.Capture:
                 //image button colours
                 tab6Interaction0.image.color = pageOptionDormantColour;
-                tab6Interaction1.image.color = pageOptionActiveColour;
+                tab6Interaction1.image.color = optionActiveColour;
                 //text colours
                 tab6Interaction0.title.color = tabTextDormantColour;
                 tab6Interaction1.title.color = tabTextActiveColour;
@@ -3226,7 +3226,7 @@ public class ModalTabbedUI : MonoBehaviour
         {
             case TabbedOrg.Organisation:
                 //image button colours
-                tab9Interaction0.image.color = pageOptionActiveColour;
+                tab9Interaction0.image.color = optionActiveColour;
                 tab9Interaction1.image.color = pageOptionDormantColour;
                 //text colours
                 tab9Interaction0.title.color = tabTextActiveColour;
@@ -3240,7 +3240,7 @@ public class ModalTabbedUI : MonoBehaviour
             case TabbedOrg.MegaCorp:
                 //image button colours
                 tab9Interaction0.image.color = pageOptionDormantColour;
-                tab9Interaction1.image.color = pageOptionActiveColour;
+                tab9Interaction1.image.color = optionActiveColour;
                 //text colours
                 tab9Interaction0.title.color = tabTextDormantColour;
                 tab9Interaction1.title.color = tabTextActiveColour;
@@ -4464,15 +4464,21 @@ public class ModalTabbedUI : MonoBehaviour
                             HistoryMegaCorp historyMegaCorp = listOfHistory[i];
                             if (historyMegaCorp != null)
                             {
-                                /*
-                                listOfText.Add(GameManager.Formatt(string.Format("day {0}  {1} (Mood now {2} star{3}){4}", historyMegaCorp.turn, historyMood.descriptor, historyMood.mood,
-                                historyM.mood != 1 ? "s" : "", historyMood.factor.Length > 0 ? string.Format(", influenced by <b>{0}</b>", historyMood.factor) : ""), ColourType.neutralText));
-                                */
+                                if (historyMegaCorp.isHighlight == true)
+                                {
+                                    listOfText.Add(GameManager.Formatt(string.Format("day {0}  {1}, {2}, Rel +{3}, now {4}, {5}", historyMegaCorp.turn, historyMegaCorp.megaCorpName, 
+                                        historyMegaCorp.cityTag, historyMegaCorp.change, historyMegaCorp.relationshipNow, historyMegaCorp.text), ColourType.neutralText));
+                                }
+                                else
+                                {
+                                    listOfText.Add(string.Format("day {0} {1}, {2}, Rel {3}{4}, now {5}, {6}", historyMegaCorp.turn, historyMegaCorp.megaCorpName, historyMegaCorp.cityTag,
+                                        historyMegaCorp.change > 0 ? "+" : "", historyMegaCorp.change, historyMegaCorp.relationshipNow, historyMegaCorp.text));
+                                }
                             }
-                            else { Debug.LogWarningFormat("Invalid HistoryMood (Null) for listOfMood[{0}]", i); }
+                            else { Debug.LogWarningFormat("Invalid HistoryMegaCorp (Null) for listOfHistory[{0}]", i); }
                         }
                     }
-                    else { Debug.LogWarningFormat("Invalid listOfMood (Null) for TabbedHistory \"{0}\", Player", history); }
+                    else { Debug.LogWarningFormat("Invalid listOfHistory  (Null) for TabbedHistory \"{0}\", Player", history); }
                     break;
                 case TabbedHistory.Moves:
 

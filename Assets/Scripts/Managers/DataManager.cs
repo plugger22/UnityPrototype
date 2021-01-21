@@ -414,7 +414,7 @@ public class DataManager : MonoBehaviour
             for (int i = 1; i < arrayOfMegaCorpRelations.Length; i++)
             {
                 //set all relations to excellent at start of a new game
-                UpdateMegaCorpRelations((MegaCorpType)i, 3, "Starting Relationship");
+                UpdateMegaCorpRelations((MegaCorpType)i, 3, "Starting Relationship", true);
             }
         }
         //HQ Positions
@@ -10065,10 +10065,11 @@ public class DataManager : MonoBehaviour
 
     /// <summary>
     /// Update relations by an amount (positive or negative). Auto clamps the changed value within 0 to 3 range. 'reason' should be short and self-contained
+    /// isHighlight true if you want the record to be higlighted in the history list of ModalTabbedUI.cs, eg. use for a 'starting Relationship', default false
     /// </summary>
     /// <param name="megaCorp"></param>
     /// <param name="amountToChange"></param>
-    public void UpdateMegaCorpRelations(MegaCorpType megaCorp, int amountToChange, string reason)
+    public void UpdateMegaCorpRelations(MegaCorpType megaCorp, int amountToChange, string reason, bool isHighlight = false)
     {
         if (megaCorp != MegaCorpType.Count)
         {
@@ -10079,7 +10080,7 @@ public class DataManager : MonoBehaviour
             Debug.LogFormat("[Meg] DataManager.cs -> UpdateMegaCorpRelations: {0} rel {1}{2} (was {3}, now {4}){5}", 
                 GetMegaCorpName(megaCorp), amountToChange > 0 ? "+" : "", amountToChange, current, updated, "\n");
             //history
-            AddMegaCorpHistory(megaCorp, amountToChange, updated, reason);
+            AddMegaCorpHistory(megaCorp, amountToChange, updated, reason, isHighlight);
         }
         else { Debug.LogWarning("Invalid MegaCorpType ('Count')"); }
     }
@@ -10138,15 +10139,17 @@ public class DataManager : MonoBehaviour
     /// <param name="changeAmount"></param>
     /// <param name="relationshipAfterChange"></param>
     /// <param name="reason"></param>
-    private void AddMegaCorpHistory(MegaCorpType megaCorp, int changeAmount, int relationshipAfterChange, string reason)
+    private void AddMegaCorpHistory(MegaCorpType megaCorp, int changeAmount, int relationshipAfterChange, string reason, bool isHighlighted)
     {
         if (string.IsNullOrEmpty(reason) == false)
         {
             HistoryMegaCorp history = new HistoryMegaCorp()
             {
                 megaCorp = megaCorp,
+                megaCorpName = GetMegaCorpName(megaCorp),
                 change = changeAmount,
                 relationshipNow = relationshipAfterChange,
+                isHighlight = isHighlighted,
                 text = reason
             };
             listOfHistoryMegaCorp.Add(history);

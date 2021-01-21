@@ -98,3 +98,6 @@ City seed 44588 -> Londus, Eurasia
 
 Dev seed 4570 -> Thursday, 21 January 2021 11:52 AM
 City seed 8770 -> Londus, Eurasia
+
+Dev seed 18292 -> Thursday, 21 January 2021 12:26 PM
+City seed 19313 -> Londus, Eurasia

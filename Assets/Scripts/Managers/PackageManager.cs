@@ -629,9 +629,11 @@ namespace packageAPI
     public class HistoryMegaCorp
     {
         public MegaCorpType megaCorp;
+        public string megaCorpName;
         public int change;                      //amount relationship changed by
         public int relationshipNow;             //relationship level AFTER change
         public string text;                     //reason why
+        public bool isHighlight;                //displays history in yellow highlight (used for initialisation records, eg. 'Starting Relationship')
         //automatic
         public int turn;
         public string city;                     //city name, eg. 'NewYork'

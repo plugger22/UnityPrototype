@@ -1582,9 +1582,9 @@ public class HelpManager : MonoBehaviour
         //Reputation
         data = new HelpData();
         data.tag = "megaCorp_2";
-        data.header = "Reputation";
+        data.header = "Relations";
         data.text = string.Format("Most of the time you are {0}irrelevant{1} to the MegaCorps, except when you're not. Then they take an interest. " +
-            "This is reflected by your {2}Reputation{3} (0 to 3 stars, {4}higher the better{5})",
+            "This is reflected by your {2}Relations{3} (0 to 3 stars, {4}higher the better{5})",
             colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Low Reputation
