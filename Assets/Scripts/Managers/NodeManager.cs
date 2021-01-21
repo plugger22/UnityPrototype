@@ -2871,6 +2871,7 @@ public class NodeManager : MonoBehaviour
                 history.playerNodeID = moveDetails.nodeID;
                 history.invisibility = GameManager.i.playerScript.Invisibility;
                 history.nemesisNodeID = GameManager.i.nodeScript.nodeNemesis;
+                history.nodeName = node.nodeName;
                 GameManager.i.dataScript.AddHistoryRebelMove(history);
                 //Statistics
                 GameManager.i.dataScript.StatisticIncrement(StatType.PlayerMoveActions);

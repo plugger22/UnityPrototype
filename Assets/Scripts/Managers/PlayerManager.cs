@@ -102,6 +102,9 @@ public class PlayerManager : MonoBehaviour
 
     //Note: There is no ActorStatus for the player as the 'ResistanceState' handles this -> EDIT: Nope, status does
 
+    #region Properties...
+
+    #region PlayerName
     //Returns name of human controlled player side (even if temporarily AI controlled during an autoRun)
     //Use GetPlayerNameResistance/Authority for a specific side name
     //NOTE: _playerNameResistance/Authority are set by SideManager.cs -> Initialise
@@ -120,10 +123,14 @@ public class PlayerManager : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region FirstName
     public string FirstName
     { get { return _firstName; } }
+    #endregion
 
+    #region Power
     public int Power
     {
         get
@@ -169,7 +176,9 @@ public class PlayerManager : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region Invisibility
     public int Invisibility
     {
         get { return _invisibility; }
@@ -180,7 +189,9 @@ public class PlayerManager : MonoBehaviour
             _invisibility = value;
         }
     }
+    #endregion
 
+    #region Innocence
     /// <summary>
     /// How innocent the Authority see the resistance human/AI player when captured (3 is innocent, eg. low level operative, 0 is guilty, eg. high level commander)
     /// </summary>
@@ -212,6 +223,9 @@ public class PlayerManager : MonoBehaviour
             }
         }
     }
+    #endregion
+
+    #endregion 
 
 
     /// <summary>
@@ -474,7 +488,9 @@ public class PlayerManager : MonoBehaviour
                     //message
                     string text = string.Format("Player commences at \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, node.nodeID);
                     GameManager.i.messageScript.PlayerMove(text, node, 0, 0, true);
-
+                    //history
+                    GameManager.i.dataScript.AddHistoryRebelMove(new HistoryRebelMove()
+                    { turn = 0, playerNodeID = nodeTemp.nodeID, invisibility = Invisibility, nemesisNodeID = -1, isHighlight = true, nodeName = nodeTemp.nodeName });
                 }
                 else { Debug.LogErrorFormat("Invalid playerNode (Null) for nodeID {0}", nodeID); }
             }

@@ -509,6 +509,8 @@ namespace packageAPI
         public int playerNodeID;                    //location at end of move
         public int invisibility;                    //Invisibility at end of move
         public int nemesisNodeID;
+        public string nodeName;
+        public bool isHighlight;                    //if true record is shown in yellow highlight in ModalTabbedUI.cs -> Move History. Use for starting locations at each level
     }
 
     /// <summary>

@@ -2877,6 +2877,7 @@ public class AIRebelManager : MonoBehaviour
             history.playerNodeID = node.nodeID;
             history.invisibility = GameManager.i.playerScript.Invisibility;
             history.nemesisNodeID = GameManager.i.nodeScript.nodeNemesis;
+            history.nodeName = node.nodeName;
             GameManager.i.dataScript.AddHistoryRebelMove(history);
 
             //Erasure team may pick up player  if invisibility 1 or less

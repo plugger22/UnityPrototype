@@ -4481,7 +4481,34 @@ public class ModalTabbedUI : MonoBehaviour
                     else { Debug.LogWarningFormat("Invalid listOfHistory  (Null) for TabbedHistory \"{0}\", Player", history); }
                     break;
                 case TabbedHistory.Moves:
-
+                    //Player Moves
+                    List<HistoryRebelMove> listOfMoves = GameManager.i.dataScript.GetListOfHistoryRebelMove();
+                    if (listOfMoves != null)
+                    {
+                        //city name
+                        string cityName = GameManager.i.cityScript.GetCity().tag;
+                        //limit to last 'x' events
+                        count = listOfMoves.Count;
+                        max = Mathf.Min(maxNumOfScrollItems, count);
+                        limit = count - max;
+                        for (int i = count - 1; i >= limit; i--)
+                        {
+                            HistoryRebelMove historyMoves = listOfMoves[i];
+                            if (historyMoves != null)
+                            {
+                                if (historyMoves.isHighlight == true)
+                                {
+                                    listOfText.Add(GameManager.Formatt(string.Format("day {0}  {1}, start at {2}, Invisibility {3} star{4}", historyMoves.turn, cityName, historyMoves.nodeName, historyMoves.invisibility, 
+                                        historyMoves.invisibility != 1 ? "s" : ""), ColourType.neutralText));
+                                }
+                                else
+                                { listOfText.Add(string.Format("day {0}  {1}, moved to {2}, Invisibility {3} star{4}", historyMoves.turn, cityName, historyMoves.nodeName, historyMoves.invisibility, 
+                                    historyMoves.invisibility != 1 ? "s" : "")); }
+                            }
+                            else { Debug.LogWarningFormat("Invalid HistoryMegaCorp (Null) for listOfHistory[{0}]", i); }
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid listOfMoves  (Null) for TabbedHistory \"{0}\", Player", history); }
                     break;
                 default: Debug.LogWarningFormat("Unrecognised history \"{0}\"", history); break;
             }
