@@ -6454,6 +6454,7 @@ MonoBehaviour:
   TabbedTopTabDormant: {r: 0.1764706, g: 0.32941177, b: 0.7019608, a: 1}
   TabbedTextActive: {r: 0.1764706, g: 0.32941177, b: 0.7019608, a: 1}
   TabbedTextDormant: {r: 0.9490196, g: 0.9137255, b: 0.30588236, a: 1}
+  TabbedTextInactive: {r: 0.9490196, g: 0.9137255, b: 0.30588236, a: 0.49411765}
   TabbedSubHeader: {r: 0.1764706, g: 0.32941177, b: 0.7019608, a: 1}
   TabbedSubHeaderText: {r: 0.9490196, g: 0.9137255, b: 0.30588236, a: 1}
   TabbedPersonMiddle: {r: 0.16078432, g: 0.29411766, b: 0.6392157, a: 1}
@@ -6474,6 +6475,9 @@ MonoBehaviour:
   TabbedOrgAll: {r: 0.1764706, g: 0.32941177, b: 0.7019608, a: 1}
   TabbedCorpAll: {r: 0.12941177, g: 0.23529412, b: 0.5137255, a: 1}
   TabbedStatItem: {r: 0.1764706, g: 0.32941177, b: 0.7019608, a: 1}
+  TabbedOptionLight: {r: 0.36078432, g: 0.49411765, b: 0.8392157, a: 1}
+  TabbedOptionDark: {r: 0.23137255, g: 0.39607844, b: 0.80784315, a: 1}
+  TabbedOptionInactive: {r: 0.20392157, g: 0.21176471, b: 0.2, a: 0.49411765}
 --- !u!114 &114733366453475614
 MonoBehaviour:
   m_ObjectHideFlags: 1

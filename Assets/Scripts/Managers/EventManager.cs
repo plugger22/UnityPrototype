@@ -184,6 +184,8 @@ public enum EventType
     TabbedMegaCorp,
     TabbedHistoryEvents,
     TabbedHistoryEmotions,          //mood or option history depending on actor or player
+    TabbedHistoryMegaCorps,
+    TabbedHistoryMoves,
     //Main Info
     MainInfoOpen,
     MainInfoOpenInterim,

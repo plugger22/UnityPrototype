@@ -10,3 +10,91 @@ City seed 39157 -> Londus, Eurasia
 
 Dev seed 60774 -> Thursday, 21 January 2021 10:33 AM
 City seed 61728 -> Londus, Eurasia
+
+Dev seed 765 -> Thursday, 21 January 2021 11:20 AM
+City seed 58378 -> Londus, Eurasia
+ERROR Invalid tab7Interaction2 (Null)
+UnityEngine.Debug:LogError(Object)
+	ModalTabbedUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:988)
+	ModalTabbedUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:429)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:922)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	ERROR Invalid tab7Interaction3 (Null)
+UnityEngine.Debug:LogError(Object)
+	ModalTabbedUI:SubInitialiseSessionStart() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:989)
+	ModalTabbedUI:Initialise(GameState) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:429)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:868)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:922)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:413)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.UpdateHistoryButtons (gameAPI.TabbedHistory history) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2195)
+	ModalTabbedUI.OpenHistory (gameAPI.TabbedHistory history) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2269)
+	ModalTabbedUI.UpdatePage () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1738)
+	ModalTabbedUI.OpenPage (System.Int32 tabIndex, System.Boolean isMouseClick) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1663)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1121)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:351)
+	TabbedTopTabUI.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ModalTabbedUI/TabbedTopTabUI.cs:42)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "None"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:338)
+	TabbedGenericOptionUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ModalTabbedUI/TabbedGenericOptionUI.cs:49)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "None"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:338)
+	TabbedGenericOptionUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ModalTabbedUI/TabbedGenericOptionUI.cs:49)
+	UnityEngine.EventSystems.EventSystem:Update()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalTabbedUI.UpdateHistoryButtons (gameAPI.TabbedHistory history) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2200)
+	ModalTabbedUI.OpenHistory (gameAPI.TabbedHistory history) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2269)
+	ModalTabbedUI.UpdatePage () (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1738)
+	ModalTabbedUI.OpenPage (System.Int32 tabIndex, System.Boolean isMouseClick) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1663)
+	ModalTabbedUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1121)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:351)
+	TabbedTopTabUI.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ModalTabbedUI/TabbedTopTabUI.cs:42)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 20611 -> Thursday, 21 January 2021 11:23 AM
+City seed 922 -> Londus, Eurasia
+WARNING Unrecognised TabbedHistory "Moves"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:UpdateHistoryButtons(TabbedHistory) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2188)
+	ModalTabbedUI:OpenHistory(TabbedHistory) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2269)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1172)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:351)
+	TabbedGenericOptionUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ModalTabbedUI/TabbedGenericOptionUI.cs:49)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised TabbedHistory "MegaCorps"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:UpdateHistoryButtons(TabbedHistory) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2188)
+	ModalTabbedUI:OpenHistory(TabbedHistory) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2269)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1169)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:351)
+	TabbedGenericOptionUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ModalTabbedUI/TabbedGenericOptionUI.cs:49)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised TabbedHistory "Moves"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:UpdateHistoryButtons(TabbedHistory) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2188)
+	ModalTabbedUI:OpenHistory(TabbedHistory) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2269)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1172)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:351)
+	TabbedGenericOptionUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ModalTabbedUI/TabbedGenericOptionUI.cs:49)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 32651 -> Thursday, 21 January 2021 11:38 AM
+City seed 8068 -> Londus, Eurasia
+
+Dev seed 30833 -> Thursday, 21 January 2021 11:41 AM
+City seed 43879 -> Londus, Eurasia
+
+Dev seed 35937 -> Thursday, 21 January 2021 11:50 AM
+City seed 44588 -> Londus, Eurasia
+
+Dev seed 4570 -> Thursday, 21 January 2021 11:52 AM
+City seed 8770 -> Londus, Eurasia

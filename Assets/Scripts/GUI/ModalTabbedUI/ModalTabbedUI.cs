@@ -165,6 +165,8 @@ public class ModalTabbedUI : MonoBehaviour
     public GameObject tab7ScrollBackground;                 //needed to get scrollRect component in order to manually disable scrolling when not needed
     public TabbedGenericOptionUI tab7Interaction0;
     public TabbedGenericOptionUI tab7Interaction1;
+    public TabbedGenericOptionUI tab7Interaction2;
+    public TabbedGenericOptionUI tab7Interaction3;
     [Tooltip("Place all tabbedScrollItems (Dark/Light) in here. NOTE: Make sure they are in the same order as your scroll list, eg. light0, dark0, light1, dark1, light2 ...")]
     public List<GameObject> listOfTab7Items;
     public GenericHelpTooltipUI tab7PageHelp;
@@ -316,6 +318,7 @@ public class ModalTabbedUI : MonoBehaviour
     private Color topTabActiveColour;
     private Color tabTextActiveColour;                                 //top tab and controller button text colours
     private Color tabTextDormantColour;                                //top tab and controller button text colours
+    private Color tabTextInactiveColour;                               //page option inactive text colours, eg. History megaCorp / Moves for subordinates
     private Color tabSubHeaderColour;
     private Color tabSubHeaderTextActiveColour;
     private Color tabSubHeaderTextDormantColour;
@@ -339,6 +342,9 @@ public class ModalTabbedUI : MonoBehaviour
     private Color corpColour;
     private Color investigationColour;
     private Color statItemColour;
+    private Color optionLightColour;
+    private Color optionDarkColour;
+    private Color optionInactiveColour;
     #endregion
 
     #region Collections
@@ -628,6 +634,7 @@ public class ModalTabbedUI : MonoBehaviour
         topTabDormantColour = GameManager.i.uiScript.TabbedTopTabDormant;
         tabTextActiveColour = GameManager.i.uiScript.TabbedTextActive;
         tabTextDormantColour = GameManager.i.uiScript.TabbedTextDormant;
+        tabTextInactiveColour = GameManager.i.uiScript.TabbedTextInactive;
         tabSubHeaderColour = GameManager.i.uiScript.TabbedSubHeader;
         tabSubHeaderTextActiveColour = GameManager.i.uiScript.TabbedSubHeaderText;
         personMiddleColour = GameManager.i.uiScript.TabbedPersonMiddle;
@@ -648,6 +655,9 @@ public class ModalTabbedUI : MonoBehaviour
         corpColour = GameManager.i.uiScript.TabbedCorpAll;
         investigationColour = GameManager.i.uiScript.TabbedInvestigationAll;
         statItemColour = GameManager.i.uiScript.TabbedStatItem;
+        optionLightColour = GameManager.i.uiScript.TabbedOptionLight;
+        optionDarkColour = GameManager.i.uiScript.TabbedOptionDark;
+        optionInactiveColour = GameManager.i.uiScript.TabbedOptionInactive;
         Color tempColour = tabSubHeaderTextActiveColour;
         tempColour.a = 0.60f;
         tabSubHeaderTextDormantColour = tempColour;
@@ -977,6 +987,8 @@ public class ModalTabbedUI : MonoBehaviour
         //history options
         if (tab7Interaction0 != null) { tab7Interaction0.SetEvent(EventType.TabbedHistoryEvents); } else { Debug.LogError("Invalid tab7Interaction0 (Null)"); }
         if (tab7Interaction1 != null) { tab7Interaction1.SetEvent(EventType.TabbedHistoryEmotions); } else { Debug.LogError("Invalid tab7Interaction1 (Null)"); }
+        if (tab7Interaction2 != null) { tab7Interaction2.SetEvent(EventType.TabbedHistoryMegaCorps); } else { Debug.LogError("Invalid tab7Interaction2 (Null)"); }
+        if (tab7Interaction3 != null) { tab7Interaction3.SetEvent(EventType.TabbedHistoryMoves); } else { Debug.LogError("Invalid tab7Interaction3 (Null)"); }
         //scrollable items-> populate arrays
         for (int i = 0; i < listOfTab7Items.Count; i++)
         {
@@ -1076,6 +1088,8 @@ public class ModalTabbedUI : MonoBehaviour
         EventManager.i.AddListener(EventType.TabbedScrollDown, OnEvent, "ModalTabbedUI");
         EventManager.i.AddListener(EventType.TabbedHistoryEvents, OnEvent, "ModalTabbedUI");
         EventManager.i.AddListener(EventType.TabbedHistoryEmotions, OnEvent, "ModalTabbedUI");
+        EventManager.i.AddListener(EventType.TabbedHistoryMegaCorps, OnEvent, "ModalTabbedUI");
+        EventManager.i.AddListener(EventType.TabbedHistoryMoves, OnEvent, "ModalTabbedUI");
         EventManager.i.AddListener(EventType.TabbedGearNormal, OnEvent, "ModalTabbedUI");
         EventManager.i.AddListener(EventType.TabbedGearCapture, OnEvent, "ModalTabbedUI");
         EventManager.i.AddListener(EventType.TabbedOrganisation, OnEvent, "ModalTabbedUI");
@@ -1152,6 +1166,12 @@ public class ModalTabbedUI : MonoBehaviour
                 break;
             case EventType.TabbedHistoryEmotions:
                 OpenHistory(TabbedHistory.Emotions);
+                break;
+            case EventType.TabbedHistoryMegaCorps:
+                OpenHistory(TabbedHistory.MegaCorps);
+                break;
+            case EventType.TabbedHistoryMoves:
+                OpenHistory(TabbedHistory.Moves);
                 break;
             case EventType.TabbedGearNormal:
                 OpenGear(TabbedGear.Normal);
@@ -2013,7 +2033,7 @@ public class ModalTabbedUI : MonoBehaviour
             }
             //update index (required for when player directly clicks on a tab)
             currentTopTabIndex = tabIndex;
-            
+
             /*//main page text
             textPageMain.text = Convert.ToString(arrayOfPages[tabIndex]);*/
 
@@ -2135,7 +2155,7 @@ public class ModalTabbedUI : MonoBehaviour
 
     }
     #endregion
- 
+
     #region UpdateHistoryButtons
     /// <summary>
     /// Handles history page 7 option buttons texts and colours. Assumes that a button has been pressed (isPressed = true)
@@ -2148,28 +2168,132 @@ public class ModalTabbedUI : MonoBehaviour
             case TabbedHistory.Events:
                 //image button colours
                 tab7Interaction0.image.color = pageOptionActiveColour;
-                tab7Interaction1.image.color = pageOptionDormantColour;
+                tab7Interaction1.image.color = optionLightColour;
+                tab7Interaction2.image.color = optionDarkColour;
+                tab7Interaction3.image.color = optionLightColour;
                 //text colours
                 tab7Interaction0.title.color = tabTextActiveColour;
                 tab7Interaction1.title.color = tabTextDormantColour;
                 //header
                 tab7Header.text = "Events";
+                //last two options only for player
+                if (inputData.who == TabbedUIWho.Player)
+                {
+                    //image button colours
+                    tab7Interaction2.image.color = optionDarkColour;
+                    tab7Interaction3.image.color = optionLightColour;
+                    //texts
+                    tab7Interaction2.title.color = tabTextDormantColour;
+                    tab7Interaction3.title.color = tabTextDormantColour;
+                }
+                else
+                {
+                    //image button colours
+                    tab7Interaction2.image.color = optionInactiveColour;
+                    tab7Interaction3.image.color = optionInactiveColour;
+                    //texts
+                    tab7Interaction2.title.color = tabTextInactiveColour;
+                    tab7Interaction3.title.color = tabTextInactiveColour;
+                }
                 break;
             case TabbedHistory.Emotions:
                 //image button colours
-                tab7Interaction0.image.color = pageOptionDormantColour;
+                tab7Interaction0.image.color = optionDarkColour;
                 tab7Interaction1.image.color = pageOptionActiveColour;
+                tab7Interaction2.image.color = optionDarkColour;
+                tab7Interaction3.image.color = optionLightColour;
                 //text colours
                 tab7Interaction0.title.color = tabTextDormantColour;
                 tab7Interaction1.title.color = tabTextActiveColour;
-                //header
+                //last two options only for player
                 if (inputData.who == TabbedUIWho.Player)
-                { tab7Header.text = "Mood"; }
-                else { tab7Header.text = "Opinion"; }
+                {
+                    tab7Header.text = "Mood";
+                    //image button colours
+                    tab7Interaction2.image.color = optionDarkColour;
+                    tab7Interaction3.image.color = optionLightColour;
+                    //texts
+                    tab7Interaction2.title.color = tabTextDormantColour;
+                    tab7Interaction3.title.color = tabTextDormantColour;
+                }
+                else
+                {
+                    tab7Header.text = "Opinion";
+                    //image button colours
+                    tab7Interaction2.image.color = optionInactiveColour;
+                    tab7Interaction3.image.color = optionInactiveColour;
+                    //texts
+                    tab7Interaction2.title.color = tabTextInactiveColour;
+                    tab7Interaction3.title.color = tabTextInactiveColour;
+                }
+                break;
+            case TabbedHistory.MegaCorps:
+                if (inputData.who == TabbedUIWho.Player)
+                {
+                    //image button colours
+                    tab7Interaction0.image.color = optionDarkColour;
+                    tab7Interaction1.image.color = optionLightColour;
+                    tab7Interaction2.image.color = pageOptionActiveColour;
+                    tab7Interaction3.image.color = optionLightColour;
+                    //text colours
+                    tab7Interaction0.title.color = tabTextDormantColour;
+                    tab7Interaction1.title.color = tabTextDormantColour;
+                    tab7Interaction2.title.color = tabTextActiveColour;
+                    tab7Interaction3.title.color = tabTextDormantColour;
+                    //header
+                    tab7Header.text = "MegaCorps";
+                }
+                else
+                {
+                    //image button colours
+                    tab7Interaction0.image.color = optionDarkColour;
+                    tab7Interaction1.image.color = optionLightColour;
+                    tab7Interaction2.image.color = optionInactiveColour;
+                    tab7Interaction3.image.color = optionInactiveColour;
+                    //text colours
+                    tab7Interaction0.title.color = tabTextDormantColour;
+                    tab7Interaction1.title.color = tabTextDormantColour;
+                    tab7Interaction2.title.color = tabTextInactiveColour;
+                    tab7Interaction3.title.color = tabTextInactiveColour;
+                    //header
+                    tab7Header.text = "Player Only";
+                }
+                break;
+            case TabbedHistory.Moves:
+                if (inputData.who == TabbedUIWho.Player)
+                {
+                    //image button colours
+                    tab7Interaction0.image.color = optionDarkColour;
+                    tab7Interaction1.image.color = optionLightColour;
+                    tab7Interaction2.image.color = optionDarkColour;
+                    tab7Interaction3.image.color = pageOptionActiveColour;
+                    //text colours
+                    tab7Interaction0.title.color = tabTextDormantColour;
+                    tab7Interaction1.title.color = tabTextDormantColour;
+                    tab7Interaction2.title.color = tabTextDormantColour;
+                    tab7Interaction3.title.color = tabTextActiveColour;
+                    //header
+                    tab7Header.text = "Moves";
+                }
+                else
+                {
+                    //image button colours
+                    tab7Interaction0.image.color = optionDarkColour;
+                    tab7Interaction1.image.color = optionLightColour;
+                    tab7Interaction2.image.color = optionInactiveColour;
+                    tab7Interaction3.image.color = optionInactiveColour;
+                    //text colours
+                    tab7Interaction0.title.color = tabTextDormantColour;
+                    tab7Interaction1.title.color = tabTextDormantColour;
+                    tab7Interaction2.title.color = tabTextInactiveColour;
+                    tab7Interaction3.title.color = tabTextInactiveColour;
+                    //header
+                    tab7Header.text = "Player Only";
+                }
                 break;
             default: Debug.LogWarningFormat("Unrecognised TabbedHistory \"{0}\"", history); break;
         }
-        //text for Emotions button
+        //text for Emotion Option button -> varys depending on Player or Other
         switch (inputData.who)
         {
             case TabbedUIWho.Player: tab7Interaction1.title.text = "Mood"; break;
@@ -4263,121 +4387,153 @@ public class ModalTabbedUI : MonoBehaviour
         if (inputData.who == TabbedUIWho.Player)
         {
             //Player -> Events or Mood
-            if (history == TabbedHistory.Events)
+            switch (history)
             {
-                //Events
-                List<HistoryActor> listOfEvents = GameManager.i.dataScript.GetListOfHistoryPlayer();
-                //debug -> flag prevents multiple occurences
-                if (isAddDebugRecords == false)
-                { listOfEvents.AddRange(DebugGetExtraHistory()); }
-                //convert to text
-                if (listOfEvents != null)
-                {
-                    //limit to last 'x' events
-                    count = listOfEvents.Count;
-                    max = Mathf.Min(maxNumOfScrollItems, count);
-                    limit = count - max;
-                    for (int i = count - 1; i >= limit; i--)
+                case TabbedHistory.Events:
+                    //Events
+                    List<HistoryActor> listOfEvents = GameManager.i.dataScript.GetListOfHistoryPlayer();
+                    //debug -> flag prevents multiple occurences
+                    if (isAddDebugRecords == false)
+                    { listOfEvents.AddRange(DebugGetExtraHistory()); }
+                    //convert to text
+                    if (listOfEvents != null)
                     {
-                        HistoryActor historyEvent = listOfEvents[i];
-                        if (historyEvent != null)
+                        //limit to last 'x' events
+                        count = listOfEvents.Count;
+                        max = Mathf.Min(maxNumOfScrollItems, count);
+                        limit = count - max;
+                        for (int i = count - 1; i >= limit; i--)
                         {
-                            //highlight any special entries, eg. start of level, in yellow
-                            if (historyEvent.isHighlight == true)
+                            HistoryActor historyEvent = listOfEvents[i];
+                            if (historyEvent != null)
                             {
-                                listOfText.Add(GameManager.Formatt(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", at " + historyEvent.district : ""),
-                                  ColourType.neutralText));
+                                //highlight any special entries, eg. start of level, in yellow
+                                if (historyEvent.isHighlight == true)
+                                {
+                                    listOfText.Add(GameManager.Formatt(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", at " + historyEvent.district : ""),
+                                      ColourType.neutralText));
+                                }
+                                else { listOfText.Add(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", at " + historyEvent.district : "")); }
                             }
-                            else { listOfText.Add(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", at " + historyEvent.district : "")); }
+                            else { Debug.LogWarningFormat("Invalid HistoryActor (Null) for listOfEvents[{0}]", i); }
                         }
-                        else { Debug.LogWarningFormat("Invalid HistoryActor (Null) for listOfEvents[{0}]", i); }
                     }
-                }
-                else { Debug.LogWarningFormat("Invalid listOfEvents (Null) for TabbedHistory \"{0}\", Player", history); }
-            }
-            else
-            {
-                //Mood
-                List<HistoryMood> listOfMood = GameManager.i.playerScript.GetListOfMoodHistory();
-                if (listOfMood != null)
-                {
-                    //limit to last 'x' events
-                    count = listOfMood.Count;
-                    max = Mathf.Min(maxNumOfScrollItems, count);
-                    limit = count - max;
-                    for (int i = count - 1; i >= limit; i--)
+                    else { Debug.LogWarningFormat("Invalid listOfEvents (Null) for TabbedHistory \"{0}\", Player", history); }
+                    break;
+                case TabbedHistory.Emotions:
+                    //Mood
+                    List<HistoryMood> listOfMood = GameManager.i.playerScript.GetListOfMoodHistory();
+                    if (listOfMood != null)
                     {
-                        HistoryMood historyMood = listOfMood[i];
-                        if (historyMood != null)
+                        //limit to last 'x' events
+                        count = listOfMood.Count;
+                        max = Mathf.Min(maxNumOfScrollItems, count);
+                        limit = count - max;
+                        for (int i = count - 1; i >= limit; i--)
                         {
-                            if (historyMood.isHighlight == true)
+                            HistoryMood historyMood = listOfMood[i];
+                            if (historyMood != null)
                             {
-                                listOfText.Add(GameManager.Formatt(string.Format("day {0}  {1} (Mood now {2} star{3}){4}", historyMood.turn, historyMood.descriptor, historyMood.mood,
-                                historyMood.mood != 1 ? "s" : "", historyMood.factor.Length > 0 ? string.Format(", influenced by <b>{0}</b>", historyMood.factor) : ""), ColourType.neutralText));
+                                if (historyMood.isHighlight == true)
+                                {
+                                    listOfText.Add(GameManager.Formatt(string.Format("day {0}  {1} (Mood now {2} star{3}){4}", historyMood.turn, historyMood.descriptor, historyMood.mood,
+                                    historyMood.mood != 1 ? "s" : "", historyMood.factor.Length > 0 ? string.Format(", influenced by <b>{0}</b>", historyMood.factor) : ""), ColourType.neutralText));
+                                }
+                                else
+                                {
+                                    listOfText.Add(string.Format("day {0}  {1} (Mood now {2} star{3}){4}", historyMood.turn, historyMood.descriptor, historyMood.mood,
+                                    historyMood.mood != 1 ? "s" : "", historyMood.factor.Length > 0 ? string.Format(", influenced by <b>{0}</b>", historyMood.factor) : ""));
+                                }
                             }
-                            else
-                            {
-                                listOfText.Add(string.Format("day {0}  {1} (Mood now {2} star{3}){4}", historyMood.turn, historyMood.descriptor, historyMood.mood,
-                                historyMood.mood != 1 ? "s" : "", historyMood.factor.Length > 0 ? string.Format(", influenced by <b>{0}</b>", historyMood.factor) : ""));
-                            }
+                            else { Debug.LogWarningFormat("Invalid HistoryMood (Null) for listOfMood[{0}]", i); }
                         }
-                        else { Debug.LogWarningFormat("Invalid HistoryMood (Null) for listOfMood[{0}]", i); }
                     }
-                }
-                else { Debug.LogWarningFormat("Invalid listOfMood (Null) for TabbedHistory \"{0}\", Player", history); }
+                    else { Debug.LogWarningFormat("Invalid listOfMood (Null) for TabbedHistory \"{0}\", Player", history); }
+                    break;
+                case TabbedHistory.MegaCorps:
+                    //MegaCorps
+                    List<HistoryMegaCorp> listOfHistory = GameManager.i.dataScript.GetListOfHistoryMegaCorp();
+                    if (listOfHistory != null)
+                    {
+                        //limit to last 'x' events
+                        count = listOfHistory.Count;
+                        max = Mathf.Min(maxNumOfScrollItems, count);
+                        limit = count - max;
+                        for (int i = count - 1; i >= limit; i--)
+                        {
+                            HistoryMegaCorp historyMegaCorp = listOfHistory[i];
+                            if (historyMegaCorp != null)
+                            {
+                                /*
+                                listOfText.Add(GameManager.Formatt(string.Format("day {0}  {1} (Mood now {2} star{3}){4}", historyMegaCorp.turn, historyMood.descriptor, historyMood.mood,
+                                historyM.mood != 1 ? "s" : "", historyMood.factor.Length > 0 ? string.Format(", influenced by <b>{0}</b>", historyMood.factor) : ""), ColourType.neutralText));
+                                */
+                            }
+                            else { Debug.LogWarningFormat("Invalid HistoryMood (Null) for listOfMood[{0}]", i); }
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid listOfMood (Null) for TabbedHistory \"{0}\", Player", history); }
+                    break;
+                case TabbedHistory.Moves:
+
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised history \"{0}\"", history); break;
             }
         }
         else
         {
-            //Actor -> Events or Opinion
-            if (history == TabbedHistory.Events)
+            switch (history)
             {
-                List<HistoryActor> listOfEvents = arrayOfActorsTemp[currentSideTabIndex].GetListOfHistory();
-                if (listOfEvents != null)
-                {
-                    //limit to last 'x' events
-                    count = listOfEvents.Count;
-                    max = Mathf.Min(maxNumOfScrollItems, count);
-                    limit = count - max;
-                    for (int i = count - 1; i >= limit; i--)
+                case TabbedHistory.Events:
+                    //Actor -> Events or Opinion
+
+                    List<HistoryActor> listOfEvents = arrayOfActorsTemp[currentSideTabIndex].GetListOfHistory();
+                    if (listOfEvents != null)
                     {
-                        HistoryActor historyEvent = listOfEvents[i];
-                        if (historyEvent != null)
+                        //limit to last 'x' events
+                        count = listOfEvents.Count;
+                        max = Mathf.Min(maxNumOfScrollItems, count);
+                        limit = count - max;
+                        for (int i = count - 1; i >= limit; i--)
                         {
-                            //highlight any special entries, eg. start of level, in yellow
-                            if (historyEvent.isHighlight == true)
+                            HistoryActor historyEvent = listOfEvents[i];
+                            if (historyEvent != null)
                             {
-                                listOfText.Add(GameManager.Formatt(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", at " + historyEvent.district : ""),
-                                  ColourType.neutralText));
+                                //highlight any special entries, eg. start of level, in yellow
+                                if (historyEvent.isHighlight == true)
+                                {
+                                    listOfText.Add(GameManager.Formatt(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", at " + historyEvent.district : ""),
+                                      ColourType.neutralText));
+                                }
+                                else { listOfText.Add(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", at " + historyEvent.district : "")); }
                             }
-                            else { listOfText.Add(string.Format("day {0}  {1}{2}", historyEvent.turn, historyEvent.text, historyEvent.district != null ? ", at " + historyEvent.district : "")); }
+                            else { Debug.LogWarningFormat("Invalid HistoryActor (Null) for listOfEvents[{0}]", i); }
                         }
-                        else { Debug.LogWarningFormat("Invalid HistoryActor (Null) for listOfEvents[{0}]", i); }
                     }
-                }
-                else { Debug.LogWarningFormat("Invalid listOfEvents (Null) for TabbedHistory \"{0}\", Actor", history); }
-            }
-            else
-            {
-                List<HistoryOpinion> listOfOpinion = arrayOfActorsTemp[currentSideTabIndex].GetPersonality().GetListOfOpinion();
-                if (listOfOpinion != null)
-                {
-                    //limit to last 'x' events
-                    count = listOfOpinion.Count;
-                    max = Mathf.Min(maxNumOfScrollItems, count);
-                    limit = count - max;
-                    for (int i = count - 1; i >= limit; i--)
+                    else { Debug.LogWarningFormat("Invalid listOfEvents (Null) for TabbedHistory \"{0}\", Actor", history); }
+                    break;
+                case TabbedHistory.Emotions:
+                    List<HistoryOpinion> listOfOpinion = arrayOfActorsTemp[currentSideTabIndex].GetPersonality().GetListOfOpinion();
+                    if (listOfOpinion != null)
                     {
-                        HistoryOpinion historyOpinion = listOfOpinion[i];
-                        if (historyOpinion != null)
+                        //limit to last 'x' events
+                        count = listOfOpinion.Count;
+                        max = Mathf.Min(maxNumOfScrollItems, count);
+                        limit = count - max;
+                        for (int i = count - 1; i >= limit; i--)
                         {
-                            listOfText.Add(string.Format("day {0}  {1} (Opinion now {2} star{3}){4}", historyOpinion.turn, historyOpinion.descriptor, historyOpinion.opinion,
-                              historyOpinion.opinion != 1 ? "s" : "", historyOpinion.isNormal == true ? "" : ", IGNORED"));
+                            HistoryOpinion historyOpinion = listOfOpinion[i];
+                            if (historyOpinion != null)
+                            {
+                                listOfText.Add(string.Format("day {0}  {1} (Opinion now {2} star{3}){4}", historyOpinion.turn, historyOpinion.descriptor, historyOpinion.opinion,
+                                  historyOpinion.opinion != 1 ? "s" : "", historyOpinion.isNormal == true ? "" : ", IGNORED"));
+                            }
+                            else { Debug.LogWarningFormat("Invalid HistoryOpinion (Null) for listOfOpinion[{0}]", i); }
                         }
-                        else { Debug.LogWarningFormat("Invalid HistoryOpinion (Null) for listOfOpinion[{0}]", i); }
                     }
-                }
-                else { Debug.LogWarningFormat("Invalid listOfOpinion (Null) for TabbedHistory \"{0}\", Player", history); }
+                    else { Debug.LogWarningFormat("Invalid listOfOpinion (Null) for TabbedHistory \"{0}\", Player", history); }
+                    break;
+                    //no default as MegaCorps and Moves options should be 'Nothing happens' (buttons shown as greyed out and inactive)
             }
         }
         return listOfText;

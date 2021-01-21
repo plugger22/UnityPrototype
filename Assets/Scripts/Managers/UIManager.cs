@@ -71,6 +71,8 @@ public class UIManager : MonoBehaviour
     public Color TabbedTextActive;
     [Tooltip("Dormant Top and Controller text colour (should be 100% alpha)")]
     public Color TabbedTextDormant;
+    [Tooltip("Inactive Option Text color -> should be 50% (126) alpha")]
+    public Color TabbedTextInactive;
     [Tooltip("Sub header background sprite colour, eg. Status, Friends and Enemies, (should be 100% alpha)")]
     public Color TabbedSubHeader;
     [Tooltip("Sub header text colour (should be 100% alpha)")]
@@ -111,4 +113,11 @@ public class UIManager : MonoBehaviour
     public Color TabbedCorpAll;
     [Tooltip("Statistics item background -> minimal alpha (25)")]
     public Color TabbedStatItem;
+    [Tooltip("History Option Light color -> All (should be 100% alpha)")]
+    public Color TabbedOptionLight;
+    [Tooltip("History Option Dark color -> All (should be 100% alpha)")]
+    public Color TabbedOptionDark;
+    [Tooltip("History Option Inactive color -> 50% (126) alpha)")]
+    public Color TabbedOptionInactive;
+
 }
