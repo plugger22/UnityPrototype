@@ -18,11 +18,15 @@ public class ActorPoolManager : MonoBehaviour
     private ActorDraftStatus statusHqWorker;
     private ActorDraftStatus statusOnMap;
     private ActorDraftStatus statusPool;
-    private ActorDraftStatus statusReserves;
     private NameSet nameSet;
     private List<ActorArc> listOfActorArcs;
+    private List<ActorArc> listOfTempArcs;                      //used for processing
+    private List<Trait> listOfTraits;
     private int numOfActorsHQ;
     private int hqPowerFactor;
+    private int numOfActorArcs;
+    private int index;
+    private int counter;
 
     /// <summary>
     /// Initialisation
@@ -70,7 +74,6 @@ public class ActorPoolManager : MonoBehaviour
                     case "HQWorker": statusHqWorker = assetSO; break;
                     case "OnMap": statusOnMap = assetSO; break;
                     case "Pool": statusPool = assetSO; break;
-                    case "Reserves": statusReserves = assetSO; break;
                     default: Debug.LogWarningFormat("Unrecognised ActorDraftStatus \"{0}\"", assetSO.name); break;
                 }
             }
@@ -82,8 +85,35 @@ public class ActorPoolManager : MonoBehaviour
             if (statusHqWorker == null) { Debug.LogError("Invalid statusHqWorker (Null)"); }
             if (statusOnMap == null) { Debug.LogError("Invalid statusOnMap (Null)"); }
             if (statusPool == null) { Debug.LogError("Invalid statusPool (Null)"); }
-            if (statusReserves == null) { Debug.LogError("Invalid statusReserves (Null)"); }
         }
+        //
+        // - - - Traits
+        //
+        listOfTraits = new List<Trait>();
+        Trait[] arrayOfTraits = GameManager.i.loadScript.arrayOfTraits;
+        Trait trait;
+        if (arrayOfTraits != null)
+        {
+            //loop traits and place those that apply to the resistance, or both, into the listOfTraits
+            for (int i = 0; i < arrayOfTraits.Length; i++)
+            {
+                trait = arrayOfTraits[i];
+                if (trait != null)
+                {
+                    switch (trait.side.name)
+                    {
+                        case "Both":
+                        case "Resistance":
+                            listOfTraits.Add(trait);
+                            break;
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid trait (Null) for arrayOfTraits[{0}]", i); }
+            }
+            if (listOfTraits.Count == 0)
+            { Debug.LogError("Invalid listOfTraits (Empty)"); }
+        }
+        else { Debug.LogError("Invalid arrayOfTraits (Null)"); }
         //
         // - - - Nameset
         //
@@ -95,6 +125,13 @@ public class ActorPoolManager : MonoBehaviour
         //
         listOfActorArcs = GameManager.i.dataScript.GetActorArcs(GameManager.i.sideScript.PlayerSide);
         if (listOfActorArcs == null) { Debug.LogError("Invalid listOfActorArcs (Null)"); }
+        else
+        {
+            numOfActorArcs = listOfActorArcs.Count;
+            //initialise temp list of Arcs by Value (not reference as I'll be deleting some)
+            listOfTempArcs = new List<ActorArc>();
+            listOfTempArcs.AddRange(listOfActorArcs);
+        }
         //
         // - - - Fast Access
         //
@@ -105,41 +142,63 @@ public class ActorPoolManager : MonoBehaviour
     /// <summary>
     /// Master program
     /// </summary>
-    public void CreateActorPool()
+    public void CreateActorPool(string poolName)
     {
+        Debug.Assert(string.IsNullOrEmpty(poolName) == false, "Invalid poolName (Null or Empty)");
+        //stop animations
+        GameManager.i.animateScript.StopAnimations();
         Initialise();
-        CreateActorDraft(11);
+        InitialiseActorPool(poolName);
+        //restart animations
+        GameManager.i.animateScript.StartAnimations();
     }
 
     /// <summary>
-    /// Creates an ActorDraft.SO and places in folder
+    /// Creates an actorPool and populates with ActorDraft.SO's
     /// </summary>
-    private void CreateActorDraft(int numToCreate)
+    private void InitialiseActorPool(string poolName)
     {
-        string path;
+
+        string pathPool, pathDraft;
+        //
+        // - - - ActorPool
+        //
+        ActorPool poolAsset = ScriptableObject.CreateInstance<ActorPool>();
+        //path with unique asset name for each
+        pathPool = string.Format("Assets/SO/ActorPools/{0}.asset", poolName);
+        //how many actors required to populate pool
+        int numToCreate = poolAsset.numOfActors;
+        poolAsset.nameSet = nameSet.name;
+        //
+        // - - - ActorDrafts
+        //
         for (int i = 0; i < numToCreate; i++)
         {
             //create SO object
             ActorDraft actorAsset = ScriptableObject.CreateInstance<ActorDraft>();
             //overwrite default data
-            UpdateActorDraft(actorAsset, i);
+            UpdateActorDraft(poolAsset, actorAsset, i);
             //path with unique asset name for each
-            path = string.Format("Assets/SO/ActorDrafts/draft{0}.asset", i);
+            pathDraft = string.Format("Assets/SO/ActorDrafts/draft{0}.asset", i);
             //delete any existing asset at the same location (if same named asset presnet, new asset won't overwrite)
-            AssetDatabase.DeleteAsset(path);
+            AssetDatabase.DeleteAsset(pathDraft);
             //Add asset to file and give it a name ('actor')
-            AssetDatabase.CreateAsset(actorAsset, path);
+            AssetDatabase.CreateAsset(actorAsset, pathDraft);
         }
+        //delete any existing asset at the same location (if same named asset presnet, new asset won't overwrite)
+        AssetDatabase.DeleteAsset(pathPool);
+        //initialise pool
+        AssetDatabase.CreateAsset(poolAsset, pathPool);
         //Save assets to disk
         AssetDatabase.SaveAssets();       
     }
 
 
     /// <summary>
-    /// Initialises data for a newly created ActorDraft
+    /// Initialises data for a newly created ActorDraft. 
     /// </summary>
     /// <param name="actor"></param>
-    private void UpdateActorDraft(ActorDraft actor, int num)
+    private void UpdateActorDraft(ActorPool pool, ActorDraft actor, int num)
     {
         if (actor != null)
         {
@@ -159,14 +218,39 @@ public class ActorPoolManager : MonoBehaviour
             actor.lastName = nameSet.lastNames.GetRandomRecord();
             actor.actorName = string.Format("{0} {1}", actor.firstName, actor.lastName);
             //
-            // - - - status, arc, level and power
+            // - - - status, arc, level and power -> assign to actorPool
             //
             switch (num)
             {
-                case 0: actor.status = statusHqBoss0; actor.arc = listOfActorArcs[Random.Range(0, listOfActorArcs.Count)]; actor.power = (numOfActorsHQ + 2 - (int)ActorHQ.Boss) * hqPowerFactor; break;
-                case 1: actor.status = statusHqBoss1; actor.arc = listOfActorArcs[Random.Range(0, listOfActorArcs.Count)]; actor.power = (numOfActorsHQ + 2 - (int)ActorHQ.SubBoss1) * hqPowerFactor; break;
-                case 2: actor.status = statusHqBoss2; actor.arc = listOfActorArcs[Random.Range(0, listOfActorArcs.Count)]; actor.power = (numOfActorsHQ + 2 - (int)ActorHQ.SubBoss2) * hqPowerFactor; break;
-                case 3: actor.status = statusHqBoss3; actor.arc = listOfActorArcs[Random.Range(0, listOfActorArcs.Count)]; actor.power = (numOfActorsHQ + 2 - (int)ActorHQ.SubBoss3) * hqPowerFactor; break;
+                case 0:
+                    actor.status = statusHqBoss0;
+                    actor.arc = listOfActorArcs[Random.Range(0, listOfActorArcs.Count)];
+                    actor.power = (numOfActorsHQ + 2 - (int)ActorHQ.Boss) * hqPowerFactor;
+                    actor.level = 3;
+                    pool.hqBoss0 = actor;
+                    break;
+                case 1:
+                    actor.status = statusHqBoss1;
+                    actor.arc = listOfActorArcs[Random.Range(0, listOfActorArcs.Count)];
+                    actor.power = (numOfActorsHQ + 2 - (int)ActorHQ.SubBoss1) * hqPowerFactor;
+                    actor.level = 2;
+                    //add to pool (do after all data initialisation)
+                    pool.hqBoss1 = actor;
+                    break;
+                case 2:
+                    actor.status = statusHqBoss2;
+                    actor.arc = listOfActorArcs[Random.Range(0, listOfActorArcs.Count)];
+                    actor.power = (numOfActorsHQ + 2 - (int)ActorHQ.SubBoss2) * hqPowerFactor;
+                    actor.level = 2;
+                    pool.hqBoss2 = actor;
+                    break;
+                case 3:
+                    actor.status = statusHqBoss3;
+                    actor.arc = listOfActorArcs[Random.Range(0, listOfActorArcs.Count)];
+                    actor.power = (numOfActorsHQ + 2 - (int)ActorHQ.SubBoss3) * hqPowerFactor;
+                    actor.level = 2;
+                    pool.hqBoss3 = actor;
+                    break;
                 case 4:
                 case 5:
                 case 6:
@@ -174,7 +258,96 @@ public class ActorPoolManager : MonoBehaviour
                 case 8:
                 case 9:
                 case 10:
-                case 11: actor.status = statusHqWorker; actor.arc = listOfActorArcs[Random.Range(0, listOfActorArcs.Count)]; actor.power = Random.Range(1, 6); break;
+                case 11:
+                    //workers
+                    actor.status = statusHqWorker;
+                    actor.arc = listOfActorArcs[Random.Range(0, listOfActorArcs.Count)];
+                    actor.power = Random.Range(1, 6);
+                    actor.level = 2;
+                    pool.listHqWorkers.Add(actor);
+                    break;
+                case 12:
+                case 13:
+                case 14:
+                case 15:
+                    //OnMap
+                    actor.status = statusOnMap;
+                    index = Random.Range(0, listOfTempArcs.Count);
+                    actor.arc = listOfTempArcs[index];
+                    //remove arc from temp list to prevent dupes
+                    listOfTempArcs.RemoveAt(index);
+                    actor.power = 0;
+                    actor.level = 1;
+                    pool.listOnMap.Add(actor);
+                    //set counter to 0 for remaining level 1 actors using left over temp Arcs
+                    if (num == 15) { counter = 0; }
+                    break;
+                case 16:
+                case 17:
+                case 18:
+                case 19:
+                case 20:
+                    //Level one, remaining temp arcs
+                    actor.status = statusPool;
+                    actor.arc = listOfTempArcs[counter++];
+                    actor.power = 0;
+                    actor.level = 1;
+                    pool.listLevelOne.Add(actor);
+                    //reset counter ready for a full arc set of level one actors
+                    if (num == 20) { counter = 0; }
+                    break;
+                case 21:
+                case 22:
+                case 23:
+                case 24:
+                case 25:
+                case 26:
+                case 27:
+                case 28:
+                case 29:
+                    //Level one, an additional full set of 9
+                    actor.status = statusPool;
+                    actor.arc = listOfActorArcs[counter++];
+                    actor.power = 0;
+                    actor.level = 1;
+                    pool.listLevelOne.Add(actor);
+                    //reset counter ready for a full arc set of level two actors
+                    if (num == 29) { counter = 0; }
+                    break;
+                case 30:
+                case 31:
+                case 32:
+                case 33:
+                case 34:
+                case 35:
+                case 36:
+                case 37:
+                case 38:
+                    //Level two, a full set of 9
+                    actor.status = statusPool;
+                    actor.arc = listOfActorArcs[counter++];
+                    actor.power = 0;
+                    actor.level = 2;
+                    pool.listLevelTwo.Add(actor);
+                    //reset counter ready for a full arc set of level three actors
+                    if (num == 38) { counter = 0; }
+                    break;
+                case 39:
+                case 40:
+                case 41:
+                case 42:
+                case 43:
+                case 44:
+                case 45:
+                case 46:
+                case 47:
+                    //Level three, a full set of 9
+                    actor.status = statusPool;
+                    actor.arc = listOfActorArcs[counter++];
+                    actor.power = 0;
+                    actor.level = 3;
+                    pool.listLevelThree.Add(actor);
+                    break;
                 default: Debug.LogWarningFormat("Unrecognised num \"{0}\"", num); break;
             }
 

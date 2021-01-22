@@ -11,14 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
   m_Name: draft0
   m_EditorClassIdentifier: 
-  actorName: Gabby Morris
-  firstName: Gabby
-  lastName: Morris
+  actorName: Zack Cochrane
+  firstName: Zack
+  lastName: Cochrane
   sprite: {fileID: 0}
-  arc: {fileID: 11400000, guid: 33cfb0c161a7cde409d27df1080bd2c8, type: 2}
+  arc: {fileID: 11400000, guid: acb9718e84f6a6740810786455da2a6e, type: 2}
   trait: {fileID: 0}
-  level: 0
+  level: 3
   power: 50
   backstory: 
   status: {fileID: 11400000, guid: 77611bb5bd4c52649be9b54f0cc46975, type: 2}
-  sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
+  sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}

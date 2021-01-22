@@ -11,13 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
   m_Name: draft3
   m_EditorClassIdentifier: 
-  actorName: Imogen Jones
-  firstName: Imogen
-  lastName: Jones
+  actorName: Paisley Clark
+  firstName: Paisley
+  lastName: Clark
   sprite: {fileID: 0}
-  arc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
+  arc: {fileID: 11400000, guid: acb9718e84f6a6740810786455da2a6e, type: 2}
   trait: {fileID: 0}
-  level: 0
+  level: 2
   power: 20
   backstory: 
   status: {fileID: 11400000, guid: 239d57ba6472f0545a7bc4e4c820638c, type: 2}

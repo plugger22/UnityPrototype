@@ -11,14 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
   m_Name: draft4
   m_EditorClassIdentifier: 
-  actorName: Elena Clark
-  firstName: Elena
-  lastName: Clark
+  actorName: Mary Spencer
+  firstName: Mary
+  lastName: Spencer
   sprite: {fileID: 0}
-  arc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
+  arc: {fileID: 11400000, guid: 585f6ebe97311aa4396d0c79f6faf1df, type: 2}
   trait: {fileID: 0}
-  level: 0
-  power: 3
+  level: 2
+  power: 2
   backstory: 
   status: {fileID: 11400000, guid: 182c6f3b0ee729240bf13874e977c634, type: 2}
   sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}

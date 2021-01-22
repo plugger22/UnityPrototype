@@ -11,13 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
   m_Name: draft2
   m_EditorClassIdentifier: 
-  actorName: Katie Beckhelling
-  firstName: Katie
-  lastName: Beckhelling
+  actorName: Alana Montgomery
+  firstName: Alana
+  lastName: Montgomery
   sprite: {fileID: 0}
-  arc: {fileID: 11400000, guid: 33cfb0c161a7cde409d27df1080bd2c8, type: 2}
+  arc: {fileID: 11400000, guid: acb9718e84f6a6740810786455da2a6e, type: 2}
   trait: {fileID: 0}
-  level: 0
+  level: 2
   power: 30
   backstory: 
   status: {fileID: 11400000, guid: 02ce306de46faba468675aca9da4675e, type: 2}

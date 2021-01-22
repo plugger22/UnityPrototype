@@ -11,13 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
   m_Name: draft1
   m_EditorClassIdentifier: 
-  actorName: Freddy Sweeney
-  firstName: Freddy
-  lastName: Sweeney
+  actorName: Declan Cumberland
+  firstName: Declan
+  lastName: Cumberland
   sprite: {fileID: 0}
-  arc: {fileID: 11400000, guid: 0e5101dc3946aa543a729ea87a09ee67, type: 2}
+  arc: {fileID: 11400000, guid: 268c960d386d285478b3ab6aaa5796bf, type: 2}
   trait: {fileID: 0}
-  level: 0
+  level: 2
   power: 40
   backstory: 
   status: {fileID: 11400000, guid: dbebf12928f09674abf2bdf3846857cc, type: 2}
