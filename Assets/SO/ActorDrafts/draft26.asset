@@ -11,14 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
   m_Name: draft26
   m_EditorClassIdentifier: 
-  actorName: Teddy Simpson
-  firstName: Teddy
-  lastName: Simpson
-  sprite: {fileID: 0}
+  actorName: Lex Burnett
+  firstName: Lex
+  lastName: Burnett
+  sprite: {fileID: 21300000, guid: aa2bfbc87aa65fa469977ae64d323a08, type: 3}
   arc: {fileID: 11400000, guid: 47b35b061cc8ac94b8c82676e37f243e, type: 2}
-  trait: {fileID: 0}
+  trait: {fileID: 11400000, guid: da4a57d4fd990da459ef0d1af153cad8, type: 2}
   level: 1
   power: 0
   backstory: 
-  status: {fileID: 11400000, guid: d33c8be776f062e4dbbf9ee9b616602d, type: 2}
+  status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
   sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}

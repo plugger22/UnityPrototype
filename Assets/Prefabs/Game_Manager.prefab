@@ -1567,13 +1567,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
   arrayOfActorDraftStatus:
   - {fileID: 11400000, guid: 77611bb5bd4c52649be9b54f0cc46975, type: 2}
-  - {fileID: 11400000, guid: dbebf12928f09674abf2bdf3846857cc, type: 2}
-  - {fileID: 11400000, guid: 02ce306de46faba468675aca9da4675e, type: 2}
-  - {fileID: 11400000, guid: 239d57ba6472f0545a7bc4e4c820638c, type: 2}
-  - {fileID: 11400000, guid: 182c6f3b0ee729240bf13874e977c634, type: 2}
-  - {fileID: 11400000, guid: 9a8635429b3cc654f87dbd855c55c659, type: 2}
-  - {fileID: 11400000, guid: d33c8be776f062e4dbbf9ee9b616602d, type: 2}
-  - {fileID: 11400000, guid: 259b53fc95c05844482d3948222f3347, type: 2}
+  - {fileID: 11400000, guid: 2e301ce6b82a6774e966d7fdb4817cd6, type: 2}
+  - {fileID: 11400000, guid: 37e045679635478418061cea316085b7, type: 2}
+  - {fileID: 11400000, guid: 12718945bbbb5204c97bb9365e8f9787, type: 2}
+  - {fileID: 11400000, guid: 745709acc9a885940bf510a33f017691, type: 2}
+  - {fileID: 11400000, guid: f52d9e83b05732d4cb27c200536658b7, type: 2}
+  - {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
   arrayOfConditions:
   - {fileID: 11400000, guid: 404616d01297a7549a6d1e8d51025471, type: 2}
   - {fileID: 11400000, guid: 611afd3256c0b4344838897e41a45a0d, type: 2}

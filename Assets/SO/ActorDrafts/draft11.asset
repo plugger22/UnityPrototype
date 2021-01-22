@@ -11,14 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
   m_Name: draft11
   m_EditorClassIdentifier: 
-  actorName: Torrance Beckhelling
-  firstName: Torrance
-  lastName: Beckhelling
-  sprite: {fileID: 0}
-  arc: {fileID: 11400000, guid: 33cfb0c161a7cde409d27df1080bd2c8, type: 2}
-  trait: {fileID: 0}
+  actorName: Elena Windsor
+  firstName: Elena
+  lastName: Windsor
+  sprite: {fileID: 21300000, guid: 7bbf2ee2c617a774f898a6889352d063, type: 3}
+  arc: {fileID: 11400000, guid: 0e5101dc3946aa543a729ea87a09ee67, type: 2}
+  trait: {fileID: 11400000, guid: f4ec8537a1417d244824032875ed1dcf, type: 2}
   level: 2
-  power: 4
+  power: 1
   backstory: 
-  status: {fileID: 11400000, guid: 182c6f3b0ee729240bf13874e977c634, type: 2}
-  sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
+  status: {fileID: 11400000, guid: 745709acc9a885940bf510a33f017691, type: 2}
+  sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}

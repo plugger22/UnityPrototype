@@ -11,14 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
   m_Name: draft2
   m_EditorClassIdentifier: 
-  actorName: Alana Montgomery
-  firstName: Alana
-  lastName: Montgomery
-  sprite: {fileID: 0}
-  arc: {fileID: 11400000, guid: acb9718e84f6a6740810786455da2a6e, type: 2}
-  trait: {fileID: 0}
+  actorName: Layla Clark
+  firstName: Layla
+  lastName: Clark
+  sprite: {fileID: 21300000, guid: aa2bfbc87aa65fa469977ae64d323a08, type: 3}
+  arc: {fileID: 11400000, guid: 47b35b061cc8ac94b8c82676e37f243e, type: 2}
+  trait: {fileID: 11400000, guid: 2664358faa20c1745a50ea08148f156f, type: 2}
   level: 2
   power: 30
   backstory: 
-  status: {fileID: 11400000, guid: 02ce306de46faba468675aca9da4675e, type: 2}
+  status: {fileID: 11400000, guid: 37e045679635478418061cea316085b7, type: 2}
   sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}

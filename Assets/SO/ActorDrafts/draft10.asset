@@ -11,14 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
   m_Name: draft10
   m_EditorClassIdentifier: 
-  actorName: Katie Clark
-  firstName: Katie
-  lastName: Clark
-  sprite: {fileID: 0}
-  arc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
-  trait: {fileID: 0}
+  actorName: Carly Roberts
+  firstName: Carly
+  lastName: Roberts
+  sprite: {fileID: 21300000, guid: 994e1ef5d70ac654c9a246149603e5ab, type: 3}
+  arc: {fileID: 11400000, guid: 37d9dfd62535e6b438debd5d11731168, type: 2}
+  trait: {fileID: 11400000, guid: 7093476ba7a405d47a6bc45121774616, type: 2}
   level: 2
-  power: 5
+  power: 4
   backstory: 
-  status: {fileID: 11400000, guid: 182c6f3b0ee729240bf13874e977c634, type: 2}
+  status: {fileID: 11400000, guid: 745709acc9a885940bf510a33f017691, type: 2}
   sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}

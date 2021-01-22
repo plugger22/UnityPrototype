@@ -11,14 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
   m_Name: draft45
   m_EditorClassIdentifier: 
-  actorName: Mollie Fogg
-  firstName: Mollie
-  lastName: Fogg
-  sprite: {fileID: 0}
+  actorName: Harry Potter
+  firstName: Harry
+  lastName: Potter
+  sprite: {fileID: 21300000, guid: e8c221bd51bffd746985d9a2db13476c, type: 3}
   arc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
-  trait: {fileID: 0}
+  trait: {fileID: 11400000, guid: 432d6458cd6168441b7ea05014312e9e, type: 2}
   level: 3
   power: 0
   backstory: 
-  status: {fileID: 11400000, guid: d33c8be776f062e4dbbf9ee9b616602d, type: 2}
-  sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
+  status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
+  sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}

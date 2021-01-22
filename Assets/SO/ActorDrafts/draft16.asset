@@ -11,14 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
   m_Name: draft16
   m_EditorClassIdentifier: 
-  actorName: Erasmus McGuire
-  firstName: Erasmus
-  lastName: McGuire
-  sprite: {fileID: 0}
-  arc: {fileID: 11400000, guid: 79fb6b3426257194faf6776c7cb489d2, type: 2}
-  trait: {fileID: 0}
+  actorName: Lucy O'Donnell
+  firstName: Lucy
+  lastName: O'Donnell
+  sprite: {fileID: 21300000, guid: 8a947f318ba8ccf45895e42cc50c6af3, type: 3}
+  arc: {fileID: 11400000, guid: 585f6ebe97311aa4396d0c79f6faf1df, type: 2}
+  trait: {fileID: 11400000, guid: 584dbea69bd95c247847a49eddba102e, type: 2}
   level: 1
   power: 0
   backstory: 
-  status: {fileID: 11400000, guid: d33c8be776f062e4dbbf9ee9b616602d, type: 2}
-  sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
+  status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
+  sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}

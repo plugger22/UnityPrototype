@@ -11,14 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
   m_Name: draft41
   m_EditorClassIdentifier: 
-  actorName: Millie McQuirky
-  firstName: Millie
-  lastName: McQuirky
-  sprite: {fileID: 0}
+  actorName: Max Mountbatten
+  firstName: Max
+  lastName: Mountbatten
+  sprite: {fileID: 21300000, guid: c051c39bca0f7f8468bd562b9a858f50, type: 3}
   arc: {fileID: 11400000, guid: 268c960d386d285478b3ab6aaa5796bf, type: 2}
-  trait: {fileID: 0}
+  trait: {fileID: 11400000, guid: 17ca90560b198124885c188ce4a0ba33, type: 2}
   level: 3
   power: 0
   backstory: 
-  status: {fileID: 11400000, guid: d33c8be776f062e4dbbf9ee9b616602d, type: 2}
-  sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
+  status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
+  sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}

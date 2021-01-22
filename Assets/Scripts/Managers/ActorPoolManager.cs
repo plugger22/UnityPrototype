@@ -22,11 +22,12 @@ public class ActorPoolManager : MonoBehaviour
     private List<ActorArc> listOfActorArcs;
     private List<ActorArc> listOfTempArcs;                      //used for processing
     private List<Trait> listOfTraits;
+    private List<Trait> listOfTempTraits;
     private int numOfActorsHQ;
     private int hqPowerFactor;
-    private int numOfActorArcs;
     private int index;
     private int counter;
+    private int numOfTraits;
 
     /// <summary>
     /// Initialisation
@@ -67,11 +68,11 @@ public class ActorPoolManager : MonoBehaviour
                 ActorDraftStatus assetSO = arrayOfActorStatus[i];
                 switch (assetSO.name)
                 {
-                    case "HQBoss0": statusHqBoss0 = assetSO; break;
-                    case "HQBoss1": statusHqBoss1 = assetSO; break;
-                    case "HQBoss2": statusHqBoss2 = assetSO; break;
-                    case "HQBoss3": statusHqBoss3 = assetSO; break;
-                    case "HQWorker": statusHqWorker = assetSO; break;
+                    case "HqBoss0": statusHqBoss0 = assetSO; break;
+                    case "HqBoss1": statusHqBoss1 = assetSO; break;
+                    case "HqBoss2": statusHqBoss2 = assetSO; break;
+                    case "HqBoss3": statusHqBoss3 = assetSO; break;
+                    case "HqWorker": statusHqWorker = assetSO; break;
                     case "OnMap": statusOnMap = assetSO; break;
                     case "Pool": statusPool = assetSO; break;
                     default: Debug.LogWarningFormat("Unrecognised ActorDraftStatus \"{0}\"", assetSO.name); break;
@@ -112,6 +113,13 @@ public class ActorPoolManager : MonoBehaviour
             }
             if (listOfTraits.Count == 0)
             { Debug.LogError("Invalid listOfTraits (Empty)"); }
+            else
+            {
+                numOfTraits = listOfTraits.Count;
+                //initialise listOfTempTraits
+                listOfTempTraits = new List<Trait>();
+                listOfTempTraits.AddRange(listOfTraits);
+            }
         }
         else { Debug.LogError("Invalid arrayOfTraits (Null)"); }
         //
@@ -127,7 +135,6 @@ public class ActorPoolManager : MonoBehaviour
         if (listOfActorArcs == null) { Debug.LogError("Invalid listOfActorArcs (Null)"); }
         else
         {
-            numOfActorArcs = listOfActorArcs.Count;
             //initialise temp list of Arcs by Value (not reference as I'll be deleting some)
             listOfTempArcs = new List<ActorArc>();
             listOfTempArcs.AddRange(listOfActorArcs);
@@ -225,30 +232,38 @@ public class ActorPoolManager : MonoBehaviour
                 case 0:
                     actor.status = statusHqBoss0;
                     actor.arc = listOfActorArcs[Random.Range(0, listOfActorArcs.Count)];
+                    actor.sprite = actor.arc.sprite;
                     actor.power = (numOfActorsHQ + 2 - (int)ActorHQ.Boss) * hqPowerFactor;
                     actor.level = 3;
+                    actor.trait = GetTrait();
+                    //add to pool (do after all data initialisation)
                     pool.hqBoss0 = actor;
                     break;
                 case 1:
                     actor.status = statusHqBoss1;
                     actor.arc = listOfActorArcs[Random.Range(0, listOfActorArcs.Count)];
+                    actor.sprite = actor.arc.sprite;
                     actor.power = (numOfActorsHQ + 2 - (int)ActorHQ.SubBoss1) * hqPowerFactor;
                     actor.level = 2;
-                    //add to pool (do after all data initialisation)
+                    actor.trait = GetTrait();
                     pool.hqBoss1 = actor;
                     break;
                 case 2:
                     actor.status = statusHqBoss2;
                     actor.arc = listOfActorArcs[Random.Range(0, listOfActorArcs.Count)];
+                    actor.sprite = actor.arc.sprite;
                     actor.power = (numOfActorsHQ + 2 - (int)ActorHQ.SubBoss2) * hqPowerFactor;
                     actor.level = 2;
+                    actor.trait = GetTrait();
                     pool.hqBoss2 = actor;
                     break;
                 case 3:
                     actor.status = statusHqBoss3;
                     actor.arc = listOfActorArcs[Random.Range(0, listOfActorArcs.Count)];
+                    actor.sprite = actor.arc.sprite;
                     actor.power = (numOfActorsHQ + 2 - (int)ActorHQ.SubBoss3) * hqPowerFactor;
                     actor.level = 2;
+                    actor.trait = GetTrait();
                     pool.hqBoss3 = actor;
                     break;
                 case 4:
@@ -262,8 +277,10 @@ public class ActorPoolManager : MonoBehaviour
                     //workers
                     actor.status = statusHqWorker;
                     actor.arc = listOfActorArcs[Random.Range(0, listOfActorArcs.Count)];
+                    actor.sprite = actor.arc.sprite;
                     actor.power = Random.Range(1, 6);
                     actor.level = 2;
+                    actor.trait = GetTrait();
                     pool.listHqWorkers.Add(actor);
                     break;
                 case 12:
@@ -274,10 +291,12 @@ public class ActorPoolManager : MonoBehaviour
                     actor.status = statusOnMap;
                     index = Random.Range(0, listOfTempArcs.Count);
                     actor.arc = listOfTempArcs[index];
+                    actor.sprite = actor.arc.sprite;
                     //remove arc from temp list to prevent dupes
                     listOfTempArcs.RemoveAt(index);
                     actor.power = 0;
                     actor.level = 1;
+                    actor.trait = GetTrait();
                     pool.listOnMap.Add(actor);
                     //set counter to 0 for remaining level 1 actors using left over temp Arcs
                     if (num == 15) { counter = 0; }
@@ -290,8 +309,10 @@ public class ActorPoolManager : MonoBehaviour
                     //Level one, remaining temp arcs
                     actor.status = statusPool;
                     actor.arc = listOfTempArcs[counter++];
+                    actor.sprite = actor.arc.sprite;
                     actor.power = 0;
                     actor.level = 1;
+                    actor.trait = GetTrait();
                     pool.listLevelOne.Add(actor);
                     //reset counter ready for a full arc set of level one actors
                     if (num == 20) { counter = 0; }
@@ -308,8 +329,10 @@ public class ActorPoolManager : MonoBehaviour
                     //Level one, an additional full set of 9
                     actor.status = statusPool;
                     actor.arc = listOfActorArcs[counter++];
+                    actor.sprite = actor.arc.sprite;
                     actor.power = 0;
                     actor.level = 1;
+                    actor.trait = GetTrait();
                     pool.listLevelOne.Add(actor);
                     //reset counter ready for a full arc set of level two actors
                     if (num == 29) { counter = 0; }
@@ -326,8 +349,10 @@ public class ActorPoolManager : MonoBehaviour
                     //Level two, a full set of 9
                     actor.status = statusPool;
                     actor.arc = listOfActorArcs[counter++];
+                    actor.sprite = actor.arc.sprite;
                     actor.power = 0;
                     actor.level = 2;
+                    actor.trait = GetTrait();
                     pool.listLevelTwo.Add(actor);
                     //reset counter ready for a full arc set of level three actors
                     if (num == 38) { counter = 0; }
@@ -344,16 +369,39 @@ public class ActorPoolManager : MonoBehaviour
                     //Level three, a full set of 9
                     actor.status = statusPool;
                     actor.arc = listOfActorArcs[counter++];
+                    actor.sprite = actor.arc.sprite;
                     actor.power = 0;
                     actor.level = 3;
+                    actor.trait = GetTrait();
                     pool.listLevelThree.Add(actor);
                     break;
                 default: Debug.LogWarningFormat("Unrecognised num \"{0}\"", num); break;
             }
-
         }
         else { Debug.LogError("Invalid actorDraft (Null)"); }
     }
-           
+
+    /// <summary>
+    /// Returns a trait. Two stage process. First returns a random trait from tempList to ensure that all traits are used at least once. Then, once tempList exhausted, returns a random trait from listOfTraits (dupes possible)
+    /// Return null if a problem but generates an error within method if so
+    /// </summary>
+    /// <returns></returns>
+    private Trait GetTrait()
+    {
+        Trait trait = null;
+        if (listOfTempTraits.Count > 0)
+        {
+            index = Random.Range(0, listOfTempTraits.Count);
+            trait = listOfTempTraits[index];
+            listOfTempTraits.RemoveAt(index);
+        }
+        else
+        { trait = listOfTraits[Random.Range(0, numOfTraits)]; }
+        //error check
+        if (trait == null)
+        { Debug.LogErrorFormat("Invalid trait (Null), listOfTempTraits.Count {0}, numOfTraits {1}", listOfTempTraits.Count, numOfTraits); }
+        return trait;
+    }
+
     //new methods above here 
 }

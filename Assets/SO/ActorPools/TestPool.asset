@@ -34,7 +34,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9dd523c5f5a673a40b1f55baf00e4bcf, type: 2}
   - {fileID: 11400000, guid: 7d9a1f77069a5a949aff0a219ad87dab, type: 2}
   - {fileID: 11400000, guid: 8b8a685ecd7b4d946ab827c7d4f2b8dc, type: 2}
-  listReserves: []
   listLevelOne:
   - {fileID: 11400000, guid: 3ad2e9d016d05bc4db8e3f595d1b4ad1, type: 2}
   - {fileID: 11400000, guid: a1bada1a06fe281459e72ae748f552ae, type: 2}
