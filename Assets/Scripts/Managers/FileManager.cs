@@ -2110,8 +2110,8 @@ public class FileManager : MonoBehaviour
         { GameManager.i.debugScript.optionDebugData = "Debug Data OFF"; }
             else { GameManager.i.debugScript.optionDebugData = "Debug Data ON"; }
         if (read.optionData.showPower == false)
-        { GameManager.i.debugScript.optionRenownUI = "Power UI ON"; }
-        else { GameManager.i.debugScript.optionRenownUI = "Power UI OFF"; }
+        { GameManager.i.debugScript.optionPowerUI = "Power UI ON"; }
+        else { GameManager.i.debugScript.optionPowerUI = "Power UI OFF"; }
         if (read.optionData.showContacts == true)
         { GameManager.i.debugScript.optionContacts = "Contacts OFF"; }
         else { GameManager.i.debugScript.optionContacts = "Contacts ON"; }

@@ -1325,3 +1325,51 @@ City seed 58936 -> Londus, Eurasia
 
 Dev seed 17279 -> Thursday, 21 January 2021 4:26 PM
 City seed 27257 -> Londus, Eurasia
+
+Dev seed 58675 -> Friday, 22 January 2021 10:38 AM
+City seed 44670 -> Londus, Eurasia
+ERROR Parent directory must exist before creating asset at Assets/SO/Actor Drafts/actor.asset.
+UnityEditor.AssetDatabase:CreateAsset(Object, String)
+	ActorPoolManager:CreateActorDraft() (at Assets/Scripts/Managers/ActorPoolManager.cs:18)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:261)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:447)
+	ASSERT UnityException: Creating asset at path Assets/SO/Actor Drafts/actor.asset failed.
+ActorPoolManager.CreateActorDraft () (at Assets/Scripts/Managers/ActorPoolManager.cs:18)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:261)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:447)
+	
+Dev seed 7180 -> Friday, 22 January 2021 10:40 AM
+City seed 40073 -> Londus, Eurasia
+
+Dev seed 12310 -> Friday, 22 January 2021 10:44 AM
+City seed 14217 -> Londus, Eurasia
+
+Dev seed 5466 -> Friday, 22 January 2021 10:46 AM
+City seed 44428 -> Londus, Eurasia
+
+Dev seed 23648 -> Friday, 22 January 2021 10:46 AM
+City seed 33456 -> Londus, Eurasia
+
+Dev seed 1348 -> Friday, 22 January 2021 10:55 AM
+City seed 5492 -> Londus, Eurasia
+
+Dev seed 21959 -> Friday, 22 January 2021 11:36 AM
+City seed 11525 -> Londus, Eurasia
+
+Dev seed 64809 -> Friday, 22 January 2021 11:36 AM
+City seed 27994 -> Londus, Eurasia
+
+Dev seed 17285 -> Friday, 22 January 2021 11:38 AM
+City seed 62309 -> Londus, Eurasia
+
+Dev seed 11424 -> Friday, 22 January 2021 11:41 AM
+City seed 4547 -> Londus, Eurasia
+
+Dev seed 10737 -> Friday, 22 January 2021 12:03 PM
+City seed 2432 -> Londus, Eurasia
+
+Dev seed 9317 -> Friday, 22 January 2021 12:19 PM
+City seed 53023 -> Londus, Eurasia
+
+Dev seed 45765 -> Friday, 22 January 2021 12:38 PM
+City seed 2772 -> Londus, Eurasia

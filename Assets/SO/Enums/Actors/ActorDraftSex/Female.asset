@@ -9,5 +9,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 061823d697302674da4580406f0b66e6, type: 3}
-  m_Name: Male
+  m_Name: Female
   m_EditorClassIdentifier: 

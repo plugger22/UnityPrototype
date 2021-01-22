@@ -80,6 +80,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public TestManager testScript;                    //Test Manager
     [HideInInspector] public TextManager textScript;                    //Text Manager
     [HideInInspector] public FeatureManager featureScript;              //Feature Manager
+    [HideInInspector] public ActorPoolManager poolScript;               //ActorPool Manager
     //GUI
     [HideInInspector] public TooltipNode tooltipNodeScript;             //node tooltip static instance
     [HideInInspector] public TooltipConnection tooltipConnScript;       //connection tooltip static instance
@@ -249,6 +250,7 @@ public class GameManager : MonoBehaviour
         debugScript = GetComponent<DebugGUI>();
         animateScript = GetComponent<AnimationManager>();
         featureScript = GetComponent<FeatureManager>();
+        poolScript = GetComponent<ActorPoolManager>();
         //Get UI static references -> from PanelManager
         tooltipNodeScript = TooltipNode.Instance();
         tooltipConnScript = TooltipConnection.Instance();

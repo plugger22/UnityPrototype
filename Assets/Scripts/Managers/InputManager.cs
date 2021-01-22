@@ -258,7 +258,7 @@ public class InputManager : MonoBehaviour
         else if (Input.GetButtonDown("Test") == true)
         {
             //runs a test condition (whatever you want)
-            GameManager.i.actorScript.InitialiseActorDetails();
+            GameManager.i.poolScript.CreateActorPool();
         }
         else
         {

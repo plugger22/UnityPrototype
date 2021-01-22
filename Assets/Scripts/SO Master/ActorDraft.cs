@@ -9,11 +9,14 @@ using UnityEngine;
 public class ActorDraft : ScriptableObject
 {
     public string actorName;
+    public string firstName;
+    public string lastName;
     public Sprite sprite;
 
     public ActorArc arc;
     public Trait trait;
     public int level;
+    public int power;
     public string backstory;
     public ActorDraftStatus status;
     public ActorDraftSex sex;

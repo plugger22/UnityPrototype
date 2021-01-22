@@ -76,7 +76,7 @@ public class DebugGUI : MonoBehaviour
     public string optionNodes;
     public string optionNodeDisplay;
     public string optionTileDisplay;
-    public string optionRenownUI;
+    public string optionPowerUI;
     public string optionPath;
     public string optionContacts;
     public string optionMoodInfo;
@@ -106,7 +106,7 @@ public class DebugGUI : MonoBehaviour
         /*optionAIOffline = "AIOffline ON";*/
         /*optionAITraceback = "AITraceback ON";*/
         /*optionAIScreamer = "AIScreamer ON";*/
-        optionRenownUI = "Compatibility ON";
+        optionPowerUI = "Compatibility ON";
         optionPath = "Input Path";
         optionContacts = "Contacts ON";
         optionShowContacts = "Show Contacts";
@@ -696,18 +696,18 @@ public class DebugGUI : MonoBehaviour
             }
 
             //tenth button
-            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), optionRenownUI))
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 7 + button_height * 7, button_width, button_height), optionPowerUI))
             {
                 Debug.Log("[Dbg] Button -> Toggle Info UI Display");
                 if (GameManager.i.actorPanelScript.CheckInfoUIStatus() == true)
                 {
                     GameManager.i.actorPanelScript.SetActorInfoUI(false);
-                    optionRenownUI = "Renown ON";
+                    optionPowerUI = "Power ON";
                 }
                 else
                 {
                     GameManager.i.actorPanelScript.SetActorInfoUI(true);
-                    optionRenownUI = "Compatibility ON";
+                    optionPowerUI = "Compatibility ON";
                 }
             }
 
@@ -932,9 +932,9 @@ public class DebugGUI : MonoBehaviour
             }
             //thirteenth button
             offset = 9;
-            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), "Give Renown"))
+            if (GUI.Button(new Rect(box_action + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), "Give Power"))
             {
-                Debug.Log("[Dbg] Button -> Give Player Renown");
+                Debug.Log("[Dbg] Button -> Give Player Power");
                 GameManager.i.playerScript.DebugGivePower();
             }
 

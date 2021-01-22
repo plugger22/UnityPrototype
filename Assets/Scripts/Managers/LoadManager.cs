@@ -45,6 +45,10 @@ public class LoadManager : MonoBehaviour
     public HqPosition[] arrayOfHqPositions;
     public CaptureTool[] arrayOfCaptureTools;
 
+    [Header("ActorDrafts")]
+    public ActorDraftSex[] arrayOfActorDraftSex;
+    public ActorDraftStatus[] arrayOfActorDraftStatus;
+
     [Header("InitialiseStart")]
     public Condition[] arrayOfConditions;
     public Cure[] arrayOfCures;
@@ -776,6 +780,20 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfMissions has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No Missions present"); }
+        //
+        // - - - ActorDraftSex (not stored in a collection)
+        //
+        numArray = arrayOfActorDraftSex.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfActorDraftSex has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No ActorDraftSex present"); }
+        //
+        // - - - ActorDraftStatus (not stored in a collection)
+        //
+        numArray = arrayOfActorDraftStatus.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfActorDraftStatus has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No ActorDraftStatus present"); }
         //
         // - - - Quality
         //
