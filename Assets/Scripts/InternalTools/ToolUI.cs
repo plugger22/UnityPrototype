@@ -13,6 +13,7 @@ public class ToolUI : MonoBehaviour
     #region Main
     public Canvas menuCanvas;
     public ToolButtonInteraction adventureInteraction;
+    public ToolButtonInteraction actorInteraction;
     public ToolButtonInteraction quitInteraction;
 
     //static reference
@@ -42,6 +43,7 @@ public class ToolUI : MonoBehaviour
         //error checks
         Debug.Assert(menuCanvas != null, "Invalid menuCanvas (Null)");
         Debug.Assert(adventureInteraction != null, "Invalid adventureInteraction (Null)");
+        Debug.Assert(actorInteraction != null, "Invalid actorInteraction (Null)");
         Debug.Assert(quitInteraction != null, "Invalid quitInteraction (Null)");
         //button assignments
         adventureInteraction.SetButton(ToolEventType.OpenAdventureUI);
