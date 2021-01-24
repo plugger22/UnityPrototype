@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114805727387746334}
   - component: {fileID: 114181834597934474}
   - component: {fileID: 114123726871970134}
+  - component: {fileID: 114673709113548012}
   m_Layer: 0
   m_Name: ToolManager
   m_TagString: Untagged
@@ -68,11 +69,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   adventureScript: {fileID: 0}
+  actorScript: {fileID: 0}
   toolDataScript: {fileID: 0}
   toolFileScript: {fileID: 0}
   toolInputScript: {fileID: 0}
   toolDetailScript: {fileID: 0}
   adventureUIScript: {fileID: 0}
+  actorPoolUIScript: {fileID: 0}
   toolUIScript: {fileID: 0}
 --- !u!114 &114181834597934474
 MonoBehaviour:
@@ -96,6 +99,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73a792080afdb104abd0a99da598083a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114673709113548012
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1442030075232148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c2017f9d1858424eb899f32ecb8b387, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114742990141811574
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -109,6 +123,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chanceOfConstantPlotpoint: 10
   chanceOfConstantCharacter: 5
+  numOfOrgProfiles: 50
   arrayOfNameSets:
   - {fileID: 11400000, guid: 195743710f6a69f47acd502168cd250c, type: 2}
   - {fileID: 11400000, guid: 56b7e91ac8e6f3d449828205cc0d2f2a, type: 2}

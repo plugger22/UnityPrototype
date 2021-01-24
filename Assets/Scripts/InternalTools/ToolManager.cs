@@ -25,12 +25,14 @@ public class ToolManager : MonoBehaviour
     public static ToolManager i = null;                                 //static instance of toolManager which allows it to be accessed by any other script
 
     [HideInInspector] public AdventureManager adventureScript;
+    [HideInInspector] public ActorPoolManager actorScript;
     [HideInInspector] public ToolDataManager toolDataScript;
     [HideInInspector] public ToolFileManager toolFileScript;
     [HideInInspector] public ToolInput toolInputScript;
     [HideInInspector] public ToolDetails toolDetailScript;
     //GUI
     [HideInInspector] public AdventureUI adventureUIScript;
+    [HideInInspector] public ActorPoolUI actorPoolUIScript;
     [HideInInspector] public ToolUI toolUIScript;
     #endregion
 
@@ -52,17 +54,21 @@ public class ToolManager : MonoBehaviour
             }
             //components
             adventureScript = GetComponent<AdventureManager>();
+            actorScript = GetComponent<ActorPoolManager>();
             toolDataScript = GetComponent<ToolDataManager>();
             toolFileScript = GetComponent<ToolFileManager>();
             toolInputScript = GetComponent<ToolInput>();
             toolDetailScript = GetComponent<ToolDetails>();
             //gui
             adventureUIScript = AdventureUI.Instance();
+            actorPoolUIScript = ActorPoolUI.Instance();
             toolUIScript = ToolUI.Instance();
             //error Check
             Debug.Assert(adventureScript != null, "Invalid adventureScript (Null)");
+            Debug.Assert(actorScript != null, "Invalid actorScript (Null)");
             Debug.Assert(toolDataScript != null, "Invalid toolDataScript (Null)");
             Debug.Assert(adventureUIScript != null, "Invalid adventureUIScript (Null)");
+            Debug.Assert(actorPoolUIScript != null, "Invalid actorPoolUIScript (Null)");
             Debug.Assert(toolUIScript != null, "Invalid toolUIScript (Null)");
             Debug.Assert(toolInputScript != null, "Invalid toolInputScript (Null)");
             Debug.Assert(toolDetailScript != null, "Invalid toolDetailScript (Null)");
@@ -91,6 +97,7 @@ public class ToolManager : MonoBehaviour
         toolFileScript.Initialise();
         toolDetailScript.Initialise();
         adventureUIScript.Initialise();
+        actorPoolUIScript.Initialise();
         adventureScript.Initialise();
     }
     #endregion

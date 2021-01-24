@@ -47,6 +47,7 @@ public class ToolUI : MonoBehaviour
         Debug.Assert(quitInteraction != null, "Invalid quitInteraction (Null)");
         //button assignments
         adventureInteraction.SetButton(ToolEventType.OpenAdventureUI);
+        actorInteraction.SetButton(ToolEventType.OpenActorPoolUI);
         quitInteraction.SetButton(ToolEventType.QuitTools);
         //turn on
         menuCanvas.gameObject.SetActive(true);

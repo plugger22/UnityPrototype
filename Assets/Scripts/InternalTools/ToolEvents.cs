@@ -71,7 +71,10 @@ public enum ToolEventType
     DeleteConstants,
     DeleteCampaignConstants,
     NextConstant,
-    PreviousConstant
+    PreviousConstant,
+    //Actor Pool
+    OpenActorPoolUI,
+    CloseActorPoolUI
 
 }
 
