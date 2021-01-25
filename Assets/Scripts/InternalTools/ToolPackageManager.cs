@@ -13,9 +13,12 @@ namespace toolsAPI
     // - - - Enums
     //
 
+    //Tools
     public enum ToolModal { Menu, Main, New, TurningPoint, Lists, Constants, ActorPool }
     public enum ToolModalType { Read, Edit, Input, Process, Details }
     public enum ToolModalSubNew { New, Summary }                                        //new adventure sub state
+
+    //Adventure Manager
     public enum ThemeType { Action, Tension, Mystery, Social, Personal, Count }   //NOTE: Order matters (ToolDetails.cs)
     public enum StoryStatus { New, Logical, Data }
     public enum ListItemStatus { None, PlotLine, Character }    //what's currently selected on the Aventure/list page
@@ -27,6 +30,8 @@ namespace toolsAPI
     public enum ConstantSummaryType { Plotpoint, Character, Organisation, Object, Total, Count}     //NOTE: Order matters
     public enum TurningPointType { None, New, Development, Conclusion }
     public enum CharacterSex { None, Male, Female }
+
+    //Actor Pool
 
 
 

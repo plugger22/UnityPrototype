@@ -27,7 +27,7 @@ public class ToolLoader : MonoBehaviour
         //Check if a toolManager has already been assigned to static variable toolManager.instance or if it's still null
         if (ToolManager.i == null)
         {
-            //create GameManager instance from prefab
+            //create Managers instances from prefab
             Instantiate(toolManager);
         }        
     }

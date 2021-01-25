@@ -74,7 +74,10 @@ public enum ToolEventType
     PreviousConstant,
     //Actor Pool
     OpenActorPoolUI,
-    CloseActorPoolUI
+    CloseActorPoolUI,
+    NewPoolUI,
+    SavePoolUI,
+    DeletePoolUI
 
 }
 

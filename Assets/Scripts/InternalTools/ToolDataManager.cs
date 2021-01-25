@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 /// </summary>
 public class ToolDataManager : MonoBehaviour
 {
-
+    //Adventure dictionaries
     private Dictionary<string, Story> dictOfStories = new Dictionary<string, Story>();                                                  //key -> refTag, value -> Story
     private Dictionary<string, Plotpoint> dictOfPlotpoints = new Dictionary<string, Plotpoint>();                                       //key -> refTag, value -> Plotpoint
     private Dictionary<string, MetaPlotpoint> dictOfMetaPlotpoints = new Dictionary<string, MetaPlotpoint>();                           //key -> refTag, value -> MetaPlotpoint   
@@ -24,6 +24,7 @@ public class ToolDataManager : MonoBehaviour
     private CharacterDescriptor[] arrayOfDescriptorsLookup;
     private CharacterSpecial[] arrayOfSpecialLookup;
 
+    //Organisations
     private List<OrganisationDescriptor> listOfOrganisationType = new List<OrganisationDescriptor>();
     private List<OrganisationDescriptor> listOfOrganisationOrigin = new List<OrganisationDescriptor>();
     private List<OrganisationDescriptor> listOfOrganisationHistory = new List<OrganisationDescriptor>();

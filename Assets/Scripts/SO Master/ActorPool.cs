@@ -13,7 +13,8 @@ public class ActorPool : ScriptableObject
     public string tag;
     public string author;
     public string nameSet;
-    public string campaign;
+    public string side;
+    public string dateCreated;
 
     [Header("HQ Hierarchy")]
     public ActorDraft hqBoss0;

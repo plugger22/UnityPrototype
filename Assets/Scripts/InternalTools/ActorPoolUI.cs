@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using toolsAPI;
 using UnityEngine;
-using UnityEngine.UI;
 
 /// <summary>
 /// Runs actorPoolUI in internal tools scene
@@ -18,24 +14,58 @@ public class ActorPoolUI : MonoBehaviour
 
     [Header("Button Interactions")]
     public ToolButtonInteraction newPoolInteraction;
-    public ToolButtonInteraction loadPoolInteraction;
     public ToolButtonInteraction savePoolInteraction;
+    public ToolButtonInteraction deletePoolInteraction;
     public ToolButtonInteraction quitPoolInteraction;
 
+    [Header("Pool texts")]
+    public TextMeshProUGUI poolName;
+    public TextMeshProUGUI poolNameSet;
+    public TextMeshProUGUI poolSide;
+    public TextMeshProUGUI poolAuthor;
+    public TextMeshProUGUI poolDate;
+    public TMP_InputField poolNameInput;
+    public TMP_InputField poolAuthorInput;
+    public TMP_InputField poolDateInput;
+
+    [Header("Actor texts")]
+    public TextMeshProUGUI textName;
+    public TextMeshProUGUI textArc;
+    public TextMeshProUGUI textStatus;
+    public TextMeshProUGUI textSex;
+    public TextMeshProUGUI textTrait;
+
     [Header("Drop down lists")]
+    public TMP_Dropdown dropInputPool;
+    public TMP_Dropdown dropInputNameSet;
+    public TMP_Dropdown dropInputSide;
     public TMP_Dropdown dropInputTrait;
 
     #endregion
 
+    #region private
+    private int dropIntPool;
+    private int dropIntTrait;
+    private int dropIntNameSet;
+    private int dropIntSide;
+    private string dropStringPool;
+    private string dropStringTrait;
+    private string dropStringNameSet;
+    private string dropStringSide;
+    #endregion
+
     #region Collections
-    private List<string> listOfOptions = new List<string>();
+    private List<string> listOfTraitOptions = new List<string>();
+    private List<string> listOfPoolOptions = new List<string>();
+    private List<string> listOfNameSetOptions = new List<string>();
+    private List<string> listOfSideOptions = new List<string>();
 
     #endregion
 
+    #region static Instance
     //static reference
     private static ActorPoolUI actorPoolUI;
 
-    #region static Instance
     /// <summary>
     /// provide a static reference to ActorPoolUI that can be accessed from any script
     /// </summary>
@@ -52,16 +82,19 @@ public class ActorPoolUI : MonoBehaviour
     }
     #endregion
 
+
+    #region Initialise -> Master
     /// <summary>
     /// Master Initialiser
     /// </summary>
     public void Initialise()
     {
-        InitialiseFastAccess();
+        InitialiseAsserts();
         InitialiseEvents();
         InitialiseButtons();
-
+        InitialiseDropDownTraits();
     }
+    #endregion
 
     #region InitialiseButtons
     /// <summary>
@@ -69,23 +102,44 @@ public class ActorPoolUI : MonoBehaviour
     /// </summary>
     private void InitialiseButtons()
     {
+        newPoolInteraction.SetButton(ToolEventType.NewPoolUI);
+        savePoolInteraction.SetButton(ToolEventType.SavePoolUI);
+        deletePoolInteraction.SetButton(ToolEventType.DeletePoolUI);
         quitPoolInteraction.SetButton(ToolEventType.CloseActorPoolUI);
     }
     #endregion
 
-    #region InitialiseFastAccess
+    #region InitialiseAsserts
     /// <summary>
     /// Fast access
     /// </summary>
-    public void InitialiseFastAccess()
+    public void InitialiseAsserts()
     {
         Debug.Assert(actorCanvas != null, "Invalid actorCanvas (Null)");
         //buttons
         Debug.Assert(newPoolInteraction != null, "Invalid newPoolInteraction (Null)");
-        Debug.Assert(loadPoolInteraction != null, "Invalid loadPoolInteraction (Null)");
         Debug.Assert(savePoolInteraction != null, "Invalid savePoolInteraction (Null)");
+        Debug.Assert(deletePoolInteraction != null, "Invalid deletePoolInteraction (Null)");
         Debug.Assert(quitPoolInteraction != null, "Invalid quitPoolInteraction (Null)");
+        //pool texts
+        Debug.Assert(poolName != null, "Invalid poolName (Null)");
+        Debug.Assert(poolNameSet != null, "Invalid poolNameSet (Null)");
+        Debug.Assert(poolSide != null, "Invalid poolSide (Null)");
+        Debug.Assert(poolAuthor != null, "Invalid poolAuthor (Null)");
+        Debug.Assert(poolDate != null, "Invalid poolDate (Null)");
+        Debug.Assert(poolNameInput != null, "Invalid poolNameInput (Null)");
+        Debug.Assert(poolAuthorInput != null, "Invalid poolAuthorInput (Null)");
+        Debug.Assert(poolDateInput != null, "Invalid poolDateInput (Null)");
+        //actor texts
+        Debug.Assert(textName != null, "Invalid textName (Null)");
+        Debug.Assert(textArc != null, "Invalid textArc (Null)");
+        Debug.Assert(textStatus != null, "Invalid textStatus (Null)");
+        Debug.Assert(textSex != null, "Invalid textSex (Null)");
+        Debug.Assert(textTrait != null, "Invalid textTrait (Null)");
         //drop down lists
+        Debug.Assert(dropInputPool != null, "Invalid dropInputPool (Null)");
+        Debug.Assert(dropInputNameSet != null, "Invalid dropInputNameSet (Null)");
+        Debug.Assert(dropInputSide != null, "Invalid dropInputSide (Null)");
         Debug.Assert(dropInputTrait != null, "Invalid dropInputTrait (Null)");
     }
     #endregion
@@ -99,6 +153,9 @@ public class ActorPoolUI : MonoBehaviour
         //listeners
         ToolEvents.i.AddListener(ToolEventType.OpenActorPoolUI, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.CloseActorPoolUI, OnEvent, "ActorPoolUI");
+        ToolEvents.i.AddListener(ToolEventType.NewPoolUI, OnEvent, "ActorPoolUI");
+        ToolEvents.i.AddListener(ToolEventType.SavePoolUI, OnEvent, "ActorPoolUI");
+        ToolEvents.i.AddListener(ToolEventType.DeletePoolUI, OnEvent, "ActorPoolUI");
     }
     #endregion
 
@@ -118,6 +175,15 @@ public class ActorPoolUI : MonoBehaviour
             case ToolEventType.OpenActorPoolUI:
                 OpenActorPoolUI();
                 break;
+            case ToolEventType.NewPoolUI:
+                NewPoolUI();
+                break;
+            case ToolEventType.SavePoolUI:
+                SavePoolUI();
+                break;
+            case ToolEventType.DeletePoolUI:
+                DeletePoolUI();
+                break;
             case ToolEventType.CloseActorPoolUI:
                 CloseActorPoolUI();
                 break;
@@ -128,6 +194,12 @@ public class ActorPoolUI : MonoBehaviour
     }
     #endregion
 
+    #region Actions...
+    //
+    // - - - Actions
+    //
+
+    #region OpenActorPoolUI
     /// <summary>
     /// opens ActorPoolUI
     /// </summary>
@@ -139,8 +211,44 @@ public class ActorPoolUI : MonoBehaviour
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.ActorPool);
         ToolManager.i.toolInputScript.SetModalType(ToolModalType.Edit);
+        UpdateSidePanel(false);
     }
+    #endregion
 
+    #region New PoolUI
+    /// <summary>
+    /// Create a new pool and auto populate with ActorDrafts
+    /// </summary>
+    private void NewPoolUI()
+    {
+        UpdateSidePanel(true);
+        //Set Modal state
+        ToolManager.i.toolInputScript.SetModalType(ToolModalType.Input);
+    }
+    #endregion
+
+    #region Save PoolUI
+    /// <summary>
+    /// Save actorPool data -> Writes to Campaign.SO
+    /// </summary>
+    private void SavePoolUI()
+    {
+
+    }
+    #endregion
+
+    #region Delete Pool
+    /// <summary>
+    /// Deletes actor pool and all related actorDrafts
+    /// </summary>
+    private void DeletePoolUI()
+    {
+
+    }
+    #endregion
+
+
+    #region CloseActorPoolUI
     /// <summary>
     /// close ActorPoolUI
     /// </summary>
@@ -151,4 +259,117 @@ public class ActorPoolUI : MonoBehaviour
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.Menu);
     }
+    #endregion
+
+    #endregion
+
+
+    #region InitialiseActorDraft
+    /// <summary>
+    /// sets up actor
+    /// </summary>
+    private void InitialiseActorDraft()
+    {
+
+    }
+    #endregion
+
+    //
+    // - - - Drop Downs
+    //
+
+    #region InitialiseDropDownTraits
+    /// <summary>
+    /// Initialise drop down control for Traitss
+    /// </summary>
+    private void InitialiseDropDownTraits()
+    {
+        //delegate for dropDown
+        dropInputTrait.onValueChanged.AddListener(delegate { DropDownTraitSelected(); });
+        //reset input fields to defaults
+        dropIntTrait = -1;
+        dropStringTrait = "";
+        List<Trait> listOfTraits = new List<Trait>();
+        listOfTraits = ToolManager.i.actorScript.GetListOfTraits();
+        if (listOfTraits != null)
+        {
+            //names of traits
+            listOfTraitOptions = listOfTraits.Select(txt => txt.tag).ToList();
+            //set options
+            if (listOfTraitOptions != null)
+            {
+                dropInputTrait.options.Clear();
+                for (int i = 0; i < listOfTraitOptions.Count; i++)
+                { dropInputTrait.options.Add(new TMP_Dropdown.OptionData() { text = listOfTraitOptions[i] }); }
+            }
+            else { Debug.LogError("Invalid listOfOptions (Null)"); }
+        }
+        else { Debug.LogError("Invalid listOfTraits (Null)"); }
+        //set index
+        dropInputTrait.value = -1;
+    }
+    #endregion
+
+    #region DropDownTraitSelected
+    /// <summary>
+    /// Get option selected from dropDown pick list
+    /// </summary>
+    private void DropDownTraitSelected()
+    {
+        int index = dropInputTrait.value;
+        //set input values
+        dropIntTrait = index;
+        dropStringTrait = dropInputTrait.options[index].text;
+        //set label
+        textTrait.text = dropStringTrait;
+    }
+    #endregion
+
+    #region Utilities...
+    //
+    // - - - Utilities
+    //
+
+    #region UpdateSidePanel
+    /// <summary>
+    /// Toggles side labels/inputs on/off depending on whether 'isInput' true/false
+    /// </summary>
+    private void UpdateSidePanel(bool isInput)
+    {
+        if (isInput == true)
+        {
+            //INPUT mode -> switch off side labels
+            poolName.gameObject.SetActive(false);
+            poolNameSet.gameObject.SetActive(false);
+            poolSide.gameObject.SetActive(false);
+            poolAuthor.gameObject.SetActive(false);
+            poolDate.gameObject.SetActive(false);
+            //switch on side panel inputs
+            poolNameInput.gameObject.SetActive(true);
+            poolAuthorInput.gameObject.SetActive(true);
+            poolDateInput.gameObject.SetActive(true);
+            dropInputNameSet.gameObject.SetActive(true);
+            dropInputSide.gameObject.SetActive(true);
+        }
+        else
+        {
+            //EDIT mode -> switch on side labels
+            poolName.gameObject.SetActive(true);
+            poolNameSet.gameObject.SetActive(true);
+            poolSide.gameObject.SetActive(true);
+            poolAuthor.gameObject.SetActive(true);
+            poolDate.gameObject.SetActive(true);
+            //switch off side panel inputs
+            poolNameInput.gameObject.SetActive(false);
+            poolAuthorInput.gameObject.SetActive(false);
+            poolDateInput.gameObject.SetActive(false);
+            dropInputNameSet.gameObject.SetActive(false);
+            dropInputSide.gameObject.SetActive(false);
+        }
+    }
+    #endregion
+
+
+    #endregion
+    //new methods above here
 }

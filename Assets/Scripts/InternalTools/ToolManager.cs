@@ -82,6 +82,10 @@ public class ToolManager : MonoBehaviour
         //only run if internal tools scene
         if (scene.name.Equals("Internal_Tools", StringComparison.Ordinal) == true)
         {
+            //do minimum required GameManager startup in order to run internal tools
+            GameManager.i.loadScript.InitialiseStart(gameAPI.GameState.NewInitialisation);
+            GameManager.i.loadScript.InitialiseEarly(gameAPI.GameState.NewInitialisation);
+            GameManager.i.loadScript.InitialiseLate(gameAPI.GameState.NewInitialisation);
             InitialiseAll();
         }
     }
@@ -96,9 +100,10 @@ public class ToolManager : MonoBehaviour
         toolUIScript.Initialise();
         toolFileScript.Initialise();
         toolDetailScript.Initialise();
+        adventureScript.Initialise();
+        actorScript.Initialise();
         adventureUIScript.Initialise();
         actorPoolUIScript.Initialise();
-        adventureScript.Initialise();
     }
     #endregion
 

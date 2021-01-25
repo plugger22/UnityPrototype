@@ -29,10 +29,11 @@ public class ActorPoolManager : MonoBehaviour
     private int counter;
     private int numOfTraits;
 
+    #region Initialise
     /// <summary>
     /// Initialisation
     /// </summary>
-    private void Initialise()
+    public void Initialise()
     {
         int num;
         //
@@ -145,7 +146,9 @@ public class ActorPoolManager : MonoBehaviour
         numOfActorsHQ = GameManager.i.hqScript.numOfActorsHQ;
         hqPowerFactor = GameManager.i.hqScript.powerFactor;
     }
+    #endregion
 
+    #region CreateActorPool
     /// <summary>
     /// Master program
     /// </summary>
@@ -159,7 +162,9 @@ public class ActorPoolManager : MonoBehaviour
         //restart animations
         GameManager.i.animateScript.StartAnimations();
     }
+    #endregion
 
+    #region InitialiseActorPool
     /// <summary>
     /// Creates an actorPool and populates with ActorDraft.SO's
     /// </summary>
@@ -199,8 +204,9 @@ public class ActorPoolManager : MonoBehaviour
         //Save assets to disk
         AssetDatabase.SaveAssets();       
     }
+    #endregion
 
-
+    #region UpdateActorDraft
     /// <summary>
     /// Initialises data for a newly created ActorDraft. 
     /// </summary>
@@ -380,7 +386,9 @@ public class ActorPoolManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid actorDraft (Null)"); }
     }
+    #endregion
 
+    #region GetTrait
     /// <summary>
     /// Returns a trait. Two stage process. First returns a random trait from tempList to ensure that all traits are used at least once. Then, once tempList exhausted, returns a random trait from listOfTraits (dupes possible)
     /// Return null if a problem but generates an error within method if so
@@ -402,6 +410,18 @@ public class ActorPoolManager : MonoBehaviour
         { Debug.LogErrorFormat("Invalid trait (Null), listOfTempTraits.Count {0}, numOfTraits {1}", listOfTempTraits.Count, numOfTraits); }
         return trait;
     }
+    #endregion
+
+    #region Utilities...
+
+    /// <summary>
+    /// returns listOfTraits for the current side and traits that apply to all sides
+    /// </summary>
+    /// <returns></returns>
+    public List<Trait> GetListOfTraits()
+    { return listOfTraits; }
+
+    #endregion
 
     //new methods above here 
 }
