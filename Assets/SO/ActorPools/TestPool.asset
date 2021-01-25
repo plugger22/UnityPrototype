@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Name: TestPool
   m_EditorClassIdentifier: 
   numOfActors: 48
-  tag: 
-  author: 
+  tag: Test Pool
+  author: Cameron Harris
   nameSet: English
-  campaign: 
+  side: Resistance
+  dateCreated: 25th Jan '21
   hqBoss0: {fileID: 11400000, guid: 1f8aec841e4b33a43b83c60f7a9b09bf, type: 2}
   hqBoss1: {fileID: 11400000, guid: a5e8a0efe15193b4b96594a29f70119c, type: 2}
   hqBoss2: {fileID: 11400000, guid: ea293b02cb4e41f478d79cf2a02aab09, type: 2}

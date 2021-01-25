@@ -3,6 +3,7 @@ using System.Linq;
 using TMPro;
 using toolsAPI;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Runs actorPoolUI in internal tools scene
@@ -17,6 +18,10 @@ public class ActorPoolUI : MonoBehaviour
     public ToolButtonInteraction savePoolInteraction;
     public ToolButtonInteraction deletePoolInteraction;
     public ToolButtonInteraction quitPoolInteraction;
+    public ToolButtonInteraction createPoolInteraction;
+
+    [Header("Buttons that toggle")]
+    public Button createPoolButton;
 
     [Header("Pool texts")]
     public TextMeshProUGUI poolName;
@@ -25,6 +30,7 @@ public class ActorPoolUI : MonoBehaviour
     public TextMeshProUGUI poolAuthor;
     public TextMeshProUGUI poolDate;
     public TMP_InputField poolNameInput;
+    public TMP_InputField poolTagInput;
     public TMP_InputField poolAuthorInput;
     public TMP_InputField poolDateInput;
 
@@ -106,6 +112,7 @@ public class ActorPoolUI : MonoBehaviour
         savePoolInteraction.SetButton(ToolEventType.SavePoolUI);
         deletePoolInteraction.SetButton(ToolEventType.DeletePoolUI);
         quitPoolInteraction.SetButton(ToolEventType.CloseActorPoolUI);
+        createPoolInteraction.SetButton(ToolEventType.CreatePoolUI);
     }
     #endregion
 
@@ -121,6 +128,8 @@ public class ActorPoolUI : MonoBehaviour
         Debug.Assert(savePoolInteraction != null, "Invalid savePoolInteraction (Null)");
         Debug.Assert(deletePoolInteraction != null, "Invalid deletePoolInteraction (Null)");
         Debug.Assert(quitPoolInteraction != null, "Invalid quitPoolInteraction (Null)");
+        Debug.Assert(createPoolInteraction != null, "Invalid createPoolInteraction (Null)");
+        Debug.Assert(createPoolButton != null, "Invalid createPoolButton (Null)");
         //pool texts
         Debug.Assert(poolName != null, "Invalid poolName (Null)");
         Debug.Assert(poolNameSet != null, "Invalid poolNameSet (Null)");
@@ -128,6 +137,7 @@ public class ActorPoolUI : MonoBehaviour
         Debug.Assert(poolAuthor != null, "Invalid poolAuthor (Null)");
         Debug.Assert(poolDate != null, "Invalid poolDate (Null)");
         Debug.Assert(poolNameInput != null, "Invalid poolNameInput (Null)");
+        Debug.Assert(poolTagInput != null, "Invalid poolTagInput (Null)");
         Debug.Assert(poolAuthorInput != null, "Invalid poolAuthorInput (Null)");
         Debug.Assert(poolDateInput != null, "Invalid poolDateInput (Null)");
         //actor texts
@@ -178,6 +188,9 @@ public class ActorPoolUI : MonoBehaviour
             case ToolEventType.NewPoolUI:
                 NewPoolUI();
                 break;
+            case ToolEventType.CreatePoolUI:
+                CreatePoolUI();
+                break;
             case ToolEventType.SavePoolUI:
                 SavePoolUI();
                 break;
@@ -224,6 +237,51 @@ public class ActorPoolUI : MonoBehaviour
         UpdateSidePanel(true);
         //Set Modal state
         ToolManager.i.toolInputScript.SetModalType(ToolModalType.Input);
+        //toggle on button
+        createPoolButton.gameObject.SetActive(true);
+
+    }
+    #endregion
+
+    #region Create PoolUI
+    /// <summary>
+    /// Once data is entered for a new pool, press button to create
+    /// </summary>
+    private void CreatePoolUI()
+    {
+        ActorPoolData data = new ActorPoolData();
+
+        data.poolName = poolNameInput.text;
+        data.tag = poolTagInput.text;
+
+        //temporary
+        data.nameSet = ToolManager.i.jointScript.arrayOfNameSets[Random.Range(0, ToolManager.i.jointScript.arrayOfNameSets.Length)];
+        data.side = ToolManager.i.jointScript.sideResistance;
+
+        data.author = poolAuthorInput.text;
+        data.dateCreated = poolDateInput.text;
+
+        //error check prior to activating button
+        bool isProceed = true;
+        if (string.IsNullOrEmpty(data.poolName) == true) { isProceed = false; Debug.LogWarning("Invalid data.poolName (Null or Empty)"); }
+        if (string.IsNullOrEmpty(data.tag) == true) { isProceed = false; Debug.LogWarning("Invalid data.tag (Null or Empty)"); }
+        if (string.IsNullOrEmpty(data.author) == true) { isProceed = false; Debug.LogWarning("Invalid data.author (Null or Empty)"); }
+        if (string.IsNullOrEmpty(data.dateCreated) == true) { isProceed = false; Debug.LogWarning("Invalid data.dateCreated (Null or Empty)"); }
+        if (data.nameSet == null) { isProceed = false; Debug.LogWarning("Invalid data.nameSet (Null)"); }
+        if (data.side == null) { isProceed = false; Debug.LogWarning("Invalid data.side (Null)"); }
+        
+        //new ActorPool only if all data present
+        if (isProceed == true)
+        {
+            //create pool and actorDrafts in SO/Temp folder
+            ToolManager.i.actorScript.CreateActorPool(data);
+            //disable button
+            createPoolButton.gameObject.SetActive(false);
+            //swap fields
+            UpdateSidePanel(false);
+        }
+        else { Debug.LogWarning("Actor Pool NOT created due to invalid data"); }
+
     }
     #endregion
 
@@ -339,6 +397,7 @@ public class ActorPoolUI : MonoBehaviour
         if (isInput == true)
         {
             //INPUT mode -> switch off side labels
+            dropInputPool.gameObject.SetActive(false);
             poolName.gameObject.SetActive(false);
             poolNameSet.gameObject.SetActive(false);
             poolSide.gameObject.SetActive(false);
@@ -346,6 +405,7 @@ public class ActorPoolUI : MonoBehaviour
             poolDate.gameObject.SetActive(false);
             //switch on side panel inputs
             poolNameInput.gameObject.SetActive(true);
+            poolTagInput.gameObject.SetActive(true);
             poolAuthorInput.gameObject.SetActive(true);
             poolDateInput.gameObject.SetActive(true);
             dropInputNameSet.gameObject.SetActive(true);
@@ -354,6 +414,7 @@ public class ActorPoolUI : MonoBehaviour
         else
         {
             //EDIT mode -> switch on side labels
+            dropInputPool.gameObject.SetActive(true);
             poolName.gameObject.SetActive(true);
             poolNameSet.gameObject.SetActive(true);
             poolSide.gameObject.SetActive(true);
@@ -361,10 +422,13 @@ public class ActorPoolUI : MonoBehaviour
             poolDate.gameObject.SetActive(true);
             //switch off side panel inputs
             poolNameInput.gameObject.SetActive(false);
+            poolTagInput.gameObject.SetActive(false);
             poolAuthorInput.gameObject.SetActive(false);
             poolDateInput.gameObject.SetActive(false);
             dropInputNameSet.gameObject.SetActive(false);
             dropInputSide.gameObject.SetActive(false);
+            //button
+            createPoolButton.gameObject.SetActive(false);
         }
     }
     #endregion

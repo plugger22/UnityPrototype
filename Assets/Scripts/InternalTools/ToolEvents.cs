@@ -76,6 +76,7 @@ public enum ToolEventType
     OpenActorPoolUI,
     CloseActorPoolUI,
     NewPoolUI,
+    CreatePoolUI,
     SavePoolUI,
     DeletePoolUI
 

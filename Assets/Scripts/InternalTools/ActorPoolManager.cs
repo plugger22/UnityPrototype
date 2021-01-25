@@ -1,4 +1,5 @@
-﻿using gameAPI;
+﻿using toolsAPI;
+using gameAPI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -23,15 +24,15 @@ public class ActorPoolManager : MonoBehaviour
     private List<ActorArc> listOfTempArcs;                      //used for processing
     private List<Trait> listOfTraits;
     private List<Trait> listOfTempTraits;
-    private int numOfActorsHQ;
-    private int hqPowerFactor;
+    private int numOfActorsHQ = 4;      //duplicate
+    private int hqPowerFactor = 10;     //duplicate
     private int index;
     private int counter;
     private int numOfTraits;
 
     #region Initialise
     /// <summary>
-    /// Initialisation
+    /// Initialisation. Called when needed
     /// </summary>
     public void Initialise()
     {
@@ -39,7 +40,7 @@ public class ActorPoolManager : MonoBehaviour
         //
         // - - - ActorDraftSex globals
         //
-        ActorDraftSex[] arrayOfActorSex = GameManager.i.loadScript.arrayOfActorDraftSex;
+        ActorDraftSex[] arrayOfActorSex = ToolManager.i.jointScript.arrayOfActorDraftSex;
         num = arrayOfActorSex.Length;
         if (num > 0)
         {
@@ -60,7 +61,7 @@ public class ActorPoolManager : MonoBehaviour
         //
         // - - - ActorDraftStatus globals
         //
-        ActorDraftStatus[] arrayOfActorStatus = GameManager.i.loadScript.arrayOfActorDraftStatus;
+        ActorDraftStatus[] arrayOfActorStatus = ToolManager.i.jointScript.arrayOfActorDraftStatus;
         num = arrayOfActorStatus.Length;
         if (num > 0)
         {
@@ -89,10 +90,10 @@ public class ActorPoolManager : MonoBehaviour
             if (statusPool == null) { Debug.LogError("Invalid statusPool (Null)"); }
         }
         //
-        // - - - Traits
+        // - - - Traits (no Mayor traits in array)
         //
         listOfTraits = new List<Trait>();
-        Trait[] arrayOfTraits = GameManager.i.loadScript.arrayOfTraits;
+        Trait[] arrayOfTraits = ToolManager.i.jointScript.arrayOfTraits;
         Trait trait;
         if (arrayOfTraits != null)
         {
@@ -123,28 +124,27 @@ public class ActorPoolManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid arrayOfTraits (Null)"); }
+
+        /*
         //
-        // - - - Nameset
+        // - - - Nameset (All)
         //
-        nameSet = GameManager.i.cityScript.GetNameSet();
+        nameSet = data.nameSet;
         if (nameSet == null)
         { Debug.LogError("Invalid nameSet (Null)"); }
+        */
+
         //
         // - - - Collections
         //
-        listOfActorArcs = GameManager.i.dataScript.GetActorArcs(GameManager.i.sideScript.PlayerSide);
+        listOfActorArcs = ToolManager.i.jointScript.GetActorArcs(ToolManager.i.jointScript.sideResistance);
         if (listOfActorArcs == null) { Debug.LogError("Invalid listOfActorArcs (Null)"); }
         else
         {
             //initialise temp list of Arcs by Value (not reference as I'll be deleting some)
             listOfTempArcs = new List<ActorArc>();
             listOfTempArcs.AddRange(listOfActorArcs);
-        }
-        //
-        // - - - Fast Access
-        //
-        numOfActorsHQ = GameManager.i.hqScript.numOfActorsHQ;
-        hqPowerFactor = GameManager.i.hqScript.powerFactor;
+        }       
     }
     #endregion
 
@@ -152,35 +152,35 @@ public class ActorPoolManager : MonoBehaviour
     /// <summary>
     /// Master program
     /// </summary>
-    public void CreateActorPool(string poolName)
+    public void CreateActorPool(ActorPoolData data)
     {
-        Debug.Assert(string.IsNullOrEmpty(poolName) == false, "Invalid poolName (Null or Empty)");
-        //stop animations
-        GameManager.i.animateScript.StopAnimations();
+        Debug.Assert(data != null, "Invalid ActorPoolData (Null)");
         Initialise();
-        InitialiseActorPool(poolName);
-        //restart animations
-        GameManager.i.animateScript.StartAnimations();
+        InitialiseActorPool(data);
     }
     #endregion
 
     #region InitialiseActorPool
     /// <summary>
-    /// Creates an actorPool and populates with ActorDraft.SO's
+    /// Creates an actorPool and populates with ActorDraft.SO's. 
+    /// Note: data checked by parent method
     /// </summary>
-    private void InitialiseActorPool(string poolName)
+    private void InitialiseActorPool(ActorPoolData data)
     {
-
         string pathPool, pathDraft;
         //
         // - - - ActorPool
         //
         ActorPool poolAsset = ScriptableObject.CreateInstance<ActorPool>();
         //path with unique asset name for each
-        pathPool = string.Format("Assets/SO/ActorPools/{0}.asset", poolName);
+        pathPool = string.Format("Assets/SO/Temp/{0}.asset", data.poolName);
         //how many actors required to populate pool
         int numToCreate = poolAsset.numOfActors;
-        poolAsset.nameSet = nameSet.name;
+        poolAsset.nameSet = data.nameSet;
+        poolAsset.tag = data.tag;
+        poolAsset.side = data.side;
+        poolAsset.author = data.author;
+        poolAsset.dateCreated = data.dateCreated;
         //
         // - - - ActorDrafts
         //
@@ -190,8 +190,8 @@ public class ActorPoolManager : MonoBehaviour
             ActorDraft actorAsset = ScriptableObject.CreateInstance<ActorDraft>();
             //overwrite default data
             UpdateActorDraft(poolAsset, actorAsset, i);
-            //path with unique asset name for each
-            pathDraft = string.Format("Assets/SO/ActorDrafts/draft{0}.asset", i);
+            //path with unique asset name for each (poolName + counter)
+            pathDraft = string.Format("Assets/SO/Temp/{0}{1}.asset", data.poolName, i);
             //delete any existing asset at the same location (if same named asset presnet, new asset won't overwrite)
             AssetDatabase.DeleteAsset(pathDraft);
             //Add asset to file and give it a name ('actor')

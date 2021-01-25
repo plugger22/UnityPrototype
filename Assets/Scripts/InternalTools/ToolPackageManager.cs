@@ -37,7 +37,7 @@ namespace toolsAPI
 
 
     //
-    // - - - Data Packages
+    // - - - Story Data Packages
     //
 
     #region Story Master
@@ -1427,6 +1427,24 @@ namespace toolsAPI
     }
     #endregion
 
+    //
+    // - - - ActorPool Data Packages
+    //
+
+    #region ActorPoolData
+    /// <summary>
+    /// Actor Pool metaData
+    /// </summary>
+    public class ActorPoolData
+    {
+        public string poolName;
+        public string tag;
+        public NameSet nameSet;
+        public GlobalSide side;
+        public string author;
+        public string dateCreated;
+    }
+    #endregion
 
 }
 #endif

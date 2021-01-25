@@ -1821,8 +1821,6 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfGlobalChance);
         //GlobalType
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfGlobalType);
-        //GlobalSide
-        ValidateSOGeneric(GameManager.i.loadScript.arrayOfGlobalSide);
         //GlobalWho
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfGlobalWho);
         //Criteria
@@ -1881,18 +1879,12 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfScenarios);
         //Campaign
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfCampaigns);
-        //NameSet
-        ValidateSOGeneric(GameManager.i.loadScript.arrayOfNameSets);
         //NodeDatapoint
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfNodeDatapoints);
         //NodeArc
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfNodeArcs);
         //NodeCrisis
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfNodeCrisis);
-        //Trait
-        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTraits);
-        //ActorArc
-        ValidateSOGeneric(GameManager.i.loadScript.arrayOfActorArcs);
         //Effect
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfEffects);
         //Action
@@ -1975,10 +1967,14 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfTopicItems);
         //Billboards
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfBillboards);
-        //ActorDraftSex
-        ValidateSOGeneric(GameManager.i.loadScript.arrayOfActorDraftSex);
-        //ActorDraftStatus
-        ValidateSOGeneric(GameManager.i.loadScript.arrayOfActorDraftStatus);
+        //GlobalSide
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfGlobalSide);
+        //NameSet
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfNameSets);
+        //ActorArc
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfActorArcs);
+        //Trait
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTraits);
     }
     #endregion
 
@@ -3889,7 +3885,7 @@ public class ValidationManager : MonoBehaviour
                 else { Debug.LogFormat("{0} Invalid trait (Null) for arrayOfTraits[{1}]{2}", tag, i, "\n"); }
             }
         }
-        else { Debug.LogError("Invalid listOfTraits (Null)"); }
+        else { Debug.LogError("Invalid listOfTraits (Null) in JointManager.cs"); }
     }
     #endregion
 

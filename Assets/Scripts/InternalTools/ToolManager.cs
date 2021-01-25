@@ -30,6 +30,7 @@ public class ToolManager : MonoBehaviour
     [HideInInspector] public ToolFileManager toolFileScript;
     [HideInInspector] public ToolInput toolInputScript;
     [HideInInspector] public ToolDetails toolDetailScript;
+    [HideInInspector] public JointManager jointScript;
     //GUI
     [HideInInspector] public AdventureUI adventureUIScript;
     [HideInInspector] public ActorPoolUI actorPoolUIScript;
@@ -59,6 +60,7 @@ public class ToolManager : MonoBehaviour
             toolFileScript = GetComponent<ToolFileManager>();
             toolInputScript = GetComponent<ToolInput>();
             toolDetailScript = GetComponent<ToolDetails>();
+            jointScript = GetComponent<JointManager>();
             //gui
             adventureUIScript = AdventureUI.Instance();
             actorPoolUIScript = ActorPoolUI.Instance();
@@ -72,6 +74,7 @@ public class ToolManager : MonoBehaviour
             Debug.Assert(toolUIScript != null, "Invalid toolUIScript (Null)");
             Debug.Assert(toolInputScript != null, "Invalid toolInputScript (Null)");
             Debug.Assert(toolDetailScript != null, "Invalid toolDetailScript (Null)");
+            Debug.Assert(jointScript != null, "Invalid jointScript (Null)");
         }
     }
     #endregion
@@ -82,10 +85,6 @@ public class ToolManager : MonoBehaviour
         //only run if internal tools scene
         if (scene.name.Equals("Internal_Tools", StringComparison.Ordinal) == true)
         {
-            //do minimum required GameManager startup in order to run internal tools
-            GameManager.i.loadScript.InitialiseStart(gameAPI.GameState.NewInitialisation);
-            GameManager.i.loadScript.InitialiseEarly(gameAPI.GameState.NewInitialisation);
-            GameManager.i.loadScript.InitialiseLate(gameAPI.GameState.NewInitialisation);
             InitialiseAll();
         }
     }
@@ -97,6 +96,7 @@ public class ToolManager : MonoBehaviour
     /// </summary>
     private void InitialiseAll()
     {
+        jointScript.Initialise();
         toolUIScript.Initialise();
         toolFileScript.Initialise();
         toolDetailScript.Initialise();

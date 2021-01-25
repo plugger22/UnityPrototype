@@ -12,8 +12,8 @@ public class ActorPool : ScriptableObject
     public int numOfActors = 48;        //4 x hq hierarchy, 8 x workers, 4 x OnMap, 5 + 9 x level One, 9 x level Two, 9 x level three
     public string tag;
     public string author;
-    public string nameSet;
-    public string side;
+    public NameSet nameSet;
+    public GlobalSide side;
     public string dateCreated;
 
     [Header("HQ Hierarchy")]

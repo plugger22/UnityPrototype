@@ -15,11 +15,11 @@ public class HQManager : MonoBehaviour
     [Range(0, 10)] public int maxHqApproval = 10;
     [Tooltip("How much Power will the HQ give per turn if they decide to support the Player")]
     [Range(1, 3)] public int powerPerTurn = 1;
-    [Tooltip("How many actors in the HQ line up. Needs to correspond with enum.ActorHQ. Determines size of DataManager.cs -> arrayOfActorsHQ")]
+    [Tooltip("How many actors in the HQ line up. Needs to correspond with enum.ActorHQ. Determines size of DataManager.cs -> arrayOfActorsHQl NOTE: ActorPoolManager.cs duplicate")]
     [Range(1, 6)] public int numOfActorsHQ = 4;
     [Tooltip("Size cap on HQ worker pool")]
     [Range(0, 10)] public int maxNumOfWorkers = 8;
-    [Tooltip("Multiplier for HQ hierarchy Actors Power (Boss gets highest Power, subBoss's progressively less) forumla Power = (numOfActorsHQ + 2 - enum.StatusHQ) * powerFactor")]
+    [Tooltip("Multiplier for HQ hierarchy Actors Power (Boss gets highest Power, subBoss's progressively less) forumla Power = (numOfActorsHQ + 2 - enum.StatusHQ) * powerFactor. NOTE: ActorPoolManager.cs duplicate")]
     [Range(1, 20)] public int powerFactor = 10;
 
     [Header("HQ Assessments (End Level page)")]
