@@ -26982,7 +26982,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 20.000015, y: -690}
+  m_AnchoredPosition: {x: 20, y: -690}
   m_SizeDelta: {x: 370, y: 60}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &604659530
@@ -49493,7 +49493,7 @@ MonoBehaviour:
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
   m_isCullingEnabled: 0
-  m_ignoreRectMaskCulling: 0
+  m_ignoreRectMaskCulling: 1
   m_ignoreCulling: 1
   m_horizontalMapping: 0
   m_verticalMapping: 0
@@ -82689,6 +82689,8 @@ MonoBehaviour:
   actorLastName: {fileID: 453891518}
   actorLevel: {fileID: 44369123}
   actorPower: {fileID: 1507346177}
+  backstory0: {fileID: 694862016}
+  backstory1: {fileID: 604659530}
   dropInputPool: {fileID: 2095349731}
   dropInputNameSet: {fileID: 945402349}
   dropInputSide: {fileID: 485846142}

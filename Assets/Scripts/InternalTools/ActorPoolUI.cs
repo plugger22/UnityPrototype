@@ -496,6 +496,8 @@ public class ActorPoolUI : MonoBehaviour
         dropStringPool = dropInputPool.options[0].text;
         //Update LHS labels showing data for currently selected pool (which will be the one at the top of the drop down list at initialisation)
         UpdatePoolObject();
+
+
     }
     #endregion
 
@@ -608,6 +610,10 @@ public class ActorPoolUI : MonoBehaviour
         dropIntPool = index;
         dropStringPool = dropInputPool.options[index].text;
         UpdatePoolObject();
+        //update ActorDrafts
+        InitialiseActorDraftList();
+        //update actor details
+        UpdateActorDraft();
     }
     #endregion
 
@@ -760,7 +766,7 @@ public class ActorPoolUI : MonoBehaviour
 
     #region UpdatePoolObject
     /// <summary>
-    /// Updates pool object based on current selection in drop down pool name list
+    /// Updates pool object based on current selection in drop down pool name list 
     /// </summary>
     private void UpdatePoolObject()
     {
