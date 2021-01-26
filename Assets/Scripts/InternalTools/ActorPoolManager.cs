@@ -10,6 +10,15 @@ using UnityEngine;
 /// </summary>
 public class ActorPoolManager : MonoBehaviour
 {
+    [Header("Details")]
+    [Tooltip("Number of ActorDrafts in a pool -> 4 x hq hierarchy, 8 x workers, 4 x OnMap, 5 + 9 x level One, 9 x level Two, 9 x level three")]
+    [Range(48, 48)] public int numOfActors = 48;
+    [Tooltip("Number of ActorDrafts for HQ heirarchy (duplicate of HQManager.cs -> numOfActorsHQ")]
+    [Range(4, 4)] public int numOfActorsHQ = 4;
+    [Tooltip("Number of Power Factor for HQ Hierarchy (duplicate of HQManager.cs -> hqPowerFactor")]
+    [Range(10, 10)] public int hqPowerFactor = 10;
+
+    //private
     private ActorDraftSex sexMale;
     private ActorDraftSex sexFemale;
     private ActorDraftStatus statusHqBoss0;
@@ -24,8 +33,7 @@ public class ActorPoolManager : MonoBehaviour
     private List<ActorArc> listOfTempArcs;                      //used for processing
     private List<Trait> listOfTraits;
     private List<Trait> listOfTempTraits;
-    private int numOfActorsHQ = 4;      //duplicate
-    private int hqPowerFactor = 10;     //duplicate
+     //duplicate
     private int index;
     private int counter;
     private int numOfTraits;
@@ -175,7 +183,7 @@ public class ActorPoolManager : MonoBehaviour
         //path with unique asset name for each
         pathPool = string.Format("Assets/SO/Temp/{0}.asset", data.poolName);
         //how many actors required to populate pool
-        int numToCreate = poolAsset.numOfActors;
+        int numToCreate = numOfActors;
         poolAsset.nameSet = data.nameSet;
         poolAsset.tag = data.tag;
         poolAsset.side = data.side;
@@ -191,7 +199,7 @@ public class ActorPoolManager : MonoBehaviour
             //overwrite default data
             UpdateActorDraft(poolAsset, actorAsset, i);
             //path with unique asset name for each (poolName + counter)
-            pathDraft = string.Format("Assets/SO/Temp/{0}{1}.asset", data.poolName, i);
+            pathDraft = string.Format("Assets/SO/TempPool/{0}{1}.asset", data.poolName, i);
             //delete any existing asset at the same location (if same named asset presnet, new asset won't overwrite)
             AssetDatabase.DeleteAsset(pathDraft);
             //Add asset to file and give it a name ('actor')

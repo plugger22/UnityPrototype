@@ -9,7 +9,6 @@ using UnityEngine;
 public class ActorPool : ScriptableObject
 {
     [Header("Details")]
-    public int numOfActors = 48;        //4 x hq hierarchy, 8 x workers, 4 x OnMap, 5 + 9 x level One, 9 x level Two, 9 x level three
     public string tag;
     public string author;
     public NameSet nameSet;
@@ -37,4 +36,5 @@ public class ActorPool : ScriptableObject
     public List<ActorDraft> listLevelTwo = new List<ActorDraft>();
     [Tooltip("One full set of 9 Arcs")]
     public List<ActorDraft> listLevelThree = new List<ActorDraft>();
+
 }

@@ -2,6 +2,7 @@
 using System.Linq;
 using TMPro;
 using toolsAPI;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -58,6 +59,7 @@ public class ActorPoolUI : MonoBehaviour
     private string dropStringTrait;
     private string dropStringNameSet;
     private string dropStringSide;
+    private ActorPool poolObject;
     #endregion
 
     #region Collections
@@ -65,6 +67,7 @@ public class ActorPoolUI : MonoBehaviour
     private List<string> listOfPoolOptions = new List<string>();
     private List<string> listOfNameSetOptions = new List<string>();
     private List<string> listOfSideOptions = new List<string>();
+    private List<ActorPool> listOfActorPools = new List<ActorPool>();
 
     #endregion
 
@@ -98,6 +101,9 @@ public class ActorPoolUI : MonoBehaviour
         InitialiseAsserts();
         InitialiseEvents();
         InitialiseButtons();
+        InitialiseDropDownPool();
+        InitialiseDropDownNameSet();
+        InitialiseDropDownSide();
         InitialiseDropDownTraits();
     }
     #endregion
@@ -336,9 +342,108 @@ public class ActorPoolUI : MonoBehaviour
     // - - - Drop Downs
     //
 
+    #region InitialiseDropDownPool
+    /// <summary>
+    /// Initialise drop down control for Actor Pools
+    /// </summary>
+    private void InitialiseDropDownPool()
+    {
+        //set up base list
+        UpdateListOfActorPools();
+        //delegate for dropDown
+        dropInputPool.onValueChanged.AddListener(delegate { DropDownPoolSelected(); });
+        //reset input fields to defaults
+        dropIntPool = -1;
+        dropStringPool = "";
+        if (listOfActorPools != null)
+        {
+            //names of Pools
+            listOfPoolOptions = listOfActorPools.Select(txt => txt.name).ToList();
+            //set options
+            if (listOfPoolOptions != null)
+            {
+                dropInputPool.options.Clear();
+                for (int i = 0; i < listOfPoolOptions.Count; i++)
+                { dropInputPool.options.Add(new TMP_Dropdown.OptionData() { text = listOfPoolOptions[i] }); }
+            }
+            else { Debug.LogError("Invalid listOfOptions (Null)"); }
+        }
+        else { Debug.LogError("Invalid listOfActorPools (Null)"); }
+        //set index
+        dropInputPool.value = -1;
+    }
+    #endregion
+
+    #region InitialiseDropDownNameSet
+    /// <summary>
+    /// Initialise drop down control for NameSet
+    /// </summary>
+    private void InitialiseDropDownNameSet()
+    {
+        //delegate for dropDown
+        dropInputNameSet.onValueChanged.AddListener(delegate { DropDownNameSetSelected(); });
+        //reset input fields to defaults
+        dropIntNameSet = -1;
+        dropStringNameSet = "";
+        List<NameSet> listOfNameSets = new List<NameSet>();
+        listOfNameSets = ToolManager.i.jointScript.arrayOfNameSets.ToList();
+        if (listOfNameSets != null)
+        {
+            //names of nameSets
+            listOfNameSetOptions = listOfNameSets.Select(txt => txt.name).ToList();
+            //set options
+            if (listOfNameSetOptions != null)
+            {
+                dropInputNameSet.options.Clear();
+                for (int i = 0; i < listOfNameSetOptions.Count; i++)
+                { dropInputNameSet.options.Add(new TMP_Dropdown.OptionData() { text = listOfNameSetOptions[i] }); }
+            }
+            else { Debug.LogError("Invalid listOfOptions (Null)"); }
+        }
+        else { Debug.LogError("Invalid listOfNameSets (Null)"); }
+        //set index
+        dropInputNameSet.value = -1;
+    }
+    #endregion
+
+    #region InitialiseDropDownSide
+    /// <summary>
+    /// Initialise drop down control for GlobalSide
+    /// </summary>
+    private void InitialiseDropDownSide()
+    {
+        //delegate for dropDown
+        dropInputSide.onValueChanged.AddListener(delegate { DropDownSideSelected(); });
+        //reset input fields to defaults
+        dropIntSide = -1;
+        dropStringSide = "";
+        List<GlobalSide> listOfSides = new List<GlobalSide>();
+        listOfSides = ToolManager.i.jointScript.arrayOfGlobalSide.ToList();
+        if (listOfSides != null)
+        {
+            //reverse sort list to make 'Resistance' the default
+            var sorted = listOfSides.OrderByDescending(x => x.level);
+            listOfSides = sorted.ToList();
+            //names of Sides
+            listOfSideOptions = listOfSides.Select(txt => txt.name).ToList();
+            //set options
+            if (listOfSideOptions != null)
+            {
+                dropInputSide.options.Clear();
+                for (int i = 0; i < listOfSideOptions.Count; i++)
+                { dropInputSide.options.Add(new TMP_Dropdown.OptionData() { text = listOfSideOptions[i] }); }
+            }
+            else { Debug.LogError("Invalid listOfOptions (Null)"); }
+        }
+        else { Debug.LogError("Invalid listOfSides (Null)"); }
+        //set index
+        dropInputSide.value = -1;
+    }
+    #endregion
+
     #region InitialiseDropDownTraits
     /// <summary>
-    /// Initialise drop down control for Traitss
+    /// Initialise drop down control for Traits
     /// </summary>
     private void InitialiseDropDownTraits()
     {
@@ -368,6 +473,51 @@ public class ActorPoolUI : MonoBehaviour
     }
     #endregion
 
+    #region DropDownPoolSelected
+    /// <summary>
+    /// Get option selected from dropDown pick list
+    /// </summary>
+    private void DropDownPoolSelected()
+    {
+        int index = dropInputPool.value;
+        //set input values
+        dropIntPool = index;
+        dropStringPool = dropInputPool.options[index].text;
+        //set label
+        poolName.text = dropStringPool;
+    }
+    #endregion
+
+    #region DropDownNameSetSelected
+    /// <summary>
+    /// Get option selected from dropDown pick list
+    /// </summary>
+    private void DropDownNameSetSelected()
+    {
+        int index = dropInputNameSet.value;
+        //set input values
+        dropIntNameSet = index;
+        dropStringNameSet = dropInputNameSet.options[index].text;
+        //set label
+        poolNameSet.text = dropStringNameSet;
+    }
+    #endregion
+
+    #region DropDownSideSelected
+    /// <summary>
+    /// Get option selected from dropDown pick list
+    /// </summary>
+    private void DropDownSideSelected()
+    {
+        int index = dropInputSide.value;
+        //set input values
+        dropIntSide = index;
+        dropStringSide = dropInputSide.options[index].text;
+        //set label
+        poolSide.text = dropStringSide;
+    }
+    #endregion
+
     #region DropDownTraitSelected
     /// <summary>
     /// Get option selected from dropDown pick list
@@ -387,6 +537,54 @@ public class ActorPoolUI : MonoBehaviour
     //
     // - - - Utilities
     //
+
+    #region UpdateListOfActorPools
+    /// <summary>
+    /// Updates and Initialises listOfPoolOptions by searching for actorPools in SO/Temp and SO/ActorPool folders
+    /// </summary>
+    private void UpdateListOfActorPools()
+    {
+        string pathName;
+        ActorPool pool;
+        string[] arrayOfGuids;
+        //clear list prior to fresh update 
+        listOfActorPools.Clear();
+        //ActorPool folder
+        arrayOfGuids = AssetDatabase.FindAssets("t:ActorPool", new[] { "Assets/SO/ActorPools" });
+        if (arrayOfGuids.Length > 0)
+        {
+            for (int i = 0; i < arrayOfGuids.Length; i++)
+            {
+                pathName = AssetDatabase.GUIDToAssetPath(arrayOfGuids[i]);
+                if (pathName.Length > 0)
+                {
+                    pool = (ActorPool)AssetDatabase.LoadAssetAtPath(pathName, typeof(ActorPool));
+                    if (pool != null)
+                    { listOfActorPools.Add(pool); }
+                    else { Debug.LogErrorFormat("Invalid pool (Null) for path \"{0}\"", pathName); }
+                }
+                else { Debug.LogErrorFormat("Invalid path (Empty) for guid \"{0}\", guids[{1}] at /ActorPoolss", arrayOfGuids[i], i); }
+            }
+        }
+        //Temp folder
+        arrayOfGuids = AssetDatabase.FindAssets("t:ActorPool", new[] { "Assets/SO/TempPool" });
+        if (arrayOfGuids.Length > 0)
+        {
+            for (int i = 0; i < arrayOfGuids.Length; i++)
+            {
+                pathName = AssetDatabase.GUIDToAssetPath(arrayOfGuids[i]);
+                if (pathName.Length > 0)
+                {
+                    pool = (ActorPool)AssetDatabase.LoadAssetAtPath(pathName, typeof(ActorPool));
+                    if (pool != null)
+                    { listOfActorPools.Add(pool); }
+                    else { Debug.LogErrorFormat("Invalid pool (Null) for path \"{0}\"", pathName); }
+                }
+                else { Debug.LogErrorFormat("Invalid path (Empty) for guid \"{0}\", guids[{1}] at /TempPool", arrayOfGuids[i], i); }
+            }
+        }
+    }
+    #endregion
 
     #region UpdateSidePanel
     /// <summary>

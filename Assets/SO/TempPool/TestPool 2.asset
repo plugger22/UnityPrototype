@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35b442ab8bdda3e4e8b2570c2e3fe2c1, type: 3}
-  m_Name: TestPool
+  m_Name: TestPool 2
   m_EditorClassIdentifier: 
   tag: Test Pool
   author: Cameron Harris
