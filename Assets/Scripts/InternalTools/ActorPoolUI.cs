@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using toolsAPI;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// Runs actorPoolUI in internal tools scene
@@ -35,12 +37,20 @@ public class ActorPoolUI : MonoBehaviour
     public TMP_InputField poolAuthorInput;
     public TMP_InputField poolDateInput;
 
-    [Header("Actor texts")]
+    [Header("Actor Display")]
     public TextMeshProUGUI textName;
     public TextMeshProUGUI textArc;
     public TextMeshProUGUI textStatus;
     public TextMeshProUGUI textSex;
     public TextMeshProUGUI textTrait;
+    public Image actorPortrait;
+    public TMP_InputField actorFirstName;
+    public TMP_InputField actorLastName;
+    public TMP_InputField actorLevel;
+    public TMP_InputField actorPower;
+    public TMP_InputField backstory0;
+    public TMP_InputField backstory1;
+
 
     [Header("Drop down lists")]
     public TMP_Dropdown dropInputPool;
@@ -55,11 +65,14 @@ public class ActorPoolUI : MonoBehaviour
     private int dropIntTrait;
     private int dropIntNameSet;
     private int dropIntSide;
+    private int actorDraftIndex;
+    private int maxActorDraftIndex;
     private string dropStringPool;
     private string dropStringTrait;
     private string dropStringNameSet;
     private string dropStringSide;
     private ActorPool poolObject;
+    private ActorDraft actorObject;
     #endregion
 
     #region Collections
@@ -68,6 +81,8 @@ public class ActorPoolUI : MonoBehaviour
     private List<string> listOfNameSetOptions = new List<string>();
     private List<string> listOfSideOptions = new List<string>();
     private List<ActorPool> listOfActorPools = new List<ActorPool>();
+    private List<ActorDraft> listOfActorDrafts = new List<ActorDraft>();
+    private List<Trait> listOfTraits = new List<Trait>();
 
     #endregion
 
@@ -102,6 +117,8 @@ public class ActorPoolUI : MonoBehaviour
         InitialiseEvents();
         InitialiseButtons();
         InitialiseDropDownPool();
+        InitialiseActorDraftList();
+        InitialiseActorInputFields();
         InitialiseDropDownNameSet();
         InitialiseDropDownSide();
         InitialiseDropDownTraits();
@@ -152,6 +169,13 @@ public class ActorPoolUI : MonoBehaviour
         Debug.Assert(textStatus != null, "Invalid textStatus (Null)");
         Debug.Assert(textSex != null, "Invalid textSex (Null)");
         Debug.Assert(textTrait != null, "Invalid textTrait (Null)");
+        Debug.Assert(actorPortrait != null, "Invalid actorPortrait (Null)");
+        Debug.Assert(actorFirstName != null, "Invalid actorFirstName (Null)");
+        Debug.Assert(actorLastName != null, "Invalid actorLastName (Null)");
+        Debug.Assert(actorLevel != null, "Invalid actorLevel (Null)");
+        Debug.Assert(actorPower != null, "Invalid actorPower (Null)");
+        Debug.Assert(backstory0 != null, "Invalid backstory0 (Null)");
+        Debug.Assert(backstory1 != null, "Invalid backstory1 (Null)");
         //drop down lists
         Debug.Assert(dropInputPool != null, "Invalid dropInputPool (Null)");
         Debug.Assert(dropInputNameSet != null, "Invalid dropInputNameSet (Null)");
@@ -172,6 +196,8 @@ public class ActorPoolUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.NewPoolUI, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.SavePoolUI, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.DeletePoolUI, OnEvent, "ActorPoolUI");
+        ToolEvents.i.AddListener(ToolEventType.NextActorDraft, OnEvent, "ActorPoolUI");
+        ToolEvents.i.AddListener(ToolEventType.PreviousActorDraft, OnEvent, "ActorPoolUI");
     }
     #endregion
 
@@ -202,6 +228,12 @@ public class ActorPoolUI : MonoBehaviour
                 break;
             case ToolEventType.DeletePoolUI:
                 DeletePoolUI();
+                break;
+            case ToolEventType.NextActorDraft:
+                NextActor();
+                break;
+            case ToolEventType.PreviousActorDraft:
+                PreviousActor();
                 break;
             case ToolEventType.CloseActorPoolUI:
                 CloseActorPoolUI();
@@ -275,7 +307,7 @@ public class ActorPoolUI : MonoBehaviour
         if (string.IsNullOrEmpty(data.dateCreated) == true) { isProceed = false; Debug.LogWarning("Invalid data.dateCreated (Null or Empty)"); }
         if (data.nameSet == null) { isProceed = false; Debug.LogWarning("Invalid data.nameSet (Null)"); }
         if (data.side == null) { isProceed = false; Debug.LogWarning("Invalid data.side (Null)"); }
-        
+
         //new ActorPool only if all data present
         if (isProceed == true)
         {
@@ -311,6 +343,39 @@ public class ActorPoolUI : MonoBehaviour
     }
     #endregion
 
+    #region NextActor
+    /// <summary>
+    /// Move down an actor in the listOfActorDrafts -> RIGHT arrow
+    /// </summary>
+    private void NextActor()
+    {
+        actorDraftIndex += 1;
+        //check for rollover
+        if (actorDraftIndex >= maxActorDraftIndex)
+        { actorDraftIndex = 0; }
+        //update actor
+        actorObject = listOfActorDrafts[actorDraftIndex];
+        //Update details
+        UpdateActorDraft();
+    }
+    #endregion
+
+    #region PreviousActor
+    /// <summary>
+    /// Move up an actor in the listOfActorDrafts -> Left arrow
+    /// </summary>
+    private void PreviousActor()
+    {
+        actorDraftIndex -= 1;
+        //check for rollover
+        if (actorDraftIndex < 0)
+        { actorDraftIndex = maxActorDraftIndex - 1; }
+        //update actor
+        actorObject = listOfActorDrafts[actorDraftIndex];
+        //Update details
+        UpdateActorDraft();
+    }
+    #endregion
 
     #region CloseActorPoolUI
     /// <summary>
@@ -327,17 +392,73 @@ public class ActorPoolUI : MonoBehaviour
 
     #endregion
 
+    #region ActorDrafts...
+    //
+    // - - - ActorDrafts
+    //
 
-    #region InitialiseActorDraft
+    #region InitialiseActorDraftList
     /// <summary>
-    /// sets up actor
+    /// sets up actordrafts of currently selected actorPool in an ordered list ready for editing
     /// </summary>
-    private void InitialiseActorDraft()
+    private void InitialiseActorDraftList()
     {
-
+        actorDraftIndex = 0;
+        //Create an ordered list of ActorDrafts within an ActorPool starting with HqBoss0
+        listOfActorDrafts.Clear();
+        listOfActorDrafts.Add(poolObject.hqBoss0);
+        listOfActorDrafts.Add(poolObject.hqBoss1);
+        listOfActorDrafts.Add(poolObject.hqBoss2);
+        listOfActorDrafts.Add(poolObject.hqBoss3);
+        listOfActorDrafts.AddRange(poolObject.listHqWorkers);
+        listOfActorDrafts.AddRange(poolObject.listOnMap);
+        listOfActorDrafts.AddRange(poolObject.listLevelOne);
+        listOfActorDrafts.AddRange(poolObject.listLevelTwo);
+        listOfActorDrafts.AddRange(poolObject.listLevelThree);
+        //check there is the correct number of actor Drafts
+        maxActorDraftIndex = ToolManager.i.actorScript.numOfActors;
+        if (listOfActorDrafts.Count != maxActorDraftIndex)
+        { Debug.LogWarningFormat("Mismatch on actorPool \"{0}\" count (should be {1}, is {2} ActorDraft SO's)", poolObject.name, maxActorDraftIndex, listOfActorDrafts.Count); }
+        else
+        {
+            actorObject = listOfActorDrafts[actorDraftIndex];
+            UpdateActorDraft();
+        };
     }
     #endregion
 
+    #region UpdateActorDraft
+    /// <summary>
+    /// Update and populate page for currently selected ActorDraft
+    /// </summary>
+    private void UpdateActorDraft()
+    {
+        if (actorObject != null)
+        {
+            //labels
+            textName.text = actorObject.actorName;
+            textArc.text = actorObject.arc.name;
+            textStatus.text = actorObject.status.name;
+            textSex.text = actorObject.sex.name;
+            textTrait.text = actorObject.trait.tag;
+            //sprite
+            actorPortrait.sprite = actorObject.sprite;
+            //inputs
+            actorFirstName.text = actorObject.firstName;
+            actorLastName.text = actorObject.lastName;
+            actorLevel.text = Convert.ToString(actorObject.level);
+            actorPower.text = Convert.ToString(actorObject.power);
+            //set trait dropDown
+            dropIntTrait = listOfTraitOptions.FindIndex(x => x.Equals(actorObject.trait.tag, StringComparison.Ordinal) == true);
+            dropInputTrait.value = dropIntTrait;
+        }
+        else { Debug.LogError("Invalid actorObject (Null)"); }
+    }
+    #endregion
+
+    #endregion
+
+    #region DropDowns...
     //
     // - - - Drop Downs
     //
@@ -371,6 +492,10 @@ public class ActorPoolUI : MonoBehaviour
         else { Debug.LogError("Invalid listOfActorPools (Null)"); }
         //set index
         dropInputPool.value = -1;
+        //assign default as first entry
+        dropStringPool = dropInputPool.options[0].text;
+        //Update LHS labels showing data for currently selected pool (which will be the one at the top of the drop down list at initialisation)
+        UpdatePoolObject();
     }
     #endregion
 
@@ -452,7 +577,6 @@ public class ActorPoolUI : MonoBehaviour
         //reset input fields to defaults
         dropIntTrait = -1;
         dropStringTrait = "";
-        List<Trait> listOfTraits = new List<Trait>();
         listOfTraits = ToolManager.i.actorScript.GetListOfTraits();
         if (listOfTraits != null)
         {
@@ -483,8 +607,7 @@ public class ActorPoolUI : MonoBehaviour
         //set input values
         dropIntPool = index;
         dropStringPool = dropInputPool.options[index].text;
-        //set label
-        poolName.text = dropStringPool;
+        UpdatePoolObject();
     }
     #endregion
 
@@ -498,8 +621,6 @@ public class ActorPoolUI : MonoBehaviour
         //set input values
         dropIntNameSet = index;
         dropStringNameSet = dropInputNameSet.options[index].text;
-        //set label
-        poolNameSet.text = dropStringNameSet;
     }
     #endregion
 
@@ -513,8 +634,6 @@ public class ActorPoolUI : MonoBehaviour
         //set input values
         dropIntSide = index;
         dropStringSide = dropInputSide.options[index].text;
-        //set label
-        poolSide.text = dropStringSide;
     }
     #endregion
 
@@ -530,7 +649,60 @@ public class ActorPoolUI : MonoBehaviour
         dropStringTrait = dropInputTrait.options[index].text;
         //set label
         textTrait.text = dropStringTrait;
+        actorObject.trait = listOfTraits.Find(x => x.tag.Equals(dropStringTrait, StringComparison.Ordinal) == true);
     }
+    #endregion
+
+    #endregion
+
+    #region InputFields...
+    //
+    // - - - Input fields
+    //
+
+    private void InitialiseActorInputFields()
+    {
+        actorFirstName.onValueChanged.AddListener(delegate { UpdateActorFirstName(); });
+        actorLastName.onValueChanged.AddListener(delegate { UpdateActorLastName(); });
+        actorLevel.onValueChanged.AddListener(delegate { UpdateActorLevel(); });
+        actorPower.onValueChanged.AddListener(delegate { UpdateActorPower(); });
+        backstory0.onValueChanged.AddListener(delegate { UpdateBackstory0(); });
+        backstory1.onValueChanged.AddListener(delegate { UpdateBackstory1(); });
+    }
+
+    /// <summary>
+    /// Actor first name changed
+    /// </summary>
+    private void UpdateActorFirstName()
+    {
+        actorObject.firstName = actorFirstName.text;
+        actorObject.actorName = string.Format("{0} {1}", actorFirstName.text, actorLastName.text);
+        textName.text = actorObject.actorName;
+    }
+
+    /// <summary>
+    /// Actor last name changed
+    /// </summary>
+    private void UpdateActorLastName()
+    {
+        actorObject.lastName = actorLastName.text;
+        actorObject.actorName = string.Format("{0} {1}", actorFirstName.text, actorLastName.text);
+        textName.text = actorObject.actorName;
+    }
+
+
+    private void UpdateActorLevel()
+    { actorObject.level = Convert.ToInt32(actorLevel.text); }
+
+    private void UpdateActorPower()
+    { actorObject.power = Convert.ToInt32(actorPower.text); }
+
+    private void UpdateBackstory0()
+    { actorObject.backstory0 = backstory0.text; }
+
+    private void UpdateBackstory1()
+    { actorObject.backstory1 = backstory1.text; }
+
     #endregion
 
     #region Utilities...
@@ -586,6 +758,26 @@ public class ActorPoolUI : MonoBehaviour
     }
     #endregion
 
+    #region UpdatePoolObject
+    /// <summary>
+    /// Updates pool object based on current selection in drop down pool name list
+    /// </summary>
+    private void UpdatePoolObject()
+    {
+        //assign to poolObject and update data in LHS panel
+        poolObject = listOfActorPools.Find(x => x.name.Equals(dropStringPool));
+        if (poolObject != null)
+        {
+            poolName.text = poolObject.tag;
+            poolNameSet.text = poolObject.nameSet.name;
+            poolSide.text = poolObject.side.name;
+            poolAuthor.text = poolObject.author;
+            poolDate.text = poolObject.dateCreated;
+        }
+        else { Debug.LogError("Invalid poolObject (Null), not found in listOfActorPools"); }
+    }
+    #endregion
+
     #region UpdateSidePanel
     /// <summary>
     /// Toggles side labels/inputs on/off depending on whether 'isInput' true/false
@@ -633,5 +825,8 @@ public class ActorPoolUI : MonoBehaviour
 
 
     #endregion
+
+
+
     //new methods above here
 }
