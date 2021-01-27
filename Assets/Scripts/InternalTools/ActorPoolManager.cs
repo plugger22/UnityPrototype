@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using System;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// Handles all matters related to ActorPool.SO and ActorDraft.SO
@@ -33,6 +35,7 @@ public class ActorPoolManager : MonoBehaviour
     private List<ActorArc> listOfTempArcs;                      //used for processing
     private List<Trait> listOfTraits;
     private List<Trait> listOfTempTraits;
+    private List<NameSet> listOfNameSets;
      //duplicate
     private int index;
     private int counter;
@@ -40,7 +43,7 @@ public class ActorPoolManager : MonoBehaviour
 
     #region Initialise
     /// <summary>
-    /// Initialisation. Called when needed
+    /// Initialisation. Called only when needed, eg. CreateActorPool
     /// </summary>
     public void Initialise()
     {
@@ -133,14 +136,17 @@ public class ActorPoolManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfTraits (Null)"); }
 
-        /*
+
         //
         // - - - Nameset (All)
         //
-        nameSet = data.nameSet;
-        if (nameSet == null)
-        { Debug.LogError("Invalid nameSet (Null)"); }
-        */
+        listOfNameSets = ToolManager.i.jointScript.GetListOfNameSets();
+        if (listOfNameSets != null)
+        {
+            if (listOfNameSets.Count == 0) { Debug.LogError("Invalid listOfNameSets (Empty)"); }
+        }
+        else { Debug.LogError("Invalid listOfNameSets (Null)"); }
+        
 
         //
         // - - - Collections
@@ -428,6 +434,7 @@ public class ActorPoolManager : MonoBehaviour
     /// <returns></returns>
     public List<Trait> GetListOfTraits()
     { return listOfTraits; }
+
 
     #endregion
 

@@ -113,6 +113,15 @@ public class JointManager : MonoBehaviour
         return listOfArcs;
     }
 
+    /// <summary>
+    /// Return a list of NameSets
+    /// </summary>
+    /// <returns></returns>
+    public List<NameSet> GetListOfNameSets()
+    {
+        return arrayOfNameSets.Select(x => x).ToList();
+    }
+
 
 
     //new methods above here

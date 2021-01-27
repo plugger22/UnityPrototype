@@ -14,7 +14,10 @@ using Random = UnityEngine.Random;
 public class ActorPoolUI : MonoBehaviour
 {
     #region public
+    [Header("Main UI Components")]
     public Canvas actorCanvas;
+    public Image actorPanel;
+    public Image dataPanel;
 
     [Header("Button Interactions")]
     public ToolButtonInteraction newPoolInteraction;
@@ -165,6 +168,8 @@ public class ActorPoolUI : MonoBehaviour
     public void InitialiseAsserts()
     {
         Debug.Assert(actorCanvas != null, "Invalid actorCanvas (Null)");
+        Debug.Assert(actorPanel != null, "Invalid actorPanel (Null)");
+        Debug.Assert(dataPanel != null, "Invalid dataPanel (Null)");
         //buttons
         Debug.Assert(newPoolInteraction != null, "Invalid newPoolInteraction (Null)");
         Debug.Assert(savePoolInteraction != null, "Invalid savePoolInteraction (Null)");
@@ -212,6 +217,7 @@ public class ActorPoolUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.OpenActorPoolUI, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.CloseActorPoolUI, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.NewPoolUI, OnEvent, "ActorPoolUI");
+        ToolEvents.i.AddListener(ToolEventType.CreatePoolUI, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.SavePoolUI, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.DeletePoolUI, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.NextActorDraft, OnEvent, "ActorPoolUI");
@@ -277,6 +283,7 @@ public class ActorPoolUI : MonoBehaviour
         //turn on
         ToolManager.i.toolUIScript.CloseTools();
         actorCanvas.gameObject.SetActive(true);
+        actorPanel.gameObject.SetActive(true);
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.ActorPool);
         ToolManager.i.toolInputScript.SetModalType(ToolModalType.Edit);
@@ -295,6 +302,8 @@ public class ActorPoolUI : MonoBehaviour
         ToolManager.i.toolInputScript.SetModalType(ToolModalType.Input);
         //toggle on button
         createPoolButton.gameObject.SetActive(true);
+        //toggle off actor Panel
+        actorPanel.gameObject.SetActive(false);
 
     }
     #endregion
@@ -310,9 +319,9 @@ public class ActorPoolUI : MonoBehaviour
         data.poolName = poolNameInput.text;
         data.tag = poolTagInput.text;
 
-        //temporary
+        /*//temporary
         data.nameSet = ToolManager.i.jointScript.arrayOfNameSets[Random.Range(0, ToolManager.i.jointScript.arrayOfNameSets.Length)];
-        data.side = ToolManager.i.jointScript.sideResistance;
+        data.side = ToolManager.i.jointScript.sideResistance;*/
 
         data.author = poolAuthorInput.text;
         data.dateCreated = poolDateInput.text;
@@ -329,12 +338,14 @@ public class ActorPoolUI : MonoBehaviour
         //new ActorPool only if all data present
         if (isProceed == true)
         {
+            //toggle actor panel back on
+            actorPanel.gameObject.SetActive(true);
             //create pool and actorDrafts in SO/Temp folder
             ToolManager.i.actorScript.CreateActorPool(data);
             //disable button
             createPoolButton.gameObject.SetActive(false);
             //swap fields
-            UpdateSidePanel(false);
+            UpdateSidePanel(false);          
         }
         else { Debug.LogWarning("Actor Pool NOT created due to invalid data"); }
 

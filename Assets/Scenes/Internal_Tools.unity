@@ -48250,7 +48250,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.0509078, g: 0.5233, b: 0.9811321, a: 1}
+    m_NormalColor: {r: 0.050980393, g: 0.52156866, b: 0.98039216, a: 1}
     m_HighlightedColor: {r: 0.011764706, g: 0.64705884, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -63975,14 +63975,14 @@ MonoBehaviour:
 '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
-  m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: b246c4190f4e46ec9352fe15a7b09ce0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4285201907
+  m_fontColor: {r: 0.9529412, g: 0.99215686, b: 0.41568628, a: 1}
   m_enableVertexGradient: 0
   m_fontColorGradient:
     topLeft: {r: 1, g: 1, b: 1, a: 1}
@@ -70399,7 +70399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.09803922}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -82508,6 +82508,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actorCanvas: {fileID: 1712206084}
+  actorPanel: {fileID: 373328505}
+  dataPanel: {fileID: 1254520718}
   newPoolInteraction: {fileID: 570854341}
   savePoolInteraction: {fileID: 785256558}
   deletePoolInteraction: {fileID: 69417930}
