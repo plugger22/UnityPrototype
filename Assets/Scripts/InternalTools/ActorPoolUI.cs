@@ -6,7 +6,6 @@ using toolsAPI;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 /// <summary>
 /// Runs actorPoolUI in internal tools scene
@@ -18,6 +17,7 @@ public class ActorPoolUI : MonoBehaviour
     public Canvas actorCanvas;
     public Image actorPanel;
     public Image dataPanel;
+    public Image confirmPanel;
 
     [Header("Button Interactions")]
     public ToolButtonInteraction newPoolInteraction;
@@ -25,6 +25,8 @@ public class ActorPoolUI : MonoBehaviour
     public ToolButtonInteraction deletePoolInteraction;
     public ToolButtonInteraction quitPoolInteraction;
     public ToolButtonInteraction createPoolInteraction;
+    public ToolButtonInteraction confirmCancelInteraction;
+    public ToolButtonInteraction confirmDeleteInteraction;
 
     [Header("Buttons that toggle")]
     public Button createPoolButton;
@@ -53,6 +55,8 @@ public class ActorPoolUI : MonoBehaviour
     public TMP_InputField backstory0;
     public TMP_InputField backstory1;
 
+    [Header("Confirm Panel")]
+    public TextMeshProUGUI confirmText;
 
     [Header("Drop down lists")]
     public TMP_Dropdown dropInputPool;
@@ -84,7 +88,9 @@ public class ActorPoolUI : MonoBehaviour
     private List<string> listOfSideOptions = new List<string>();
     private List<ActorPool> listOfActorPools = new List<ActorPool>();
     private List<ActorDraft> listOfActorDrafts = new List<ActorDraft>();
+    private List<NameSet> listOfNameSets = new List<NameSet>();
     private List<Trait> listOfTraits = new List<Trait>();
+    List<GlobalSide> listOfSides = new List<GlobalSide>();
 
     #endregion
 
@@ -107,7 +113,6 @@ public class ActorPoolUI : MonoBehaviour
         return actorPoolUI;
     }
     #endregion
-
 
     #region Initialise -> Master
     /// <summary>
@@ -137,11 +142,38 @@ public class ActorPoolUI : MonoBehaviour
         listOfTraits = ToolManager.i.actorScript.GetListOfTraits();
         if (listOfTraits != null)
         {
-            //names of traits
+            //
+            // - - - traits
+            //
             listOfTraitOptions = listOfTraits.Select(txt => txt.tag).ToList();
             //set options
             if (listOfTraitOptions == null)
             { Debug.LogError("Invalid listOfOptions (Null)"); }
+            //
+            // - - - nameSets
+            //
+            listOfNameSets = ToolManager.i.jointScript.arrayOfNameSets.ToList();
+            if (listOfNameSets != null)
+            {
+                //names of nameSets
+                listOfNameSetOptions = listOfNameSets.Select(txt => txt.name).ToList();
+            }
+            else { Debug.LogError("Invalid listOfNameSets (Null)"); }
+            //
+            // - - - side
+            //
+            listOfSides = ToolManager.i.jointScript.arrayOfGlobalSide.ToList();
+            if (listOfSides != null)
+            {
+                //reverse sort list to make 'Resistance' the default
+                var sorted = listOfSides.OrderByDescending(x => x.level);
+                listOfSides = sorted.ToList();
+                //names of Sides
+                listOfSideOptions = listOfSides.Select(txt => txt.name).ToList();
+                if (listOfSideOptions == null)
+                { Debug.LogError("Invalid listOfOptions (Null)"); }
+            }
+            else { Debug.LogError("Invalid listOfSides (Null)"); }
         }
         else { Debug.LogError("Invalid listOfTraits (Null)"); }
     }
@@ -158,6 +190,8 @@ public class ActorPoolUI : MonoBehaviour
         deletePoolInteraction.SetButton(ToolEventType.DeletePoolUI);
         quitPoolInteraction.SetButton(ToolEventType.CloseActorPoolUI);
         createPoolInteraction.SetButton(ToolEventType.CreatePoolUI);
+        confirmCancelInteraction.SetButton(ToolEventType.DeletePoolCancel);
+        confirmDeleteInteraction.SetButton(ToolEventType.DeletePoolConfirm);
     }
     #endregion
 
@@ -170,6 +204,7 @@ public class ActorPoolUI : MonoBehaviour
         Debug.Assert(actorCanvas != null, "Invalid actorCanvas (Null)");
         Debug.Assert(actorPanel != null, "Invalid actorPanel (Null)");
         Debug.Assert(dataPanel != null, "Invalid dataPanel (Null)");
+        Debug.Assert(confirmPanel != null, "Invalid confirmPanel (Null)");
         //buttons
         Debug.Assert(newPoolInteraction != null, "Invalid newPoolInteraction (Null)");
         Debug.Assert(savePoolInteraction != null, "Invalid savePoolInteraction (Null)");
@@ -177,6 +212,8 @@ public class ActorPoolUI : MonoBehaviour
         Debug.Assert(quitPoolInteraction != null, "Invalid quitPoolInteraction (Null)");
         Debug.Assert(createPoolInteraction != null, "Invalid createPoolInteraction (Null)");
         Debug.Assert(createPoolButton != null, "Invalid createPoolButton (Null)");
+        Debug.Assert(confirmCancelInteraction != null, "Invalid confirmCancelInteraction (Null)");
+        Debug.Assert(confirmDeleteInteraction != null, "Invalid confirmDeleteInteraction (Null)");
         //pool texts
         Debug.Assert(poolName != null, "Invalid poolName (Null)");
         Debug.Assert(poolNameSet != null, "Invalid poolNameSet (Null)");
@@ -199,6 +236,8 @@ public class ActorPoolUI : MonoBehaviour
         Debug.Assert(actorPower != null, "Invalid actorPower (Null)");
         Debug.Assert(backstory0 != null, "Invalid backstory0 (Null)");
         Debug.Assert(backstory1 != null, "Invalid backstory1 (Null)");
+        //confirm texts
+        Debug.Assert(confirmText != null, "Invalid confirmText (Null)");
         //drop down lists
         Debug.Assert(dropInputPool != null, "Invalid dropInputPool (Null)");
         Debug.Assert(dropInputNameSet != null, "Invalid dropInputNameSet (Null)");
@@ -222,9 +261,10 @@ public class ActorPoolUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.DeletePoolUI, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.NextActorDraft, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.PreviousActorDraft, OnEvent, "ActorPoolUI");
+        ToolEvents.i.AddListener(ToolEventType.DeletePoolCancel, OnEvent, "ActorPoolUI");
+        ToolEvents.i.AddListener(ToolEventType.DeletePoolConfirm, OnEvent, "ActorPoolUI");
     }
     #endregion
-
 
     #region Events
     /// <summary>
@@ -262,6 +302,12 @@ public class ActorPoolUI : MonoBehaviour
             case ToolEventType.CloseActorPoolUI:
                 CloseActorPoolUI();
                 break;
+            case ToolEventType.DeletePoolCancel:
+                CancelDeletePool();
+                break;
+            case ToolEventType.DeletePoolConfirm:
+                ConfirmDeletePool();
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
@@ -284,6 +330,8 @@ public class ActorPoolUI : MonoBehaviour
         ToolManager.i.toolUIScript.CloseTools();
         actorCanvas.gameObject.SetActive(true);
         actorPanel.gameObject.SetActive(true);
+        dataPanel.gameObject.SetActive(true);
+        confirmPanel.gameObject.SetActive(false);
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.ActorPool);
         ToolManager.i.toolInputScript.SetModalType(ToolModalType.Edit);
@@ -316,13 +364,11 @@ public class ActorPoolUI : MonoBehaviour
     {
         ActorPoolData data = new ActorPoolData();
 
+        //populate data package
         data.poolName = poolNameInput.text;
         data.tag = poolTagInput.text;
-
-        /*//temporary
-        data.nameSet = ToolManager.i.jointScript.arrayOfNameSets[Random.Range(0, ToolManager.i.jointScript.arrayOfNameSets.Length)];
-        data.side = ToolManager.i.jointScript.sideResistance;*/
-
+        data.side = listOfSides.Find(x => x.name.Equals(dropStringSide, StringComparison.Ordinal));
+        data.nameSet = listOfNameSets.Find(x => x.name.Equals(dropStringNameSet, StringComparison.Ordinal));
         data.author = poolAuthorInput.text;
         data.dateCreated = poolDateInput.text;
 
@@ -338,6 +384,7 @@ public class ActorPoolUI : MonoBehaviour
         //new ActorPool only if all data present
         if (isProceed == true)
         {
+            dropStringPool = data.poolName;
             //toggle actor panel back on
             actorPanel.gameObject.SetActive(true);
             //create pool and actorDrafts in SO/Temp folder
@@ -345,7 +392,17 @@ public class ActorPoolUI : MonoBehaviour
             //disable button
             createPoolButton.gameObject.SetActive(false);
             //swap fields
-            UpdateSidePanel(false);          
+            UpdateSidePanel(false);
+            //swap modes
+            ToolManager.i.toolInputScript.SetModalType(ToolModalType.Edit);
+            //Make new actor pool current
+            UpdateListOfActorPools();
+            UpdatePoolObject();
+            //Update actor drafts
+            InitialiseActorDraftList();
+            UpdateActorDraft();
+            //drop down Pool list
+            InitialiseDropDownPool(false);
         }
         else { Debug.LogWarning("Actor Pool NOT created due to invalid data"); }
 
@@ -364,11 +421,62 @@ public class ActorPoolUI : MonoBehaviour
 
     #region Delete Pool
     /// <summary>
-    /// Deletes actor pool and all related actorDrafts
+    /// Deletes actor pool -> Opens up confirmation dialogue, eg. 'Are you sure?'
     /// </summary>
     private void DeletePoolUI()
     {
+        if (poolObject != null)
+        {
+            //check if proceed
+            actorPanel.gameObject.SetActive(false);
+            dataPanel.gameObject.SetActive(false);
+            confirmPanel.gameObject.SetActive(true);
+            //confirm text
+            confirmText.text = string.Format("Delete ActorPool{0}<size=120%>{1}</size>{2}Are you sure?", "\n", poolObject.tag, "\n");
+        }
+        else { Debug.LogWarningFormat("Invalid poolObject (Null)"); }
+    }
+    #endregion
 
+    #region CancelDeletePool
+    /// <summary>
+    /// Abort delete pool operation, return to main menu
+    /// </summary>
+    private void CancelDeletePool()
+    {
+        confirmPanel.gameObject.SetActive(false);
+        actorPanel.gameObject.SetActive(true);
+        dataPanel.gameObject.SetActive(true);
+    }
+    #endregion
+
+    #region ConfirmDeletePool
+    /// <summary>
+    /// Confirm delete pool operation, return to main menu, set first pool in list as default
+    /// </summary>
+    private void ConfirmDeletePool()
+    {
+        string path;
+        //delete actorDrafts -> reverse loop
+        for (int i = listOfActorDrafts.Count - 1; i >= 0; i--)
+        {
+            path = string.Format("Assets/SO/ActorDrafts/{0}.asset", listOfActorDrafts[i].name);
+            if (AssetDatabase.DeleteAsset(path) == false)
+            { Debug.LogWarningFormat("{0} failed to delete", path); }
+        }
+        //delete actorPool
+        path = string.Format("Assets/SO/ActorPools/{0}.asset", poolObject.name);
+        if (AssetDatabase.DeleteAsset(path) == false)
+        { Debug.LogWarningFormat("{0} failed to delete", path); }
+        //Update 
+        confirmPanel.gameObject.SetActive(false);
+        actorPanel.gameObject.SetActive(true);
+        dataPanel.gameObject.SetActive(true);
+        UpdateListOfActorPools();
+        InitialiseDropDownPool();
+        InitialiseActorDraftList();
+        UpdateActorDraft();
+        UpdatePoolObject();
     }
     #endregion
 
@@ -497,17 +605,20 @@ public class ActorPoolUI : MonoBehaviour
 
     #region InitialiseDropDownPool
     /// <summary>
-    /// Initialise drop down control for Actor Pools
+    /// Initialise drop down control for Actor Pools. 'isDefault' true if first item in list is to be default. If false then dropStringPool record is used, eg. in case of newly created pool
     /// </summary>
-    private void InitialiseDropDownPool()
+    private void InitialiseDropDownPool(bool isFirstItemDefault = true)
     {
         //set up base list
         UpdateListOfActorPools();
         //delegate for dropDown
         dropInputPool.onValueChanged.AddListener(delegate { DropDownPoolSelected(); });
-        //reset input fields to defaults
-        dropIndexPool = -1;
-        dropStringPool = "";
+        if (isFirstItemDefault == true)
+        {
+            //reset input fields to defaults
+            dropIndexPool = -1;
+            dropStringPool = "";
+        }
         if (listOfActorPools != null)
         {
             //names of Pools
@@ -522,10 +633,30 @@ public class ActorPoolUI : MonoBehaviour
             else { Debug.LogError("Invalid listOfOptions (Null)"); }
         }
         else { Debug.LogError("Invalid listOfActorPools (Null)"); }
-        //set index
-        dropInputPool.value = -1;
-        //assign default as first entry
-        dropStringPool = dropInputPool.options[0].text;
+        if (isFirstItemDefault == true)
+        {
+            //set index
+            dropInputPool.value = -1;
+            //assign default as first entry
+            dropStringPool = dropInputPool.options[0].text;
+        }
+        else
+        {
+            //set list to whatever record corresponds to dropStringPool
+            dropIndexPool = listOfPoolOptions.FindIndex(x => x.Equals(dropStringPool, StringComparison.Ordinal));
+            if (dropIndexPool > -1)
+            {
+                dropInputPool.value = dropIndexPool;
+            }
+            else
+            {
+                //Not found -> error condition, display default first record instead
+                Debug.LogWarningFormat("Invalid dropIndexPool (-1) for dropStringPool \"{0}\"", dropStringPool);
+                dropInputPool.value = -1;
+                dropStringPool = dropInputPool.options[0].text;
+            }
+            dropInputPool.RefreshShownValue();
+        }
         //Update LHS labels showing data for currently selected pool (which will be the one at the top of the drop down list at initialisation)
         UpdatePoolObject();
 
@@ -544,22 +675,14 @@ public class ActorPoolUI : MonoBehaviour
         //reset input fields to defaults
         dropIndexNameSet = -1;
         dropStringNameSet = "";
-        List<NameSet> listOfNameSets = new List<NameSet>();
-        listOfNameSets = ToolManager.i.jointScript.arrayOfNameSets.ToList();
-        if (listOfNameSets != null)
+        //set options
+        if (listOfNameSetOptions != null)
         {
-            //names of nameSets
-            listOfNameSetOptions = listOfNameSets.Select(txt => txt.name).ToList();
-            //set options
-            if (listOfNameSetOptions != null)
-            {
-                dropInputNameSet.options.Clear();
-                for (int i = 0; i < listOfNameSetOptions.Count; i++)
-                { dropInputNameSet.options.Add(new TMP_Dropdown.OptionData() { text = listOfNameSetOptions[i] }); }
-            }
-            else { Debug.LogError("Invalid listOfOptions (Null)"); }
+            dropInputNameSet.options.Clear();
+            for (int i = 0; i < listOfNameSetOptions.Count; i++)
+            { dropInputNameSet.options.Add(new TMP_Dropdown.OptionData() { text = listOfNameSetOptions[i] }); }
         }
-        else { Debug.LogError("Invalid listOfNameSets (Null)"); }
+        else { Debug.LogError("Invalid listOfOptions (Null)"); }
         //set index
         dropInputNameSet.value = -1;
     }
@@ -576,25 +699,13 @@ public class ActorPoolUI : MonoBehaviour
         //reset input fields to defaults
         dropIndexSide = -1;
         dropStringSide = "";
-        List<GlobalSide> listOfSides = new List<GlobalSide>();
-        listOfSides = ToolManager.i.jointScript.arrayOfGlobalSide.ToList();
-        if (listOfSides != null)
+        if (listOfSideOptions != null)
         {
-            //reverse sort list to make 'Resistance' the default
-            var sorted = listOfSides.OrderByDescending(x => x.level);
-            listOfSides = sorted.ToList();
-            //names of Sides
-            listOfSideOptions = listOfSides.Select(txt => txt.name).ToList();
-            //set options
-            if (listOfSideOptions != null)
-            {
-                dropInputSide.options.Clear();
-                for (int i = 0; i < listOfSideOptions.Count; i++)
-                { dropInputSide.options.Add(new TMP_Dropdown.OptionData() { text = listOfSideOptions[i] }); }
-            }
-            else { Debug.LogError("Invalid listOfOptions (Null)"); }
+            dropInputSide.options.Clear();
+            for (int i = 0; i < listOfSideOptions.Count; i++)
+            { dropInputSide.options.Add(new TMP_Dropdown.OptionData() { text = listOfSideOptions[i] }); }
         }
-        else { Debug.LogError("Invalid listOfSides (Null)"); }
+        else { Debug.LogError("Invalid listOfOptions (Null)"); }
         //set index
         dropInputSide.value = -1;
     }
@@ -608,7 +719,9 @@ public class ActorPoolUI : MonoBehaviour
     {
         //delegate for dropDown
         dropInputTrait.onValueChanged.AddListener(delegate { DropDownTraitSelected(); });
-        dropStringTrait = "";
+
+        /*dropStringTrait = "";*/
+
         //set options
         if (listOfTraitOptions != null)
         {
@@ -767,7 +880,7 @@ public class ActorPoolUI : MonoBehaviour
                     { listOfActorPools.Add(pool); }
                     else { Debug.LogErrorFormat("Invalid pool (Null) for path \"{0}\"", pathName); }
                 }
-                else { Debug.LogErrorFormat("Invalid path (Empty) for guid \"{0}\", guids[{1}] at /ActorPoolss", arrayOfGuids[i], i); }
+                else { Debug.LogErrorFormat("Invalid path (Empty) for guid \"{0}\", guids[{1}] at /ActorPools", arrayOfGuids[i], i); }
             }
         }
     }

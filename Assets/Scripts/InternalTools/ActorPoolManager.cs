@@ -235,14 +235,14 @@ public class ActorPoolManager : MonoBehaviour
             if (Random.Range(0, 100) < 50)
             {
                 actor.sex = sexMale;
-                actor.firstName = nameSet.firstMaleNames.GetRandomRecord();
+                actor.firstName = pool.nameSet.firstMaleNames.GetRandomRecord();
             }
             else
             {
                 actor.sex = sexFemale;
-                actor.firstName = nameSet.firstFemaleNames.GetRandomRecord();
+                actor.firstName = pool.nameSet.firstFemaleNames.GetRandomRecord();
             }
-            actor.lastName = nameSet.lastNames.GetRandomRecord();
+            actor.lastName = pool.nameSet.lastNames.GetRandomRecord();
             actor.actorName = string.Format("{0} {1}", actor.firstName, actor.lastName);
             //
             // - - - status, arc, level and power -> assign to actorPool

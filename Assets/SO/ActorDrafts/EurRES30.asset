@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
+  m_Name: EurRES30
+  m_EditorClassIdentifier: 
+  actorName: Charles Knox
+  firstName: Charles
+  lastName: Knox
+  sprite: {fileID: 21300000, guid: 8a947f318ba8ccf45895e42cc50c6af3, type: 3}
+  arc: {fileID: 11400000, guid: 585f6ebe97311aa4396d0c79f6faf1df, type: 2}
+  trait: {fileID: 11400000, guid: a63d143a2637f6f4e984a6bc9b0b5778, type: 2}
+  level: 2
+  power: 0
+  status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
+  sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
+  backstory0: 
+  backstory1: 

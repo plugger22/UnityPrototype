@@ -80,7 +80,9 @@ public enum ToolEventType
     SavePoolUI,
     DeletePoolUI,
     NextActorDraft,
-    PreviousActorDraft
+    PreviousActorDraft,
+    DeletePoolCancel,
+    DeletePoolConfirm
 
 }
 
