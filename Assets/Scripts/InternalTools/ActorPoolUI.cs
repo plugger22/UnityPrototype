@@ -42,7 +42,6 @@ public class ActorPoolUI : MonoBehaviour
     public TextMeshProUGUI textArc;
     public TextMeshProUGUI textStatus;
     public TextMeshProUGUI textSex;
-    public TextMeshProUGUI textTrait;
     public Image actorPortrait;
     public TMP_InputField actorFirstName;
     public TMP_InputField actorLastName;
@@ -61,10 +60,10 @@ public class ActorPoolUI : MonoBehaviour
     #endregion
 
     #region private
-    private int dropIntPool;
-    private int dropIntTrait;
-    private int dropIntNameSet;
-    private int dropIntSide;
+    private int dropIndexPool;
+    private int dropIndexTrait;
+    private int dropIndexNameSet;
+    private int dropIndexSide;
     private int actorDraftIndex;
     private int maxActorDraftIndex;
     private string dropStringPool;
@@ -114,6 +113,7 @@ public class ActorPoolUI : MonoBehaviour
     public void Initialise()
     {
         InitialiseAsserts();
+        InitialiseOther();
         InitialiseEvents();
         InitialiseButtons();
         InitialiseDropDownPool();
@@ -122,6 +122,25 @@ public class ActorPoolUI : MonoBehaviour
         InitialiseDropDownNameSet();
         InitialiseDropDownSide();
         InitialiseDropDownTraits();
+    }
+    #endregion
+
+    #region InitialiseOther
+    /// <summary>
+    /// Initialisation of items not covered by any other Method
+    /// </summary>
+    private void InitialiseOther()
+    {
+        listOfTraits = ToolManager.i.actorScript.GetListOfTraits();
+        if (listOfTraits != null)
+        {
+            //names of traits
+            listOfTraitOptions = listOfTraits.Select(txt => txt.tag).ToList();
+            //set options
+            if (listOfTraitOptions == null)
+            { Debug.LogError("Invalid listOfOptions (Null)"); }
+        }
+        else { Debug.LogError("Invalid listOfTraits (Null)"); }
     }
     #endregion
 
@@ -168,7 +187,6 @@ public class ActorPoolUI : MonoBehaviour
         Debug.Assert(textArc != null, "Invalid textArc (Null)");
         Debug.Assert(textStatus != null, "Invalid textStatus (Null)");
         Debug.Assert(textSex != null, "Invalid textSex (Null)");
-        Debug.Assert(textTrait != null, "Invalid textTrait (Null)");
         Debug.Assert(actorPortrait != null, "Invalid actorPortrait (Null)");
         Debug.Assert(actorFirstName != null, "Invalid actorFirstName (Null)");
         Debug.Assert(actorLastName != null, "Invalid actorLastName (Null)");
@@ -440,7 +458,6 @@ public class ActorPoolUI : MonoBehaviour
             textArc.text = actorObject.arc.name;
             textStatus.text = actorObject.status.name;
             textSex.text = actorObject.sex.name;
-            textTrait.text = actorObject.trait.tag;
             //sprite
             actorPortrait.sprite = actorObject.sprite;
             //inputs
@@ -448,9 +465,13 @@ public class ActorPoolUI : MonoBehaviour
             actorLastName.text = actorObject.lastName;
             actorLevel.text = Convert.ToString(actorObject.level);
             actorPower.text = Convert.ToString(actorObject.power);
+            backstory0.text = actorObject.backstory0;
+            backstory1.text = actorObject.backstory1;
             //set trait dropDown
-            dropIntTrait = listOfTraitOptions.FindIndex(x => x.Equals(actorObject.trait.tag, StringComparison.Ordinal) == true);
-            dropInputTrait.value = dropIntTrait;
+            dropIndexTrait = listOfTraitOptions.FindIndex(x => x.Equals(actorObject.trait.tag, StringComparison.Ordinal) == true);
+            if (dropIndexTrait > -1)
+            { dropInputTrait.value = dropIndexTrait; }
+            else { Debug.LogError("Invalid dropIntTrait (-1)"); }
         }
         else { Debug.LogError("Invalid actorObject (Null)"); }
     }
@@ -474,7 +495,7 @@ public class ActorPoolUI : MonoBehaviour
         //delegate for dropDown
         dropInputPool.onValueChanged.AddListener(delegate { DropDownPoolSelected(); });
         //reset input fields to defaults
-        dropIntPool = -1;
+        dropIndexPool = -1;
         dropStringPool = "";
         if (listOfActorPools != null)
         {
@@ -510,7 +531,7 @@ public class ActorPoolUI : MonoBehaviour
         //delegate for dropDown
         dropInputNameSet.onValueChanged.AddListener(delegate { DropDownNameSetSelected(); });
         //reset input fields to defaults
-        dropIntNameSet = -1;
+        dropIndexNameSet = -1;
         dropStringNameSet = "";
         List<NameSet> listOfNameSets = new List<NameSet>();
         listOfNameSets = ToolManager.i.jointScript.arrayOfNameSets.ToList();
@@ -542,7 +563,7 @@ public class ActorPoolUI : MonoBehaviour
         //delegate for dropDown
         dropInputSide.onValueChanged.AddListener(delegate { DropDownSideSelected(); });
         //reset input fields to defaults
-        dropIntSide = -1;
+        dropIndexSide = -1;
         dropStringSide = "";
         List<GlobalSide> listOfSides = new List<GlobalSide>();
         listOfSides = ToolManager.i.jointScript.arrayOfGlobalSide.ToList();
@@ -576,26 +597,19 @@ public class ActorPoolUI : MonoBehaviour
     {
         //delegate for dropDown
         dropInputTrait.onValueChanged.AddListener(delegate { DropDownTraitSelected(); });
-        //reset input fields to defaults
-        dropIntTrait = -1;
         dropStringTrait = "";
-        listOfTraits = ToolManager.i.actorScript.GetListOfTraits();
-        if (listOfTraits != null)
+        //set options
+        if (listOfTraitOptions != null)
         {
-            //names of traits
-            listOfTraitOptions = listOfTraits.Select(txt => txt.tag).ToList();
-            //set options
-            if (listOfTraitOptions != null)
-            {
-                dropInputTrait.options.Clear();
-                for (int i = 0; i < listOfTraitOptions.Count; i++)
-                { dropInputTrait.options.Add(new TMP_Dropdown.OptionData() { text = listOfTraitOptions[i] }); }
-            }
-            else { Debug.LogError("Invalid listOfOptions (Null)"); }
+            dropInputTrait.options.Clear();
+            for (int i = 0; i < listOfTraitOptions.Count; i++)
+            { dropInputTrait.options.Add(new TMP_Dropdown.OptionData() { text = listOfTraitOptions[i] }); }
         }
-        else { Debug.LogError("Invalid listOfTraits (Null)"); }
+        else { Debug.LogError("Invalid listOfOptions (Null)"); }
         //set index
-        dropInputTrait.value = -1;
+        dropInputTrait.value = dropIndexTrait;
+        dropStringTrait = dropInputTrait.options[dropIndexTrait].text;
+        dropInputTrait.RefreshShownValue();
     }
     #endregion
 
@@ -607,7 +621,7 @@ public class ActorPoolUI : MonoBehaviour
     {
         int index = dropInputPool.value;
         //set input values
-        dropIntPool = index;
+        dropIndexPool = index;
         dropStringPool = dropInputPool.options[index].text;
         UpdatePoolObject();
         //update ActorDrafts
@@ -625,7 +639,7 @@ public class ActorPoolUI : MonoBehaviour
     {
         int index = dropInputNameSet.value;
         //set input values
-        dropIntNameSet = index;
+        dropIndexNameSet = index;
         dropStringNameSet = dropInputNameSet.options[index].text;
     }
     #endregion
@@ -638,7 +652,7 @@ public class ActorPoolUI : MonoBehaviour
     {
         int index = dropInputSide.value;
         //set input values
-        dropIntSide = index;
+        dropIndexSide = index;
         dropStringSide = dropInputSide.options[index].text;
     }
     #endregion
@@ -649,13 +663,14 @@ public class ActorPoolUI : MonoBehaviour
     /// </summary>
     private void DropDownTraitSelected()
     {
-        int index = dropInputTrait.value;
+        dropIndexTrait = dropInputTrait.value;
         //set input values
-        dropIntTrait = index;
-        dropStringTrait = dropInputTrait.options[index].text;
+        dropStringTrait = dropInputTrait.options[dropIndexTrait].text;
         //set label
-        textTrait.text = dropStringTrait;
-        actorObject.trait = listOfTraits.Find(x => x.tag.Equals(dropStringTrait, StringComparison.Ordinal) == true);
+        Trait trait = listOfTraits.Find(x => x.tag.Equals(dropStringTrait, StringComparison.Ordinal) == true);
+        if (trait != null)
+        { actorObject.trait = trait; }
+        else { Debug.LogErrorFormat("Invalid trait (Null) for dropStringTrait \"{0}\"", dropStringTrait); }
     }
     #endregion
 
@@ -742,23 +757,6 @@ public class ActorPoolUI : MonoBehaviour
                     else { Debug.LogErrorFormat("Invalid pool (Null) for path \"{0}\"", pathName); }
                 }
                 else { Debug.LogErrorFormat("Invalid path (Empty) for guid \"{0}\", guids[{1}] at /ActorPoolss", arrayOfGuids[i], i); }
-            }
-        }
-        //Temp folder
-        arrayOfGuids = AssetDatabase.FindAssets("t:ActorPool", new[] { "Assets/SO/TempPool" });
-        if (arrayOfGuids.Length > 0)
-        {
-            for (int i = 0; i < arrayOfGuids.Length; i++)
-            {
-                pathName = AssetDatabase.GUIDToAssetPath(arrayOfGuids[i]);
-                if (pathName.Length > 0)
-                {
-                    pool = (ActorPool)AssetDatabase.LoadAssetAtPath(pathName, typeof(ActorPool));
-                    if (pool != null)
-                    { listOfActorPools.Add(pool); }
-                    else { Debug.LogErrorFormat("Invalid pool (Null) for path \"{0}\"", pathName); }
-                }
-                else { Debug.LogErrorFormat("Invalid path (Empty) for guid \"{0}\", guids[{1}] at /TempPool", arrayOfGuids[i], i); }
             }
         }
     }

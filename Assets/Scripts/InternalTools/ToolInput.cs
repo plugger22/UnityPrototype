@@ -182,12 +182,15 @@ public class ToolInput : MonoBehaviour
                             break;
                         case ToolModalType.Process:
                         case ToolModalType.Read:
-                            //right / left arrows -> NOTE: Process mode is for View Filtered selection
-                            x_axis = Input.GetAxisRaw("Horizontal");
-                            if (x_axis > 0)
-                            { ToolEvents.i.PostNotification(ToolEventType.NextConstant, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal RIGHT"); }
-                            else if (x_axis < 0)
-                            { ToolEvents.i.PostNotification(ToolEventType.PreviousConstant, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal LEFT"); }
+                            if (Input.GetButtonDown("Horizontal"))
+                            {
+                                //right / left arrows -> NOTE: Process mode is for View Filtered selection
+                                x_axis = Input.GetAxisRaw("Horizontal");
+                                if (x_axis > 0)
+                                { ToolEvents.i.PostNotification(ToolEventType.NextConstant, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal RIGHT"); }
+                                else if (x_axis < 0)
+                                { ToolEvents.i.PostNotification(ToolEventType.PreviousConstant, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal LEFT"); }
+                            }
                             break;
 
                     }
@@ -198,12 +201,15 @@ public class ToolInput : MonoBehaviour
                     switch (_modalType)
                     {
                         case ToolModalType.Edit:
-                            //right / left arrows -> change Actor (move up/down list)
-                            x_axis = Input.GetAxisRaw("Horizontal");
-                            if (x_axis > 0)
-                            { ToolEvents.i.PostNotification(ToolEventType.NextActorDraft, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal RIGHT"); }
-                            else if (x_axis < 0)
-                            { ToolEvents.i.PostNotification(ToolEventType.PreviousActorDraft, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal LEFT"); }
+                            if (Input.GetButtonDown("Horizontal"))
+                            {
+                                //right / left arrows
+                                x_axis = Input.GetAxisRaw("Horizontal");
+                                if (x_axis > 0)
+                                { ToolEvents.i.PostNotification(ToolEventType.NextActorDraft, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal RIGHT"); }
+                                else if (x_axis < 0)
+                                { ToolEvents.i.PostNotification(ToolEventType.PreviousActorDraft, this, null, "ToolInput.cs -> ProcessKeyInput Horizontal LEFT"); }
+                            }
                             break;
                         case ToolModalType.Input:
 

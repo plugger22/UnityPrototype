@@ -181,7 +181,7 @@ public class ActorPoolManager : MonoBehaviour
         //
         ActorPool poolAsset = ScriptableObject.CreateInstance<ActorPool>();
         //path with unique asset name for each
-        pathPool = string.Format("Assets/SO/Temp/{0}.asset", data.poolName);
+        pathPool = string.Format("Assets/SO/ActorPools/{0}.asset", data.poolName);
         //how many actors required to populate pool
         int numToCreate = numOfActors;
         poolAsset.nameSet = data.nameSet;
@@ -199,7 +199,7 @@ public class ActorPoolManager : MonoBehaviour
             //overwrite default data
             UpdateActorDraft(poolAsset, actorAsset, i);
             //path with unique asset name for each (poolName + counter)
-            pathDraft = string.Format("Assets/SO/TempPool/{0}{1}.asset", data.poolName, i);
+            pathDraft = string.Format("Assets/SO/ActorDrafts/{0}{1}.asset", data.poolName, i);
             //delete any existing asset at the same location (if same named asset presnet, new asset won't overwrite)
             AssetDatabase.DeleteAsset(pathDraft);
             //Add asset to file and give it a name ('actor')

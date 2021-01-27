@@ -100,7 +100,7 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _OutlineShininess: 0
-    - _OutlineSoftness: 0.281
+    - _OutlineSoftness: 0
     - _OutlineUVSpeedX: 0
     - _OutlineUVSpeedY: 0
     - _OutlineWidth: 0.07
