@@ -27,6 +27,10 @@ public class ActorPoolUI : MonoBehaviour
     public ToolButtonInteraction createPoolInteraction;
     public ToolButtonInteraction confirmCancelInteraction;
     public ToolButtonInteraction confirmDeleteInteraction;
+    public ToolButtonInteraction dataInteraction0;
+    public ToolButtonInteraction dataInteraction1;
+    public ToolButtonInteraction dataInteraction2;
+    public ToolButtonInteraction dataInteraction3;
 
     [Header("Buttons that toggle")]
     public Button createPoolButton;
@@ -57,6 +61,10 @@ public class ActorPoolUI : MonoBehaviour
 
     [Header("Confirm Panel")]
     public TextMeshProUGUI confirmText;
+
+    [Header("Data Panel")]
+    public TextMeshProUGUI dataHeader;
+    public TextMeshProUGUI dataText;
 
     [Header("Drop down lists")]
     public TMP_Dropdown dropInputPool;
@@ -214,6 +222,12 @@ public class ActorPoolUI : MonoBehaviour
         Debug.Assert(createPoolButton != null, "Invalid createPoolButton (Null)");
         Debug.Assert(confirmCancelInteraction != null, "Invalid confirmCancelInteraction (Null)");
         Debug.Assert(confirmDeleteInteraction != null, "Invalid confirmDeleteInteraction (Null)");
+        Debug.Assert(dataInteraction0 != null, "Invalid dataInteraction0 (Null)");
+        Debug.Assert(dataInteraction1 != null, "Invalid dataInteraction1 (Null)");
+        Debug.Assert(dataInteraction2 != null, "Invalid dataInteraction2 (Null)");
+        Debug.Assert(dataInteraction3 != null, "Invalid dataInteraction3 (Null)");
+        Debug.Assert(dataHeader != null, "Invalid dataHeader (Null)");
+        Debug.Assert(dataText != null, "Invalid dataText (Null)");
         //pool texts
         Debug.Assert(poolName != null, "Invalid poolName (Null)");
         Debug.Assert(poolNameSet != null, "Invalid poolNameSet (Null)");
