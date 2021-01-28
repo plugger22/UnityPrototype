@@ -24796,7 +24796,7 @@ GameObject:
   - component: {fileID: 550851660}
   - component: {fileID: 550851659}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Text1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24839,9 +24839,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 'Backstory
-
-'
+  m_text: data1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: b246c4190f4e46ec9352fe15a7b09ce0, type: 2}
@@ -24909,9 +24907,9 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 550851659}
-    characterCount: 10
+    characterCount: 5
     spriteCount: 0
-    spaceCount: 1
+    spaceCount: 0
     wordCount: 1
     linkCount: 0
     lineCount: 1
@@ -53937,7 +53935,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -54438,8 +54436,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 10, y: -50}
-  m_SizeDelta: {x: 380, y: 670}
+  m_AnchoredPosition: {x: 30, y: -50}
+  m_SizeDelta: {x: 340, y: 670}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1279485528
 MonoBehaviour:
@@ -56941,7 +56939,7 @@ GameObject:
   - component: {fileID: 1359611366}
   - component: {fileID: 1359611365}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Text3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56984,7 +56982,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 'Other
+  m_text: 'data3
 
 '
   m_isRightToLeft: 0
@@ -75381,7 +75379,7 @@ GameObject:
   - component: {fileID: 1814105468}
   - component: {fileID: 1814105467}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Text0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75424,9 +75422,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 'Overview
-
-'
+  m_text: data0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: b246c4190f4e46ec9352fe15a7b09ce0, type: 2}
@@ -75494,9 +75490,9 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1814105467}
-    characterCount: 9
+    characterCount: 5
     spriteCount: 0
-    spaceCount: 1
+    spaceCount: 0
     wordCount: 1
     linkCount: 0
     lineCount: 1
@@ -84823,6 +84819,10 @@ MonoBehaviour:
   dataInteraction2: {fileID: 561084571}
   dataInteraction3: {fileID: 744466298}
   createPoolButton: {fileID: 1167263758}
+  dataButtonText0: {fileID: 1814105467}
+  dataButtonText1: {fileID: 550851659}
+  dataButtonText2: {fileID: 2096903175}
+  dataButtonText3: {fileID: 1359611365}
   poolName: {fileID: 1982048993}
   poolNameSet: {fileID: 1540036614}
   poolSide: {fileID: 89656732}
@@ -85543,7 +85543,7 @@ GameObject:
   - component: {fileID: 2096903176}
   - component: {fileID: 2096903175}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Text2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85586,7 +85586,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 'Traits
+  m_text: 'data2
 
 '
   m_isRightToLeft: 0
@@ -85656,7 +85656,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 2096903175}
-    characterCount: 7
+    characterCount: 6
     spriteCount: 0
     spaceCount: 1
     wordCount: 1

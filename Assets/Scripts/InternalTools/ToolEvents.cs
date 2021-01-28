@@ -82,7 +82,11 @@ public enum ToolEventType
     NextActorDraft,
     PreviousActorDraft,
     DeletePoolCancel,
-    DeletePoolConfirm
+    DeletePoolConfirm,
+    DataButton0,
+    DataButton1,
+    DataButton2,
+    DataButton3
 
 }
 

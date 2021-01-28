@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using TMPro;
 using toolsAPI;
 using UnityEditor;
@@ -34,6 +35,12 @@ public class ActorPoolUI : MonoBehaviour
 
     [Header("Buttons that toggle")]
     public Button createPoolButton;
+
+    [Header("Data button labels")]
+    public TextMeshProUGUI dataButtonText0;
+    public TextMeshProUGUI dataButtonText1;
+    public TextMeshProUGUI dataButtonText2;
+    public TextMeshProUGUI dataButtonText3;
 
     [Header("Pool texts")]
     public TextMeshProUGUI poolName;
@@ -87,6 +94,15 @@ public class ActorPoolUI : MonoBehaviour
     private string dropStringSide;
     private ActorPool poolObject;
     private ActorDraft actorObject;
+    #endregion
+
+    #region inputFieldFlags
+    private bool flagFirstName;
+    private bool flagLastName;
+    private bool flagPower;
+    private bool flagLevel;
+    private bool flagBackstory0;
+    private bool flagBackstory1;
     #endregion
 
     #region Collections
@@ -193,6 +209,7 @@ public class ActorPoolUI : MonoBehaviour
     /// </summary>
     private void InitialiseButtons()
     {
+        //button events
         newPoolInteraction.SetButton(ToolEventType.NewPoolUI);
         savePoolInteraction.SetButton(ToolEventType.SavePoolUI);
         deletePoolInteraction.SetButton(ToolEventType.DeletePoolUI);
@@ -200,6 +217,15 @@ public class ActorPoolUI : MonoBehaviour
         createPoolInteraction.SetButton(ToolEventType.CreatePoolUI);
         confirmCancelInteraction.SetButton(ToolEventType.DeletePoolCancel);
         confirmDeleteInteraction.SetButton(ToolEventType.DeletePoolConfirm);
+        dataInteraction0.SetButton(ToolEventType.DataButton0);
+        dataInteraction1.SetButton(ToolEventType.DataButton1);
+        dataInteraction2.SetButton(ToolEventType.DataButton2);
+        dataInteraction3.SetButton(ToolEventType.DataButton3);
+        //button labels
+        dataButtonText0.text = Convert.ToString(ActorDataType.Backstory);
+        dataButtonText1.text = Convert.ToString(ActorDataType.Hierarchy);
+        dataButtonText2.text = Convert.ToString(ActorDataType.Summary);
+        dataButtonText3.text = Convert.ToString(ActorDataType.Traits);
     }
     #endregion
 
@@ -250,6 +276,11 @@ public class ActorPoolUI : MonoBehaviour
         Debug.Assert(actorPower != null, "Invalid actorPower (Null)");
         Debug.Assert(backstory0 != null, "Invalid backstory0 (Null)");
         Debug.Assert(backstory1 != null, "Invalid backstory1 (Null)");
+        //data buttons texts
+        Debug.Assert(dataButtonText0 != null, "Invalid dataButtonText0 (Null)");
+        Debug.Assert(dataButtonText1 != null, "Invalid dataButtonText1 (Null)");
+        Debug.Assert(dataButtonText2 != null, "Invalid dataButtonText2 (Null)");
+        Debug.Assert(dataButtonText3 != null, "Invalid dataButtonText3 (Null)");
         //confirm texts
         Debug.Assert(confirmText != null, "Invalid confirmText (Null)");
         //drop down lists
@@ -277,6 +308,10 @@ public class ActorPoolUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.PreviousActorDraft, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.DeletePoolCancel, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.DeletePoolConfirm, OnEvent, "ActorPoolUI");
+        ToolEvents.i.AddListener(ToolEventType.DataButton0, OnEvent, "ActorPoolUI");
+        ToolEvents.i.AddListener(ToolEventType.DataButton1, OnEvent, "ActorPoolUI");
+        ToolEvents.i.AddListener(ToolEventType.DataButton2, OnEvent, "ActorPoolUI");
+        ToolEvents.i.AddListener(ToolEventType.DataButton3, OnEvent, "ActorPoolUI");
     }
     #endregion
 
@@ -322,6 +357,18 @@ public class ActorPoolUI : MonoBehaviour
             case ToolEventType.DeletePoolConfirm:
                 ConfirmDeletePool();
                 break;
+            case ToolEventType.DataButton0:
+                ShowData(ActorDataType.Backstory);
+                break;
+            case ToolEventType.DataButton1:
+                ShowData(ActorDataType.Hierarchy);
+                break;
+            case ToolEventType.DataButton2:
+                ShowData(ActorDataType.Summary);
+                break;
+            case ToolEventType.DataButton3:
+                ShowData(ActorDataType.Traits);
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
@@ -346,6 +393,9 @@ public class ActorPoolUI : MonoBehaviour
         actorPanel.gameObject.SetActive(true);
         dataPanel.gameObject.SetActive(true);
         confirmPanel.gameObject.SetActive(false);
+        //blank out data panel
+        dataHeader.text = "";
+        dataText.text = "";
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.ActorPool);
         ToolManager.i.toolInputScript.SetModalType(ToolModalType.Edit);
@@ -504,6 +554,8 @@ public class ActorPoolUI : MonoBehaviour
         //check for rollover
         if (actorDraftIndex >= maxActorDraftIndex)
         { actorDraftIndex = 0; }
+        //check for any unsaved data
+        CheckFlags();
         //update actor
         actorObject = listOfActorDrafts[actorDraftIndex];
         //Update details
@@ -521,10 +573,41 @@ public class ActorPoolUI : MonoBehaviour
         //check for rollover
         if (actorDraftIndex < 0)
         { actorDraftIndex = maxActorDraftIndex - 1; }
+        //check for any unsaved data
+        CheckFlags();
         //update actor
         actorObject = listOfActorDrafts[actorDraftIndex];
         //Update details
         UpdateActorDraft();
+    }
+    #endregion
+
+    #region ShowData
+    /// <summary>
+    /// Show a data set on the RHS data page
+    /// </summary>
+    /// <param name="dataType"></param>
+    private void ShowData(ActorDataType dataType)
+    {
+        //any unsaved data
+        CheckFlags();
+        //display data
+        switch (dataType)
+        {
+            case ActorDataType.Backstory:
+
+                break;
+            case ActorDataType.Hierarchy:
+                DisplayDataHierarchy();
+                break;
+            case ActorDataType.Summary:
+
+                break;
+            case ActorDataType.Traits:
+
+                break;
+            default: Debug.LogWarningFormat("Unrecognised ActorDataType \"{0}\"", dataType); break;
+        }
     }
     #endregion
 
@@ -821,13 +904,30 @@ public class ActorPoolUI : MonoBehaviour
 
     private void InitialiseActorInputFields()
     {
-        actorFirstName.onValueChanged.AddListener(delegate { UpdateActorFirstName(); });
-        actorLastName.onValueChanged.AddListener(delegate { UpdateActorLastName(); });
-        actorLevel.onValueChanged.AddListener(delegate { UpdateActorLevel(); });
-        actorPower.onValueChanged.AddListener(delegate { UpdateActorPower(); });
-        backstory0.onValueChanged.AddListener(delegate { UpdateBackstory0(); });
-        backstory1.onValueChanged.AddListener(delegate { UpdateBackstory1(); });
+        //update once all edits complete
+        actorFirstName.onEndEdit.AddListener(delegate { UpdateActorFirstName(); });
+        actorLastName.onEndEdit.AddListener(delegate { UpdateActorLastName(); });
+        backstory0.onEndEdit.AddListener(delegate { UpdateBackstory0(); });
+        backstory1.onEndEdit.AddListener(delegate { UpdateBackstory1(); });
+        actorLevel.onEndEdit.AddListener(delegate { UpdateActorLevel(); });
+        actorPower.onEndEdit.AddListener(delegate { UpdateActorPower(); });
+        //enable flags for onEndEdit fields (allows updating of any unsaved data)
+        actorFirstName.onValueChanged.AddListener(delegate { SetFlagActorFirstName(); });
+        actorLastName.onValueChanged.AddListener(delegate { SetFlagActorLastName(); });
+        actorPower.onValueChanged.AddListener(delegate { SetFlagActorPower(); });
+        actorLevel.onValueChanged.AddListener(delegate { SetFlagActorLevel(); });
+        backstory0.onValueChanged.AddListener(delegate { SetFlagActorBackstory0(); });
+        backstory1.onValueChanged.AddListener(delegate { SetFlagActorBackstory1(); });
+        //flags
+        flagFirstName = false;
+        flagLastName = false;
+        flagPower = false;
+        flagLevel = false;
+        flagBackstory0 = false;
+        flagBackstory1 = false;
     }
+
+    #region Update Fields
 
     /// <summary>
     /// Actor first name changed
@@ -837,6 +937,8 @@ public class ActorPoolUI : MonoBehaviour
         actorObject.firstName = actorFirstName.text;
         actorObject.actorName = string.Format("{0} {1}", actorFirstName.text, actorLastName.text);
         textName.text = actorObject.actorName;
+        //reset flag
+        flagFirstName = false;
     }
 
     /// <summary>
@@ -847,20 +949,166 @@ public class ActorPoolUI : MonoBehaviour
         actorObject.lastName = actorLastName.text;
         actorObject.actorName = string.Format("{0} {1}", actorFirstName.text, actorLastName.text);
         textName.text = actorObject.actorName;
+        //reset flag
+        flagLastName = false;
     }
 
-
     private void UpdateActorLevel()
-    { actorObject.level = Convert.ToInt32(actorLevel.text); }
+    {
+        actorObject.level = Convert.ToInt32(actorLevel.text);
+        flagLevel = false;
+    }
 
     private void UpdateActorPower()
-    { actorObject.power = Convert.ToInt32(actorPower.text); }
+    {
+        actorObject.power = Convert.ToInt32(actorPower.text);
+        flagPower = false;
+    }
 
     private void UpdateBackstory0()
-    { actorObject.backstory0 = backstory0.text; }
+    {
+        actorObject.backstory0 = backstory0.text;
+        flagBackstory0 = false;
+    }
 
     private void UpdateBackstory1()
-    { actorObject.backstory1 = backstory1.text; }
+    {
+        actorObject.backstory1 = backstory1.text;
+        flagBackstory1 = false;
+    }
+    #endregion
+
+    #region Flags 
+
+    /// <summary>
+    /// Toggle flag on to indicate that input field has unsaved changes
+    /// </summary>
+    private void SetFlagActorFirstName()
+    { flagFirstName = true; }
+
+    /// <summary>
+    /// Toggle flag on to indicate that input field has unsaved changes
+    /// </summary>
+    private void SetFlagActorLastName()
+    { flagLastName = true; }
+
+    /// <summary>
+    /// Toggle flag on to indicate that input field has unsaved changes
+    /// </summary>
+    private void SetFlagActorPower()
+    { flagPower = true; }
+
+    /// <summary>
+    /// Toggle flag on to indicate that input field has unsaved changes
+    /// </summary>
+    private void SetFlagActorLevel()
+    { flagLevel = true; }
+
+    /// <summary>
+    /// Toggle flag on to indicate that input field has unsaved changes
+    /// </summary>
+    private void SetFlagActorBackstory0()
+    { flagBackstory0 = true; }
+
+    /// <summary>
+    /// Toggle flag on to indicate that input field has unsaved changes
+    /// </summary>
+    private void SetFlagActorBackstory1()
+    { flagBackstory1 = true; }
+
+    /// <summary>
+    /// Checks all actor page input field flags for unsaved data prior to leaving page
+    /// </summary>
+    private void CheckFlags()
+    {
+        if (flagFirstName == true)
+        { UpdateActorFirstName(); }
+        if (flagLastName == true)
+        { UpdateActorLastName(); }
+        if (flagPower == true)
+        { UpdateActorPower(); }
+        if (flagLevel == true)
+        { UpdateActorLevel(); }
+        if (flagBackstory0 == true)
+        { UpdateBackstory0(); }
+        if (flagBackstory1 == true)
+        { UpdateBackstory1(); }
+    }
+
+    #endregion
+
+    #endregion
+
+    #region DataDisplays...
+    //
+    // - - - Data Displays
+    //
+
+    #region DisplayDataHierarchy
+    /// <summary>
+    /// Display visual hierarchy of actors along with their power 
+    /// </summary>
+    private void DisplayDataHierarchy()
+    {
+        ActorDraft actor;
+        StringBuilder builder = new StringBuilder();
+        builder.Append("HQ Hierarchy");
+        builder.AppendLine();
+        builder.AppendFormat("{0} {1} pwr {2}{3}", poolObject.hqBoss0.status.name, poolObject.hqBoss0.actorName, poolObject.hqBoss0.power, "\n");
+        builder.AppendFormat("{0} {1} pwr {2}{3}", poolObject.hqBoss1.status.name, poolObject.hqBoss1.actorName, poolObject.hqBoss1.power, "\n");
+        builder.AppendFormat("{0} {1} pwr {2}{3}", poolObject.hqBoss2.status.name, poolObject.hqBoss2.actorName, poolObject.hqBoss2.power, "\n");
+        builder.AppendFormat("{0} {1} pwr {2}{3}", poolObject.hqBoss3.status.name, poolObject.hqBoss3.actorName, poolObject.hqBoss3.power, "\n");
+        builder.AppendLine();
+        builder.AppendLine("HQ Workers");
+        for (int i = 0; i < poolObject.listHqWorkers.Count; i++)
+        {
+            actor = poolObject.listHqWorkers[i];
+            if (actor != null)
+            { builder.AppendFormat("{0}, pwr {1}{2}", actor.actorName, actor.power, "\n"); }
+            else { Debug.LogWarningFormat("Invalid actorDraft (Null) for {0}.listHqWorkers[{1}]", poolObject.name, i); }
+        }
+        builder.AppendLine();
+        builder.AppendLine("On Map");
+        for (int i = 0; i < poolObject.listOnMap.Count; i++)
+        {
+            actor = poolObject.listOnMap[i];
+            if (actor != null)
+            { builder.AppendFormat("{0}, {1}{2}", actor.actorName, actor.arc.name, "\n"); }
+            else { Debug.LogWarningFormat("Invalid actorDraft (Null) for {0}.listOnMap[{1}]", poolObject.name, i); }
+        }
+        builder.AppendLine();
+        builder.AppendLine("Pool -> Level One");
+        for (int i = 0; i < poolObject.listLevelOne.Count; i++)
+        {
+            actor = poolObject.listLevelOne[i];
+            if (actor != null)
+            { builder.AppendFormat("{0}, {1}{2}", actor.actorName, actor.arc.name, "\n"); }
+            else { Debug.LogWarningFormat("Invalid actorDraft (Null) for {0}.listLevelOne[{1}]", poolObject.name, i); }
+        }
+        builder.AppendLine();
+        builder.AppendLine("Pool -> Level Two");
+        for (int i = 0; i < poolObject.listLevelTwo.Count; i++)
+        {
+            actor = poolObject.listLevelTwo[i];
+            if (actor != null)
+            { builder.AppendFormat("{0}, {1}{2}", actor.actorName, actor.arc.name, "\n"); }
+            else { Debug.LogWarningFormat("Invalid actorDraft (Null) for {0}.listLevelTwo[{1}]", poolObject.name, i); }
+        }
+        builder.AppendLine();
+        builder.AppendLine("Pool -> Level Three");
+        for (int i = 0; i < poolObject.listLevelThree.Count; i++)
+        {
+            actor = poolObject.listLevelThree[i];
+            if (actor != null)
+            { builder.AppendFormat("{0}, {1}{2}", actor.actorName, actor.arc.name, "\n"); }
+            else { Debug.LogWarningFormat("Invalid actorDraft (Null) for {0}.listLevelThree[{1}]", poolObject.name, i); }
+        }
+        builder.AppendLine();
+        //update fields
+        dataHeader.text = "Hierarchy";
+        dataText.text = builder.ToString();
+    }
+    #endregion
 
     #endregion
 
@@ -964,6 +1212,7 @@ public class ActorPoolUI : MonoBehaviour
         }
     }
     #endregion
+
 
 
     #endregion

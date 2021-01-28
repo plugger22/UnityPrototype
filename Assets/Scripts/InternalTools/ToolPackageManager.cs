@@ -32,7 +32,7 @@ namespace toolsAPI
     public enum CharacterSex { None, Male, Female }
 
     //Actor Pool
-
+    public enum ActorDataType { Backstory, Hierarchy, Summary, Traits }       //Data panel buttons, in order of buttons 0 -> 3. Also used as text labels for data buttons
 
 
 
