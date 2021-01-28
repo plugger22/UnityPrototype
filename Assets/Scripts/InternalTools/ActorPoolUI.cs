@@ -94,6 +94,7 @@ public class ActorPoolUI : MonoBehaviour
     private string dropStringSide;
     private ActorPool poolObject;
     private ActorDraft actorObject;
+    private ActorDataType currentData;
     #endregion
 
     #region inputFieldFlags
@@ -105,6 +106,20 @@ public class ActorPoolUI : MonoBehaviour
     private bool flagBackstory1;
     #endregion
 
+    #region dataFlags
+    private bool flagDataHierarchy;
+    private bool flagDataPool;
+    private bool flagDataTraits;
+    private bool flagDataBackstory;
+    #endregion
+
+    #region cached data
+    private string cachedHierarchyText;
+    private string cachedPoolText;
+    private string cachedSummaryText;
+    private string cachedBackstoryText;
+    #endregion
+
     #region Collections
     private List<string> listOfTraitOptions = new List<string>();
     private List<string> listOfPoolOptions = new List<string>();
@@ -114,8 +129,9 @@ public class ActorPoolUI : MonoBehaviour
     private List<ActorDraft> listOfActorDrafts = new List<ActorDraft>();
     private List<NameSet> listOfNameSets = new List<NameSet>();
     private List<Trait> listOfTraits = new List<Trait>();
-    List<GlobalSide> listOfSides = new List<GlobalSide>();
-
+    private List<GlobalSide> listOfSides = new List<GlobalSide>();
+    private List<TraitData> listOfTraitData = new List<TraitData>();
+    private Dictionary<string, TraitData> dictOfTraitData = new Dictionary<string, TraitData>();
     #endregion
 
     #region static Instance
@@ -224,8 +240,8 @@ public class ActorPoolUI : MonoBehaviour
         //button labels
         dataButtonText0.text = Convert.ToString(ActorDataType.Backstory);
         dataButtonText1.text = Convert.ToString(ActorDataType.Hierarchy);
-        dataButtonText2.text = Convert.ToString(ActorDataType.Summary);
-        dataButtonText3.text = Convert.ToString(ActorDataType.Traits);
+        dataButtonText2.text = Convert.ToString(ActorDataType.Traits);
+        dataButtonText3.text = Convert.ToString(ActorDataType.Pool);
     }
     #endregion
 
@@ -364,10 +380,10 @@ public class ActorPoolUI : MonoBehaviour
                 ShowData(ActorDataType.Hierarchy);
                 break;
             case ToolEventType.DataButton2:
-                ShowData(ActorDataType.Summary);
+                ShowData(ActorDataType.Traits);
                 break;
             case ToolEventType.DataButton3:
-                ShowData(ActorDataType.Traits);
+                ShowData(ActorDataType.Pool);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -400,6 +416,7 @@ public class ActorPoolUI : MonoBehaviour
         ToolManager.i.toolInputScript.SetModalState(ToolModal.ActorPool);
         ToolManager.i.toolInputScript.SetModalType(ToolModalType.Edit);
         UpdateSidePanel(false);
+        ResetDataFlags();
     }
     #endregion
 
@@ -467,6 +484,11 @@ public class ActorPoolUI : MonoBehaviour
             UpdateActorDraft();
             //drop down Pool list
             InitialiseDropDownPool(false);
+            //update Trait summary
+            UpdateTraitData();
+            //clear out data caches
+            ClearDataCaches();
+            ResetDataFlags();
         }
         else { Debug.LogWarning("Actor Pool NOT created due to invalid data"); }
 
@@ -541,6 +563,11 @@ public class ActorPoolUI : MonoBehaviour
         InitialiseActorDraftList();
         UpdateActorDraft();
         UpdatePoolObject();
+        //update Trait summary
+        UpdateTraitData();
+        //clear out data caches
+        ClearDataCaches();
+        ResetDataFlags();
     }
     #endregion
 
@@ -555,7 +582,7 @@ public class ActorPoolUI : MonoBehaviour
         if (actorDraftIndex >= maxActorDraftIndex)
         { actorDraftIndex = 0; }
         //check for any unsaved data
-        CheckFlags();
+        CheckInputFlags();
         //update actor
         actorObject = listOfActorDrafts[actorDraftIndex];
         //Update details
@@ -574,7 +601,7 @@ public class ActorPoolUI : MonoBehaviour
         if (actorDraftIndex < 0)
         { actorDraftIndex = maxActorDraftIndex - 1; }
         //check for any unsaved data
-        CheckFlags();
+        CheckInputFlags();
         //update actor
         actorObject = listOfActorDrafts[actorDraftIndex];
         //Update details
@@ -590,7 +617,7 @@ public class ActorPoolUI : MonoBehaviour
     private void ShowData(ActorDataType dataType)
     {
         //any unsaved data
-        CheckFlags();
+        CheckInputFlags();
         //display data
         switch (dataType)
         {
@@ -598,16 +625,54 @@ public class ActorPoolUI : MonoBehaviour
 
                 break;
             case ActorDataType.Hierarchy:
-                DisplayDataHierarchy();
-                break;
-            case ActorDataType.Summary:
-
+                if (flagDataHierarchy == false)
+                {
+                    if (string.IsNullOrEmpty(cachedHierarchyText) == false)
+                    {
+                        dataHeader.text = "Hierarchy";
+                        dataText.text = cachedHierarchyText;
+                    }
+                    else
+                    { DisplayDataHierarchy(); }
+                }
+                else { DisplayDataHierarchy(); }
                 break;
             case ActorDataType.Traits:
-
+                if (flagDataTraits == false)
+                {
+                    if (string.IsNullOrEmpty(cachedSummaryText) == false)
+                    {
+                        dataHeader.text = "Trait Summary";
+                        dataText.text = cachedSummaryText;
+                    }
+                    else
+                    {
+                        UpdateTraitData();
+                        DisplayDataTraits();
+                    }
+                }
+                else
+                {
+                    UpdateTraitData();
+                    DisplayDataTraits();
+                }
+                break;
+            case ActorDataType.Pool:
+                if (flagDataPool == false)
+                {
+                    if (string.IsNullOrEmpty(cachedPoolText) == false)
+                    {
+                        dataHeader.text = "Pool";
+                        dataText.text = cachedPoolText;
+                    }
+                    else { DisplayDataPool(); }
+                }
+                else { DisplayDataPool(); }
                 break;
             default: Debug.LogWarningFormat("Unrecognised ActorDataType \"{0}\"", dataType); break;
         }
+        //update currently viewed data
+        currentData = dataType;
     }
     #endregion
 
@@ -849,6 +914,11 @@ public class ActorPoolUI : MonoBehaviour
         InitialiseActorDraftList();
         //update actor details
         UpdateActorDraft();
+        //update Trait summary
+        UpdateTraitData();
+        //clear out data caches
+        ClearDataCaches();
+        ResetDataFlags();
     }
     #endregion
 
@@ -892,6 +962,13 @@ public class ActorPoolUI : MonoBehaviour
         if (trait != null)
         { actorObject.trait = trait; }
         else { Debug.LogErrorFormat("Invalid trait (Null) for dropStringTrait \"{0}\"", dropStringTrait); }
+        //update if current page or set data flag if not
+        if (currentData == ActorDataType.Traits)
+        {
+            UpdateTraitData();
+            DisplayDataTraits();
+        }
+        else { flagDataTraits = true; }
     }
     #endregion
 
@@ -937,7 +1014,18 @@ public class ActorPoolUI : MonoBehaviour
         actorObject.firstName = actorFirstName.text;
         actorObject.actorName = string.Format("{0} {1}", actorFirstName.text, actorLastName.text);
         textName.text = actorObject.actorName;
-        //reset flag
+        //flags -> update data page if current is the same, otherwise set flag
+        switch (currentData)
+        {
+            case ActorDataType.Hierarchy:
+                DisplayDataHierarchy();
+                flagDataPool = true;
+                break;
+            case ActorDataType.Pool:
+                DisplayDataPool();
+                flagDataHierarchy = true;
+                break;
+        }
         flagFirstName = false;
     }
 
@@ -949,7 +1037,18 @@ public class ActorPoolUI : MonoBehaviour
         actorObject.lastName = actorLastName.text;
         actorObject.actorName = string.Format("{0} {1}", actorFirstName.text, actorLastName.text);
         textName.text = actorObject.actorName;
-        //reset flag
+        //flags -> update data page if current is the same, otherwise set flag
+        switch (currentData)
+        {
+            case ActorDataType.Hierarchy:
+                DisplayDataHierarchy();
+                flagDataPool = true;
+                break;
+            case ActorDataType.Pool:
+                DisplayDataPool();
+                flagDataHierarchy = true;
+                break;
+        }
         flagLastName = false;
     }
 
@@ -963,6 +1062,10 @@ public class ActorPoolUI : MonoBehaviour
     {
         actorObject.power = Convert.ToInt32(actorPower.text);
         flagPower = false;
+        //update if current page is Hierarchy, otherwise set flag
+        if (currentData == ActorDataType.Hierarchy)
+        { DisplayDataHierarchy(); }
+        else { flagDataHierarchy = true; }
     }
 
     private void UpdateBackstory0()
@@ -1019,7 +1122,7 @@ public class ActorPoolUI : MonoBehaviour
     /// <summary>
     /// Checks all actor page input field flags for unsaved data prior to leaving page
     /// </summary>
-    private void CheckFlags()
+    private void CheckInputFlags()
     {
         if (flagFirstName == true)
         { UpdateActorFirstName(); }
@@ -1046,67 +1149,202 @@ public class ActorPoolUI : MonoBehaviour
 
     #region DisplayDataHierarchy
     /// <summary>
-    /// Display visual hierarchy of actors along with their power 
+    /// Display visual hierarchy of actors -> HQ / workers / OnMap
     /// </summary>
     private void DisplayDataHierarchy()
     {
         ActorDraft actor;
         StringBuilder builder = new StringBuilder();
-        builder.Append("HQ Hierarchy");
+        builder.AppendLine("<b>HQ Hierarchy</b>");
+        builder.AppendFormat("{0} pwr {1}, trait {2}{3}", poolObject.hqBoss0.actorName, poolObject.hqBoss0.power, GetHqTraitEffect(poolObject.hqBoss0.trait), "\n");
+        builder.AppendFormat("{0} pwr {1}, trait {2}{3}", poolObject.hqBoss1.actorName, poolObject.hqBoss1.power, GetHqTraitEffect(poolObject.hqBoss1.trait), "\n");
+        builder.AppendFormat("{0} pwr {1}, trait {2}{3}", poolObject.hqBoss2.actorName, poolObject.hqBoss2.power, GetHqTraitEffect(poolObject.hqBoss2.trait), "\n");
+        builder.AppendFormat("{0} pwr {1}, trait {2}{3}", poolObject.hqBoss3.actorName, poolObject.hqBoss3.power, GetHqTraitEffect(poolObject.hqBoss3.trait), "\n");
         builder.AppendLine();
-        builder.AppendFormat("{0} {1} pwr {2}{3}", poolObject.hqBoss0.status.name, poolObject.hqBoss0.actorName, poolObject.hqBoss0.power, "\n");
-        builder.AppendFormat("{0} {1} pwr {2}{3}", poolObject.hqBoss1.status.name, poolObject.hqBoss1.actorName, poolObject.hqBoss1.power, "\n");
-        builder.AppendFormat("{0} {1} pwr {2}{3}", poolObject.hqBoss2.status.name, poolObject.hqBoss2.actorName, poolObject.hqBoss2.power, "\n");
-        builder.AppendFormat("{0} {1} pwr {2}{3}", poolObject.hqBoss3.status.name, poolObject.hqBoss3.actorName, poolObject.hqBoss3.power, "\n");
-        builder.AppendLine();
-        builder.AppendLine("HQ Workers");
+        builder.AppendLine("<b>HQ Workers</b>");
         for (int i = 0; i < poolObject.listHqWorkers.Count; i++)
         {
             actor = poolObject.listHqWorkers[i];
             if (actor != null)
-            { builder.AppendFormat("{0}, pwr {1}{2}", actor.actorName, actor.power, "\n"); }
+            { builder.AppendFormat("{0}, pwr {1}, trait {2}{3}", actor.actorName, actor.power, GetHqTraitEffect(actor.trait), "\n"); }
             else { Debug.LogWarningFormat("Invalid actorDraft (Null) for {0}.listHqWorkers[{1}]", poolObject.name, i); }
         }
         builder.AppendLine();
-        builder.AppendLine("On Map");
+        builder.AppendLine("<b>On Map</b>");
         for (int i = 0; i < poolObject.listOnMap.Count; i++)
         {
             actor = poolObject.listOnMap[i];
             if (actor != null)
-            { builder.AppendFormat("{0}, {1}{2}", actor.actorName, actor.arc.name, "\n"); }
+            { builder.AppendFormat("{0}, {1}, {2}{3}", actor.actorName, actor.arc.name, actor.trait.tag, "\n"); }
             else { Debug.LogWarningFormat("Invalid actorDraft (Null) for {0}.listOnMap[{1}]", poolObject.name, i); }
         }
+        //update fields
+        dataHeader.text = "Hierarchy";
+        dataText.text = builder.ToString();
+        //cache
+        cachedHierarchyText = builder.ToString();
+        //reset flag
+        flagDataHierarchy = false;
+  
+    }
+    #endregion
+
+    #region DisplayDataTraits
+    /// <summary>
+    /// Display summary of Traits
+    /// </summary>
+    private void DisplayDataTraits()
+    {
+        //Get list of alphabetically sorted traits
+        int countGood = 0;
+        int countBad = 0;
+        int countTotal = 0;
+        listOfTraitData.Clear();
+        var items = from pair in dictOfTraitData
+                    orderby pair.Key ascending
+                    select pair.Value;
+        listOfTraitData = items.ToList();
+        StringBuilder builder = new StringBuilder();
+        builder.AppendLine("<b>Traits</b>");
+        for(int i = 0; i < listOfTraitData.Count; i++)
+        {
+            builder.AppendFormat("{0}, {1}, count {2}{3}", listOfTraitData[i].tag, listOfTraitData[i].isGood == true ? "Good" : "Bad", listOfTraitData[i].count, "\n");
+            if (listOfTraitData[i].isGood == true) { countGood += listOfTraitData[i].count; }
+            else { countBad += listOfTraitData[i].count; }
+            countTotal += listOfTraitData[i].count;
+        }
+        //summary
         builder.AppendLine();
-        builder.AppendLine("Pool -> Level One");
+        builder.AppendLine("<b>Summary</b>");
+        builder.AppendFormat("Good Traits {0}{1}", countGood, "\n");
+        builder.AppendFormat("Bad Traits {0}{1}", countBad, "\n");
+        //tally check
+        Debug.AssertFormat(countTotal == countGood + countBad, "Mismatch on count (total {0}, good {1}, bad {2})", countTotal, countGood, countBad);
+        //update fields
+        dataHeader.text = "Trait Summary";
+        dataText.text = builder.ToString();
+        //cache
+        cachedSummaryText = builder.ToString();
+        //reset flag
+        flagDataTraits = false;
+    }
+    #endregion
+
+    #region DisplayDataPool
+    /// <summary>
+    /// Display visual pool of actors -> level 1/2/3r 
+    /// </summary>
+    private void DisplayDataPool()
+    {
+        ActorDraft actor;
+        StringBuilder builder = new StringBuilder();
+        builder.AppendLine("<b>Pool -> Level One</b>");
         for (int i = 0; i < poolObject.listLevelOne.Count; i++)
         {
             actor = poolObject.listLevelOne[i];
             if (actor != null)
-            { builder.AppendFormat("{0}, {1}{2}", actor.actorName, actor.arc.name, "\n"); }
+            { builder.AppendFormat("{0}, {1}, {2}{3}", actor.actorName, actor.arc.name, actor.trait.tag, "\n"); }
             else { Debug.LogWarningFormat("Invalid actorDraft (Null) for {0}.listLevelOne[{1}]", poolObject.name, i); }
         }
         builder.AppendLine();
-        builder.AppendLine("Pool -> Level Two");
+        builder.AppendLine("<b>Pool -> Level Two</b>");
         for (int i = 0; i < poolObject.listLevelTwo.Count; i++)
         {
             actor = poolObject.listLevelTwo[i];
             if (actor != null)
-            { builder.AppendFormat("{0}, {1}{2}", actor.actorName, actor.arc.name, "\n"); }
+            { builder.AppendFormat("{0}, {1}, {2}{3}", actor.actorName, actor.arc.name, actor.trait.tag, "\n"); }
             else { Debug.LogWarningFormat("Invalid actorDraft (Null) for {0}.listLevelTwo[{1}]", poolObject.name, i); }
         }
         builder.AppendLine();
-        builder.AppendLine("Pool -> Level Three");
+        builder.AppendLine("<b>Pool -> Level Three</b>");
         for (int i = 0; i < poolObject.listLevelThree.Count; i++)
         {
             actor = poolObject.listLevelThree[i];
             if (actor != null)
-            { builder.AppendFormat("{0}, {1}{2}", actor.actorName, actor.arc.name, "\n"); }
+            { builder.AppendFormat("{0}, {1}, {2}{3}", actor.actorName, actor.arc.name, actor.trait.tag, "\n"); }
             else { Debug.LogWarningFormat("Invalid actorDraft (Null) for {0}.listLevelThree[{1}]", poolObject.name, i); }
         }
         builder.AppendLine();
         //update fields
-        dataHeader.text = "Hierarchy";
+        dataHeader.text = "Pool";
         dataText.text = builder.ToString();
+        //cache
+        cachedPoolText = builder.ToString();
+        //reset flag
+        flagDataPool = false;
+    }
+    #endregion
+
+    #region GetHqTraitEffect
+    /// <summary>
+    /// returns user friendly string indicating effect of trait on Hq actor
+    /// </summary>
+    /// <param name="trait"></param>
+    /// <returns></returns>
+    private string GetHqTraitEffect(Trait trait)
+    {
+        string effect = "Unknown";
+        double amount;
+        if (trait.hqPowerMultiplier != 0)
+        {
+            //HQ power gain multiplier
+            amount = 1.0 - trait.hqPowerMultiplier;
+            if (amount < 0.0)
+            {
+                //positive effect 
+                effect = string.Format("+{0}% Pwr", Convert.ToInt32(amount * -100));
+            }
+            else
+            {
+                //negative effect
+                effect = string.Format("{0}% Pwr", Convert.ToInt32(amount * 100));
+            }
+        }
+        else if (trait.hqMajorMultiplier != 0)
+        {
+            //chance of leaving multiplier
+            amount = 1.0 - trait.hqMajorMultiplier;
+            if (amount < 0.0)
+            {
+                //positive effect
+                effect = string.Format("+{0}% Leave", Convert.ToInt32(amount * -100));
+            }
+            else
+            {
+                //negative effect
+                effect = string.Format("{0}% Leave", Convert.ToInt32(amount * 100));
+            }
+        }
+        else if (trait.hqMinorMultiplier != 0)
+        {
+            //chance of good event multiplier (negative effect then chance of bad event multiplier)
+            amount = 1.0 - trait.hqMinorMultiplier;
+            if (amount < 0.0)
+            {
+                //positive effect
+                effect = string.Format("+{0}% Good", Convert.ToInt32(amount * -100));
+            }
+            else
+            {
+                //negative effect
+                effect = string.Format("+{0}% Bad", Convert.ToInt32(amount * 100));
+            }
+        }
+        else { Debug.LogWarningFormat("Invalid HQ effect data for trait \"{0}\"", trait.name); }
+        return effect;
+    }
+    #endregion
+
+    #region ResetDataFlags
+    /// <summary>
+    /// Reset all data flags to indicate no changed data
+    /// </summary>
+    private void ResetDataFlags()
+    {
+        flagDataHierarchy = false;
+        flagDataPool = false;
+        flagDataTraits = false;
+        flagDataBackstory = false;
     }
     #endregion
 
@@ -1213,7 +1451,57 @@ public class ActorPoolUI : MonoBehaviour
     }
     #endregion
 
+    #region UpdateTraitData
+    /// <summary>
+    /// Tallies up trait data for all actors in an actorPool and updates data in dictOfTraitData
+    /// </summary>
+    private void UpdateTraitData()
+    {
+        Trait trait;
+        bool isGoodTrait;
+        dictOfTraitData.Clear();
+        for (int i = 0; i < listOfActorDrafts.Count; i++)
+        {
+            if (listOfActorDrafts[i] != null)
+            {
+                trait = listOfActorDrafts[i].trait;
+                //check if already in dictionary
+                if (dictOfTraitData.ContainsKey(trait.name) == true)
+                {
+                    //record present, increment count
+                    dictOfTraitData[trait.name].count++;
+                }
+                else
+                {
+                    isGoodTrait = false;
+                    //not found, create new record
+                    if (trait.typeOfTrait.name.Equals("Good", StringComparison.Ordinal) == true)
+                    { isGoodTrait = true; }
+                    dictOfTraitData.Add(trait.name, new TraitData() { tag = trait.tag, isGood = isGoodTrait, count = 1 });
+                }
+            }
+            else { Debug.LogWarningFormat("Invalid actorDraft (Null) in listOfActorDrafts[{0}]", i); }
+        }
+    }
+    #endregion
 
+    #region ClearDataCaches
+    /// <summary>
+    /// Empty out all data caches when a new actor pool is loaded and clear out data panel
+    /// </summary>
+    private void ClearDataCaches()
+    {
+        cachedHierarchyText = "";
+        cachedPoolText = "";
+        cachedSummaryText = "";
+        cachedBackstoryText = "";
+        //clear data panel
+        dataHeader.text = "";
+        dataText.text = "";
+        //reset currently viewed data
+        currentData = ActorDataType.None;
+    }
+    #endregion
 
     #endregion
 

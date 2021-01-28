@@ -32,7 +32,7 @@ namespace toolsAPI
     public enum CharacterSex { None, Male, Female }
 
     //Actor Pool
-    public enum ActorDataType { Backstory, Hierarchy, Summary, Traits }       //Data panel buttons, in order of buttons 0 -> 3. Also used as text labels for data buttons
+    public enum ActorDataType { None, Backstory, Hierarchy, Traits, Pool }       //Data panel buttons, in order of buttons 0 -> 3. Also used as text labels for data buttons
 
 
 
@@ -1443,6 +1443,19 @@ namespace toolsAPI
         public GlobalSide side;
         public string author;
         public string dateCreated;
+    }
+    #endregion
+
+
+    #region TraitData
+    /// <summary>
+    /// Used for tallying up trait summaries of ActorPools
+    /// </summary>
+    public class TraitData
+    {
+        public string tag;
+        public bool isGood;
+        public int count;
     }
     #endregion
 
