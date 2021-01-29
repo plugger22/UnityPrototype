@@ -11,15 +11,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
   m_Name: AmerRES5
   m_EditorClassIdentifier: 
-  actorName: Cotovatre Peters
-  firstName: Cotovatre
-  lastName: Peters
-  sprite: {fileID: 21300000, guid: c051c39bca0f7f8468bd562b9a858f50, type: 3}
-  arc: {fileID: 11400000, guid: 268c960d386d285478b3ab6aaa5796bf, type: 2}
-  trait: {fileID: 11400000, guid: cbeaa8a1b6ff0a94c91dcb814114442d, type: 2}
+  actorName: Elon Garcia
+  firstName: Elon
+  lastName: Garcia
+  sprite: {fileID: 21300000, guid: aa2bfbc87aa65fa469977ae64d323a08, type: 3}
+  arc: {fileID: 11400000, guid: 47b35b061cc8ac94b8c82676e37f243e, type: 2}
+  trait: {fileID: 11400000, guid: 7127b95ed1a25df42a4047f58f56d2e0, type: 2}
   level: 2
   power: 4
   status: {fileID: 11400000, guid: 745709acc9a885940bf510a33f017691, type: 2}
-  sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
+  sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
   backstory0: 
   backstory1: 
+  listOfIdentity:
+  - Soldier
+  listOfDescriptors:
+  - Bold
+  - Slow
+  listOfGoals:
+  - Protect a secret
+  listOfMotivation:
+  - Wealth
+  listOfFocus: []

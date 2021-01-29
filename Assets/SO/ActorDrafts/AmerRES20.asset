@@ -11,15 +11,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
   m_Name: AmerRES20
   m_EditorClassIdentifier: 
-  actorName: Macey Crowder
-  firstName: Macey
-  lastName: Crowder
-  sprite: {fileID: 21300000, guid: 5f6fc0092b9642044b567f1b26c9ed84, type: 3}
-  arc: {fileID: 11400000, guid: 33cfb0c161a7cde409d27df1080bd2c8, type: 2}
-  trait: {fileID: 11400000, guid: e0a0c6e9f04965e44b9a9bfd4863c964, type: 2}
+  actorName: Wyatt Martin
+  firstName: Wyatt
+  lastName: Martin
+  sprite: {fileID: 21300000, guid: 96332a55984d94b48ba0d03d94b64c9b, type: 3}
+  arc: {fileID: 11400000, guid: acb9718e84f6a6740810786455da2a6e, type: 2}
+  trait: {fileID: 11400000, guid: 2664358faa20c1745a50ea08148f156f, type: 2}
   level: 1
   power: 0
   status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
   sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
   backstory0: 
   backstory1: 
+  listOfIdentity:
+  - Engineer
+  listOfDescriptors:
+  - Powerless
+  - Frightened
+  listOfGoals:
+  - Seize power
+  listOfMotivation:
+  - Power
+  listOfFocus: []

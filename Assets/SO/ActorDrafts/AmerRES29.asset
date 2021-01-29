@@ -11,15 +11,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
   m_Name: AmerRES29
   m_EditorClassIdentifier: 
-  actorName: Gregg Carter
-  firstName: Gregg
-  lastName: Carter
+  actorName: Eunice Taylor
+  firstName: Eunice
+  lastName: Taylor
   sprite: {fileID: 21300000, guid: 5f6fc0092b9642044b567f1b26c9ed84, type: 3}
   arc: {fileID: 11400000, guid: 33cfb0c161a7cde409d27df1080bd2c8, type: 2}
-  trait: {fileID: 11400000, guid: 7127b95ed1a25df42a4047f58f56d2e0, type: 2}
+  trait: {fileID: 11400000, guid: 7093476ba7a405d47a6bc45121774616, type: 2}
   level: 1
   power: 0
   status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
-  sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
+  sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
   backstory0: 
   backstory1: 
+  listOfIdentity:
+  - Guardian
+  listOfDescriptors:
+  - Sweet
+  - Polite
+  listOfGoals:
+  - Make an agreement
+  listOfMotivation:
+  - Pleasure / Excitement
+  listOfFocus: []

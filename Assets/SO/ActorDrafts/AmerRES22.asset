@@ -11,15 +11,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
   m_Name: AmerRES22
   m_EditorClassIdentifier: 
-  actorName: Eunice Davis
-  firstName: Eunice
-  lastName: Davis
+  actorName: Londa Sanchez
+  firstName: Londa
+  lastName: Sanchez
   sprite: {fileID: 21300000, guid: a5b97171f51cd134896a3507329533e1, type: 3}
   arc: {fileID: 11400000, guid: 79fb6b3426257194faf6776c7cb489d2, type: 2}
-  trait: {fileID: 11400000, guid: dc8a591757aa5fa4e896a61094c92585, type: 2}
+  trait: {fileID: 11400000, guid: c8283205e0785884ca708cf77582d25f, type: 2}
   level: 1
   power: 0
   status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
   sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
   backstory0: 
   backstory1: 
+  listOfIdentity:
+  - Thief
+  listOfDescriptors:
+  - Surprising
+  listOfGoals:
+  - Seek a truth
+  listOfMotivation:
+  - Personal Honour
+  listOfFocus: []

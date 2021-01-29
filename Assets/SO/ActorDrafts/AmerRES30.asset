@@ -11,15 +11,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
   m_Name: AmerRES30
   m_EditorClassIdentifier: 
-  actorName: Clara Miller
-  firstName: Clara
-  lastName: Miller
+  actorName: Kristel White
+  firstName: Kristel
+  lastName: White
   sprite: {fileID: 21300000, guid: 8a947f318ba8ccf45895e42cc50c6af3, type: 3}
   arc: {fileID: 11400000, guid: 585f6ebe97311aa4396d0c79f6faf1df, type: 2}
-  trait: {fileID: 11400000, guid: 1b7757c87b291d4418da2888d67bb8e6, type: 2}
+  trait: {fileID: 11400000, guid: 571fc7cc55b031942b10769f4872059b, type: 2}
   level: 2
   power: 0
   status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
   sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
   backstory0: 
   backstory1: 
+  listOfIdentity:
+  - Protector
+  listOfDescriptors:
+  - Trained
+  listOfGoals:
+  - Seek a truth
+  - Prove worthiness
+  listOfMotivation:
+  - Love of Duty
+  listOfFocus: []

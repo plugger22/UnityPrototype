@@ -410,9 +410,11 @@ public class ActorPoolUI : MonoBehaviour
         //blank out data panel
         dataHeader.text = "";
         dataText.text = "";
+        currentData = ActorDataType.None;
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.ActorPool);
         ToolManager.i.toolInputScript.SetModalType(ToolModalType.Edit);
+        
         UpdateSidePanel(false);
         ResetDataFlags();
     }
@@ -431,7 +433,7 @@ public class ActorPoolUI : MonoBehaviour
         createPoolButton.gameObject.SetActive(true);
         //toggle off actor Panel
         actorPanel.gameObject.SetActive(false);
-
+        dataPanel.gameObject.SetActive(false);
     }
     #endregion
 
@@ -466,6 +468,7 @@ public class ActorPoolUI : MonoBehaviour
             dropStringPool = data.poolName;
             //toggle actor panel back on
             actorPanel.gameObject.SetActive(true);
+            dataPanel.gameObject.SetActive(true);
             //create pool and actorDrafts in SO/Temp folder
             ToolManager.i.actorScript.CreateActorPool(data);
             //disable button
@@ -586,7 +589,9 @@ public class ActorPoolUI : MonoBehaviour
         //Update details
         UpdateActorDraft();
         //backstory
-        DisplayDataBackstory();
+        if (currentData == ActorDataType.Backstory)
+        { DisplayDataBackstory(); }
+        else { flagDataBackstory = true; }
     }
     #endregion
 
@@ -607,7 +612,9 @@ public class ActorPoolUI : MonoBehaviour
         //Update details
         UpdateActorDraft();
         //backstory
-        DisplayDataBackstory();
+        if (currentData == ActorDataType.Backstory)
+        { DisplayDataBackstory(); }
+        else { flagDataBackstory = true; }
     }
     #endregion
 

@@ -11,15 +11,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
   m_Name: AmerRES4
   m_EditorClassIdentifier: 
-  actorName: Rosabel Foster
-  firstName: Rosabel
-  lastName: Foster
-  sprite: {fileID: 21300000, guid: 96332a55984d94b48ba0d03d94b64c9b, type: 3}
-  arc: {fileID: 11400000, guid: acb9718e84f6a6740810786455da2a6e, type: 2}
-  trait: {fileID: 11400000, guid: da4a57d4fd990da459ef0d1af153cad8, type: 2}
+  actorName: Eamon McCoy
+  firstName: Eamon
+  lastName: McCoy
+  sprite: {fileID: 21300000, guid: a5b97171f51cd134896a3507329533e1, type: 3}
+  arc: {fileID: 11400000, guid: 79fb6b3426257194faf6776c7cb489d2, type: 2}
+  trait: {fileID: 11400000, guid: e0a0c6e9f04965e44b9a9bfd4863c964, type: 2}
   level: 2
   power: 5
   status: {fileID: 11400000, guid: 745709acc9a885940bf510a33f017691, type: 2}
-  sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
+  sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
   backstory0: 
   backstory1: 
+  listOfIdentity:
+  - Servant
+  - Assistant
+  listOfDescriptors:
+  - Young
+  listOfGoals:
+  - Collect a debt
+  listOfMotivation:
+  - Power
+  listOfFocus: []

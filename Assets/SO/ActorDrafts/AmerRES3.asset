@@ -11,15 +11,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
   m_Name: AmerRES3
   m_EditorClassIdentifier: 
-  actorName: Tracey Musk
-  firstName: Tracey
-  lastName: Musk
-  sprite: {fileID: 21300000, guid: 8a947f318ba8ccf45895e42cc50c6af3, type: 3}
-  arc: {fileID: 11400000, guid: 585f6ebe97311aa4396d0c79f6faf1df, type: 2}
-  trait: {fileID: 11400000, guid: c8283205e0785884ca708cf77582d25f, type: 2}
+  actorName: Scrumpy Santa
+  firstName: Scrumpy
+  lastName: Santa
+  sprite: {fileID: 21300000, guid: e8c221bd51bffd746985d9a2db13476c, type: 3}
+  arc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
+  trait: {fileID: 11400000, guid: 17004eba36fea134cb4ff0d53f09ab65, type: 2}
   level: 2
   power: 20
   status: {fileID: 11400000, guid: 12718945bbbb5204c97bb9365e8f9787, type: 2}
-  sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
-  backstory0: 
-  backstory1: 
+  sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
+  backstory0: Humble beginnings have made Scrumpy into the ultra confident, egotistical
+    superior that thrives on ascending ever higher up the hierarchy by climbng over
+    those less blessed with natural gifts than he
+  backstory1: Scrumpy loves to travel. He hasn't yet been to Luna. Would you like
+    to help pay for his trip?
+  listOfIdentity:
+  - Survivor
+  - Laborer
+  listOfDescriptors:
+  - Confident
+  listOfGoals:
+  - Travel to a place
+  listOfMotivation:
+  - Personal Egotism
+  listOfFocus:
+  - Motivation
+  - Goal

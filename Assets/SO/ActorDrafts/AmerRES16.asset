@@ -11,15 +11,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
   m_Name: AmerRES16
   m_EditorClassIdentifier: 
-  actorName: LeAnn Davis
-  firstName: LeAnn
-  lastName: Davis
+  actorName: Phillip Scott
+  firstName: Phillip
+  lastName: Scott
   sprite: {fileID: 21300000, guid: 8a947f318ba8ccf45895e42cc50c6af3, type: 3}
   arc: {fileID: 11400000, guid: 585f6ebe97311aa4396d0c79f6faf1df, type: 2}
-  trait: {fileID: 11400000, guid: c3a511b561bf25442805a5c68874781f, type: 2}
+  trait: {fileID: 11400000, guid: 93559269ee439f94ab62f9768de51855, type: 2}
   level: 1
   power: 0
   status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
-  sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
+  sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
   backstory0: 
   backstory1: 
+  listOfIdentity:
+  - Killer
+  listOfDescriptors:
+  - Exotic
+  listOfGoals:
+  - Defend a place
+  listOfMotivation:
+  - Pleasure / Excitement
+  listOfFocus: []

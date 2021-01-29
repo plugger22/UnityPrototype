@@ -11,15 +11,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
   m_Name: AmerRES19
   m_EditorClassIdentifier: 
-  actorName: Milford Owens
-  firstName: Milford
-  lastName: Owens
-  sprite: {fileID: 21300000, guid: 96332a55984d94b48ba0d03d94b64c9b, type: 3}
-  arc: {fileID: 11400000, guid: acb9718e84f6a6740810786455da2a6e, type: 2}
-  trait: {fileID: 11400000, guid: 571fc7cc55b031942b10769f4872059b, type: 2}
+  actorName: Majondra Powell
+  firstName: Majondra
+  lastName: Powell
+  sprite: {fileID: 21300000, guid: e8c221bd51bffd746985d9a2db13476c, type: 3}
+  arc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
+  trait: {fileID: 11400000, guid: 1b7757c87b291d4418da2888d67bb8e6, type: 2}
   level: 1
   power: 0
   status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
-  sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
+  sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
   backstory0: 
   backstory1: 
+  listOfIdentity:
+  - Religious
+  listOfDescriptors:
+  - Trained
+  listOfGoals:
+  - Obtain an Object
+  listOfMotivation:
+  - Love
+  listOfFocus: []

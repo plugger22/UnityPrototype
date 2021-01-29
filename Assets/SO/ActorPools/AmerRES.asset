@@ -11,11 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35b442ab8bdda3e4e8b2570c2e3fe2c1, type: 3}
   m_Name: AmerRES
   m_EditorClassIdentifier: 
-  tag: American Resistance
+  tag: Americon Resistance
   author: Cameron Harris
   nameSet: {fileID: 11400000, guid: 195743710f6a69f47acd502168cd250c, type: 2}
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
-  dateCreated: 28th Jan 2021
+  dateCreated: 29th January 2021
   hqBoss0: {fileID: 11400000, guid: 648426a4069b1b34c8e9fa00da0b6c8a, type: 2}
   hqBoss1: {fileID: 11400000, guid: adccad1536cac7b45a92dbc7bcb5705c, type: 2}
   hqBoss2: {fileID: 11400000, guid: e5ab6ede902ded04c978ec9c4742658b, type: 2}

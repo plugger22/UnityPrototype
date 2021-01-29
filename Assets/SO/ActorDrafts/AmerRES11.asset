@@ -11,15 +11,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
   m_Name: AmerRES11
   m_EditorClassIdentifier: 
-  actorName: Petunia Allen
-  firstName: Petunia
-  lastName: Allen
+  actorName: Dorothee Lewis
+  firstName: Dorothee
+  lastName: Lewis
   sprite: {fileID: 21300000, guid: c051c39bca0f7f8468bd562b9a858f50, type: 3}
   arc: {fileID: 11400000, guid: 268c960d386d285478b3ab6aaa5796bf, type: 2}
-  trait: {fileID: 11400000, guid: 432d6458cd6168441b7ea05014312e9e, type: 2}
+  trait: {fileID: 11400000, guid: f4ec8537a1417d244824032875ed1dcf, type: 2}
   level: 2
-  power: 4
+  power: 1
   status: {fileID: 11400000, guid: 745709acc9a885940bf510a33f017691, type: 2}
   sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
   backstory0: 
   backstory1: 
+  listOfIdentity:
+  - Trader
+  - Deceiver
+  listOfDescriptors:
+  - Foul
+  listOfGoals:
+  - Advance status
+  listOfMotivation:
+  - Knowledge
+  - Knowledge
+  listOfFocus: []

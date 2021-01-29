@@ -11,15 +11,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
   m_Name: AmerRES33
   m_EditorClassIdentifier: 
-  actorName: John Anderson
-  firstName: John
-  lastName: Anderson
+  actorName: Taniya Hall
+  firstName: Taniya
+  lastName: Hall
   sprite: {fileID: 21300000, guid: 994e1ef5d70ac654c9a246149603e5ab, type: 3}
   arc: {fileID: 11400000, guid: 37d9dfd62535e6b438debd5d11731168, type: 2}
-  trait: {fileID: 11400000, guid: d8cae4f6ebce95a4b8cbdf3cec11ae60, type: 2}
+  trait: {fileID: 11400000, guid: 45e4744a458b5634894e6c349fe8cb71, type: 2}
   level: 2
   power: 0
   status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
-  sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
+  sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
   backstory0: 
   backstory1: 
+  listOfIdentity:
+  - Foreigner
+  - Creator
+  listOfDescriptors:
+  - Primitive
+  listOfGoals:
+  - Cure an ill
+  listOfMotivation:
+  - Wealth
+  listOfFocus: []
