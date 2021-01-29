@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -26,7 +25,12 @@ public class ActorDraft : ScriptableObject
 
     [Header("Backstory")]
     [Tooltip("Four lines of text max (backstory1 is added on with a blank line between")]
-    [TextArea(3,5)] public string backstory0;
+    [TextArea(3, 5)] public string backstory0;
     [Tooltip("Two lines of text max (this is added on to backstory0 with a blank line between")]
     [TextArea(1, 2)] public string backstory1;
+
+    [Header("Backstory Prompts")]
+    public List<string> listOfIdentity;
+    public List<string> listOfDescriptors;
+    public List<string> listOfGoals;
 }

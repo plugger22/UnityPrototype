@@ -22,6 +22,7 @@ public class ToolDataManager : MonoBehaviour
     private MetaPlotpoint[] arrayOfMetaPlotpointLookup;
     private CharacterIdentity[] arrayOfIdentityLookup;
     private CharacterDescriptor[] arrayOfDescriptorsLookup;
+    private CharacterGoal[] arrayOfGoalsLookup;
     private CharacterSpecial[] arrayOfSpecialLookup;
 
     //Organisations
@@ -43,6 +44,7 @@ public class ToolDataManager : MonoBehaviour
         arrayOfMetaPlotpointLookup = new MetaPlotpoint[size];
         arrayOfIdentityLookup = new CharacterIdentity[size];
         arrayOfDescriptorsLookup = new CharacterDescriptor[size];
+        arrayOfGoalsLookup = new CharacterGoal[size];
         arrayOfSpecialLookup = new CharacterSpecial[size];
     }
 
@@ -408,6 +410,9 @@ public class ToolDataManager : MonoBehaviour
     public CharacterDescriptor[] GetArrayOfCharacterDescriptors()
     { return arrayOfDescriptorsLookup; }
 
+    public CharacterGoal[] GetArrayOfCharacterGoals()
+    { return arrayOfGoalsLookup; }
+
     /// <summary>
     /// Get random CharacterSpecial. Returns null if a problem
     /// </summary>
@@ -475,6 +480,35 @@ public class ToolDataManager : MonoBehaviour
         }
         else { listOfDescriptors.Add(descriptor.tag); }
         return listOfDescriptors;
+    }
+
+    /// <summary>
+    /// Get a list of character Goals (typically only one but could be two). Returns empty list if a problem
+    /// </summary>
+    /// <returns></returns>
+    public List<string> GetCharacterGoal()
+    {
+        List<string> listOfGoals = new List<string>();
+        int rnd = Random.Range(0, 100);
+        CharacterGoal goal = arrayOfGoalsLookup[rnd];
+        //check roll again
+        if (goal.isRollAgain == true)
+        {
+            int counter = 0;
+            do
+            {
+                rnd = UnityEngine.Random.Range(0, 100);
+                goal = arrayOfGoalsLookup[rnd];
+                if (goal.isRollAgain == false)
+                {
+                    listOfGoals.Add(goal.tag);
+                    counter++;
+                }
+            }
+            while (counter < 2);
+        }
+        else { listOfGoals.Add(goal.tag); }
+        return listOfGoals;
     }
 
     #endregion

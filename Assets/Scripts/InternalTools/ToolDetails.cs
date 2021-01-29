@@ -20,6 +20,7 @@ public class ToolDetails : MonoBehaviour
         InitialiseCharacterSpecial();
         InitialiseCharacterIdentity();
         InitialiseCharacterDescriptors();
+        InitialiseCharacterGoal();
         //organisations
         InitialiseOrganisationType();
         InitialiseOrganisationOrigin();
@@ -3908,6 +3909,221 @@ public class ToolDetails : MonoBehaviour
             /*Debug.LogFormat("[Tst] ToolDetails.cs -> InitialiseCharacterDescriptors: arrayOfDescriptor has {0} records{1}", count, "\n");*/
         }
         else { Debug.LogError("Invalid arrayOfDescriptor (Null)"); }
+    }
+    #endregion
+
+    #region InitialiseCharacterGoal
+    /// <summary>
+    /// Character Goal Initialisation
+    /// </summary>
+    private void InitialiseCharacterGoal()
+    {
+        List<CharacterGoal> listOfCharacterGoal = new List<CharacterGoal>() {
+            new CharacterGoal() {
+                tag = "Obtain an Object",
+                listToRoll = new List<int> {1,2,3},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Make an agreement",
+                listToRoll = new List<int> {4,5,6},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Build a relationship",
+                listToRoll = new List<int> {7,8,9},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Undermine a relationship",
+                listToRoll = new List<int> {10, 11, 12},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Seek a truth",
+                listToRoll = new List<int> {13, 14, 15},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Pay a debt",
+                listToRoll = new List<int> {16, 17, 18},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Refute a falsehood",
+                listToRoll = new List<int> {19, 20, 21},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Harm a rival",
+                listToRoll = new List<int> {22, 23, 24},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Cure an ill",
+                listToRoll = new List<int> {25, 26, 27},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Find a person",
+                listToRoll = new List<int> {28, 29, 30},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Find a home",
+                listToRoll = new List<int> {31, 32, 33},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Seize power",
+                listToRoll = new List<int> {34, 35, 36},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Restore a relationship",
+                listToRoll = new List<int> {37, 38, 39},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Create an item",
+                listToRoll = new List<int> {40, 41, 42},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Travel to a place",
+                listToRoll = new List<int> {43, 44, 45},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Secure provisions",
+                listToRoll = new List<int> {46, 47, 48},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Rebel against power",
+                listToRoll = new List<int> {49, 50, 51},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Collect a debt",
+                listToRoll = new List<int> {52, 53, 54},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Protect a secret",
+                listToRoll = new List<int> {55, 56, 57},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Spread faith",
+                listToRoll = new List<int> {58, 59, 60},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Enrich themselves",
+                listToRoll = new List<int> {61, 62, 63},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Protect a person",
+                listToRoll = new List<int> {64, 65, 66},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Protect the status quo",
+                listToRoll = new List<int> {67, 68, 69},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Advance status",
+                listToRoll = new List<int> {70, 71, 72},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Defend a place",
+                listToRoll = new List<int> {73, 74, 75},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Avenge a wrong",
+                listToRoll = new List<int> {76, 77, 78},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Fufill a duty",
+                listToRoll = new List<int> {79, 80, 81},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Gain knowledge",
+                listToRoll = new List<int> {82, 83, 84},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Prove worthiness",
+                listToRoll = new List<int> {85, 86, 87},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Find redemption",
+                listToRoll = new List<int> {88, 89, 90},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Escape from something",
+                listToRoll = new List<int> {91, 92, 93},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "Resolve a dispute",
+                listToRoll = new List<int> {94, 95, 96},
+                isRollAgain = false
+            },
+            new CharacterGoal() {
+                tag = "RollAgain",
+                listToRoll = new List<int> {97, 98, 99, 100},
+                isRollAgain = false
+            }
+
+
+        };
+
+        CharacterGoal[] arrayOfGoal = ToolManager.i.toolDataScript.GetArrayOfCharacterGoals();
+        if (arrayOfGoal != null)
+        {
+            int count;
+            int index;
+            //populate array
+            for (int i = 0; i < listOfCharacterGoal.Count; i++)
+            {
+                CharacterGoal goal = listOfCharacterGoal[i];
+                if (goal != null)
+                {
+                    count = goal.listToRoll.Count;
+                    if (count > 0)
+                    {
+                        for (int j = 0; j < count; j++)
+                        {
+                            index = goal.listToRoll[j] - 1;
+                            arrayOfGoal[index] = goal;
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid count (Zero) for characterGoal \"{0}\"", goal.tag); }
+                }
+                else { Debug.LogWarningFormat("Invalid characterGoal (Null) for listOfCharacterGoal[{0}]", "\n"); }
+            }
+            //data validation
+            count = 0;
+            for (int i = 0; i < arrayOfGoal.Length; i++)
+            {
+                if (arrayOfGoal[i] == null)
+                { Debug.LogWarningFormat("Invalid characterGoal (Null) for arrayOfGoal[{0}]", i); }
+                else { count++; }
+            }
+            /*Debug.LogFormat("[Tst] ToolDetails.cs -> InitialiseCharacterGoal: arrayOfGoal has {0} records{1}", count, "\n");*/
+        }
+        else { Debug.LogError("Invalid arrayOfGoals (Null)"); }
+
     }
     #endregion
 

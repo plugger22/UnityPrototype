@@ -1404,6 +1404,18 @@ namespace toolsAPI
     }
     #endregion
 
+    #region CharacterGoal
+    /// <summary>
+    /// Character Goal
+    /// </summary>
+    public class CharacterGoal
+    {
+        public string tag;
+        public List<int> listToRoll;
+        public bool isRollAgain;                  //if true then roll twice
+    }
+    #endregion
+
     #region CharacterSpecial
     /// <summary>
     /// Character Special Trait
@@ -1446,7 +1458,6 @@ namespace toolsAPI
     }
     #endregion
 
-
     #region TraitData
     /// <summary>
     /// Used for tallying up trait summaries of ActorPools
@@ -1458,6 +1469,7 @@ namespace toolsAPI
         public int count;
     }
     #endregion
+
 
 }
 #endif

@@ -84,8 +84,6 @@ public class ActorPoolUI : MonoBehaviour
     #region private
     private int dropIndexPool;
     private int dropIndexTrait;
-    private int dropIndexNameSet;
-    private int dropIndexSide;
     private int actorDraftIndex;
     private int maxActorDraftIndex;
     private string dropStringPool;
@@ -110,7 +108,6 @@ public class ActorPoolUI : MonoBehaviour
     private bool flagDataHierarchy;
     private bool flagDataPool;
     private bool flagDataTraits;
-    private bool flagDataBackstory;
     #endregion
 
     #region cached data
@@ -587,6 +584,8 @@ public class ActorPoolUI : MonoBehaviour
         actorObject = listOfActorDrafts[actorDraftIndex];
         //Update details
         UpdateActorDraft();
+        //backstory
+        DisplayDataBackstory();
     }
     #endregion
 
@@ -606,6 +605,8 @@ public class ActorPoolUI : MonoBehaviour
         actorObject = listOfActorDrafts[actorDraftIndex];
         //Update details
         UpdateActorDraft();
+        //backstory
+        DisplayDataBackstory();
     }
     #endregion
 
@@ -622,7 +623,13 @@ public class ActorPoolUI : MonoBehaviour
         switch (dataType)
         {
             case ActorDataType.Backstory:
-
+                if (string.IsNullOrEmpty(cachedBackstoryText) == false)
+                {
+                    dataHeader.text = "Backstory";
+                    dataText.text = cachedBackstoryText;
+                }
+                else
+                { DisplayDataBackstory(); }
                 break;
             case ActorDataType.Hierarchy:
                 if (flagDataHierarchy == false)
@@ -835,7 +842,6 @@ public class ActorPoolUI : MonoBehaviour
         //delegate for dropDown
         dropInputNameSet.onValueChanged.AddListener(delegate { DropDownNameSetSelected(); });
         //reset input fields to defaults
-        dropIndexNameSet = -1;
         dropStringNameSet = "";
         //set options
         if (listOfNameSetOptions != null)
@@ -859,7 +865,6 @@ public class ActorPoolUI : MonoBehaviour
         //delegate for dropDown
         dropInputSide.onValueChanged.AddListener(delegate { DropDownSideSelected(); });
         //reset input fields to defaults
-        dropIndexSide = -1;
         dropStringSide = "";
         if (listOfSideOptions != null)
         {
@@ -930,7 +935,6 @@ public class ActorPoolUI : MonoBehaviour
     {
         int index = dropInputNameSet.value;
         //set input values
-        dropIndexNameSet = index;
         dropStringNameSet = dropInputNameSet.options[index].text;
     }
     #endregion
@@ -943,7 +947,6 @@ public class ActorPoolUI : MonoBehaviour
     {
         int index = dropInputSide.value;
         //set input values
-        dropIndexSide = index;
         dropStringSide = dropInputSide.options[index].text;
     }
     #endregion
@@ -1185,7 +1188,7 @@ public class ActorPoolUI : MonoBehaviour
         cachedHierarchyText = builder.ToString();
         //reset flag
         flagDataHierarchy = false;
-  
+
     }
     #endregion
 
@@ -1206,7 +1209,7 @@ public class ActorPoolUI : MonoBehaviour
         listOfTraitData = items.ToList();
         StringBuilder builder = new StringBuilder();
         builder.AppendLine("<b>Traits</b>");
-        for(int i = 0; i < listOfTraitData.Count; i++)
+        for (int i = 0; i < listOfTraitData.Count; i++)
         {
             builder.AppendFormat("{0}, {1}, count {2}{3}", listOfTraitData[i].tag, listOfTraitData[i].isGood == true ? "Good" : "Bad", listOfTraitData[i].count, "\n");
             if (listOfTraitData[i].isGood == true) { countGood += listOfTraitData[i].count; }
@@ -1232,7 +1235,7 @@ public class ActorPoolUI : MonoBehaviour
 
     #region DisplayDataPool
     /// <summary>
-    /// Display visual pool of actors -> level 1/2/3r 
+    /// Display visual pool of actors -> level 1/2/3
     /// </summary>
     private void DisplayDataPool()
     {
@@ -1272,6 +1275,68 @@ public class ActorPoolUI : MonoBehaviour
         cachedPoolText = builder.ToString();
         //reset flag
         flagDataPool = false;
+    }
+    #endregion
+
+    #region DisplayDataBackstory
+    /// <summary>
+    /// Display procedurally generated backstory prompts (there to spark ideas for writing an ActorDraft backstory)
+    /// </summary>
+    private void DisplayDataBackstory()
+    {
+        List<string> tempList;
+        StringBuilder builder = new StringBuilder();
+        builder.AppendLine("<b>Identity</b>");
+        tempList = actorObject.listOfIdentity;
+        if (tempList != null && tempList.Count > 0)
+        {
+            for (int i = 0; i < tempList.Count; i++)
+            { builder.AppendLine(tempList[i]); }
+        }
+        else
+        {
+            actorObject.listOfIdentity = ToolManager.i.toolDataScript.GetCharacterIdentity();
+            tempList = actorObject.listOfIdentity;
+            for (int i = 0; i < tempList.Count; i++)
+            { builder.AppendLine(tempList[i]); }
+        }
+        builder.AppendLine();
+        builder.AppendLine("<b>Descriptors</b>");
+        tempList = actorObject.listOfDescriptors;
+        if (tempList != null && tempList.Count > 0)
+        {
+            for (int i = 0; i < tempList.Count; i++)
+            { builder.AppendLine(tempList[i]); }
+        }
+        else
+        {
+            actorObject.listOfDescriptors = ToolManager.i.toolDataScript.GetCharacterDescriptors();
+            tempList = actorObject.listOfDescriptors;
+            for (int i = 0; i < tempList.Count; i++)
+            { builder.AppendLine(tempList[i]); }
+        }
+        builder.AppendLine();
+        builder.AppendLine("<b>Goal</b>");
+        tempList = actorObject.listOfGoals;
+        if (tempList != null && tempList.Count > 0)
+        {
+            for (int i = 0; i < tempList.Count; i++)
+            { builder.AppendLine(tempList[i]); }
+        }
+        else
+        {
+            actorObject.listOfGoals = ToolManager.i.toolDataScript.GetCharacterGoal();
+            tempList = actorObject.listOfGoals;
+            for (int i = 0; i < tempList.Count; i++)
+            { builder.AppendLine(tempList[i]); }
+        }
+        //update fields
+        dataHeader.text = "Backstory";
+        dataText.text = builder.ToString();
+        //cache
+        cachedBackstoryText = builder.ToString();
+
+
     }
     #endregion
 
@@ -1344,7 +1409,6 @@ public class ActorPoolUI : MonoBehaviour
         flagDataHierarchy = false;
         flagDataPool = false;
         flagDataTraits = false;
-        flagDataBackstory = false;
     }
     #endregion
 
