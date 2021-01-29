@@ -22,6 +22,7 @@ public class ToolDetails : MonoBehaviour
         InitialiseCharacterDescriptors();
         InitialiseCharacterGoal();
         InitialiseCharacterMotivation();
+        InitialiseCharacterFocus();
         //organisations
         InitialiseOrganisationType();
         InitialiseOrganisationOrigin();
@@ -4083,7 +4084,7 @@ public class ToolDetails : MonoBehaviour
             new CharacterGoal() {
                 tag = "RollAgain",
                 listToRoll = new List<int> {97, 98, 99, 100},
-                isRollAgain = false
+                isRollAgain = true
             }
         };
 
@@ -4187,7 +4188,7 @@ public class ToolDetails : MonoBehaviour
                 tag = "RollAgain",
                 listToRoll = new List<int> {91, 92, 93, 94, 95, 96, 97, 98, 99, 100},
                 isRollAgain = true
-            },
+            }
         };
 
         CharacterMotivation[] arrayOfMotivation = ToolManager.i.toolDataScript.GetArrayOfCharacterMotivation();
@@ -4225,6 +4226,83 @@ public class ToolDetails : MonoBehaviour
             /*Debug.LogFormat("[Tst] ToolDetails.cs -> InitialiseCharacterMotivation: arrayOfMotivation has {0} records{1}", count, "\n");*/
         }
         else { Debug.LogError("Invalid arrayOfMotivation (Null)"); }
+    }
+    #endregion
+
+    #region InitialiseCharacterFocus
+    /// <summary>
+    /// Character Focus Initialisation
+    /// </summary>
+    private void InitialiseCharacterFocus()
+    {
+        List<CharacterFocus> listOfCharacterFocus = new List<CharacterFocus>() {
+            new CharacterFocus() {
+                tag = "Identity",
+                listToRoll = new List<int> {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20},
+                isRollAgain = false
+            },
+            new CharacterFocus() {
+                tag = "Descriptors",
+                listToRoll = new List<int> {21, 22, 23, 24, 25, 26, 27, 28, 29, 30},
+                isRollAgain = false
+            },
+            new CharacterFocus() {
+                tag = "Goal",
+                listToRoll = new List<int> {31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50},
+                isRollAgain = false
+            },
+            new CharacterFocus() {
+                tag = "Motivation",
+                listToRoll = new List<int> {51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70},
+                isRollAgain = false
+            },
+            new CharacterFocus() {
+                tag = "Trait",
+                listToRoll = new List<int> {71, 72, 73, 74, 75, 76, 77, 78, 79, 80},
+                isRollAgain = false
+            },
+            new CharacterFocus() {
+                tag = "RollAgain",
+                listToRoll = new List<int> {81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100},
+                isRollAgain = true
+            }
+        };
+
+        CharacterFocus[] arrayOfFocus = ToolManager.i.toolDataScript.GetArrayOfCharacterFocus();
+        if (arrayOfFocus != null)
+        {
+            int count;
+            int index;
+            //populate array
+            for (int i = 0; i < listOfCharacterFocus.Count; i++)
+            {
+                CharacterFocus focus = listOfCharacterFocus[i];
+                if (focus != null)
+                {
+                    count = focus.listToRoll.Count;
+                    if (count > 0)
+                    {
+                        for (int j = 0; j < count; j++)
+                        {
+                            index = focus.listToRoll[j] - 1;
+                            arrayOfFocus[index] = focus;
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid count (Zero) for characterFocus \"{0}\"", focus.tag); }
+                }
+                else { Debug.LogWarningFormat("Invalid characterFocus (Null) for listOfCharacterFocus[{0}]", "\n"); }
+            }
+            //data validation
+            count = 0;
+            for (int i = 0; i < arrayOfFocus.Length; i++)
+            {
+                if (arrayOfFocus[i] == null)
+                { Debug.LogWarningFormat("Invalid characterFocus (Null) for arrayOfFocus[{0}]", i); }
+                else { count++; }
+            }
+            /*Debug.LogFormat("[Tst] ToolDetails.cs -> InitialiseCharacterFocus: arrayOfFocus has {0} records{1}", count, "\n");*/
+        }
+        else { Debug.LogError("Invalid arrayOfFocus (Null)"); }
     }
     #endregion
 

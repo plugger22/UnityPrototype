@@ -24,7 +24,9 @@ public class ToolDataManager : MonoBehaviour
     private CharacterDescriptor[] arrayOfDescriptorsLookup;
     private CharacterGoal[] arrayOfGoalsLookup;
     private CharacterMotivation[] arrayOfMotivationLookup;
+    private CharacterFocus[] arrayOfFocusLookup;
     private CharacterSpecial[] arrayOfSpecialLookup;
+
 
     //Organisations
     private List<OrganisationDescriptor> listOfOrganisationType = new List<OrganisationDescriptor>();
@@ -47,6 +49,7 @@ public class ToolDataManager : MonoBehaviour
         arrayOfDescriptorsLookup = new CharacterDescriptor[size];
         arrayOfGoalsLookup = new CharacterGoal[size];
         arrayOfMotivationLookup = new CharacterMotivation[size];
+        arrayOfFocusLookup = new CharacterFocus[size];
         arrayOfSpecialLookup = new CharacterSpecial[size];
     }
 
@@ -418,6 +421,9 @@ public class ToolDataManager : MonoBehaviour
     public CharacterMotivation[] GetArrayOfCharacterMotivation()
     { return arrayOfMotivationLookup; }
 
+    public CharacterFocus[] GetArrayOfCharacterFocus()
+    { return arrayOfFocusLookup; }
+
     /// <summary>
     /// Get random CharacterSpecial. Returns null if a problem
     /// </summary>
@@ -543,6 +549,51 @@ public class ToolDataManager : MonoBehaviour
         }
         else { listOfMotivation.Add(motivation.tag); }
         return listOfMotivation;
+    }
+
+    /// <summary>
+    /// Get a list of character Focus (typically only one but could be two strings). Returns empty list if a problem
+    /// </summary>
+    /// <returns></returns>
+    public List<string> GetCharacterFocus()
+    {
+        List<string> listOfFocus = new List<string>();
+        CharacterFocus focus;
+        int rnd = Random.Range(0, 100);
+        //do big picture first
+        if (rnd < 20)
+        { listOfFocus.Add("Nothing stands out"); }
+        else if (rnd > 90)
+        {
+            //extreme
+            rnd = Random.Range(0, 100);
+            focus = arrayOfFocusLookup[rnd];
+            listOfFocus.Add(string.Format("Extreme {0}", focus.tag));
+        }
+        else
+        {
+            //one or two focuses are important
+            rnd = Random.Range(0, 100);
+            focus = arrayOfFocusLookup[rnd];
+            //check roll again
+            if (focus.isRollAgain == true)
+            {
+                int counter = 0;
+                do
+                {
+                    rnd = Random.Range(0, 100);
+                    focus = arrayOfFocusLookup[rnd];
+                    if (focus.isRollAgain == false)
+                    {
+                        listOfFocus.Add(focus.tag);
+                        counter++;
+                    }
+                }
+                while (counter < 2);
+            }
+            else { listOfFocus.Add(focus.tag); }
+        }
+        return listOfFocus;
     }
 
     #endregion

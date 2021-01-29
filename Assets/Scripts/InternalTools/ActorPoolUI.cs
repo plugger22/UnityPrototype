@@ -1369,6 +1369,22 @@ public class ActorPoolUI : MonoBehaviour
             for (int i = 0; i < tempList.Count; i++)
             { builder.AppendLine(tempList[i]); }
         }
+        builder.AppendLine();
+        // - - - Focus
+        builder.AppendLine("<b>Focus</b>");
+        tempList = actorObject.listOfFocus;
+        if (tempList != null && tempList.Count > 0)
+        {
+            for (int i = 0; i < tempList.Count; i++)
+            { builder.AppendLine(tempList[i]); }
+        }
+        else
+        {
+            actorObject.listOfFocus = ToolManager.i.toolDataScript.GetCharacterFocus();
+            tempList = actorObject.listOfFocus;
+            for (int i = 0; i < tempList.Count; i++)
+            { builder.AppendLine(tempList[i]); }
+        }
         // - - - update fields
         dataHeader.text = "Backstory";
         dataText.text = builder.ToString();

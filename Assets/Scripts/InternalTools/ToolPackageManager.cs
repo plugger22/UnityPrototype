@@ -1428,6 +1428,18 @@ namespace toolsAPI
     }
     #endregion
 
+    #region CharacterFocus
+    /// <summary>
+    /// Character Focus
+    /// </summary>
+    public class CharacterFocus
+    {
+        public string tag;
+        public List<int> listToRoll;
+        public bool isRollAgain;                  //if true then roll twice
+    }
+    #endregion
+
     #region CharacterSpecial
     /// <summary>
     /// Character Special Trait
