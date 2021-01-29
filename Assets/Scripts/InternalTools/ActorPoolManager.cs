@@ -256,9 +256,7 @@ public class ActorPoolManager : MonoBehaviour
                     actor.power = (numOfActorsHQ + 2 - (int)ActorHQ.Boss) * hqPowerFactor;
                     actor.level = 3;
                     actor.trait = GetTrait();
-                    actor.listOfIdentity = ToolManager.i.toolDataScript.GetCharacterIdentity();
-                    actor.listOfDescriptors = ToolManager.i.toolDataScript.GetCharacterDescriptors();
-                    actor.listOfGoals = ToolManager.i.toolDataScript.GetCharacterGoal();
+                    UpdateActorData(actor);
                     //add to pool (do after all data initialisation)
                     pool.hqBoss0 = actor;
                     break;
@@ -269,9 +267,7 @@ public class ActorPoolManager : MonoBehaviour
                     actor.power = (numOfActorsHQ + 2 - (int)ActorHQ.SubBoss1) * hqPowerFactor;
                     actor.level = 2;
                     actor.trait = GetTrait();
-                    actor.listOfIdentity = ToolManager.i.toolDataScript.GetCharacterIdentity();
-                    actor.listOfDescriptors = ToolManager.i.toolDataScript.GetCharacterDescriptors();
-                    actor.listOfGoals = ToolManager.i.toolDataScript.GetCharacterGoal();
+                    UpdateActorData(actor);
                     pool.hqBoss1 = actor;
                     break;
                 case 2:
@@ -281,9 +277,7 @@ public class ActorPoolManager : MonoBehaviour
                     actor.power = (numOfActorsHQ + 2 - (int)ActorHQ.SubBoss2) * hqPowerFactor;
                     actor.level = 2;
                     actor.trait = GetTrait();
-                    actor.listOfIdentity = ToolManager.i.toolDataScript.GetCharacterIdentity();
-                    actor.listOfDescriptors = ToolManager.i.toolDataScript.GetCharacterDescriptors();
-                    actor.listOfGoals = ToolManager.i.toolDataScript.GetCharacterGoal();
+                    UpdateActorData(actor);
                     pool.hqBoss2 = actor;
                     break;
                 case 3:
@@ -293,9 +287,7 @@ public class ActorPoolManager : MonoBehaviour
                     actor.power = (numOfActorsHQ + 2 - (int)ActorHQ.SubBoss3) * hqPowerFactor;
                     actor.level = 2;
                     actor.trait = GetTrait();
-                    actor.listOfIdentity = ToolManager.i.toolDataScript.GetCharacterIdentity();
-                    actor.listOfDescriptors = ToolManager.i.toolDataScript.GetCharacterDescriptors();
-                    actor.listOfGoals = ToolManager.i.toolDataScript.GetCharacterGoal();
+                    UpdateActorData(actor);
                     pool.hqBoss3 = actor;
                     break;
                 case 4:
@@ -313,9 +305,7 @@ public class ActorPoolManager : MonoBehaviour
                     actor.power = Random.Range(1, 6);
                     actor.level = 2;
                     actor.trait = GetTrait();
-                    actor.listOfIdentity = ToolManager.i.toolDataScript.GetCharacterIdentity();
-                    actor.listOfDescriptors = ToolManager.i.toolDataScript.GetCharacterDescriptors();
-                    actor.listOfGoals = ToolManager.i.toolDataScript.GetCharacterGoal();
+                    UpdateActorData(actor);
                     pool.listHqWorkers.Add(actor);
                     break;
                 case 12:
@@ -332,9 +322,7 @@ public class ActorPoolManager : MonoBehaviour
                     actor.power = 0;
                     actor.level = 1;
                     actor.trait = GetTrait();
-                    actor.listOfIdentity = ToolManager.i.toolDataScript.GetCharacterIdentity();
-                    actor.listOfDescriptors = ToolManager.i.toolDataScript.GetCharacterDescriptors();
-                    actor.listOfGoals = ToolManager.i.toolDataScript.GetCharacterGoal();
+                    UpdateActorData(actor);
                     pool.listOnMap.Add(actor);
                     //set counter to 0 for remaining level 1 actors using left over temp Arcs
                     if (num == 15) { counter = 0; }
@@ -351,9 +339,7 @@ public class ActorPoolManager : MonoBehaviour
                     actor.power = 0;
                     actor.level = 1;
                     actor.trait = GetTrait();
-                    actor.listOfIdentity = ToolManager.i.toolDataScript.GetCharacterIdentity();
-                    actor.listOfDescriptors = ToolManager.i.toolDataScript.GetCharacterDescriptors();
-                    actor.listOfGoals = ToolManager.i.toolDataScript.GetCharacterGoal();
+                    UpdateActorData(actor);
                     pool.listLevelOne.Add(actor);
                     //reset counter ready for a full arc set of level one actors
                     if (num == 20) { counter = 0; }
@@ -374,9 +360,7 @@ public class ActorPoolManager : MonoBehaviour
                     actor.power = 0;
                     actor.level = 1;
                     actor.trait = GetTrait();
-                    actor.listOfIdentity = ToolManager.i.toolDataScript.GetCharacterIdentity();
-                    actor.listOfDescriptors = ToolManager.i.toolDataScript.GetCharacterDescriptors();
-                    actor.listOfGoals = ToolManager.i.toolDataScript.GetCharacterGoal();
+                    UpdateActorData(actor);
                     pool.listLevelOne.Add(actor);
                     //reset counter ready for a full arc set of level two actors
                     if (num == 29) { counter = 0; }
@@ -397,9 +381,7 @@ public class ActorPoolManager : MonoBehaviour
                     actor.power = 0;
                     actor.level = 2;
                     actor.trait = GetTrait();
-                    actor.listOfIdentity = ToolManager.i.toolDataScript.GetCharacterIdentity();
-                    actor.listOfDescriptors = ToolManager.i.toolDataScript.GetCharacterDescriptors();
-                    actor.listOfGoals = ToolManager.i.toolDataScript.GetCharacterGoal();
+                    UpdateActorData(actor);
                     pool.listLevelTwo.Add(actor);
                     //reset counter ready for a full arc set of level three actors
                     if (num == 38) { counter = 0; }
@@ -420,9 +402,7 @@ public class ActorPoolManager : MonoBehaviour
                     actor.power = 0;
                     actor.level = 3;
                     actor.trait = GetTrait();
-                    actor.listOfIdentity = ToolManager.i.toolDataScript.GetCharacterIdentity();
-                    actor.listOfDescriptors = ToolManager.i.toolDataScript.GetCharacterDescriptors();
-                    actor.listOfGoals = ToolManager.i.toolDataScript.GetCharacterGoal();
+                    UpdateActorData(actor);
                     pool.listLevelThree.Add(actor);
                     break;
                 default: Debug.LogWarningFormat("Unrecognised num \"{0}\"", num); break;
@@ -464,6 +444,22 @@ public class ActorPoolManager : MonoBehaviour
     /// <returns></returns>
     public List<Trait> GetListOfTraits()
     { return listOfTraits; }
+
+    /// <summary>
+    /// Updates all actor backstory prompt list fields
+    /// </summary>
+    /// <param name="actor"></param>
+    public void UpdateActorData(ActorDraft actor)
+    {
+        if (actor != null)
+        {
+            actor.listOfIdentity = ToolManager.i.toolDataScript.GetCharacterIdentity();
+            actor.listOfDescriptors = ToolManager.i.toolDataScript.GetCharacterDescriptors();
+            actor.listOfGoals = ToolManager.i.toolDataScript.GetCharacterGoal();
+            actor.listOfMotivation = ToolManager.i.toolDataScript.GetCharacterMotivation();
+        }
+        else { Debug.LogError("Invalid actorDraft (Null)"); }
+    }
 
     #endregion
 

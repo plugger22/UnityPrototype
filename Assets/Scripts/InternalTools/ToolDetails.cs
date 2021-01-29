@@ -21,6 +21,7 @@ public class ToolDetails : MonoBehaviour
         InitialiseCharacterIdentity();
         InitialiseCharacterDescriptors();
         InitialiseCharacterGoal();
+        InitialiseCharacterMotivation();
         //organisations
         InitialiseOrganisationType();
         InitialiseOrganisationOrigin();
@@ -4084,8 +4085,6 @@ public class ToolDetails : MonoBehaviour
                 listToRoll = new List<int> {97, 98, 99, 100},
                 isRollAgain = false
             }
-
-
         };
 
         CharacterGoal[] arrayOfGoal = ToolManager.i.toolDataScript.GetArrayOfCharacterGoals();
@@ -4124,6 +4123,108 @@ public class ToolDetails : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfGoals (Null)"); }
 
+    }
+    #endregion
+
+    #region InitialiseCharacterMotivation
+    /// <summary>
+    /// Character Motivation Initialisation
+    /// </summary>
+    private void InitialiseCharacterMotivation()
+    {
+        List<CharacterMotivation> listOfCharacterMotivation = new List<CharacterMotivation>() {
+            new CharacterMotivation() {
+                tag = "Personal Egotism",
+                listToRoll = new List<int> {1, 2, 3, 4, 5, 6, 7, 8, 9},
+                isRollAgain = false
+            },
+            new CharacterMotivation() {
+                tag = "Personal Honour",
+                listToRoll = new List<int> {10, 11, 12, 13, 14, 15, 16, 17, 18},
+                isRollAgain = false
+            },
+            new CharacterMotivation() {
+                tag = "Love of Duty",
+                listToRoll = new List<int> {19, 20, 21, 22, 23, 24, 25, 26, 27},
+                isRollAgain = false
+            },
+            new CharacterMotivation() {
+                tag = "Pleasure / Excitement",
+                listToRoll = new List<int> {28, 29, 30, 31, 32, 33, 34, 35, 36},
+                isRollAgain = false
+            },
+            new CharacterMotivation() {
+                tag = "Knowledge",
+                listToRoll = new List<int> {37, 38, 39, 40, 41, 42, 43, 44, 45},
+                isRollAgain = false
+            },
+            new CharacterMotivation() {
+                tag = "Love",
+                listToRoll = new List<int> {46, 47, 48, 49, 50, 51, 52, 53, 54},
+                isRollAgain = false
+            },
+            new CharacterMotivation() {
+                tag = "Power",
+                listToRoll = new List<int> {55, 56, 57, 58, 59, 60, 61, 62, 63},
+                isRollAgain = false
+            },
+            new CharacterMotivation() {
+                tag = "Wealth",
+                listToRoll = new List<int> {64, 65, 66, 67, 68, 69, 70, 71, 72},
+                isRollAgain = false
+            },
+            new CharacterMotivation() {
+                tag = "Social Status",
+                listToRoll = new List<int> {73, 74, 75, 76, 77, 78, 79, 80, 81},
+                isRollAgain = false
+            },
+            new CharacterMotivation() {
+                tag = "Vengeance",
+                listToRoll = new List<int> {82, 83, 84, 85, 86, 87, 88, 89, 90},
+                isRollAgain = false
+            },
+            new CharacterMotivation() {
+                tag = "RollAgain",
+                listToRoll = new List<int> {91, 92, 93, 94, 95, 96, 97, 98, 99, 100},
+                isRollAgain = true
+            },
+        };
+
+        CharacterMotivation[] arrayOfMotivation = ToolManager.i.toolDataScript.GetArrayOfCharacterMotivation();
+        if (arrayOfMotivation != null)
+        {
+            int count;
+            int index;
+            //populate array
+            for (int i = 0; i < listOfCharacterMotivation.Count; i++)
+            {
+                CharacterMotivation motivation = listOfCharacterMotivation[i];
+                if (motivation != null)
+                {
+                    count = motivation.listToRoll.Count;
+                    if (count > 0)
+                    {
+                        for (int j = 0; j < count; j++)
+                        {
+                            index = motivation.listToRoll[j] - 1;
+                            arrayOfMotivation[index] = motivation;
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid count (Zero) for characterMotivation \"{0}\"", motivation.tag); }
+                }
+                else { Debug.LogWarningFormat("Invalid characterMotivation (Null) for listOfCharacterMotivation[{0}]", "\n"); }
+            }
+            //data validation
+            count = 0;
+            for (int i = 0; i < arrayOfMotivation.Length; i++)
+            {
+                if (arrayOfMotivation[i] == null)
+                { Debug.LogWarningFormat("Invalid characterMotivation (Null) for arrayOfMotivation[{0}]", i); }
+                else { count++; }
+            }
+            /*Debug.LogFormat("[Tst] ToolDetails.cs -> InitialiseCharacterMotivation: arrayOfMotivation has {0} records{1}", count, "\n");*/
+        }
+        else { Debug.LogError("Invalid arrayOfMotivation (Null)"); }
     }
     #endregion
 

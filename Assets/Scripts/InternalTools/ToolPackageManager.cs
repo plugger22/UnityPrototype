@@ -1416,6 +1416,18 @@ namespace toolsAPI
     }
     #endregion
 
+    #region CharacterMotivation
+    /// <summary>
+    /// Character Motivation
+    /// </summary>
+    public class CharacterMotivation
+    {
+        public string tag;
+        public List<int> listToRoll;
+        public bool isRollAgain;                  //if true then roll twice
+    }
+    #endregion
+
     #region CharacterSpecial
     /// <summary>
     /// Character Special Trait

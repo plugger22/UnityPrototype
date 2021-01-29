@@ -23,6 +23,7 @@ public class ToolDataManager : MonoBehaviour
     private CharacterIdentity[] arrayOfIdentityLookup;
     private CharacterDescriptor[] arrayOfDescriptorsLookup;
     private CharacterGoal[] arrayOfGoalsLookup;
+    private CharacterMotivation[] arrayOfMotivationLookup;
     private CharacterSpecial[] arrayOfSpecialLookup;
 
     //Organisations
@@ -45,6 +46,7 @@ public class ToolDataManager : MonoBehaviour
         arrayOfIdentityLookup = new CharacterIdentity[size];
         arrayOfDescriptorsLookup = new CharacterDescriptor[size];
         arrayOfGoalsLookup = new CharacterGoal[size];
+        arrayOfMotivationLookup = new CharacterMotivation[size];
         arrayOfSpecialLookup = new CharacterSpecial[size];
     }
 
@@ -413,6 +415,9 @@ public class ToolDataManager : MonoBehaviour
     public CharacterGoal[] GetArrayOfCharacterGoals()
     { return arrayOfGoalsLookup; }
 
+    public CharacterMotivation[] GetArrayOfCharacterMotivation()
+    { return arrayOfMotivationLookup; }
+
     /// <summary>
     /// Get random CharacterSpecial. Returns null if a problem
     /// </summary>
@@ -431,7 +436,7 @@ public class ToolDataManager : MonoBehaviour
     public List<string> GetCharacterIdentity()
     {
         List<string> listOfIdentity = new List<string>();
-        int rnd = UnityEngine.Random.Range(0, 100);
+        int rnd = Random.Range(0, 100);
         CharacterIdentity identity = arrayOfIdentityLookup[rnd];
         //check roll again
         if (identity.isRollAgain == true)
@@ -439,7 +444,7 @@ public class ToolDataManager : MonoBehaviour
             int counter = 0;
             do
             {
-                rnd = UnityEngine.Random.Range(0, 100);
+                rnd = Random.Range(0, 100);
                 identity = arrayOfIdentityLookup[rnd];
                 if (identity.isRollAgain == false)
                 {
@@ -468,7 +473,7 @@ public class ToolDataManager : MonoBehaviour
             int counter = 0;
             do
             {
-                rnd = UnityEngine.Random.Range(0, 100);
+                rnd = Random.Range(0, 100);
                 descriptor = arrayOfDescriptorsLookup[rnd];
                 if (descriptor.isRollAgain == false)
                 {
@@ -497,7 +502,7 @@ public class ToolDataManager : MonoBehaviour
             int counter = 0;
             do
             {
-                rnd = UnityEngine.Random.Range(0, 100);
+                rnd = Random.Range(0, 100);
                 goal = arrayOfGoalsLookup[rnd];
                 if (goal.isRollAgain == false)
                 {
@@ -509,6 +514,35 @@ public class ToolDataManager : MonoBehaviour
         }
         else { listOfGoals.Add(goal.tag); }
         return listOfGoals;
+    }
+
+    /// <summary>
+    /// Get a list of character Motivation (typically only one but could be two). Returns empty list if a problem
+    /// </summary>
+    /// <returns></returns>
+    public List<string> GetCharacterMotivation()
+    {
+        List<string> listOfMotivation = new List<string>();
+        int rnd = Random.Range(0, 100);
+        CharacterMotivation motivation = arrayOfMotivationLookup[rnd];
+        //check roll again
+        if (motivation.isRollAgain == true)
+        {
+            int counter = 0;
+            do
+            {
+                rnd = Random.Range(0, 100);
+                motivation = arrayOfMotivationLookup[rnd];
+                if (motivation.isRollAgain == false)
+                {
+                    listOfMotivation.Add(motivation.tag);
+                    counter++;
+                }
+            }
+            while (counter < 2);
+        }
+        else { listOfMotivation.Add(motivation.tag); }
+        return listOfMotivation;
     }
 
     #endregion

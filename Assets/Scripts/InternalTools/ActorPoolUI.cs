@@ -108,6 +108,7 @@ public class ActorPoolUI : MonoBehaviour
     private bool flagDataHierarchy;
     private bool flagDataPool;
     private bool flagDataTraits;
+    private bool flagDataBackstory;
     #endregion
 
     #region cached data
@@ -623,13 +624,17 @@ public class ActorPoolUI : MonoBehaviour
         switch (dataType)
         {
             case ActorDataType.Backstory:
-                if (string.IsNullOrEmpty(cachedBackstoryText) == false)
+                if (flagDataBackstory == false)
                 {
-                    dataHeader.text = "Backstory";
-                    dataText.text = cachedBackstoryText;
+                    if (string.IsNullOrEmpty(cachedBackstoryText) == false)
+                    {
+                        dataHeader.text = "Backstory";
+                        dataText.text = cachedBackstoryText;
+                    }
+                    else
+                    { DisplayDataBackstory(); }
                 }
-                else
-                { DisplayDataBackstory(); }
+                else { DisplayDataBackstory(); }
                 break;
             case ActorDataType.Hierarchy:
                 if (flagDataHierarchy == false)
@@ -970,8 +975,18 @@ public class ActorPoolUI : MonoBehaviour
         {
             UpdateTraitData();
             DisplayDataTraits();
+            flagDataBackstory = true;
         }
-        else { flagDataTraits = true; }
+        else if (currentData == ActorDataType.Backstory)
+        {
+            DisplayDataBackstory();
+            flagDataTraits = true;
+        }
+        else
+        {
+            flagDataTraits = true;
+            flagDataBackstory = true;
+        }
     }
     #endregion
 
@@ -1286,6 +1301,7 @@ public class ActorPoolUI : MonoBehaviour
     {
         List<string> tempList;
         StringBuilder builder = new StringBuilder();
+        // - - - Identity
         builder.AppendLine("<b>Identity</b>");
         tempList = actorObject.listOfIdentity;
         if (tempList != null && tempList.Count > 0)
@@ -1301,6 +1317,7 @@ public class ActorPoolUI : MonoBehaviour
             { builder.AppendLine(tempList[i]); }
         }
         builder.AppendLine();
+        // - - - Descriptor
         builder.AppendLine("<b>Descriptors</b>");
         tempList = actorObject.listOfDescriptors;
         if (tempList != null && tempList.Count > 0)
@@ -1316,6 +1333,12 @@ public class ActorPoolUI : MonoBehaviour
             { builder.AppendLine(tempList[i]); }
         }
         builder.AppendLine();
+        // - - - Trait 
+        builder.AppendLine("<b>Trait</b>");
+        builder.Append(actorObject.trait.tag);
+        builder.AppendLine();
+        builder.AppendLine();
+        // - - - Goals
         builder.AppendLine("<b>Goal</b>");
         tempList = actorObject.listOfGoals;
         if (tempList != null && tempList.Count > 0)
@@ -1330,11 +1353,29 @@ public class ActorPoolUI : MonoBehaviour
             for (int i = 0; i < tempList.Count; i++)
             { builder.AppendLine(tempList[i]); }
         }
-        //update fields
+        builder.AppendLine();
+        // - - - Motivation
+        builder.AppendLine("<b>Motivation</b>");
+        tempList = actorObject.listOfMotivation;
+        if (tempList != null && tempList.Count > 0)
+        {
+            for (int i = 0; i < tempList.Count; i++)
+            { builder.AppendLine(tempList[i]); }
+        }
+        else
+        {
+            actorObject.listOfMotivation = ToolManager.i.toolDataScript.GetCharacterMotivation();
+            tempList = actorObject.listOfGoals;
+            for (int i = 0; i < tempList.Count; i++)
+            { builder.AppendLine(tempList[i]); }
+        }
+        // - - - update fields
         dataHeader.text = "Backstory";
         dataText.text = builder.ToString();
         //cache
         cachedBackstoryText = builder.ToString();
+        //reset flag
+        flagDataBackstory = false;
 
 
     }
@@ -1409,6 +1450,7 @@ public class ActorPoolUI : MonoBehaviour
         flagDataHierarchy = false;
         flagDataPool = false;
         flagDataTraits = false;
+        flagDataBackstory = false;
     }
     #endregion
 
