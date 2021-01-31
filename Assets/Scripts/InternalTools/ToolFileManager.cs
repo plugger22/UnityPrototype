@@ -10,6 +10,7 @@ using UnityEngine;
 /// <summary>
 /// Save.cs equivalent
 /// </summary>
+[System.Serializable]
 public class SaveTools
 {
     public SaveToolData toolData = new SaveToolData();
@@ -24,7 +25,6 @@ public class SaveTools
 public class SaveToolData
 {
     public List<Story> listOfStories = new List<Story>();
-
 }
 #endregion
 
@@ -32,6 +32,7 @@ public class SaveToolData
 /// <summary>
 /// Save.cs equivalent
 /// </summary>
+[System.Serializable]
 public class SaveConstants
 {
     public SaveConstantsData constantsData = new SaveConstantsData();
@@ -52,7 +53,7 @@ public class SaveConstantsData
 
 
 /// <summary>
-/// handles all file save/load functionality. Doubles up as Save.cs and FileManager.cs equivalents
+/// handles all Story file save/load functionality. Doubles up as Save.cs and FileManager.cs equivalents
 /// </summary>
 public class ToolFileManager : MonoBehaviour
 {

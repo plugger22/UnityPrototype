@@ -1009,10 +1009,10 @@ public class ActorPoolUI : MonoBehaviour
         //update once all edits complete
         actorFirstName.onEndEdit.AddListener(delegate { UpdateActorFirstName(); });
         actorLastName.onEndEdit.AddListener(delegate { UpdateActorLastName(); });
-        backstory0.onEndEdit.AddListener(delegate { UpdateBackstory0(); });
-        backstory1.onEndEdit.AddListener(delegate { UpdateBackstory1(); });
         actorLevel.onEndEdit.AddListener(delegate { UpdateActorLevel(); });
         actorPower.onEndEdit.AddListener(delegate { UpdateActorPower(); });
+        backstory0.onEndEdit.AddListener(delegate { UpdateBackstory0(); });
+        backstory1.onEndEdit.AddListener(delegate { UpdateBackstory1(); });
         //enable flags for onEndEdit fields (allows updating of any unsaved data)
         actorFirstName.onValueChanged.AddListener(delegate { SetFlagActorFirstName(); });
         actorLastName.onValueChanged.AddListener(delegate { SetFlagActorLastName(); });
@@ -1620,6 +1620,7 @@ public class ActorPoolUI : MonoBehaviour
     /// </summary>
     private void ClearDataCaches()
     {
+        //data panel caches
         cachedHierarchyText = "";
         cachedPoolText = "";
         cachedSummaryText = "";
@@ -1629,6 +1630,27 @@ public class ActorPoolUI : MonoBehaviour
         dataText.text = "";
         //reset currently viewed data
         currentData = ActorDataType.None;
+    }
+    #endregion
+
+    #region OnDisable
+    /// <summary>
+    /// Remove event listeners from input fields on close
+    /// </summary>
+    private void OnDisable()
+    {
+        actorFirstName.onEndEdit.RemoveAllListeners();
+        actorLastName.onEndEdit.RemoveAllListeners();
+        actorLevel.onEndEdit.RemoveAllListeners();
+        actorPower.onEndEdit.RemoveAllListeners();
+        backstory0.onEndEdit.RemoveAllListeners();
+        backstory1.onEndEdit.RemoveAllListeners();
+        actorFirstName.onValueChanged.RemoveAllListeners();
+        actorLastName.onValueChanged.RemoveAllListeners();
+        actorLevel.onValueChanged.RemoveAllListeners();
+        actorPower.onValueChanged.RemoveAllListeners();
+        backstory0.onValueChanged.RemoveAllListeners();
+        backstory1.onValueChanged.RemoveAllListeners();
     }
     #endregion
 

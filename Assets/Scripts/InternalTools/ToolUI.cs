@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using toolsAPI;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 
 #if (UNITY_EDITOR)
 
