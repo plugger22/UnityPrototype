@@ -23,6 +23,7 @@ public class ActorPoolUI : MonoBehaviour
     [Header("Button Interactions")]
     public ToolButtonInteraction newPoolInteraction;
     public ToolButtonInteraction savePoolInteraction;
+    public ToolButtonInteraction loadPoolInteraction;
     public ToolButtonInteraction deletePoolInteraction;
     public ToolButtonInteraction quitPoolInteraction;
     public ToolButtonInteraction createPoolInteraction;
@@ -226,6 +227,7 @@ public class ActorPoolUI : MonoBehaviour
         //button events
         newPoolInteraction.SetButton(ToolEventType.NewPoolUI);
         savePoolInteraction.SetButton(ToolEventType.SavePoolUI);
+        loadPoolInteraction.SetButton(ToolEventType.LoadPoolUI);
         deletePoolInteraction.SetButton(ToolEventType.DeletePoolUI);
         quitPoolInteraction.SetButton(ToolEventType.CloseActorPoolUI);
         createPoolInteraction.SetButton(ToolEventType.CreatePoolUI);
@@ -256,6 +258,7 @@ public class ActorPoolUI : MonoBehaviour
         //buttons
         Debug.Assert(newPoolInteraction != null, "Invalid newPoolInteraction (Null)");
         Debug.Assert(savePoolInteraction != null, "Invalid savePoolInteraction (Null)");
+        Debug.Assert(loadPoolInteraction != null, "Invalid loadPoolInteraction (Null)");
         Debug.Assert(deletePoolInteraction != null, "Invalid deletePoolInteraction (Null)");
         Debug.Assert(quitPoolInteraction != null, "Invalid quitPoolInteraction (Null)");
         Debug.Assert(createPoolInteraction != null, "Invalid createPoolInteraction (Null)");
@@ -317,6 +320,7 @@ public class ActorPoolUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.NewPoolUI, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.CreatePoolUI, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.SavePoolUI, OnEvent, "ActorPoolUI");
+        ToolEvents.i.AddListener(ToolEventType.LoadPoolUI, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.DeletePoolUI, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.NextActorDraft, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.PreviousActorDraft, OnEvent, "ActorPoolUI");
@@ -352,6 +356,9 @@ public class ActorPoolUI : MonoBehaviour
                 break;
             case ToolEventType.SavePoolUI:
                 SavePoolUI();
+                break;
+            case ToolEventType.LoadPoolUI:
+                LoadPoolUI();
                 break;
             case ToolEventType.DeletePoolUI:
                 DeletePoolUI();
@@ -414,7 +421,7 @@ public class ActorPoolUI : MonoBehaviour
         //set Modal State
         ToolManager.i.toolInputScript.SetModalState(ToolModal.ActorPool);
         ToolManager.i.toolInputScript.SetModalType(ToolModalType.Edit);
-        
+        //button panel
         UpdateSidePanel(false);
         ResetDataFlags();
     }
@@ -498,12 +505,18 @@ public class ActorPoolUI : MonoBehaviour
 
     #region Save PoolUI
     /// <summary>
-    /// Save actorPool data -> Writes to Campaign.SO
+    /// Save actorPool data -> Writes to file in JSON format
     /// </summary>
     private void SavePoolUI()
-    {
+    { ToolManager.i.actorFileScript.WriteActorPool(poolObject);  }
+    #endregion
 
-    }
+    #region Load PoolUI
+    /// <summary>
+    /// Loads last saved Json file data for pool (if present) which will override any existing data
+    /// </summary>
+    private void LoadPoolUI()
+    { ToolManager.i.actorFileScript.ReadActorPool(poolObject);  }
     #endregion
 
     #region Delete Pool
@@ -840,6 +853,9 @@ public class ActorPoolUI : MonoBehaviour
         }
         //Update LHS labels showing data for currently selected pool (which will be the one at the top of the drop down list at initialisation)
         UpdatePoolObject();
+        //load json data from files (if present)
+        for (int i = 0; i < listOfActorPools.Count; i++)
+        { ToolManager.i.actorFileScript.ReadActorPool(listOfActorPools[i]); }
 
 
     }

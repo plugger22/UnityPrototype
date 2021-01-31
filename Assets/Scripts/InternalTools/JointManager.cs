@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,8 +11,8 @@ using UnityEngine;
 public class JointManager : MonoBehaviour
 {
     #region Globals
-    public GlobalSide sideAuthority;
-    public GlobalSide sideResistance;
+    [HideInInspector] public GlobalSide sideAuthority;
+    [HideInInspector] public GlobalSide sideResistance;
 
     #endregion
 
@@ -74,15 +75,70 @@ public class JointManager : MonoBehaviour
                         Debug.LogWarningFormat("Invalid side \"{0}\"", assetSO.name);
                         break;
                 }
+                
             }
             //error check
             Debug.Assert(sideAuthority != null, "Invalid sideAuthority (Null)");
             Debug.Assert(sideResistance != null, "Invalid sideResistance (Null)");
         }
+        //
+        // - - - Traits
+        //
+        Dictionary<string, Trait> dictOfTraits = ToolManager.i.toolDataScript.GetDictOfTraits();
+        if (dictOfTraits != null)
+        {
+            numArray = arrayOfTraits.Length;
+            if (numArray > 0)
+            { Debug.LogFormat("[Loa] Initialise -> arrayOfTraits has {0} entries{1}", numArray, "\n"); }
+            else { Debug.LogWarning(" LoadManager.cs -> Initialise: No Trait present"); }
+            //add to dictionary
+            for (int i = 0; i < numArray; i++)
+            {
+                Trait trait = arrayOfTraits[i];
+                if (trait != null)
+                {
+                    try
+                    { dictOfTraits.Add(trait.name, trait); }
+                    catch (ArgumentException)
+                    { Debug.LogWarningFormat("Duplicate record exists in dictOfTraits for {0}", trait); }
+                }
+                else { Debug.LogWarningFormat("Invalid Trait (Null) for arrayOfTraits[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfTraits (Null)"); }
+
+        /*
+        //
+        // - - - ActorArcs
+        //
+        Dictionary<string, ActorArc> dictOfActorArcs = ToolManager.i.toolDataScript.GetDictOfActorArcs();
+        if (dictOfActorArcs != null)
+        {
+            numArray = arrayOfActorArcs.Length;
+            if (numArray > 0)
+            { Debug.LogFormat("[Loa] Initialise -> arrayOfActorArcs has {0} entries{1}", numArray, "\n"); }
+            else { Debug.LogWarning(" LoadManager.cs -> Initialise: No ActorArc present"); }
+            //add to dictionary
+            for (int i = 0; i < numArray; i++)
+            {
+                ActorArc arc = arrayOfActorArcs[i];
+                if (arc != null)
+                {
+                    try
+                    { dictOfActorArcs.Add(arc.name, arc); }
+                    catch (ArgumentException)
+                    { Debug.LogWarningFormat("Duplicate record exists in dictOfActorArcs for {0}", arc); }
+                }
+                else { Debug.LogWarningFormat("Invalid ActorArc (Null) for arrayOfActorArcs[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfActorArcs (Null)"); }
+        */
+
     }
     #endregion
 
-
+    #region Utilities
     //
     // - - - Utilities
     //
@@ -121,6 +177,8 @@ public class JointManager : MonoBehaviour
     {
         return arrayOfNameSets.Select(x => x).ToList();
     }
+
+    #endregion
 
 
 

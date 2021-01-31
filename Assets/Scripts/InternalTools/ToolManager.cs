@@ -31,6 +31,7 @@ public class ToolManager : MonoBehaviour
     [HideInInspector] public ToolInput toolInputScript;
     [HideInInspector] public ToolDetails toolDetailScript;
     [HideInInspector] public JointManager jointScript;
+    [HideInInspector] public ActorFileManager actorFileScript;
     //GUI
     [HideInInspector] public AdventureUI adventureUIScript;
     [HideInInspector] public ActorPoolUI actorPoolUIScript;
@@ -61,6 +62,7 @@ public class ToolManager : MonoBehaviour
             toolInputScript = GetComponent<ToolInput>();
             toolDetailScript = GetComponent<ToolDetails>();
             jointScript = GetComponent<JointManager>();
+            actorFileScript = GetComponent<ActorFileManager>();
             //gui
             adventureUIScript = AdventureUI.Instance();
             actorPoolUIScript = ActorPoolUI.Instance();
@@ -75,6 +77,7 @@ public class ToolManager : MonoBehaviour
             Debug.Assert(toolInputScript != null, "Invalid toolInputScript (Null)");
             Debug.Assert(toolDetailScript != null, "Invalid toolDetailScript (Null)");
             Debug.Assert(jointScript != null, "Invalid jointScript (Null)");
+            Debug.Assert(actorFileScript != null, "Invalid actorFileScript (Null)");
         }
     }
     #endregion

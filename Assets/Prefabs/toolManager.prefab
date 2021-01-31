@@ -27,6 +27,7 @@ GameObject:
   - component: {fileID: 114123726871970134}
   - component: {fileID: 114673709113548012}
   - component: {fileID: 114482273697668978}
+  - component: {fileID: 114629602027970174}
   m_Layer: 0
   m_Name: ToolManager
   m_TagString: Untagged
@@ -186,6 +187,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 745709acc9a885940bf510a33f017691, type: 2}
   - {fileID: 11400000, guid: f52d9e83b05732d4cb27c200536658b7, type: 2}
   - {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
+--- !u!114 &114629602027970174
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1442030075232148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f14782dc1acd134aab056c9b27d9097, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114673709113548012
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -197,6 +209,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c2017f9d1858424eb899f32ecb8b387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numOfActors: 48
+  numOfActorsHQ: 4
+  hqPowerFactor: 10
 --- !u!114 &114742990141811574
 MonoBehaviour:
   m_ObjectHideFlags: 1

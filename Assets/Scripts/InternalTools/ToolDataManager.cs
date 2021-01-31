@@ -17,6 +17,10 @@ public class ToolDataManager : MonoBehaviour
     private Dictionary<string, MetaPlotpoint> dictOfMetaPlotpoints = new Dictionary<string, MetaPlotpoint>();                           //key -> refTag, value -> MetaPlotpoint   
     private Dictionary<string, ConstantPlotpoint> dictOfConstantPlotpoints = new Dictionary<string, ConstantPlotpoint>();               //key -> refTag, value -> ConstantPlotpoint
 
+    //Actor Pool dictionaries
+    private Dictionary<string, Trait> dictOfTraits = new Dictionary<string, Trait>();
+    /*private Dictionary<string, ActorArc> dictOfActorArcs = new Dictionary<string, ActorArc>();*/
+
     //lookup tables
     private Plotpoint[,] arrayOfPlotpointLookup;
     private MetaPlotpoint[] arrayOfMetaPlotpointLookup;
@@ -755,6 +759,43 @@ public class ToolDataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid tempList (Null)"); }
     }
+
+    #endregion
+
+    #region ActorPool dictionaries
+    //
+    // - - - Actor Pool
+    //
+
+    public Dictionary<string, Trait> GetDictOfTraits()
+    { return dictOfTraits; }
+
+    /*public Dictionary<string, ActorArc> GetDictOfActorArcs()
+    {return dictOfActorArcs; }*/
+
+    /// <summary>
+    /// Get a Trait from dictionary. Returns null if not found
+    /// </summary>
+    /// <param name="traitName"></param>
+    /// <returns></returns>
+    public Trait GetTrait(string traitName)
+    {
+        if (dictOfTraits.ContainsKey(traitName) == true)
+        { return dictOfTraits[traitName]; }
+        return null;
+    }
+
+    /*/// <summary>
+    /// Get an ActorArc from dictionary. Returns null if not found
+    /// </summary>
+    /// <param name="arcName"></param>
+    /// <returns></returns>
+    public ActorArc GetActorArc(string arcName)
+    {
+        if (dictOfActorArcs.ContainsKey(arcName) == true)
+        { return dictOfActorArcs[arcName]; }
+        return null;
+    }*/
 
     #endregion
 
