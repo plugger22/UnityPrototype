@@ -96,6 +96,10 @@ public class ActorPoolUI : MonoBehaviour
     private ActorDataType currentData;
     #endregion
 
+    #region poolFlags
+    private bool flagPool;                          //set true if any changes made to the current pool. Set false after SAVE POOl clicked. Enables unsaved changes to be made when exiting UI/changing pool
+    #endregion
+
     #region inputFieldFlags
     private bool flagFirstName;
     private bool flagLastName;
@@ -424,6 +428,8 @@ public class ActorPoolUI : MonoBehaviour
         //button panel
         UpdateSidePanel(false);
         ResetDataFlags();
+        //reset pool flag (needed because trait dropdown initialisation triggers it to true)
+        flagPool = false;
     }
     #endregion
 
@@ -497,6 +503,7 @@ public class ActorPoolUI : MonoBehaviour
             //clear out data caches
             ClearDataCaches();
             ResetDataFlags();
+            //NOTE: no need to create new json file as already done via InitialiseDropDownPool
         }
         else { Debug.LogWarning("Actor Pool NOT created due to invalid data"); }
 
@@ -508,7 +515,11 @@ public class ActorPoolUI : MonoBehaviour
     /// Save actorPool data -> Writes to file in JSON format
     /// </summary>
     private void SavePoolUI()
-    { ToolManager.i.actorFileScript.WriteActorPool(poolObject);  }
+    {
+        ToolManager.i.actorFileScript.WriteActorPool(poolObject);
+        //toggle flag off to indicate all changes saved
+        flagPool = false;
+    }
     #endregion
 
     #region Load PoolUI
@@ -556,7 +567,8 @@ public class ActorPoolUI : MonoBehaviour
     /// </summary>
     private void ConfirmDeletePool()
     {
-        string path;
+        string path, poolName;
+        poolName = poolObject.name;
         //delete actorDrafts -> reverse loop
         for (int i = listOfActorDrafts.Count - 1; i >= 0; i--)
         {
@@ -568,6 +580,11 @@ public class ActorPoolUI : MonoBehaviour
         path = string.Format("Assets/SO/ActorPools/{0}.asset", poolObject.name);
         if (AssetDatabase.DeleteAsset(path) == false)
         { Debug.LogWarningFormat("{0} failed to delete", path); }
+        else
+        {
+            //ActorPool asset removed now delete json file
+            ToolManager.i.actorFileScript.DeletePoolFile(poolName);
+        }
         //Update 
         confirmPanel.gameObject.SetActive(false);
         actorPanel.gameObject.SetActive(true);
@@ -714,6 +731,14 @@ public class ActorPoolUI : MonoBehaviour
     /// </summary>
     private void CloseActorPoolUI()
     {
+        //any unsaved changes in previous pool
+        if (flagPool == true)
+        {
+            ToolManager.i.actorFileScript.WriteActorPool(poolObject);
+            Debug.LogFormat("[Fil] ActorPoolUI.cs -> CloseActorPoolUI: Unsaved changes in \"{0}\" saved{1}", poolObject.name, "\n");
+            flagPool = false;
+        }
+        //main menu
         ToolManager.i.toolUIScript.OpenTools();
         actorCanvas.gameObject.SetActive(false);
         //set Modal State
@@ -853,7 +878,9 @@ public class ActorPoolUI : MonoBehaviour
         }
         //Update LHS labels showing data for currently selected pool (which will be the one at the top of the drop down list at initialisation)
         UpdatePoolObject();
-        //load json data from files (if present)
+        //toggle flag off (changes)
+        flagPool = false;
+        //load json data from files (if present, create new file if not)
         for (int i = 0; i < listOfActorPools.Count; i++)
         { ToolManager.i.actorFileScript.ReadActorPool(listOfActorPools[i]); }
 
@@ -942,6 +969,14 @@ public class ActorPoolUI : MonoBehaviour
         //set input values
         dropIndexPool = index;
         dropStringPool = dropInputPool.options[index].text;
+        //any unsaved changes in previous pool
+        if (flagPool == true)
+        {
+            ToolManager.i.actorFileScript.WriteActorPool(poolObject);
+            Debug.LogFormat("[Fil] ActorPoolUI.cs -> DropDownPoolSelected: UNSAVED changes in \"{0}\" saved{1}", poolObject.name, "\n");
+            flagPool = false;
+        }
+        //set new poolObject
         UpdatePoolObject();
         //update ActorDrafts
         InitialiseActorDraftList();
@@ -1010,6 +1045,8 @@ public class ActorPoolUI : MonoBehaviour
             flagDataTraits = true;
             flagDataBackstory = true;
         }
+        //changes in pool
+        flagPool = true;
     }
     #endregion
 
@@ -1068,6 +1105,8 @@ public class ActorPoolUI : MonoBehaviour
                 break;
         }
         flagFirstName = false;
+        //changes in pool
+        flagPool = true;
     }
 
     /// <summary>
@@ -1091,19 +1130,25 @@ public class ActorPoolUI : MonoBehaviour
                 break;
         }
         flagLastName = false;
+        //changes in pool
+        flagPool = true;
     }
 
     private void UpdateActorLevel()
     {
         actorObject.level = Convert.ToInt32(actorLevel.text);
         flagLevel = false;
+        //changes in pool
+        flagPool = true;
     }
 
     private void UpdateActorPower()
     {
         actorObject.power = Convert.ToInt32(actorPower.text);
         flagPower = false;
-        //update if current page is Hierarchy, otherwise set flag
+        //changes in pool
+        flagPool = true;
+        //update if current data page is Hierarchy, otherwise set flag
         if (currentData == ActorDataType.Hierarchy)
         { DisplayDataHierarchy(); }
         else { flagDataHierarchy = true; }
@@ -1113,12 +1158,16 @@ public class ActorPoolUI : MonoBehaviour
     {
         actorObject.backstory0 = backstory0.text;
         flagBackstory0 = false;
+        //changes in pool
+        flagPool = true;
     }
 
     private void UpdateBackstory1()
     {
         actorObject.backstory1 = backstory1.text;
         flagBackstory1 = false;
+        //changes in pool
+        flagPool = true;
     }
     #endregion
 

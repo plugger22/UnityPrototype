@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
+  m_Name: AusRES39
+  m_EditorClassIdentifier: 
+  actorName: Jade Fisher
+  firstName: Jade
+  lastName: Fisher
+  sprite: {fileID: 21300000, guid: 8a947f318ba8ccf45895e42cc50c6af3, type: 3}
+  arc: {fileID: 11400000, guid: 585f6ebe97311aa4396d0c79f6faf1df, type: 2}
+  trait: {fileID: 11400000, guid: 17004eba36fea134cb4ff0d53f09ab65, type: 2}
+  level: 3
+  power: 0
+  status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
+  sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
+  backstory0: 
+  backstory1: 
+  listOfIdentity:
+  - Teacher
+  listOfDescriptors:
+  - Confident
+  listOfGoals:
+  - Protect a person
+  listOfMotivation:
+  - Personal Egotism
+  listOfFocus: []

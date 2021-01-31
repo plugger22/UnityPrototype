@@ -115,7 +115,6 @@ public class ActorFileManager : MonoBehaviour
     }
     #endregion
 
-
     #region ReadActorPool
     /// <summary>
     /// Read json file and update actorPool.SO
@@ -152,7 +151,11 @@ public class ActorFileManager : MonoBehaviour
                         { Debug.LogErrorFormat("Failed to read Json, error \"{0}\"", e.Message); }
                     }
                 }
-                else { Debug.LogWarningFormat("File \"{0}\" not found -> Info only", filePath); }
+                else
+                {
+                    //file doesn't exist, creat one
+                    WriteActorPool(pool);
+                }
             }
             else { Debug.LogError("Invalid filename (Null or Empty)"); }
 
@@ -162,6 +165,27 @@ public class ActorFileManager : MonoBehaviour
     }
     #endregion
 
+    #region DeletePoolFile
+    /// <summary>
+    /// Delete an actor pool json file (done when ActorPool.SO deleted)
+    /// </summary>
+    /// <param name="poolName"></param>
+    public void DeletePoolFile(string poolName)
+    {
+        if (string.IsNullOrEmpty(poolName) == false)
+        {
+            fileName = poolName + ".txt";
+            filePath = Path.Combine(Application.persistentDataPath, fileName);
+            try
+            { File.Delete(filePath); }
+            catch (Exception e)
+            { Debug.LogErrorFormat("Failed to delete file at \"{0}\", error \"{1}\"", filePath, e.Message); }
+        }
+        else { Debug.LogError("Invalid poolName (Null or Empty)"); }
+    }
+    #endregion
+
+    #region Utilities...
 
     #region ConvertFromActorPool
     /// <summary>
@@ -338,5 +362,7 @@ public class ActorFileManager : MonoBehaviour
     }
     #endregion
 
-//new methods above here
+    #endregion
+
+    //new methods above here
 }

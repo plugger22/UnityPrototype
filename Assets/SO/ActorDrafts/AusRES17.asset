@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ab361a1a459bf14689c17095d14e446, type: 3}
+  m_Name: AusRES17
+  m_EditorClassIdentifier: 
+  actorName: Ben Dunn
+  firstName: Ben
+  lastName: Dunn
+  sprite: {fileID: 21300000, guid: 7bbf2ee2c617a774f898a6889352d063, type: 3}
+  arc: {fileID: 11400000, guid: 0e5101dc3946aa543a729ea87a09ee67, type: 2}
+  trait: {fileID: 11400000, guid: da4a57d4fd990da459ef0d1af153cad8, type: 2}
+  level: 1
+  power: 0
+  status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
+  sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
+  backstory0: 
+  backstory1: 
+  listOfIdentity:
+  - Administrator
+  listOfDescriptors:
+  - Armed
+  listOfGoals:
+  - Travel to a place
+  listOfMotivation:
+  - Power
+  listOfFocus: []
