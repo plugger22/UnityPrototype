@@ -1,10 +1,8 @@
-﻿using toolsAPI;
-using gameAPI;
-using System.Collections;
+﻿using gameAPI;
 using System.Collections.Generic;
+using toolsAPI;
 using UnityEditor;
 using UnityEngine;
-using System;
 using Random = UnityEngine.Random;
 
 /// <summary>
@@ -36,7 +34,7 @@ public class ActorPoolManager : MonoBehaviour
     private List<Trait> listOfTraits;
     private List<Trait> listOfTempTraits;
     private List<NameSet> listOfNameSets;
-     //duplicate
+    //duplicate
     private int index;
     private int counter;
     private int numOfTraits;
@@ -146,7 +144,7 @@ public class ActorPoolManager : MonoBehaviour
             if (listOfNameSets.Count == 0) { Debug.LogError("Invalid listOfNameSets (Empty)"); }
         }
         else { Debug.LogError("Invalid listOfNameSets (Null)"); }
-        
+
 
         //
         // - - - Collections
@@ -158,7 +156,7 @@ public class ActorPoolManager : MonoBehaviour
             //initialise temp list of Arcs by Value (not reference as I'll be deleting some)
             listOfTempArcs = new List<ActorArc>();
             listOfTempArcs.AddRange(listOfActorArcs);
-        }       
+        }
     }
     #endregion
 
@@ -168,9 +166,22 @@ public class ActorPoolManager : MonoBehaviour
     /// </summary>
     public void CreateActorPool(ActorPoolData data)
     {
-        Debug.Assert(data != null, "Invalid ActorPoolData (Null)");
-        Initialise();
-        InitialiseActorPool(data);
+        if (data != null)
+        { InitialiseActorPool(data); }
+        else { Debug.LogError("Invalid ActorPoolData (Null)"); }
+    }
+    #endregion
+
+    #region CreateActorPoolFinal
+    /// <summary>
+    /// Turn an actorPool.SO into an ActorPoolFinal.SO along with actorDraft's. Takes name of provided ActorPool
+    /// </summary>
+    /// <param name="pool"></param>
+    public void CreateActorPoolFinal(ActorPool pool)
+    {
+        if (pool != null)
+        { InitialiseActorPoolFinal(pool); }
+        else { Debug.LogError("Invalid actorPool (Null)"); }
     }
     #endregion
 
@@ -187,7 +198,7 @@ public class ActorPoolManager : MonoBehaviour
         //
         ActorPool poolAsset = ScriptableObject.CreateInstance<ActorPool>();
         //path with unique asset name for each
-        pathPool = string.Format("Assets/SO/ActorPools/{0}.asset", data.poolName);
+        pathPool = string.Format("Assets/SO/Tools/ActorPools/{0}.asset", data.poolName);
         //how many actors required to populate pool
         int numToCreate = numOfActors;
         poolAsset.nameSet = data.nameSet;
@@ -205,7 +216,7 @@ public class ActorPoolManager : MonoBehaviour
             //overwrite default data
             UpdateActorDraft(poolAsset, actorAsset, i);
             //path with unique asset name for each (poolName + counter)
-            pathDraft = string.Format("Assets/SO/ActorDrafts/{0}{1}.asset", data.poolName, i);
+            pathDraft = string.Format("Assets/SO/Tools/ActorDrafts/{0}{1}.asset", data.poolName, i);
             //delete any existing asset at the same location (if same named asset presnet, new asset won't overwrite)
             AssetDatabase.DeleteAsset(pathDraft);
             //Add asset to file and give it a name ('actor')
@@ -216,7 +227,54 @@ public class ActorPoolManager : MonoBehaviour
         //initialise pool
         AssetDatabase.CreateAsset(poolAsset, pathPool);
         //Save assets to disk
-        AssetDatabase.SaveAssets();       
+        AssetDatabase.SaveAssets();
+    }
+    #endregion
+
+    #region InitialiseActorPoolFinal
+    /// <summary>
+    ///  Creates an actorPoolFinal and populates with ActorDraftFinal.SO's.
+    /// </summary>
+    /// <param name="pool"></param>
+    private void InitialiseActorPoolFinal(ActorPool pool)
+    {
+        string pathPool, pathDraft;
+        //
+        // - - - ActorPool
+        //
+        ActorPoolFinal poolAsset = ScriptableObject.CreateInstance<ActorPoolFinal>();
+        //path with unique asset name for each
+        pathPool = string.Format("Assets/SO/ActorPoolFinal/{0}.asset", pool.name);
+        //how many actors required to populate pool
+        int numToCreate = numOfActors;
+        poolAsset.nameSet = pool.nameSet;
+        poolAsset.tag = pool.tag;
+        poolAsset.side = pool.side;
+        poolAsset.author = pool.author;
+        poolAsset.dateCreated = pool.dateCreated;
+        //
+        // - - - ActorDraftFinals
+        //
+        for (int i = 0; i < numToCreate; i++)
+        {
+            //create SO object
+            ActorDraftFinal actorAsset = ScriptableObject.CreateInstance<ActorDraftFinal>();
+            //overwrite default data
+            UpdateActorDraftFinal(pool, poolAsset, actorAsset, i);
+            //path with unique asset name for each (poolName + counter)
+            pathDraft = string.Format("Assets/SO/ActorDraftFinal/{0}{1}.asset", pool.name, i);
+            //delete any existing asset at the same location (if same named asset presnet, new asset won't overwrite)
+            AssetDatabase.DeleteAsset(pathDraft);
+            //Add asset to file and give it a name ('actor')
+            AssetDatabase.CreateAsset(actorAsset, pathDraft);
+        }
+        //delete any existing asset at the same location (if same named asset presnet, new asset won't overwrite)
+        AssetDatabase.DeleteAsset(pathPool);
+        //initialise pool
+        AssetDatabase.CreateAsset(poolAsset, pathPool);
+        //Save assets to disk
+        AssetDatabase.SaveAssets();
+
     }
     #endregion
 
@@ -412,6 +470,157 @@ public class ActorPoolManager : MonoBehaviour
     }
     #endregion
 
+    #region UpdateActorDraftFinal
+    /// <summary>
+    /// creates an ActorDraftFinal.SO's using data from supplied ActorDraft.SO
+    /// </summary>
+    private void UpdateActorDraftFinal(ActorPool pool, ActorPoolFinal poolFinal, ActorDraftFinal actor, int num)
+    {
+        ActorDraft draft = null;
+        if (actor != null)
+        {
+            //
+            // - - - Get ActorDraft
+            //
+            switch (num)
+            {
+                //hq hierarchy
+                case 0: draft = pool.hqBoss0; break;
+                case 1: draft = pool.hqBoss1; break;
+                case 2: draft = pool.hqBoss2; break;
+                case 3: draft = pool.hqBoss3; break;
+                //hq Workers
+                case 4: draft = pool.listHqWorkers[0]; break;
+                case 5: draft = pool.listHqWorkers[1]; break;
+                case 6: draft = pool.listHqWorkers[2]; break;
+                case 7: draft = pool.listHqWorkers[3]; break;
+                case 8: draft = pool.listHqWorkers[4]; break;
+                case 9: draft = pool.listHqWorkers[5]; break;
+                case 10: draft = pool.listHqWorkers[6]; break;
+                case 11: draft = pool.listHqWorkers[7]; break;
+                //onMap
+                case 12: draft = pool.listOnMap[0]; break;
+                case 13: draft = pool.listOnMap[1]; break;
+                case 14: draft = pool.listOnMap[2]; break;
+                case 15: draft = pool.listOnMap[3]; break;
+                //level one, remaining of full set
+                case 16: draft = pool.listLevelOne[0]; break;
+                case 17: draft = pool.listLevelOne[1]; break;
+                case 18: draft = pool.listLevelOne[2]; break;
+                case 19: draft = pool.listLevelOne[3]; break;
+                case 20: draft = pool.listLevelOne[4]; break;
+                //level one, second full set
+                case 21: draft = pool.listLevelOne[5]; break;
+                case 22: draft = pool.listLevelOne[6]; break;
+                case 23: draft = pool.listLevelOne[7]; break;
+                case 24: draft = pool.listLevelOne[8]; break;
+                case 25: draft = pool.listLevelOne[9]; break;
+                case 26: draft = pool.listLevelOne[10]; break;
+                case 27: draft = pool.listLevelOne[11]; break;
+                case 28: draft = pool.listLevelOne[12]; break;
+                case 29: draft = pool.listLevelOne[13]; break;
+                //level two, full set
+                case 30: draft = pool.listLevelTwo[0]; break;
+                case 31: draft = pool.listLevelTwo[1]; break;
+                case 32: draft = pool.listLevelTwo[2]; break;
+                case 33: draft = pool.listLevelTwo[3]; break;
+                case 34: draft = pool.listLevelTwo[4]; break;
+                case 35: draft = pool.listLevelTwo[5]; break;
+                case 36: draft = pool.listLevelTwo[6]; break;
+                case 37: draft = pool.listLevelTwo[7]; break;
+                case 38: draft = pool.listLevelTwo[8]; break;
+                //level three, full set
+                case 39: draft = pool.listLevelThree[0]; break;
+                case 40: draft = pool.listLevelThree[1]; break;
+                case 41: draft = pool.listLevelThree[2]; break;
+                case 42: draft = pool.listLevelThree[3]; break;
+                case 43: draft = pool.listLevelThree[4]; break;
+                case 44: draft = pool.listLevelThree[5]; break;
+                case 45: draft = pool.listLevelThree[6]; break;
+                case 46: draft = pool.listLevelThree[7]; break;
+                case 47: draft = pool.listLevelThree[8]; break;
+                default: Debug.LogWarningFormat("Unrecognised num \"{0}\"", num); break;
+
+            }
+            if (draft != null)
+            {
+                //transfer data
+                UpdateActorDataFinal(actor, draft);
+                //
+                // - - - Assign to ActorPoolFinal
+                //
+                switch (num)
+                {
+                    //hq hierarchy
+                    case 0: poolFinal.hqBoss0 = actor; break;
+                    case 1: poolFinal.hqBoss1 = actor; break;
+                    case 2: poolFinal.hqBoss2 = actor; break;
+                    case 3: poolFinal.hqBoss3 = actor; break;
+                    //hq Workers
+                    case 4: 
+                    case 5: 
+                    case 6: 
+                    case 7: 
+                    case 8: 
+                    case 9: 
+                    case 10:
+                    case 11:
+                        poolFinal.listHqWorkers.Add(actor);  break;
+                    //onMap
+                    case 12:
+                    case 13:
+                    case 14:
+                    case 15:
+                        poolFinal.listOnMap.Add(actor); break;
+                    //level one, remaining of full set
+                    case 16: 
+                    case 17: 
+                    case 18: 
+                    case 19: 
+                    case 20:
+                        poolFinal.listLevelOne.Add(actor); break;
+                    //level one, second full set
+                    case 21: 
+                    case 22: 
+                    case 23: 
+                    case 24: 
+                    case 25: 
+                    case 26: 
+                    case 27: 
+                    case 28: 
+                    case 29:
+                        poolFinal.listLevelOne.Add(actor); break;
+                    //level two, full set
+                    case 30: 
+                    case 31: 
+                    case 32: 
+                    case 33: 
+                    case 34: 
+                    case 35: 
+                    case 36: 
+                    case 37:
+                    case 38:
+                        poolFinal.listLevelTwo.Add(actor); break;
+                    //level three, full set
+                    case 39: 
+                    case 40: 
+                    case 41: 
+                    case 42: 
+                    case 43: 
+                    case 44: 
+                    case 45: 
+                    case 46: 
+                    case 47:
+                        poolFinal.listLevelThree.Add(actor); break;
+                    default: Debug.LogWarningFormat("Unrecognised num \"{0}\"", num); break;
+                }
+            }
+            else { Debug.LogError("Invalid actorDraft (Null)"); }
+        }
+        else { Debug.LogError("Invalid actorDraftFinal (Null)"); }
+    }
+    #endregion
+
     #region GetTrait
     /// <summary>
     /// Returns a trait. Two stage process. First returns a random trait from tempList to ensure that all traits are used at least once. Then, once tempList exhausted, returns a random trait from listOfTraits (dupes possible)
@@ -459,6 +668,27 @@ public class ActorPoolManager : MonoBehaviour
             actor.listOfMotivation = ToolManager.i.toolDataScript.GetCharacterMotivation();
         }
         else { Debug.LogError("Invalid actorDraft (Null)"); }
+    }
+
+    /// <summary>
+    /// Updates actorDraftFinal data with data from corresponding actorDrafts
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="draft"></param>
+    public void UpdateActorDataFinal(ActorDraftFinal actor, ActorDraft draft)
+    {
+        actor.sex = draft.sex;
+        actor.firstName = draft.firstName;
+        actor.lastName = draft.lastName;
+        actor.actorName = draft.actorName;
+        actor.sprite = draft.sprite;
+        actor.arc = draft.arc;
+        actor.level = draft.level;
+        actor.power = draft.power;
+        actor.trait = draft.trait;
+        actor.status = draft.status;
+        actor.backstory0 = draft.backstory0;
+        actor.backstory1 = draft.backstory1;
     }
 
     #endregion

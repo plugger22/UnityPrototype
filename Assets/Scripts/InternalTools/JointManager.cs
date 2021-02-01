@@ -106,8 +106,6 @@ public class JointManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfTraits (Null)"); }
-
-        /*
         //
         // - - - ActorArcs
         //
@@ -133,8 +131,6 @@ public class JointManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid dictOfActorArcs (Null)"); }
-        */
-
     }
     #endregion
 

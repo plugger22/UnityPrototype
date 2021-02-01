@@ -22,6 +22,10 @@ public class Campaign : ScriptableObject
     [Tooltip("A list of all scenarios that make up the campaign. NOTE: Scenarios are played in order from top (index 0) to bottom")]
     public List<Scenario> listOfScenarios = new List<Scenario>();
 
+    [Header("Actor Pool")]
+    [Tooltip("Pool of actors to be used for the duration of the campaign")]
+    public ActorPoolFinal actorPool;
+
     [Header("Story Module")]
     [Tooltip("Module that holds all possible stories for the campaign and all related data")]
     public StoryModule story;
@@ -119,6 +123,7 @@ public class Campaign : ScriptableObject
         //Asserts for Resistance side only (Debug measure -> remove once Authority is active)
         if (side.level == 2)
         {
+            Debug.Assert(actorPool != null, "Invalid actorPool (Null)");
 
             Debug.Assert(actorContactPool != null, "Invalid actorContactPool (Null)");
             Debug.Assert(actorDistrictPool != null, "Invalid actorDistrictPool (Null)");

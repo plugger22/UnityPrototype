@@ -45,7 +45,7 @@ public class SaveActorDraft
     public string lastName;
 
     public string spriteName;
-    /*public string arcName;*/
+    public string arcName;
     public string traitName;
     public int level;
     public int power;
@@ -62,6 +62,7 @@ public class SaveActorDraft
 
 /// <summary>
 /// handles all Actor Pool file save/load functionality. Doubles up as Save.cs and FileManager.cs equivalents
+/// NOTE: ToolManager AND GameManager
 /// </summary>
 public class ActorFileManager : MonoBehaviour
 {
@@ -158,8 +159,6 @@ public class ActorFileManager : MonoBehaviour
                 }
             }
             else { Debug.LogError("Invalid filename (Null or Empty)"); }
-
-
         }
         else { Debug.LogError("Invalid actorPool (Null)"); }
     }
@@ -266,7 +265,7 @@ public class ActorFileManager : MonoBehaviour
             saveDraft.firstName = actorDraft.firstName;
             saveDraft.lastName = actorDraft.lastName;
             saveDraft.spriteName = actorDraft.sprite.name;
-            /*saveDraft.arcName = actorDraft.arc.name;*/
+            saveDraft.arcName = actorDraft.arc.name;
             saveDraft.traitName = actorDraft.trait.name;
             saveDraft.level = actorDraft.level;
             saveDraft.power = actorDraft.power;

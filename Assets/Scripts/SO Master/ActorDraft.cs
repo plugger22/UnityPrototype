@@ -4,6 +4,7 @@ using UnityEngine;
 
 /// <summary>
 /// Draft actor class that is used to enable customisation prior to being converted to a full Actor.cs class at the start of a new campaign
+/// NOTE: These are the Internal Tools version and aren't used in-game
 /// </summary>
 [CreateAssetMenu(menuName = "Actor / ActorDraft")]
 public class ActorDraft : ScriptableObject

@@ -20,6 +20,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3f5fc5ab3d43a6444b3047cac10f3402, type: 2}
   - {fileID: 11400000, guid: f722b44b783a5b94a967ea8ed048b9de, type: 2}
   - {fileID: 11400000, guid: 0b04472666f8fc648833265a5027da36, type: 2}
+  actorPool: {fileID: 11400000, guid: a47ecb4b2ca870b41a8317ca997f7799, type: 2}
   story: {fileID: 11400000, guid: 47b8784802e99f3418be87e7e59e34a2, type: 2}
   teamPool: {fileID: 0}
   actorContactPool: {fileID: 11400000, guid: e24ffdebe88f92f4bbfe09116f0f0502, type: 2}

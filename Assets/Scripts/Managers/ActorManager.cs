@@ -218,14 +218,20 @@ public class ActorManager : MonoBehaviour
     private string colourArc;
     private string colourEnd;
 
-
+    #region PerInitialiseActors
+    /// <summary>
+    /// Set paramaters for actors
+    /// </summary>
+    /// <param name="state"></param>
     public void PreInitialiseActors(GameState state)
     {
         //number of actors, default 4
         maxNumOfOnMapActors = maxNumOfOnMapActors == 4 ? maxNumOfOnMapActors : 4;
         numOfActiveActors = maxNumOfOnMapActors;
     }
+    #endregion
 
+    #region Initialise
     /// <summary>
     /// Not called for GameState.LoadGame
     /// </summary>
@@ -254,7 +260,9 @@ public class ActorManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
+    #region InitialiseLate
     /// <summary>
     /// Late initialisation done after DataManager.cs -> InitialiseLate
     /// Not for GameState.LoadGame
@@ -278,6 +286,8 @@ public class ActorManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
+
 
     #region Initialisation SubMethods
 
@@ -430,6 +440,7 @@ public class ActorManager : MonoBehaviour
 
     #endregion
 
+    #region OnEvent
     /// <summary>
     /// handles events
     /// </summary>
@@ -476,8 +487,9 @@ public class ActorManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
-
+    #region StartTurnLate
     /// <summary>
     /// Pre turn processing
     /// </summary>
@@ -613,8 +625,9 @@ public class ActorManager : MonoBehaviour
             }
         }
     }
+    #endregion
 
-
+    #region OnDisable
     /// <summary>
     /// deregisters events
     /// </summary>
@@ -623,7 +636,9 @@ public class ActorManager : MonoBehaviour
         EventManager.i.RemoveEvent(EventType.NodeAction);
         EventManager.i.RemoveEvent(EventType.TargetAction);
     }
+    #endregion
 
+    #region SetColours
     /// <summary>
     /// set colour palette for Generic Tool tip
     /// </summary>
@@ -646,13 +661,32 @@ public class ActorManager : MonoBehaviour
         colourArc = GameManager.i.colourScript.GetColour(ColourType.salmonText);
         colourEnd = GameManager.i.colourScript.GetEndTag();
     }
+    #endregion
 
+    #region ResetCounter
     /// <summary>
     /// Reset data prior to a new level
     /// </summary>
     public void ResetCounter()
     { actorIDCounter = 0; }
+    #endregion
 
+    #region LoadActorPool
+    /// <summary>
+    /// Loads actor pool (first scenario only, at start)
+    /// </summary>
+    private void LoadActorPool()
+    {
+        ActorPoolFinal pool = GameManager.i.campaignScript.campaign.actorPool;
+        if (pool != null)
+        {
+           
+        }
+        else { Debug.LogError("Invalid actorPoolFinal (Null)"); }
+    }
+    #endregion
+
+    #region InitialiseActors
     /// <summary>
     /// Set up number of required actors (minions supporting play). New actors for first scenario only, drawn from pool for the subsequent scenarios (GetOnMapActorsFromPool)
     /// </summary>
@@ -685,7 +719,7 @@ public class ActorManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid number of Actors (Zero, or less)"); }
     }
-
+    #endregion
 
     #region GetOnMapActorsFromPool
     /// <summary>
@@ -957,7 +991,7 @@ public class ActorManager : MonoBehaviour
     }
     #endregion
 
-
+    #region GetPreviousActors
     /// <summary>
     /// retrieves a list of previously used actors in lists of actors with a level greater than 'higherThan', eg. if parameter is 1 then retrieves from actors level 2 and 3 lists. Returns EMPTY list if none
     /// NOTE: Previously used actors determined by actor.listOfHistory.Count > 0 (includes those who've been recruited to reserves but never used in anger)
@@ -1022,7 +1056,7 @@ public class ActorManager : MonoBehaviour
         }
         return listOfActors;
     }
-
+    #endregion
 
     /// <summary>
     /// Initialise actor contacts for both sides at game start

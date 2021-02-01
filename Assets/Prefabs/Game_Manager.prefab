@@ -77,7 +77,6 @@ GameObject:
   - component: {fileID: 114912672506915200}
   - component: {fileID: 114079522176207682}
   - component: {fileID: 114902299002132126}
-  - component: {fileID: 114443927497886796}
   m_Layer: 0
   m_Name: Game_Manager
   m_TagString: Untagged
@@ -252,6 +251,7 @@ MonoBehaviour:
   toolInputScript: {fileID: 0}
   toolDetailScript: {fileID: 0}
   jointScript: {fileID: 0}
+  actorFileScript: {fileID: 0}
   adventureUIScript: {fileID: 0}
   actorPoolUIScript: {fileID: 0}
   toolUIScript: {fileID: 0}
@@ -5820,17 +5820,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e3eb7d6397e79e40883ad4f8dd32979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114443927497886796
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1289370855557188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c2017f9d1858424eb899f32ecb8b387, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114525357966728784
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6666,6 +6655,7 @@ MonoBehaviour:
   testScript: {fileID: 0}
   textScript: {fileID: 0}
   featureScript: {fileID: 0}
+  actorFileScript: {fileID: 0}
   tooltipNodeScript: {fileID: 0}
   tooltipConnScript: {fileID: 0}
   tooltipActorScript: {fileID: 0}

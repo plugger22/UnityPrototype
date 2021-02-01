@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// container class holding enough ActorDraft.SO's for a campaign to enable customation prior to conversion to Actor.cs
+/// container class holding enough ActorDraft.SO's for a campaign to enable customation
+/// /// NOTE: These are the Internal Tools version and aren't used in-game
 /// </summary>
 [CreateAssetMenu(menuName = "Actor / ActorPool")]
 public class ActorPool : ScriptableObject

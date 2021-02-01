@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 427f6772736667547a34eb4cfb79a586, type: 3}
+  m_Name: AmerRES1
+  m_EditorClassIdentifier: 
+  actorName: Darth Dark
+  firstName: Darth
+  lastName: Dark
+  sprite: {fileID: 21300000, guid: a5b97171f51cd134896a3507329533e1, type: 3}
+  arc: {fileID: 11400000, guid: 79fb6b3426257194faf6776c7cb489d2, type: 2}
+  trait: {fileID: 11400000, guid: d8cae4f6ebce95a4b8cbdf3cec11ae60, type: 2}
+  level: 2
+  power: 40
+  status: {fileID: 11400000, guid: 2e301ce6b82a6774e966d7fdb4817cd6, type: 2}
+  sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
+  backstory0: I'm am the DARKNESS
+  backstory1: The darkness is me

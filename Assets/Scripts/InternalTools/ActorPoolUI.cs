@@ -26,6 +26,7 @@ public class ActorPoolUI : MonoBehaviour
     [Header("Button Interactions")]
     public ToolButtonInteraction newPoolInteraction;
     public ToolButtonInteraction savePoolInteraction;
+    public ToolButtonInteraction finalPoolInteraction;
     public ToolButtonInteraction loadPoolInteraction;
     public ToolButtonInteraction deletePoolInteraction;
     public ToolButtonInteraction quitPoolInteraction;
@@ -237,6 +238,7 @@ public class ActorPoolUI : MonoBehaviour
         newPoolInteraction.SetButton(ToolEventType.NewPoolUI);
         savePoolInteraction.SetButton(ToolEventType.SavePoolUI);
         loadPoolInteraction.SetButton(ToolEventType.LoadPoolUI);
+        finalPoolInteraction.SetButton(ToolEventType.FinalPoolUI);
         deletePoolInteraction.SetButton(ToolEventType.DeletePoolUI);
         quitPoolInteraction.SetButton(ToolEventType.CloseActorPoolUI);
         createPoolInteraction.SetButton(ToolEventType.CreatePoolUI);
@@ -271,6 +273,7 @@ public class ActorPoolUI : MonoBehaviour
         //buttons
         Debug.Assert(newPoolInteraction != null, "Invalid newPoolInteraction (Null)");
         Debug.Assert(savePoolInteraction != null, "Invalid savePoolInteraction (Null)");
+        Debug.Assert(finalPoolInteraction != null, "Invalid finalPoolInteraction (Null)");
         Debug.Assert(loadPoolInteraction != null, "Invalid loadPoolInteraction (Null)");
         Debug.Assert(deletePoolInteraction != null, "Invalid deletePoolInteraction (Null)");
         Debug.Assert(quitPoolInteraction != null, "Invalid quitPoolInteraction (Null)");
@@ -334,6 +337,7 @@ public class ActorPoolUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.CloseActorPoolUI, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.NewPoolUI, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.CreatePoolUI, OnEvent, "ActorPoolUI");
+        ToolEvents.i.AddListener(ToolEventType.FinalPoolUI, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.SavePoolUI, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.LoadPoolUI, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.DeletePoolUI, OnEvent, "ActorPoolUI");
@@ -376,6 +380,9 @@ public class ActorPoolUI : MonoBehaviour
                 break;
             case ToolEventType.LoadPoolUI:
                 LoadPoolUI();
+                break;
+            case ToolEventType.FinalPoolUI:
+                FinalPoolUI();
                 break;
             case ToolEventType.DeletePoolUI:
                 DeletePoolUI();
@@ -550,6 +557,16 @@ public class ActorPoolUI : MonoBehaviour
     /// </summary>
     private void LoadPoolUI()
     { ToolManager.i.actorFileScript.ReadActorPool(poolObject);  }
+    #endregion
+
+    #region FinalPoolUI
+    /// <summary>
+    /// Creates a final ActorPool for use in-game using current pool and data
+    /// </summary>
+    private void FinalPoolUI()
+    {
+        ToolManager.i.actorScript.CreateActorPoolFinal(poolObject);
+    }
     #endregion
 
     #region HelpPoolUI
@@ -1607,7 +1624,7 @@ public class ActorPoolUI : MonoBehaviour
         //clear list prior to fresh update 
         listOfActorPools.Clear();
         //ActorPool folder
-        arrayOfGuids = AssetDatabase.FindAssets("t:ActorPool", new[] { "Assets/SO/ActorPools" });
+        arrayOfGuids = AssetDatabase.FindAssets("t:ActorPool", new[] { "Assets/SO/Tools/ActorPools" });
         if (arrayOfGuids.Length > 0)
         {
             for (int i = 0; i < arrayOfGuids.Length; i++)

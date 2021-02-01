@@ -19,7 +19,7 @@ public class ToolDataManager : MonoBehaviour
 
     //Actor Pool dictionaries
     private Dictionary<string, Trait> dictOfTraits = new Dictionary<string, Trait>();
-    /*private Dictionary<string, ActorArc> dictOfActorArcs = new Dictionary<string, ActorArc>();*/
+    private Dictionary<string, ActorArc> dictOfActorArcs = new Dictionary<string, ActorArc>();
 
     //lookup tables
     private Plotpoint[,] arrayOfPlotpointLookup;
@@ -770,8 +770,8 @@ public class ToolDataManager : MonoBehaviour
     public Dictionary<string, Trait> GetDictOfTraits()
     { return dictOfTraits; }
 
-    /*public Dictionary<string, ActorArc> GetDictOfActorArcs()
-    {return dictOfActorArcs; }*/
+    public Dictionary<string, ActorArc> GetDictOfActorArcs()
+    {return dictOfActorArcs; }
 
     /// <summary>
     /// Get a Trait from dictionary. Returns null if not found
@@ -785,7 +785,7 @@ public class ToolDataManager : MonoBehaviour
         return null;
     }
 
-    /*/// <summary>
+    /// <summary>
     /// Get an ActorArc from dictionary. Returns null if not found
     /// </summary>
     /// <param name="arcName"></param>
@@ -795,7 +795,7 @@ public class ToolDataManager : MonoBehaviour
         if (dictOfActorArcs.ContainsKey(arcName) == true)
         { return dictOfActorArcs[arcName]; }
         return null;
-    }*/
+    }
 
     #endregion
 

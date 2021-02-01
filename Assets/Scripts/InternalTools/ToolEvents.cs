@@ -79,6 +79,7 @@ public enum ToolEventType
     CreatePoolUI,
     SavePoolUI,
     LoadPoolUI,
+    FinalPoolUI,
     HelpPoolUI,
     HelpToolsExit,
     DeletePoolUI,
