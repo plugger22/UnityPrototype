@@ -16,9 +16,12 @@ public class ActorPoolUI : MonoBehaviour
     #region public
     [Header("Main UI Components")]
     public Canvas actorCanvas;
+    public Image mainPanel;
+    public Image sidePanel;
     public Image actorPanel;
     public Image dataPanel;
     public Image confirmPanel;
+    public Image helpPanel;
 
     [Header("Button Interactions")]
     public ToolButtonInteraction newPoolInteraction;
@@ -29,6 +32,8 @@ public class ActorPoolUI : MonoBehaviour
     public ToolButtonInteraction createPoolInteraction;
     public ToolButtonInteraction confirmCancelInteraction;
     public ToolButtonInteraction confirmDeleteInteraction;
+    public ToolButtonInteraction helpPoolInteraction;
+    public ToolButtonInteraction helpExitInteraction;
     public ToolButtonInteraction dataInteraction0;
     public ToolButtonInteraction dataInteraction1;
     public ToolButtonInteraction dataInteraction2;
@@ -236,7 +241,8 @@ public class ActorPoolUI : MonoBehaviour
         quitPoolInteraction.SetButton(ToolEventType.CloseActorPoolUI);
         createPoolInteraction.SetButton(ToolEventType.CreatePoolUI);
         confirmCancelInteraction.SetButton(ToolEventType.DeletePoolCancel);
-        confirmDeleteInteraction.SetButton(ToolEventType.DeletePoolConfirm);
+        helpPoolInteraction.SetButton(ToolEventType.HelpPoolUI);
+        helpExitInteraction.SetButton(ToolEventType.HelpToolsExit);
         dataInteraction0.SetButton(ToolEventType.DataButton0);
         dataInteraction1.SetButton(ToolEventType.DataButton1);
         dataInteraction2.SetButton(ToolEventType.DataButton2);
@@ -256,9 +262,12 @@ public class ActorPoolUI : MonoBehaviour
     public void InitialiseAsserts()
     {
         Debug.Assert(actorCanvas != null, "Invalid actorCanvas (Null)");
+        Debug.Assert(mainPanel != null, "Invalid mainPanel (Null)");
+        Debug.Assert(sidePanel != null, "Invalid sidePanel (Null)");
         Debug.Assert(actorPanel != null, "Invalid actorPanel (Null)");
         Debug.Assert(dataPanel != null, "Invalid dataPanel (Null)");
         Debug.Assert(confirmPanel != null, "Invalid confirmPanel (Null)");
+        Debug.Assert(helpPanel != null, "Invalid helpPanel (Null)");
         //buttons
         Debug.Assert(newPoolInteraction != null, "Invalid newPoolInteraction (Null)");
         Debug.Assert(savePoolInteraction != null, "Invalid savePoolInteraction (Null)");
@@ -269,6 +278,8 @@ public class ActorPoolUI : MonoBehaviour
         Debug.Assert(createPoolButton != null, "Invalid createPoolButton (Null)");
         Debug.Assert(confirmCancelInteraction != null, "Invalid confirmCancelInteraction (Null)");
         Debug.Assert(confirmDeleteInteraction != null, "Invalid confirmDeleteInteraction (Null)");
+        Debug.Assert(helpPoolInteraction != null, "Invalid helpPoolInteraction (Null)");
+        Debug.Assert(helpExitInteraction != null, "Invalid helpExitInteraction (Null)");
         Debug.Assert(dataInteraction0 != null, "Invalid dataInteraction0 (Null)");
         Debug.Assert(dataInteraction1 != null, "Invalid dataInteraction1 (Null)");
         Debug.Assert(dataInteraction2 != null, "Invalid dataInteraction2 (Null)");
@@ -326,6 +337,8 @@ public class ActorPoolUI : MonoBehaviour
         ToolEvents.i.AddListener(ToolEventType.SavePoolUI, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.LoadPoolUI, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.DeletePoolUI, OnEvent, "ActorPoolUI");
+        ToolEvents.i.AddListener(ToolEventType.HelpPoolUI, OnEvent, "ActorPoolUI");
+        ToolEvents.i.AddListener(ToolEventType.HelpToolsExit, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.NextActorDraft, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.PreviousActorDraft, OnEvent, "ActorPoolUI");
         ToolEvents.i.AddListener(ToolEventType.DeletePoolCancel, OnEvent, "ActorPoolUI");
@@ -366,6 +379,12 @@ public class ActorPoolUI : MonoBehaviour
                 break;
             case ToolEventType.DeletePoolUI:
                 DeletePoolUI();
+                break;
+            case ToolEventType.HelpPoolUI:
+                HelpPoolUI();
+                break;
+            case ToolEventType.HelpToolsExit:
+                HelpExit();
                 break;
             case ToolEventType.NextActorDraft:
                 NextActor();
@@ -415,9 +434,12 @@ public class ActorPoolUI : MonoBehaviour
         //turn on
         ToolManager.i.toolUIScript.CloseTools();
         actorCanvas.gameObject.SetActive(true);
+        mainPanel.gameObject.SetActive(true);
+        sidePanel.gameObject.SetActive(true);
         actorPanel.gameObject.SetActive(true);
         dataPanel.gameObject.SetActive(true);
         confirmPanel.gameObject.SetActive(false);
+        helpPanel.gameObject.SetActive(false);
         //blank out data panel
         dataHeader.text = "";
         dataText.text = "";
@@ -528,6 +550,30 @@ public class ActorPoolUI : MonoBehaviour
     /// </summary>
     private void LoadPoolUI()
     { ToolManager.i.actorFileScript.ReadActorPool(poolObject);  }
+    #endregion
+
+    #region HelpPoolUI
+    /// <summary>
+    /// Display help
+    /// </summary>
+    private void HelpPoolUI()
+    {
+        sidePanel.gameObject.SetActive(false);
+        mainPanel.gameObject.SetActive(false);
+        helpPanel.gameObject.SetActive(true);
+    }
+    #endregion
+
+    #region HelpExit
+    /// <summary>
+    /// Exit help
+    /// </summary>
+    private void HelpExit()
+    {
+        helpPanel.gameObject.SetActive(false);
+        sidePanel.gameObject.SetActive(true);
+        mainPanel.gameObject.SetActive(true);
+    }
     #endregion
 
     #region Delete Pool

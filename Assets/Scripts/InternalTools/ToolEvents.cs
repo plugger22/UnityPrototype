@@ -79,6 +79,8 @@ public enum ToolEventType
     CreatePoolUI,
     SavePoolUI,
     LoadPoolUI,
+    HelpPoolUI,
+    HelpToolsExit,
     DeletePoolUI,
     NextActorDraft,
     PreviousActorDraft,
