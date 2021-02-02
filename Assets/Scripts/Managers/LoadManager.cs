@@ -205,10 +205,6 @@ public class LoadManager : MonoBehaviour
     #endregion
 
 
-    #region GameManager...
-    //
-    // - - - GameManager only
-    //
 
     #region InitialiseStart
     public void InitialiseStart(GameState state)
@@ -2361,8 +2357,6 @@ public class LoadManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfHelp (Empty)"); }
         }
     }
-
-    #endregion
 
     #endregion
 

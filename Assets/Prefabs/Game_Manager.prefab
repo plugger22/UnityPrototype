@@ -6315,6 +6315,8 @@ MonoBehaviour:
   stressImmunityCurrent: 0
   addictedTally: 0
   maxNumOfDevices: 0
+  backstory0: 
+  backstory1: 
 --- !u!114 &114704934405690708
 MonoBehaviour:
   m_ObjectHideFlags: 1

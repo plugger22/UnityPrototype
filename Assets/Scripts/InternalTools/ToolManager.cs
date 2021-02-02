@@ -76,7 +76,7 @@ public class ToolManager : MonoBehaviour
             Debug.Assert(toolUIScript != null, "Invalid toolUIScript (Null)");
             Debug.Assert(toolInputScript != null, "Invalid toolInputScript (Null)");
             Debug.Assert(toolDetailScript != null, "Invalid toolDetailScript (Null)");
-            Debug.Assert(jointScript != null, "Invalid jointScript (Null)");
+            Debug.Assert(jointScript != null, "Invalid loadScript (Null)");
             Debug.Assert(actorFileScript != null, "Invalid actorFileScript (Null)");
         }
     }

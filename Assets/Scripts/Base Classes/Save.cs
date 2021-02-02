@@ -99,6 +99,7 @@ public class SaveOptionData
     public bool showPower;
     public bool connectorTooltips;
     public bool fullMoodInfo;
+    public bool isActorPool;
     public bool isAI;
     public bool isNemesis;
     public bool isDecisions;
@@ -241,6 +242,8 @@ public class SavePlayerData
     public int Invisibility;
     public int Innocence;
     public int mood;
+    public string backstory0;
+    public string backstory1;
     public ActorStatus status;
     public ActorTooltip tooltipStatus;
     public ActorInactive inactiveStatus;
@@ -735,6 +738,8 @@ public class SaveActor
     public string firstName;
     public string spriteName;
     public string arcName;
+    public string backstory0;
+    public string backstory1;
     public int compatibilityWithPlayer;
     public string profile;
     public string profileDescriptor;

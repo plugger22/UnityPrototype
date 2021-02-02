@@ -99,7 +99,7 @@ public class ActorPoolManager : MonoBehaviour
             if (statusPool == null) { Debug.LogError("Invalid statusPool (Null)"); }
         }
         //
-        // - - - Traits (no Mayor traits in array)
+        // - - - Traits 
         //
         listOfTraits = new List<Trait>();
         Trait[] arrayOfTraits = ToolManager.i.jointScript.arrayOfTraits;
@@ -112,6 +112,7 @@ public class ActorPoolManager : MonoBehaviour
                 trait = arrayOfTraits[i];
                 if (trait != null)
                 {
+                    //only want some traits (exclude Mayor & Authority traits) 
                     switch (trait.side.name)
                     {
                         case "Both":

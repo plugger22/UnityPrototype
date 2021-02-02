@@ -416,7 +416,7 @@ public class ActorManager : MonoBehaviour
             else
             {
                 //standard -> use actor pool
-                LoadActorPool();  
+                LoadActorPool();
             }
             //Debug settings
             DebugTest();
@@ -712,7 +712,7 @@ public class ActorManager : MonoBehaviour
             {
                 case 1: InitialiseActors(maxNumOfOnMapActors, GameManager.i.globalScript.sideResistance); break;
                 case 2: InitialiseActors(maxNumOfOnMapActors, GameManager.i.globalScript.sideAuthority); break;
-                default: Debug.LogWarningFormat("Unrecognised pool.side \"{0}\", level {1}", pool.side, pool.side.level);  break;
+                default: Debug.LogWarningFormat("Unrecognised pool.side \"{0}\", level {1}", pool.side, pool.side.level); break;
             }
 
         }
@@ -724,7 +724,7 @@ public class ActorManager : MonoBehaviour
     /// <summary>
     /// Creates a new actor using an ActorDraftFinal as the template. Handles all admin
     /// </summary>
-    private void CreateActorFinal(GlobalSide side,  ActorDraftFinal draft, int slotID = -1)
+    private void CreateActorFinal(GlobalSide side, ActorDraftFinal draft, int slotID = -1)
     {
         if (draft != null)
         {
@@ -1297,6 +1297,23 @@ public class ActorManager : MonoBehaviour
     public void InitialisePoolActors()
     {
         int numOfArcs;
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
+        //get list of OnMap actor Arcs to exclude from levelOne second full set of actors
+        List<string> listOfExclusionArcs = new List<string>();
+        Actor[] arrayOfOnMapActors = GameManager.i.dataScript.GetCurrentActorsFixed(playerSide);
+        {
+            if (arrayOfOnMapActors != null)
+            {
+                for (int i = 0; i < arrayOfOnMapActors.Length; i++)
+                {
+                    Actor actor = arrayOfOnMapActors[i];
+                    if (actor != null)
+                    { listOfExclusionArcs.Add(actor.arc.name); }
+                    else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfOnMapActors[{0}]", i); }
+                }
+            }
+        }
+
         //Authority
         List<ActorArc> listOfArcs = GameManager.i.dataScript.GetActorArcs(globalAuthority);
         if (listOfArcs != null)
@@ -1313,6 +1330,21 @@ public class ActorManager : MonoBehaviour
                     GameManager.i.dataScript.AddActorToRecruitPool(actorOne.actorID, 1, globalAuthority);
                 }
                 else { Debug.LogWarning(string.Format("Invalid Authority actorOne (Null) for actorArc \"{0}\"", listOfArcs[i].name)); }
+                //only if player side
+                if (playerSide.level == globalAuthority.level)
+                {
+                    //level one -> second full set excluding arcs of existing OnMap actors (so 9 + 5 -> 14 actors in level One)
+                    if (listOfExclusionArcs.Exists(x => x.Equals(listOfArcs[i].name, StringComparison.Ordinal)) == false)
+                    {
+                        Actor actorExtra = CreateActor(globalAuthority, listOfArcs[i].name, 1, ActorStatus.RecruitPool);
+                        if (actorExtra != null)
+                        {
+                            GameManager.i.dataScript.AddActor(actorExtra);
+                            GameManager.i.dataScript.AddActorToRecruitPool(actorExtra.actorID, 1, globalAuthority);
+                        }
+                        else { Debug.LogWarning(string.Format("Invalid Authority actorExtra (Null) for actorArc \"{0}\"", listOfArcs[i].name)); }
+                    }
+                }
                 //level two actor
                 Actor actorTwo = CreateActor(globalAuthority, listOfArcs[i].name, 2, ActorStatus.RecruitPool);
                 if (actorTwo != null)
@@ -1348,6 +1380,21 @@ public class ActorManager : MonoBehaviour
                     GameManager.i.dataScript.AddActorToRecruitPool(actorOne.actorID, 1, globalResistance);
                 }
                 else { Debug.LogWarning(string.Format("Invalid Resistance actorOne (Null) for actorArc \"{0}\"", listOfArcs[i].name)); }
+                //only if player side
+                if (playerSide.level == globalResistance.level)
+                {
+                    //level one -> second full set excluding arcs of existing OnMap actors (so 9 + 5 -> 14 actors in level One)
+                    if (listOfExclusionArcs.Exists(x => x.Equals(listOfArcs[i].name, StringComparison.Ordinal)) == false)
+                    {
+                        Actor actorExtra = CreateActor(globalResistance, listOfArcs[i].name, 1, ActorStatus.RecruitPool);
+                        if (actorExtra != null)
+                        {
+                            GameManager.i.dataScript.AddActor(actorExtra);
+                            GameManager.i.dataScript.AddActorToRecruitPool(actorExtra.actorID, 1, globalResistance);
+                        }
+                        else { Debug.LogWarning(string.Format("Invalid Authority actorExtra (Null) for actorArc \"{0}\"", listOfArcs[i].name)); }
+                    }
+                }
                 //level two actor
                 Actor actorTwo = CreateActor(globalResistance, listOfArcs[i].name, 2, ActorStatus.RecruitPool);
                 if (actorTwo != null)
@@ -4570,7 +4617,7 @@ public class ActorManager : MonoBehaviour
                             data.arrayOfTooltipsSprite[i + 1 - offset] = tooltipDetailsSprite;
                             data.arrayOfTooltipsResult[i + 1 - offset] = tooltipDetailsResult;
                             //stats
-                            switch(actor.GetDatapoint(ActorDatapoint.Opinion1))
+                            switch (actor.GetDatapoint(ActorDatapoint.Opinion1))
                             {
                                 case 3: actor.numOfVotesFor++; break;
                                 case 2: actor.numOfVotesAbstained++; break;
@@ -6968,7 +7015,7 @@ public class ActorManager : MonoBehaviour
             else { Debug.LogError("Invalid arrayOfActors (Resistance) (Null)"); }
         }
     }
-#endregion
+    #endregion
 
     /// <summary>
     /// subMtethod to handle a warning message. NOTE: it's assumed that the calling method has isPlayer set to true (for AI versions only)

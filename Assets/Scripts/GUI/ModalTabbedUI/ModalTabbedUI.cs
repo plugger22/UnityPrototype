@@ -3583,17 +3583,25 @@ public class ModalTabbedUI : MonoBehaviour
     /// <returns></returns>
     private string GetActorBackground(int tabIndex)
     {
-        string background = "Background details Redacted";
+        string background = "Unknown";
         switch (inputData.who)
         {
             case TabbedUIWho.Player:
-                //TO DO
+                if (GameManager.i.playerScript.backstory0.Length > 0)
+                {
+                    //To Do 
+                }
+                else { background = "Background details Redacted for security purposes"; }
                 break;
             default:
                 if (tabIndex <= maxSideTabIndex)
                 {
                     if (arrayOfActorsTemp[tabIndex] != null)
-                    { background = string.Format("{0}{1}{2}{3}", arrayOfActorsTemp[tabIndex].backstory0, "\n", "\n", arrayOfActorsTemp[tabIndex].backstory1); }
+                    {
+                        if (arrayOfActorsTemp[tabIndex].backstory0.Length > 0)
+                        { background = string.Format("{0}{1}{2}{3}", arrayOfActorsTemp[tabIndex].backstory0, "\n", "\n", arrayOfActorsTemp[tabIndex].backstory1); }
+                        else { background = "Background details Redacted for security purposes"; }
+                    }
                     else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfActorsTemp[{0}]", tabIndex); }
                 }
                 else { Debug.LogWarningFormat("Invalid tabIndex (is {0}, should be <= {1})", tabIndex, maxSideTabIndex); }

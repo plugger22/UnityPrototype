@@ -53,6 +53,8 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public int stressImmunityCurrent;                             //dynamic number of turns player is immune from stress (due to drug)
     [HideInInspector] public int addictedTally;                                     //starts from 0 whenever player becomes addicted (needed to provide a buffer before feed the need kicks in)
     [HideInInspector] public int maxNumOfDevices;                                   //max number of interrogation devices (captureTools) player can have in inventory at any one time (UI restriction)
+    [HideInInspector] public string backstory0;
+    [HideInInspector] public string backstory1;
     //collections
     private bool[] arrayOfCaptureTools = new bool[4];                               //if true Player has CaptureTool.SO corresponding to array index (0 to 3) level of Innocence
     private List<string> listOfGear = new List<string>();                           //gear names of all gear items in inventory

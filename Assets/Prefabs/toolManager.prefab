@@ -77,6 +77,7 @@ MonoBehaviour:
   toolInputScript: {fileID: 0}
   toolDetailScript: {fileID: 0}
   jointScript: {fileID: 0}
+  actorFileScript: {fileID: 0}
   adventureUIScript: {fileID: 0}
   actorPoolUIScript: {fileID: 0}
   toolUIScript: {fileID: 0}

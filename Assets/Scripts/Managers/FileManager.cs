@@ -359,6 +359,7 @@ public class FileManager : MonoBehaviour
         write.optionData.showPower = GameManager.i.optionScript.showPower;
         write.optionData.connectorTooltips = GameManager.i.optionScript.connectorTooltips;
         write.optionData.fullMoodInfo = GameManager.i.optionScript.fullMoodInfo;
+        write.optionData.isActorPool = GameManager.i.optionScript.isActorPool;
         write.optionData.isAI = GameManager.i.optionScript.isAI;
         write.optionData.isNemesis = GameManager.i.optionScript.isNemesis;
         write.optionData.isDecisions = GameManager.i.optionScript.isDecisions;
@@ -392,6 +393,8 @@ public class FileManager : MonoBehaviour
         write.playerData.power = GameManager.i.playerScript.Power;
         write.playerData.status = GameManager.i.playerScript.status;
         write.playerData.sex = GameManager.i.playerScript.sex;
+        write.playerData.backstory0 = GameManager.i.playerScript.backstory0;
+        write.playerData.backstory1 = GameManager.i.playerScript.backstory1;
         write.playerData.Invisibility = GameManager.i.playerScript.Invisibility;
         write.playerData.Innocence = GameManager.i.playerScript.Innocence;
         write.playerData.mood = GameManager.i.playerScript.GetMood();
@@ -2088,6 +2091,7 @@ public class FileManager : MonoBehaviour
         GameManager.i.optionScript.showPower = read.optionData.showPower;
         GameManager.i.optionScript.connectorTooltips = read.optionData.connectorTooltips;
         GameManager.i.optionScript.fullMoodInfo = read.optionData.fullMoodInfo;
+        GameManager.i.optionScript.isActorPool = read.optionData.isActorPool;
         GameManager.i.optionScript.isNemesis = read.optionData.isNemesis;
         GameManager.i.optionScript.isDecisions = read.optionData.isDecisions;
         GameManager.i.optionScript.isMainInfoApp = read.optionData.isMainInfoApp;
@@ -2159,6 +2163,8 @@ public class FileManager : MonoBehaviour
         GameManager.i.playerScript.Innocence = read.playerData.Innocence;
         GameManager.i.playerScript.sex = read.playerData.sex;
         GameManager.i.playerScript.SetMood(read.playerData.mood);
+        GameManager.i.playerScript.backstory0 = read.playerData.backstory0;
+        GameManager.i.playerScript.backstory1 = read.playerData.backstory1;
         GameManager.i.playerScript.status = read.playerData.status;
         GameManager.i.playerScript.tooltipStatus = read.playerData.tooltipStatus;
         GameManager.i.playerScript.inactiveStatus = read.playerData.inactiveStatus;
@@ -4443,6 +4449,8 @@ public class FileManager : MonoBehaviour
         saveActor.level = actor.level;
         saveActor.nodeCaptured = actor.nodeCaptured;
         saveActor.gearName = actor.GetGearName();
+        saveActor.backstory0 = actor.backstory0;
+        saveActor.backstory1 = actor.backstory1;
         saveActor.sex = actor.sex;
         saveActor.actorName = actor.actorName;
         saveActor.firstName = actor.firstName;
@@ -4801,6 +4809,8 @@ public class FileManager : MonoBehaviour
         actor.sex = readActor.sex;
         actor.actorName = readActor.actorName;
         actor.firstName = readActor.firstName;
+        actor.backstory0 = readActor.backstory0;
+        actor.backstory1 = readActor.backstory1;
         actor.arc = GameManager.i.dataScript.GetActorArc(readActor.arcName);
         Trait trait = GameManager.i.dataScript.GetTrait(readActor.traitName);
         if (trait != null)
