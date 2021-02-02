@@ -886,6 +886,18 @@ public class ActorManager : MonoBehaviour
     {
         if (actor != null)
         {
+            //contacts/influence -> actor.level
+            actor.SetDatapoint(ActorDatapoint.Datapoint0, level);
+            //opinion always 2
+            actor.SetDatapoint(ActorDatapoint.Datapoint1, 2);
+            //Invisibility always 3 
+            if (side.level == GameManager.i.globalScript.sideResistance.level)
+            { actor.SetDatapoint(ActorDatapoint.Datapoint2, 3); }
+            else
+            //Ability -> actor.level
+            { actor.SetDatapoint(ActorDatapoint.Datapoint2, level); }
+
+            /*
             // - - - Actor stats (variable or fixed)
             if (GameManager.i.optionScript.fixedActorStats == true)
             {
@@ -927,6 +939,7 @@ public class ActorManager : MonoBehaviour
                     actor.SetDatapoint(ActorDatapoint.Ability2, Random.Range(limitLower, limitUpper));
                 }
             }
+            */
         }
         else { Debug.LogError("Invalid actor (Null)"); }
     }
