@@ -565,6 +565,9 @@ public class ActorPoolUI : MonoBehaviour
     /// </summary>
     private void FinalPoolUI()
     {
+        //save to json file
+        ToolManager.i.actorFileScript.WriteActorPool(poolObject);
+        //create 'final' SO's
         ToolManager.i.actorScript.CreateActorPoolFinal(poolObject);
     }
     #endregion

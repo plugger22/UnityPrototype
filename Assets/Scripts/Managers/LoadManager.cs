@@ -45,6 +45,10 @@ public class LoadManager : MonoBehaviour
     public HqPosition[] arrayOfHqPositions;
     public CaptureTool[] arrayOfCaptureTools;
 
+    [Header("ActorDrafts -> ToolManager only")]
+    public ActorDraftSex[] arrayOfActorDraftSex;
+    public ActorDraftStatus[] arrayOfActorDraftStatus;
+
     [Header("InitialiseStart")]
     public Condition[] arrayOfConditions;
     public Cure[] arrayOfCures;
@@ -199,6 +203,12 @@ public class LoadManager : MonoBehaviour
     [HideInInspector] public MetaOption[] arrayOfMetaOptions;
     [HideInInspector] public Billboard[] arrayOfBillboards;
     #endregion
+
+
+    #region GameManager...
+    //
+    // - - - GameManager only
+    //
 
     #region InitialiseStart
     public void InitialiseStart(GameState state)
@@ -770,6 +780,20 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfCaptureTools has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No CaptureTools present"); }
+        //
+        // - - - ArrayOfActorDraftSex (not stored in a collection)
+        //
+        numArray = arrayOfActorDraftSex.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfActorDraftSex has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No ActorDraftSex present"); }
+        //
+        // - - - ArrayOfActorDraftStatus (not stored in a collection)
+        //
+        numArray = arrayOfActorDraftStatus.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfActorDraftStatus has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No ActorDraftStatus present"); }
         //
         // - - - Mission (not stored in a collection)
         //
@@ -2339,6 +2363,9 @@ public class LoadManager : MonoBehaviour
     }
 
     #endregion
+
+    #endregion
+
 
     //new methods above here
 }

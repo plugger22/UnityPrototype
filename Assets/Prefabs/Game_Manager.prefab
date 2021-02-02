@@ -1565,6 +1565,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 955dc9ad811c9014fabb1f38513130e4, type: 2}
   - {fileID: 11400000, guid: 550e26826e757814c92f41d36ab3c00f, type: 2}
   - {fileID: 11400000, guid: f843e35d83fae614b9583b62b5aba7d2, type: 2}
+  arrayOfActorDraftSex:
+  - {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
+  - {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
+  arrayOfActorDraftStatus:
+  - {fileID: 11400000, guid: 77611bb5bd4c52649be9b54f0cc46975, type: 2}
+  - {fileID: 11400000, guid: 2e301ce6b82a6774e966d7fdb4817cd6, type: 2}
+  - {fileID: 11400000, guid: 37e045679635478418061cea316085b7, type: 2}
+  - {fileID: 11400000, guid: 12718945bbbb5204c97bb9365e8f9787, type: 2}
+  - {fileID: 11400000, guid: 745709acc9a885940bf510a33f017691, type: 2}
+  - {fileID: 11400000, guid: f52d9e83b05732d4cb27c200536658b7, type: 2}
+  - {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
   arrayOfConditions:
   - {fileID: 11400000, guid: 404616d01297a7549a6d1e8d51025471, type: 2}
   - {fileID: 11400000, guid: 611afd3256c0b4344838897e41a45a0d, type: 2}
@@ -5843,6 +5854,7 @@ MonoBehaviour:
   isNPC: 1
   isSubordinates: 1
   isReviews: 1
+  isActorPool: 0
   showContacts: 0
   showPower: 1
   connectorTooltips: 0
@@ -6655,7 +6667,6 @@ MonoBehaviour:
   testScript: {fileID: 0}
   textScript: {fileID: 0}
   featureScript: {fileID: 0}
-  actorFileScript: {fileID: 0}
   tooltipNodeScript: {fileID: 0}
   tooltipConnScript: {fileID: 0}
   tooltipActorScript: {fileID: 0}
@@ -6699,6 +6710,7 @@ MonoBehaviour:
   isIntegrityCheck: 1
   isRandomLevel: 1
   isRandomCity: 0
+  isRandomActors: 0
   isEncrypted: 0
   isAutoSave: 0
   isLoadAutoSave: 0

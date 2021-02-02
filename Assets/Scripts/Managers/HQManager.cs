@@ -194,12 +194,16 @@ public class HQManager : MonoBehaviour
     private void SubInitialiseNewGame()
     {
         //initialise HQ actors starting lineUp
-        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
-        GameManager.i.actorScript.InitialiseHqActors(playerSide);
-        //add workers (possible testManager.cs override)
-        if (GameManager.i.testScript.numOfWorkers > -1)
-        { GameManager.i.actorScript.InitialiseHqWorkers(GameManager.i.testScript.numOfWorkers, playerSide); }
-        else { GameManager.i.actorScript.InitialiseHqWorkers(numOfActorsHQ, playerSide); }
+        if (GameManager.i.optionScript.isActorPool == false)
+        {
+            GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
+            GameManager.i.actorScript.InitialiseHqActors(playerSide);
+            //add workers (possible testManager.cs override)
+            if (GameManager.i.testScript.numOfWorkers > -1)
+            { GameManager.i.actorScript.InitialiseHqWorkers(GameManager.i.testScript.numOfWorkers, playerSide); }
+            else { GameManager.i.actorScript.InitialiseHqWorkers(numOfActorsHQ, playerSide); }
+
+        }
         //assign compatibility with player and descriptors
         GameManager.i.personScript.SetHqActorsCompatibility();
     }
@@ -1268,8 +1272,11 @@ public class HQManager : MonoBehaviour
                             //bump current actor back to work status (they can then compete for lower level hierarchy positions)
                             currentActor.statusHQ = ActorHQ.Worker;
                             //history
-                            currentActor.AddHistory(new HistoryActor() { text = string.Format("Demoted from {0}{1}{2} position at HQ, ex-{3}", colourAlert, GetHqTitle(newActor.statusHQ), colourEnd, 
-                                GameManager.i.campaignScript.scenario.city.tag) });
+                            currentActor.AddHistory(new HistoryActor()
+                            {
+                                text = string.Format("Demoted from {0}{1}{2} position at HQ, ex-{3}", colourAlert, GetHqTitle(newActor.statusHQ), colourEnd,
+                                GameManager.i.campaignScript.scenario.city.tag)
+                            });
                             newActor.AddHistory(new HistoryActor()
                             {
                                 text = string.Format("Promoted to {0}{1}{2} position at HQ (previously {3}{4}{5}), ex-{6}",
@@ -1281,8 +1288,13 @@ public class HQManager : MonoBehaviour
                             Debug.LogFormat("[HQ] HQManager.cs -> CheckHqHierarchy: {0}, {1}, Power {2} is secure in their position{3}", currentActor.actorName,
                                 GetHqTitle(currentActor.statusHQ), currentActor.Power, "\n");
                             if (GameManager.i.campaignScript.GetScenarioIndex() > GameManager.i.scenarioStartLevel)
-                            { currentActor.AddHistory(new HistoryActor() { text = string.Format("Position secure at HQ as {0}{1}{2}, ex-{3}", colourAlert, GetHqTitle(currentActor.statusHQ), colourEnd, 
-                                GameManager.i.campaignScript.scenario.city.tag) }); }
+                            {
+                                currentActor.AddHistory(new HistoryActor()
+                                {
+                                    text = string.Format("Position secure at HQ as {0}{1}{2}, ex-{3}", colourAlert, GetHqTitle(currentActor.statusHQ), colourEnd,
+                                  GameManager.i.campaignScript.scenario.city.tag)
+                                });
+                            }
                         }
                     }
                     else
@@ -1307,8 +1319,11 @@ public class HQManager : MonoBehaviour
                             if (newActor.Power > 15 && newActor.statusHQ == ActorHQ.Worker)
                             {
                                 //had a higher position previously (can't say what it was 'cause when they were bumped they were sent back to the Worker pool)
-                                newActor.AddHistory(new HistoryActor() { text = string.Format("Reasssigned to {0}{1}{2} position at HQ, ex-{3}", colourAlert, GetHqTitle(newActor.statusHQ), colourEnd, 
-                                    GameManager.i.campaignScript.scenario.city.tag) });
+                                newActor.AddHistory(new HistoryActor()
+                                {
+                                    text = string.Format("Reasssigned to {0}{1}{2} position at HQ, ex-{3}", colourAlert, GetHqTitle(newActor.statusHQ), colourEnd,
+                                    GameManager.i.campaignScript.scenario.city.tag)
+                                });
                             }
                             else
                             {
@@ -1931,7 +1946,7 @@ public class HQManager : MonoBehaviour
     private TooltipData GetEndLevelMedalTooltip(EndlLevelMedal medal)
     {
         TooltipData data = new TooltipData();
-        switch(medal)
+        switch (medal)
         {
             case EndlLevelMedal.Gold:
                 data.header = string.Format("{0}<size=120%>Gold Medal</size>{1}", colourAlert, colourEnd);
@@ -1951,17 +1966,17 @@ public class HQManager : MonoBehaviour
             case EndlLevelMedal.DeadDuck:
                 data.header = string.Format("{0}<size=120%>Dead Duck Award</size>{1}", colourAlert, colourEnd);
                 if (Random.Range(0, 100) < 50)
-                { data.main = string.Format("What the h*ll went wrong? This is a<br>{0}<size=120%>Disgrace</size>{1}", colourBad, colourEnd);}
+                { data.main = string.Format("What the h*ll went wrong? This is a<br>{0}<size=120%>Disgrace</size>{1}", colourBad, colourEnd); }
                 else { data.main = string.Format("How could this happen? This is an<br>{0}<size=120%>Embarrassment</size>{1}", colourBad, colourEnd); }
                 data.details = string.Format("Awarded for {0}0{1} stars", colourNeutral, colourEnd);
                 break;
             default: Debug.LogWarningFormat("Unrecognised medal \"{0}\"", medal); break;
-            
+
         }
         return data;
     }
 
-    
+
 
 
     //new methods above here

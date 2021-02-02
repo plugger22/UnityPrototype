@@ -3998,6 +3998,13 @@ public class DataManager : MonoBehaviour
     { return arrayOfActorsHQ; }
 
     /// <summary>
+    /// Add actor to HQ Hierarchys
+    /// </summary>
+    /// <param name="actor"></param>
+    public void AddHqActorToArray(Actor actor)
+    { arrayOfActorsHQ[(int)actor.statusHQ] = actor; }
+
+    /// <summary>
     /// returns HQ actor according to ActorHQ position, eg. boss, subBoss1, etc., Null if a problem.
     /// </summary>
     /// <param name="hq"></param>

@@ -85,6 +85,7 @@ public class ModalTabbedUI : MonoBehaviour
     public TextMeshProUGUI tab0ActorTitle;
     public TextMeshProUGUI tab0PowerText;
     public TextMeshProUGUI tab0Compatibility;
+    public TextMeshProUGUI tab0Background;
     public TextMeshProUGUI tab0NonePresent;
     public Image tab0ActorImage;
     public Image tab0MainPanel;
@@ -497,6 +498,7 @@ public class ModalTabbedUI : MonoBehaviour
         Debug.Assert(tab0PowerText != null, "Invalid tab0PowerText (Null)");
         Debug.Assert(tab0NonePresent != null, "Invalid tab0NonePresent (Null)");
         Debug.Assert(tab0Compatibility != null, "Invalid tab0Compatibility (Null)");
+        Debug.Assert(tab0Background != null, "Invalid tab0Background (Null)");
         Debug.Assert(tab0ActorImage != null, "Invalid tab0ActorImage (Null)");
         Debug.Assert(tab0MainPanel != null, "Invalid tab0MainPanel (Null)");
         Debug.Assert(tab0Header0 != null, "Invalid tab0Header0 (Null)");
@@ -2063,6 +2065,7 @@ public class ModalTabbedUI : MonoBehaviour
                     tab0ActorName.text = GetActorName(currentSideTabIndex);
                     tab0ActorTitle.text = GetActorTitle(currentSideTabIndex);
                     tab0ActorImage.sprite = arrayOfSideTabItems[currentSideTabIndex].portrait.sprite;
+                    tab0Background.text = GetActorBackground(currentSideTabIndex);
                     //rhs
                     tab0Header0.image.gameObject.SetActive(true);
                     tab0Header1.image.gameObject.SetActive(true);
@@ -2092,6 +2095,7 @@ public class ModalTabbedUI : MonoBehaviour
                 tab0ActorName.text = GetActorName(currentSideTabIndex);
                 tab0ActorTitle.text = GetActorTitle(currentSideTabIndex);
                 tab0ActorImage.sprite = arrayOfSideTabItems[currentSideTabIndex].portrait.sprite;
+                tab0Background.text = GetActorBackground(currentSideTabIndex);
                 //rhs
                 tab0Header0.image.gameObject.SetActive(true);
                 tab0Header1.image.gameObject.SetActive(false);
@@ -2111,6 +2115,7 @@ public class ModalTabbedUI : MonoBehaviour
                 tab0ActorName.text = GetActorName(currentSideTabIndex);
                 tab0ActorTitle.text = GetActorTitle(currentSideTabIndex);
                 tab0ActorImage.sprite = arrayOfSideTabItems[currentSideTabIndex].portrait.sprite;
+                tab0Background.text = GetActorBackground(currentSideTabIndex);
                 //rhs
                 tab0Header0.image.gameObject.SetActive(true);
                 tab0Header1.image.gameObject.SetActive(false);
@@ -2130,6 +2135,7 @@ public class ModalTabbedUI : MonoBehaviour
                     tab0ActorName.text = GetActorName(currentSideTabIndex);
                     tab0ActorTitle.text = GetActorTitle(currentSideTabIndex);
                     tab0ActorImage.sprite = arrayOfSideTabItems[currentSideTabIndex].portrait.sprite;
+                    tab0Background.text = GetActorBackground(currentSideTabIndex);
                     //rhs
                     tab0Header0.image.gameObject.SetActive(true);
                     tab0Header1.image.gameObject.SetActive(false);
@@ -3568,6 +3574,32 @@ public class ModalTabbedUI : MonoBehaviour
                 break;
         }
         return actorName;
+    }
+
+    /// <summary>
+    /// Returns actor background
+    /// </summary>
+    /// <param name="tabIndex"></param>
+    /// <returns></returns>
+    private string GetActorBackground(int tabIndex)
+    {
+        string background = "Background details Redacted";
+        switch (inputData.who)
+        {
+            case TabbedUIWho.Player:
+                //TO DO
+                break;
+            default:
+                if (tabIndex <= maxSideTabIndex)
+                {
+                    if (arrayOfActorsTemp[tabIndex] != null)
+                    { background = string.Format("{0}{1}{2}{3}", arrayOfActorsTemp[tabIndex].backstory0, "\n", "\n", arrayOfActorsTemp[tabIndex].backstory1); }
+                    else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfActorsTemp[{0}]", tabIndex); }
+                }
+                else { Debug.LogWarningFormat("Invalid tabIndex (is {0}, should be <= {1})", tabIndex, maxSideTabIndex); }
+                break;
+        }
+        return background;
     }
 
     /// <summary>

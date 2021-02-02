@@ -39,6 +39,8 @@ namespace gameAPI
         //other
         [HideInInspector] public string actorName;              //complete name
         [HideInInspector] public string firstName;              //first name
+        [HideInInspector] public string backstory0;
+        [HideInInspector] public string backstory1;
         [HideInInspector] public ActorArc arc;
         [HideInInspector] public ActorTooltip tooltipStatus;     //Actor sprite shows a relevant tooltip if tooltipStatus > None (Stress leave, lying low, wants to talk, etc)
         [HideInInspector] public ActorInactive inactiveStatus;   //reason actor is inactive

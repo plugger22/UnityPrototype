@@ -288,7 +288,6 @@ public class ActorManager : MonoBehaviour
     }
     #endregion
 
-
     #region Initialisation SubMethods
 
     #region SubInitialiseEvents
@@ -407,10 +406,18 @@ public class ActorManager : MonoBehaviour
         //create new actors -> first level only
         if (GameManager.i.campaignScript.GetScenarioIndex() == GameManager.i.scenarioStartLevel)
         {
-            //create active, OnMap actors (need to do both sides for purposes of setting up contacts)
-            InitialiseActors(maxNumOfOnMapActors, GameManager.i.globalScript.sideResistance);
-            InitialiseActors(maxNumOfOnMapActors, GameManager.i.globalScript.sideAuthority);
-            InitialisePoolActors();
+            if (GameManager.i.optionScript.isActorPool == false)
+            {
+                //create active, OnMap actors (need to do both sides for purposes of setting up contacts)
+                InitialiseActors(maxNumOfOnMapActors, GameManager.i.globalScript.sideResistance);
+                InitialiseActors(maxNumOfOnMapActors, GameManager.i.globalScript.sideAuthority);
+                InitialisePoolActors();
+            }
+            else
+            {
+                //standard -> use actor pool
+                LoadActorPool();  
+            }
             //Debug settings
             DebugTest();
         }
@@ -680,9 +687,158 @@ public class ActorManager : MonoBehaviour
         ActorPoolFinal pool = GameManager.i.campaignScript.campaign.actorPool;
         if (pool != null)
         {
-           
+            //hq hierarchy
+            CreateActorFinal(pool.side, pool.hqBoss0);
+            CreateActorFinal(pool.side, pool.hqBoss1);
+            CreateActorFinal(pool.side, pool.hqBoss2);
+            CreateActorFinal(pool.side, pool.hqBoss3);
+            //hq workers
+            for (int i = 0; i < pool.listHqWorkers.Count; i++)
+            { CreateActorFinal(pool.side, pool.listHqWorkers[i]); }
+            //OnMap
+            for (int i = 0; i < pool.listOnMap.Count; i++)
+            { CreateActorFinal(pool.side, pool.listOnMap[i], i); }
+            //Pool level One
+            for (int i = 0; i < pool.listLevelOne.Count; i++)
+            { CreateActorFinal(pool.side, pool.listLevelOne[i]); }
+            //Pool level Two
+            for (int i = 0; i < pool.listLevelTwo.Count; i++)
+            { CreateActorFinal(pool.side, pool.listLevelTwo[i]); }
+            //Pool level Three
+            for (int i = 0; i < pool.listLevelThree.Count; i++)
+            { CreateActorFinal(pool.side, pool.listLevelThree[i]); }
+            //need to create a random set of OnMap actors for the AI (for the contacts)
+            switch (pool.side.level)
+            {
+                case 1: InitialiseActors(maxNumOfOnMapActors, GameManager.i.globalScript.sideResistance); break;
+                case 2: InitialiseActors(maxNumOfOnMapActors, GameManager.i.globalScript.sideAuthority); break;
+                default: Debug.LogWarningFormat("Unrecognised pool.side \"{0}\", level {1}", pool.side, pool.side.level);  break;
+            }
+
         }
         else { Debug.LogError("Invalid actorPoolFinal (Null)"); }
+    }
+    #endregion
+
+    #region CreateActorFinal
+    /// <summary>
+    /// Creates a new actor using an ActorDraftFinal as the template. Handles all admin
+    /// </summary>
+    private void CreateActorFinal(GlobalSide side,  ActorDraftFinal draft, int slotID = -1)
+    {
+        if (draft != null)
+        {
+            //create new actor
+            Actor actor = new Actor();
+            //data
+            actor.actorID = actorIDCounter++;
+            actor.slotID = slotID;
+            actor.level = draft.level;
+            actor.Power = draft.power;
+            actor.side = side;
+            actor.arc = draft.arc;
+            actor.AddTrait(draft.trait);
+            actor.sprite = draft.sprite;
+            actor.spriteName = draft.sprite.name;
+            actor.firstName = draft.firstName;
+            actor.actorName = draft.actorName;
+            actor.backstory0 = draft.backstory0;
+            actor.backstory1 = draft.backstory1;
+            //sex
+            switch (draft.sex.name)
+            {
+                case "Male": actor.sex = ActorSex.Male; break;
+                case "Female": actor.sex = ActorSex.Female; break;
+                default: Debug.LogWarningFormat("Unrecognised ActorDraftSex \"{0}\"", draft.sex); break;
+            }
+            //personality
+            actor.GetPersonality().SetFactors(GameManager.i.personScript.SetPersonalityFactors(actor.GetTrait().GetArrayOfCriteria()));
+            //stats
+            InitialiseActorStats(actor, draft.level, side);
+            //status specific items
+            switch (draft.status.name)
+            {
+                case "HqBoss0":
+                    actor.Status = ActorStatus.HQ;
+                    actor.statusHQ = ActorHQ.Boss;
+                    actor.hqID = hqIDCounter++;
+                    actor.AddHistory(new HistoryActor() { text = string.Format("Assigned to <b>{0}</b> position at HQ", GameManager.i.hqScript.GetHqTitle(actor.statusHQ)), isHighlight = true });
+                    GameManager.i.dataScript.AddHqActor(actor);
+                    GameManager.i.dataScript.AddActorToHqPool(actor.hqID);
+                    GameManager.i.dataScript.AddHqActorToArray(actor);
+                    break;
+                case "HqBoss1":
+                    actor.Status = ActorStatus.HQ;
+                    actor.statusHQ = ActorHQ.SubBoss1;
+                    actor.hqID = hqIDCounter++;
+                    actor.AddHistory(new HistoryActor() { text = string.Format("Assigned to <b>{0}</b> position at HQ", GameManager.i.hqScript.GetHqTitle(actor.statusHQ)), isHighlight = true });
+                    GameManager.i.dataScript.AddHqActor(actor);
+                    GameManager.i.dataScript.AddActorToHqPool(actor.hqID);
+                    GameManager.i.dataScript.AddHqActorToArray(actor);
+                    break;
+                case "HqBoss2":
+                    actor.Status = ActorStatus.HQ;
+                    actor.statusHQ = ActorHQ.SubBoss2;
+                    actor.hqID = hqIDCounter++;
+                    actor.AddHistory(new HistoryActor() { text = string.Format("Assigned to <b>{0}</b> position at HQ", GameManager.i.hqScript.GetHqTitle(actor.statusHQ)), isHighlight = true });
+                    GameManager.i.dataScript.AddHqActor(actor);
+                    GameManager.i.dataScript.AddActorToHqPool(actor.hqID);
+                    GameManager.i.dataScript.AddHqActorToArray(actor);
+                    break;
+                case "HqBoss3":
+                    actor.Status = ActorStatus.HQ;
+                    actor.statusHQ = ActorHQ.SubBoss3;
+                    actor.hqID = hqIDCounter++;
+                    actor.AddHistory(new HistoryActor() { text = string.Format("Assigned to <b>{0}</b> position at HQ", GameManager.i.hqScript.GetHqTitle(actor.statusHQ)), isHighlight = true });
+                    GameManager.i.dataScript.AddHqActor(actor);
+                    GameManager.i.dataScript.AddActorToHqPool(actor.hqID);
+                    GameManager.i.dataScript.AddHqActorToArray(actor);
+                    break;
+                case "HqWorker":
+                    actor.Status = ActorStatus.HQ;
+                    actor.statusHQ = ActorHQ.Worker;
+                    actor.hqID = hqIDCounter++;
+                    actor.AddHistory(new HistoryActor() { text = string.Format("Assigned to <b>{0}</b> position at HQ", GameManager.i.hqScript.GetHqTitle(actor.statusHQ)), isHighlight = true });
+                    //NOTE: need to add to Dictionary BEFORE adding to Pool (Debug.Assert checks dictOfActors.Count in AddActorToPool)
+                    GameManager.i.dataScript.AddHqActor(actor);
+                    GameManager.i.dataScript.AddActorToHqPool(actor.hqID);
+                    break;
+                case "OnMap":
+                    actor.Status = ActorStatus.Active;
+                    actor.statusHQ = ActorHQ.None;
+                    //add to data collections
+                    GameManager.i.dataScript.AddActor(actor);
+                    GameManager.i.dataScript.AddCurrentActor(side, actor, slotID);
+                    //Subordinates toggled off
+                    if (GameManager.i.optionScript.isSubordinates == false)
+                    {
+                        //Set to Inactive
+                        actor.Status = ActorStatus.Inactive;
+                        actor.inactiveStatus = ActorInactive.Dormant;
+                        actor.tooltipStatus = ActorTooltip.Dormant;
+                        //history
+                        actor.AddHistory(new HistoryActor() { text = "Dormant" });
+                    }
+                    else
+                    {
+                        //history
+                        actor.AddHistory(new HistoryActor() { text = string.Format("{0}Reports for active duty at <b>{1}</b>{2}", colourNeutral, GameManager.i.campaignScript.scenario.city.tag, colourEnd), isHighlight = true });
+                        //city stat
+                        actor.numOfCities++;
+                    }
+                    break;
+                case "Pool":
+                    actor.Status = ActorStatus.RecruitPool;
+                    actor.statusHQ = ActorHQ.None;
+                    //add actor to dictOfActors -> need to add to Dictionary BEFORE adding to Pool (Debug.Assert checks dictOfActors.Count in AddActorToPool)
+                    GameManager.i.dataScript.AddActor(actor);
+                    GameManager.i.dataScript.AddActorToRecruitPool(actor.actorID, actor.level, side);
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised draft.status \"[0}\"", draft.status); break;
+            }
+
+        }
+        else { Debug.LogError("Invalid ActorDraftFinal (Null)"); }
     }
     #endregion
 
@@ -718,6 +874,61 @@ public class ActorManager : MonoBehaviour
             }
         }
         else { Debug.LogWarning("Invalid number of Actors (Zero, or less)"); }
+    }
+    #endregion
+
+    #region InitialiseActorStats
+    /// <summary>
+    /// Initialise actor stats, fixed or variable
+    /// </summary>
+    /// <param name="actor"></param>
+    private void InitialiseActorStats(Actor actor, int level, GlobalSide side)
+    {
+        if (actor != null)
+        {
+            // - - - Actor stats (variable or fixed)
+            if (GameManager.i.optionScript.fixedActorStats == true)
+            {
+                //Fixed stats
+                actor.SetDatapoint(ActorDatapoint.Datapoint0, level);
+                actor.SetDatapoint(ActorDatapoint.Datapoint1, level);
+                actor.SetDatapoint(ActorDatapoint.Datapoint2, level);
+            }
+            else
+            {
+                //Variable Stats -> level -> range limits
+                int limitLower = 1;
+                if (level == 3) { limitLower = 2; }
+                int limitUpper = Math.Min(4, level + 2);
+                //level -> assign
+                actor.SetDatapoint(ActorDatapoint.Datapoint0, Random.Range(limitLower, limitUpper)); //connections and influence
+                actor.SetDatapoint(ActorDatapoint.Datapoint1, Random.Range(limitLower, limitUpper)); //opinion and support
+                                                                                                     //Datapoint 2
+                if (side.level == GameManager.i.globalScript.sideResistance.level)
+                {
+                    //invisibility -> Level 3 100% Invis 3, level 2 25% Invis 2, 75% Invis 3, level 1 50% Invis 2, 50% Invis 3
+                    switch (actor.level)
+                    {
+                        case 3: actor.SetDatapoint(ActorDatapoint.Invisibility2, 3); break;
+                        case 2:
+                            if (Random.Range(0, 100) <= 25) { actor.SetDatapoint(ActorDatapoint.Invisibility2, 2); }
+                            else { actor.SetDatapoint(ActorDatapoint.Invisibility2, 3); }
+                            break;
+                        case 1:
+                            if (Random.Range(0, 100) <= 50) { actor.SetDatapoint(ActorDatapoint.Invisibility2, 2); }
+                            else { actor.SetDatapoint(ActorDatapoint.Invisibility2, 3); }
+                            break;
+                    }
+
+                }
+                else if (side.level == GameManager.i.globalScript.sideAuthority.level)
+                {
+                    //Ability
+                    actor.SetDatapoint(ActorDatapoint.Ability2, Random.Range(limitLower, limitUpper));
+                }
+            }
+        }
+        else { Debug.LogError("Invalid actor (Null)"); }
     }
     #endregion
 
@@ -1058,6 +1269,7 @@ public class ActorManager : MonoBehaviour
     }
     #endregion
 
+    #region InitialiseActorContacts
     /// <summary>
     /// Initialise actor contacts for both sides at game start
     /// </summary>
@@ -1076,6 +1288,7 @@ public class ActorManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
     }
+    #endregion
 
     #region InitialisePoolActors
     /// <summary>
@@ -1156,7 +1369,6 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogError("Invalid list of Resistance Actor Arcs (Null)"); }
     }
     #endregion
-
 
     #region InitialiseHQActors
     /// <summary>
@@ -1316,7 +1528,6 @@ public class ActorManager : MonoBehaviour
     }
     #endregion
 
-
     #region InitialiseHqWorkers
     /// <summary>
     /// Add new actors to hqActorPool as workers (used at Campaign start and also during metaGame to fill any gaps for HQ actors who may leave)
@@ -1347,7 +1558,6 @@ public class ActorManager : MonoBehaviour
         }
     }
     #endregion
-
 
     #region CreateActor
     /// <summary>
@@ -1404,47 +1614,8 @@ public class ActorManager : MonoBehaviour
                     actor.firstName = nameSet.firstFemaleNames.GetRandomRecord();
                 }
                 actor.actorName = string.Format("{0} {1}", actor.firstName, nameSet.lastNames.GetRandomRecord());
-                // - - - Actor stats (variable or fixed)
-                if (GameManager.i.optionScript.fixedActorStats == true)
-                {
-                    //Fixed stats
-                    actor.SetDatapoint(ActorDatapoint.Datapoint0, level);
-                    actor.SetDatapoint(ActorDatapoint.Datapoint1, level);
-                    actor.SetDatapoint(ActorDatapoint.Datapoint2, level);
-                }
-                else
-                {
-                    //Variable Stats -> level -> range limits
-                    int limitLower = 1;
-                    if (level == 3) { limitLower = 2; }
-                    int limitUpper = Math.Min(4, level + 2);
-                    //level -> assign
-                    actor.SetDatapoint(ActorDatapoint.Datapoint0, Random.Range(limitLower, limitUpper)); //connections and influence
-                    actor.SetDatapoint(ActorDatapoint.Datapoint1, Random.Range(limitLower, limitUpper)); //opinion and support
-                    //Datapoint 2
-                    if (side.level == GameManager.i.globalScript.sideResistance.level)
-                    {
-                        //invisibility -> Level 3 100% Invis 3, level 2 25% Invis 2, 75% Invis 3, level 1 50% Invis 2, 50% Invis 3
-                        switch (actor.level)
-                        {
-                            case 3: actor.SetDatapoint(ActorDatapoint.Invisibility2, 3); break;
-                            case 2:
-                                if (Random.Range(0, 100) <= 25) { actor.SetDatapoint(ActorDatapoint.Invisibility2, 2); }
-                                else { actor.SetDatapoint(ActorDatapoint.Invisibility2, 3); }
-                                break;
-                            case 1:
-                                if (Random.Range(0, 100) <= 50) { actor.SetDatapoint(ActorDatapoint.Invisibility2, 2); }
-                                else { actor.SetDatapoint(ActorDatapoint.Invisibility2, 3); }
-                                break;
-                        }
-
-                    }
-                    else if (side.level == GameManager.i.globalScript.sideAuthority.level)
-                    {
-                        //Ability
-                        actor.SetDatapoint(ActorDatapoint.Ability2, Random.Range(limitLower, limitUpper));
-                    }
-                }
+                //Stats
+                InitialiseActorStats(actor, level, side);
                 // - - - OnMap actor (pool actors already in dictionary)
                 if (slotID > -1)
                 {
@@ -1472,7 +1643,6 @@ public class ActorManager : MonoBehaviour
         return null;
     }
     #endregion
-
 
     #region GetNodeActions
     /// <summary>
@@ -2113,7 +2283,6 @@ public class ActorManager : MonoBehaviour
     }
     #endregion
 
-
     #region GetActorActions
     /// <summary>
     /// Returns a list of all relevant Actor Actions for the actor to enable a ModalActionMenu to be put together (one button per action). 
@@ -2658,7 +2827,6 @@ public class ActorManager : MonoBehaviour
     }
     #endregion
 
-
     #region GetPlayerActions
     /// <summary>
     /// Right click Player sprite Action menu
@@ -3103,7 +3271,6 @@ public class ActorManager : MonoBehaviour
     }
     #endregion
 
-
     #region GetGearInventoryActions
     /// <summary>
     /// Returns a list of all relevant actions for Gear in the player's Inventory (right click gear sprite in inventory)
@@ -3391,7 +3558,6 @@ public class ActorManager : MonoBehaviour
         return eventList;
     }
     #endregion
-
 
     #region GetReservePoolActions
     /// <summary>
@@ -3749,7 +3915,7 @@ public class ActorManager : MonoBehaviour
     }
     #endregion
 
-
+    #region RecruitActor
     /// <summary>
     /// call this to recruit an actor of a specified level (1 to 3) from a Decision
     /// </summary>
@@ -3779,7 +3945,7 @@ public class ActorManager : MonoBehaviour
         }
         InitialiseGenericPickerRecruit(details);
     }
-
+    #endregion
 
     #region InitialiseGenericPickerRecruit
     /// <summary>
@@ -4084,7 +4250,6 @@ public class ActorManager : MonoBehaviour
     }
     #endregion
 
-
     #region InitialiseHqHierarchyInventory
     /// <summary>
     /// sets up all needed data for HQ Hierarchy only Actors and triggers ModalInventoryUI to display such
@@ -4212,7 +4377,6 @@ public class ActorManager : MonoBehaviour
     }
     #endregion
 
-
     #region InitialiseDeviceInventory
     /// <summary>
     /// sets up all needed data for Interrogation Devices Inventory and triggers ModalInventoryUI to display such
@@ -4303,7 +4467,6 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogError("Invalid arrayOfDevices (Null)"); }
     }
     #endregion
-
 
     #region InitialiseReview
     /// <summary>
@@ -4537,7 +4700,6 @@ public class ActorManager : MonoBehaviour
     }
     #endregion
 
-
     #region InitialseActorDetails
     /// <summary>
     /// Initialise Actor details and pass to ModalTabbedUI for display
@@ -4576,6 +4738,7 @@ public class ActorManager : MonoBehaviour
     }
     #endregion
 
+    #region GetReviewResult
     /// <summary>
     /// returns colour formatted review icon (fontAwesome) for a given opinion of decisions taken (values from 0 to 3)
     /// NOTE: ref parameters as votesFor/Against are ongoing tallies
@@ -4614,6 +4777,7 @@ public class ActorManager : MonoBehaviour
         }
         return opinionText;
     }
+    #endregion
 
     #region InitialiseReservePoolInventory
     /// <summary>
@@ -5513,6 +5677,7 @@ public class ActorManager : MonoBehaviour
     }
     #endregion
 
+    #region UpdateActorStats
     /// <summary>
     /// Updates actor stats (big picture -> days OnMap/days Reserves)  (PlayerSide only)
     /// </summary>
@@ -5557,7 +5722,7 @@ public class ActorManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfReserves (Null)"); }
     }
-
+    #endregion
 
     #region Debug methods...
     //
@@ -6039,7 +6204,6 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogError("Invalid City nameSet (Null)"); }
     }
     #endregion
-
 
     //
     // - - - Inactive Actors - - -
