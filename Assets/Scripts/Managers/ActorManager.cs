@@ -898,16 +898,7 @@ public class ActorManager : MonoBehaviour
             { actor.SetDatapoint(ActorDatapoint.Datapoint2, level); }
 
             /*
-            // - - - Actor stats (variable or fixed)
-            if (GameManager.i.optionScript.fixedActorStats == true)
-            {
-                //Fixed stats
-                actor.SetDatapoint(ActorDatapoint.Datapoint0, level);
-                actor.SetDatapoint(ActorDatapoint.Datapoint1, level);
-                actor.SetDatapoint(ActorDatapoint.Datapoint2, level);
-            }
-            else
-            {
+            // - - - Actor stats (variable)
                 //Variable Stats -> level -> range limits
                 int limitLower = 1;
                 if (level == 3) { limitLower = 2; }
@@ -938,7 +929,6 @@ public class ActorManager : MonoBehaviour
                     //Ability
                     actor.SetDatapoint(ActorDatapoint.Ability2, Random.Range(limitLower, limitUpper));
                 }
-            }
             */
         }
         else { Debug.LogError("Invalid actor (Null)"); }
@@ -6265,9 +6255,536 @@ public class ActorManager : MonoBehaviour
     }
     #endregion
 
-    //
-    // - - - Inactive Actors - - -
-    //
+    #region SetReputationWarningMessage
+    /// <summary>
+    /// subMtethod to handle a warning message. NOTE: it's assumed that the calling method has isPlayer set to true (for AI versions only)
+    /// </summary>
+    private void SetReputationWarningMessage(List<Condition> listOfBadConditions)
+    {
+        if (listOfBadConditions != null)
+        {
+            bool isQuestionable = false;
+            StringBuilder builder = new StringBuilder();
+            foreach (Condition condition in listOfBadConditions)
+            {
+                //check for questionable condition
+                if (condition.tag.Equals(conditionQuestionable.name, StringComparison.Ordinal) == true)
+                { isQuestionable = true; }
+                if (builder.Length > 0) { builder.Append(", "); }
+                builder.Append(condition.tag);
+            }
+            //warning message
+            string msgText = string.Format("Your subordinates are considering resigning over your Reputation, {0} bad Conditions present", listOfBadConditions.Count);
+            string itemText = "Your Reputation is poor";
+            string reason = string.Format("{0}You are {1}<b>{2}</b>{3}{4}", "\n", colourBad, builder.ToString(), colourEnd, "\n");
+            string warning = string.Format("{0}Your Subordinates may resign{1}", colourAlert, colourEnd);
+            if (isQuestionable == true)
+            { warning = string.Format("{0}Your Subordinates may resign{1}HQ APPROVAL may fall{2}", colourAlert, "\n", colourEnd); }
+            GameManager.i.messageScript.GeneralWarning(msgText, itemText, "Dubious Reputation", reason, warning);
+        }
+        else { Debug.LogError("Invalid listOfBadConditions (Null)"); }
+    }
+    #endregion
+
+    #region Process...
+
+    #region ProcessStress
+    /// <summary>
+    /// sub Method to check Stress condition each turn. Called by CheckActive(Resistance/Authority)Actors.
+    /// NOTE: Actor has been checked for null by calling method
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <returns></returns>
+    private void ProcessStress(Actor actor, int chance, bool isPlayer)
+    {
+        //stats
+        actor.numOfDaysStressed++;
+        //enforces a minimum one turn gap between successive breakdowns
+        if (actor.isBreakdown == false)
+        {
+            //Trait Check
+            if (actor.CheckTraitEffect(actorBreakdownChanceHigh) == true)
+            {
+                chance *= 2;
+                if (isPlayer == true)
+                { TraitLogMessage(actor, "for a Nervous Breakdown check", "to DOUBLE the chance of a breakdown"); }
+            }
+            else if (actor.CheckTraitEffect(actorBreakdownChanceLow) == true)
+            {
+                chance /= 2;
+                if (isPlayer == true)
+                { TraitLogMessage(actor, "for a Nervous Breakdown check", "to HALVE the chance of a breakdown"); }
+            }
+            else if (actor.CheckTraitEffect(actorBreakdownChanceNone) == true)
+            {
+                chance = 0;
+                if (isPlayer == true)
+                { TraitLogMessage(actor, "for a Nervous Breakdown check", "to PREVENT a breakdown"); }
+            }
+            //test
+            int rnd = Random.Range(0, 100);
+            if (rnd < chance)
+            {
+                //breakdown
+                ProcessActorBreakdown(actor, actor.side);
+                Debug.LogFormat("[Rnd] ActorManager.cs -> CheckActiveActors: Stress check SUCCESS -> need < {0}, rolled {1}{2}",
+                    chance, rnd, "\n");
+                if (isPlayer == true)
+                {
+                    string text = string.Format("{0}, {1}, Stress check SUCCESS", actor.actorName, actor.arc.name);
+                    GameManager.i.messageScript.GeneralRandom(text, "Stress Breakdown", chance, rnd, true);
+                }
+                Debug.LogFormat("[Rim] ActorManager.cs -> ProcessStress: {0}, {1}, id {2} suffers STRESS BREAKDOWN{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
+            }
+            else
+            {
+                //passed test
+                if (isPlayer == true)
+                {
+                    string text = string.Format("{0}, {1}, Stress check FAILED", actor.actorName, actor.arc.name);
+                    GameManager.i.messageScript.GeneralRandom(text, "Stress Breakdown", chance, rnd, true);
+                }
+            }
+        }
+        else { actor.isBreakdown = false; }
+    }
+    #endregion
+
+    #region Process Blackmail
+    /// <summary>
+    /// sub Method to check Blackmail condition each turn. Called by CheckActive(Resistance/Authority)Actors. 
+    /// NOTE: Actor has been checked for null by calling method
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <returns></returns>
+    private void ProcessBlackmail(Actor actor)
+    {
+        string msgText, reason;
+        bool isResolved = false;
+        //decrement timer
+        actor.blackmailTimer--;
+        if (actor.GetDatapoint(ActorDatapoint.Opinion1) == maxStatValue)
+        {
+            //trait Vindictive (won't be appeased)
+            if (actor.CheckTraitEffect(actorAppeaseNone) == false)
+            {
+                //Opinion at max value, Blackmailer condition cancelled
+                actor.RemoveCondition(conditionBlackmailer, string.Format("{0} has Maximum Opinion", actor.arc.name));
+                isResolved = true;
+                //message
+                msgText = string.Format("{0} has MAX Opinion and has dropped their threat", actor.arc.name);
+                reason = string.Format("{0} has regained MAXIMUM Opinion", actor.arc.name);
+                GameManager.i.messageScript.ActorBlackmail(msgText, actor, null, true, reason);
+            }
+            else
+            { TraitLogMessage(actor, "for a Stop Blackmail check", "to REFUSE being bought-off"); }
+        }
+        if (isResolved == false)
+        {
+            if (actor.blackmailTimer == 0)
+            {
+                //
+                // - - - Actor REVEALS secret - - -
+                //
+                Secret secret = actor.GetSecret();
+                if (secret != null)
+                {
+                    secret.revealedID = actor.actorID;
+                    secret.revealedWho = string.Format("{0}, {1}", actor.actorName, actor.arc.name);
+                    secret.revealedWhen = GameManager.SetTimeStamp();
+                    secret.status = SecretStatus.Revealed;
+                    //message
+                    msgText = string.Format("{0} reveals your secret (\"{1}\")", actor.arc.name, secret.tag);
+                    GameManager.i.messageScript.ActorBlackmail(msgText, actor, secret);
+                    StringBuilder builder = new StringBuilder();
+                    builder.AppendFormat("{0}{1}{2}", colourNeutral, secret.tag, colourEnd);
+                    //history
+                    actor.AddHistory(new HistoryActor() { text = string.Format("Reveals your {0} secret", secret.tag) });
+                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("{0}, {1} reveals your Secret ({2})", actor.actorName, actor.arc.name, secret.tag) });
+                    //carry out effects
+                    if (secret.listOfEffects != null)
+                    {
+                        //data packages
+                        EffectDataReturn effectReturn = new EffectDataReturn();
+                        EffectDataInput effectInput = new EffectDataInput();
+                        effectInput.originText = "Reveal Secret";
+                        /*effectInput.dataName = secret.org.name;*/
+                        effectInput.dataName = secret.tag;
+                        Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
+                        if (node != null)
+                        {
+
+                            /*//loop effects
+                            foreach (Effect effect in secret.listOfEffects)   EDIT: Redundant code, left in to check if a problem with replacement code, Dec 17, '20
+                            {
+                                effectReturn = GameManager.i.effectScript.ProcessEffect(effect, node, effectInput);
+                                if (effectReturn.errorFlag == false)
+                                { builder.AppendFormat("{0}{1}", "\n", effectReturn.bottomText); }
+                            }*/
+
+                            //Process effects -> max number of Effects allowed for a secret
+                            int limit = Mathf.Min(GameManager.i.secretScript.secretMaxEffects, secret.listOfEffects.Count);
+                            for (int i = 0; i < limit; i++)
+                            {
+                                effectReturn = GameManager.i.effectScript.ProcessEffect(secret.listOfEffects[i], node, effectInput);
+                                if (effectReturn.errorFlag == false)
+                                { builder.AppendFormat("{0}{1}", "\n", effectReturn.bottomText); }
+                            }
+                        }
+                        else { Debug.LogWarning("Invalid player node (Null)"); }
+                    }
+                    //message detailing effects
+                    GameManager.i.messageScript.ActorRevealSecret(msgText, actor, secret, "Carries out Blackmail threat");
+                    //attempt executed, Blackmailer condition cancelled
+                    actor.RemoveCondition(conditionBlackmailer, string.Format("{0} has carried out their Threat", actor.arc.name));
+                    //outcome (message pipeline)
+                    string text = string.Format("{0}, {1}{2}{3}, has carried out their Blackmail threat and revealed your secret", actor.actorName, colourAlert, actor.arc.name, colourEnd,
+                        colourNeutral, secret.tag, colourEnd);
+                    ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
+                    {
+                        textTop = text,
+                        textBottom = builder.ToString(),
+                        sprite = GameManager.i.spriteScript.alertWarningSprite,
+                        isAction = false,
+                        side = GameManager.i.sideScript.PlayerSide,
+                        type = MsgPipelineType.SecretRevealed,
+                        help0 = "secret_4"
+                    };
+                    if (GameManager.i.guiScript.InfoPipelineAdd(outcomeDetails) == false)
+                    { Debug.LogWarningFormat("Secret Revealed InfoPipeline message FAILED to be added to dictOfPipeline"); }
+                    //remove secret from all actors and player
+                    GameManager.i.secretScript.RemoveSecretFromAll(secret.name);
+                }
+                else { Debug.LogWarning("Invalid Secret (Null) -> Not revealed"); }
+            }
+            else
+            {
+                //warning message
+                msgText = string.Format("{0} is Blackmailing you and will reveal your secret in {1} turn{2}", actor.arc.name, actor.blackmailTimer,
+                    actor.blackmailTimer != 1 ? "s" : "");
+                string itemText = string.Format("{0} is Blackmailing you", actor.arc.name);
+                reason = string.Format("This is a result of a conflict between you and {0}, {1}", actor.actorName, actor.arc.name);
+                string warning = string.Format("<b>{0} will reveal your Secret in {1} turn{2}</b>", actor.arc.name, actor.blackmailTimer, actor.blackmailTimer != 1 ? "s" : "");
+                GameManager.i.messageScript.GeneralWarning(msgText, itemText, "Blackmail", reason, warning);
+            }
+        }
+    }
+    #endregion
+
+    #region ProcessSecrets
+    /// <summary>
+    /// sub Method to check if actors learn of Player Secrets each turn. Called by CheckActive(Resistance/Authority)Actors.
+    /// NOTE: Actor has been checked for null by calling method
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <returns></returns>  
+    private void ProcessSecrets(Actor actor, List<Secret> listOfSecrets, int chance, bool isPlayer)
+    {
+        if (actor != null)
+        {
+            int rnd;
+            bool isProceed;
+            //actor already knows any secrets
+            bool knowSecret = false;
+            int actorSecrets = actor.CheckNumOfSecrets();
+            if (actorSecrets > 0) { knowSecret = true; }
+            //trait Detective
+            if (actor.CheckTraitEffect(actorSecretChanceHigh) == true)
+            {
+                chance *= 3;
+                //only do trait message if there is a secret to learn to avoid message spam (can't learn secret on first turn as player doesn't gain it until after in sequence)
+                if (GameManager.i.turnScript.Turn > 1 && actorSecrets < listOfSecrets.Count)
+                {
+                    if (isPlayer == true)
+                    { TraitLogMessage(actor, "for a Learn Secret check", "to TRIPLE chance of learning a Secret"); }
+                }
+            }
+            //trait Bedazzled
+            if (actor.CheckTraitEffect(actorSecretChanceNone) == false)
+            {
+                //loop through Player secrets
+                for (int i = 0; i < listOfSecrets.Count; i++)
+                {
+                    isProceed = true;
+                    Secret secret = listOfSecrets[i];
+                    if (secret != null)
+                    {
+                        //does actor already know the secret
+                        if (knowSecret == true)
+                        {
+                            if (secret.CheckActorPresent(actor.actorID) == true)
+                            { isProceed = false; }
+                        }
+                        if (isProceed == true)
+                        {
+                            //secret can only be learned one turn AFTER player gains secret (the '+1' is to get around the messaging system)
+                            if ((secret.gainedWhen.turn + 1) < GameManager.i.turnScript.Turn)
+                            {
+                                //does actor learn of secret
+                                rnd = Random.Range(0, 100);
+                                if (rnd < chance)
+                                {
+                                    //actor learns of secret
+                                    actor.AddSecret(secret);
+                                    secret.AddActor(actor.actorID);
+                                    actor.AddHistory(new HistoryActor() { text = string.Format("Learnt one of your Secrets ({0})", secret.tag) });
+                                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("{0}, {1} learns your Secret ({2})", actor.actorName, actor.arc.name, secret.tag) });
+                                    //popUp
+                                    GameManager.i.popUpFixedScript.SetData(actor.slotID, "Learns Secret");
+                                    //Admin
+                                    Debug.LogFormat("[Rnd] PlayerManager.cs -> CheckForSecrets: {0} learned SECRET need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                                    if (isPlayer == true)
+                                    {
+                                        string text = string.Format("{0}, {1}, learnt SECRET", actor.actorName, actor.arc.name);
+                                        GameManager.i.messageScript.GeneralRandom(text, "Learnt Secret", chance, rnd, true);
+                                    }
+                                    GameManager.i.dataScript.StatisticIncrement(StatType.ActorLearntSecret);
+                                    //trait Blabbermouth
+                                    if (actor.CheckTraitEffect(actorSecretTellAll) == true)
+                                    {
+                                        //actor passes secret onto all other actors
+                                        ProcessSecretTellAll(secret, actor);
+                                        if (isPlayer == true)
+                                        { TraitLogMessage(actor, "for passing on secrets", "to TELL ALL about secret"); }
+                                    }
+                                }
+                                else
+                                {
+                                    if (isPlayer == true)
+                                    {
+                                        string text = string.Format("{0}, {1}, didn't learn Secret", actor.actorName, actor.arc.name);
+                                        GameManager.i.messageScript.GeneralRandom(text, "Learn Secret", chance, rnd, true);
+                                    }
+                                }
+                            }
+                            /*else { Debug.LogFormat("[Tst] ActorManager.cs -> ProcessSecrets: Can't learn secret, gained turn {0}, current turn {1}", secret.gainedWhen.turn, GameManager.instance.turnScript.Turn); }*/
+                        }
+                    }
+                    else { Debug.LogWarningFormat("Invalid secret (Null) in listOFSecrets[{0}]", i); }
+                }
+            }
+            else
+            {
+                if (isPlayer == true)
+                { TraitLogMessage(actor, "for a Learn Secret check", "to AVOID learning any secrets"); }
+            }
+        }
+        else { Debug.LogWarning("Invalid actor (Null)"); }
+    }
+    #endregion
+
+    #region ProcessSecretTellAll
+    /// <summary>
+    /// subMethod for ProcessSecrets to handle trait Blabbermouth where an actor tells all other actors about the secret they have learned. Actor is the actor who learned of secret. Default current side.
+    /// NOTE: actorTrait & secret checked for null by calling method. Actors are told of secret regardless whether they are active or inactive or have 'Bedazzled' trait
+    /// </summary>
+    /// <param name="secret"></param>
+    /// <returns></returns>
+    private int ProcessSecretTellAll(Secret secret, Actor actorTrait)
+    {
+        int numTold = 0;
+        GlobalSide sideCurrent = GameManager.i.turnScript.currentSide;
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(sideCurrent);
+        //loop all actors on Map
+        for (int i = 0; i < arrayOfActors.Length; i++)
+        {
+            //check actor is present in slot (not vacant)
+            if (GameManager.i.dataScript.CheckActorSlotStatus(i, sideCurrent) == true)
+            {
+                Actor actor = arrayOfActors[i];
+                if (actor != null)
+                {
+                    //exclude actor with the trait who is telling everybody else
+                    if (actor.actorID != actorTrait.actorID)
+                    {
+                        //actor doesn't already know the secret
+                        if (secret.CheckActorPresent(actor.actorID) == false)
+                        {
+                            //popUp
+                            GameManager.i.popUpFixedScript.SetData(actor.slotID, "Learns Secret");
+                            //actor learns of secret
+                            actor.AddSecret(secret);
+                            secret.AddActor(actor.actorID);
+                            numTold++;
+                            GameManager.i.dataScript.StatisticIncrement(StatType.ActorLearntSecret);
+                        }
+                    }
+                }
+            }
+        }
+        return numTold;
+    }
+    #endregion
+
+    #region ProcessCompatibility
+    /// <summary>
+    /// subMethod to check if actors resign due to the Player having a bad condition (Corrupt/Incompetent/Questionable). Leave side as Null for default player side, specify otherwise
+    /// NOTE: Actor checked for null by calling method
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <param name="numOfBadConditions"></param>
+    public void ProcessCompatibility(Actor actor, List<Condition> listOfBadConditions, GlobalSide side = null)
+    {
+        int chance, rnd;
+        string itemText, reason, warning;
+        string msgText = "";
+        if (listOfBadConditions != null)
+        {
+            int numOfBadConditions = listOfBadConditions.Count;
+            if (numOfBadConditions > 0)
+            {
+                chance = actorResignChance * numOfBadConditions;
+                rnd = Random.Range(0, 100);
+                //default player side if not specified
+                if (side == null)
+                { side = GameManager.i.sideScript.PlayerSide; }
+                //proceed only if actor doesn't have do not resign trait
+                if (actor.CheckTraitEffect(actorNeverResigns) == false)
+                {
+                    //trait check -> 'Ethical' (triple chance of resigning)
+                    if (actor.CheckTraitEffect(actorResignHigh) == true)
+                    {
+                        chance *= 3;
+                        TraitLogMessage(actor, "for a Resignation check", "to TRIPLE chance of Resigning");
+                    }
+                    if (rnd < chance)
+                    {
+                        //Actor RESIGNS -> random message
+                        Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessCompatibility: Resign check SUCCESS need < {0}, rolled {1}{2}", chance, rnd, "\n");
+                        string text = string.Format("{0} Resign attempt SUCCESS", actor.arc.name);
+                        GameManager.i.messageScript.GeneralRandom(text, "Resignation", chance, rnd, true);
+                        //popUp
+                        GameManager.i.popUpFixedScript.SetData(actor.slotID, "Resigns");
+                        //resignation
+                        if (GameManager.i.dataScript.RemoveCurrentActor(side, actor, ActorStatus.Resigned) == true)
+                        {
+                            //choose a random condition that actor is upset about
+                            Condition conditionUpsetOver = listOfBadConditions[Random.Range(0, numOfBadConditions)];
+                            if (conditionUpsetOver != null)
+                            {
+                                if (string.IsNullOrEmpty(conditionUpsetOver.resignTag) == false)
+                                {
+                                    msgText = string.Format("{0} Resigns (over Player's {1})", actor.arc.name, conditionUpsetOver.resignTag);
+                                    Debug.LogFormat("[Tor] ActorManager.cs -> ProcessCompatibility: {0}, {1}, Resigns in disgust{2}", actor.actorName, actor.arc.name, "\n");
+                                    //history
+                                    actor.AddHistory(new HistoryActor() { text = string.Format("Resigns due to your {0}", conditionUpsetOver.resignTag) });
+                                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("{0}, {1} Resigns due to your {2}", actor.actorName, actor.arc.name, conditionUpsetOver.resignTag) });
+                                }
+                                else { Debug.LogWarning("Invalid conditionUpsetOver.resignTag (Null or empty)"); }
+                            }
+                            else { Debug.LogWarning("Invalid conditionUpsetOver (Null)"); }
+                            //autoRun
+                            if (GameManager.i.turnScript.CheckIsAutoRun() == true)
+                            {
+                                string textAutoRun = string.Format("{0}{1}{2}, {3}Resigns{4}", colourAlert, actor.arc.name, colourEnd, colourBad, colourEnd);
+                                GameManager.i.dataScript.AddHistoryAutoRun(textAutoRun);
+                                GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("{0}, {1} Resigns due to your {2}", actor.actorName, actor.arc.name, conditionUpsetOver.resignTag) });
+                            }
+                            //statistics
+                            if (side.level == globalResistance.level)
+                            { GameManager.i.dataScript.StatisticIncrement(StatType.ActorsResignedResistance); }
+                            else { GameManager.i.dataScript.StatisticIncrement(StatType.ActorsResignedAuthority); }
+                        }
+                        //message
+                        if (string.IsNullOrEmpty(msgText) == false)
+                        { GameManager.i.messageScript.ActorStatus(msgText, "Resigned", "has resigned because of your <b>abysmal reputation</b>", actor.actorID, side, null, HelpType.BadCondition); }
+                    }
+                    else
+                    {
+                        //random message
+                        Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessCompatibility: Resign check FAILED need < {0}, rolled {1}{2}", chance, rnd, "\n");
+                        string text = string.Format("{0} Resign attempt FAILED", actor.arc.name);
+                        GameManager.i.messageScript.GeneralRandom(text, "Resignation", chance, rnd, true);
+                    }
+                }
+                else
+                {
+                    //only generate message if the actor was about to resign
+                    if (rnd < chance)
+                    {
+                        //trait actorResignNone "Loyal"
+                        TraitLogMessage(actor, "for a Resignation check", "to AVOID Resigning");
+                        //General Info message
+                        msgText = string.Format("{0} considered Resigning but didn't because they are LOYAL", actor.arc.name);
+                        itemText = string.Format("{0} almost RESIGNS", actor.arc.name);
+                        reason = string.Format("<b>{0}, {1}{2}{3}{4}{5}considered Resigning</b>{6}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", colourBad, colourEnd);
+                        warning = string.Format("But didn't because they are <b>{0}</b>", actor.GetTrait().tag);
+                        GameManager.i.messageScript.GeneralInfo(msgText, itemText, "Resignation", reason, warning, false);
+                    }
+                }
+            }
+            else { Debug.LogWarning("Invalid listOfBadConditions (empty)"); }
+        }
+        else { Debug.LogWarning("Invalid listOfBadConditions (Null)"); }
+    }
+    #endregion
+
+    #region ProcessInvisibility
+    /// <summary>
+    /// Warning if actor Invisibility Zero
+    /// </summary>
+    /// <param name="actor"></param>
+    public void ProcessInvisibilityWarning(Actor actor)
+    {
+        Debug.Assert(actor != null, "Invalid actor (Null)");
+        string itemText = string.Format("{0} at risk of Capture", actor.arc.name);
+        string detailsTop = string.Format("{0}<b>{1}, {2}{3}{4}</b>{5}{6}<b>Invisibility</b> at {7}<b>Zero</b>{8}", "\n", actor.actorName, colourAlert, actor.arc.name, colourEnd,
+            "\n", "\n", colourNeutral, colourEnd);
+        string detailsBottom = string.Format("{0}<b>Can be CAPTURED</b>{1}", colourAlert, colourEnd);
+        GameManager.i.messageScript.ActorWarningOngoing(itemText, detailsTop, detailsBottom, actor.sprite, actor.actorID);
+    }
+    #endregion
+
+    #region ProcessOpinionWarning
+    /// <summary>
+    /// Warning if actor Opinion Zero, InfoApp effects tab
+    /// </summary>
+    /// <param name="actor"></param>
+    public void ProcessOpinionWarning(Actor actor)
+    {
+        string msgText = string.Format("{0} at risk of a Relationship Conflict", actor.arc.name);
+        string reason = string.Format("<b>{0}, {1}{2}{3}{4}{5}{6}{7}Opinion at {8}Zero{9}{10}</b>", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n",
+            colourNormal, colourEnd, colourNeutral, colourEnd, "\n");
+        string warning = string.Format("{0}<b>Can develop a RELATIONSHIP CONFLICT</b>{1}", colourBad, colourEnd);
+        List<string> listOfHelp = new List<string>() { "conflict_0", "conflict_1", "conflict_2" };
+        GameManager.i.messageScript.ActorWarningOngoing(msgText, reason, warning, actor.sprite, actor.actorID, listOfHelp);
+    }
+    #endregion
+
+    #region ProcessActorBreakdown
+    /// <summary>
+    /// handles all admin for an Actor having a breakdown as a result of having the Stressed condition
+    /// </summary>
+    /// <param name="actor"></param>
+    private void ProcessActorBreakdown(Actor actor, GlobalSide side)
+    {
+        if (actor != null)
+        {
+            actor.Status = ActorStatus.Inactive;
+            actor.inactiveStatus = ActorInactive.Breakdown;
+            actor.tooltipStatus = ActorTooltip.Breakdown;
+            actor.isBreakdown = true;
+            actor.numOfTimesBreakdown++;
+            //popUp
+            GameManager.i.popUpFixedScript.SetData(actor.slotID, "BREAKDOWN");
+            //change alpha of actor to indicate inactive status
+            GameManager.i.actorPanelScript.UpdateActorAlpha(actor.slotID, GameManager.i.guiScript.alphaInactive);
+            //message (public)
+            string text = string.Format("{0}, {1}, has suffered a Breakdown (Stressed)", actor.actorName, actor.arc.name);
+            string itemText = "has suffered a Breakdown";
+            string reason = "has suffered a Nervous Breakdown due to being <b>STRESSED</b>";
+            string details = string.Format("{0}<b>Unavailable but will recover next turn</b>{1}", colourNeutral, colourEnd);
+            GameManager.i.messageScript.ActorStatus(text, itemText, reason, actor.actorID, side, details);
+            //history
+            actor.AddHistory(new HistoryActor() { text = "Suffers a Breakdown" });
+        }
+        else { Debug.LogError("Invalid actor (Null)"); }
+    }
+    #endregion
+
+    #endregion
+
+    #region Checks...
 
     #region CheckInactiveResistanceActorsHuman
     /// <summary>
@@ -7030,532 +7547,7 @@ public class ActorManager : MonoBehaviour
     }
     #endregion
 
-    /// <summary>
-    /// subMtethod to handle a warning message. NOTE: it's assumed that the calling method has isPlayer set to true (for AI versions only)
-    /// </summary>
-    private void SetReputationWarningMessage(List<Condition> listOfBadConditions)
-    {
-        if (listOfBadConditions != null)
-        {
-            bool isQuestionable = false;
-            StringBuilder builder = new StringBuilder();
-            foreach (Condition condition in listOfBadConditions)
-            {
-                //check for questionable condition
-                if (condition.tag.Equals(conditionQuestionable.name, StringComparison.Ordinal) == true)
-                { isQuestionable = true; }
-                if (builder.Length > 0) { builder.Append(", "); }
-                builder.Append(condition.tag);
-            }
-            //warning message
-            string msgText = string.Format("Your subordinates are considering resigning over your Reputation, {0} bad Conditions present", listOfBadConditions.Count);
-            string itemText = "Your Reputation is poor";
-            string reason = string.Format("{0}You are {1}<b>{2}</b>{3}{4}", "\n", colourBad, builder.ToString(), colourEnd, "\n");
-            string warning = string.Format("{0}Your Subordinates may resign{1}", colourAlert, colourEnd);
-            if (isQuestionable == true)
-            { warning = string.Format("{0}Your Subordinates may resign{1}HQ APPROVAL may fall{2}", colourAlert, "\n", colourEnd); }
-            GameManager.i.messageScript.GeneralWarning(msgText, itemText, "Dubious Reputation", reason, warning);
-        }
-        else { Debug.LogError("Invalid listOfBadConditions (Null)"); }
-    }
-
-
-    /// <summary>
-    /// Checks all OnMap Inactive AI Authority actors
-    /// </summary>
-    private void CheckInactiveAuthorityActorsAI(bool isPlayer)
-    {
-        //Authority actors only
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalAuthority);
-        if (arrayOfActors != null)
-        {
-            for (int i = 0; i < arrayOfActors.Length; i++)
-            {
-                //check actor is present in slot (not vacant)
-                if (GameManager.i.dataScript.CheckActorSlotStatus(i, globalAuthority) == true)
-                {
-                    Actor actor = arrayOfActors[i];
-                    if (actor != null)
-                    {
-                        if (actor.Status == ActorStatus.Inactive)
-                        {
-                            switch (actor.inactiveStatus)
-                            {
-                                case ActorInactive.Breakdown:
-                                    //restore actor (one stress turn only)
-                                    actor.Status = ActorStatus.Active;
-                                    actor.inactiveStatus = ActorInactive.None;
-                                    actor.tooltipStatus = ActorTooltip.None;
-                                    if (isPlayer == true)
-                                    {
-                                        string textBreakdown = string.Format("{0}, {1}, has recovered from their Breakdown", actor.arc.name, actor.actorName);
-                                        GameManager.i.messageScript.ActorStatus(textBreakdown, "has Recovered", "has recovered from their Breakdown", actor.actorID, globalAuthority);
-                                    }
-                                    GameManager.i.actorPanelScript.UpdateActorAlpha(actor.slotID, GameManager.i.guiScript.alphaActive);
-                                    Debug.LogFormat("[Rim] ActorManager.cs -> CheckInactiveAuthorityActorsAI: {0}, {1}, id {2} has RECOVERED from their Breakdown{3}", actor.actorName,
-                                        actor.arc.name, actor.actorID, "\n");
-                                    break;
-                            }
-                        }
-                    }
-                    else { Debug.LogError(string.Format("Invalid Authority actor (Null), index {0}", i)); }
-                }
-            }
-        }
-        else { Debug.LogError("Invalid arrayOfActorsAuthority (Null)"); }
-    }
-
-
-    /// <summary>
-    /// sub Method to check Stress condition each turn. Called by CheckActive(Resistance/Authority)Actors.
-    /// NOTE: Actor has been checked for null by calling method
-    /// </summary>
-    /// <param name="actor"></param>
-    /// <returns></returns>
-    private void ProcessStress(Actor actor, int chance, bool isPlayer)
-    {
-        //stats
-        actor.numOfDaysStressed++;
-        //enforces a minimum one turn gap between successive breakdowns
-        if (actor.isBreakdown == false)
-        {
-            //Trait Check
-            if (actor.CheckTraitEffect(actorBreakdownChanceHigh) == true)
-            {
-                chance *= 2;
-                if (isPlayer == true)
-                { TraitLogMessage(actor, "for a Nervous Breakdown check", "to DOUBLE the chance of a breakdown"); }
-            }
-            else if (actor.CheckTraitEffect(actorBreakdownChanceLow) == true)
-            {
-                chance /= 2;
-                if (isPlayer == true)
-                { TraitLogMessage(actor, "for a Nervous Breakdown check", "to HALVE the chance of a breakdown"); }
-            }
-            else if (actor.CheckTraitEffect(actorBreakdownChanceNone) == true)
-            {
-                chance = 0;
-                if (isPlayer == true)
-                { TraitLogMessage(actor, "for a Nervous Breakdown check", "to PREVENT a breakdown"); }
-            }
-            //test
-            int rnd = Random.Range(0, 100);
-            if (rnd < chance)
-            {
-                //breakdown
-                ProcessActorBreakdown(actor, actor.side);
-                Debug.LogFormat("[Rnd] ActorManager.cs -> CheckActiveActors: Stress check SUCCESS -> need < {0}, rolled {1}{2}",
-                    chance, rnd, "\n");
-                if (isPlayer == true)
-                {
-                    string text = string.Format("{0}, {1}, Stress check SUCCESS", actor.actorName, actor.arc.name);
-                    GameManager.i.messageScript.GeneralRandom(text, "Stress Breakdown", chance, rnd, true);
-                }
-                Debug.LogFormat("[Rim] ActorManager.cs -> ProcessStress: {0}, {1}, id {2} suffers STRESS BREAKDOWN{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
-            }
-            else
-            {
-                //passed test
-                if (isPlayer == true)
-                {
-                    string text = string.Format("{0}, {1}, Stress check FAILED", actor.actorName, actor.arc.name);
-                    GameManager.i.messageScript.GeneralRandom(text, "Stress Breakdown", chance, rnd, true);
-                }
-            }
-        }
-        else { actor.isBreakdown = false; }
-    }
-
-
-    /// <summary>
-    /// sub Method to check Blackmail condition each turn. Called by CheckActive(Resistance/Authority)Actors. 
-    /// NOTE: Actor has been checked for null by calling method
-    /// </summary>
-    /// <param name="actor"></param>
-    /// <returns></returns>
-    private void ProcessBlackmail(Actor actor)
-    {
-        string msgText, reason;
-        bool isResolved = false;
-        //decrement timer
-        actor.blackmailTimer--;
-        if (actor.GetDatapoint(ActorDatapoint.Opinion1) == maxStatValue)
-        {
-            //trait Vindictive (won't be appeased)
-            if (actor.CheckTraitEffect(actorAppeaseNone) == false)
-            {
-                //Opinion at max value, Blackmailer condition cancelled
-                actor.RemoveCondition(conditionBlackmailer, string.Format("{0} has Maximum Opinion", actor.arc.name));
-                isResolved = true;
-                //message
-                msgText = string.Format("{0} has MAX Opinion and has dropped their threat", actor.arc.name);
-                reason = string.Format("{0} has regained MAXIMUM Opinion", actor.arc.name);
-                GameManager.i.messageScript.ActorBlackmail(msgText, actor, null, true, reason);
-            }
-            else
-            { TraitLogMessage(actor, "for a Stop Blackmail check", "to REFUSE being bought-off"); }
-        }
-        if (isResolved == false)
-        {
-            if (actor.blackmailTimer == 0)
-            {
-                //
-                // - - - Actor REVEALS secret - - -
-                //
-                Secret secret = actor.GetSecret();
-                if (secret != null)
-                {
-                    secret.revealedID = actor.actorID;
-                    secret.revealedWho = string.Format("{0}, {1}", actor.actorName, actor.arc.name);
-                    secret.revealedWhen = GameManager.SetTimeStamp();
-                    secret.status = SecretStatus.Revealed;
-                    //message
-                    msgText = string.Format("{0} reveals your secret (\"{1}\")", actor.arc.name, secret.tag);
-                    GameManager.i.messageScript.ActorBlackmail(msgText, actor, secret);
-                    StringBuilder builder = new StringBuilder();
-                    builder.AppendFormat("{0}{1}{2}", colourNeutral, secret.tag, colourEnd);
-                    //history
-                    actor.AddHistory(new HistoryActor() { text = string.Format("Reveals your {0} secret", secret.tag) });
-                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("{0}, {1} reveals your Secret ({2})", actor.actorName, actor.arc.name, secret.tag) });
-                    //carry out effects
-                    if (secret.listOfEffects != null)
-                    {
-                        //data packages
-                        EffectDataReturn effectReturn = new EffectDataReturn();
-                        EffectDataInput effectInput = new EffectDataInput();
-                        effectInput.originText = "Reveal Secret";
-                        /*effectInput.dataName = secret.org.name;*/
-                        effectInput.dataName = secret.tag;
-                        Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
-                        if (node != null)
-                        {
-
-                            /*//loop effects
-                            foreach (Effect effect in secret.listOfEffects)   EDIT: Redundant code, left in to check if a problem with replacement code, Dec 17, '20
-                            {
-                                effectReturn = GameManager.i.effectScript.ProcessEffect(effect, node, effectInput);
-                                if (effectReturn.errorFlag == false)
-                                { builder.AppendFormat("{0}{1}", "\n", effectReturn.bottomText); }
-                            }*/
-
-                            //Process effects -> max number of Effects allowed for a secret
-                            int limit = Mathf.Min(GameManager.i.secretScript.secretMaxEffects, secret.listOfEffects.Count);
-                            for (int i = 0; i < limit; i++)
-                            {
-                                effectReturn = GameManager.i.effectScript.ProcessEffect(secret.listOfEffects[i], node, effectInput);
-                                if (effectReturn.errorFlag == false)
-                                { builder.AppendFormat("{0}{1}", "\n", effectReturn.bottomText); }
-                            }
-                        }
-                        else { Debug.LogWarning("Invalid player node (Null)"); }
-                    }
-                    //message detailing effects
-                    GameManager.i.messageScript.ActorRevealSecret(msgText, actor, secret, "Carries out Blackmail threat");
-                    //attempt executed, Blackmailer condition cancelled
-                    actor.RemoveCondition(conditionBlackmailer, string.Format("{0} has carried out their Threat", actor.arc.name));
-                    //outcome (message pipeline)
-                    string text = string.Format("{0}, {1}{2}{3}, has carried out their Blackmail threat and revealed your secret", actor.actorName, colourAlert, actor.arc.name, colourEnd,
-                        colourNeutral, secret.tag, colourEnd);
-                    ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails
-                    {
-                        textTop = text,
-                        textBottom = builder.ToString(),
-                        sprite = GameManager.i.spriteScript.alertWarningSprite,
-                        isAction = false,
-                        side = GameManager.i.sideScript.PlayerSide,
-                        type = MsgPipelineType.SecretRevealed,
-                        help0 = "secret_4"
-                    };
-                    if (GameManager.i.guiScript.InfoPipelineAdd(outcomeDetails) == false)
-                    { Debug.LogWarningFormat("Secret Revealed InfoPipeline message FAILED to be added to dictOfPipeline"); }
-                    //remove secret from all actors and player
-                    GameManager.i.secretScript.RemoveSecretFromAll(secret.name);
-                }
-                else { Debug.LogWarning("Invalid Secret (Null) -> Not revealed"); }
-            }
-            else
-            {
-                //warning message
-                msgText = string.Format("{0} is Blackmailing you and will reveal your secret in {1} turn{2}", actor.arc.name, actor.blackmailTimer,
-                    actor.blackmailTimer != 1 ? "s" : "");
-                string itemText = string.Format("{0} is Blackmailing you", actor.arc.name);
-                reason = string.Format("This is a result of a conflict between you and {0}, {1}", actor.actorName, actor.arc.name);
-                string warning = string.Format("<b>{0} will reveal your Secret in {1} turn{2}</b>", actor.arc.name, actor.blackmailTimer, actor.blackmailTimer != 1 ? "s" : "");
-                GameManager.i.messageScript.GeneralWarning(msgText, itemText, "Blackmail", reason, warning);
-            }
-        }
-    }
-
-    /// <summary>
-    /// sub Method to check if actors learn of Player Secrets each turn. Called by CheckActive(Resistance/Authority)Actors.
-    /// NOTE: Actor has been checked for null by calling method
-    /// </summary>
-    /// <param name="actor"></param>
-    /// <returns></returns>  
-    private void ProcessSecrets(Actor actor, List<Secret> listOfSecrets, int chance, bool isPlayer)
-    {
-        if (actor != null)
-        {
-            int rnd;
-            bool isProceed;
-            //actor already knows any secrets
-            bool knowSecret = false;
-            int actorSecrets = actor.CheckNumOfSecrets();
-            if (actorSecrets > 0) { knowSecret = true; }
-            //trait Detective
-            if (actor.CheckTraitEffect(actorSecretChanceHigh) == true)
-            {
-                chance *= 3;
-                //only do trait message if there is a secret to learn to avoid message spam (can't learn secret on first turn as player doesn't gain it until after in sequence)
-                if (GameManager.i.turnScript.Turn > 1 && actorSecrets < listOfSecrets.Count)
-                {
-                    if (isPlayer == true)
-                    { TraitLogMessage(actor, "for a Learn Secret check", "to TRIPLE chance of learning a Secret"); }
-                }
-            }
-            //trait Bedazzled
-            if (actor.CheckTraitEffect(actorSecretChanceNone) == false)
-            {
-                //loop through Player secrets
-                for (int i = 0; i < listOfSecrets.Count; i++)
-                {
-                    isProceed = true;
-                    Secret secret = listOfSecrets[i];
-                    if (secret != null)
-                    {
-                        //does actor already know the secret
-                        if (knowSecret == true)
-                        {
-                            if (secret.CheckActorPresent(actor.actorID) == true)
-                            { isProceed = false; }
-                        }
-                        if (isProceed == true)
-                        {
-                            //secret can only be learned one turn AFTER player gains secret (the '+1' is to get around the messaging system)
-                            if ((secret.gainedWhen.turn + 1) < GameManager.i.turnScript.Turn)
-                            {
-                                //does actor learn of secret
-                                rnd = Random.Range(0, 100);
-                                if (rnd < chance)
-                                {
-                                    //actor learns of secret
-                                    actor.AddSecret(secret);
-                                    secret.AddActor(actor.actorID);
-                                    actor.AddHistory(new HistoryActor() { text = string.Format("Learnt one of your Secrets ({0})", secret.tag) });
-                                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("{0}, {1} learns your Secret ({2})", actor.actorName, actor.arc.name, secret.tag) });
-                                    //popUp
-                                    GameManager.i.popUpFixedScript.SetData(actor.slotID, "Learns Secret");
-                                    //Admin
-                                    Debug.LogFormat("[Rnd] PlayerManager.cs -> CheckForSecrets: {0} learned SECRET need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
-                                    if (isPlayer == true)
-                                    {
-                                        string text = string.Format("{0}, {1}, learnt SECRET", actor.actorName, actor.arc.name);
-                                        GameManager.i.messageScript.GeneralRandom(text, "Learnt Secret", chance, rnd, true);
-                                    }
-                                    GameManager.i.dataScript.StatisticIncrement(StatType.ActorLearntSecret);
-                                    //trait Blabbermouth
-                                    if (actor.CheckTraitEffect(actorSecretTellAll) == true)
-                                    {
-                                        //actor passes secret onto all other actors
-                                        ProcessSecretTellAll(secret, actor);
-                                        if (isPlayer == true)
-                                        { TraitLogMessage(actor, "for passing on secrets", "to TELL ALL about secret"); }
-                                    }
-                                }
-                                else
-                                {
-                                    if (isPlayer == true)
-                                    {
-                                        string text = string.Format("{0}, {1}, didn't learn Secret", actor.actorName, actor.arc.name);
-                                        GameManager.i.messageScript.GeneralRandom(text, "Learn Secret", chance, rnd, true);
-                                    }
-                                }
-                            }
-                            /*else { Debug.LogFormat("[Tst] ActorManager.cs -> ProcessSecrets: Can't learn secret, gained turn {0}, current turn {1}", secret.gainedWhen.turn, GameManager.instance.turnScript.Turn); }*/
-                        }
-                    }
-                    else { Debug.LogWarningFormat("Invalid secret (Null) in listOFSecrets[{0}]", i); }
-                }
-            }
-            else
-            {
-                if (isPlayer == true)
-                { TraitLogMessage(actor, "for a Learn Secret check", "to AVOID learning any secrets"); }
-            }
-        }
-        else { Debug.LogWarning("Invalid actor (Null)"); }
-    }
-
-    /// <summary>
-    /// subMethod for ProcessSecrets to handle trait Blabbermouth where an actor tells all other actors about the secret they have learned. Actor is the actor who learned of secret. Default current side.
-    /// NOTE: actorTrait & secret checked for null by calling method. Actors are told of secret regardless whether they are active or inactive or have 'Bedazzled' trait
-    /// </summary>
-    /// <param name="secret"></param>
-    /// <returns></returns>
-    private int ProcessSecretTellAll(Secret secret, Actor actorTrait)
-    {
-        int numTold = 0;
-        GlobalSide sideCurrent = GameManager.i.turnScript.currentSide;
-        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(sideCurrent);
-        //loop all actors on Map
-        for (int i = 0; i < arrayOfActors.Length; i++)
-        {
-            //check actor is present in slot (not vacant)
-            if (GameManager.i.dataScript.CheckActorSlotStatus(i, sideCurrent) == true)
-            {
-                Actor actor = arrayOfActors[i];
-                if (actor != null)
-                {
-                    //exclude actor with the trait who is telling everybody else
-                    if (actor.actorID != actorTrait.actorID)
-                    {
-                        //actor doesn't already know the secret
-                        if (secret.CheckActorPresent(actor.actorID) == false)
-                        {
-                            //popUp
-                            GameManager.i.popUpFixedScript.SetData(actor.slotID, "Learns Secret");
-                            //actor learns of secret
-                            actor.AddSecret(secret);
-                            secret.AddActor(actor.actorID);
-                            numTold++;
-                            GameManager.i.dataScript.StatisticIncrement(StatType.ActorLearntSecret);
-                        }
-                    }
-                }
-            }
-        }
-        return numTold;
-    }
-
-    /// <summary>
-    /// subMethod to check if actors resign due to the Player having a bad condition (Corrupt/Incompetent/Questionable). Leave side as Null for default player side, specify otherwise
-    /// NOTE: Actor checked for null by calling method
-    /// </summary>
-    /// <param name="actor"></param>
-    /// <param name="numOfBadConditions"></param>
-    public void ProcessCompatibility(Actor actor, List<Condition> listOfBadConditions, GlobalSide side = null)
-    {
-        int chance, rnd;
-        string itemText, reason, warning;
-        string msgText = "";
-        if (listOfBadConditions != null)
-        {
-            int numOfBadConditions = listOfBadConditions.Count;
-            if (numOfBadConditions > 0)
-            {
-                chance = actorResignChance * numOfBadConditions;
-                rnd = Random.Range(0, 100);
-                //default player side if not specified
-                if (side == null)
-                { side = GameManager.i.sideScript.PlayerSide; }
-                //proceed only if actor doesn't have do not resign trait
-                if (actor.CheckTraitEffect(actorNeverResigns) == false)
-                {
-                    //trait check -> 'Ethical' (triple chance of resigning)
-                    if (actor.CheckTraitEffect(actorResignHigh) == true)
-                    {
-                        chance *= 3;
-                        TraitLogMessage(actor, "for a Resignation check", "to TRIPLE chance of Resigning");
-                    }
-                    if (rnd < chance)
-                    {
-                        //Actor RESIGNS -> random message
-                        Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessCompatibility: Resign check SUCCESS need < {0}, rolled {1}{2}", chance, rnd, "\n");
-                        string text = string.Format("{0} Resign attempt SUCCESS", actor.arc.name);
-                        GameManager.i.messageScript.GeneralRandom(text, "Resignation", chance, rnd, true);
-                        //popUp
-                        GameManager.i.popUpFixedScript.SetData(actor.slotID, "Resigns");
-                        //resignation
-                        if (GameManager.i.dataScript.RemoveCurrentActor(side, actor, ActorStatus.Resigned) == true)
-                        {
-                            //choose a random condition that actor is upset about
-                            Condition conditionUpsetOver = listOfBadConditions[Random.Range(0, numOfBadConditions)];
-                            if (conditionUpsetOver != null)
-                            {
-                                if (string.IsNullOrEmpty(conditionUpsetOver.resignTag) == false)
-                                {
-                                    msgText = string.Format("{0} Resigns (over Player's {1})", actor.arc.name, conditionUpsetOver.resignTag);
-                                    Debug.LogFormat("[Tor] ActorManager.cs -> ProcessCompatibility: {0}, {1}, Resigns in disgust{2}", actor.actorName, actor.arc.name, "\n");
-                                    //history
-                                    actor.AddHistory(new HistoryActor() { text = string.Format("Resigns due to your {0}", conditionUpsetOver.resignTag) });
-                                    GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("{0}, {1} Resigns due to your {2}", actor.actorName, actor.arc.name, conditionUpsetOver.resignTag) });
-                                }
-                                else { Debug.LogWarning("Invalid conditionUpsetOver.resignTag (Null or empty)"); }
-                            }
-                            else { Debug.LogWarning("Invalid conditionUpsetOver (Null)"); }
-                            //autoRun
-                            if (GameManager.i.turnScript.CheckIsAutoRun() == true)
-                            {
-                                string textAutoRun = string.Format("{0}{1}{2}, {3}Resigns{4}", colourAlert, actor.arc.name, colourEnd, colourBad, colourEnd);
-                                GameManager.i.dataScript.AddHistoryAutoRun(textAutoRun);
-                                GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("{0}, {1} Resigns due to your {2}", actor.actorName, actor.arc.name, conditionUpsetOver.resignTag) });
-                            }
-                            //statistics
-                            if (side.level == globalResistance.level)
-                            { GameManager.i.dataScript.StatisticIncrement(StatType.ActorsResignedResistance); }
-                            else { GameManager.i.dataScript.StatisticIncrement(StatType.ActorsResignedAuthority); }
-                        }
-                        //message
-                        if (string.IsNullOrEmpty(msgText) == false)
-                        { GameManager.i.messageScript.ActorStatus(msgText, "Resigned", "has resigned because of your <b>abysmal reputation</b>", actor.actorID, side, null, HelpType.BadCondition); }
-                    }
-                    else
-                    {
-                        //random message
-                        Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessCompatibility: Resign check FAILED need < {0}, rolled {1}{2}", chance, rnd, "\n");
-                        string text = string.Format("{0} Resign attempt FAILED", actor.arc.name);
-                        GameManager.i.messageScript.GeneralRandom(text, "Resignation", chance, rnd, true);
-                    }
-                }
-                else
-                {
-                    //only generate message if the actor was about to resign
-                    if (rnd < chance)
-                    {
-                        //trait actorResignNone "Loyal"
-                        TraitLogMessage(actor, "for a Resignation check", "to AVOID Resigning");
-                        //General Info message
-                        msgText = string.Format("{0} considered Resigning but didn't because they are LOYAL", actor.arc.name);
-                        itemText = string.Format("{0} almost RESIGNS", actor.arc.name);
-                        reason = string.Format("<b>{0}, {1}{2}{3}{4}{5}considered Resigning</b>{6}", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", colourBad, colourEnd);
-                        warning = string.Format("But didn't because they are <b>{0}</b>", actor.GetTrait().tag);
-                        GameManager.i.messageScript.GeneralInfo(msgText, itemText, "Resignation", reason, warning, false);
-                    }
-                }
-            }
-            else { Debug.LogWarning("Invalid listOfBadConditions (empty)"); }
-        }
-        else { Debug.LogWarning("Invalid listOfBadConditions (Null)"); }
-    }
-
-    /// <summary>
-    /// Warning if actor Invisibility Zero
-    /// </summary>
-    /// <param name="actor"></param>
-    public void ProcessInvisibilityWarning(Actor actor)
-    {
-        Debug.Assert(actor != null, "Invalid actor (Null)");
-        string itemText = string.Format("{0} at risk of Capture", actor.arc.name);
-        string detailsTop = string.Format("{0}<b>{1}, {2}{3}{4}</b>{5}{6}<b>Invisibility</b> at {7}<b>Zero</b>{8}", "\n", actor.actorName, colourAlert, actor.arc.name, colourEnd,
-            "\n", "\n", colourNeutral, colourEnd);
-        string detailsBottom = string.Format("{0}<b>Can be CAPTURED</b>{1}", colourAlert, colourEnd);
-        GameManager.i.messageScript.ActorWarningOngoing(itemText, detailsTop, detailsBottom, actor.sprite, actor.actorID);
-    }
-
-    /// <summary>
-    /// Warning if actor Opinion Zero, InfoApp effects tab
-    /// </summary>
-    /// <param name="actor"></param>
-    public void ProcessOpinionWarning(Actor actor)
-    {
-        string msgText = string.Format("{0} at risk of a Relationship Conflict", actor.arc.name);
-        string reason = string.Format("<b>{0}, {1}{2}{3}{4}{5}{6}{7}Opinion at {8}Zero{9}{10}</b>", actor.actorName, colourAlert, actor.arc.name, colourEnd, "\n", "\n",
-            colourNormal, colourEnd, colourNeutral, colourEnd, "\n");
-        string warning = string.Format("{0}<b>Can develop a RELATIONSHIP CONFLICT</b>{1}", colourBad, colourEnd);
-        List<string> listOfHelp = new List<string>() { "conflict_0", "conflict_1", "conflict_2" };
-        GameManager.i.messageScript.ActorWarningOngoing(msgText, reason, warning, actor.sprite, actor.actorID, listOfHelp);
-    }
-
+    #region CheckInactiveAuthorityActorsHuman
     /// <summary>
     /// Checks all OnMap Inactive Authority actors, and returns any at max value back to Active status
     /// </summary>
@@ -7611,36 +7603,56 @@ public class ActorManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid arrayOfActorsAuthority (Null)"); }
     }
+    #endregion
 
+    #region CheckInactiveAuthorityActorsAI
     /// <summary>
-    /// handles all admin for an Actor having a breakdown as a result of having the Stressed condition
+    /// Checks all OnMap Inactive AI Authority actors
     /// </summary>
-    /// <param name="actor"></param>
-    private void ProcessActorBreakdown(Actor actor, GlobalSide side)
+    private void CheckInactiveAuthorityActorsAI(bool isPlayer)
     {
-        if (actor != null)
+        //Authority actors only
+        Actor[] arrayOfActors = GameManager.i.dataScript.GetCurrentActorsFixed(globalAuthority);
+        if (arrayOfActors != null)
         {
-            actor.Status = ActorStatus.Inactive;
-            actor.inactiveStatus = ActorInactive.Breakdown;
-            actor.tooltipStatus = ActorTooltip.Breakdown;
-            actor.isBreakdown = true;
-            actor.numOfTimesBreakdown++;
-            //popUp
-            GameManager.i.popUpFixedScript.SetData(actor.slotID, "BREAKDOWN");
-            //change alpha of actor to indicate inactive status
-            GameManager.i.actorPanelScript.UpdateActorAlpha(actor.slotID, GameManager.i.guiScript.alphaInactive);
-            //message (public)
-            string text = string.Format("{0}, {1}, has suffered a Breakdown (Stressed)", actor.actorName, actor.arc.name);
-            string itemText = "has suffered a Breakdown";
-            string reason = "has suffered a Nervous Breakdown due to being <b>STRESSED</b>";
-            string details = string.Format("{0}<b>Unavailable but will recover next turn</b>{1}", colourNeutral, colourEnd);
-            GameManager.i.messageScript.ActorStatus(text, itemText, reason, actor.actorID, side, details);
-            //history
-            actor.AddHistory(new HistoryActor() { text = "Suffers a Breakdown" });
+            for (int i = 0; i < arrayOfActors.Length; i++)
+            {
+                //check actor is present in slot (not vacant)
+                if (GameManager.i.dataScript.CheckActorSlotStatus(i, globalAuthority) == true)
+                {
+                    Actor actor = arrayOfActors[i];
+                    if (actor != null)
+                    {
+                        if (actor.Status == ActorStatus.Inactive)
+                        {
+                            switch (actor.inactiveStatus)
+                            {
+                                case ActorInactive.Breakdown:
+                                    //restore actor (one stress turn only)
+                                    actor.Status = ActorStatus.Active;
+                                    actor.inactiveStatus = ActorInactive.None;
+                                    actor.tooltipStatus = ActorTooltip.None;
+                                    if (isPlayer == true)
+                                    {
+                                        string textBreakdown = string.Format("{0}, {1}, has recovered from their Breakdown", actor.arc.name, actor.actorName);
+                                        GameManager.i.messageScript.ActorStatus(textBreakdown, "has Recovered", "has recovered from their Breakdown", actor.actorID, globalAuthority);
+                                    }
+                                    GameManager.i.actorPanelScript.UpdateActorAlpha(actor.slotID, GameManager.i.guiScript.alphaActive);
+                                    Debug.LogFormat("[Rim] ActorManager.cs -> CheckInactiveAuthorityActorsAI: {0}, {1}, id {2} has RECOVERED from their Breakdown{3}", actor.actorName,
+                                        actor.arc.name, actor.actorID, "\n");
+                                    break;
+                            }
+                        }
+                    }
+                    else { Debug.LogError(string.Format("Invalid Authority actor (Null), index {0}", i)); }
+                }
+            }
         }
-        else { Debug.LogError("Invalid actor (Null)"); }
+        else { Debug.LogError("Invalid arrayOfActorsAuthority (Null)"); }
     }
+    #endregion
 
+    #region CheckPlayerHuman
     /// <summary>
     /// runs all start late turn Human player checks, both sides
     /// </summary>
@@ -8109,8 +8121,9 @@ public class ActorManager : MonoBehaviour
             else { Debug.LogError("Invalid listOfActionAdjustments (Null)"); }
         }
     }
+    #endregion
 
-
+    #region CheckPlayerResistanceAI
     /// <summary>
     /// run all late start turn AI Resistance player checks
     /// </summary>
@@ -8350,8 +8363,9 @@ public class ActorManager : MonoBehaviour
                 //NO Default case here, only check for what you are interested in
         }
     }
+    #endregion
 
-
+    #region CheckPlayerAuthorityAI
     /// <summary>
     /// run all late start turn AI Authority player checks
     /// </summary>
@@ -8433,8 +8447,11 @@ public class ActorManager : MonoBehaviour
                 //NO Default case here, only check for what you are interested in
         }
     }
+    #endregion
 
+    #endregion
 
+    #region UpdateReserveActors
     /// <summary>
     /// Checks all reserve pool actors (both sides), decrements unhappy timers and takes appropriate action if any have reached zero
     /// </summary>
@@ -8705,6 +8722,7 @@ public class ActorManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfActors -> Authority (Null)"); }
     }
+    #endregion
 
     /// <summary>
     /// returns a colour formatted tooltip for the detail section of the topBar unhappy tooltip (who's unhappy in the Reserves), for the Player side. Returns null if a problem

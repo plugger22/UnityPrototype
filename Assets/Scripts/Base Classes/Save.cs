@@ -93,7 +93,6 @@ public class SaveOptionData
     public bool autoGearResolution;
     public bool fogOfWar;
     public bool debugData;
-    public bool fixedActorStats;
     public bool billboard;
     public bool showContacts;
     public bool showPower;

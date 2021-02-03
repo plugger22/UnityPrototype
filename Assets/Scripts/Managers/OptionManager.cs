@@ -10,7 +10,6 @@ public class OptionManager : MonoBehaviour
     #region Save Data Compatible
     //game options
     [HideInInspector] public bool autoGearResolution = false;                     //if true then dice roller ignored whenever not enough power to save gear
-    [HideInInspector] public bool fixedActorStats = false;                        //if true then actors will have varying stats according to level, if false then actors of the same level all have identical stats
     [HideInInspector] public bool billboard = true;                               //if true billboard shows between turns
 
     //Debug options
@@ -78,7 +77,6 @@ public class OptionManager : MonoBehaviour
             .AppendFormat(" Side -> {0}{1}", GameManager.i.sideScript.PlayerSide, "\n")
             .AppendFormat("{0}- Game Options{1}", "\n", "\n")
             .AppendFormat(" Auto Gear (Dice ignored if not enough Power) -> {0}{1}", autoGearResolution, "\n")
-            .AppendFormat(" Fixed Actor Stats -> {0}{1}", fixedActorStats, "\n")
             .AppendFormat(" Billboards -> {0}{1}", billboard, "\n")
             .AppendFormat("{0}- Debug Options{1}", "\n", "\n")
             .AppendFormat(" Debug Data -> {0}{1}", debugData, "\n")

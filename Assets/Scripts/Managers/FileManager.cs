@@ -352,7 +352,6 @@ public class FileManager : MonoBehaviour
     {
         write.optionData.autoGearResolution = GameManager.i.optionScript.autoGearResolution;
         write.optionData.fogOfWar = GameManager.i.optionScript.isfogOfWar;
-        write.optionData.fixedActorStats = GameManager.i.optionScript.fixedActorStats;
         write.optionData.billboard = GameManager.i.optionScript.billboard;
         write.optionData.debugData = GameManager.i.optionScript.debugData;
         write.optionData.showContacts = GameManager.i.optionScript.showContacts;
@@ -2084,7 +2083,6 @@ public class FileManager : MonoBehaviour
     {
         GameManager.i.optionScript.autoGearResolution = read.optionData.autoGearResolution;
         GameManager.i.optionScript.isfogOfWar = read.optionData.fogOfWar;
-        GameManager.i.optionScript.fixedActorStats = read.optionData.fixedActorStats;
         GameManager.i.optionScript.billboard = read.optionData.billboard;
         GameManager.i.optionScript.debugData = read.optionData.debugData;
         GameManager.i.optionScript.showContacts = read.optionData.showContacts;
