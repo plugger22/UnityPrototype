@@ -10745,5 +10745,127 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
     }
 
+    /// <summary>
+    /// Get data for ActorPool export to file in order to check actor backstories and personalities
+    /// </summary>
+    /// <returns></returns>
+    public string GetExportActorPool()
+    {
+        StringBuilder builder = new StringBuilder();
+        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
+        //header
+        builder.AppendFormat("Actor Pool \"{0}\", Campaign \"{1}\"{2}", GameManager.i.campaignScript.campaign.actorPool.tag, GameManager.i.campaignScript.campaign.tag, "\n");
+        builder.AppendFormat("Use file to proof backstories and to identify any inconsistencies with an actor's personality{0}{1}", "\n", "\n");
+        //hq hierarchy
+        builder.AppendFormat("- - - HQ Hierarchy{0}{1}", "\n", "\n");
+        List<Actor> listOfHierarchy = GameManager.i.dataScript.GetListOfHqHierarchy();
+        if (listOfHierarchy != null)
+        {
+            for (int i = 0; i < listOfHierarchy.Count; i++)
+            {
+                builder.AppendFormat(GetExportActorData(listOfHierarchy[i]));
+                builder.AppendLine(); builder.AppendLine();
+            }
+        }
+        else { Debug.LogError("Invalid listOfHierarchy (Null)"); }
+        //hq workers
+        builder.AppendFormat("- - - HQ Workers{0}{1}", "\n", "\n");
+        List<Actor> listOfWorkers = GameManager.i.dataScript.GetListOfHqWorkers();
+        if (listOfWorkers != null)
+        {
+            for (int i = 0; i < listOfWorkers.Count; i++)
+            {
+                builder.AppendFormat(GetExportActorData(listOfWorkers[i]));
+                builder.AppendLine(); builder.AppendLine();
+            }
+        }
+        else { Debug.LogError("Invalid listOfWorkers (Null)"); }
+        //OnMap actors
+        builder.AppendFormat("- - - On Map{0}{1}", "\n", "\n");
+        Actor[] arrayOfOnMap = GameManager.i.dataScript.GetCurrentActorsFixed(playerSide);
+        if (arrayOfOnMap != null)
+        {
+            for (int i = 0; i < arrayOfOnMap.Length; i++)
+            {
+                builder.AppendFormat(GetExportActorData(arrayOfOnMap[i]));
+                builder.AppendLine(); builder.AppendLine();
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfOnMap (Null)"); }
+        //pool lvl 1
+        builder.AppendFormat("- - - Pool Level 1{0}{1}", "\n", "\n");
+        List<int> listOfLevelOne = GameManager.i.dataScript.GetActorRecruitPool(1, playerSide);
+        if (listOfLevelOne != null)
+        {
+            for (int i = 0; i < listOfLevelOne.Count; i++)
+            {
+                Actor actor = GameManager.i.dataScript.GetActor(listOfLevelOne[i]);
+                builder.AppendFormat(GetExportActorData(actor));
+                builder.AppendLine(); builder.AppendLine();
+            }
+        }
+        else { Debug.LogError("Invalid listOfLevelOne (Null)"); }
+        //pool lvl 2
+        builder.AppendFormat("- - - Pool Level 2{0}{1}", "\n", "\n");
+        List<int> listOfLevelTwo = GameManager.i.dataScript.GetActorRecruitPool(2, playerSide);
+        if (listOfLevelTwo != null)
+        {
+            for (int i = 0; i < listOfLevelTwo.Count; i++)
+            {
+                Actor actor = GameManager.i.dataScript.GetActor(listOfLevelTwo[i]);
+                builder.AppendFormat(GetExportActorData(actor));
+                builder.AppendLine(); builder.AppendLine();
+            }
+        }
+        else { Debug.LogError("Invalid listOfLevelTwo (Null)"); }
+        //pool lvl 3
+        builder.AppendFormat("- - - Pool Level 3{0}{1}", "\n", "\n");
+        List<int> listOfLevelThree = GameManager.i.dataScript.GetActorRecruitPool(3, playerSide);
+        if (listOfLevelThree != null)
+        {
+            for (int i = 0; i < listOfLevelThree.Count; i++)
+            {
+                Actor actor = GameManager.i.dataScript.GetActor(listOfLevelThree[i]);
+                builder.AppendFormat(GetExportActorData(actor));
+                builder.AppendLine(); builder.AppendLine();
+            }
+        }
+        else { Debug.LogError("Invalid listOfLevelThree (Null)"); }
+
+        return builder.ToString();
+    }
+
+    /// <summary>
+    /// Takes an actor and returns their data in a consistent format for GetExportActorPool.cs
+    /// </summary>
+    /// <param name="actor"></param>
+    /// <returns></returns>
+    private string GetExportActorData(Actor actor)
+    {
+        StringBuilder builder = new StringBuilder();
+        if (actor != null)
+        {
+            Personality personality = actor.GetPersonality();
+            string profile = personality.GetProfile();
+            if (personality != null)
+            {
+                builder.AppendFormat("[Actor] {0}, ({1}), {2}, ID {3}{4}", actor.actorName, actor.firstName, actor.arc.name, actor.actorID, "\n");
+                builder.AppendFormat("{0}, level {1}{2}", actor.GetTrait().tag, actor.level, "\n");
+                //personality profile
+                if (string.IsNullOrEmpty(profile) == false)
+                {
+                    builder.AppendFormat("[Profile] {0} -> {1}{2}", profile, personality.GetProfileDescriptor(), "\n");
+                    builder.AppendFormat("[Explanation] {0}{1}", personality.GetProfileExplanation(), "\n");
+                }
+                else { builder.AppendFormat("[Profile] No profile{0}", "\n"); }
+                //backstory
+                builder.AppendFormat("[Backstory] {0}{1}{2}{3}", actor.backstory0, "\n", actor.backstory1, "\n");
+            }
+            else { Debug.LogErrorFormat("Invalid personality (Null) for actor \"{0}\", ID {1}", actor.actorName, actor.actorID); }
+        }
+        else { Debug.LogError("Invalid actor (Null)"); }
+        return builder.ToString();
+    }
+
     //new methods above here
 }

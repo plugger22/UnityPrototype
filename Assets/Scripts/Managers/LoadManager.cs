@@ -45,7 +45,7 @@ public class LoadManager : MonoBehaviour
     public HqPosition[] arrayOfHqPositions;
     public CaptureTool[] arrayOfCaptureTools;
 
-    [Header("ActorDrafts -> ToolManager only")]
+    [Header("ActorDrafts -> ToolManager Duplicates")]
     public ActorDraftSex[] arrayOfActorDraftSex;
     public ActorDraftStatus[] arrayOfActorDraftStatus;
 
@@ -66,7 +66,7 @@ public class LoadManager : MonoBehaviour
     public TextList[] arrayOfAdvertTextLists;
     public TextList[] arrayOfCrisisTextLists;
 
-    [Header("NameSets")]
+    [Header("NameSets -> ToolManager Duplicates")]
     public NameSet[] arrayOfNameSets;
 
 
@@ -102,10 +102,12 @@ public class LoadManager : MonoBehaviour
     public StoryComms[] arrayOfStoryComms;
     public StoryHelp[] arrayOfStoryHelp;
 
+    [Header("Traits -> ToolManager.cs duplicates")]
+    public Trait[] arrayOfTraits;
+
     [Header("InitialiseEarly")]
     public NodeArc[] arrayOfNodeArcs;
     public NodeCrisis[] arrayOfNodeCrisis;
-    public Trait[] arrayOfTraits;
     public ActorArc[] arrayOfActorArcs;
     public Action[] arrayOfActions;
     public TeamArc[] arrayOfTeamArcs;

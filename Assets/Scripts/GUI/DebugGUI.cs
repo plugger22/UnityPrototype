@@ -1406,6 +1406,14 @@ public class DebugGUI : MonoBehaviour
                 GameManager.i.fileScript.ExportStoryHelp();
             }
 
+            //six button
+            offset = 5;
+            if (GUI.Button(new Rect(box_file + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), "Exp Actor Pool"))
+            {
+                Debug.Log("[Dbg] Button -> Export Actor Pool");
+                GameManager.i.fileScript.ExportActorPoolData();
+            }
+
 
 
 

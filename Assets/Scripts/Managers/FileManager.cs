@@ -31,8 +31,10 @@ public class FileManager : MonoBehaviour
     //secondary
     private static readonly string STORYDATA_FILE = "storyDataFile.txt";
     private static readonly string STORYHELP_FILE = "storyHelpFile.txt";
+    private static readonly string ACTORPOOL_FILE = "actorPoolData.txt";
     private string filenameStory;
     private string filenameHelp;
+    private string filenamePool;
 
     //fast access
     GlobalSide globalAuthority;
@@ -51,6 +53,7 @@ public class FileManager : MonoBehaviour
         filenameAuto = Path.Combine(Application.persistentDataPath, AUTO_FILE);
         filenameStory = Path.Combine(Application.persistentDataPath, STORYDATA_FILE);
         filenameHelp = Path.Combine(Application.persistentDataPath, STORYHELP_FILE);
+        filenamePool = Path.Combine(Application.persistentDataPath, ACTORPOOL_FILE);
         codeKey = "#kJ83DAl50$*@.<__'][90{4#dDA'a?~";                         //needs to be 32 characters long exactly
         //fast access
         globalAuthority = GameManager.i.globalScript.sideAuthority;
@@ -5038,6 +5041,41 @@ public class FileManager : MonoBehaviour
             Debug.LogFormat("[Fil] FileManager.cs -> SaveStoryHelpToFile: StoryHelp SAVED to \"{0}\"{1}", filenameHelp, "\n");
         }
         else { Debug.LogError("Invalid writeTEXT (Null)"); }
+    }
+    #endregion
+
+    #region ActorPoolData
+    /// <summary>
+    /// Take in-game ActorPool data and convert to dataDump export format to enable checking of actor backstories and personalities
+    /// </summary>
+    public void ExportActorPoolData()
+    {
+        string text = GameManager.i.actorScript.GetExportActorPool();
+        SaveActorPoolDataToFile(text);
+    }
+    #endregion
+
+    #region SaveActorPoolDataToFile
+    /// <summary>
+    /// write export dataDump to file
+    /// </summary>
+    /// <param name="poolText"></param>
+    public void SaveActorPoolDataToFile(string poolTEXT)
+    {
+        if (poolTEXT != null)
+        {
+            //file present? If so delete
+            if (File.Exists(filenamePool) == true)
+            {
+                try { File.Delete(filenamePool); }
+                catch (Exception e) { Debug.LogErrorFormat("Failed to DELETE FILE, error \"{0}\"", e.Message); }
+            }
+            //create new file
+            try { File.WriteAllText(filenamePool, poolTEXT); }
+            catch (Exception e) { Debug.LogErrorFormat("Failed to write TEXT FROM FILE, error \"{0}\"", e.Message); }
+            Debug.LogFormat("[Fil] FileManager.cs -> SaveActorPoolDataToFile: poolTEXT SAVED to \"{0}\"{1}", filenamePool, "\n");
+        }
+        else { Debug.LogError("Invalid poolTEXT (Null)"); }
     }
     #endregion
 
