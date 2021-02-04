@@ -21,5 +21,9 @@ MonoBehaviour:
   power: 1
   status: {fileID: 11400000, guid: 745709acc9a885940bf510a33f017691, type: 2}
   sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
-  backstory0: 
-  backstory1: 
+  backstory0: With his parents currently doing time at the Area 9 Reeductation facility,
+    Raylene has learnt the value of being a team player. You get to stay in the team,
+    they look after you and you get fed. The team is the thing. Don't ever let it
+    down and it'll take care of you
+  backstory1: Is Raylene likely to go all rugged Mr Individualist on us? No sir. That's
+    a positive. There's a lot to like about Raylene

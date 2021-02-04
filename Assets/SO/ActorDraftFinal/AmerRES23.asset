@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 427f6772736667547a34eb4cfb79a586, type: 3}
   m_Name: AmerRES23
   m_EditorClassIdentifier: 
-  actorName: Audel Gomez
-  firstName: Audel
+  actorName: Goof Gomez
+  firstName: Goof
   lastName: Gomez
   sprite: {fileID: 21300000, guid: c051c39bca0f7f8468bd562b9a858f50, type: 3}
   arc: {fileID: 11400000, guid: 268c960d386d285478b3ab6aaa5796bf, type: 2}
@@ -21,5 +21,9 @@ MonoBehaviour:
   power: 0
   status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
   sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
-  backstory0: 
-  backstory1: 
+  backstory0: Goof is a wild man. He looks like he's just stepped out of the jungle
+    and acts as if he's a caged animal on speed. Hidden behind this crazy act is a
+    patient, meticulous, finder of things who can get you anything you want, for a
+    fee
+  backstory1: Why the wild act? Goof will tell you that it's about pulling in the
+    women. Who wants to date Mr Fastidious? Does it work? Yaaaarrrrr!

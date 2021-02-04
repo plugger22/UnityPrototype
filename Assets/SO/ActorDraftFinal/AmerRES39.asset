@@ -11,15 +11,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 427f6772736667547a34eb4cfb79a586, type: 3}
   m_Name: AmerRES39
   m_EditorClassIdentifier: 
-  actorName: Arik Edwards
-  firstName: Arik
+  actorName: Animal Edwards
+  firstName: Animal
   lastName: Edwards
   sprite: {fileID: 21300000, guid: 8a947f318ba8ccf45895e42cc50c6af3, type: 3}
   arc: {fileID: 11400000, guid: 585f6ebe97311aa4396d0c79f6faf1df, type: 2}
-  trait: {fileID: 11400000, guid: 4f10dac9b65e6b444b9aedf275ec0aae, type: 2}
+  trait: {fileID: 11400000, guid: e0a0c6e9f04965e44b9a9bfd4863c964, type: 2}
   level: 3
   power: 0
   status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
   sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
-  backstory0: 
-  backstory1: 
+  backstory0: Animal has an oversized 'E' tattooed on his chest. When asked, he will
+    tell you it's because he is one of the ELITE of the Resistance. Is that a thing?
+    Obviously not for you!, replies Animal. Bombs and status are what gets Animal
+    out of bed in the morning
+  backstory1: Being a member of the Elite blow-people-up brigade means that Animal,
+    to the best of his knowlegde, has never accepted a bribe

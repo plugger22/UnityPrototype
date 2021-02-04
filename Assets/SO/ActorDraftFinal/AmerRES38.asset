@@ -21,5 +21,9 @@ MonoBehaviour:
   power: 0
   status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
   sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
-  backstory0: 
-  backstory1: 
+  backstory0: Vinnie owes money. Quite a bit. To a podShark who just keeps circling.
+    Every person that Vinnie recruits for the Resistance has to pay him a special
+    sign-on 'bonus'. HQ know about it and don't care. They figure it only incentives
+    Vinnie to recruit more cannon fodder
+  backstory1: Vinnie is stuck in a deep hole. The more he feeds the podShark, the
+    more it wants. How many people can he physically recruit in a week?

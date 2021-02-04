@@ -21,5 +21,8 @@ MonoBehaviour:
   power: 0
   status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
   sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
-  backstory0: 
-  backstory1: 
+  backstory0: His mother died of the rad cough caught while volunteering, his father
+    gunned down by a securityBot at a protest rally. Eamon grew up understanding that
+    trouble gets you dead. You stay quiet, in the shadows. You run from trouble
+  backstory1: Nobody disputes the fact that Eamon is a coward, least of all Eamon.
+    He hopes to continue the McCoy line and you don't do that by being brave. No sir.

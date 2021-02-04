@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 427f6772736667547a34eb4cfb79a586, type: 3}
   m_Name: AmerRES2
   m_EditorClassIdentifier: 
-  actorName: Knightley Musk
-  firstName: Knightley
+  actorName: Gator Musk
+  firstName: Gator
   lastName: Musk
   sprite: {fileID: 21300000, guid: 8a947f318ba8ccf45895e42cc50c6af3, type: 3}
   arc: {fileID: 11400000, guid: 585f6ebe97311aa4396d0c79f6faf1df, type: 2}
@@ -21,5 +21,9 @@ MonoBehaviour:
   power: 30
   status: {fileID: 11400000, guid: 37e045679635478418061cea316085b7, type: 2}
   sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
-  backstory0: Mr Knightely knows where the Molluscs are hidden
-  backstory1: His bottom hurts
+  backstory0: Like a slithering reptile who never forgets where the bodies are festering,
+    Gator KNOWS where the pools of money are to be found. Scarcity isn't the issue,
+    it's all about allocating the money for maximum impact. Gator doesn't take kindly
+    to wastage
+  backstory1: Born into money, Gator swims through the arcane, murky, depths of illegal
+    financing. He consumes all that he finds

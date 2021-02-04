@@ -21,5 +21,9 @@ MonoBehaviour:
   power: 0
   status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
   sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
-  backstory0: 
-  backstory1: 
+  backstory0: If Phillip was an animal he'd be a Toucan, high up in the jungle canopy,
+    laughing at those below. Flashing his exotic plumage as the sun lights up his
+    lofty perch. Ready to swoop down and plunge his monstrous beak into the neck of
+    an unsuspecting victim, severing their carotid artery
+  backstory1: Whatever you do don't mention poor Phillip's eyesight. Toucans are supposed
+    to be eagle eyed, not myopic

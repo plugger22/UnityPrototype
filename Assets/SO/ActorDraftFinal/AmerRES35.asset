@@ -11,15 +11,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 427f6772736667547a34eb4cfb79a586, type: 3}
   m_Name: AmerRES35
   m_EditorClassIdentifier: 
-  actorName: Encarnacion Hazzard
-  firstName: Encarnacion
+  actorName: Emily Hazzard
+  firstName: Emily
   lastName: Hazzard
   sprite: {fileID: 21300000, guid: aa2bfbc87aa65fa469977ae64d323a08, type: 3}
   arc: {fileID: 11400000, guid: 47b35b061cc8ac94b8c82676e37f243e, type: 2}
-  trait: {fileID: 11400000, guid: 4f10dac9b65e6b444b9aedf275ec0aae, type: 2}
+  trait: {fileID: 11400000, guid: da4a57d4fd990da459ef0d1af153cad8, type: 2}
   level: 2
   power: 0
   status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
   sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
-  backstory0: 
-  backstory1: 
+  backstory0: Emily is part human, part spyBot.  Andriods don't yet exist but if they
+    did, they'd be like Emily. She lofts, scans and analyzes situations with uncanny
+    accuracy and speed. Is there an AI augmentation lurking behind her charming smile?
+    Nobody knows
+  backstory1: Loyalty is Emily's cornerstone. It's the rock that she hangs onto. You
+    can be certain that no matter how bad things get, Emily will still be there beside
+    you

@@ -21,5 +21,9 @@ MonoBehaviour:
   power: 0
   status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
   sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
-  backstory0: 
-  backstory1: 
+  backstory0: Once upon a time Eunice had children. Subsprogs that did exactly what
+    she asked of them. Most of the time. Then came the day when she sold them to the
+    Kid Exchange and joined the Resistance. You need to prioritise your life, says
+    Eunice.
+  backstory1: Kids? Who needs 'em? Not Eunice. She is a red hot Resistance recruiter,
+    famed for her sacrifice. Who can measure up to that?

@@ -21,5 +21,10 @@ MonoBehaviour:
   power: 0
   status: {fileID: 11400000, guid: f52d9e83b05732d4cb27c200536658b7, type: 2}
   sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
-  backstory0: 
-  backstory1: 
+  backstory0: Wyatt is cursed with a sense of doubt. Is she worthy of her family name?
+    Can she ever match up to the impossible standards of mythological perfection?
+    There are times when she looks in the mirror and wonders if it's not her who is
+    the evil villian of the story
+  backstory1: Wyatt couldn't wash for a month once. The humiliating experience of
+    being unclean and oozing stink has taught her the value of regular hygiene. Wyatt
+    smells NICE

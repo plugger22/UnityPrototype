@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 427f6772736667547a34eb4cfb79a586, type: 3}
   m_Name: AmerRES17
   m_EditorClassIdentifier: 
-  actorName: Randy Cook
+  actorName: Randy Rattler
   firstName: Randy
-  lastName: Cook
+  lastName: Rattler
   sprite: {fileID: 21300000, guid: a5b97171f51cd134896a3507329533e1, type: 3}
   arc: {fileID: 11400000, guid: 79fb6b3426257194faf6776c7cb489d2, type: 2}
   trait: {fileID: 11400000, guid: 837bf57d2df9488449695af72f57a7be, type: 2}
@@ -21,5 +21,9 @@ MonoBehaviour:
   power: 0
   status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
   sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
-  backstory0: 
-  backstory1: 
+  backstory0: There have been generations of Rattlers in the hills of old Dakota for
+    as long as there were irradiated badlands. They traded to survive. Goods, guns,
+    people. Whatever it took. You wanted something 'unique', you'd speak to a Rattler,
+    that's just how it was
+  backstory1: Young Randy, however, realised that power didn't come from selling stuff
+    to scruffy strangers. No sir, power came to those who could think big

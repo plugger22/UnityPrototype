@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 427f6772736667547a34eb4cfb79a586, type: 3}
   m_Name: AmerRES6
   m_EditorClassIdentifier: 
-  actorName: Knightley Adams
-  firstName: Knightley
+  actorName: Frog Adams
+  firstName: Frog
   lastName: Adams
   sprite: {fileID: 21300000, guid: e8c221bd51bffd746985d9a2db13476c, type: 3}
   arc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
@@ -21,5 +21,9 @@ MonoBehaviour:
   power: 3
   status: {fileID: 11400000, guid: 745709acc9a885940bf510a33f017691, type: 2}
   sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
-  backstory0: 
-  backstory1: 
+  backstory0: Frog was left out in the burning sun too long when he was a kid. Cooked
+    off layers of skin. Cheap corrective surgery gone wrong. Not pretty.  It doesn't
+    worry Frog one bit. He's more than a face. He's a man who can entertain people,
+    cheer them up. Make their lives better.
+  backstory1: 'Everybody who meets Frog, once they overcome their initial revulsion,
+    loves him. He''s a star. Frog makes you feel better. '

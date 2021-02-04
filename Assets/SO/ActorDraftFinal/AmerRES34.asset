@@ -21,5 +21,10 @@ MonoBehaviour:
   power: 0
   status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
   sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
-  backstory0: 
-  backstory1: 
+  backstory0: Tianna's boyfriend left her. Once she had retired from her illustrious
+    career as a KillBall star what, he asked, was left? Not much, apparently, other
+    than a muscled up, he-woman. Tianna won't accept that the relationship is over
+    and has taken a vow of chastity
+  backstory1: Nobody is twisting her arm to break her vow but Tianna is determined
+    to remain faithful to her now, long gone, ex-boyfriend in the hope that, one day,
+    he'll return

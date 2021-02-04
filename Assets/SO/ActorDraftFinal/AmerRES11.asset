@@ -21,5 +21,9 @@ MonoBehaviour:
   power: 1
   status: {fileID: 11400000, guid: 745709acc9a885940bf510a33f017691, type: 2}
   sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
-  backstory0: 
-  backstory1: 
+  backstory0: Dorothee is a voracious reader. She'll strap herself into an immersion
+    VR rig and pump her brain cells full of knowledge until the cows come home. You'd
+    think that knowing all about everything would be a useful thing and a great benefit
+    to the Resistance
+  backstory1: Sadly no. The more Dorothee learns, the more she worries about the state
+    of the world and her place in it. Come on, it's not that bad, surely?

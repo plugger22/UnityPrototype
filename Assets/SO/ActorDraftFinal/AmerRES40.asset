@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 427f6772736667547a34eb4cfb79a586, type: 3}
   m_Name: AmerRES40
   m_EditorClassIdentifier: 
-  actorName: Gwyneth Bailey
-  firstName: Gwyneth
+  actorName: Godiva Bailey
+  firstName: Godiva
   lastName: Bailey
   sprite: {fileID: 21300000, guid: a5b97171f51cd134896a3507329533e1, type: 3}
   arc: {fileID: 11400000, guid: 79fb6b3426257194faf6776c7cb489d2, type: 2}
@@ -21,5 +21,9 @@ MonoBehaviour:
   power: 0
   status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
   sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
-  backstory0: 
-  backstory1: 
+  backstory0: You'd be a touch sensitive to if both your parents were left dangling
+    from the roboHanger for questioning the legitimacy of the Authority. The crows
+    picked out their eyes, Godiva will tell you. Maggots crawled under their skin
+    like out of control, ghostly, burrowing nano-worms
+  backstory1: Of course Godiva joined the Resistance. She is one of our best bloggers,
+    highly experienced and effective. Just a touch delicate, is all

@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 427f6772736667547a34eb4cfb79a586, type: 3}
   m_Name: AmerRES3
   m_EditorClassIdentifier: 
-  actorName: Scrumpy Santa
+  actorName: Scrumpy Smith
   firstName: Scrumpy
-  lastName: Santa
+  lastName: Smith
   sprite: {fileID: 21300000, guid: e8c221bd51bffd746985d9a2db13476c, type: 3}
   arc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
   trait: {fileID: 11400000, guid: 17004eba36fea134cb4ff0d53f09ab65, type: 2}
@@ -21,8 +21,9 @@ MonoBehaviour:
   power: 20
   status: {fileID: 11400000, guid: 12718945bbbb5204c97bb9365e8f9787, type: 2}
   sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
-  backstory0: Humble beginnings have made Scrumpy into the ultra confident, egotistical
-    superior that thrives on ascending ever higher up the hierarchy by climbng over
-    those less blessed with natural gifts than he
-  backstory1: Scrumpy loves to travel. He hasn't yet been to Luna. Would you like
-    to help pay for his trip?
+  backstory0: Scrumpy doesn't shy from of a bit of self promotion. He'll happily knock
+    down the door of any Resistance member who is in need of a little re-education.
+    He especially likes big, imposing, doors. Ones that attract attention when you
+    smash through them
+  backstory1: Scrumpy loves to travel. He hasn't yet been to Luna. A first class ticket
+    isn't cheap. Scrumpy is currently accepting 'donations'

@@ -21,5 +21,9 @@ MonoBehaviour:
   power: 4
   status: {fileID: 11400000, guid: 745709acc9a885940bf510a33f017691, type: 2}
   sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
-  backstory0: 
-  backstory1: 
+  backstory0: Elon wants to go Mars. Petitions us regularly. We'd send him if we thought
+    it'd do any good but what's left of Mars these days? Nothing but burnt out colonies
+    and starving people. What a mess. No, Elon is staying put and is being groomed
+    for higher office
+  backstory1: There is a steady, resolute, core to Elon that we like. One that will
+    inspire confidence to all those below. We're fast tracking him

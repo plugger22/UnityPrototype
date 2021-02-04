@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 427f6772736667547a34eb4cfb79a586, type: 3}
   m_Name: AmerRES45
   m_EditorClassIdentifier: 
-  actorName: Kristal Peters
-  firstName: Kristal
-  lastName: Peters
+  actorName: Debby Death
+  firstName: Debby
+  lastName: Death
   sprite: {fileID: 21300000, guid: e8c221bd51bffd746985d9a2db13476c, type: 3}
   arc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
   trait: {fileID: 11400000, guid: c3a511b561bf25442805a5c68874781f, type: 2}
@@ -21,5 +21,9 @@ MonoBehaviour:
   power: 0
   status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
   sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
-  backstory0: 
-  backstory1: 
+  backstory0: 'The happiest hit woman in town, that''s Debby. Always smiles, never
+    has an off day. Laughs at anything. Debby has the view that life is short, brutal
+    with few redeeming features so why not enjoy it? Debby and her nilhistic sense
+    of humour can light up any party '
+  backstory1: It's said that Debby spent time in The Camp but it's only hearsay. It'd
+    certainly explain her proficiency in the Dark Arts

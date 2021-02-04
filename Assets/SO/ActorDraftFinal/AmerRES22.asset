@@ -21,5 +21,9 @@ MonoBehaviour:
   power: 0
   status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
   sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
-  backstory0: 
-  backstory1: 
+  backstory0: Londa steals stuff. That's how she managed to make it into the Resistance.
+    By stealing another persons ID and money. Stealing somebodies story. Stealing
+    a goal. Whatever was needed, Londa stole it. Which has made her valuable to the
+    Resistance. They need thieves.
+  backstory1: Especially ones who can steal IDEAS. Twist them and turn them before
+    writing them down as their own and spreading them far and wide

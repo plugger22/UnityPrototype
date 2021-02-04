@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 427f6772736667547a34eb4cfb79a586, type: 3}
   m_Name: AmerRES7
   m_EditorClassIdentifier: 
-  actorName: Adil Powell
-  firstName: Adil
+  actorName: Ant Powell
+  firstName: Ant
   lastName: Powell
   sprite: {fileID: 21300000, guid: 8a947f318ba8ccf45895e42cc50c6af3, type: 3}
   arc: {fileID: 11400000, guid: 585f6ebe97311aa4396d0c79f6faf1df, type: 2}
@@ -21,5 +21,10 @@ MonoBehaviour:
   power: 4
   status: {fileID: 11400000, guid: 745709acc9a885940bf510a33f017691, type: 2}
   sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
-  backstory0: 
-  backstory1: 
+  backstory0: Ant messed up. We just haven't got around to firing him. He's a nice
+    guy. It's hard to get rid of nice people. Ant has offered to throw himself under
+    the nearest autoTruck in order to save us the embarrassment but that would be
+    MESSY
+  backstory1: What did Ant do? Best not to say. Nothing good, anyway. Actually he
+    really did drop the ball. We have to find a way to get rid of him before he does
+    it again

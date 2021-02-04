@@ -21,5 +21,8 @@ MonoBehaviour:
   power: 0
   status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
   sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
-  backstory0: 
-  backstory1: 
+  backstory0: A few subtle augmentations have made Adiel into an attractive female.
+    Technology, sadly, can't fix a twitchy manner or a concern for what others think.
+    Love has not found Adiel yet, despite her herculean efforts at running it down.
+  backstory1: While Adiel hasn't given up on the idea of finding love, she liberally
+    uses SparkMe pills to tide her over until that happy day arrives

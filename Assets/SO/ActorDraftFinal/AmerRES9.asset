@@ -21,5 +21,9 @@ MonoBehaviour:
   power: 1
   status: {fileID: 11400000, guid: 745709acc9a885940bf510a33f017691, type: 2}
   sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
-  backstory0: 
-  backstory1: 
+  backstory0: Kristel is worried about the Sun going supernova. She's worried about
+    a lot of things. She should be worried about losing her job unless she stops hyperventilating
+    over imaginery nothings. Is that likely? Kristel is too busy trying to find a
+    tree to hug to know. Not a lot of trees in a city these days
+  backstory1: Somebody needs to take Kristel under their wing and tell her to grow
+    a backbone

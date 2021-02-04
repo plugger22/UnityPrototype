@@ -21,5 +21,9 @@ MonoBehaviour:
   power: 40
   status: {fileID: 11400000, guid: 2e301ce6b82a6774e966d7fdb4817cd6, type: 2}
   sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
-  backstory0: I'm am the DARKNESS
-  backstory1: The darkness is me
+  backstory0: Darth guards the faith. The essence of the Resistance, it's spiritual
+    core. Which is a bright shining light compared to Darth and his dark, rough edged,
+    inquisatorial rooting out of insidious pagans.
+  backstory1: You aren't a true believer? Like a demonic bloodhound, Darth will sniff
+    you out and chase you down, drooling saliva and baying for your blood all the
+    way

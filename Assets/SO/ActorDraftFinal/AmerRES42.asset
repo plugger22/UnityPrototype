@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 427f6772736667547a34eb4cfb79a586, type: 3}
   m_Name: AmerRES42
   m_EditorClassIdentifier: 
-  actorName: Adiel Young
-  firstName: Adiel
+  actorName: Jezzabella Young
+  firstName: Jezzabella
   lastName: Young
   sprite: {fileID: 21300000, guid: 994e1ef5d70ac654c9a246149603e5ab, type: 3}
   arc: {fileID: 11400000, guid: 37d9dfd62535e6b438debd5d11731168, type: 2}
@@ -21,5 +21,9 @@ MonoBehaviour:
   power: 0
   status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
   sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
-  backstory0: 
-  backstory1: 
+  backstory0: Born in a commune belonging to the Cult of the Purple Pig, Jezzabella
+    learned patience young. You don't question, you don't make sudden, jerky, movements.
+    You don't act impulsively. Not if you didn't want a beating
+  backstory1: No, you sat quietly and waited for your opportunity. Then, when the
+    time was right, you made your move. Decisively. That's how you become a great
+    hacker

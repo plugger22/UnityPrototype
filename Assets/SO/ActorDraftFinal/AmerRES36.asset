@@ -21,5 +21,9 @@ MonoBehaviour:
   power: 0
   status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
   sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
-  backstory0: 
-  backstory1: 
+  backstory0: Ladd was in an accident. A floatCab malfunctioned and plummeted to the
+    street. The only survivor, Ladd walked away with 'minor' head injuries. Adversity
+    only makes you stronger, insists Ladd. On a good day. When he can focus. The other
+    days? They're a little fuzzy
+  backstory1: Don't let a hole in the head prejudice your thinking. That'd be holist.
+    Ladd is a good Operator and knows his way around town

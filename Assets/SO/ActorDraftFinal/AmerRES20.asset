@@ -11,8 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 427f6772736667547a34eb4cfb79a586, type: 3}
   m_Name: AmerRES20
   m_EditorClassIdentifier: 
-  actorName: Wyatt Martin
-  firstName: Wyatt
+  actorName: Wendy Martin
+  firstName: Wendy
   lastName: Martin
   sprite: {fileID: 21300000, guid: 96332a55984d94b48ba0d03d94b64c9b, type: 3}
   arc: {fileID: 11400000, guid: acb9718e84f6a6740810786455da2a6e, type: 2}
@@ -21,5 +21,8 @@ MonoBehaviour:
   power: 0
   status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
   sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
-  backstory0: 
-  backstory1: 
+  backstory0: Wendy has always been in trouble for sharing other people's secrets.
+    She can't help hereself. The people, she insists, have a right to KNOW.  Her friends
+    and family would probably reframe it as Wendy having a need to TELL.
+  backstory1: Despite these obvious limitations Wendy is a promising Resistance member
+    who has proven trustworthy and useful to date. Just don't tell her any secrets...

@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 427f6772736667547a34eb4cfb79a586, type: 3}
   m_Name: AmerRES0
   m_EditorClassIdentifier: 
-  actorName: Carla Cookson
-  firstName: Carla
-  lastName: Cookson
+  actorName: Carly Cook
+  firstName: Carly
+  lastName: Cook
   sprite: {fileID: 21300000, guid: e8c221bd51bffd746985d9a2db13476c, type: 3}
   arc: {fileID: 11400000, guid: 263a792d486e45c479c3e25c59a47157, type: 2}
   trait: {fileID: 11400000, guid: c5272e86a8264aa448c93726b35ab9ed, type: 2}
@@ -21,7 +21,9 @@ MonoBehaviour:
   power: 50
   status: {fileID: 11400000, guid: 77611bb5bd4c52649be9b54f0cc46975, type: 2}
   sex: {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
-  backstory0: Fred flinstone yabadabbado! Fred is a wild man who knows how to party
-    and really shakes it down when the music gets loud and he's had a lot to drink.
-    Fred is a bonafide Party Animal
-  backstory1: I'm a pinkie commie loving supporter but don't tell anybody
+  backstory0: Can Carly cook? What's not in doubt is that she can mix up a mean poison.
+    There are a long trail of bodies in her past. People who have done her wrong.
+    Carly is not one to turn the other cheek and forgive. Vengeance is the fuel that
+    cranks her engine
+  backstory1: Is there a softer side to Carly? Sure there is, everybody has one. Finding
+    it could be a challenge. Let us know when you succeed

@@ -21,5 +21,8 @@ MonoBehaviour:
   power: 0
   status: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
   sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
-  backstory0: 
-  backstory1: 
+  backstory0: 'People mistake Aurelio''s slow drawl and quiet nature for a mental
+    deficiency of some kind. A weakness. Which would be a mistake as within the body
+    of a mumbling sloth, lies a rock hard survivor willing to do whatever is needed. '
+  backstory1: Aurelio's specialty is his uncanny knack of seeing what isn't there.
+    What's missing. What shoud be there but isn't. It's a gift.

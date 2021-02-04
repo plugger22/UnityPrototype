@@ -21,5 +21,9 @@ MonoBehaviour:
   power: 0
   status: {fileID: 11400000, guid: f52d9e83b05732d4cb27c200536658b7, type: 2}
   sex: {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}
-  backstory0: 
-  backstory1: 
+  backstory0: Princeton has an enquiring mind. He can't help it, his father was an
+    intelligence analyst and his mother a quantum scientist. Princeton can ferret
+    information out of anyone while simultaneously fiercely guarding his own foibles
+    and weaknesses
+  backstory1: There is a touch of naivety about Princetons faith in the power of knowing
+    that can occasionally cause him to miss the glaringly obvious
