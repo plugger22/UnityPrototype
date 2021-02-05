@@ -4432,9 +4432,11 @@ public class ModalTabbedUI : MonoBehaviour
                 case TabbedHistory.Events:
                     //Events
                     List<HistoryActor> listOfEvents = GameManager.i.dataScript.GetListOfHistoryPlayer();
-                    //debug -> flag prevents multiple occurences
+                    
+                    /*//debug -> flag prevents multiple occurences
                     if (isAddDebugRecords == false)
-                    { listOfEvents.AddRange(DebugGetExtraHistory()); }
+                    { listOfEvents.AddRange(DebugGetExtraHistory()); }*/
+                    
                     //convert to text
                     if (listOfEvents != null)
                     {
