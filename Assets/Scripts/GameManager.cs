@@ -790,6 +790,10 @@ public class GameManager : MonoBehaviour
         startMethod.handler = popUpDynamicScript.Initialise;
         startMethod.className = "PopUpDynamic";
         listOfUIMethods.Add(startMethod);
+        //ModalOutcome
+        startMethod.handler = outcomeScript.Initialise;
+        startMethod.className = "ModalOutcome";
+        listOfUIMethods.Add(startMethod);
         //ModalInventoryUI
         startMethod.handler = inventoryScript.Initialise;
         startMethod.className = "ModalInventoryUI";

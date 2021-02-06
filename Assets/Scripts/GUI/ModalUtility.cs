@@ -119,14 +119,15 @@ namespace modalAPI
         public string textBottom;
         public Sprite sprite;
         public int modalLevel;              //modal level of outcome window, default 1
-        public ModalSubState modalState;       //modal level to return to once outcome window closes (only for modallevel's 2+, ignore otherwise)
+        public ModalSubState modalState;    //modal level to return to once outcome window closes (only for modallevel's 2+, ignore otherwise)
         public bool isAction;               //true if an action has been used
+        public bool isSpecial;              //Special outcome (expanding black bars), default false, optional
         public string reason;               //short text giving reason for outcome window, eg. "Select Gear" (used for debugging)
         public MsgPipelineType type;        //used for start of turn messages in message Queue (ignore for messages displayed during turn)
         public string help0;                //if help0 specified a help icon will auto appear, otherwise invisible
         public string help1;                //optional
         public string help2;                //optional
-        public string help3;                //optional
+        public string help3;                //optional      
         //ShowMe
         public List<Node> listOfNodes;      //optional -> if valid then a 'Show Me' button will appear (replaces Confirm until used)
         public EventType hideEvent;         //only if underlying UI element and a possible ShowMe use. Event to call when ShowMe pressed in Outcome window to hide underlying UI 
@@ -134,11 +135,14 @@ namespace modalAPI
         //Trigger Event
         public EventType triggerEvent;      //optional -> when Outcome closes will run this event
 
+  
+
         public ModalOutcomeDetails()
         {
             modalLevel = 1;
             modalState = ModalSubState.None;
             isAction = false;
+            isSpecial = false;
             reason = "Unknown";
             side = GameManager.i.sideScript.PlayerSide;
             sprite = GameManager.i.spriteScript.infoSprite;

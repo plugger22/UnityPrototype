@@ -12,17 +12,26 @@ using UnityEngine.UI;
 /// </summary>
 public class ModalOutcome : MonoBehaviour
 {
-    public GameObject modalOutcomeWindow;
+    public GameObject outcomeObject;
+    public Canvas outcomeCanvas;
 
-    public TextMeshProUGUI topText;
-    public TextMeshProUGUI bottomText;
-    public Image outcomeImage;
-    public Button confirmButton;
-    public Button showMeButton;
-    public Button helpButton;
+    //Normal
+    public Image panelNormal;
+    public Image portraitNormal;
+    public TextMeshProUGUI topTextNormal;
+    public TextMeshProUGUI bottomTextNormal;
+    public Button confirmButtonNormal;
+    public Button showMeButtonNormal;
+    public Button helpButtonNormal;
+    //Special
+    public Image panelSpecial;
+    public Image portraitSpecial;
+    public TextMeshProUGUI topTextSpecial;
+    public TextMeshProUGUI bottomTextSpecial;
+    
 
 
-    private static ModalOutcome modalOutcome;
+
     private RectTransform rectTransform;
     private Image background;
     private ButtonInteraction interactConfirm;
@@ -39,40 +48,9 @@ public class ModalOutcome : MonoBehaviour
     private EventType triggerEvent;                     //optional event that triggers when Outcome Window closes
     private bool isAction;                              //triggers 'UseAction' event on confirmation button click if true (passed in to method by ModalOutcomeDetails)
 
-    /// <summary>
-    /// initialisation
-    /// </summary>
-    private void Start()
-    {
-        //Asserts
-        Debug.Assert(helpButton != null, "Invalid GenericHelpTooltipUI (Null)");
-        Debug.Assert(confirmButton != null, "Invalid confirmButton (Null)");
-        Debug.Assert(showMeButton != null, "Invalid showMeButton (Null)");
 
-        /*canvasGroup = modalOutcomeWindow.GetComponent<CanvasGroup>();*/
-        /*fadeInTime = GameManager.instance.tooltipScript.tooltipFade;*/
-
-        //Assignments
-        rectTransform = modalOutcomeWindow.GetComponent<RectTransform>();
-        help = helpButton.GetComponent<GenericHelpTooltipUI>();
-        if (help == null) { Debug.LogError("Invalid help script (Null)"); }
-        //button interactions
-        interactConfirm = confirmButton.GetComponent<ButtonInteraction>();
-        if (interactConfirm != null)
-        { interactConfirm.SetButton(EventType.OutcomeClose); }
-        else { Debug.LogError("Invalid interactConfirm (Null)"); }
-        interactShowMe = showMeButton.GetComponent<ButtonInteraction>();
-        if (interactShowMe != null)
-        { interactShowMe.SetButton(EventType.OutcomeShowMe); }
-        else { Debug.LogError("Invalid interactShowMe (Null)"); }
-
-        //register a listener
-        EventManager.i.AddListener(EventType.OutcomeOpen, OnEvent, "ModalOutcome");
-        EventManager.i.AddListener(EventType.OutcomeClose, OnEvent, "ModalOutcome");
-        EventManager.i.AddListener(EventType.OutcomeShowMe, OnEvent, "ModalOutcome");
-        EventManager.i.AddListener(EventType.OutcomeRestore, OnEvent, "ModalOutcome");
-        EventManager.i.AddListener(EventType.ChangeSide, OnEvent, "ModalOutcome");
-    }
+    #region Static Instance
+    private static ModalOutcome modalOutcome;
 
     /// <summary>
     /// provide a static reference to ModalOutcome that can be accessed from any script
@@ -88,8 +66,97 @@ public class ModalOutcome : MonoBehaviour
         }
         return modalOutcome;
     }
+    #endregion
 
 
+    #region Initialisation...
+    /// <summary>
+    /// Master Initialisation
+    /// </summary>
+    /// <param name="state"></param>
+    public void Initialise(GameState state)
+    {
+        switch (state)
+        {
+            case GameState.LoadGame:
+            case GameState.NewInitialisation:
+            case GameState.LoadAtStart:
+                SubInitialiseSessionStart();
+                SubInitialiseEvents();
+                break;
+            case GameState.FollowOnInitialisation:
+                //do nothing
+                break;
+            default:
+                Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
+                break;
+        }
+    }
+
+
+    private void SubInitialiseAsserts()
+    {
+        //Overall
+        Debug.Assert(outcomeObject != null, "Invalid outcomeObject (Null)");
+        Debug.Assert(outcomeCanvas != null, "Invalid outcomeCanvas (Null)");
+
+        //Normal
+        Debug.Assert(panelNormal != null, "Invalid panelNormal (Null)");
+        Debug.Assert(portraitNormal != null, "Invalid portraitNormal (Null)");
+        Debug.Assert(topTextNormal != null, "Invalid topTextNormal (Null)");
+        Debug.Assert(bottomTextNormal != null, "Invalid bottomTextNormal (Null)");
+        Debug.Assert(helpButtonNormal != null, "Invalid GenericHelpTooltipUI (Null)");
+        Debug.Assert(confirmButtonNormal != null, "Invalid confirmButton (Null)");
+        Debug.Assert(showMeButtonNormal != null, "Invalid showMeButton (Null)");
+
+        //Special
+        Debug.Assert(panelSpecial != null, "Invalid panelSpecial (Null)");
+        Debug.Assert(portraitSpecial != null, "Invalid portraitSpecial (Null)");
+        Debug.Assert(topTextSpecial != null, "Invalid topTextSpecial (Null)");
+        Debug.Assert(bottomTextSpecial != null, "Invalid bottomTextSpecial (Null)");
+    }
+
+    /// <summary>
+    /// Session Start Initialisation
+    /// </summary>
+    private void SubInitialiseSessionStart()
+    {
+
+
+        /*canvasGroup = modalOutcomeWindow.GetComponent<CanvasGroup>();*/
+        /*fadeInTime = GameManager.instance.tooltipScript.tooltipFade;*/
+
+        //Assignments
+        rectTransform = outcomeObject.GetComponent<RectTransform>();
+        help = helpButtonNormal.GetComponent<GenericHelpTooltipUI>();
+        if (help == null) { Debug.LogError("Invalid help script (Null)"); }
+        //button interactions
+        interactConfirm = confirmButtonNormal.GetComponent<ButtonInteraction>();
+        if (interactConfirm != null)
+        { interactConfirm.SetButton(EventType.OutcomeClose); }
+        else { Debug.LogError("Invalid interactConfirm (Null)"); }
+        interactShowMe = showMeButtonNormal.GetComponent<ButtonInteraction>();
+        if (interactShowMe != null)
+        { interactShowMe.SetButton(EventType.OutcomeShowMe); }
+        else { Debug.LogError("Invalid interactShowMe (Null)"); }
+    }
+
+    /// <summary>
+    /// Initialise Event listeners
+    /// </summary>
+    private void SubInitialiseEvents()
+    {
+        //register a listener
+        EventManager.i.AddListener(EventType.OutcomeOpen, OnEvent, "ModalOutcome");
+        EventManager.i.AddListener(EventType.OutcomeClose, OnEvent, "ModalOutcome");
+        EventManager.i.AddListener(EventType.OutcomeShowMe, OnEvent, "ModalOutcome");
+        EventManager.i.AddListener(EventType.OutcomeRestore, OnEvent, "ModalOutcome");
+        EventManager.i.AddListener(EventType.ChangeSide, OnEvent, "ModalOutcome");
+    }
+    #endregion
+
+
+    #region OnEvent
     /// <summary>
     /// Event Handler
     /// </summary>
@@ -103,8 +170,9 @@ public class ModalOutcome : MonoBehaviour
         {
             case EventType.OutcomeOpen:
                 ModalOutcomeDetails details = Param as ModalOutcomeDetails;
-                //SetModalOutcome(details.side, details.textTop, details.textBottom, details.sprite);
-                SetModalOutcome(details);
+                if (details.isSpecial == true)
+                { SetModalOutcomeSpecial(details); }
+                else { SetModalOutcome(details); }
                 break;
             case EventType.OutcomeClose:
                 CloseModalOutcome();
@@ -123,15 +191,21 @@ public class ModalOutcome : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
-
+    #region OnDisable
     public void OnDisable()
     {
         EventManager.i.RemoveEvent(EventType.OutcomeOpen);
+        EventManager.i.RemoveEvent(EventType.OutcomeClose);
+        EventManager.i.RemoveEvent(EventType.OutcomeShowMe);
+        EventManager.i.RemoveEvent(EventType.OutcomeRestore);
+        EventManager.i.RemoveEvent(EventType.ChangeSide);
     }
+    #endregion
 
 
-
+    #region SetModalOutcome
     /// <summary>
     /// Initiate Modal Outcome window
     /// </summary>
@@ -153,14 +227,14 @@ public class ModalOutcome : MonoBehaviour
                 List<HelpData> listOfHelpData = GameManager.i.helpScript.GetHelpData(details.help0, details.help1, details.help2, details.help3);
                 if (listOfHelpData != null && listOfHelpData.Count > 0)
                 {
-                    helpButton.gameObject.SetActive(true);
+                    helpButtonNormal.gameObject.SetActive(true);
                     help.SetHelpTooltip(listOfHelpData, 100, 200);
                 }
-                else { helpButton.gameObject.SetActive(false); }
+                else { helpButtonNormal.gameObject.SetActive(false); }
                 //set modal true
                 GameManager.i.guiScript.SetIsBlocked(true, details.modalLevel);
                 //open panel at start, the modal window is already active on the panel
-                modalOutcomeWindow.SetActive(true);
+                outcomeObject.SetActive(true);
                 //register action status
                 isAction = details.isAction;
                 /*
@@ -200,8 +274,8 @@ public class ModalOutcome : MonoBehaviour
                     //showMe data
                     listOfShowMeNodes = details.listOfNodes;
                     //disable Confirm, activate Show Me button
-                    confirmButton.gameObject.SetActive(false);
-                    showMeButton.gameObject.SetActive(true);
+                    confirmButtonNormal.gameObject.SetActive(false);
+                    showMeButtonNormal.gameObject.SetActive(true);
                     //events to call to handle underlying UI (if any)
                     hideOtherEvent = details.hideEvent;
                     restoreOtherEvent = details.restoreEvent;
@@ -210,8 +284,8 @@ public class ModalOutcome : MonoBehaviour
                 {
                     listOfShowMeNodes.Clear();
                     //disable ShowMe, activate Confirm button
-                    confirmButton.gameObject.SetActive(true);
-                    showMeButton.gameObject.SetActive(false);
+                    confirmButtonNormal.gameObject.SetActive(true);
+                    showMeButtonNormal.gameObject.SetActive(false);
                     //default settings for events
                     hideOtherEvent = EventType.None;
                     restoreOtherEvent = EventType.None;
@@ -221,10 +295,10 @@ public class ModalOutcome : MonoBehaviour
                 //SetOpacity(0f);
 
                 //set up modalOutcome elements
-                topText.text = details.textTop;
-                bottomText.text = details.textBottom;
+                topTextNormal.text = details.textTop;
+                bottomTextNormal.text = details.textBottom;
                 if (details.sprite != null)
-                { outcomeImage.sprite = details.sprite; }
+                { panelNormal.sprite = details.sprite; }
 
                 //get dimensions of outcome window (dynamic)
                 float width = rectTransform.rect.width;
@@ -235,7 +309,7 @@ public class ModalOutcome : MonoBehaviour
                 screenPos.x = Screen.width / 2;
                 screenPos.y = Screen.height / 2;
                 //set position
-                modalOutcomeWindow.transform.position = screenPos;
+                outcomeObject.transform.position = screenPos;
                 //set states
                 ModalStateData package = new ModalStateData() { mainState = ModalSubState.Outcome };
                 GameManager.i.inputScript.SetModalState(package);
@@ -250,7 +324,99 @@ public class ModalOutcome : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid ModalOutcomeDetails package (Null)"); }
     }
+    #endregion
 
+
+    #region SetModalOutcomeSpecial
+    /// <summary>
+    /// Initialise ModalOutcome window but in special format (expanding black bars across the screen)
+    /// </summary>
+    /// <param name="details"></param>
+    private void SetModalOutcomeSpecial(ModalOutcomeDetails details)
+    {
+        if (details != null)
+        {
+            //ignore if autoRun true
+            if (GameManager.i.turnScript.CheckIsAutoRun() == false)
+            {
+                //exit any generic or node tooltips
+                GameManager.i.tooltipGenericScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcome");
+                GameManager.i.tooltipNodeScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcome");
+                GameManager.i.tooltipHelpScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcome");
+                reason = details.reason;
+                triggerEvent = details.triggerEvent;
+                //set help
+                List<HelpData> listOfHelpData = GameManager.i.helpScript.GetHelpData(details.help0, details.help1, details.help2, details.help3);
+                if (listOfHelpData != null && listOfHelpData.Count > 0)
+                {
+                    helpButtonNormal.gameObject.SetActive(true);
+                    help.SetHelpTooltip(listOfHelpData, 100, 200);
+                }
+                else { helpButtonNormal.gameObject.SetActive(false); }
+                //set modal true
+                GameManager.i.guiScript.SetIsBlocked(true, details.modalLevel);
+                //open panel at start, the modal window is already active on the panel
+                outcomeObject.SetActive(true);
+                //register action status
+                isAction = details.isAction;
+                //Show Me
+                if (details.listOfNodes != null && details.listOfNodes.Count > 0)
+                {
+
+                    //showMe data
+                    listOfShowMeNodes = details.listOfNodes;
+                    //disable Confirm, activate Show Me button
+                    confirmButtonNormal.gameObject.SetActive(false);
+                    showMeButtonNormal.gameObject.SetActive(true);
+                    //events to call to handle underlying UI (if any)
+                    hideOtherEvent = details.hideEvent;
+                    restoreOtherEvent = details.restoreEvent;
+                }
+                else
+                {
+                    listOfShowMeNodes.Clear();
+                    //disable ShowMe, activate Confirm button
+                    confirmButtonNormal.gameObject.SetActive(true);
+                    showMeButtonNormal.gameObject.SetActive(false);
+                    //default settings for events
+                    hideOtherEvent = EventType.None;
+                    restoreOtherEvent = EventType.None;
+                }
+
+                //set opacity to zero (invisible)
+                //SetOpacity(0f);
+
+                //set up modalOutcome elements
+                topTextSpecial.text = details.textTop;
+                bottomTextSpecial.text = details.textBottom;
+                if (details.sprite != null)
+                { panelNormal.sprite = details.sprite; }
+
+                //get dimensions of outcome window (dynamic)
+                float width = rectTransform.rect.width;
+                float height = rectTransform.rect.height;
+
+                //Fixed position at screen centre
+                Vector3 screenPos = new Vector3();
+                screenPos.x = Screen.width / 2;
+                screenPos.y = Screen.height / 2;
+                //set position
+                outcomeObject.transform.position = screenPos;
+                //set states
+                ModalStateData package = new ModalStateData() { mainState = ModalSubState.Outcome };
+                GameManager.i.inputScript.SetModalState(package);
+                //pass through data for when the outcome window is closed
+                modalLevel = details.modalLevel;
+                modalState = details.modalState;
+                Debug.LogFormat("[UI] ModalOutcome.cs -> SetModalOutcome{0}", "\n");
+                //fixed popUps
+                GameManager.i.popUpFixedScript.ExecuteFixed(0.75f);
+
+            }
+        }
+        else { Debug.LogWarning("Invalid ModalOutcomeDetails package (Null)"); }
+    }
+    #endregion
 
     /*/// <summary>
     /// fade in tooltip over time
@@ -273,7 +439,7 @@ public class ModalOutcome : MonoBehaviour
     public bool CheckModalOutcomeActive()
     {
         //return modalOutcomeObject.activeSelf;
-        return modalOutcomeWindow.activeSelf;
+        return outcomeObject.activeSelf;
     }
 
     /// <summary>
@@ -283,7 +449,7 @@ public class ModalOutcome : MonoBehaviour
     {
         Debug.LogFormat("[UI] ModalOutcome.cs -> CloseModalOutcome{0}", "\n");
         //modalOutcomeObject.SetActive(false);
-        modalOutcomeWindow.SetActive(false);
+        outcomeObject.SetActive(false);
         //close tooltips
         GameManager.i.guiScript.SetTooltipsOff();
 
@@ -320,7 +486,7 @@ public class ModalOutcome : MonoBehaviour
     {
         Debug.Assert(side != null, "Invalid side (Null)");
         //get component reference (done where because method called from GameManager which happens prior to this.Awake()
-        background = modalOutcomeWindow.GetComponent<Image>();
+        background = outcomeObject.GetComponent<Image>();
         //assign side specific sprites
         switch (side.level)
         {
@@ -344,7 +510,7 @@ public class ModalOutcome : MonoBehaviour
     private void ExecuteShowMe()
     {
         //turn of ModalOutcome window
-        modalOutcomeWindow.SetActive(false);
+        outcomeObject.SetActive(false);
         //pass data package to GUIManager.cs
         ShowMeData data = new ShowMeData();
         data.restoreEvent = EventType.OutcomeRestore;
@@ -366,10 +532,10 @@ public class ModalOutcome : MonoBehaviour
         //alert message
         GameManager.i.alertScript.CloseAlertUI();
         //swap buttons
-        confirmButton.gameObject.SetActive(true);
-        showMeButton.gameObject.SetActive(false);
+        confirmButtonNormal.gameObject.SetActive(true);
+        showMeButtonNormal.gameObject.SetActive(false);
         //turn ModalOutcome back on
-        modalOutcomeWindow.SetActive(true);
+        outcomeObject.SetActive(true);
     }
 
     //new methods above here

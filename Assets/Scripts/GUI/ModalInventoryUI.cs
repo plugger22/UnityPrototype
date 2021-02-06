@@ -181,7 +181,7 @@ public class ModalInventoryUI : MonoBehaviour
         }
     }
 
-
+    #region SetInventoryUI
     /// <summary>
     /// Open Inventory UI
     /// </summary>
@@ -391,6 +391,7 @@ public class ModalInventoryUI : MonoBehaviour
             Debug.LogFormat("[UI] ModalInventoryUI.cs -> SetInventoryUI{0}", "\n");
         }
     }
+    #endregion
 
 
     /// <summary>
