@@ -344,6 +344,8 @@ public class ActionManager : MonoBehaviour
                             if (effectReturn != null)
                             {
                                 outcomeDetails.sprite = actor.sprite;
+                                //specail outcome gfx
+                                outcomeDetails.isSpecial = true;
                                 //update stringBuilder texts
                                 if (string.IsNullOrEmpty(effectReturn.topText) == false)
                                 {

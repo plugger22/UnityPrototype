@@ -1,6 +1,7 @@
 ﻿using gameAPI;
 using modalAPI;
 using packageAPI;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -24,8 +25,10 @@ public class ModalOutcome : MonoBehaviour
     public Button showMeButtonNormal;
     public Button helpButtonNormal;
     //Special
+    public Canvas canvasSpecial;
     public Image panelSpecial;
     public Image portraitSpecial;
+    public Image blackBar;
     public TextMeshProUGUI topTextSpecial;
     public TextMeshProUGUI bottomTextSpecial;
     
@@ -33,6 +36,7 @@ public class ModalOutcome : MonoBehaviour
 
 
     private RectTransform rectTransform;
+    private RectTransform blackBarTransform;
     private Image background;
     private ButtonInteraction interactConfirm;
     private ButtonInteraction interactShowMe;
@@ -110,10 +114,12 @@ public class ModalOutcome : MonoBehaviour
         Debug.Assert(showMeButtonNormal != null, "Invalid showMeButton (Null)");
 
         //Special
+        Debug.Assert(canvasSpecial != null, "Invalid canvasSpecial (Null)");
         Debug.Assert(panelSpecial != null, "Invalid panelSpecial (Null)");
         Debug.Assert(portraitSpecial != null, "Invalid portraitSpecial (Null)");
         Debug.Assert(topTextSpecial != null, "Invalid topTextSpecial (Null)");
         Debug.Assert(bottomTextSpecial != null, "Invalid bottomTextSpecial (Null)");
+        Debug.Assert(blackBar != null, "Invalid blackBar (Null)");
     }
 
     /// <summary>
@@ -121,13 +127,14 @@ public class ModalOutcome : MonoBehaviour
     /// </summary>
     private void SubInitialiseSessionStart()
     {
-
-
         /*canvasGroup = modalOutcomeWindow.GetComponent<CanvasGroup>();*/
         /*fadeInTime = GameManager.instance.tooltipScript.tooltipFade;*/
 
         //Assignments
         rectTransform = outcomeObject.GetComponent<RectTransform>();
+        blackBarTransform = blackBar.GetComponent<RectTransform>();
+        Debug.Assert(rectTransform != null, "Invalid rectTransform (Null)");
+        Debug.Assert(blackBarTransform != null, "Invalid blackBarTransform (Null)");
         help = helpButtonNormal.GetComponent<GenericHelpTooltipUI>();
         if (help == null) { Debug.LogError("Invalid help script (Null)"); }
         //button interactions
@@ -139,6 +146,12 @@ public class ModalOutcome : MonoBehaviour
         if (interactShowMe != null)
         { interactShowMe.SetButton(EventType.OutcomeShowMe); }
         else { Debug.LogError("Invalid interactShowMe (Null)"); }
+        //Set Main elements
+        outcomeObject.SetActive(true);
+        outcomeCanvas.gameObject.SetActive(false);
+        panelNormal.gameObject.SetActive(false);
+        canvasSpecial.gameObject.SetActive(false);
+        panelSpecial.gameObject.SetActive(true);
     }
 
     /// <summary>
@@ -233,8 +246,9 @@ public class ModalOutcome : MonoBehaviour
                 else { helpButtonNormal.gameObject.SetActive(false); }
                 //set modal true
                 GameManager.i.guiScript.SetIsBlocked(true, details.modalLevel);
-                //open panel at start, the modal window is already active on the panel
-                outcomeObject.SetActive(true);
+                //toggle panels
+                panelNormal.gameObject.SetActive(true);
+                canvasSpecial.gameObject.SetActive(false);
                 //register action status
                 isAction = details.isAction;
                 /*
@@ -298,7 +312,7 @@ public class ModalOutcome : MonoBehaviour
                 topTextNormal.text = details.textTop;
                 bottomTextNormal.text = details.textBottom;
                 if (details.sprite != null)
-                { panelNormal.sprite = details.sprite; }
+                { portraitNormal.sprite = details.sprite; }
 
                 //get dimensions of outcome window (dynamic)
                 float width = rectTransform.rect.width;
@@ -313,6 +327,8 @@ public class ModalOutcome : MonoBehaviour
                 //set states
                 ModalStateData package = new ModalStateData() { mainState = ModalSubState.Outcome };
                 GameManager.i.inputScript.SetModalState(package);
+                //open Canvas
+                outcomeCanvas.gameObject.SetActive(true);
                 //pass through data for when the outcome window is closed
                 modalLevel = details.modalLevel;
                 modalState = details.modalState;
@@ -340,11 +356,12 @@ public class ModalOutcome : MonoBehaviour
             if (GameManager.i.turnScript.CheckIsAutoRun() == false)
             {
                 //exit any generic or node tooltips
-                GameManager.i.tooltipGenericScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcome");
-                GameManager.i.tooltipNodeScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcome");
-                GameManager.i.tooltipHelpScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcome");
+                GameManager.i.tooltipGenericScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcomeSpecial");
+                GameManager.i.tooltipNodeScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcomeSpecial");
+                GameManager.i.tooltipHelpScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcomeSpecial");
                 reason = details.reason;
                 triggerEvent = details.triggerEvent;
+
                 //set help
                 List<HelpData> listOfHelpData = GameManager.i.helpScript.GetHelpData(details.help0, details.help1, details.help2, details.help3);
                 if (listOfHelpData != null && listOfHelpData.Count > 0)
@@ -353,13 +370,17 @@ public class ModalOutcome : MonoBehaviour
                     help.SetHelpTooltip(listOfHelpData, 100, 200);
                 }
                 else { helpButtonNormal.gameObject.SetActive(false); }
+
                 //set modal true
                 GameManager.i.guiScript.SetIsBlocked(true, details.modalLevel);
-                //open panel at start, the modal window is already active on the panel
-                outcomeObject.SetActive(true);
+                //toggle panels
+                panelNormal.gameObject.SetActive(false);
+                canvasSpecial.gameObject.SetActive(true);
                 //register action status
                 isAction = details.isAction;
-                //Show Me
+
+                #region archive
+                /*//Show Me
                 if (details.listOfNodes != null && details.listOfNodes.Count > 0)
                 {
 
@@ -381,20 +402,24 @@ public class ModalOutcome : MonoBehaviour
                     //default settings for events
                     hideOtherEvent = EventType.None;
                     restoreOtherEvent = EventType.None;
-                }
+                }*/
 
                 //set opacity to zero (invisible)
                 //SetOpacity(0f);
+                #endregion
 
                 //set up modalOutcome elements
                 topTextSpecial.text = details.textTop;
                 bottomTextSpecial.text = details.textBottom;
                 if (details.sprite != null)
-                { panelNormal.sprite = details.sprite; }
-
+                { portraitSpecial.sprite = details.sprite; }
+                //open Canvas
+                outcomeCanvas.gameObject.SetActive(true);
                 //get dimensions of outcome window (dynamic)
                 float width = rectTransform.rect.width;
                 float height = rectTransform.rect.height;
+                //set blackBar to min width
+                blackBarTransform.sizeDelta = new Vector2(width, blackBarTransform.sizeDelta.y);
 
                 //Fixed position at screen centre
                 Vector3 screenPos = new Vector3();
@@ -408,15 +433,33 @@ public class ModalOutcome : MonoBehaviour
                 //pass through data for when the outcome window is closed
                 modalLevel = details.modalLevel;
                 modalState = details.modalState;
-                Debug.LogFormat("[UI] ModalOutcome.cs -> SetModalOutcome{0}", "\n");
+                Debug.LogFormat("[UI] ModalOutcome.cs -> SetModalOutcomeSpecial{0}", "\n");
                 //fixed popUps
                 GameManager.i.popUpFixedScript.ExecuteFixed(0.75f);
-
+                //grow black bars
+                StartCoroutine("GrowBlackBars");
             }
         }
         else { Debug.LogWarning("Invalid ModalOutcomeDetails package (Null)"); }
     }
     #endregion
+
+    /// <summary>
+    /// Extend black bars (behind Special Outcome) to full screen width
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator GrowBlackBars()
+    {
+        float growTime = 1.0f;
+        float growSpeed = Screen.width;
+        float size = blackBarTransform.sizeDelta.x;
+        while (blackBarTransform.sizeDelta.x < Screen.width)
+        {
+            size += Time.deltaTime / growTime * growSpeed;
+            blackBarTransform.sizeDelta = new Vector2(size, blackBarTransform.sizeDelta.y);
+            yield return null;
+        }
+    }
 
     /*/// <summary>
     /// fade in tooltip over time
@@ -432,6 +475,7 @@ public class ModalOutcome : MonoBehaviour
     }*/
 
 
+    #region CheckModalOutcomeActive
     /// <summary>
     /// returns true if tooltip is active and visible
     /// </summary>
@@ -441,20 +485,21 @@ public class ModalOutcome : MonoBehaviour
         //return modalOutcomeObject.activeSelf;
         return outcomeObject.activeSelf;
     }
+    #endregion
 
+    #region CloseModalOutcome
     /// <summary>
     /// close window
     /// </summary>
     public void CloseModalOutcome()
     {
         Debug.LogFormat("[UI] ModalOutcome.cs -> CloseModalOutcome{0}", "\n");
-        //modalOutcomeObject.SetActive(false);
-        outcomeObject.SetActive(false);
+        //toggle canvas off
+        outcomeCanvas.gameObject.SetActive(false);
         //close tooltips
         GameManager.i.guiScript.SetTooltipsOff();
-
-        /*GameManager.i.tooltipHelpScript.CloseTooltip("ModalOutcome.cs -> CloseModalOutcome");*/
-
+        //stop coroutine
+        StopCoroutine("GrowBlackBars");
         //set modal false
         GameManager.i.guiScript.SetIsBlocked(false, modalLevel);
         //set game state
@@ -470,6 +515,7 @@ public class ModalOutcome : MonoBehaviour
         if (triggerEvent != EventType.None)
         { EventManager.i.PostNotification(triggerEvent, this, null, "ModalOutcome.cs -> CloseModalOutcome"); }
     }
+    #endregion
 
 
     /*public void SetOpacity(float opacity)
