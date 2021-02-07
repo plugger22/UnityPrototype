@@ -160,3 +160,39 @@ City seed 27893 -> Londus, Eurasia
 
 Dev seed 51389 -> Sunday, 7 February 2021 2:30 PM
 City seed 14890 -> Londus, Eurasia
+
+Dev seed 18840 -> Monday, 8 February 2021 9:09 AM
+City seed 34056 -> Londus, Eurasia
+
+Dev seed 58710 -> Monday, 8 February 2021 9:20 AM
+City seed 19185 -> Londus, Eurasia
+
+Dev seed 13402 -> Monday, 8 February 2021 9:23 AM
+City seed 14143 -> Londus, Eurasia
+
+Dev seed 62306 -> Monday, 8 February 2021 9:30 AM
+City seed 22840 -> Londus, Eurasia
+
+Dev seed 53072 -> Monday, 8 February 2021 9:33 AM
+City seed 55592 -> Londus, Eurasia
+
+Dev seed 49105 -> Monday, 8 February 2021 9:49 AM
+City seed 7999 -> Londus, Eurasia
+
+Dev seed 47535 -> Monday, 8 February 2021 9:53 AM
+City seed 19013 -> Londus, Eurasia
+
+Dev seed 54721 -> Monday, 8 February 2021 10:01 AM
+City seed 37951 -> Londus, Eurasia
+
+Dev seed 41715 -> Monday, 8 February 2021 10:05 AM
+City seed 51364 -> Londus, Eurasia
+ERROR _actionsTotal exceeded by _actionsCurrent
+UnityEngine.Debug:LogError(Object)
+	TurnManager:UseAction(String) (at Assets/Scripts/Managers/TurnManager.cs:705)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:192)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:351)
+	ModalOutcome:CloseModalOutcome() (at Assets/Scripts/GUI/ModalOutcome.cs:543)
+	<RunCloseSequence>c__Iterator2:MoveNext() (at Assets/Scripts/GUI/ModalOutcome.cs:520)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	

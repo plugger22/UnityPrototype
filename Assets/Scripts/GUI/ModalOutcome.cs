@@ -35,7 +35,7 @@ public class ModalOutcome : MonoBehaviour
 
 
 
-    private RectTransform rectTransform;
+    private RectTransform specialTransform;
     private RectTransform blackBarTransform;
     private Image background;
     private ButtonInteraction interactConfirm;
@@ -51,6 +51,11 @@ public class ModalOutcome : MonoBehaviour
     private EventType restoreOtherEvent;                //event to call to restore underlying UI if 'ShowMe'. Can ignore
     private EventType triggerEvent;                     //optional event that triggers when Outcome Window closes
     private bool isAction;                              //triggers 'UseAction' event on confirmation button click if true (passed in to method by ModalOutcomeDetails)
+    private bool isSpecial;                             //true if a special outcome
+    private float specialWidth = -1.0f;
+    private float blackBarTime;                         //time span to grow black bars
+    private float blackBarSpeed;
+    private float blackBarSize;
 
 
     #region Static Instance
@@ -131,10 +136,12 @@ public class ModalOutcome : MonoBehaviour
         /*fadeInTime = GameManager.instance.tooltipScript.tooltipFade;*/
 
         //Assignments
-        rectTransform = outcomeObject.GetComponent<RectTransform>();
+        specialTransform = panelSpecial.GetComponent<RectTransform>();
         blackBarTransform = blackBar.GetComponent<RectTransform>();
-        Debug.Assert(rectTransform != null, "Invalid rectTransform (Null)");
+        specialWidth = specialTransform.rect.width;
+        Debug.Assert(specialTransform != null, "Invalid specialTransform (Null)");
         Debug.Assert(blackBarTransform != null, "Invalid blackBarTransform (Null)");
+        Debug.Assert(specialWidth > 0.0f, "Invalid specialWidth (Zero or less)");
         help = helpButtonNormal.GetComponent<GenericHelpTooltipUI>();
         if (help == null) { Debug.LogError("Invalid help script (Null)"); }
         //button interactions
@@ -149,6 +156,16 @@ public class ModalOutcome : MonoBehaviour
         //colours
         panelSpecial.color = GameManager.i.uiScript.outcomeSpecial;
         blackBar.color = GameManager.i.uiScript.outcomeBlackBars;
+        //Fixed position at screen centre
+        Vector3 screenPos = new Vector3();
+        screenPos.x = Screen.width / 2;
+        screenPos.y = Screen.height / 2;
+        //set position
+        outcomeObject.transform.position = screenPos;
+        //Blackbar (special outcome)
+        blackBarTime = 1.0f;
+        blackBarSpeed = Screen.width;
+        blackBarSize = blackBarTransform.sizeDelta.x;
         //Set Main elements
         outcomeObject.SetActive(true);
         outcomeCanvas.gameObject.SetActive(false);
@@ -192,7 +209,9 @@ public class ModalOutcome : MonoBehaviour
                 else { SetModalOutcome(details); }
                 break;
             case EventType.OutcomeClose:
-                CloseModalOutcome();
+                if (isSpecial == true)
+                { StartCoroutine(RunCloseSequence()); }
+                else { CloseModalOutcome(); }
                 break;
             case EventType.OutcomeShowMe:
                 ExecuteShowMe();
@@ -231,6 +250,7 @@ public class ModalOutcome : MonoBehaviour
     {
         if (details != null)
         {
+            isSpecial = false;
             //ignore if autoRun true
             if (GameManager.i.turnScript.CheckIsAutoRun() == false)
             {
@@ -255,6 +275,7 @@ public class ModalOutcome : MonoBehaviour
                 canvasSpecial.gameObject.SetActive(false);
                 //register action status
                 isAction = details.isAction;
+
                 /*
                 //set confirm button image and sprite states
                 switch (details.side.name)
@@ -318,16 +339,10 @@ public class ModalOutcome : MonoBehaviour
                 if (details.sprite != null)
                 { portraitNormal.sprite = details.sprite; }
 
-                //get dimensions of outcome window (dynamic)
+                /*//get dimensions of outcome window (dynamic)
                 float width = rectTransform.rect.width;
-                float height = rectTransform.rect.height;
+                float height = rectTransform.rect.height;*/
 
-                //Fixed position at screen centre
-                Vector3 screenPos = new Vector3();
-                screenPos.x = Screen.width / 2;
-                screenPos.y = Screen.height / 2;
-                //set position
-                outcomeObject.transform.position = screenPos;
                 //set states
                 ModalStateData package = new ModalStateData() { mainState = ModalSubState.Outcome };
                 GameManager.i.inputScript.SetModalState(package);
@@ -356,6 +371,7 @@ public class ModalOutcome : MonoBehaviour
     {
         if (details != null)
         {
+            isSpecial = true;
             //ignore if autoRun true
             if (GameManager.i.turnScript.CheckIsAutoRun() == false)
             {
@@ -414,23 +430,16 @@ public class ModalOutcome : MonoBehaviour
 
                 //set up modalOutcome elements
                 topTextSpecial.text = details.textTop;
-                bottomTextSpecial.text = string.Format("{0}{1}{2}<size=80%>Press ANY Key to exit</size>", details.textBottom, "\n", "\n");
+                bottomTextSpecial.text = details.textBottom;
+                /*bottomTextSpecial.text = string.Format("{0}{1}{2}<size=80%>Press ANY Key to exit</size>", details.textBottom, "\n", "\n");*/
                 if (details.sprite != null)
                 { portraitSpecial.sprite = details.sprite; }
                 //open Canvas
                 outcomeCanvas.gameObject.SetActive(true);
-                //get dimensions of outcome window (dynamic)
-                float width = rectTransform.rect.width;
-                float height = rectTransform.rect.height;
-                //set blackBar to min width
-                blackBarTransform.sizeDelta = new Vector2(width, blackBarTransform.sizeDelta.y);
 
-                //Fixed position at screen centre
-                Vector3 screenPos = new Vector3();
-                screenPos.x = Screen.width / 2;
-                screenPos.y = Screen.height / 2;
-                //set position
-                outcomeObject.transform.position = screenPos;
+                //set blackBar to min width
+                blackBarTransform.sizeDelta = new Vector2(specialWidth, blackBarTransform.sizeDelta.y);
+
                 //set states
                 ModalStateData package = new ModalStateData() { mainState = ModalSubState.Outcome };
                 GameManager.i.inputScript.SetModalState(package);
@@ -454,13 +463,26 @@ public class ModalOutcome : MonoBehaviour
     /// <returns></returns>
     IEnumerator GrowBlackBars()
     {
-        float growTime = 1.0f;
-        float growSpeed = Screen.width;
-        float size = blackBarTransform.sizeDelta.x;
+        blackBarSize = blackBarTransform.sizeDelta.x;
         while (blackBarTransform.sizeDelta.x < Screen.width)
         {
-            size += Time.deltaTime / growTime * growSpeed;
-            blackBarTransform.sizeDelta = new Vector2(size, blackBarTransform.sizeDelta.y);
+            blackBarSize += Time.deltaTime / blackBarTime * blackBarSpeed;
+            blackBarTransform.sizeDelta = new Vector2(blackBarSize, blackBarTransform.sizeDelta.y);
+            yield return null;
+        }
+    }
+
+    /// <summary>
+    /// Shrink black bars (behind Special Outcome) to width of Special Outcome panel. Used when closing
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator ShrinkBlackBars()
+    {
+        blackBarSize = blackBarTransform.sizeDelta.x;
+        while (blackBarTransform.sizeDelta.x > specialWidth)
+        {
+            blackBarSize -= Time.deltaTime / blackBarTime * blackBarSpeed;
+            blackBarTransform.sizeDelta = new Vector2(blackBarSize, blackBarTransform.sizeDelta.y);
             yield return null;
         }
     }
@@ -491,11 +513,19 @@ public class ModalOutcome : MonoBehaviour
     }
     #endregion
 
+
+    IEnumerator RunCloseSequence()
+    {
+        yield return StartCoroutine(ShrinkBlackBars());
+        CloseModalOutcome();
+        yield break;
+    }
+
     #region CloseModalOutcome
     /// <summary>
     /// close window
     /// </summary>
-    public void CloseModalOutcome()
+    private void CloseModalOutcome()
     {
         Debug.LogFormat("[UI] ModalOutcome.cs -> CloseModalOutcome{0}", "\n");
         //toggle canvas off
@@ -518,6 +548,8 @@ public class ModalOutcome : MonoBehaviour
         //check trigger event
         if (triggerEvent != EventType.None)
         { EventManager.i.PostNotification(triggerEvent, this, null, "ModalOutcome.cs -> CloseModalOutcome"); }
+        //reset
+        isSpecial = false;
     }
     #endregion
 

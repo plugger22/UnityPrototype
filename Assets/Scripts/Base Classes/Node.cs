@@ -450,7 +450,7 @@ public class Node : MonoBehaviour
     }
 
 
-
+    #region ShowTooltip
     /// <summary>
     /// tooltip coroutine
     /// </summary>
@@ -622,6 +622,7 @@ public class Node : MonoBehaviour
             }
         }
     }
+    #endregion
 
     /// <summary>
     /// Controlled shut down of Coroutine

@@ -2555,27 +2555,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1200c8c20f8782c499a9aa29b142c88b, type: 2}
   - {fileID: 11400000, guid: 3aff0cda871af6d45a8cc7338550290a, type: 2}
   - {fileID: 11400000, guid: 9354cd0e2edcd4249b70f4a853ec2b6d, type: 2}
-  arrayOfNodeArcs:
-  - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
-  - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
-  - {fileID: 11400000, guid: 22da6f390f1942a47ac201efce0a17ad, type: 2}
-  - {fileID: 11400000, guid: 6e4d8554b9a93064b86083fd577aae7a, type: 2}
-  - {fileID: 11400000, guid: 57b20377eb263fd469ff13fbcedd95c5, type: 2}
-  - {fileID: 11400000, guid: a000e873a8202b044ba60f811375b3a8, type: 2}
-  - {fileID: 11400000, guid: 1667605fc4382654f9baac2b83741900, type: 2}
-  arrayOfNodeCrisis:
-  - {fileID: 11400000, guid: 7083f9c3937cf7349a2c7ede11785937, type: 2}
-  - {fileID: 11400000, guid: d4efa607b23d60f44bcab52aa7118c3f, type: 2}
-  - {fileID: 11400000, guid: 934825ec73414354d8caeaeb1c5e35d1, type: 2}
-  - {fileID: 11400000, guid: f02e5d794d3391c44b02f36a05333cc5, type: 2}
-  - {fileID: 11400000, guid: dabb716e70a7f754484ba1871aec017c, type: 2}
-  - {fileID: 11400000, guid: d5bb9b790e1484e4cb473095db266a5a, type: 2}
-  - {fileID: 11400000, guid: 87b9bf663c48c2c459c209862e920e3a, type: 2}
-  - {fileID: 11400000, guid: c7496c3a5dc3856408793fd3d13e2ab3, type: 2}
-  - {fileID: 11400000, guid: 56440c5c800a42f4098e892f72741632, type: 2}
-  - {fileID: 11400000, guid: 3681f1cbcc72edf418a421e562ff20f1, type: 2}
-  - {fileID: 11400000, guid: bc629e27e61bcf94dad9c92c330d0264, type: 2}
-  - {fileID: 11400000, guid: 05782ba72ab4ce44188b5ba41f4ddaae, type: 2}
   arrayOfTraits:
   - {fileID: 11400000, guid: 5e419ee7ddb808e488b854181aa29cb4, type: 2}
   - {fileID: 11400000, guid: a63d143a2637f6f4e984a6bc9b0b5778, type: 2}
@@ -2626,6 +2605,27 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6b9e8ebfecd390545b357843c68634a8, type: 2}
   - {fileID: 11400000, guid: efb963588c684c24c976937b83901841, type: 2}
   - {fileID: 11400000, guid: 4522b593a5d6f994b950325f427dc947, type: 2}
+  arrayOfNodeArcs:
+  - {fileID: 11400000, guid: 8daa2886dcfaf6140b430b2701135e0f, type: 2}
+  - {fileID: 11400000, guid: d03030438403f60428c44b7db6a53dc8, type: 2}
+  - {fileID: 11400000, guid: 22da6f390f1942a47ac201efce0a17ad, type: 2}
+  - {fileID: 11400000, guid: 6e4d8554b9a93064b86083fd577aae7a, type: 2}
+  - {fileID: 11400000, guid: 57b20377eb263fd469ff13fbcedd95c5, type: 2}
+  - {fileID: 11400000, guid: a000e873a8202b044ba60f811375b3a8, type: 2}
+  - {fileID: 11400000, guid: 1667605fc4382654f9baac2b83741900, type: 2}
+  arrayOfNodeCrisis:
+  - {fileID: 11400000, guid: 7083f9c3937cf7349a2c7ede11785937, type: 2}
+  - {fileID: 11400000, guid: d4efa607b23d60f44bcab52aa7118c3f, type: 2}
+  - {fileID: 11400000, guid: 934825ec73414354d8caeaeb1c5e35d1, type: 2}
+  - {fileID: 11400000, guid: f02e5d794d3391c44b02f36a05333cc5, type: 2}
+  - {fileID: 11400000, guid: dabb716e70a7f754484ba1871aec017c, type: 2}
+  - {fileID: 11400000, guid: d5bb9b790e1484e4cb473095db266a5a, type: 2}
+  - {fileID: 11400000, guid: 87b9bf663c48c2c459c209862e920e3a, type: 2}
+  - {fileID: 11400000, guid: c7496c3a5dc3856408793fd3d13e2ab3, type: 2}
+  - {fileID: 11400000, guid: 56440c5c800a42f4098e892f72741632, type: 2}
+  - {fileID: 11400000, guid: 3681f1cbcc72edf418a421e562ff20f1, type: 2}
+  - {fileID: 11400000, guid: bc629e27e61bcf94dad9c92c330d0264, type: 2}
+  - {fileID: 11400000, guid: 05782ba72ab4ce44188b5ba41f4ddaae, type: 2}
   arrayOfActorArcs:
   - {fileID: 11400000, guid: db747620427cca543b9d5e37f91ce0ef, type: 2}
   - {fileID: 11400000, guid: 19633dda06ebf4c4584309ee34b8623b, type: 2}
@@ -5843,7 +5843,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoGearResolution: 0
-  fixedActorStats: 0
   billboard: 1
   debugData: 0
   isfogOfWar: 0
@@ -6449,6 +6448,8 @@ MonoBehaviour:
   - {r: 0.96862745, g: 0.09019608, b: 0.20784314, a: 0}
   - {r: 0.9490196, g: 0.9137255, b: 0.30588236, a: 0}
   - {r: 0.101960786, g: 1, b: 0.8352941, a: 0}
+  outcomeSpecial: {r: 0.20392157, g: 0.21176471, b: 0.2, a: 1}
+  outcomeBlackBars: {r: 0.20392157, g: 0.21176471, b: 0.2, a: 0.7490196}
   Bloc1: {r: 0.33333334, g: 0.75686276, b: 1, a: 0}
   Bloc2: {r: 0.9490196, g: 0.9137255, b: 0.30588236, a: 0}
   Bloc3: {r: 0.9843137, g: 0.5372549, b: 0.59607846, a: 0}
