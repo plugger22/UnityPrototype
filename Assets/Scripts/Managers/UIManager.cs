@@ -10,6 +10,12 @@ public class UIManager : MonoBehaviour
     [Tooltip("Palette of colours from which all other colours derive (all UI elements must use a colour in the palette to ensure a consistent look)")]
     public List<Color> listOfColours;
 
+    [Header("Outcome Panel")]
+    [Tooltip("Panel Special background (should be 100% alpha)")]
+    public Color outcomeSpecial;
+    [Tooltip("Black bars that grow out behind panel Special")]
+    public Color outcomeBlackBars;
+
     [Header("Power Bloc Texts")]
     [Tooltip("Americon")]
     public Color Bloc1;

@@ -146,12 +146,16 @@ public class ModalOutcome : MonoBehaviour
         if (interactShowMe != null)
         { interactShowMe.SetButton(EventType.OutcomeShowMe); }
         else { Debug.LogError("Invalid interactShowMe (Null)"); }
+        //colours
+        panelSpecial.color = GameManager.i.uiScript.outcomeSpecial;
+        blackBar.color = GameManager.i.uiScript.outcomeBlackBars;
         //Set Main elements
         outcomeObject.SetActive(true);
         outcomeCanvas.gameObject.SetActive(false);
         panelNormal.gameObject.SetActive(false);
         canvasSpecial.gameObject.SetActive(false);
         panelSpecial.gameObject.SetActive(true);
+
     }
 
     /// <summary>
@@ -410,7 +414,7 @@ public class ModalOutcome : MonoBehaviour
 
                 //set up modalOutcome elements
                 topTextSpecial.text = details.textTop;
-                bottomTextSpecial.text = details.textBottom;
+                bottomTextSpecial.text = string.Format("{0}{1}{2}<size=80%>Press ANY Key to exit</size>", details.textBottom, "\n", "\n");
                 if (details.sprite != null)
                 { portraitSpecial.sprite = details.sprite; }
                 //open Canvas
