@@ -262,7 +262,8 @@ public class ModalTabbedUI : MonoBehaviour
     private static ModalTabbedUI modalTabbedUI;
 
     //debug
-    private bool isAddDebugRecords;                                 //true if a set of debug player history event records have been addeds
+    /*private bool isAddDebugRecords;                                 //true if a set of debug player history event records have been addeds*/
+
     //help tooltips (I don't want this as a global, just a master private field)
     private int x_offset = 200;
     private int y_offset = 40;
@@ -1115,8 +1116,31 @@ public class ModalTabbedUI : MonoBehaviour
         switch (eventType)
         {
             case EventType.TabbedOpen:
-                TabbedUIData details = Param as TabbedUIData;
-                SetTabbedUI(details);
+                bool isProceed = false;
+                //can be shown normally and when Reserves or HQ UI on screen
+                switch (GameManager.i.inputScript.ModalState)
+                {
+                    case ModalState.Normal: isProceed = true; break;
+                    case ModalState.ModalUI:
+                        switch (GameManager.i.inputScript.ModalSubState)
+                        {
+                            case ModalSubState.Inventory:
+                                switch (GameManager.i.inputScript.ModalInventoryState)
+                                {
+                                    case ModalInventorySubState.HQ:
+                                    case ModalInventorySubState.ReservePool:
+                                        isProceed = true;
+                                        break;
+                                }
+                                break;
+                        }
+                        break;
+                }
+                if (isProceed == true)
+                {
+                    TabbedUIData details = Param as TabbedUIData;
+                    SetTabbedUI(details);
+                }
                 break;
             case EventType.TabbedClose:
                 CloseTabbedUI();
@@ -3946,17 +3970,22 @@ public class ModalTabbedUI : MonoBehaviour
                     {
                         tab0Header4.listOfItems[i].gameObject.SetActive(true);
                         tab0Header4.listOfItems[i].descriptor.text = cureName;
-                        //turn on help
-                        tab0Header4.listOfItems[0].image.gameObject.SetActive(true);
-                        tab0Header4.listOfItems[0].image.color = tabItemHelpActiveColour;
-                        //tooltip
-                        tab0Header4.listOfItems[0].help.SetHelpTooltip(listOfHelpData);
+                        if (i == 0)
+                        {
+                            //turn on help -> first one only (repetitive, no point doing the rest)
+                            tab0Header4.listOfItems[i].image.gameObject.SetActive(true);
+                            tab0Header4.listOfItems[i].image.color = tabItemHelpActiveColour;
+                            //tooltip
+                            tab0Header4.listOfItems[i].help.SetHelpTooltip(listOfHelpData);
+                        }
+                        else
+                        { tab0Header4.listOfItems[i].image.gameObject.SetActive(false); }
                     }
                     else
                     {
                         Debug.LogWarningFormat("Invalid cure (Null or Empty) for listOfCures[{0}]", i);
                         tab0Header4.listOfItems[i].descriptor.text = "Unknown";
-                        tab0Header4.listOfItems[0].image.color = tabItemHelpDormantColour;
+                        tab0Header4.listOfItems[i].image.color = tabItemHelpDormantColour;
                     }
                 }
                 else
@@ -4432,11 +4461,11 @@ public class ModalTabbedUI : MonoBehaviour
                 case TabbedHistory.Events:
                     //Events
                     List<HistoryActor> listOfEvents = GameManager.i.dataScript.GetListOfHistoryPlayer();
-                    
+
                     /*//debug -> flag prevents multiple occurences
                     if (isAddDebugRecords == false)
                     { listOfEvents.AddRange(DebugGetExtraHistory()); }*/
-                    
+
                     //convert to text
                     if (listOfEvents != null)
                     {
@@ -4508,7 +4537,7 @@ public class ModalTabbedUI : MonoBehaviour
                             {
                                 if (historyMegaCorp.isHighlight == true)
                                 {
-                                    listOfText.Add(GameManager.Formatt(string.Format("day {0}  {1}, {2}, Rel +{3}, now {4}, {5}", historyMegaCorp.turn, historyMegaCorp.megaCorpName, 
+                                    listOfText.Add(GameManager.Formatt(string.Format("day {0}  {1}, {2}, Rel +{3}, now {4}, {5}", historyMegaCorp.turn, historyMegaCorp.megaCorpName,
                                         historyMegaCorp.cityTag, historyMegaCorp.change, historyMegaCorp.relationshipNow, historyMegaCorp.text), ColourType.neutralText));
                                 }
                                 else
@@ -4540,12 +4569,14 @@ public class ModalTabbedUI : MonoBehaviour
                             {
                                 if (historyMoves.isHighlight == true)
                                 {
-                                    listOfText.Add(GameManager.Formatt(string.Format("day {0}  {1}, start at {2}, Invisibility {3} star{4}", historyMoves.turn, cityName, historyMoves.nodeName, historyMoves.invisibility, 
+                                    listOfText.Add(GameManager.Formatt(string.Format("day {0}  {1}, start at {2}, Invisibility {3} star{4}", historyMoves.turn, cityName, historyMoves.nodeName, historyMoves.invisibility,
                                         historyMoves.invisibility != 1 ? "s" : ""), ColourType.neutralText));
                                 }
                                 else
-                                { listOfText.Add(string.Format("day {0}  {1}, moved to {2}, Invisibility {3} star{4}", historyMoves.turn, cityName, historyMoves.nodeName, historyMoves.invisibility, 
-                                    historyMoves.invisibility != 1 ? "s" : "")); }
+                                {
+                                    listOfText.Add(string.Format("day {0}  {1}, moved to {2}, Invisibility {3} star{4}", historyMoves.turn, cityName, historyMoves.nodeName, historyMoves.invisibility,
+                                      historyMoves.invisibility != 1 ? "s" : ""));
+                                }
                             }
                             else { Debug.LogWarningFormat("Invalid HistoryMegaCorp (Null) for listOfHistory[{0}]", i); }
                         }
@@ -4621,7 +4652,8 @@ public class ModalTabbedUI : MonoBehaviour
     private List<HistoryActor> DebugGetExtraHistory()
     {
         //make sure it's a one off
-        isAddDebugRecords = true;
+        /*isAddDebugRecords = true;*/
+
         List<HistoryActor> tempList = new List<HistoryActor>();
         for (int i = 0; i < 40; i++)
         { tempList.Add(new HistoryActor() { text = $"Debug History item {i}" }); }

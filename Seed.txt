@@ -195,4 +195,86 @@ UnityEngine.Debug:LogError(Object)
 	ModalOutcome:CloseModalOutcome() (at Assets/Scripts/GUI/ModalOutcome.cs:543)
 	<RunCloseSequence>c__Iterator2:MoveNext() (at Assets/Scripts/GUI/ModalOutcome.cs:520)
 	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs(265,18): warning CS0414: The private field `ModalTabbedUI.isAddDebugRecords' is assigned but its value is never used
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:235)
 	
+Dev seed 8898 -> Monday, 8 February 2021 11:08 AM
+City seed 16316 -> Londus, Eurasia
+
+Dev seed 52083 -> Monday, 8 February 2021 11:09 AM
+City seed 15550 -> Londus, Eurasia
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 60094 -> Monday, 8 February 2021 11:23 AM
+City seed 27569 -> Londus, Eurasia
+
+Dev seed 46285 -> Monday, 8 February 2021 11:33 AM
+City seed 5188 -> Londus, Eurasia
+
+Dev seed 37495 -> Monday, 8 February 2021 11:35 AM
+City seed 55632 -> Londus, Eurasia
+
+Dev seed 33373 -> Monday, 8 February 2021 11:39 AM
+City seed 49300 -> Londus, Eurasia
+
+Dev seed 63888 -> Monday, 8 February 2021 11:41 AM
+City seed 30839 -> Londus, Eurasia
+
+Dev seed 51396 -> Monday, 8 February 2021 11:45 AM
+City seed 11054 -> Londus, Eurasia
+
+Dev seed 12074 -> Monday, 8 February 2021 11:58 AM
+City seed 40878 -> Londus, Eurasia
+
+Dev seed 1270 -> Monday, 8 February 2021 12:16 PM
+City seed 49671 -> Londus, Eurasia
+
+Dev seed 29562 -> Monday, 8 February 2021 12:25 PM
+City seed 11014 -> Londus, Eurasia
+
+Dev seed 5501 -> Monday, 8 February 2021 12:31 PM
+City seed 30363 -> Londus, Eurasia
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 9140 -> Monday, 8 February 2021 12:33 PM
+City seed 60020 -> Londus, Eurasia
+
+Dev seed 42135 -> Monday, 8 February 2021 12:36 PM
+City seed 28878 -> Londus, Eurasia

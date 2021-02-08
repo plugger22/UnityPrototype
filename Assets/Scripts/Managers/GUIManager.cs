@@ -97,6 +97,10 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Max number of options available in UI")]
     [Range(4, 4)] public int maxInventoryOptions = 4;
 
+    [Header("ModalOutcomeUI")]
+    [Tooltip("Time for blackBars to expand/contract for Outcome Special mode (seconds)")]
+    [Range(0.5f, 1.5f)] public float outcomeBlackBarTimer = 0.75f;
+
     [Header("BillboardUI")]
     [Tooltip("Offset distance to get side panels offscreen during development (pixels")]
     [Range(0f, 200f)] public float billboardOffset = 135;

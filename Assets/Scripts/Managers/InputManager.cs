@@ -485,14 +485,9 @@ public class InputManager : MonoBehaviour
 
                         #region Outcome
                         case ModalSubState.Outcome:
-                            if (Input.GetButtonDown("Cancel") == true)
-                            { EventManager.i.PostNotification(EventType.OutcomeClose, this, null, "InputManager.cs -> ProcessKeyInput Cancel"); }
-                            //space bar
-                            else if (Input.GetButtonDown("Multipurpose") == true)
-                            { EventManager.i.PostNotification(EventType.OutcomeClose, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose"); }
-                            //Any key
+                            //Any key -> normal or special modes
                             if (Input.anyKeyDown == true)
-                            { EventManager.i.PostNotification(EventType.OutcomeClose, this, null, "InputManager.cs -> ProcessKeyInput Outcome"); }
+                            { EventManager.i.PostNotification(EventType.OutcomeClose, this, null, "InputManager.cs -> ProcessKeyInput AnyKeyDown"); }
                             break;
                         #endregion
 

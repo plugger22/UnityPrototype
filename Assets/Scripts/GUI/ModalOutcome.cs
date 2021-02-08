@@ -31,7 +31,7 @@ public class ModalOutcome : MonoBehaviour
     public Image blackBar;
     public TextMeshProUGUI topTextSpecial;
     public TextMeshProUGUI bottomTextSpecial;
-    
+
 
 
 
@@ -163,7 +163,7 @@ public class ModalOutcome : MonoBehaviour
         //set position
         outcomeObject.transform.position = screenPos;
         //Blackbar (special outcome)
-        blackBarTime = 1.0f;
+        blackBarTime = GameManager.i.guiScript.outcomeBlackBarTimer;                                       
         blackBarSpeed = Screen.width;
         blackBarSize = blackBarTransform.sizeDelta.x;
         //Set Main elements
@@ -513,9 +513,13 @@ public class ModalOutcome : MonoBehaviour
     }
     #endregion
 
-
+    /// <summary>
+    /// Close sequence for outcome special (shrinks black bars first)
+    /// </summary>
+    /// <returns></returns>
     IEnumerator RunCloseSequence()
     {
+
         yield return StartCoroutine(ShrinkBlackBars());
         CloseModalOutcome();
         yield break;

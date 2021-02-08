@@ -2332,6 +2332,11 @@ Prefab:
       propertyPath: m_fontStyle
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114649148857983612, guid: 662dab0c178262e4da6ad8cc4ea86c4b,
+        type: 2}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 662dab0c178262e4da6ad8cc4ea86c4b, type: 2}
   m_IsPrefabAsset: 0
@@ -3368,6 +3373,11 @@ Prefab:
         type: 2}
       propertyPath: m_fontStyle
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114649148857983612, guid: 662dab0c178262e4da6ad8cc4ea86c4b,
+        type: 2}
+      propertyPath: m_fontStyle
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 662dab0c178262e4da6ad8cc4ea86c4b, type: 2}
@@ -24827,6 +24837,11 @@ Prefab:
         type: 2}
       propertyPath: m_fontStyle
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114649148857983612, guid: 662dab0c178262e4da6ad8cc4ea86c4b,
+        type: 2}
+      propertyPath: m_fontStyle
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 662dab0c178262e4da6ad8cc4ea86c4b, type: 2}
@@ -56480,7 +56495,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &962538583
 RectTransform:
   m_ObjectHideFlags: 0
@@ -81685,6 +81700,11 @@ Prefab:
         type: 2}
       propertyPath: m_fontStyle
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114649148857983612, guid: 662dab0c178262e4da6ad8cc4ea86c4b,
+        type: 2}
+      propertyPath: m_fontStyle
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 662dab0c178262e4da6ad8cc4ea86c4b, type: 2}

@@ -167,7 +167,7 @@ public class TooltipHelp : MonoBehaviour
     /// </summary>
     public void CloseTooltip(string text = "Unknown")
     {
-        Debug.LogFormat("[UI] TooltipHelp -> CloseTooltip: called by {0}{1}", text, "\n");
+        Debug.LogFormat("[UI] TooltipHelp.cs -> CloseTooltip: called by {0}{1}", text, "\n");
         tooltipHelpObject.SetActive(false);
         tooltipHelpCanvas.gameObject.SetActive(false);
     }
