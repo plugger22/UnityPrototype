@@ -617,6 +617,18 @@ public class HelpManager : MonoBehaviour
         listOfHelp.Add(data);
         #endregion
 
+        #region OutcomeUI
+        //
+        // - - - Outcome UI
+        //
+        //Open
+        data = new HelpData();
+        data.tag = "outcome_0";
+        data.header = "District Actions";
+        data.text = string.Format("Press {0}any key{1} to close", colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
         #region Inventory UI
 
         #region Reserves Inventory

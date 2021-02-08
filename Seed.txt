@@ -278,3 +278,69 @@ City seed 60020 -> Londus, Eurasia
 
 Dev seed 42135 -> Monday, 8 February 2021 12:36 PM
 City seed 28878 -> Londus, Eurasia
+
+Dev seed 41463 -> Monday, 8 February 2021 12:38 PM
+City seed 52063 -> Londus, Eurasia
+
+Dev seed 31709 -> Monday, 8 February 2021 3:04 PM
+City seed 47682 -> Londus, Eurasia
+
+Dev seed 44153 -> Monday, 8 February 2021 3:04 PM
+City seed 36279 -> Londus, Eurasia
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 7993 -> Monday, 8 February 2021 3:09 PM
+City seed 54503 -> Londus, Eurasia
+
+Dev seed 7988 -> Monday, 8 February 2021 3:10 PM
+City seed 5897 -> Londus, Eurasia
+
+Dev seed 6604 -> Monday, 8 February 2021 3:11 PM
+City seed 2550 -> Londus, Eurasia
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	
+Dev seed 28679 -> Monday, 8 February 2021 3:41 PM
+City seed 24357 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.SubInitialiseSessionStart () (at Assets/Scripts/GUI/ModalOutcome.cs:149)
+	ModalOutcome.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/ModalOutcome.cs:95)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:874)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:930)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:415)
+	
+Dev seed 5652 -> Monday, 8 February 2021 3:41 PM
+City seed 2637 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.SubInitialiseSessionStart () (at Assets/Scripts/GUI/ModalOutcome.cs:149)
+	ModalOutcome.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/ModalOutcome.cs:95)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:874)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:930)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:415)
+	WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "OutcomeOpen"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:338)
+	GUIManager:CreateAlertMessage(AlertType, ModalOutcomeDetails, Int32) (at Assets/Scripts/Managers/GUIManager.cs:542)
+	GUIManager:SetAlertMessageModalOne(AlertType, Int32) (at Assets/Scripts/Managers/GUIManager.cs:407)
+	Node:OnMouseDown() (at Assets/Scripts/Base Classes/Node.cs:365)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	
+Dev seed 16441 -> Monday, 8 February 2021 3:43 PM
+City seed 54432 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.SubInitialiseSessionStart () (at Assets/Scripts/GUI/ModalOutcome.cs:149)
+	ModalOutcome.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/ModalOutcome.cs:95)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:874)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:930)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:415)
+	
+Dev seed 23226 -> Monday, 8 February 2021 3:43 PM
+City seed 3340 -> Londus, Eurasia
+
+Dev seed 26862 -> Monday, 8 February 2021 3:49 PM
+City seed 13162 -> Londus, Eurasia

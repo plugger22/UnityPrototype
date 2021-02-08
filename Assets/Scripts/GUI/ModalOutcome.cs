@@ -41,7 +41,7 @@ public class ModalOutcome : MonoBehaviour
     private ButtonInteraction interactConfirm;
     private ButtonInteraction interactShowMe;
     /*private CanvasGroup canvasGroup;*/
-    private GenericHelpTooltipUI help;
+    private GenericHelpTooltipUI helpNormal;
     /*private float fadeInTime;*/
     private int modalLevel;                              //modal level of menu, passed in by ModalOutcomeDetails in SetModalOutcome
     private ModalSubState modalState;                       //modal state to return to once outcome window closed (handles modalLevel 2+ cases, ignored for rest)
@@ -114,7 +114,7 @@ public class ModalOutcome : MonoBehaviour
         Debug.Assert(portraitNormal != null, "Invalid portraitNormal (Null)");
         Debug.Assert(topTextNormal != null, "Invalid topTextNormal (Null)");
         Debug.Assert(bottomTextNormal != null, "Invalid bottomTextNormal (Null)");
-        Debug.Assert(helpButtonNormal != null, "Invalid GenericHelpTooltipUI (Null)");
+        Debug.Assert(helpButtonNormal != null, "Invalid helpButtonNormal (Null)");
         Debug.Assert(confirmButtonNormal != null, "Invalid confirmButton (Null)");
         Debug.Assert(showMeButtonNormal != null, "Invalid showMeButton (Null)");
 
@@ -142,8 +142,8 @@ public class ModalOutcome : MonoBehaviour
         Debug.Assert(specialTransform != null, "Invalid specialTransform (Null)");
         Debug.Assert(blackBarTransform != null, "Invalid blackBarTransform (Null)");
         Debug.Assert(specialWidth > 0.0f, "Invalid specialWidth (Zero or less)");
-        help = helpButtonNormal.GetComponent<GenericHelpTooltipUI>();
-        if (help == null) { Debug.LogError("Invalid help script (Null)"); }
+        helpNormal = helpButtonNormal.GetComponent<GenericHelpTooltipUI>();
+        if (helpNormal == null) { Debug.LogError("Invalid helpNormal (Null)"); }
         //button interactions
         interactConfirm = confirmButtonNormal.GetComponent<ButtonInteraction>();
         if (interactConfirm != null)
@@ -265,7 +265,7 @@ public class ModalOutcome : MonoBehaviour
                 if (listOfHelpData != null && listOfHelpData.Count > 0)
                 {
                     helpButtonNormal.gameObject.SetActive(true);
-                    help.SetHelpTooltip(listOfHelpData, 100, 200);
+                    helpNormal.SetHelpTooltip(listOfHelpData, 100, 200);
                 }
                 else { helpButtonNormal.gameObject.SetActive(false); }
                 //set modal true
@@ -381,16 +381,6 @@ public class ModalOutcome : MonoBehaviour
                 GameManager.i.tooltipHelpScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcomeSpecial");
                 reason = details.reason;
                 triggerEvent = details.triggerEvent;
-
-                //set help
-                List<HelpData> listOfHelpData = GameManager.i.helpScript.GetHelpData(details.help0, details.help1, details.help2, details.help3);
-                if (listOfHelpData != null && listOfHelpData.Count > 0)
-                {
-                    helpButtonNormal.gameObject.SetActive(true);
-                    help.SetHelpTooltip(listOfHelpData, 100, 200);
-                }
-                else { helpButtonNormal.gameObject.SetActive(false); }
-
                 //set modal true
                 GameManager.i.guiScript.SetIsBlocked(true, details.modalLevel);
                 //toggle panels
