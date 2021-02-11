@@ -703,32 +703,46 @@ public class ActorManager : MonoBehaviour
             //Random choice of OnMap actors from ActorPoolFinal.listLevelOne or use actors as specified
             if (GameManager.i.optionScript.isOnMapRandom == true)
             {
+
                 //Random -> place onMap actor drafts in level one pool
                 listOfLevelOneTemp.AddRange(pool.listLevelOne);
                 for (int i = 0; i < pool.listOnMap.Count; i++)
                 {
-                    pool.listOnMap[i].status = statusPool;
-                    pool.listOnMap[i].level = 1;
-                    listOfLevelOneTemp.Add(pool.listOnMap[i]);
+                    //create a new actorDraftFinal for the tempList
+                    ActorDraftFinal actorFinal = ScriptableObject.CreateInstance<ActorDraftFinal>();
+                    actorFinal.actorName = pool.listOnMap[i].actorName;
+                    actorFinal.firstName = pool.listOnMap[i].firstName;
+                    actorFinal.lastName = pool.listOnMap[i].lastName;
+                    actorFinal.sprite = pool.listOnMap[i].sprite;
+                    actorFinal.trait = pool.listOnMap[i].trait;
+                    actorFinal.power = pool.listOnMap[i].power;
+                    actorFinal.sex = pool.listOnMap[i].sex;
+                    actorFinal.arc = pool.listOnMap[i].arc;
+                    actorFinal.level = pool.listOnMap[i].level;
+                    actorFinal.backstory0 = pool.listOnMap[i].backstory0;
+                    actorFinal.backstory1 = pool.listOnMap[i].backstory1;
+                    actorFinal.status = statusPool;
+                    //add to tempList
+                    listOfLevelOneTemp.Add(actorFinal);
                 }
                 //Randomly select four actors from level One pool to be OnMap -> unique Arcs only
                 List<string> listOfArcs = new List<string>();
                 int counter = 0;
                 int index;
-                ActorDraftFinal actorFinal;
+                ActorDraftFinal actorTemp;
                 while (listOfOnMapTemp.Count < maxNumOfOnMapActors)
                 {
-                    actorFinal = listOfLevelOneTemp[Random.Range(0, listOfLevelOneTemp.Count)];
-                    if (listOfArcs.Exists(x => x.Equals(actorFinal.arc.name, StringComparison.Ordinal)) == false)
+                    actorTemp = listOfLevelOneTemp[Random.Range(0, listOfLevelOneTemp.Count)];
+                    if (listOfArcs.Exists(x => x.Equals(actorTemp.arc.name, StringComparison.Ordinal)) == false)
                     {
                         //add arc to exclusion list
-                        listOfArcs.Add(actorFinal.arc.name);
+                        listOfArcs.Add(actorTemp.arc.name);
                         //change actor status
-                        actorFinal.status = statusOnMap;
+                        actorTemp.status = statusOnMap;
                         //add to OnMap list
-                        listOfOnMapTemp.Add(actorFinal);
+                        listOfOnMapTemp.Add(actorTemp);
                         //remove from level One list
-                        index = listOfLevelOneTemp.FindIndex(x => x.name.Equals(actorFinal.name, StringComparison.Ordinal));
+                        index = listOfLevelOneTemp.FindIndex(x => x.name.Equals(actorTemp.name, StringComparison.Ordinal));
                         if (index > -1)
                         { listOfLevelOneTemp.RemoveAt(index); }
                         //reset counter
@@ -776,7 +790,13 @@ public class ActorManager : MonoBehaviour
                 case 2: InitialiseActors(maxNumOfOnMapActors, GameManager.i.globalScript.sideAuthority); break;
                 default: Debug.LogWarningFormat("Unrecognised pool.side \"{0}\", level {1}", pool.side, pool.side.level); break;
             }
-
+            /*
+            //delete Temp files -> EDIT maybe not needed if assets aren't saved to file?
+            for (int i = listOfOnMapTemp.Count - 1; i >= 0; i--)
+            { Destroy(listOfOnMapTemp[i]);  }
+            for (int i = listOfLevelOneTemp.Count - 1; i >= 0; i--)
+            { Destroy(listOfLevelOneTemp[i]); }
+            */
         }
         else { Debug.LogError("Invalid actorPoolFinal (Null)"); }
     }

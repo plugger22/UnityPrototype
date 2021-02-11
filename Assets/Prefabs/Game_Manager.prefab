@@ -5854,6 +5854,7 @@ MonoBehaviour:
   isSubordinates: 1
   isReviews: 1
   isActorPool: 0
+  isOnMapRandom: 0
   showContacts: 0
   showPower: 1
   connectorTooltips: 0
@@ -6220,11 +6221,14 @@ MonoBehaviour:
   stressLeavePowerCostResistance: 2
   stressLeaveHQApproval: 1
   lieLowCooldownPeriod: 5
+  lieLowActionPoints: 1
   powerFactorPromoted: 3
   powerFactorOthers: 2
   baseHqAmount: 15
   timerRelations: 999
   chanceRelationShift: 100
+  statusOnMap: {fileID: 11400000, guid: f52d9e83b05732d4cb27c200536658b7, type: 2}
+  statusPool: {fileID: 11400000, guid: bbc55e5c679455d48afc96a6be96878a, type: 2}
   lieLowTimer: 0
   doomTimer: 0
   captureTimerPlayer: 0
@@ -6538,6 +6542,7 @@ MonoBehaviour:
   reviewTimeInterval: 0.1
   actorFontSize: 18
   maxInventoryOptions: 4
+  outcomeBlackBarTimer: 0.75
   billboardOffset: 135
   billboardFlash: 1.5
   billboardChance: 20
@@ -6714,6 +6719,7 @@ MonoBehaviour:
   isRandomLevel: 1
   isRandomCity: 0
   isRandomActors: 0
+  isRandomOnMap: 1
   isEncrypted: 0
   isAutoSave: 0
   isLoadAutoSave: 0
