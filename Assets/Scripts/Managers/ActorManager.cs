@@ -113,6 +113,8 @@ public class ActorManager : MonoBehaviour
     [Header("Lie Low")]
     [Tooltip("Lying Low has a global cooldown period. Once it has been used by either an actor or the player, it isn't available until the cooldown timer has expired")]
     [Range(1, 10)] public int lieLowCooldownPeriod = 5;
+    [Tooltip("When PLAYER recovers from lying low this is how many action points he gets for that turn only")]
+    [Range(0, 2)] public int lieLowActionPoints = 1;
 
     [Header("MetaGame")]
     [Tooltip("Power multiplier, when actor joins HQ, for Promoted actor")]
@@ -127,6 +129,12 @@ public class ActorManager : MonoBehaviour
     [Range(0, 1000)] public int timerRelations = 999;
     [Tooltip("Chance of an opinion shift occuring when a friend/enemy relationship exists (will only ever be +/-1 regardless of how big the initial shift in the originating actor")]
     [Range(0, 100)] public int chanceRelationShift = 100;
+
+    [Header("Actor Pool")]
+    [Tooltip("ActorDraftFinal.SO -> ActorDraftStatus.SO for OnMap actor")]
+    public ActorDraftStatus statusOnMap;
+    [Tooltip("ActorDraftFinal.SO -> ActorDraftStatus.SO for a pool actor")]
+    public ActorDraftStatus statusPool;
 
     #region Save Compatible Data
     [HideInInspector] public int lieLowTimer;                                   //Lying low can't be used unless timer is 0. Reset to lieLowCooldownPeriod whenever used. Decremented each turn.
@@ -350,6 +358,8 @@ public class ActorManager : MonoBehaviour
         Debug.Assert(gearSwapPreferredAmount > -1, "Invalid gearSwapPreferredAmount (-1)");
         Debug.Assert(maxGenericOptions > -1, "Invalid maxGenericOptions (-1)");
         Debug.Assert(actionAnyTeam != null, "Invalid actionAnyTeam (Null)");
+        Debug.Assert(statusOnMap != null, "Invalid statusOnMap (Null)");
+        Debug.Assert(statusPool != null, "Invalid statusPool (Null)");
         //cached TraitEffects
         actorBreakdownChanceHigh = "ActorBreakdownChanceHigh";
         actorBreakdownChanceLow = "ActorBreakdownChanceLow";
@@ -372,6 +382,7 @@ public class ActorManager : MonoBehaviour
         actorRemoveActionDoubled = "ActorRemoveActionDoubled";
         actorRemoveActionHalved = "ActorRemoveActionHalved";
         actorUnhappyNone = "ActorUnhappyNone";
+        
     }
     #endregion
 
@@ -687,6 +698,57 @@ public class ActorManager : MonoBehaviour
         ActorPoolFinal pool = GameManager.i.campaignScript.campaign.actorPool;
         if (pool != null)
         {
+            List<ActorDraftFinal> listOfOnMapTemp = new List<ActorDraftFinal>();
+            List<ActorDraftFinal> listOfLevelOneTemp = new List<ActorDraftFinal>();
+            //Random choice of OnMap actors from ActorPoolFinal.listLevelOne or use actors as specified
+            if (GameManager.i.optionScript.isOnMapRandom == true)
+            {
+                //Random -> place onMap actor drafts in level one pool
+                listOfLevelOneTemp.AddRange(pool.listLevelOne);
+                for (int i = 0; i < pool.listOnMap.Count; i++)
+                {
+                    pool.listOnMap[i].status = statusPool;
+                    pool.listOnMap[i].level = 1;
+                    listOfLevelOneTemp.Add(pool.listOnMap[i]);
+                }
+                //Randomly select four actors from level One pool to be OnMap -> unique Arcs only
+                List<string> listOfArcs = new List<string>();
+                int counter = 0;
+                int index;
+                ActorDraftFinal actorFinal;
+                while (listOfOnMapTemp.Count < maxNumOfOnMapActors)
+                {
+                    actorFinal = listOfLevelOneTemp[Random.Range(0, listOfLevelOneTemp.Count)];
+                    if (listOfArcs.Exists(x => x.Equals(actorFinal.arc.name, StringComparison.Ordinal)) == false)
+                    {
+                        //add arc to exclusion list
+                        listOfArcs.Add(actorFinal.arc.name);
+                        //change actor status
+                        actorFinal.status = statusOnMap;
+                        //add to OnMap list
+                        listOfOnMapTemp.Add(actorFinal);
+                        //remove from level One list
+                        index = listOfLevelOneTemp.FindIndex(x => x.name.Equals(actorFinal.name, StringComparison.Ordinal));
+                        if (index > -1)
+                        { listOfLevelOneTemp.RemoveAt(index); }
+                        //reset counter
+                        counter = 0;
+                    }
+                    else
+                    {
+                        //increment counter
+                        counter++;
+                        if (counter > 20) { Debug.LogWarningFormat("No match for unique actor arc found -> tried {0} times (there are {1} OnMap actors", counter, listOfOnMapTemp.Count); }
+                        if (counter > 30) { Debug.LogError("No match -> counter > 30"); }
+                    }
+                }
+            }
+            else
+            {
+                //use ActorPoolFinal actors as specified -> use temp lists to avoid messing up ActorPoolFinal.SO
+                listOfOnMapTemp.AddRange(pool.listOnMap);
+                listOfLevelOneTemp.AddRange(pool.listLevelOne);
+            }
             //hq hierarchy
             CreateActorFinal(pool.side, pool.hqBoss0);
             CreateActorFinal(pool.side, pool.hqBoss1);
@@ -696,11 +758,11 @@ public class ActorManager : MonoBehaviour
             for (int i = 0; i < pool.listHqWorkers.Count; i++)
             { CreateActorFinal(pool.side, pool.listHqWorkers[i]); }
             //OnMap
-            for (int i = 0; i < pool.listOnMap.Count; i++)
-            { CreateActorFinal(pool.side, pool.listOnMap[i], i); }
+            for (int i = 0; i < listOfOnMapTemp.Count; i++)
+            { CreateActorFinal(pool.side, listOfOnMapTemp[i], i); }
             //Pool level One
-            for (int i = 0; i < pool.listLevelOne.Count; i++)
-            { CreateActorFinal(pool.side, pool.listLevelOne[i]); }
+            for (int i = 0; i < listOfLevelOneTemp.Count; i++)
+            { CreateActorFinal(pool.side, listOfLevelOneTemp[i]); }
             //Pool level Two
             for (int i = 0; i < pool.listLevelTwo.Count; i++)
             { CreateActorFinal(pool.side, pool.listLevelTwo[i]); }
@@ -6783,6 +6845,181 @@ public class ActorManager : MonoBehaviour
     }
     #endregion
 
+    #region ProcessReservePoolAction
+    /// <summary>
+    /// An unhappy Reserve Pool actor takes action (both sides). Returns true if actor resigns, false for any other outcome
+    /// NOTE: Actor is assumed to be Null checked by the calling method
+    /// </summary>
+    /// <param name="actor"></param>
+    private bool ProcessReservePoolAction(Actor actor)
+    {
+        bool isResigned = false;
+        int rnd, chance;
+        string msgText, itemText, reason;
+        //
+        // - - - Reveal Secret (check first)
+        //
+        if (actor.CheckNumOfSecrets() > 0)
+        {
+            rnd = Random.Range(0, 100);
+            chance = unhappyRevealSecretChance;
+            if (rnd < chance)
+            {
+                //random message
+                Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessReservePoolAction: Unhappy {0} Reveal Secret SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                msgText = string.Format("Unhappy {0} Reveal Secret SUCCESS", actor.arc.name);
+                GameManager.i.messageScript.GeneralRandom(msgText, "Reveal Secret", chance, rnd, true);
+                Secret secret = actor.GetSecret();
+                if (secret != null)
+                {
+                    secret.revealedID = actor.actorID;
+                    secret.revealedWho = string.Format("{0}, {1}", actor.actorName, actor.arc.name);
+                    secret.revealedWhen = GameManager.SetTimeStamp();
+                    secret.status = SecretStatus.Revealed;
+                    //carry out effects
+                    if (secret.listOfEffects != null)
+                    {
+                        //data packages
+                        EffectDataInput effectInput = new EffectDataInput();
+                        effectInput.originText = "Reveal Secret";
+                        Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
+                        if (node != null)
+                        {
+                            //loop effects
+                            foreach (Effect effect in secret.listOfEffects)
+                            { GameManager.i.effectScript.ProcessEffect(effect, node, effectInput); }
+                        }
+                        else { Debug.LogWarning("Invalid player node (Null)"); }
+                    }
+                    //remove secret from all actors and player
+                    GameManager.i.secretScript.RemoveSecretFromAll(secret.name);
+                    //message
+                    GameManager.i.messageScript.ActorRevealSecret(string.Format("{0} Reveals your SECRET", actor.arc.name), actor, secret, "Unhappy at being left in Reserve");
+                    Debug.LogFormat("[Res] ActorManager.cs -> ProcessReservePoolAction: Reserve {0}, {1}, ID {2} Reveals Secret{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
+                }
+                else { Debug.LogWarning("Invalid Secret (Null) -> Not revealed"); }
+                return isResigned;
+            }
+            else
+            {
+                //random message
+                Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessReservePoolAction: Unhappy {0} Reveal Secret FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                msgText = string.Format("Unhappy {0} Reveal Secret FAILED", actor.arc.name);
+                GameManager.i.messageScript.GeneralRandom(msgText, "Reveal Secret", chance, rnd, true);
+            }
+        }
+        //
+        // - - -  Resign (check second)
+        //
+        if (actor.isComplaining == false)
+        {
+            rnd = Random.Range(0, 100);
+            chance = unhappyResignChance;
+            if (rnd < chance)
+            {
+                //random message
+                Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessReservePoolAction: Unhappy {0} Leave SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                msgText = string.Format("Unhappy {0} Leave SUCCESS", actor.arc.name);
+                GameManager.i.messageScript.GeneralRandom(msgText, "Leave", chance, rnd, true);
+                //resigns in frustration
+                if (GameManager.i.dataScript.RemoveCurrentActor(GameManager.i.sideScript.PlayerSide, actor, ActorStatus.Resigned) == true)
+                {
+                    isResigned = true;
+                    //remove from reserve pool
+                    GameManager.i.dataScript.RemoveActorFromReservePool(GameManager.i.sideScript.PlayerSide, actor);
+                    //change status message
+                    msgText = string.Format("{0} resigns in disgust at being left in Reserves", actor.arc.name);
+                    itemText = "resigns in disgust";
+                    reason = string.Format("{0}<b>was Unhappy at being left in Reserves</b>{1}", colourBad, colourEnd);
+                    GameManager.i.messageScript.ActorStatus(msgText, itemText, reason, actor.actorID, GameManager.i.sideScript.PlayerSide);
+                    Debug.LogFormat("[Res] ActorManager.cs -> ProcessReservePoolAction: Reserve {0}, {1}, ID {2} Resigns in frustration{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
+                }
+                else { Debug.LogWarningFormat("Actor, {0}, {1}, ID {2} didn't resign", actor.actorName, actor.arc.name, actor.actorID); }
+                return isResigned;
+            }
+            else
+            {
+                //random message
+                Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessReservePoolAction: Unhappy {0} Leave FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                msgText = string.Format("Unhappy {0} Leave FAILED", actor.arc.name);
+                GameManager.i.messageScript.GeneralRandom(msgText, "Leave", chance, rnd, true);
+            }
+        }
+        else
+        {
+            rnd = Random.Range(0, 100);
+            chance = unhappyResignChance * 2;
+            //double chance if actor has already complained
+            if (rnd < chance)
+            {
+                //random message
+                Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessReservePoolAction: Unhappy {0} Leave  (already Complained) SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                msgText = string.Format("Unhappy {0} Leave (already Complained) SUCCESS", actor.arc.name);
+                GameManager.i.messageScript.GeneralRandom(msgText, "Leave", chance, rnd, true);
+
+                //resigns in frustration
+                if (GameManager.i.dataScript.RemoveCurrentActor(GameManager.i.sideScript.PlayerSide, actor, ActorStatus.Resigned) == true)
+                {
+                    isResigned = true;
+                    //remove from reserve pool
+                    GameManager.i.dataScript.RemoveActorFromReservePool(GameManager.i.sideScript.PlayerSide, actor);
+                    //change status message
+                    msgText = string.Format("{0} resigns in disgust at being left in Reserves", actor.arc.name);
+                    itemText = "resigns in disgust";
+                    reason = string.Format("{0}<b>was Unhappy at being left in Reserves</b>{1}", colourBad, colourEnd);
+                    GameManager.i.messageScript.ActorStatus(msgText, itemText, reason, actor.actorID, GameManager.i.sideScript.PlayerSide);
+                    Debug.LogFormat("[Res] ActorManager.cs -> ProcessReservePoolAction: Reserve {0}, {1}, ID {2} Resigns in frustration{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
+                }
+                return isResigned;
+            }
+            else
+            {
+                //random message
+                Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessReservePoolAction: Unhappy {0} Leave (already Complained) FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                msgText = string.Format("Unhappy {0} Leave (already Complained) FAILED", actor.arc.name);
+                GameManager.i.messageScript.GeneralRandom(msgText, "Leave (Complained)", chance, rnd, true);
+            }
+        }
+        //
+        // - - - Complain (check last)
+        //
+        if (actor.isComplaining == false)
+        {
+            rnd = Random.Range(0, 100);
+            chance = unhappyComplainChance;
+            if (rnd < chance)
+            {
+                //random message
+                Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessReservePoolAction: Unhappy {0} Complain SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                msgText = string.Format("Unhappy {0} Complain SUCCESS", actor.arc.name);
+                GameManager.i.messageScript.GeneralRandom(msgText, "Complain", chance, rnd, true);
+                msgText = string.Format("{0} Complains about being left in Reserves", actor.arc.name);
+                GameManager.i.messageScript.ActorComplains(msgText, actor, "Unhappy at being left in Reserve", "Higher chance of Resigning or Revealing a Secret");
+                Debug.LogFormat("[Res] ActorManager.cs -> ProcessReservePoolAction: Reserve {0}, {1}, ID {2} Complains{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
+                actor.isComplaining = true;
+                return isResigned;
+            }
+            else
+            {
+                //random message
+                Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessReservePoolAction: Unhappy {0} Complain FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
+                msgText = string.Format("Unhappy {0} Complain FAILED", actor.arc.name);
+                GameManager.i.messageScript.GeneralRandom(msgText, "Complain", chance, rnd, true);
+            }
+        }
+        //
+        // - - - NO Action take -> WARNING message
+        //
+        msgText = string.Format("{0}, {1}, in Reserves, Failed to Act, but will", actor.actorName, actor.arc.name);
+        itemText = string.Format("Reserve {0} Failed to Act, but will", actor.arc.name);
+        reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
+        string warning = string.Format("{0} will {1}<b>TAKE DECISIVE ACTION</b>{2}, but didn't this turn", actor.actorName, colourBad, colourEnd);
+        GameManager.i.messageScript.GeneralWarning(msgText, itemText, "Taking Action", reason, warning);
+        Debug.LogFormat("[Res] ActorManager.cs -> ProcessReservePoolAction: Reserve {0}, {1}, ID {2} Failed to Act{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
+        return isResigned;
+    }
+    #endregion
+
     #endregion
 
     #region Checks...
@@ -7783,7 +8020,7 @@ public class ActorManager : MonoBehaviour
                             GameManager.i.playerScript.tooltipStatus = ActorTooltip.None;
                             GameManager.i.actorPanelScript.UpdatePlayerAlpha(GameManager.i.guiScript.alphaActive);
                             //assign one action
-                            GameManager.i.turnScript.SetActionsRecovery(1);
+                            GameManager.i.turnScript.SetActionsRecovery(lieLowActionPoints);
                             //check if Player has stressed condition -> Player.RemoveCondition handles mood change
                             if (GameManager.i.playerScript.isStressed == true)
                             { GameManager.i.playerScript.RemoveCondition(conditionStressed, playerSide, "Lying Low removes Stress"); }
@@ -8932,178 +9169,7 @@ public class ActorManager : MonoBehaviour
         return numOfBlackmailers;
     }
 
-    /// <summary>
-    /// An unhappy Reserve Pool actor takes action (both sides). Returns true if actor resigns, false for any other outcome
-    /// NOTE: Actor is assumed to be Null checked by the calling method
-    /// </summary>
-    /// <param name="actor"></param>
-    private bool ProcessReservePoolAction(Actor actor)
-    {
-        bool isResigned = false;
-        int rnd, chance;
-        string msgText, itemText, reason;
-        //
-        // - - - Reveal Secret (check first)
-        //
-        if (actor.CheckNumOfSecrets() > 0)
-        {
-            rnd = Random.Range(0, 100);
-            chance = unhappyRevealSecretChance;
-            if (rnd < chance)
-            {
-                //random message
-                Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessReservePoolAction: Unhappy {0} Reveal Secret SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
-                msgText = string.Format("Unhappy {0} Reveal Secret SUCCESS", actor.arc.name);
-                GameManager.i.messageScript.GeneralRandom(msgText, "Reveal Secret", chance, rnd, true);
-                Secret secret = actor.GetSecret();
-                if (secret != null)
-                {
-                    secret.revealedID = actor.actorID;
-                    secret.revealedWho = string.Format("{0}, {1}", actor.actorName, actor.arc.name);
-                    secret.revealedWhen = GameManager.SetTimeStamp();
-                    secret.status = SecretStatus.Revealed;
-                    //carry out effects
-                    if (secret.listOfEffects != null)
-                    {
-                        //data packages
-                        EffectDataInput effectInput = new EffectDataInput();
-                        effectInput.originText = "Reveal Secret";
-                        Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
-                        if (node != null)
-                        {
-                            //loop effects
-                            foreach (Effect effect in secret.listOfEffects)
-                            { GameManager.i.effectScript.ProcessEffect(effect, node, effectInput); }
-                        }
-                        else { Debug.LogWarning("Invalid player node (Null)"); }
-                    }
-                    //remove secret from all actors and player
-                    GameManager.i.secretScript.RemoveSecretFromAll(secret.name);
-                    //message
-                    GameManager.i.messageScript.ActorRevealSecret(string.Format("{0} Reveals your SECRET", actor.arc.name), actor, secret, "Unhappy at being left in Reserve");
-                    Debug.LogFormat("[Res] ActorManager.cs -> ProcessReservePoolAction: Reserve {0}, {1}, ID {2} Reveals Secret{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
-                }
-                else { Debug.LogWarning("Invalid Secret (Null) -> Not revealed"); }
-                return isResigned;
-            }
-            else
-            {
-                //random message
-                Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessReservePoolAction: Unhappy {0} Reveal Secret FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
-                msgText = string.Format("Unhappy {0} Reveal Secret FAILED", actor.arc.name);
-                GameManager.i.messageScript.GeneralRandom(msgText, "Reveal Secret", chance, rnd, true);
-            }
-        }
-        //
-        // - - -  Resign (check second)
-        //
-        if (actor.isComplaining == false)
-        {
-            rnd = Random.Range(0, 100);
-            chance = unhappyResignChance;
-            if (rnd < chance)
-            {
-                //random message
-                Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessReservePoolAction: Unhappy {0} Leave SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
-                msgText = string.Format("Unhappy {0} Leave SUCCESS", actor.arc.name);
-                GameManager.i.messageScript.GeneralRandom(msgText, "Leave", chance, rnd, true);
-                //resigns in frustration
-                if (GameManager.i.dataScript.RemoveCurrentActor(GameManager.i.sideScript.PlayerSide, actor, ActorStatus.Resigned) == true)
-                {
-                    isResigned = true;
-                    //remove from reserve pool
-                    GameManager.i.dataScript.RemoveActorFromReservePool(GameManager.i.sideScript.PlayerSide, actor);
-                    //change status message
-                    msgText = string.Format("{0} resigns in disgust at being left in Reserves", actor.arc.name);
-                    itemText = "resigns in disgust";
-                    reason = string.Format("{0}<b>was Unhappy at being left in Reserves</b>{1}", colourBad, colourEnd);
-                    GameManager.i.messageScript.ActorStatus(msgText, itemText, reason, actor.actorID, GameManager.i.sideScript.PlayerSide);
-                    Debug.LogFormat("[Res] ActorManager.cs -> ProcessReservePoolAction: Reserve {0}, {1}, ID {2} Resigns in frustration{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
-                }
-                else { Debug.LogWarningFormat("Actor, {0}, {1}, ID {2} didn't resign", actor.actorName, actor.arc.name, actor.actorID); }
-                return isResigned;
-            }
-            else
-            {
-                //random message
-                Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessReservePoolAction: Unhappy {0} Leave FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
-                msgText = string.Format("Unhappy {0} Leave FAILED", actor.arc.name);
-                GameManager.i.messageScript.GeneralRandom(msgText, "Leave", chance, rnd, true);
-            }
-        }
-        else
-        {
-            rnd = Random.Range(0, 100);
-            chance = unhappyResignChance * 2;
-            //double chance if actor has already complained
-            if (rnd < chance)
-            {
-                //random message
-                Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessReservePoolAction: Unhappy {0} Leave  (already Complained) SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
-                msgText = string.Format("Unhappy {0} Leave (already Complained) SUCCESS", actor.arc.name);
-                GameManager.i.messageScript.GeneralRandom(msgText, "Leave", chance, rnd, true);
 
-                //resigns in frustration
-                if (GameManager.i.dataScript.RemoveCurrentActor(GameManager.i.sideScript.PlayerSide, actor, ActorStatus.Resigned) == true)
-                {
-                    isResigned = true;
-                    //remove from reserve pool
-                    GameManager.i.dataScript.RemoveActorFromReservePool(GameManager.i.sideScript.PlayerSide, actor);
-                    //change status message
-                    msgText = string.Format("{0} resigns in disgust at being left in Reserves", actor.arc.name);
-                    itemText = "resigns in disgust";
-                    reason = string.Format("{0}<b>was Unhappy at being left in Reserves</b>{1}", colourBad, colourEnd);
-                    GameManager.i.messageScript.ActorStatus(msgText, itemText, reason, actor.actorID, GameManager.i.sideScript.PlayerSide);
-                    Debug.LogFormat("[Res] ActorManager.cs -> ProcessReservePoolAction: Reserve {0}, {1}, ID {2} Resigns in frustration{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
-                }
-                return isResigned;
-            }
-            else
-            {
-                //random message
-                Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessReservePoolAction: Unhappy {0} Leave (already Complained) FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
-                msgText = string.Format("Unhappy {0} Leave (already Complained) FAILED", actor.arc.name);
-                GameManager.i.messageScript.GeneralRandom(msgText, "Leave (Complained)", chance, rnd, true);
-            }
-        }
-        //
-        // - - - Complain (check last)
-        //
-        if (actor.isComplaining == false)
-        {
-            rnd = Random.Range(0, 100);
-            chance = unhappyComplainChance;
-            if (rnd < chance)
-            {
-                //random message
-                Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessReservePoolAction: Unhappy {0} Complain SUCCESS need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
-                msgText = string.Format("Unhappy {0} Complain SUCCESS", actor.arc.name);
-                GameManager.i.messageScript.GeneralRandom(msgText, "Complain", chance, rnd, true);
-                msgText = string.Format("{0} Complains about being left in Reserves", actor.arc.name);
-                GameManager.i.messageScript.ActorComplains(msgText, actor, "Unhappy at being left in Reserve", "Higher chance of Resigning or Revealing a Secret");
-                Debug.LogFormat("[Res] ActorManager.cs -> ProcessReservePoolAction: Reserve {0}, {1}, ID {2} Complains{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
-                actor.isComplaining = true;
-                return isResigned;
-            }
-            else
-            {
-                //random message
-                Debug.LogFormat("[Rnd] ActorManager.cs -> ProcessReservePoolAction: Unhappy {0} Complain FAILED need < {1}, rolled {2}{3}", actor.arc.name, chance, rnd, "\n");
-                msgText = string.Format("Unhappy {0} Complain FAILED", actor.arc.name);
-                GameManager.i.messageScript.GeneralRandom(msgText, "Complain", chance, rnd, true);
-            }
-        }
-        //
-        // - - - NO Action take -> WARNING message
-        //
-        msgText = string.Format("{0}, {1}, in Reserves, Failed to Act, but will", actor.actorName, actor.arc.name);
-        itemText = string.Format("Reserve {0} Failed to Act, but will", actor.arc.name);
-        reason = string.Format("{0}, {1}{2}{3}, is upset at being left in the Reserves", actor.actorName, colourAlert, actor.arc.name, colourEnd);
-        string warning = string.Format("{0} will {1}<b>TAKE DECISIVE ACTION</b>{2}, but didn't this turn", actor.actorName, colourBad, colourEnd);
-        GameManager.i.messageScript.GeneralWarning(msgText, itemText, "Taking Action", reason, warning);
-        Debug.LogFormat("[Res] ActorManager.cs -> ProcessReservePoolAction: Reserve {0}, {1}, ID {2} Failed to Act{3}", actor.actorName, actor.arc.name, actor.actorID, "\n");
-        return isResigned;
-    }
 
     /// <summary>
     /// Generates a log message indicating use of a trait. Output format is  "Actor uses x trait' 

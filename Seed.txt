@@ -371,3 +371,91 @@ City seed 17453 -> Londus, Eurasia
 
 Dev seed 44167 -> Thursday, 11 February 2021 12:27 PM
 City seed 61860 -> Londus, Eurasia
+
+Dev seed 48802 -> Thursday, 11 February 2021 2:43 PM
+City seed 17930 -> Londus, Eurasia
+
+Dev seed 26165 -> Thursday, 11 February 2021 3:43 PM
+City seed 12798 -> Londus, Eurasia
+
+Dev seed 36990 -> Thursday, 11 February 2021 3:45 PM
+City seed 62220 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ERROR You must exit play mode to save the scene!
+UnityEditor.SceneView:ShowSceneViewPlayModeSaveWarning()
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnMouseOver () (at Assets/Scripts/Base Classes/Node.cs:391)
+	UnityEngine.SendMouseEvents:DoSendMouseEvents(Int32)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:235)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:654)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActionManager.OnDisable () (at Assets/Scripts/Managers/ActionManager.cs:258)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:468)
+	
+Dev seed 18254 -> Thursday, 11 February 2021 3:47 PM
+City seed 39855 -> Londus, Eurasia
+
+Dev seed 23838 -> Thursday, 11 February 2021 3:47 PM
+City seed 50148 -> Londus, Eurasia
+
+Dev seed 12296 -> Thursday, 11 February 2021 3:52 PM
+ASSERT IndexOutOfRangeException: Index was outside the bounds of the array.
+DataManager.AddCurrentActor (GlobalSide side, gameAPI.Actor actor, System.Int32 slotID) (at Assets/Scripts/Managers/DataManager.cs:4277)
+	ActorManager.CreateActorFinal (GlobalSide side, ActorDraftFinal draft, System.Int32 slotID) (at Assets/Scripts/Managers/ActorManager.cs:873)
+	ActorManager.LoadActorPool () (at Assets/Scripts/Managers/ActorManager.cs:765)
+	ActorManager.SubInitialiseLevelStart () (at Assets/Scripts/Managers/ActorManager.cs:430)
+	ActorManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/ActorManager.cs:254)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:876)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:932)
+	GameManager.Start () (at Assets/Scripts/GameManager.cs:417)
+	

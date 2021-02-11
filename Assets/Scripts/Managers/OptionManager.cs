@@ -26,6 +26,7 @@ public class OptionManager : MonoBehaviour
     [HideInInspector] public bool isSubordinates = true;                            //if false Subordinates are switched off
     [HideInInspector] public bool isReviews = true;                                 //if false Performance reviews are switched off
     [HideInInspector] public bool isActorPool = true;                               //if false all actors are randomly generated, if true then ActorPoolFinal.SO actors are used (GameManager.cs -> isRandomActors)
+    [HideInInspector] public bool isOnMapRandom = false;                            //if true OnMap actors will be selected randomly from actorPoolFinal.SO. Only applies if isActorPool true
 
     //UI options
     [HideInInspector] public bool showContacts = false;                           //if true node tooltips will show contact as well as Actor Arcs for nodes where actors have contacts
@@ -89,6 +90,7 @@ public class OptionManager : MonoBehaviour
             .AppendFormat(" isSubordinates -> {0}{1}", isSubordinates, "\n")
             .AppendFormat(" isReviews -> {0}{1}", isReviews, "\n")
             .AppendFormat(" isActorPool -> {0}{1}", isActorPool, "\n")
+            .AppendFormat(" isOnMapRandom -> {0}{1}", isOnMapRandom, "\n")
             .AppendFormat(" NO Nodes -> {0}{1}", noNodes, "\n")
             .AppendFormat("{0}- UI Options{1}", "\n", "\n")
             .AppendFormat(" Connector Tooltips -> {0}{1}", connectorTooltips, "\n")

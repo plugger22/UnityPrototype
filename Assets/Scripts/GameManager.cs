@@ -142,8 +142,10 @@ public class GameManager : MonoBehaviour
     public bool isRandomLevel;
     [Tooltip("If true a Random city is used, not a campaign city")]
     public bool isRandomCity;
-    [Tooltip("If true random actors are generated, if false, ActorPool in Campaign.SO is used")]
+    [Tooltip("If true random actors are procedurally generated, if false, ActorPool in Campaign.SO is used")]
     public bool isRandomActors;
+    [Tooltip("If true OnMap actors will be randomly selected from ActorPool in Campaign.SO (level 1). Actors in pool who are 'OnMap' will be placed into the pool prior to selection")]
+    public bool isRandomOnMap;
 
     [Header("Save/Load")]
     [Tooltip("If true then save files are encrypted")]
@@ -914,7 +916,8 @@ public class GameManager : MonoBehaviour
         //lock mouse to prevent mouseover events occuring prior to full initialisation
         Cursor.lockState = CursorLockMode.Locked;
         //actor pool
-        optionScript.isActorPool = !isRandomActors;
+        optionScript.isActorPool = !isRandomActors; //reversed with exclamation mark
+        optionScript.isOnMapRandom = isRandomOnMap;
         //start sequence
         if (isPerformanceLog == false)
         {
