@@ -653,6 +653,26 @@ public class TurnManager : MonoBehaviour
         EventManager.i.PostNotification(EventType.ChangeActionPoints, this, _actionsTotal, "TurnManager.cs -> SetActionsforNewTurn");
     }
 
+    /// <summary>
+    /// Assigns a set number of actions to player NOTE: used ONLY for when recovering from Lying Low, NOT for anything else
+    /// </summary>
+    /// <param name="numOfActions"></param>
+    public void SetActionsRecovery(int numOfActions)
+    {
+        if (numOfActions > 0)
+        {
+            if (numOfActions <= _actionsLimit)
+            {
+                _actionsTotal = numOfActions;
+                _actionsCurrent = 0;
+                //update widget
+                EventManager.i.PostNotification(EventType.ChangeActionPoints, this, _actionsTotal, "TurnManager.cs -> SetActionsRecovery");
+            }
+            else { Debug.LogWarningFormat("Invalid number of actions (is {0}, limit is {1})", numOfActions, _actionsLimit); }
+        }
+        else { Debug.LogWarningFormat("Invalid number of actions \"{0}\" (should be more than Zero)", numOfActions); }
+    }
+
 
 
     public void ChangeSide(GlobalSide side)

@@ -407,6 +407,7 @@ public class GUIManager : MonoBehaviour
         CreateAlertMessage(type, details, data);
     }
 
+    #region CreateAlertMessage
     /// <summary>
     /// SubMethod for generating an alert Message. Called by SetAlertMessageModalOne\Two
     /// </summary>
@@ -543,6 +544,7 @@ public class GUIManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid ModalOutcomeDetails (Null)"); }
     }
+    #endregion
 
     //
     // - - - Show Me

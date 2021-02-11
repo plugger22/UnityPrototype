@@ -254,6 +254,8 @@ public class ModalOutcome : MonoBehaviour
             //ignore if autoRun true
             if (GameManager.i.turnScript.CheckIsAutoRun() == false)
             {
+                //reset input
+                Input.ResetInputAxes();
                 //exit any generic or node tooltips
                 GameManager.i.tooltipGenericScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcome");
                 GameManager.i.tooltipNodeScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcome");
@@ -375,6 +377,8 @@ public class ModalOutcome : MonoBehaviour
             //ignore if autoRun true
             if (GameManager.i.turnScript.CheckIsAutoRun() == false)
             {
+                //reset input
+                Input.ResetInputAxes();
                 //exit any generic or node tooltips
                 GameManager.i.tooltipGenericScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcomeSpecial");
                 GameManager.i.tooltipNodeScript.CloseTooltip("ModalOutcome.cs -> SetModalOutcomeSpecial");

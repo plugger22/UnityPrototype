@@ -1259,6 +1259,7 @@ public class ActionManager : MonoBehaviour
         }
     }
 
+    #region ProcessLieLowActorAction
     /// <summary>
     /// Process Lie Low actor action (Resistance only). Can't do during a Surveillance crackdown
     /// </summary>
@@ -1317,7 +1318,9 @@ public class ActionManager : MonoBehaviour
         //generate a create modal window event
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessLieLowActorAction");
     }
+    #endregion
 
+    #region ProcessLieLowPlayerAction
     /// <summary>
     /// Process Lie Low Player action (Resistance only). Can't do during a Surveillance crackdown
     /// </summary>
@@ -1371,6 +1374,7 @@ public class ActionManager : MonoBehaviour
         //generate a create modal window event
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessLieLowPlayerAction");
     }
+    #endregion
 
     /// <summary>
     /// formatted message string for both player and actor Lie Low action

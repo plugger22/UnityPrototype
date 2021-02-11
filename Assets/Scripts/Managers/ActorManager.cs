@@ -5230,7 +5230,8 @@ public class ActorManager : MonoBehaviour
                                     };
                                     //add to player's personal list
                                     GameManager.i.playerScript.AddNodeAction(nodeActionData);
-                                    Debug.LogFormat("[Tst] ActorManager.cs -> ProcessRecruitChoiceResistance: nodeActionData added to {0}, {1}{2}", GameManager.i.playerScript.PlayerName, "Player", "\n");
+                                    /*Debug.LogFormat("[Tst] ActorManager.cs -> ProcessRecruitChoiceResistance: nodeActionData added to {0}, {1}{2}", GameManager.i.playerScript.PlayerName, "Player", "\n");*/
+
                                     //statistics
                                     GameManager.i.dataScript.StatisticIncrement(StatType.PlayerNodeActions);
                                 }
@@ -7665,7 +7666,9 @@ public class ActorManager : MonoBehaviour
         string warning = "Unknown";
         string playerName = GameManager.i.playerScript.PlayerName;
         GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
-        //doom timer
+        //
+        // - - - Doom timer
+        //
         if (doomTimer > 0)
         {
             //decrement timer
@@ -7779,6 +7782,8 @@ public class ActorManager : MonoBehaviour
                             GameManager.i.playerScript.inactiveStatus = ActorInactive.None;
                             GameManager.i.playerScript.tooltipStatus = ActorTooltip.None;
                             GameManager.i.actorPanelScript.UpdatePlayerAlpha(GameManager.i.guiScript.alphaActive);
+                            //assign one action
+                            GameManager.i.turnScript.SetActionsRecovery(1);
                             //check if Player has stressed condition -> Player.RemoveCondition handles mood change
                             if (GameManager.i.playerScript.isStressed == true)
                             { GameManager.i.playerScript.RemoveCondition(conditionStressed, playerSide, "Lying Low removes Stress"); }
