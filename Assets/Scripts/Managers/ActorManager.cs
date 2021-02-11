@@ -382,7 +382,7 @@ public class ActorManager : MonoBehaviour
         actorRemoveActionDoubled = "ActorRemoveActionDoubled";
         actorRemoveActionHalved = "ActorRemoveActionHalved";
         actorUnhappyNone = "ActorUnhappyNone";
-        
+
     }
     #endregion
 
@@ -704,26 +704,23 @@ public class ActorManager : MonoBehaviour
             if (GameManager.i.optionScript.isOnMapRandom == true)
             {
 
-                //Random -> place onMap actor drafts in level one pool
+                //Random -> create copies of actorDrafts in temp list
                 listOfLevelOneTemp.AddRange(pool.listLevelOne);
+                for (int i = 0; i < pool.listLevelOne.Count; i++)
+                {
+                    //create a new actorDraftFinal for the tempList
+                    ActorDraftFinal actorCopy = CopyActorDraftFinal(pool.listLevelOne[i]);
+                    //add to tempList
+                    listOfLevelOneTemp.Add(actorCopy);
+                }
+                //place onMap actor draft copies in level one temp pool
                 for (int i = 0; i < pool.listOnMap.Count; i++)
                 {
                     //create a new actorDraftFinal for the tempList
-                    ActorDraftFinal actorFinal = ScriptableObject.CreateInstance<ActorDraftFinal>();
-                    actorFinal.actorName = pool.listOnMap[i].actorName;
-                    actorFinal.firstName = pool.listOnMap[i].firstName;
-                    actorFinal.lastName = pool.listOnMap[i].lastName;
-                    actorFinal.sprite = pool.listOnMap[i].sprite;
-                    actorFinal.trait = pool.listOnMap[i].trait;
-                    actorFinal.power = pool.listOnMap[i].power;
-                    actorFinal.sex = pool.listOnMap[i].sex;
-                    actorFinal.arc = pool.listOnMap[i].arc;
-                    actorFinal.level = pool.listOnMap[i].level;
-                    actorFinal.backstory0 = pool.listOnMap[i].backstory0;
-                    actorFinal.backstory1 = pool.listOnMap[i].backstory1;
-                    actorFinal.status = statusPool;
+                    ActorDraftFinal actorCopy = CopyActorDraftFinal(pool.listOnMap[i]);
+                    actorCopy.status = statusPool;
                     //add to tempList
-                    listOfLevelOneTemp.Add(actorFinal);
+                    listOfLevelOneTemp.Add(actorCopy);
                 }
                 //Randomly select four actors from level One pool to be OnMap -> unique Arcs only
                 List<string> listOfArcs = new List<string>();
@@ -799,6 +796,35 @@ public class ActorManager : MonoBehaviour
             */
         }
         else { Debug.LogError("Invalid actorPoolFinal (Null)"); }
+    }
+    #endregion
+
+    #region CopyActorDraftFinal
+    /// <summary>
+    /// copies an existing ActorPoolFinal actorDRaft.SO to a new SO and returns new SO
+    /// </summary>
+    /// <param name="draft"></param>
+    /// <returns></returns>
+    private ActorDraftFinal CopyActorDraftFinal(ActorDraftFinal draft)
+    {
+        ActorDraftFinal actorFinal = ScriptableObject.CreateInstance<ActorDraftFinal>();
+        if (draft != null)
+        {
+            actorFinal.actorName = draft.actorName;
+            actorFinal.firstName = draft.firstName;
+            actorFinal.lastName = draft.lastName;
+            actorFinal.sprite = draft.sprite;
+            actorFinal.trait = draft.trait;
+            actorFinal.power = draft.power;
+            actorFinal.sex = draft.sex;
+            actorFinal.status = draft.status;
+            actorFinal.arc = draft.arc;
+            actorFinal.level = draft.level;
+            actorFinal.backstory0 = draft.backstory0;
+            actorFinal.backstory1 = draft.backstory1;
+        }
+        else { Debug.LogError("Invalid actorDraftFinal (Null)"); }
+        return actorFinal;
     }
     #endregion
 

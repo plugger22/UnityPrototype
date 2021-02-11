@@ -4270,24 +4270,30 @@ public class DataManager : MonoBehaviour
     /// <param name="slotID"></param>
     public void AddCurrentActor(GlobalSide side, Actor actor, int slotID)
     {
-        Debug.Assert(side != null, "Invalid side (Null)");
-        Debug.Assert(slotID > -1 && slotID < GameManager.i.actorScript.maxNumOfOnMapActors, "Invalid slotID input");
-        if (actor != null)
+        if (side != null)
         {
-            arrayOfActors[side.level, slotID] = actor;
-            //ensure position is set to 'Filled'
-            arrayOfActorsPresent[side.level, slotID] = true;
-            //update actor
-            actor.slotID = slotID;
-            actor.ResetStates();
-            actor.Status = ActorStatus.Active;
-            //update contacts (not for game or level start -> sequencing issues)
-            if (GameManager.i.turnScript.Turn > 0 && GameManager.i.inputScript.GameState == GameState.PlayGame)
-            { GameManager.i.contactScript.SetActorContacts(actor); }
-            //update actor GUI display
-            GameManager.i.actorPanelScript.UpdateActorPanel();
+            if (slotID > -1 && slotID < GameManager.i.actorScript.maxNumOfOnMapActors)
+            {
+                if (actor != null)
+                {
+                    arrayOfActors[side.level, slotID] = actor;
+                    //ensure position is set to 'Filled'
+                    arrayOfActorsPresent[side.level, slotID] = true;
+                    //update actor
+                    actor.slotID = slotID;
+                    actor.ResetStates();
+                    actor.Status = ActorStatus.Active;
+                    //update contacts (not for game or level start -> sequencing issues)
+                    if (GameManager.i.turnScript.Turn > 0 && GameManager.i.inputScript.GameState == GameState.PlayGame)
+                    { GameManager.i.contactScript.SetActorContacts(actor); }
+                    //update actor GUI display
+                    GameManager.i.actorPanelScript.UpdateActorPanel();
+                }
+                else { Debug.LogError("Invalid actor (null)"); }
+            }
+            else { Debug.LogWarningFormat("Invalid slotID input \"{0}\"", slotID); }
         }
-        else { Debug.LogError("Invalid actor (null)"); }
+        else { Debug.LogWarning("Invalid side (Null)"); }
     }
 
     /// <summary>
