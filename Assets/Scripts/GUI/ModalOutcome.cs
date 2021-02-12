@@ -29,6 +29,7 @@ public class ModalOutcome : MonoBehaviour
     public Image panelSpecial;
     public Image portraitSpecial;
     public Image blackBar;
+    public Image highlight;
     public TextMeshProUGUI topTextSpecial;
     public TextMeshProUGUI bottomTextSpecial;
 
@@ -37,6 +38,7 @@ public class ModalOutcome : MonoBehaviour
 
     private RectTransform specialTransform;
     private RectTransform blackBarTransform;
+    private RectTransform highlightTransform;
     private Image background;
     private ButtonInteraction interactConfirm;
     private ButtonInteraction interactShowMe;
@@ -56,6 +58,11 @@ public class ModalOutcome : MonoBehaviour
     private float blackBarTime;                         //time span to grow black bars
     private float blackBarSpeed;
     private float blackBarSize;
+    private float highlightMin;
+    private float highlightMax;
+    private float highlightTime;
+    private float highlightPause;
+    private bool isHighlightGrow;
 
 
     #region Static Instance
@@ -125,6 +132,7 @@ public class ModalOutcome : MonoBehaviour
         Debug.Assert(topTextSpecial != null, "Invalid topTextSpecial (Null)");
         Debug.Assert(bottomTextSpecial != null, "Invalid bottomTextSpecial (Null)");
         Debug.Assert(blackBar != null, "Invalid blackBar (Null)");
+        Debug.Assert(highlight != null, "Invalid highlight1 (Null)");
     }
 
     /// <summary>
@@ -138,9 +146,11 @@ public class ModalOutcome : MonoBehaviour
         //Assignments
         specialTransform = panelSpecial.GetComponent<RectTransform>();
         blackBarTransform = blackBar.GetComponent<RectTransform>();
+        highlightTransform = highlight.GetComponent<RectTransform>();
         specialWidth = specialTransform.rect.width;
         Debug.Assert(specialTransform != null, "Invalid specialTransform (Null)");
         Debug.Assert(blackBarTransform != null, "Invalid blackBarTransform (Null)");
+        Debug.Assert(highlightTransform != null, "Invalid highlight1Transform (Null)");
         Debug.Assert(specialWidth > 0.0f, "Invalid specialWidth (Zero or less)");
         helpNormal = helpButtonNormal.GetComponent<GenericHelpTooltipUI>();
         if (helpNormal == null) { Debug.LogError("Invalid helpNormal (Null)"); }
@@ -163,9 +173,15 @@ public class ModalOutcome : MonoBehaviour
         //set position
         outcomeObject.transform.position = screenPos;
         //Blackbar (special outcome)
-        blackBarTime = GameManager.i.guiScript.outcomeBlackBarTimer;                                       
+        blackBarTime = GameManager.i.guiScript.outcomeBlackBarTimer;
         blackBarSpeed = Screen.width;
         blackBarSize = blackBarTransform.sizeDelta.x;
+        //highlights (special Outcome)
+        highlightMax = GameManager.i.guiScript.outcomeHighlightMax;
+        highlightTime = GameManager.i.guiScript.outcomeHighlightTimer;
+        highlightPause = GameManager.i.guiScript.outcomeHighlightPause;
+        highlightMin = highlightTransform.sizeDelta.x;
+        isHighlightGrow = true;
         //Set Main elements
         outcomeObject.SetActive(true);
         outcomeCanvas.gameObject.SetActive(false);
@@ -464,6 +480,8 @@ public class ModalOutcome : MonoBehaviour
             blackBarTransform.sizeDelta = new Vector2(blackBarSize, blackBarTransform.sizeDelta.y);
             yield return null;
         }
+        //start highlights
+        StartCoroutine(RunHighlights());
     }
 
     /// <summary>
@@ -477,6 +495,41 @@ public class ModalOutcome : MonoBehaviour
         {
             blackBarSize -= Time.deltaTime / blackBarTime * blackBarSpeed;
             blackBarTransform.sizeDelta = new Vector2(blackBarSize, blackBarTransform.sizeDelta.y);
+            yield return null;
+        }
+    }
+
+    /// <summary>
+    /// grow/shrink blue line highlights along black bars behind the specialOutcome panel
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator RunHighlights()
+    {
+        float size = highlightTransform.sizeDelta.x;
+        while (true)
+        {
+            if (isHighlightGrow == true)
+            {
+                //grow
+                size += Time.deltaTime / highlightTime * highlightMax;
+                highlightTransform.sizeDelta = new Vector2(size, highlightTransform.sizeDelta.y);
+                //max size check
+                if (size >= highlightMax)
+                { isHighlightGrow = false; }
+            }
+            else
+            {
+                //shrink
+                size -= Time.deltaTime / highlightTime * highlightMax;
+                highlightTransform.sizeDelta = new Vector2(size, highlightTransform.sizeDelta.y);
+                //min size check
+                if (size <= highlightMin)
+                {
+                    isHighlightGrow = true;
+                    //pause
+                    yield return new WaitForSeconds(highlightPause);
+                }
+            }
             yield return null;
         }
     }
@@ -513,7 +566,7 @@ public class ModalOutcome : MonoBehaviour
     /// <returns></returns>
     IEnumerator RunCloseSequence()
     {
-
+        StopCoroutine(RunHighlights());
         yield return StartCoroutine(ShrinkBlackBars());
         CloseModalOutcome();
         yield break;

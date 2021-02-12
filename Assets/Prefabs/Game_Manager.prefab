@@ -6719,7 +6719,7 @@ MonoBehaviour:
   isRandomLevel: 1
   isRandomCity: 0
   isRandomActors: 0
-  isRandomOnMap: 1
+  isRandomOnMap: 0
   isEncrypted: 0
   isAutoSave: 0
   isLoadAutoSave: 0

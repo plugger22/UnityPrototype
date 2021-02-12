@@ -39,8 +39,7 @@ public class GUIManager : MonoBehaviour
     [Range(0.1f, 1.0f)] public float flashConnectiontTime = 0.4f;
     [Tooltip("Flash interval (in real seconds) for InfoApp alerts over the top of Request and Meeting tabs")]
     [Range(0.1f, 1.0f)] public float flashInfoTabTime = 0.4f;
-
-    
+ 
     [Header("PopUp Texts")]
     [Tooltip("How long the full animation cycle lasts (seconds)")]
     [Range(1f, 3f)] public float timerMax = 2.0f;
@@ -100,6 +99,12 @@ public class GUIManager : MonoBehaviour
     [Header("ModalOutcomeUI")]
     [Tooltip("Time for blackBars to expand/contract for Outcome Special mode (seconds)")]
     [Range(0.5f, 1.5f)] public float outcomeBlackBarTimer = 0.75f;
+    [Tooltip("Time for highlight line to expand/contract for Outcome Special mode (seconds)")]
+    [Range(0.5f, 1.5f)] public float outcomeHighlightTimer = 1.00f;
+    [Tooltip("Pause time for highlight when it has shrunk and before it starts growing again for Outcome Special mode (seconds)")]
+    [Range(0.5f, 1.5f)] public float outcomeHighlightPause = 1.0f;
+    [Tooltip("Max width for highlight to expand to for Outcome Special mode (pixels)")]
+    [Range(350, 1000)] public float outcomeHighlightMax = 700f;
 
     [Header("BillboardUI")]
     [Tooltip("Offset distance to get side panels offscreen during development (pixels")]
