@@ -176,14 +176,13 @@ public class ModalOutcome : MonoBehaviour
         //Blackbar (special outcome)
         blackBarTime = GameManager.i.guiScript.outcomeBlackBarTimer;
         blackBarSpeed = Screen.width;
-        blackBarSize = blackBarTransform.sizeDelta.x;
+        blackBarSize = specialTransform.sizeDelta.x;
         //highlights (special Outcome)
         highlightMax = GameManager.i.guiScript.outcomeHighlightMax;
         highlightTime = GameManager.i.guiScript.outcomeHighlightTimer;
         highlightPause = GameManager.i.guiScript.outcomeHighlightPause;
-        highlightMin = highlightTransform.sizeDelta.x;
+        highlightMin = specialTransform.sizeDelta.x;
         highlightHeight = highlightTransform.sizeDelta.y;
-        isHighlightGrow = true;
         //Set Main elements
         outcomeObject.SetActive(true);
         outcomeCanvas.gameObject.SetActive(false);
