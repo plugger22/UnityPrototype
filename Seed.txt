@@ -1133,3 +1133,6 @@ City seed 15759 -> Londus, Eurasia
 
 Dev seed 38976 -> Friday, 12 February 2021 6:18 PM
 City seed 22489 -> Londus, Eurasia
+
+Dev seed 6152 -> Friday, 12 February 2021 8:08 PM
+City seed 65467 -> Londus, Eurasia
