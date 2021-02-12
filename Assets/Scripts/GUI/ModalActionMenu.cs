@@ -96,6 +96,7 @@ public class ModalActionMenu : MonoBehaviour
         }
     }
 
+    #region SetActionMenu
     /// <summary>
     /// Initialise and activate modal Action Menu
     /// </summary>
@@ -239,7 +240,7 @@ public class ModalActionMenu : MonoBehaviour
             EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ModalActionMenu.cs -> SetActionMenu");
         }
     }
-
+    #endregion
 
     /// <summary>
     /// close Action Menu

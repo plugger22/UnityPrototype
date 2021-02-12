@@ -1376,6 +1376,7 @@ public class ActionManager : MonoBehaviour
     }
     #endregion
 
+    #region GetLieLowMessage
     /// <summary>
     /// formatted message string for both player and actor Lie Low action
     /// </summary>
@@ -1383,7 +1384,7 @@ public class ActionManager : MonoBehaviour
     private string GetLieLowMessage(int numOfTurns, string actorName, string actorArc, bool isStressed)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("{0}, {1}{2}{3}, will be Inactive for {4}{5} turn{6}{7} or until Activated", actorName, colourAlert, actorArc, colourEnd,
+        builder.AppendFormat("{0}, {1}{2}{3}, will be Inactive for {4}{5} turn{6}{7}", actorName, colourAlert, actorArc, colourEnd,
             colourNeutral, numOfTurns, numOfTurns != 1 ? "s" : "", colourEnd);
         builder.AppendLine(); builder.AppendLine();
         builder.AppendFormat("{0}Invisibility +1{1} each turn {2}Inactive{3}", colourNeutral, colourEnd, colourAlert, colourEnd);
@@ -1399,7 +1400,9 @@ public class ActionManager : MonoBehaviour
         builder.AppendFormat("{0}Rebel HQ{1} will need {2}{3} turn{4}{5} before anyone else can Lie Low", colourAlert, colourEnd, colourNeutral, lieLowPeriod, lieLowPeriod != 1 ? "s" : "", colourEnd);
         return builder.ToString();
     }
+    #endregion
 
+    #region ProcessPlayerCure
     /// <summary>
     /// Process cure for a player condition (Resistance only)
     /// </summary>
@@ -1441,8 +1444,9 @@ public class ActionManager : MonoBehaviour
         //generate a create modal window event
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessActivateActorAction");
     }
+    #endregion
 
-
+    #region ProcessActivateActorAction
     /// <summary>
     /// Process Activate actor action (Resistance only at present but set up for both sides)
     /// </summary>
@@ -1490,7 +1494,9 @@ public class ActionManager : MonoBehaviour
         //generate a create modal window event
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessActivateActorAction");
     }
+    #endregion
 
+    #region ProcessActivatePlayerAction
     /// <summary>
     /// Process Activate Player action (Resistance only at present but set up for both sides)
     /// </summary>
@@ -1533,7 +1539,9 @@ public class ActionManager : MonoBehaviour
         //generate a create modal window event
         EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessActivatePlayerAction");
     }
+    #endregion
 
+    #region ProcessStressLeavePlayerAction
     /// <summary>
     /// Process Stress Leave for Human Player (both sides)
     /// </summary>
@@ -1587,7 +1595,9 @@ public class ActionManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); }
     }
+    #endregion
 
+    #region ProcessStressLeaveActorAction
     /// <summary>
     /// Process Stress Leave for Human Authority/Resistance Actor
     /// </summary>
@@ -1641,6 +1651,7 @@ public class ActionManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid ModalActionDetails (Null)"); }
     }
+    #endregion
 
     /// <summary>
     /// submethod for ProcessStressLeavePlayer/Actor to take care of statistics

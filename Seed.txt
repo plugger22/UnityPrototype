@@ -939,3 +939,116 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:932)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:417)
 	City seed 26650 -> Londus, Eurasia
+
+Dev seed 35066 -> Friday, 12 February 2021 10:10 AM
+WARNING Invalid slotID input "-1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddCurrentActor(GlobalSide, Actor, Int32) (at Assets/Scripts/Managers/DataManager.cs:4294)
+	ActorManager:CreateActorFinal(GlobalSide, ActorDraftFinal, Int32) (at Assets/Scripts/Managers/ActorManager.cs:919)
+	ActorManager:LoadActorPool() (at Assets/Scripts/Managers/ActorManager.cs:776)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:430)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:254)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:876)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:932)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:417)
+	WARNING Invalid slotID input "-1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddCurrentActor(GlobalSide, Actor, Int32) (at Assets/Scripts/Managers/DataManager.cs:4294)
+	ActorManager:CreateActorFinal(GlobalSide, ActorDraftFinal, Int32) (at Assets/Scripts/Managers/ActorManager.cs:919)
+	ActorManager:LoadActorPool() (at Assets/Scripts/Managers/ActorManager.cs:776)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:430)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:254)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:876)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:932)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:417)
+	WARNING Invalid slotID input "-1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddCurrentActor(GlobalSide, Actor, Int32) (at Assets/Scripts/Managers/DataManager.cs:4294)
+	ActorManager:CreateActorFinal(GlobalSide, ActorDraftFinal, Int32) (at Assets/Scripts/Managers/ActorManager.cs:919)
+	ActorManager:LoadActorPool() (at Assets/Scripts/Managers/ActorManager.cs:776)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:430)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:254)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:876)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:932)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:417)
+	WARNING Invalid slotID input "-1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddCurrentActor(GlobalSide, Actor, Int32) (at Assets/Scripts/Managers/DataManager.cs:4294)
+	ActorManager:CreateActorFinal(GlobalSide, ActorDraftFinal, Int32) (at Assets/Scripts/Managers/ActorManager.cs:919)
+	ActorManager:LoadActorPool() (at Assets/Scripts/Managers/ActorManager.cs:776)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:430)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:254)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:876)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:932)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:417)
+	City seed 52320 -> Londus, Eurasia
+
+Dev seed 17341 -> Friday, 12 February 2021 10:18 AM
+WARNING Invalid slotID input "-1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddCurrentActor(GlobalSide, Actor, Int32) (at Assets/Scripts/Managers/DataManager.cs:4294)
+	ActorManager:CreateActorFinal(GlobalSide, ActorDraftFinal, Int32) (at Assets/Scripts/Managers/ActorManager.cs:919)
+	ActorManager:LoadActorPool() (at Assets/Scripts/Managers/ActorManager.cs:776)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:430)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:254)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:876)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:932)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:417)
+	WARNING Invalid slotID input "-1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddCurrentActor(GlobalSide, Actor, Int32) (at Assets/Scripts/Managers/DataManager.cs:4294)
+	ActorManager:CreateActorFinal(GlobalSide, ActorDraftFinal, Int32) (at Assets/Scripts/Managers/ActorManager.cs:919)
+	ActorManager:LoadActorPool() (at Assets/Scripts/Managers/ActorManager.cs:776)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:430)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:254)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:876)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:932)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:417)
+	WARNING Invalid slotID input "-1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddCurrentActor(GlobalSide, Actor, Int32) (at Assets/Scripts/Managers/DataManager.cs:4294)
+	ActorManager:CreateActorFinal(GlobalSide, ActorDraftFinal, Int32) (at Assets/Scripts/Managers/ActorManager.cs:919)
+	ActorManager:LoadActorPool() (at Assets/Scripts/Managers/ActorManager.cs:776)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:430)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:254)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:876)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:932)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:417)
+	WARNING Invalid slotID input "-1"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	DataManager:AddCurrentActor(GlobalSide, Actor, Int32) (at Assets/Scripts/Managers/DataManager.cs:4294)
+	ActorManager:CreateActorFinal(GlobalSide, ActorDraftFinal, Int32) (at Assets/Scripts/Managers/ActorManager.cs:919)
+	ActorManager:LoadActorPool() (at Assets/Scripts/Managers/ActorManager.cs:776)
+	ActorManager:SubInitialiseLevelStart() (at Assets/Scripts/Managers/ActorManager.cs:430)
+	ActorManager:Initialise(GameState) (at Assets/Scripts/Managers/ActorManager.cs:254)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:876)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:932)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:417)
+	City seed 65432 -> Londus, Eurasia
+
+Dev seed 16445 -> Friday, 12 February 2021 10:27 AM
+City seed 44678 -> Londus, Eurasia
+WARNING Maximum number of teams already present at Node City Centre, ID 10 (Info Only)
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	Node:AddTeam(Team, Int32) (at Assets/Scripts/Base Classes/Node.cs:1185)
+	TeamManager:MoveTeamAI(TeamPool, Int32, Node) (at Assets/Scripts/Managers/TeamManager.cs:897)
+	AIManager:ExecuteTeamTask(AITask) (at Assets/Scripts/Managers/AIManager.cs:3279)
+	AIManager:ExecuteTasks(Int32) (at Assets/Scripts/Managers/AIManager.cs:3187)
+	AIManager:ProcessAISideAuthority() (at Assets/Scripts/Managers/AIManager.cs:647)
+	TurnManager:EndTurnAI() (at Assets/Scripts/Managers/TurnManager.cs:591)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:329)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:251)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:421)
+	
+Dev seed 37389 -> Friday, 12 February 2021 10:36 AM
+City seed 17164 -> Londus, Eurasia
+
+Dev seed 50982 -> Friday, 12 February 2021 10:44 AM
+City seed 54667 -> Londus, Eurasia
+
+Dev seed 46416 -> Friday, 12 February 2021 10:57 AM
+City seed 62985 -> Londus, Eurasia
+
+Dev seed 21140 -> Friday, 12 February 2021 11:02 AM
+City seed 43178 -> Londus, Eurasia

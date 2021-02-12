@@ -705,7 +705,6 @@ public class ActorManager : MonoBehaviour
             {
 
                 //Random -> create copies of actorDrafts in temp list
-                listOfLevelOneTemp.AddRange(pool.listLevelOne);
                 for (int i = 0; i < pool.listLevelOne.Count; i++)
                 {
                     //create a new actorDraftFinal for the tempList
@@ -739,9 +738,10 @@ public class ActorManager : MonoBehaviour
                         //add to OnMap list
                         listOfOnMapTemp.Add(actorTemp);
                         //remove from level One list
-                        index = listOfLevelOneTemp.FindIndex(x => x.name.Equals(actorTemp.name, StringComparison.Ordinal));
+                        index = listOfLevelOneTemp.FindIndex(x => x.actorName.Equals(actorTemp.actorName, StringComparison.Ordinal));
                         if (index > -1)
                         { listOfLevelOneTemp.RemoveAt(index); }
+                        else { Debug.LogWarningFormat("Couldn't find actorTemp \"{0}\" in listOfLevelOnTemp", actorTemp.name); }
                         //reset counter
                         counter = 0;
                     }
