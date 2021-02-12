@@ -62,6 +62,7 @@ public class ModalOutcome : MonoBehaviour
     private float highlightMax;
     private float highlightTime;
     private float highlightPause;
+    private float highlightHeight;
     private bool isHighlightGrow;
 
 
@@ -181,6 +182,7 @@ public class ModalOutcome : MonoBehaviour
         highlightTime = GameManager.i.guiScript.outcomeHighlightTimer;
         highlightPause = GameManager.i.guiScript.outcomeHighlightPause;
         highlightMin = highlightTransform.sizeDelta.x;
+        highlightHeight = highlightTransform.sizeDelta.y;
         isHighlightGrow = true;
         //Set Main elements
         outcomeObject.SetActive(true);
@@ -461,6 +463,7 @@ public class ModalOutcome : MonoBehaviour
                 GameManager.i.popUpFixedScript.ExecuteFixed(0.75f);
                 //grow black bars
                 StartCoroutine("GrowBlackBars");
+                StartCoroutine("RunHighlights");
             }
         }
         else { Debug.LogWarning("Invalid ModalOutcomeDetails package (Null)"); }
@@ -480,8 +483,6 @@ public class ModalOutcome : MonoBehaviour
             blackBarTransform.sizeDelta = new Vector2(blackBarSize, blackBarTransform.sizeDelta.y);
             yield return null;
         }
-        //start highlights
-        StartCoroutine(RunHighlights());
     }
 
     /// <summary>
@@ -505,14 +506,18 @@ public class ModalOutcome : MonoBehaviour
     /// <returns></returns>
     IEnumerator RunHighlights()
     {
+        //initialise
+        highlightTransform.sizeDelta = new Vector2(highlightMin, highlightHeight);
+        isHighlightGrow = true;
         float size = highlightTransform.sizeDelta.x;
+        //continuous
         while (true)
         {
             if (isHighlightGrow == true)
             {
                 //grow
                 size += Time.deltaTime / highlightTime * highlightMax;
-                highlightTransform.sizeDelta = new Vector2(size, highlightTransform.sizeDelta.y);
+                highlightTransform.sizeDelta = new Vector2(size, highlightHeight);
                 //max size check
                 if (size >= highlightMax)
                 { isHighlightGrow = false; }
@@ -521,7 +526,7 @@ public class ModalOutcome : MonoBehaviour
             {
                 //shrink
                 size -= Time.deltaTime / highlightTime * highlightMax;
-                highlightTransform.sizeDelta = new Vector2(size, highlightTransform.sizeDelta.y);
+                highlightTransform.sizeDelta = new Vector2(size, highlightHeight);
                 //min size check
                 if (size <= highlightMin)
                 {
