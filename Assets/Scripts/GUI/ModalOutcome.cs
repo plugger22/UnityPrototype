@@ -64,6 +64,11 @@ public class ModalOutcome : MonoBehaviour
     private float highlightPause;
     private float highlightHeight;
     private bool isHighlightGrow;
+    //coroutines
+    private Coroutine myCoroutineBarGrow;
+    private Coroutine myCoroutineBarShrink;
+    private Coroutine myCoroutineHighlights;
+
 
 
     #region Static Instance
@@ -461,8 +466,8 @@ public class ModalOutcome : MonoBehaviour
                 //fixed popUps
                 GameManager.i.popUpFixedScript.ExecuteFixed(0.75f);
                 //grow black bars
-                StartCoroutine("GrowBlackBars");
-                StartCoroutine("RunHighlights");
+                myCoroutineBarGrow = StartCoroutine("GrowBlackBar");
+                myCoroutineHighlights = StartCoroutine("RunHighlights");
             }
         }
         else { Debug.LogWarning("Invalid ModalOutcomeDetails package (Null)"); }
@@ -473,7 +478,7 @@ public class ModalOutcome : MonoBehaviour
     /// Extend black bars (behind Special Outcome) to full screen width
     /// </summary>
     /// <returns></returns>
-    IEnumerator GrowBlackBars()
+    IEnumerator GrowBlackBar()
     {
         blackBarSize = blackBarTransform.sizeDelta.x;
         while (blackBarTransform.sizeDelta.x < Screen.width)
@@ -488,7 +493,7 @@ public class ModalOutcome : MonoBehaviour
     /// Shrink black bars (behind Special Outcome) to width of Special Outcome panel. Used when closing
     /// </summary>
     /// <returns></returns>
-    IEnumerator ShrinkBlackBars()
+    IEnumerator ShrinkBlackBar()
     {
         blackBarSize = blackBarTransform.sizeDelta.x;
         while (blackBarTransform.sizeDelta.x > specialWidth)
@@ -570,8 +575,10 @@ public class ModalOutcome : MonoBehaviour
     /// <returns></returns>
     IEnumerator RunCloseSequence()
     {
-        StopCoroutine(RunHighlights());
-        yield return StartCoroutine(ShrinkBlackBars());
+        if (myCoroutineHighlights != null)
+        { StopCoroutine(myCoroutineHighlights); }
+        myCoroutineBarShrink = StartCoroutine("ShrinkBlackBar");
+        yield return myCoroutineBarShrink;
         CloseModalOutcome();
         yield break;
     }
@@ -587,8 +594,11 @@ public class ModalOutcome : MonoBehaviour
         outcomeCanvas.gameObject.SetActive(false);
         //close tooltips
         GameManager.i.guiScript.SetTooltipsOff();
-        //stop coroutine
-        StopCoroutine("GrowBlackBars");
+        //stop coroutine -> failsafe
+        if (myCoroutineBarGrow != null)
+        { StopCoroutine(myCoroutineBarGrow); }
+        if (myCoroutineBarShrink != null)
+        { StopCoroutine(myCoroutineBarShrink); }
         //set modal false
         GameManager.i.guiScript.SetIsBlocked(false, modalLevel);
         //set game state
