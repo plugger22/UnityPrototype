@@ -101,6 +101,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
     }
 
+    #region showTooltip
     /// <summary>
     /// tooltip coroutine
     /// </summary>
@@ -250,5 +251,7 @@ public class ModalMenuUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             }
         }
     }
+    #endregion
+
 
 }
