@@ -169,6 +169,8 @@ public class GameManager : MonoBehaviour
     private List<StartMethod> listOfDebugMethods = new List<StartMethod>();         //Debug related methods
     private List<StartMethod> listOfLoadMethods = new List<StartMethod>();          //Load a saved game methods (used to regenerate the loaded level). For AI (both sides) Player
 
+
+
     #endregion
 
 

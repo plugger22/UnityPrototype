@@ -444,7 +444,8 @@ public class Node : MonoBehaviour
             else
             {
                 onMouseFlag = true;
-                myCoroutine = StartCoroutine("ShowTooltip");
+                /*myCoroutine = StartCoroutine("ShowTooltip");*/
+                GameManager.i.guiScript.myNodeTooltip = StartCoroutine("ShowTooltip");
             }
         }
     }
@@ -629,10 +630,16 @@ public class Node : MonoBehaviour
     /// </summary>
     private void StopMyCoroutine()
     {
-        if (myCoroutine != null)
+        /*if (myCoroutine != null)
         {
             StopCoroutine(myCoroutine);
             myCoroutine = null;
+            onMouseFlag = false;
+        }*/
+        if (GameManager.i.guiScript.myNodeTooltip != null)
+        {
+            StopCoroutine(GameManager.i.guiScript.myNodeTooltip);
+            GameManager.i.guiScript.myNodeTooltip = null;
             onMouseFlag = false;
         }
     }
