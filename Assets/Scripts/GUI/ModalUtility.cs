@@ -122,6 +122,7 @@ namespace modalAPI
         public ModalSubState modalState;    //modal level to return to once outcome window closes (only for modallevel's 2+, ignore otherwise)
         public bool isAction;               //true if an action has been used
         public bool isSpecial;              //Special outcome (expanding black bars), default false, optional
+        public bool isSpecialGood;          //Special outcome, if true highlight uses good outcome colour, otherwise bad outcome colour (default true, used for target outcomes to differentiate between success and failure)
         public string reason;               //short text giving reason for outcome window, eg. "Select Gear" (used for debugging)
         public MsgPipelineType type;        //used for start of turn messages in message Queue (ignore for messages displayed during turn)
         public string help0;                //if help0 specified a help icon will auto appear, otherwise invisible
@@ -143,6 +144,7 @@ namespace modalAPI
             modalState = ModalSubState.None;
             isAction = false;
             isSpecial = false;
+            isSpecialGood = true;
             reason = "Unknown";
             side = GameManager.i.sideScript.PlayerSide;
             sprite = GameManager.i.spriteScript.infoSprite;

@@ -2723,14 +2723,22 @@ public class ActionManager : MonoBehaviour
                 //action (if valid) expended -> must be BEFORE outcome window event
                 outcomeDetails.isAction = isAction;
                 if (isSuccessful == true)
-                { outcomeDetails.reason = "Target Success"; }
-                else { outcomeDetails.reason = "Target Fail"; }
+                {
+                    outcomeDetails.reason = "Target Success";
+                    outcomeDetails.isSpecialGood = true;
+                }
+                else
+                {
+                    outcomeDetails.reason = "Target Fail";
+                    outcomeDetails.isSpecialGood = false;
+                }
                 if (errorFlag == false)
                 {
                     //outcome
                     outcomeDetails.side = GameManager.i.globalScript.sideResistance;
                     outcomeDetails.textTop = builderTop.ToString();
                     outcomeDetails.textBottom = builderBottom.ToString();
+                    outcomeDetails.isSpecial = true;
                     //help tags
                     if (listOfHelpTags.Count > 0)
                     { ProcessOutcomeHelp(outcomeDetails, listOfHelpTags); }

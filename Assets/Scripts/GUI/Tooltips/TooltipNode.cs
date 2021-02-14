@@ -614,7 +614,7 @@ public class TooltipNode : MonoBehaviour
         { screenPos.x += width / 2 - screenPos.x; }
         //set new position
         tooltipNodeObject.transform.position = screenPos;
-        Debug.LogFormat("[UI] TooltipNode.cs -> SetTooltip{0}", "\n");
+        Debug.LogFormat("[UI] TooltipNode.cs -> SetTooltip, node \"{0}\"{1}", data.nodeName, "\n");
         /*}*/
     }
     #endregion

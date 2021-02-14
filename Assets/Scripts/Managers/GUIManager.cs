@@ -213,8 +213,8 @@ public class GUIManager : MonoBehaviour
     //private string colourNormal;
     private string colourEnd;
 
-    //tooltip coroutines
-    public Coroutine myNodeTooltip;
+    /*//tooltip coroutines
+    public Coroutine myNodeTooltip;*/
 
 
     private string alpha = "<alpha=#66>";   //alpha transparency, used for stars (FF is 100%, CC / AA / 88 / 66 / 44 / 22)
@@ -943,8 +943,9 @@ public class GUIManager : MonoBehaviour
     /// </summary>
     public void SetTooltipsOff()
     {
-        if (myNodeTooltip != null)
-        { StopCoroutine(myNodeTooltip); }
+        /*if (myNodeTooltip != null)
+        { StopCoroutine(myNodeTooltip); }*/
+
         //exit any generic or node tooltips
         GameManager.i.tooltipGenericScript.CloseTooltip("GUIManager.cs -> SetTooltipsOff");
         GameManager.i.tooltipNodeScript.CloseTooltip("GUIManager.cs -> SetTooltipsOff");

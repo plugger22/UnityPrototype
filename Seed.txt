@@ -1148,3 +1148,92 @@ City seed 56527 -> Londus, Eurasia
 
 Dev seed 13568 -> Sunday, 14 February 2021 12:06 PM
 City seed 60285 -> Londus, Eurasia
+
+Dev seed 13837 -> Sunday, 14 February 2021 3:14 PM
+City seed 53262 -> Londus, Eurasia
+
+Dev seed 61760 -> Sunday, 14 February 2021 3:26 PM
+City seed 13564 -> Londus, Eurasia
+
+Dev seed 41616 -> Sunday, 14 February 2021 3:32 PM
+City seed 7395 -> Londus, Eurasia
+
+Dev seed 15780 -> Sunday, 14 February 2021 3:37 PM
+City seed 40238 -> Londus, Eurasia
+WARNING Invalid node (Null) for target.nodeID 10
+UnityEngine.Debug:LogWarning(Object)
+	NodeManager:ShowNodes(NodeUI) (at Assets/Scripts/Managers/NodeManager.cs:663)
+	NodeManager:FlashHighlightNodes(NodeUI) (at Assets/Scripts/Managers/NodeManager.cs:590)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:380)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:351)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:380)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:451)
+	WARNING Invalid node (Null) for target.nodeID 21
+UnityEngine.Debug:LogWarning(Object)
+	NodeManager:ShowNodes(NodeUI) (at Assets/Scripts/Managers/NodeManager.cs:663)
+	NodeManager:FlashHighlightNodes(NodeUI) (at Assets/Scripts/Managers/NodeManager.cs:590)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:380)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:351)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:380)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:451)
+	
+Dev seed 35415 -> Sunday, 14 February 2021 3:39 PM
+City seed 49923 -> Londus, Eurasia
+
+Dev seed 51447 -> Sunday, 14 February 2021 3:41 PM
+City seed 55956 -> Londus, Eurasia
+
+Dev seed 61393 -> Sunday, 14 February 2021 3:48 PM
+City seed 4003 -> Londus, Eurasia
+ERROR Coroutine continue failure
+
+Dev seed 18886 -> Sunday, 14 February 2021 3:50 PM
+City seed 19122 -> Londus, Eurasia
+WARNING Invalid node (Null) for target.nodeID 3
+UnityEngine.Debug:LogWarning(Object)
+	NodeManager:ShowNodes(NodeUI) (at Assets/Scripts/Managers/NodeManager.cs:663)
+	NodeManager:FlashHighlightNodes(NodeUI) (at Assets/Scripts/Managers/NodeManager.cs:590)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:380)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:351)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:380)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:451)
+	WARNING Invalid node (Null) for target.nodeID 10
+UnityEngine.Debug:LogWarning(Object)
+	NodeManager:ShowNodes(NodeUI) (at Assets/Scripts/Managers/NodeManager.cs:663)
+	NodeManager:FlashHighlightNodes(NodeUI) (at Assets/Scripts/Managers/NodeManager.cs:590)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:380)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:351)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:380)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:451)
+	WARNING Invalid node (Null) for target.nodeID 10
+UnityEngine.Debug:LogWarning(Object)
+	NodeManager:ShowNodes(NodeUI) (at Assets/Scripts/Managers/NodeManager.cs:663)
+	NodeManager:FlashHighlightNodes(NodeUI) (at Assets/Scripts/Managers/NodeManager.cs:590)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:380)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:351)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:380)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:451)
+	WARNING Invalid node (Null) for target.nodeID 10
+UnityEngine.Debug:LogWarning(Object)
+	NodeManager:ShowNodes(NodeUI) (at Assets/Scripts/Managers/NodeManager.cs:663)
+	NodeManager:FlashHighlightNodes(NodeUI) (at Assets/Scripts/Managers/NodeManager.cs:590)
+	NodeManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/NodeManager.cs:380)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:351)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:380)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:451)
+	
+Dev seed 50394 -> Sunday, 14 February 2021 3:55 PM
+City seed 4571 -> Londus, Eurasia
+ERROR Coroutine continue failure
+
+Dev seed 11718 -> Sunday, 14 February 2021 3:58 PM
+City seed 3399 -> Londus, Eurasia
+
+Dev seed 25691 -> Sunday, 14 February 2021 4:07 PM
+City seed 37189 -> Londus, Eurasia
+
+Dev seed 57787 -> Sunday, 14 February 2021 4:09 PM
+City seed 64382 -> Londus, Eurasia
+
+Dev seed 55879 -> Sunday, 14 February 2021 6:06 PM
+City seed 59032 -> Londus, Eurasia

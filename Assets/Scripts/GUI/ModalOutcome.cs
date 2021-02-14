@@ -68,6 +68,9 @@ public class ModalOutcome : MonoBehaviour
     private Coroutine myCoroutineBarGrow;
     private Coroutine myCoroutineBarShrink;
     private Coroutine myCoroutineHighlights;
+    //fast access
+    private Color colourGood;
+    private Color colourBad;
 
 
 
@@ -170,6 +173,8 @@ public class ModalOutcome : MonoBehaviour
         { interactShowMe.SetButton(EventType.OutcomeShowMe); }
         else { Debug.LogError("Invalid interactShowMe (Null)"); }
         //colours
+        colourGood = GameManager.i.uiScript.outcomeGood;
+        colourBad = GameManager.i.uiScript.outcomeBad;
         panelSpecial.color = GameManager.i.uiScript.outcomeSpecial;
         blackBar.color = GameManager.i.uiScript.outcomeBlackBars;
         //Fixed position at screen centre
@@ -412,6 +417,7 @@ public class ModalOutcome : MonoBehaviour
                 //toggle panels
                 panelNormal.gameObject.SetActive(false);
                 canvasSpecial.gameObject.SetActive(true);
+
                 //register action status
                 isAction = details.isAction;
 
@@ -455,7 +461,10 @@ public class ModalOutcome : MonoBehaviour
 
                 //set blackBar to min width
                 blackBarTransform.sizeDelta = new Vector2(specialWidth, blackBarTransform.sizeDelta.y);
-
+                //highlight colour
+                if (details.isSpecialGood == true)
+                { highlight.color = colourGood; }
+                else { highlight.color = colourBad; }
                 //set states
                 ModalStateData package = new ModalStateData() { mainState = ModalSubState.Outcome };
                 GameManager.i.inputScript.SetModalState(package);

@@ -15,6 +15,10 @@ public class UIManager : MonoBehaviour
     public Color outcomeSpecial;
     [Tooltip("Black bars that grow out behind panel Special")]
     public Color outcomeBlackBars;
+    [Tooltip("Outcome special highlight colour -> Good outcomes, alpha at 75% (191)")]
+    public Color outcomeGood;
+    [Tooltip("Outcome special highlight colour -> Bad outcomes, alpha at 75% (191)")]
+    public Color outcomeBad;
 
     [Header("Power Bloc Texts")]
     [Tooltip("Americon")]

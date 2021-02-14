@@ -653,14 +653,27 @@ public class NodeManager : MonoBehaviour
                         foreach (Target target in tempList)
                         {
                             Node nodeTemp = GameManager.i.dataScript.GetNode(target.nodeID);
-                            //only show if target isKnown
-                            if (nodeTemp != null && nodeTemp.isTargetKnown == true)
+                            if (nodeTemp != null)
                             {
-                                nodeTemp.SetActive();
-                                listOfHighlighted.Add(nodeTemp);
-                                counter++;
+                                //only show if target isKnown (authority side
+                                if (GameManager.i.sideScript.PlayerSide.level == 1)
+                                {
+                                    if (nodeTemp.isTargetKnown == true)
+                                    {
+                                        nodeTemp.SetActive();
+                                        listOfHighlighted.Add(nodeTemp);
+                                        counter++;
+                                    }
+                                }
+                                else
+                                {
+                                    //resistance player
+                                    nodeTemp.SetActive();
+                                    listOfHighlighted.Add(nodeTemp);
+                                    counter++;
+                                }
                             }
-                            else { Debug.LogWarning(string.Format("Invalid node (Null) for target.nodeID {0}", target.nodeID)); }
+                            else { Debug.LogWarningFormat("Invalid node (Null) for target.nodeID {0}", target.nodeID); }
                         }
                         displayText = string.Format("{0}{1}{2}{3} Target{4}{5} district{6}{7}", colourDefault, counter, colourEnd, colourHighlight, colourEnd,
                             colourDefault, tempList.Count != 1 ? "s" : "", colourEnd);
@@ -2890,6 +2903,7 @@ public class NodeManager : MonoBehaviour
     private void ProcessMoveOutcome(MoveReturnData data)
     {
         ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+        outcomeDetails.isSpecial = true;
         //Erasure team picks up player immediately if invisibility 0
         CaptureDetails captureDetails = GameManager.i.captureScript.CheckCaptured(data.node.nodeID, GameManager.i.playerScript.actorID);
         if (captureDetails != null)
@@ -2910,6 +2924,7 @@ public class NodeManager : MonoBehaviour
                 outcomeDetails.isAction = true;
                 outcomeDetails.side = globalResistance;
                 outcomeDetails.reason = "Player Move";
+                outcomeDetails.isSpecialGood = false;
             }
             else
             {
@@ -2920,6 +2935,7 @@ public class NodeManager : MonoBehaviour
                 outcomeDetails.isAction = true;
                 outcomeDetails.side = globalResistance;
                 outcomeDetails.reason = "Player Move";
+                outcomeDetails.isSpecialGood = true;
             }
             EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "NodeManager.cs -> ProcessMoveOutcome");
             //Nemesis, if at same node, can interact and damage player
