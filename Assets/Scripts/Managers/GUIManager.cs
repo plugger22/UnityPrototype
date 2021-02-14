@@ -105,6 +105,8 @@ public class GUIManager : MonoBehaviour
     [Range(0.5f, 1.5f)] public float outcomeHighlightPause = 1.0f;
     [Tooltip("Max width for highlight to expand to for Outcome Special mode (pixels)")]
     [Range(350, 1000)] public float outcomeHighlightMax = 700f;
+    [Tooltip("Timer for fading out Highlights upon closing (seconds)")]
+    [Range(0.25f, 1.00f)] public float outcomeHighlightFade = 0.75f;
 
     [Header("BillboardUI")]
     [Tooltip("Offset distance to get side panels offscreen during development (pixels")]

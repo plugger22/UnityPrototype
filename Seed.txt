@@ -1237,3 +1237,36 @@ City seed 64382 -> Londus, Eurasia
 
 Dev seed 55879 -> Sunday, 14 February 2021 6:06 PM
 City seed 59032 -> Londus, Eurasia
+
+Dev seed 18493 -> Monday, 15 February 2021 9:06 AM
+City seed 21145 -> Londus, Eurasia
+
+Dev seed 55211 -> Monday, 15 February 2021 9:20 AM
+City seed 17439 -> Londus, Eurasia
+
+Dev seed 42150 -> Monday, 15 February 2021 9:21 AM
+City seed 51693 -> Londus, Eurasia
+
+Dev seed 28187 -> Monday, 15 February 2021 9:22 AM
+City seed 44287 -> Londus, Eurasia
+
+Dev seed 45223 -> Monday, 15 February 2021 9:24 AM
+City seed 47030 -> Londus, Eurasia
+
+Dev seed 22135 -> Monday, 15 February 2021 9:25 AM
+City seed 33011 -> Londus, Eurasia
+
+Dev seed 2669 -> Monday, 15 February 2021 9:26 AM
+City seed 40438 -> Londus, Eurasia
+
+Dev seed 43361 -> Monday, 15 February 2021 9:33 AM
+City seed 37431 -> Londus, Eurasia
+
+Dev seed 16176 -> Monday, 15 February 2021 9:54 AM
+City seed 61998 -> Londus, Eurasia
+
+Dev seed 24012 -> Monday, 15 February 2021 10:09 AM
+City seed 36077 -> Londus, Eurasia
+
+Dev seed 22279 -> Monday, 15 February 2021 10:18 AM
+City seed 6669 -> Londus, Eurasia

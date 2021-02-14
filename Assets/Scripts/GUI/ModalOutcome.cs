@@ -63,11 +63,13 @@ public class ModalOutcome : MonoBehaviour
     private float highlightTime;
     private float highlightPause;
     private float highlightHeight;
+    private float highlightFade;
     private bool isHighlightGrow;
     //coroutines
     private Coroutine myCoroutineBarGrow;
     private Coroutine myCoroutineBarShrink;
     private Coroutine myCoroutineHighlights;
+    private Coroutine myCoroutineFadeHighlights;
     //fast access
     private Color colourGood;
     private Color colourBad;
@@ -191,6 +193,7 @@ public class ModalOutcome : MonoBehaviour
         highlightMax = GameManager.i.guiScript.outcomeHighlightMax;
         highlightTime = GameManager.i.guiScript.outcomeHighlightTimer;
         highlightPause = GameManager.i.guiScript.outcomeHighlightPause;
+        highlightFade = GameManager.i.guiScript.outcomeHighlightFade;
         highlightMin = specialTransform.sizeDelta.x;
         highlightHeight = highlightTransform.sizeDelta.y;
         //Set Main elements
@@ -552,6 +555,22 @@ public class ModalOutcome : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Fade out highlight on close
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator FadeHighlights()
+    {
+        Color highlightColour;
+        while (highlight.color.a > 0)
+        {
+            highlightColour = highlight.color;
+            highlightColour.a -= Time.deltaTime / highlightFade;
+            highlight.color = highlightColour;
+            yield return null;
+        }
+    }
+
     /*/// <summary>
     /// fade in tooltip over time
     /// </summary>
@@ -584,10 +603,19 @@ public class ModalOutcome : MonoBehaviour
     /// <returns></returns>
     IEnumerator RunCloseSequence()
     {
+        //deal with highlights first
         if (myCoroutineHighlights != null)
-        { StopCoroutine(myCoroutineHighlights); }
+        {
+            //stop highlight animation
+            StopCoroutine(myCoroutineHighlights);
+            //fade out highlights
+            myCoroutineFadeHighlights = StartCoroutine("FadeHighlights");
+            /*yield return myCoroutineFadeHighlights;*/
+        }
+        //shrink black bars
         myCoroutineBarShrink = StartCoroutine("ShrinkBlackBar");
         yield return myCoroutineBarShrink;
+        //close main panel
         CloseModalOutcome();
         yield break;
     }
