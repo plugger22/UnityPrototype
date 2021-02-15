@@ -238,6 +238,7 @@ public class BillboardUI : MonoBehaviour
         /*Debug.LogFormat("[Tst] BillboardUI.cs -> halfScreenWidth {0}, panelWidth {1}, distance {2}{3}", halfScreenWidth, width, distance, "\n");*/
     }
 
+    #region ResetBillboard
     /// <summary>
     /// reset panels just off screen
     /// </summary>
@@ -255,6 +256,7 @@ public class BillboardUI : MonoBehaviour
         billRight.transform.localPosition = new Vector3(screenDistance, 0, 0);
         Debug.LogFormat("[UI] BillboardUI.cs -> Reset: Reset Billboard{0}", "\n");
     }
+    #endregion
 
     /// <summary>
     /// Main billboard controller (true if billboard displayed for an advertisement, etc., false for a simple turn display)
@@ -282,6 +284,7 @@ public class BillboardUI : MonoBehaviour
         }
     }
 
+    #region BillOpenMain
     /// <summary>
     /// coroutine to slide panels together then display full billboard (strobes the neon border)
     /// </summary>
@@ -422,7 +425,9 @@ public class BillboardUI : MonoBehaviour
             yield return null;
         }
     }
+    #endregion
 
+    #region ProcessBillboardTextTop
     /// <summary>
     /// Takes textTop from billboard and converts any '[' and ']' tags (topText only) into textmeshPro tags
     /// </summary>
@@ -446,6 +451,7 @@ public class BillboardUI : MonoBehaviour
         }
         return checkedText;
     }
+    #endregion
 
     /// <summary>
     /// coroutine to slide panels together then display simple turn display

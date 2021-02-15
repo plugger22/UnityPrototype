@@ -132,6 +132,10 @@ public class GUIManager : MonoBehaviour
     [Tooltip("% chance of a light beam flickering each frame")]
     [Range(0, 100)] public int billboardLightChance = 1;
 
+    [Header("Advertisements")]
+    [Tooltip("Chance of an advert occuring per turn (excludes turns where a Review occurs)")]
+    [Range(0, 100)] public int advertChance = 50;
+
 
 
     //font awesome icons (characters)
@@ -795,23 +799,31 @@ public class GUIManager : MonoBehaviour
     {
         TopicGlobal topicGlobal = GameManager.i.topicScript.GetTopicGlobal();
         Debug.LogFormat("[Pip] GUIManager.cs -> show {0} topic{1}", topicGlobal, "\n");
+
+        //topic type
         switch (topicGlobal)
         {
             case TopicGlobal.Decision:
+                //tooltips (modal 0) off
+                SetTooltipsOff();
                 if (GameManager.i.topicDisplayScript.CheckIsTopic() == true)
                 {
-                    //switch of all modal 0 tooltips
-                    SetTooltipsOff();
                     waitUntilDone = true;
                     InitialiseTopic();
                 }
                 else { waitUntilDone = false; }
                 break;
             case TopicGlobal.Review:
-                //switch of all modal 0 tooltips
+                //tooltips (modal 0) off
                 SetTooltipsOff();
                 waitUntilDone = true;
                 GameManager.i.actorScript.InitialiseReview();
+                break;
+            case TopicGlobal.Advert:
+                //tooltips (modal 0) off
+                SetTooltipsOff();
+                waitUntilDone = true;
+                GameManager.i.advertScript.InitialiseAdvert();
                 break;
             case TopicGlobal.None:
             default:

@@ -264,6 +264,9 @@ public class TopicManager : MonoBehaviour
     private string levelScopeName;
     private string campaignScopeName;
 
+    //adverts
+    private int advertChance = -1;
+
     //colour palette for Modal Outcome
     private string colourGood;
     private string colourBad;
@@ -276,6 +279,7 @@ public class TopicManager : MonoBehaviour
     private string colourEnd;
     #endregion
 
+    #region Initialise
     /// <summary>
     /// Initialisation
     /// </summary>
@@ -285,7 +289,8 @@ public class TopicManager : MonoBehaviour
         switch (state)
         {
             case GameState.NewInitialisation:
-                SubInitialiseFastAccess(); //needs to be first
+                SubInitialiseAsserts();     //needs to be first
+                SubInitialiseFastAccess();
                 SubInitialiseStartUp();
                 SubInitialiseLevelStart();
                 SubInitialiseEvents();
@@ -294,6 +299,7 @@ public class TopicManager : MonoBehaviour
                 SubInitialiseLevelStart();
                 break;
             case GameState.LoadAtStart:
+                SubInitialiseAsserts();
                 SubInitialiseFastAccess();
                 SubInitialiseStartUp();
                 SubInitialiseStoryTopics();
@@ -307,7 +313,7 @@ public class TopicManager : MonoBehaviour
                 break;
         }
     }
-
+    #endregion
 
     #region Initialisation SubMethods
 
@@ -421,6 +427,18 @@ public class TopicManager : MonoBehaviour
 
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
+    {
+        //adverts
+        advertChance = GameManager.i.guiScript.advertChance;
+        Debug.Assert(advertChance > -1, "Invalid advertChance (-1)");
+    }
+    #endregion
+
+    #region SubInitialiseAsserts
+    /// <summary>
+    /// Assert SO checks
+    /// </summary>
+    private void SubInitialiseAsserts()
     {
         //text lists
         Debug.Assert(textlistGenericLocation != null, "Invalid textListGenericLocations (Null)");
@@ -1268,6 +1286,14 @@ public class TopicManager : MonoBehaviour
                         //Performance Reviews toggled off
                         topicGlobal = TopicGlobal.Decision;
                     }
+                    //
+                    // - - - Advert, chance of
+                    //
+                    if (topicGlobal == TopicGlobal.Decision)
+                    {
+                        if (Random.Range(0, 100) < advertChance)
+                        { topicGlobal = TopicGlobal.Advert; }
+                    }
                 }
                 else
                 {
@@ -1277,6 +1303,7 @@ public class TopicManager : MonoBehaviour
                 //
                 // - - - Decision topic
                 //
+
                 if (topicGlobal == TopicGlobal.Decision)
                 {
                     CheckTopics();
@@ -1313,6 +1340,7 @@ public class TopicManager : MonoBehaviour
                         UnitTestTopic(playerSide);
                     }
                 }
+
             }
         }
         else { Debug.LogError("Invalid playerSide (Null)"); }

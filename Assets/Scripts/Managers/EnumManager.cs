@@ -23,7 +23,7 @@
     //  - - - UI - - -
     //
     public enum ModalState { Normal, ModalUI}                                                                                //main modal state
-    public enum ModalSubState { None, Outcome, Confirm, GenericPicker, ActionMenu, MainMenu, Inventory, TeamPicker, DiceRoller, Topic, InfoDisplay, ShowMe, Review, Transition, MetaGame, Billboard,
+    public enum ModalSubState { None, Outcome, Confirm, GenericPicker, ActionMenu, MainMenu, Inventory, TeamPicker, DiceRoller, Topic, InfoDisplay, ShowMe, Review, Transition, MetaGame, Billboard, Advert,
          Debug } //ModalUI sub game states
     public enum ModalInfoSubState { None, CityInfo, AIInfo, MainInfo, TabbedUI }                                                                  //if ModalUI.InfoDisplay -> what type of info
     public enum ModalGenericPickerSubState { None, Normal, CompromisedGear }                                                            //if ModalUI.GenericPicker -> what type of picker
@@ -120,7 +120,7 @@
     //
     // - - - Topics and Targets - - -
     //
-    public enum TopicGlobal { None, Decision, Review }                      //what type of topic will be generated this turn
+    public enum TopicGlobal { None, Decision, Review, Advert }                      //what type of topic will be generated this turn
     public enum TopicDecisionType { Normal, Letter, Comms, Count }                 //type of decision topic
     public enum TopicBase { Normal, Other, Count }                      //used for base topicUI. Order matters (array index)
     public enum Status { Dormant, Active, Live, Outstanding, Done }         //target or topic status (Outstanding applies only targets)

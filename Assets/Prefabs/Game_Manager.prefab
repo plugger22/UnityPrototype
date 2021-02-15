@@ -6548,9 +6548,10 @@ MonoBehaviour:
   outcomeHighlightTimer: 1
   outcomeHighlightPause: 1
   outcomeHighlightMax: 700
+  outcomeHighlightFade: 0.75
   billboardOffset: 135
   billboardFlash: 1.5
-  billboardChance: 20
+  billboardChance: 0
   billboardSpeed: 100
   billboardFontPause: 3
   billboardFontSpeed: 2

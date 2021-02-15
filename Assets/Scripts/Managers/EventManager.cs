@@ -238,6 +238,8 @@ public enum EventType
     TopicDisplayIgnore,
     //Billboard
     BillboardClose,
+    //Advert
+    AdvertClose,
     //ShowMe
     ShowMeRestore,
     //ActorPanelUI

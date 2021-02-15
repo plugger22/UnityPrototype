@@ -115,6 +115,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public PopUpDynamic popUpDynamicScript;           //PopUpDynamic
     [HideInInspector] public PopUpFixed popUpFixedScript;               //PopUpFixed
     [HideInInspector] public BillboardUI billboardScript;               //Billboard UI
+    [HideInInspector] public AdvertUI advertScript;                     //Advert UI
     [HideInInspector] public ModalTabbedUI tabbedUIScript;              //Tabbed UI
 #endregion
 
@@ -289,6 +290,7 @@ public class GameManager : MonoBehaviour
         popUpDynamicScript = PopUpDynamic.Instance();
         popUpFixedScript = PopUpFixed.Instance();
         billboardScript = BillboardUI.Instance();
+        advertScript = AdvertUI.Instance();
         tabbedUIScript = ModalTabbedUI.Instance();
         //Error Checking
         Debug.Assert(startScript != null, "Invalid startScript (Null)");
@@ -376,6 +378,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(popUpDynamicScript != null, "Invalid popUpDynamicScript (Null)");
         Debug.Assert(popUpFixedScript != null, "Invalid popUpFixedScript (Null)");
         Debug.Assert(billboardScript != null, "Invalid billboardScript (Null)");
+        Debug.Assert(advertScript != null, "Invalid advertScript (Null)");
         Debug.Assert(tabbedUIScript != null, "Invalid tabbedUIScript (Null)");
         //set up list of delegates
         InitialiseStartSequence();
@@ -805,6 +808,10 @@ public class GameManager : MonoBehaviour
         //BillboardUI
         startMethod.handler = billboardScript.Initialise;
         startMethod.className = "BillboardUI";
+        listOfUIMethods.Add(startMethod);
+        //AdvertUI
+        startMethod.handler = advertScript.Initialise;
+        startMethod.className = "AdvertUI";
         listOfUIMethods.Add(startMethod);
         //TabbedUI
         startMethod.handler = tabbedUIScript.Initialise;

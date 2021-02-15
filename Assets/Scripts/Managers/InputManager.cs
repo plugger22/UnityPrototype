@@ -50,6 +50,10 @@ public class InputManager : MonoBehaviour
     #endregion
 
     #region Properties
+    //
+    // - - - Properties
+    //
+
     public GameState GameState
     {
         get { return _gameState; }
@@ -536,6 +540,22 @@ public class InputManager : MonoBehaviour
                                 //any key or mouse click
                                 GameManager.i.guiScript.waitUntilDone = true;
                                 EventManager.i.PostNotification(EventType.BillboardClose, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
+                            }
+                            break;
+                        #endregion
+
+                        #region Advert
+                        case ModalSubState.Advert:
+                            if (Input.GetButtonDown("Multipurpose") == true)
+                            {
+                                GameManager.i.guiScript.waitUntilDone = true;
+                                EventManager.i.PostNotification(EventType.AdvertClose, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
+                            }
+                            else
+                            {
+                                //any key or mouse click
+                                GameManager.i.guiScript.waitUntilDone = true;
+                                EventManager.i.PostNotification(EventType.AdvertClose, this, null, "InputManager.cs -> ProcessKeyInput Multipurpose");
                             }
                             break;
                         #endregion
