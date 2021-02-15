@@ -115,8 +115,6 @@ public class AdvertUI : MonoBehaviour
         //positions
         pos_x = Screen.width / 2;
         pos_y = Screen.height / 2;
-        //initialise advert
-        InitialiseAdvert();
     }
     #endregion
 

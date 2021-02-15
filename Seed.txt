@@ -1695,3 +1695,207 @@ UnityEngine.Debug:LogErrorFormat(String, Object[])
 	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
 	
+Dev seed 19657 -> Monday, 15 February 2021 12:41 PM
+City seed 5001 -> Londus, Eurasia
+ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	
+Dev seed 23114 -> Monday, 15 February 2021 2:38 PM
+City seed 7996 -> Londus, Eurasia
+ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	ERROR Duplicate record exists for MainInfoData turn 0
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:UpdateCurrentItemData() (at Assets/Scripts/Managers/DataManager.cs:729)
+	TurnManager:SetAutoRun(Int32) (at Assets/Scripts/Managers/TurnManager.cs:254)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:426)
+	
+Dev seed 29947 -> Monday, 15 February 2021 2:39 PM
+City seed 6521 -> Londus, Eurasia
+
+Dev seed 34707 -> Monday, 15 February 2021 2:44 PM
+City seed 39434 -> Londus, Eurasia
+
+Dev seed 23396 -> Monday, 15 February 2021 2:44 PM
+City seed 32043 -> Londus, Eurasia
