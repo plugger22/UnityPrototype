@@ -30,6 +30,17 @@ public class AdvertUI : MonoBehaviour
     private string colourRed;
     private string endTag;
     private string sizeLarge;
+    private Coroutine myCoroutine;
+
+    //Name text (pulses up and down in size)
+    private float fontSizeMax;
+    private float fontSizeMin;
+    private float fontSizeCurrent;
+    private float fontSizeCounter;
+    private float fontSizeCounterMax;
+    private float fontSizeSpeed;
+    private float fontSizeBoost;           //will grow at a faster rate than shrinking due to the boost
+    private Pulsing fontSizeState;
 
     private float pos_x;
     private float pos_y;
@@ -99,7 +110,21 @@ public class AdvertUI : MonoBehaviour
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
     {
-
+        flashBorder = GameManager.i.guiScript.billboardFlash;
+        panelOffset = GameManager.i.guiScript.billboardOffset;
+        fontSizeMin = GameManager.i.guiScript.billboardFontMin;
+        fontSizeCounterMax = GameManager.i.guiScript.billboardFontPause;
+        fontSizeSpeed = GameManager.i.guiScript.billboardFontSpeed;
+        fontSizeBoost = GameManager.i.guiScript.billboardFontBoost;
+        maxNameChars = GameManager.i.guiScript.billboardNameMax;
+        //Asserts
+        Debug.Assert(flashBorder > 0.0f, "Invalid flashNeon (Zero)");
+        Debug.Assert(panelOffset > 0.0f, "Invalid panelOffset (Zero)");
+        Debug.Assert(fontSizeMin > 0.0f, "Invalid fontSizeMin (Zero)");
+        Debug.Assert(fontSizeCounterMax > 0.0f, "Invalid fontSizeCounterMax (Zero)");
+        Debug.Assert(fontSizeSpeed > 0.0f, "Invalid fontSizeSpeed (Zero)");
+        Debug.Assert(fontSizeBoost > 0.0f, "Invalid fontSizeBoost (Zero)");
+        Debug.Assert(maxNameChars > 0, "Invalid maxNameChars (Zero)");
     }
     #endregion
 
@@ -108,13 +133,30 @@ public class AdvertUI : MonoBehaviour
     {
 
         //colours
-        colourRed = "<color=#f71735>";
-        colourBlue = "<color=#55C1FF>";
+        colourRed = "<color=#EB6424>";
+        /*colourBlue = "<color=#55C1FF>";*/
+        colourBlue = "<color=#1AFFD5>";
         endTag = "</color></size>";
         sizeLarge = "<size=130%>";
+        outerColour = outerPanel.color;
         //positions
         pos_x = Screen.width / 2;
         pos_y = Screen.height / 2;
+        //Fixed position at screen centre
+        advertObject.transform.position = new Vector3(pos_x, pos_y);
+        //name text won't pulse without this
+        textName.gameObject.SetActive(false);   //remove if you want to reactivate name
+
+        /*textName.enableAutoSizing = false;*/
+
+        //initialise listOfBillboard text
+        GameManager.i.dataScript.InitialiseBillboardList();
+        //turn off canvas (just in case)
+        advertCanvas.gameObject.SetActive(false);
+        //reset panels On at start
+        innerPanel.gameObject.SetActive(true);
+        outerPanel.gameObject.SetActive(true);
+        /*SetAdvertCentre(true);*/
     }
     #endregion
 
@@ -128,6 +170,7 @@ public class AdvertUI : MonoBehaviour
 
     #endregion
 
+    #region OnEvent
     /// <summary>
     /// Event handler
     /// </summary>
@@ -147,22 +190,53 @@ public class AdvertUI : MonoBehaviour
                 break;
         }
     }
+    #endregion
+
+
 
     /// <summary>
-    /// Initialise and open AdvertUI
+    /// Update and run AdvertUI
     /// </summary>
-    public void InitialiseAdvert()
+    public void RunAdvert()
     {
-        SetAdvertUI();
+        //full billboard display
+        Billboard billboard = GameManager.i.dataScript.GetRandomBillboard();
+        if (billboard != null)
+        {
+            Debug.LogFormat("[UI] AdvertUI.cs -> RunAdvert: Start SetAdvertUI with \"{0}\" display{1}", billboard.name, "\n");
+            myCoroutine = StartCoroutine("OpenAdvert", billboard);
+        }
+        else { Debug.LogWarning("Invalid billboard (Null)"); }
     }
+
 
     /// <summary>
     /// Open Advert
     /// </summary>
-    private void SetAdvertUI()
+    private IEnumerator OpenAdvert(Billboard billboard)
     {
-        //Fixed position at screen centre
-        advertObject.transform.position = new Vector3(pos_x, pos_y);
+        int counter;
+        textTop.text = ProcessAdvertTextTop(billboard);
+        textBottom.text = billboard.textBottom.ToUpper();
+        /*textName.text = GameManager.i.playerScript.FirstName.ToUpper();*/
+        if (billboard.sprite != null)
+        {
+            logo.sprite = billboard.sprite;
+            logo.gameObject.SetActive(true);
+        }
+        else { logo.gameObject.SetActive(false); }
+
+        /*
+        //any longer than set num of char's will cause issues with pulsing, use a default text instead
+        if (textName.text.Length > maxNameChars)
+        { textName.text = "Yes YOU!"; }
+        //determine parameters for name text font size pulsing (max size is current max size feasible in space)
+        fontSizeMax = textName.fontSize;
+        fontSizeCurrent = fontSizeMax;
+        fontSizeState = Pulsing.Fading;
+        fontSizeCounter = 0.0f;
+        */
+
         //set states
         ModalStateData package = new ModalStateData() { mainState = ModalSubState.Advert };
         GameManager.i.inputScript.SetModalState(package);
@@ -170,6 +244,80 @@ public class AdvertUI : MonoBehaviour
         Debug.LogFormat("[UI] AdvertUI.cs -> OpenAdvert{0}", "\n");
         //open canvas
         advertCanvas.gameObject.SetActive(true);
+
+        /*SetAdvertCentre(true);*/
+        counter = 0;
+        //indefinitely strobe outer panel (cyan neon borders)
+        isFading = true;
+        while (true)
+        {
+            // - - - Strobe outer panel
+            outerColour = outerPanel.color;
+            if (isFading == false)
+            {
+                outerColour.a += Time.deltaTime / flashBorder;
+                if (outerColour.a >= 1.0f)
+                {
+                    isFading = true;
+                    counter = 0;
+                }
+            }
+            else
+            {
+                if (counter == 0)
+                {
+                    outerColour.a -= Time.deltaTime / flashBorder;
+                    if (outerColour.a <= 0.0f)
+                    { counter++; }
+                }
+                else
+                {
+                    //when panel at 0 alpha, pause before repeating
+                    if (counter > 120)
+                    { isFading = false; }
+                    else { counter++; }
+                }
+            }
+            outerPanel.color = outerColour;
+            /*
+            //Name text font size Pulsing
+            switch (fontSizeState)
+            {
+                case Pulsing.Constant:
+                    //pause pulsing at max font size for a short moment
+                    fontSizeCounter += Time.deltaTime;
+                    if (fontSizeCounter > fontSizeCounterMax)
+                    {
+                        fontSizeState = Pulsing.Fading;
+                        fontSizeCounter = 0.0f;
+                    }
+                    break;
+                case Pulsing.Growing:
+                    //grow at a faster rate than shrinking
+                    fontSizeCurrent += fontSizeCurrent * Time.deltaTime * fontSizeSpeed * fontSizeBoost;
+                    if (fontSizeCurrent >= fontSizeMax)
+                    {
+                        fontSizeState = Pulsing.Constant;
+                        //make sure fontsize doesn't momentarily go over the max and be outside the displayable area
+                        fontSizeCurrent = Mathf.Min(fontSizeCurrent, fontSizeMax);
+                    }
+                    break;
+                case Pulsing.Fading:
+                    //shrinking
+                    fontSizeCurrent -= fontSizeCurrent * Time.deltaTime * fontSizeSpeed;
+                    if (fontSizeCurrent <= fontSizeMin)
+                    {
+                        fontSizeCurrent = Mathf.Max(0.0f, fontSizeCurrent);
+                        fontSizeState = Pulsing.Growing;
+                    }
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised fontSizeState \"{0}\"", fontSizeState); break;
+            }
+            //adjust font size
+            textName.fontSize = fontSizeCurrent;
+            */
+            yield return null;
+        }
     }
 
     /// <summary>
@@ -177,10 +325,64 @@ public class AdvertUI : MonoBehaviour
     /// </summary>
     private void CloseAdvert()
     {
+        StopCoroutine(myCoroutine);
+        
         advertCanvas.gameObject.SetActive(false);
+        //reset name size
+        textName.fontSize = fontSizeMax;
         //close advertUI and go straight to MainInfoApp
         GameManager.i.guiScript.waitUntilDone = false;
     }
+
+    #region ProcessAdvertTextTop
+    /// <summary>
+    /// Takes textTop from advert and converts any '[' and ']' tags (topText only) into textmeshPro tags
+    /// </summary>
+    /// <param name="text"></param>
+    /// <returns></returns>
+    private string ProcessAdvertTextTop(Billboard billboard)
+    {
+        string checkedText = "Unknown";
+        string startTag;
+        //normally a blue highlight but can be red. Always upsized
+        if (billboard.isRedHighlight == true)
+        { startTag = string.Format("{0}{1}", sizeLarge, colourRed); }
+        else { startTag = string.Format("{0}{1}", sizeLarge, colourBlue); }
+        //switch to Caps
+        string text = billboard.textTop.ToUpper();
+        //replace tags
+        if (string.IsNullOrEmpty(text) == false)
+        {
+            string tempText = text.Replace("[", startTag);
+            checkedText = tempText.Replace("]", endTag);
+        }
+        return checkedText;
+    }
+    #endregion
+
+    /*
+    /// <summary>
+    /// Toggles advert centre elements on/off
+    /// </summary>
+    /// <param name="isSwitchOn"></param>
+    private void SetAdvertCentre(bool isSwitchOn)
+    {
+        if (isSwitchOn)
+        {
+            //enable centre elements
+            innerPanel.gameObject.SetActive(true);
+            outerPanel.gameObject.SetActive(true);
+        }
+        else
+        {
+            //disable centre elements
+            innerPanel.gameObject.SetActive(false);
+            outerPanel.gameObject.SetActive(false);
+        }
+    }
+    */
+
+
 
     //new methods above here
 }

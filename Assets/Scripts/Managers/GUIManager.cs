@@ -823,7 +823,7 @@ public class GUIManager : MonoBehaviour
                 //tooltips (modal 0) off
                 SetTooltipsOff();
                 waitUntilDone = true;
-                GameManager.i.advertScript.InitialiseAdvert();
+                GameManager.i.advertScript.RunAdvert();
                 break;
             case TopicGlobal.None:
             default:

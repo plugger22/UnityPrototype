@@ -1899,3 +1899,112 @@ City seed 39434 -> Londus, Eurasia
 
 Dev seed 23396 -> Monday, 15 February 2021 2:44 PM
 City seed 32043 -> Londus, Eurasia
+
+Dev seed 10713 -> Monday, 15 February 2021 3:23 PM
+City seed 12250 -> Londus, Eurasia
+
+Dev seed 60818 -> Monday, 15 February 2021 3:40 PM
+City seed 658 -> Londus, Eurasia
+
+Dev seed 14896 -> Monday, 15 February 2021 3:51 PM
+City seed 8928 -> Londus, Eurasia
+
+Dev seed 59828 -> Monday, 15 February 2021 3:53 PM
+City seed 5976 -> Londus, Eurasia
+
+Dev seed 60603 -> Monday, 15 February 2021 4:03 PM
+City seed 59144 -> Londus, Eurasia
+
+Dev seed 13617 -> Monday, 15 February 2021 4:05 PM
+City seed 29570 -> Londus, Eurasia
+
+Dev seed 12888 -> Monday, 15 February 2021 4:26 PM
+City seed 13506 -> Londus, Eurasia
+
+Dev seed 20738 -> Monday, 15 February 2021 4:32 PM
+City seed 43525 -> Londus, Eurasia
+
+Dev seed 47535 -> Monday, 15 February 2021 4:42 PM
+City seed 37889 -> Londus, Eurasia
+
+Dev seed 9593 -> Monday, 15 February 2021 4:45 PM
+City seed 18376 -> Londus, Eurasia
+
+Dev seed 24833 -> Monday, 15 February 2021 4:46 PM
+City seed 6655 -> Londus, Eurasia
+
+Dev seed 34875 -> Monday, 15 February 2021 4:49 PM
+City seed 19619 -> Londus, Eurasia
+
+Dev seed 38161 -> Monday, 15 February 2021 4:55 PM
+City seed 16883 -> Londus, Eurasia
+
+Dev seed 43328 -> Monday, 15 February 2021 5:01 PM
+City seed 52514 -> Londus, Eurasia
+
+Dev seed 43321 -> Monday, 15 February 2021 5:04 PM
+City seed 10517 -> Londus, Eurasia
+WARNING Assets/Scripts/GUI/AdvertUI.cs(36,19): warning CS0649: Field `AdvertUI.fontSizeMax' is never assigned to, and will always have its default value `0'
+WARNING Assets/Scripts/GUI/ModalOutcome.cs(72,23): warning CS0414: The private field `ModalOutcome.myCoroutineFadeHighlights' is assigned but its value is never used
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+Node.OnEnable () (at Assets/Scripts/Base Classes/Node.cs:275)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActorManager.OnDisable () (at Assets/Scripts/Managers/ActorManager.cs:654)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ActionManager.OnDisable () (at Assets/Scripts/Managers/ActionManager.cs:258)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+NodeManager.OnDisable () (at Assets/Scripts/Managers/NodeManager.cs:468)
+	ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalOutcome.OnDisable () (at Assets/Scripts/GUI/ModalOutcome.cs:265)
+	
+Dev seed 51551 -> Monday, 15 February 2021 5:07 PM
+City seed 44013 -> Londus, Eurasia
+
+Dev seed 28346 -> Monday, 15 February 2021 5:08 PM
+City seed 19882 -> Londus, Eurasia
+
+Dev seed 53343 -> Monday, 15 February 2021 5:09 PM
+City seed 24388 -> Londus, Eurasia
+
+Dev seed 33694 -> Monday, 15 February 2021 5:11 PM
+City seed 28195 -> Londus, Eurasia
+
+Dev seed 45428 -> Monday, 15 February 2021 5:13 PM
+City seed 41029 -> Londus, Eurasia
+
+Dev seed 15060 -> Monday, 15 February 2021 5:15 PM
+City seed 47791 -> Londus, Eurasia
+
+Dev seed 45394 -> Monday, 15 February 2021 5:17 PM
+City seed 5060 -> Londus, Eurasia
+
+Dev seed 18944 -> Monday, 15 February 2021 5:19 PM
+City seed 25194 -> Londus, Eurasia
+
+Dev seed 48593 -> Monday, 15 February 2021 5:21 PM
+City seed 31152 -> Londus, Eurasia
+
+Dev seed 3286 -> Monday, 15 February 2021 5:26 PM
+City seed 39050 -> Londus, Eurasia
+
+Dev seed 50451 -> Monday, 15 February 2021 5:28 PM
+City seed 49380 -> Londus, Eurasia
+
+Dev seed 23645 -> Monday, 15 February 2021 5:31 PM
+City seed 12714 -> Londus, Eurasia
+
+Dev seed 20381 -> Monday, 15 February 2021 5:32 PM
+City seed 5889 -> Londus, Eurasia
+
+Dev seed 58589 -> Monday, 15 February 2021 5:33 PM
+City seed 17230 -> Londus, Eurasia

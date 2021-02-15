@@ -6554,12 +6554,13 @@ MonoBehaviour:
   billboardChance: 0
   billboardSpeed: 100
   billboardFontPause: 3
-  billboardFontSpeed: 2
-  billboardFontBoost: 1.75
-  billboardFontMin: 12
-  billboardNameMax: 20
+  billboardFontSpeed: 1
+  billboardFontBoost: 2.5
+  billboardFontMin: 10
+  billboardNameMax: 18
   billboardLightOff: 0.1
   billboardLightChance: 1
+  advertChance: 75
   bulletChar: 0
   starChar: 61445
   airportChar: 61554
@@ -6714,6 +6715,7 @@ MonoBehaviour:
   popUpDynamicScript: {fileID: 0}
   popUpFixedScript: {fileID: 0}
   billboardScript: {fileID: 0}
+  advertScript: {fileID: 0}
   tabbedUIScript: {fileID: 0}
   seedDev: 0
   autoRunTurns: 20

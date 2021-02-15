@@ -453,6 +453,7 @@ public class BillboardUI : MonoBehaviour
     }
     #endregion
 
+    #region BillOpenTurn
     /// <summary>
     /// coroutine to slide panels together then display simple turn display
     /// </summary>
@@ -475,6 +476,7 @@ public class BillboardUI : MonoBehaviour
         SetBillboardTurn(true);
         yield return null;
     }
+    #endregion
 
 
     /// <summary>
