@@ -15,12 +15,16 @@ public class AdvertUI : MonoBehaviour
     public GameObject advertObject;
     public Image innerPanel;
     public Image outerPanel;
+    public Image advertBarBack;
+    public Image advertBarFront;
     public Image logo;
     public TextMeshProUGUI textName;
     public TextMeshProUGUI textTop;
     public TextMeshProUGUI textBottom;
 
     //private
+    private RectTransform barFrontTransform;
+    private RectTransform barBackTransform;
     private bool isFading;
     private Color outerColour;
     private float flashBorder;
@@ -30,9 +34,18 @@ public class AdvertUI : MonoBehaviour
     private string colourRed;
     private string endTag;
     private string sizeLarge;
-    private Coroutine myCoroutine;
+    private Coroutine myCoroutineAdvert;
+    private Coroutine myCoroutineGrowBars;
+    private Coroutine myCoroutineShrinkBars;
 
-    //Name text (pulses up and down in size)
+    //bars
+    private float barMin;
+    private float barSize;
+    private float barTime;
+    private float barSpeed;
+    private float barMax;
+
+    /*//Name text (pulses up and down in size)
     private float fontSizeMax;
     private float fontSizeMin;
     private float fontSizeCurrent;
@@ -40,7 +53,7 @@ public class AdvertUI : MonoBehaviour
     private float fontSizeCounterMax;
     private float fontSizeSpeed;
     private float fontSizeBoost;           //will grow at a faster rate than shrinking due to the boost
-    private Pulsing fontSizeState;
+    private Pulsing fontSizeState;*/
 
     private float pos_x;
     private float pos_y;
@@ -104,6 +117,24 @@ public class AdvertUI : MonoBehaviour
         Debug.Assert(textName != null, "Invalid textName (Null)");
         Debug.Assert(textTop != null, "Invalid textTop (Null)");
         Debug.Assert(textBottom != null, "Invalid textBottom (Null)");
+        //advert Bar Front
+        if (advertBarFront != null)
+        {
+            barFrontTransform = advertBarFront.GetComponent<RectTransform>();
+            if (barFrontTransform == null)
+            { Debug.LogError("Invalid barTransformFront (Null)"); }
+        }
+        else { Debug.LogError("Invalid advertBarFront (Null)"); }
+        //advert Bar Back
+        if (advertBarBack != null)
+        {
+            barBackTransform = advertBarBack.GetComponent<RectTransform>();
+            if (barBackTransform == null)
+            { Debug.LogError("Invalid barTransformBack (Null)"); }
+        }
+        else { Debug.LogError("Invalid advertBarBack (Null)"); }
+
+        
     }
     #endregion
 
@@ -112,18 +143,18 @@ public class AdvertUI : MonoBehaviour
     {
         flashBorder = GameManager.i.guiScript.billboardFlash;
         panelOffset = GameManager.i.guiScript.billboardOffset;
-        fontSizeMin = GameManager.i.guiScript.billboardFontMin;
+        /*fontSizeMin = GameManager.i.guiScript.billboardFontMin;
         fontSizeCounterMax = GameManager.i.guiScript.billboardFontPause;
         fontSizeSpeed = GameManager.i.guiScript.billboardFontSpeed;
-        fontSizeBoost = GameManager.i.guiScript.billboardFontBoost;
+        fontSizeBoost = GameManager.i.guiScript.billboardFontBoost;*/
         maxNameChars = GameManager.i.guiScript.billboardNameMax;
         //Asserts
         Debug.Assert(flashBorder > 0.0f, "Invalid flashNeon (Zero)");
         Debug.Assert(panelOffset > 0.0f, "Invalid panelOffset (Zero)");
-        Debug.Assert(fontSizeMin > 0.0f, "Invalid fontSizeMin (Zero)");
+       /* Debug.Assert(fontSizeMin > 0.0f, "Invalid fontSizeMin (Zero)");
         Debug.Assert(fontSizeCounterMax > 0.0f, "Invalid fontSizeCounterMax (Zero)");
         Debug.Assert(fontSizeSpeed > 0.0f, "Invalid fontSizeSpeed (Zero)");
-        Debug.Assert(fontSizeBoost > 0.0f, "Invalid fontSizeBoost (Zero)");
+        Debug.Assert(fontSizeBoost > 0.0f, "Invalid fontSizeBoost (Zero)");*/
         Debug.Assert(maxNameChars > 0, "Invalid maxNameChars (Zero)");
     }
     #endregion
@@ -155,8 +186,20 @@ public class AdvertUI : MonoBehaviour
         advertCanvas.gameObject.SetActive(false);
         //reset panels On at start
         innerPanel.gameObject.SetActive(true);
-        outerPanel.gameObject.SetActive(true);
+        outerPanel.gameObject.SetActive(false);
         /*SetAdvertCentre(true);*/
+
+        //set bars at just under panel width
+        barMin = innerPanel.rectTransform.sizeDelta.x - 100;
+        barTime = 1.0f;
+        barSpeed = Screen.width;
+        barMax = Screen.width;
+        barFrontTransform.sizeDelta = new Vector3 (barSize, barFrontTransform.sizeDelta.y);
+        barBackTransform.sizeDelta = new Vector3 (barSize, barBackTransform.sizeDelta.y);
+        //activate bars
+        advertBarBack.gameObject.SetActive(true);
+        advertBarFront.gameObject.SetActive(true);
+        
     }
     #endregion
 
@@ -183,7 +226,7 @@ public class AdvertUI : MonoBehaviour
         switch (eventType)
         {
             case EventType.AdvertClose:
-                CloseAdvert();
+                StartCoroutine(CloseAdvert());
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -204,7 +247,8 @@ public class AdvertUI : MonoBehaviour
         if (billboard != null)
         {
             Debug.LogFormat("[UI] AdvertUI.cs -> RunAdvert: Start SetAdvertUI with \"{0}\" display{1}", billboard.name, "\n");
-            myCoroutine = StartCoroutine("OpenAdvert", billboard);
+            myCoroutineAdvert = StartCoroutine("OpenAdvert", billboard);
+            myCoroutineGrowBars = StartCoroutine("GrowBars");
         }
         else { Debug.LogWarning("Invalid billboard (Null)"); }
     }
@@ -226,6 +270,7 @@ public class AdvertUI : MonoBehaviour
         }
         else { logo.gameObject.SetActive(false); }
 
+        #region name Archive
         /*
         //any longer than set num of char's will cause issues with pulsing, use a default text instead
         if (textName.text.Length > maxNameChars)
@@ -236,6 +281,7 @@ public class AdvertUI : MonoBehaviour
         fontSizeState = Pulsing.Fading;
         fontSizeCounter = 0.0f;
         */
+        #endregion
 
         //set states
         ModalStateData package = new ModalStateData() { mainState = ModalSubState.Advert };
@@ -249,7 +295,9 @@ public class AdvertUI : MonoBehaviour
         counter = 0;
         //indefinitely strobe outer panel (cyan neon borders)
         isFading = true;
-        while (true)
+
+        #region while archive
+        /*while (true)
         {
             // - - - Strobe outer panel
             outerColour = outerPanel.color;
@@ -315,24 +363,69 @@ public class AdvertUI : MonoBehaviour
             }
             //adjust font size
             textName.fontSize = fontSizeCurrent;
-            */
+            
+            yield return null;
+        }*/
+        #endregion
+
+        yield return null;
+    }
+
+    /// <summary>
+    /// Grow bars behind advert upon opening
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator GrowBars()
+    {
+        barSize = barMin;
+        while (barBackTransform.sizeDelta.x < barMax)
+        {
+            barSize += Time.deltaTime / barTime * barSpeed;
+            //both grow together
+            barBackTransform.sizeDelta = new Vector2(barSize, barBackTransform.sizeDelta.y);
+            barFrontTransform.sizeDelta = new Vector2(barSize, barFrontTransform.sizeDelta.y);
             yield return null;
         }
     }
 
     /// <summary>
+    /// Shrink bars (behind advert) to width of Advert panel. Used when closing
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator ShrinkBars()
+    {
+        barSize = barBackTransform.sizeDelta.x;
+        while (barBackTransform.sizeDelta.x > barMin)
+        {
+            barSize -= Time.deltaTime / barTime * barSpeed;
+            //both shrink together
+            barBackTransform.sizeDelta = new Vector2(barSize, barBackTransform.sizeDelta.y);
+            barFrontTransform.sizeDelta = new Vector2(barSize, barFrontTransform.sizeDelta.y);
+            yield return null;
+        }
+    }
+
+
+
+    /// <summary>
     /// Close advert UI
     /// </summary>
-    private void CloseAdvert()
+    private IEnumerator CloseAdvert()
     {
-        StopCoroutine(myCoroutine);
-        
+        myCoroutineShrinkBars = StartCoroutine("ShrinkBars");
+        yield return myCoroutineShrinkBars;
+        StopCoroutine(myCoroutineAdvert);
+        //disable canvas
         advertCanvas.gameObject.SetActive(false);
-        //reset name size
-        textName.fontSize = fontSizeMax;
+
+        /*//reset name size
+        textName.fontSize = fontSizeMax;*/
+
         //close advertUI and go straight to MainInfoApp
         GameManager.i.guiScript.waitUntilDone = false;
     }
+
+    
 
     #region ProcessAdvertTextTop
     /// <summary>

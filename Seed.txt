@@ -2008,3 +2008,21 @@ City seed 5889 -> Londus, Eurasia
 
 Dev seed 58589 -> Monday, 15 February 2021 5:33 PM
 City seed 17230 -> Londus, Eurasia
+
+Dev seed 36703 -> Tuesday, 16 February 2021 2:47 PM
+City seed 39619 -> Londus, Eurasia
+
+Dev seed 39831 -> Tuesday, 16 February 2021 2:54 PM
+City seed 19 -> Londus, Eurasia
+
+Dev seed 50509 -> Tuesday, 16 February 2021 3:02 PM
+City seed 30146 -> Londus, Eurasia
+
+Dev seed 40986 -> Tuesday, 16 February 2021 3:46 PM
+City seed 40970 -> Londus, Eurasia
+
+Dev seed 52445 -> Tuesday, 16 February 2021 3:59 PM
+City seed 293 -> Londus, Eurasia
+
+Dev seed 44534 -> Tuesday, 16 February 2021 4:08 PM
+City seed 20264 -> Londus, Eurasia
