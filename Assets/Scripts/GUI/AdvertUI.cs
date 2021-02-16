@@ -41,7 +41,8 @@ public class AdvertUI : MonoBehaviour
     //bars
     private float barMin;
     private float barSize;
-    private float barTime;
+    private float barGrowTime;
+    private float barShrinkTime;
     private float barSpeed;
     private float barMax;
 
@@ -190,8 +191,9 @@ public class AdvertUI : MonoBehaviour
         /*SetAdvertCentre(true);*/
 
         //set bars at just under panel width
-        barMin = innerPanel.rectTransform.sizeDelta.x - 100;
-        barTime = 1.0f;
+        barMin = innerPanel.rectTransform.sizeDelta.x;
+        barGrowTime = GameManager.i.guiScript.advertGrowTime;
+        barShrinkTime = GameManager.i.guiScript.advertShrinkTime;
         barSpeed = Screen.width;
         barMax = Screen.width;
         barFrontTransform.sizeDelta = new Vector3 (barSize, barFrontTransform.sizeDelta.y);
@@ -259,7 +261,7 @@ public class AdvertUI : MonoBehaviour
     /// </summary>
     private IEnumerator OpenAdvert(Billboard billboard)
     {
-        int counter;
+        /*int counter;*/
         textTop.text = ProcessAdvertTextTop(billboard);
         textBottom.text = billboard.textBottom.ToUpper();
         /*textName.text = GameManager.i.playerScript.FirstName.ToUpper();*/
@@ -291,8 +293,9 @@ public class AdvertUI : MonoBehaviour
         //open canvas
         advertCanvas.gameObject.SetActive(true);
 
-        /*SetAdvertCentre(true);*/
-        counter = 0;
+        /*SetAdvertCentre(true);
+        counter = 0;*/
+
         //indefinitely strobe outer panel (cyan neon borders)
         isFading = true;
 
@@ -380,7 +383,7 @@ public class AdvertUI : MonoBehaviour
         barSize = barMin;
         while (barBackTransform.sizeDelta.x < barMax)
         {
-            barSize += Time.deltaTime / barTime * barSpeed;
+            barSize += Time.deltaTime / barGrowTime * barSpeed;
             //both grow together
             barBackTransform.sizeDelta = new Vector2(barSize, barBackTransform.sizeDelta.y);
             barFrontTransform.sizeDelta = new Vector2(barSize, barFrontTransform.sizeDelta.y);
@@ -397,7 +400,7 @@ public class AdvertUI : MonoBehaviour
         barSize = barBackTransform.sizeDelta.x;
         while (barBackTransform.sizeDelta.x > barMin)
         {
-            barSize -= Time.deltaTime / barTime * barSpeed;
+            barSize -= Time.deltaTime / barShrinkTime * barSpeed;
             //both shrink together
             barBackTransform.sizeDelta = new Vector2(barSize, barBackTransform.sizeDelta.y);
             barFrontTransform.sizeDelta = new Vector2(barSize, barFrontTransform.sizeDelta.y);

@@ -135,6 +135,10 @@ public class GUIManager : MonoBehaviour
     [Header("Advertisements")]
     [Tooltip("Chance of an advert occuring per turn (excludes turns where a Review occurs)")]
     [Range(0, 100)] public int advertChance = 50;
+    [Tooltip("Time for bars to grow (seconds)")]
+    [Range(0.5f, 1.5f)] public float advertGrowTime = 0.75f;
+    [Tooltip("Time for bars to shrink (seconds")]
+    [Range(0.25f, 1.5f)] public float advertShrinkTime = 0.50f;
 
 
 
