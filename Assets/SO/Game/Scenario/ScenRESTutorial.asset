@@ -9,25 +9,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67259fbe661332a4ca3aa02028ac12bd, type: 3}
-  m_Name: ScenarioRESFive
+  m_Name: ScenRESTutorial
   m_EditorClassIdentifier: 
-  tag: Test Scenario 5 Resistance
-  descriptor: Rabid Finish
+  tag: Test Scenario 2 Resistance
+  descriptor: Taxi, Taxi, Taxi!
   descriptorResistance: 'Rebel HQ have requested maximum disruption to the City of
     London. Spare no effort and take no heed of collateral damage.
 
 '
   descriptorAuthority: 
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
-  city: {fileID: 11400000, guid: 9f78c56ccf907b1468d68f6be123552e, type: 2}
-  seedCity: 1616
+  city: {fileID: 11400000, guid: 028f2bbc2bbda2244a371c4f7237c3db, type: 2}
+  seedCity: 765
   leaderResistance: {fileID: 11400000, guid: 2693c6e44ddf043468b4d660fe0e2b67, type: 2}
-  leaderAuthority: {fileID: 11400000, guid: d1858bef418cc7b49bd4d7f1cf133dbc, type: 2}
-  approvalStartRebelHQ: 5
-  approvalStartAuthorityHQ: 5
-  cityStartLoyalty: 5
+  leaderAuthority: {fileID: 11400000, guid: 9768b5680a5445847b2a3e54b3577cc1, type: 2}
+  approvalStartRebelHQ: 3
+  approvalStartAuthorityHQ: 3
+  cityStartLoyalty: 3
   missionResistance: {fileID: 11400000, guid: c18dfa424a4646349ac6ee1fc6ddb8cf, type: 2}
   missionAuthority: {fileID: 0}
-  challengeResistance: {fileID: 11400000, guid: 77769dd534e67a44bb51fbe33ec2a869,
+  challengeResistance: {fileID: 11400000, guid: f49eada5905cc6e4dbd50b2b5650dea1,
     type: 2}
   timer: 70

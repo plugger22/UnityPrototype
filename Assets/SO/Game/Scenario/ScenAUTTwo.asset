@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67259fbe661332a4ca3aa02028ac12bd, type: 3}
-  m_Name: ScenarioAUTTwo
+  m_Name: ScenAUTTwo
   m_EditorClassIdentifier: 
   tag: Test Scenario 2  Authority
   descriptor: Bondi Burnout
@@ -27,5 +27,4 @@ MonoBehaviour:
   missionAuthority: {fileID: 11400000, guid: 8023ca43a32398449810e7e2ddd1c5f0, type: 2}
   challengeResistance: {fileID: 11400000, guid: 338cc5cc4c7726448bb8cc125e0b0633,
     type: 2}
-  challengeAuthority: {fileID: 0}
   timer: 70

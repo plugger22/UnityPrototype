@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
+  m_Name: DistrictsTutorial
+  m_EditorClassIdentifier: 
+  descriptor: Tutorial city district names
+  category: {fileID: 11400000, guid: 8c3d71e162950234e9ea67442945c204, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
+  randomList:
+  - Downtown
+  - Tricomer
+  - Dollarville
+  - Diamondville
+  - Fashionville
+  - Robbinsville
+  - The Cauldron
+  - The Bowery
+  - Little Italy
+  - Old Gotham
+  - Gotham Square
+  - Small End
+  - Narrows
+  - Blackgate
+  - Gotham Square
+  - The Coventry
+  - Burnley
+  - Robinson Park
+  - Aparo Park
+  - Morrison Park
+  - Gotham Village
+  - Cherry Hill
+  - Gotham Heights
+  - New Town
+  - Old Town
+  - Obsburg
+  - Park Row
+  - Big End
+  - Bristol
+  - Burnside
+  - Slaughter Swamp
+  - Barr Town
+  - Willowwood
+  - Olympus
+  - Sherwood
+  - Cobblepot
+  - Puckett Park
+  - Finger Bridge
+  - Daggetsville
+  - Stagg Town
+  index: 9
