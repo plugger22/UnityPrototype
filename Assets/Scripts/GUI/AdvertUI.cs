@@ -25,8 +25,8 @@ public class AdvertUI : MonoBehaviour
     //private
     private RectTransform barFrontTransform;
     private RectTransform barBackTransform;
-    private bool isFading;
-    private Color outerColour;
+    /*private bool isFading;
+    private Color outerColour;*/
     private float flashBorder;
     private float panelOffset;                   //offset distance to get panels off screen during development
     private int maxNameChars;                    //max number of chars in playerName before it's swapped to a default text to prevent overflowing
@@ -166,11 +166,12 @@ public class AdvertUI : MonoBehaviour
 
         //colours
         colourRed = "<color=#EB6424>";
-        /*colourBlue = "<color=#55C1FF>";*/
         colourBlue = "<color=#1AFFD5>";
         endTag = "</color></size>";
         sizeLarge = "<size=130%>";
-        outerColour = outerPanel.color;
+
+        /*outerColour = outerPanel.color;*/
+
         //positions
         pos_x = Screen.width / 2;
         pos_y = Screen.height / 2;
@@ -297,7 +298,7 @@ public class AdvertUI : MonoBehaviour
         counter = 0;*/
 
         //indefinitely strobe outer panel (cyan neon borders)
-        isFading = true;
+        /*isFading = true;*/
 
         #region while archive
         /*while (true)
@@ -415,6 +416,8 @@ public class AdvertUI : MonoBehaviour
     /// </summary>
     private IEnumerator CloseAdvert()
     {
+        if (myCoroutineGrowBars != null)
+        { StopCoroutine(myCoroutineGrowBars); }
         myCoroutineShrinkBars = StartCoroutine("ShrinkBars");
         yield return myCoroutineShrinkBars;
         StopCoroutine(myCoroutineAdvert);

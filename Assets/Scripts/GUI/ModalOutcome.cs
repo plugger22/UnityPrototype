@@ -55,7 +55,8 @@ public class ModalOutcome : MonoBehaviour
     private bool isAction;                              //triggers 'UseAction' event on confirmation button click if true (passed in to method by ModalOutcomeDetails)
     private bool isSpecial;                             //true if a special outcome
     private float specialWidth = -1.0f;
-    private float blackBarTime;                         //time span to grow black bars
+    private float blackBarTimeGrow;                     //time span to grow black bars
+    private float blackBarTimeShrink;
     private float blackBarSpeed;
     private float blackBarSize;
     private float highlightMin;
@@ -186,7 +187,8 @@ public class ModalOutcome : MonoBehaviour
         //set position
         outcomeObject.transform.position = screenPos;
         //Blackbar (special outcome)
-        blackBarTime = GameManager.i.guiScript.outcomeBlackBarTimer;
+        blackBarTimeGrow = GameManager.i.guiScript.outcomeBarTimerGrow;
+        blackBarTimeShrink = GameManager.i.guiScript.outcomeBarTimerShrink;
         blackBarSpeed = Screen.width;
         blackBarSize = specialTransform.sizeDelta.x;
         //highlights (special Outcome)
@@ -495,7 +497,7 @@ public class ModalOutcome : MonoBehaviour
         blackBarSize = blackBarTransform.sizeDelta.x;
         while (blackBarTransform.sizeDelta.x < Screen.width)
         {
-            blackBarSize += Time.deltaTime / blackBarTime * blackBarSpeed;
+            blackBarSize += Time.deltaTime / blackBarTimeGrow * blackBarSpeed;
             blackBarTransform.sizeDelta = new Vector2(blackBarSize, blackBarTransform.sizeDelta.y);
             yield return null;
         }
@@ -510,7 +512,7 @@ public class ModalOutcome : MonoBehaviour
         blackBarSize = blackBarTransform.sizeDelta.x;
         while (blackBarTransform.sizeDelta.x > specialWidth)
         {
-            blackBarSize -= Time.deltaTime / blackBarTime * blackBarSpeed;
+            blackBarSize -= Time.deltaTime / blackBarTimeShrink * blackBarSpeed;
             blackBarTransform.sizeDelta = new Vector2(blackBarSize, blackBarTransform.sizeDelta.y);
             yield return null;
         }
@@ -615,6 +617,9 @@ public class ModalOutcome : MonoBehaviour
         //shrink black bars
         myCoroutineBarShrink = StartCoroutine("ShrinkBlackBar");
         yield return myCoroutineBarShrink;
+        //failsafe
+        if (myCoroutineFadeHighlights != null)
+        { StopCoroutine(myCoroutineFadeHighlights); }
         //close main panel
         CloseModalOutcome();
         yield break;

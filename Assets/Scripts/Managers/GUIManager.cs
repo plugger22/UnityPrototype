@@ -97,8 +97,10 @@ public class GUIManager : MonoBehaviour
     [Range(4, 4)] public int maxInventoryOptions = 4;
 
     [Header("ModalOutcomeUI")]
-    [Tooltip("Time for blackBars to expand/contract for Outcome Special mode (seconds)")]
-    [Range(0.5f, 1.5f)] public float outcomeBlackBarTimer = 0.75f;
+    [Tooltip("Time for blackBars to Grow for Outcome Special mode (seconds)")]
+    [Range(0.5f, 1.5f)] public float outcomeBarTimerGrow = 0.75f;
+    [Tooltip("Time for blackBars to Shrink for Outcome Special mode (seconds)")]
+    [Range(0.5f, 1.5f)] public float outcomeBarTimerShrink = 0.50f;
     [Tooltip("Time for highlight line to expand/contract for Outcome Special mode (seconds)")]
     [Range(0.5f, 1.5f)] public float outcomeHighlightTimer = 1.00f;
     [Tooltip("Pause time for highlight when it has shrunk and before it starts growing again for Outcome Special mode (seconds)")]
@@ -106,7 +108,7 @@ public class GUIManager : MonoBehaviour
     [Tooltip("Max width for highlight to expand to for Outcome Special mode (pixels)")]
     [Range(350, 1000)] public float outcomeHighlightMax = 700f;
     [Tooltip("Timer for fading out Highlights upon closing (seconds)")]
-    [Range(0.25f, 1.00f)] public float outcomeHighlightFade = 0.75f;
+    [Range(0.25f, 1.00f)] public float outcomeHighlightFade = 0.50f;
 
     [Header("BillboardUI")]
     [Tooltip("Offset distance to get side panels offscreen during development (pixels")]

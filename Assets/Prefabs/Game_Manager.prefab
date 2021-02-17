@@ -6560,7 +6560,7 @@ MonoBehaviour:
   billboardNameMax: 18
   billboardLightOff: 0.1
   billboardLightChance: 1
-  advertChance: 75
+  advertChance: 20
   advertGrowTime: 0.75
   advertShrinkTime: 0.5
   bulletChar: 0
