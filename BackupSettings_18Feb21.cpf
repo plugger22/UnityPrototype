@@ -1,0 +1,137 @@
+[
+    {
+        "filterName": "[Tut]",
+        "mainColor": {
+            "r": 0.949964046478271,
+            "g": 0.981132090091705,
+            "b": 0.522961914539337,
+            "a": 1.0
+        },
+        "isStandardFilter": false,
+        "isTempFilter": false,
+        "useAdvancedColors": true,
+        "customTextColor": {
+            "r": 0.952941179275513,
+            "g": 0.992156863212585,
+            "b": 0.415686279535294,
+            "a": 1.0
+        },
+        "customBackgroundColor": {
+            "r": 0.49056601524353,
+            "g": 0.49056601524353,
+            "b": 0.49056601524353,
+            "a": 1.0
+        },
+        "swallowStandard": true,
+        "standardCanSwallow": false,
+        "overrideStandardColors": true,
+        "overrideStandardIcon": true,
+        "collapseIconBackground": false,
+        "collapseIconSymbol": false,
+        "collapseIconLetter": false,
+        "collapseIconTexture": false,
+        "useIconBackground": true,
+        "useIconSymbol": false,
+        "useIconLetter": true,
+        "useIconTexture": false,
+        "filterFormatVersion": -1,
+        "iconColorize": false,
+        "useAndOpForSearchList": false,
+        "searchList": [
+            {
+                "searchString": "[Tut]",
+                "searchType": "ExactCaseInsensitive",
+                "removeSearchStringFromLog": false,
+                "logTypeList": [
+                    {
+                        "logType": "Any",
+                        "name": null,
+                        "isEnabled": true,
+                        "collapsed": false,
+                        "itemGUID": "2a9c9c18-704a-4907-83b0-5012bf89249c"
+                    }
+                ],
+                "columnTypeList": [
+                    {
+                        "columnType": "Log",
+                        "name": null,
+                        "isEnabled": true,
+                        "collapsed": false,
+                        "itemGUID": "b78a7b76-f5ff-4d0c-b80c-5d8c6a87d9fe"
+                    }
+                ],
+                "name": null,
+                "isEnabled": true,
+                "collapsed": false,
+                "itemGUID": "9e58317c-1c1d-420b-bb23-3323d33c38e2"
+            }
+        ],
+        "iconLetter": {
+            "iconType": "Text",
+            "iconType2": "None",
+            "iconText": "A",
+            "useIconTextFirstLetter": true,
+            "useIconLogColor": false,
+            "iconColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "iconBuiltInID": "BACKGROUNDS_ECPBGROUNDEDSQUARE",
+            "iconTextureGUID": "",
+            "useIconShadow": true,
+            "iconOffset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "iconShadowOffset": {
+                "x": 0.5,
+                "y": 0.5
+            },
+            "iconSize": 13.0,
+            "name": null,
+            "isEnabled": true,
+            "collapsed": false,
+            "itemGUID": null
+        },
+        "iconSymbol": null,
+        "iconBackground": {
+            "iconType": "Background",
+            "iconType2": "None",
+            "iconText": "A",
+            "useIconTextFirstLetter": true,
+            "useIconLogColor": true,
+            "iconColor": {
+                "r": 1.0,
+                "g": 1.0,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "iconBuiltInID": "BACKGROUNDS_ECPBGROUNDEDSQUARE",
+            "iconTextureGUID": "",
+            "useIconShadow": true,
+            "iconOffset": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "iconShadowOffset": {
+                "x": 0.5,
+                "y": 0.5
+            },
+            "iconSize": 13.0,
+            "name": null,
+            "isEnabled": true,
+            "collapsed": false,
+            "itemGUID": null
+        },
+        "iconTexture": null,
+        "showInToolbar": true,
+        "hideLabelInToolbar": false,
+        "hideWhenNoMatches": false,
+        "name": "[Tut]",
+        "isEnabled": true,
+        "collapsed": false,
+        "itemGUID": "bd305d98-03ec-4df5-b715-e8474c3174d8"
+    }
+]

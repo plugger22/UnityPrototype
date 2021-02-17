@@ -77,6 +77,7 @@ GameObject:
   - component: {fileID: 114912672506915200}
   - component: {fileID: 114079522176207682}
   - component: {fileID: 114902299002132126}
+  - component: {fileID: 114429961579356908}
   m_Layer: 0
   m_Name: Game_Manager
   m_TagString: Untagged
@@ -5831,6 +5832,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e3eb7d6397e79e40883ad4f8dd32979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114429961579356908
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1289370855557188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 160cf8a0b91fce247ad9b489ca70884b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114525357966728784
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6544,7 +6556,8 @@ MonoBehaviour:
   reviewTimeInterval: 0.1
   actorFontSize: 18
   maxInventoryOptions: 4
-  outcomeBlackBarTimer: 0.75
+  outcomeBarTimerGrow: 0.75
+  outcomeBarTimerShrink: 0.5
   outcomeHighlightTimer: 1
   outcomeHighlightPause: 1
   outcomeHighlightMax: 700
@@ -6720,7 +6733,7 @@ MonoBehaviour:
   advertScript: {fileID: 0}
   tabbedUIScript: {fileID: 0}
   seedDev: 0
-  autoRunTurns: 20
+  autoRunTurns: 0
   scenarioStartLevel: 0
   isPerformanceLog: 1
   isDataValidation: 1

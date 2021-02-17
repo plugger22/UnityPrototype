@@ -83,6 +83,7 @@ namespace modalAPI
         public AlignHorizontal alignHorizontal;
         public Background background;                                   //what type of background to display behind menu, default "None"
         public bool isResume;                                           //individual button toggles (default true on all)
+        public bool isTutorial;
         public bool isNewGame;
         public bool isLoadGame;
         public bool isOptions;
@@ -97,6 +98,7 @@ namespace modalAPI
             alignHorizontal = AlignHorizontal.Centre;
             background = Background.None;
             isResume = true;
+            isTutorial = true;
             isNewGame = true;
             isLoadGame = true;
             isOptions = true;

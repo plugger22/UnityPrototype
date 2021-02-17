@@ -35,7 +35,7 @@ public class ModalOutcome : MonoBehaviour
 
 
 
-
+    //private
     private RectTransform specialTransform;
     private RectTransform blackBarTransform;
     private RectTransform highlightTransform;
@@ -109,6 +109,7 @@ public class ModalOutcome : MonoBehaviour
             case GameState.LoadGame:
             case GameState.NewInitialisation:
             case GameState.LoadAtStart:
+                SubInitialiseAsserts();
                 SubInitialiseSessionStart();
                 SubInitialiseEvents();
                 break;

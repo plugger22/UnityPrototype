@@ -31,7 +31,8 @@ public class ControlManager : MonoBehaviour
         EventManager.i.AddListener(EventType.SaveGame, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.SaveAndExit, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.CloseLoadGame, OnEvent, "ControlManager");
-        EventManager.i.AddListener(EventType.CloseSaveGame, OnEvent, "CampaignManager");
+        EventManager.i.AddListener(EventType.CloseSaveGame, OnEvent, "ControlManager");
+        EventManager.i.AddListener(EventType.Tutorial, OnEvent, "ControlManager.cs");
     }
 
 
@@ -77,6 +78,9 @@ public class ControlManager : MonoBehaviour
             case EventType.CloseSaveGame:
                 CloseSaveGame();
                 break;
+            case EventType.Tutorial:
+                ProcessTutorial();
+                break;
             case EventType.CreateOptions:
                 ProcessOptions((GameState)Param);
                 break;
@@ -120,7 +124,7 @@ public class ControlManager : MonoBehaviour
         //set background
         GameManager.i.modalGUIScript.SetBackground(Background.NewGame);
         //close MainMenu
-        EventManager.i.PostNotification(EventType.CloseMainMenu, this, null, "CampaignManager.cs -> ProcessNewGame");
+        EventManager.i.PostNotification(EventType.CloseMainMenu, this, null, "ControlManager.cs -> ProcessNewGame");
         //change game state (allows inputManager.cs to handle relevant input)
         GameManager.i.inputScript.GameState = GameState.NewGame;
     }
@@ -182,7 +186,7 @@ public class ControlManager : MonoBehaviour
         //open Options background
         GameManager.i.modalGUIScript.SetBackground(Background.Options);
         //close MainMenu
-        EventManager.i.PostNotification(EventType.CloseMainMenu, this, null, "CampaignManager.cs -> ProcessOptions");
+        EventManager.i.PostNotification(EventType.CloseMainMenu, this, null, "ControlManager.cs -> ProcessOptions");
         gameState = state;
         //change game state (allows inputManager.cs to handle relevant input)
         GameManager.i.inputScript.GameState = GameState.Options;
@@ -532,6 +536,24 @@ public class ControlManager : MonoBehaviour
         GameManager.i.inputScript.GameState = GameState.ExitCampaign;
         //end level campaign data
         GameManager.i.dataScript.SetCampaignHistoryEnd();
+    }
+
+    /// <summary>
+    /// Initialises and runs tutorial
+    /// </summary>
+    private void ProcessTutorial()
+    {
+        Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessTutorial: ProcessTutorial selected{0}", "\n");
+        //save existing game state
+        gameState = GameManager.i.inputScript.GameState;
+        //set background
+        GameManager.i.modalGUIScript.SetBackground(Background.NewGame);
+        //close MainMenu
+        EventManager.i.PostNotification(EventType.CloseMainMenu, this, null, "ControlManager.cs -> ProcessTutorial");
+        //change game state
+        GameManager.i.inputScript.GameState = GameState.Tutorial;
+        //run tutorial
+        GameManager.i.tutorialScript.InitialiseTutorial();
     }
 
     /// <summary>

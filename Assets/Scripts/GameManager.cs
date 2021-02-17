@@ -80,6 +80,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public TestManager testScript;                    //Test Manager
     [HideInInspector] public TextManager textScript;                    //Text Manager
     [HideInInspector] public FeatureManager featureScript;              //Feature Manager
+    [HideInInspector] public TutorialManager tutorialScript;            //Tutorial Manager
     //GUI
     [HideInInspector] public TooltipNode tooltipNodeScript;             //node tooltip static instance
     [HideInInspector] public TooltipConnection tooltipConnScript;       //connection tooltip static instance
@@ -256,6 +257,7 @@ public class GameManager : MonoBehaviour
         debugScript = GetComponent<DebugGUI>();
         animateScript = GetComponent<AnimationManager>();
         featureScript = GetComponent<FeatureManager>();
+        tutorialScript = GetComponent<TutorialManager>();
         //Get UI static references -> from PanelManager
         tooltipNodeScript = TooltipNode.Instance();
         tooltipConnScript = TooltipConnection.Instance();
@@ -348,6 +350,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(debugScript != null, "Invalid debugScript (Null)");
         Debug.Assert(animateScript != null, "Invalid animateScript (Null)");
         Debug.Assert(featureScript != null, "Invalid featureScript (Null)");
+        Debug.Assert(tutorialScript != null, "Invalid tutorialScript (Null)");
         //singletons
         Debug.Assert(tooltipNodeScript != null, "Invalid tooltipNodeScript (Null)");
         Debug.Assert(tooltipConnScript != null, "Invalid tooltipConnScript (Null)");
@@ -563,6 +566,10 @@ public class GameManager : MonoBehaviour
         startMethod.handler = campaignScript.InitialiseGame;
         startMethod.className = "CampaignManager Game";
         listOfGameMethods.Add(startMethod);
+        /*//Tutorial Manager
+        startMethod.handler = tutorialScript.Initialise;
+        startMethod.className = "TutorialManager";
+        listOfGameMethods.Add(startMethod);*/
         #endregion
 
         #region Level Methods
