@@ -6552,7 +6552,7 @@ MonoBehaviour:
   billboardOffset: 135
   billboardFlash: 1.5
   billboardChance: 0
-  billboardSpeed: 100
+  billboardSpeed: 150
   billboardFontPause: 3
   billboardFontSpeed: 1
   billboardFontBoost: 2.5
@@ -6561,6 +6561,8 @@ MonoBehaviour:
   billboardLightOff: 0.1
   billboardLightChance: 1
   advertChance: 75
+  advertGrowTime: 0.75
+  advertShrinkTime: 0.5
   bulletChar: 0
   starChar: 61445
   airportChar: 61554

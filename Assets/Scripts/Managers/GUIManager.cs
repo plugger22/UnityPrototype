@@ -116,7 +116,7 @@ public class GUIManager : MonoBehaviour
     [Tooltip("If billboard is switch 'ON' gives the % chance (less than) of a billboard being shown at the end of a turn (eg. determines frequency)")]
     [Range(0, 100)] public int billboardChance = 20;
     [Tooltip("Speed at which billboard blinds open and shut (speed x Time.deltaTime)")]
-    [Range(0f, 100f)] public float billboardSpeed = 100.0f;
+    [Range(0f, 200f)] public float billboardSpeed = 200.0f;
     [Tooltip("Strobing of playerName font size. How will it pause at full size? (Time.deltaTime)")]
     [Range(0f, 3.00f)] public float billboardFontPause = 1.25f;
     [Tooltip("Speed of font growing or shrinking (Time.deltaTime")]
