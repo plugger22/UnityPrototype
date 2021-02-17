@@ -9,7 +9,7 @@ using UnityEngine;
 public class TutorialManager : MonoBehaviour
 {
 
-    /*
+    
     #region Initialisation...
     /// <summary>
     /// Master Initialisation
@@ -19,12 +19,14 @@ public class TutorialManager : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
+                SubInitialiseTutorial();
+                break;
             case GameState.LoadGame:
             case GameState.NewInitialisation:
             case GameState.LoadAtStart:
             case GameState.StartUp:
-                SubInitialiseSessionStart();
-                SubInitialiseEvents();
+                //do nothing
                 break;
             case GameState.FollowOnInitialisation:
                 //do nothing
@@ -36,45 +38,19 @@ public class TutorialManager : MonoBehaviour
     }
 
 
-    #region SubInitialiseSessionStart
-    private void SubInitialiseSessionStart()
+    #region SubInitialiseTutorial
+    private void SubInitialiseTutorial()
     {
 
     }
     #endregion
 
-    #region SubInitialiseEvents
-    private void SubInitialiseEvents()
-    {
-        //register a listener
-        EventManager.i.AddListener(EventType.Tutorial, OnEvent, "TutorialManager.cs");
-    }
-    #endregion
+
 
     #endregion
-    */
+    
 
-    #region OnEvent
-    /// <summary>
-    /// Event Handler
-    /// </summary>
-    /// <param name="eventType"></param>
-    /// <param name="Sender"></param>
-    /// <param name="Param"></param>
-    public void OnEvent(EventType eventType, Component Sender, object Param = null)
-    {
-        //detect event type
-        switch (eventType)
-        {
-            case EventType.Tutorial:
-                InitialiseTutorial();
-                break;
-            default:
-                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
-                break;
-        }
-    }
-    #endregion
+
 
     /// <summary>
     /// Set up tutorial prior to running

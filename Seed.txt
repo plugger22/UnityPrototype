@@ -2149,3 +2149,151 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 Dev seed 3749 -> Wednesday, 17 February 2021 4:58 PM
 
 Dev seed 31482 -> Wednesday, 17 February 2021 5:13 PM
+
+Dev seed 44653 -> Thursday, 18 February 2021 10:15 AM
+WARNING [Val] ValidateSO: MISMATCH on City, array 9, assets 10 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(City[]) (at Assets/Scripts/Managers/ValidationManager.cs:2001)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1861)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:903)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:417)
+	WARNING [Val] ValidateSO: MISMATCH on Scenario, array 9, assets 10 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Scenario[]) (at Assets/Scripts/Managers/ValidationManager.cs:2001)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1879)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:903)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:417)
+	WARNING [Val] ValidateSO: MISMATCH on TextList, array 89, assets 90 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:2001)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1941)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:903)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:417)
+	City seed 4824 -> Londus, Eurasia
+
+Dev seed 10803 -> Thursday, 18 February 2021 10:20 AM
+City seed 64968 -> Londus, Eurasia
+WARNING Unrecognised playerSide "Both" for scenario "ScenRESTutorial"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateScenarios() (at Assets/Scripts/Managers/ValidationManager.cs:1585)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:173)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:903)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:961)
+	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:163)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:73)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:354)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:320)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:458)
+	WARNING Unrecognised Inactive status "Dormant"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:GetStatus(ActorStatus, ActorInactive) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:3710)
+	ModalTabbedUI:UpdateStatus(Boolean) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:3652)
+	ModalTabbedUI:OpenMain() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2105)
+	ModalTabbedUI:UpdatePage() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1708)
+	ModalTabbedUI:OpenPage(Int32, Boolean) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1691)
+	ModalTabbedUI:OpenActorSet(TabbedUIWho, Boolean) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1805)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1155)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:354)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised Inactive status "Dormant"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:GetStatus(ActorStatus, ActorInactive) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:3710)
+	ModalTabbedUI:UpdateStatus(Boolean) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:3652)
+	ModalTabbedUI:OpenMain() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2105)
+	ModalTabbedUI:UpdatePage() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1708)
+	ModalTabbedUI:OpenSideTab(Int32, Boolean) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1647)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1152)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:354)
+	TabbedSideTabUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ModalTabbedUI/TabbedSideTabUI.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised Inactive status "Dormant"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:GetStatus(ActorStatus, ActorInactive) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:3710)
+	ModalTabbedUI:UpdateStatus(Boolean) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:3652)
+	ModalTabbedUI:OpenMain() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2105)
+	ModalTabbedUI:UpdatePage() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1708)
+	ModalTabbedUI:OpenSideTab(Int32, Boolean) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1647)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1152)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:354)
+	TabbedSideTabUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ModalTabbedUI/TabbedSideTabUI.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised Inactive status "Dormant"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:GetStatus(ActorStatus, ActorInactive) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:3710)
+	ModalTabbedUI:UpdateStatus(Boolean) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:3652)
+	ModalTabbedUI:OpenMain() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2105)
+	ModalTabbedUI:UpdatePage() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1708)
+	ModalTabbedUI:OpenSideTab(Int32, Boolean) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1647)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1152)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:354)
+	TabbedSideTabUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ModalTabbedUI/TabbedSideTabUI.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Unrecognised Inactive status "Dormant"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ModalTabbedUI:GetStatus(ActorStatus, ActorInactive) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:3710)
+	ModalTabbedUI:UpdateStatus(Boolean) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:3652)
+	ModalTabbedUI:OpenMain() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:2105)
+	ModalTabbedUI:UpdatePage() (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1708)
+	ModalTabbedUI:OpenSideTab(Int32, Boolean) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1647)
+	ModalTabbedUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalTabbedUI/ModalTabbedUI.cs:1152)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:354)
+	TabbedSideTabUI:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ModalTabbedUI/TabbedSideTabUI.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 7877 -> Thursday, 18 February 2021 10:23 AM
+City seed 848 -> Londus, Eurasia
+WARNING Unrecognised playerSide "Both" for scenario "ScenRESTutorial"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateScenarios() (at Assets/Scripts/Managers/ValidationManager.cs:1585)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:173)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:903)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:961)
+	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:163)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:73)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:354)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:320)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:458)
+	
+Dev seed 61858 -> Thursday, 18 February 2021 10:27 AM
+City seed 62750 -> Londus, Eurasia
+WARNING Unrecognised playerSide "Both" for scenario "ScenRESTutorial"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateScenarios() (at Assets/Scripts/Managers/ValidationManager.cs:1585)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:173)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:903)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:961)
+	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:163)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:73)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:354)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:320)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:458)
+	
+Dev seed 48280 -> Thursday, 18 February 2021 10:36 AM
+City seed 59855 -> Londus, Eurasia
+WARNING Unrecognised playerSide "Both" for scenario "ScenRESTutorial"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateScenarios() (at Assets/Scripts/Managers/ValidationManager.cs:1585)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:173)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:903)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:961)
+	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:163)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:73)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:354)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:320)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:458)
+	
+Dev seed 38245 -> Thursday, 18 February 2021 10:43 AM
+City seed 11013 -> Londus, Eurasia
+WARNING Unrecognised playerSide "Both" for scenario "ScenRESTutorial"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateScenarios() (at Assets/Scripts/Managers/ValidationManager.cs:1585)
+	ValidationManager:Initialise(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:173)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:903)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:961)
+	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:163)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:73)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:354)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:320)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:458)
+	

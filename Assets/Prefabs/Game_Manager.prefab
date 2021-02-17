@@ -1692,6 +1692,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b43cbfe86c95be04396264b8043c4696, type: 2}
   - {fileID: 11400000, guid: 87b85359d6eafcf42941c43b99a4c9d8, type: 2}
   - {fileID: 11400000, guid: f2ec3998326528a4c820b31d04acec8e, type: 2}
+  - {fileID: 11400000, guid: 4aef0a3b3da56bd43941c24cfcb6c7d9, type: 2}
   arrayOfShortTextLists:
   - {fileID: 11400000, guid: b85afe865dfb86f4d9edcfda9118e34d, type: 2}
   - {fileID: 11400000, guid: 8c3c6c350f22bf74990e977c25519166, type: 2}
@@ -5149,6 +5150,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9f78c56ccf907b1468d68f6be123552e, type: 2}
   - {fileID: 11400000, guid: 6cba8e7b258719f46b715a8d2e5a887b, type: 2}
   - {fileID: 11400000, guid: e68919b8292180346a520337da71d547, type: 2}
+  - {fileID: 11400000, guid: b2de2db146c63ed4d85b04ff860274c4, type: 2}
   arrayOfObjectives:
   - {fileID: 11400000, guid: da26300d7cc8ec34aa0459017fdc2992, type: 2}
   - {fileID: 11400000, guid: 5dfa5c1eb935a644b9d2ac8c11ca04d7, type: 2}
@@ -5228,6 +5230,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3f5fc5ab3d43a6444b3047cac10f3402, type: 2}
   - {fileID: 11400000, guid: 931e19efb2302b247b658b59ca91b4cf, type: 2}
   - {fileID: 11400000, guid: 0b04472666f8fc648833265a5027da36, type: 2}
+  - {fileID: 11400000, guid: 7bbaf2ea70a3f9948a66adac71da2d2c, type: 2}
   arrayOfCampaigns:
   - {fileID: 11400000, guid: 8a6c37e55ea44964f8f00f2f602b6463, type: 2}
   - {fileID: 11400000, guid: 201c4f109df0cec4b97ac3e88f445010, type: 2}
@@ -6697,6 +6700,7 @@ MonoBehaviour:
   testScript: {fileID: 0}
   textScript: {fileID: 0}
   featureScript: {fileID: 0}
+  tutorialScript: {fileID: 0}
   tooltipNodeScript: {fileID: 0}
   tooltipConnScript: {fileID: 0}
   tooltipActorScript: {fileID: 0}

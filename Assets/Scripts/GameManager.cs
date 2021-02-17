@@ -166,6 +166,7 @@ public class GameManager : MonoBehaviour
     private List<StartMethod> listOfGlobalMethods = new List<StartMethod>();        //start game global methods
     private List<StartMethod> listOfGameMethods = new List<StartMethod>();          //game managerment methods
     private List<StartMethod> listOfLevelMethods = new List<StartMethod>();         //level related methods
+    private List<StartMethod> listOfTutorialMethods = new List<StartMethod>();      //tutorial related methods
     private List<StartMethod> listOfUIMethods = new List<StartMethod>();            //UI related methods
     private List<StartMethod> listOfConditionalMethods = new List<StartMethod>();   //methods (UI) that conditionally apply, eg. if Resistance Player. Used for InitialiseLoadGame
     private List<StartMethod> listOfDebugMethods = new List<StartMethod>();         //Debug related methods
@@ -572,6 +573,16 @@ public class GameManager : MonoBehaviour
         listOfGameMethods.Add(startMethod);*/
         #endregion
 
+        #region Tutorial Methods
+        //
+        // - - - Tutorial methods - - -
+        //
+        //Tutorial Manager
+        startMethod.handler = tutorialScript.Initialise;
+        startMethod.className = "TutorialManager";
+        listOfTutorialMethods.Add(startMethod);
+        #endregion
+
         #region Level Methods
         //
         // - - - Level methods - - -
@@ -945,6 +956,44 @@ public class GameManager : MonoBehaviour
         else
         {
             //start-up with Performance Monitoring
+            InitialiseWithPerformanceMonitoring(listOfLevelMethods);
+            InitialiseWithPerformanceMonitoring(listOfUIMethods);
+            InitialiseWithPerformanceMonitoring(listOfDebugMethods);
+            DisplayTotalTime();
+        }
+        //set session flag
+        isSession = true;
+        //do a final redraw before game start
+        nodeScript.NodeRedraw = true;
+        //colour scheme
+        optionScript.ColourOption = ColourScheme.Normal;
+        //free mouse for normal operations
+        Cursor.lockState = CursorLockMode.None;
+    }
+    #endregion
+
+
+    #region InitialiseTutorial
+    /// <summary>
+    /// Tutorial training simulation
+    /// </summary>
+    public void InitialiseTutorial()
+    {
+        //lock mouse to prevent mouseover events occuring prior to full initialisation
+        Cursor.lockState = CursorLockMode.Locked;
+        //start sequence
+        if (isPerformanceLog == false)
+        {
+            //normal start-up
+            InitialiseMethods(listOfTutorialMethods);
+            InitialiseMethods(listOfLevelMethods);
+            InitialiseMethods(listOfUIMethods);
+            InitialiseMethods(listOfDebugMethods);
+        }
+        else
+        {
+            //start-up with Performance Monitoring
+            InitialiseWithPerformanceMonitoring(listOfTutorialMethods);
             InitialiseWithPerformanceMonitoring(listOfLevelMethods);
             InitialiseWithPerformanceMonitoring(listOfUIMethods);
             InitialiseWithPerformanceMonitoring(listOfDebugMethods);

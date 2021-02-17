@@ -26,7 +26,7 @@ MonoBehaviour:
   - The Bowery
   - Little Italy
   - Old Gotham
-  - Gotham Square
+  - Gothville
   - Small End
   - Narrows
   - Blackgate
@@ -56,4 +56,4 @@ MonoBehaviour:
   - Finger Bridge
   - Daggetsville
   - Stagg Town
-  index: 9
+  index: 25

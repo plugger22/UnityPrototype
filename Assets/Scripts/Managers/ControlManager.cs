@@ -553,7 +553,7 @@ public class ControlManager : MonoBehaviour
         //change game state
         GameManager.i.inputScript.GameState = GameState.Tutorial;
         //run tutorial
-        GameManager.i.tutorialScript.InitialiseTutorial();
+        GameManager.i.InitialiseTutorial();
     }
 
     /// <summary>

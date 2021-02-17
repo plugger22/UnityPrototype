@@ -698,6 +698,8 @@ public class TurnManager : MonoBehaviour
         //calculate total actions available
         _actionsAdjust = GameManager.i.dataScript.GetActionAdjustment(side);
         _actionsTotal = _actionsLimit + _actionsAdjust;
+        //update widget
+        EventManager.i.PostNotification(EventType.ChangeActionPoints, this, _actionsTotal, "TurnManager.cs -> UpdateActionsLimit");
     }
 
     /// <summary>
