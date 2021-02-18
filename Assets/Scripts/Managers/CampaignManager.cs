@@ -44,6 +44,9 @@ public class CampaignManager : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
+                //do nothing
+                break;
             case GameState.NewInitialisation:
                 SubInitialiseNewGame();
                 SubInitialiseAllEarly();
@@ -69,6 +72,9 @@ public class CampaignManager : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
+                //do nothing
+                break;
             case GameState.NewInitialisation:
             case GameState.FollowOnInitialisation:
             case GameState.LoadAtStart:
@@ -108,11 +114,16 @@ public class CampaignManager : MonoBehaviour
         //Assign a scenario
         scenario = GetCurrentScenario();
         if (scenario != null)
-        { Debug.LogFormat("[Cam] CampaignManager.cs -> InitialiseEarly: Current scenario \"{0}\", {1}{2}", scenario.tag, scenario.descriptor, "\n"); }
+        {
+            Debug.LogFormat("[Cam] CampaignManager.cs -> InitialiseEarly: Current scenario \"{0}\", {1}{2}", scenario.tag, scenario.descriptor, "\n");
+            //assign to current Scenario
+            GameManager.i.scenarioScript.scenario = scenario;
+        }
         else { Debug.LogError("Invalid scenario (Null)"); }
         // City (Early)
         if (scenario.city != null)
         {
+            //assign to current city
             GameManager.i.cityScript.SetCity(scenario.city);
             //NOTE: currently chooses a random city (overrides scenario.city). Need to sort out. DEBUG
             GameManager.i.cityScript.InitialiseEarly(scenario.leaderAuthority);

@@ -54,6 +54,7 @@ public class SideManager : MonoBehaviour
     //backing field
     private GlobalSide _playerSide;
 
+    #region Properties...
     //what side is the player (Human, even if temporarily under AI control for an autorun)
     public GlobalSide PlayerSide
     {
@@ -101,6 +102,7 @@ public class SideManager : MonoBehaviour
             Debug.Log(string.Format("OptionManager -> Player Side now {0}{1}", _playerSide, "\n"));
         }
     }
+    #endregion
 
     /// <summary>
     /// Note called for GameState.LoadGame
@@ -109,6 +111,10 @@ public class SideManager : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
+                SubInitialiseFastAccess();
+                SubInitialiseTutorial();
+                break;
             case GameState.NewInitialisation:
                 SubInitialiseFastAccess();
                 SubInitialiseSessionStart();
@@ -214,6 +220,50 @@ public class SideManager : MonoBehaviour
             GameManager.i.playerScript.SetPlayerFirstName(GameManager.i.preloadScript.nameFirst);
         }
         else { Debug.LogError("Invalid campaign (Null)"); }
+    }
+    #endregion
+
+    #region SubInitialiseTutorial
+    private void SubInitialiseTutorial()
+    {
+        Tutorial tutorial = GameManager.i.tutorialScript.currentTutorial;
+        if (tutorial != null)
+        {
+                //HUMAN Player
+                switch (tutorial.side.level)
+                {
+                    case 1:
+                        //Authority player
+                        PlayerSide = globalAuthority;
+                        Debug.Log("[Start] Player set to AUTHORITY side");
+                        resistanceOverall = SideState.AI;
+                        authorityOverall = SideState.Human;
+                        resistanceCurrent = SideState.AI;
+                        authorityCurrent = SideState.Human;
+                        //names
+                        GameManager.i.playerScript.SetPlayerNameResistance(GameManager.i.campaignScript.scenario.leaderResistance.leaderName);
+                        GameManager.i.playerScript.SetPlayerNameAuthority(GameManager.i.preloadScript.nameAuthority);
+                        break;
+                    case 2:
+                        //Resistance player
+                        PlayerSide = GameManager.i.globalScript.sideResistance;
+                        Debug.Log("[Start] Player set to RESISTANCE side");
+                        resistanceOverall = SideState.Human;
+                        authorityOverall = SideState.AI;
+                        resistanceCurrent = SideState.Human;
+                        authorityCurrent = SideState.AI;
+                        //names
+                        GameManager.i.playerScript.SetPlayerNameResistance(GameManager.i.preloadScript.nameResistance);
+                        GameManager.i.playerScript.SetPlayerNameAuthority(GameManager.i.campaignScript.scenario.leaderAuthority.mayorName);
+                        break;
+                    default:
+                        Debug.LogWarningFormat("Unrecognised tutorial side \"{0}\"", tutorial.side.name);
+                        break;
+                }
+            //set first name
+            GameManager.i.playerScript.SetPlayerFirstName(GameManager.i.preloadScript.nameFirst);
+        }
+        else { Debug.LogError("Invalid tutorial (Null)"); }
     }
     #endregion
 

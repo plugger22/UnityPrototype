@@ -251,6 +251,10 @@ public class CityManager : MonoBehaviour
     public string GetCityNameFormatted()
     { return string.Format("{0}<size=115%><b>{1}</b></size>{2}", colourSide, city.tag, colourEnd); }
 
+
+    public string GetCityName()
+    { return city.tag; }
+
     /// <summary>
     /// returns current city Arc name in 90% size, default white text format
     /// </summary>

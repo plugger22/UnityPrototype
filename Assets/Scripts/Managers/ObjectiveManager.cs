@@ -35,6 +35,7 @@ public class ObjectiveManager : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
             case GameState.NewInitialisation:
                 SubInitialiseEvents();
                 SubInitialiseObjectives();

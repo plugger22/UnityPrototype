@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
-using Random = UnityEngine.Random;
+﻿using delegateAPI;
 using gameAPI;
-using delegateAPI;
-using System.IO;
-using System.Globalization;
 using modalAPI;
 using packageAPI;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 public struct StartMethod
 {
@@ -81,6 +81,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public TextManager textScript;                    //Text Manager
     [HideInInspector] public FeatureManager featureScript;              //Feature Manager
     [HideInInspector] public TutorialManager tutorialScript;            //Tutorial Manager
+    [HideInInspector] public ScenarioManager scenarioScript;            //Scenario Manager
     //GUI
     [HideInInspector] public TooltipNode tooltipNodeScript;             //node tooltip static instance
     [HideInInspector] public TooltipConnection tooltipConnScript;       //connection tooltip static instance
@@ -118,7 +119,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public BillboardUI billboardScript;               //Billboard UI
     [HideInInspector] public AdvertUI advertScript;                     //Advert UI
     [HideInInspector] public ModalTabbedUI tabbedUIScript;              //Tabbed UI
-#endregion
+    #endregion
 
 
     #region Variables
@@ -162,6 +163,7 @@ public class GameManager : MonoBehaviour
     private long totalTime;                                                         //used for Performance monitoring on start up
     private float mouseWheelInput;                                                  //used for detecting mouse wheel input in the Update method
     [HideInInspector] public bool isSession;                                        //true once InitialiseNewLevel has been run at least once (for Load game functionality to detect if loading prior to any initialisation)
+                                                                                    //also used by InitialiseTutorial to detect if overall initialisation has occurred already, or not
 
     private List<StartMethod> listOfGlobalMethods = new List<StartMethod>();        //start game global methods
     private List<StartMethod> listOfGameMethods = new List<StartMethod>();          //game managerment methods
@@ -259,6 +261,7 @@ public class GameManager : MonoBehaviour
         animateScript = GetComponent<AnimationManager>();
         featureScript = GetComponent<FeatureManager>();
         tutorialScript = GetComponent<TutorialManager>();
+        scenarioScript = GetComponent<ScenarioManager>();
         //Get UI static references -> from PanelManager
         tooltipNodeScript = TooltipNode.Instance();
         tooltipConnScript = TooltipConnection.Instance();
@@ -352,6 +355,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(animateScript != null, "Invalid animateScript (Null)");
         Debug.Assert(featureScript != null, "Invalid featureScript (Null)");
         Debug.Assert(tutorialScript != null, "Invalid tutorialScript (Null)");
+        Debug.Assert(scenarioScript != null, "Invalid scenarioScript (Null)");
         //singletons
         Debug.Assert(tooltipNodeScript != null, "Invalid tooltipNodeScript (Null)");
         Debug.Assert(tooltipConnScript != null, "Invalid tooltipConnScript (Null)");
@@ -923,7 +927,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void InitialiseMainMenu()
     {
-        ModalMainMenuDetails detailsMain = new ModalMainMenuDetails() {
+        ModalMainMenuDetails detailsMain = new ModalMainMenuDetails()
+        {
             alignHorizontal = AlignHorizontal.Centre,
             background = Background.Start,
             isResume = false,
@@ -986,21 +991,31 @@ public class GameManager : MonoBehaviour
         {
             //normal start-up
             InitialiseMethods(listOfTutorialMethods);
-            InitialiseMethods(listOfLevelMethods);
-            InitialiseMethods(listOfUIMethods);
-            InitialiseMethods(listOfDebugMethods);
+            if (isSession == false)
+            {
+                //overall session initialisation hasn't yet occured
+                InitialiseMethods(listOfLevelMethods);
+                InitialiseMethods(listOfUIMethods);
+                InitialiseMethods(listOfDebugMethods);
+                //set session flag
+                isSession = true;
+            }
         }
         else
         {
             //start-up with Performance Monitoring
             InitialiseWithPerformanceMonitoring(listOfTutorialMethods);
-            InitialiseWithPerformanceMonitoring(listOfLevelMethods);
-            InitialiseWithPerformanceMonitoring(listOfUIMethods);
-            InitialiseWithPerformanceMonitoring(listOfDebugMethods);
+            if (isSession == false)
+            {
+                //overall session initialisation hasn't yet occured
+                InitialiseWithPerformanceMonitoring(listOfLevelMethods);
+                InitialiseWithPerformanceMonitoring(listOfUIMethods);
+                InitialiseWithPerformanceMonitoring(listOfDebugMethods);
+                //set session flag
+                isSession = true;
+            }
             DisplayTotalTime();
         }
-        //set session flag
-        isSession = true;
         //do a final redraw before game start
         nodeScript.NodeRedraw = true;
         //colour scheme

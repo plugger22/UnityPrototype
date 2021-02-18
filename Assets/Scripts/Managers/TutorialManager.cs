@@ -8,6 +8,12 @@ using UnityEngine;
 /// </summary>
 public class TutorialManager : MonoBehaviour
 {
+    [Header("Tutorials")]
+    public Tutorial resistanceTutorial;
+    public Tutorial authorityTutorial;
+
+
+    [HideInInspector] public Tutorial currentTutorial;
 
     
     #region Initialisation...
@@ -20,14 +26,13 @@ public class TutorialManager : MonoBehaviour
         switch (state)
         {
             case GameState.Tutorial:
+                SubInitialiseFastAccess();
                 SubInitialiseTutorial();
                 break;
             case GameState.LoadGame:
             case GameState.NewInitialisation:
             case GameState.LoadAtStart:
             case GameState.StartUp:
-                //do nothing
-                break;
             case GameState.FollowOnInitialisation:
                 //do nothing
                 break;
@@ -37,11 +42,20 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
+    #region SubInitialiseFastAccess
+    private void SubInitialiseFastAccess()
+    {
+        Debug.Assert(resistanceTutorial != null, "Invalid resistanceTutorial (Null)");
+        /*Debug.Assert(authorityTutorial != null, "Invalid authorityTutorial (Null)");*/  //EDIT -> TO DO -> switch back on for Authority side
+    }
+    #endregion
+
 
     #region SubInitialiseTutorial
     private void SubInitialiseTutorial()
     {
-
+        //Debug
+        currentTutorial = resistanceTutorial;
     }
     #endregion
 

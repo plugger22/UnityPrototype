@@ -461,7 +461,7 @@ public class BillboardUI : MonoBehaviour
     private IEnumerator BillOpenTurn(int dayNum)
     {
         screenCounter = 0;
-        billTextTurn.text = string.Format("Day {0}{1}{2}", dayNum, "\n", GameManager.i.campaignScript.scenario.city.tag);
+        billTextTurn.text = string.Format("Day {0}{1}{2}", dayNum, "\n", GameManager.i.cityScript.GetCityName());
         //modal state
         GameManager.i.inputScript.SetModalState(new ModalStateData() { mainState = ModalSubState.Billboard });
         //slide blinds
