@@ -618,8 +618,8 @@ namespace packageAPI
             {
                 turn = GameManager.i.turnScript.Turn;
                 scenarioIndex = GameManager.i.campaignScript.GetScenarioIndex();
-                city = GameManager.i.campaignScript.scenario.city.name;
-                cityTag = GameManager.i.campaignScript.scenario.city.tag;
+                city = GameManager.i.cityScript.GetCity().name;
+                cityTag = GameManager.i.cityScript.GetCityName();
             }
         }
     }
@@ -647,8 +647,8 @@ namespace packageAPI
             if (GameManager.i.inputScript.GameState != GameState.LoadAtStart)
             {
                 turn = GameManager.i.turnScript.Turn;
-                city = GameManager.i.campaignScript.scenario.city.name;
-                cityTag = GameManager.i.campaignScript.scenario.city.tag;
+                city = GameManager.i.cityScript.GetCity().name;
+                cityTag = GameManager.i.cityScript.GetCityName();
             }
         }
     }

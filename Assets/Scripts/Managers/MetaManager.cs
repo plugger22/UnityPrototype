@@ -156,7 +156,7 @@ public class MetaManager : MonoBehaviour
         //confirm window that will open transition on closing
         ModalConfirmDetails details = new ModalConfirmDetails();
         details.topText = string.Format("You have been successfully {0} from {1}. There are a few things to take care of before your next mission",
-            GameManager.Formatt("extracted", ColourType.moccasinText), GameManager.Formatt(GameManager.i.campaignScript.scenario.city.tag, ColourType.neutralText));
+            GameManager.Formatt("extracted", ColourType.moccasinText), GameManager.Formatt(GameManager.i.cityScript.GetCityName(), ColourType.neutralText));
         details.bottomText = "Are you ready?";
         details.buttonFalse = "SAVE and EXIT";
         details.buttonTrue = "CONTINUE";

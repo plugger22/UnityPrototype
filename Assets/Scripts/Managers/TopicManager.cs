@@ -668,7 +668,7 @@ public class TopicManager : MonoBehaviour
                 if (campaign != null)
                 {
                     //get current city
-                    City city = GameManager.i.campaignScript.scenario.city;
+                    City city = GameManager.i.cityScript.GetCity();
                     if (city != null)
                     {
                         string subTypeName;
@@ -3345,7 +3345,7 @@ public class TopicManager : MonoBehaviour
                         if (turnTopic.comms != null)
                         {
                             data.text = string.Format("ATTN: {0}, {1}{2}FRM: {3}, {4}{5}{6}{7}{8}{9}{10}",
-                                GameManager.i.playerScript.PlayerName, GameManager.i.campaignScript.scenario.city.tag, "\n", turnTopic.comms.textFrom, turnTopic.comms.textWhere, "\n", "\n",
+                                GameManager.i.playerScript.PlayerName, GameManager.i.cityScript.GetCityName(), "\n", turnTopic.comms.textFrom, turnTopic.comms.textWhere, "\n", "\n",
                                 turnTopic.comms.textTop, "\n", "\n", turnTopic.comms.textBottom);
                         }
                         else { Debug.LogErrorFormat("Invalid comms (Null) for topic \"{0}\"", turnTopic.text); }
@@ -6379,8 +6379,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.campaignScript.scenario.city.tag, colourEnd); }
-                            else { replaceText = GameManager.i.campaignScript.scenario.city.tag; }
+                            { replaceText = string.Format("{0}<b>{1}</b>{2}", colourCheckText, GameManager.i.cityScript.GetCityName(), colourEnd); }
+                            else { replaceText = GameManager.i.cityScript.GetCityName(); }
                         }
                         else { CountTextTag("city", dictOfTags); }
                         break;
@@ -6389,8 +6389,8 @@ public class TopicManager : MonoBehaviour
                         if (isValidate == false)
                         {
                             if (isColourHighlighting == true)
-                            { replaceText = string.Format("{0}<b>{1}'s</b>{2}", colourCheckText, GameManager.i.campaignScript.scenario.city.tag, colourEnd); }
-                            else { replaceText = string.Format("{0}'s", GameManager.i.campaignScript.scenario.city.tag); }
+                            { replaceText = string.Format("{0}<b>{1}'s</b>{2}", colourCheckText, GameManager.i.cityScript.GetCityName(), colourEnd); }
+                            else { replaceText = string.Format("{0}'s", GameManager.i.cityScript.GetCityName()); }
                         }
                         else { CountTextTag("citys", dictOfTags); }
                         break;

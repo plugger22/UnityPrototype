@@ -152,7 +152,7 @@ public class CityManager : MonoBehaviour
     private void SubInitialiseLevelStart()
     {
         //assign city loyalty (if input value zero then use a random value between 2 & 8 inclusive)
-        int loyalty = GameManager.i.campaignScript.scenario.cityStartLoyalty;
+        int loyalty = GameManager.i.scenarioScript.scenario.cityStartLoyalty;
         if (loyalty == 0) { loyalty = Random.Range(2, 9); }
         CityLoyalty = loyalty;
     }

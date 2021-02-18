@@ -837,7 +837,7 @@ public class TurnManager : MonoBehaviour
     /// <returns></returns>
     public string GetTurnRemainingTip()
     {
-        int turnsRemaining = GameManager.i.campaignScript.scenario.timer - Turn;
+        int turnsRemaining = GameManager.i.scenarioScript.scenario.timer - Turn;
         return string.Format("You have {0}{1}{2} day{3} remaining to complete your mission", colourAlert, turnsRemaining, colourEnd, turnsRemaining != 1 ? "s" : "");
     }
 
@@ -1152,7 +1152,7 @@ public class TurnManager : MonoBehaviour
         {
             topText = string.Format("Your Mission timer ({0}{1} turns{2}) has EXPIRED", colourNeutral, scenarioTimer, colourEnd);
             //level win state achieved
-            switch (GameManager.i.campaignScript.scenario.missionResistance.side.level)
+            switch (GameManager.i.scenarioScript.scenario.missionResistance.side.level)
             {
                 case 1:
                     //Authority mission, timer expired so Resistance wins
@@ -1165,7 +1165,7 @@ public class TurnManager : MonoBehaviour
                     SetWinStateLevel(WinStateLevel.Authority, WinReasonLevel.MissionTimerMin, topText, bottomText);
                     break;
                 default:
-                    Debug.LogErrorFormat("Invalid mission side, {0}", GameManager.i.campaignScript.scenario.missionResistance.side.name);
+                    Debug.LogErrorFormat("Invalid mission side, {0}", GameManager.i.scenarioScript.scenario.missionResistance.side.name);
                     break;
             }
         }

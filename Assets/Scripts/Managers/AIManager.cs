@@ -351,6 +351,7 @@ public class AIManager : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
             case GameState.NewInitialisation:
                 SubInitialiseStartSession();
                 SubInitialiseDecisionData();
@@ -567,7 +568,7 @@ public class AIManager : MonoBehaviour
         city = GameManager.i.cityScript.GetCity();
         Debug.Assert(city != null, "Invalid City (Null)");
         //set AI resource levels
-        int resources = GameManager.i.campaignScript.scenario.leaderAuthority.resourcesStarting;
+        int resources = GameManager.i.scenarioScript.scenario.leaderAuthority.resourcesStarting;
         GameManager.i.dataScript.SetAIResources(globalAuthority, resources);
         //get names of node arcs (name or null, if none)
         if (city.mayor.preferredArc != null) { authorityPreferredArc = city.mayor.preferredArc.name; }

@@ -2328,7 +2328,7 @@ public class ItemDataManager : MonoBehaviour
     public string GetNpcArrivalDetails(Npc npc)
     {
         StringBuilder builder = new StringBuilder();
-        builder.AppendFormat("<b>The {0}{1}{2} will be in {3} for at least {4}{5} days{6}</b>{7}{8}", colourAlert, npc.tag, colourEnd, GameManager.i.campaignScript.scenario.city.tag,
+        builder.AppendFormat("<b>The {0}{1}{2} will be in {3} for at least {4}{5} days{6}</b>{7}{8}", colourAlert, npc.tag, colourEnd, GameManager.i.cityScript.GetCityName(),
             colourNeutral, npc.maxTurns, colourEnd, "\n", "\n");
         if (string.IsNullOrEmpty(npc.nodeStart.arriving) == false)
         { builder.AppendFormat("<b>They will be arriving at {0}{1}{2}</b>{3}", colourNeutral, npc.nodeStart.arriving, colourEnd, "\n"); }

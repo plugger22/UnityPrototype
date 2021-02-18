@@ -78,6 +78,7 @@ GameObject:
   - component: {fileID: 114912672506915200}
   - component: {fileID: 114079522176207682}
   - component: {fileID: 114902299002132126}
+  - component: {fileID: 114081333536054852}
   m_Layer: 0
   m_Name: Game_Manager
   m_TagString: Untagged
@@ -256,6 +257,18 @@ MonoBehaviour:
   adventureUIScript: {fileID: 0}
   actorPoolUIScript: {fileID: 0}
   toolUIScript: {fileID: 0}
+--- !u!114 &114081333536054852
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1289370855557188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ed8a8f750e783646bb957eb54a86402, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scenario: {fileID: 0}
 --- !u!114 &114160796570192384
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5848,6 +5861,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resistanceTutorial: {fileID: 11400000, guid: c050560a8867a3a4c806544632dda679, type: 2}
   authorityTutorial: {fileID: 0}
+  currentTutorial: {fileID: 0}
 --- !u!114 &114525357966728784
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -6314,9 +6314,9 @@ public class EffectManager : MonoBehaviour
             Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.nodeNpc);
             if (node != null)
             {
-                builderEffect.AppendFormat("{0}{1}{2}{3}{4} is at {5}, {6}{7}{8}{9}", "\n", colourNeutral, GameManager.i.campaignScript.scenario.missionResistance.npc.tag, colourEnd,
+                builderEffect.AppendFormat("{0}{1}{2}{3}{4} is at {5}, {6}{7}{8}{9}", "\n", colourNeutral, GameManager.i.scenarioScript.scenario.missionResistance.npc.tag, colourEnd,
                     colourNormal, node.nodeName, colourEnd, colourAlert, node.Arc.name, colourEnd);
-                builderIntel.AppendFormat("{0}{1}<b>{2}{3}{4} at {5}</b>{6}", "\n", colourNeutral, GameManager.i.campaignScript.scenario.missionResistance.npc.tag,
+                builderIntel.AppendFormat("{0}{1}<b>{2}{3}{4} at {5}</b>{6}", "\n", colourNeutral, GameManager.i.scenarioScript.scenario.missionResistance.npc.tag,
                     colourEnd, colourNormal, node.nodeName, colourEnd);
                 listOfNodes.Add(node);
             }

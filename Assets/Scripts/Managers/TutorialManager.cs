@@ -56,6 +56,18 @@ public class TutorialManager : MonoBehaviour
     {
         //Debug
         currentTutorial = resistanceTutorial;
+        //set scenario
+        if (currentTutorial.scenario != null)
+        {
+            GameManager.i.scenarioScript.scenario = currentTutorial.scenario;
+            if (currentTutorial.scenario.city != null)
+            {
+                //set city
+                GameManager.i.cityScript.SetCity(currentTutorial.scenario.city);
+            }
+            else { Debug.LogError("Invalid tutorial city (Null)"); }
+        }
+        else { Debug.LogError("Invalid tutorial Scenario (Null)"); }
     }
     #endregion
 

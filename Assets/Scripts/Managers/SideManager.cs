@@ -224,6 +224,9 @@ public class SideManager : MonoBehaviour
     #endregion
 
     #region SubInitialiseTutorial
+    /// <summary>
+    /// Tutorial
+    /// </summary>
     private void SubInitialiseTutorial()
     {
         Tutorial tutorial = GameManager.i.tutorialScript.currentTutorial;
@@ -241,7 +244,7 @@ public class SideManager : MonoBehaviour
                         resistanceCurrent = SideState.AI;
                         authorityCurrent = SideState.Human;
                         //names
-                        GameManager.i.playerScript.SetPlayerNameResistance(GameManager.i.campaignScript.scenario.leaderResistance.leaderName);
+                        GameManager.i.playerScript.SetPlayerNameResistance(GameManager.i.scenarioScript.scenario.leaderResistance.leaderName);
                         GameManager.i.playerScript.SetPlayerNameAuthority(GameManager.i.preloadScript.nameAuthority);
                         break;
                     case 2:
@@ -254,7 +257,7 @@ public class SideManager : MonoBehaviour
                         authorityCurrent = SideState.AI;
                         //names
                         GameManager.i.playerScript.SetPlayerNameResistance(GameManager.i.preloadScript.nameResistance);
-                        GameManager.i.playerScript.SetPlayerNameAuthority(GameManager.i.campaignScript.scenario.leaderAuthority.mayorName);
+                        GameManager.i.playerScript.SetPlayerNameAuthority(GameManager.i.scenarioScript.scenario.leaderAuthority.mayorName);
                         break;
                     default:
                         Debug.LogWarningFormat("Unrecognised tutorial side \"{0}\"", tutorial.side.name);

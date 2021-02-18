@@ -213,7 +213,7 @@ public class AnimationManager : MonoBehaviour
     public void StartAnimations()
     {
         //run only during normal play mode
-        if (GameManager.i.inputScript.GameState == GameState.PlayGame)
+        if (GameManager.i.inputScript.GameState == GameState.PlayGame || GameManager.i.inputScript.GameState == GameState.Tutorial)
         {
             myCoroutineConnection = StartCoroutine("AnimateConnections");
             myCoroutineTile0 = StartCoroutine("AnimateTile0");

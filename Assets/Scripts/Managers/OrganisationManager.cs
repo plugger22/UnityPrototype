@@ -28,6 +28,9 @@ public class OrganisationManager : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
+                //do nothing
+                break;
             case GameState.NewInitialisation:
                 SubInitialiseLevelStart();
                 SubInitialiseSessionStart();

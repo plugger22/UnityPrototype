@@ -88,6 +88,7 @@ public class LevelManager : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
             case GameState.NewInitialisation:
             case GameState.FollowOnInitialisation:
                 SubInitialiseFastAccess();
@@ -188,7 +189,7 @@ public class LevelManager : MonoBehaviour
         seed = 0;
         if (GameManager.i.isRandomLevel == true)
         { seed = GameManager.i.GetRandomSeed(); }
-        else { seed = GameManager.i.campaignScript.scenario.seedCity; }
+        else { seed = GameManager.i.scenarioScript.scenario.seedCity; }
         Random.InitState(seed);
     }
 

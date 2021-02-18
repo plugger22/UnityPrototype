@@ -321,13 +321,13 @@ public class AIRebelManager : MonoBehaviour
     {
         //player (human / AI revert to human)
         playerName = GameManager.i.playerScript.GetPlayerNameResistance();
-        /*playerTag = GameManager.instance.campaignScript.scenario.leaderResistance.tag;
-        playerBackground = GameManager.instance.campaignScript.scenario.descriptorResistance;*/
+        /*playerTag = GameManager.i.scenarioScript.scenario.leaderResistance.tag;
+        playerBackground = GameManager.i.scenarioScript.scenario.descriptorResistance;*/
         if (GameManager.i.sideScript.PlayerSide.level != globalResistance.level) { isPlayer = false; }
         else
         { isPlayer = true; }
         //gear pool
-        gearPool = GameManager.i.campaignScript.scenario.leaderResistance.gearPoints;
+        gearPool = GameManager.i.scenarioScript.scenario.leaderResistance.gearPoints;
         gearPool = Mathf.Clamp(gearPool, 0, gearPoolMaxSize);
         //Rebel leader
         InitialiseRebelLeader();
@@ -354,7 +354,7 @@ public class AIRebelManager : MonoBehaviour
         inactiveStatus = ActorInactive.None;
         GameManager.i.playerScript.Invisibility = GameManager.i.actorScript.maxStatValue;
         //set AI resource levels
-        GameManager.i.dataScript.SetAIResources(globalResistance, GameManager.i.campaignScript.scenario.leaderResistance.resourcesStarting);
+        GameManager.i.dataScript.SetAIResources(globalResistance, GameManager.i.scenarioScript.scenario.leaderResistance.resourcesStarting);
         //autoRun test
         if (GameManager.i.testScript.conditionResistance != null && GameManager.i.testScript.conditionTurnResistance > -1)
         {
@@ -401,30 +401,30 @@ public class AIRebelManager : MonoBehaviour
     /// </summary>
     private void InitialiseRebelLeader()
     {
-        survivalMove = GameManager.i.campaignScript.scenario.leaderResistance.moveChance;
-        playerAction = GameManager.i.campaignScript.scenario.leaderResistance.playerChance;
-        targetAttemptMinOdds = GameManager.i.campaignScript.scenario.leaderResistance.targetAttemptMinOdds / 10;
-        targetAttemptPlayerChance = GameManager.i.campaignScript.scenario.leaderResistance.targetAttemptPlayerChance;
-        targetAttemptActorChance = GameManager.i.campaignScript.scenario.leaderResistance.targetAttemptActorChance;
+        survivalMove = GameManager.i.scenarioScript.scenario.leaderResistance.moveChance;
+        playerAction = GameManager.i.scenarioScript.scenario.leaderResistance.playerChance;
+        targetAttemptMinOdds = GameManager.i.scenarioScript.scenario.leaderResistance.targetAttemptMinOdds / 10;
+        targetAttemptPlayerChance = GameManager.i.scenarioScript.scenario.leaderResistance.targetAttemptPlayerChance;
+        targetAttemptActorChance = GameManager.i.scenarioScript.scenario.leaderResistance.targetAttemptActorChance;
         dismissChance = GameManager.i.actorScript.dismissQuestionableChance;
-        priorityStressLeavePlayer = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.stressLeavePlayer);
-        priorityStressLeaveActor = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.stressLeaveActor);
-        priorityMovePlayer = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.movePriority);
-        priorityIdlePlayer = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.idlePriority);
-        priorityAnarchistTask = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.taskAnarchist);
-        priorityBloggerTask = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.taskBlogger);
-        priorityFixerTask = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.taskFixer);
-        priorityHackerTask = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.taskHacker);
-        priorityHeavyTask = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.taskHeavy);
-        priorityObserverTask = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.taskObserver);
-        priorityOperatorTask = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.taskOperator);
-        priorityPlannerTask = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.taskPlanner);
-        priorityRecruiterTask = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.taskRecruiter);
-        priorityTargetPlayer = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.targetPlayer);
-        priorityTargetActor = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.targetActor);
-        priorityFactionApproval = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.approvalPriority);
-        priorityReserveActors = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.manageReserve);
-        priorityQuestionableActor = GetPriority(GameManager.i.campaignScript.scenario.leaderResistance.manageQuestionable);
+        priorityStressLeavePlayer = GetPriority(GameManager.i.scenarioScript.scenario.leaderResistance.stressLeavePlayer);
+        priorityStressLeaveActor = GetPriority(GameManager.i.scenarioScript.scenario.leaderResistance.stressLeaveActor);
+        priorityMovePlayer = GetPriority(GameManager.i.scenarioScript.scenario.leaderResistance.movePriority);
+        priorityIdlePlayer = GetPriority(GameManager.i.scenarioScript.scenario.leaderResistance.idlePriority);
+        priorityAnarchistTask = GetPriority(GameManager.i.scenarioScript.scenario.leaderResistance.taskAnarchist);
+        priorityBloggerTask = GetPriority(GameManager.i.scenarioScript.scenario.leaderResistance.taskBlogger);
+        priorityFixerTask = GetPriority(GameManager.i.scenarioScript.scenario.leaderResistance.taskFixer);
+        priorityHackerTask = GetPriority(GameManager.i.scenarioScript.scenario.leaderResistance.taskHacker);
+        priorityHeavyTask = GetPriority(GameManager.i.scenarioScript.scenario.leaderResistance.taskHeavy);
+        priorityObserverTask = GetPriority(GameManager.i.scenarioScript.scenario.leaderResistance.taskObserver);
+        priorityOperatorTask = GetPriority(GameManager.i.scenarioScript.scenario.leaderResistance.taskOperator);
+        priorityPlannerTask = GetPriority(GameManager.i.scenarioScript.scenario.leaderResistance.taskPlanner);
+        priorityRecruiterTask = GetPriority(GameManager.i.scenarioScript.scenario.leaderResistance.taskRecruiter);
+        priorityTargetPlayer = GetPriority(GameManager.i.scenarioScript.scenario.leaderResistance.targetPlayer);
+        priorityTargetActor = GetPriority(GameManager.i.scenarioScript.scenario.leaderResistance.targetActor);
+        priorityFactionApproval = GetPriority(GameManager.i.scenarioScript.scenario.leaderResistance.approvalPriority);
+        priorityReserveActors = GetPriority(GameManager.i.scenarioScript.scenario.leaderResistance.manageReserve);
+        priorityQuestionableActor = GetPriority(GameManager.i.scenarioScript.scenario.leaderResistance.manageQuestionable);
         Debug.Assert(priorityStressLeavePlayer != Priority.None, "Invalid priorityStressLeavePlayer (None)");
         Debug.Assert(priorityStressLeaveActor != Priority.None, "Invalid priorityStressLeaveActor (None)");
         Debug.Assert(priorityMovePlayer != Priority.None, "Invalid priorityMovePlayer (None)");

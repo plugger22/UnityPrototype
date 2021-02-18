@@ -310,6 +310,11 @@ public class DataManager : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
+                SubInitialiseNewGame();
+                SubInitialiseReset();
+                SubInitialiseAll();
+                break;
             case GameState.NewInitialisation:
                 SubInitialiseNewGame();
                 SubInitialiseReset();
@@ -4284,7 +4289,7 @@ public class DataManager : MonoBehaviour
                     actor.ResetStates();
                     actor.Status = ActorStatus.Active;
                     //update contacts (not for game or level start -> sequencing issues)
-                    if (GameManager.i.turnScript.Turn > 0 && GameManager.i.inputScript.GameState == GameState.PlayGame)
+                    if (GameManager.i.turnScript.Turn > 0 && (GameManager.i.inputScript.GameState == GameState.PlayGame || GameManager.i.inputScript.GameState == GameState.Tutorial))
                     { GameManager.i.contactScript.SetActorContacts(actor); }
                     //update actor GUI display
                     GameManager.i.actorPanelScript.UpdateActorPanel();
@@ -5982,7 +5987,7 @@ public class DataManager : MonoBehaviour
             else
             {
                 Debug.LogWarningFormat("Secret \"{0}\", ID {1}, has revealedWhen t {2} at {3}", secret.tag, secret.name, secret.revealedWhen.turn,
-             GameManager.i.campaignScript.GetScenario(secret.revealedWhen.scenario).city.tag);
+                GameManager.i.campaignScript.GetScenario(secret.revealedWhen.scenario).city.tag);
             }
         }
         else { Debug.LogWarning("Invalid Secret (Null)"); }
@@ -8317,7 +8322,7 @@ public class DataManager : MonoBehaviour
     public string DebugShowNpcMoves()
     {
         StringBuilder builder = new StringBuilder();
-        Npc npc = GameManager.i.campaignScript.scenario.missionResistance.npc;
+        Npc npc = GameManager.i.scenarioScript.scenario.missionResistance.npc;
         if (npc != null)
         {
             List<int> listOfInvisibleNodes = GameManager.i.missionScript.mission.npc.listOfInvisibleNodes;
@@ -9986,12 +9991,12 @@ public class DataManager : MonoBehaviour
         HistoryLevel data = GetHistoryLevel(index);
         if (data != null)
         {
-            data.cityLoyaltyStart = GameManager.i.campaignScript.scenario.cityStartLoyalty;
+            data.cityLoyaltyStart = GameManager.i.scenarioScript.scenario.cityStartLoyalty;
             data.hqApprovalStart = -1;
             switch (GameManager.i.sideScript.PlayerSide.level)
             {
-                case 1: data.hqApprovalStart = GameManager.i.campaignScript.scenario.approvalStartAuthorityHQ; break;
-                case 2: data.hqApprovalStart = GameManager.i.campaignScript.scenario.approvalStartRebelHQ; break;
+                case 1: data.hqApprovalStart = GameManager.i.scenarioScript.scenario.approvalStartAuthorityHQ; break;
+                case 2: data.hqApprovalStart = GameManager.i.scenarioScript.scenario.approvalStartRebelHQ; break;
                 default: Debug.LogWarningFormat("Unrecognised playerSide \"{0}\"", GameManager.i.sideScript.PlayerSide); break;
             }
         }

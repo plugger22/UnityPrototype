@@ -218,7 +218,7 @@ public class PlayerManager : MonoBehaviour
 
             Debug.LogFormat("[Sta] -> PlayerManager.cs: Player (Resistance) Innocence changed from {0} to {1}{2}", _innocence, value, "\n");
             _innocence = value;
-            if (GameManager.i.inputScript.GameState == GameState.PlayGame)
+            if (GameManager.i.inputScript.GameState == GameState.PlayGame || GameManager.i.inputScript.GameState == GameState.Tutorial)
             {
                 //update topBar
                 GameManager.i.topBarScript.UpdateInnocence(_innocence);
@@ -307,7 +307,7 @@ public class PlayerManager : MonoBehaviour
         /*Investigation invest = new Investigation()
         {
             reference = "test",
-            city = GameManager.instance.campaignScript.scenario.city.name,
+            city = GameManager.instance.cityScript.GetCity().name,
             tag = "Bad Ted Collaboration",
             turnStart = 1,
             lead = ActorHQ.SubBoss1,
@@ -365,7 +365,7 @@ public class PlayerManager : MonoBehaviour
         //Update player mood
         GameManager.i.actorPanelScript.SetPlayerMoodUI(mood);
         //History
-        string cityName = GameManager.i.campaignScript.scenario.city.tag;
+        string cityName = GameManager.i.cityScript.GetCityName();
         GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = $"Arrive and take charge at <b>{cityName}</b>", isHighlight = true });
         //Mood
         HistoryMood record = new HistoryMood()
@@ -2039,7 +2039,7 @@ public class PlayerManager : MonoBehaviour
         Investigation investigation = new Investigation()
         {
             reference = $"{turn}Debug",
-            city = GameManager.i.campaignScript.scenario.city.tag,
+            city = GameManager.i.cityScript.GetCityName(),
             turnStart = turn
         };
         switch (Random.Range(0, 3))

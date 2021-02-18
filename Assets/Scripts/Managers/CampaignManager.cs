@@ -359,7 +359,7 @@ public class CampaignManager : MonoBehaviour
     public void SetBlackMarks(int value)
     {
         blackmarks = value;
-        if (GameManager.i.controlScript.GetExistingGameState() == GameState.PlayGame)
+        if (GameManager.i.controlScript.GetExistingGameState() == GameState.PlayGame || GameManager.i.inputScript.GameState == GameState.Tutorial)
         {
             //update topBar
             GameManager.i.topBarScript.UpdateBlackmarks(blackmarks);
@@ -373,7 +373,7 @@ public class CampaignManager : MonoBehaviour
     public void SetCommendations(int value)
     {
         commendations = value;
-        if (GameManager.i.controlScript.GetExistingGameState() == GameState.PlayGame)
+        if (GameManager.i.controlScript.GetExistingGameState() == GameState.PlayGame || GameManager.i.inputScript.GameState == GameState.Tutorial)
         {
             //update topBar
             GameManager.i.topBarScript.UpdateCommendations(commendations);
@@ -549,6 +549,9 @@ public class CampaignManager : MonoBehaviour
     }
 
 
+    #region archive...
+    /*
+    //NOTE: -> Moved to ScenarioManager.cs
     /// <summary>
     /// Debug display of current scenario
     /// </summary>
@@ -572,8 +575,7 @@ public class CampaignManager : MonoBehaviour
 
         Mission mission = scenario.missionResistance;
         builder.AppendFormat("{0}-Mission Resistance \"{1}\"{2}", "\n", mission.descriptor, "\n");
-        /*foreach(Objective objective in mission.listOfObjectives)
-        { builder.AppendFormat(" Objective: {0}{1}", objective.tag, "\n"); }*/
+
         mission.listOfObjectives.ForEach(objective => builder.AppendFormat(" Objective: {0}{1}", objective.tag, "\n"));
         builder.AppendFormat(" Generic Targets: Live {0}, Active {1}{2}", mission.targetsGenericLive, mission.targetsGenericActive, "\n");
         if (mission.targetBaseCityHall != null)
@@ -587,19 +589,13 @@ public class CampaignManager : MonoBehaviour
         if (mission.targetBaseVIP != null)
         { builder.AppendFormat(" Target VIP: {0}{1}", mission.targetBaseVIP.targetName, "\n"); }
 
-        /*if (mission.targetBaseStory != null)
-        { builder.AppendFormat(" Target Story: {0}{1}", mission.targetBaseStory.targetName, "\n"); }
-        if (mission.targetBaseGoal != null)
-        { builder.AppendFormat(" Target Goal: {0}{1}", mission.targetBaseGoal.targetName, "\n"); }*/
-
         if (mission.profileGenericLive != null)
         { builder.AppendFormat(" Profile Generic Live: {0}{1}", mission.profileGenericLive.name, "\n"); }
         if (mission.profileGenericActive != null)
         { builder.AppendFormat(" Profile Generic Active: {0}{1}", mission.profileGenericActive.name, "\n"); }
         if (mission.profileGenericFollowOn != null)
         { builder.AppendFormat(" Profile Generic FollowOn: {0}{1}", mission.profileGenericFollowOn.name, "\n"); }
-        /*foreach(ObjectiveTarget objectiveTarget in mission.listOfObjectiveTargets)
-        { builder.AppendFormat(" ObjectiveTarget: {0}{1}", objectiveTarget.name, "\n"); }*/
+
         mission.listOfObjectiveTargets.ForEach(objectiveTarget => builder.AppendFormat(" ObjectiveTarget: {0}{1}", objectiveTarget.name, "\n"));
         //Npc
         if (GameManager.i.missionScript.mission.npc != null)
@@ -651,6 +647,8 @@ public class CampaignManager : MonoBehaviour
         }
         return builder.ToString();
     }
+    */
+    #endregion
 
     //new methods above here
 }

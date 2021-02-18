@@ -332,7 +332,7 @@ public class SecretManager : MonoBehaviour
                             evidence = secret.investigationEvidence,
                             turnStart = gameTurn,
                             lead = GameManager.i.hqScript.GetRandomHqPosition(),
-                            city = GameManager.i.campaignScript.scenario.city.name,
+                            city = GameManager.i.cityScript.GetCityName(),
                             status = InvestStatus.Ongoing,
                             outcome = InvestOutcome.None
                         };

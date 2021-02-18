@@ -247,6 +247,11 @@ public class ActorManager : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
+                SubInitialiseRecruitActorCachedFields();
+                SubInitialiseFastAccess();
+                SubInitialiseEvents();
+                break;
             case GameState.NewInitialisation:
                 SubInitialiseRecruitActorCachedFields();
                 SubInitialiseFastAccess();
@@ -279,6 +284,9 @@ public class ActorManager : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
+                //do nothing
+                break;
             case GameState.NewInitialisation:
                 SubInitialiseAllLate();
                 break;
@@ -930,7 +938,7 @@ public class ActorManager : MonoBehaviour
                     else
                     {
                         //history
-                        actor.AddHistory(new HistoryActor() { text = string.Format("{0}Reports for active duty at <b>{1}</b>{2}", colourNeutral, GameManager.i.campaignScript.scenario.city.tag, colourEnd), isHighlight = true });
+                        actor.AddHistory(new HistoryActor() { text = string.Format("{0}Reports for active duty at <b>{1}</b>{2}", colourNeutral, GameManager.i.cityScript.GetCityName(), colourEnd), isHighlight = true });
                         //city stat
                         actor.numOfCities++;
                     }
@@ -968,7 +976,7 @@ public class ActorManager : MonoBehaviour
                 if (actor != null)
                 {
                     //history
-                    actor.AddHistory(new HistoryActor() { text = string.Format("{0}Reports for active duty at <b>{1}</b>{2}", colourNeutral, GameManager.i.campaignScript.scenario.city.tag, colourEnd), isHighlight = true });
+                    actor.AddHistory(new HistoryActor() { text = string.Format("{0}Reports for active duty at <b>{1}</b>{2}", colourNeutral, GameManager.i.cityScript.GetCityName(), colourEnd), isHighlight = true });
                     //city stat
                     actor.numOfCities++;
                     //Debug actor summary
@@ -1217,7 +1225,7 @@ public class ActorManager : MonoBehaviour
                                         GameManager.i.dataScript.AddMetaGameCurrentActor(side, actor, index);
                                         actor.AddHistory(new HistoryActor()
                                         {
-                                            text = string.Format("{0}Reports for active duty at <b>{1}</b>{2}", colourNeutral, GameManager.i.campaignScript.scenario.city.tag, colourEnd),
+                                            text = string.Format("{0}Reports for active duty at <b>{1}</b>{2}", colourNeutral, GameManager.i.cityScript.GetCityName(), colourEnd),
                                             isHighlight = true
                                         });
                                         Debug.LogFormat("[Tor] ActorManager.cs -> GetOnMapActorsFromPool: OnMap {0}, {1}, ID {2}, slotID {3} Added from Recruit Pool{4}",
@@ -1244,7 +1252,7 @@ public class ActorManager : MonoBehaviour
                                                     GameManager.i.dataScript.AddMetaGameCurrentActor(side, actor, index);
                                                     actor.AddHistory(new HistoryActor()
                                                     {
-                                                        text = string.Format("{0}Reports for active duty at <b>{1}</b>{2}", colourNeutral, GameManager.i.campaignScript.scenario.city.tag, colourEnd),
+                                                        text = string.Format("{0}Reports for active duty at <b>{1}</b>{2}", colourNeutral, GameManager.i.cityScript.GetCityName(), colourEnd),
                                                         isHighlight = true
                                                     });
                                                     Debug.LogFormat("[Tor] ActorManager.cs -> GetOnMapActorsFromPool: OnMap {0}, {1}, ID {2}, slotID {3} Selected from Recruit Pool{4}",
@@ -1278,7 +1286,7 @@ public class ActorManager : MonoBehaviour
                                         newActor.actorName, newActor.arc.name, newActor.actorID, newActor.slotID, "\n");
                                     newActor.AddHistory(new HistoryActor()
                                     {
-                                        text = string.Format("{0}Reports for active duty at <b>{1}</b>{2}", colourNeutral, GameManager.i.campaignScript.scenario.city.tag, colourEnd),
+                                        text = string.Format("{0}Reports for active duty at <b>{1}</b>{2}", colourNeutral, GameManager.i.cityScript.GetCityName(), colourEnd),
                                         isHighlight = true
                                     });
                                 }

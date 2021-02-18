@@ -40,6 +40,7 @@ public class StatisticManager : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
             case GameState.NewInitialisation:
             case GameState.FollowOnInitialisation:
             case GameState.LoadAtStart:
@@ -60,7 +61,7 @@ public class StatisticManager : MonoBehaviour
     /// </summary>
     private void SubInitialiseSessionStart()
     {
-        //instantiate statistic trackers if a new sessession
+        //instantiate statistic trackers if a new session
         foreach (var stat in Enum.GetValues(typeof(StatType)))
         { GameManager.i.dataScript.StatisticAddNew((StatType)stat); }
     }

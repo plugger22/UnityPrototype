@@ -247,10 +247,10 @@ public class HQManager : MonoBehaviour
         if (hQResistance == null)
         { Debug.LogError("Invalid HqResistance (Null)"); }
         //approval levels (if input approval is Zero then generate a random value between 2 & 8)
-        int approval = GameManager.i.campaignScript.scenario.approvalStartAuthorityHQ;
+        int approval = GameManager.i.scenarioScript.scenario.approvalStartAuthorityHQ;
         if (approval == 0) { approval = Random.Range(2, 9); }
         ApprovalAuthority = approval;
-        approval = GameManager.i.campaignScript.scenario.approvalStartRebelHQ;
+        approval = GameManager.i.scenarioScript.scenario.approvalStartRebelHQ;
         if (approval == 0)
         { approval = Random.Range(2, 9); }
         ApprovalResistance = approval;
@@ -1037,7 +1037,7 @@ public class HQManager : MonoBehaviour
                 // - - - MAJOR event -> hq actor leaves
                 //
                 reason = hQMajorEvent.GetRandomRecord(false);
-                actor.AddHistory(new HistoryActor() { text = string.Format("Leaves HQ due to {0}, ex-{1}", reason, GameManager.i.campaignScript.scenario.city.tag) });
+                actor.AddHistory(new HistoryActor() { text = string.Format("Leaves HQ due to {0}, ex-{1}", reason, GameManager.i.cityScript.GetCityName()) });
                 Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqHierarchy:{0}, {1}, hqID {2} MAJOR EVENT{3}", actor.actorName, GetHqTitle(actor.statusHQ), actor.hqID, "\n");
                 Debug.LogFormat("[HQ] HQManager.cs -> ProcessHqHierarchy: {0}, {1}, leaves HQ due to {2}{3}", actor.actorName, GetHqTitle(actor.statusHQ),
                     reason, "\n");
@@ -1068,7 +1068,7 @@ public class HQManager : MonoBehaviour
                     actor.Power += change;
                     text = hQMinorEventHierarchyGood.GetRandomRecord(false);
                     reason = string.Format("gains +{0} Power because of {1} (before {2}, now {3} Power)", change, text, powerBefore, actor.Power);
-                    actor.AddHistory(new HistoryActor() { text = string.Format("Gains Power at HQ because of {0}, ex-{1}", text, GameManager.i.campaignScript.scenario.city.tag) });
+                    actor.AddHistory(new HistoryActor() { text = string.Format("Gains Power at HQ because of {0}, ex-{1}", text, GameManager.i.cityScript.GetCityName()) });
                     //add to list
                     eventText = string.Format("{0}{1}{2}, {3}{4}{5}{6}gains {7}+{8} Power{9} due to {10}", colourNormal, actor.actorName, colourEnd, colourNeutral, GetHqTitle(actor.statusHQ),
                         colourEnd, "\n", colourGood, change, colourEnd, text);
@@ -1081,7 +1081,7 @@ public class HQManager : MonoBehaviour
                     text = hQMinorEventHierarchyBad.GetRandomRecord(false);
                     change *= -1;
                     reason = string.Format("loses {0} Power because of {1} (before {2}, now {3} Power)", change, text, powerBefore, actor.Power);
-                    actor.AddHistory(new HistoryActor() { text = string.Format("Loses Power at HQ because of {0}, ex-{1}", text, GameManager.i.campaignScript.scenario.city.tag) });
+                    actor.AddHistory(new HistoryActor() { text = string.Format("Loses Power at HQ because of {0}, ex-{1}", text, GameManager.i.cityScript.GetCityName()) });
                     //add to list
                     eventText = string.Format("{0}{1}{2}, {3}{4}{5}{6}loses {7}{8} Power{9} because of {10}", colourNormal, actor.actorName, colourEnd, colourNeutral, GetHqTitle(actor.statusHQ),
                         colourEnd, "\n", colourBad, change, colourEnd, text);
@@ -1150,10 +1150,10 @@ public class HQManager : MonoBehaviour
                 actor.Power += change;
                 text = hQMinorEventWorkerGood.GetRandomRecord(false);
                 reason = string.Format("gains +{0} Power because of {1} (before {2}, now {3} Power)", change, text, powerBefore, actor.Power);
-                actor.AddHistory(new HistoryActor() { text = string.Format("Gains Power at HQ because of {0}, ex-{1}", text, GameManager.i.campaignScript.scenario.city.tag) });
+                actor.AddHistory(new HistoryActor() { text = string.Format("Gains Power at HQ because of {0}, ex-{1}", text, GameManager.i.cityScript.GetCityName()) });
                 //add to list
                 eventText = string.Format("{0}{1}{2}, {3}{4}{5}{6}gains {7}+{8} Power{9} due to {10}, ex-{11}", colourNormal, actor.actorName, colourEnd, colourAlert, GetHqTitle(actor.statusHQ),
-                    colourEnd, "\n", colourGood, change, colourEnd, text, GameManager.i.campaignScript.scenario.city.tag);
+                    colourEnd, "\n", colourGood, change, colourEnd, text, GameManager.i.cityScript.GetCityName());
                 GameManager.i.dataScript.AddHqEvent(eventText);
             }
             else
@@ -1275,12 +1275,12 @@ public class HQManager : MonoBehaviour
                             currentActor.AddHistory(new HistoryActor()
                             {
                                 text = string.Format("Demoted from {0}{1}{2} position at HQ, ex-{3}", colourAlert, GetHqTitle(newActor.statusHQ), colourEnd,
-                                GameManager.i.campaignScript.scenario.city.tag)
+                                GameManager.i.cityScript.GetCityName())
                             });
                             newActor.AddHistory(new HistoryActor()
                             {
                                 text = string.Format("Promoted to {0}{1}{2} position at HQ (previously {3}{4}{5}), ex-{6}",
-                                colourAlert, GetHqTitle(newActor.statusHQ), colourEnd, colourAlert, GetHqTitle(previousStatus), colourEnd, GameManager.i.campaignScript.scenario.city.tag)
+                                colourAlert, GetHqTitle(newActor.statusHQ), colourEnd, colourAlert, GetHqTitle(previousStatus), colourEnd, GameManager.i.cityScript.GetCityName())
                             });
                         }
                         else
@@ -1292,7 +1292,7 @@ public class HQManager : MonoBehaviour
                                 currentActor.AddHistory(new HistoryActor()
                                 {
                                     text = string.Format("Position secure at HQ as {0}{1}{2}, ex-{3}", colourAlert, GetHqTitle(currentActor.statusHQ), colourEnd,
-                                  GameManager.i.campaignScript.scenario.city.tag)
+                                  GameManager.i.cityScript.GetCityName())
                                 });
                             }
                         }
@@ -1322,7 +1322,7 @@ public class HQManager : MonoBehaviour
                                 newActor.AddHistory(new HistoryActor()
                                 {
                                     text = string.Format("Reasssigned to {0}{1}{2} position at HQ, ex-{3}", colourAlert, GetHqTitle(newActor.statusHQ), colourEnd,
-                                    GameManager.i.campaignScript.scenario.city.tag)
+                                    GameManager.i.cityScript.GetCityName())
                                 });
                             }
                             else
@@ -1330,7 +1330,7 @@ public class HQManager : MonoBehaviour
                                 newActor.AddHistory(new HistoryActor()
                                 {
                                     text = string.Format("Promoted to {0}{1}{2} position at HQ (previously {3}{4}{5}), ex-{6}",
-                             colourAlert, GetHqTitle(newActor.statusHQ), colourEnd, colourAlert, GetHqTitle(previousStatus), colourEnd, GameManager.i.campaignScript.scenario.city.tag)
+                             colourAlert, GetHqTitle(newActor.statusHQ), colourEnd, colourAlert, GetHqTitle(previousStatus), colourEnd, GameManager.i.cityScript.GetCityName())
                                 });
                             }
 

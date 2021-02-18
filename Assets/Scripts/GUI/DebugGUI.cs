@@ -1904,7 +1904,7 @@ public class DebugGUI : MonoBehaviour
                     //scenario data
                     case 56:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.i.campaignScript.DebugDisplayScenarioData();
+                        analysis = GameManager.i.scenarioScript.DebugDisplayScenarioData();
                         GUI.Box(new Rect(Screen.width - 405, 10, 400, 900), analysis, customBackground);
                         break;
                     //Personality data (OnMap actors)
