@@ -561,14 +561,13 @@ public class ControlManager : MonoBehaviour
         GameManager.i.modalGUIScript.SetBackground(Background.NewGame);
         //admin for new game
         SetNewGame();
-        //set up first level in campaign
-        GameManager.i.InitialiseTutorial();
         //change game state
         GameManager.i.inputScript.GameState = GameState.TutorialOptions;
+        //set up first level in campaign
+        GameManager.i.InitialiseTutorial();
         //close MainMenu
         EventManager.i.PostNotification(EventType.CloseMainMenu, this, null, "ControlManager.cs -> ProcessTutorial");
-        //run tutorial
-        GameManager.i.InitialiseTutorial();
+
     }
 
     //
