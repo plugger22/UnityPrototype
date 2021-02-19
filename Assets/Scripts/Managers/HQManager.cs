@@ -165,6 +165,7 @@ public class HQManager : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
             case GameState.NewInitialisation:
                 SubInitialiseNewGame();
                 SubInitialiseFastAccess();

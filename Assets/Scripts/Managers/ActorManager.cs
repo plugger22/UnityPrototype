@@ -9020,6 +9020,7 @@ public class ActorManager : MonoBehaviour
     }
     #endregion
 
+    #region GetUnhappyActorsTooltip
     /// <summary>
     /// returns a colour formatted tooltip for the detail section of the topBar unhappy tooltip (who's unhappy in the Reserves), for the Player side. Returns null if a problem
     /// </summary>
@@ -9058,7 +9059,9 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfActors for Reserves (Null)"); }
         return builder.ToString();
     }
+    #endregion
 
+    #region CheckNumOfUnhappyActors
     /// <summary>
     /// returns number of unhappy actors in reserve pool for player side
     /// </summary>
@@ -9093,7 +9096,9 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfActors for Reserves (Null)"); }
         return numOfUnhappy;
     }
+    #endregion
 
+    #region GetConflictActorsTooltip
     /// <summary>
     /// Returns a colour formatted string of all actors who currently have opinion 0 and can potentially have a conflict with the player in format actorName + actorArc. 
     /// Used by topBar conflict status icon tooltip details, returns null if a problem
@@ -9127,7 +9132,9 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
         return builder.ToString();
     }
+    #endregion
 
+    #region CheckNumOfConflictActors
     /// <summary>
     /// returns number of onMap (active/inactive) actors with opinion Zero
     /// </summary>
@@ -9157,8 +9164,9 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
         return numOfOpinionZero;
     }
+    #endregion
 
-
+    #region GetBlackmailActorsTooltip
     /// <summary>
     /// returns a colour formatted tooltip for the detail secion of the topBar blackmail tooltip for the Playerside. Returns null if a problem.
     /// </summary>
@@ -9192,7 +9200,9 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
         return builder.ToString();
     }
+    #endregion
 
+    #region CheckNumOfBlackmailActors
     /// <summary>
     /// returns number of onMap actors currently blackmailing player
     /// </summary>
@@ -9222,9 +9232,9 @@ public class ActorManager : MonoBehaviour
         else { Debug.LogError("Invalid arrayOfActors (Null)"); }
         return numOfBlackmailers;
     }
+    #endregion
 
-
-
+    #region TraitLogMessage
     /// <summary>
     /// Generates a log message indicating use of a trait. Output format is  "Actor uses x trait' 
     /// 'forText' (self-contained), eg.'for an attempt on a Target', 'toText (self-Contained), eg. 'to CANCEL attempt due to Security Measures' (Key word in CAPS, usually verb)
@@ -9255,7 +9265,7 @@ public class ActorManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid actor (Null)"); }
     }
-
+    #endregion
 
     //
     // - - - Tooltips - - -

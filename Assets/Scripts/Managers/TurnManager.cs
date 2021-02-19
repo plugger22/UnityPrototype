@@ -106,6 +106,7 @@ public class TurnManager : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
             case GameState.NewInitialisation:
                 SubInitialiseFastAccess();
                 SubInitialiseEvents();
