@@ -414,7 +414,7 @@ public class ModalMainMenu : MonoBehaviour
                 buttonTooltipHeader = string.Format("{0}Tutorial{1}", colourSide, colourEnd),
                 buttonTooltipMain = string.Format("{0}Do the Tutorial{1}", colourNormal, colourEnd),
                 buttonTooltipDetail = string.Format("{0}You weren't expecting to figure this out on your own, were you?{1}", colourAlert, colourEnd),
-                action = () => { EventManager.i.PostNotification(EventType.Tutorial, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
+                action = () => { EventManager.i.PostNotification(EventType.TutorialOptions, this, -1, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
             details.listOfButtonDetails.Add(button1);
         }        

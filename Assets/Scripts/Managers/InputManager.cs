@@ -320,7 +320,7 @@ public class InputManager : MonoBehaviour
                                 EventManager.i.PostNotification(EventType.CloseNewGame, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
                                 break;
                             case GameState.TutorialOptions:
-                                EventManager.i.PostNotification(EventType.CloseTutorial, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
+                                EventManager.i.PostNotification(EventType.CloseTutorialOptions, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
                                 break;
                             case GameState.LoadGame:
                             case GameState.LoadAtStart:
