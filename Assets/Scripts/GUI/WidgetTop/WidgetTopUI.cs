@@ -97,7 +97,7 @@ public class WidgetTopUI : MonoBehaviour
     {
         switch (state)
         {
-            case GameState.Tutorial:
+            case GameState.TutorialOptions:
             case GameState.StartUp:
             case GameState.NewInitialisation:
                 SubInitialiseFastAccess();

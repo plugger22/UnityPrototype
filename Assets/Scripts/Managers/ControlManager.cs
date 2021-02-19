@@ -32,7 +32,8 @@ public class ControlManager : MonoBehaviour
         EventManager.i.AddListener(EventType.SaveAndExit, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.CloseLoadGame, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.CloseSaveGame, OnEvent, "ControlManager");
-        EventManager.i.AddListener(EventType.Tutorial, OnEvent, "ControlManager.cs");
+        EventManager.i.AddListener(EventType.TutorialOptions, OnEvent, "ControlManager.cs");
+        EventManager.i.AddListener(EventType.CloseTutorialOptions, OnEvent, "ControlManager.cs");
     }
 
 
@@ -78,8 +79,11 @@ public class ControlManager : MonoBehaviour
             case EventType.CloseSaveGame:
                 CloseSaveGame();
                 break;
-            case EventType.Tutorial:
-                ProcessTutorial();
+            case EventType.TutorialOptions:
+                ProcessTutorialOptions();
+                break;
+            case EventType.CloseTutorialOptions:
+                ProcessCloseTutorialOptions();
                 break;
             case EventType.CreateOptions:
                 ProcessOptions((GameState)Param);
@@ -155,14 +159,17 @@ public class ControlManager : MonoBehaviour
         Debug.LogFormat("[Ctrl] ControlManager.cs -> CloseNewGameOptions: CloseNewGameOptions selected{0}", "\n");
         //save existing game state
         gameState = GameManager.i.inputScript.GameState;
-        //revert to playGame state by default
+
+        /*//revert to playGame state by default
         GameManager.i.inputScript.GameState = GameState.NewInitialisation;
         //create new game -> DEBUG: resets campaign so assumes brand new campaign
         GameManager.i.campaignScript.Reset();
         //set up first level in campaign
         GameManager.i.InitialiseNewSession();
         //campaign history
-        GameManager.i.dataScript.SetCampaignHistoryStart();
+        GameManager.i.dataScript.SetCampaignHistoryStart();*/   //edit -> replaced by SetNewGame
+
+        SetNewGame();
         //revert to playGame state by default
         GameManager.i.inputScript.GameState = GameState.PlayGame;
         //close background
@@ -541,19 +548,38 @@ public class ControlManager : MonoBehaviour
     /// <summary>
     /// Initialises and runs tutorial
     /// </summary>
-    private void ProcessTutorial()
+    private void ProcessTutorialOptions()
     {
-        Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessTutorial: ProcessTutorial selected{0}", "\n");
+        Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessTutorialOptions: ProcessTutorialOptions selected{0}", "\n");
         //save existing game state
         gameState = GameManager.i.inputScript.GameState;
         //set background
         GameManager.i.modalGUIScript.SetBackground(Background.NewGame);
+        //admin for new game
+        SetNewGame();
         //close MainMenu
         EventManager.i.PostNotification(EventType.CloseMainMenu, this, null, "ControlManager.cs -> ProcessTutorial");
-        //change game state
-        GameManager.i.inputScript.GameState = GameState.Tutorial;
         //run tutorial
         GameManager.i.InitialiseTutorial();
+    }
+
+    //
+    /// <summary>
+    /// Closes tutorial screen and drops player into tutorial city
+    /// </summary>
+    private void ProcessCloseTutorialOptions()
+    {
+        Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessCloseTutorialOptions: ProcessCloseTutorialOptions selected{0}", "\n");
+        //save existing game state
+        gameState = GameManager.i.inputScript.GameState;
+        //change game state
+        GameManager.i.inputScript.GameState = GameState.TutorialOptions;
+        //close background
+        GameManager.i.modalGUIScript.CloseBackgrounds();
+        //toggle off modal block
+        GameManager.i.guiScript.SetIsBlocked(false);
+        //start animations
+        GameManager.i.animateScript.StartAnimations();
     }
 
     /// <summary>
@@ -590,6 +616,21 @@ public class ControlManager : MonoBehaviour
     /// <returns></returns>
     public GameState GetExistingGameState()
     { return gameState; }
+
+    /// <summary>
+    /// Utility subMethod that handles admin for creating a newgame / tutorial
+    /// </summary>
+    private void SetNewGame()
+    {
+        //revert to playGame state by default
+        GameManager.i.inputScript.GameState = GameState.NewInitialisation;
+        //create new game -> DEBUG: resets campaign so assumes brand new campaign
+        GameManager.i.campaignScript.Reset();
+        //set up first level in campaign
+        GameManager.i.InitialiseNewSession();
+        //campaign history
+        GameManager.i.dataScript.SetCampaignHistoryStart();
+    }
 
 
     //new methods above here

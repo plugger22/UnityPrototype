@@ -19,7 +19,7 @@ public class AuthorityManager : MonoBehaviour
     {
         switch (state)
         {
-            case GameState.Tutorial:
+            case GameState.TutorialOptions:
             case GameState.NewInitialisation:
                 SubInitialiseFastAccess();
                 break;

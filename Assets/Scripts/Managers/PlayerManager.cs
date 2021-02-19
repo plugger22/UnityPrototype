@@ -237,7 +237,7 @@ public class PlayerManager : MonoBehaviour
     {
         switch (state)
         {
-            case GameState.Tutorial:
+            case GameState.TutorialOptions:
             case GameState.NewInitialisation:
                 SubInitialiseSessionStartEarly();
                 SubInitialiseLevelStart();
@@ -264,7 +264,7 @@ public class PlayerManager : MonoBehaviour
     {
         switch (state)
         {
-            case GameState.Tutorial:
+            case GameState.TutorialOptions:
             case GameState.NewInitialisation:
                 //debug purposes only 
                 SubInitialiseSessionStartLate();

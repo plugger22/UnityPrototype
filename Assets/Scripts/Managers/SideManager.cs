@@ -111,7 +111,7 @@ public class SideManager : MonoBehaviour
     {
         switch (state)
         {
-            case GameState.Tutorial:
+            case GameState.TutorialOptions:
                 SubInitialiseFastAccess();
                 SubInitialiseTutorial();
                 break;

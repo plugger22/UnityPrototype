@@ -60,7 +60,7 @@ public class ModalInventoryUI : MonoBehaviour
     {
         switch (state)
         {
-            case GameState.Tutorial:
+            case GameState.TutorialOptions:
             case GameState.LoadGame:
             case GameState.NewInitialisation:
             case GameState.LoadAtStart:

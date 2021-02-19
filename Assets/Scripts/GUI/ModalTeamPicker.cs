@@ -70,7 +70,7 @@ public class ModalTeamPicker : MonoBehaviour
         {
             switch (state)
             {
-                case GameState.Tutorial:
+                case GameState.TutorialOptions:
                 case GameState.NewInitialisation:
                 case GameState.LoadAtStart:
                     SubInitialiseSessionStart();

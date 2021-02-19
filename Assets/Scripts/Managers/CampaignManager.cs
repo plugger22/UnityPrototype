@@ -44,7 +44,7 @@ public class CampaignManager : MonoBehaviour
     {
         switch (state)
         {
-            case GameState.Tutorial:
+            case GameState.TutorialOptions:
                 //do nothing
                 break;
             case GameState.NewInitialisation:
@@ -72,7 +72,7 @@ public class CampaignManager : MonoBehaviour
     {
         switch (state)
         {
-            case GameState.Tutorial:
+            case GameState.TutorialOptions:
                 //do nothing
                 break;
             case GameState.NewInitialisation:

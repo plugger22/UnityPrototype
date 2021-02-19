@@ -60,7 +60,7 @@ public class MessageManager : MonoBehaviour
     {
         switch (GameManager.i.inputScript.GameState)
         {
-            case GameState.Tutorial:
+            case GameState.TutorialOptions:
             case GameState.NewInitialisation:
             case GameState.FollowOnInitialisation:
             case GameState.LoadAtStart:

@@ -85,7 +85,7 @@ public class CityInfoUI : MonoBehaviour
     {
         switch (state)
         {
-            case GameState.Tutorial:
+            case GameState.TutorialOptions:
             case GameState.NewInitialisation:
                 SubInitialiseFastAccess();
                 SubInitialiseLevelStart();

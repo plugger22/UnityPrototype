@@ -28,7 +28,7 @@ public class OrganisationManager : MonoBehaviour
     {
         switch (state)
         {
-            case GameState.Tutorial:
+            case GameState.TutorialOptions:
                 //do nothing
                 break;
             case GameState.NewInitialisation:

@@ -310,7 +310,7 @@ public class DataManager : MonoBehaviour
     {
         switch (state)
         {
-            case GameState.Tutorial:
+            case GameState.TutorialOptions:
                 SubInitialiseNewGame();
                 SubInitialiseReset();
                 SubInitialiseAll();

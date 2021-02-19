@@ -9,7 +9,7 @@
     //
     public enum GameState {
         None, MainMenu, StartUp, Options, NewGame, NewGameOptions, NewInitialisation, FollowOnInitialisation, NewCampaign, SaveGame, SaveAndExit, LoadGame, LoadAtStart,
-        PlayGame, MetaGame, Tutorial, ExitLevel, ExitCampaign, ExitGame}  //overall game state
+        PlayGame, MetaGame, TutorialOptions, Tutorial, ExitLevel, ExitCampaign, ExitGame}  //overall game state
     public enum WinStateLevel { None, Authority, Resistance }                                                                                   //none indicates nobody has yet won level
     public enum WinReasonLevel { None, CityLoyaltyMin, CityLoyaltyMax, HqSupportMin, MissionTimerMin, ObjectivesCompleted, Investigation, CampaignResult } //reason for Level Win State (from POV of winner)
     public enum WinStateCampaign { None, Authority, Resistance }

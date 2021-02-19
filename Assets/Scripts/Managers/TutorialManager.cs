@@ -25,7 +25,7 @@ public class TutorialManager : MonoBehaviour
     {
         switch (state)
         {
-            case GameState.Tutorial:
+            case GameState.TutorialOptions:
                 SubInitialiseFastAccess();
                 SubInitialiseTutorial();
                 break;

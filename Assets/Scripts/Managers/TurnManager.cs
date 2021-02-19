@@ -106,7 +106,7 @@ public class TurnManager : MonoBehaviour
     {
         switch (state)
         {
-            case GameState.Tutorial:
+            case GameState.TutorialOptions:
             case GameState.NewInitialisation:
                 SubInitialiseFastAccess();
                 SubInitialiseEvents();
@@ -144,7 +144,7 @@ public class TurnManager : MonoBehaviour
         currentSide = GameManager.i.sideScript.PlayerSide;
         Debug.Assert(currentSide != null, "Invalid currentSide (Null)");
         //scenarion time (update for each new scenario so not in fast access)
-        scenarioTimer = GameManager.i.campaignScript.scenario.timer;
+        scenarioTimer = GameManager.i.scenarioScript.scenario.timer;
         Debug.Assert(scenarioTimer > -1, "Invalid scenarioTimer (-1)");
 
     }

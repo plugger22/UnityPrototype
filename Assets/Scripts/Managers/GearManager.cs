@@ -94,7 +94,7 @@ public class GearManager : MonoBehaviour
     {
         switch (state)
         {
-            case GameState.Tutorial:
+            case GameState.TutorialOptions:
             case GameState.NewInitialisation:
                 SubInitialiseFastAccess();
                 SubInitialiseSessionStart();

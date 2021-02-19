@@ -247,7 +247,7 @@ public class ActorManager : MonoBehaviour
     {
         switch (state)
         {
-            case GameState.Tutorial:
+            case GameState.TutorialOptions:
                 SubInitialiseRecruitActorCachedFields();
                 SubInitialiseFastAccess();
                 SubInitialiseEvents();
@@ -284,7 +284,7 @@ public class ActorManager : MonoBehaviour
     {
         switch (state)
         {
-            case GameState.Tutorial:
+            case GameState.TutorialOptions:
                 //do nothing
                 break;
             case GameState.NewInitialisation:

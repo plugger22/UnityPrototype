@@ -288,7 +288,7 @@ public class TopicManager : MonoBehaviour
     {
         switch (state)
         {
-            case GameState.Tutorial:
+            case GameState.TutorialOptions:
             case GameState.NewInitialisation:
                 SubInitialiseAsserts();     //needs to be first
                 SubInitialiseFastAccess();

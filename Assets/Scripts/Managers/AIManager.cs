@@ -351,7 +351,7 @@ public class AIManager : MonoBehaviour
     {
         switch (state)
         {
-            case GameState.Tutorial:
+            case GameState.TutorialOptions:
             case GameState.NewInitialisation:
                 SubInitialiseStartSession();
                 SubInitialiseDecisionData();

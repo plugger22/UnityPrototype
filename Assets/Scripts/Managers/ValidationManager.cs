@@ -157,7 +157,7 @@ public class ValidationManager : MonoBehaviour
     {
         switch (state)
         {
-            case GameState.Tutorial:
+            case GameState.TutorialOptions:
             case GameState.NewInitialisation:
             case GameState.LoadAtStart:
                 Debug.LogFormat("[Val] ValidationManager.cs -> Initialise: Commence checks...{0}", "\n");
