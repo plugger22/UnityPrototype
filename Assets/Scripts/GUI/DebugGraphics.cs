@@ -35,6 +35,7 @@ public class DebugGraphics : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
             case GameState.NewInitialisation:
                 SubInitialiseSessionStart();
                 break;

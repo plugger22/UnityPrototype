@@ -225,6 +225,7 @@ public class TransitionUI : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
             case GameState.NewInitialisation:
                 SubInitialiseFastAccess();
                 SubInitialiseSessionStart();

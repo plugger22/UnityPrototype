@@ -170,6 +170,7 @@ public class TopicUI : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
             case GameState.NewInitialisation:
                 SubInitialiseFastAccess();
                 SubInitialiseSessionStart();

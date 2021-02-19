@@ -425,6 +425,7 @@ public class ModalTabbedUI : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
             case GameState.LoadGame:
             case GameState.NewInitialisation:
             case GameState.LoadAtStart:

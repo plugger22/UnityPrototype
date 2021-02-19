@@ -106,6 +106,7 @@ public class ModalOutcome : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
             case GameState.LoadGame:
             case GameState.NewInitialisation:
             case GameState.LoadAtStart:
@@ -261,6 +262,7 @@ public class ModalOutcome : MonoBehaviour
         }
     }
     #endregion
+
 
     #region OnDisable
     public void OnDisable()

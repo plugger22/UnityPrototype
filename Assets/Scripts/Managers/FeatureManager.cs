@@ -35,6 +35,7 @@ public class FeatureManager : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
             case GameState.NewInitialisation:
             case GameState.FollowOnInitialisation:
                 SubInitialiseToggle();

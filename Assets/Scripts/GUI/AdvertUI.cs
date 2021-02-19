@@ -83,6 +83,7 @@ public class AdvertUI : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
             case GameState.StartUp:
             case GameState.NewInitialisation:
                 SubInitialiseAsserts();
@@ -105,7 +106,7 @@ public class AdvertUI : MonoBehaviour
     }
     #endregion
 
-    #region Initialise SubMethods
+    #region Initialise SubMethods...
 
     #region SubInitialiseAsserts
     private void SubInitialiseAsserts()
