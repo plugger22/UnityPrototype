@@ -121,6 +121,7 @@ public class AnimationManager : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
             case GameState.NewInitialisation:
                 SubInitialiseFastAccess();
                 SubInitialiseLevelStart();

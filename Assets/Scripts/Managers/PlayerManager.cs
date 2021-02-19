@@ -264,6 +264,7 @@ public class PlayerManager : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
             case GameState.NewInitialisation:
                 //debug purposes only 
                 SubInitialiseSessionStartLate();

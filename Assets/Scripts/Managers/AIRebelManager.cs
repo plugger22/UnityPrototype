@@ -221,6 +221,7 @@ public class AIRebelManager : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
             case GameState.NewInitialisation:
                 SubInitialiseAllEarly();
                 SubInitialiseFastAccess();

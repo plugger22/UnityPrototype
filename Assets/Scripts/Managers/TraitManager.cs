@@ -22,6 +22,7 @@ public class TraitManager : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
             case GameState.NewInitialisation:
                 SubInitialiseSessionStart();
                 SubInitialiseEvents();

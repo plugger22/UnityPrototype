@@ -31,6 +31,7 @@ public class ConnectionManager : MonoBehaviour
     {
         switch (state)
         {
+            case GameState.Tutorial:
             case GameState.NewInitialisation:
                 SubInitialiseAll();
                 SubInitialiseSessionStart();
