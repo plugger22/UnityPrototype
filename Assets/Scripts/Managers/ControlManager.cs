@@ -558,7 +558,7 @@ public class ControlManager : MonoBehaviour
         //save existing game state
         gameState = GameManager.i.inputScript.GameState;
         //set background
-        GameManager.i.modalGUIScript.SetBackground(Background.NewGame);
+        GameManager.i.modalGUIScript.SetBackground(Background.TutorialOptions);
         //admin for new game
         SetNewGame();
         //change game state

@@ -28,6 +28,8 @@ public class ModalGUI : MonoBehaviour
     public Image backgroundNewGameOptions;
     [Tooltip("Option screen background")]
     public Image backgroundOptions;
+    [Tooltip("Tutorial options screen background")]
+    public Image backgroundTutorialOptions;
     [Tooltip("End Level (summary) background")]
     public Image backgroundEndLevel;
     [Tooltip("MetaGame (between levels) background")]
@@ -73,6 +75,7 @@ public class ModalGUI : MonoBehaviour
         Debug.Assert(backgroundNewGame != null, "Invalid backgroundNewGame (Null)");
         Debug.Assert(backgroundNewGameOptions != null, "Invalid backgroundNewGameOptions (Null)");
         Debug.Assert(backgroundOptions != null, "Invalid backgroundOptions (Null)");
+        Debug.Assert(backgroundTutorialOptions != null, "Invalid backgroundTutorialOptions (Null)");
         Debug.Assert(backgroundEndLevel != null, "Invalid backgroundEndLevel (Null)");
         Debug.Assert(backgroundMetaGame != null, "Invalid backgroundMetaGame (Null)");
         Debug.Assert(backgroundNewCampaign != null, "Invalid backgroundNewCampaign (Null)");
@@ -165,6 +168,9 @@ public class ModalGUI : MonoBehaviour
             case Background.Options:
                 backgroundOptions.gameObject.SetActive(true);
                 break;
+            case Background.TutorialOptions:
+                backgroundTutorialOptions.gameObject.SetActive(true);
+                break;
             case Background.EndLevel:
                 backgroundEndLevel.gameObject.SetActive(true);
                 break;
@@ -216,6 +222,9 @@ public class ModalGUI : MonoBehaviour
                     case Background.Options:
                         backgroundOptions.gameObject.SetActive(false);
                         break;
+                    case Background.TutorialOptions:
+                        backgroundTutorialOptions.gameObject.SetActive(false);
+                        break;
                     case Background.EndLevel:
                         backgroundEndLevel.gameObject.SetActive(false);
                         break;
@@ -263,6 +272,7 @@ public class ModalGUI : MonoBehaviour
         builder.AppendFormat(" NewGame: {0}{1}", backgroundNewGame.gameObject.activeSelf, "\n");
         builder.AppendFormat(" NewGameOptions: {0}{1}", backgroundNewGameOptions.gameObject.activeSelf, "\n");
         builder.AppendFormat(" Options: {0}{1}", backgroundOptions.gameObject.activeSelf, "\n");
+        builder.AppendFormat(" TutorialOptions: {0}{1}", backgroundTutorialOptions.gameObject.activeSelf, "\n");
         builder.AppendFormat(" EndLevel: {0}{1}", backgroundEndLevel.gameObject.activeSelf, "\n");
         builder.AppendFormat(" MetaGame: {0}{1}", backgroundMetaGame.gameObject.activeSelf, "\n");
         builder.AppendFormat(" NewCampaign: {0}{1}", backgroundNewCampaign.gameObject.activeSelf, "\n");

@@ -400,7 +400,7 @@ namespace gameAPI
                             history.change = 0;
                             history.opinion = datapoint1;
                             history.isNormal = true;
-                            text = string.Format("Starting Opinion {0}, {1}", datapoint1, GameManager.i.campaignScript.scenario.city.tag);
+                            text = string.Format("Starting Opinion {0}, {1}", datapoint1, GameManager.i.cityScript.GetCityName());
                             history.descriptor = GameManager.Formatt(text, ColourType.neutralText);
                             personality.AddOpinion(history);
                         }

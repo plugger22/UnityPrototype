@@ -3623,9 +3623,13 @@ public class ModalTabbedUI : MonoBehaviour
                 {
                     if (arrayOfActorsTemp[tabIndex] != null)
                     {
-                        if (arrayOfActorsTemp[tabIndex].backstory0.Length > 0)
-                        { background = string.Format("{0}{1}{2}{3}", arrayOfActorsTemp[tabIndex].backstory0, "\n", "\n", arrayOfActorsTemp[tabIndex].backstory1); }
-                        else { background = "Background details Redacted for security purposes"; }
+                        if (arrayOfActorsTemp[tabIndex].backstory0 != null)
+                        {
+                            if (arrayOfActorsTemp[tabIndex].backstory0.Length > 0)
+                            { background = string.Format("{0}{1}{2}{3}", arrayOfActorsTemp[tabIndex].backstory0, "\n", "\n", arrayOfActorsTemp[tabIndex].backstory1); }
+                            else { background = "Background details have been redacted for security purposes"; }
+                        }
+                        else { background = "Your security clearance does not allow access to background information. Review pending"; }
                     }
                     else { Debug.LogWarningFormat("Invalid actor (Null) for arrayOfActorsTemp[{0}]", tabIndex); }
                 }

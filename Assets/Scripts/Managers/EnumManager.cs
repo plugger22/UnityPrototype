@@ -32,7 +32,7 @@
     public enum ModalInventorySubState { None, Gear, ReservePool, HQ, CaptureTool}                                                      //if ModalUI.Inventory -> what type of Inventory
     public enum ModalTransitionSubState { None, EndLevel, HQ, PlayerStatus, BriefingOne, BriefingTwo}                                   //if ModalUI.Transition -> what type of Transition
     public enum AlignHorizontal { None, Left, Centre, Right }
-    public enum Background { None, Start, NewGame, NewGameOptions, SaveGame, LoadGame, Options, EndLevel, MetaGame, NewCampaign, EndCampaign }             //full screen backgrounds
+    public enum Background { None, Start, NewGame, NewGameOptions, SaveGame, LoadGame, Options, TutorialOptions, EndLevel, MetaGame, NewCampaign, EndCampaign }             //full screen backgrounds
     public enum ActionMenuType { None, Node, NodeGear, Gear, Actor, Player, Move, Reserve }
     public enum DebugRegister { None, Ongoing, Actions }
     public enum GenericTooltipType { Any, ActorInfo }                                           //ability to specify tooltip types that must be closed and to ignore the rest. Create group types as required.

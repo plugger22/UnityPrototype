@@ -251,6 +251,7 @@ public class ActorManager : MonoBehaviour
                 SubInitialiseRecruitActorCachedFields();
                 SubInitialiseFastAccess();
                 SubInitialiseEvents();
+                SubInitialiseLevelStart();
                 break;
             case GameState.NewInitialisation:
                 SubInitialiseRecruitActorCachedFields();
@@ -285,7 +286,7 @@ public class ActorManager : MonoBehaviour
         switch (state)
         {
             case GameState.TutorialOptions:
-                //do nothing
+                SubInitialiseAllLate();
                 break;
             case GameState.NewInitialisation:
                 SubInitialiseAllLate();
@@ -422,31 +423,43 @@ public class ActorManager : MonoBehaviour
         nameSet = GameManager.i.cityScript.GetNameSet();
         if (nameSet == null)
         { Debug.LogError("Invalid nameSet (Null)"); }
-        //create new actors -> first level only
-        if (GameManager.i.campaignScript.GetScenarioIndex() == GameManager.i.scenarioStartLevel)
+        //normal ops
+        if (GameManager.i.inputScript.GameState != GameState.TutorialOptions)
         {
-            if (GameManager.i.optionScript.isActorPool == false)
+            //create new actors -> first level only
+            if (GameManager.i.campaignScript.GetScenarioIndex() == GameManager.i.scenarioStartLevel)
             {
-                //create active, OnMap actors (need to do both sides for purposes of setting up contacts)
-                InitialiseActors(maxNumOfOnMapActors, GameManager.i.globalScript.sideResistance);
-                InitialiseActors(maxNumOfOnMapActors, GameManager.i.globalScript.sideAuthority);
-                InitialisePoolActors();
+                if (GameManager.i.optionScript.isActorPool == false)
+                {
+                    //create active, OnMap actors (need to do both sides for purposes of setting up contacts)
+                    InitialiseActors(maxNumOfOnMapActors, GameManager.i.globalScript.sideResistance);
+                    InitialiseActors(maxNumOfOnMapActors, GameManager.i.globalScript.sideAuthority);
+                    InitialisePoolActors();
+                }
+                else
+                {
+                    //standard -> use actor pool
+                    LoadActorPool();
+                }
+                //Debug settings
+                DebugTest();
             }
             else
             {
-                //standard -> use actor pool
-                LoadActorPool();
+                //NOT the first level
+                MetaGameOptions data = GameManager.i.metaScript.GetMetaOptions();
+                //draw from pool
+                GetOnMapActorsFromPool(maxNumOfOnMapActors, GameManager.i.globalScript.sideResistance, data);
+                GetOnMapActorsFromPool(maxNumOfOnMapActors, GameManager.i.globalScript.sideAuthority, data);
             }
-            //Debug settings
-            DebugTest();
         }
+        //tutorial
         else
         {
-            //NOT the first level
-            MetaGameOptions data = GameManager.i.metaScript.GetMetaOptions();
-            //draw from pool
-            GetOnMapActorsFromPool(maxNumOfOnMapActors, GameManager.i.globalScript.sideResistance, data);
-            GetOnMapActorsFromPool(maxNumOfOnMapActors, GameManager.i.globalScript.sideAuthority, data);
+            //create active, OnMap actors (need to do both sides for purposes of setting up contacts)
+            InitialiseActors(maxNumOfOnMapActors, GameManager.i.globalScript.sideResistance);
+            InitialiseActors(maxNumOfOnMapActors, GameManager.i.globalScript.sideAuthority);
+            InitialisePoolActors();
         }
         //set actor alpha to active for all onMap slots
         if (GameManager.i.optionScript.isSubordinates == true)
