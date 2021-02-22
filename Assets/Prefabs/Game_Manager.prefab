@@ -6717,6 +6717,7 @@ MonoBehaviour:
   textScript: {fileID: 0}
   featureScript: {fileID: 0}
   tutorialScript: {fileID: 0}
+  scenarioScript: {fileID: 0}
   tooltipNodeScript: {fileID: 0}
   tooltipConnScript: {fileID: 0}
   tooltipActorScript: {fileID: 0}
@@ -6759,7 +6760,7 @@ MonoBehaviour:
   isDataValidation: 1
   isValidateSO: 1
   isIntegrityCheck: 1
-  isRandomLevel: 1
+  isRandomLevel: 0
   isRandomCity: 0
   isRandomActors: 0
   isRandomOnMap: 0

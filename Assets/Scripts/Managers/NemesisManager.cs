@@ -120,6 +120,7 @@ public class NemesisManager : MonoBehaviour
     {
         switch (GameManager.i.inputScript.GameState)
         {
+            case GameState.TutorialOptions:
             case GameState.NewInitialisation:
                 SubInitialisePlayerData();
                 SubInitialiseFastAccess();

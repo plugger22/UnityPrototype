@@ -16,21 +16,21 @@ MonoBehaviour:
   isTestForDuplicates: 1
   isTestForTextTags: 0
   randomList:
-  - Downtown
-  - Tricomer
-  - Dollarville
-  - Diamondville
-  - Fashionville
+  - Bridgeton
+  - Dalmark
+  - Rutherglen
+  - Fort Matilda
+  - Croftfoot
   - Robbinsville
   - The Cauldron
   - The Bowery
-  - Little Italy
+  - Crosshill
   - Old Gotham
   - Gothville
   - Small End
-  - Narrows
+  - The Narrows
   - Blackgate
-  - Gotham Square
+  - Yoker
   - Dog Town
   - Burnley
   - Robinson Park
@@ -39,11 +39,11 @@ MonoBehaviour:
   - Gotham Village
   - Cherry Hill
   - Gotham Heights
-  - New Town
+  - Broddick
   - Old Town
   - Obsburg
   - Park Row
-  - Big End
+  - Giffrock
   - Bristol
   - Burnside
   - Slaughter Swamp
@@ -56,4 +56,4 @@ MonoBehaviour:
   - Finger Bridge
   - Daggetsville
   - Stagg Town
-  index: 20
+  index: 0

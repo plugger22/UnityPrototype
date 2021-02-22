@@ -69,6 +69,7 @@ public class CityManager : MonoBehaviour
     {
         switch (GameManager.i.inputScript.GameState)
         {
+            case GameState.TutorialOptions:
             case GameState.NewInitialisation:
                 SubInitialiseAllEarly(mayor);
                 SubInitialiseEvents();
@@ -97,6 +98,7 @@ public class CityManager : MonoBehaviour
     {
         switch (GameManager.i.inputScript.GameState)
         {
+            case GameState.TutorialOptions:
             case GameState.NewInitialisation:
                 SubInitialiseLevelStart();
                 SubInitialiseAllLate();
@@ -124,7 +126,7 @@ public class CityManager : MonoBehaviour
     private void SubInitialiseAllEarly(Mayor mayor)
     {
         //use a random city if GameManager dev option set true, uses Scenario specified city otherwise
-        if (GameManager.i.isRandomCity == true)
+        if (GameManager.i.isRandomCity == true && GameManager.i.inputScript.GameState == GameState.NewInitialisation)
         { city = GameManager.i.dataScript.GetRandomCity(); }
 
         isLoyaltyCheckedThisTurn = false;
@@ -163,10 +165,6 @@ public class CityManager : MonoBehaviour
     {
         //initialise number of districts
         city.SetDistrictTotals(GameManager.i.dataScript.GetNodeTypeTotals());
-
-        /*//organisations -> placeholder (should be a loop for all cities -> must be AFTER mayor and faction have been initialised
-        GameManager.instance.orgScript.SetOrganisationsInCity(city);*/
-
         //set up base panel UI
         GameManager.i.basePanelScript.SetBaseNames(city);
     }

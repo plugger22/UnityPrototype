@@ -40,6 +40,7 @@ public class MissionManager : MonoBehaviour
     {
         switch (GameManager.i.inputScript.GameState)
         {
+            case GameState.TutorialOptions:
             case GameState.NewInitialisation:
                 SubInitialiseAll();
                 SubInitialiseEvents();
@@ -67,20 +68,28 @@ public class MissionManager : MonoBehaviour
     private void SubInitialiseAll()
     {
         Debug.Assert(mission != null, "Invalid Mission (Null)");
-        //Assign Objectives if present, if not use random objectives
-        List<Objective> listOfObjectives = new List<Objective>();
-        if (mission.listOfObjectives.Count > 0)
-        { listOfObjectives.AddRange(mission.listOfObjectives); }
-        else { listOfObjectives.AddRange(GameManager.i.dataScript.GetRandomObjectives(GameManager.i.objectiveScript.maxNumOfObjectives)); }
-        GameManager.i.objectiveScript.SetObjectives(listOfObjectives);
-        //initialise and assign targets
-        GameManager.i.targetScript.Initialise();
-        GameManager.i.targetScript.AssignTargets(mission);
-        //Npc -> Human Resistance Player only
-        if (GameManager.i.optionScript.isNPC == true)
+        if (GameManager.i.inputScript.GameState != GameState.TutorialOptions)
         {
-            if (GameManager.i.campaignScript.campaign.side.level == 2)
-            { InitialiseNpc(); }
+            //Assign Objectives if present, if not use random objectives
+            List<Objective> listOfObjectives = new List<Objective>();
+            if (mission.listOfObjectives.Count > 0)
+            { listOfObjectives.AddRange(mission.listOfObjectives); }
+            else { listOfObjectives.AddRange(GameManager.i.dataScript.GetRandomObjectives(GameManager.i.objectiveScript.maxNumOfObjectives)); }
+            GameManager.i.objectiveScript.SetObjectives(listOfObjectives);
+            //initialise and assign targets
+            GameManager.i.targetScript.Initialise();
+            GameManager.i.targetScript.AssignTargets(mission);
+            //Npc -> Human Resistance Player only
+            if (GameManager.i.optionScript.isNPC == true)
+            {
+                if (GameManager.i.campaignScript.campaign.side.level == 2)
+                { InitialiseNpc(); }
+            }
+        }
+        //Tutorial
+        else
+        {
+            //to do
         }
     }
     #endregion

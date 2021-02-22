@@ -73,8 +73,6 @@ public class CampaignManager : MonoBehaviour
         switch (state)
         {
             case GameState.TutorialOptions:
-                //do nothing
-                break;
             case GameState.NewInitialisation:
             case GameState.FollowOnInitialisation:
             case GameState.LoadAtStart:
@@ -137,7 +135,10 @@ public class CampaignManager : MonoBehaviour
     {
         // City (Late)
         GameManager.i.cityScript.InitialiseLate();
-        if (scenario.challengeResistance != null)
+        //in case of tutorial initialisation
+        if (scenario == null)
+        { scenario = GameManager.i.scenarioScript.scenario; }
+        if (scenario.challengeResistance != null) 
         {
             // Mission
             if (scenario.missionResistance != null)

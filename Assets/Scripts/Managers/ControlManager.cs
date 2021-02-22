@@ -557,6 +557,8 @@ public class ControlManager : MonoBehaviour
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessTutorialOptions: ProcessTutorialOptions selected{0}", "\n");
         //save existing game state
         gameState = GameManager.i.inputScript.GameState;
+        //toggle on modal block
+        GameManager.i.guiScript.SetIsBlocked(true);
         //set background
         GameManager.i.modalGUIScript.SetBackground(Background.TutorialOptions);
         //admin for new game
