@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d228a6c97b1decc4c97b0bf3ead188bc, type: 3}
+  m_Name: Res0
+  m_EditorClassIdentifier: 
+  tutorial: {fileID: 11400000, guid: c050560a8867a3a4c806544632dda679, type: 2}
+  notes: 1st set in Resistance Tutorial
+  index: 0

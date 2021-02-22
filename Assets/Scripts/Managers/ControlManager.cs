@@ -557,6 +557,8 @@ public class ControlManager : MonoBehaviour
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessTutorialOptions: ProcessTutorialOptions selected{0}", "\n");
         //save existing game state
         gameState = GameManager.i.inputScript.GameState;
+        //close MainMenu
+        EventManager.i.PostNotification(EventType.CloseMainMenu, this, null, "ControlManager.cs -> ProcessTutorial");
         //toggle on modal block
         GameManager.i.guiScript.SetIsBlocked(true);
         //set background
@@ -567,9 +569,6 @@ public class ControlManager : MonoBehaviour
         GameManager.i.inputScript.GameState = GameState.TutorialOptions;
         //set up first level in campaign
         GameManager.i.InitialiseTutorial();
-        //close MainMenu
-        EventManager.i.PostNotification(EventType.CloseMainMenu, this, null, "ControlManager.cs -> ProcessTutorial");
-
     }
 
     //
