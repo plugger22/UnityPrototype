@@ -176,6 +176,11 @@ public class LoadManager : MonoBehaviour
     public MetaOption[] arrayOfSubBoss2Options;
     public MetaOption[] arrayOfSubBoss3Options;
 
+    [Header("Tutorials")]
+    public Tutorial[] arrayOfTutorials;
+    public TutorialSet[] arrayOfTutorialSets;
+    public TutorialFeature[] arrayOfTutorialFeatures;
+
     [Header("InitialiseLate")]
     public ManageActor[] arrayOfManageActors;
     public ManageAction[] arrayOfManageActions;
@@ -1023,8 +1028,47 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfStoryComms has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No StoryComms present"); }
-
-
+        //
+        // - - - Tutorials - - -
+        //
+        Dictionary<string, int> dictOfTutorialData = GameManager.i.dataScript.GetDictOfTutorialData();
+        if (dictOfTutorialData != null)
+        {
+            numArray = arrayOfTutorials.Length;
+            if (numArray > 0)
+            {
+                for (int i = 0; i < numArray; i++)
+                {
+                    Tutorial tutorial = arrayOfTutorials[i];
+                    //add to dictionary
+                    try
+                    { dictOfTutorialData.Add(tutorial.name, 0); }
+                    catch (ArgumentNullException)
+                    { Debug.LogError("Invalid Tutorial (Null)"); }
+                    catch (ArgumentException)
+                    { Debug.LogErrorFormat("Invalid Tutorial (duplicate) \"{0}\"", tutorial.name); }
+                }
+            }
+            numDict = dictOfTutorialData.Count;
+            Debug.LogFormat("[Loa] InitialiseStart -> dictOfTutorialData has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict > 0, "No data in dictOfTutorialData");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch on tutorial and data count, array {0}, dict {1}", numArray, numDict));
+        }
+        else { Debug.LogError("Invalid dictOfTutorialData (Null) -> Import failed"); }
+        //
+        // - - - Tutorial Sets (not stored in a collection)
+        //
+        numArray = arrayOfTutorialSets.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTutorialSets has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TutorialSets present"); }
+        //
+        // - - - Tutorial Features (not stored in a collection)
+        //
+        numArray = arrayOfTutorialFeatures.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTutorialFeatures has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TutorialFeatures present"); }
     }
     #endregion
 

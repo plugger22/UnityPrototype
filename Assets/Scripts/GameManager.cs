@@ -571,10 +571,6 @@ public class GameManager : MonoBehaviour
         startMethod.handler = campaignScript.InitialiseGame;
         startMethod.className = "CampaignManager Game";
         listOfGameMethods.Add(startMethod);
-        /*//Tutorial Manager
-        startMethod.handler = tutorialScript.Initialise;
-        startMethod.className = "TutorialManager";
-        listOfGameMethods.Add(startMethod);*/
         #endregion
 
         #region Tutorial Methods

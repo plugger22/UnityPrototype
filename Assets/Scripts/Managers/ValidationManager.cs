@@ -1976,6 +1976,12 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfActorArcs);
         //Trait
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfTraits);
+        //Tutorials
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTutorials);
+        //TutorialSets
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTutorialSets);
+        //TutorialFeatures
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfTutorialFeatures);
     }
     #endregion
 

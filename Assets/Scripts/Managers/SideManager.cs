@@ -229,7 +229,7 @@ public class SideManager : MonoBehaviour
     /// </summary>
     private void SubInitialiseTutorial()
     {
-        Tutorial tutorial = GameManager.i.tutorialScript.currentTutorial;
+        Tutorial tutorial = GameManager.i.tutorialScript.tutorial;
         if (tutorial != null)
         {
                 //HUMAN Player

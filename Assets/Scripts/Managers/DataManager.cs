@@ -270,6 +270,7 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, HistoryLevel> dictOfCampaignHistory = new Dictionary<int, HistoryLevel>();          //Key -> HistoryLevel.scenarioIndex, Value -> HistoryLevel
     private Dictionary<string, StoryHelp> dictOfStoryHelp = new Dictionary<string, StoryHelp>();                //Key -> StoryHelp.name, Value -> StoryHelp
     private Dictionary<string, Billboard> dictOfBillboards = new Dictionary<string, Billboard>();               //Key -> Billboard.name, Value -> Billboard
+    private Dictionary<string, int> dictOfTutorialData = new Dictionary<string, int>();                         //Key -> Tutorial.name, Value -> set index
 
     //Development only collections
     private Dictionary<string, int> dictOfBeliefs = new Dictionary<string, int>();                              //Key -> belief name, Value -> belief count (num used in topic options)
@@ -10058,6 +10059,7 @@ public class DataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    #region MegaCorps
     //
     // - - - MegaCorp Relations
     //
@@ -10214,7 +10216,9 @@ public class DataManager : MonoBehaviour
         else { builder.Append("No records present"); }
         return builder.ToString();
     }
+    #endregion
 
+    #region Stories
     //
     // - - - Stories
     //
@@ -10247,8 +10251,34 @@ public class DataManager : MonoBehaviour
         foreach (var storyHelp in dictOfStoryHelp)
         { storyHelp.Value.isKnown = false; }
     }
+    #endregion
 
+    #region Tutorials
+    //
+    // - - - Tutorials
+    //
 
+    public Dictionary<string, int> GetDictOfTutorialData()
+    { return dictOfTutorialData; }
+
+    /// <summary>
+    /// Returns current set index for the specified tutorial name (SO name). Returns -1 if a problem
+    /// </summary>
+    /// <param name="tutorialName"></param>
+    /// <returns></returns>
+    public int GetTutorialIndex(string tutorialName)
+    {
+        int index = -1;
+        if (string.IsNullOrEmpty(tutorialName) == false)
+        {
+            if (dictOfTutorialData.ContainsKey(tutorialName) == true)
+            { index = dictOfTutorialData[tutorialName]; }
+        }
+        else { Debug.LogError("Invalid tutorialName (Null or Empty)"); }
+        return index;
+    }
+
+    #endregion
 
     //new methods above here
 }

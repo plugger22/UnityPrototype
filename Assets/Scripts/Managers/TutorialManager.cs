@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using packageAPI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,10 +13,10 @@ public class TutorialManager : MonoBehaviour
     public Tutorial resistanceTutorial;
     public Tutorial authorityTutorial;
 
-    [HideInInspector] int index;                                  //index for tutorial set (which one is currently in use)
+    [HideInInspector] public Tutorial tutorial;
+    [HideInInspector] public TutorialSet set;
+    [HideInInspector] public int index;                         //index that tracks player's progress (set #) through current tutorial
 
-
-    [HideInInspector] public Tutorial currentTutorial;
 
     
     #region Initialisation...
@@ -57,15 +58,32 @@ public class TutorialManager : MonoBehaviour
     private void SubInitialiseTutorial()
     {
         //Debug
-        currentTutorial = resistanceTutorial;
+        tutorial = resistanceTutorial;
         //set scenario
-        if (currentTutorial.scenario != null)
+        if (tutorial.scenario != null)
         {
-            GameManager.i.scenarioScript.scenario = currentTutorial.scenario;
-            if (currentTutorial.scenario.city != null)
+            GameManager.i.scenarioScript.scenario = tutorial.scenario;
+            if (tutorial.scenario.city != null)
             {
                 //set city
-                GameManager.i.cityScript.SetCity(currentTutorial.scenario.city);
+                GameManager.i.cityScript.SetCity(tutorial.scenario.city);
+                //get index
+                index = GameManager.i.dataScript.GetTutorialIndex(tutorial.name);
+                if (index > -1)
+                {
+                    //get set
+                    if (tutorial.listOfSets.Count > index)
+                    {
+                        set = tutorial.listOfSets[index];
+                        if (set != null)
+                        {
+                            // Features toggle on/off -> To Do
+                        }
+                        else { Debug.LogErrorFormat("Invalid tutorialSet (Null) for index {0}", index); }
+                    }
+                    else { Debug.LogErrorFormat("Invalid tutorialIndex (index {0}, there are {1} sets in tutorial.listOfSets)", index, tutorial.listOfSets.Count); }
+                }
+                else { Debug.LogError("Invalid tutorial index (-1)"); }
             }
             else { Debug.LogError("Invalid tutorial city (Null)"); }
         }
