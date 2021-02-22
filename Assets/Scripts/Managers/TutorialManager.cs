@@ -12,6 +12,8 @@ public class TutorialManager : MonoBehaviour
     public Tutorial resistanceTutorial;
     public Tutorial authorityTutorial;
 
+    [HideInInspector] int index;                                  //index for tutorial set (which one is currently in use)
+
 
     [HideInInspector] public Tutorial currentTutorial;
 

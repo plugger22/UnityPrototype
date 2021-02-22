@@ -16,4 +16,7 @@ public class TutorialSet : ScriptableObject
 
     [Tooltip("Where the set sits within the tutorial sequence (zero based)")]
     [Range(0, 10)] public int index;
+
+    [Tooltip("List of features switched OFF for this tutorial set")]
+    public List<TutorialFeature> listOfFeaturesOff;
 }
