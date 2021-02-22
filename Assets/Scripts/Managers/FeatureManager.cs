@@ -26,6 +26,10 @@ public class FeatureManager : MonoBehaviour
     public bool isSubordinates;
     [Tooltip("Review decisions on/off (auto off if isDecisions OFF) -> sets initial state only (can be adjusted by code later)")]
     public bool isReviews;
+    [Tooltip("Objectives on/off -> sets initial state only (can be adjusted by code later)")]
+    public bool isObjectives;
+    [Tooltip("Organisations on/off -> sets initial state only (can be adjusted by code later)")]
+    public bool isOrganisations;
 
 
     /// <summary>
@@ -74,12 +78,14 @@ public class FeatureManager : MonoBehaviour
     {
         GameManager.i.optionScript.isAI = isAI;
         GameManager.i.optionScript.isNemesis = isNemesis;
-        GameManager.i.optionScript.isfogOfWar = isFOW;
+        GameManager.i.optionScript.isFogOfWar = isFOW;
         GameManager.i.optionScript.isDecisions = isDecisions;
         GameManager.i.optionScript.isMainInfoApp = isMainInfoApp;
         GameManager.i.optionScript.isNPC = isNPC;
         GameManager.i.optionScript.isSubordinates = isSubordinates;
         GameManager.i.optionScript.isReviews = isReviews;
+        GameManager.i.optionScript.isObjectives = isObjectives;
+        GameManager.i.optionScript.isOrganisations = isOrganisations;
         //set button texts in DebugGUI.cs
         if (isSubordinates == true)
         { GameManager.i.debugScript.optionSubordinates = "Subordinates OFF"; }

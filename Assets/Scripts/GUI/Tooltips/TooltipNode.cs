@@ -447,7 +447,7 @@ public class TooltipNode : MonoBehaviour
             }
             builderActor.AppendLine();
             //Authority comment on resistance contacts
-            if (GameManager.i.optionScript.isfogOfWar == true)
+            if (GameManager.i.optionScript.isFogOfWar == true)
             {
                 //FOW ON
                 if (data.isContactKnown == true)
@@ -525,7 +525,7 @@ public class TooltipNode : MonoBehaviour
         if (playerSide.level == globalAuthority.level) { proceedFlag = true; }
         else if (playerSide.level == globalResistance.level)
         {
-            if (GameManager.i.optionScript.isfogOfWar == true)
+            if (GameManager.i.optionScript.isFogOfWar == true)
             {
                 if (data.isTracer == true || data.isTeamKnown == true || data.isActiveContact == true)
                 { proceedFlag = true; }

@@ -605,7 +605,7 @@ public class NodeManager : MonoBehaviour
         bool nodeTypeFlag = false;
         bool proceedFlag = false;
         string displayText = null;
-        bool isFogOfWar = GameManager.i.optionScript.isfogOfWar;
+        bool isFogOfWar = GameManager.i.optionScript.isFogOfWar;
         List<Node> listOfHighlighted = new List<Node>();
         //set all nodes to default colour first
         ResetNodes();
@@ -1353,7 +1353,7 @@ public class NodeManager : MonoBehaviour
                 //player's current node (Resistance side only if FOW ON)
                 if (GameManager.i.sideScript.PlayerSide.level == globalAuthority.level)
                 {
-                    if (GameManager.i.optionScript.isfogOfWar == true)
+                    if (GameManager.i.optionScript.isFogOfWar == true)
                     { proceedFlag = false; }
                 }
                 if (proceedFlag == true)

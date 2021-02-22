@@ -546,7 +546,7 @@ public class Node : MonoBehaviour
                         if (GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideResistance.level
                             || GameManager.i.sideScript.PlayerSide.level == GameManager.i.globalScript.sideBoth.level)
                         {
-                            if (GameManager.i.optionScript.isfogOfWar == true)
+                            if (GameManager.i.optionScript.isFogOfWar == true)
                             {
                                 if (isSpiderKnown == true) { showSpider = true; }
                             }

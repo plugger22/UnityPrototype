@@ -17,11 +17,13 @@ public class OptionManager : MonoBehaviour
     //NOTE: most of these are controlled by GameManager.cs -> InitialiseFeatures (set options in the GameManager.cs prefab under 'Features')
     //
     [HideInInspector] public bool debugData = false;                                //if true debug data is displayed onscreen
-    [HideInInspector] public bool isfogOfWar = false;                               //if true then one sides sees only the information that they should
+    [HideInInspector] public bool isFogOfWar = false;                               //if true then one sides sees only the information that they should
     [HideInInspector] public bool isAI = false;                                     //if false AI is switched off for both sides (debug purposes)
     [HideInInspector] public bool isNemesis = true;                                 //if false Nemesis is switched off
     [HideInInspector] public bool isDecisions = true;                               //if false Decisions are switched off
     [HideInInspector] public bool isMainInfoApp = true;                             //if false MainInfoApp is switched off
+    [HideInInspector] public bool isObjectives = true;                              //if false Objectives are switched off
+    [HideInInspector] public bool isOrganisations = true;                           //if false Organisations are switched off
     [HideInInspector] public bool isNPC = true;                                     //if false NPC is switched off
     [HideInInspector] public bool isSubordinates = true;                            //if false Subordinates are switched off
     [HideInInspector] public bool isReviews = true;                                 //if false Performance reviews are switched off
@@ -81,7 +83,7 @@ public class OptionManager : MonoBehaviour
             .AppendFormat(" Billboards -> {0}{1}", billboard, "\n")
             .AppendFormat("{0}- Debug Options{1}", "\n", "\n")
             .AppendFormat(" Debug Data -> {0}{1}", debugData, "\n")
-            .AppendFormat(" isFogOfWar -> {0}{1}", isfogOfWar, "\n")
+            .AppendFormat(" isFogOfWar -> {0}{1}", isFogOfWar, "\n")
             .AppendFormat(" isAI -> {0}{1}", isAI, "\n")
             .AppendFormat(" isNemesis -> {0}{1}", isNemesis, "\n")
             .AppendFormat(" isDecisions -> {0}{1}", isDecisions, "\n")
@@ -89,6 +91,8 @@ public class OptionManager : MonoBehaviour
             .AppendFormat(" isNPC -> {0}{1}", isNPC, "\n")
             .AppendFormat(" isSubordinates -> {0}{1}", isSubordinates, "\n")
             .AppendFormat(" isReviews -> {0}{1}", isReviews, "\n")
+            .AppendFormat(" isObjectives -> {0}{1}", isObjectives, "\n")
+            .AppendFormat(" isOrganisations -> {0}{1}", isOrganisations, "\n")
             .AppendFormat(" isActorPool -> {0}{1}", isActorPool, "\n")
             .AppendFormat(" isOnMapRandom -> {0}{1}", isOnMapRandom, "\n")
             .AppendFormat(" NO Nodes -> {0}{1}", noNodes, "\n")

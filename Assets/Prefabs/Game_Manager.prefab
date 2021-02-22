@@ -299,6 +299,8 @@ MonoBehaviour:
   isNPC: 1
   isSubordinates: 1
   isReviews: 1
+  isObjectives: 1
+  isOrganisations: 1
 --- !u!114 &114177065037937216
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5894,11 +5896,13 @@ MonoBehaviour:
   autoGearResolution: 0
   billboard: 1
   debugData: 0
-  isfogOfWar: 0
+  isFogOfWar: 0
   isAI: 0
   isNemesis: 1
   isDecisions: 1
   isMainInfoApp: 1
+  isObjectives: 1
+  isOrganisations: 1
   isNPC: 1
   isSubordinates: 1
   isReviews: 1
@@ -6772,7 +6776,7 @@ MonoBehaviour:
   advertScript: {fileID: 0}
   tabbedUIScript: {fileID: 0}
   seedDev: 0
-  autoRunTurns: 20
+  autoRunTurns: 0
   scenarioStartLevel: 0
   isPerformanceLog: 1
   isDataValidation: 1

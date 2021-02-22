@@ -57,37 +57,7 @@ public class TutorialManager : MonoBehaviour
     #region SubInitialiseTutorial
     private void SubInitialiseTutorial()
     {
-        //Debug
-        tutorial = resistanceTutorial;
-        //set scenario
-        if (tutorial.scenario != null)
-        {
-            GameManager.i.scenarioScript.scenario = tutorial.scenario;
-            if (tutorial.scenario.city != null)
-            {
-                //set city
-                GameManager.i.cityScript.SetCity(tutorial.scenario.city);
-                //get index
-                index = GameManager.i.dataScript.GetTutorialIndex(tutorial.name);
-                if (index > -1)
-                {
-                    //get set
-                    if (tutorial.listOfSets.Count > index)
-                    {
-                        set = tutorial.listOfSets[index];
-                        if (set != null)
-                        {
-                            // Features toggle on/off -> To Do
-                        }
-                        else { Debug.LogErrorFormat("Invalid tutorialSet (Null) for index {0}", index); }
-                    }
-                    else { Debug.LogErrorFormat("Invalid tutorialIndex (index {0}, there are {1} sets in tutorial.listOfSets)", index, tutorial.listOfSets.Count); }
-                }
-                else { Debug.LogError("Invalid tutorial index (-1)"); }
-            }
-            else { Debug.LogError("Invalid tutorial city (Null)"); }
-        }
-        else { Debug.LogError("Invalid tutorial Scenario (Null)"); }
+        InitialiseTutorial();
     }
     #endregion
 
@@ -103,9 +73,117 @@ public class TutorialManager : MonoBehaviour
     /// </summary>
     public void InitialiseTutorial()
     {
-        Debug.LogFormat("[Tut] TutorialManager.cs -> InitialiseTutorial: Commence Initialisation{0}", "\n");
+        //Debug
+        tutorial = resistanceTutorial;
+        Debug.LogFormat("[Tut] TutorialManager.cs -> InitialiseTutorial: tutorial \"{0}\" loaded{1}", tutorial.name, "\n");
+        //set scenario
+        if (tutorial.scenario != null)
+        {
+            GameManager.i.scenarioScript.scenario = tutorial.scenario;
+            if (tutorial.scenario.city != null)
+            {
+                //set city
+                GameManager.i.cityScript.SetCity(tutorial.scenario.city);
+                //get index
+                index = GameManager.i.dataScript.GetTutorialIndex(tutorial.name);
+                if (index > -1)
+                {
+                    Debug.LogFormat("[Tut] TutorialManager.cs -> InitialiseTutorial: index \"{0}\" loaded{1}", index, "\n");
+                    //get set
+                    if (tutorial.listOfSets.Count > index)
+                    {
+                        set = tutorial.listOfSets[index];
+                        if (set != null)
+                        {
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> InitialiseTutorial: set \"{0}\" loaded{1}", set.name, "\n");
+                            // Features toggle on/off -> To Do
+                            UpdateFeatures(set.listOfFeaturesOff);
+                        }
+                        else { Debug.LogErrorFormat("Invalid tutorialSet (Null) for index {0}", index); }
+                    }
+                    else { Debug.LogErrorFormat("Invalid tutorialIndex (index {0}, there are {1} sets in tutorial.listOfSets)", index, tutorial.listOfSets.Count); }
+                }
+                else { Debug.LogError("Invalid tutorial index (-1)"); }
+            }
+            else { Debug.LogError("Invalid tutorial city (Null)"); }
+        }
+        else { Debug.LogError("Invalid tutorial Scenario (Null)"); }
     }
 
+
+    /// <summary>
+    /// Update features prior for current tutorial set. Note: this will override anything set in GameManager prefab -> FeatureManager
+    /// </summary>
+    /// <param name="listOfFeatures"></param>
+    public void UpdateFeatures(List<TutorialFeature> listOfFeaturesToToggleOff)
+    {
+        if (listOfFeaturesToToggleOff != null)
+        {
+            //set all features true
+            GameManager.i.optionScript.isAI = true;
+            GameManager.i.optionScript.isNemesis = true;
+            GameManager.i.optionScript.isFogOfWar = true;
+            GameManager.i.optionScript.isDecisions = true;
+            GameManager.i.optionScript.isMainInfoApp = true;
+            GameManager.i.optionScript.isNPC = true;
+            GameManager.i.optionScript.isSubordinates = true;
+            GameManager.i.optionScript.isReviews = true;
+            //turn OFF any features in list
+            for (int i = 0; i < listOfFeaturesToToggleOff.Count; i++)
+            {
+                TutorialFeature feature = listOfFeaturesToToggleOff[i];
+                if (feature != null)
+                {
+                    switch (feature.name)
+                    {
+                        case "AI":
+                            GameManager.i.optionScript.isAI = false;
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: AI toggled Off{0}", "\n");
+                            break;
+                        case "Decisions":
+                            GameManager.i.optionScript.isDecisions = false;
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: Decisions toggled Off{0}", "\n");
+                            break;
+                        case "FOW":
+                            GameManager.i.optionScript.isFogOfWar = false;
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: Fog of War toggled Off{0}", "\n");
+                            break;
+                        case "MainInfoApp":
+                            GameManager.i.optionScript.isMainInfoApp = false;
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: MainInfoApp toggled Off{0}", "\n");
+                            break;
+                        case "Nemesis":
+                            GameManager.i.optionScript.isNemesis = false;
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: Nemesis toggled Off{0}", "\n");
+                            break;
+                        case "NPC":
+                            GameManager.i.optionScript.isNPC = false;
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: NPC toggled Off{0}", "\n");
+                            break;
+                        case "Objectives":
+                            /*GameManager.i.optionScript.isObjectives = false;    TO DO 
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: Objectives toggled Off{0}", "\n");*/
+                            break;
+                        case "Reviews":
+                            GameManager.i.optionScript.isReviews = false;
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: Reviews toggled Off{0}", "\n");
+                            break;
+                        case "Subordinates":
+                            GameManager.i.optionScript.isSubordinates = false;
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: Subordinates toggled Off{0}", "\n");
+                            break;
+                        default: Debug.LogWarningFormat("Unrecognised feature.name \"{0}\"", feature.name); break;
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid feature (Null) for listOfFeaturesToToggleOff[{0}]", i); }
+            }
+            //discretionary GUI elements toggled off if required (those not directly effected by option settings)
+            if (GameManager.i.optionScript.isAI == true)
+            { GameManager.i.featureScript.ToggleAISideWidget(true); }
+            else { GameManager.i.featureScript.ToggleAISideWidget(false); }
+        }
+        else { Debug.LogError("Invalid listOfFeaturesToToggleOff (Null)"); }
+    }
 
     //new methods above here
 }

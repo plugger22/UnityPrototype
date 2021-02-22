@@ -575,16 +575,16 @@ public class DebugGUI : MonoBehaviour
             if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * 3 + button_height * 3, button_width, button_height), optionFogOfWar))
             {
                 Debug.Log("[Dbg] Button -> Toggle Fog Of War");
-                if (GameManager.i.optionScript.isfogOfWar == true)
+                if (GameManager.i.optionScript.isFogOfWar == true)
                 {
                     //sets both FOW and Nemesis settings in tandem
-                    GameManager.i.optionScript.isfogOfWar = false;
+                    GameManager.i.optionScript.isFogOfWar = false;
                     GameManager.i.nemesisScript.isShown = true;
                     optionFogOfWar = "Fog Of War ON";
                 }
                 else
                 {
-                    GameManager.i.optionScript.isfogOfWar = true;
+                    GameManager.i.optionScript.isFogOfWar = true;
                     GameManager.i.nemesisScript.isShown = false;
                     optionFogOfWar = "Fog Of War OFF";
                 }
