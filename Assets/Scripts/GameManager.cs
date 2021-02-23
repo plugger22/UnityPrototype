@@ -923,14 +923,16 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void InitialiseMainMenu()
     {
-        ModalMainMenuDetails detailsMain = new ModalMainMenuDetails()
+        /*ModalMainMenuDetails detailsMain = new ModalMainMenuDetails()
         {
             alignHorizontal = AlignHorizontal.Centre,
             background = Background.Start,
             isResume = false,
         };
+        mainMenuScript.InitialiseMainMenu(detailsMain);*/
+
         //activate menu
-        mainMenuScript.InitialiseMainMenu(detailsMain);
+        EventManager.i.PostNotification(EventType.OpenMainMenu, this, MainMenuType.Start, "GameManager.cs -> InitialiseMainMenu");
     }
     #endregion
 

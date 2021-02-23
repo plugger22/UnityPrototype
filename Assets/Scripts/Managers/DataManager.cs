@@ -4302,7 +4302,7 @@ public class DataManager : MonoBehaviour
                     actor.ResetStates();
                     actor.Status = ActorStatus.Active;
                     //update contacts (not for game or level start -> sequencing issues)
-                    if (GameManager.i.turnScript.Turn > 0 && (GameManager.i.inputScript.GameState == GameState.PlayGame || GameManager.i.inputScript.GameState == GameState.Tutorial))
+                    if (GameManager.i.turnScript.Turn > 0 && GameManager.i.inputScript.CheckNormalMode() == true)
                     { GameManager.i.contactScript.SetActorContacts(actor); }
                     //update actor GUI display
                     GameManager.i.actorPanelScript.UpdateActorPanel();

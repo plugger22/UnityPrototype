@@ -1239,10 +1239,22 @@ public class TurnManager : MonoBehaviour
     {
         TurnActionData turnData = new TurnActionData();
         turnData.turn = Turn;
-        turnData.actionsCurrent = _actionsCurrent;
-        turnData.actionsLimit = _actionsLimit;
-        turnData.actionsAdjust = _actionsAdjust;
-        turnData.actionsTotal = _actionsTotal;
+        if (GameManager.i.playerScript.status == ActorStatus.Active)
+        {
+            //normal
+            turnData.actionsCurrent = _actionsCurrent;
+            turnData.actionsLimit = _actionsLimit;
+            turnData.actionsAdjust = _actionsAdjust;
+            turnData.actionsTotal = _actionsTotal;
+        }
+        else
+        {
+            //inactive
+            turnData.actionsCurrent = 0;
+            turnData.actionsLimit = 0;
+            turnData.actionsAdjust = 0;
+            turnData.actionsTotal = 0;
+        }
         return turnData;
     }
 

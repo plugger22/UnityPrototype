@@ -123,7 +123,7 @@ public class ModalOutcome : MonoBehaviour
         }
     }
 
-
+    #region SubInitialiseAsserts
     private void SubInitialiseAsserts()
     {
         //Overall
@@ -148,7 +148,9 @@ public class ModalOutcome : MonoBehaviour
         Debug.Assert(blackBar != null, "Invalid blackBar (Null)");
         Debug.Assert(highlight != null, "Invalid highlight1 (Null)");
     }
+    #endregion
 
+    #region SubInitialiseSessionStart
     /// <summary>
     /// Session Start Initialisation
     /// </summary>
@@ -206,9 +208,10 @@ public class ModalOutcome : MonoBehaviour
         panelNormal.gameObject.SetActive(false);
         canvasSpecial.gameObject.SetActive(false);
         panelSpecial.gameObject.SetActive(true);
-
     }
+    #endregion
 
+    #region SubInitialiseEvents
     /// <summary>
     /// Initialise Event listeners
     /// </summary>
@@ -219,8 +222,9 @@ public class ModalOutcome : MonoBehaviour
         EventManager.i.AddListener(EventType.OutcomeClose, OnEvent, "ModalOutcome");
         EventManager.i.AddListener(EventType.OutcomeShowMe, OnEvent, "ModalOutcome");
         EventManager.i.AddListener(EventType.OutcomeRestore, OnEvent, "ModalOutcome");
-        EventManager.i.AddListener(EventType.ChangeSide, OnEvent, "ModalOutcome");
     }
+    #endregion
+
     #endregion
 
 
@@ -252,9 +256,6 @@ public class ModalOutcome : MonoBehaviour
                 break;
             case EventType.OutcomeRestore:
                 ExecuteRestore();
-                break;
-            case EventType.ChangeSide:
-                InitialiseOutcome((GlobalSide)Param);
                 break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
@@ -670,31 +671,6 @@ public class ModalOutcome : MonoBehaviour
     public float GetOpacity()
     { return canvasGroup.alpha; }*/
 
-    /// <summary>
-    /// set up sprites on outcome window for the appropriate side
-    /// </summary>
-    /// <param name="side"></param>
-    private void InitialiseOutcome(GlobalSide side)
-    {
-        Debug.Assert(side != null, "Invalid side (Null)");
-        //get component reference (done where because method called from GameManager which happens prior to this.Awake()
-        background = outcomeObject.GetComponent<Image>();
-        //assign side specific sprites
-        switch (side.level)
-        {
-            case 1:
-                //Authority
-                background.sprite = GameManager.i.sideScript.outcome_backgroundAuthority;
-                break;
-            case 2:
-                //Resistance
-                background.sprite = GameManager.i.sideScript.outcome_backgroundRebel;
-                break;
-            default:
-                Debug.LogError(string.Format("Invalid side \"{0}\"", side.name));
-                break;
-        }
-    }
 
     /// <summary>
     /// ShowMe button pressed (display node/s while hiding outcome window)

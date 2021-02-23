@@ -313,8 +313,8 @@ public class ControlManager : MonoBehaviour
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessResumeGame: RESUME game option selected{0}", "\n");
         //save existing game state
         gameState = GameManager.i.inputScript.GameState;
-        //if anything other than play Game then set a modal block (it cancels otherwise due to Main Menu closing)
-        if (GameManager.i.inputScript.GameState != GameState.PlayGame)
+        //if anything other than play Game /Tutorial then set a modal block (it cancels otherwise due to Main Menu closing)
+        if (GameManager.i.inputScript.CheckNormalMode() == false)
         { GameManager.i.guiScript.SetIsBlocked(true); }
 
     }

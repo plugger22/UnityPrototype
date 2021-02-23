@@ -246,6 +246,17 @@ public class InputManager : MonoBehaviour
     #endregion
 
     /// <summary>
+    /// Returns true if gamestate either PlayGame or Tutorial. False otherwise. Use to test if game in normal mode.
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckNormalMode()
+    {
+        if (GameState == GameState.PlayGame || GameState == GameState.Tutorial)
+        { return true; }
+        return false;
+    }
+
+    /// <summary>
     /// takes care of all key and mouse press input (excludes mouse wheel movement -> see ProcessMouseWheelInput)
     /// </summary>
     public void ProcessKeyInput()
@@ -298,12 +309,21 @@ public class InputManager : MonoBehaviour
                             case GameState.ExitGame:
                                 //do nothing, already exiting game
                                 break;
+                            case GameState.Tutorial:
+                                //if debug overlay on then switch this off first before any game UI element
+                                if (GameManager.i.debugScript.showGUI == false)
+                                {
+                                    //main menu without tutorial option
+                                    EventManager.i.PostNotification(EventType.OpenMainMenu, this, MainMenuType.Tutorial, "InputManager.cs -> ProcessKeyInput Exit \"Cancel (ESC)\"");
+                                }
+                                else { GameManager.i.debugScript.showGUI = false; }
+                                break;
                             default:
                                 //if debug overlay on then switch this off first before any game UI element
                                 if (GameManager.i.debugScript.showGUI == false)
                                 {
                                     //all other options revert to main menu (default option of displaying over the top of whatever is present with no background initiated)
-                                    EventManager.i.PostNotification(EventType.OpenMainMenu, this, null, "InputManager.cs -> ProcessKeyInput Exit \"Cancel (ESC)\"");
+                                    EventManager.i.PostNotification(EventType.OpenMainMenu, this, MainMenuType.Default, "InputManager.cs -> ProcessKeyInput Exit \"Cancel (ESC)\"");
                                 }
                                 else { GameManager.i.debugScript.showGUI = false; }
                                 break;
@@ -349,8 +369,8 @@ public class InputManager : MonoBehaviour
                     }
                     else if (Input.GetButtonDown("NewTurn") == true)    //ENTER
                     {
-                        //new turn only if in normal play game state
-                        if (GameState == GameState.PlayGame)
+                        //new turn only if in normal play game / tutorial state
+                        if (CheckNormalMode() == true)
                         {
                             //Force a new turn (perhaps didn't want to take any actions), otherwise TurnManager.cs handles this once action quota used up
                             EventManager.i.PostNotification(EventType.NewTurn, this, null, "InputManager.cs -> ProcessKeyInput NewTurn");

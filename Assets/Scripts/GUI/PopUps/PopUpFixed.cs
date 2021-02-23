@@ -332,7 +332,7 @@ public class PopUpFixed : MonoBehaviour
         if (isActive == false)
         {
             //run only during main game or tutorial, eg. not during metaGame
-            if (GameManager.i.inputScript.GameState == GameState.PlayGame || GameManager.i.inputScript.GameState == GameState.Tutorial)
+            if (GameManager.i.inputScript.CheckNormalMode() == true)
             {
                 //run only if data present to display
                 if (CheckIfDataToDisplay() == true)
