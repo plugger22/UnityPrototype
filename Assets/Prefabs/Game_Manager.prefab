@@ -299,8 +299,9 @@ MonoBehaviour:
   isNPC: 1
   isSubordinates: 1
   isReviews: 1
-  isObjectives: 0
-  isOrganisations: 0
+  isObjectives: 1
+  isOrganisations: 1
+  isTargets: 1
 --- !u!114 &114177065037937216
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5114,6 +5115,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9454b7127e3650a4eaab65f71ee34ca0, type: 2}
   - {fileID: 11400000, guid: efba9c88561b33140bc3fe102eb154d3, type: 2}
   - {fileID: 11400000, guid: 17e9781d9857d6c4cb1164f4f6c0deb8, type: 2}
+  - {fileID: 11400000, guid: 7b6d0ef2e1cd6eb45bb791542c5ed363, type: 2}
+  - {fileID: 11400000, guid: e16c959b5f1eac342979baf4a1a9362b, type: 2}
   arrayOfManageActors:
   - {fileID: 11400000, guid: 26d41044020eece48a4f909569982bff, type: 2}
   - {fileID: 11400000, guid: cf453464037bce94bae73feb20f00ea9, type: 2}
@@ -5903,6 +5906,7 @@ MonoBehaviour:
   isMainInfoApp: 1
   isObjectives: 1
   isOrganisations: 1
+  isTargets: 1
   isNPC: 1
   isSubordinates: 1
   isReviews: 1
@@ -6776,7 +6780,7 @@ MonoBehaviour:
   advertScript: {fileID: 0}
   tabbedUIScript: {fileID: 0}
   seedDev: 0
-  autoRunTurns: 0
+  autoRunTurns: 20
   scenarioStartLevel: 0
   isPerformanceLog: 1
   isDataValidation: 1

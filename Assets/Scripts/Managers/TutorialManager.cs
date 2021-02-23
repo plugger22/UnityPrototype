@@ -128,6 +128,9 @@ public class TutorialManager : MonoBehaviour
             GameManager.i.optionScript.isNPC = true;
             GameManager.i.optionScript.isSubordinates = true;
             GameManager.i.optionScript.isReviews = true;
+            GameManager.i.optionScript.isObjectives = true;
+            GameManager.i.optionScript.isOrganisations = true;
+            GameManager.i.optionScript.isTargets = true;
             //turn OFF any features in list
             for (int i = 0; i < listOfFeaturesToToggleOff.Count; i++)
             {
@@ -161,8 +164,8 @@ public class TutorialManager : MonoBehaviour
                             Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: NPC toggled Off{0}", "\n");
                             break;
                         case "Objectives":
-                            /*GameManager.i.optionScript.isObjectives = false;    TO DO 
-                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: Objectives toggled Off{0}", "\n");*/
+                            GameManager.i.optionScript.isObjectives = false;
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: Objectives toggled Off{0}", "\n");
                             break;
                         case "Reviews":
                             GameManager.i.optionScript.isReviews = false;
@@ -171,6 +174,17 @@ public class TutorialManager : MonoBehaviour
                         case "Subordinates":
                             GameManager.i.optionScript.isSubordinates = false;
                             Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: Subordinates toggled Off{0}", "\n");
+                            break;
+                        case "Organisations":
+                            GameManager.i.optionScript.isOrganisations = false;
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: Organisations toggled Off{0}", "\n");
+                            break;
+                        case "Targets":
+                            GameManager.i.optionScript.isTargets = false;
+                            //auto off if targets are off
+                            GameManager.i.optionScript.isOrganisations = false;
+                            GameManager.i.optionScript.isObjectives = false;
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: Targets, Organisations and Objectives all toggled Off{0}", "\n");
                             break;
                         default: Debug.LogWarningFormat("Unrecognised feature.name \"{0}\"", feature.name); break;
                     }

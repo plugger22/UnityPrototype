@@ -619,68 +619,73 @@ public class NodeManager : MonoBehaviour
         {
             //show all nodes with Targets
             case NodeUI.ShowTargets:
-                List<Target> tempList = new List<Target>();
-                if (isFogOfWar == false)
+                if (GameManager.i.optionScript.isTargets == true)
                 {
-                    //FOW Off
-                    /*tempList.AddRange(GameManager.i.dataScript.GetTargetPool(Status.Active));*/
-                    tempList.AddRange(GameManager.i.dataScript.GetTargetPool(Status.Live));
-                    tempList.AddRange(GameManager.i.dataScript.GetTargetPool(Status.Outstanding));
-                    if (tempList.Count > 0)
+                    List<Target> tempList = new List<Target>();
+                    if (isFogOfWar == false)
                     {
-                        foreach (Target target in tempList)
+                        //FOW Off
+                        /*tempList.AddRange(GameManager.i.dataScript.GetTargetPool(Status.Active));*/
+                        tempList.AddRange(GameManager.i.dataScript.GetTargetPool(Status.Live));
+                        tempList.AddRange(GameManager.i.dataScript.GetTargetPool(Status.Outstanding));
+                        if (tempList.Count > 0)
                         {
-                            Node nodeTemp = GameManager.i.dataScript.GetNode(target.nodeID);
-                            if (nodeTemp != null)
+                            foreach (Target target in tempList)
                             {
-                                nodeTemp.SetActive();
-                                listOfHighlighted.Add(nodeTemp);
-                            }
-                            else { Debug.LogWarning(string.Format("Invalid node (Null) for target.nodeID {0}", target.nodeID)); }
-                        }
-                        displayText = string.Format("{0}{1}{2}{3} Target{4}{5} district{6}{7}", colourDefault, tempList.Count, colourEnd, colourHighlight, colourEnd,
-                            colourDefault, tempList.Count != 1 ? "s" : "", colourEnd);
-                    }
-                    else { displayText = string.Format("{0}{1}{2}", colourError, "No Targets present", colourEnd); }
-                }
-                else
-                {
-                    //FOW ON
-                    tempList.AddRange(GameManager.i.dataScript.GetTargetPool(Status.Live));
-                    tempList.AddRange(GameManager.i.dataScript.GetTargetPool(Status.Outstanding));
-                    if (tempList.Count > 0)
-                    {
-                        counter = 0;
-                        foreach (Target target in tempList)
-                        {
-                            Node nodeTemp = GameManager.i.dataScript.GetNode(target.nodeID);
-                            if (nodeTemp != null)
-                            {
-                                //only show if target isKnown (authority side
-                                if (GameManager.i.sideScript.PlayerSide.level == 1)
+                                Node nodeTemp = GameManager.i.dataScript.GetNode(target.nodeID);
+                                if (nodeTemp != null)
                                 {
-                                    if (nodeTemp.isTargetKnown == true)
+                                    nodeTemp.SetActive();
+                                    listOfHighlighted.Add(nodeTemp);
+                                }
+                                else { Debug.LogWarning(string.Format("Invalid node (Null) for target.nodeID {0}", target.nodeID)); }
+                            }
+                            displayText = string.Format("{0}{1}{2}{3} Target{4}{5} district{6}{7}", colourDefault, tempList.Count, colourEnd, colourHighlight, colourEnd,
+                                colourDefault, tempList.Count != 1 ? "s" : "", colourEnd);
+                        }
+                        else { displayText = string.Format("{0}{1}{2}", colourError, "No Targets present", colourEnd); }
+                    }
+                    else
+                    {
+                        //FOW ON
+                        tempList.AddRange(GameManager.i.dataScript.GetTargetPool(Status.Live));
+                        tempList.AddRange(GameManager.i.dataScript.GetTargetPool(Status.Outstanding));
+                        if (tempList.Count > 0)
+                        {
+                            counter = 0;
+                            foreach (Target target in tempList)
+                            {
+                                Node nodeTemp = GameManager.i.dataScript.GetNode(target.nodeID);
+                                if (nodeTemp != null)
+                                {
+                                    //only show if target isKnown (authority side
+                                    if (GameManager.i.sideScript.PlayerSide.level == 1)
                                     {
+                                        if (nodeTemp.isTargetKnown == true)
+                                        {
+                                            nodeTemp.SetActive();
+                                            listOfHighlighted.Add(nodeTemp);
+                                            counter++;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        //resistance player
                                         nodeTemp.SetActive();
                                         listOfHighlighted.Add(nodeTemp);
                                         counter++;
                                     }
                                 }
-                                else
-                                {
-                                    //resistance player
-                                    nodeTemp.SetActive();
-                                    listOfHighlighted.Add(nodeTemp);
-                                    counter++;
-                                }
+                                else { Debug.LogWarningFormat("Invalid node (Null) for target.nodeID {0}", target.nodeID); }
                             }
-                            else { Debug.LogWarningFormat("Invalid node (Null) for target.nodeID {0}", target.nodeID); }
+                            displayText = string.Format("{0}{1}{2}{3} Target{4}{5} district{6}{7}", colourDefault, counter, colourEnd, colourHighlight, colourEnd,
+                                colourDefault, tempList.Count != 1 ? "s" : "", colourEnd);
                         }
-                        displayText = string.Format("{0}{1}{2}{3} Target{4}{5} district{6}{7}", colourDefault, counter, colourEnd, colourHighlight, colourEnd,
-                            colourDefault, tempList.Count != 1 ? "s" : "", colourEnd);
+                        else { displayText = string.Format("{0}{1}{2}", colourError, "No Targets present", colourEnd); }
                     }
-                    else { displayText = string.Format("{0}{1}{2}", colourError, "No Targets present", colourEnd); }
                 }
+                //Targets off
+                else { displayText = string.Format("{0}Targets have been Disabled{1}", colourError, colourEnd); }
                 break;
 
             //show all viable move locations for player (nodes adjacent to current location)
