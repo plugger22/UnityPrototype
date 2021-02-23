@@ -26,10 +26,12 @@ public class FeatureManager : MonoBehaviour
     public bool isSubordinates;
     [Tooltip("Review decisions on/off (auto off if isDecisions OFF) -> sets initial state only (can be adjusted by code later)")]
     public bool isReviews;
-    [Tooltip("Objectives on/off -> sets initial state only (can be adjusted by code later)")]
+    [Tooltip("Objectives on/off (auto Off if Targets off) -> sets initial state only (can be adjusted by code later)")]
     public bool isObjectives;
-    [Tooltip("Organisations on/off -> sets initial state only (can be adjusted by code later)")]
+    [Tooltip("Organisations on/off (auto Off if Targets off)-> sets initial state only (can be adjusted by code later)")]
     public bool isOrganisations;
+    [Tooltip("Targets on/off (if off, sets Objectives and Organisations off automatically) -> sets initial state only (can be adjusted by code later)")]
+    public bool isTargets;
 
 
     /// <summary>
@@ -86,6 +88,13 @@ public class FeatureManager : MonoBehaviour
         GameManager.i.optionScript.isReviews = isReviews;
         GameManager.i.optionScript.isObjectives = isObjectives;
         GameManager.i.optionScript.isOrganisations = isOrganisations;
+        GameManager.i.optionScript.isTargets = isTargets;
+        if (isTargets == false)
+        {
+            //automatically disable Objectives and Organisations if targets are also disabled
+            GameManager.i.optionScript.isObjectives = false;
+            GameManager.i.optionScript.isOrganisations = false;
+        }
         //set button texts in DebugGUI.cs
         if (isSubordinates == true)
         { GameManager.i.debugScript.optionSubordinates = "Subordinates OFF"; }

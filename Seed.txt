@@ -19,3 +19,48 @@ City seed 43515 -> Simulation, Eurasia
 
 Dev seed 621 -> Monday, 22 February 2021 5:09 PM
 City seed 59684 -> Londus, Eurasia
+
+Dev seed 59813 -> Tuesday, 23 February 2021 9:19 AM
+City seed 50828 -> Simulation, Eurasia
+
+Dev seed 28844 -> Tuesday, 23 February 2021 9:49 AM
+City seed 7037 -> Londus, Eurasia
+
+Dev seed 20913 -> Tuesday, 23 February 2021 9:51 AM
+City seed 62856 -> Londus, Eurasia
+
+Dev seed 60463 -> Tuesday, 23 February 2021 9:57 AM
+City seed 12042 -> Londus, Eurasia
+
+Dev seed 13514 -> Tuesday, 23 February 2021 10:03 AM
+City seed 57351 -> Londus, Eurasia
+
+Dev seed 55958 -> Tuesday, 23 February 2021 10:04 AM
+City seed 53303 -> Londus, Eurasia
+
+Dev seed 14446 -> Tuesday, 23 February 2021 10:05 AM
+City seed 24443 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+DataManager.DebugShowGenericTargets () (at Assets/Scripts/Managers/DataManager.cs:3469)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1717)
+	
+Dev seed 29825 -> Tuesday, 23 February 2021 10:12 AM
+City seed 26461 -> Londus, Eurasia
+
+Dev seed 25265 -> Tuesday, 23 February 2021 10:12 AM
+City seed 11397 -> Londus, Eurasia
+
+Dev seed 32917 -> Tuesday, 23 February 2021 10:17 AM
+City seed 38617 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+DataManager.DebugDisplayGenericTargets () (at Assets/Scripts/Managers/DataManager.cs:3469)
+	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1717)
+	
+Dev seed 54941 -> Tuesday, 23 February 2021 10:25 AM
+City seed 26242 -> Londus, Eurasia
+
+Dev seed 56137 -> Tuesday, 23 February 2021 10:47 AM
+City seed 44907 -> Londus, Eurasia
+
+Dev seed 52561 -> Tuesday, 23 February 2021 10:50 AM
+City seed 51553 -> Londus, Eurasia

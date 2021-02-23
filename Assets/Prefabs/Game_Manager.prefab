@@ -299,8 +299,8 @@ MonoBehaviour:
   isNPC: 1
   isSubordinates: 1
   isReviews: 1
-  isObjectives: 1
-  isOrganisations: 1
+  isObjectives: 0
+  isOrganisations: 0
 --- !u!114 &114177065037937216
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -68,29 +68,31 @@ public class MissionManager : MonoBehaviour
     private void SubInitialiseAll()
     {
         Debug.Assert(mission != null, "Invalid Mission (Null)");
-        if (GameManager.i.inputScript.GameState != GameState.TutorialOptions)
+
+        //Objectives -> assign if present, if not use random objectives
+        if (GameManager.i.optionScript.isObjectives == true)
         {
-            //Assign Objectives if present, if not use random objectives
             List<Objective> listOfObjectives = new List<Objective>();
             if (mission.listOfObjectives.Count > 0)
             { listOfObjectives.AddRange(mission.listOfObjectives); }
             else { listOfObjectives.AddRange(GameManager.i.dataScript.GetRandomObjectives(GameManager.i.objectiveScript.maxNumOfObjectives)); }
             GameManager.i.objectiveScript.SetObjectives(listOfObjectives);
-            //initialise and assign targets
+        }
+
+        //Targets -> initialise and assign
+        if (GameManager.i.optionScript.isTargets == true)
+        {
             GameManager.i.targetScript.Initialise();
             GameManager.i.targetScript.AssignTargets(mission);
-            //Npc -> Human Resistance Player only
-            if (GameManager.i.optionScript.isNPC == true)
-            {
-                if (GameManager.i.campaignScript.campaign.side.level == 2)
-                { InitialiseNpc(); }
-            }
         }
-        //Tutorial
-        else
+
+        //Npc -> Human Resistance Player only
+        if (GameManager.i.optionScript.isNPC == true)
         {
-            //to do
+            if (GameManager.i.campaignScript.campaign.side.level == 2)
+            { InitialiseNpc(); }
         }
+
     }
     #endregion
 

@@ -1714,21 +1714,21 @@ public class DebugGUI : MonoBehaviour
                     //Targets Generic
                     case 34:
                         customBackground.alignment = TextAnchor.UpperLeft;
-                        analysis = GameManager.i.dataScript.DebugShowGenericTargets();
+                        analysis = GameManager.i.dataScript.DebugDisplayGenericTargets();
                         GUI.Box(new Rect(Screen.width - 555, 10, 550, 600), analysis, customBackground);
                         break;
                     //Target Pools
                     case 35:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         /*analysis = GameManager.instance.dataScript.DebugShowGenericTargets();*/
-                        analysis = GameManager.i.dataScript.DebugShowTargetPools();
+                        analysis = GameManager.i.dataScript.DebugDisplayTargetPools();
                         GUI.Box(new Rect(Screen.width - 555, 10, 550, 600), analysis, customBackground);
                         break;
                     //Target Dictionary
                     case 36:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         /*analysis = GameManager.instance.dataScript.DebugShowGenericTargets();*/
-                        analysis = GameManager.i.dataScript.DebugShowTargetDict();
+                        analysis = GameManager.i.dataScript.DebugDisplayTargetDict();
                         GUI.Box(new Rect(Screen.width - 555, 10, 550, 800), analysis, customBackground);
                         break;
                     //Show / Toggle Path (between two nodes)

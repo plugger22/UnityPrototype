@@ -88,12 +88,13 @@ public class TargetManager : MonoBehaviour
     private string colourEnd;
 
     /// <summary>
-    /// Initial setup called by MissionManager.cs -> Initialise and higher up by CampaignManager.cs -> Initialise
+    /// NOTE: Initialise called by MissionManager.cs -> Initialise and higher up by CampaignManager.cs -> Initialise
     /// </summary>
     public void Initialise()
     {
         switch (GameManager.i.inputScript.GameState)
         {
+            case GameState.TutorialOptions:
             case GameState.NewInitialisation:
             case GameState.FollowOnInitialisation:
             case GameState.LoadAtStart:
@@ -264,7 +265,8 @@ public class TargetManager : MonoBehaviour
     /// </summary>
     private void StartTurnEarly()
     {
-        CheckTargets();
+        if (GameManager.i.optionScript.isTargets == true)
+        { CheckTargets(); }
     }
 
     /// <summary>
@@ -429,7 +431,8 @@ public class TargetManager : MonoBehaviour
             AssignVIPTarget(mission);
             /*AssignStoryTarget(mission);
             AssignGoalTarget(mission);*/
-            AssignOrganisationTarget(mission);
+            if (GameManager.i.optionScript.isOrganisations == true)
+            { AssignOrganisationTarget(mission); }
         }
         else { Debug.LogError("Invalid mission (Null)"); }
     }

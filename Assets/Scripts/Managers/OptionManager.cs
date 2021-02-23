@@ -24,6 +24,7 @@ public class OptionManager : MonoBehaviour
     [HideInInspector] public bool isMainInfoApp = true;                             //if false MainInfoApp is switched off
     [HideInInspector] public bool isObjectives = true;                              //if false Objectives are switched off
     [HideInInspector] public bool isOrganisations = true;                           //if false Organisations are switched off
+    [HideInInspector] public bool isTargets = true;                                 //if false Targets are switched off
     [HideInInspector] public bool isNPC = true;                                     //if false NPC is switched off
     [HideInInspector] public bool isSubordinates = true;                            //if false Subordinates are switched off
     [HideInInspector] public bool isReviews = true;                                 //if false Performance reviews are switched off
@@ -93,6 +94,7 @@ public class OptionManager : MonoBehaviour
             .AppendFormat(" isReviews -> {0}{1}", isReviews, "\n")
             .AppendFormat(" isObjectives -> {0}{1}", isObjectives, "\n")
             .AppendFormat(" isOrganisations -> {0}{1}", isOrganisations, "\n")
+            .AppendFormat(" isTargets -> {0}{1}", isTargets, "\n")
             .AppendFormat(" isActorPool -> {0}{1}", isActorPool, "\n")
             .AppendFormat(" isOnMapRandom -> {0}{1}", isOnMapRandom, "\n")
             .AppendFormat(" NO Nodes -> {0}{1}", noNodes, "\n")

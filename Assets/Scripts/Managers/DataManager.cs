@@ -3460,55 +3460,63 @@ public class DataManager : MonoBehaviour
     /// Debug method to display contents of generic target array
     /// </summary>
     /// <returns></returns>
-    public string DebugShowGenericTargets()
+    public string DebugDisplayGenericTargets()
     {
-        StringBuilder builder = new StringBuilder();
-        Target target = null;
-        List<string> tempList = new List<string>();
-        builder.AppendFormat(" ArrayOfGenericTargets{0}", "\n");
-        for (int i = 0; i < arrayOfGenericTargets.Length; i++)
+        if (GameManager.i.optionScript.isTargets == true)
         {
-            builder.AppendFormat("{0} NodeArc -> {1}{2}", "\n", GetNodeArc(i).name, "\n");
-            tempList = arrayOfGenericTargets[i];
-            if (tempList != null)
+            StringBuilder builder = new StringBuilder();
+            Target target = null;
+            List<string> tempList = new List<string>();
+            builder.AppendFormat(" ArrayOfGenericTargets{0}", "\n");
+            for (int i = 0; i < arrayOfGenericTargets.Length; i++)
             {
-                if (tempList.Count > 0)
+                builder.AppendFormat("{0} NodeArc -> {1}{2}", "\n", GetNodeArc(i).name, "\n");
+                tempList = arrayOfGenericTargets[i];
+                if (tempList != null)
                 {
-                    for (int j = 0; j < tempList.Count; j++)
+                    if (tempList.Count > 0)
                     {
-                        target = GetTarget(tempList[j]);
-                        if (target != null)
+                        for (int j = 0; j < tempList.Count; j++)
                         {
-                            builder.AppendFormat(" {0}, level {1}, act {2}, del {3}, win {4}{5}", target.targetName, target.targetLevel,
-                                target.profile.activation.name, target.timerDelay, target.timerWindow, "\n");
+                            target = GetTarget(tempList[j]);
+                            if (target != null)
+                            {
+                                builder.AppendFormat(" {0}, level {1}, act {2}, del {3}, win {4}{5}", target.targetName, target.targetLevel,
+                                    target.profile.activation.name, target.timerDelay, target.timerWindow, "\n");
+                            }
+                            else { builder.AppendFormat(" INVALID Target (Null){0}", "\n"); }
                         }
-                        else { builder.AppendFormat(" INVALID Target (Null){0}", "\n"); }
                     }
+                    else { builder.AppendFormat(" No Targets present{0}", "\n"); }
                 }
-                else { builder.AppendFormat(" No Targets present{0}", "\n"); }
+                else { builder.AppendFormat(" INVALID List (Null){0}", "\n"); }
             }
-            else { builder.AppendFormat(" INVALID List (Null){0}", "\n"); }
+            return builder.ToString();
         }
-        return builder.ToString();
+        else { return "Targets have been disabled"; }
     }
 
     /// <summary>
     /// Debug method to display different target pools
     /// </summary>
     /// <returns></returns>
-    public string DebugShowTargetPools()
+    public string DebugDisplayTargetPools()
     {
-        StringBuilder builder = new StringBuilder();
+        if (GameManager.i.optionScript.isTargets == true)
+        {
+            StringBuilder builder = new StringBuilder();
         builder.AppendFormat(" Target Pools{0}", "\n");
         builder.AppendFormat("{0} Active Targets{1}", "\n", "\n");
-        builder.Append(DebugDisplayPool(targetPoolActive));
+        builder.Append(DebugShowPool(targetPoolActive));
         builder.AppendFormat("{0} Live Targets{1}", "\n", "\n");
-        builder.Append(DebugDisplayPool(targetPoolLive));
+        builder.Append(DebugShowPool(targetPoolLive));
         builder.AppendFormat("{0} Outstanding Targets{1}", "\n", "\n");
-        builder.Append(DebugDisplayPool(targetPoolOutstanding));
+        builder.Append(DebugShowPool(targetPoolOutstanding));
         builder.AppendFormat("{0} Done Targets{1}", "\n", "\n");
-        builder.Append(DebugDisplayPool(targetPoolDone));
+        builder.Append(DebugShowPool(targetPoolDone));
         return builder.ToString();
+    }
+        else { return "Targets have been disabled"; }
     }
 
     /// <summary>
@@ -3516,7 +3524,7 @@ public class DataManager : MonoBehaviour
     /// </summary>
     /// <param name="tempList"></param>
     /// <returns></returns>
-    private string DebugDisplayPool(List<Target> tempList)
+    private string DebugShowPool(List<Target> tempList)
     {
         StringBuilder builderTemp = new StringBuilder();
         Target target = null;
@@ -3555,45 +3563,49 @@ public class DataManager : MonoBehaviour
     /// Debug method to display target dictionary
     /// </summary>
     /// <returns></returns>
-    public string DebugShowTargetDict()
+    public string DebugDisplayTargetDict()
     {
-        StringBuilder builder = new StringBuilder();
-        builder.AppendFormat(" TargetDictionary{0}{1}", "\n", "\n");
-        foreach (var target in dictOfTargets)
+        if (GameManager.i.optionScript.isTargets == true)
         {
-            if (target.Value.followOnTarget != null)
+            StringBuilder builder = new StringBuilder();
+            builder.AppendFormat(" TargetDictionary{0}{1}", "\n", "\n");
+            foreach (var target in dictOfTargets)
             {
-                if (target.Value.profile.activation != null)
+                if (target.Value.followOnTarget != null)
                 {
-                    //non-dormant but has follow-on target & valid activation
-                    builder.AppendFormat(" {0}: lvl {1}, act {2}, {3}, d {4}, w {5}, nodeID {6}, followOn {7}{8}", target.Value.name, target.Value.targetLevel,
-                        target.Value.profile.activation.name, target.Value.targetStatus, target.Value.timerDelay, target.Value.timerWindow, target.Value.nodeID, target.Value.followOnTarget.targetName, "\n");
+                    if (target.Value.profile.activation != null)
+                    {
+                        //non-dormant but has follow-on target & valid activation
+                        builder.AppendFormat(" {0}: lvl {1}, act {2}, {3}, d {4}, w {5}, nodeID {6}, followOn {7}{8}", target.Value.name, target.Value.targetLevel,
+                            target.Value.profile.activation.name, target.Value.targetStatus, target.Value.timerDelay, target.Value.timerWindow, target.Value.nodeID, target.Value.followOnTarget.targetName, "\n");
+                    }
+                    else
+                    {
+                        //dormant ->  follow-on target & NO valid activation
+                        builder.AppendFormat(" {0}: lvl {1}, act n.a, {2}, d {3}, w {4}, nodeID {5}, followOn {6}{87}", target.Value.name, target.Value.targetLevel,
+                            target.Value.targetStatus, target.Value.timerDelay, target.Value.timerWindow, target.Value.nodeID, target.Value.followOnTarget.targetName, "\n");
+                    }
                 }
                 else
                 {
-                    //dormant ->  follow-on target & NO valid activation
-                    builder.AppendFormat(" {0}: lvl {1}, act n.a, {2}, d {3}, w {4}, nodeID {5}, followOn {6}{87}", target.Value.name, target.Value.targetLevel,
-                        target.Value.targetStatus, target.Value.timerDelay, target.Value.timerWindow, target.Value.nodeID, target.Value.followOnTarget.targetName, "\n");
+                    //No followOn target
+                    if (target.Value.profile.activation != null)
+                    {
+                        //active / live / outstanding -> valid activation
+                        builder.AppendFormat(" {0}: lvl {1}, act {2}, {3}, d {4}, w {5}, nodeID {6}{7}", target.Value.name, target.Value.targetLevel,
+                              target.Value.profile.activation.name, target.Value.targetStatus, target.Value.timerDelay, target.Value.timerWindow, target.Value.nodeID, "\n");
+                    }
+                    else
+                    {
+                        //dormant -> no activation value
+                        builder.AppendFormat(" {0}: lvl {1}, act n.a, {2}, d {3}, w {4}, nodeID {5}{6}", target.Value.name, target.Value.targetLevel,
+                              target.Value.targetStatus, target.Value.timerDelay, target.Value.timerWindow, target.Value.nodeID, "\n");
+                    }
                 }
             }
-            else
-            {
-                //No followOn target
-                if (target.Value.profile.activation != null)
-                {
-                    //active / live / outstanding -> valid activation
-                    builder.AppendFormat(" {0}: lvl {1}, act {2}, {3}, d {4}, w {5}, nodeID {6}{7}", target.Value.name, target.Value.targetLevel,
-                          target.Value.profile.activation.name, target.Value.targetStatus, target.Value.timerDelay, target.Value.timerWindow, target.Value.nodeID, "\n");
-                }
-                else
-                {
-                    //dormant -> no activation value
-                    builder.AppendFormat(" {0}: lvl {1}, act n.a, {2}, d {3}, w {4}, nodeID {5}{6}", target.Value.name, target.Value.targetLevel,
-                          target.Value.targetStatus, target.Value.timerDelay, target.Value.timerWindow, target.Value.nodeID, "\n");
-                }
-            }
+            return builder.ToString();
         }
-        return builder.ToString();
+        else { return "Targets have been disabled"; }
     }
 
     //

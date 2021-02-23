@@ -140,13 +140,16 @@ public class CampaignManager : MonoBehaviour
         { scenario = GameManager.i.scenarioScript.scenario; }
         if (scenario.challengeResistance != null) 
         {
-            // Mission
+            // Mission (includes Objectives and Targets)
             if (scenario.missionResistance != null)
             {
-                GameManager.i.missionScript.mission = scenario.missionResistance;
-                GameManager.i.objectiveScript.mission = scenario.missionResistance;
-                if (GameManager.i.inputScript.GameState != GameState.LoadGame)
-                { GameManager.i.missionScript.Initialise(); }
+                    GameManager.i.missionScript.mission = scenario.missionResistance;
+                    GameManager.i.objectiveScript.mission = scenario.missionResistance;
+                    if (GameManager.i.inputScript.GameState != GameState.LoadGame)
+                    {
+                        //Initialises Missions which then initialises Targets
+                        GameManager.i.missionScript.Initialise();
+                    }
             }
             else { Debug.LogError("Invalid mission (Null) for scenario"); }
             // Nemesis -> may or may not be present

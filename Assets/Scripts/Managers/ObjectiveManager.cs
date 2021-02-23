@@ -1,9 +1,8 @@
-﻿using System.Collections;
+﻿using gameAPI;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-using gameAPI;
-using System;
 
 /// <summary>
 /// handles all Objective related matters (both sides)
@@ -123,11 +122,11 @@ public class ObjectiveManager : MonoBehaviour
     public void SetObjectives(List<Objective> listOfSetObjectives, bool isZeroProgress = true)
     {
         if (listOfSetObjectives != null)
-        {        
+        {
             //loop objectives
             int counter = 0;
             listOfObjectives.Clear();
-            foreach(Objective objective in listOfSetObjectives)
+            foreach (Objective objective in listOfSetObjectives)
             {
                 if (objective != null)
                 {
@@ -317,25 +316,29 @@ public class ObjectiveManager : MonoBehaviour
     public string GetObjectivesSummary()
     {
         string description = "Unknown";
-        switch (GameManager.i.sideScript.PlayerSide.level)
+        if (GameManager.i.optionScript.isObjectives == true)
         {
-            case 1:
-                if (GameManager.i.sideScript.authorityOverall == SideState.Human)
-                {
-                    description = string.Format("{0}{1}{2}{3} of <b>{4}{5}{6}{7}</b> Objectives have been completed{8}", colourNeutral, GetCompletedObjectives(),
-                        colourEnd, colourNormal, colourEnd, colourNeutral, objectivesCurrent, colourNormal, colourEnd);
-                }
-                else { description = string.Format("{0}No Objectives for AI{1}", colourAlert, colourEnd); }
-                break;
-            case 2:
-                if (GameManager.i.sideScript.resistanceOverall == SideState.Human)
-                {
-                    description = string.Format("{0}{1}{2}{3} of <b>{4}{5}{6}{7}</b> Objectives have been completed{8}", colourNeutral, GetCompletedObjectives(),
-                        colourEnd, colourNormal, colourEnd, colourNeutral, objectivesCurrent, colourNormal, colourEnd);
-                }
-                else { description = string.Format("{0}No Objectives for AI{1}", colourAlert, colourEnd); }
-                break;
+            switch (GameManager.i.sideScript.PlayerSide.level)
+            {
+                case 1:
+                    if (GameManager.i.sideScript.authorityOverall == SideState.Human)
+                    {
+                        description = string.Format("{0}{1}{2}{3} of <b>{4}{5}{6}{7}</b> Objectives have been completed{8}", colourNeutral, GetCompletedObjectives(),
+                            colourEnd, colourNormal, colourEnd, colourNeutral, objectivesCurrent, colourNormal, colourEnd);
+                    }
+                    else { description = string.Format("{0}No Objectives for AI{1}", colourAlert, colourEnd); }
+                    break;
+                case 2:
+                    if (GameManager.i.sideScript.resistanceOverall == SideState.Human)
+                    {
+                        description = string.Format("{0}{1}{2}{3} of <b>{4}{5}{6}{7}</b> Objectives have been completed{8}", colourNeutral, GetCompletedObjectives(),
+                            colourEnd, colourNormal, colourEnd, colourNeutral, objectivesCurrent, colourNormal, colourEnd);
+                    }
+                    else { description = string.Format("{0}No Objectives for AI{1}", colourAlert, colourEnd); }
+                    break;
+            }
         }
+        else { description = string.Format("<size=110%>Objectives have been {0}disabled{1}</size>", colourAlert, colourEnd); }
         return description;
     }
 
@@ -363,7 +366,6 @@ public class ObjectiveManager : MonoBehaviour
             }
             else { Debug.LogWarningFormat("Invalid objective (Null) for listOfObjectives[{0}]", i); }
         }
-
         return builder.ToString();
     }
 
@@ -374,7 +376,7 @@ public class ObjectiveManager : MonoBehaviour
     public int GetCompletedObjectives()
     {
         int numCompleted = 0;
-        for(int i = 0; i < listOfObjectives.Count; i++)
+        for (int i = 0; i < listOfObjectives.Count; i++)
         {
             Objective objective = listOfObjectives[i];
             if (objective != null)
