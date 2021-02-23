@@ -1031,28 +1031,46 @@ public class LoadManager : MonoBehaviour
         //
         // - - - Tutorials - - -
         //
-        Dictionary<string, int> dictOfTutorialData = GameManager.i.dataScript.GetDictOfTutorialData();
-        if (dictOfTutorialData != null)
+        Dictionary<string, Tutorial> dictOfTutorials = GameManager.i.dataScript.GetDictOfTutorials();
+        if (dictOfTutorials != null)
         {
-            numArray = arrayOfTutorials.Length;
-            if (numArray > 0)
+            Dictionary<string, TutorialData> dictOfTutorialData = GameManager.i.dataScript.GetDictOfTutorialData();
+            if (dictOfTutorialData != null)
             {
-                for (int i = 0; i < numArray; i++)
+                numArray = arrayOfTutorials.Length;
+                if (numArray > 0)
                 {
-                    Tutorial tutorial = arrayOfTutorials[i];
-                    //add to dictionary
-                    try
-                    { dictOfTutorialData.Add(tutorial.name, 0); }
-                    catch (ArgumentNullException)
-                    { Debug.LogError("Invalid Tutorial (Null)"); }
-                    catch (ArgumentException)
-                    { Debug.LogErrorFormat("Invalid Tutorial (duplicate) \"{0}\"", tutorial.name); }
+                    for (int i = 0; i < numArray; i++)
+                    {
+                        Tutorial tutorial = arrayOfTutorials[i];
+                        //add to dictOfTutorials
+                        try
+                        { dictOfTutorials.Add(tutorial.name, tutorial); }
+                        catch (ArgumentNullException)
+                        { Debug.LogError("Invalid Tutorial (Null)"); }
+                        catch (ArgumentException)
+                        { Debug.LogErrorFormat("Invalid Tutorial (duplicate) \"{0}\"", tutorial.name); }
+                        //add to dictOfTutorialData
+                        try
+                        { dictOfTutorialData.Add(tutorial.name, new TutorialData() { tutorialName = tutorial.name, index = 0 }); }
+                        catch (ArgumentNullException)
+                        { Debug.LogError("Invalid Tutorial (Null)"); }
+                        catch (ArgumentException)
+                        { Debug.LogErrorFormat("Invalid Tutorial (duplicate) \"{0}\"", tutorial.name); }
+                    }
                 }
+                //tutorial
+                numDict = dictOfTutorials.Count;
+                Debug.LogFormat("[Loa] InitialiseStart -> dictOfTutorials has {0} entries{1}", numDict, "\n");
+                Debug.Assert(numDict > 0, "No data in dictOfTutorials");
+                Debug.Assert(numArray == numDict, string.Format("Mismatch on tutorial and data count for dictOfTutorials, array {0}, dict {1}", numArray, numDict));
+                //tutorialData
+                numDict = dictOfTutorialData.Count;
+                Debug.LogFormat("[Loa] InitialiseStart -> dictOfTutorialData has {0} entries{1}", numDict, "\n");
+                Debug.Assert(numDict > 0, "No data in dictOfTutorialData");
+                Debug.Assert(numArray == numDict, string.Format("Mismatch on tutorial and data count for dictOfTutorialData, array {0}, dict {1}", numArray, numDict));
             }
-            numDict = dictOfTutorialData.Count;
-            Debug.LogFormat("[Loa] InitialiseStart -> dictOfTutorialData has {0} entries{1}", numDict, "\n");
-            Debug.Assert(numDict > 0, "No data in dictOfTutorialData");
-            Debug.Assert(numArray == numDict, string.Format("Mismatch on tutorial and data count, array {0}, dict {1}", numArray, numDict));
+            else { Debug.LogError("Invalid dictOfTutorialData (Null) -> Import failed"); }
         }
         else { Debug.LogError("Invalid dictOfTutorialData (Null) -> Import failed"); }
         //

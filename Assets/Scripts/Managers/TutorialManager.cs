@@ -13,12 +13,13 @@ public class TutorialManager : MonoBehaviour
     public Tutorial resistanceTutorial;
     public Tutorial authorityTutorial;
 
+    #region save data compatibile
     [HideInInspector] public Tutorial tutorial;
     [HideInInspector] public TutorialSet set;
     [HideInInspector] public int index;                         //index that tracks player's progress (set #) through current tutorial
+    #endregion
 
 
-    
     #region Initialisation...
     /// <summary>
     /// Master Initialisation
@@ -53,7 +54,6 @@ public class TutorialManager : MonoBehaviour
     }
     #endregion
 
-
     #region SubInitialiseTutorial
     private void SubInitialiseTutorial()
     {
@@ -61,13 +61,11 @@ public class TutorialManager : MonoBehaviour
     }
     #endregion
 
-
-
     #endregion
-    
 
 
 
+    #region InitialiseTutorial
     /// <summary>
     /// Set up tutorial prior to running
     /// </summary>
@@ -109,8 +107,9 @@ public class TutorialManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid tutorial Scenario (Null)"); }
     }
+    #endregion
 
-
+    #region UpdateFeatures
     /// <summary>
     /// Update features prior for current tutorial set. Note: this will override anything set in GameManager prefab -> FeatureManager
     /// </summary>
@@ -198,6 +197,7 @@ public class TutorialManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid listOfFeaturesToToggleOff (Null)"); }
     }
+    #endregion
 
     //new methods above here
 }

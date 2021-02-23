@@ -86,6 +86,7 @@ public class FileManager : MonoBehaviour
         WriteDataData();
         WriteCampaignData();
         WriteOptionData();
+        WriteTutorialData();
         WritePlayerData();
         WriteNemesisData();
         WriteGameData();
@@ -224,6 +225,7 @@ public class FileManager : MonoBehaviour
                 ReadCampaignData();
                 ReadGameData(playerSide);
                 ReadSeedData();
+                ReadTutorialData();
                 //set up level based on loaded current scenario seed
                 GameManager.i.InitialiseLoadGame(playerSide.level);
                 ReadScenarioData();
@@ -283,6 +285,19 @@ public class FileManager : MonoBehaviour
     {
         write.seedData.levelSeed = GameManager.i.levelScript.seed;
         write.seedData.devSeed = GameManager.i.seedDev;
+    }
+    #endregion
+
+
+    #region WriteTutorialData
+    /// <summary>
+    /// tutorialManager.cs data
+    /// </summary>
+    private void WriteTutorialData()
+    {
+        write.tutorialData.tutorialName = GameManager.i.tutorialScript.tutorial.name;
+        write.tutorialData.setName = GameManager.i.tutorialScript.set.name;
+        write.tutorialData.index = GameManager.i.tutorialScript.index;
     }
     #endregion
 
@@ -1303,6 +1318,16 @@ public class FileManager : MonoBehaviour
         { write.dataData.listOfBillboardsSeen.AddRange(listOfBillboardsSeen); }
         else { Debug.LogError("Invalid listOfBillboardsSeen (Null)"); }
         #endregion
+
+        #region Tutorials
+        Dictionary<string, TutorialData> dictOfTutorialData = GameManager.i.dataScript.GetDictOfTutorialData();
+        if (dictOfTutorialData != null)
+        {
+            foreach (var item in dictOfTutorialData)
+            { write.dataData.listOfTutorialData.Add(item.Value); }
+        }
+        else { Debug.LogError("Invalid dictOfTutorialData (Null)"); }
+        #endregion
     }
     #endregion
 
@@ -2063,6 +2088,35 @@ public class FileManager : MonoBehaviour
     }
     #endregion
 
+    #region Read Tutorial Data
+    /// <summary>
+    /// tutorialManager.cs data
+    /// </summary>
+    private void ReadTutorialData()
+    {
+        //tutorial
+        Tutorial tutorial = GameManager.i.dataScript.GetTutorial(read.tutorialData.tutorialName);
+        if (tutorial != null)
+        {
+            GameManager.i.tutorialScript.tutorial = tutorial;
+            //set and index
+            if (read.tutorialData.index > -1)
+            {
+                if (read.tutorialData.index < tutorial.listOfSets.Count)
+                {
+                    GameManager.i.tutorialScript.index = read.tutorialData.index;
+                    TutorialSet set = tutorial.listOfSets[read.tutorialData.index];
+                    if (set != null)
+                    { GameManager.i.tutorialScript.set = set; }
+                    else { Debug.LogWarningFormat("Invalid set (Null) for tutorial.listOfSets[{0}]", read.tutorialData.index); }
+                }
+                else { Debug.LogWarningFormat("Invalid read.tutorialData.index (too big, is {0}, tutorial.listOfSets.Count {1})", read.tutorialData.index, tutorial.listOfSets.Count); }
+            }
+            else { Debug.LogWarningFormat("Invalid read.tutorialData.index \"{0}\"", read.tutorialData.index); }
+        }
+        else { Debug.LogWarningFormat("Tutorial not found in dictionary for tutorial.name \"{0}\"", read.tutorialData.tutorialName); }
+    }
+    #endregion
 
     #region Read Npc Data
     /// <summary>
@@ -2113,7 +2167,7 @@ public class FileManager : MonoBehaviour
         else { GameManager.i.debugScript.optionConnectorTooltips = "Conn tooltips ON"; }
         if (read.optionData.debugData == true)
         { GameManager.i.debugScript.optionDebugData = "Debug Data OFF"; }
-            else { GameManager.i.debugScript.optionDebugData = "Debug Data ON"; }
+        else { GameManager.i.debugScript.optionDebugData = "Debug Data ON"; }
         if (read.optionData.showPower == false)
         { GameManager.i.debugScript.optionPowerUI = "Power UI ON"; }
         else { GameManager.i.debugScript.optionPowerUI = "Power UI OFF"; }
@@ -2265,7 +2319,7 @@ public class FileManager : MonoBehaviour
         info.listOfWorkerTooltips = read.metaGameData.listOfWorkerTooltips;
         //sprites -> hq
         if (read.metaGameData.listOfHqSprites != null)
-            {
+        {
             for (int i = 0; i < read.metaGameData.listOfHqSprites.Count; i++)
             {
                 Sprite sprite = GameManager.i.dataScript.GetSprite(read.metaGameData.listOfHqSprites[i]);
@@ -3310,6 +3364,29 @@ public class FileManager : MonoBehaviour
             else { Debug.LogWarning("Invalid listOfTextListNames (Null)"); }
         }
         else { Debug.LogError("Invalid dictOfTextLists (Null)"); }
+        #endregion
+
+        #region Tutorials
+        Dictionary<string, TutorialData> dictOfTutorialData = GameManager.i.dataScript.GetDictOfTutorialData();
+        if (dictOfTutorialData != null)
+        {
+            //clear dicts
+            dictOfTutorialData.Clear();
+            //copy data across -> NOTE: tutorialName used to populate both dictionaries
+            for (int i = 0; i < read.dataData.listOfTutorialData.Count; i++)
+            {
+                TutorialData tutData = read.dataData.listOfTutorialData[i];
+                if (tutData != null)
+                {
+                    try
+                    { dictOfTutorialData.Add(tutData.tutorialName, tutData); }
+                    catch (ArgumentException)
+                    { Debug.LogWarningFormat("Duplicate tutorialName \"{0}\"", tutData.tutorialName); }
+                }
+                else { Debug.LogWarningFormat("Invalid tutorialData (Null) for listOfTutorialData[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfTutorialData (Null)"); }
         #endregion
     }
     #endregion

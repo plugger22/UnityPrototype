@@ -17,6 +17,7 @@ public class Save
     public SaveOptionData optionData = new SaveOptionData();
     public SavePlayerData playerData = new SavePlayerData();
     public SaveGameData gameData = new SaveGameData();
+    public SaveTutorialData tutorialData = new SaveTutorialData();
     public SaveActorData actorData = new SaveActorData();
     public SaveNodeData nodeData = new SaveNodeData();
     public SaveConnectionData connData = new SaveConnectionData();
@@ -225,6 +226,8 @@ public class SaveDataData
     //Billboard
     public List<string> listOfBillboards = new List<string>();
     public List<string> listOfBillboardsSeen = new List<string>();
+    //Tutorial
+    public List<TutorialData> listOfTutorialData = new List<TutorialData>();
 
 }
 #endregion
@@ -340,6 +343,20 @@ public class SaveGameData
     public string currentSide;
     public bool haltExecution;
     public bool isSecurityFlash;
+}
+#endregion
+
+
+#region SaveTutorialData
+/// <summary>
+/// TutorialManager.cs specific data
+/// </summary>
+[System.Serializable]
+public class SaveTutorialData
+{
+    public string tutorialName;
+    public string setName;
+    public int index;
 }
 #endregion
 

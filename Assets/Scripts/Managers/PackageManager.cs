@@ -1450,7 +1450,7 @@ namespace packageAPI
     }
 
 
-    /*/// <summary>
+    /// <summary>
     /// Data package to track player's progress through a tutorial
     /// </summary>
     [Serializable]
@@ -1458,7 +1458,7 @@ namespace packageAPI
     {
         public string tutorialName;                 //name of Tutorial.SO
         public int index;                           //set index where player is currently at
-    }*/
+    }
 
 
     //new classes above here

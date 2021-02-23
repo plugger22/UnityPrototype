@@ -270,7 +270,8 @@ public class DataManager : MonoBehaviour
     private Dictionary<int, HistoryLevel> dictOfCampaignHistory = new Dictionary<int, HistoryLevel>();          //Key -> HistoryLevel.scenarioIndex, Value -> HistoryLevel
     private Dictionary<string, StoryHelp> dictOfStoryHelp = new Dictionary<string, StoryHelp>();                //Key -> StoryHelp.name, Value -> StoryHelp
     private Dictionary<string, Billboard> dictOfBillboards = new Dictionary<string, Billboard>();               //Key -> Billboard.name, Value -> Billboard
-    private Dictionary<string, int> dictOfTutorialData = new Dictionary<string, int>();                         //Key -> Tutorial.name, Value -> set index
+    private Dictionary<string, Tutorial> dictOfTutorials = new Dictionary<string, Tutorial>();                  //Key -> Tutorial.name, Value -> Tutorial
+    private Dictionary<string, TutorialData> dictOfTutorialData = new Dictionary<string, TutorialData>();       //Key -> Tutorial.name, Value -> TutorialData.cs
 
     //Development only collections
     private Dictionary<string, int> dictOfBeliefs = new Dictionary<string, int>();                              //Key -> belief name, Value -> belief count (num used in topic options)
@@ -10269,9 +10270,27 @@ public class DataManager : MonoBehaviour
     //
     // - - - Tutorials
     //
+    public Dictionary<string, Tutorial> GetDictOfTutorials()
+    { return dictOfTutorials; }
 
-    public Dictionary<string, int> GetDictOfTutorialData()
+    public Dictionary<string, TutorialData> GetDictOfTutorialData()
     { return dictOfTutorialData; }
+
+    /// <summary>
+    /// returns a tutorial.so based on the tutorial.name
+    /// </summary>
+    /// <param name="tutorialName"></param>
+    /// <returns></returns>
+    public Tutorial GetTutorial(string tutorialName)
+    {
+        if (string.IsNullOrEmpty(tutorialName) == false)
+        {
+            if (dictOfTutorials.ContainsKey(tutorialName) == true)
+            { return dictOfTutorials[tutorialName]; }
+        }
+        else { Debug.LogError("Invalid tutorialName (Null or Empty)"); }
+        return null;
+    }
 
     /// <summary>
     /// Returns current set index for the specified tutorial name (SO name). Returns -1 if a problem
@@ -10284,7 +10303,12 @@ public class DataManager : MonoBehaviour
         if (string.IsNullOrEmpty(tutorialName) == false)
         {
             if (dictOfTutorialData.ContainsKey(tutorialName) == true)
-            { index = dictOfTutorialData[tutorialName]; }
+            {
+                TutorialData data = dictOfTutorialData[tutorialName];
+                if (data != null)
+                { index = data.index; }
+                else { Debug.LogErrorFormat("Invalid TutorialData (Null) for \"{0}\"", tutorialName); }
+            }
         }
         else { Debug.LogError("Invalid tutorialName (Null or Empty)"); }
         return index;
