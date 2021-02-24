@@ -1,325 +1,101 @@
 
-Dev seed 16310 -> Monday, 22 February 2021 11:34 AM
-City seed 778899 -> Simulation, Eurasia
+Dev seed 65347 -> Thursday, 25 February 2021 10:44 AM
+City seed 9043 -> Simulation, Eurasia
 
-Dev seed 34620 -> Monday, 22 February 2021 11:37 AM
-City seed 778899 -> Simulation, Eurasia
+Dev seed 10612 -> Thursday, 25 February 2021 10:45 AM
 
-Dev seed 61511 -> Monday, 22 February 2021 11:40 AM
-City seed 5678 -> Londus, Eurasia
+Dev seed 1028 -> Thursday, 25 February 2021 10:48 AM
+City seed 49239 -> Simulation, Eurasia
 
-Dev seed 174 -> Monday, 22 February 2021 3:51 PM
-City seed 52860 -> Londus, Eurasia
+Dev seed 60328 -> Thursday, 25 February 2021 10:52 AM
+City seed 3376 -> Simulation, Eurasia
 
-Dev seed 26664 -> Monday, 22 February 2021 3:51 PM
-City seed 56672 -> Simulation, Eurasia
+Dev seed 29685 -> Thursday, 25 February 2021 10:52 AM
+City seed 305 -> Simulation, Eurasia
 
-Dev seed 9177 -> Monday, 22 February 2021 4:59 PM
-City seed 43515 -> Simulation, Eurasia
+Dev seed 58025 -> Thursday, 25 February 2021 10:56 AM
+City seed 7702 -> Londus, Eurasia
 
-Dev seed 621 -> Monday, 22 February 2021 5:09 PM
-City seed 59684 -> Londus, Eurasia
-
-Dev seed 59813 -> Tuesday, 23 February 2021 9:19 AM
-City seed 50828 -> Simulation, Eurasia
-
-Dev seed 28844 -> Tuesday, 23 February 2021 9:49 AM
-City seed 7037 -> Londus, Eurasia
-
-Dev seed 20913 -> Tuesday, 23 February 2021 9:51 AM
-City seed 62856 -> Londus, Eurasia
-
-Dev seed 60463 -> Tuesday, 23 February 2021 9:57 AM
-City seed 12042 -> Londus, Eurasia
-
-Dev seed 13514 -> Tuesday, 23 February 2021 10:03 AM
-City seed 57351 -> Londus, Eurasia
-
-Dev seed 55958 -> Tuesday, 23 February 2021 10:04 AM
-City seed 53303 -> Londus, Eurasia
-
-Dev seed 14446 -> Tuesday, 23 February 2021 10:05 AM
-City seed 24443 -> Londus, Eurasia
+Dev seed 3742 -> Thursday, 25 February 2021 10:57 AM
+City seed 7152 -> Londus, Eurasia
+ERROR Duplicate entry exists for dictOfCampaign[scenarioIndex] "0"
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:InitialiseCampaignHistory() (at Assets/Scripts/Managers/DataManager.cs:9959)
+	CampaignManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/CampaignManager.cs:102)
+	CampaignManager:InitialiseEarly(GameState) (at Assets/Scripts/Managers/CampaignManager.cs:49)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:903)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:962)
+	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:182)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:76)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:357)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:340)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:462)
+	ERROR Duplicate entry exists for dictOfCampaign[scenarioIndex] "1"
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:InitialiseCampaignHistory() (at Assets/Scripts/Managers/DataManager.cs:9959)
+	CampaignManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/CampaignManager.cs:102)
+	CampaignManager:InitialiseEarly(GameState) (at Assets/Scripts/Managers/CampaignManager.cs:49)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:903)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:962)
+	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:182)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:76)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:357)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:340)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:462)
+	ERROR Duplicate entry exists for dictOfCampaign[scenarioIndex] "2"
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:InitialiseCampaignHistory() (at Assets/Scripts/Managers/DataManager.cs:9959)
+	CampaignManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/CampaignManager.cs:102)
+	CampaignManager:InitialiseEarly(GameState) (at Assets/Scripts/Managers/CampaignManager.cs:49)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:903)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:962)
+	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:182)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:76)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:357)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:340)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:462)
+	ERROR Duplicate entry exists for dictOfCampaign[scenarioIndex] "3"
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:InitialiseCampaignHistory() (at Assets/Scripts/Managers/DataManager.cs:9959)
+	CampaignManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/CampaignManager.cs:102)
+	CampaignManager:InitialiseEarly(GameState) (at Assets/Scripts/Managers/CampaignManager.cs:49)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:903)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:962)
+	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:182)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:76)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:357)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:340)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:462)
+	ERROR Duplicate entry exists for dictOfCampaign[scenarioIndex] "4"
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	DataManager:InitialiseCampaignHistory() (at Assets/Scripts/Managers/DataManager.cs:9959)
+	CampaignManager:SubInitialiseNewGame() (at Assets/Scripts/Managers/CampaignManager.cs:102)
+	CampaignManager:InitialiseEarly(GameState) (at Assets/Scripts/Managers/CampaignManager.cs:49)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:903)
+	GameManager:InitialiseNewSession() (at Assets/Scripts/GameManager.cs:962)
+	ControlManager:CloseNewGameOptions() (at Assets/Scripts/Managers/ControlManager.cs:182)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:76)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:357)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:340)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:462)
+	City seed 28279 -> Londus, Eurasia
 ASSERT NullReferenceException: Object reference not set to an instance of an object
-DataManager.DebugShowGenericTargets () (at Assets/Scripts/Managers/DataManager.cs:3469)
-	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1717)
-	
-Dev seed 29825 -> Tuesday, 23 February 2021 10:12 AM
-City seed 26461 -> Londus, Eurasia
-
-Dev seed 25265 -> Tuesday, 23 February 2021 10:12 AM
-City seed 11397 -> Londus, Eurasia
-
-Dev seed 32917 -> Tuesday, 23 February 2021 10:17 AM
-City seed 38617 -> Londus, Eurasia
-ASSERT NullReferenceException: Object reference not set to an instance of an object
-DataManager.DebugDisplayGenericTargets () (at Assets/Scripts/Managers/DataManager.cs:3469)
-	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:1717)
-	
-Dev seed 54941 -> Tuesday, 23 February 2021 10:25 AM
-City seed 26242 -> Londus, Eurasia
-
-Dev seed 56137 -> Tuesday, 23 February 2021 10:47 AM
-City seed 44907 -> Londus, Eurasia
-
-Dev seed 52561 -> Tuesday, 23 February 2021 10:50 AM
-City seed 51553 -> Londus, Eurasia
-
-Dev seed 49591 -> Tuesday, 23 February 2021 11:27 AM
-City seed 63098 -> Londus, Eurasia
-
-Dev seed 8039 -> Tuesday, 23 February 2021 11:31 AM
-City seed 43856 -> Londus, Eurasia
-
-Dev seed 2512 -> Tuesday, 23 February 2021 11:31 AM
-City seed 40841 -> Londus, Eurasia
-
-Dev seed 1504 -> Tuesday, 23 February 2021 11:35 AM
-City seed 47742 -> Londus, Eurasia
-
-Dev seed 26914 -> Tuesday, 23 February 2021 11:44 AM
-City seed 50026 -> Londus, Eurasia
-
-Dev seed 54405 -> Tuesday, 23 February 2021 11:45 AM
-City seed 46896 -> Simulation, Eurasia
-
-Dev seed 48393 -> Tuesday, 23 February 2021 11:49 AM
-
-Dev seed 29184 -> Tuesday, 23 February 2021 11:54 AM
-City seed 19561 -> Simulation, Eurasia
-
-Dev seed 59499 -> Tuesday, 23 February 2021 3:13 PM
-City seed 38116 -> Londus, Eurasia
-
-Dev seed 25951 -> Tuesday, 23 February 2021 3:44 PM
-City seed 27861 -> Londus, Eurasia
-
-Dev seed 3528 -> Tuesday, 23 February 2021 3:45 PM
-City seed 793 -> Simulation, Eurasia
-
-Dev seed 23022 -> Tuesday, 23 February 2021 3:46 PM
-City seed 53284 -> Londus, Eurasia
-
-Dev seed 21109 -> Tuesday, 23 February 2021 3:59 PM
-City seed 43697 -> Simulation, Eurasia
-
-Dev seed 6967 -> Tuesday, 23 February 2021 4:00 PM
-City seed 55841 -> Londus, Eurasia
-
-Dev seed 13335 -> Tuesday, 23 February 2021 4:00 PM
-City seed 21900 -> Simulation, Eurasia
-
-Dev seed 17749 -> Tuesday, 23 February 2021 4:12 PM
-City seed 34565 -> Londus, Eurasia
-
-Dev seed 1096 -> Tuesday, 23 February 2021 4:41 PM
-
-Dev seed 50684 -> Tuesday, 23 February 2021 4:41 PM
-City seed 53048 -> Londus, Eurasia
-
-Dev seed 30697 -> Tuesday, 23 February 2021 4:43 PM
-City seed 53953 -> Londus, Eurasia
-ASSERT NullReferenceException: Object reference not set to an instance of an object
-ModalOutcome.InitialiseOutcome (GlobalSide side) (at Assets/Scripts/GUI/ModalOutcome.cs:691)
-	ModalOutcome.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalOutcome.cs:257)
-	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:355)
-	SideManager.set_PlayerSide (GlobalSide value) (at Assets/Scripts/Managers/SideManager.cs:100)
-	FileManager.ReadGameData (GlobalSide side) (at Assets/Scripts/Managers/FileManager.cs:2344)
-	FileManager.LoadSaveData () (at Assets/Scripts/Managers/FileManager.cs:225)
-	ControlManager.ProcessLoadGame (gameAPI.GameState state) (at Assets/Scripts/Managers/ControlManager.cs:395)
-	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:59)
-	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:355)
-	ModalMainMenu.<InitialiseMainMenu>m__3 () (at Assets/Scripts/GUI/ModalMainMenu.cs:340)
-	UnityEngine.Events.InvokableCall.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent.cs:166)
-	UnityEngine.Events.UnityEvent.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent_0.cs:58)
-	UnityEngine.UI.Button.Press () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:36)
-	UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:45)
-	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
-	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
-	UnityEngine.EventSystems.EventSystem:Update()
-	
-Dev seed 60171 -> Tuesday, 23 February 2021 4:46 PM
-City seed 46593 -> Londus, Eurasia
-ERROR Invalid background (Null)
-UnityEngine.Debug:LogError(Object)
-	ModalOutcome:InitialiseOutcome(GlobalSide) (at Assets/Scripts/GUI/ModalOutcome.cs:700)
-	ModalOutcome:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalOutcome.cs:257)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:355)
-	SideManager:set_PlayerSide(GlobalSide) (at Assets/Scripts/Managers/SideManager.cs:100)
-	FileManager:ReadGameData(GlobalSide) (at Assets/Scripts/Managers/FileManager.cs:2344)
-	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:225)
-	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:395)
-	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:59)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:355)
-	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:340)
-	UnityEngine.EventSystems.EventSystem:Update()
-	City seed 53048 -> Londus, Eurasia
-
-Dev seed 59553 -> Tuesday, 23 February 2021 4:49 PM
-City seed 60909 -> Londus, Eurasia
-
-Dev seed 33610 -> Tuesday, 23 February 2021 4:50 PM
-City seed 35632 -> Londus, Eurasia
-ERROR Invalid eventType ChangeSide
-
-UnityEngine.Debug:LogError(Object)
-	ModalOutcome:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalOutcome.cs:260)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:355)
-	SideManager:set_PlayerSide(GlobalSide) (at Assets/Scripts/Managers/SideManager.cs:100)
-	FileManager:ReadGameData(GlobalSide) (at Assets/Scripts/Managers/FileManager.cs:2344)
-	FileManager:LoadSaveData() (at Assets/Scripts/Managers/FileManager.cs:225)
-	ControlManager:ProcessLoadGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:395)
-	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:59)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:355)
-	ModalMainMenu:<InitialiseMainMenu>m__3() (at Assets/Scripts/GUI/ModalMainMenu.cs:340)
-	UnityEngine.EventSystems.EventSystem:Update()
-	City seed 53048 -> Londus, Eurasia
-
-Dev seed 29643 -> Tuesday, 23 February 2021 4:54 PM
-City seed 1190 -> Londus, Eurasia
-City seed 53048 -> Londus, Eurasia
-
-Dev seed 32205 -> Tuesday, 23 February 2021 4:57 PM
-City seed 58855 -> Londus, Eurasia
-City seed 53048 -> Londus, Eurasia
-
-Dev seed 21332 -> Tuesday, 23 February 2021 5:03 PM
-City seed 20419 -> Londus, Eurasia
-City seed 53048 -> Londus, Eurasia
-
-Dev seed 50134 -> Tuesday, 23 February 2021 5:11 PM
-City seed 12185 -> Londus, Eurasia
-
-Dev seed 53630 -> Tuesday, 23 February 2021 5:14 PM
-City seed 33899 -> Londus, Eurasia
-City seed 12185 -> Londus, Eurasia
-WARNING Invalid number of actions (is 1, limit is 0)
+MainInfoUI.InitialiseItems () (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:614)
+	MainInfoUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:555)
+	MainInfoUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:238)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:903)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:963)
+	ControlManager.CloseNewGameOptions () (at Assets/Scripts/Managers/ControlManager.cs:182)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:76)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:357)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:340)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:462)
+	WARNING Unrecognised GameState "NewInitialisation"
 UnityEngine.Debug:LogWarningFormat(String, Object[])
-	TurnManager:SetActionsRecovery(Int32) (at Assets/Scripts/Managers/TurnManager.cs:672)
-	ActorManager:CheckPlayerHuman() (at Assets/Scripts/Managers/ActorManager.cs:8090)
-	ActorManager:StartTurnLate() (at Assets/Scripts/Managers/ActorManager.cs:546)
-	ActorManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ActorManager.cs:498)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:355)
-	TurnManager:StartTurnLate() (at Assets/Scripts/Managers/TurnManager.cs:552)
-	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:335)
-	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:190)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:355)
-	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:376)
+	ModalMainMenu:InitialiseMainMenu(ModalMainMenuDetails) (at Assets/Scripts/GUI/ModalMainMenu.cs:453)
+	ModalMainMenu:OpenMainMenu(MainMenuType) (at Assets/Scripts/GUI/ModalMainMenu.cs:264)
+	ModalMainMenu:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalMainMenu.cs:168)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:357)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:326)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:462)
 	
-Dev seed 61733 -> Wednesday, 24 February 2021 11:41 AM
-City seed 42059 -> Londus, Eurasia
-
-Dev seed 28869 -> Wednesday, 24 February 2021 11:59 AM
-City seed 44668 -> Londus, Eurasia
-ASSERT NullReferenceException: Object reference not set to an instance of an object
-TutorialManager.DebugDisplayTutorialData () (at Assets/Scripts/Managers/TutorialManager.cs:212)
-	DebugGUI.OnGUI () (at Assets/Scripts/GUI/DebugGUI.cs:2316)
-	
-Dev seed 40012 -> Wednesday, 24 February 2021 12:05 PM
-City seed 48684 -> Londus, Eurasia
-
-Dev seed 5735 -> Wednesday, 24 February 2021 12:06 PM
-City seed 26085 -> Simulation, Eurasia
-
-Dev seed 50463 -> Wednesday, 24 February 2021 12:07 PM
-City seed 38017 -> Simulation, Eurasia
-ASSERT NullReferenceException: Object reference not set to an instance of an object
-NemesisManager.WriteSaveData () (at Assets/Scripts/Managers/NemesisManager.cs:1976)
-	FileManager.WriteNemesisData () (at Assets/Scripts/Managers/FileManager.cs:398)
-	FileManager.WriteSaveData (packageAPI.LoadGameState loadGameState) (at Assets/Scripts/Managers/FileManager.cs:91)
-	ControlManager.ProcessSaveGame (gameAPI.GameState state) (at Assets/Scripts/Managers/ControlManager.cs:469)
-	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:62)
-	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:355)
-	ModalMainMenu.<InitialiseMainMenu>m__4 () (at Assets/Scripts/GUI/ModalMainMenu.cs:353)
-	UnityEngine.Events.InvokableCall.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent.cs:166)
-	UnityEngine.Events.UnityEvent.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent_0.cs:58)
-	UnityEngine.UI.Button.Press () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:36)
-	UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:45)
-	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
-	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
-	UnityEngine.EventSystems.EventSystem:Update()
-	
-Dev seed 2764 -> Wednesday, 24 February 2021 12:24 PM
-City seed 40575 -> Simulation, Eurasia
-ERROR Invalid arrayOfGenericTargets (Null)
-UnityEngine.Debug:LogError(Object)
-	FileManager:WriteTargetData() (at Assets/Scripts/Managers/FileManager.cs:1975)
-	FileManager:WriteSaveData(LoadGameState) (at Assets/Scripts/Managers/FileManager.cs:101)
-	ControlManager:ProcessSaveGame(GameState) (at Assets/Scripts/Managers/ControlManager.cs:469)
-	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:62)
-	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:355)
-	ModalMainMenu:<InitialiseMainMenu>m__4() (at Assets/Scripts/GUI/ModalMainMenu.cs:353)
-	UnityEngine.EventSystems.EventSystem:Update()
-	
-Dev seed 56755 -> Wednesday, 24 February 2021 12:28 PM
-City seed 30339 -> Simulation, Eurasia
-
-Dev seed 18995 -> Wednesday, 24 February 2021 12:41 PM
-City seed 51713 -> Simulation, Eurasia
-
-Dev seed 4917 -> Wednesday, 24 February 2021 12:45 PM
-City seed 35172 -> Simulation, Eurasia
-
-Dev seed 33209 -> Wednesday, 24 February 2021 12:49 PM
-City seed 48185 -> Simulation, Eurasia
-
-Dev seed 22078 -> Wednesday, 24 February 2021 12:50 PM
-City seed 29822 -> Simulation, Eurasia
-
-Dev seed 23627 -> Wednesday, 24 February 2021 12:51 PM
-City seed 9720 -> Simulation, Eurasia
-
-Dev seed 17612 -> Wednesday, 24 February 2021 2:47 PM
-City seed 61393 -> Simulation, Eurasia
-
-Dev seed 15363 -> Wednesday, 24 February 2021 3:05 PM
-City seed 14590 -> Simulation, Eurasia
-
-Dev seed 59220 -> Wednesday, 24 February 2021 3:10 PM
-City seed 8019 -> Simulation, Eurasia
-
-Dev seed 46191 -> Wednesday, 24 February 2021 3:12 PM
-City seed 43853 -> Simulation, Eurasia
-
-Dev seed 15630 -> Wednesday, 24 February 2021 3:39 PM
-City seed 55955 -> Simulation, Eurasia
-
-Dev seed 41193 -> Wednesday, 24 February 2021 3:42 PM
-City seed 14165 -> Simulation, Eurasia
-
-Dev seed 14853 -> Wednesday, 24 February 2021 4:12 PM
-City seed 24190 -> Londus, Eurasia
-
-Dev seed 42189 -> Wednesday, 24 February 2021 4:49 PM
-City seed 49180 -> Londus, Eurasia
-
-Dev seed 1766 -> Wednesday, 24 February 2021 5:05 PM
-City seed 47694 -> Londus, Eurasia
-
-Dev seed 53851 -> Wednesday, 24 February 2021 5:13 PM
-City seed 40629 -> Londus, Eurasia
-
-Dev seed 32655 -> Wednesday, 24 February 2021 5:14 PM
-City seed 39487 -> Londus, Eurasia
-
-Dev seed 56383 -> Wednesday, 24 February 2021 5:15 PM
-City seed 44260 -> Londus, Eurasia
-
-Dev seed 21039 -> Wednesday, 24 February 2021 5:15 PM
-City seed 7258 -> Londus, Eurasia
-
-Dev seed 45550 -> Wednesday, 24 February 2021 5:16 PM
-City seed 50987 -> Londus, Eurasia
-
-Dev seed 25181 -> Wednesday, 24 February 2021 5:17 PM
-City seed 28180 -> Londus, Eurasia
-
-Dev seed 65413 -> Wednesday, 24 February 2021 5:18 PM
-City seed 58089 -> Londus, Eurasia
-
-Dev seed 29879 -> Wednesday, 24 February 2021 5:19 PM
-City seed 46941 -> Londus, Eurasia
-
-Dev seed 15627 -> Wednesday, 24 February 2021 5:19 PM
-City seed 40091 -> Simulation, Eurasia

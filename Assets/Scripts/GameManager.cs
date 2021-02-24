@@ -932,7 +932,7 @@ public class GameManager : MonoBehaviour
         mainMenuScript.InitialiseMainMenu(detailsMain);*/
 
         //activate menu
-        EventManager.i.PostNotification(EventType.OpenMainMenu, this, MainMenuType.Start, "GameManager.cs -> InitialiseMainMenu");
+        EventManager.i.PostNotification(EventType.OpenMainMenu, this, MainMenuType.Main, "GameManager.cs -> InitialiseMainMenu");
     }
     #endregion
 

@@ -214,7 +214,7 @@ public class ModalMainMenu : MonoBehaviour
             GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.MainMenuUnavailable);
         }
     }*/
- 
+
 
     #region OpenMainMenu
     /// <summary>
@@ -230,21 +230,33 @@ public class ModalMainMenu : MonoBehaviour
         //preset configurations
         switch (menuType)
         {
-            case MainMenuType.Default:
-                //in-game, press ESC
-                details.isCustomise = false;
-                details.isCredits = false;
-                break;
-            case MainMenuType.Start:
+            case MainMenuType.Main:
                 //game start
+                details.header = "Main Menu";
                 details.background = Background.Start;
                 details.isResume = false;
+                details.isMainMenu = false;
                 break;
+            case MainMenuType.Game:
+                //in-game, press ESC
+                details.header = "Game Menu";
+                details.isCustomise = false;
+                details.isNewGame = false;
+                details.isCredits = false;
+                details.isTutorial = false;
+                details.isMainMenu = true;
+                break;
+
             case MainMenuType.Tutorial:
                 //tutorial mode
+                details.header = "Tutorial Menu";
+                details.isSaveGame = false;
+                details.isLoadGame = false;
+                details.isNewGame = false;
                 details.isTutorial = false;
                 details.isCustomise = false;
                 details.isCredits = false;
+                details.isMainMenu = true;
                 break;
             default: Debug.LogWarningFormat("Unrecognised menuType \"{0}\"", menuType); break;
         }
@@ -264,7 +276,7 @@ public class ModalMainMenu : MonoBehaviour
         gameState = GameManager.i.inputScript.GameState;
         //menu
         ModalGenericMenuDetails details = new ModalGenericMenuDetails();
-        details.itemName = "Main Menu";
+        details.itemName = detailsMain.header;
         details.itemDetails = "2033";
         float horizontalPos = 0f;
         float verticalPos = Screen.height / 2;
@@ -342,7 +354,7 @@ public class ModalMainMenu : MonoBehaviour
             details.listOfButtonDetails.Add(button3);
         }
         //Save Game button
-        if (detailsMain.isLoadGame == true)
+        if (detailsMain.isSaveGame == true)
         {
             EventButtonDetails button4 = new EventButtonDetails()
             {
@@ -406,7 +418,7 @@ public class ModalMainMenu : MonoBehaviour
             };
             details.listOfButtonDetails.Add(button8);
         }
-        //Exit button
+        //Information button
         if (detailsMain.isInformation == true)
         {
             EventButtonDetails button9 = new EventButtonDetails()
@@ -419,18 +431,41 @@ public class ModalMainMenu : MonoBehaviour
             };
             details.listOfButtonDetails.Add(button9);
         }
-        //Cancel button
-        if (detailsMain.isExit == true)
+        //Exit to Main Menu button
+        if (detailsMain.isMainMenu == true)
         {
             EventButtonDetails button10 = new EventButtonDetails()
             {
-                buttonTitle = "EXIT",
+                buttonTitle = "Main Menu",
+                buttonTooltipHeader = string.Format("{0}Main Menu{1}", colourSide, colourEnd),
+                buttonTooltipMain = string.Format("{0}Return to the Main Menu{1}", colourNormal, colourEnd),
+                buttonTooltipDetail = string.Format("{0}Take a moment to recalibrate{1}", colourAlert, colourEnd)
+            };
+            //depends on where you are returning from
+            switch (GameManager.i.inputScript.GameState)
+            {
+                case GameState.PlayGame:
+                    button10.action = () => { EventManager.i.PostNotification(EventType.GameReturn, this, gameState, "ModalMainMenu.cs -> InitialiseMainMenu"); };
+                    break;
+                case GameState.Tutorial:
+                    button10.action = () => { EventManager.i.PostNotification(EventType.TutorialReturn, this, gameState, "ModalMainMenu.cs -> InitialiseMainMenu"); };
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState); break;
+            }
+            details.listOfButtonDetails.Add(button10);
+        }
+        //Exit to Desktop button
+        if (detailsMain.isExit == true)
+        {
+            EventButtonDetails button11 = new EventButtonDetails()
+            {
+                buttonTitle = "EXIT to Desktop",
                 buttonTooltipHeader = string.Format("{0}EXIT{1}", colourSide, colourEnd),
                 buttonTooltipMain = string.Format("{0}Leave the game and exit to the desktop{1}", colourNormal, colourEnd),
                 buttonTooltipDetail = string.Format("{0}HQ will hold the fort until you return{1}", colourAlert, colourEnd),
                 action = () => { EventManager.i.PostNotification(EventType.ExitGame, this, gameState, "ModalMainMenu.cs -> InitialiseMainMenu"); }
             };
-            details.listOfButtonDetails.Add(button10);
+            details.listOfButtonDetails.Add(button11);
         }
         //display background (default is none)
         GameManager.i.modalGUIScript.SetBackground(detailsMain.background);

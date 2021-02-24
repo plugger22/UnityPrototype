@@ -34,6 +34,8 @@ public class ControlManager : MonoBehaviour
         EventManager.i.AddListener(EventType.CloseSaveGame, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.TutorialOptions, OnEvent, "ControlManager.cs");
         EventManager.i.AddListener(EventType.CloseTutorialOptions, OnEvent, "ControlManager.cs");
+        EventManager.i.AddListener(EventType.TutorialReturn, OnEvent, "ControlManager.cs");
+        EventManager.i.AddListener(EventType.GameReturn, OnEvent, "ControlManager.cs");
     }
 
 
@@ -77,13 +79,19 @@ public class ControlManager : MonoBehaviour
                 CloseLoadGame();
                 break;
             case EventType.CloseSaveGame:
-                CloseSaveGame();
+                ProcessCloseSaveGame();
                 break;
             case EventType.TutorialOptions:
                 ProcessTutorialOptions();
                 break;
             case EventType.CloseTutorialOptions:
                 ProcessCloseTutorialOptions();
+                break;
+            case EventType.TutorialReturn:
+                ProcessTutorialReturn();
+                break;
+            case EventType.GameReturn:
+                ProcessGameReturn();
                 break;
             case EventType.CreateOptions:
                 ProcessOptions((GameState)Param);
@@ -104,7 +112,7 @@ public class ControlManager : MonoBehaviour
                 ProcessEndCampaign();
                 break;
             case EventType.ExitGame:
-                CloseGame();
+                ProcessCloseGame();
                 break;
             default:
                 Debug.LogErrorFormat("Invalid eventType {0}{1}", eventType, "\n");
@@ -591,9 +599,33 @@ public class ControlManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Closes tutorial and returns to main Menu
+    /// </summary>
+    private void ProcessTutorialReturn()
+    {
+        Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessTutorialReturn: ProcessTutorialReturn to MainMenu selected{0}", "\n");
+        //stop animations
+        GameManager.i.animateScript.StopAnimations();
+        //activate menu
+        EventManager.i.PostNotification(EventType.OpenMainMenu, this, MainMenuType.Main, "GameManager.cs -> ProcessTutorialReturn");
+    }
+
+    /// <summary>
+    /// Closes game (playing) and returns to main Menu
+    /// </summary>
+    private void ProcessGameReturn()
+    {
+        Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessGameReturn: ProcessGameReturn to MainMenu selected{0}", "\n");
+        //stop animations
+        GameManager.i.animateScript.StopAnimations();
+        //activate menu
+        EventManager.i.PostNotification(EventType.OpenMainMenu, this, MainMenuType.Main, "ControlManager.cs -> ProcessGameReturn");
+    }
+
+    /// <summary>
     /// Close save game screen
     /// </summary>
-    private void CloseSaveGame()
+    private void ProcessCloseSaveGame()
     {
         Debug.LogFormat("[Ctrl] ControlManager.cs -> CloseSaveGame: CloseSaveGame selected{0}", "\n");
         //Close any open background
@@ -604,8 +636,10 @@ public class ControlManager : MonoBehaviour
         GameManager.i.inputScript.GameState = GameState.PlayGame;
     }
 
-
-    private void CloseGame()
+    /// <summary>
+    /// Exit to desktop
+    /// </summary>
+    private void ProcessCloseGame()
     {
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessResumeGame: QUIT game option selected{0}", "\n");
         //shutdown animations
@@ -617,6 +651,10 @@ public class ControlManager : MonoBehaviour
     }
 
 
+    #region Utilities...
+    //
+    // - - - Utilities
+    //
 
     /// <summary>
     /// returns game state at time player opted for the selected option. Use during non-normal gameState checks, eg. Menu ops, Save/Load, otherwise inputScript.GameState
@@ -624,6 +662,7 @@ public class ControlManager : MonoBehaviour
     /// <returns></returns>
     public GameState GetExistingGameState()
     { return gameState; }
+
 
     /// <summary>
     /// Utility subMethod that handles admin for creating a newgame / tutorial
@@ -636,6 +675,9 @@ public class ControlManager : MonoBehaviour
         GameManager.i.campaignScript.Reset();
 
     }
+
+    #endregion
+
 
 
     //new methods above here

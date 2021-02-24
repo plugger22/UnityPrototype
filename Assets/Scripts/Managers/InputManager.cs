@@ -323,7 +323,7 @@ public class InputManager : MonoBehaviour
                                 if (GameManager.i.debugScript.showGUI == false)
                                 {
                                     //all other options revert to main menu (default option of displaying over the top of whatever is present with no background initiated)
-                                    EventManager.i.PostNotification(EventType.OpenMainMenu, this, MainMenuType.Default, "InputManager.cs -> ProcessKeyInput Exit \"Cancel (ESC)\"");
+                                    EventManager.i.PostNotification(EventType.OpenMainMenu, this, MainMenuType.Game, "InputManager.cs -> ProcessKeyInput Exit \"Cancel (ESC)\"");
                                 }
                                 else { GameManager.i.debugScript.showGUI = false; }
                                 break;

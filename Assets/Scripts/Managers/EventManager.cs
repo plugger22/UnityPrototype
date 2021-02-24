@@ -11,7 +11,7 @@ public enum EventType
     ChangeColour,
     ChangeSide,
     UseAction,
-    //Game State
+    //Game State -> ControlManager.cs
     ExitLevel,
     ExitGame,
     ExitCampaign,
@@ -29,6 +29,8 @@ public enum EventType
     SaveGame,
     TutorialOptions,
     CloseTutorialOptions,
+    TutorialReturn,
+    GameReturn,
     CloseSaveGame,
     SaveAndExit,
     //UI Menus

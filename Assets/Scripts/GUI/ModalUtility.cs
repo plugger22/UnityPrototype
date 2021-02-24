@@ -82,30 +82,36 @@ namespace modalAPI
     {
         public AlignHorizontal alignHorizontal;
         public Background background;                                   //what type of background to display behind menu, default "None"
+        public string header;                                           //name of menu
         public bool isResume;                                           //individual button toggles (default true on all)
         public bool isTutorial;
         public bool isNewGame;
         public bool isLoadGame;
+        public bool isSaveGame;
         public bool isOptions;
         public bool isCustomise;
         public bool isFeedback;
         public bool isCredits;
         public bool isInformation;
-        public bool isExit;
+        public bool isMainMenu;                                         //exit to main menu
+        public bool isExit;                                             //exit to desktop
 
         public ModalMainMenuDetails()
         {
             alignHorizontal = AlignHorizontal.Centre;
             background = Background.None;
+            header = "Unknown";
             isResume = true;
             isTutorial = true;
             isNewGame = true;
             isLoadGame = true;
+            isSaveGame = true;
             isOptions = true;
             isFeedback = true;
             isCustomise = true;
             isCredits = true;
             isInformation = true;
+            isMainMenu = false;
             isExit = true;
         }
     }
