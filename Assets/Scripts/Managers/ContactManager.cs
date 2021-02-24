@@ -664,6 +664,7 @@ public class ContactManager : MonoBehaviour
     {
         int numOfTargets;
         int numOfRumours = 0;
+        bool isProceed;
         List<Target> listOfActiveTargets = GameManager.i.dataScript.GetTargetPool(Status.Active);
         List<Target> listOfRumourTargets = new List<Target>();  //temp list to hold targets that have triggered a rumour
         if (listOfActiveTargets != null)
@@ -674,11 +675,21 @@ public class ContactManager : MonoBehaviour
                 //loop targets, check for a rumour
                 for (int i = 0; i < numOfTargets; i++)
                 {
+                    isProceed = true;
                     Target target = listOfActiveTargets[i];
                     if (target != null)
                     {
-                        if (Random.Range(0, 100) < rumourTarget)
-                        { listOfRumourTargets.Add(target); }
+                        //special case -> Organisation targets excluded if option toggled off
+                        if (target.targetType.name.Equals("Organisation", StringComparison.Ordinal) == true && GameManager.i.optionScript.isOrganisations == false)
+                        {
+                            isProceed = false;
+                            /*Debug.LogFormat("[Tst] ContactManager.cs -> CheckTargetRumour: {0} target \"{1}\" excluded from Rumour pool{2}", target.targetType.name, target.targetName, "\n");*/
+                        }
+                        if (isProceed == true)
+                        {
+                            if (Random.Range(0, 100) < rumourTarget)
+                            { listOfRumourTargets.Add(target); }
+                        }
                     }
                     else { Debug.LogWarningFormat("Invalid target (Null) for listOfActiveTargets[{0}]", i); }
                 }

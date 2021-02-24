@@ -353,52 +353,62 @@ public class TargetManager : MonoBehaviour
                                 }
                                 break;
                             case Status.Active:
-                                if (target.timerDelay <= 0)
+                                bool isProceed = true;
+                                //exclude Organisation targets if the option is toggled off to ensure target never goes live
+                                if (target.targetType.name.Equals("Organisation", StringComparison.Ordinal) == true && GameManager.i.optionScript.isOrganisations == false)
                                 {
-                                    //activation roll
-                                    isLive = false;
-                                    target.timerHardLimit++;
-                                    rndNum = Random.Range(0, 100);
-                                    switch (target.profile.activation.level)
-                                    {
-                                        case 3:
-                                            //Extreme
-                                            if (rndNum < activateExtremeChance) { isLive = true; /*Debug.LogFormat("[Tst] Extreme Roll {0} < {1}", rndNum, activateExtremeChance);*/ }
-                                            else if (target.timerHardLimit >= activateExtremeLimit) { isLive = true; }
-                                            break;
-                                        case 2:
-                                            //High
-                                            if (rndNum < activateHighChance) { isLive = true; /*Debug.LogFormat("[Tst] High Roll {0} < {1}", rndNum, activateHighChance);*/ }
-                                            else if (target.timerHardLimit >= activateHighLimit) { isLive = true; }
-                                            break;
-                                        case 1:
-                                            //Medium
-                                            /*Debug.LogFormat("[Tst] target  {0}, ID {1}, Med Roll (need {2}, roll {3}", target.targetName, target.targetID, activateMedChance, rndNum);*/
-                                            if (rndNum < activateMedChance) { isLive = true; }
-                                            else if (target.timerHardLimit >= activateMedLimit) { isLive = true; }
-                                            break;
-                                        case 0:
-                                            //Low
-                                            if (rndNum < activateLowChance) { isLive = true; /*Debug.LogFormat("[Tst] Low Roll {0} < {1}", rndNum, activateLowChance);*/ }
-                                            else if (target.timerHardLimit >= activateLowLimit) { isLive = true; }
-                                            break;
-                                        default:
-                                            Debug.LogWarningFormat("Invalid activation GlobalChance.level {0}", target.profile.activation.level);
-                                            break;
-                                    }
-                                    //Target goes Live
-                                    if (isLive == true)
-                                    {
-                                        target.targetStatus = Status.Live;
-                                        GameManager.i.dataScript.AddTargetToPool(target, Status.Live);
-                                        GameManager.i.dataScript.RemoveTargetFromPool(target, Status.Active);
-                                        string text = string.Format("New target {0} at {1}, {2}, id {3}", target.targetName, node.nodeName, node.Arc.name, node.nodeID);
-                                        GameManager.i.messageScript.TargetNew(text, node, target);
-                                        Debug.LogFormat("[Tar] TargetManager.cs -> CheckTargets: Target {0} goes LIVE", target.targetName);
-                                    }
+                                    isProceed = false;
+                                    /*Debug.LogFormat("[Tst] TargetManager.cs -> CheckTargets: {0} target \"{1}\" excluded from status check{2}", target.targetType.name, target.targetName, "\n");*/
                                 }
-                                else
-                                { target.timerDelay--; }
+                                if (isProceed == true)
+                                {
+                                    if (target.timerDelay <= 0)
+                                    {
+                                        //activation roll
+                                        isLive = false;
+                                        target.timerHardLimit++;
+                                        rndNum = Random.Range(0, 100);
+                                        switch (target.profile.activation.level)
+                                        {
+                                            case 3:
+                                                //Extreme
+                                                if (rndNum < activateExtremeChance) { isLive = true; /*Debug.LogFormat("[Tst] Extreme Roll {0} < {1}", rndNum, activateExtremeChance);*/ }
+                                                else if (target.timerHardLimit >= activateExtremeLimit) { isLive = true; }
+                                                break;
+                                            case 2:
+                                                //High
+                                                if (rndNum < activateHighChance) { isLive = true; /*Debug.LogFormat("[Tst] High Roll {0} < {1}", rndNum, activateHighChance);*/ }
+                                                else if (target.timerHardLimit >= activateHighLimit) { isLive = true; }
+                                                break;
+                                            case 1:
+                                                //Medium
+                                                /*Debug.LogFormat("[Tst] target  {0}, ID {1}, Med Roll (need {2}, roll {3}", target.targetName, target.targetID, activateMedChance, rndNum);*/
+                                                if (rndNum < activateMedChance) { isLive = true; }
+                                                else if (target.timerHardLimit >= activateMedLimit) { isLive = true; }
+                                                break;
+                                            case 0:
+                                                //Low
+                                                if (rndNum < activateLowChance) { isLive = true; /*Debug.LogFormat("[Tst] Low Roll {0} < {1}", rndNum, activateLowChance);*/ }
+                                                else if (target.timerHardLimit >= activateLowLimit) { isLive = true; }
+                                                break;
+                                            default:
+                                                Debug.LogWarningFormat("Invalid activation GlobalChance.level {0}", target.profile.activation.level);
+                                                break;
+                                        }
+                                        //Target goes Live
+                                        if (isLive == true)
+                                        {
+                                            target.targetStatus = Status.Live;
+                                            GameManager.i.dataScript.AddTargetToPool(target, Status.Live);
+                                            GameManager.i.dataScript.RemoveTargetFromPool(target, Status.Active);
+                                            string text = string.Format("New target {0} at {1}, {2}, id {3}", target.targetName, node.nodeName, node.Arc.name, node.nodeID);
+                                            GameManager.i.messageScript.TargetNew(text, node, target);
+                                            Debug.LogFormat("[Tar] TargetManager.cs -> CheckTargets: Target {0} goes LIVE", target.targetName);
+                                        }
+                                    }
+                                    else
+                                    { target.timerDelay--; }
+                                }
                                 break;
                         }
                     }
@@ -429,14 +439,14 @@ public class TargetManager : MonoBehaviour
             AssignCityTargets(mission);
             AssignGenericTargets(mission);
             AssignVIPTarget(mission);
+            AssignOrganisationTarget(mission);
             /*AssignStoryTarget(mission);
             AssignGoalTarget(mission);*/
-            if (GameManager.i.optionScript.isOrganisations == true)
-            { AssignOrganisationTarget(mission); }
         }
         else { Debug.LogError("Invalid mission (Null)"); }
     }
 
+    #region AssignCityTargets
     /// <summary>
     /// Assign city targets to appropriate nodes
     /// </summary>
@@ -500,7 +510,9 @@ public class TargetManager : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region AssignGenericTargets
     /// <summary>
     /// Assign the specified number of active and Live Generic targets to specific NodeArc types
     /// </summary>
@@ -658,7 +670,9 @@ public class TargetManager : MonoBehaviour
         }
         while (counter < numActive && attempts < 20);
     }
+    #endregion
 
+    #region AssignVIPTarget
     /// <summary>
     /// Assign a VIP target (typically it's a repeating target) to a random node
     /// </summary>
@@ -679,47 +693,9 @@ public class TargetManager : MonoBehaviour
         }
         else { Debug.LogWarning("Invalid node (Null) for VIPTarget"); }
     }
+    #endregion
 
-    /*/// <summary>
-    /// Assign a Story target to a random node
-    /// </summary>
-    /// <param name="mission"></param>
-    private void AssignStoryTarget(Mission mission)
-    {
-        Node node = GameManager.i.dataScript.GetRandomTargetNode();
-        if (node != null)
-        {
-            if (mission.targetBaseHarbour != null)
-            {
-                Target target = mission.targetBaseStory;
-                SetTargetDetails(target, node);
-                Debug.LogFormat("[Tar] MissionManager.cs -> AssignStoryTarget: Story node \"{0}\", {1}, id {2}, assigned target \"{3}\"", node.nodeName, node.Arc.name, node.nodeID,
-                    target.targetName);
-            }
-        }
-        else { Debug.LogWarning("Invalid node (Null) for StoryTarget"); }
-    }*/
-
-    /*/// <summary>
-    /// Assign a Goal target to a random node
-    /// </summary>
-    /// <param name="mission"></param>
-    private void AssignGoalTarget(Mission mission)
-    {
-        Node node = GameManager.i.dataScript.GetRandomTargetNode();
-        if (node != null)
-        {
-            if (mission.targetBaseHarbour != null)
-            {
-                Target target = mission.targetBaseGoal;
-                SetTargetDetails(target, node);
-                Debug.LogFormat("[Tar] MissionManager.cs -> AssignGoalTarget: Goal node \"{0}\", {1}, id {2}, assigned target \"{3}\"", node.nodeName, node.Arc.name, node.nodeID,
-                    target.targetName);
-            }
-        }
-        else { Debug.LogWarning("Invalid node (Null) for GoalTarget"); }
-    }*/
-
+    #region AssignOrganisationTarget
     /// <summary>
     /// Assign a single Organisation target (if space for a new org) each level
     /// </summary>
@@ -772,6 +748,53 @@ public class TargetManager : MonoBehaviour
     }
     #endregion
 
+    #region AssignStoryTarget -> archived
+    /*/// <summary>
+    /// Assign a Story target to a random node
+    /// </summary>
+    /// <param name="mission"></param>
+    private void AssignStoryTarget(Mission mission)
+    {
+        Node node = GameManager.i.dataScript.GetRandomTargetNode();
+        if (node != null)
+        {
+            if (mission.targetBaseHarbour != null)
+            {
+                Target target = mission.targetBaseStory;
+                SetTargetDetails(target, node);
+                Debug.LogFormat("[Tar] MissionManager.cs -> AssignStoryTarget: Story node \"{0}\", {1}, id {2}, assigned target \"{3}\"", node.nodeName, node.Arc.name, node.nodeID,
+                    target.targetName);
+            }
+        }
+        else { Debug.LogWarning("Invalid node (Null) for StoryTarget"); }
+    }*/
+    #endregion
+
+    #region AssignGoalTarget -> archived
+    /*/// <summary>
+    /// Assign a Goal target to a random node
+    /// </summary>
+    /// <param name="mission"></param>
+    private void AssignGoalTarget(Mission mission)
+    {
+        Node node = GameManager.i.dataScript.GetRandomTargetNode();
+        if (node != null)
+        {
+            if (mission.targetBaseHarbour != null)
+            {
+                Target target = mission.targetBaseGoal;
+                SetTargetDetails(target, node);
+                Debug.LogFormat("[Tar] MissionManager.cs -> AssignGoalTarget: Goal node \"{0}\", {1}, id {2}, assigned target \"{3}\"", node.nodeName, node.Arc.name, node.nodeID,
+                    target.targetName);
+            }
+        }
+        else { Debug.LogWarning("Invalid node (Null) for GoalTarget"); }
+    }*/
+    #endregion
+
+    #endregion
+
+    #region SetTargetDetails
     /// <summary>
     /// Sets target activation, status and adds to relevant pools. Returns true if successful
     /// NOTE: Target and Node checked for null by calling methods
@@ -825,6 +848,17 @@ public class TargetManager : MonoBehaviour
                                 isSuccess = false;
                                 break;
                         }
+                        //special case -> Organisation targets
+                        if (target.targetType.name.Equals("Organisation", StringComparison.Ordinal) == true && GameManager.i.optionScript.isOrganisations == false)
+                        {
+                            //can't be live and must have a delay > 0 (due to CheckTargets not taking into account org targets that are live at start in case of org option being false)
+                            if (target.targetStatus == Status.Live)
+                            {
+                                target.targetStatus = Status.Active;
+                                if (target.timerDelay == 0)
+                                { target.timerDelay = 5; }
+                            }
+                        }
                         //add to pool
                         if (isSuccess == true)
                         { GameManager.i.dataScript.AddTargetToPool(target, target.targetStatus); }
@@ -842,8 +876,9 @@ public class TargetManager : MonoBehaviour
         else { Debug.LogWarningFormat("Node {0}, {1}, id {2} NOT assigned target {3} (Node already has target)", node.nodeName, node.Arc.name, node.nodeID, target.targetName); isSuccess = false; }
         return isSuccess;
     }
+    #endregion
 
-
+    #region GetTargetTooltip
     /// <summary>
     /// returns a list of formatted and coloured strings ready for a node Tooltip (Resistance), abbreviate for Authority (if target known), returns an empty list if none
     /// </summary>
@@ -928,7 +963,9 @@ public class TargetManager : MonoBehaviour
         }
         return tempList;
     }
+    #endregion
 
+    #region GetTargetDetails
     /// <summary>
     /// private subMethod for GetTargetTooltip to collate full target details.
     /// Target tested for null by parent method
@@ -1017,7 +1054,9 @@ public class TargetManager : MonoBehaviour
         }
         return tempList;
     }
+    #endregion
 
+    #region GetTargetEffects
     /// <summary>
     /// returns formatted string of all good and bad target effects. Returns 'None' if no effects present
     /// </summary>
@@ -1096,7 +1135,9 @@ public class TargetManager : MonoBehaviour
         }
         return builder.ToString();
     }
+    #endregion
 
+    #region GetTargetFactors
     /// <summary>
     /// Returns all factors involved in a particular targets resolution (eg. effects chance of success). 
     /// Used by ActorManager.cs -> GetNodeActions for action button tooltip
@@ -1282,7 +1323,9 @@ public class TargetManager : MonoBehaviour
         }
         return builder.ToString();
     }
+    #endregion
 
+    #region GetTargetTally
     /// <summary>
     /// returns tally of all factors in target success, eg. -2, +1, etc. SetGearUsed as true only when target actually attempted.
     /// NOTE: Tweak listOfFactors in Initialise() if you want to change any factors in the calculations
@@ -1432,7 +1475,9 @@ public class TargetManager : MonoBehaviour
         { Debug.LogError(string.Format("Invalid Target (null), \"{0}\"{1}", targetName, "\n")); }
         return tally;
     }
+    #endregion
 
+    #region GetTargetTallyAI
     /// <summary>
     /// returns tally of all factors in target success, eg. -2, +1, etc. AI version. Ignores intel and gear (done by calling method in AIRebelManager.cs -> ProcessTargetTask)
     /// </summary>
@@ -1491,7 +1536,9 @@ public class TargetManager : MonoBehaviour
         { Debug.LogError(string.Format("Invalid Target (null), \"{0}\"{1}", targetName, "\n")); }
         return tally;
     }
+    #endregion
 
+    #region GetTargetChance
     /// <summary>
     /// returns % chance (whole numbers) of target resolution being a success
     /// Formula -> baseTargetChance + tally * 10
@@ -1504,6 +1551,7 @@ public class TargetManager : MonoBehaviour
         chance = Mathf.Clamp(chance, 0, 100);
         return chance;
     }
+    #endregion
 
 
     /// <summary>

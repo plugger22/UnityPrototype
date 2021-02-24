@@ -343,30 +343,34 @@ public class ObjectiveManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns colour formatted string based on Player side
+    /// returns colour formatted string based on Player side. Returns null if Objectives have been disabled
     /// </summary>
     /// <returns></returns>
     public string GetObjectiveDetails()
     {
-        string posTag = "<pos=70%>";
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < listOfObjectives.Count; i++)
+        if (GameManager.i.optionScript.isObjectives == true)
         {
-            Objective objective = listOfObjectives[i];
-            if (objective != null)
+            string posTag = "<pos=70%>";
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < listOfObjectives.Count; i++)
             {
-                if (builder.Length > 0) { builder.AppendLine(); }
-                builder.AppendFormat("{0}{1}{2}  ", colourNormal, objective.tag, colourEnd);
-                //objective complete if progress 100% or above
-                if (objective.progress >= 100)
-                { builder.AppendFormat("{0}{1}100 %{2}", posTag, colourGood, colourEnd); }
-                else if (objective.progress > 0)
-                { builder.AppendFormat("{0}{1}{2} %{3}", posTag, colourNeutral, objective.progress, colourEnd); }
-                else { builder.AppendFormat("{0}{1}{2} %{3}", posTag, colourBad, objective.progress, colourEnd); }
+                Objective objective = listOfObjectives[i];
+                if (objective != null)
+                {
+                    if (builder.Length > 0) { builder.AppendLine(); }
+                    builder.AppendFormat("{0}{1}{2}  ", colourNormal, objective.tag, colourEnd);
+                    //objective complete if progress 100% or above
+                    if (objective.progress >= 100)
+                    { builder.AppendFormat("{0}{1}100 %{2}", posTag, colourGood, colourEnd); }
+                    else if (objective.progress > 0)
+                    { builder.AppendFormat("{0}{1}{2} %{3}", posTag, colourNeutral, objective.progress, colourEnd); }
+                    else { builder.AppendFormat("{0}{1}{2} %{3}", posTag, colourBad, objective.progress, colourEnd); }
+                }
+                else { Debug.LogWarningFormat("Invalid objective (Null) for listOfObjectives[{0}]", i); }
             }
-            else { Debug.LogWarningFormat("Invalid objective (Null) for listOfObjectives[{0}]", i); }
+            return builder.ToString();
         }
-        return builder.ToString();
+        return null;
     }
 
     /// <summary>

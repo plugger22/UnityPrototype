@@ -55,73 +55,67 @@ public class OrganisationManager : MonoBehaviour
     #region SubInitialiseLevelStart
     private void SubInitialiseLevelStart()
     {
-        if (GameManager.i.optionScript.isOrganisations == true)
+        //get list of all Orgs involved in campaign
+        List<Organisation> listOfOrgs = GameManager.i.dataScript.GetListOfCurrentOrganisations();
+        //empty list just to be sure
+        listOfOrgs.Clear();
+        //load all campaign organisations into list
+        if (listOfOrgs != null)
         {
-            //get list of all Orgs involved in campaign
-            List<Organisation> listOfOrgs = GameManager.i.dataScript.GetListOfCurrentOrganisations();
-            //empty list just to be sure
-            listOfOrgs.Clear();
-            //load all campaign organisations into list
-            if (listOfOrgs != null)
-            {
-                //cure
-                Organisation org = GameManager.i.campaignScript.campaign.orgCure;
-                if (org != null)
-                { listOfOrgs.Add(org); }
-                else { Debug.LogWarningFormat("Invalid campaign.orgCure (Null)"); }
-                //contract
-                org = GameManager.i.campaignScript.campaign.orgContract;
-                if (org != null)
-                { listOfOrgs.Add(org); }
-                else { Debug.LogWarningFormat("Invalid campaign.orgContract (Null)"); }
-                //HQ
-                org = GameManager.i.campaignScript.campaign.orgHQ;
-                if (org != null)
-                { listOfOrgs.Add(org); }
-                else { Debug.LogWarningFormat("Invalid campaign.orgHQ (Null)"); }
-                //Emergency
-                org = GameManager.i.campaignScript.campaign.orgEmergency;
-                if (org != null)
-                { listOfOrgs.Add(org); }
-                else { Debug.LogWarningFormat("Invalid campaign.orgEmergency (Null)"); }
-                //Info
-                org = GameManager.i.campaignScript.campaign.orgInfo;
-                if (org != null)
-                { listOfOrgs.Add(org); }
-                else { Debug.LogWarningFormat("Invalid campaign.orgInfo (Null)"); }
-            }
-            else { Debug.LogError("Invalid listOfCurrentOrganisations (Null)"); }
-            //initialise orgs in list
-            foreach (Organisation org in listOfOrgs)
-            {
-                org.maxStat = GameManager.i.actorScript.maxStatValue;
-                org.SetReputation(GameManager.i.testScript.orgReputation);
-                org.SetFreedom(GameManager.i.testScript.orgFreedom);
-                org.isContact = false;
-                org.isSecretKnown = false;
-                org.timer = 0;
-                Debug.LogFormat("[Org] OrganisationManager.cs -> SubInitaliseLevelStart: Org \"{0}\", reputation {1}, freedom {2}, isContact {3}{4}",
-                    org.tag, org.GetReputation(), org.GetFreedom(), org.isContact, "\n");
-            }
+            //cure
+            Organisation org = GameManager.i.campaignScript.campaign.orgCure;
+            if (org != null)
+            { listOfOrgs.Add(org); }
+            else { Debug.LogWarningFormat("Invalid campaign.orgCure (Null)"); }
+            //contract
+            org = GameManager.i.campaignScript.campaign.orgContract;
+            if (org != null)
+            { listOfOrgs.Add(org); }
+            else { Debug.LogWarningFormat("Invalid campaign.orgContract (Null)"); }
+            //HQ
+            org = GameManager.i.campaignScript.campaign.orgHQ;
+            if (org != null)
+            { listOfOrgs.Add(org); }
+            else { Debug.LogWarningFormat("Invalid campaign.orgHQ (Null)"); }
+            //Emergency
+            org = GameManager.i.campaignScript.campaign.orgEmergency;
+            if (org != null)
+            { listOfOrgs.Add(org); }
+            else { Debug.LogWarningFormat("Invalid campaign.orgEmergency (Null)"); }
+            //Info
+            org = GameManager.i.campaignScript.campaign.orgInfo;
+            if (org != null)
+            { listOfOrgs.Add(org); }
+            else { Debug.LogWarningFormat("Invalid campaign.orgInfo (Null)"); }
+        }
+        else { Debug.LogError("Invalid listOfCurrentOrganisations (Null)"); }
+        //initialise orgs in list
+        foreach (Organisation org in listOfOrgs)
+        {
+            org.maxStat = GameManager.i.actorScript.maxStatValue;
+            org.SetReputation(GameManager.i.testScript.orgReputation);
+            org.SetFreedom(GameManager.i.testScript.orgFreedom);
+            org.isContact = false;
+            org.isSecretKnown = false;
+            org.timer = 0;
+            Debug.LogFormat("[Org] OrganisationManager.cs -> SubInitaliseLevelStart: Org \"{0}\", reputation {1}, freedom {2}, isContact {3}{4}",
+                org.tag, org.GetReputation(), org.GetFreedom(), org.isContact, "\n");
         }
     }
     #endregion
-    
+
     #region SubInitialiseSessionStart
     private void SubInitialiseSessionStart()
     {
-        if (GameManager.i.optionScript.isOrganisations == true)
+        //get list of all Orgs involved in campaign
+        List<Organisation> listOfOrgs = GameManager.i.dataScript.GetListOfCurrentOrganisations();
+        if (listOfOrgs != null)
         {
-            //get list of all Orgs involved in campaign
-            List<Organisation> listOfOrgs = GameManager.i.dataScript.GetListOfCurrentOrganisations();
-            if (listOfOrgs != null)
-            {
-                //reset isCutOff in case of a new Game
-                foreach (Organisation org in listOfOrgs)
-                { org.isCutOff = false; }
-            }
-            else { Debug.LogError("Invalid listOfCurrentOrganisations (Null)"); }
+            //reset isCutOff in case of a new Game
+            foreach (Organisation org in listOfOrgs)
+            { org.isCutOff = false; }
         }
+        else { Debug.LogError("Invalid listOfCurrentOrganisations (Null)"); }
     }
     #endregion
 

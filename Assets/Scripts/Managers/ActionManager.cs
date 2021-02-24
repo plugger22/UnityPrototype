@@ -2571,7 +2571,8 @@ public class ActionManager : MonoBehaviour
                     GameManager.i.dataScript.StatisticIncrement(StatType.TargetSuccesses);
                     target.turnSuccess = GameManager.i.turnScript.Turn;
                     //objective
-                    GameManager.i.objectiveScript.CheckObjectiveTargets(target);
+                    if (GameManager.i.optionScript.isObjectives == true)
+                    { GameManager.i.objectiveScript.CheckObjectiveTargets(target); }
                     //Ongoing effects then target moved to completed pool
                     if (target.ongoingEffect != null)
                     {
