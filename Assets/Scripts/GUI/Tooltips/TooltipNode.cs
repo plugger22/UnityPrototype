@@ -1,7 +1,6 @@
 ﻿using gameAPI;
 using packageAPI;
 using System;
-using System.Collections;
 using System.Text;
 using TMPro;
 using UnityEngine;
@@ -555,33 +554,42 @@ public class TooltipNode : MonoBehaviour
         //NO Activity
         if (GameManager.i.nodeScript.activityState == ActivityUI.None)
         {
-            if (data.listOfTargets.Count > 0)
+            if (GameManager.i.optionScript.isTargets == true)
             {
-                //normal target info
-                builder.Append(colourDefault);
-                //foreach (string target in listOfTarget)
-                for (int i = 0; i < data.listOfTargets.Count; i++)
+                if (data.listOfTargets.Count > 0)
                 {
-                    if (i > 0)
+                    //normal target info
+                    builder.Append(colourDefault);
+                    //foreach (string target in listOfTarget)
+                    for (int i = 0; i < data.listOfTargets.Count; i++)
                     {
-                        builder.AppendLine();
-                        builder.AppendFormat("<size=90%>{0}</size>", data.listOfTargets[i]);
+                        if (i > 0)
+                        {
+                            builder.AppendLine();
+                            builder.AppendFormat("<size=90%>{0}</size>", data.listOfTargets[i]);
+                        }
+                        else { builder.Append(data.listOfTargets[i]); }
                     }
-                    else { builder.Append(data.listOfTargets[i]); }
+                    builder.Append(colourEnd);
                 }
-                builder.Append(colourEnd);
+                else { builder.AppendFormat("{0}{1}{2}", colourDefault, "<size=90%>No Target present</size>", colourEnd); }
+                nodeTarget.text = builder.ToString();
             }
-            else { builder.AppendFormat("{0}{1}{2}", colourDefault, "<size=90%>No Target present</size>", colourEnd); }
-            nodeTarget.text = builder.ToString();
+            else { nodeTarget.text = string.Format("{0}{1}{2}", colourDefault, "<size=90%>Targets Disabled</size>", colourEnd); }
         }
         //Activity
         else
         {
             //show one line at top for target/no target and activity data for the rest
-            if (data.listOfTargets.Count > 0)
-            { builder.Append(data.listOfTargets[0]); }
-            else { builder.AppendFormat("{0}{1}{2}", colourDefault, "<size=90%>No Target present</size>", colourEnd); }
+            if (GameManager.i.optionScript.isTargets == true)
+            {
+                if (data.listOfTargets.Count > 0)
+                { builder.Append(data.listOfTargets[0]); }
+                else { builder.AppendFormat("{0}{1}{2}", colourDefault, "<size=90%>No Target present</size>", colourEnd); }
+            }
+            else { builder.AppendFormat("{0}{1}{2}", colourDefault, "<size=90%>Targets Disabled</size>", colourEnd); }
             builder.AppendLine(); builder.AppendLine();
+
             //Activity information
             if (data.listOfActivity != null && data.listOfActivity.Count > 0)
             {
@@ -597,6 +605,7 @@ public class TooltipNode : MonoBehaviour
             else { builder.AppendFormat("{0}<b>Unknown Activity Info</b>{1}", colourBadSide, colourEnd); }
             nodeTarget.text = builder.ToString();
         }
+
         //convert coordinates
         Vector3 screenPos = Camera.main.WorldToScreenPoint(data.tooltipPos);
         Canvas.ForceUpdateCanvases();

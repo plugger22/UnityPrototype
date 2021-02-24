@@ -2,6 +2,7 @@
 using packageAPI;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 /// <summary>
@@ -199,5 +200,50 @@ public class TutorialManager : MonoBehaviour
     }
     #endregion
 
+    #region DebugDisplayTutorialData
+    /// <summary>
+    /// Display all relevant tutorial data
+    /// </summary>
+    /// <returns></returns>
+    public string DebugDisplayTutorialData()
+    {
+        if (GameManager.i.inputScript.GameState == GameState.Tutorial)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendFormat("-Tutorial Data{0}{1}", "\n", "\n");
+            builder.AppendFormat("tutorial: {0}{1}", tutorial.name, "\n");
+            builder.AppendFormat("tutorialSet: {0}{1}", set.name, "\n");
+            builder.AppendFormat("index: {0}{1}", index, "\n");
+
+            //current tutorialSet -> Features Off
+            builder.AppendFormat("{0}-features OFF for \"{1}\"{2}", "\n", set.name, "\n");
+            for (int i = 0; i < set.listOfFeaturesOff.Count; i++)
+            { builder.AppendFormat(" {0}{1}", set.listOfFeaturesOff[i].name, "\n"); }
+
+            //current tutorial -> Sets
+            builder.AppendFormat("{0}-tutorialSets for \"{1}\"{2}", "\n", tutorial.name, "\n");
+            for (int i = 0; i < tutorial.listOfSets.Count; i++)
+            { builder.AppendFormat(" {0} -> index {1}{2}", tutorial.listOfSets[i].name, i, "\n"); }
+
+            //dictOfTutorialData
+            Dictionary<string, TutorialData> dictOfData = GameManager.i.dataScript.GetDictOfTutorialData();
+            if (dictOfData != null)
+            {
+                builder.AppendFormat("{0}-dictOfTutorialData{1}", "\n", "\n");
+                if (dictOfData.Count > 0)
+                {
+                    foreach (var data in dictOfData)
+                    { builder.AppendFormat(" {0} -> index {1}{2}", data.Value.tutorialName, data.Value.index, "\n"); }
+                }
+                else { builder.AppendLine("No records present"); }
+            }
+            else { Debug.LogError("Invalid dictOfTutorialData (Null)"); }
+            return builder.ToString();
+        }
+        else { return "You must be in Tutorial mode to access this information"; }
+    }
+    #endregion
+    
+    
     //new methods above here
 }

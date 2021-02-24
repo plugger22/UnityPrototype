@@ -2088,6 +2088,7 @@ public class FileManager : MonoBehaviour
     }
     #endregion
 
+
     #region Read Tutorial Data
     /// <summary>
     /// tutorialManager.cs data
@@ -2117,6 +2118,7 @@ public class FileManager : MonoBehaviour
         else { Debug.LogWarningFormat("Tutorial not found in dictionary for tutorial.name \"{0}\"", read.tutorialData.tutorialName); }
     }
     #endregion
+
 
     #region Read Npc Data
     /// <summary>

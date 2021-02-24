@@ -80,11 +80,8 @@ public class MissionManager : MonoBehaviour
         }
 
         //Targets -> initialise and assign
-        if (GameManager.i.optionScript.isTargets == true)
-        {
-            GameManager.i.targetScript.Initialise();
-            GameManager.i.targetScript.AssignTargets(mission);
-        }
+        GameManager.i.targetScript.Initialise();
+        GameManager.i.targetScript.AssignTargets(mission);
 
         //Npc -> Human Resistance Player only
         if (GameManager.i.optionScript.isNPC == true)

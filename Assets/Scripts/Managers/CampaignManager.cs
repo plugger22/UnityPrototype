@@ -1,7 +1,5 @@
 ﻿using gameAPI;
 using packageAPI;
-using System;
-using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
@@ -138,28 +136,25 @@ public class CampaignManager : MonoBehaviour
         //in case of tutorial initialisation
         if (scenario == null)
         { scenario = GameManager.i.scenarioScript.scenario; }
-        if (scenario.challengeResistance != null) 
+        if (scenario.challengeResistance != null)
         {
             // Mission (includes Objectives and Targets)
             if (scenario.missionResistance != null)
             {
-                    GameManager.i.missionScript.mission = scenario.missionResistance;
-                    GameManager.i.objectiveScript.mission = scenario.missionResistance;
-                    if (GameManager.i.inputScript.GameState != GameState.LoadGame)
-                    {
-                        //Initialises Missions which then initialises Targets
-                        GameManager.i.missionScript.Initialise();
-                    }
+                GameManager.i.missionScript.mission = scenario.missionResistance;
+                GameManager.i.objectiveScript.mission = scenario.missionResistance;
+                if (GameManager.i.inputScript.GameState != GameState.LoadGame)
+                {
+                    //Initialises Missions which then initialises Targets
+                    GameManager.i.missionScript.Initialise();
+                }
             }
             else { Debug.LogError("Invalid mission (Null) for scenario"); }
             // Nemesis -> may or may not be present
             if (scenario.challengeResistance.nemesisFirst != null)
             {
-                if (GameManager.i.optionScript.isNemesis == true)
-                {
-                    GameManager.i.nemesisScript.nemesis = scenario.challengeResistance.nemesisFirst;
-                    GameManager.i.nemesisScript.Initialise();
-                }
+                GameManager.i.nemesisScript.nemesis = scenario.challengeResistance.nemesisFirst;
+                GameManager.i.nemesisScript.Initialise();
             }
             else { Debug.LogFormat("[Nem] CampaignManager.cs -> InitialiseLate: No Nemesis present in Scenario{0}", "\n"); }
         }
@@ -221,7 +216,7 @@ public class CampaignManager : MonoBehaviour
                 default: Debug.LogWarningFormat("Unrecognised playerSide \"{0}\"", GameManager.i.sideScript.PlayerSide.name); break;
             }
             topText = string.Format("<b>{0}</b>", GameManager.Formatt("Your performance has been a huge Disappointment", ColourType.badText));
-            bottomText = string.Format("<b>You have {0} Blackmarks</b>",  blackmarks);
+            bottomText = string.Format("<b>You have {0} Blackmarks</b>", blackmarks);
             GameManager.i.turnScript.SetWinStateCampaign(win, WinReasonCampaign.BlackMarks, topText, bottomText);
         }
     }
@@ -493,7 +488,7 @@ public class CampaignManager : MonoBehaviour
         }
         return gear;
     }
-    
+
 
     //
     // - - - Debug - - -
@@ -524,7 +519,7 @@ public class CampaignManager : MonoBehaviour
         //status
         builder.AppendFormat("{0} Campaign Status{1}", "\n", "\n");
         builder.AppendFormat(" Commendations: {0}{1}", commendations, "\n");
-        builder.AppendFormat(" Black Marks: {0}{1}", blackmarks, "\n");    
+        builder.AppendFormat(" Black Marks: {0}{1}", blackmarks, "\n");
         builder.AppendFormat(" Investigation Black Marks (if Guilty): {0}{1}", investigationBlackmarks, "\n");
         //win/loss
         builder.AppendFormat("{0} Win/Loss Status{1}", "\n", "\n");

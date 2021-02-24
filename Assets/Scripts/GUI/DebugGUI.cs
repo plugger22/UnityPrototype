@@ -153,7 +153,7 @@ public class DebugGUI : MonoBehaviour
             //background box (Options)
             GUI.Box(new Rect(box_option, box_y, box_width, box_height / 2 + 170), "Option Menu", customBackground);
             //background box (Info)
-            GUI.Box(new Rect(box_info, box_y, box_width, box_height + 290), "Info Menu", customBackground);
+            GUI.Box(new Rect(box_info, box_y, box_width, box_height + 340), "Info Menu", customBackground);
             //background box (Actions)
             GUI.Box(new Rect(box_action, box_y, box_width, box_height + 340), "Action Menu", customBackground);
             //background box (Map)
@@ -529,6 +529,16 @@ public class DebugGUI : MonoBehaviour
                     case 3: debugDisplay = 113; storyToggle = 4; break;
                     case 4: debugDisplay = 0; storyToggle = 0; break;
                 }
+            }
+
+            //thirtieth button
+            offset = 28;
+            if (GUI.Button(new Rect(box_info + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), "Tutorial Data"))
+            {
+                Debug.Log("[Dbg] Button -> Tutorial Data");
+                if (debugDisplay != 115)
+                { debugDisplay = 115; }
+                else { debugDisplay = 0; }
             }
 
             //
@@ -2299,6 +2309,12 @@ public class DebugGUI : MonoBehaviour
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.newsScript.DebugDisplayBillboards();
                         GUI.Box(new Rect(Screen.width - 410, 10, 400, 800), analysis, customBackground);
+                        break;
+                    //Tutorial Data
+                    case 115:
+                        customBackground.alignment = TextAnchor.UpperLeft;
+                        analysis = GameManager.i.tutorialScript.DebugDisplayTutorialData();
+                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 600), analysis, customBackground);
                         break;
                 }
             }
