@@ -300,7 +300,7 @@ MonoBehaviour:
   isSubordinates: 1
   isReviews: 1
   isObjectives: 1
-  isOrganisations: 0
+  isOrganisations: 1
   isTargets: 1
 --- !u!114 &114177065037937216
 MonoBehaviour:
@@ -464,6 +464,11 @@ MonoBehaviour:
   optionDecisions: 
   optionMainInfoApp: 
   optionReviews: 
+  optionNemesis: 
+  optionNPC: 
+  optionObjectives: 
+  optionOrganisations: 
+  optionTargets: 
 --- !u!114 &114230505564311274
 MonoBehaviour:
   m_ObjectHideFlags: 1

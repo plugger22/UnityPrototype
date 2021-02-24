@@ -114,6 +114,21 @@ public class FeatureManager : MonoBehaviour
         if (isReviews == true)
         { GameManager.i.debugScript.optionReviews = "Reviews OFF"; }
         else { GameManager.i.debugScript.optionReviews = "Reviews ON"; }
+        if (isNemesis == true)
+        { GameManager.i.debugScript.optionNemesis = "Nemesis OFF"; }
+        else { GameManager.i.debugScript.optionNemesis = "Nemesis ON"; }
+        if (isNPC == true)
+        { GameManager.i.debugScript.optionNPC = "NPC OFF"; }
+        else { GameManager.i.debugScript.optionNPC = "NPC ON"; }
+        if (isObjectives == true)
+        { GameManager.i.debugScript.optionObjectives = "Objectives OFF"; }
+        else { GameManager.i.debugScript.optionObjectives = "Objectives ON"; }
+        if (isOrganisations == true)
+        { GameManager.i.debugScript.optionOrganisations = "Organisations OFF"; }
+        else { GameManager.i.debugScript.optionOrganisations = "Organisations ON"; }
+        if (isTargets == true)
+        { GameManager.i.debugScript.optionTargets = "Targets OFF"; }
+        else { GameManager.i.debugScript.optionTargets = "Targets ON"; }
     }
 
 

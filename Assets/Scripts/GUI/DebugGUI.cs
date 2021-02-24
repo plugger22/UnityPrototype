@@ -89,6 +89,11 @@ public class DebugGUI : MonoBehaviour
     public string optionDecisions;
     public string optionMainInfoApp;
     public string optionReviews;
+    public string optionNemesis;
+    public string optionNPC;
+    public string optionObjectives;
+    public string optionOrganisations;
+    public string optionTargets;
 
     private void Awake()
     {
@@ -120,6 +125,11 @@ public class DebugGUI : MonoBehaviour
         optionDecisions = "Decisions OFF";
         optionMainInfoApp = "InfoApp OFF";
         optionReviews = "Reviews OFF";
+        optionNemesis = "Nemesis OFF";
+        optionNPC = "NPC OFF";
+        optionObjectives = "Objectives OFF";
+        optionOrganisations = "Organisations OFF";
+        optionTargets = "Targets OFF";
     }
 
     // Update is called once per frame
@@ -151,7 +161,7 @@ public class DebugGUI : MonoBehaviour
 
             customBackground.alignment = TextAnchor.UpperCenter;
             //background box (Options)
-            GUI.Box(new Rect(box_option, box_y, box_width, box_height / 2 + 170), "Option Menu", customBackground);
+            GUI.Box(new Rect(box_option, box_y, box_width, box_height + 340), "Option Menu", customBackground);
             //background box (Info)
             GUI.Box(new Rect(box_info, box_y, box_width, box_height + 340), "Info Menu", customBackground);
             //background box (Actions)
@@ -838,6 +848,91 @@ public class DebugGUI : MonoBehaviour
                 {
                     GameManager.i.optionScript.isReviews = true;
                     optionReviews = "Reviews OFF";
+                }
+            }
+
+            //Nemesis button
+            offset = 15;
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), optionNemesis))
+            {
+                Debug.Log("[Dbg] Button -> Toggle Nemesis option");
+                if (GameManager.i.optionScript.isNemesis == true)
+                {
+                    GameManager.i.optionScript.isNemesis = false;
+                    optionNemesis = "Nemesis ON";
+                }
+                else
+                {
+                    GameManager.i.optionScript.isNemesis = true;
+                    optionNemesis = "Nemesis OFF";
+                }
+            }
+
+            //NPC button
+            offset = 16;
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), optionNPC))
+            {
+                Debug.Log("[Dbg] Button -> Toggle NPC option");
+                if (GameManager.i.optionScript.isNPC == true)
+                {
+                    GameManager.i.optionScript.isNPC = false;
+                    optionNPC = "NPC ON";
+                }
+                else
+                {
+                    GameManager.i.optionScript.isNPC = true;
+                    optionNPC = "NPC OFF";
+                }
+            }
+
+            //Objectives button
+            offset = 17;
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), optionObjectives))
+            {
+                Debug.Log("[Dbg] Button -> Toggle Objectives option");
+                if (GameManager.i.optionScript.isObjectives == true)
+                {
+                    GameManager.i.optionScript.isObjectives = false;
+                    optionObjectives = "Objectives ON";
+                }
+                else
+                {
+                    GameManager.i.optionScript.isObjectives = true;
+                    optionObjectives = "Objectives OFF";
+                }
+            }
+
+            //Organisations button
+            offset = 18;
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), optionOrganisations))
+            {
+                Debug.Log("[Dbg] Button -> Toggle Organisations option");
+                if (GameManager.i.optionScript.isOrganisations == true)
+                {
+                    GameManager.i.optionScript.isOrganisations = false;
+                    optionOrganisations = "Organisations ON";
+                }
+                else
+                {
+                    GameManager.i.optionScript.isOrganisations = true;
+                    optionOrganisations = "Organisations OFF";
+                }
+            }
+
+            //Targets button
+            offset = 19;
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), optionTargets))
+            {
+                Debug.Log("[Dbg] Button -> Toggle Targets option");
+                if (GameManager.i.optionScript.isTargets == true)
+                {
+                    GameManager.i.optionScript.isTargets = false;
+                    optionTargets = "Targets ON";
+                }
+                else
+                {
+                    GameManager.i.optionScript.isTargets = true;
+                    optionTargets = "Targets OFF";
                 }
             }
 

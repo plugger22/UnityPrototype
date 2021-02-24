@@ -817,7 +817,8 @@ public class GUIManager : MonoBehaviour
                     waitUntilDone = true;
                     InitialiseTopic();
                 }
-                else { waitUntilDone = false; }
+                else
+                { waitUntilDone = false; }
                 break;
             case TopicGlobal.Review:
                 //tooltips (modal 0) off
