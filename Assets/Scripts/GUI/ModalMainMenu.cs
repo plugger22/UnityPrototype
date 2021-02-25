@@ -163,8 +163,10 @@ public class ModalMainMenu : MonoBehaviour
                 SetColours();
                 break;
             case EventType.OpenMainMenu:
-                /*CreateDefaultMainMenu();*/
-                MainMenuType menu = (MainMenuType)Param;
+                //default main menu unless otherwise specified
+                MainMenuType menu = MainMenuType.Main;
+                if (Param != null)
+                menu = (MainMenuType)Param;
                 OpenMainMenu(menu);
                 break;
             case EventType.CloseMainMenu:
@@ -431,7 +433,7 @@ public class ModalMainMenu : MonoBehaviour
             };
             details.listOfButtonDetails.Add(button9);
         }
-        //Exit to Main Menu button
+        //Return to Main Menu button
         if (detailsMain.isMainMenu == true)
         {
             EventButtonDetails button10 = new EventButtonDetails()
@@ -627,9 +629,10 @@ public class ModalMainMenu : MonoBehaviour
     /// </summary>
     public void CloseMainMenu()
     {
-        mainMenuCanvas.gameObject.SetActive(false);
         //remove modal block
         GameManager.i.guiScript.SetIsBlocked(false, modalLevel);
+        //disable menu
+        mainMenuCanvas.gameObject.SetActive(false);
         //close Generic toolip (eg. from button)
         GameManager.i.tooltipGenericScript.CloseTooltip("ModalMainMenu -> CloseMainMenu");
         //set modal state

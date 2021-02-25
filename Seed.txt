@@ -315,3 +315,42 @@ City seed 37140 -> Londus, Eurasia
 Dev seed 7782 -> Thursday, 25 February 2021 3:09 PM
 City seed 33529 -> Londus, Eurasia
 City seed 8332 -> Londus, Eurasia
+
+Dev seed 28502 -> Thursday, 25 February 2021 3:46 PM
+City seed 7997 -> Londus, Eurasia
+
+Dev seed 47144 -> Thursday, 25 February 2021 3:53 PM
+
+Dev seed 6832 -> Thursday, 25 February 2021 3:56 PM
+City seed 50172 -> Londus, Eurasia
+City seed 58556 -> Londus, Eurasia
+
+Dev seed 44681 -> Thursday, 25 February 2021 4:13 PM
+City seed 36124 -> Londus, Eurasia
+ERROR Invalid ModalConfirmDetails (Null)
+UnityEngine.Debug:LogError(Object)
+	ModalConfirm:SetModalConfirm(ModalConfirmDetails) (at Assets/Scripts/GUI/ModalConfirm.cs:125)
+	ModalConfirm:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/ModalConfirm.cs:83)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:357)
+	ControlManager:ProcessGameReturn() (at Assets/Scripts/Managers/ControlManager.cs:628)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:94)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:357)
+	ModalMainMenu:<InitialiseMainMenu>m__A() (at Assets/Scripts/GUI/ModalMainMenu.cs:449)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 23968 -> Thursday, 25 February 2021 4:15 PM
+City seed 16602 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+ModalMainMenu.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalMainMenu.cs:167)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:357)
+	ModalConfirm.ConfirmCloseRight () (at Assets/Scripts/GUI/ModalConfirm.cs:160)
+	ModalConfirm.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/ModalConfirm.cs:89)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:357)
+	ButtonInteraction.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 37914 -> Thursday, 25 February 2021 4:19 PM
+City seed 26049 -> Londus, Eurasia
+City seed 27258 -> Londus, Eurasia

@@ -63,6 +63,9 @@ public class ControlManager : MonoBehaviour
             case EventType.SaveGame:
                 ProcessSaveGame((GameState)Param);
                 break;
+            case EventType.SaveGameAndReturn:
+                ProcessSaveGameAndReturn((GameState)Param);
+                break;
             case EventType.SaveAndExit:
                 ProcessSaveAndExit((RestorePoint)Param);
                 break;
@@ -193,12 +196,12 @@ public class ControlManager : MonoBehaviour
     private void ProcessOptions(GameState state)
     {
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessOptions: game OPTIONS selected{0}", "\n");
-        //modal block
-        GameManager.i.guiScript.SetIsBlocked(true);
         //open Options background
         GameManager.i.modalGUIScript.SetBackground(Background.Options);
         //close MainMenu
         EventManager.i.PostNotification(EventType.CloseMainMenu, this, null, "ControlManager.cs -> ProcessOptions");
+        //modal block -> after CloseMainMenu (it resets block)
+        GameManager.i.guiScript.SetIsBlocked(true);
         gameState = state;
         //change game state (allows inputManager.cs to handle relevant input)
         GameManager.i.inputScript.GameState = GameState.Options;
@@ -560,7 +563,7 @@ public class ControlManager : MonoBehaviour
         gameState = GameManager.i.inputScript.GameState;
         //close MainMenu
         EventManager.i.PostNotification(EventType.CloseMainMenu, this, null, "ControlManager.cs -> ProcessTutorial");
-        //toggle on modal block
+        //toggle on modal block -> after closeMainmenu (it resets block)
         GameManager.i.guiScript.SetIsBlocked(true);
         //set background
         GameManager.i.modalGUIScript.SetBackground(Background.TutorialOptions);
@@ -607,15 +610,50 @@ public class ControlManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Closes game (playing) and returns to main Menu
+    /// Closes game (playing) and returns to main Menu -> asks if you want to save first
     /// </summary>
     private void ProcessGameReturn()
     {
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessGameReturn: ProcessGameReturn to MainMenu selected{0}", "\n");
         //stop animations
         GameManager.i.animateScript.StopAnimations();
-        //activate menu
-        EventManager.i.PostNotification(EventType.OpenMainMenu, this, MainMenuType.Main, "ControlManager.cs -> ProcessGameReturn");
+
+        ModalConfirmDetails details = new ModalConfirmDetails()
+        {
+            topText = "Any recent progress will be lost unless Saved",
+            bottomText = "Save progress?",
+            buttonFalse = "Don't Save",
+            buttonTrue = "SAVE",
+            eventFalse = EventType.OpenMainMenu,
+            eventTrue = EventType.OpenMainMenu
+        };
+        //open confirmation dialogue
+        EventManager.i.PostNotification(EventType.ConfirmOpen, this, details, "ControlManager.cs -> ProcessGameReturn");
+    }
+
+    /// <summary>
+    /// Returning to main menu from game, saving progress on the way
+    /// </summary>
+    private void ProcessSaveGameAndReturn(GameState state)
+    {
+        Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessSaveGameAndReturn: SAVE game option selected{0}", "\n");
+        //save existing game state
+        gameState = state;
+        //toggle on modal block
+        GameManager.i.guiScript.SetIsBlocked(true);
+        //Save Game -> open background
+        GameManager.i.modalGUIScript.SetBackground(Background.SaveGame);
+        //Close any open background
+        GameManager.i.modalGUIScript.CloseBackgrounds(Background.SaveGame);
+        //change game state
+        GameManager.i.inputScript.GameState = GameState.SaveGame;
+        //check node display and reset back to normal if not prior to save
+        if (GameManager.i.nodeScript.NodeShowFlag > 0)
+        { GameManager.i.nodeScript.ResetAll(); }
+        //check connection display and reset back to normal if not prior to save
+        if (GameManager.i.connScript.resetConnections == true)
+        { GameManager.i.connScript.RestoreConnections(); }
+
     }
 
     /// <summary>

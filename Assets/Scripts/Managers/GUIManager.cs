@@ -379,7 +379,7 @@ public class GUIManager : MonoBehaviour
     {
         Debug.Assert(level <= numOfModalLevels, string.Format("Invalid level {0}, max is numOfModalLevels {1}", level, numOfModalLevels));
         arrayIsBlocked[level] = isBlocked;
-        Debug.Log(string.Format("GUIManager: Blocked -> {0}, level {1}{2}", isBlocked, level, "\n"));
+        Debug.LogFormat("[Inp] GUIManager: Blocked -> {0}, level {1}{2}", isBlocked, level, "\n");
         GameManager.i.modalGUIScript.SetModalMasks(isBlocked, level);
     }
 

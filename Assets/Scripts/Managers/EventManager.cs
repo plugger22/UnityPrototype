@@ -27,6 +27,7 @@ public enum EventType
     ResumeGame,
     ResumeMetaGame,
     SaveGame,
+    SaveGameAndReturn,
     TutorialOptions,
     CloseTutorialOptions,
     TutorialReturn,

@@ -1058,24 +1058,28 @@ public class InputManager : MonoBehaviour
         builder.AppendFormat(" NodeShowFlag -> {0}{1}", GameManager.i.nodeScript.NodeShowFlag, "\n");
         builder.AppendFormat(" isHaltExecution -> {0}{1}", GameManager.i.turnScript.haltExecution, "\n");
         builder.AppendFormat(" Dev seed -> {0}{1}", GameManager.i.seedDev, "\n");
-        builder.AppendFormat(" Level seed -> {0}{1}", GameManager.i.levelScript.seed, "\n");
-        builder.AppendFormat(" {0} PlayerSide -> {1}{2}{3}", "\n", GameManager.i.sideScript.PlayerSide.name, "\n", "\n");
-        builder.AppendFormat(" currentSide -> {0}{1}", GameManager.i.turnScript.currentSide.name, "\n");
-        builder.AppendFormat(" AuthorityCurrent -> {0}{1}", GameManager.i.sideScript.authorityCurrent, "\n");
-        builder.AppendFormat(" ResistanceCurrent -> {0}{1}{2}", GameManager.i.sideScript.resistanceCurrent, "\n", "\n");
-        builder.AppendFormat(" AuthorityOverall -> {0}{1}", GameManager.i.sideScript.authorityOverall, "\n");
-        builder.AppendFormat(" ResistanceOverall -> {0}{1}{2}", GameManager.i.sideScript.resistanceOverall, "\n", "\n");
-        builder.AppendFormat(" AuthoritySecurityState -> {0}{1}", GameManager.i.turnScript.authoritySecurityState, "\n");
-        /*builder.AppendFormat(" ResistanceState -> {0}{1}{2}", GameManager.instance.turnScript.resistanceState, "\n", "\n");*/
-        builder.AppendFormat(" immediateAuthorityFlag -> {0}{1}", GameManager.i.aiScript.immediateFlagAuthority, "\n");
-        builder.AppendFormat(" immediateResistanceFlag -> {0}{1}{2}", GameManager.i.aiScript.immediateFlagResistance, "\n", "\n");
-        builder.AppendFormat(" Authority Player -> {0}{1}", GameManager.i.playerScript.GetPlayerNameAuthority(), "\n");
-        builder.AppendFormat(" Resistance Player -> {0}{1}{2}", GameManager.i.playerScript.GetPlayerNameResistance(), "\n", "\n");
-        builder.AppendFormat(" HQ Approval Authority -> {0}{1}", GameManager.i.hqScript.ApprovalAuthority, "\n");
-        builder.AppendFormat(" HQ Approval Resistance -> {0}{1}{2}", GameManager.i.hqScript.ApprovalResistance, "\n", "\n");
-        builder.AppendFormat(" City Loyalty -> {0}{1}", GameManager.i.cityScript.CityLoyalty, "\n");
+        builder.AppendFormat(" Level seed -> {0}{1}{2}", GameManager.i.levelScript.seed, "\n", "\n");
+
+        //play game or tutorial data
+        if (GameManager.i.inputScript.CheckNormalMode() == true)
+        {
+            builder.AppendFormat(" {0} PlayerSide -> {1}{2}", "\n", GameManager.i.sideScript.PlayerSide.name, "\n");
+            builder.AppendFormat(" currentSide -> {0}{1}", GameManager.i.turnScript.currentSide.name, "\n");
+            builder.AppendFormat(" AuthorityCurrent -> {0}{1}", GameManager.i.sideScript.authorityCurrent, "\n");
+            builder.AppendFormat(" ResistanceCurrent -> {0}{1}", GameManager.i.sideScript.resistanceCurrent, "\n");
+            builder.AppendFormat(" AuthorityOverall -> {0}{1}", GameManager.i.sideScript.authorityOverall, "\n");
+            builder.AppendFormat(" ResistanceOverall -> {0}{1}", GameManager.i.sideScript.resistanceOverall, "\n");
+            builder.AppendFormat(" AuthoritySecurityState -> {0}{1}", GameManager.i.turnScript.authoritySecurityState, "\n");
+            /*builder.AppendFormat(" ResistanceState -> {0}{1}{2}", GameManager.instance.turnScript.resistanceState, "\n", "\n");*/
+            builder.AppendFormat(" immediateAuthorityFlag -> {0}{1}", GameManager.i.aiScript.immediateFlagAuthority, "\n");
+            builder.AppendFormat(" immediateResistanceFlag -> {0}{1}{2}", GameManager.i.aiScript.immediateFlagResistance, "\n", "\n");
+            builder.AppendFormat(" Authority Player -> {0}{1}", GameManager.i.playerScript.GetPlayerNameAuthority(), "\n");
+            builder.AppendFormat(" Resistance Player -> {0}{1}{2}", GameManager.i.playerScript.GetPlayerNameResistance(), "\n", "\n");
+            builder.AppendFormat(" HQ Approval Authority -> {0}{1}", GameManager.i.hqScript.ApprovalAuthority, "\n");
+            builder.AppendFormat(" HQ Approval Resistance -> {0}{1}{2}", GameManager.i.hqScript.ApprovalResistance, "\n", "\n");
+            builder.AppendFormat(" City Loyalty -> {0}{1}", GameManager.i.cityScript.CityLoyalty, "\n");
+        }
         //backgrounds
-        builder.AppendLine();
         builder.AppendLine();
         builder.Append(GameManager.i.modalGUIScript.DebugDisplayBackgrounds());
         return builder.ToString();
