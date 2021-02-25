@@ -512,6 +512,25 @@ public class MainInfoUI : MonoBehaviour
                 var childrenImage = itemObject.GetComponentsInChildren<Image>();
                 foreach (var child in childrenImage)
                 {
+                    switch (child.name)
+                    {
+                        case "background":
+                            arrayItemBackground[index] = child;
+                            //attached interaction script
+                            ItemInteractionUI itemScript = child.GetComponent<ItemInteractionUI>();
+                            if (itemScript != null)
+                            {
+                                itemScript.SetItemIndex(index, numOfItemsTotal);
+                                itemScript.SetUIType(MajorUI.MainInfoApp);
+                            }
+                            else { Debug.LogWarningFormat("Invalid ItemInteractionUI component (Null) for mainItemArray[{0}]", index); }
+                            break;
+                        case "icon": arrayItemIcon[index] = child; break;
+                        case "border": arrayItemBorder[index] = child; break;
+                        case "checkmark": arrayCheckMark[index] = child;  break;
+                        default: Debug.LogWarningFormat("Unrecognised child.name \"{0}\"", child.name); break;
+                    }
+                    /*
                     if (child.name.Equals("background", StringComparison.Ordinal) == true)
                     {
                         arrayItemBackground[index] = child;
@@ -530,6 +549,7 @@ public class MainInfoUI : MonoBehaviour
                     { arrayItemBorder[index] = child; }
                     else if (child.name.Equals("checkmark", StringComparison.Ordinal) == true)
                     { arrayCheckMark[index] = child; }
+                    */
                 }
                 //child components -> Text
                 var childrenText = itemObject.GetComponentsInChildren<TextMeshProUGUI>();

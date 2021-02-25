@@ -9943,6 +9943,9 @@ public class DataManager : MonoBehaviour
         List<Scenario> listOfScenarios = GameManager.i.campaignScript.campaign.listOfScenarios;
         if (listOfScenarios != null)
         {
+            //clear out dict
+            dictOfCampaignHistory.Clear();
+            //populate with new campaign data
             for (int i = 0; i < listOfScenarios.Count; i++)
             {
                 Scenario scenario = listOfScenarios[i];

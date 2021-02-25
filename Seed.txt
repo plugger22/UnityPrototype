@@ -99,3 +99,66 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:326)
 	GameManager:Update() (at Assets/Scripts/GameManager.cs:462)
 	
+Dev seed 22667 -> Thursday, 25 February 2021 11:32 AM
+City seed 21478 -> Londus, Eurasia
+City seed 6403 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+MainInfoUI.InitialiseItems () (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:614)
+	MainInfoUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:555)
+	MainInfoUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:238)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:903)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:963)
+	ControlManager.CloseNewGameOptions () (at Assets/Scripts/Managers/ControlManager.cs:182)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:76)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:357)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:340)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:462)
+	
+Dev seed 6340 -> Thursday, 25 February 2021 11:33 AM
+City seed 54729 -> Londus, Eurasia
+City seed 57752 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+MainInfoUI.InitialiseItems () (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:614)
+	MainInfoUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:555)
+	MainInfoUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:238)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:903)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:963)
+	ControlManager.CloseNewGameOptions () (at Assets/Scripts/Managers/ControlManager.cs:182)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:76)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:357)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:340)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:462)
+	ERROR !m_View
+UnityEditor.EditorApplicationLayout:SetPausemodeLayout()
+	ERROR !m_View
+UnityEditor.EditorApplicationLayout:SetPausemodeLayout()
+	ERROR !m_View
+UnityEditor.EditorApplicationLayout:SetPausemodeLayout()
+	ERROR !m_View
+UnityEditor.EditorApplicationLayout:SetPausemodeLayout()
+	ERROR !m_View
+UnityEditor.EditorApplicationLayout:SetPausemodeLayout()
+	ERROR !m_View
+UnityEditor.EditorApplicationLayout:SetPausemodeLayout()
+	ERROR !m_View
+UnityEditor.EditorApplicationLayout:SetPausemodeLayout()
+	ERROR !m_View
+UnityEditor.EditorApplicationLayout:SetPausemodeLayout()
+	
+Dev seed 19694 -> Thursday, 25 February 2021 11:38 AM
+
+Dev seed 15900 -> Thursday, 25 February 2021 11:42 AM
+City seed 5510 -> Londus, Eurasia
+City seed 22317 -> Londus, Eurasia
+ASSERT NullReferenceException: Object reference not set to an instance of an object
+MainInfoUI.InitialiseItems () (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:634)
+	MainInfoUI.SubInitialiseSessionStart () (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:575)
+	MainInfoUI.Initialise (gameAPI.GameState state) (at Assets/Scripts/GUI/InfoDisplays/MainInfoUI.cs:238)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:903)
+	GameManager.InitialiseNewSession () (at Assets/Scripts/GameManager.cs:963)
+	ControlManager.CloseNewGameOptions () (at Assets/Scripts/Managers/ControlManager.cs:182)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:76)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:357)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:340)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:462)
+	
