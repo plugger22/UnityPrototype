@@ -29,7 +29,9 @@ public class ControlManager : MonoBehaviour
         EventManager.i.AddListener(EventType.ResumeMetaGame, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.LoadGame, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.SaveGame, OnEvent, "ControlManager");
+        EventManager.i.AddListener(EventType.SaveGameAndReturn, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.SaveAndExit, OnEvent, "ControlManager");
+        EventManager.i.AddListener(EventType.SaveToMain, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.CloseLoadGame, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.CloseSaveGame, OnEvent, "ControlManager");
         EventManager.i.AddListener(EventType.TutorialOptions, OnEvent, "ControlManager.cs");
@@ -64,7 +66,10 @@ public class ControlManager : MonoBehaviour
                 ProcessSaveGame((GameState)Param);
                 break;
             case EventType.SaveGameAndReturn:
-                ProcessSaveGameAndReturn((GameState)Param);
+                ProcessSaveGameAndReturn();
+                break;
+            case EventType.SaveToMain:
+                ProcessCloseSaveGameAndReturnToMainMenu();
                 break;
             case EventType.SaveAndExit:
                 ProcessSaveAndExit((RestorePoint)Param);
@@ -625,7 +630,7 @@ public class ControlManager : MonoBehaviour
             buttonFalse = "Don't Save",
             buttonTrue = "SAVE",
             eventFalse = EventType.OpenMainMenu,
-            eventTrue = EventType.OpenMainMenu
+            eventTrue = EventType.SaveGameAndReturn
         };
         //open confirmation dialogue
         EventManager.i.PostNotification(EventType.ConfirmOpen, this, details, "ControlManager.cs -> ProcessGameReturn");
@@ -634,26 +639,50 @@ public class ControlManager : MonoBehaviour
     /// <summary>
     /// Returning to main menu from game, saving progress on the way
     /// </summary>
-    private void ProcessSaveGameAndReturn(GameState state)
+    private void ProcessSaveGameAndReturn()
     {
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessSaveGameAndReturn: SAVE game option selected{0}", "\n");
-        //save existing game state
-        gameState = state;
+
         //toggle on modal block
         GameManager.i.guiScript.SetIsBlocked(true);
         //Save Game -> open background
         GameManager.i.modalGUIScript.SetBackground(Background.SaveGame);
         //Close any open background
         GameManager.i.modalGUIScript.CloseBackgrounds(Background.SaveGame);
-        //change game state
-        GameManager.i.inputScript.GameState = GameState.SaveGame;
-        //check node display and reset back to normal if not prior to save
+
+        /*//check node display and reset back to normal if not prior to save
         if (GameManager.i.nodeScript.NodeShowFlag > 0)
         { GameManager.i.nodeScript.ResetAll(); }
         //check connection display and reset back to normal if not prior to save
         if (GameManager.i.connScript.resetConnections == true)
-        { GameManager.i.connScript.RestoreConnections(); }
+        { GameManager.i.connScript.RestoreConnections(); }*/
 
+        //Debug -> time load game process
+        GameManager.i.testScript.StartTimer();
+        GameManager.i.fileScript.WriteSaveData(new LoadGameState() { gameState = GameState.PlayGame, restorePoint = RestorePoint.None });
+        GameManager.i.fileScript.SaveGame();
+        //how long did it take?
+        long timeElapsed = GameManager.i.testScript.StopTimer();
+        Debug.LogFormat("[Per] ControlManager.cs -> ProcessSaveGameAndReturn: SAVE GAME took {0} ms", timeElapsed);
+        //change game state
+        GameManager.i.inputScript.GameState = GameState.SaveAndMain;
+
+    }
+
+    /// <summary>
+    /// Follow on from ProcessSaveGameAndReturn. Closes save background and opens main menu
+    /// </summary>
+    private void ProcessCloseSaveGameAndReturnToMainMenu()
+    {
+        Debug.LogFormat("[Ctrl] ControlManager.cs -> CloseSaveGameAndReturnToMainMenu: CloseSaveGameAndReturnToMainMenu selected{0}", "\n");
+        //Close any open background
+        GameManager.i.modalGUIScript.CloseBackgrounds();
+        //toggle of modal block
+        GameManager.i.guiScript.SetIsBlocked(false);
+        //change game state
+        GameManager.i.inputScript.GameState = GameState.MainMenu;
+        //activate menu
+        EventManager.i.PostNotification(EventType.OpenMainMenu, this, MainMenuType.Main, "GameManager.cs -> ProcessTutorialReturn");
     }
 
     /// <summary>

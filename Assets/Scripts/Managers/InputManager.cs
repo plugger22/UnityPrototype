@@ -349,6 +349,10 @@ public class InputManager : MonoBehaviour
                             case GameState.SaveGame:
                                 EventManager.i.PostNotification(EventType.CloseSaveGame, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
                                 break;
+                            case GameState.SaveAndMain:
+                                //return to main menu once saved
+                                EventManager.i.PostNotification(EventType.SaveToMain, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");
+                                break;
                             case GameState.Options:
                                 //close Options background -> Debug: need to set new Game State
                                 EventManager.i.PostNotification(EventType.CloseOptions, this, null, "InputManager.cs -> ProcessKeyInput \"Multipurpose (SPACE)\"");

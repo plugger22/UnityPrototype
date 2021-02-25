@@ -237,6 +237,7 @@ public class ModalMainMenu : MonoBehaviour
                 details.header = "Main Menu";
                 details.background = Background.Start;
                 details.isResume = false;
+                details.isSaveGame = false;
                 details.isMainMenu = false;
                 break;
             case MainMenuType.Game:

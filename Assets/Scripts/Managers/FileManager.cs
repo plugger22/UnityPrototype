@@ -86,7 +86,7 @@ public class FileManager : MonoBehaviour
         WriteDataData();
         WriteCampaignData();
         WriteOptionData();
-        WriteTutorialData();
+        /*WriteTutorialData();*/
         WritePlayerData();
         WriteNemesisData();
         WriteGameData();
@@ -224,8 +224,8 @@ public class FileManager : MonoBehaviour
                 ReadDataData();
                 ReadCampaignData();
                 ReadGameData(playerSide);
+                /*ReadTutorialData();*/
                 ReadSeedData();
-                ReadTutorialData();
                 //set up level based on loaded current scenario seed
                 GameManager.i.InitialiseLoadGame(playerSide.level);
                 ReadScenarioData();

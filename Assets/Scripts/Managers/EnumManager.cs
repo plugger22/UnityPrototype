@@ -8,7 +8,7 @@
     // - - - Game Manager - - -
     //
     public enum GameState {
-        None, MainMenu, StartUp, Options, NewGame, NewGameOptions, NewInitialisation, FollowOnInitialisation, NewCampaign, SaveGame, SaveAndExit, LoadGame, LoadAtStart,
+        None, MainMenu, StartUp, Options, NewGame, NewGameOptions, NewInitialisation, FollowOnInitialisation, NewCampaign, SaveGame, SaveAndExit, SaveAndMain, LoadGame, LoadAtStart,
         PlayGame, MetaGame, TutorialOptions, Tutorial, ExitLevel, ExitCampaign, ExitGame}  //overall game state
     public enum WinStateLevel { None, Authority, Resistance }                                                                                   //none indicates nobody has yet won level
     public enum WinReasonLevel { None, CityLoyaltyMin, CityLoyaltyMax, HqSupportMin, MissionTimerMin, ObjectivesCompleted, Investigation, CampaignResult } //reason for Level Win State (from POV of winner)
