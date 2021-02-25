@@ -508,8 +508,8 @@ public class MainInfoUI : MonoBehaviour
             GameObject itemObject = arrayItemMain[index];
             if (itemObject != null)
             {
-                //get child components -> Image
-                var childrenImage = itemObject.GetComponentsInChildren<Image>();
+                //get child components -> Image -> NOTE: includes inactive components as checkmark set false on first run through and wouldn't otherwise be picked up on subsequent new game starts in the same session
+                var childrenImage = itemObject.GetComponentsInChildren<Image>(true);
                 foreach (var child in childrenImage)
                 {
                     switch (child.name)

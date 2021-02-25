@@ -137,6 +137,8 @@ public class ControlManager : MonoBehaviour
         GameManager.i.modalGUIScript.SetBackground(Background.NewGame);
         //close MainMenu
         EventManager.i.PostNotification(EventType.CloseMainMenu, this, null, "ControlManager.cs -> ProcessNewGame");
+        //modal block -> after closeMainMenu
+        GameManager.i.guiScript.SetIsBlocked(true);
         //change game state (allows inputManager.cs to handle relevant input)
         GameManager.i.inputScript.GameState = GameState.NewGame;
     }
@@ -149,8 +151,6 @@ public class ControlManager : MonoBehaviour
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessNewGameOptions: ProcessNewGameOptions selected{0}", "\n");
         //save existing game state
         gameState = GameManager.i.inputScript.GameState;
-        //modal block
-        GameManager.i.guiScript.SetIsBlocked(true);
         //open NewGame background
         GameManager.i.modalGUIScript.SetBackground(Background.NewGameOptions);
         //close previous background
@@ -167,17 +167,10 @@ public class ControlManager : MonoBehaviour
         Debug.LogFormat("[Ctrl] ControlManager.cs -> CloseNewGameOptions: CloseNewGameOptions selected{0}", "\n");
         //save existing game state
         gameState = GameManager.i.inputScript.GameState;
-
-        /*//revert to playGame state by default
+        //revert to playGame state by default
         GameManager.i.inputScript.GameState = GameState.NewInitialisation;
         //create new game -> DEBUG: resets campaign so assumes brand new campaign
         GameManager.i.campaignScript.Reset();
-        //set up first level in campaign
-        GameManager.i.InitialiseNewSession();
-        //campaign history
-        GameManager.i.dataScript.SetCampaignHistoryStart();*/   //edit -> replaced by SetNewGame
-
-        SetNewGame();
         //set up first level in campaign
         GameManager.i.InitialiseNewSession();
         //campaign history
@@ -572,7 +565,10 @@ public class ControlManager : MonoBehaviour
         //set background
         GameManager.i.modalGUIScript.SetBackground(Background.TutorialOptions);
         //admin for new game
-        SetNewGame();
+        //revert to playGame state by default
+        GameManager.i.inputScript.GameState = GameState.NewInitialisation;
+        //create new game -> DEBUG: resets campaign so assumes brand new campaign
+        GameManager.i.campaignScript.Reset();
         //change game state
         GameManager.i.inputScript.GameState = GameState.TutorialOptions;
         //set up first level in campaign
@@ -664,17 +660,6 @@ public class ControlManager : MonoBehaviour
     { return gameState; }
 
 
-    /// <summary>
-    /// Utility subMethod that handles admin for creating a newgame / tutorial
-    /// </summary>
-    private void SetNewGame()
-    {
-        //revert to playGame state by default
-        GameManager.i.inputScript.GameState = GameState.NewInitialisation;
-        //create new game -> DEBUG: resets campaign so assumes brand new campaign
-        GameManager.i.campaignScript.Reset();
-
-    }
 
     #endregion
 

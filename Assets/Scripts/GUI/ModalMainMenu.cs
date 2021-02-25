@@ -444,6 +444,7 @@ public class ModalMainMenu : MonoBehaviour
             //depends on where you are returning from
             switch (GameManager.i.inputScript.GameState)
             {
+                case GameState.NewInitialisation:       //playGame when exiting to main menu
                 case GameState.PlayGame:
                     button10.action = () => { EventManager.i.PostNotification(EventType.GameReturn, this, gameState, "ModalMainMenu.cs -> InitialiseMainMenu"); };
                     break;
@@ -622,11 +623,12 @@ public class ModalMainMenu : MonoBehaviour
 
     #region CloseMainMenu
     /// <summary>
-    /// close Main Menu
+    /// close Main Menu. Removes modal block
     /// </summary>
     public void CloseMainMenu()
     {
         mainMenuCanvas.gameObject.SetActive(false);
+        //remove modal block
         GameManager.i.guiScript.SetIsBlocked(false, modalLevel);
         //close Generic toolip (eg. from button)
         GameManager.i.tooltipGenericScript.CloseTooltip("ModalMainMenu -> CloseMainMenu");
@@ -635,8 +637,6 @@ public class ModalMainMenu : MonoBehaviour
         //revert to previous game state if necessary (menu option may have triggered a new game state already)
         if (GameManager.i.inputScript.GameState == GameState.MainMenu)
         { GameManager.i.inputScript.GameState = gameState; }
-        /*        //close background (do so regardless as not a big overhead)
-                GameManager.instance.modalGUIScript.DisableBackground(Background.Start);*/
         Debug.LogFormat("[UI] ModalMainMenu.cs -> CloseMainMenu{0}", "\n");
     }
 

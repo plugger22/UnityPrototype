@@ -503,8 +503,8 @@ public class MetaGameUI : MonoBehaviour
             GameObject metaObject = arrayOfSideMetaMain[index];
             if (metaObject != null)
             {
-                //get child components -> Image
-                var childrenImage = metaObject.GetComponentsInChildren<Image>();
+                //get child components -> Image -> NOTE: includes inactive components as checkmark set false on first run through and wouldn't otherwise be picked up on subsequent new game starts in the same session
+                var childrenImage = metaObject.GetComponentsInChildren<Image>(true);
                 foreach (var child in childrenImage)
                 {
                     if (child.name.Equals("background", StringComparison.Ordinal) == true)
@@ -547,8 +547,8 @@ public class MetaGameUI : MonoBehaviour
             GameObject metaObject = arrayOfTopMetaMain[index];
             if (metaObject != null)
             {
-                //get child components -> Image
-                var childrenImage = metaObject.GetComponentsInChildren<Image>();
+                //get child components -> Image -> NOTE: includes inactive components as checkmark set false on first run through and wouldn't otherwise be picked up on subsequent new game starts in the same session
+                var childrenImage = metaObject.GetComponentsInChildren<Image>(true);
                 foreach (var child in childrenImage)
                 {
                     if (child.name.Equals("background", StringComparison.Ordinal) == true)

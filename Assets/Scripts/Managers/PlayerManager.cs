@@ -1504,6 +1504,8 @@ public class PlayerManager : MonoBehaviour
         List<Secret> listOfPlayerSecrets = GameManager.i.dataScript.GetListOfPlayerSecrets();
         if (listOfPlayerSecrets != null)
         {
+            //clear out listOfSecrets (in case of multiple new game starts)
+            listOfSecrets.Clear();
             //copy all Inactive secrets across to another list
             List<Secret> tempList = new List<Secret>();
             foreach (Secret secret in listOfPlayerSecrets)
