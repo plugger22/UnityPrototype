@@ -1,6 +1,5 @@
 ﻿using gameAPI;
 using packageAPI;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -72,8 +71,12 @@ public class TutorialManager : MonoBehaviour
     /// </summary>
     public void InitialiseTutorial()
     {
-        //Debug
-        tutorial = resistanceTutorial;
+        //If an existing tutorial already done during session or a loaded save game tutorial then tutorial won't be none
+        if (tutorial == null)
+        {
+            //Debug -> default tutorial if none present
+            tutorial = resistanceTutorial;
+        }
         Debug.LogFormat("[Tut] TutorialManager.cs -> InitialiseTutorial: tutorial \"{0}\" loaded{1}", tutorial.name, "\n");
         //set scenario
         if (tutorial.scenario != null)
@@ -96,7 +99,7 @@ public class TutorialManager : MonoBehaviour
                         if (set != null)
                         {
                             Debug.LogFormat("[Tut] TutorialManager.cs -> InitialiseTutorial: set \"{0}\" loaded{1}", set.name, "\n");
-                            // Features toggle on/off -> To Do
+                            // Features toggle on/off
                             UpdateFeatures(set.listOfFeaturesOff);
                         }
                         else { Debug.LogErrorFormat("Invalid tutorialSet (Null) for index {0}", index); }
@@ -108,6 +111,8 @@ public class TutorialManager : MonoBehaviour
             else { Debug.LogError("Invalid tutorial city (Null)"); }
         }
         else { Debug.LogError("Invalid tutorial Scenario (Null)"); }
+
+
     }
     #endregion
 
@@ -244,7 +249,7 @@ public class TutorialManager : MonoBehaviour
         else { return "You must be in Tutorial mode to access this information"; }
     }
     #endregion
-    
-    
+
+
     //new methods above here
 }

@@ -9928,6 +9928,7 @@ public class DataManager : MonoBehaviour
     }
 
 
+    #region Campaign History...
     //
     // - - - Campaign History
     //
@@ -10074,8 +10075,9 @@ public class DataManager : MonoBehaviour
 
         return builder.ToString();
     }
+    #endregion
 
-    #region MegaCorps
+    #region MegaCorps...
     //
     // - - - MegaCorp Relations
     //
@@ -10234,7 +10236,7 @@ public class DataManager : MonoBehaviour
     }
     #endregion
 
-    #region Stories
+    #region Stories...
     //
     // - - - Stories
     //
@@ -10269,7 +10271,7 @@ public class DataManager : MonoBehaviour
     }
     #endregion
 
-    #region Tutorials
+    #region Tutorials...
     //
     // - - - Tutorials
     //
@@ -10315,6 +10317,30 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid tutorialName (Null or Empty)"); }
         return index;
+    }
+
+    /// <summary>
+    /// Update tutorial index for specified tutorial
+    /// </summary>
+    /// <param name="tutorialName"></param>
+    /// <param name="index"></param>
+    public void UpdateTutorialIndex(string tutorialName, int newIndex)
+    {
+        if (string.IsNullOrEmpty(tutorialName) == false)
+        {
+            if (newIndex > -1)
+            {
+                int oldIndex = -1;
+                if (dictOfTutorialData.ContainsKey(tutorialName) == true)
+                {
+                    oldIndex = dictOfTutorialData[tutorialName].index;
+                    dictOfTutorialData[tutorialName].index = newIndex;
+                    Debug.LogFormat("[Tut] DataManager.cs -> UpdateTutorialIndex: tutorial \"{0}\" index now {1} (was {2})", tutorialName, newIndex, oldIndex);
+                }
+            }
+            else { Debug.LogErrorFormat("Invalid newIndex \"{0}\" (should be Zero or more)", newIndex); }
+        }
+        else { Debug.LogError("Invalid tutorialName (Null or empty)"); }
     }
 
     #endregion

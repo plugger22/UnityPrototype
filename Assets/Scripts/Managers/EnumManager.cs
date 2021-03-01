@@ -9,7 +9,7 @@
     //
     public enum GameState {
         None, MainMenu, StartUp, Options, NewGame, NewGameOptions, NewInitialisation, FollowOnInitialisation, NewCampaign, SaveGame, SaveAndExit, SaveAndMain, LoadGame, LoadAtStart,
-        PlayGame, MetaGame, TutorialOptions, Tutorial, ExitLevel, ExitCampaign, ExitGame}  //overall game state
+        PlayGame, MetaGame, TutorialOptions, Tutorial, ExitLevel, ExitCampaign, ExitGame}  //overall game state, NOTE: don't change order (save file)
     public enum WinStateLevel { None, Authority, Resistance }                                                                                   //none indicates nobody has yet won level
     public enum WinReasonLevel { None, CityLoyaltyMin, CityLoyaltyMax, HqSupportMin, MissionTimerMin, ObjectivesCompleted, Investigation, CampaignResult } //reason for Level Win State (from POV of winner)
     public enum WinStateCampaign { None, Authority, Resistance }
@@ -38,7 +38,6 @@
     public enum GenericTooltipType { Any, ActorInfo }                                           //ability to specify tooltip types that must be closed and to ignore the rest. Create group types as required.
     public enum MajorUI { None, MainInfoApp, MetaGameUI }                                       //used for Item prefab attached scripts to determine which UI they are working within
     public enum PopUpPosition { ActorSlot0, ActorSlot1, ActorSlot2, ActorSlot3, Player, TopBarLeft, TopBarRight, TopCentre, Count}  //used for fixed UI PopUps
-    public enum RestorePoint { None, MetaTransition, MetaOptions, MetaComplete }                       //when save and exit, chance to return to game. This specifies the point of return
     public enum EndlLevelMedal { DeadDuck, Bronze, Silver, Gold }                               //used by EndLevel data to determine medal to award during TransitionUI / MetaGame
     public enum Pulsing { Fading, Growing, Constant }                     //used for UI elements, eg. text, that 'pulse' (grown/shrink in size). Constant is for maintaining constant size 
     public enum MainMenuType { Main, Game, Tutorial }                              //configs for custom (main) menus
@@ -50,6 +49,12 @@
         DebugAI, DebugPlayer,
         HackingRebootInProgress, HackingInsufficientPower, HackingInitialising, HackingIndisposed, HackingOffline
     }
+
+    //
+    // - - - File Operations
+    //
+    public enum SaveType { None, PlayerSave, AutoSave, Tutorial}                                       //type of save file. Don't change order (save file)
+    public enum RestorePoint { None, MetaTransition, MetaOptions, MetaComplete }                       //when save and exit, chance to return to game. This specifies the point of return
 
     //
     // - - - Animation - - -

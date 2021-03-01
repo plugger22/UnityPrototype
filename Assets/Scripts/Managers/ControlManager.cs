@@ -398,10 +398,10 @@ public class ControlManager : MonoBehaviour
         //Debug -> time load game process
         GameManager.i.testScript.StartTimer();
         //read data from file
-        if (GameManager.i.fileScript.ReadSaveData() == true)
+        if (GameManager.i.fileScript.ReadSaveData(SaveType.PlayerSave) == true)
         {
             //load data into game
-            LoadGameState loadGameState = GameManager.i.fileScript.LoadSaveData();
+            LoadGameState loadGameState = GameManager.i.fileScript.LoadSaveData(SaveType.PlayerSave);
             if (loadGameState != null)
             {
                 //standard load game drops you straight into gameState.PlayGame
@@ -475,8 +475,8 @@ public class ControlManager : MonoBehaviour
         { GameManager.i.connScript.RestoreConnections(); }
         //Debug -> time load game process
         GameManager.i.testScript.StartTimer();
-        GameManager.i.fileScript.WriteSaveData(new LoadGameState() { gameState = GameState.PlayGame, restorePoint = RestorePoint.None });
-        GameManager.i.fileScript.SaveGame();
+        GameManager.i.fileScript.WriteSaveData(new LoadGameState() { gameState = GameState.PlayGame, restorePoint = RestorePoint.None }, SaveType.PlayerSave);
+        GameManager.i.fileScript.SaveGame(SaveType.PlayerSave);
         //how long did it take?
         long timeElapsed = GameManager.i.testScript.StopTimer();
         Debug.LogFormat("[Per] ControlManager.cs -> ProcessSaveGame: SAVE GAME took {0} ms", timeElapsed);
@@ -503,8 +503,8 @@ public class ControlManager : MonoBehaviour
         GameManager.i.inputScript.GameState = GameState.SaveAndExit;
         //Debug -> time load game process
         GameManager.i.testScript.StartTimer();
-        GameManager.i.fileScript.WriteSaveData(new LoadGameState() { gameState = GameState.MetaGame, restorePoint = restorePointInput });
-        GameManager.i.fileScript.SaveGame();
+        GameManager.i.fileScript.WriteSaveData(new LoadGameState() { gameState = GameState.MetaGame, restorePoint = restorePointInput }, SaveType.PlayerSave);
+        GameManager.i.fileScript.SaveGame(SaveType.PlayerSave);
         //how long did it take?
         long timeElapsed = GameManager.i.testScript.StopTimer();
         Debug.LogFormat("[Per] ControlManager.cs -> ProcessSaveGame: SAVE GAME took {0} ms", timeElapsed);
@@ -529,8 +529,8 @@ public class ControlManager : MonoBehaviour
     {
         //Debug -> time load game process
         GameManager.i.testScript.StartTimer();
-        GameManager.i.fileScript.WriteSaveData(new LoadGameState() { gameState = state, restorePoint = restore });
-        GameManager.i.fileScript.SaveGame(true);
+        GameManager.i.fileScript.WriteSaveData(new LoadGameState() { gameState = state, restorePoint = restore }, SaveType.AutoSave);
+        GameManager.i.fileScript.SaveGame(SaveType.AutoSave, true);
         //how long did it take?
         long timeElapsed = GameManager.i.testScript.StopTimer();
         Debug.LogFormat("[Per] ControlManager.cs -> ProcessSaveGame: SAVE GAME took {0} ms", timeElapsed);
@@ -579,6 +579,14 @@ public class ControlManager : MonoBehaviour
         GameManager.i.campaignScript.Reset();
         //change game state
         GameManager.i.inputScript.GameState = GameState.TutorialOptions;
+        //autoload last saved tutorial -> TO DO -> give options for all tutorials including their current states
+        GameManager.i.testScript.StartTimer();
+        if (GameManager.i.fileScript.ReadSaveData(SaveType.Tutorial) == true)
+        {
+            GameManager.i.fileScript.LoadSaveData(SaveType.Tutorial);
+        }
+        long timeElapsed = GameManager.i.testScript.StopTimer();
+        Debug.LogFormat("[Per] ControlManager.cs -> ProcessTutorialOptions: LOAD TUTORIAL took {0} ms", timeElapsed);
         //set up first level in campaign
         GameManager.i.InitialiseTutorial();
     }
@@ -608,8 +616,18 @@ public class ControlManager : MonoBehaviour
     private void ProcessTutorialReturn()
     {
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessTutorialReturn: ProcessTutorialReturn to MainMenu selected{0}", "\n");
+
         //stop animations
         GameManager.i.animateScript.StopAnimations();
+        //update dictionary
+        GameManager.i.dataScript.UpdateTutorialIndex(GameManager.i.tutorialScript.tutorial.name, GameManager.i.tutorialScript.index);
+        //Debug -> time save game process
+        GameManager.i.testScript.StartTimer();
+        GameManager.i.fileScript.WriteSaveData(new LoadGameState() { gameState = GameState.Tutorial, restorePoint = RestorePoint.None }, SaveType.Tutorial);
+        GameManager.i.fileScript.SaveGame(SaveType.Tutorial);
+        //how long did it take?
+        long timeElapsed = GameManager.i.testScript.StopTimer();
+        Debug.LogFormat("[Per] ControlManager.cs -> ProcessTutorialReturn: SAVE GAME took {0} ms", timeElapsed);
         //activate menu
         EventManager.i.PostNotification(EventType.OpenMainMenu, this, MainMenuType.Main, "GameManager.cs -> ProcessTutorialReturn");
     }
@@ -667,8 +685,8 @@ public class ControlManager : MonoBehaviour
 
         //Debug -> time load game process
         GameManager.i.testScript.StartTimer();
-        GameManager.i.fileScript.WriteSaveData(new LoadGameState() { gameState = GameState.PlayGame, restorePoint = RestorePoint.None });
-        GameManager.i.fileScript.SaveGame();
+        GameManager.i.fileScript.WriteSaveData(new LoadGameState() { gameState = GameState.PlayGame, restorePoint = RestorePoint.None }, SaveType.PlayerSave);
+        GameManager.i.fileScript.SaveGame(SaveType.PlayerSave);
         //how long did it take?
         long timeElapsed = GameManager.i.testScript.StopTimer();
         Debug.LogFormat("[Per] ControlManager.cs -> ProcessSaveGameAndReturn: SAVE GAME took {0} ms", timeElapsed);

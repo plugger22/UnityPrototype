@@ -18,10 +18,12 @@ public class FileManager : MonoBehaviour
     //main file operations
     private static readonly string SAVE_FILE = "savefile.json";
     private static readonly string AUTO_FILE = "autoSaveFile.json";
+    private static readonly string TUTORIAL_FILE = "tutorial.json";
     private Save write;
     private Save read;
     private string filenamePlayer;
     private string filenameAuto;
+    private string filenameTutorial;
     private string jsonWrite;
     private string jsonRead;
     private byte[] soupWrite;               //encryption out
@@ -54,6 +56,7 @@ public class FileManager : MonoBehaviour
     {
         filenamePlayer = Path.Combine(Application.persistentDataPath, SAVE_FILE);
         filenameAuto = Path.Combine(Application.persistentDataPath, AUTO_FILE);
+        filenameTutorial = Path.Combine(Application.persistentDataPath, TUTORIAL_FILE);
         filenameStory = Path.Combine(Application.persistentDataPath, STORYDATA_FILE);
         filenameHelp = Path.Combine(Application.persistentDataPath, STORYHELP_FILE);
         filenamePool = Path.Combine(Application.persistentDataPath, ACTORPOOL_FILE);
@@ -80,33 +83,43 @@ public class FileManager : MonoBehaviour
     /// <summary>
     /// copy inGame data to saveData
     /// </summary>
-    public void WriteSaveData(LoadGameState loadGameState)
+    public void WriteSaveData(LoadGameState loadGameState, SaveType saveType)
     {
         write = new Save();
-        //Sequentially write data
-        WriteGameStatus(loadGameState);
-        WriteSeedData();
-        WriteDataData();
-        WriteCampaignData();
-        WriteOptionData();
-        /*WriteTutorialData();*/
-        WritePlayerData();
-        WriteNemesisData();
-        WriteGameData();
-        WriteScenarioData();
-        WriteActorData();
-        WriteNodeData();
-        WriteConnectionData();
-        WriteGearData();
-        WriteContactData();
-        WriteAIData();
-        WriteTopicData();
-        WriteTargetData();
-        WriteStatisticsData();
-        WriteGUIData();
-        //only do so if gameState.MetaGame
-        if (write.gameStatus.gameState == GameState.MetaGame)
-        { WriteMetaData(); }
+        switch (saveType)
+        {
+            case SaveType.PlayerSave:
+            case SaveType.AutoSave:
+                //Sequentially write data
+                WriteGameStatus(loadGameState, saveType);
+                WriteSeedData();
+                WriteDataData();
+                WriteCampaignData();
+                WriteOptionData();
+                WritePlayerData();
+                WriteNemesisData();
+                WriteGameData();
+                WriteScenarioData();
+                WriteActorData();
+                WriteNodeData();
+                WriteConnectionData();
+                WriteGearData();
+                WriteContactData();
+                WriteAIData();
+                WriteTopicData();
+                WriteTargetData();
+                WriteStatisticsData();
+                WriteGUIData();
+                //only do so if gameState.MetaGame
+                if (write.gameStatus.gameState == GameState.MetaGame)
+                { WriteMetaData(); }
+                break;
+            case SaveType.Tutorial:
+                WriteGameStatus(loadGameState, saveType);
+                WriteTutorialData();
+                break;
+            default: Debug.LogWarningFormat("Unrecognised saveType \"{0}\"", saveType); break;
+        }
     }
     #endregion
 
@@ -115,11 +128,10 @@ public class FileManager : MonoBehaviour
     /// <summary>
     /// Save game method
     /// </summary>
-    public void SaveGame(bool isAutoSave = false)
+    public void SaveGame(SaveType saveType, bool isAutoSave = false)
     {
-        string filename;
-        if (isAutoSave == true) { filename = filenameAuto; }
-        else { filename = filenamePlayer; }
+        string filename = GetFileName(saveType);
+        //write data
         if (write != null)
         {
             if (string.IsNullOrEmpty(filename) == false)
@@ -170,12 +182,14 @@ public class FileManager : MonoBehaviour
     /// <summary>
     /// Read Save method, returns true if successful, false otherise
     /// </summary>
-    public bool ReadSaveData()
+    public bool ReadSaveData(SaveType saveType)
     {
         bool isSuccess = false;
-        string filename;
-        if (GameManager.i.isLoadAutoSave == true) { filename = filenameAuto; }
-        else { filename = filenamePlayer; }
+        string filename = GetFileName(saveType);
+
+        /*if (GameManager.i.isLoadAutoSave == true) { filename = filenameAuto; }
+        else { filename = filenamePlayer; }*/
+
         if (string.IsNullOrEmpty(filename) == false)
         {
             if (File.Exists(filename) == true)
@@ -184,7 +198,7 @@ public class FileManager : MonoBehaviour
                 {
                     //read data from File
                     try { jsonRead = File.ReadAllText(filename); }
-                    catch (Exception e) { Debug.LogErrorFormat("Failed to read TEXT FROM FILE, error \"{0}\"", e.Message); }
+                    catch (Exception e) { Debug.LogErrorFormat("Failed to read TEXT FROM FILE, error \"{0}\", file \"{1}\"", e.Message, filename); }
                     isSuccess = true;
                 }
                 else
@@ -192,7 +206,7 @@ public class FileManager : MonoBehaviour
                     //encrypted file
                     Rijndael crypto = new Rijndael();
                     try { soupRead = File.ReadAllBytes(filename); }
-                    catch (Exception e) { Debug.LogErrorFormat("Failed to read BYTES FROM FILE, error \"{0}\"", e.Message); }
+                    catch (Exception e) { Debug.LogErrorFormat("Failed to read BYTES FROM FILE, error \"{0}\", file \"{1}\"", e.Message, filename); }
                     jsonRead = crypto.Decrypt(soupRead, codeKey);
                     isSuccess = true;
                 }
@@ -202,6 +216,7 @@ public class FileManager : MonoBehaviour
                     try
                     {
                         read = JsonUtility.FromJson<Save>(jsonRead);
+                        Debug.LogFormat("[Fil] FileManager.cs -> ReadSaveGame: SAVE FILE LOADED from \"{0}\"{1}", filename, "\n");
                         return true;
                     }
                     catch (Exception e)
@@ -221,7 +236,7 @@ public class FileManager : MonoBehaviour
     /// Load data from Save file back into game
     /// Returns LoadGameState to enable ControlManager.cs -> ProcessLoadGame to restore game to the correct place, eg. normal gameState.playGame or a specific restore point in the MetaGame sequence
     /// </summary>
-    public LoadGameState LoadSaveData()
+    public LoadGameState LoadSaveData(SaveType saveType)
     {
         LoadGameState loadGameState = new LoadGameState();
         if (read != null)
@@ -229,43 +244,87 @@ public class FileManager : MonoBehaviour
             GlobalSide playerSide = GameManager.i.dataScript.GetGlobalSide(read.gameData.playerSide);
             if (playerSide != null)
             {
-                loadGameState.gameState = read.gameStatus.gameState;
-                //side (player) at start
-                ReadDataData();
-                ReadOptionData();
-                ReadCampaignData();
-                ReadGameData(playerSide);
-                /*ReadTutorialData();*/
-                ReadSeedData();
-                //set up level based on loaded current scenario seed
-                GameManager.i.InitialiseLoadGame(playerSide.level);
-                ReadScenarioData();
-                ReadNodeData();
-                ReadNpcData();
-                ReadConnectionData();
-                ReadNemesisData();
-                ReadGearData();
-                ReadAIData();
-                ReadTopicData();
-                ReadActorData();
-                ValidateActorData();
-                ReadPlayerData();
-                ValidatePlayerData();
-                ReadContactData();
-                ReadTargetData();
-                ReadStatisticsData();
-                UpdateGUI(playerSide);
-                //only read metaGame back in if it's a metaGame save
-                if (read.gameStatus.gameState == GameState.MetaGame)
+                switch (saveType)
                 {
-                    ReadMetaGameData();
-                    loadGameState.restorePoint = read.gameStatus.restorePoint;
+                    case SaveType.PlayerSave:
+                    case SaveType.AutoSave:
+
+
+                        loadGameState.gameState = read.gameStatus.gameState;
+                        //side (player) at start
+                        ReadDataData();
+                        ReadOptionData();
+                        ReadCampaignData();
+                        ReadGameData(playerSide);
+                        ReadSeedData();
+                        //set up level based on loaded current scenario seed
+                        GameManager.i.InitialiseLoadGame(playerSide.level);
+                        ReadScenarioData();
+                        ReadNodeData();
+                        ReadNpcData();
+                        ReadConnectionData();
+                        ReadNemesisData();
+                        ReadGearData();
+                        ReadAIData();
+                        ReadTopicData();
+                        ReadActorData();
+                        ValidateActorData();
+                        ReadPlayerData();
+                        ValidatePlayerData();
+                        ReadContactData();
+                        ReadTargetData();
+                        ReadStatisticsData();
+                        UpdateGUI(playerSide);
+                        //only read metaGame back in if it's a metaGame save
+                        if (read.gameStatus.gameState == GameState.MetaGame)
+                        {
+                            ReadMetaGameData();
+                            loadGameState.restorePoint = read.gameStatus.restorePoint;
+                        }
+                        Debug.LogFormat("[Fil] FileManager.cs -> LoadSaveData: Saved Game Data has been LOADED (gameState {0}, restorePoint {1}){2}", read.gameStatus.gameState, read.gameStatus.restorePoint, "\n");
+                        break;
+                    case SaveType.Tutorial:
+                        loadGameState.gameState = read.gameStatus.gameState;
+                        if (loadGameState.gameState == GameState.Tutorial)
+                        {
+                            ReadGameData(playerSide);
+                            ReadTutorialData();
+                        }
+                        else { Debug.LogWarningFormat("Invalid gameState \"{0}\" (should be GameState.Tutorial)", loadGameState.gameState); }
+                        break;
+                    default: Debug.LogWarningFormat("Unrecognised saveType \"{0}\"", saveType); break;
                 }
-                Debug.LogFormat("[Fil] FileManager.cs -> LoadSaveData: Saved Game Data has been LOADED (gameState {0}, restorePoint {1}){2}", read.gameStatus.gameState, read.gameStatus.restorePoint, "\n");
             }
             else { Debug.LogError("Invalid playerSide (Null)"); }
         }
         return loadGameState;
+    }
+    #endregion
+
+
+    #region GetFileName
+    /// <summary>
+    /// returns appropriate filename for save type. Returns null if a problem
+    /// </summary>
+    /// <param name="saveType"></param>
+    /// <returns></returns>
+    private string GetFileName(SaveType saveType)
+    {
+        string filename = null;
+        //autosave
+        if (GameManager.i.isLoadAutoSave == true) { filename = filenameAuto; }
+        else
+        {
+            //determine filename
+            switch (saveType)
+            {
+                case SaveType.PlayerSave: filename = filenamePlayer; break;
+                case SaveType.AutoSave: filename = filenameAuto; break;
+                case SaveType.Tutorial: filename = filenameTutorial; break;
+                default: Debug.LogWarningFormat("Unrecognised saveType \"{0}\"", saveType); break;
+            }
+        }
+        return filename;
     }
     #endregion
 
@@ -277,8 +336,9 @@ public class FileManager : MonoBehaviour
     /// <summary>
     /// records game status in order to know whether a normal save/load operation (gameState.playGame) or a MetaGame one (gameState.MetaGame and restorePoint required)
     /// </summary>
-    private void WriteGameStatus(LoadGameState loadGameState)
+    private void WriteGameStatus(LoadGameState loadGameState, SaveType saveType)
     {
+        write.gameStatus.saveType = saveType;
         write.gameStatus.gameState = loadGameState.gameState;
         write.gameStatus.restorePoint = loadGameState.restorePoint;
         write.gameStatus.turn = GameManager.i.turnScript.Turn;
@@ -309,6 +369,14 @@ public class FileManager : MonoBehaviour
         write.tutorialData.tutorialName = GameManager.i.tutorialScript.tutorial.name;
         write.tutorialData.setName = GameManager.i.tutorialScript.set.name;
         write.tutorialData.index = GameManager.i.tutorialScript.index;
+        //dictionary -> duplicated in WriteDataData (needed due to different save configurations)
+        Dictionary<string, TutorialData> dictOfTutorialData = GameManager.i.dataScript.GetDictOfTutorialData();
+        if (dictOfTutorialData != null)
+        {
+            foreach (var item in dictOfTutorialData)
+            { write.dataData.listOfTutorialData.Add(item.Value); }
+        }
+        else { Debug.LogError("Invalid dictOfTutorialData (Null)"); }
     }
     #endregion
 
@@ -1331,6 +1399,7 @@ public class FileManager : MonoBehaviour
         #endregion
 
         #region Tutorials
+        //NOTE: duplicated in WriteTutorialData (needed due to different save configurations)
         Dictionary<string, TutorialData> dictOfTutorialData = GameManager.i.dataScript.GetDictOfTutorialData();
         if (dictOfTutorialData != null)
         {
@@ -2127,6 +2196,27 @@ public class FileManager : MonoBehaviour
             else { Debug.LogWarningFormat("Invalid read.tutorialData.index \"{0}\"", read.tutorialData.index); }
         }
         else { Debug.LogWarningFormat("Tutorial not found in dictionary for tutorial.name \"{0}\"", read.tutorialData.tutorialName); }
+        //dictionary -> duplicated in ReadDatadata (needed due to different save configurations)
+        Dictionary<string, TutorialData> dictOfTutorialData = GameManager.i.dataScript.GetDictOfTutorialData();
+        if (dictOfTutorialData != null)
+        {
+            //clear dicts
+            dictOfTutorialData.Clear();
+            //copy data across -> NOTE: tutorialName used to populate both dictionaries
+            for (int i = 0; i < read.dataData.listOfTutorialData.Count; i++)
+            {
+                TutorialData tutData = read.dataData.listOfTutorialData[i];
+                if (tutData != null)
+                {
+                    try
+                    { dictOfTutorialData.Add(tutData.tutorialName, tutData); }
+                    catch (ArgumentException)
+                    { Debug.LogWarningFormat("Duplicate tutorialName \"{0}\"", tutData.tutorialName); }
+                }
+                else { Debug.LogWarningFormat("Invalid tutorialData (Null) for listOfTutorialData[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid dictOfTutorialData (Null)"); }
     }
     #endregion
 
@@ -2426,7 +2516,7 @@ public class FileManager : MonoBehaviour
         { GameManager.i.turnScript.currentSide = currentSide; }
         else { Debug.LogError("Invalid currentSide (Null)"); }
         GameManager.i.turnScript.haltExecution = read.gameData.haltExecution;
-
+        //NOTE: no need to read in saveType, included in save file for reference only
 
     }
     #endregion
@@ -3384,6 +3474,7 @@ public class FileManager : MonoBehaviour
         #endregion
 
         #region Tutorials
+        //Note: duplicated in ReadTutorialData (needed as different save configurations)
         Dictionary<string, TutorialData> dictOfTutorialData = GameManager.i.dataScript.GetDictOfTutorialData();
         if (dictOfTutorialData != null)
         {

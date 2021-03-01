@@ -45,6 +45,7 @@ public class Save
 [System.Serializable]
 public class SaveGameStatus
 {
+    public SaveType saveType;                           //write only, included for reference, not read back on load
     public GameState gameState;
     public RestorePoint restorePoint;                   //only relevant if gameState.MetaGame. Ignored otherwise
     public int turn;                                    //info purposes only (top of the file, easy to read)
@@ -357,6 +358,8 @@ public class SaveTutorialData
     public string tutorialName;
     public string setName;
     public int index;
+    //Tutorial Dict (duplicated in SaveDataData -> duplication required as possible different save configurations)
+    public List<TutorialData> listOfTutorialData = new List<TutorialData>();
 }
 #endregion
 
