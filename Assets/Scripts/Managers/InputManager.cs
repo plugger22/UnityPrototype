@@ -1086,6 +1086,10 @@ public class InputManager : MonoBehaviour
         //backgrounds
         builder.AppendLine();
         builder.Append(GameManager.i.modalGUIScript.DebugDisplayBackgrounds());
+        //save flag
+        builder.AppendLine();
+        builder.AppendFormat(" - FileManager{0}", "\n");
+        builder.AppendFormat(" isSaveRequired: {0}{1}", GameManager.i.fileScript.CheckSaveRequired(), "\n");
         return builder.ToString();
     }
     #endregion

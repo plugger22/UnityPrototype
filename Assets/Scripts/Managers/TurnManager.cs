@@ -314,6 +314,11 @@ public class TurnManager : MonoBehaviour
                     //stop animation
                     GameManager.i.animateScript.StopAnimations();
                 }
+                else
+                {
+                    //Set flag indicating unsaved progress
+                    GameManager.i.fileScript.SetSaveRequired();
+                }
 
                 //set flag to prevent multiple calls to new turn (Set false at end of coroutine.StartPipeline)
                 isNewTurn = true;
@@ -722,12 +727,12 @@ public class TurnManager : MonoBehaviour
             //exceed action limit? (total includes any temporary adjustments)
             remainder = _actionsTotal - _actionsCurrent;
         }
-        /*//cached actions (so player can't keep regenerating new gear picks within an action)
-        GameManager.instance.gearScript.ResetCachedGearPicks();*/
         if (remainder < 0)
         { Debug.LogError("_actionsTotal exceeded by _actionsCurrent"); }
         else
         { EventManager.i.PostNotification(EventType.ChangeActionPoints, this, remainder, "TurnManager.cs -> UseAction"); }
+        //set save flag to indicate there is unsaved progress
+        GameManager.i.fileScript.SetSaveRequired();
     }
 
     /// <summary>

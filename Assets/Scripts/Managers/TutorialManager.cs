@@ -83,6 +83,7 @@ public class TutorialManager : MonoBehaviour
             {
                 //set city
                 GameManager.i.cityScript.SetCity(tutorial.scenario.city);
+                Debug.LogFormat("[Tut] TutorialManager.cs -> InitialiseTutorial: city \"{0}\" loaded{1}", tutorial.scenario.city.tag, "\n");
                 //get index
                 index = GameManager.i.dataScript.GetTutorialIndex(tutorial.name);
                 if (index > -1)

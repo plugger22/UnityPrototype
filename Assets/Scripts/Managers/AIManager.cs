@@ -435,7 +435,7 @@ public class AIManager : MonoBehaviour
         decisionCurfew = GameManager.i.dataScript.GetAIDecision("Curfew");
         decisionRoboCop = GameManager.i.dataScript.GetAIDecision("RoboCops");
         decisionDrones = GameManager.i.dataScript.GetAIDecision("DroneWarfare");
-        decisionHamper = GameManager.i.dataScript.GetAIDecision("XmasHampers");
+        decisionHamper = GameManager.i.dataScript.GetAIDecision("FoodHampers");
         decisionAusterity = GameManager.i.dataScript.GetAIDecision("AusterityPymnt");
         decisionMedical = GameManager.i.dataScript.GetAIDecision("MedicalCare");
         decisionBlindEye = GameManager.i.dataScript.GetAIDecision("BlindEye");

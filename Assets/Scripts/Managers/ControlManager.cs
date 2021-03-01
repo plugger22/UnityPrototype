@@ -622,18 +622,26 @@ public class ControlManager : MonoBehaviour
         Debug.LogFormat("[Ctrl] ControlManager.cs -> ProcessGameReturn: ProcessGameReturn to MainMenu selected{0}", "\n");
         //stop animations
         GameManager.i.animateScript.StopAnimations();
-
-        ModalConfirmDetails details = new ModalConfirmDetails()
+        //save dialogue if there is unsaved progress
+        if (GameManager.i.fileScript.CheckSaveRequired() == true)
         {
-            topText = "Any recent progress will be lost unless Saved",
-            bottomText = "Save progress?",
-            buttonFalse = "Don't Save",
-            buttonTrue = "SAVE",
-            eventFalse = EventType.OpenMainMenu,
-            eventTrue = EventType.SaveGameAndReturn
-        };
-        //open confirmation dialogue
-        EventManager.i.PostNotification(EventType.ConfirmOpen, this, details, "ControlManager.cs -> ProcessGameReturn");
+            ModalConfirmDetails details = new ModalConfirmDetails()
+            {
+                topText = "Any recent progress will be lost unless Saved",
+                bottomText = "Save progress?",
+                buttonFalse = "Don't Save",
+                buttonTrue = "SAVE",
+                eventFalse = EventType.OpenMainMenu,
+                eventTrue = EventType.SaveGameAndReturn
+            };
+            //open confirmation dialogue
+            EventManager.i.PostNotification(EventType.ConfirmOpen, this, details, "ControlManager.cs -> ProcessGameReturn");
+        }
+        else
+        {
+            //returns to main menu (nothing to save, hence no save dialogue
+            EventManager.i.PostNotification(EventType.OpenMainMenu, this, MainMenuType.Main, "ControlManager.cs -> ProcessGameReturn");
+        }
     }
 
     /// <summary>

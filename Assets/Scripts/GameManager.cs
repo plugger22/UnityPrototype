@@ -998,6 +998,7 @@ public class GameManager : MonoBehaviour
                 //set session flag
                 isSession = true;
             }
+            else { InitialiseMethods(listOfLevelMethods); }
         }
         else
         {
@@ -1012,6 +1013,7 @@ public class GameManager : MonoBehaviour
                 //set session flag
                 isSession = true;
             }
+            else { InitialiseWithPerformanceMonitoring(listOfLevelMethods); }
             DisplayTotalTime();
         }
         //do a final redraw before game start

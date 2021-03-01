@@ -14,6 +14,7 @@ using UnityEngine;
 /// </summary>
 public class FileManager : MonoBehaviour
 {
+
     //main file operations
     private static readonly string SAVE_FILE = "savefile.json";
     private static readonly string AUTO_FILE = "autoSaveFile.json";
@@ -35,6 +36,8 @@ public class FileManager : MonoBehaviour
     private string filenameStory;
     private string filenameHelp;
     private string filenamePool;
+
+    private bool isSaveNeeded;                          //save flag, set false every time game saved, true every time player uses a action (so code can see if there is progress that needs saving)
 
     //fast access
     GlobalSide globalAuthority;
@@ -134,7 +137,11 @@ public class FileManager : MonoBehaviour
                 if (GameManager.i.isEncrypted == false)
                 {
                     //create new file
-                    try { File.WriteAllText(filename, jsonWrite); }
+                    try
+                    {
+                        File.WriteAllText(filename, jsonWrite);
+                        isSaveNeeded = false;
+                    }
                     catch (Exception e) { Debug.LogErrorFormat("Failed to write TEXT FROM FILE, error \"{0}\"", e.Message); }
                     Debug.LogFormat("[Fil] FileManager.cs -> SaveGame: GAME SAVED to \"{0}\"{1}", filename, "\n");
                 }
@@ -143,7 +150,11 @@ public class FileManager : MonoBehaviour
                     //encrypt save file
                     Rijndael crypto = new Rijndael();
                     soupWrite = crypto.Encrypt(jsonWrite, codeKey);
-                    try { File.WriteAllBytes(filename, soupWrite); }
+                    try
+                    {
+                        File.WriteAllBytes(filename, soupWrite);
+                        isSaveNeeded = false;
+                    }
                     catch (Exception e) { Debug.LogErrorFormat("Failed to write BYTES TO FILE, error \"{0}\"", e.Message); }
                     Debug.LogFormat("[Fil] FileManager.cs -> SaveGame: Encrypted GAME SAVED to \"{0}\"{1}", filename, "\n");
                 }
@@ -220,8 +231,8 @@ public class FileManager : MonoBehaviour
             {
                 loadGameState.gameState = read.gameStatus.gameState;
                 //side (player) at start
-                ReadOptionData();
                 ReadDataData();
+                ReadOptionData();
                 ReadCampaignData();
                 ReadGameData(playerSide);
                 /*ReadTutorialData();*/
@@ -2179,12 +2190,16 @@ public class FileManager : MonoBehaviour
         if (read.optionData.isSubordinates == true)
         {
             GameManager.i.debugScript.optionSubordinates = "Subordinates OFF";
-            GameManager.i.featureScript.ToggleOnMapActors(true);
+            //do except if loading at start
+            if (GameManager.i.inputScript.GameState != GameState.LoadAtStart)
+            { GameManager.i.featureScript.ToggleOnMapActors(true); }
         }
         else
         {
             GameManager.i.debugScript.optionSubordinates = "Subordinates ON";
-            GameManager.i.featureScript.ToggleOnMapActors(false);
+            //do except if loading at start
+            if (GameManager.i.inputScript.GameState != GameState.LoadAtStart)
+            { GameManager.i.featureScript.ToggleOnMapActors(false); }
         }
         if (read.optionData.isDecisions == true)
         { GameManager.i.debugScript.optionDecisions = "Decisions OFF"; }
@@ -4386,6 +4401,23 @@ public class FileManager : MonoBehaviour
     //
     // - - - Utilities - - -
     //
+
+    #region CheckSaveRequired
+    /// <summary>
+    /// returns true if there is progress since the last save (save needed), false otherwise. Everytime player takes an action they set this flag, saving resets it
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckSaveRequired()
+    { return isSaveNeeded; }
+    #endregion
+
+    #region SetSaveRequired
+    /// <summary>
+    /// Sets isSaveNeeded to true to indicate unsaved progress present
+    /// </summary>
+    public void SetSaveRequired()
+    { isSaveNeeded = true; }
+    #endregion
 
     #region TransferMainInfoData
     /// <summary>
