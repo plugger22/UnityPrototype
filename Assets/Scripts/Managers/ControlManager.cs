@@ -579,14 +579,17 @@ public class ControlManager : MonoBehaviour
         GameManager.i.campaignScript.Reset();
         //change game state
         GameManager.i.inputScript.GameState = GameState.TutorialOptions;
-        //autoload last saved tutorial -> TO DO -> give options for all tutorials including their current states
-        GameManager.i.testScript.StartTimer();
-        if (GameManager.i.fileScript.ReadSaveData(SaveType.Tutorial) == true)
+        //autoload last saved tutorial (if not already loaded) -> TO DO -> give options for all tutorials including their current states
+        if (GameManager.i.fileScript.CheckTutorialSaveLoaded() == false)
         {
-            GameManager.i.fileScript.LoadSaveData(SaveType.Tutorial);
+            GameManager.i.testScript.StartTimer();
+            if (GameManager.i.fileScript.ReadSaveData(SaveType.Tutorial) == true)
+            {
+                GameManager.i.fileScript.LoadSaveData(SaveType.Tutorial);
+            }
+            long timeElapsed = GameManager.i.testScript.StopTimer();
+            Debug.LogFormat("[Per] ControlManager.cs -> ProcessTutorialOptions: LOAD TUTORIAL took {0} ms", timeElapsed);
         }
-        long timeElapsed = GameManager.i.testScript.StopTimer();
-        Debug.LogFormat("[Per] ControlManager.cs -> ProcessTutorialOptions: LOAD TUTORIAL took {0} ms", timeElapsed);
         //set up first level in campaign
         GameManager.i.InitialiseTutorial();
     }

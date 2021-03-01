@@ -47,3 +47,14 @@ UnityEngine.Debug:LogError(Object)
 	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:329)
 	UnityEngine.EventSystems.EventSystem:Update()
 	City seed 256 -> Simulation, Eurasia
+
+Dev seed 62420 -> Monday, 1 March 2021 6:02 PM
+City seed 24621 -> Simulation, Eurasia
+
+Dev seed 26321 -> Monday, 1 March 2021 6:05 PM
+City seed 19416 -> Simulation, Eurasia
+City seed 6116 -> Simulation, Eurasia
+
+Dev seed 8836 -> Monday, 1 March 2021 6:20 PM
+City seed 20302 -> Simulation, Eurasia
+City seed 33907 -> Simulation, Eurasia

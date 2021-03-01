@@ -40,6 +40,7 @@ public class FileManager : MonoBehaviour
     private string filenamePool;
 
     private bool isSaveNeeded;                          //save flag, set false every time game saved, true every time player uses a action (so code can see if there is progress that needs saving)
+    private bool isTutorialLoaded;                      //flag that is set true once tutorial saved data has been loaded at least once per session (prevents multiple loading of tutorial saved data during a session)
 
     //fast access
     GlobalSide globalAuthority;
@@ -54,6 +55,7 @@ public class FileManager : MonoBehaviour
     /// </summary>
     public void Initialise(GameState state)
     {
+        isTutorialLoaded = false;
         filenamePlayer = Path.Combine(Application.persistentDataPath, SAVE_FILE);
         filenameAuto = Path.Combine(Application.persistentDataPath, AUTO_FILE);
         filenameTutorial = Path.Combine(Application.persistentDataPath, TUTORIAL_FILE);
@@ -241,14 +243,14 @@ public class FileManager : MonoBehaviour
         LoadGameState loadGameState = new LoadGameState();
         if (read != null)
         {
-            GlobalSide playerSide = GameManager.i.dataScript.GetGlobalSide(read.gameData.playerSide);
-            if (playerSide != null)
-            {
-                switch (saveType)
-                {
-                    case SaveType.PlayerSave:
-                    case SaveType.AutoSave:
 
+            switch (saveType)
+            {
+                case SaveType.PlayerSave:
+                case SaveType.AutoSave:
+                    GlobalSide playerSide = GameManager.i.dataScript.GetGlobalSide(read.gameData.playerSide);
+                    if (playerSide != null)
+                    {
 
                         loadGameState.gameState = read.gameStatus.gameState;
                         //side (player) at start
@@ -282,20 +284,21 @@ public class FileManager : MonoBehaviour
                             loadGameState.restorePoint = read.gameStatus.restorePoint;
                         }
                         Debug.LogFormat("[Fil] FileManager.cs -> LoadSaveData: Saved Game Data has been LOADED (gameState {0}, restorePoint {1}){2}", read.gameStatus.gameState, read.gameStatus.restorePoint, "\n");
-                        break;
-                    case SaveType.Tutorial:
-                        loadGameState.gameState = read.gameStatus.gameState;
-                        if (loadGameState.gameState == GameState.Tutorial)
-                        {
-                            ReadGameData(playerSide);
-                            ReadTutorialData();
-                        }
-                        else { Debug.LogWarningFormat("Invalid gameState \"{0}\" (should be GameState.Tutorial)", loadGameState.gameState); }
-                        break;
-                    default: Debug.LogWarningFormat("Unrecognised saveType \"{0}\"", saveType); break;
-                }
+                    }
+                    else { Debug.LogError("Invalid playerSide (Null)"); }
+                    break;
+                case SaveType.Tutorial:
+                    loadGameState.gameState = read.gameStatus.gameState;
+                    if (loadGameState.gameState == GameState.Tutorial)
+                    {
+                        ReadTutorialData();
+                        isTutorialLoaded = true;
+                    }
+                    else { Debug.LogWarningFormat("Invalid gameState \"{0}\" (should be GameState.Tutorial)", loadGameState.gameState); }
+                    break;
+                default: Debug.LogWarningFormat("Unrecognised saveType \"{0}\"", saveType); break;
             }
-            else { Debug.LogError("Invalid playerSide (Null)"); }
+
         }
         return loadGameState;
     }
@@ -4508,6 +4511,15 @@ public class FileManager : MonoBehaviour
     /// </summary>
     public void SetSaveRequired()
     { isSaveNeeded = true; }
+    #endregion
+
+    #region CheckTutorialSaveLoaded
+    /// <summary>
+    /// returns true if tutorial has already been loaded this session, false otherwise
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckTutorialSaveLoaded()
+    { return isTutorialLoaded; }
     #endregion
 
     #region TransferMainInfoData
