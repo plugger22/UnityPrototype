@@ -12,6 +12,9 @@ public class Tutorial : ScriptableObject
     public GlobalSide side;
     public Scenario scenario;
 
+    [Tooltip("sprite of character who is conducting tutorial")]
+    public Sprite sprite;
+
     [Tooltip("List of TutorialSets that make up the tutorial in order of use")]
     public List<TutorialSet> listOfSets;
 

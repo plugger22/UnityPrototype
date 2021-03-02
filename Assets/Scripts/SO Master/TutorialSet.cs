@@ -19,4 +19,7 @@ public class TutorialSet : ScriptableObject
 
     [Tooltip("List of features switched OFF for this tutorial set")]
     public List<TutorialFeature> listOfFeaturesOff;
+
+    [Tooltip("List of Tutorial items for this set. ORDER MATTERS")]
+    public List<TutorialItem> listOfTutorialItems;
 }

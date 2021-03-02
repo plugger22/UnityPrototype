@@ -69,6 +69,12 @@ public class LoadManager : MonoBehaviour
     [Header("NameSets -> ToolManager Duplicates")]
     public NameSet[] arrayOfNameSets;
 
+    [Header("Tutorials")]
+    public Tutorial[] arrayOfTutorials;
+    public TutorialSet[] arrayOfTutorialSets;
+    public TutorialFeature[] arrayOfTutorialFeatures;
+    public TutorialItem[] arrayOfTutorialItems;
+    public TutorialType[] arrayOfTutorialTypes;
 
     [Header("Personality Factors - ORDER MATTERS")]
     public Factor[] arrayOfFiveFactorModel;
@@ -176,10 +182,7 @@ public class LoadManager : MonoBehaviour
     public MetaOption[] arrayOfSubBoss2Options;
     public MetaOption[] arrayOfSubBoss3Options;
 
-    [Header("Tutorials")]
-    public Tutorial[] arrayOfTutorials;
-    public TutorialSet[] arrayOfTutorialSets;
-    public TutorialFeature[] arrayOfTutorialFeatures;
+
 
     [Header("InitialiseLate")]
     public ManageActor[] arrayOfManageActors;
@@ -210,7 +213,6 @@ public class LoadManager : MonoBehaviour
     [HideInInspector] public MetaOption[] arrayOfMetaOptions;
     [HideInInspector] public Billboard[] arrayOfBillboards;
     #endregion
-
 
 
     #region InitialiseStart
@@ -1087,6 +1089,20 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTutorialFeatures has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TutorialFeatures present"); }
+        //
+        // - - - Tutorial Items (not stored in a collection)
+        //
+        numArray = arrayOfTutorialItems.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTutorialItems has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TutorialItems present"); }
+        //
+        // - - - Tutorial Types (not stored in a collection)
+        //
+        numArray = arrayOfTutorialTypes.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTutorialTypes has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TutorialTypes present"); }
     }
     #endregion
 

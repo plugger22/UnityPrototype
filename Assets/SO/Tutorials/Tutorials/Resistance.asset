@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   side: {fileID: 11400000, guid: aad17a2dc5fbb0a48a2ac67990904e7f, type: 2}
   scenario: {fileID: 11400000, guid: 7bbaf2ea70a3f9948a66adac71da2d2c, type: 2}
+  sprite: {fileID: 21300000, guid: 0990750233d69384f832d111b8981353, type: 3}
   listOfSets:
   - {fileID: 11400000, guid: 8684e764709be71419fb07dae908d1e0, type: 2}
   - {fileID: 11400000, guid: 0e6e4f4202fc8ce4c81bc74b8e59543c, type: 2}

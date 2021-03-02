@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b75efcd146b11ff49b6e05dbc6248f10, type: 3}
   m_Name: Tutorial
   m_EditorClassIdentifier: 
-  tag: Simulation
+  tag: VirtualCity
   realLife: Tutorlal
   descriptor: Training ground
   Arc: {fileID: 11400000, guid: 9ceafc034aa45664a9c4b564298e540e, type: 2}
