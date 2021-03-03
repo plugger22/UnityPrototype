@@ -119,6 +119,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public BillboardUI billboardScript;               //Billboard UI
     [HideInInspector] public AdvertUI advertScript;                     //Advert UI
     [HideInInspector] public ModalTabbedUI tabbedUIScript;              //Tabbed UI
+    [HideInInspector] public TutorialUI tutorialUIScript;               //Tutorial UI 
     #endregion
 
 
@@ -298,6 +299,7 @@ public class GameManager : MonoBehaviour
         billboardScript = BillboardUI.Instance();
         advertScript = AdvertUI.Instance();
         tabbedUIScript = ModalTabbedUI.Instance();
+        tutorialUIScript = TutorialUI.Instance();
         //Error Checking
         Debug.Assert(startScript != null, "Invalid startScript (Null)");
         Debug.Assert(levelScript != null, "Invalid levelScript (Null)");
@@ -388,6 +390,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(billboardScript != null, "Invalid billboardScript (Null)");
         Debug.Assert(advertScript != null, "Invalid advertScript (Null)");
         Debug.Assert(tabbedUIScript != null, "Invalid tabbedUIScript (Null)");
+        Debug.Assert(tutorialUIScript != null, "Invalid tutorialUIScript (Null)");
         //set up list of delegates
         InitialiseStartSequence();
         //sets this to not be destroyed when reloading a scene
@@ -834,6 +837,10 @@ public class GameManager : MonoBehaviour
         //TabbedUI
         startMethod.handler = tabbedUIScript.Initialise;
         startMethod.className = "TabbedUI";
+        listOfUIMethods.Add(startMethod);
+        //TutorialUI
+        startMethod.handler = tutorialUIScript.Initialise;
+        startMethod.className = "TutorialUI";
         listOfUIMethods.Add(startMethod);
         #endregion
 
