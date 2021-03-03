@@ -134,6 +134,8 @@ public class ControlManager : MonoBehaviour
     // - - - Event methods - - -
     //
 
+    #region Process...
+
     #region ProcessNewGame
     /// <summary>
     /// New Game
@@ -789,6 +791,7 @@ public class ControlManager : MonoBehaviour
     }
     #endregion
 
+    #endregion
 
     #region Utilities...
     //

@@ -1,6 +1,7 @@
 ﻿using gameAPI;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,10 +28,20 @@ public class TutorialUI : MonoBehaviour
     public Button button9;
 
     #region Private...
-
+    //button sprites
+    private TutorialButtonInteraction interact0;
+    private TutorialButtonInteraction interact1;
+    private TutorialButtonInteraction interact2;
+    private TutorialButtonInteraction interact3;
+    private TutorialButtonInteraction interact4;
+    private TutorialButtonInteraction interact5;
+    private TutorialButtonInteraction interact6;
+    private TutorialButtonInteraction interact7;
+    private TutorialButtonInteraction interact8;
+    private TutorialButtonInteraction interact9;
     //collections
     private List<Button> listOfButtons = new List<Button>();
-    private List<ButtonInteraction> listOfButtonInteractions = new List<ButtonInteraction>();
+    private List<TutorialButtonInteraction> listOfInteractions = new List<TutorialButtonInteraction>();
 
     #endregion
 
@@ -71,6 +82,7 @@ public class TutorialUI : MonoBehaviour
             case GameState.LoadAtStart:
             case GameState.StartUp:
                 SubInitialiseFastAccess();
+                SubInitialiseComponents();
                 SubInitialiseAll();
                 SubInitialiseEvents();
                 break;
@@ -99,11 +111,39 @@ public class TutorialUI : MonoBehaviour
     }
     #endregion
 
+    #region SubInitaliseComponents
+    private void SubInitialiseComponents()
+    {
+        //button interaction components -> image sprite
+        interact0 = button0.GetComponent<TutorialButtonInteraction>();
+        interact1 = button1.GetComponent<TutorialButtonInteraction>();
+        interact2 = button2.GetComponent<TutorialButtonInteraction>();
+        interact3 = button3.GetComponent<TutorialButtonInteraction>();
+        interact4 = button4.GetComponent<TutorialButtonInteraction>();
+        interact5 = button5.GetComponent<TutorialButtonInteraction>();
+        interact6 = button6.GetComponent<TutorialButtonInteraction>();
+        interact7 = button7.GetComponent<TutorialButtonInteraction>();
+        interact8 = button8.GetComponent<TutorialButtonInteraction>();
+        interact9 = button9.GetComponent<TutorialButtonInteraction>();
+        //asserts
+        Debug.Assert(interact0 != null, "Invalid interact0 (Null)");
+        Debug.Assert(interact1 != null, "Invalid interact1 (Null)");
+        Debug.Assert(interact2 != null, "Invalid interact2 (Null)");
+        Debug.Assert(interact3 != null, "Invalid interact3 (Null)");
+        Debug.Assert(interact4 != null, "Invalid interact4 (Null)");
+        Debug.Assert(interact5 != null, "Invalid interact5 (Null)");
+        Debug.Assert(interact6 != null, "Invalid interact6 (Null)");
+        Debug.Assert(interact7 != null, "Invalid interact7 (Null)");
+        Debug.Assert(interact8 != null, "Invalid interact8 (Null)");
+        Debug.Assert(interact9 != null, "Invalid interact9 (Null)");
+    }
+    #endregion
+
     #region SubInitialiseAll
     private void SubInitialiseAll()
     {
         tutorialCanvas.gameObject.SetActive(false);
-        //set up lists
+        //set up lists -> listOfButtons
         listOfButtons.Add(button0);
         listOfButtons.Add(button1);
         listOfButtons.Add(button2);
@@ -114,6 +154,17 @@ public class TutorialUI : MonoBehaviour
         listOfButtons.Add(button7);
         listOfButtons.Add(button8);
         listOfButtons.Add(button9);
+        //button interaction components
+        listOfInteractions.Add(interact0);
+        listOfInteractions.Add(interact1);
+        listOfInteractions.Add(interact2);
+        listOfInteractions.Add(interact3);
+        listOfInteractions.Add(interact4);
+        listOfInteractions.Add(interact5);
+        listOfInteractions.Add(interact6);
+        listOfInteractions.Add(interact7);
+        listOfInteractions.Add(interact8);
+        listOfInteractions.Add(interact9);
     }
     #endregion
 
@@ -182,6 +233,23 @@ public class TutorialUI : MonoBehaviour
                         if (item != null)
                         {
                             listOfButtons[i].gameObject.SetActive(true);
+                            //type of item
+                            switch (item.tutorialType.name)
+                            {
+                                case "Dialogue":
+                                    listOfInteractions[i].buttonText.text = "D";
+                                    break;
+                                case "Goal":
+                                    listOfInteractions[i].buttonText.text = "G";
+                                    break;
+                                case "Information":
+                                    listOfInteractions[i].buttonText.text = "I";
+                                    break;
+                                case "Question":
+                                    listOfInteractions[i].buttonText.text = "?";
+                                    break;
+                                default: Debug.LogWarningFormat("Unrecognised item.TutorialType \"{0}\"", item.tutorialType.name); break;
+                            }
                         }
                         else { Debug.LogWarningFormat("Invalid listOfItems[{0}] (Null) for set \"{1}\"", i, set.name); }
                     }
