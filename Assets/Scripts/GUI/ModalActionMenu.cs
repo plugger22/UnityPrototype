@@ -49,17 +49,9 @@ public class ModalActionMenu : MonoBehaviour
     /*private string colourEffects;
     private string colourEnd;*/
 
-    private static ModalActionMenu modalActionMenu;
+    #region Static...
 
-    /// <summary>
-    /// initialisation
-    /// </summary>
-    private void Start()
-    {
-        offset = GameManager.i.guiScript.tooltipOffset * 2;
-        //register listener
-        EventManager.i.AddListener(EventType.CloseActionMenu, OnEvent, "ModalActionMenu");
-    }
+    private static ModalActionMenu modalActionMenu;
 
     /// <summary>
     /// Static instance so the Modal Menu can be accessed from any script
@@ -74,6 +66,17 @@ public class ModalActionMenu : MonoBehaviour
             { Debug.LogError("There needs to be one active ModalActionMenu script on a GameObject in your scene"); }
         }
         return modalActionMenu;
+    }
+    #endregion
+
+    /// <summary>
+    /// initialisation
+    /// </summary>
+    private void Start()
+    {
+        offset = GameManager.i.guiScript.tooltipOffset * 2;
+        //register listener
+        EventManager.i.AddListener(EventType.CloseActionMenu, OnEvent, "ModalActionMenu");
     }
 
     /// <summary>

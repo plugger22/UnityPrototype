@@ -235,6 +235,9 @@ public enum EventType
     TransitionBack,
     TransitionHqEvents,
     TransitionObjectives,
+    //TutorialUI
+    TutorialOpenUI,
+    TutorialCloseUI,
     //Topic UI
     TopicDisplayOpen,
     TopicDisplayClose,

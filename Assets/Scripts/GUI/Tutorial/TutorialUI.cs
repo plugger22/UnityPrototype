@@ -28,7 +28,9 @@ public class TutorialUI : MonoBehaviour
 
     #region Private...
 
-    private RectTransform mainTransform;
+    //collections
+    private List<Button> listOfButtons = new List<Button>();
+    private List<ButtonInteraction> listOfButtonInteractions = new List<ButtonInteraction>();
 
     #endregion
 
@@ -61,15 +63,16 @@ public class TutorialUI : MonoBehaviour
         switch (state)
         {
             case GameState.FollowOnInitialisation:
-            case GameState.TutorialOptions:
                 //do nothing
                 break;
+            case GameState.TutorialOptions:
             case GameState.LoadGame:
             case GameState.NewInitialisation:
             case GameState.LoadAtStart:
             case GameState.StartUp:
                 SubInitialiseFastAccess();
                 SubInitialiseAll();
+                SubInitialiseEvents();
                 break;
             default:
                 Debug.LogWarningFormat("Unrecognised GameState \"{0}\"", GameManager.i.inputScript.GameState);
@@ -99,20 +102,111 @@ public class TutorialUI : MonoBehaviour
     #region SubInitialiseAll
     private void SubInitialiseAll()
     {
-        mainTransform = mainPanel.GetComponent<RectTransform>();
-        if (mainTransform != null)
-        {
-            Vector3 position = mainTransform.position;
-            position.x = Screen.width - mainTransform.rect.width - 50;
-            position.y = mainTransform.rect.y;
-            position = Camera.main.ScreenToWorldPoint(position);
-            //move main panel to right hand side of screen
-            mainTransform.position = position;
-        }
-        else { Debug.LogError("Invalid mainTranform (Null)"); }
+        tutorialCanvas.gameObject.SetActive(false);
+        //set up lists
+        listOfButtons.Add(button0);
+        listOfButtons.Add(button1);
+        listOfButtons.Add(button2);
+        listOfButtons.Add(button3);
+        listOfButtons.Add(button4);
+        listOfButtons.Add(button5);
+        listOfButtons.Add(button6);
+        listOfButtons.Add(button7);
+        listOfButtons.Add(button8);
+        listOfButtons.Add(button9);
     }
     #endregion
 
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
+    {
+        //register listener
+        EventManager.i.AddListener(EventType.TutorialOpenUI, OnEvent, "TutorialUI.cs");
+        EventManager.i.AddListener(EventType.TutorialCloseUI, OnEvent, "TutorialUI.cs");
+    }
+    #endregion
+
+    #endregion
+
+
+
+    #region OnEvent
+    /// <summary>
+    /// Event Handler
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //select event type
+        switch (eventType)
+        {
+            case EventType.TutorialOpenUI:
+                TutorialSet set = Param as TutorialSet;
+                SetTutorialUI(set);
+                break;
+            case EventType.TutorialCloseUI:
+                CloseTutorialUI();
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
+                break;
+        }
+    }
+    #endregion
+
+
+    #region SetTutorialUI
+    /// <summary>
+    /// Initialises tutorialUI for a specified tutorialSet
+    /// </summary>
+    private void SetTutorialUI(TutorialSet set)
+    {
+        if (set != null)
+        {
+            List<TutorialItem> listOfItems = set.listOfTutorialItems;
+            if (listOfItems != null)
+            {
+                //disable all buttons (default)
+                for (int i = 0; i < listOfButtons.Count; i++)
+                { listOfButtons[i].gameObject.SetActive(false); }
+                //activate and populate a button for each item in set
+                int count = listOfItems.Count;
+                if (count > 0)
+                {
+                    TutorialItem item;
+                    for (int i = 0; i < count; i++)
+                    {
+                        item = listOfItems[i];
+                        if (item != null)
+                        {
+                            listOfButtons[i].gameObject.SetActive(true);
+                        }
+                        else { Debug.LogWarningFormat("Invalid listOfItems[{0}] (Null) for set \"{1}\"", i, set.name); }
+                    }
+                    //activate canvas
+                    tutorialCanvas.gameObject.SetActive(true);
+                }
+                else { Debug.LogErrorFormat("Invalid tutorialSet.listOfItems (Empty) for set \"{0}\"", set.name); }
+            }
+            else { Debug.LogErrorFormat("Invalid TutorialSet.listOfItems (Null) for set \"{0}\"", set.name); }
+        }
+        else { Debug.LogError("Invalid TutorialSet (Null)"); }
+    }
+    #endregion
+
+
+    #region CloseTutorialUI
+    /// <summary>
+    /// Close tutorialUI
+    /// </summary>
+    private void CloseTutorialUI()
+    {
+
+        //disable canvas
+        tutorialCanvas.gameObject.SetActive(false);
+    }
     #endregion
 
 }

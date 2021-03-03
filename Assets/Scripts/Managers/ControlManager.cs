@@ -12,6 +12,7 @@ public class ControlManager : MonoBehaviour
     private GameState gameState;                    //stores current game state prior to change to enable a revert after change
     private RestorePoint restorePoint;              //stores point of game to restore to if user changes their mind (eg. 'Save And Exit')
 
+    #region Initialise
     public void Initialise(GameState state)
     {
         //event Listeners
@@ -39,9 +40,9 @@ public class ControlManager : MonoBehaviour
         EventManager.i.AddListener(EventType.TutorialReturn, OnEvent, "ControlManager.cs");
         EventManager.i.AddListener(EventType.GameReturn, OnEvent, "ControlManager.cs");
     }
+    #endregion
 
-
-
+    #region OnEvent
     /// <summary>
     /// Called when an event happens
     /// </summary>
@@ -81,7 +82,7 @@ public class ControlManager : MonoBehaviour
                 ProcessNewGame();
                 break;
             case EventType.CloseNewGame:
-                CloseNewGameOptions();
+                ProcessCloseNewGameOptions();
                 break;
             case EventType.CloseLoadGame:
                 CloseLoadGame();
@@ -105,7 +106,7 @@ public class ControlManager : MonoBehaviour
                 ProcessOptions((GameState)Param);
                 break;
             case EventType.CloseOptions:
-                CloseOptions();
+                ProcessCloseOptions();
                 break;
             case EventType.ExitLevel:
                 ProcessEndLevel();
@@ -114,7 +115,7 @@ public class ControlManager : MonoBehaviour
                 ProcessMetaGame();
                 break;
             case EventType.CloseMetaOverall:
-                CloseMetaGame();
+                ProcessCloseMetaGame();
                 break;
             case EventType.ExitCampaign:
                 ProcessEndCampaign();
@@ -127,12 +128,13 @@ public class ControlManager : MonoBehaviour
                 break;
         }
     }
-
+    #endregion
 
     //
     // - - - Event methods - - -
     //
 
+    #region ProcessNewGame
     /// <summary>
     /// New Game
     /// </summary>
@@ -150,7 +152,9 @@ public class ControlManager : MonoBehaviour
         //change game state (allows inputManager.cs to handle relevant input)
         GameManager.i.inputScript.GameState = GameState.NewGame;
     }
+    #endregion
 
+    #region ProcessNewGameOptions
     /// <summary>
     /// New game options
     /// </summary>
@@ -166,11 +170,13 @@ public class ControlManager : MonoBehaviour
         //change game state (allows inputManager.cs to handle relevant input)
         GameManager.i.inputScript.GameState = GameState.NewGameOptions;
     }
+    #endregion
 
+    #region ProcessCloseNewGameOptions
     /// <summary>
     /// exit New Game screen
     /// </summary>
-    private void CloseNewGameOptions()
+    private void ProcessCloseNewGameOptions()
     {
         Debug.LogFormat("[Ctrl] ControlManager.cs -> CloseNewGameOptions: CloseNewGameOptions selected{0}", "\n");
         //save existing game state
@@ -192,9 +198,9 @@ public class ControlManager : MonoBehaviour
         //start animations
         GameManager.i.animateScript.StartAnimations();
     }
+    #endregion
 
-
-
+    #region ProcessOptions
     /// <summary>
     /// Options
     /// </summary>
@@ -211,11 +217,13 @@ public class ControlManager : MonoBehaviour
         //change game state (allows inputManager.cs to handle relevant input)
         GameManager.i.inputScript.GameState = GameState.Options;
     }
+    #endregion
 
+    #region ProcessCloseOptions
     /// <summary>
     /// exit options screen
     /// </summary>
-    private void CloseOptions()
+    private void ProcessCloseOptions()
     {
         Debug.LogFormat("[Ctrl] ControlManager.cs -> CloseOptions: CloseOptions selected{0}", "\n");
         //revert to original game screen prior to Options being chosen
@@ -225,7 +233,9 @@ public class ControlManager : MonoBehaviour
         //toggle of modal block
         GameManager.i.guiScript.SetIsBlocked(false);
     }
+    #endregion
 
+    #region ProcessEndLevel
     /// <summary>
     /// Exit level and display summary background
     /// </summary>
@@ -249,7 +259,9 @@ public class ControlManager : MonoBehaviour
         //start metaGame
         EventManager.i.PostNotification(EventType.CreateMetaOverall, this, null, "ControlManager.cs -> ProcessEndLevel");
     }
+    #endregion
 
+    #region ProcessMetaGame
     /// <summary>
     /// Start Meta Game
     /// </summary>
@@ -269,11 +281,13 @@ public class ControlManager : MonoBehaviour
         //run metaGame
         GameManager.i.metaScript.ProcessMetaGame();
     }
+    #endregion
 
+    #region ProcessCloseMetaGame
     /// <summary>
     /// Close Meta Game and start up new level (debug)
     /// </summary>
-    private void CloseMetaGame()
+    private void ProcessCloseMetaGame()
     {
         //save existing game state
         gameState = GameManager.i.inputScript.GameState;
@@ -313,7 +327,9 @@ public class ControlManager : MonoBehaviour
             GameManager.i.inputScript.GameState = GameState.ExitCampaign;
         }
     }
+    #endregion
 
+    #region ProcessResumeGame
     /// <summary>
     /// Return to the game
     /// </summary>
@@ -327,7 +343,9 @@ public class ControlManager : MonoBehaviour
         { GameManager.i.guiScript.SetIsBlocked(true); }
 
     }
+    #endregion
 
+    #region ProcessResumeMetaGame
     /// <summary>
     /// Return to the MetaGame (different points) after SaveAndExit but opting to resume game once having Saved
     /// </summary>
@@ -362,7 +380,9 @@ public class ControlManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
+    #region ProcessLoadGame
     /// <summary>
     /// Load a saved game
     /// </summary>
@@ -425,7 +445,9 @@ public class ControlManager : MonoBehaviour
         long timeElapsed = GameManager.i.testScript.StopTimer();
         Debug.LogFormat("[Per] ControlManager.cs -> ProcessLoadGame: LOAD GAME took {0} ms", timeElapsed);
     }
+    #endregion
 
+    #region CloseLoadGame
     /// <summary>
     /// Close load game screen
     /// </summary>
@@ -450,7 +472,9 @@ public class ControlManager : MonoBehaviour
         //start animations
         GameManager.i.animateScript.StartAnimations();
     }
+    #endregion
 
+    #region ProcessSaveGame
     /// <summary>
     /// Save the current game (Normal save operation during gameState.PlayGame)
     /// </summary>
@@ -481,7 +505,9 @@ public class ControlManager : MonoBehaviour
         long timeElapsed = GameManager.i.testScript.StopTimer();
         Debug.LogFormat("[Per] ControlManager.cs -> ProcessSaveGame: SAVE GAME took {0} ms", timeElapsed);
     }
+    #endregion
 
+    #region ProcessSaveAndExit
     /// <summary>
     /// Save the current game and Exit. Special Save operation during gameState.MetaGame)
     /// </summary>
@@ -520,8 +546,9 @@ public class ControlManager : MonoBehaviour
         //open confirm
         EventManager.i.PostNotification(EventType.ConfirmOpen, this, details, "MetaManager.cs -> ProcessMetaGame");
     }
+    #endregion
 
-
+    #region ProcessAutoSave
     /// <summary>
     /// AutoSave file (TurnManager.cs -> ProcessNewTurn)
     /// </summary>
@@ -535,9 +562,9 @@ public class ControlManager : MonoBehaviour
         long timeElapsed = GameManager.i.testScript.StopTimer();
         Debug.LogFormat("[Per] ControlManager.cs -> ProcessSaveGame: SAVE GAME took {0} ms", timeElapsed);
     }
+    #endregion
 
-
-
+    #region ProcessEndCampaign
     /// <summary>
     /// win/Loss state achieved for end of campaign -> summaries, etc before exiting
     /// </summary>
@@ -557,7 +584,9 @@ public class ControlManager : MonoBehaviour
         //end level campaign data
         GameManager.i.dataScript.SetCampaignHistoryEnd();
     }
+    #endregion
 
+    #region ProcessTutorialOptions
     /// <summary>
     /// Initialises and runs tutorial
     /// </summary>
@@ -593,7 +622,9 @@ public class ControlManager : MonoBehaviour
         //set up first level in campaign
         GameManager.i.InitialiseTutorial();
     }
+    #endregion
 
+    #region ProcessCloseTutorialOptions
     //
     /// <summary>
     /// Closes tutorial screen and drops player into tutorial city
@@ -611,8 +642,12 @@ public class ControlManager : MonoBehaviour
         GameManager.i.guiScript.SetIsBlocked(false);
         //start animations
         GameManager.i.animateScript.StartAnimations();
+        //activate tutorialUI
+        EventManager.i.PostNotification(EventType.TutorialOpenUI, this, GameManager.i.tutorialScript.set, "ControlManager.cs -> ProcessCloseTutorialOptions");
     }
+    #endregion
 
+    #region ProcessTutorialReturn
     /// <summary>
     /// Closes tutorial and returns to main Menu
     /// </summary>
@@ -622,6 +657,7 @@ public class ControlManager : MonoBehaviour
 
         //stop animations
         GameManager.i.animateScript.StopAnimations();
+        EventManager.i.PostNotification(EventType.TutorialCloseUI, this, null, "ControlManager.cs -> ProcessTutorialReturn");
         //update dictionary
         GameManager.i.dataScript.UpdateTutorialIndex(GameManager.i.tutorialScript.tutorial.name, GameManager.i.tutorialScript.index);
         //Debug -> time save game process
@@ -634,7 +670,9 @@ public class ControlManager : MonoBehaviour
         //activate menu
         EventManager.i.PostNotification(EventType.OpenMainMenu, this, MainMenuType.Main, "GameManager.cs -> ProcessTutorialReturn");
     }
+    #endregion
 
+    #region ProcessGameReturn
     /// <summary>
     /// Closes game (playing) and returns to main Menu -> asks if you want to save first
     /// </summary>
@@ -664,7 +702,9 @@ public class ControlManager : MonoBehaviour
             EventManager.i.PostNotification(EventType.OpenMainMenu, this, MainMenuType.Main, "ControlManager.cs -> ProcessGameReturn");
         }
     }
+    #endregion
 
+    #region ProcessSaveGameAndReturn
     /// <summary>
     /// Returning to main menu from game, saving progress on the way
     /// </summary>
@@ -697,7 +737,9 @@ public class ControlManager : MonoBehaviour
         GameManager.i.inputScript.GameState = GameState.SaveAndMain;
 
     }
+    #endregion
 
+    #region ProcessCloseSaveGameAndReturn
     /// <summary>
     /// Follow on from ProcessSaveGameAndReturn. Closes save background and opens main menu
     /// </summary>
@@ -713,7 +755,9 @@ public class ControlManager : MonoBehaviour
         //activate menu
         EventManager.i.PostNotification(EventType.OpenMainMenu, this, MainMenuType.Main, "GameManager.cs -> ProcessTutorialReturn");
     }
+    #endregion
 
+    #region ProcessCloseSaveGame
     /// <summary>
     /// Close save game screen
     /// </summary>
@@ -727,7 +771,9 @@ public class ControlManager : MonoBehaviour
         //change game state
         GameManager.i.inputScript.GameState = GameState.PlayGame;
     }
+    #endregion
 
+    #region ProcessCloseGame
     /// <summary>
     /// Exit to desktop
     /// </summary>
@@ -741,6 +787,7 @@ public class ControlManager : MonoBehaviour
         //quit game
         GameManager.i.turnScript.Quit();
     }
+    #endregion
 
 
     #region Utilities...
