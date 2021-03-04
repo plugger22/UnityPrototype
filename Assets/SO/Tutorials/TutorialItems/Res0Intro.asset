@@ -14,8 +14,8 @@ MonoBehaviour:
   tutorialType: {fileID: 11400000, guid: 6af73092ead59e34f89fadf31d6d355c, type: 2}
   tag: Introduction
   topText: Well hello there! Welcome to our training simulation. You can call me Fred
-  bottomText: Look sharp. The one before you? Dead within days. Didn't pay attention.
-    Work your way through the tasks on the right. Take your time
+  bottomText: Look sharp. The one before you? Dead within days. Didn't pay attention<br><br>Work
+    your way through the tasks on the right. Take your time
   testInformation: 
   testGoal: 
   testQuestion: 

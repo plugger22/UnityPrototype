@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using modalAPI;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -40,9 +41,14 @@ public class TutorialUI : MonoBehaviour
     private TutorialButtonInteraction interact8;
     private TutorialButtonInteraction interact9;
 
+    //assorted
+    private int numOfItems;                                                         //number of active items/buttons for this set
+    private TutorialItem currentItem;                                               //currently selected tutorial item
+
     //collections
     private List<Button> listOfButtons = new List<Button>();
     private List<TutorialButtonInteraction> listOfInteractions = new List<TutorialButtonInteraction>();
+    private List<TutorialItem> listOfSetItems = new List<TutorialItem>();                                                      //used to hold dynamic TutorialItems, index corresponds to active set button indexes
 
     //fast access
     private Color colourDialogue;
@@ -69,6 +75,7 @@ public class TutorialUI : MonoBehaviour
         return tutorialUI;
     }
     #endregion
+
 
     #region Initialisation...
     /// <summary>
@@ -191,6 +198,7 @@ public class TutorialUI : MonoBehaviour
         //register listener
         EventManager.i.AddListener(EventType.TutorialOpenUI, OnEvent, "TutorialUI.cs");
         EventManager.i.AddListener(EventType.TutorialCloseUI, OnEvent, "TutorialUI.cs");
+        EventManager.i.AddListener(EventType.TutorialItemOpen, OnEvent, "TutorialUI.cs");
     }
     #endregion
 
@@ -217,6 +225,9 @@ public class TutorialUI : MonoBehaviour
             case EventType.TutorialCloseUI:
                 CloseTutorialUI();
                 break;
+            case EventType.TutorialItemOpen:
+                OpenTutorialItem((int)Param);
+                break;
             default:
                 Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
                 break;
@@ -233,27 +244,35 @@ public class TutorialUI : MonoBehaviour
     {
         if (set != null)
         {
-            List<TutorialItem> listOfItems = set.listOfTutorialItems;
-            if (listOfItems != null)
+            listOfSetItems.Clear();
+            //populate list with current set tutorial items (indexes match button.buttonInteraction.returnValue)
+            listOfSetItems = set.listOfTutorialItems;
+            if (listOfSetItems != null)
             {
                 //disable all buttons (default)
                 for (int i = 0; i < listOfButtons.Count; i++)
                 { listOfButtons[i].gameObject.SetActive(false); }
                 //activate and populate a button for each item in set
-                int count = listOfItems.Count;
-                if (count > 0)
+                numOfItems = listOfSetItems.Count;
+                if (numOfItems > 0)
                 {
                     TutorialItem item;
-                    for (int i = 0; i < count; i++)
+                    for (int i = 0; i < numOfItems; i++)
                     {
-                        item = listOfItems[i];
+                        item = listOfSetItems[i];
                         if (item != null)
                         {
+                            //activate button
                             listOfButtons[i].gameObject.SetActive(true);
                             //button colours
                             ColorBlock buttonColours = listOfButtons[i].colors;
                             //switch off arrow
                             listOfInteractions[i].arrowImage.gameObject.SetActive(false);
+                            //assign event to button along with a unique index #
+                            listOfInteractions[i].buttonInteraction.SetButton(EventType.TutorialItemOpen, i);
+                            //tooltip
+                            listOfInteractions[i].tooltip.tooltipHeader = string.Format("<size=120%><b>{0}</b></size>", GameManager.Formatt(item.tag, ColourType.salmonText));
+                            listOfInteractions[i].tooltip.tooltipMain = string.Format("This is a <size=115%><b>{0}</b></size> item", GameManager.Formatt(item.tutorialType.name, ColourType.neutralText));
                             //type of item
                             switch (item.tutorialType.name)
                             {
@@ -261,21 +280,25 @@ public class TutorialUI : MonoBehaviour
                                     listOfInteractions[i].buttonText.text = "D";
                                     buttonColours.normalColor = colourDialogue;
                                     listOfInteractions[i].buttonText.text = string.Format("{0}", GameManager.i.guiScript.tutDialogue);
+                                    listOfInteractions[i].tooltip.tooltipDetails = "Words of wisdom from your <b>training guide</b>";
                                     break;
                                 case "Goal":
                                     listOfInteractions[i].buttonText.text = "G";
                                     buttonColours.normalColor = colourGoal;
                                     listOfInteractions[i].buttonText.text = string.Format("{0}", GameManager.i.guiScript.tutGoal);
+                                    listOfInteractions[i].tooltip.tooltipDetails = "A specific training goal that you need to achieve <b>in order to progress</b>";
                                     break;
                                 case "Information":
                                     listOfInteractions[i].buttonText.text = "I";
                                     buttonColours.normalColor = colourInfo;
                                     listOfInteractions[i].buttonText.text = string.Format("{0}", GameManager.i.guiScript.tutInfo);
+                                    listOfInteractions[i].tooltip.tooltipDetails = "<b>Knowledge is power</b>. A detailed look at a topic";
                                     break;
                                 case "Question":
                                     listOfInteractions[i].buttonText.text = "?";
                                     buttonColours.normalColor = colourQuestion;
                                     listOfInteractions[i].buttonText.text = string.Format("{0}", GameManager.i.guiScript.tutQuestion);
+                                    listOfInteractions[i].tooltip.tooltipDetails = "There are certain things that HQ <b>needs to know</b>";
                                     break;
                                 default: Debug.LogWarningFormat("Unrecognised item.TutorialType \"{0}\"", item.tutorialType.name); break;
                             }
@@ -304,6 +327,61 @@ public class TutorialUI : MonoBehaviour
 
         //disable canvas
         tutorialCanvas.gameObject.SetActive(false);
+    }
+    #endregion
+
+
+    #region OpenTutorialItem
+    /// <summary>
+    /// Tutorial button on RHS clicked, open up relevant tutorial UI based on supplied item
+    /// </summary>
+    /// <param name="item"></param>
+    private void OpenTutorialItem(int index = -1)
+    {
+        if (index > -1)
+        {
+            //get tutorialItem
+            if (index < listOfSetItems.Count)
+            {
+                currentItem = listOfSetItems[index];
+                if (currentItem != null)
+                {
+                    //switch off all arrows
+                    for (int i = 0; i < numOfItems; i++)
+                    { listOfInteractions[i].arrowImage.gameObject.SetActive(false); }
+                    //display arrow next to selected tutorial button
+                    listOfInteractions[index].arrowImage.gameObject.SetActive(true);
+                    //what type of item
+                    switch (currentItem.tutorialType.name)
+                    {
+                        case "Dialogue":
+                            //open special outcome window
+                            ModalOutcomeDetails details = new ModalOutcomeDetails()
+                            {
+                                side = GameManager.i.sideScript.PlayerSide,
+                                textTop = GameManager.Formatt(currentItem.topText, ColourType.moccasinText),
+                                textBottom = currentItem.bottomText,
+                                sprite = GameManager.i.tutorialScript.tutorial.sprite,
+                                isAction = false,
+                                isSpecial = true,
+                                isSpecialGood = true
+                            };
+                            EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
+                            break;
+                        case "Goal":
+                            break;
+                        case "Information":
+                            break;
+                        case "Question":
+                            break;
+                        default: Debug.LogWarningFormat("Unrecognised item.TutorialType \"{0}\"", currentItem.tutorialType.name); break;
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid currentItem (tutorial) (Null)"); }
+            }
+            else { Debug.LogWarningFormat("Invalid index (is {0}, listOfSetItems.Count is {1})", index, listOfSetItems.Count); }
+        }
+        else { Debug.LogWarning("Invalid index (button.buttonInteraction.returnValue (-1)"); }
     }
     #endregion
 

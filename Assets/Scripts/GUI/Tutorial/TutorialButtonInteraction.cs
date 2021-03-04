@@ -13,6 +13,7 @@ public class TutorialButtonInteraction : MonoBehaviour
     public Image arrowImage;
     public TextMeshProUGUI buttonText;
     public ButtonInteraction buttonInteraction;
+    public GenericTooltipUI tooltip;
 
     public void OnEnable()
     {
@@ -20,5 +21,6 @@ public class TutorialButtonInteraction : MonoBehaviour
         Debug.Assert(arrowImage != null, "Invalid arrowImage (Null)");
         Debug.Assert(buttonText != null, "Invalid buttonText (Null)");
         Debug.Assert(buttonInteraction != null, "Invalid buttonInteraction (Null)");
+        Debug.Assert(tooltip != null, "Invalid (Generic) tooltip (Null)");
     }
 }

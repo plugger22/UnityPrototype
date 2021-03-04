@@ -238,6 +238,7 @@ public enum EventType
     //TutorialUI
     TutorialOpenUI,
     TutorialCloseUI,
+    TutorialItemOpen,
     //Topic UI
     TopicDisplayOpen,
     TopicDisplayClose,

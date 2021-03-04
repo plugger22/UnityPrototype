@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 114494154925606034}
   - component: {fileID: 114663662887778286}
   - component: {fileID: 114882970461981122}
+  - component: {fileID: 114424905352667434}
   m_Layer: 5
   m_Name: tutorialButton
   m_TagString: Untagged
@@ -84,7 +85,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 88cddebc5febaf34e97be88e89428bae, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 321da26d6f4e05445bea5d6b2b6f75bb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -232,6 +233,27 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114424905352667434
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1560231258216548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca7d8d72305dd0342acffd3c30b3c77f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  x_offset: 0
+  y_offset: 0
+  nodeID: 0
+  connID: 0
+  testTag: 
+  isIgnoreClick: 0
+  tooltipType: 0
 --- !u!114 &114494154925606034
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -311,6 +333,7 @@ MonoBehaviour:
   arrowImage: {fileID: 114096310602845968}
   buttonText: {fileID: 114165346378401116}
   buttonInteraction: {fileID: 114663662887778286}
+  tooltip: {fileID: 114424905352667434}
 --- !u!222 &222171001248053382
 CanvasRenderer:
   m_ObjectHideFlags: 1
