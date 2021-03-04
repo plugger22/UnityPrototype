@@ -10,12 +10,14 @@ using UnityEngine.UI;
 public class TutorialButtonInteraction : MonoBehaviour
 {
     public Image buttonImage;
+    public Image arrowImage;
     public TextMeshProUGUI buttonText;
     public ButtonInteraction buttonInteraction;
 
     public void OnEnable()
     {
         Debug.Assert(buttonImage != null, "Invalid buttonImage (Null)");
+        Debug.Assert(arrowImage != null, "Invalid arrowImage (Null)");
         Debug.Assert(buttonText != null, "Invalid buttonText (Null)");
         Debug.Assert(buttonInteraction != null, "Invalid buttonInteraction (Null)");
     }

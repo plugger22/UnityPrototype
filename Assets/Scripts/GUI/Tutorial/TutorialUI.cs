@@ -39,10 +39,16 @@ public class TutorialUI : MonoBehaviour
     private TutorialButtonInteraction interact7;
     private TutorialButtonInteraction interact8;
     private TutorialButtonInteraction interact9;
+
     //collections
     private List<Button> listOfButtons = new List<Button>();
     private List<TutorialButtonInteraction> listOfInteractions = new List<TutorialButtonInteraction>();
 
+    //fast access
+    private Color colourDialogue;
+    private Color colourInfo;
+    private Color colourQuestion;
+    private Color colourGoal;
     #endregion
 
     #region static instance...
@@ -81,6 +87,7 @@ public class TutorialUI : MonoBehaviour
             case GameState.NewInitialisation:
             case GameState.LoadAtStart:
             case GameState.StartUp:
+                SubInitialiseAsserts();
                 SubInitialiseFastAccess();
                 SubInitialiseComponents();
                 SubInitialiseAll();
@@ -94,6 +101,16 @@ public class TutorialUI : MonoBehaviour
 
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
+    {
+        colourDialogue = GameManager.i.uiScript.tutDialogue;
+        colourInfo = GameManager.i.uiScript.tutInfo;
+        colourQuestion = GameManager.i.uiScript.tutQuestion;
+        colourGoal = GameManager.i.uiScript.tutGoal;
+    }
+    #endregion
+
+    #region SubInitialiseAsserts
+    private void SubInitialiseAsserts()
     {
         Debug.Assert(tutorialCanvas != null, "Invalid tutorialCanvas (Null)");
         Debug.Assert(tutorialObject != null, "Invalid tutorialObject (Null)");
@@ -233,23 +250,36 @@ public class TutorialUI : MonoBehaviour
                         if (item != null)
                         {
                             listOfButtons[i].gameObject.SetActive(true);
+                            //button colours
+                            ColorBlock buttonColours = listOfButtons[i].colors;
+                            //switch off arrow
+                            listOfInteractions[i].arrowImage.gameObject.SetActive(false);
                             //type of item
                             switch (item.tutorialType.name)
                             {
                                 case "Dialogue":
                                     listOfInteractions[i].buttonText.text = "D";
+                                    buttonColours.normalColor = colourDialogue;
+                                    listOfInteractions[i].buttonText.text = string.Format("{0}", GameManager.i.guiScript.tutDialogue);
                                     break;
                                 case "Goal":
                                     listOfInteractions[i].buttonText.text = "G";
+                                    buttonColours.normalColor = colourGoal;
+                                    listOfInteractions[i].buttonText.text = string.Format("{0}", GameManager.i.guiScript.tutGoal);
                                     break;
                                 case "Information":
                                     listOfInteractions[i].buttonText.text = "I";
+                                    buttonColours.normalColor = colourInfo;
+                                    listOfInteractions[i].buttonText.text = string.Format("{0}", GameManager.i.guiScript.tutInfo);
                                     break;
                                 case "Question":
                                     listOfInteractions[i].buttonText.text = "?";
+                                    buttonColours.normalColor = colourQuestion;
+                                    listOfInteractions[i].buttonText.text = string.Format("{0}", GameManager.i.guiScript.tutQuestion);
                                     break;
                                 default: Debug.LogWarningFormat("Unrecognised item.TutorialType \"{0}\"", item.tutorialType.name); break;
                             }
+                            listOfButtons[i].colors = buttonColours;
                         }
                         else { Debug.LogWarningFormat("Invalid listOfItems[{0}] (Null) for set \"{1}\"", i, set.name); }
                     }

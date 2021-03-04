@@ -178,6 +178,11 @@ public class GUIManager : MonoBehaviour
     [HideInInspector] public char cityChar;
     [HideInInspector] public char compatibilityChar;
     [HideInInspector] public char alertChar;
+    [HideInInspector] public char tutDialogue;
+    [HideInInspector] public char tutInfo;
+    [HideInInspector] public char tutQuestion;
+    [HideInInspector] public char tutGoal;
+
     //UI
     [HideInInspector] public char arrowRight;
     [HideInInspector] public char arrowLeft;
@@ -292,6 +297,11 @@ public class GUIManager : MonoBehaviour
         alertChar = '\uf06a';
         arrowRight = '\uf0a9';
         arrowLeft = '\uf0a8';
+        tutDialogue = '\uf075';
+        tutInfo = '\uf129';
+        tutQuestion = '\uf128';
+        tutGoal = '\uf46c';
+
     }
 
     /// <summary>

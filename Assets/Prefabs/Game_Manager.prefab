@@ -6533,6 +6533,10 @@ MonoBehaviour:
   Bloc1: {r: 0.33333334, g: 0.75686276, b: 1, a: 0}
   Bloc2: {r: 0.9490196, g: 0.9137255, b: 0.30588236, a: 0}
   Bloc3: {r: 0.9843137, g: 0.5372549, b: 0.59607846, a: 0}
+  tutDialogue: {r: 0.79607844, g: 0.54901963, b: 0.9490196, a: 1}
+  tutInfo: {r: 0.33333334, g: 0.75686276, b: 1, a: 1}
+  tutQuestion: {r: 0.92156863, g: 0.39215687, b: 0.14117648, a: 1}
+  tutGoal: {r: 0.96862745, g: 0.09019608, b: 0.20784314, a: 1}
   TopicNormal: {r: 0.33333334, g: 0.75686276, b: 1, a: 0}
   TopicCapture: {r: 0.9372549, g: 0.078431375, b: 0.27058825, a: 0}
   MainBackground: {r: 0.33333334, g: 0.75686276, b: 1, a: 0.49411765}
@@ -6671,6 +6675,10 @@ MonoBehaviour:
   cityChar: 0
   compatibilityChar: 0
   alertChar: 0
+  tutDialogue: 0
+  tutInfo: 0
+  tutQuestion: 0
+  tutGoal: 0
   arrowRight: 0
   arrowLeft: 0
   stabilityIcon: 
@@ -6796,6 +6804,7 @@ MonoBehaviour:
   billboardScript: {fileID: 0}
   advertScript: {fileID: 0}
   tabbedUIScript: {fileID: 0}
+  tutorialUIScript: {fileID: 0}
   seedDev: 0
   autoRunTurns: 0
   scenarioStartLevel: 0

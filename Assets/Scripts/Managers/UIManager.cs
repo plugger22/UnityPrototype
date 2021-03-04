@@ -28,6 +28,16 @@ public class UIManager : MonoBehaviour
     [Tooltip("Chinock")]
     public Color Bloc3;
 
+    [Header("Tutorial Button Colours")]
+    [Tooltip("Dialogue button colour (should be 100% alpha)")]
+    public Color tutDialogue;
+    [Tooltip("Info button colour (should be 100% alpha)")]
+    public Color tutInfo;
+    [Tooltip("Question button colour (should be 100% alpha)")]
+    public Color tutQuestion;
+    [Tooltip("Goal button colour (should be 100 % alpha)")]
+    public Color tutGoal;
+
     [Header("Topic UI")]
     [Tooltip("Topic UI, main background, for all normal topics")]
     public Color TopicNormal;
