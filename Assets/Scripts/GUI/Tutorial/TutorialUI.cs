@@ -308,6 +308,10 @@ public class TutorialUI : MonoBehaviour
                     }
                     //activate canvas
                     tutorialCanvas.gameObject.SetActive(true);
+                    //activate first button
+                    if (listOfButtons[0] != null)
+                    { EventManager.i.PostNotification(EventType.TutorialItemOpen, this, 0); }
+                    else { Debug.LogError("Invalid listOfButtons[0] (Null)"); }
                 }
                 else { Debug.LogErrorFormat("Invalid tutorialSet.listOfItems (Empty) for set \"{0}\"", set.name); }
             }
@@ -349,8 +353,9 @@ public class TutorialUI : MonoBehaviour
                     //switch off all arrows
                     for (int i = 0; i < numOfItems; i++)
                     { listOfInteractions[i].arrowImage.gameObject.SetActive(false); }
-                    //display arrow next to selected tutorial button
-                    listOfInteractions[index].arrowImage.gameObject.SetActive(true);
+                    //display arrow next to selected + 1 tutorial button (shows the next one you need to click on)
+                    if (index + 1 < numOfItems)
+                    { listOfInteractions[index + 1].arrowImage.gameObject.SetActive(true); }
                     //what type of item
                     switch (currentItem.tutorialType.name)
                     {
