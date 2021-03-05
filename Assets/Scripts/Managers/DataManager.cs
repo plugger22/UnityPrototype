@@ -271,7 +271,8 @@ public class DataManager : MonoBehaviour
     private Dictionary<string, StoryHelp> dictOfStoryHelp = new Dictionary<string, StoryHelp>();                //Key -> StoryHelp.name, Value -> StoryHelp
     private Dictionary<string, Billboard> dictOfBillboards = new Dictionary<string, Billboard>();               //Key -> Billboard.name, Value -> Billboard
     private Dictionary<string, Tutorial> dictOfTutorials = new Dictionary<string, Tutorial>();                  //Key -> Tutorial.name, Value -> Tutorial
-    private Dictionary<string, TutorialData> dictOfTutorialData = new Dictionary<string, TutorialData>();       //Key -> Tutorial.name, Value -> TutorialData.cs
+    private Dictionary<string, TutorialData> dictOfTutorialData = new Dictionary<string, TutorialData>();       //Key -> Tutorial.name, Value -> TutorialData
+    private Dictionary<string, GameHelp> dictOfGameHelp = new Dictionary<string, GameHelp>();                   //Key -> GameHelp.name, Value -> GameHelp
 
     //Development only collections
     private Dictionary<string, int> dictOfBeliefs = new Dictionary<string, int>();                              //Key -> belief name, Value -> belief count (num used in topic options)
@@ -9316,6 +9317,7 @@ public class DataManager : MonoBehaviour
         return builder.ToString();
     }
 
+    #region Actor Relations...
     //
     // - - - Actor Relations
     //
@@ -9820,7 +9822,9 @@ public class DataManager : MonoBehaviour
         }
         return reply;
     }
+    #endregion
 
+    #region Awards...
     //
     // - - - Awards
     //
@@ -9880,7 +9884,9 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid tempList (Null) for Blackmarks"); }
     }
+    #endregion
 
+    #region MetaOptions...
     //
     // - - - MetaOptions
     //
@@ -9926,7 +9932,7 @@ public class DataManager : MonoBehaviour
         }
         else { Debug.LogError("Invalid saveMetaOption (Null)"); }
     }
-
+    #endregion
 
     #region Campaign History...
     //
@@ -10341,6 +10347,31 @@ public class DataManager : MonoBehaviour
             else { Debug.LogErrorFormat("Invalid newIndex \"{0}\" (should be Zero or more)", newIndex); }
         }
         else { Debug.LogError("Invalid tutorialName (Null or empty)"); }
+    }
+    #endregion
+
+    #region GameHelp...
+    //
+    // - - - GameHelp
+    //
+
+    public Dictionary<string, GameHelp> GetDictOfGameHelp()
+    { return dictOfGameHelp; }
+
+    /// <summary>
+    /// returns a GameHelp.SO based on GameHelp.name from dictOfGameHelp
+    /// </summary>
+    /// <param name="tutorialName"></param>
+    /// <returns></returns>
+    public GameHelp GetGameHelp(string helpName)
+    {
+        if (string.IsNullOrEmpty(helpName) == false)
+        {
+            if (dictOfGameHelp.ContainsKey(helpName) == true)
+            { return dictOfGameHelp[helpName]; }
+        }
+        else { Debug.LogError("Invalid helpName (Null or Empty)"); }
+        return null;
     }
 
     #endregion

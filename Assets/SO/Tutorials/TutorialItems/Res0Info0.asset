@@ -15,6 +15,6 @@ MonoBehaviour:
   tag: City Familiarity
   topText: 
   bottomText: 
-  testInformation: City
+  gameHelp: {fileID: 11400000, guid: 695b16a6bbe55124680ffaddad0a0b60, type: 2}
   testGoal: 
   testQuestion: 

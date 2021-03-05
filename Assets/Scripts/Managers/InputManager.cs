@@ -522,6 +522,14 @@ public class InputManager : MonoBehaviour
                             break;
                         #endregion
 
+                        #region GameHelp
+                        case ModalSubState.GameHelp:
+                            //Any key -> normal or special modes
+                            if (Input.anyKeyDown == true)
+                            { EventManager.i.PostNotification(EventType.GameHelpClose, this, null, "InputManager.cs -> ProcessKeyInput AnyKeyDown"); }
+                            break;
+                        #endregion
+
                         #region Inventory
                         case ModalSubState.Inventory:
                             if (Input.GetButtonDown("Cancel") == true)

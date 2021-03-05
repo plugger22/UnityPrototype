@@ -22,7 +22,8 @@ public class TutorialItem : ScriptableObject
 
 
     [Header("Information")]
-    public string testInformation;
+    [Tooltip("GameHelp.SO specifies data and layout")]
+    public GameHelp gameHelp;
 
     [Header("Goal")]
     public string testGoal;

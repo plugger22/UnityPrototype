@@ -175,6 +175,7 @@ public class ValidationManager : MonoBehaviour
                 ValidateCampaigns();
                 ValidateCapture();
                 ValidateMetaOptions();
+                ValidateTutorialData();
                 break;
             case GameState.FollowOnInitialisation:
             //do nothing
@@ -1802,6 +1803,60 @@ public class ValidationManager : MonoBehaviour
     #endregion
 
 
+    #region ValidateTutorialData
+    /// <summary>
+    /// runs checks on Tutorial Data
+    /// </summary>
+    private void ValidateTutorialData()
+    {
+        string tag = "[Val] ValidationManager.cs -> ValidateTutorialData:";
+        //Tutorials
+        Tutorial[] arrayOfTutorials = GameManager.i.loadScript.arrayOfTutorials;
+        if (arrayOfTutorials != null)
+        {
+            for (int i = 0; i < arrayOfTutorials.Length; i++)
+            {
+                Tutorial tutorial = arrayOfTutorials[i];
+                if (tutorial != null)
+                {
+                    //check listOfSets > 0
+                    if (tutorial.listOfSets.Count > 0)
+                    {
+                        for (int j = 0; j < tutorial.listOfSets.Count; j++)
+                        {
+                            TutorialSet set = tutorial.listOfSets[j];
+                            if (set != null)
+                            {
+                                //check set is associated with tutorial
+                                if (set.tutorial != tutorial)
+                                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: Set \"{0}\" is associated with a different tutorial (is \"{1}\", should be \"{2}\"){3}",
+                                    set.name, set.tutorial.name, tutorial.name, "\n"); }
+                                else
+                                {
+                                    //check set -> lists for null
+                                    CheckList(set.listOfFeaturesOff, "listOfFeaturesOff", tag);
+                                    CheckList(set.listOfTutorialItems, "listOfTutorialItems", tag);
+                                    //check set -> lists for duplicates
+                                    List<string> listOfNames = set.listOfFeaturesOff.Select(x => x.name).ToList();
+                                    CheckListForDuplicates(listOfNames, "TutorialFeature", "SO.name", "listOfFeaturesOff");
+                                    listOfNames = set.listOfTutorialItems.Select(x => x.name).ToList();
+                                    CheckListForDuplicates(listOfNames, "TutorialItems", "SO.name", "listOfTutorialItems");
+
+                                }
+                            }
+                            else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: Invalid set (Null) for tutorial \"{0}\" , listOfSets[{1}]{2}", tutorial.name, j, "\n"); }
+                        }
+                    }
+                    else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: tutorial \"{0}\" has no sets (ListOfSets.Count is Zero){1}", tutorial.name, "\n"); }
+                }
+                else { Debug.LogErrorFormat("Invalid tutorial (Null) in arrayOfTutorials[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfTutorials (Null)"); }
+    }
+    #endregion
+
+
 
 
 #if (UNITY_EDITOR)
@@ -1986,6 +2041,10 @@ public class ValidationManager : MonoBehaviour
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfTutorialItems);
         //TutorialTypes
         ValidateSOGeneric(GameManager.i.loadScript.arrayOfTutorialTypes);
+        //Layouts
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfLayouts);
+        //GameHelp
+        ValidateSOGeneric(GameManager.i.loadScript.arrayOfGameHelp);
     }
     #endregion
 

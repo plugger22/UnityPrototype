@@ -44,6 +44,8 @@ public class LoadManager : MonoBehaviour
     public OrgType[] arrayOfOrgTypes;
     public HqPosition[] arrayOfHqPositions;
     public CaptureTool[] arrayOfCaptureTools;
+    public Layout[] arrayOfLayouts;
+    public GameHelp[] arrayOfGameHelp;
 
     [Header("ActorDrafts -> ToolManager Duplicates")]
     public ActorDraftSex[] arrayOfActorDraftSex;
@@ -1103,6 +1105,40 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTutorialTypes has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TutorialTypes present"); }
+        //
+        // - - - Layouts (not stored in a collection)
+        //
+        numArray = arrayOfLayouts.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfLayouts has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No Layouts present"); }
+        //
+        // - - - GameHelp - - -
+        //
+        Dictionary<string, GameHelp> dictOfGameHelp = GameManager.i.dataScript.GetDictOfGameHelp();
+        if (dictOfGameHelp != null)
+        {
+            numArray = arrayOfGameHelp.Length;
+            if (numArray > 0)
+            {
+                for (int i = 0; i < numArray; i++)
+                {
+                    GameHelp gameHelp = arrayOfGameHelp[i];
+                    //add to dictionary
+                    try
+                    { dictOfGameHelp.Add(gameHelp.name, gameHelp); }
+                    catch (ArgumentNullException)
+                    { Debug.LogError("Invalid GameHelp (Null)"); }
+                    catch (ArgumentException)
+                    { Debug.LogErrorFormat("Invalid GameHelp (duplicate) \"{0}\"", gameHelp.name); }
+                }
+            }
+            numDict = dictOfGameHelp.Count;
+            Debug.LogFormat("[Loa] InitialiseStart -> dictOfGameHelp has {0} entries{1}", numDict, "\n");
+            Debug.Assert(numDict > 0, "No GameHelp in dictOfGameHelp");
+            Debug.Assert(numArray == numDict, string.Format("Mismatch on GameHelp count, array {0}, dict {1}", numArray, numDict));
+        }
+        else { Debug.LogError("Invalid dictOfGameHelp (Null) -> Import failed"); }
     }
     #endregion
 

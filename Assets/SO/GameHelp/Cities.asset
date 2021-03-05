@@ -8,8 +8,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15fab73610a9cf64a90418df1f1fe465, type: 3}
-  m_Name: City
+  m_Script: {fileID: 11500000, guid: 0a96cf628e828134da5d0c4d79195566, type: 3}
+  m_Name: Cities
   m_EditorClassIdentifier: 
   header: Cities
   layout: {fileID: 11400000, guid: f86e231ef3f7d1b40a9c086b0d0da6bd, type: 2}

@@ -1587,6 +1587,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 955dc9ad811c9014fabb1f38513130e4, type: 2}
   - {fileID: 11400000, guid: 550e26826e757814c92f41d36ab3c00f, type: 2}
   - {fileID: 11400000, guid: f843e35d83fae614b9583b62b5aba7d2, type: 2}
+  arrayOfLayouts:
+  - {fileID: 11400000, guid: f86e231ef3f7d1b40a9c086b0d0da6bd, type: 2}
+  arrayOfGameHelp:
+  - {fileID: 11400000, guid: 695b16a6bbe55124680ffaddad0a0b60, type: 2}
   arrayOfActorDraftSex:
   - {fileID: 11400000, guid: 0d3d0716135317142a2cd0159601f0ce, type: 2}
   - {fileID: 11400000, guid: ca7e377cd01ff6b44b17444c7ad44d7e, type: 2}

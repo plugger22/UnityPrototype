@@ -210,6 +210,9 @@ public enum EventType
     MainInfoRestore,
     MainInfoTickerFaster,
     MainInfoTickerSlower,
+    //GameHelpUI
+    GameHelpOpen,
+    GameHelpClose,
     //MetaGame UI
     MetaGameClose,
     MetaGameSideTabOpen,

@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b8982fe94abdd04b826b5c6c6b913b0, type: 3}
   m_Name: HelpSingle
   m_EditorClassIdentifier: 
-  notes: 'HelpUI.cs -> Single infoDump image that takes up the whole UI
+  notes: 'GameHelpUI.cs -> Single infoDump image that takes up the whole UI
 
 '
