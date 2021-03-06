@@ -13,4 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   header: Cities
   layout: {fileID: 11400000, guid: f86e231ef3f7d1b40a9c086b0d0da6bd, type: 2}
-  sprite0: {fileID: 21300000, guid: fc016c79b192e914ebe875c9d3100ecd, type: 3}
+  sprite0: {fileID: 21300000, guid: 9a1fd5f3df50a374b8a46ff2cb09e144, type: 3}

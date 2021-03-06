@@ -47,6 +47,7 @@ public class LoadManager : MonoBehaviour
     public Layout[] arrayOfLayouts;
     public GameHelp[] arrayOfGameHelp;
 
+
     [Header("ActorDrafts -> ToolManager Duplicates")]
     public ActorDraftSex[] arrayOfActorDraftSex;
     public ActorDraftStatus[] arrayOfActorDraftStatus;
@@ -77,6 +78,7 @@ public class LoadManager : MonoBehaviour
     public TutorialFeature[] arrayOfTutorialFeatures;
     public TutorialItem[] arrayOfTutorialItems;
     public TutorialType[] arrayOfTutorialTypes;
+    public TutorialGoal[] arrayOfTutorialGoals;
 
     [Header("Personality Factors - ORDER MATTERS")]
     public Factor[] arrayOfFiveFactorModel;
@@ -1105,6 +1107,13 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTutorialTypes has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TutorialTypes present"); }
+        //
+        // - - - Tutorial Goal (not stored in a collection)
+        //
+        numArray = arrayOfTutorialGoals.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTutorialGoals has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TutorialGoals present"); }
         //
         // - - - Layouts (not stored in a collection)
         //

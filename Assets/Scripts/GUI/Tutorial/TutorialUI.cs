@@ -380,6 +380,7 @@ public class TutorialUI : MonoBehaviour
                             EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
                             break;
                         case "Goal":
+                            GameManager.i.tutorialScript.UpdateGoal(currentItem.goal);
                             break;
                         case "Information":
                             EventManager.i.PostNotification(EventType.GameHelpOpen, this, currentItem.gameHelp);

@@ -26,7 +26,8 @@ public class TutorialItem : ScriptableObject
     public GameHelp gameHelp;
 
     [Header("Goal")]
-    public string testGoal;
+    [Tooltip("Goal that you want the player to achieve")]
+    public TutorialGoal goal;
 
     [Header("Question")]
     public string testQuestion;
@@ -36,7 +37,25 @@ public class TutorialItem : ScriptableObject
     {
         Debug.AssertFormat(tutorialType != null, "Invalid tutorialType (Null) for {0}", name);
         Debug.AssertFormat(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty) for {0}", name);
+        //type specific asserts
+        switch (tutorialType.name)
+        {
+            case "Dialogue":
+                Debug.AssertFormat(topText != null, "Invalid topText (Null) for {0}", name);
+                Debug.AssertFormat(bottomText != null, "Invalid bottomText (Null) for {0}", name);
+                break;
+            case "Information":
+                Debug.AssertFormat(gameHelp != null, "Invalid gameHelp (Null) for {0}", name);
+                break;
+            case "Goal":
+                Debug.AssertFormat(goal != null, "Invalid goal (Null) for {0}", name);
+                break;
+            case "Question":
+                //To do
+                break;
+            default: Debug.LogWarningFormat("Unrecognised tutorialType \"{0}\" for {1}", tutorialType.name, name); break;
 
+        }
     }
 
 }

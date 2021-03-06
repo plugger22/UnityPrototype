@@ -199,11 +199,16 @@ public class DataManager : MonoBehaviour
 
     //NewsFeed
     private List<NewsItem> listOfNewsItems = new List<NewsItem>();
+
     //Adverts
     private List<string> listOfAdverts = new List<string>();
+
     //Billboard
     private List<string> listOfBillboards = new List<string>();                                                 //pool from which billboards are randomly drawn from
     private List<string> listOfBillboardsSeen = new List<string>();                                             //ones that player has seen
+
+    //Tutorials
+    private List<TutorialGoal> listOfCurrentGoals = new List<TutorialGoal>();                                   //current, active, tutorial goals
 
     //dictionaries
     private Dictionary<int, GameObject> dictOfNodeObjects = new Dictionary<int, GameObject>();                  //Key -> nodeID, Value -> Node gameObject
@@ -10286,6 +10291,15 @@ public class DataManager : MonoBehaviour
 
     public Dictionary<string, TutorialData> GetDictOfTutorialData()
     { return dictOfTutorialData; }
+
+    public List<TutorialGoal> GetListOfTutorialGoals()
+    { return listOfCurrentGoals; }
+
+    /// <summary>
+    /// Clears out listOfCurrent(Tutorial)Goals
+    /// </summary>
+    public void ClearListOfTutorialGoals()
+    { listOfCurrentGoals.Clear(); }
 
     /// <summary>
     /// returns a tutorial.so based on the tutorial.name

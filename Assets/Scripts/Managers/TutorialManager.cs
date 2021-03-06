@@ -1,5 +1,6 @@
 ﻿using gameAPI;
 using packageAPI;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -22,7 +23,6 @@ public class TutorialManager : MonoBehaviour
     [HideInInspector] public TutorialSet set;
     [HideInInspector] public int index;                         //index that tracks player's progress (set #) through current tutorial
     #endregion
-
 
     #region Initialisation...
     /// <summary>
@@ -68,7 +68,6 @@ public class TutorialManager : MonoBehaviour
     #endregion
 
 
-
     #region InitialiseTutorial
     /// <summary>
     /// Set up tutorial prior to running
@@ -105,6 +104,8 @@ public class TutorialManager : MonoBehaviour
                             Debug.LogFormat("[Tut] TutorialManager.cs -> InitialiseTutorial: set \"{0}\" loaded{1}", set.name, "\n");
                             // Features toggle on/off
                             UpdateFeatures(set.listOfFeaturesOff);
+                            //Goals reset
+                            GameManager.i.dataScript.ClearListOfTutorialGoals();
                         }
                         else { Debug.LogErrorFormat("Invalid tutorialSet (Null) for index {0}", index); }
                     }
@@ -210,6 +211,48 @@ public class TutorialManager : MonoBehaviour
     }
     #endregion
 
+    #region UpdateGoal
+    /// <summary>
+    /// Load any goals from the current TutorialSet into DM -> listOfActiveGoals
+    /// </summary>
+    public void UpdateGoal(TutorialGoal goal)
+    {
+        if (goal != null)
+        {
+            List<TutorialGoal> listOfGoals = GameManager.i.dataScript.GetListOfTutorialGoals();
+            if (listOfGoals != null)
+            {
+                //check not already present
+                if (listOfGoals.Exists(x => x.name.Equals(goal.name, StringComparison.Ordinal)) == true)
+                { Debug.LogWarningFormat("TutorialManager.cs -> UpdateGoal: Can't add goal \"{0}\" as already present in listOfGoals{1}", goal.name, "\n"); }
+                else
+                {
+                    listOfGoals.Add(goal);
+                    Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateGoals: goal \"{0}\" Activated and added to listOfCurrentGoals{1}", goal.name, "\n");
+                }
+
+            }
+            else { Debug.LogError("Invalid listOfTutorialGoals (Null)"); }
+        }
+        else { Debug.LogError("Invalid (Tutorial) goal (Null)"); }
+    }
+    #endregion
+
+
+    #region CheckGoals
+    /// <summary>
+    /// Check any current tutorial goals to see if they have been achieved
+    /// </summary>
+    private void CheckGoals()
+    {
+
+    }
+    #endregion
+
+
+
+
+
     #region DebugDisplayTutorialData
     /// <summary>
     /// Display all relevant tutorial data
@@ -229,6 +272,21 @@ public class TutorialManager : MonoBehaviour
             builder.AppendFormat("{0}-features OFF for \"{1}\"{2}", "\n", set.name, "\n");
             for (int i = 0; i < set.listOfFeaturesOff.Count; i++)
             { builder.AppendFormat(" {0}{1}", set.listOfFeaturesOff[i].name, "\n"); }
+
+            //current tutorialSet -> Goals
+            List<TutorialGoal> listOfGoals = GameManager.i.dataScript.GetListOfTutorialGoals();
+            if (listOfGoals != null)
+            {
+                builder.AppendFormat("{0}-Goals for \"{1}\"{2}", "\n", set.name, "\n");
+                int count = listOfGoals.Count;
+                if (count > 0)
+                {
+                    for (int i = 0; i < count; i++)
+                    { builder.AppendFormat(" {0}{1}", listOfGoals[i].name, "\n"); }
+                }
+                else { builder.AppendFormat(" No goals specified for this set{0}", "\n"); }
+            }
+            else { Debug.LogError("Invalid listOfTutorialGoals (Null)"); }
 
             //current tutorial -> Sets
             builder.AppendFormat("{0}-tutorialSets for \"{1}\"{2}", "\n", tutorial.name, "\n");
@@ -253,6 +311,7 @@ public class TutorialManager : MonoBehaviour
         else { return "You must be in Tutorial mode to access this information"; }
     }
     #endregion
+
 
 
     //new methods above here

@@ -401,3 +401,88 @@ UnityEngine.Debug:LogWarning(Object)
 	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
 	UnityEngine.EventSystems.EventSystem:Update()
 	
+Dev seed 19858 -> Saturday, 6 March 2021 11:58 AM
+City seed 39845 -> VirtualCity, Eurasia
+
+Dev seed 3049 -> Saturday, 6 March 2021 11:59 AM
+City seed 41762 -> VirtualCity, Eurasia
+
+Dev seed 47758 -> Saturday, 6 March 2021 3:11 PM
+WARNING  LoadManager.cs -> InitialiseStart: No TutorialGoals present
+UnityEngine.Debug:LogWarning(Object)
+	LoadManager:InitialiseStart(GameState) (at Assets/Scripts/Managers/LoadManager.cs:1116)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:917)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:427)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialGoal, array 0, assets 1 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialGoal[]) (at Assets/Scripts/Managers/ValidationManager.cs:2091)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2062)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:917)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:427)
+	City seed 50569 -> VirtualCity, Eurasia
+
+Dev seed 26378 -> Saturday, 6 March 2021 3:16 PM
+City seed 4722 -> VirtualCity, Eurasia
+
+Dev seed 60914 -> Saturday, 6 March 2021 3:22 PM
+City seed 18704 -> VirtualCity, Eurasia
+
+Dev seed 9975 -> Saturday, 6 March 2021 4:19 PM
+ASSERT FormatException: Input string was not in a correct format.
+System.Text.StringBuilder.FormatError () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Text.StringBuilder.AppendFormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.String.FormatHelper (System.IFormatProvider provider, System.String format, System.ParamsArray args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.String.Format (System.String format, System.Object[] args) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	UnityEngine.DebugLogHandler.LogFormat (UnityEngine.LogType logType, UnityEngine.Object context, System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Logger/DebugLogHandler.cs:9)
+	UnityEngine.Logger.LogFormat (UnityEngine.LogType logType, System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Logger/Logger.cs:113)
+	UnityEngine.Debug.LogFormat (System.String format, System.Object[] args) (at C:/buildslave/unity/build/Runtime/Export/Debug.bindings.cs:108)
+	TutorialManager.UpdateGoals () (at Assets/Scripts/Managers/TutorialManager.cs:237)
+	TutorialManager.InitialiseTutorial () (at Assets/Scripts/Managers/TutorialManager.cs:108)
+	TutorialManager.SubInitialiseTutorial () (at Assets/Scripts/Managers/TutorialManager.cs:64)
+	TutorialManager.Initialise (gameAPI.GameState state) (at Assets/Scripts/Managers/TutorialManager.cs:38)
+	GameManager.InitialiseWithPerformanceMonitoring (System.Collections.Generic.List`1[T] listOfMethods) (at Assets/Scripts/GameManager.cs:917)
+	GameManager.InitialiseTutorial () (at Assets/Scripts/GameManager.cs:1020)
+	ControlManager.ProcessTutorialOptions () (at Assets/Scripts/Managers/ControlManager.cs:625)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:94)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:366)
+	ModalMainMenu.<InitialiseMainMenu>m__1 () (at Assets/Scripts/GUI/ModalMainMenu.cs:329)
+	UnityEngine.Events.InvokableCall.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent.cs:166)
+	UnityEngine.Events.UnityEvent.Invoke () (at C:/buildslave/unity/build/Runtime/Export/UnityEvent_0.cs:58)
+	UnityEngine.UI.Button.Press () (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:36)
+	UnityEngine.UI.Button.OnPointerClick (UnityEngine.EventSystems.PointerEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/UI/Core/Button.cs:45)
+	UnityEngine.EventSystems.ExecuteEvents.Execute (UnityEngine.EventSystems.IPointerClickHandler handler, UnityEngine.EventSystems.BaseEventData eventData) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:50)
+	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 48328 -> Saturday, 6 March 2021 4:20 PM
+City seed 49739 -> VirtualCity, Eurasia
+
+Dev seed 5514 -> Saturday, 6 March 2021 4:23 PM
+City seed 52353 -> VirtualCity, Eurasia
+
+Dev seed 22315 -> Saturday, 6 March 2021 4:46 PM
+City seed 61222 -> VirtualCity, Eurasia
+WARNING TutorialManager.cs -> UpdateGoal: Can't add goal "Move" as already present in listOfGoals
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:UpdateGoal(TutorialGoal) (at Assets/Scripts/Managers/TutorialManager.cs:227)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:383)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:233)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:366)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 54505 -> Saturday, 6 March 2021 4:49 PM
+City seed 44768 -> VirtualCity, Eurasia
+WARNING TutorialManager.cs -> UpdateGoal: Can't add goal "Move" as already present in listOfGoals
+
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:UpdateGoal(TutorialGoal) (at Assets/Scripts/Managers/TutorialManager.cs:227)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:383)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:233)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:366)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 51066 -> Saturday, 6 March 2021 4:50 PM
+City seed 11866 -> VirtualCity, Eurasia

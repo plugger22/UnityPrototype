@@ -1815,6 +1815,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3ea5e079678bd114896744e070740f21, type: 2}
   - {fileID: 11400000, guid: 716ea073e009ff84381f714833572864, type: 2}
   - {fileID: 11400000, guid: 8b2847a7a246595458eee2b6a64e9b06, type: 2}
+  arrayOfTutorialGoals:
+  - {fileID: 11400000, guid: 33e14c1b26727af4796ede7d57be31f2, type: 2}
   arrayOfFiveFactorModel:
   - {fileID: 11400000, guid: 456adeff3cd08484bb73dab8396a5d8d, type: 2}
   - {fileID: 11400000, guid: 7acfd5c74d59ce64198cf88e42ca66ff, type: 2}
@@ -5903,6 +5905,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resistanceTutorial: {fileID: 11400000, guid: c050560a8867a3a4c806544632dda679, type: 2}
   authorityTutorial: {fileID: 0}
+  maxNumOfItems: 10
   tutorial: {fileID: 0}
   set: {fileID: 0}
   index: 0
@@ -6809,6 +6812,7 @@ MonoBehaviour:
   advertScript: {fileID: 0}
   tabbedUIScript: {fileID: 0}
   tutorialUIScript: {fileID: 0}
+  gameHelpScript: {fileID: 0}
   seedDev: 0
   autoRunTurns: 0
   scenarioStartLevel: 0
