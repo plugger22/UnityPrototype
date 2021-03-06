@@ -13,6 +13,10 @@ public class TutorialManager : MonoBehaviour
     public Tutorial resistanceTutorial;
     public Tutorial authorityTutorial;
 
+    [Header("Globals")]
+    [Tooltip("Maximum number of Tutorial Items allowed per TutorialSet")]
+    [Range(5, 15)] public int maxNumOfItems = 10;
+
     #region save data compatibile
     [HideInInspector] public Tutorial tutorial;
     [HideInInspector] public TutorialSet set;

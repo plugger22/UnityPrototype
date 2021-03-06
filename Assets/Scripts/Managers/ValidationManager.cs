@@ -649,7 +649,7 @@ public class ValidationManager : MonoBehaviour
             if (secret != null)
             {
                 //check number of effects
-                if (secret.listOfEffects.Count > maxNumOfEffects )
+                if (secret.listOfEffects.Count > maxNumOfEffects)
                 { Debug.LogFormat("[Val] ValidationSecrets.cs -> Too many effects for secret \"{0}\", (have {1}, max allowed {2}), listOfSecrets[{3}]", secret.name, secret.listOfEffects.Count, maxNumOfEffects, i); }
             }
             else { Debug.LogWarningFormat("[Val] ValidateSecrets: Invalid secret (Null) in arrayOfSecrets[{0}]", i); }
@@ -1802,13 +1802,13 @@ public class ValidationManager : MonoBehaviour
     }
     #endregion
 
-
     #region ValidateTutorialData
     /// <summary>
     /// runs checks on Tutorial Data
     /// </summary>
     private void ValidateTutorialData()
     {
+        int maxTutorialItems = GameManager.i.tutorialScript.maxNumOfItems;
         string tag = "[Val] ValidationManager.cs -> ValidateTutorialData:";
         //Tutorials
         Tutorial[] arrayOfTutorials = GameManager.i.loadScript.arrayOfTutorials;
@@ -1829,18 +1829,35 @@ public class ValidationManager : MonoBehaviour
                             {
                                 //check set is associated with tutorial
                                 if (set.tutorial != tutorial)
-                                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: Set \"{0}\" is associated with a different tutorial (is \"{1}\", should be \"{2}\"){3}",
-                                    set.name, set.tutorial.name, tutorial.name, "\n"); }
+                                {
+                                    Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: Set \"{0}\" is associated with a different tutorial (is \"{1}\", should be \"{2}\"){3}",
+                                      set.name, set.tutorial.name, tutorial.name, "\n");
+                                }
                                 else
                                 {
+                                    List<string> listOfNames = new List<string>();
                                     //check set -> lists for null
-                                    CheckList(set.listOfFeaturesOff, "listOfFeaturesOff", tag);
-                                    CheckList(set.listOfTutorialItems, "listOfTutorialItems", tag);
-                                    //check set -> lists for duplicates
-                                    List<string> listOfNames = set.listOfFeaturesOff.Select(x => x.name).ToList();
-                                    CheckListForDuplicates(listOfNames, "TutorialFeature", "SO.name", "listOfFeaturesOff");
-                                    listOfNames = set.listOfTutorialItems.Select(x => x.name).ToList();
-                                    CheckListForDuplicates(listOfNames, "TutorialItems", "SO.name", "listOfTutorialItems");
+                                    if (CheckList(set.listOfFeaturesOff, "listOfFeaturesOff", tag) == true)
+                                    {
+                                        //check for duplicates -> NOTE: need to nest within Checklist check as any null will cause error on Select(x => x.name)
+                                        listOfNames = set.listOfFeaturesOff.Select(x => x.name).ToList();
+                                        CheckListForDuplicates(listOfNames, "TutorialFeature", "SO.name", "listOfFeaturesOff");
+                                    }
+                                    //check tutorial items
+                                    if (CheckList(set.listOfTutorialItems, "listOfTutorialItems", tag) == true)
+                                    {
+                                        //check for duplicates -> NOTE: need to nest within Checklist check as any null will cause error on Select(x => x.name)
+                                        listOfNames = set.listOfTutorialItems.Select(x => x.name).ToList();
+                                        CheckListForDuplicates(listOfNames, "TutorialItems", "SO.name", "listOfTutorialItems");
+                                        //Max of 10 tutorial items per set
+                                        if (set.listOfTutorialItems.Count > maxTutorialItems)
+                                        {
+                                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: Set \"{0}\", invalid count in listOfTutorialItems (has {1}, max allowed is {2}){3}",
+                                                set.tutorial.name, set.listOfTutorialItems.Count, maxTutorialItems, "\n");
+                                        }
+                                    }
+
+
 
                                 }
                             }
@@ -3969,7 +3986,8 @@ public class ValidationManager : MonoBehaviour
     #region CheckListForDuplicates
     /// <summary>
     /// generic method that takes any list of IComparables, eg. int, string, but NOT SO's, and checks for duplicates. Debug.LogFormat("[Val]"...) messages generated for dupes.
-    /// NOTE: How to handle SO's -> topic.listOfStoryHelp.Select(x => x.name).ToList()
+    /// NOTE: How to handle SO's -> topic.listOfStoryHelp.Select(x => x.name).ToList(). 
+    /// IMPORTANT -> run method after a CheckList() == true code block in order to screen out null's which will trigger an error on the Select(x => x.name)
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="listToCheck"></param>
@@ -4197,12 +4215,14 @@ public class ValidationManager : MonoBehaviour
     /// <summary>
     /// Check a standalone (not enscapsulated within a class) list for null and check all entries in list for null (optional, default true)
     /// expectedCount used if you expect the list to have 'x' amount of records. Ignore otherwise
+    /// Returns true if there are NO Null entries present, false otherwise (can be ignored but useful when checking lists of names derived from other objects, eg. SO's)
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="list"></param>
     /// <param name="tag"></param>
-    private void CheckList<T>(List<T> list, string listName, string tag, int expectedCount = 0, bool isNullCheckContents = true)
+    private bool CheckList<T>(List<T> list, string listName, string tag, int expectedCount = 0, bool isNullCheckContents = true)
     {
+        bool isNoNulls = true;
         if (list != null)
         {
             //check number of records in list (optional)
@@ -4217,11 +4237,15 @@ public class ValidationManager : MonoBehaviour
                 foreach (T item in list)
                 {
                     if (item == null)
-                    { Debug.LogFormat("{0}Invalid {1} (Null) in {2}{3}", tag, nameof(T), listName, "\n"); }
+                    {
+                        Debug.LogFormat("{0}Invalid {1} (Null) in {2}{3}", tag, nameof(T), listName, "\n");
+                        isNoNulls = false;
+                    }
                 }
             }
         }
         else { Debug.LogFormat("{0}\"{1}\" Invalid (Null){2}", tag, listName, "\n"); }
+        return isNoNulls;
     }
 
     /// <summary>

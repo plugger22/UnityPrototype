@@ -310,3 +310,94 @@ ValidationManager.<ValidateTutorialData>m__18 (TutorialItem x) (at Assets/Script
 	UnityEngine.EventSystems.ExecuteEvents.Execute[T] (UnityEngine.GameObject target, UnityEngine.EventSystems.BaseEventData eventData, UnityEngine.EventSystems.ExecuteEvents+EventFunction`1[T1] functor) (at C:/buildslave/unity/build/Extensions/guisystem/UnityEngine.UI/EventSystem/ExecuteEvents.cs:261)
 	UnityEngine.EventSystems.EventSystem:Update()
 	
+Dev seed 45823 -> Saturday, 6 March 2021 11:02 AM
+City seed 26318 -> VirtualCity, Eurasia
+WARNING Invalid (Game) help (Null)
+UnityEngine.Debug:LogWarning(Object)
+	GameHelpUI:SetGameHelp(GameHelp) (at Assets/Scripts/GUI/GameHelpUI.cs:177)
+	GameHelpUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/GameHelpUI.cs:125)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:366)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:379)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:229)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:366)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid (Game) help (Null)
+UnityEngine.Debug:LogWarning(Object)
+	GameHelpUI:SetGameHelp(GameHelp) (at Assets/Scripts/GUI/GameHelpUI.cs:177)
+	GameHelpUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/GameHelpUI.cs:125)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:366)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:379)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:229)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:366)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 1464 -> Saturday, 6 March 2021 11:16 AM
+City seed 9153 -> VirtualCity, Eurasia
+
+Dev seed 19639 -> Saturday, 6 March 2021 11:16 AM
+City seed 40516 -> VirtualCity, Eurasia
+WARNING Invalid listOfItems[5] (Null) for set "Res0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialUI:SetTutorialUI(TutorialSet) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:307)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:223)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:366)
+	ControlManager:ProcessCloseTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:648)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:97)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:366)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:343)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:468)
+	
+Dev seed 55079 -> Saturday, 6 March 2021 11:19 AM
+City seed 29287 -> VirtualCity, Eurasia
+
+Dev seed 63439 -> Saturday, 6 March 2021 11:20 AM
+City seed 20746 -> VirtualCity, Eurasia
+ASSERT ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.
+Parameter name: index
+System.ThrowHelper.ThrowArgumentOutOfRangeException (System.ExceptionArgument argument, System.ExceptionResource resource) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.ThrowHelper.ThrowArgumentOutOfRangeException () (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	System.Collections.Generic.List`1[T].get_Item (System.Int32 index) (at <f826c2584fc94ec19a48a6576640bdc5>:0)
+	TutorialUI.SetTutorialUI (TutorialSet set) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:266)
+	TutorialUI.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:223)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:366)
+	ControlManager.ProcessCloseTutorialOptions () (at Assets/Scripts/Managers/ControlManager.cs:648)
+	ControlManager.OnEvent (EventType eventType, UnityEngine.Component Sender, System.Object Param) (at Assets/Scripts/Managers/ControlManager.cs:97)
+	EventManager.PostNotification (EventType eventType, UnityEngine.Component Sender, System.Object Param, System.String methodName) (at Assets/Scripts/Managers/EventManager.cs:366)
+	InputManager.ProcessKeyInput () (at Assets/Scripts/Managers/InputManager.cs:343)
+	GameManager.Update () (at Assets/Scripts/GameManager.cs:468)
+	
+Dev seed 28666 -> Saturday, 6 March 2021 11:21 AM
+City seed 9481 -> VirtualCity, Eurasia
+WARNING Invalid (Game) help (Null)
+UnityEngine.Debug:LogWarning(Object)
+	GameHelpUI:SetGameHelp(GameHelp) (at Assets/Scripts/GUI/GameHelpUI.cs:177)
+	GameHelpUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/GameHelpUI.cs:125)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:366)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:381)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:229)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:366)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid (Game) help (Null)
+UnityEngine.Debug:LogWarning(Object)
+	GameHelpUI:SetGameHelp(GameHelp) (at Assets/Scripts/GUI/GameHelpUI.cs:177)
+	GameHelpUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/GameHelpUI.cs:125)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:366)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:381)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:229)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:366)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid (Game) help (Null)
+UnityEngine.Debug:LogWarning(Object)
+	GameHelpUI:SetGameHelp(GameHelp) (at Assets/Scripts/GUI/GameHelpUI.cs:177)
+	GameHelpUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/GameHelpUI.cs:125)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:366)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:381)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:229)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:366)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	

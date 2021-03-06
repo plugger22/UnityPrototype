@@ -51,6 +51,7 @@ public class TutorialUI : MonoBehaviour
     private List<TutorialItem> listOfSetItems = new List<TutorialItem>();                                                      //used to hold dynamic TutorialItems, index corresponds to active set button indexes
 
     //fast access
+    private int maxNumOfItems = -1;
     private Color colourDialogue;
     private Color colourInfo;
     private Color colourQuestion;
@@ -109,6 +110,9 @@ public class TutorialUI : MonoBehaviour
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
     {
+        maxNumOfItems = GameManager.i.tutorialScript.maxNumOfItems;
+        Debug.Assert(maxNumOfItems > -1, "Invalid maxNumOfItems (-1)");
+        //colours
         colourDialogue = GameManager.i.uiScript.tutDialogue;
         colourInfo = GameManager.i.uiScript.tutInfo;
         colourQuestion = GameManager.i.uiScript.tutQuestion;
@@ -256,6 +260,8 @@ public class TutorialUI : MonoBehaviour
                 numOfItems = listOfSetItems.Count;
                 if (numOfItems > 0)
                 {
+                    //only accept upt to max num of items
+                    numOfItems = Mathf.Min(numOfItems, maxNumOfItems);
                     TutorialItem item;
                     for (int i = 0; i < numOfItems; i++)
                     {
