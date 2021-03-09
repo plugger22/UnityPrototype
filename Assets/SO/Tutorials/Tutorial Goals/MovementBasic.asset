@@ -23,7 +23,7 @@ MonoBehaviour:
     Here, have a Fungus burger, you've earned it
   goal0: {fileID: 11400000, guid: 5237bc6f2db221e4cbec1efa3fbd5e9a, type: 2}
   tracker0Notes: Nodes to move
-  tracker0Target: 2
+  target0: 2
   goal1: {fileID: 0}
   tracker1Notes: 
-  tracker1Target: -1
+  target1: -1

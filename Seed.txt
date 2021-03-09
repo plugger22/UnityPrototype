@@ -649,3 +649,46 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:917)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:427)
 	
+Dev seed 47556 -> Wednesday, 10 March 2021 9:04 AM
+WARNING  LoadManager.cs -> InitialiseStart: No TutorialGUIFeatures present
+UnityEngine.Debug:LogWarning(Object)
+	LoadManager:InitialiseStart(GameState) (at Assets/Scripts/Managers/LoadManager.cs:1132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:917)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:427)
+	City seed 40420 -> VirtualCity, Eurasia
+
+Dev seed 40348 -> Wednesday, 10 March 2021 9:57 AM
+WARNING  LoadManager.cs -> InitialiseStart: No TutorialGUIFeatures present
+UnityEngine.Debug:LogWarning(Object)
+	LoadManager:InitialiseStart(GameState) (at Assets/Scripts/Managers/LoadManager.cs:1132)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:917)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:427)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialGUIFeature, array 0, assets 6 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialGUIFeature[]) (at Assets/Scripts/Managers/ValidationManager.cs:2095)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2066)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:917)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:427)
+	City seed 53990 -> VirtualCity, Eurasia
+
+Dev seed 45578 -> Wednesday, 10 March 2021 10:15 AM
+WARNING Unrecognised feature.name "DistrictLeftMenu"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:UpdateFeatures(List`1, List`1) (at Assets/Scripts/Managers/TutorialManager.cs:269)
+	TutorialManager:InitialiseTutorial() (at Assets/Scripts/Managers/TutorialManager.cs:107)
+	TutorialManager:SubInitialiseTutorial() (at Assets/Scripts/Managers/TutorialManager.cs:65)
+	TutorialManager:Initialise(GameState) (at Assets/Scripts/Managers/TutorialManager.cs:39)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:917)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1020)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:625)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:94)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:366)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:329)
+	UnityEngine.EventSystems.EventSystem:Update()
+	City seed 27314 -> VirtualCity, Eurasia
+
+Dev seed 51294 -> Wednesday, 10 March 2021 10:17 AM
+City seed 10610 -> VirtualCity, Eurasia
+
+Dev seed 54988 -> Wednesday, 10 March 2021 10:18 AM
+City seed 11968 -> Londus, Eurasia

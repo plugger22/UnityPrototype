@@ -104,7 +104,7 @@ public class TutorialManager : MonoBehaviour
                         {
                             Debug.LogFormat("[Tut] TutorialManager.cs -> InitialiseTutorial: set \"{0}\" loaded{1}", set.name, "\n");
                             // Features toggle on/off
-                            UpdateFeatures(set.listOfFeaturesOff);
+                            UpdateFeatures(set.listOfFeaturesOff, set.listOfGUIOff);
                             //Goals reset
                             GameManager.i.dataScript.ClearListOfTutorialGoals();
                         }
@@ -127,8 +127,12 @@ public class TutorialManager : MonoBehaviour
     /// Update features prior for current tutorial set. Note: this will override anything set in GameManager prefab -> FeatureManager
     /// </summary>
     /// <param name="listOfFeatures"></param>
-    public void UpdateFeatures(List<TutorialFeature> listOfFeaturesToToggleOff)
+    public void UpdateFeatures(List<TutorialFeature> listOfFeaturesToToggleOff, List<TutorialGUIFeature> listOfGUIFeaturesToToggleOff)
     {
+        #region Features
+        //
+        // - - - Features
+        //
         if (listOfFeaturesToToggleOff != null)
         {
             //set all features true
@@ -203,14 +207,78 @@ public class TutorialManager : MonoBehaviour
                 }
                 else { Debug.LogWarningFormat("Invalid feature (Null) for listOfFeaturesToToggleOff[{0}]", i); }
             }
-            //discretionary GUI elements toggled off if required (those not directly effected by option settings)
-            if (GameManager.i.optionScript.isAI == true)
-            { GameManager.i.featureScript.ToggleAISideWidget(true); }
-            else { GameManager.i.featureScript.ToggleAISideWidget(false); }
         }
         else { Debug.LogError("Invalid listOfFeaturesToToggleOff (Null)"); }
+        #endregion
+
+        #region AI
+        //
+        // - - - AI (includes sideTab)
+        //
+        //discretionary GUI elements toggled off if required (those not directly effected by option settings)
+        if (GameManager.i.optionScript.isAI == true)
+        { GameManager.i.featureScript.ToggleAISideWidget(true); }
+        else { GameManager.i.featureScript.ToggleAISideWidget(false); }
+        #endregion
+
+        #region GUI
+        //
+        // - - - GUI
+        //
+        if (listOfGUIFeaturesToToggleOff != null)
+        {
+            //set all features true
+            GameManager.i.optionScript.isActorLeftMenu = true;
+            GameManager.i.optionScript.isActorRightMenu = true;
+            GameManager.i.optionScript.isNodeLeftMenu = true;
+            GameManager.i.optionScript.isNodeRightMenu = true;
+            GameManager.i.optionScript.isTopWidget = true;
+            GameManager.i.optionScript.isSideTabAI = true;
+            //turn OFF any features in list
+            for (int i = 0; i < listOfGUIFeaturesToToggleOff.Count; i++)
+            {
+                TutorialGUIFeature feature = listOfGUIFeaturesToToggleOff[i];
+                if (feature != null)
+                {
+                    switch (feature.name)
+                    {
+                        case "ActorLeftMenu":
+                            GameManager.i.optionScript.isActorLeftMenu = false;
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: ActorLeftMenu Off{0}", "\n");
+                            break;
+                        case "ActorRightMenu":
+                            GameManager.i.optionScript.isActorRightMenu = false;
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: ActorRightMenu toggled Off{0}", "\n");
+                            break;
+                        case "NodeLeftMenu":
+                            GameManager.i.optionScript.isNodeLeftMenu = false;
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: NodeLeftMenu toggled Off{0}", "\n");
+                            break;
+                        case "NodeRightMenu":
+                            GameManager.i.optionScript.isNodeRightMenu = false;
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: NodeRightMenu toggled Off{0}", "\n");
+                            break;
+                        case "TopWidget":
+                            GameManager.i.optionScript.isTopWidget = false;
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: TopWidget toggled Off{0}", "\n");
+                            break;
+                        case "SideTabAI":
+                            GameManager.i.optionScript.isSideTabAI = false;
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: SideTabAI toggled Off{0}", "\n");
+                            break;
+                        default: Debug.LogWarningFormat("Unrecognised feature.name \"{0}\"", feature.name); break;
+                    }
+                }
+                else { Debug.LogWarningFormat("Invalid feature (Null) for listOfGUIFeaturesToToggleOff[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid listOfGUIFeaturesToToggleOff (Null)"); }
+        #endregion
+
     }
     #endregion
+
+    #region Goals...
 
     #region UpdateGoal
     /// <summary>
@@ -251,8 +319,8 @@ public class TutorialManager : MonoBehaviour
                             goal1 = goalSecondary,
                             data0 = GetGoalValue(goalPrimary),
                             data1 = GetGoalValue(goalSecondary),
-                            target0 = goal.tracker0Target,
-                            target1 = goal.tracker1Target,
+                            target0 = goal.target0,
+                            target1 = goal.target1,
                         };
 
                         listOfGoals.Add(tracker);
@@ -279,7 +347,6 @@ public class TutorialManager : MonoBehaviour
         else { Debug.LogError("Invalid (Tutorial) goal (Null)"); }
     }
     #endregion
-
 
     #region CheckGoals
     /// <summary>
@@ -357,7 +424,7 @@ public class TutorialManager : MonoBehaviour
     }
     #endregion
 
-
+    #region GetGoalType
     /// <summary>
     /// Converts a TutorialGoal.SO primary or secondary goal into a GoalType.enum. Returns GoalType.None if a problem
     /// </summary>
@@ -377,7 +444,9 @@ public class TutorialManager : MonoBehaviour
         else { Debug.LogError("Invalid TutorialGoalType (Null)"); }
         return goalType;
     }
+    #endregion
 
+    #region GetGoalValue
     /// <summary>
     /// Returns current value of a goalType, -1 if a problem
     /// </summary>
@@ -395,8 +464,9 @@ public class TutorialManager : MonoBehaviour
         }
         return goalValue;
     }
+    #endregion
 
-
+    #endregion
 
     #region DebugDisplayTutorialData
     /// <summary>

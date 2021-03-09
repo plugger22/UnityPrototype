@@ -21,18 +21,29 @@ public class TutorialGoal : ScriptableObject
     [TextArea] public string finishBottomText;
 
     [Header("Primary Goal")]
-    [Tooltip("enum.SO that is used in code to look up the primary, tracker0 goal")]
+    [Tooltip("enum.SO that is used in code to look up the primary, tracker0 goal. Required")]
     public TutorialGoalType goal0;
     [Tooltip("Explanatory notes only")]
     public string tracker0Notes;
     [Tooltip("Target value for first tracker in order to achieve goal. NOTE: Default -1, show bool as 1 or 0 (true/false)")]
-    public int tracker0Target = -1;
+    public int target0 = -1;
 
     [Header("Secondary Goal")]
-    [Tooltip("enum.SO that is used in code to look up goal associated with any secondary, tracker1 gaol. Can be ignored")]
+    [Tooltip("enum.SO that is used in code to look up goal associated with any secondary, tracker1 gaol. Optional")]
     public TutorialGoalType goal1;
     [Tooltip("Explanatory notes only")]
     public string tracker1Notes;
     [Tooltip("Target value for second tracker (if any, leave blank if none) in order to achieve goal. NOTE: Default -1, show bool as 1 or 0 (true/false)")]
-    public int tracker1Target = -1;
+    public int target1 = -1;
+
+
+    public void OnEnable()
+    {
+        Debug.AssertFormat(goal0 != null, "Invalid goal0 for {0}", name);
+        Debug.AssertFormat(string.IsNullOrEmpty(startTopText) == false, "Invalid startTopText (Null or Empty) for {0}", name);
+        Debug.AssertFormat(string.IsNullOrEmpty(startBottomText) == false, "Invalid startBottomText (Null or Empty) for {0}", name);
+        Debug.AssertFormat(string.IsNullOrEmpty(finishTopText) == false, "Invalid finishTopText (Null or Empty) for {0}", name);
+        Debug.AssertFormat(string.IsNullOrEmpty(finishBottomText) == false, "Invalid finishBottomText (Null or Empty) for {0}", name);
+        Debug.AssertFormat(target0 > -1, "Invalid target0 for {0}", name);
+    }
 }

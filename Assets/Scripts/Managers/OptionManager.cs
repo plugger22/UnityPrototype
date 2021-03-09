@@ -32,10 +32,17 @@ public class OptionManager : MonoBehaviour
     [HideInInspector] public bool isOnMapRandom = false;                            //if true OnMap actors will be selected randomly from actorPoolFinal.SO. Only applies if isActorPool true
 
     //UI options
-    [HideInInspector] public bool showContacts = false;                           //if true node tooltips will show contact as well as Actor Arcs for nodes where actors have contacts
-    [HideInInspector] public bool showPower = true;                              //if true power UI elements shown for actors and player, if false show compatibility instead
-    [HideInInspector] public bool connectorTooltips = false;                      //if true then connectors have tooltips
+    [HideInInspector] public bool showContacts = false;                             //if true node tooltips will show contact as well as Actor Arcs for nodes where actors have contacts
+    [HideInInspector] public bool showPower = true;                                 //if true power UI elements shown for actors and player, if false show compatibility instead
+    [HideInInspector] public bool connectorTooltips = false;                        //if true then connectors have tooltips
     [HideInInspector] public bool fullMoodInfo = false;
+    //GUI functionality
+    [HideInInspector] public bool isActorLeftMenu = true;                           //left click actor menu
+    [HideInInspector] public bool isActorRightMenu = true;                          //right click actor menu
+    [HideInInspector] public bool isNodeLeftMenu = true;                            //left click node menu
+    [HideInInspector] public bool isNodeRightMenu = true;                           //right click node menu
+    [HideInInspector] public bool isSideTabAI = true;                               //side tab on LHS
+    [HideInInspector] public bool isTopWidget = true;                               //top centre widget (turn, actions, support, etc)
 
     //Backing fields (use underscore)
     private ColourScheme _colourOption;
@@ -103,6 +110,13 @@ public class OptionManager : MonoBehaviour
             .AppendFormat(" Full Mood Information -> {0}{1}", fullMoodInfo, "\n")
             .AppendFormat(" Show Contacts -> {0}{1}", showContacts, "\n")
             .AppendFormat(" Show Power -> {0}{1}", showPower, "\n")
+            .AppendFormat("{0}- GUI Functionality{1}", "\n", "\n")
+            .AppendFormat(" Actor Left Click Menu -> {0}{1}", isActorLeftMenu, "\n")
+            .AppendFormat(" Actor Right Click Menu -> {0}{1}", isActorRightMenu, "\n")
+            .AppendFormat(" Node Left Click Menu -> {0}{1}", isNodeLeftMenu, "\n")
+            .AppendFormat(" Node Right Click Menu -> {0}{1}", isNodeRightMenu, "\n")
+            .AppendFormat(" AI Side Tab LHS -> {0}{1}", isSideTabAI, "\n")
+            .AppendFormat(" Top Centre Widget -> {0}{1}", isTopWidget, "\n")
             .ToString();
     }
 

@@ -20,6 +20,15 @@ public class TutorialSet : ScriptableObject
     [Tooltip("List of features switched OFF for this tutorial set")]
     public List<TutorialFeature> listOfFeaturesOff;
 
+    [Tooltip("List of GUI elements switched OFF for this tutorial set")]
+    public List<TutorialGUIFeature> listOfGUIOff;
+
     [Tooltip("List of Tutorial items for this set. ORDER MATTERS. Maximum of 10 items")]
     public List<TutorialItem> listOfTutorialItems;
+
+
+    public void OnEnable()
+    {
+        Debug.AssertFormat(tutorial != null, "Invalid tutorial (Null) for {0}", name);
+    }
 }
