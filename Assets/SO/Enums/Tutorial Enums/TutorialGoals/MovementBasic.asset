@@ -9,6 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14ce46f3171943c4288c53f60de62339, type: 3}
-  m_Name: Move
+  m_Name: MovementBasic
   m_EditorClassIdentifier: 
-  notes: Player moves from one district to another
+  descriptor: Take the hyperloop to a couple of new districts
+  notes: Player moves to a couple of districts. Order or location don't matter, as
+    along as it's two moves
+  goal0: Move
+  tracker0Notes: Nodes to move
+  tracker0Target: 2
+  goal1: 
+  tracker1Notes: 
+  tracker1Target: -1

@@ -1460,6 +1460,23 @@ namespace packageAPI
         public int index;                           //set index where player is currently at
     }
 
+    /// <summary>
+    /// Used to track the progress of Tutorial Goals
+    /// </summary>
+    public class GoalTracker
+    {
+        public string descriptor;                   //tutorialGoal.SO descriptor
+        public string goalName;                     //tutorialGoal.name (reference only)
+        //primary goal
+        public GoalType goal0;                      //type of goal associated with data0 and target0
+        public int data0;                           //current value of first data point to be tracked, default -1
+        public int target0;                         //target value of first data point in order for goal to be achieved
+        //secondary, optional, goal
+        public GoalType goal1;                      //type of goal associated with data1 and target1
+        public int data1;                           //current value of second data point to be tracked (if any), default -1
+        public int target1;                         //target value of second data point in order for goal to be achieved
+    }
+
 
     //new classes above here
 }

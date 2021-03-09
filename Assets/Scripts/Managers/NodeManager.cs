@@ -2785,6 +2785,8 @@ public class NodeManager : MonoBehaviour
                 //message
                 string text = string.Format("You've moved to {0}", destination);
                 GameManager.i.messageScript.PlayerMove(text, node, moveDetails.changeInvisibility, moveDetails.ai_Delay);
+                //Statistics (needs to be before ProcessMoveOutcome calls for tutorial goals)
+                GameManager.i.dataScript.StatisticIncrement(StatType.PlayerMoveActions);
                 //
                 // - - - Invisibility - - -
                 //
@@ -2892,8 +2894,6 @@ public class NodeManager : MonoBehaviour
                 history.nemesisNodeID = GameManager.i.nodeScript.nodeNemesis;
                 history.nodeName = node.nodeName;
                 GameManager.i.dataScript.AddHistoryRebelMove(history);
-                //Statistics
-                GameManager.i.dataScript.StatisticIncrement(StatType.PlayerMoveActions);
             }
             else
             { Debug.LogError(string.Format("Invalid node (Null) for nodeID {0}", moveDetails.nodeID)); }

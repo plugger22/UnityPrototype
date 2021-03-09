@@ -208,7 +208,7 @@ public class DataManager : MonoBehaviour
     private List<string> listOfBillboardsSeen = new List<string>();                                             //ones that player has seen
 
     //Tutorials
-    private List<TutorialGoal> listOfCurrentGoals = new List<TutorialGoal>();                                   //current, active, tutorial goals
+    private List<GoalTracker> listOfCurrentGoals = new List<GoalTracker>();                                   //current, active, tutorial goals
 
     //dictionaries
     private Dictionary<int, GameObject> dictOfNodeObjects = new Dictionary<int, GameObject>();                  //Key -> nodeID, Value -> Node gameObject
@@ -10292,7 +10292,7 @@ public class DataManager : MonoBehaviour
     public Dictionary<string, TutorialData> GetDictOfTutorialData()
     { return dictOfTutorialData; }
 
-    public List<TutorialGoal> GetListOfTutorialGoals()
+    public List<GoalTracker> GetListOfTutorialGoals()
     { return listOfCurrentGoals; }
 
     /// <summary>
@@ -10300,6 +10300,13 @@ public class DataManager : MonoBehaviour
     /// </summary>
     public void ClearListOfTutorialGoals()
     { listOfCurrentGoals.Clear(); }
+
+    /// <summary>
+    /// returns number of tutorial goals in listOfCurrentGoals
+    /// </summary>
+    /// <returns></returns>
+    public int CheckNumberOfCurrentGoals()
+    { return listOfCurrentGoals.Count(); }
 
     /// <summary>
     /// returns a tutorial.so based on the tutorial.name

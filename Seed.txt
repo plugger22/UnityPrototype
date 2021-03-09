@@ -486,3 +486,95 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	
 Dev seed 51066 -> Saturday, 6 March 2021 4:50 PM
 City seed 11866 -> VirtualCity, Eurasia
+
+Dev seed 65494 -> Tuesday, 9 March 2021 9:05 AM
+City seed 58719 -> VirtualCity, Eurasia
+
+Dev seed 14918 -> Tuesday, 9 March 2021 11:34 AM
+City seed 1352 -> VirtualCity, Eurasia
+WARNING Unrecognised goal ""
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:GetGoalType(String) (at Assets/Scripts/Managers/TutorialManager.cs:285)
+	TutorialManager:UpdateGoal(TutorialGoal) (at Assets/Scripts/Managers/TutorialManager.cs:225)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:383)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:233)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:366)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid goalType (GoalType.None)
+UnityEngine.Debug:LogWarning(Object)
+	TutorialManager:UpdateGoal(TutorialGoal) (at Assets/Scripts/Managers/TutorialManager.cs:252)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:383)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:233)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:366)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 19340 -> Tuesday, 9 March 2021 11:44 AM
+City seed 18667 -> VirtualCity, Eurasia
+WARNING Unrecognised goal ""
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:GetGoalType(String) (at Assets/Scripts/Managers/TutorialManager.cs:288)
+	TutorialManager:UpdateGoal(TutorialGoal) (at Assets/Scripts/Managers/TutorialManager.cs:225)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:383)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:233)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:366)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid goalType (GoalType.None)
+UnityEngine.Debug:LogWarning(Object)
+	TutorialManager:UpdateGoal(TutorialGoal) (at Assets/Scripts/Managers/TutorialManager.cs:255)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:383)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:233)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:366)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 42686 -> Tuesday, 9 March 2021 11:46 AM
+City seed 53298 -> VirtualCity, Eurasia
+ERROR Invalid goal (Null or Empty)
+UnityEngine.Debug:LogError(Object)
+	TutorialManager:GetGoalType(String) (at Assets/Scripts/Managers/TutorialManager.cs:291)
+	TutorialManager:UpdateGoal(TutorialGoal) (at Assets/Scripts/Managers/TutorialManager.cs:225)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:383)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:233)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:366)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid goalType (GoalType.None)
+UnityEngine.Debug:LogWarning(Object)
+	TutorialManager:UpdateGoal(TutorialGoal) (at Assets/Scripts/Managers/TutorialManager.cs:255)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:383)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:233)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:366)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 31213 -> Tuesday, 9 March 2021 11:47 AM
+City seed 57376 -> VirtualCity, Eurasia
+ERROR Invalid goal (Null or Empty)
+UnityEngine.Debug:LogError(Object)
+	TutorialManager:GetGoalType(String) (at Assets/Scripts/Managers/TutorialManager.cs:291)
+	TutorialManager:UpdateGoal(TutorialGoal) (at Assets/Scripts/Managers/TutorialManager.cs:225)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:383)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:233)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:366)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING Invalid goalType (GoalType.None)
+UnityEngine.Debug:LogWarning(Object)
+	TutorialManager:UpdateGoal(TutorialGoal) (at Assets/Scripts/Managers/TutorialManager.cs:255)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:383)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:233)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:366)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 25213 -> Tuesday, 9 March 2021 11:48 AM
+City seed 51753 -> VirtualCity, Eurasia
+
+Dev seed 47706 -> Tuesday, 9 March 2021 12:22 PM
+City seed 12652 -> VirtualCity, Eurasia
+
+Dev seed 42551 -> Tuesday, 9 March 2021 12:35 PM
+City seed 37986 -> VirtualCity, Eurasia

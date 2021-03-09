@@ -243,6 +243,11 @@
     public enum PlayerCheck { None, NodeActionsNOTZero }
 
     //
+    // - - - Goals
+    //
+    public enum GoalType { None, Move }                 //TutorialGoal.SO equivalents
+
+    //
     // - - - Statistics - - - 
     //
     public enum StatType                                //NOTE -> No 'None' or 'Count' (code loops enum and can't handle either)
