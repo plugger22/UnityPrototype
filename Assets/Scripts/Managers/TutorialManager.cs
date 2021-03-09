@@ -1,4 +1,5 @@
 ﻿using gameAPI;
+using modalAPI;
 using packageAPI;
 using System;
 using System.Collections.Generic;
@@ -213,7 +214,7 @@ public class TutorialManager : MonoBehaviour
 
     #region UpdateGoal
     /// <summary>
-    /// Load any goals from the current TutorialSet into DM -> listOfActiveGoals
+    /// Convert and Load a player selected goal (they've clicked on a tutorial goal button, RHS) from the current TutorialSet into DM -> listOfCurrentGoals
     /// </summary>
     public void UpdateGoal(TutorialGoal goal)
     {
@@ -227,17 +228,24 @@ public class TutorialManager : MonoBehaviour
                 {
                     //check TutorialGoal not already present
                     if (listOfGoals.Exists(x => x.goalName.Equals(goal.name, StringComparison.Ordinal)) == true)
-                    { Debug.LogWarningFormat("TutorialManager.cs -> UpdateGoal: Can't add goal \"{0}\",  as already present in listOfGoals{1}", goal.name, "\n"); }
+                    {
+                        Debug.LogWarningFormat("TutorialManager.cs -> UpdateGoal: Can't add goal \"{0}\",  as already present in listOfGoals{1}", goal.name, "\n");
+                        //warning message
+                        GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.TutorialGoal);
+                    }
                     else
                     {
                         //secondary goal (optional)
                         GoalType goalSecondary = GoalType.None;
-                        if (string.IsNullOrEmpty(goal.goal1) == false)
+                        if (goal.goal1 != null)
                         { GetGoalType(goal.goal1); }
                         //Convert to a GoalTracker
                         GoalTracker tracker = new GoalTracker()
                         {
-                            descriptor = goal.descriptor,
+                            startTop = goal.startTopText,
+                            startBottom = goal.startBottomText,
+                            finishTop = goal.finishTopText,
+                            finishBottom = goal.finishBottomText,
                             goalName = goal.name,
                             goal0 = goalPrimary,
                             goal1 = goalSecondary,
@@ -248,8 +256,20 @@ public class TutorialManager : MonoBehaviour
                         };
 
                         listOfGoals.Add(tracker);
-                        Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateGoals: goal \"{0}\" added to list (goal0 {1}, data0 {2}, target0 {3} goal1 {4} -> data1 {5}, target1 {6}){7}", tracker.goalName, 
+                        Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateGoals: goal \"{0}\" added to list (goal0 {1}, data0 {2}, target0 {3} goal1 {4} -> data1 {5}, target1 {6}){7}", tracker.goalName,
                             tracker.goal0, tracker.data0, tracker.target0, tracker.goal1, tracker.data1, tracker.target1, "\n");
+                        //open special outcome window
+                        ModalOutcomeDetails details = new ModalOutcomeDetails()
+                        {
+                            side = GameManager.i.sideScript.PlayerSide,
+                            textTop = GameManager.Formatt(goal.startTopText, ColourType.moccasinText),
+                            textBottom = goal.startBottomText,
+                            sprite = GameManager.i.tutorialScript.tutorial.sprite,
+                            isAction = false,
+                            isSpecial = true,
+                            isSpecialGood = true
+                        };
+                        EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
                     }
                 }
                 else { Debug.LogWarning("Invalid goalType (GoalType.None)"); }
@@ -275,7 +295,8 @@ public class TutorialManager : MonoBehaviour
             List<GoalTracker> listOfGoals = GameManager.i.dataScript.GetListOfTutorialGoals();
             if (listOfGoals != null)
             {
-                for (int i = 0; i < listOfGoals.Count; i++)
+                //reverse loop as may have to remove completed goals
+                for (int i = listOfGoals.Count - 1; i >= 0; i--)
                 {
                     GoalTracker tracker = listOfGoals[i];
                     if (tracker != null)
@@ -284,8 +305,7 @@ public class TutorialManager : MonoBehaviour
                         currentValue = GetGoalValue(tracker.goal0);
                         if (currentValue > -1)
                         {
-                            tracker.data0 = currentValue;
-                            if (tracker.data0 >= tracker.target0)
+                            if (currentValue - tracker.data0 >= tracker.target0)
                             {
                                 //check secondary goal, if present
                                 if (tracker.goal1 != GoalType.None)
@@ -293,8 +313,7 @@ public class TutorialManager : MonoBehaviour
                                     currentValue = GetGoalValue(tracker.goal1);
                                     if (currentValue > -1)
                                     {
-                                        tracker.data1 = currentValue;
-                                        if (tracker.data1 >= tracker.target1)
+                                        if (currentValue - tracker.data1 >= tracker.target1)
                                         { isGoalAchieved = true; }
                                     }
                                     else { Debug.LogWarningFormat("Invalid currentValue (-1) for goal \"{0}\", Secondary goal {1}{2}", tracker.goalName, tracker.goal1, "\n"); }
@@ -308,6 +327,21 @@ public class TutorialManager : MonoBehaviour
                         {
                             Debug.LogFormat("[Tut] TutorialManager.cs -> CheckGoals: Goal \"{0}\" COMPLETED (goal0 {1}, data0 {2}, target0 {3}, goal1 {4}, data1 {5}, target1 {6}){7}",
                                 tracker.goalName, tracker.goal0, tracker.data0, tracker.target0, tracker.goal1, tracker.data1, tracker.target1, "\n");
+                            //open special outcome window
+                            ModalOutcomeDetails details = new ModalOutcomeDetails()
+                            {
+                                side = GameManager.i.sideScript.PlayerSide,
+                                textTop = GameManager.Formatt(tracker.finishTop, ColourType.moccasinText),
+                                textBottom = tracker.finishBottom,
+                                sprite = GameManager.i.tutorialScript.tutorial.sprite,
+                                isAction = false,
+                                isSpecial = true,
+                                isSpecialGood = true
+                            };
+                            EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
+                            //remove goal
+                            Debug.LogFormat("[Tut] DataManager.cs -> RemoveCurrentGoal: goal \"{0}\" REMOVED from listOfCurrentGoals{1}", tracker.goalName, "\n");
+                            listOfGoals.RemoveAt(i);
                         }
                         else
                         {
@@ -329,18 +363,18 @@ public class TutorialManager : MonoBehaviour
     /// </summary>
     /// <param name="goal"></param>
     /// <returns></returns>
-    private GoalType GetGoalType(string goal)
+    private GoalType GetGoalType(TutorialGoalType goal)
     {
         GoalType goalType = GoalType.None;
-        if (string.IsNullOrEmpty(goal) != true)
+        if (goal != null)
         {
-            switch (goal)
+            switch (goal.name)
             {
-                case "Move": goalType = GoalType.Move; break;
+                case "MoveBasic": goalType = GoalType.Move; break;
                 default: Debug.LogWarningFormat("Unrecognised goal \"{0}\"", goal); break;
             }
         }
-        else { Debug.LogError("Invalid goal (Null or Empty)"); }
+        else { Debug.LogError("Invalid TutorialGoalType (Null)"); }
         return goalType;
     }
 
@@ -397,8 +431,8 @@ public class TutorialManager : MonoBehaviour
                         GoalTracker goal = listOfGoals[i];
                         if (goal != null)
                         {
-                            builder.AppendFormat(" {0} -> {1}{2}  goal0 {3}, data0 {4}, target {5}{6}  goal1 {7} -> data1 {8}, target1 {9}{10} ", 
-                                goal.goalName, goal.descriptor, "\n", goal.goal0, goal.data0, goal.target0, "\n", goal.goal1, goal.data1, goal.target1, "\n");
+                            builder.AppendFormat(" {0} -> {1}{2}  goal0 {3}, data0 {4}, target {5}{6}  goal1 {7} -> data1 {8}, target1 {9}{10} ",
+                                goal.goalName, goal.startTop, "\n", goal.goal0, goal.data0, goal.target0, "\n", goal.goal1, goal.data1, goal.target1, "\n");
                         }
                         else { Debug.LogErrorFormat("Invalid goal (Null) for listOfGoals[{0}]", i); }
                     }

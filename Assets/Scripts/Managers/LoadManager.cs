@@ -79,6 +79,8 @@ public class LoadManager : MonoBehaviour
     public TutorialItem[] arrayOfTutorialItems;
     public TutorialType[] arrayOfTutorialTypes;
     public TutorialGoal[] arrayOfTutorialGoals;
+    public TutorialGoalType[] arrayOfTutorialGoalTypes;
+    public TutorialGUIFeature[] arrayOfTutorialGUIFeatures;
 
     [Header("Personality Factors - ORDER MATTERS")]
     public Factor[] arrayOfFiveFactorModel;
@@ -1114,6 +1116,20 @@ public class LoadManager : MonoBehaviour
         if (numArray > 0)
         { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTutorialGoals has {0} entries{1}", numArray, "\n"); }
         else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TutorialGoals present"); }
+        //
+        // - - - Tutorial Goal Types (not stored in a collection)
+        //
+        numArray = arrayOfTutorialGoalTypes.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTutorialGoalTypes has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TutorialGoalTypes present"); }
+        //
+        // - - - Tutorial GUI Features (not stored in a collection)
+        //
+        numArray = arrayOfTutorialGUIFeatures.Length;
+        if (numArray > 0)
+        { Debug.LogFormat("[Loa] InitialiseStart -> arrayOfTutorialGUIFeatures has {0} entries{1}", numArray, "\n"); }
+        else { Debug.LogWarning(" LoadManager.cs -> InitialiseStart: No TutorialGUIFeatures present"); }
         //
         // - - - Layouts (not stored in a collection)
         //

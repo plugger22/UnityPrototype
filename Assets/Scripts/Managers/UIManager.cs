@@ -37,6 +37,8 @@ public class UIManager : MonoBehaviour
     public Color tutQuestion;
     [Tooltip("Goal button colour (should be 100 % alpha)")]
     public Color tutGoal;
+    [Tooltip("Tutorial button completed (should be 100% alpha)")]
+    public Color tutCompleted;
 
     [Header("Topic UI")]
     [Tooltip("Topic UI, main background, for all normal topics")]

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14ce46f3171943c4288c53f60de62339, type: 3}
+  m_Name: MovementBasic
+  m_EditorClassIdentifier: 
+  notes: Player moves to a couple of districts. Order or location don't matter, as
+    along as it's two moves
+  startTopText: Learn to move around the city
+  startBottomText: Mouse over your portrait (bottom centre). Look at the map. That's
+    where you are now. Move somewhere <b>several districts</b> away<br><br>Jump back
+    and take in the <b>Moving Help</b> if you need to
+  finishTopText: Yep, that's the Hyperloop. Whisper quiet and silky smooth, ain't
+    it?
+  finishBottomText: Moving isn't actually <b>THAT</b> easy but we'll get to that.
+    Here, have a Fungus burger, you've earned it
+  goal0: {fileID: 11400000, guid: 5237bc6f2db221e4cbec1efa3fbd5e9a, type: 2}
+  tracker0Notes: Nodes to move
+  tracker0Target: 2
+  goal1: {fileID: 0}
+  tracker1Notes: 
+  tracker1Target: -1

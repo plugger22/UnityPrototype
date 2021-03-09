@@ -257,6 +257,9 @@ public class GUIManager : MonoBehaviour
         EventManager.i.AddListener(EventType.ShowMeRestore, OnEvent, "GUIManager");
     }
 
+    #region Awesome fonts...
+
+    #region SetFontChars
     /// <summary>
     /// Set AwesomeFont char symbols
     /// </summary>
@@ -303,7 +306,9 @@ public class GUIManager : MonoBehaviour
         tutGoal = '\uf46c';
 
     }
+    #endregion
 
+    #region SetIcons
     /// <summary>
     /// Set colour formatted predefined icon strings for data values. Used throughout code base, central repositry here
     /// </summary>
@@ -332,7 +337,9 @@ public class GUIManager : MonoBehaviour
         arrowIconRight = string.Format("{0}<size=120%>{1}</size>{2}", colourIcon, arrowRight, colourEnd);
         arrowIconLeft = string.Format("{0}<size=120%>{1}</size>{2}", colourIcon, arrowLeft, colourEnd);
     }
+    #endregion
 
+    #endregion
 
     /// <summary>
     /// handles events
@@ -459,6 +466,11 @@ public class GUIManager : MonoBehaviour
                     //generic fault message
                     details.textTop = string.Format("{0}Main Menu is unavailable{1}", colourBad, colourEnd);
                     details.textBottom = string.Format("If you are {0}Lying Low{1} or have been {2}Captured{3} your options are limited", colourAlert, colourEnd, colourAlert, colourEnd);
+                    break;
+                case AlertType.TutorialGoal:
+                    //Player clicked on tutorial goal when goal is already in progress
+                    details.textTop = string.Format("{0}Goal Active{1}", colourBad, colourEnd);
+                    details.textBottom = string.Format("You are already attempting this goal<br><br>You can {0}<size=115%>do it again</size>{1} once you've completed it, if you wish", colourAlert, colourEnd);
                     break;
                 case AlertType.PlayerStatus:
                     switch (GameManager.i.playerScript.status)

@@ -21,6 +21,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7e2f496678746a1488d0508fb5ac34ef, type: 2}
   - {fileID: 11400000, guid: 9454b7127e3650a4eaab65f71ee34ca0, type: 2}
   - {fileID: 11400000, guid: e16c959b5f1eac342979baf4a1a9362b, type: 2}
+  - {fileID: 11400000, guid: 17e9781d9857d6c4cb1164f4f6c0deb8, type: 2}
+  - {fileID: 11400000, guid: efba9c88561b33140bc3fe102eb154d3, type: 2}
+  - {fileID: 11400000, guid: 70e66f38820226347909bc5dfe71319a, type: 2}
+  - {fileID: 11400000, guid: 60c5546ae44161c4e96b856a75904210, type: 2}
   listOfTutorialItems:
   - {fileID: 11400000, guid: 369ffecea2dba2d498950da307347892, type: 2}
   - {fileID: 11400000, guid: cf84719c70b337c48b65ccf56a5137ae, type: 2}

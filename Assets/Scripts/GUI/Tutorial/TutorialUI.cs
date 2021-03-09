@@ -56,6 +56,7 @@ public class TutorialUI : MonoBehaviour
     private Color colourInfo;
     private Color colourQuestion;
     private Color colourGoal;
+    private Color colourCompleted;
     #endregion
 
     #region static instance...
@@ -117,6 +118,7 @@ public class TutorialUI : MonoBehaviour
         colourInfo = GameManager.i.uiScript.tutInfo;
         colourQuestion = GameManager.i.uiScript.tutQuestion;
         colourGoal = GameManager.i.uiScript.tutGoal;
+        colourCompleted = GameManager.i.uiScript.tutCompleted;
     }
     #endregion
 
@@ -381,6 +383,10 @@ public class TutorialUI : MonoBehaviour
                             break;
                         case "Goal":
                             GameManager.i.tutorialScript.UpdateGoal(currentItem.goal);
+                            //change colour to completed (indicates that you're currently doing, or have done, the goal)
+                            ColorBlock buttonColours = listOfButtons[index].colors;
+                            buttonColours.normalColor = colourCompleted;
+                            listOfButtons[index].colors = buttonColours;
                             break;
                         case "Information":
                             EventManager.i.PostNotification(EventType.GameHelpOpen, this, currentItem.gameHelp);

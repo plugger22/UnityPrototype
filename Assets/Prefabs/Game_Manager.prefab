@@ -1817,6 +1817,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8b2847a7a246595458eee2b6a64e9b06, type: 2}
   arrayOfTutorialGoals:
   - {fileID: 11400000, guid: 33e14c1b26727af4796ede7d57be31f2, type: 2}
+  arrayOfTutorialGoalTypes:
+  - {fileID: 11400000, guid: 5237bc6f2db221e4cbec1efa3fbd5e9a, type: 2}
   arrayOfFiveFactorModel:
   - {fileID: 11400000, guid: 456adeff3cd08484bb73dab8396a5d8d, type: 2}
   - {fileID: 11400000, guid: 7acfd5c74d59ce64198cf88e42ca66ff, type: 2}
@@ -6544,6 +6546,7 @@ MonoBehaviour:
   tutInfo: {r: 0.33333334, g: 0.75686276, b: 1, a: 1}
   tutQuestion: {r: 0.92156863, g: 0.39215687, b: 0.14117648, a: 1}
   tutGoal: {r: 0.96862745, g: 0.09019608, b: 0.20784314, a: 1}
+  tutCompleted: {r: 0.20392157, g: 0.21176471, b: 0.2, a: 1}
   TopicNormal: {r: 0.33333334, g: 0.75686276, b: 1, a: 0}
   TopicCapture: {r: 0.9372549, g: 0.078431375, b: 0.27058825, a: 0}
   MainBackground: {r: 0.33333334, g: 0.75686276, b: 1, a: 0.49411765}

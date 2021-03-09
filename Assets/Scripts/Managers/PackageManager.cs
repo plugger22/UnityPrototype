@@ -1465,7 +1465,10 @@ namespace packageAPI
     /// </summary>
     public class GoalTracker
     {
-        public string descriptor;                   //tutorialGoal.SO descriptor
+        public string startTop;                     //message (top text) given to player at goal initiation
+        public string startBottom;                  //message (bottom text) given to player at goal initiation
+        public string finishTop;                    //message (top text) given to player upon goal completion
+        public string finishBottom;                 //message (bottom text) given to player upon goal completion
         public string goalName;                     //tutorialGoal.name (reference only)
         //primary goal
         public GoalType goal0;                      //type of goal associated with data0 and target0
