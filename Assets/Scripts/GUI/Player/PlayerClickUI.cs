@@ -32,14 +32,18 @@ public class PlayerClickUI : MonoBehaviour, IPointerClickHandler
         switch (eventData.button)
         {
             case PointerEventData.InputButton.Left:
-                //player review
-                TabbedUIData tabbedDetails = new TabbedUIData()
+                if (GameManager.i.optionScript.isActorLeftMenu == true)
                 {
-                    side = playerSide,
-                    who = TabbedUIWho.Player,
-                    slotID = 0,
-                };
-                EventManager.i.PostNotification(EventType.TabbedOpen, this, tabbedDetails, "PlayerClickUI.cs -> OnPointerClick");
+                    //player review
+                    TabbedUIData tabbedDetails = new TabbedUIData()
+                    {
+                        side = playerSide,
+                        who = TabbedUIWho.Player,
+                        slotID = 0,
+                    };
+                    EventManager.i.PostNotification(EventType.TabbedOpen, this, tabbedDetails, "PlayerClickUI.cs -> OnPointerClick");
+                }
+                else { GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.TutorialMenuUnavailable); }
                 break;
             case PointerEventData.InputButton.Right:
                 if (GameManager.i.guiScript.CheckIsBlocked() == false)
@@ -49,6 +53,8 @@ public class PlayerClickUI : MonoBehaviour, IPointerClickHandler
                     { proceedFlag = false; alertType = AlertType.SideStatus; }
                     if (GameManager.i.playerScript.status != ActorStatus.Active)
                     { proceedFlag = false; alertType = AlertType.PlayerStatus; }
+                    if (GameManager.i.optionScript.isActorRightMenu == false)
+                    { proceedFlag = false; alertType = AlertType.TutorialMenuUnavailable; }
                     /*//Action Menu -> not valid if  Player inactive
                     else if (GameManager.instance.playerScript.status != ActorStatus.Active)
                     { proceedFlag = false; alertType = AlertType.PlayerStatus; }*/

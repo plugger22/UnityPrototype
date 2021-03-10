@@ -29,7 +29,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2b429498342b10042847ad6b6e67d783, type: 2}
   - {fileID: 11400000, guid: 4ecda8036df900d48b4b25e77b1b6ad0, type: 2}
   - {fileID: 11400000, guid: 7046d4b9b0e864d409b0b2019663b6b2, type: 2}
-  - {fileID: 11400000, guid: 0a8d1b9997403cc46bee6cc85a993b68, type: 2}
   - {fileID: 11400000, guid: b624e75a5ef516045a64c1b6b4c72e16, type: 2}
   listOfTutorialItems:
   - {fileID: 11400000, guid: 369ffecea2dba2d498950da307347892, type: 2}

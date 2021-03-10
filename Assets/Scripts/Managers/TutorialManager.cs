@@ -211,7 +211,7 @@ public class TutorialManager : MonoBehaviour
         else { Debug.LogError("Invalid listOfFeaturesToToggleOff (Null)"); }
         #endregion
 
-        #region AI
+        #region Special Cases
         //
         // - - - AI (includes sideTab)
         //
@@ -233,7 +233,6 @@ public class TutorialManager : MonoBehaviour
             GameManager.i.optionScript.isNodeLeftMenu = true;
             GameManager.i.optionScript.isNodeRightMenu = true;
             GameManager.i.optionScript.isTopWidget = true;
-            GameManager.i.optionScript.isSideTabAI = true;
             //turn OFF any features in list
             for (int i = 0; i < listOfGUIFeaturesToToggleOff.Count; i++)
             {
@@ -259,18 +258,17 @@ public class TutorialManager : MonoBehaviour
                             Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: NodeRightMenu toggled Off{0}", "\n");
                             break;
                         case "TopWidget":
+                            //note: placed here for message purposes only -> dealt with below
                             GameManager.i.optionScript.isTopWidget = false;
                             Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: TopWidget toggled Off{0}", "\n");
-                            break;
-                        case "SideTabAI":
-                            GameManager.i.optionScript.isSideTabAI = false;
-                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: SideTabAI toggled Off{0}", "\n");
                             break;
                         default: Debug.LogWarningFormat("Unrecognised feature.name \"{0}\"", feature.name); break;
                     }
                 }
                 else { Debug.LogWarningFormat("Invalid feature (Null) for listOfGUIFeaturesToToggleOff[{0}]", i); }
             }
+            //Top widget (toggle either on/off but do so after option has been set above)
+            GameManager.i.widgetTopScript.SetWidget(GameManager.i.optionScript.isTopWidget);
         }
         else { Debug.LogError("Invalid listOfGUIFeaturesToToggleOff (Null)"); }
         #endregion

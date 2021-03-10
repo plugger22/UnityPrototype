@@ -1836,12 +1836,19 @@ public class ValidationManager : MonoBehaviour
                                 else
                                 {
                                     List<string> listOfNames = new List<string>();
-                                    //check set -> lists for null
+                                    //check set -> features lists for null
                                     if (CheckList(set.listOfFeaturesOff, "listOfFeaturesOff", tag) == true)
                                     {
                                         //check for duplicates -> NOTE: need to nest within Checklist check as any null will cause error on Select(x => x.name)
                                         listOfNames = set.listOfFeaturesOff.Select(x => x.name).ToList();
                                         CheckListForDuplicates(listOfNames, "TutorialFeature", "SO.name", "listOfFeaturesOff");
+                                    }
+                                    //check set -> GUI features lists for null
+                                    if (CheckList(set.listOfGUIOff, "listOfGUIOff", tag) == true)
+                                    {
+                                        //check for duplicates -> NOTE: need to nest within Checklist check as any null will cause error on Select(x => x.name)
+                                        listOfNames = set.listOfGUIOff.Select(x => x.name).ToList();
+                                        CheckListForDuplicates(listOfNames, "TutorialGUIFeature", "SO.name", "listOfGUIOff");
                                     }
                                     //check tutorial items
                                     if (CheckList(set.listOfTutorialItems, "listOfTutorialItems", tag) == true)

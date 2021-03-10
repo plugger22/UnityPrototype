@@ -1824,7 +1824,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4ecda8036df900d48b4b25e77b1b6ad0, type: 2}
   - {fileID: 11400000, guid: 7046d4b9b0e864d409b0b2019663b6b2, type: 2}
   - {fileID: 11400000, guid: 262a2750ea2c48041a39b611630cb536, type: 2}
-  - {fileID: 11400000, guid: 0a8d1b9997403cc46bee6cc85a993b68, type: 2}
   - {fileID: 11400000, guid: b624e75a5ef516045a64c1b6b4c72e16, type: 2}
   arrayOfFiveFactorModel:
   - {fileID: 11400000, guid: 456adeff3cd08484bb73dab8396a5d8d, type: 2}
@@ -5953,7 +5952,6 @@ MonoBehaviour:
   isActorRightMenu: 1
   isNodeLeftMenu: 1
   isNodeRightMenu: 1
-  isSideTabAI: 1
   isTopWidget: 1
   noNodes: 1
 --- !u!114 &114556544146557144

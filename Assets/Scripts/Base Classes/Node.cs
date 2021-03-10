@@ -340,6 +340,9 @@ public class Node : MonoBehaviour
                 //Action Menu -> not valid if  Player inactive
                 else if (GameManager.i.playerScript.status != ActorStatus.Active)
                 { proceedFlag = false; alertType = AlertType.PlayerStatus; }
+                //GUI element toggled off for tutorial
+                else if (GameManager.i.optionScript.isNodeLeftMenu == false)
+                { proceedFlag = false; alertType = AlertType.TutorialMenuUnavailable; }
                 //Proceed
                 if (proceedFlag == true)
                 {
@@ -413,6 +416,9 @@ public class Node : MonoBehaviour
                         //Action Menu -> not valid if  Player inactive
                         else if (GameManager.i.playerScript.status != ActorStatus.Active)
                         { proceedFlag = false; alertType = AlertType.PlayerStatus; }
+                        //Tutorial -> GUI element switched off
+                        else if (GameManager.i.optionScript.isNodeRightMenu == false)
+                        { proceedFlag = false; alertType = AlertType.TutorialMenuUnavailable; }
                         //proceed
                         if (proceedFlag == true)
                         {

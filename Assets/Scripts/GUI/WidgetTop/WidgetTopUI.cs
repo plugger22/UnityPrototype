@@ -14,6 +14,8 @@ public class WidgetTopUI : MonoBehaviour
 {
 
     // NOTE: Globals parameters for Icon coroutines are to be found in GUIManager.cs
+    [Header("Main")]
+    public Canvas canvas;
 
     [Header("UI Elements")]
     public Image widgetTopSprite;
@@ -60,6 +62,7 @@ public class WidgetTopUI : MonoBehaviour
 
     public void Awake()
     {
+        Debug.Assert(canvas != null, "Invalid canvas (Null)");
         Debug.Assert(starLeft != null, "Invalid starLeft (Null)");
         Debug.Assert(starMiddle != null, "Invalid starMiddle (Null)");
         Debug.Assert(starRight != null, "Invalid starRight (Null)");
@@ -257,6 +260,13 @@ public class WidgetTopUI : MonoBehaviour
                 break;
         }
     }
+
+    /// <summary>
+    /// Toggle widget on/off (used by tutorial only, default is to be on at all times)
+    /// </summary>
+    /// <param name="isActive"></param>
+    public void SetWidget(bool isActive)
+    { canvas.gameObject.SetActive(isActive); }
 
 
     /// <summary>

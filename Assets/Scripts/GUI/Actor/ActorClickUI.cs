@@ -17,7 +17,7 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
     }
 
     /// <summary>
-    /// Mouse click -> Right: Actor Action Menu
+    /// Mouse click -> Left: Dossier, Right: Actor Action Menu
     /// </summary>
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -36,14 +36,18 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                 switch (eventData.button)
                 {
                     case PointerEventData.InputButton.Left:
-                        //actor review
-                        TabbedUIData tabbedDetails = new TabbedUIData()
+                        if (GameManager.i.optionScript.isActorLeftMenu == true)
                         {
-                            side = playerSide,
-                            who = TabbedUIWho.Subordinates,
-                            slotID = GameManager.i.dataScript.GetActorPosition(actorSlotID, playerSide),
-                        };
-                        EventManager.i.PostNotification(EventType.TabbedOpen, this, tabbedDetails, "ActorClickUI.cs -> OnPointerClick");
+                            //actor review
+                            TabbedUIData tabbedDetails = new TabbedUIData()
+                            {
+                                side = playerSide,
+                                who = TabbedUIWho.Subordinates,
+                                slotID = GameManager.i.dataScript.GetActorPosition(actorSlotID, playerSide),
+                            };
+                            EventManager.i.PostNotification(EventType.TabbedOpen, this, tabbedDetails, "ActorClickUI.cs -> OnPointerClick");
+                        }
+                        else { GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.TutorialMenuUnavailable); }
                         break;
                     case PointerEventData.InputButton.Right:
                         if (GameManager.i.guiScript.CheckIsBlocked() == false)
@@ -54,6 +58,8 @@ public class ActorClickUI : MonoBehaviour, IPointerClickHandler
                             //Action Menu -> not valid if  Player inactive
                             else if (GameManager.i.playerScript.status != ActorStatus.Active)
                             { proceedFlag = false; alertType = AlertType.PlayerStatus; }
+                            else if (GameManager.i.optionScript.isActorRightMenu == false)
+                            { proceedFlag = false; alertType = AlertType.TutorialMenuUnavailable; }
                             Actor actor = GameManager.i.dataScript.GetCurrentActor(actorSlotID, playerSide);
                             if (actor != null)
                             {

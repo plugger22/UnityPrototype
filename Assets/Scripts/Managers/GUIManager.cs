@@ -472,6 +472,11 @@ public class GUIManager : MonoBehaviour
                     details.textTop = string.Format("{0}Goal Active{1}", colourBad, colourEnd);
                     details.textBottom = string.Format("You are already attempting this goal<br><br>You can {0}<size=115%>do it again</size>{1} once you've completed it, if you wish", colourAlert, colourEnd);
                     break;
+                case AlertType.TutorialMenuUnavailable:
+                    //GUI menu is temporarily unavailable for this part of the tutorial
+                    details.textTop = string.Format("{0}Menu Unavailable{1}", colourBad, colourEnd);
+                    details.textBottom = string.Format("We've {0}switched it off{1} for this part of the <b>Tutorial</b><br><br>It's only <b>temporary</b>", colourAlert, colourEnd);
+                    break;
                 case AlertType.PlayerStatus:
                     switch (GameManager.i.playerScript.status)
                     {

@@ -171,6 +171,10 @@ public class ControlManager : MonoBehaviour
         GameManager.i.modalGUIScript.CloseBackgrounds(Background.NewGameOptions);
         //change game state (allows inputManager.cs to handle relevant input)
         GameManager.i.inputScript.GameState = GameState.NewGameOptions;
+        //reset all GUI options (may have come from a tutorial)
+        GameManager.i.optionScript.SetAllGUIOptionsToDefault();
+        //game features (set according to FeatureManager in GameManager.cs prefab)
+        GameManager.i.featureScript.InitialiseFeatures();
     }
     #endregion
 

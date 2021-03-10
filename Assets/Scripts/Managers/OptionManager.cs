@@ -41,7 +41,6 @@ public class OptionManager : MonoBehaviour
     [HideInInspector] public bool isActorRightMenu = true;                          //right click actor menu
     [HideInInspector] public bool isNodeLeftMenu = true;                            //left click node menu
     [HideInInspector] public bool isNodeRightMenu = true;                           //right click node menu
-    [HideInInspector] public bool isSideTabAI = true;                               //side tab on LHS
     [HideInInspector] public bool isTopWidget = true;                               //top centre widget (turn, actions, support, etc)
 
     //Backing fields (use underscore)
@@ -65,6 +64,20 @@ public class OptionManager : MonoBehaviour
                 Debug.Log("OptionManager -> Colour Scheme: now " + _colourOption + "\n");
             }
         }
+    }
+
+    /// <summary>
+    /// Set all GUI options to default settings for a new game
+    /// </summary>
+    public void SetAllGUIOptionsToDefault()
+    {
+        //gui functionality
+        isActorLeftMenu = true;
+        isActorRightMenu = true;
+        isNodeLeftMenu = true;
+        isNodeRightMenu = true;
+        isTopWidget = true;
+        GameManager.i.widgetTopScript.SetWidget(isTopWidget);
     }
 
 
@@ -115,7 +128,6 @@ public class OptionManager : MonoBehaviour
             .AppendFormat(" Actor Right Click Menu -> {0}{1}", isActorRightMenu, "\n")
             .AppendFormat(" Node Left Click Menu -> {0}{1}", isNodeLeftMenu, "\n")
             .AppendFormat(" Node Right Click Menu -> {0}{1}", isNodeRightMenu, "\n")
-            .AppendFormat(" AI Side Tab LHS -> {0}{1}", isSideTabAI, "\n")
             .AppendFormat(" Top Centre Widget -> {0}{1}", isTopWidget, "\n")
             .ToString();
     }
