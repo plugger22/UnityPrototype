@@ -32,6 +32,10 @@ public class FeatureManager : MonoBehaviour
     public bool isOrganisations;
     [Tooltip("Targets on/off (if off, sets Objectives and Organisations off automatically) -> sets initial state only (can be adjusted by code later)")]
     public bool isTargets;
+    [Tooltip("Gear on/off -> sets initial state only (can be adjusted by code later)")]
+    public bool isGear;
+    [Tooltip("Recruit Actors on/off -> sets initial state only (can be adjusted by code later)")]
+    public bool isRecruit;
 
 
     /// <summary>
@@ -89,6 +93,8 @@ public class FeatureManager : MonoBehaviour
         GameManager.i.optionScript.isObjectives = isObjectives;
         GameManager.i.optionScript.isOrganisations = isOrganisations;
         GameManager.i.optionScript.isTargets = isTargets;
+        GameManager.i.optionScript.isGear = isGear;
+        GameManager.i.optionScript.isRecruit = isRecruit;
         if (isTargets == false)
         {
             //automatically disable Objectives and Organisations if targets are also disabled
@@ -129,6 +135,12 @@ public class FeatureManager : MonoBehaviour
         if (isTargets == true)
         { GameManager.i.debugScript.optionTargets = "Targets OFF"; }
         else { GameManager.i.debugScript.optionTargets = "Targets ON"; }
+        if (isGear == true)
+        { GameManager.i.debugScript.optionGear = "Gear OFF"; }
+        else { GameManager.i.debugScript.optionGear = "Gear ON"; }
+        if (isRecruit == true)
+        { GameManager.i.debugScript.optionRecruit = "Recruiting OFF"; }
+        else { GameManager.i.debugScript.optionRecruit = "Recruiting ON"; }
     }
 
 

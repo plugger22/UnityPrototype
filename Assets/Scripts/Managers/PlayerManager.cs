@@ -704,37 +704,41 @@ public class PlayerManager : MonoBehaviour
     /// <returns></returns>
     public bool AddGear(string gearName)
     {
-        Gear gear = GameManager.i.dataScript.GetGear(gearName);
-        if (listOfGear.Count < GameManager.i.gearScript.maxNumOfGear)
+        if (GameManager.i.optionScript.isGear == true)
         {
-            if (gear != null)
+            Gear gear = GameManager.i.dataScript.GetGear(gearName);
+            if (listOfGear.Count < GameManager.i.gearScript.maxNumOfGear)
             {
-                //check gear not already in inventory
-                if (CheckGearPresent(gearName) == false)
+                if (gear != null)
                 {
-                    ResetGearItem(gear);
-                    listOfGear.Add(gearName);
-                    Debug.LogFormat("[Gea] PlayerManager.cs -> AddGear: {0}, added to Player inventory{1}", gear.tag, "\n");
-                    CheckForAIUpdate(gear);
-                    //add to listOfCurrentGear (if not already present)
-                    GameManager.i.dataScript.AddGearNew(gear);
-                    //special Move gear
-                    if (gearName.Equals(gearSpecialMove.name, StringComparison.Ordinal) == true)
+                    //check gear not already in inventory
+                    if (CheckGearPresent(gearName) == false)
                     {
-                        isSpecialMoveGear = true;
-                        UpdateMoveNodes();
+                        ResetGearItem(gear);
+                        listOfGear.Add(gearName);
+                        Debug.LogFormat("[Gea] PlayerManager.cs -> AddGear: {0}, added to Player inventory{1}", gear.tag, "\n");
+                        CheckForAIUpdate(gear);
+                        //add to listOfCurrentGear (if not already present)
+                        GameManager.i.dataScript.AddGearNew(gear);
+                        //special Move gear
+                        if (gearName.Equals(gearSpecialMove.name, StringComparison.Ordinal) == true)
+                        {
+                            isSpecialMoveGear = true;
+                            UpdateMoveNodes();
+                        }
+                        //statistics
+                        GameManager.i.dataScript.StatisticIncrement(StatType.GearTotal);
+                        return true;
                     }
-                    //statistics
-                    GameManager.i.dataScript.StatisticIncrement(StatType.GearTotal);
-                    return true;
+                    else
+                    { Debug.LogWarningFormat("Gear \'{0}\", is already present in Player inventory", gear.tag); }
                 }
                 else
-                { Debug.LogWarningFormat("Gear \'{0}\", is already present in Player inventory", gear.tag); }
+                { Debug.LogError(string.Format("Invalid gear (Null) for gear {0}", gearName)); }
             }
-            else
-            { Debug.LogError(string.Format("Invalid gear (Null) for gear {0}", gearName)); }
-        }
         /*else { Debug.LogWarning("You cannot exceed the maxium number of Gear items -> Gear NOT added"); }*/
+        }
+        else { Debug.LogWarningFormat("[Gea] PlayerManager.cs -> AddGear: Gear \"{0}\" can't be added as gear disabled (OptionManager.isGear {1}){2}", gearName, GameManager.i.optionScript.isGear, "\n"); }
         return false;
     }
 

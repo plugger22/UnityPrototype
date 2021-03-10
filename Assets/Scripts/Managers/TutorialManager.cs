@@ -157,49 +157,72 @@ public class TutorialManager : MonoBehaviour
                     {
                         case "AI":
                             GameManager.i.optionScript.isAI = false;
+                            GameManager.i.debugScript.optionNoAI = "AI ON";
                             Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: AI toggled Off{0}", "\n");
                             break;
                         case "Decisions":
                             GameManager.i.optionScript.isDecisions = false;
+                            GameManager.i.debugScript.optionDecisions = "Decisions ON";
                             Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: Decisions toggled Off{0}", "\n");
                             break;
                         case "FOW":
                             GameManager.i.optionScript.isFogOfWar = false;
+                            GameManager.i.debugScript.optionFogOfWar = "FOW ON";
                             Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: Fog of War toggled Off{0}", "\n");
                             break;
                         case "MainInfoApp":
                             GameManager.i.optionScript.isMainInfoApp = false;
+                            GameManager.i.debugScript.optionMainInfoApp = "InfoApp ON";
                             Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: MainInfoApp toggled Off{0}", "\n");
                             break;
                         case "Nemesis":
                             GameManager.i.optionScript.isNemesis = false;
+                            GameManager.i.debugScript.optionNemesis = "Nemesis ON";
                             Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: Nemesis toggled Off{0}", "\n");
                             break;
                         case "NPC":
                             GameManager.i.optionScript.isNPC = false;
+                            GameManager.i.debugScript.optionNPC = "NPC ON";
                             Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: NPC toggled Off{0}", "\n");
                             break;
                         case "Objectives":
                             GameManager.i.optionScript.isObjectives = false;
+                            GameManager.i.debugScript.optionObjectives = "Objectives ON";
                             Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: Objectives toggled Off{0}", "\n");
                             break;
                         case "Reviews":
                             GameManager.i.optionScript.isReviews = false;
+                            GameManager.i.debugScript.optionReviews = "Reviews ON";
                             Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: Reviews toggled Off{0}", "\n");
                             break;
                         case "Subordinates":
                             GameManager.i.optionScript.isSubordinates = false;
+                            GameManager.i.debugScript.optionSubordinates = "Subordinates ON";
                             Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: Subordinates toggled Off{0}", "\n");
                             break;
                         case "Organisations":
                             GameManager.i.optionScript.isOrganisations = false;
+                            GameManager.i.debugScript.optionOrganisations = "Organisations ON";
                             Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: Organisations toggled Off{0}", "\n");
+                            break;
+                        case "Gear":
+                            GameManager.i.optionScript.isGear = false;
+                            GameManager.i.debugScript.optionGear = "Gear ON";
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: Gear toggled Off{0}", "\n");
+                            break;
+                        case "Recruiting":
+                            GameManager.i.optionScript.isRecruit = false;
+                            GameManager.i.debugScript.optionRecruit = "Recruiting ON";
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: Recruiting toggled Off{0}", "\n");
                             break;
                         case "Targets":
                             GameManager.i.optionScript.isTargets = false;
                             //auto off if targets are off
                             GameManager.i.optionScript.isOrganisations = false;
                             GameManager.i.optionScript.isObjectives = false;
+                            GameManager.i.debugScript.optionTargets = "Targets ON";
+                            GameManager.i.debugScript.optionOrganisations = "Organisations ON";
+                            GameManager.i.debugScript.optionObjectives = "Objectives ON";
                             Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: Targets, Organisations and Objectives all toggled Off{0}", "\n");
                             break;
                         default: Debug.LogWarningFormat("Unrecognised feature.name \"{0}\"", feature.name); break;

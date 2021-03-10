@@ -738,3 +738,42 @@ City seed 1549 -> Londus, Eurasia
 Dev seed 59079 -> Wednesday, 10 March 2021 12:39 PM
 City seed 45651 -> VirtualCity, Eurasia
 City seed 9248 -> Londus, Eurasia
+
+Dev seed 1756 -> Wednesday, 10 March 2021 2:40 PM
+City seed 42054 -> VirtualCity, Eurasia
+City seed 10579 -> Londus, Eurasia
+
+Dev seed 31407 -> Wednesday, 10 March 2021 2:45 PM
+City seed 10579 -> Londus, Eurasia
+
+Dev seed 25279 -> Wednesday, 10 March 2021 2:53 PM
+City seed 52302 -> VirtualCity, Eurasia
+
+Dev seed 36865 -> Wednesday, 10 March 2021 2:57 PM
+City seed 45744 -> VirtualCity, Eurasia
+
+Dev seed 20002 -> Wednesday, 10 March 2021 3:04 PM
+City seed 30968 -> Londus, Eurasia
+
+Dev seed 15898 -> Wednesday, 10 March 2021 3:16 PM
+WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "InventorySetDevice"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:353)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:405)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:469)
+	City seed 25980 -> Londus, Eurasia
+
+Dev seed 41731 -> Wednesday, 10 March 2021 3:17 PM
+City seed 18302 -> Londus, Eurasia
+
+Dev seed 6304 -> Wednesday, 10 March 2021 3:18 PM
+City seed 4644 -> Londus, Eurasia
+
+Dev seed 27744 -> Wednesday, 10 March 2021 3:23 PM
+City seed 29587 -> Londus, Eurasia
+
+Dev seed 39819 -> Wednesday, 10 March 2021 3:23 PM
+City seed 49258 -> Londus, Eurasia
+
+Dev seed 65260 -> Wednesday, 10 March 2021 3:24 PM
+City seed 39005 -> Londus, Eurasia

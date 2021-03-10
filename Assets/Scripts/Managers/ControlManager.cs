@@ -171,10 +171,6 @@ public class ControlManager : MonoBehaviour
         GameManager.i.modalGUIScript.CloseBackgrounds(Background.NewGameOptions);
         //change game state (allows inputManager.cs to handle relevant input)
         GameManager.i.inputScript.GameState = GameState.NewGameOptions;
-        //reset all GUI options (may have come from a tutorial)
-        GameManager.i.optionScript.SetAllGUIOptionsToDefault();
-        //game features (set according to FeatureManager in GameManager.cs prefab)
-        GameManager.i.featureScript.InitialiseFeatures();
     }
     #endregion
 
@@ -450,8 +446,6 @@ public class ControlManager : MonoBehaviour
         //how long did it take?
         long timeElapsed = GameManager.i.testScript.StopTimer();
         Debug.LogFormat("[Per] ControlManager.cs -> ProcessLoadGame: LOAD GAME took {0} ms", timeElapsed);
-        //reset all gui elements to default (on) as may have been changed during a tutorial
-        GameManager.i.optionScript.SetAllGUIOptionsToDefault();
     }
     #endregion
 
@@ -675,6 +669,10 @@ public class ControlManager : MonoBehaviour
         //how long did it take?
         long timeElapsed = GameManager.i.testScript.StopTimer();
         Debug.LogFormat("[Per] ControlManager.cs -> ProcessTutorialReturn: SAVE GAME took {0} ms", timeElapsed);
+        //reset all GUI options (may have come from a tutorial)
+        GameManager.i.optionScript.SetAllGUIOptionsToDefault();
+        //game features (set according to FeatureManager in GameManager.cs prefab)
+        GameManager.i.featureScript.InitialiseFeatures();
         //activate menu
         EventManager.i.PostNotification(EventType.OpenMainMenu, this, MainMenuType.Main, "GameManager.cs -> ProcessTutorialReturn");
     }

@@ -44,6 +44,7 @@
     public enum AlertType {
         None,
         MainMenuUnavailable,
+        GearDisabled,
         TutorialGoal, TutorialMenuUnavailable,
         SomethingWrong,
         PlayerStatus, SideStatus, ActorStatus,

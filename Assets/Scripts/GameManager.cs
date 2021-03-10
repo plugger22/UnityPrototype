@@ -1,6 +1,5 @@
 ﻿using delegateAPI;
 using gameAPI;
-using modalAPI;
 using packageAPI;
 using System;
 using System.Collections.Generic;
@@ -454,18 +453,21 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         mouseWheelInput = 0;
-        //redraw any Nodes where required
-        if (nodeScript.NodeRedraw == true)
-        { EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw, "GameManager.cs -> Update"); }
+        if (inputScript.GameState != GameState.ExitGame)
+        {
+            //redraw any Nodes where required
+            if (nodeScript.NodeRedraw == true)
+            { EventManager.i.PostNotification(EventType.NodeDisplay, this, NodeUI.Redraw, "GameManager.cs -> Update"); }
 
-        //get any mouse wheel input (restricts max value) and pass as a parameter as Input.anyKeyDown won't pick up mouse wheel input)
-        mouseWheelInput += Input.GetAxis("Mouse ScrollWheel");
+            //get any mouse wheel input (restricts max value) and pass as a parameter as Input.anyKeyDown won't pick up mouse wheel input)
+            mouseWheelInput += Input.GetAxis("Mouse ScrollWheel");
 
-        //Handle Game Input
-        if (mouseWheelInput != 0)
-        { inputScript.ProcessMouseWheelInput(mouseWheelInput); }
-        else if (Input.anyKeyDown == true)
-        { inputScript.ProcessKeyInput(); }
+            //Handle Game Input
+            if (mouseWheelInput != 0)
+            { inputScript.ProcessMouseWheelInput(mouseWheelInput); }
+            else if (Input.anyKeyDown == true)
+            { inputScript.ProcessKeyInput(); }
+        }
     }
     #endregion
 

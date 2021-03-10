@@ -302,6 +302,8 @@ MonoBehaviour:
   isObjectives: 1
   isOrganisations: 1
   isTargets: 1
+  isGear: 1
+  isRecruit: 0
 --- !u!114 &114177065037937216
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -469,6 +471,8 @@ MonoBehaviour:
   optionObjectives: 
   optionOrganisations: 
   optionTargets: 
+  optionGear: 
+  optionRecruit: 
 --- !u!114 &114230505564311274
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1804,6 +1808,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 17e9781d9857d6c4cb1164f4f6c0deb8, type: 2}
   - {fileID: 11400000, guid: 7b6d0ef2e1cd6eb45bb791542c5ed363, type: 2}
   - {fileID: 11400000, guid: e16c959b5f1eac342979baf4a1a9362b, type: 2}
+  - {fileID: 11400000, guid: 6d593459827a21745bbe7a4d2bd7b2f5, type: 2}
+  - {fileID: 11400000, guid: 4c8ccd2de988d20498199b0d9d7349a8, type: 2}
   arrayOfTutorialItems:
   - {fileID: 11400000, guid: 7f4d9fc2a9069174e8d80e2d5a30df8e, type: 2}
   - {fileID: 11400000, guid: cf84719c70b337c48b65ccf56a5137ae, type: 2}
@@ -5944,6 +5950,8 @@ MonoBehaviour:
   isReviews: 1
   isActorPool: 0
   isOnMapRandom: 0
+  isGear: 1
+  isRecruit: 1
   showContacts: 0
   showPower: 1
   connectorTooltips: 0

@@ -467,6 +467,11 @@ public class GUIManager : MonoBehaviour
                     details.textTop = string.Format("{0}Main Menu is unavailable{1}", colourBad, colourEnd);
                     details.textBottom = string.Format("If you are {0}Lying Low{1} or have been {2}Captured{3} your options are limited", colourAlert, colourEnd, colourAlert, colourEnd);
                     break;
+                case AlertType.GearDisabled:
+                    //gear toggled off
+                    details.textTop = string.Format("{0}Gear Disabled{1}", colourBad, colourEnd);
+                    details.textBottom = string.Format("Gear has been temporarily switched off and is {0}<b><size=115%>not available</size></b>{1}", colourAlert, colourEnd);
+                    break;
                 case AlertType.TutorialGoal:
                     //Player clicked on tutorial goal when goal is already in progress
                     details.textTop = string.Format("{0}Goal Active{1}", colourBad, colourEnd);

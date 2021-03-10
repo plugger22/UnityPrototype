@@ -94,6 +94,8 @@ public class DebugGUI : MonoBehaviour
     public string optionObjectives;
     public string optionOrganisations;
     public string optionTargets;
+    public string optionGear;
+    public string optionRecruit;
 
     private void Awake()
     {
@@ -130,6 +132,8 @@ public class DebugGUI : MonoBehaviour
         optionObjectives = "Objectives OFF";
         optionOrganisations = "Organisations OFF";
         optionTargets = "Targets OFF";
+        optionGear = "Gear OFF";
+        optionRecruit = "Recruiting OFF";
     }
 
     // Update is called once per frame
@@ -933,6 +937,40 @@ public class DebugGUI : MonoBehaviour
                 {
                     GameManager.i.optionScript.isTargets = true;
                     optionTargets = "Targets OFF";
+                }
+            }
+
+            //Gear button
+            offset = 20;
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), optionGear))
+            {
+                Debug.Log("[Dbg] Button -> Toggle Gear option");
+                if (GameManager.i.optionScript.isGear == true)
+                {
+                    GameManager.i.optionScript.isGear = false;
+                    optionGear = "Gear ON";
+                }
+                else
+                {
+                    GameManager.i.optionScript.isGear = true;
+                    optionGear = "Gear OFF";
+                }
+            }
+
+            //Recruit actors button
+            offset = 21;
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), optionRecruit))
+            {
+                Debug.Log("[Dbg] Button -> Toggle Recruiting option");
+                if (GameManager.i.optionScript.isRecruit == true)
+                {
+                    GameManager.i.optionScript.isRecruit = false;
+                    optionRecruit = "Recruiting ON";
+                }
+                else
+                {
+                    GameManager.i.optionScript.isRecruit = true;
+                    optionRecruit = "Recruiting OFF";
                 }
             }
 
