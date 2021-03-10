@@ -1969,7 +1969,7 @@ public class ModalTabbedUI : MonoBehaviour
                 else
                 {
                     //no reserves present
-                    arrayOfPages[0] = TabbedPage.Organisations;
+                    arrayOfPages[0] = TabbedPage.Main;
                     maxTopTabIndex = 0;
                     arrayOfTopTabObjects[0].SetActive(true);
                     arrayOfTopTabObjects[1].SetActive(false);

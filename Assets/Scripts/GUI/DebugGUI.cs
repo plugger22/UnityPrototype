@@ -96,6 +96,7 @@ public class DebugGUI : MonoBehaviour
     public string optionTargets;
     public string optionGear;
     public string optionRecruit;
+    public string optionMoveSecurity;
 
     private void Awake()
     {
@@ -134,6 +135,7 @@ public class DebugGUI : MonoBehaviour
         optionTargets = "Targets OFF";
         optionGear = "Gear OFF";
         optionRecruit = "Recruiting OFF";
+        optionMoveSecurity = "Move Sec OFF";
     }
 
     // Update is called once per frame
@@ -971,6 +973,23 @@ public class DebugGUI : MonoBehaviour
                 {
                     GameManager.i.optionScript.isRecruit = true;
                     optionRecruit = "Recruiting OFF";
+                }
+            }
+
+            //Move Security button
+            offset = 22;
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), optionMoveSecurity))
+            {
+                Debug.Log("[Dbg] Button -> Toggle Move Security option");
+                if (GameManager.i.optionScript.isMoveSecurity == true)
+                {
+                    GameManager.i.optionScript.isMoveSecurity = false;
+                    optionMoveSecurity = "Move Sec ON";
+                }
+                else
+                {
+                    GameManager.i.optionScript.isMoveSecurity = true;
+                    optionMoveSecurity = "Move Sec OFF";
                 }
             }
 

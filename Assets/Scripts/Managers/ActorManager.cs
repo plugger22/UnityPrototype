@@ -305,7 +305,7 @@ public class ActorManager : MonoBehaviour
     }
     #endregion
 
-    #region Initialisation SubMethods
+    #region Initialisation SubMethods...
 
     #region SubInitialiseEvents
     private void SubInitialiseEvents()
@@ -4136,299 +4136,302 @@ public class ActorManager : MonoBehaviour
     /// <param name="details"></param>
     private void InitialiseGenericPickerRecruit(ModalActionDetails details)
     {
-        bool errorFlag = false;
-        bool isIgnoreCache = false;
-        bool isResistance = false;
-        bool isResistancePlayer = false;
-        int index, countOfRecruits;
-        GenericPickerDetails genericDetails = new GenericPickerDetails();
-        Node node = null;
-
-        #region CaptureCheckResistance
-        //Capture check
-        if (details.side.level == GameManager.i.globalScript.sideResistance.level)
+        if (GameManager.i.optionScript.isRecruit == true)
         {
-            isResistance = true;
-            node = GameManager.i.dataScript.GetNode(details.nodeID);
-            if (node != null)
-            {
-                //check for player/actor being captured
-                int actorID = GameManager.i.playerScript.actorID;
-                if (node.nodeID != GameManager.i.nodeScript.GetPlayerNodeID())
-                {
-                    Actor actor = GameManager.i.dataScript.GetCurrentActor(details.actorDataID, globalResistance);
-                    if (actor != null)
-                    { actorID = actor.actorID; }
-                    else
-                    {
-                        Debug.LogError(string.Format("Invalid actor (Null) for details.ActorSlotID {0}", details.actorDataID));
-                        errorFlag = true;
-                    }
-                }
-                else { isResistancePlayer = true; }
-                //check capture provided no errors
-                if (errorFlag == false)
-                {
-                    CaptureDetails captureDetails = GameManager.i.captureScript.CheckCaptured(node.nodeID, actorID);
-                    if (captureDetails != null)
-                    {
-                        //capture happened, abort recruitment
-                        captureDetails.effects = string.Format("{0}The Recruiting mission was a wipe{1}", colourNeutral, colourEnd);
-                        EventManager.i.PostNotification(EventType.Capture, this, captureDetails, "ActorManager.cs -> InitialiseGenericPickerRecruit");
-                        return;
-                    }
-                }
-                else
-                {
-                    //reset flag to the default state prior to recruitments
-                    errorFlag = false;
-                }
-            }
-        }
-        #endregion
+            bool errorFlag = false;
+            bool isIgnoreCache = false;
+            bool isResistance = false;
+            bool isResistancePlayer = false;
+            int index, countOfRecruits;
+            GenericPickerDetails genericDetails = new GenericPickerDetails();
+            Node node = null;
 
-        #region cachedSelection
-        //get a new selection once per action. If multiple attempts during an action used the cached results to ensure the same recruit is available on each attempt
-        if (isResistance == true)
-        {
-            if (isResistancePlayer == true)
+            #region CaptureCheckResistance
+            //Capture check
+            if (details.side.level == GameManager.i.globalScript.sideResistance.level)
             {
-                if (resistancePlayerTurn != GameManager.i.turnScript.Turn || isNewActionResistancePlayer == true)
-                { isIgnoreCache = true; }
-            }
-            else
-            {
-                //actor gear selection (can be different from Players, eg. better chance of rare gear)
-                if (resistanceActorTurn != GameManager.i.turnScript.Turn || isNewActionResistanceActor == true)
-                { isIgnoreCache = true; }
-            }
-        }
-        else
-        {
-            //authority
-            if (authorityTurn != GameManager.i.turnScript.Turn || isNewActionAuthority == true)
-            { isIgnoreCache = true; }
-        }
-        #endregion
-
-        //proceed with a new Recruit Selection
-        if (isIgnoreCache == true)
-        {
-            #region RecruitActorBothSides
-            //Recruit actor (both sides)
-            if (details.side.level == globalAuthority.level || node != null)
-            {
-
-                #region setupAdmin
-                if (details.side.level == globalResistance.level) { genericDetails.returnEvent = EventType.GenericRecruitActorResistance; }
-                else if (details.side.level == globalAuthority.level) { genericDetails.returnEvent = EventType.GenericRecruitActorAuthority; }
-                else { Debug.LogError(string.Format("Invalid side \"{0}\"", details.side)); }
-                genericDetails.side = details.side;
-                genericDetails.textHeader = "Recruit Subordinate";
-                if (details.side.level == globalResistance.level)
-                { genericDetails.nodeID = details.nodeID; }
-                else { genericDetails.nodeID = -1; }
-                genericDetails.actorSlotID = details.actorDataID;
-                //picker text
-                genericDetails.textTop = string.Format("{0}Recruits{1} {2}available{3}", colourNeutral, colourEnd, colourNormal, colourEnd);
-                genericDetails.textMiddle = string.Format("{0}Recruit will be assigned to your reserve list{1}",
-                    colourNormal, colourEnd);
-                genericDetails.textBottom = "Click on a Recruit to Select. Press CONFIRM to hire Recruit. Mouseover recruit for more information.";
-                genericDetails.help0 = "reserveInv_2";
-                //
-                //generate temp list of Recruits to choose from and a list of ones for the picker
-                //
-                int numOfOptions;
-                List<int> listOfPoolActors = new List<int>();
-                List<int> listOfPickerActors = new List<int>();
-                List<string> listOfCurrentArcs = new List<string>(GameManager.i.dataScript.GetAllCurrentActorArcs(details.side));
-                #endregion
-
-                //selection methodology varies for each side -> need to populate 'listOfPoolActors'
-                if (details.side.level == globalResistance.level)
+                isResistance = true;
+                node = GameManager.i.dataScript.GetNode(details.nodeID);
+                if (node != null)
                 {
-                    if (node.nodeID == GameManager.i.nodeScript.GetPlayerNodeID())
+                    //check for player/actor being captured
+                    int actorID = GameManager.i.playerScript.actorID;
+                    if (node.nodeID != GameManager.i.nodeScript.GetPlayerNodeID())
                     {
-                        //player at node, select from 3 x level 1 options, different from current OnMap actor types
-                        listOfPoolActors.AddRange(GameManager.i.dataScript.GetActorRecruitPool(1, details.side));
-                        //loop backwards through pool of actors and remove any that match the curent OnMap types
-                        for (int i = listOfPoolActors.Count - 1; i >= 0; i--)
-                        {
-                            Actor actor = GameManager.i.dataScript.GetActor(listOfPoolActors[i]);
-                            if (actor != null)
-                            {
-                                if (listOfCurrentArcs.Exists(x => x == actor.arc.name))
-                                { listOfPoolActors.RemoveAt(i); }
-                            }
-                            else { Debug.LogWarning(string.Format("Invalid actor (Null) for actorID {0}", listOfPoolActors[i])); }
-                        }
-                    }
-                    else
-                    {
-                        //actor at node, select from 3 x level 2 options (random types, could be the same as currently OnMap)
-                        listOfPoolActors.AddRange(GameManager.i.dataScript.GetActorRecruitPool(2, details.side));
-                    }
-                }
-                //Authority
-                else if (details.side.level == globalAuthority.level)
-                {
-                    //placeholder -> select from 3 x specified level options (random types, could be the same as currently OnMap)
-                    listOfPoolActors.AddRange(GameManager.i.dataScript.GetActorRecruitPool(details.level, details.side));
-                }
-                else { Debug.LogError(string.Format("Invalid side \"{0}\"", details.side)); }
-                //
-                //select three actors for the picker
-                //
-                numOfOptions = Math.Min(maxGenericOptions, listOfPoolActors.Count);
-                for (int i = 0; i < numOfOptions; i++)
-                {
-                    index = Random.Range(0, listOfPoolActors.Count);
-                    listOfPickerActors.Add(listOfPoolActors[index]);
-                    //remove actor from pool to prevent duplicate types
-                    listOfPoolActors.RemoveAt(index);
-                }
-                //check there is at least one recruit available
-                countOfRecruits = listOfPickerActors.Count;
-                if (countOfRecruits < 1)
-                {
-                    //OUTCOME -> No recruits available
-                    Debug.LogWarning("ActorManager: No recruits available in InitaliseGenericPickerRecruits");
-                    errorFlag = true;
-                }
-                else
-                {
-                    //
-                    //loop actorID's that have been selected and package up ready for ModalGenericPicker
-                    //
-                    int dataStars;
-                    for (int i = 0; i < countOfRecruits; i++)
-                    {
-                        Actor actor = GameManager.i.dataScript.GetActor(listOfPickerActors[i]);
+                        Actor actor = GameManager.i.dataScript.GetCurrentActor(details.actorDataID, globalResistance);
                         if (actor != null)
+                        { actorID = actor.actorID; }
+                        else
                         {
-                            //option details
-                            GenericOptionDetails optionDetails = new GenericOptionDetails();
-                            optionDetails.optionID = actor.actorID;
-                            optionDetails.text = actor.arc.name;
-                            optionDetails.sprite = actor.sprite;
-                            //tooltip
-                            GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
-                            //arc type and name plus compatibility
-                            dataStars = actor.GetPersonality().GetCompatibilityWithPlayer();
-                            tooltipDetails.textHeader = string.Format("{0}<size=120%>{1}{2}</size>{3}{4}Compatibility<pos=57%>{5}{6}", colourRecruit, actor.actorName, colourEnd,
-                                "\n", colourNormal, colourEnd, GameManager.i.guiScript.GetCompatibilityStars(dataStars));
-                            //stats
-                            string[] arrayOfQualities = GameManager.i.dataScript.GetQualities(details.side);
-                            StringBuilder builder = new StringBuilder();
-                            if (arrayOfQualities.Length > 0)
-                            {
-                                //custom tooltip, 3 datapoints plus compatibility
-                                dataStars = actor.GetDatapoint(ActorDatapoint.Datapoint0);
-                                builder.AppendFormat("{0}<pos=57%>{1}{2}", arrayOfQualities[0], GameManager.i.guiScript.GetNormalStars(dataStars), "\n");
-                                dataStars = actor.GetDatapoint(ActorDatapoint.Datapoint1);
-                                builder.AppendFormat("{0}<pos=57%>{1}{2}", arrayOfQualities[1], GameManager.i.guiScript.GetNormalStars(dataStars), "\n");
-                                dataStars = actor.GetDatapoint(ActorDatapoint.Datapoint2);
-                                builder.AppendFormat("{0}<pos=57%>{1}{2}", arrayOfQualities[2], GameManager.i.guiScript.GetNormalStars(dataStars), "\n");
-                                tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
-                            }
-                            //trait and action
-                            tooltipDetails.textDetails = string.Format("{0}<size=120%>{1}</size>{2}{3}{4}{5}{6}{7}{8}", "<font=\"Bangers SDF\">", "<cspace=0.6em>", actor.GetTrait().tagFormatted,
-                                "</cspace>", "</font>", "\n", colourNormal, actor.arc.nodeAction.tag, colourEnd);
-                            //add to master arrays
-                            genericDetails.arrayOfOptions[i] = optionDetails;
-                            genericDetails.arrayOfTooltips[i] = tooltipDetails;
+                            Debug.LogError(string.Format("Invalid actor (Null) for details.ActorSlotID {0}", details.actorDataID));
+                            errorFlag = true;
                         }
-                        else { Debug.LogError(string.Format("Invalid actor (Null) for gearID {0}", listOfPickerActors[i])); }
+                    }
+                    else { isResistancePlayer = true; }
+                    //check capture provided no errors
+                    if (errorFlag == false)
+                    {
+                        CaptureDetails captureDetails = GameManager.i.captureScript.CheckCaptured(node.nodeID, actorID);
+                        if (captureDetails != null)
+                        {
+                            //capture happened, abort recruitment
+                            captureDetails.effects = string.Format("{0}The Recruiting mission was a wipe{1}", colourNeutral, colourEnd);
+                            EventManager.i.PostNotification(EventType.Capture, this, captureDetails, "ActorManager.cs -> InitialiseGenericPickerRecruit");
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        //reset flag to the default state prior to recruitments
+                        errorFlag = false;
                     }
                 }
-            }
-            else
-            {
-                Debug.LogError(string.Format("Invalid Node (null) for nodeID {0}", details.nodeID));
-                errorFlag = true;
             }
             #endregion
-        }
 
-        //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue
-        if (errorFlag == true)
-        {
-            //create an outcome window to notify player
-            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-            outcomeDetails.side = globalResistance;
-            outcomeDetails.textTop = "There has been a Snafu in communication and no recruits can be found.";
-            outcomeDetails.textBottom = "Heads will roll!";
-            EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActorManager.cs -> InitialiseGenericPickerRecruit");
-        }
-        else
-        {
-            //deactivate back button
-            GameManager.i.genericPickerScript.SetBackButton(EventType.None);
-            if (isIgnoreCache == true)
+            #region cachedSelection
+            //get a new selection once per action. If multiple attempts during an action used the cached results to ensure the same recruit is available on each attempt
+            if (isResistance == true)
             {
-
-                //activate Generic Picker window
-                EventManager.i.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "ActorManager.cs -> InitialiseGenericPickerRecruit");
-                if (isResistance == true)
+                if (isResistancePlayer == true)
                 {
-                    if (isResistancePlayer == true)
-                    {
-                        //cache details in case player attempts to access Player recruit selection again this action
-                        resistancePlayerTurn = GameManager.i.turnScript.Turn;
-                        cachedResistancePlayerDetails = genericDetails;
-                        isNewActionResistancePlayer = false;
-                    }
-                    else
-                    {
-                        //cache details in case player attempts to access Actor recruit selection again this action
-                        resistanceActorTurn = GameManager.i.turnScript.Turn;
-                        cachedResistanceActorDetails = genericDetails;
-                        isNewActionResistanceActor = false;
-                    }
+                    if (resistancePlayerTurn != GameManager.i.turnScript.Turn || isNewActionResistancePlayer == true)
+                    { isIgnoreCache = true; }
                 }
                 else
                 {
-                    //Authority cache details in case authority player attempts to access  recruit selection again this action
-                    authorityTurn = GameManager.i.turnScript.Turn;
-                    cachedAuthorityDetails = genericDetails;
-                    isNewActionAuthority = false;
+                    //actor gear selection (can be different from Players, eg. better chance of rare gear)
+                    if (resistanceActorTurn != GameManager.i.turnScript.Turn || isNewActionResistanceActor == true)
+                    { isIgnoreCache = true; }
                 }
             }
-            //player accessing recruit during the same action multiple times. Used cached details so he gets the same result.
             else
             {
-                if (isResistance == true)
+                //authority
+                if (authorityTurn != GameManager.i.turnScript.Turn || isNewActionAuthority == true)
+                { isIgnoreCache = true; }
+            }
+            #endregion
+
+            //proceed with a new Recruit Selection
+            if (isIgnoreCache == true)
+            {
+                #region RecruitActorBothSides
+                //Recruit actor (both sides)
+                if (details.side.level == globalAuthority.level || node != null)
                 {
-                    if (isResistancePlayer == true)
+
+                    #region setupAdmin
+                    if (details.side.level == globalResistance.level) { genericDetails.returnEvent = EventType.GenericRecruitActorResistance; }
+                    else if (details.side.level == globalAuthority.level) { genericDetails.returnEvent = EventType.GenericRecruitActorAuthority; }
+                    else { Debug.LogError(string.Format("Invalid side \"{0}\"", details.side)); }
+                    genericDetails.side = details.side;
+                    genericDetails.textHeader = "Recruit Subordinate";
+                    if (details.side.level == globalResistance.level)
+                    { genericDetails.nodeID = details.nodeID; }
+                    else { genericDetails.nodeID = -1; }
+                    genericDetails.actorSlotID = details.actorDataID;
+                    //picker text
+                    genericDetails.textTop = string.Format("{0}Recruits{1} {2}available{3}", colourNeutral, colourEnd, colourNormal, colourEnd);
+                    genericDetails.textMiddle = string.Format("{0}Recruit will be assigned to your reserve list{1}",
+                        colourNormal, colourEnd);
+                    genericDetails.textBottom = "Click on a Recruit to Select. Press CONFIRM to hire Recruit. Mouseover recruit for more information.";
+                    genericDetails.help0 = "reserveInv_2";
+                    //
+                    //generate temp list of Recruits to choose from and a list of ones for the picker
+                    //
+                    int numOfOptions;
+                    List<int> listOfPoolActors = new List<int>();
+                    List<int> listOfPickerActors = new List<int>();
+                    List<string> listOfCurrentArcs = new List<string>(GameManager.i.dataScript.GetAllCurrentActorArcs(details.side));
+                    #endregion
+
+                    //selection methodology varies for each side -> need to populate 'listOfPoolActors'
+                    if (details.side.level == globalResistance.level)
                     {
-                        //Player recruit selection
-                        if (cachedResistancePlayerDetails != null)
+                        if (node.nodeID == GameManager.i.nodeScript.GetPlayerNodeID())
                         {
-                            EventManager.i.PostNotification(EventType.OpenGenericPicker, this, cachedResistancePlayerDetails, "ActorManager.cs -> InitialiseGenericPickerRecruit");
+                            //player at node, select from 3 x level 1 options, different from current OnMap actor types
+                            listOfPoolActors.AddRange(GameManager.i.dataScript.GetActorRecruitPool(1, details.side));
+                            //loop backwards through pool of actors and remove any that match the curent OnMap types
+                            for (int i = listOfPoolActors.Count - 1; i >= 0; i--)
+                            {
+                                Actor actor = GameManager.i.dataScript.GetActor(listOfPoolActors[i]);
+                                if (actor != null)
+                                {
+                                    if (listOfCurrentArcs.Exists(x => x == actor.arc.name))
+                                    { listOfPoolActors.RemoveAt(i); }
+                                }
+                                else { Debug.LogWarning(string.Format("Invalid actor (Null) for actorID {0}", listOfPoolActors[i])); }
+                            }
                         }
                         else
-                        { Debug.LogWarning("Invalid cachedGenericDetails Resistance Player(Null)"); }
+                        {
+                            //actor at node, select from 3 x level 2 options (random types, could be the same as currently OnMap)
+                            listOfPoolActors.AddRange(GameManager.i.dataScript.GetActorRecruitPool(2, details.side));
+                        }
+                    }
+                    //Authority
+                    else if (details.side.level == globalAuthority.level)
+                    {
+                        //placeholder -> select from 3 x specified level options (random types, could be the same as currently OnMap)
+                        listOfPoolActors.AddRange(GameManager.i.dataScript.GetActorRecruitPool(details.level, details.side));
+                    }
+                    else { Debug.LogError(string.Format("Invalid side \"{0}\"", details.side)); }
+                    //
+                    //select three actors for the picker
+                    //
+                    numOfOptions = Math.Min(maxGenericOptions, listOfPoolActors.Count);
+                    for (int i = 0; i < numOfOptions; i++)
+                    {
+                        index = Random.Range(0, listOfPoolActors.Count);
+                        listOfPickerActors.Add(listOfPoolActors[index]);
+                        //remove actor from pool to prevent duplicate types
+                        listOfPoolActors.RemoveAt(index);
+                    }
+                    //check there is at least one recruit available
+                    countOfRecruits = listOfPickerActors.Count;
+                    if (countOfRecruits < 1)
+                    {
+                        //OUTCOME -> No recruits available
+                        Debug.LogWarning("ActorManager: No recruits available in InitaliseGenericPickerRecruits");
+                        errorFlag = true;
                     }
                     else
                     {
-                        //Actor recruit selection
-                        if (cachedResistanceActorDetails != null)
-                        { EventManager.i.PostNotification(EventType.OpenGenericPicker, this, cachedResistanceActorDetails, "ActorManager.cs -> InitialiseGenericPickerRecruit"); }
-                        else
-                        { Debug.LogWarning("Invalid cachedGenericDetails Resistance Actor (Null)"); }
+                        //
+                        //loop actorID's that have been selected and package up ready for ModalGenericPicker
+                        //
+                        int dataStars;
+                        for (int i = 0; i < countOfRecruits; i++)
+                        {
+                            Actor actor = GameManager.i.dataScript.GetActor(listOfPickerActors[i]);
+                            if (actor != null)
+                            {
+                                //option details
+                                GenericOptionDetails optionDetails = new GenericOptionDetails();
+                                optionDetails.optionID = actor.actorID;
+                                optionDetails.text = actor.arc.name;
+                                optionDetails.sprite = actor.sprite;
+                                //tooltip
+                                GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
+                                //arc type and name plus compatibility
+                                dataStars = actor.GetPersonality().GetCompatibilityWithPlayer();
+                                tooltipDetails.textHeader = string.Format("{0}<size=120%>{1}{2}</size>{3}{4}Compatibility<pos=57%>{5}{6}", colourRecruit, actor.actorName, colourEnd,
+                                    "\n", colourNormal, colourEnd, GameManager.i.guiScript.GetCompatibilityStars(dataStars));
+                                //stats
+                                string[] arrayOfQualities = GameManager.i.dataScript.GetQualities(details.side);
+                                StringBuilder builder = new StringBuilder();
+                                if (arrayOfQualities.Length > 0)
+                                {
+                                    //custom tooltip, 3 datapoints plus compatibility
+                                    dataStars = actor.GetDatapoint(ActorDatapoint.Datapoint0);
+                                    builder.AppendFormat("{0}<pos=57%>{1}{2}", arrayOfQualities[0], GameManager.i.guiScript.GetNormalStars(dataStars), "\n");
+                                    dataStars = actor.GetDatapoint(ActorDatapoint.Datapoint1);
+                                    builder.AppendFormat("{0}<pos=57%>{1}{2}", arrayOfQualities[1], GameManager.i.guiScript.GetNormalStars(dataStars), "\n");
+                                    dataStars = actor.GetDatapoint(ActorDatapoint.Datapoint2);
+                                    builder.AppendFormat("{0}<pos=57%>{1}{2}", arrayOfQualities[2], GameManager.i.guiScript.GetNormalStars(dataStars), "\n");
+                                    tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
+                                }
+                                //trait and action
+                                tooltipDetails.textDetails = string.Format("{0}<size=120%>{1}</size>{2}{3}{4}{5}{6}{7}{8}", "<font=\"Bangers SDF\">", "<cspace=0.6em>", actor.GetTrait().tagFormatted,
+                                    "</cspace>", "</font>", "\n", colourNormal, actor.arc.nodeAction.tag, colourEnd);
+                                //add to master arrays
+                                genericDetails.arrayOfOptions[i] = optionDetails;
+                                genericDetails.arrayOfTooltips[i] = tooltipDetails;
+                            }
+                            else { Debug.LogError(string.Format("Invalid actor (Null) for gearID {0}", listOfPickerActors[i])); }
+                        }
                     }
                 }
                 else
                 {
-                    //Authority
-                    if (cachedAuthorityDetails != null)
-                    { EventManager.i.PostNotification(EventType.OpenGenericPicker, this, cachedAuthorityDetails, "ActorManager.cs -> InitialiseGenericPickerRecruit"); }
+                    Debug.LogError(string.Format("Invalid Node (null) for nodeID {0}", details.nodeID));
+                    errorFlag = true;
+                }
+                #endregion
+            }
+
+            //final processing, either trigger an event for GenericPicker or go straight to an error based Outcome dialogue
+            if (errorFlag == true)
+            {
+                //create an outcome window to notify player
+                ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+                outcomeDetails.side = globalResistance;
+                outcomeDetails.textTop = "There has been a Snafu in communication and no recruits can be found.";
+                outcomeDetails.textBottom = "Heads will roll!";
+                EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActorManager.cs -> InitialiseGenericPickerRecruit");
+            }
+            else
+            {
+                //deactivate back button
+                GameManager.i.genericPickerScript.SetBackButton(EventType.None);
+                if (isIgnoreCache == true)
+                {
+
+                    //activate Generic Picker window
+                    EventManager.i.PostNotification(EventType.OpenGenericPicker, this, genericDetails, "ActorManager.cs -> InitialiseGenericPickerRecruit");
+                    if (isResistance == true)
+                    {
+                        if (isResistancePlayer == true)
+                        {
+                            //cache details in case player attempts to access Player recruit selection again this action
+                            resistancePlayerTurn = GameManager.i.turnScript.Turn;
+                            cachedResistancePlayerDetails = genericDetails;
+                            isNewActionResistancePlayer = false;
+                        }
+                        else
+                        {
+                            //cache details in case player attempts to access Actor recruit selection again this action
+                            resistanceActorTurn = GameManager.i.turnScript.Turn;
+                            cachedResistanceActorDetails = genericDetails;
+                            isNewActionResistanceActor = false;
+                        }
+                    }
                     else
-                    { Debug.LogWarning("Invalid cachedGenericDetails Authority (Null)"); }
+                    {
+                        //Authority cache details in case authority player attempts to access  recruit selection again this action
+                        authorityTurn = GameManager.i.turnScript.Turn;
+                        cachedAuthorityDetails = genericDetails;
+                        isNewActionAuthority = false;
+                    }
+                }
+                //player accessing recruit during the same action multiple times. Used cached details so he gets the same result.
+                else
+                {
+                    if (isResistance == true)
+                    {
+                        if (isResistancePlayer == true)
+                        {
+                            //Player recruit selection
+                            if (cachedResistancePlayerDetails != null)
+                            {
+                                EventManager.i.PostNotification(EventType.OpenGenericPicker, this, cachedResistancePlayerDetails, "ActorManager.cs -> InitialiseGenericPickerRecruit");
+                            }
+                            else
+                            { Debug.LogWarning("Invalid cachedGenericDetails Resistance Player(Null)"); }
+                        }
+                        else
+                        {
+                            //Actor recruit selection
+                            if (cachedResistanceActorDetails != null)
+                            { EventManager.i.PostNotification(EventType.OpenGenericPicker, this, cachedResistanceActorDetails, "ActorManager.cs -> InitialiseGenericPickerRecruit"); }
+                            else
+                            { Debug.LogWarning("Invalid cachedGenericDetails Resistance Actor (Null)"); }
+                        }
+                    }
+                    else
+                    {
+                        //Authority
+                        if (cachedAuthorityDetails != null)
+                        { EventManager.i.PostNotification(EventType.OpenGenericPicker, this, cachedAuthorityDetails, "ActorManager.cs -> InitialiseGenericPickerRecruit"); }
+                        else
+                        { Debug.LogWarning("Invalid cachedGenericDetails Authority (Null)"); }
+                    }
                 }
             }
         }
-
+        else { GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.RecruitingDisabled); }
     }
     #endregion
 
@@ -4967,168 +4970,172 @@ public class ActorManager : MonoBehaviour
     /// </summary>
     private void InitialiseReservePoolInventory()
     {
-        int numOfActors;
-        string unhappySituation;
-        bool errorFlag = false;
-        //close node tooltip -> safety check
-        GameManager.i.tooltipNodeScript.CloseTooltip("ActorManager.cs -> InitialiseReservePoolInventory");
-        numOfActors = GameManager.i.dataScript.CheckNumOfActorsInReserve();
-        //check for presence of actors in reserve pool
-        if (numOfActors > 0)
+        if (GameManager.i.optionScript.isRecruit == true)
         {
-            //At least one actor in reserve
-            InventoryInputData data = new InventoryInputData();
-            data.side = GameManager.i.sideScript.PlayerSide;
-            data.textHeader = "Reserves";
-            data.textTop = string.Format("{0}You have {1}{2}{3}{4}{5} out of {6}{7}{8}{9}{10} possible Actor{11} in your Reserve pool{12}", colourNeutral, colourEnd,
-                colourDefault, numOfActors, colourEnd, colourNeutral, colourEnd, colourDefault, maxNumOfReserveActors, colourEnd, colourNeutral,
-                maxNumOfReserveActors != 1 ? "s" : "", colourEnd);
-            data.textBottom = string.Format("{0}LEFT CLICK{1}{2} portrait for Info, {3}{4}RIGHT CLICK{5}{6} portrait for Options{7}", colourAlert, colourEnd, colourDefault,
-                colourEnd, colourAlert, colourEnd, colourDefault, colourEnd);
-            data.handler = RefreshReservePool;
-            data.state = ModalInventorySubState.ReservePool;
-            data.help0 = "reserveInv_0";
-            data.help1 = "reserveInv_1";
-            data.help2 = "reserveInv_2";
-            //Loop Actor list and populate arrays
-            List<int> listOfActors = GameManager.i.dataScript.GetActorList(data.side, ActorList.Reserve);
-            if (listOfActors != null)
+            int numOfActors;
+            string unhappySituation;
+            bool errorFlag = false;
+            //close node tooltip -> safety check
+            GameManager.i.tooltipNodeScript.CloseTooltip("ActorManager.cs -> InitialiseReservePoolInventory");
+            numOfActors = GameManager.i.dataScript.CheckNumOfActorsInReserve();
+            //check for presence of actors in reserve pool
+            if (numOfActors > 0)
             {
-                Condition conditionUnhappy = GameManager.i.dataScript.GetCondition("UNHAPPY");
-                if (conditionUnhappy != null)
+                //At least one actor in reserve
+                InventoryInputData data = new InventoryInputData();
+                data.side = GameManager.i.sideScript.PlayerSide;
+                data.textHeader = "Reserves";
+                data.textTop = string.Format("{0}You have {1}{2}{3}{4}{5} out of {6}{7}{8}{9}{10} possible Actor{11} in your Reserve pool{12}", colourNeutral, colourEnd,
+                    colourDefault, numOfActors, colourEnd, colourNeutral, colourEnd, colourDefault, maxNumOfReserveActors, colourEnd, colourNeutral,
+                    maxNumOfReserveActors != 1 ? "s" : "", colourEnd);
+                data.textBottom = string.Format("{0}LEFT CLICK{1}{2} portrait for Info, {3}{4}RIGHT CLICK{5}{6} portrait for Options{7}", colourAlert, colourEnd, colourDefault,
+                    colourEnd, colourAlert, colourEnd, colourDefault, colourEnd);
+                data.handler = RefreshReservePool;
+                data.state = ModalInventorySubState.ReservePool;
+                data.help0 = "reserveInv_0";
+                data.help1 = "reserveInv_1";
+                data.help2 = "reserveInv_2";
+                //Loop Actor list and populate arrays
+                List<int> listOfActors = GameManager.i.dataScript.GetActorList(data.side, ActorList.Reserve);
+                if (listOfActors != null)
                 {
-                    //compatibility tooltip
-                    GenericTooltipData compatibilityData = GameManager.i.guiScript.GetCompatibilityTooltip();
-                    if (compatibilityData == null) { Debug.LogWarning("Invalid compatibilityData (Null)"); }
-                    for (int i = 0; i < listOfActors.Count; i++)
+                    Condition conditionUnhappy = GameManager.i.dataScript.GetCondition("UNHAPPY");
+                    if (conditionUnhappy != null)
                     {
-                        Actor actor = GameManager.i.dataScript.GetActor(listOfActors[i]);
-                        if (actor != null)
+                        //compatibility tooltip
+                        GenericTooltipData compatibilityData = GameManager.i.guiScript.GetCompatibilityTooltip();
+                        if (compatibilityData == null) { Debug.LogWarning("Invalid compatibilityData (Null)"); }
+                        for (int i = 0; i < listOfActors.Count; i++)
                         {
-                            GenericOptionData optionData = new GenericOptionData();
-                            optionData.sprite = actor.sprite;
-                            optionData.textTop = GameManager.i.guiScript.GetCompatibilityStars(actor.GetPersonality().GetCompatibilityWithPlayer());
-                            optionData.textUpper = actor.arc.name;
-                            //unhappy situation
-                            if (actor.CheckConditionPresent(conditionUnhappy) == true)
-                            { unhappySituation = string.Format("{0}{1}{2}", colourBad, conditionUnhappy.name, colourEnd); }
+                            Actor actor = GameManager.i.dataScript.GetActor(listOfActors[i]);
+                            if (actor != null)
+                            {
+                                GenericOptionData optionData = new GenericOptionData();
+                                optionData.sprite = actor.sprite;
+                                optionData.textTop = GameManager.i.guiScript.GetCompatibilityStars(actor.GetPersonality().GetCompatibilityWithPlayer());
+                                optionData.textUpper = actor.arc.name;
+                                //unhappy situation
+                                if (actor.CheckConditionPresent(conditionUnhappy) == true)
+                                { unhappySituation = string.Format("{0}{1}{2}", colourBad, conditionUnhappy.name, colourEnd); }
+                                else
+                                {
+                                    if (actor.CheckTraitEffect(actorUnhappyNone) == false)
+                                    {
+                                        unhappySituation = string.Format("{0}Unhappy in {1} turn{2}{3}", colourDefault, actor.unhappyTimer,
+                                        actor.unhappyTimer != 1 ? "s" : "", colourEnd);
+                                    }
+                                    else { unhappySituation = string.Format("{0}Unhappy NEVER{1}", colourDefault, colourEnd); }
+                                }
+                                //combined text string
+                                optionData.textLower = string.Format("{0}{1}{2}", actor.GetTrait().tagFormatted, "\n", unhappySituation);
+                                optionData.optionID = actor.actorID;
+                                optionData.slotID = i;
+                                //tooltip
+                                GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
+                                //arc type and name
+                                tooltipDetails.textHeader = string.Format("{0}{1}{2}{3}{4}{5}{6}", colourRecruit, actor.arc.name, colourEnd, "\n", colourNormal, actor.actorName, colourEnd);
+                                //stats
+                                string[] arrayOfQualities = GameManager.i.dataScript.GetQualities(data.side);
+                                StringBuilder builder = new StringBuilder();
+                                if (arrayOfQualities.Length > 0)
+                                {
+                                    builder.AppendFormat("{0}<pos=57%>{1}{2}", arrayOfQualities[0], GameManager.i.guiScript.GetNormalStars(actor.GetDatapoint(ActorDatapoint.Datapoint0)), "\n");
+                                    builder.AppendFormat("{0}<pos=57%>{1}{2}", arrayOfQualities[1], GameManager.i.guiScript.GetNormalStars(actor.GetDatapoint(ActorDatapoint.Datapoint1)), "\n");
+                                    builder.AppendFormat("{0}<pos=57%>{1}", arrayOfQualities[2], GameManager.i.guiScript.GetNormalStars(actor.GetDatapoint(ActorDatapoint.Datapoint2)));
+                                    tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
+                                }
+                                //trait and action
+                                StringBuilder builderDetails = new StringBuilder();
+                                builderDetails.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}{8}", "<font=\"Bangers SDF\">", "<cspace=0.6em>",
+                                    actor.GetTrait().tagFormatted, "</cspace>", "</font>", "\n", colourNormal, actor.arc.nodeAction.tag, colourEnd);
+                                //secrets
+                                int numOfSecrets = actor.CheckNumOfSecrets();
+                                if (numOfSecrets > 0)
+                                {
+                                    builderDetails.AppendFormat("{0}{1}Secrets{2}", "\n", colourAlert, colourEnd);
+                                    List<string> listOfSecrets = actor.GetSecretsTooltipList();
+                                    if (listOfSecrets != null)
+                                    {
+                                        foreach (string secret in listOfSecrets)
+                                        { builderDetails.AppendFormat("{0}{1}<b>{2}</b>{3}", "\n", colourNeutral, secret, colourEnd); }
+                                    }
+                                    else { Debug.LogWarning("Invalid listOfSecrets (Null)"); }
+
+                                }
+                                //gear
+                                string gearName = actor.GetGearName();
+                                if (string.IsNullOrEmpty(gearName) == false)
+                                {
+                                    builderDetails.AppendFormat("{0}{1}Gear{2}", "\n", colourAlert, colourEnd);
+                                    Gear gear = GameManager.i.dataScript.GetGear(gearName);
+                                    if (gear != null)
+                                    { builderDetails.AppendFormat("{0}{1}<b>{2}</b>{3}", "\n", colourNeutral, gear.tag, colourEnd); }
+                                    else { Debug.LogWarningFormat("Invalid Gear (Null) for gear {0}", gearName); }
+                                }
+
+                                tooltipDetails.textDetails = builderDetails.ToString();
+                                //tooltip -> compatibility (top text -> same for all)
+                                GenericTooltipDetails tooltipDetailsCompatibility = new GenericTooltipDetails();
+                                tooltipDetailsCompatibility.textHeader = compatibilityData.header;
+                                tooltipDetailsCompatibility.textMain = compatibilityData.main;
+                                tooltipDetailsCompatibility.textDetails = compatibilityData.details;
+                                //add to arrays
+                                data.arrayOfOptions[i] = optionData;
+                                data.arrayOfTooltipsSprite[i] = tooltipDetails;
+                                data.arrayOfTooltipsCompatibility[i] = tooltipDetailsCompatibility;
+
+                            }
                             else
-                            {
-                                if (actor.CheckTraitEffect(actorUnhappyNone) == false)
-                                {
-                                    unhappySituation = string.Format("{0}Unhappy in {1} turn{2}{3}", colourDefault, actor.unhappyTimer,
-                                    actor.unhappyTimer != 1 ? "s" : "", colourEnd);
-                                }
-                                else { unhappySituation = string.Format("{0}Unhappy NEVER{1}", colourDefault, colourEnd); }
-                            }
-                            //combined text string
-                            optionData.textLower = string.Format("{0}{1}{2}", actor.GetTrait().tagFormatted, "\n", unhappySituation);
-                            optionData.optionID = actor.actorID;
-                            optionData.slotID = i;
-                            //tooltip
-                            GenericTooltipDetails tooltipDetails = new GenericTooltipDetails();
-                            //arc type and name
-                            tooltipDetails.textHeader = string.Format("{0}{1}{2}{3}{4}{5}{6}", colourRecruit, actor.arc.name, colourEnd, "\n", colourNormal, actor.actorName, colourEnd);
-                            //stats
-                            string[] arrayOfQualities = GameManager.i.dataScript.GetQualities(data.side);
-                            StringBuilder builder = new StringBuilder();
-                            if (arrayOfQualities.Length > 0)
-                            {
-                                builder.AppendFormat("{0}<pos=57%>{1}{2}", arrayOfQualities[0], GameManager.i.guiScript.GetNormalStars(actor.GetDatapoint(ActorDatapoint.Datapoint0)), "\n");
-                                builder.AppendFormat("{0}<pos=57%>{1}{2}", arrayOfQualities[1], GameManager.i.guiScript.GetNormalStars(actor.GetDatapoint(ActorDatapoint.Datapoint1)), "\n");
-                                builder.AppendFormat("{0}<pos=57%>{1}", arrayOfQualities[2], GameManager.i.guiScript.GetNormalStars(actor.GetDatapoint(ActorDatapoint.Datapoint2)));
-                                tooltipDetails.textMain = string.Format("{0}{1}{2}", colourNormal, builder.ToString(), colourEnd);
-                            }
-                            //trait and action
-                            StringBuilder builderDetails = new StringBuilder();
-                            builderDetails.AppendFormat("{0}{1}{2}{3}{4}{5}{6}{7}{8}", "<font=\"Bangers SDF\">", "<cspace=0.6em>",
-                                actor.GetTrait().tagFormatted, "</cspace>", "</font>", "\n", colourNormal, actor.arc.nodeAction.tag, colourEnd);
-                            //secrets
-                            int numOfSecrets = actor.CheckNumOfSecrets();
-                            if (numOfSecrets > 0)
-                            {
-                                builderDetails.AppendFormat("{0}{1}Secrets{2}", "\n", colourAlert, colourEnd);
-                                List<string> listOfSecrets = actor.GetSecretsTooltipList();
-                                if (listOfSecrets != null)
-                                {
-                                    foreach (string secret in listOfSecrets)
-                                    { builderDetails.AppendFormat("{0}{1}<b>{2}</b>{3}", "\n", colourNeutral, secret, colourEnd); }
-                                }
-                                else { Debug.LogWarning("Invalid listOfSecrets (Null)"); }
-
-                            }
-                            //gear
-                            string gearName = actor.GetGearName();
-                            if (string.IsNullOrEmpty(gearName) == false)
-                            {
-                                builderDetails.AppendFormat("{0}{1}Gear{2}", "\n", colourAlert, colourEnd);
-                                Gear gear = GameManager.i.dataScript.GetGear(gearName);
-                                if (gear != null)
-                                { builderDetails.AppendFormat("{0}{1}<b>{2}</b>{3}", "\n", colourNeutral, gear.tag, colourEnd); }
-                                else { Debug.LogWarningFormat("Invalid Gear (Null) for gear {0}", gearName); }
-                            }
-
-                            tooltipDetails.textDetails = builderDetails.ToString();
-                            //tooltip -> compatibility (top text -> same for all)
-                            GenericTooltipDetails tooltipDetailsCompatibility = new GenericTooltipDetails();
-                            tooltipDetailsCompatibility.textHeader = compatibilityData.header;
-                            tooltipDetailsCompatibility.textMain = compatibilityData.main;
-                            tooltipDetailsCompatibility.textDetails = compatibilityData.details;
-                            //add to arrays
-                            data.arrayOfOptions[i] = optionData;
-                            data.arrayOfTooltipsSprite[i] = tooltipDetails;
-                            data.arrayOfTooltipsCompatibility[i] = tooltipDetailsCompatibility;
-
+                            { Debug.LogWarningFormat("Invalid Actor (Null) for actorID {0}", listOfActors[i]); }
                         }
-                        else
-                        { Debug.LogWarningFormat("Invalid Actor (Null) for actorID {0}", listOfActors[i]); }
+                    }
+                    else
+                    {
+                        Debug.LogError("Invalid conditionUnhappy (Null)");
+                        errorFlag = true;
                     }
                 }
                 else
                 {
-                    Debug.LogError("Invalid conditionUnhappy (Null)");
+                    Debug.LogError("Invalid listOfActors (Null)");
                     errorFlag = true;
                 }
+                //data package has been populated, proceed if all O.K
+                if (errorFlag == true)
+                {
+                    //error msg
+                    ModalOutcomeDetails details = new ModalOutcomeDetails()
+                    {
+                        side = GameManager.i.sideScript.PlayerSide,
+                        textTop = string.Format("{0}Something has gone pear shaped with your Administration{1}", colourAlert, colourEnd),
+                        textBottom = "Phone calls are being made. Lots of them.",
+                        sprite = GameManager.i.spriteScript.errorSprite,
+                        isAction = false
+                    };
+                    EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "ActorManager.cs -> InitialiseReservePoolInventory");
+                }
+                else
+                {
+                    //open Inventory UI
+                    EventManager.i.PostNotification(EventType.InventoryOpenUI, this, data, "ActorManager.cs -> InitialiseReservePoolInventory");
+                }
+
             }
             else
             {
-                Debug.LogError("Invalid listOfActors (Null)");
-                errorFlag = true;
-            }
-            //data package has been populated, proceed if all O.K
-            if (errorFlag == true)
-            {
-                //error msg
+                //no actor in reserve
                 ModalOutcomeDetails details = new ModalOutcomeDetails()
                 {
                     side = GameManager.i.sideScript.PlayerSide,
-                    textTop = string.Format("{0}Something has gone pear shaped with your Administration{1}", colourAlert, colourEnd),
-                    textBottom = "Phone calls are being made. Lots of them.",
-                    sprite = GameManager.i.spriteScript.errorSprite,
+                    textTop = string.Format("{0}There are currently no Actors in your Reserve Pool{1}", colourInvalid, colourEnd),
+                    textBottom = string.Format("You can have a maximum of {0} actors in your Reserves", maxNumOfReserveActors),
+                    sprite = GameManager.i.spriteScript.infoSprite,
                     isAction = false
                 };
                 EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "ActorManager.cs -> InitialiseReservePoolInventory");
             }
-            else
-            {
-                //open Inventory UI
-                EventManager.i.PostNotification(EventType.InventoryOpenUI, this, data, "ActorManager.cs -> InitialiseReservePoolInventory");
-            }
-
         }
-        else
-        {
-            //no actor in reserve
-            ModalOutcomeDetails details = new ModalOutcomeDetails()
-            {
-                side = GameManager.i.sideScript.PlayerSide,
-                textTop = string.Format("{0}There are currently no Actors in your Reserve Pool{1}", colourInvalid, colourEnd),
-                textBottom = string.Format("You can have a maximum of {0} actors in your Reserves", maxNumOfReserveActors),
-                sprite = GameManager.i.spriteScript.infoSprite,
-                isAction = false
-            };
-            EventManager.i.PostNotification(EventType.OutcomeOpen, this, details, "ActorManager.cs -> InitialiseReservePoolInventory");
-        }
+        else { GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.RecruitingDisabled); }
     }
     #endregion
 

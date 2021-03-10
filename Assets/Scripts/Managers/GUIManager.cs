@@ -470,7 +470,12 @@ public class GUIManager : MonoBehaviour
                 case AlertType.GearDisabled:
                     //gear toggled off
                     details.textTop = string.Format("{0}Gear Disabled{1}", colourBad, colourEnd);
-                    details.textBottom = string.Format("Gear has been temporarily switched off and is {0}<b><size=115%>not available</size></b>{1}", colourAlert, colourEnd);
+                    details.textBottom = string.Format("Gear has been temporarily switched off and is<br><br>{0}<b><size=115%>Not available</size></b>{1}", colourAlert, colourEnd);
+                    break;
+                case AlertType.RecruitingDisabled:
+                    //actor Recruiting toggled off
+                    details.textTop = string.Format("{0}Recruiting Disabled{1}", colourBad, colourEnd);
+                    details.textBottom = string.Format("Recruiting and the Reserve Pool have been temporarily switched off and are<br><br>{0}<b><size=115%>Not available</size></b>{1}", colourAlert, colourEnd);
                     break;
                 case AlertType.TutorialGoal:
                     //Player clicked on tutorial goal when goal is already in progress

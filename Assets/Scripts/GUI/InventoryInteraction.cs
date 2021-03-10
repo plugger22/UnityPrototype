@@ -50,28 +50,34 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
                     switch (type)
                     {
                         case ModalInventorySubState.HQ:
-                            //HQ actor review
-                            TabbedUIData tabbedDetailsHq = new TabbedUIData()
+                            if (GameManager.i.optionScript.isActorLeftMenu == true)
                             {
-                                side = playerSide,
-                                who = TabbedUIWho.HQ,
-                                slotID = actorSlotID,
-                                modalLevel = 2,
-                                modalState = ModalSubState.Inventory
-                            };
-                            EventManager.i.PostNotification(EventType.TabbedOpen, this, tabbedDetailsHq, "InventoryInteraction.cs -> OnPointerClick");
+                                //HQ actor review
+                                TabbedUIData tabbedDetailsHq = new TabbedUIData()
+                                {
+                                    side = playerSide,
+                                    who = TabbedUIWho.HQ,
+                                    slotID = actorSlotID,
+                                    modalLevel = 2,
+                                    modalState = ModalSubState.Inventory
+                                };
+                                EventManager.i.PostNotification(EventType.TabbedOpen, this, tabbedDetailsHq, "InventoryInteraction.cs -> OnPointerClick");
+                            }
                             break;
                         case ModalInventorySubState.ReservePool:
-                            //Reserves actor review
-                            TabbedUIData tabbedDetailsReserves = new TabbedUIData()
+                            if (GameManager.i.optionScript.isActorLeftMenu == true)
                             {
-                                side = playerSide,
-                                who = TabbedUIWho.Reserves,
-                                slotID = actorSlotID,
-                                modalLevel = 2,
-                                modalState = ModalSubState.Inventory
-                            };
-                            EventManager.i.PostNotification(EventType.TabbedOpen, this, tabbedDetailsReserves, "InventoryInteraction.cs -> OnPointerClick");
+                                //Reserves actor review
+                                TabbedUIData tabbedDetailsReserves = new TabbedUIData()
+                                {
+                                    side = playerSide,
+                                    who = TabbedUIWho.Reserves,
+                                    slotID = actorSlotID,
+                                    modalLevel = 2,
+                                    modalState = ModalSubState.Inventory
+                                };
+                                EventManager.i.PostNotification(EventType.TabbedOpen, this, tabbedDetailsReserves, "InventoryInteraction.cs -> OnPointerClick");
+                            }
                             break;
                     }
                 }
@@ -109,42 +115,42 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
                                     };
                                     //activate menu
                                     GameManager.i.actionMenuScript.SetActionMenu(details);
-
                                 }
                                 else
                                 { Debug.LogError(string.Format("Invalid Gear (Null) for gearID / optionData {0}", optionData)); }
                                 break;
                             case ModalInventorySubState.ReservePool:
-                                Actor actor = GameManager.i.dataScript.GetActor(optionData);
-                                if (actor != null)
+                                if (GameManager.i.optionScript.isActorRightMenu == true)
                                 {
-                                    //adjust position prior to sending
-                                    Vector3 position = transform.position;
-                                    position.x += 25;
-                                    position.y -= 50;
-                                    position = Camera.main.ScreenToWorldPoint(position);
-                                    //reserve actions menu
-                                    ModalGenericMenuDetails details = new ModalGenericMenuDetails()
+                                    Actor actor = GameManager.i.dataScript.GetActor(optionData);
+                                    if (actor != null)
                                     {
-                                        itemID = actor.actorID,
-                                        itemName = actor.actorName,
-                                        modalLevel = 2,
-                                        modalState = ModalSubState.Inventory,
-                                        itemDetails = string.Format("{0} ID {1}", actor.arc.name, actor.actorID),
-                                        menuPos = position,
-                                        listOfButtonDetails = GameManager.i.actorScript.GetReservePoolActions(actor.actorID),
-                                        menuType = ActionMenuType.Reserve
-                                    };
-                                    //activate menu
-                                    GameManager.i.actionMenuScript.SetActionMenu(details);
+                                        //adjust position prior to sending
+                                        Vector3 position = transform.position;
+                                        position.x += 25;
+                                        position.y -= 50;
+                                        position = Camera.main.ScreenToWorldPoint(position);
+                                        //reserve actions menu
+                                        ModalGenericMenuDetails details = new ModalGenericMenuDetails()
+                                        {
+                                            itemID = actor.actorID,
+                                            itemName = actor.actorName,
+                                            modalLevel = 2,
+                                            modalState = ModalSubState.Inventory,
+                                            itemDetails = string.Format("{0} ID {1}", actor.arc.name, actor.actorID),
+                                            menuPos = position,
+                                            listOfButtonDetails = GameManager.i.actorScript.GetReservePoolActions(actor.actorID),
+                                            menuType = ActionMenuType.Reserve
+                                        };
+                                        //activate menu
+                                        GameManager.i.actionMenuScript.SetActionMenu(details);
 
+                                    }
+                                    else
+                                    { Debug.LogError(string.Format("Invalid Actor (Null) for actorID / optionData {0}", optionData)); }
                                 }
-                                else
-                                { Debug.LogError(string.Format("Invalid Actor (Null) for actorID / optionData {0}", optionData));  }
                                 break;
-                            default:
-                                Debug.LogError(string.Format("Invalid InventoryType \"{0}\"", type));
-                                break;
+                                //NOTE: no default option as some SubStates, eg. HQ don't have a Right click option
                         }
                     }
                     else

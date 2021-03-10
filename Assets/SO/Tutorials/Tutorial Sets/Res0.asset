@@ -25,6 +25,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: efba9c88561b33140bc3fe102eb154d3, type: 2}
   - {fileID: 11400000, guid: 70e66f38820226347909bc5dfe71319a, type: 2}
   - {fileID: 11400000, guid: 60c5546ae44161c4e96b856a75904210, type: 2}
+  - {fileID: 11400000, guid: 2aa765f9c7f230e429a0c8cb20200a3b, type: 2}
   listOfGUIOff:
   - {fileID: 11400000, guid: 2b429498342b10042847ad6b6e67d783, type: 2}
   - {fileID: 11400000, guid: 4ecda8036df900d48b4b25e77b1b6ad0, type: 2}

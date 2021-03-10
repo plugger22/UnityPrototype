@@ -2788,182 +2788,186 @@ public class ActionManager : MonoBehaviour
     /// </summary>
     private void ProcessReserveActorAction(GenericReturnData data)
     {
-        bool successFlag = true;
-        string msgText = "Unknown";
-        int numOfTeams = 0;
-        string gearName;
-        string moodText = "Unknown";
-        StringBuilder builderTop = new StringBuilder();
-        StringBuilder builderBottom = new StringBuilder();
-        Sprite sprite = GameManager.i.spriteScript.errorSprite;
-        GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
-        if (data != null)
+        if (GameManager.i.optionScript.isRecruit == true)
         {
-            if (data.actorSlotID > -1)
+            bool successFlag = true;
+            string msgText = "Unknown";
+            int numOfTeams = 0;
+            string gearName;
+            string moodText = "Unknown";
+            StringBuilder builderTop = new StringBuilder();
+            StringBuilder builderBottom = new StringBuilder();
+            Sprite sprite = GameManager.i.spriteScript.errorSprite;
+            GlobalSide playerSide = GameManager.i.sideScript.PlayerSide;
+            if (data != null)
             {
-                //find actor
-                Actor actor = GameManager.i.dataScript.GetCurrentActor(data.actorSlotID, playerSide);
-                if (actor != null)
+                if (data.actorSlotID > -1)
                 {
-                    gearName = actor.GetGearName();
-                    //add actor to reserve pool
-                    if (GameManager.i.dataScript.RemoveCurrentActor(playerSide, actor, ActorStatus.Reserve) == true)
+                    //find actor
+                    Actor actor = GameManager.i.dataScript.GetCurrentActor(data.actorSlotID, playerSide);
+                    if (actor != null)
                     {
-                        //sprite of recruited actor
-                        sprite = actor.sprite;
-                        //authority actor?
-                        if (playerSide.level == GameManager.i.globalScript.sideAuthority.level)
+                        gearName = actor.GetGearName();
+                        //add actor to reserve pool
+                        if (GameManager.i.dataScript.RemoveCurrentActor(playerSide, actor, ActorStatus.Reserve) == true)
                         {
-                            //remove all active teams connected with this actor
-                            numOfTeams = GameManager.i.teamScript.TeamCleanUp(actor);
-                        }
-                        builderTop.AppendLine();
-                        //actor successfully moved to reserve
-                        if (string.IsNullOrEmpty(data.optionNested) == false)
-                        {
-                            //history
-                            actor.AddHistory(new HistoryActor() { text = "Transferred to the Reserves" });
-                            GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("Transfers {0}, {1} to Reserves", actor.actorName, actor.arc.name)});
-                            switch (data.optionNested)
+                            //sprite of recruited actor
+                            sprite = actor.sprite;
+                            //authority actor?
+                            if (playerSide.level == GameManager.i.globalScript.sideAuthority.level)
                             {
-                                case "ReserveRest":
-                                    builderTop.AppendFormat("{0}{1} {2} understands the need for Rest{3}", colourNormal, actor.arc.name,
-                                        actor.actorName, colourEnd);
-                                    msgText = "Resting";
-                                    moodText = GameManager.i.personScript.UpdateMood(MoodType.ReserveRest, actor.arc.name);
-                                    break;
-                                case "ReservePromise":
-                                    builderTop.AppendFormat("{0}{1} {2} accepts your word that they will be recalled within a reasonable time period{3}",
-                                        colourNormal, actor.arc.name, actor.actorName, colourEnd);
-                                    msgText = "Promised";
-                                    moodText = GameManager.i.personScript.UpdateMood(MoodType.ReservePromise, actor.arc.name);
-                                    actor.numOfTimesPromised++;
-                                    break;
-                                case "ReserveNoPromise":
-                                    builderTop.AppendFormat("{0}{1} {2} is confused and doesn't understand why they are being cast aside{3}",
-                                        colourNormal, actor.arc.name, actor.actorName, colourEnd);
-                                    msgText = "No Promise";
-                                    moodText = GameManager.i.personScript.UpdateMood(MoodType.ReserveNoPromise, actor.arc.name);
-                                    break;
-                                default:
-                                    Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionNested);
-                                    break;
+                                //remove all active teams connected with this actor
+                                numOfTeams = GameManager.i.teamScript.TeamCleanUp(actor);
                             }
-                            //teams
-                            if (numOfTeams > 0)
+                            builderTop.AppendLine();
+                            //actor successfully moved to reserve
+                            if (string.IsNullOrEmpty(data.optionNested) == false)
                             {
-                                if (builderBottom.Length > 0)
-                                { builderBottom.AppendLine(); builderBottom.AppendLine(); }
-                                builderBottom.AppendFormat("{0}{1} related Team{2} sent to the Reserve Pool{3}", colourBad, numOfTeams,
-                                numOfTeams != 1 ? "s" : "", colourEnd);
-                            }
-                            //gear
-                            if (string.IsNullOrEmpty(gearName) == false)
-                            {
-                                Gear gear = GameManager.i.dataScript.GetGear(gearName);
-                                if (gear != null)
+                                //history
+                                actor.AddHistory(new HistoryActor() { text = "Transferred to the Reserves" });
+                                GameManager.i.dataScript.AddHistoryPlayer(new HistoryActor() { text = string.Format("Transfers {0}, {1} to Reserves", actor.actorName, actor.arc.name) });
+                                switch (data.optionNested)
+                                {
+                                    case "ReserveRest":
+                                        builderTop.AppendFormat("{0}{1} {2} understands the need for Rest{3}", colourNormal, actor.arc.name,
+                                            actor.actorName, colourEnd);
+                                        msgText = "Resting";
+                                        moodText = GameManager.i.personScript.UpdateMood(MoodType.ReserveRest, actor.arc.name);
+                                        break;
+                                    case "ReservePromise":
+                                        builderTop.AppendFormat("{0}{1} {2} accepts your word that they will be recalled within a reasonable time period{3}",
+                                            colourNormal, actor.arc.name, actor.actorName, colourEnd);
+                                        msgText = "Promised";
+                                        moodText = GameManager.i.personScript.UpdateMood(MoodType.ReservePromise, actor.arc.name);
+                                        actor.numOfTimesPromised++;
+                                        break;
+                                    case "ReserveNoPromise":
+                                        builderTop.AppendFormat("{0}{1} {2} is confused and doesn't understand why they are being cast aside{3}",
+                                            colourNormal, actor.arc.name, actor.actorName, colourEnd);
+                                        msgText = "No Promise";
+                                        moodText = GameManager.i.personScript.UpdateMood(MoodType.ReserveNoPromise, actor.arc.name);
+                                        break;
+                                    default:
+                                        Debug.LogErrorFormat("Invalid data.optionText \"{0}\"", data.optionNested);
+                                        break;
+                                }
+                                //teams
+                                if (numOfTeams > 0)
                                 {
                                     if (builderBottom.Length > 0)
                                     { builderBottom.AppendLine(); builderBottom.AppendLine(); }
-                                    builderBottom.AppendFormat("{0}{1} gear Lost{2}", colourBad, gear.tag, colourEnd);
-                                    //message
-                                    string gearText = string.Format("{0} gear lost by {1}, {2}", gear.tag, actor.actorName, actor.arc.name);
-                                    GameManager.i.messageScript.GearLost(gearText, gear, actor);
+                                    builderBottom.AppendFormat("{0}{1} related Team{2} sent to the Reserve Pool{3}", colourBad, numOfTeams,
+                                    numOfTeams != 1 ? "s" : "", colourEnd);
                                 }
-                                else { Debug.LogWarningFormat("Invalid Gear (Null) for gear {0}", gearName); }
-                            }
-                        }
-                        else
-                        {
-                            //default data for missing outcome
-                            Debug.LogWarningFormat("Invalid optionText (Null or empty) for {0} {1}", actor.actorName, actor.arc.name);
-                            builderTop.AppendFormat("{0} {1} is sent to the Reserves", actor.arc.name, actor.actorName);
-                        }
-                        //message
-                        string text = string.Format("{0} {1} moved to the Reserves ({2})", actor.arc.name, actor.actorName, msgText);
-                        GameManager.i.messageScript.ActorStatus(text, "sent to Reserves", "has been moved to the Reserves", actor.actorID, playerSide);
-                        //Process any other effects, if move to the Reserve pool was successful, ignore otherwise
-                        ManageAction manageAction = GameManager.i.dataScript.GetManageAction(data.optionNested);
-                        if (manageAction != null)
-                        {
-                            List<Effect> listOfEffects = manageAction.listOfEffects;
-                            if (listOfEffects.Count > 0)
-                            {
-                                EffectDataInput dataInput = new EffectDataInput();
-                                dataInput.source = EffectSource.ReserveActor;
-                                dataInput.originText = "Reserve Actor";
-                                foreach (Effect effect in listOfEffects)
+                                //gear
+                                if (string.IsNullOrEmpty(gearName) == false)
                                 {
-                                    if (effect.ignoreEffect == false)
+                                    Gear gear = GameManager.i.dataScript.GetGear(gearName);
+                                    if (gear != null)
                                     {
-                                        EffectDataReturn effectReturn = GameManager.i.effectScript.ProcessEffect(effect, null, dataInput, actor);
-                                        if (effectReturn != null)
+                                        if (builderBottom.Length > 0)
+                                        { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                                        builderBottom.AppendFormat("{0}{1} gear Lost{2}", colourBad, gear.tag, colourEnd);
+                                        //message
+                                        string gearText = string.Format("{0} gear lost by {1}, {2}", gear.tag, actor.actorName, actor.arc.name);
+                                        GameManager.i.messageScript.GearLost(gearText, gear, actor);
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid Gear (Null) for gear {0}", gearName); }
+                                }
+                            }
+                            else
+                            {
+                                //default data for missing outcome
+                                Debug.LogWarningFormat("Invalid optionText (Null or empty) for {0} {1}", actor.actorName, actor.arc.name);
+                                builderTop.AppendFormat("{0} {1} is sent to the Reserves", actor.arc.name, actor.actorName);
+                            }
+                            //message
+                            string text = string.Format("{0} {1} moved to the Reserves ({2})", actor.arc.name, actor.actorName, msgText);
+                            GameManager.i.messageScript.ActorStatus(text, "sent to Reserves", "has been moved to the Reserves", actor.actorID, playerSide);
+                            //Process any other effects, if move to the Reserve pool was successful, ignore otherwise
+                            ManageAction manageAction = GameManager.i.dataScript.GetManageAction(data.optionNested);
+                            if (manageAction != null)
+                            {
+                                List<Effect> listOfEffects = manageAction.listOfEffects;
+                                if (listOfEffects.Count > 0)
+                                {
+                                    EffectDataInput dataInput = new EffectDataInput();
+                                    dataInput.source = EffectSource.ReserveActor;
+                                    dataInput.originText = "Reserve Actor";
+                                    foreach (Effect effect in listOfEffects)
+                                    {
+                                        if (effect.ignoreEffect == false)
                                         {
-                                            if (!string.IsNullOrEmpty(effectReturn.topText) && builderTop.Length > 0) { builderTop.AppendLine(); }
-                                            builderTop.Append(effectReturn.topText);
-                                            if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
-                                            builderBottom.Append(effectReturn.bottomText);
-                                            //exit effect loop on error
-                                            if (effectReturn.errorFlag == true) { break; }
+                                            EffectDataReturn effectReturn = GameManager.i.effectScript.ProcessEffect(effect, null, dataInput, actor);
+                                            if (effectReturn != null)
+                                            {
+                                                if (!string.IsNullOrEmpty(effectReturn.topText) && builderTop.Length > 0) { builderTop.AppendLine(); }
+                                                builderTop.Append(effectReturn.topText);
+                                                if (builderBottom.Length > 0) { builderBottom.AppendLine(); builderBottom.AppendLine(); }
+                                                builderBottom.Append(effectReturn.bottomText);
+                                                //exit effect loop on error
+                                                if (effectReturn.errorFlag == true) { break; }
+                                            }
+                                            else { Debug.LogError("Invalid effectReturn (Null)"); }
                                         }
-                                        else { Debug.LogError("Invalid effectReturn (Null)"); }
                                     }
                                 }
                             }
+                            else
+                            {
+                                Debug.LogErrorFormat("Invalid ManageAction (Null) for data.optionText \"{0}\"", data.optionNested);
+                                successFlag = false;
+                            }
                         }
                         else
                         {
-                            Debug.LogErrorFormat("Invalid ManageAction (Null) for data.optionText \"{0}\"", data.optionNested);
+                            //some issue prevents actor being added to reserve pool (full? -> probably not as a criteria checks this)
                             successFlag = false;
                         }
                     }
                     else
                     {
-                        //some issue prevents actor being added to reserve pool (full? -> probably not as a criteria checks this)
+                        Debug.LogWarningFormat("Invalid Actor (Null) for actorSlotID {0}", data.optionID);
                         successFlag = false;
                     }
+
                 }
                 else
-                {
-                    Debug.LogWarningFormat("Invalid Actor (Null) for actorSlotID {0}", data.optionID);
-                    successFlag = false;
-                }
-
+                { Debug.LogWarningFormat("Invalid actorSlotID {0}", data.actorSlotID); }
+                //mood info
+                builderBottom.AppendFormat("{0}{1}{2}", "\n", "\n", moodText);
+                //statistics
+                GameManager.i.dataScript.StatisticIncrement(StatType.PlayerManageActions);
             }
             else
-            { Debug.LogWarningFormat("Invalid actorSlotID {0}", data.actorSlotID); }
-            //mood info
-            builderBottom.AppendFormat("{0}{1}{2}", "\n", "\n", moodText);
-            //statistics
-            GameManager.i.dataScript.StatisticIncrement(StatType.PlayerManageActions);
+            {
+                Debug.LogError("Invalid GenericReturnData (Null)");
+                successFlag = false;
+            }
+            //failed outcome
+            if (successFlag == false)
+            {
+                builderTop.Append("Something has gone wrong. You are unable to move anyone to the Reserve Pool at present");
+                builderBottom.Append("It's the wiring. It's broken. Rats. Big ones.");
+            }
+            //
+            // - - - Outcome - - - 
+            //
+            ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
+            outcomeDetails.textTop = builderTop.ToString();
+            outcomeDetails.textBottom = builderBottom.ToString();
+            outcomeDetails.sprite = sprite;
+            outcomeDetails.side = playerSide;
+            //action expended automatically for manage actor
+            if (successFlag == true)
+            {
+                outcomeDetails.isAction = true;
+                outcomeDetails.reason = "Manager Reserve Actor";
+            }
+            //generate a create modal window event
+            EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessReserveActorAction");
         }
-        else
-        {
-            Debug.LogError("Invalid GenericReturnData (Null)");
-            successFlag = false;
-        }
-        //failed outcome
-        if (successFlag == false)
-        {
-            builderTop.Append("Something has gone wrong. You are unable to move anyone to the Reserve Pool at present");
-            builderBottom.Append("It's the wiring. It's broken. Rats. Big ones.");
-        }
-        //
-        // - - - Outcome - - - 
-        //
-        ModalOutcomeDetails outcomeDetails = new ModalOutcomeDetails();
-        outcomeDetails.textTop = builderTop.ToString();
-        outcomeDetails.textBottom = builderBottom.ToString();
-        outcomeDetails.sprite = sprite;
-        outcomeDetails.side = playerSide;
-        //action expended automatically for manage actor
-        if (successFlag == true)
-        {
-            outcomeDetails.isAction = true;
-            outcomeDetails.reason = "Manager Reserve Actor";
-        }
-        //generate a create modal window event
-        EventManager.i.PostNotification(EventType.OutcomeOpen, this, outcomeDetails, "ActionManager.cs -> ProcessReserveActorAction");
+        else { GameManager.i.guiScript.SetAlertMessageModalOne(AlertType.RecruitingDisabled); }
     }
 
     /// <summary>

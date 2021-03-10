@@ -777,3 +777,40 @@ City seed 49258 -> Londus, Eurasia
 
 Dev seed 65260 -> Wednesday, 10 March 2021 3:24 PM
 City seed 39005 -> Londus, Eurasia
+
+Dev seed 27120 -> Wednesday, 10 March 2021 4:13 PM
+City seed 322 -> Londus, Eurasia
+
+Dev seed 17916 -> Wednesday, 10 March 2021 4:15 PM
+City seed 47620 -> Londus, Eurasia
+
+Dev seed 7138 -> Wednesday, 10 March 2021 4:26 PM
+City seed 56350 -> Londus, Eurasia
+
+Dev seed 58747 -> Wednesday, 10 March 2021 4:30 PM
+City seed 49052 -> Londus, Eurasia
+
+Dev seed 52883 -> Wednesday, 10 March 2021 4:47 PM
+City seed 22861 -> Londus, Eurasia
+
+Dev seed 32155 -> Wednesday, 10 March 2021 4:48 PM
+City seed 1119 -> Londus, Eurasia
+
+Dev seed 11177 -> Wednesday, 10 March 2021 5:12 PM
+City seed 28386 -> VirtualCity, Eurasia
+
+Dev seed 22578 -> Wednesday, 10 March 2021 5:17 PM
+City seed 54201 -> VirtualCity, Eurasia
+
+Dev seed 50710 -> Wednesday, 10 March 2021 5:19 PM
+City seed 63443 -> VirtualCity, Eurasia
+
+Dev seed 31806 -> Wednesday, 10 March 2021 5:45 PM
+City seed 38500 -> VirtualCity, Eurasia
+ERROR Invalid InventoryType "HQ"
+UnityEngine.Debug:LogError(Object)
+	InventoryInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/InventoryInteraction.cs:155)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 41005 -> Wednesday, 10 March 2021 5:47 PM
+City seed 49468 -> VirtualCity, Eurasia

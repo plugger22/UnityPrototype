@@ -147,6 +147,9 @@ public class TutorialManager : MonoBehaviour
             GameManager.i.optionScript.isObjectives = true;
             GameManager.i.optionScript.isOrganisations = true;
             GameManager.i.optionScript.isTargets = true;
+            GameManager.i.optionScript.isGear = true;
+            GameManager.i.optionScript.isRecruit = true;
+            GameManager.i.optionScript.isMoveSecurity = true;
             //turn OFF any features in list
             for (int i = 0; i < listOfFeaturesToToggleOff.Count; i++)
             {
@@ -214,6 +217,11 @@ public class TutorialManager : MonoBehaviour
                             GameManager.i.optionScript.isRecruit = false;
                             GameManager.i.debugScript.optionRecruit = "Recruiting ON";
                             Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: Recruiting toggled Off{0}", "\n");
+                            break;
+                        case "MoveSecurity":
+                            GameManager.i.optionScript.isMoveSecurity = false;
+                            GameManager.i.debugScript.optionMoveSecurity = "Move Sec ON";
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: Move Security toggled Off{0}", "\n");
                             break;
                         case "Targets":
                             GameManager.i.optionScript.isTargets = false;

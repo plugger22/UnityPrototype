@@ -4692,28 +4692,33 @@ public class DataManager : MonoBehaviour
     /// <param name="side"></param>
     public bool AddActorToReserve(int actorID, GlobalSide side)
     {
-        Debug.Assert(side != null, "Invalid side (Null)");
-        Debug.Assert(actorID > -1, "Invalid actorID");
         bool successFlag = true;
-        switch (side.name)
+        if (GameManager.i.optionScript.isRecruit == true)
         {
-            case "Authority":
-                //check space in Authority reserve pool
-                if (authorityActorReserve.Count < GameManager.i.actorScript.maxNumOfReserveActors)
-                { authorityActorReserve.Add(actorID); }
-                else { successFlag = false; }
-                break;
-            case "Resistance":
-                //check space in Resistance reserve pool
-                if (resistanceActorReserve.Count < GameManager.i.actorScript.maxNumOfReserveActors)
-                { resistanceActorReserve.Add(actorID); }
-                else { successFlag = false; }
-                break;
-            default:
-                Debug.LogWarning(string.Format("Invalid Side \"{0}\", actorID NOT added to list", side.name));
-                successFlag = false;
-                break;
+            Debug.Assert(side != null, "Invalid side (Null)");
+            Debug.Assert(actorID > -1, "Invalid actorID");
+            switch (side.name)
+            {
+                case "Authority":
+                    //check space in Authority reserve pool
+                    if (authorityActorReserve.Count < GameManager.i.actorScript.maxNumOfReserveActors)
+                    { authorityActorReserve.Add(actorID); }
+                    else { successFlag = false; }
+                    break;
+                case "Resistance":
+                    //check space in Resistance reserve pool
+                    if (resistanceActorReserve.Count < GameManager.i.actorScript.maxNumOfReserveActors)
+                    { resistanceActorReserve.Add(actorID); }
+                    else { successFlag = false; }
+                    break;
+                default:
+                    Debug.LogWarning(string.Format("Invalid Side \"{0}\", actorID NOT added to list", side.name));
+                    successFlag = false;
+                    break;
+            }
         }
+        else { Debug.LogFormat("[Tor] DataManager.cs -> AddActorToReserve: actorID {0}, side {1}, unable to be added to Reserves (OptionManager.isRecruit {2}){3}", 
+            actorID, side.name, GameManager.i.optionScript.isRecruit, "\n"); }
         return successFlag;
     }
 

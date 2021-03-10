@@ -36,6 +36,8 @@ public class FeatureManager : MonoBehaviour
     public bool isGear;
     [Tooltip("Recruit Actors on/off -> sets initial state only (can be adjusted by code later)")]
     public bool isRecruit;
+    [Tooltip("If false connection security is ignored when moving (can be adjusted by code later)")]
+    public bool isMoveSecurity;
 
 
     /// <summary>
@@ -95,6 +97,7 @@ public class FeatureManager : MonoBehaviour
         GameManager.i.optionScript.isTargets = isTargets;
         GameManager.i.optionScript.isGear = isGear;
         GameManager.i.optionScript.isRecruit = isRecruit;
+        GameManager.i.optionScript.isMoveSecurity = isMoveSecurity;
         if (isTargets == false)
         {
             //automatically disable Objectives and Organisations if targets are also disabled
@@ -141,6 +144,9 @@ public class FeatureManager : MonoBehaviour
         if (isRecruit == true)
         { GameManager.i.debugScript.optionRecruit = "Recruiting OFF"; }
         else { GameManager.i.debugScript.optionRecruit = "Recruiting ON"; }
+        if (isMoveSecurity == true)
+        { GameManager.i.debugScript.optionMoveSecurity = "Move Sec OFF"; }
+        else { GameManager.i.debugScript.optionMoveSecurity = "Move Sec ON"; }
     }
 
 

@@ -2034,252 +2034,7 @@ public class NodeManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Put an action Menu together at the selected node that has 'Move' and 'Cancel' options
-    /// </summary>
-    /// <param name="nodeID"></param>
-    private void CreateMoveMenu(int nodeID)
-    {
-        Debug.LogFormat("[UI] NodeManager.cs -> CreateMoveMenu: CreateMoveMenu (right click on node)");
-
-        List<EventButtonDetails> tempList = new List<EventButtonDetails>();
-        int playerNodeID = GetPlayerNodeID();
-        //Get Node
-        Node node = GameManager.i.dataScript.GetNode(nodeID);
-        if (node != null)
-        {
-            string moveHeader = string.Format("{0}\"{1}\", {2}{3}{4}{5}, ID {6}{7}", colourResistance, node.nodeName, colourEnd, "\n",
-                colourDefault, node.Arc.name, node.nodeID, colourEnd);
-            string moveMain = "UNKNOWN";
-            int adjustInvisibility = 0;
-            //check player has special move gear and node to move to is 2 nodes distance away
-            if (GameManager.i.playerScript.isSpecialMoveGear == true && GameManager.i.dijkstraScript.GetDistanceUnweighted(playerNodeID, nodeID) == 2)
-            {
-                //
-                // - - - Special gear Move 2 nodes
-                //
-                Gear gear = GameManager.i.gearScript.gearSpecialMove;
-                if (gear != null)
-                {
-                    //tooltip details
-                    StringBuilder builderDetail = new StringBuilder();
-
-                    builderDetail.Append(string.Format("{0}No risk of being spotted{1}", colourGood, colourEnd));
-                    //add gear chance of compromise
-                    builderDetail.Append(string.Format("{0}{1}Gear has a {2}{3}{4} %{5}{6} chance of being compromised{7}", "\n", colourAlert, colourEnd, colourNeutral,
-                        GameManager.i.gearScript.GetChanceOfCompromise(gear.name), colourEnd, colourAlert, colourEnd));
-                    //gear handles security level
-                    adjustInvisibility = 0;
-                    //Move details
-                    ModalMoveDetails moveGearDetails = new ModalMoveDetails();
-                    moveGearDetails.nodeID = nodeID;
-                    moveGearDetails.connectionID = 0;  //can set as a random value as it's ignored by ProcessPlayerMove if changeInvisibility is Zero
-                    moveGearDetails.changeInvisibility = adjustInvisibility;
-                    moveGearDetails.gearName = gear.name;
-                    //button target details (red for High security to match red connection security colour on map)
-                    string colourGearLevel = colourBad;
-                    EventButtonDetails eventMoveDetails = new EventButtonDetails()
-                    {
-                        buttonTitle = string.Format("{0} Move", gear.tag),
-                        buttonTooltipHeader = string.Format("Move using{0}{1}{2}{3}{4}{5}<size=90%>defeats</size> {6}{7}{8}{9} <size=90%>Security</size>{10}", "\n", colourNeutral, gear.tag, colourEnd,
-                        "\n", colourNormal, colourEnd, colourGearLevel, (ConnectionType)gear.data, colourEnd, colourNormal, colourEnd),
-                        buttonTooltipMain = string.Format("{0}Underground Movement{1}", colourGood, colourEnd),
-                        buttonTooltipDetail = builderDetail.ToString(),
-                        //use a Lambda to pass arguments to the action
-                        action = () => { EventManager.i.PostNotification(EventType.MoveAction, this, moveGearDetails, "NodeManager.cs -> CreateMoveMenu"); }
-                    };
-                    tempList.Add(eventMoveDetails);
-                    //
-                    // - - - Cancel
-                    //
-                    //Cancel button is added last
-                    EventButtonDetails cancelDetails = null;
-                    //necessary to prevent color tags triggering the bottom divider in TooltipGeneric
-                    cancelDetails = new EventButtonDetails()
-                    {
-                        buttonTitle = "CANCEL",
-                        buttonTooltipHeader = moveHeader,
-                        buttonTooltipMain = "You'd like to think about it",
-                        //use a Lambda to pass arguments to the action
-                        action = () => { EventManager.i.PostNotification(EventType.CloseActionMenu, this, null, "NodeManager.cs -> CreateMoveMenu"); }
-                    };
-                    //add Cancel button to list
-                    tempList.Add(cancelDetails);
-                }
-                else { Debug.LogError("Invalid gearManager.cs -> gearSpecialMove (Null)"); }
-            }
-            else
-            {
-                //
-                // - - - Normal Move (could include special gear but only moving one node away)
-                //
-                //Get Connection (between new node and Player's current location)
-                Connection connection = node.GetConnection(playerNodeID);
-                if (connection != null)
-                {
-                    ConnectionType connSecType = connection.SecurityLevel;
-                    int secLevel = (int)connSecType;
-                    if (secLevel == 0) { secLevel = 4; } //need to do this to get the default colour as 0 is regarded as terrible normally
-                    moveMain = string.Format("Connection Security{0}{1}{2}{3}", "\n", GameManager.i.colourScript.GetValueColour(secLevel), connSecType, colourEnd);
-                    //
-                    // - - - Gear (Movement) only if connection has a security level
-                    //
-                    if (secLevel < 4)
-                    {
-                        List<string> listOfGear = GameManager.i.playerScript.GetListOfGear();
-                        if (listOfGear.Count > 0)
-                        {
-                            string movement = GameManager.i.gearScript.typeMovement.name;
-                            for (int i = 0; i < listOfGear.Count; i++)
-                            {
-                                StringBuilder builderDetail = new StringBuilder();
-                                Gear gear = GameManager.i.dataScript.GetGear(listOfGear[i]);
-                                if (gear != null)
-                                {
-                                    /*if (gear.type == GearTypeEnum.Movement)*/
-                                    if (gear.type.name.Equals(movement, StringComparison.Ordinal) == true)
-                                    {
-                                        //
-                                        // - - - Create Gear Button (one for each item of relevant gear in Player's possesion)
-                                        //
-                                        ModalMoveDetails moveGearDetails = new ModalMoveDetails();
-                                        //gear effect on security
-                                        if (gear.data <= secLevel)
-                                        {
-                                            //gear handles security level
-                                            adjustInvisibility = 0;
-                                            builderDetail.Append(string.Format("{0}No risk of being spotted{1}", colourGood, colourEnd));
-                                        }
-                                        else
-                                        {
-                                            //gear falls short of security level
-                                            adjustInvisibility = -1;
-                                            if (GameManager.i.playerScript.Invisibility <= 0)
-                                            {
-                                                //invisibility will be zero, or less, if move. Immediate notification
-                                                builderDetail.Append(string.Format("{0}Invisibility -1{1}<size=110%>Authority will know Immediately</size>{2}", colourBad, "\n",
-                                                  colourEnd));
-                                                moveGearDetails.ai_Delay = 0;
-                                            }
-                                            else
-                                            {
-                                                //invisibility reduces, still above zero
-                                                int delay = moveInvisibilityDelay - Mathf.Abs(gear.data - secLevel);
-                                                delay = Mathf.Max(0, delay);
-                                                moveGearDetails.ai_Delay = delay;
-                                                builderDetail.AppendFormat("{0}Invisibility -1{1}Authority will know in {2}{3}{4}{5}{6} turn{7}{8}", colourBad, "\n", colourEnd,
-                                                    colourNeutral, moveGearDetails.ai_Delay, colourEnd, colourBad, moveGearDetails.ai_Delay != 1 ? "s" : "", colourEnd);
-                                            }
-                                        }
-                                        //add gear chance of compromise
-                                        builderDetail.Append(string.Format("{0}{1}Gear has a {2}{3}{4} %{5}{6} chance of being compromised{7}", "\n", colourAlert, colourEnd, colourNeutral,
-                                            GameManager.i.gearScript.GetChanceOfCompromise(gear.name), colourEnd, colourAlert, colourEnd));
-
-                                        //Move details
-                                        moveGearDetails.nodeID = nodeID;
-                                        moveGearDetails.connectionID = connection.connID;
-                                        moveGearDetails.changeInvisibility = adjustInvisibility;
-                                        moveGearDetails.gearName = gear.name;
-                                        //button target details (red for High security to match red connection security colour on map)
-                                        string colourGearLevel = colourNeutral;
-                                        if (gear.data == 3) { colourGearLevel = colourGood; }
-                                        else if (gear.data == 1) { colourGearLevel = colourBad; }
-                                        EventButtonDetails eventMoveDetails = new EventButtonDetails()
-                                        {
-                                            buttonTitle = string.Format("{0} Move", gear.tag),
-                                            buttonTooltipHeader = string.Format("Move using{0}{1}{2}{3}{4}{5}<size=90%>defeats</size> {6}{7}{8}{9} <size=90%>Security</size>{10}", "\n",
-                                            colourNeutral, gear.tag, colourEnd, "\n", colourNormal, colourEnd, colourGearLevel, (ConnectionType)gear.data, colourEnd, colourNormal, colourEnd),
-                                            buttonTooltipMain = moveMain,
-                                            buttonTooltipDetail = builderDetail.ToString(),
-                                            //use a Lambda to pass arguments to the action
-                                            action = () => { EventManager.i.PostNotification(EventType.MoveAction, this, moveGearDetails, "NodeManager.cs -> CreateMoveMenu"); }
-                                        };
-                                        tempList.Add(eventMoveDetails);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    //
-                    // - - - Move Button (No gear used)
-                    //
-                    ModalMoveDetails moveDetails = new ModalMoveDetails();
-                    //security conseqences (no gear)
-                    string moveDetail = "UNKNOWN";
-                    if (secLevel < 4)
-                    {
-                        //player loses one level of invisibility each time they traverse a security rated connection
-                        adjustInvisibility = -1;
-                        if (GameManager.i.playerScript.Invisibility <= 0)
-                        {
-                            //invisibility <= zero, if move. Immediate notification
-                            moveDetail = string.Format("{0}Invisibility -1{1}<size=110%>Authority will know Immediately</size>{2}", colourBad, "\n",
-                              colourEnd);
-                            moveDetails.ai_Delay = 0;
-                        }
-                        else
-                        {
-                            //invisibility reduces, zero or above
-                            moveDetails.ai_Delay = secLevel;
-                            moveDetail = string.Format("{0}Invisibility -1{1}Authority will know in {2}{3}{4}{5}{6} turn{7}{8}", colourBad, "\n", colourEnd, colourNeutral,
-                              moveDetails.ai_Delay, colourEnd, colourBad, moveDetails.ai_Delay != 1 ? "s" : "", colourEnd);
-                        }
-                    }
-                    else { moveDetail = string.Format("{0}No risk of being spotted{1}", colourGood, colourEnd); }
-
-                    //Move details
-                    moveDetails.nodeID = nodeID;
-                    moveDetails.connectionID = connection.connID;
-                    moveDetails.changeInvisibility = adjustInvisibility;
-                    moveDetails.gearName = null;
-                    //button target details
-                    EventButtonDetails eventDetails = new EventButtonDetails()
-                    {
-                        buttonTitle = "Move",
-                        buttonTooltipHeader = string.Format("{0}Move{1}", colourNeutral, colourEnd),
-                        buttonTooltipMain = moveMain,
-                        buttonTooltipDetail = moveDetail,
-                        //use a Lambda to pass arguments to the action
-                        action = () => { EventManager.i.PostNotification(EventType.MoveAction, this, moveDetails, "NodeManager.cs -> CreateMoveMenu"); }
-                    };
-                    tempList.Add(eventDetails);
-                    //
-                    // - - - Cancel
-                    //
-                    //Cancel button is added last
-                    EventButtonDetails cancelDetails = null;
-                    //necessary to prevent color tags triggering the bottom divider in TooltipGeneric
-                    cancelDetails = new EventButtonDetails()
-                    {
-                        buttonTitle = "CANCEL",
-                        buttonTooltipHeader = moveHeader,
-                        buttonTooltipMain = "You'd like to think about it",
-                        //use a Lambda to pass arguments to the action
-                        action = () => { EventManager.i.PostNotification(EventType.CloseActionMenu, this, null, "NodeManager.cs -> CreateMoveMenu"); }
-                    };
-                    //add Cancel button to list
-                    tempList.Add(cancelDetails);
-                }
-                else { Debug.LogError("Invalid Connection (Null)"); }
-            }
-        }
-        else { Debug.LogError(string.Format("Invalid Node (null), ID {0}", nodeID)); }
-        //
-        // - - - Action Menu
-        //
-        ModalGenericMenuDetails details = new ModalGenericMenuDetails()
-        {
-            itemID = nodeID,
-            itemName = node.nodeName,
-            itemDetails = string.Format("{0} ID {1}", node.Arc.name, node.nodeID),
-            menuPos = node.transform.position,
-            listOfButtonDetails = tempList,
-            menuType = ActionMenuType.Move
-        };
-        //activate menu
-        GameManager.i.actionMenuScript.SetActionMenu(details);
-    }
-
+    #region CreateSpecialNodeMenu
     /// <summary>
     /// Right Click the Resistance Player's current node -> special actions (Gear and Cure)
     /// </summary>
@@ -2752,8 +2507,266 @@ public class NodeManager : MonoBehaviour
         //activate menu
         GameManager.i.actionMenuScript.SetActionMenu(details);
     }
+    #endregion
 
+    #region Player Movement...
 
+    #region CreateMoveMenu
+    /// <summary>
+    /// Put an action Menu together at the selected node that has 'Move' and 'Cancel' options
+    /// </summary>
+    /// <param name="nodeID"></param>
+    private void CreateMoveMenu(int nodeID)
+    {
+        Debug.LogFormat("[UI] NodeManager.cs -> CreateMoveMenu: CreateMoveMenu (right click on node)");
+
+        List<EventButtonDetails> tempList = new List<EventButtonDetails>();
+        int playerNodeID = GetPlayerNodeID();
+        //Get Node
+        Node node = GameManager.i.dataScript.GetNode(nodeID);
+        if (node != null)
+        {
+            string moveHeader = string.Format("{0}\"{1}\", {2}{3}{4}{5}, ID {6}{7}", colourResistance, node.nodeName, colourEnd, "\n",
+                colourDefault, node.Arc.name, node.nodeID, colourEnd);
+            string moveMain = "UNKNOWN";
+            int adjustInvisibility = 0;
+            //check player has special move gear and node to move to is 2 nodes distance away
+            if (GameManager.i.playerScript.isSpecialMoveGear == true && GameManager.i.dijkstraScript.GetDistanceUnweighted(playerNodeID, nodeID) == 2)
+            {
+                //
+                // - - - Special gear Move 2 nodes
+                //
+                Gear gear = GameManager.i.gearScript.gearSpecialMove;
+                if (gear != null)
+                {
+                    //tooltip details
+                    StringBuilder builderDetail = new StringBuilder();
+
+                    builderDetail.Append(string.Format("{0}No risk of being spotted{1}", colourGood, colourEnd));
+                    //add gear chance of compromise
+                    builderDetail.Append(string.Format("{0}{1}Gear has a {2}{3}{4} %{5}{6} chance of being compromised{7}", "\n", colourAlert, colourEnd, colourNeutral,
+                        GameManager.i.gearScript.GetChanceOfCompromise(gear.name), colourEnd, colourAlert, colourEnd));
+                    //gear handles security level
+                    adjustInvisibility = 0;
+                    //Move details
+                    ModalMoveDetails moveGearDetails = new ModalMoveDetails();
+                    moveGearDetails.nodeID = nodeID;
+                    moveGearDetails.connectionID = 0;  //can set as a random value as it's ignored by ProcessPlayerMove if changeInvisibility is Zero
+                    moveGearDetails.changeInvisibility = adjustInvisibility;
+                    moveGearDetails.gearName = gear.name;
+                    //button target details (red for High security to match red connection security colour on map)
+                    string colourGearLevel = colourBad;
+                    EventButtonDetails eventMoveDetails = new EventButtonDetails()
+                    {
+                        buttonTitle = string.Format("{0} Move", gear.tag),
+                        buttonTooltipHeader = string.Format("Move using{0}{1}{2}{3}{4}{5}<size=90%>defeats</size> {6}{7}{8}{9} <size=90%>Security</size>{10}", "\n", colourNeutral, gear.tag, colourEnd,
+                        "\n", colourNormal, colourEnd, colourGearLevel, (ConnectionType)gear.data, colourEnd, colourNormal, colourEnd),
+                        buttonTooltipMain = string.Format("{0}Underground Movement{1}", colourGood, colourEnd),
+                        buttonTooltipDetail = builderDetail.ToString(),
+                        //use a Lambda to pass arguments to the action
+                        action = () => { EventManager.i.PostNotification(EventType.MoveAction, this, moveGearDetails, "NodeManager.cs -> CreateMoveMenu"); }
+                    };
+                    tempList.Add(eventMoveDetails);
+                    //
+                    // - - - Cancel
+                    //
+                    //Cancel button is added last
+                    EventButtonDetails cancelDetails = null;
+                    //necessary to prevent color tags triggering the bottom divider in TooltipGeneric
+                    cancelDetails = new EventButtonDetails()
+                    {
+                        buttonTitle = "CANCEL",
+                        buttonTooltipHeader = moveHeader,
+                        buttonTooltipMain = "You'd like to think about it",
+                        //use a Lambda to pass arguments to the action
+                        action = () => { EventManager.i.PostNotification(EventType.CloseActionMenu, this, null, "NodeManager.cs -> CreateMoveMenu"); }
+                    };
+                    //add Cancel button to list
+                    tempList.Add(cancelDetails);
+                }
+                else { Debug.LogError("Invalid gearManager.cs -> gearSpecialMove (Null)"); }
+            }
+            else
+            {
+                //
+                // - - - Normal Move (could include special gear but only moving one node away)
+                //
+                //Get Connection (between new node and Player's current location)
+                Connection connection = node.GetConnection(playerNodeID);
+                if (connection != null)
+                {
+                    ConnectionType connSecType = connection.SecurityLevel;
+                    int secLevel = (int)connSecType;
+                    if (secLevel == 0) { secLevel = 4; } //need to do this to get the default colour as 0 is regarded as terrible normally
+                    moveMain = string.Format("Connection Security{0}{1}{2}{3}", "\n", GameManager.i.colourScript.GetValueColour(secLevel), connSecType, colourEnd);
+                    //
+                    // - - - Gear (Movement) only if connection has a security level
+                    //
+                    if (GameManager.i.optionScript.isMoveSecurity == true)
+                    {
+                        if (secLevel < 4)
+                        {
+                            List<string> listOfGear = GameManager.i.playerScript.GetListOfGear();
+                            if (listOfGear.Count > 0)
+                            {
+                                string movement = GameManager.i.gearScript.typeMovement.name;
+                                for (int i = 0; i < listOfGear.Count; i++)
+                                {
+                                    StringBuilder builderDetail = new StringBuilder();
+                                    Gear gear = GameManager.i.dataScript.GetGear(listOfGear[i]);
+                                    if (gear != null)
+                                    {
+                                        /*if (gear.type == GearTypeEnum.Movement)*/
+                                        if (gear.type.name.Equals(movement, StringComparison.Ordinal) == true)
+                                        {
+                                            //
+                                            // - - - Create Gear Button (one for each item of relevant gear in Player's possesion)
+                                            //
+                                            ModalMoveDetails moveGearDetails = new ModalMoveDetails();
+                                            //gear effect on security
+                                            if (gear.data <= secLevel)
+                                            {
+                                                //gear handles security level
+                                                adjustInvisibility = 0;
+                                                builderDetail.Append(string.Format("{0}No risk of being spotted{1}", colourGood, colourEnd));
+                                            }
+                                            else
+                                            {
+                                                //gear falls short of security level
+                                                adjustInvisibility = -1;
+                                                if (GameManager.i.playerScript.Invisibility <= 0)
+                                                {
+                                                    //invisibility will be zero, or less, if move. Immediate notification
+                                                    builderDetail.Append(string.Format("{0}Invisibility -1{1}<size=110%>Authority will know Immediately</size>{2}", colourBad, "\n",
+                                                      colourEnd));
+                                                    moveGearDetails.ai_Delay = 0;
+                                                }
+                                                else
+                                                {
+                                                    //invisibility reduces, still above zero
+                                                    int delay = moveInvisibilityDelay - Mathf.Abs(gear.data - secLevel);
+                                                    delay = Mathf.Max(0, delay);
+                                                    moveGearDetails.ai_Delay = delay;
+                                                    builderDetail.AppendFormat("{0}Invisibility -1{1}Authority will know in {2}{3}{4}{5}{6} turn{7}{8}", colourBad, "\n", colourEnd,
+                                                        colourNeutral, moveGearDetails.ai_Delay, colourEnd, colourBad, moveGearDetails.ai_Delay != 1 ? "s" : "", colourEnd);
+                                                }
+                                            }
+                                            //add gear chance of compromise
+                                            builderDetail.Append(string.Format("{0}{1}Gear has a {2}{3}{4} %{5}{6} chance of being compromised{7}", "\n", colourAlert, colourEnd, colourNeutral,
+                                                GameManager.i.gearScript.GetChanceOfCompromise(gear.name), colourEnd, colourAlert, colourEnd));
+
+                                            //Move details
+                                            moveGearDetails.nodeID = nodeID;
+                                            moveGearDetails.connectionID = connection.connID;
+                                            moveGearDetails.changeInvisibility = adjustInvisibility;
+                                            moveGearDetails.gearName = gear.name;
+                                            //button target details (red for High security to match red connection security colour on map)
+                                            string colourGearLevel = colourNeutral;
+                                            if (gear.data == 3) { colourGearLevel = colourGood; }
+                                            else if (gear.data == 1) { colourGearLevel = colourBad; }
+                                            EventButtonDetails eventMoveDetails = new EventButtonDetails()
+                                            {
+                                                buttonTitle = string.Format("{0} Move", gear.tag),
+                                                buttonTooltipHeader = string.Format("Move using{0}{1}{2}{3}{4}{5}<size=90%>defeats</size> {6}{7}{8}{9} <size=90%>Security</size>{10}", "\n",
+                                                colourNeutral, gear.tag, colourEnd, "\n", colourNormal, colourEnd, colourGearLevel, (ConnectionType)gear.data, colourEnd, colourNormal, colourEnd),
+                                                buttonTooltipMain = moveMain,
+                                                buttonTooltipDetail = builderDetail.ToString(),
+                                                //use a Lambda to pass arguments to the action
+                                                action = () => { EventManager.i.PostNotification(EventType.MoveAction, this, moveGearDetails, "NodeManager.cs -> CreateMoveMenu"); }
+                                            };
+                                            tempList.Add(eventMoveDetails);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    //
+                    // - - - Move Button (No gear used)
+                    //
+                    ModalMoveDetails moveDetails = new ModalMoveDetails();
+                    //security conseqences (no gear)
+                    string moveDetail = "UNKNOWN";
+                    if (GameManager.i.optionScript.isMoveSecurity == true)
+                    {
+                        if (secLevel < 4)
+                        {
+                            //player loses one level of invisibility each time they traverse a security rated connection
+                            adjustInvisibility = -1;
+                            if (GameManager.i.playerScript.Invisibility <= 0)
+                            {
+                                //invisibility <= zero, if move. Immediate notification
+                                moveDetail = string.Format("{0}Invisibility -1{1}<size=110%>Authority will know Immediately</size>{2}", colourBad, "\n",
+                                  colourEnd);
+                                moveDetails.ai_Delay = 0;
+                            }
+                            else
+                            {
+                                //invisibility reduces, zero or above
+                                moveDetails.ai_Delay = secLevel;
+                                moveDetail = string.Format("{0}Invisibility -1{1}Authority will know in {2}{3}{4}{5}{6} turn{7}{8}", colourBad, "\n", colourEnd, colourNeutral,
+                                  moveDetails.ai_Delay, colourEnd, colourBad, moveDetails.ai_Delay != 1 ? "s" : "", colourEnd);
+                            }
+                        }
+                        else { moveDetail = string.Format("{0}No risk of being spotted{1}", colourGood, colourEnd); }
+                    }
+                    else { moveDetail = string.Format("{0}No risk of being spotted{1}", colourGood, colourEnd); }
+
+                    //Move details
+                    moveDetails.nodeID = nodeID;
+                    moveDetails.connectionID = connection.connID;
+                    moveDetails.changeInvisibility = adjustInvisibility;
+                    moveDetails.gearName = null;
+                    //button target details
+                    EventButtonDetails eventDetails = new EventButtonDetails()
+                    {
+                        buttonTitle = "Move",
+                        buttonTooltipHeader = string.Format("{0}Move{1}", colourNeutral, colourEnd),
+                        buttonTooltipMain = moveMain,
+                        buttonTooltipDetail = moveDetail,
+                        //use a Lambda to pass arguments to the action
+                        action = () => { EventManager.i.PostNotification(EventType.MoveAction, this, moveDetails, "NodeManager.cs -> CreateMoveMenu"); }
+                    };
+                    tempList.Add(eventDetails);
+                    //
+                    // - - - Cancel
+                    //
+                    //Cancel button is added last
+                    EventButtonDetails cancelDetails = null;
+                    //necessary to prevent color tags triggering the bottom divider in TooltipGeneric
+                    cancelDetails = new EventButtonDetails()
+                    {
+                        buttonTitle = "CANCEL",
+                        buttonTooltipHeader = moveHeader,
+                        buttonTooltipMain = "You'd like to think about it",
+                        //use a Lambda to pass arguments to the action
+                        action = () => { EventManager.i.PostNotification(EventType.CloseActionMenu, this, null, "NodeManager.cs -> CreateMoveMenu"); }
+                    };
+                    //add Cancel button to list
+                    tempList.Add(cancelDetails);
+                }
+                else { Debug.LogError("Invalid Connection (Null)"); }
+            }
+        }
+        else { Debug.LogError(string.Format("Invalid Node (null), ID {0}", nodeID)); }
+        //
+        // - - - Action Menu
+        //
+        ModalGenericMenuDetails details = new ModalGenericMenuDetails()
+        {
+            itemID = nodeID,
+            itemName = node.nodeName,
+            itemDetails = string.Format("{0} ID {1}", node.Arc.name, node.nodeID),
+            menuPos = node.transform.position,
+            listOfButtonDetails = tempList,
+            menuType = ActionMenuType.Move
+        };
+        //activate menu
+        GameManager.i.actionMenuScript.SetActionMenu(details);
+    }
+    #endregion
+
+    #region ProcessPlayerMove
     /// <summary>
     /// Move player to the specified node
     /// </summary>
@@ -2787,105 +2800,110 @@ public class NodeManager : MonoBehaviour
                 GameManager.i.messageScript.PlayerMove(text, node, moveDetails.changeInvisibility, moveDetails.ai_Delay);
                 //Statistics (needs to be before ProcessMoveOutcome calls for tutorial goals)
                 GameManager.i.dataScript.StatisticIncrement(StatType.PlayerMoveActions);
-                //
-                // - - - Invisibility - - -
-                //
-                if (moveDetails.changeInvisibility != 0)
+
+                if (GameManager.i.optionScript.isMoveSecurity == true)
                 {
-                    Connection connection = GameManager.i.dataScript.GetConnection(moveDetails.connectionID);
-                    if (connection != null)
-                    {
-                        //AI message
-                        string textAI = string.Format("Player spotted moving to \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, moveDetails.nodeID);
-                        //display
-                        builder.AppendLine();
-                        builder.AppendFormat("{0}Invisibility {1}{2}{3}", colourBad, moveDetails.changeInvisibility > 0 ? "+" : "",
-                            moveDetails.changeInvisibility, colourEnd);
-                        //player invisibility
-                        int invisibility = GameManager.i.playerScript.Invisibility;
-                        if (invisibility <= 0)
-                        {
-                            //moving while invisibility already 0 triggers immediate alert flag
-                            GameManager.i.aiScript.immediateFlagResistance = true;
-                            builder.AppendFormat("{0}{1}{2}Authority will know immediately{3}", "\n", "\n", colourBad, colourEnd);
-                            //AI Immediate notification
-                            GameManager.i.messageScript.AIImmediateActivity("Immediate Activity \"Move\" (Player)",
-                                "Moving", moveDetails.nodeID, moveDetails.connectionID);
-                            //Npc invisible node
-                            if (GameManager.i.missionScript.mission.npc != null)
-                            { GameManager.i.missionScript.mission.npc.AddInvisibleNode(moveDetails.nodeID); }
-                        }
-                        else
-                        {
-                            //normal adjusted security level delay, eg. low gives a 3 turn delay
-                            builder.AppendFormat("{0}{1}{2}Authority will know in {3}{4}{5}{6}{7} turn{8}{9}", "\n", "\n", colourAlert, colourEnd, colourNeutral,
-                                moveDetails.ai_Delay, colourEnd, colourAlert, moveDetails.ai_Delay != 1 ? "s" : "", colourEnd);
-                            //AI delayed notification
-                            GameManager.i.messageScript.AIConnectionActivity(textAI, node, connection, moveDetails.ai_Delay);
-                        }
-                        //update invisibility
-                        invisibility += moveDetails.changeInvisibility;
-                        invisibility = Mathf.Max(0, invisibility);
-                        GameManager.i.playerScript.Invisibility = invisibility;
-                        //popUp
-                        GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Invisibility {moveDetails.changeInvisibility}");
-                    }
-                    else { Debug.LogErrorFormat("Invalid connection (Null) for connectionID {0}", moveDetails.connectionID); }
-                }
-                /*else
-                {
-                    builder.AppendLine();
-                    builder.Append(string.Format("{0}Player not spotted{1}", colourGood, colourEnd));
-                }*/
-                //
-                // - - - Gear - - -
-                //
-                if (string.IsNullOrEmpty(moveDetails.gearName) == false)
-                {
-                    Gear gear = GameManager.i.dataScript.GetGear(moveDetails.gearName);
-                    if (gear != null)
-                    {
-                        //popUp
-                        GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"{gear.tag} used");
-                        //process move
-                        MoveReturnData moveData = new MoveReturnData();
-                        if (moveDetails.changeInvisibility != 0)
-                        {
-                            moveData.isChangeInvisibility = true;
-                            builder.AppendFormat("{0}{1}{2}{3}{4}{5} used to minimise recognition{6}", "\n", "\n", colourNeutral, gear.tag, colourEnd, colourNormal, colourEnd);
-                            GameManager.i.gearScript.SetGearUsed(gear, "move with as little recognition as possible");
-                        }
-                        else
-                        {
-                            moveData.isChangeInvisibility = false;
-                            builder.AppendFormat("{0}{1}{2}{3}{4} used to avoid detection{5}", "\n", colourNeutral, gear.tag, colourEnd, colourNormal, colourEnd);
-                            GameManager.i.gearScript.SetGearUsed(gear, "avoid detection while moving");
-                        }
-                        moveData.node = node;
-                        moveData.text = builder.ToString();
-                        ProcessMoveOutcome(moveData);
-                    }
-                    else { Debug.LogError(string.Format("Invalid Gear (Null) for gear {0}", moveDetails.gearName)); }
-                }
-                else
-                {
-                    //No gear involved, move straight to outcome, otherwise skip outcome if connection has no security as unnecessary
+                    //
+                    // - - - Invisibility - - -
+                    //
                     if (moveDetails.changeInvisibility != 0)
                     {
-                        MoveReturnData moveData = new MoveReturnData();
-                        moveData.node = node;
-                        moveData.text = builder.ToString();
-                        moveData.isChangeInvisibility = true;
-                        ProcessMoveOutcome(moveData);
+                        Connection connection = GameManager.i.dataScript.GetConnection(moveDetails.connectionID);
+                        if (connection != null)
+                        {
+                            //AI message
+                            string textAI = string.Format("Player spotted moving to \"{0}\", {1}, ID {2}", node.nodeName, node.Arc.name, moveDetails.nodeID);
+                            //display
+                            builder.AppendLine();
+                            builder.AppendFormat("{0}Invisibility {1}{2}{3}", colourBad, moveDetails.changeInvisibility > 0 ? "+" : "",
+                                moveDetails.changeInvisibility, colourEnd);
+                            //player invisibility
+                            int invisibility = GameManager.i.playerScript.Invisibility;
+                            if (invisibility <= 0)
+                            {
+                                //moving while invisibility already 0 triggers immediate alert flag
+                                GameManager.i.aiScript.immediateFlagResistance = true;
+                                builder.AppendFormat("{0}{1}{2}Authority will know immediately{3}", "\n", "\n", colourBad, colourEnd);
+                                //AI Immediate notification
+                                GameManager.i.messageScript.AIImmediateActivity("Immediate Activity \"Move\" (Player)",
+                                    "Moving", moveDetails.nodeID, moveDetails.connectionID);
+                                //Npc invisible node
+                                if (GameManager.i.missionScript.mission.npc != null)
+                                { GameManager.i.missionScript.mission.npc.AddInvisibleNode(moveDetails.nodeID); }
+                            }
+                            else
+                            {
+                                //normal adjusted security level delay, eg. low gives a 3 turn delay
+                                builder.AppendFormat("{0}{1}{2}Authority will know in {3}{4}{5}{6}{7} turn{8}{9}", "\n", "\n", colourAlert, colourEnd, colourNeutral,
+                                    moveDetails.ai_Delay, colourEnd, colourAlert, moveDetails.ai_Delay != 1 ? "s" : "", colourEnd);
+                                //AI delayed notification
+                                GameManager.i.messageScript.AIConnectionActivity(textAI, node, connection, moveDetails.ai_Delay);
+                            }
+                            //update invisibility
+                            invisibility += moveDetails.changeInvisibility;
+                            invisibility = Mathf.Max(0, invisibility);
+                            GameManager.i.playerScript.Invisibility = invisibility;
+                            //popUp
+                            GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"Invisibility {moveDetails.changeInvisibility}");
+                        }
+                        else { Debug.LogErrorFormat("Invalid connection (Null) for connectionID {0}", moveDetails.connectionID); }
+                    }
+                    /*else
+                    {
+                        builder.AppendLine();
+                        builder.Append(string.Format("{0}Player not spotted{1}", colourGood, colourEnd));
+                    }*/
+                    //
+                    // - - - Gear - - -
+                    //
+                    if (string.IsNullOrEmpty(moveDetails.gearName) == false)
+                    {
+                        Gear gear = GameManager.i.dataScript.GetGear(moveDetails.gearName);
+                        if (gear != null)
+                        {
+                            //popUp
+                            GameManager.i.popUpFixedScript.SetData(PopUpPosition.Player, $"{gear.tag} used");
+                            //process move
+                            MoveReturnData moveData = new MoveReturnData();
+                            if (moveDetails.changeInvisibility != 0)
+                            {
+                                moveData.isChangeInvisibility = true;
+                                builder.AppendFormat("{0}{1}{2}{3}{4}{5} used to minimise recognition{6}", "\n", "\n", colourNeutral, gear.tag, colourEnd, colourNormal, colourEnd);
+                                GameManager.i.gearScript.SetGearUsed(gear, "move with as little recognition as possible");
+                            }
+                            else
+                            {
+                                moveData.isChangeInvisibility = false;
+                                builder.AppendFormat("{0}{1}{2}{3}{4} used to avoid detection{5}", "\n", colourNeutral, gear.tag, colourEnd, colourNormal, colourEnd);
+                                GameManager.i.gearScript.SetGearUsed(gear, "avoid detection while moving");
+                            }
+                            moveData.node = node;
+                            moveData.text = builder.ToString();
+                            ProcessMoveOutcome(moveData);
+                        }
+                        else { Debug.LogError(string.Format("Invalid Gear (Null) for gear {0}", moveDetails.gearName)); }
                     }
                     else
                     {
-                        //Unsecured connection, no invisibility loss involved
-                        EventManager.i.PostNotification(EventType.UseAction, this, "Player Move", "NodeManager.cs -> ProcessPlayerMove");
-                        //Nemesis, if at same node, can interact and damage player
-                        GameManager.i.nemesisScript.CheckNemesisAtPlayerNode(true);
+                        //No gear involved, move straight to outcome, otherwise skip outcome if connection has no security as unnecessary
+                        if (moveDetails.changeInvisibility != 0)
+                        {
+                            MoveReturnData moveData = new MoveReturnData();
+                            moveData.node = node;
+                            moveData.text = builder.ToString();
+                            moveData.isChangeInvisibility = true;
+                            ProcessMoveOutcome(moveData);
+                        }
+                        else
+                        {
+                            //Unsecured connection, no invisibility loss involved
+                            EventManager.i.PostNotification(EventType.UseAction, this, "Player Move", "NodeManager.cs -> ProcessPlayerMove");
+                            //Nemesis, if at same node, can interact and damage player
+                            GameManager.i.nemesisScript.CheckNemesisAtPlayerNode(true);
+                        }
                     }
                 }
+
                 //Tracker Data
                 HistoryRebelMove history = new HistoryRebelMove();
                 history.turn = GameManager.i.turnScript.Turn;
@@ -2901,8 +2919,9 @@ public class NodeManager : MonoBehaviour
         else
         { Debug.LogError("Invalid ModalMoveDetails (Null)"); }
     }
+    #endregion
 
-
+    #region ProcessMoveOutcome
     /// <summary>
     /// ProcessPlayerMove -> ProcessMoveOutcome. Node checked for Null in calling procedure. Checks for presence of Erasure team and Nemesis in destination node
     /// </summary>
@@ -2948,6 +2967,9 @@ public class NodeManager : MonoBehaviour
             GameManager.i.nemesisScript.CheckNemesisAtPlayerNode(true);
         }
     }
+    #endregion
+
+    #endregion
 
     /// <summary>
     /// loops all nodes and removes any ongoing effects that match the specified ID
