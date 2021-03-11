@@ -18,8 +18,10 @@ public class TopicOption : ScriptableObject
     public string text;
 
     [Header("Parent")]
-    [Tooltip("Topic that the option is connected with")]
+    [Tooltip("Topic that the option is connected with. Applies to all non-Tutorial options")]
     public Topic topic;
+    [Tooltip("Tutorial item that the option is connected with -> Only applies if isTutorial true, ignore otherwise")]
+    public TutorialItem tutorialItem;
 
     [Header("Special")]
     [Tooltip("Select this if the option is preferred by HQ. Doing so will override the HQ Boss's personality preferences. Ignore otherwise")]
@@ -32,6 +34,8 @@ public class TopicOption : ScriptableObject
     public bool isIgnoreStress;
     [Tooltip("If true Player Mood effects will be ignore and tooltip will show 'No Effect On Player Mood' (default false, effects apply)")]
     public bool isIgnoreMood;
+    [Tooltip("If true then a special Tutorial option that isn't associated with topics or topic pools")]
+    public bool isTutorial;
 
     [Header("Criteria")]
     [Tooltip("Option will show as Greyed text if criteria check fails. At least one option from each topic needs to have Zero criteria so an option is always available. Optional")]
@@ -74,7 +78,8 @@ public class TopicOption : ScriptableObject
     {
         /*Debug.AssertFormat(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or Empty) for {0}", name); DEBUG -> need to activate this once topics in place*/
         Debug.AssertFormat(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty) for {0}", name);
-        Debug.AssertFormat(topic != null, "Invalid topic (Null)");
+        if (isTutorial == false)
+        { Debug.AssertFormat(topic != null, "Invalid topic (Null)"); }
         //assign optionNumber based on TopicOption name (last char is number of option in sequence, eg. 0 -> 3)
         string last;
         optionNumber = -1;

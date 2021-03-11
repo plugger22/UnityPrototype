@@ -305,6 +305,7 @@ MonoBehaviour:
   isGear: 1
   isRecruit: 1
   isMoveSecurity: 1
+  isActions: 1
 --- !u!114 &114177065037937216
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -475,6 +476,7 @@ MonoBehaviour:
   optionGear: 
   optionRecruit: 
   optionMoveSecurity: 
+  optionActions: 
 --- !u!114 &114230505564311274
 MonoBehaviour:
   m_ObjectHideFlags: 1

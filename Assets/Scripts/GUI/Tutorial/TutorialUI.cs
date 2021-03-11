@@ -1,8 +1,7 @@
 ﻿using gameAPI;
 using modalAPI;
-using System.Collections;
+using packageAPI;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -392,6 +391,9 @@ public class TutorialUI : MonoBehaviour
                             EventManager.i.PostNotification(EventType.GameHelpOpen, this, currentItem.gameHelp);
                             break;
                         case "Question":
+                            TopicUIData data = GetTopicData(currentItem);
+                            if (data != null)
+                            { EventManager.i.PostNotification(EventType.TopicDisplayOpen, this, data); }
                             break;
                         default: Debug.LogWarningFormat("Unrecognised item.TutorialType \"{0}\"", currentItem.tutorialType.name); break;
                     }
@@ -401,6 +403,67 @@ public class TutorialUI : MonoBehaviour
             else { Debug.LogWarningFormat("Invalid index (is {0}, listOfSetItems.Count is {1})", index, listOfSetItems.Count); }
         }
         else { Debug.LogWarning("Invalid index (button.buttonInteraction.returnValue (-1)"); }
+    }
+    #endregion
+
+
+    #region GetTopicData
+    /// <summary>
+    /// Populates and returns a data package suitable for TopicUI. Returns null if a problem.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    private TopicUIData GetTopicData(TutorialItem item)
+    {
+        if (item != null)
+        {
+            int index, limit, count;
+            int maxOptions = GameManager.i.topicScript.maxOptions;
+            //create temp list by Value (will be deleting
+            List<TopicOption> listOfTempOptions = new List<TopicOption>(item.listOfOptions) { };
+            //data package
+            TopicUIData data = new TopicUIData();
+            data.topicName = item.tag;
+            data.header = item.queryHeader;
+            data.text = item.queryText;
+            data.isBoss = false;
+            data.uiType = TopicDecisionType.Tutorial;
+            data.spriteMain = GameManager.i.tutorialScript.tutorial.sprite;
+            //options
+            count = item.listOfOptions.Count;
+            if (item.isRandomOptions == true)
+            {
+                limit = Mathf.Min(maxOptions, count);
+
+                //select up to four options randomly
+                for (int i = 0; i < limit; i++)
+                {
+                    index = Random.Range(0, listOfTempOptions.Count);
+                    TopicOption option = listOfTempOptions[index];
+                    if (option != null)
+                    {
+                        data.listOfOptions.Add(option);
+                        listOfTempOptions.RemoveAt(index);
+                    }
+                    else { Debug.LogWarningFormat("Invalid topicOption (Null) for isRandom listOfTempOptions[{0}]", index); }
+                }
+            }
+            else
+            {
+                //NOT random, take up to four options
+                limit = Mathf.Min(maxOptions, count);
+                for (int i = 0; i < limit; i++)
+                {
+                    TopicOption option = listOfTempOptions[i];
+                    if (option != null)
+                    { data.listOfOptions.Add(option); }
+                        else { Debug.LogWarningFormat("Invalid topicOption (Null) for normal listOfTempOptions[{0}]", i); }
+                }
+            }
+            return data;
+        }
+        else { Debug.LogWarning("Invalid (Tutorial) item (Null)"); }
+        return null;
     }
     #endregion
 

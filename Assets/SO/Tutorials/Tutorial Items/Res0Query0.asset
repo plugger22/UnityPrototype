@@ -15,6 +15,10 @@ MonoBehaviour:
   tag: Your Job
   topText: 
   bottomText: 
-  testInformation: 
-  testGoal: 
-  testQuestion: What was your job?
+  gameHelp: {fileID: 0}
+  goal: {fileID: 0}
+  queryHeader: Existing Skill Set
+  queryText: What job did you do before joining us here at the Resistance?<br><br>We're
+    looking for useful skills...
+  isRandomOptions: 1
+  listOfOptions: []

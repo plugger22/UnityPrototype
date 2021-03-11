@@ -129,7 +129,7 @@
     // - - - Topics and Targets - - -
     //
     public enum TopicGlobal { None, Decision, Review, Advert }                      //what type of topic will be generated this turn
-    public enum TopicDecisionType { Normal, Letter, Comms, Count }                 //type of decision topic
+    public enum TopicDecisionType { Normal, Letter, Comms, Tutorial, Count }                 //type of decision topic
     public enum TopicBase { Normal, Other, Count }                      //used for base topicUI. Order matters (array index)
     public enum Status { Dormant, Active, Live, Outstanding, Done }         //target or topic status (Outstanding applies only targets)
     public enum Activation { Low, Medium, High }                            //chance of Target becoming 'Live' once 'Active'

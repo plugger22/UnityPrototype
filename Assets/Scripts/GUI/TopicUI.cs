@@ -165,6 +165,7 @@ public class TopicUI : MonoBehaviour
         return topicUI;
     }
 
+    #region Initialisation...
 
     public void Initialise(GameState state)
     {
@@ -428,7 +429,9 @@ public class TopicUI : MonoBehaviour
 
     #endregion
 
+    #endregion
 
+    #region OnEvent
     /// <summary>
     /// Event handler
     /// </summary>
@@ -468,6 +471,7 @@ public class TopicUI : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
     /// <summary>
     /// Pre processing admin
@@ -499,12 +503,15 @@ public class TopicUI : MonoBehaviour
 
 
     /// <summary>
-    /// Used by message pipeline to activate the TopicUI Display
+    /// Used by message pipeline to activate the TopicUI Display (data package already in place)
     /// </summary>
     public void ActivateTopicDisplay()
     {
         if (dataPackage != null)
-        { DisplayTopic(dataPackage); }
+        {
+            innerBackgroundNormal.gameObject.SetActive(true);
+            SetTopicDisplayNormal(dataPackage);
+        }
         else { Debug.LogError("Invalid dataPackage (Null)"); }
     }
 
@@ -585,7 +592,7 @@ public class TopicUI : MonoBehaviour
     #endregion
 
 
-    /// <summary>
+    /*/// <summary>
     /// Displays relevant topic base UI type
     /// </summary>
     /// <param name="data"></param>
@@ -594,18 +601,17 @@ public class TopicUI : MonoBehaviour
         switch (data.baseType)
         {
             case TopicBase.Normal:
-                innerBackgroundNormal.gameObject.SetActive(true);
-                /*innerBackgroundOther.gameObject.SetActive(false);*/
+ 
                 SetTopicDisplayNormal(data);
                 break;
-            /*case TopicBase.Other:
+            case TopicBase.Other:
                 innerBackgroundNormal.gameObject.SetActive(false);
                 innerBackgroundOther.gameObject.SetActive(true);
                 SetTopicDisplayOther(data);
-                break;*/
+                break;
             default: Debug.LogWarningFormat("Unrecognised data.type \"{0}\"", data.uiType); break;
         }
-    }
+    }*/
 
 
     #region SetTopicDisplayNormal
@@ -629,6 +635,7 @@ public class TopicUI : MonoBehaviour
             switch (data.uiType)
             {
                 case TopicDecisionType.Normal:
+                case TopicDecisionType.Tutorial:
                     #region Normal
                     //toggle off letter & comms panels
                     panelLetter.gameObject.SetActive(false);
@@ -953,7 +960,8 @@ public class TopicUI : MonoBehaviour
     }
     #endregion
 
-    /*#region SetTopicDisplayOther
+    #region SetTopicDisplayOther -> Archive
+    /*
     /// <summary>
     /// display topicUI -> Used if you want a completely different background setup (originally for letters but now  superceded)
     /// </summary>
@@ -1116,9 +1124,10 @@ public class TopicUI : MonoBehaviour
             topicCanvas.gameObject.SetActive(true);
         }
         else { Debug.LogError("Invalid TopicUIData (Null)"); }
-    }
-    #endregion*/
+    }*/
+    #endregion
 
+    #region CommsInterference
     /// <summary>
     /// Coroutine to run comms interference line and top and bottom splatter sprites
     /// </summary>
@@ -1236,7 +1245,7 @@ public class TopicUI : MonoBehaviour
             yield return null;
         }
     }
-
+    #endregion
 
     /// <summary>
     /// close TopicUI display. Outcome if parameter >= 0, none if otherwise

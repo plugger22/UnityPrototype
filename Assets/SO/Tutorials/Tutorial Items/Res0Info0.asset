@@ -16,5 +16,8 @@ MonoBehaviour:
   topText: 
   bottomText: 
   gameHelp: {fileID: 11400000, guid: 695b16a6bbe55124680ffaddad0a0b60, type: 2}
-  testGoal: 
-  testQuestion: 
+  goal: {fileID: 0}
+  questionHeader: Existing Skill Set
+  questionText: What did you do before you decided to join us in the Resistance? Do
+    you have any useful skills?
+  listOfOptions: []

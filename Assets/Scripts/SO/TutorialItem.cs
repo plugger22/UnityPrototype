@@ -30,7 +30,12 @@ public class TutorialItem : ScriptableObject
     public TutorialGoal goal;
 
     [Header("Question")]
-    public string testQuestion;
+    public string queryHeader;
+    [TextArea(2, 3)] public string queryText;
+    [Tooltip("If false then standard option restrictions apply (min 2 max 4). If true then any number allowed and the max number (if present) are chosen randomly from the list to provide replayability")]
+    public bool isRandomOptions;
+    [Tooltip("Maximum of 4 topic Options, mininum of 2, sourced from Topics / TopicOptions / OptionsTutorial")]
+    public List<TopicOption> listOfOptions;
 
 
     public void OnEnable()
