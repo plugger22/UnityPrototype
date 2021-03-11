@@ -166,7 +166,7 @@ public class TurnManager : MonoBehaviour
     {
         //event Listeners
         EventManager.i.AddListener(EventType.NewTurn, OnEvent, "TurnManager");
-        EventManager.i.AddListener(EventType.UseAction, OnEvent, "TurnManager");
+        /*EventManager.i.AddListener(EventType.UseAction, OnEvent, "TurnManager");*/
         EventManager.i.AddListener(EventType.ChangeSide, OnEvent, "TurnManager");
         EventManager.i.AddListener(EventType.ChangeColour, OnEvent, "TurnManager");
     }
@@ -189,9 +189,9 @@ public class TurnManager : MonoBehaviour
             case EventType.NewTurn:
                 ProcessNewTurn();
                 break;
-            case EventType.UseAction:
+            /*case EventType.UseAction:
                 UseAction((string)Param);
-                break;
+                break;*/
             case EventType.ChangeSide:
                 ChangeSide((GlobalSide)Param);
                 break;
@@ -313,6 +313,8 @@ public class TurnManager : MonoBehaviour
                     { GameManager.i.controlScript.ProcessAutoSave(GameState.PlayGame); }
                     //stop animation
                     GameManager.i.animateScript.StopAnimations();
+                    //switch off new turn UI element
+                    EventManager.i.PostNotification(EventType.NewTurnHide, this, null, "TurnManager.cs -> ProcessNewTurn");
                 }
                 else
                 {
@@ -709,33 +711,41 @@ public class TurnManager : MonoBehaviour
     }
 
     /// <summary>
-    /// call this method (via event) everytime an action is expended by the Player. Triggers new turn if action limit reached, error if exceeded
+    /// call this method everytime an action is expended by the Player. Triggers new turn if action limit reached, error if exceeded
     /// </summary>
-    private void UseAction(string text = "Unknown")
+    public void UseAction(string text = "Unknown")
     {
-        int remainder;
-        if (GameManager.i.playerScript.CheckConditionPresent(conditionWounded, GameManager.i.sideScript.PlayerSide) == true)
+        if (GameManager.i.optionScript.isActions == true)
         {
-            remainder = 0;
-            _actionsCurrent = _actionsTotal;
-            Debug.LogFormat("[Act] TurnManager: \"{0}\", {1} of 1 actions (condition WOUNDED), turn {2}{3}", text, _actionsCurrent, GameManager.i.turnScript.Turn, "\n");
+            int remainder;
+            //Wounded
+            if (GameManager.i.playerScript.CheckConditionPresent(conditionWounded, GameManager.i.sideScript.PlayerSide) == true)
+            {
+                remainder = 0;
+                _actionsCurrent = _actionsTotal;
+                Debug.LogFormat("[Act] TurnManager: \"{0}\", {1} of 1 actions (condition WOUNDED), turn {2}{3}", text, _actionsCurrent, GameManager.i.turnScript.Turn, "\n");
+            }
+            else
+            {
+                //NOT Wounded
+                _actionsCurrent++;
+                Debug.LogFormat("[Act] TurnManager: \"{0}\", {1} of {2} actions, turn {3}{4}", text, _actionsCurrent, _actionsTotal, GameManager.i.turnScript.Turn, "\n");
+                //exceed action limit? (total includes any temporary adjustments)
+                remainder = _actionsTotal - _actionsCurrent;
+            }
+            if (remainder < 0)
+            { Debug.LogError("_actionsTotal exceeded by _actionsCurrent"); }
+            else
+            { EventManager.i.PostNotification(EventType.ChangeActionPoints, this, remainder, "TurnManager.cs -> UseAction"); }
+            //new turn UI if no more actions
+            if (remainder <= 0)
+            { EventManager.i.PostNotification(EventType.NewTurnShow, this, null, "TurnManager.cs -> UseAction"); }
+            //set save flag to indicate there is unsaved progress
+            GameManager.i.fileScript.SetSaveRequired();
+            //tutorial mode -> check status of any active goals
+            if (GameManager.i.inputScript.GameState == GameState.Tutorial)
+            { GameManager.i.tutorialScript.CheckGoals(); }
         }
-        else
-        {
-            _actionsCurrent++;
-            Debug.LogFormat("[Act] TurnManager: \"{0}\", {1} of {2} actions, turn {3}{4}", text, _actionsCurrent, _actionsTotal, GameManager.i.turnScript.Turn, "\n");
-            //exceed action limit? (total includes any temporary adjustments)
-            remainder = _actionsTotal - _actionsCurrent;
-        }
-        if (remainder < 0)
-        { Debug.LogError("_actionsTotal exceeded by _actionsCurrent"); }
-        else
-        { EventManager.i.PostNotification(EventType.ChangeActionPoints, this, remainder, "TurnManager.cs -> UseAction"); }
-        //set save flag to indicate there is unsaved progress
-        GameManager.i.fileScript.SetSaveRequired();
-        //tutorial mode -> check status of any active goals
-        if (GameManager.i.inputScript.GameState == GameState.Tutorial)
-        { GameManager.i.tutorialScript.CheckGoals(); }
     }
 
     /// <summary>

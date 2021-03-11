@@ -120,6 +120,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public ModalTabbedUI tabbedUIScript;              //Tabbed UI
     [HideInInspector] public TutorialUI tutorialUIScript;               //Tutorial UI 
     [HideInInspector] public GameHelpUI gameHelpScript;                 //GameHelp UI
+    [HideInInspector] public NewTurnUI newTurnScript;                   //NewTurn UI
     #endregion
 
 
@@ -301,6 +302,7 @@ public class GameManager : MonoBehaviour
         tabbedUIScript = ModalTabbedUI.Instance();
         tutorialUIScript = TutorialUI.Instance();
         gameHelpScript = GameHelpUI.Instance();
+        newTurnScript = NewTurnUI.Instance();
         //Error Checking
         Debug.Assert(startScript != null, "Invalid startScript (Null)");
         Debug.Assert(levelScript != null, "Invalid levelScript (Null)");
@@ -393,6 +395,7 @@ public class GameManager : MonoBehaviour
         Debug.Assert(tabbedUIScript != null, "Invalid tabbedUIScript (Null)");
         Debug.Assert(tutorialUIScript != null, "Invalid tutorialUIScript (Null)");
         Debug.Assert(gameHelpScript != null, "Invalid gameHelpScript (Null)");
+        Debug.Assert(newTurnScript != null, "Invalid newTurnScript (Null)");
         //set up list of delegates
         InitialiseStartSequence();
         //sets this to not be destroyed when reloading a scene
@@ -850,6 +853,10 @@ public class GameManager : MonoBehaviour
         //GameHelpUI
         startMethod.handler = gameHelpScript.Initialise;
         startMethod.className = "GameHelpUI";
+        listOfUIMethods.Add(startMethod);
+        //NewTurnUI
+        startMethod.handler = newTurnScript.Initialise;
+        startMethod.className = "NewTurnUI";
         listOfUIMethods.Add(startMethod);
         #endregion
 

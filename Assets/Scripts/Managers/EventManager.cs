@@ -10,7 +10,9 @@ public enum EventType
     //Options
     ChangeColour,
     ChangeSide,
-    UseAction,
+    
+    /*UseAction,*/
+
     //Game State -> ControlManager.cs
     ExitLevel,
     ExitGame,
@@ -102,6 +104,9 @@ public enum EventType
     EndTurnEarly,
     EndTurnLate,
     NewTurn,
+    //Newturn UI,
+    NewTurnShow,
+    NewTurnHide,
     //team Picker
     OpenTeamPicker,
     CloseTeamPicker,

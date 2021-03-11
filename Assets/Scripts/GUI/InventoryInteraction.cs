@@ -35,6 +35,7 @@ public class InventoryInteraction : MonoBehaviour, IPointerClickHandler
         Debug.Assert(textLower != null, "Invalid textLower (Null)");
         Debug.Assert(tooltipStars != null, "Invalid tooltipStars (Null)");
     }
+
     /// <summary>
     /// Mouse click -> Right: Actor Action Menu
     /// </summary>

@@ -33,6 +33,7 @@ public class OptionManager : MonoBehaviour
     [HideInInspector] public bool isGear = true;                                    //if false Gear mechanics and UI are switch off
     [HideInInspector] public bool isRecruit = true;                                 //if false no actors can be recruited
     [HideInInspector] public bool isMoveSecurity = true;                            //if false, connection security is ignored when moving
+    [HideInInspector] public bool isActions = true;                                 //if false there are no actions. New turn only on request
 
     //UI options
     [HideInInspector] public bool showContacts = false;                             //if true node tooltips will show contact as well as Actor Arcs for nodes where actors have contacts
@@ -123,6 +124,7 @@ public class OptionManager : MonoBehaviour
             .AppendFormat(" IsGear -> {0}{1}", isGear, "\n")
             .AppendFormat(" IsRecruit -> {0}{1}", isRecruit, "\n")
             .AppendFormat(" IsMoveSecurity -> {0}{1}", isMoveSecurity, "\n")
+            .AppendFormat(" isActions -> {0}{1}", isActions, "\n")
             .AppendFormat(" NO Nodes -> {0}{1}", noNodes, "\n")
             .AppendFormat("{0}- UI Options{1}", "\n", "\n")
             .AppendFormat(" Connector Tooltips -> {0}{1}", connectorTooltips, "\n")

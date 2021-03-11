@@ -814,3 +814,92 @@ UnityEngine.Debug:LogError(Object)
 	
 Dev seed 41005 -> Wednesday, 10 March 2021 5:47 PM
 City seed 49468 -> VirtualCity, Eurasia
+
+Dev seed 39387 -> Thursday, 11 March 2021 9:20 AM
+City seed 9104 -> Londus, Eurasia
+
+Dev seed 26245 -> Thursday, 11 March 2021 9:33 AM
+City seed 64622 -> Londus, Eurasia
+
+Dev seed 14893 -> Thursday, 11 March 2021 9:52 AM
+
+Dev seed 19026 -> Thursday, 11 March 2021 9:52 AM
+City seed 38629 -> VirtualCity, Eurasia
+City seed 12767 -> Londus, Eurasia
+
+Dev seed 39724 -> Thursday, 11 March 2021 10:06 AM
+City seed 1459 -> Londus, Eurasia
+
+Dev seed 19947 -> Thursday, 11 March 2021 10:06 AM
+City seed 22892 -> Londus, Eurasia
+
+Dev seed 57884 -> Thursday, 11 March 2021 10:07 AM
+City seed 3930 -> Londus, Eurasia
+
+Dev seed 31071 -> Thursday, 11 March 2021 10:08 AM
+City seed 20539 -> Londus, Eurasia
+
+Dev seed 61168 -> Thursday, 11 March 2021 10:16 AM
+City seed 63062 -> Londus, Eurasia
+
+Dev seed 1128 -> Thursday, 11 March 2021 10:22 AM
+City seed 23686 -> Londus, Eurasia
+
+Dev seed 36985 -> Thursday, 11 March 2021 10:24 AM
+City seed 46185 -> Londus, Eurasia
+
+Dev seed 64314 -> Thursday, 11 March 2021 10:25 AM
+City seed 43538 -> Londus, Eurasia
+
+Dev seed 19457 -> Thursday, 11 March 2021 10:34 AM
+City seed 51594 -> Londus, Eurasia
+
+Dev seed 10183 -> Thursday, 11 March 2021 11:09 AM
+
+Dev seed 17455 -> Thursday, 11 March 2021 11:11 AM
+City seed 352 -> Londus, Eurasia
+
+Dev seed 63670 -> Thursday, 11 March 2021 11:13 AM
+City seed 32567 -> Londus, Eurasia
+ERROR Invalid car (Null) for listOfCarsTraffic[1]
+UnityEngine.Debug:LogErrorFormat(String, Object[])
+	AnimationManager:ResetTraffic() (at Assets/Scripts/Managers/AnimationManager.cs:504)
+	AnimationManager:StopAnimations() (at Assets/Scripts/Managers/AnimationManager.cs:239)
+	TurnManager:ProcessNewTurn() (at Assets/Scripts/Managers/TurnManager.cs:317)
+	TurnManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/TurnManager.cs:190)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:371)
+	InputManager:ProcessKeyInput() (at Assets/Scripts/Managers/InputManager.cs:380)
+	GameManager:Update() (at Assets/Scripts/GameManager.cs:472)
+	
+Dev seed 11238 -> Thursday, 11 March 2021 11:15 AM
+City seed 43518 -> Londus, Eurasia
+
+Dev seed 63067 -> Thursday, 11 March 2021 11:24 AM
+City seed 47788 -> Londus, Eurasia
+
+Dev seed 31354 -> Thursday, 11 March 2021 11:42 AM
+WARNING Unrecognised feature.name "Actions"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialManager:UpdateFeatures(List`1, List`1) (at Assets/Scripts/Managers/TutorialManager.cs:236)
+	TutorialManager:InitialiseTutorial() (at Assets/Scripts/Managers/TutorialManager.cs:107)
+	TutorialManager:SubInitialiseTutorial() (at Assets/Scripts/Managers/TutorialManager.cs:65)
+	TutorialManager:Initialise(GameState) (at Assets/Scripts/Managers/TutorialManager.cs:39)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:InitialiseTutorial() (at Assets/Scripts/GameManager.cs:1029)
+	ControlManager:ProcessTutorialOptions() (at Assets/Scripts/Managers/ControlManager.cs:625)
+	ControlManager:OnEvent(EventType, Component, Object) (at Assets/Scripts/Managers/ControlManager.cs:94)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:371)
+	ModalMainMenu:<InitialiseMainMenu>m__1() (at Assets/Scripts/GUI/ModalMainMenu.cs:329)
+	UnityEngine.EventSystems.EventSystem:Update()
+	City seed 41869 -> VirtualCity, Eurasia
+City seed 49609 -> Londus, Eurasia
+
+Dev seed 51549 -> Thursday, 11 March 2021 11:51 AM
+City seed 64139 -> VirtualCity, Eurasia
+City seed 57499 -> Londus, Eurasia
+
+Dev seed 30352 -> Thursday, 11 March 2021 12:10 PM
+City seed 25010 -> VirtualCity, Eurasia
+
+Dev seed 33231 -> Thursday, 11 March 2021 12:13 PM
+City seed 37133 -> VirtualCity, Eurasia

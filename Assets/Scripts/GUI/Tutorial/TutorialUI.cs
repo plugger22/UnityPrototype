@@ -63,7 +63,7 @@ public class TutorialUI : MonoBehaviour
     private static TutorialUI tutorialUI;
 
     /// <summary>
-    /// Static instance so the Modal Menu can be accessed from any script
+    /// Static instance
     /// </summary>
     /// <returns></returns>
     public static TutorialUI Instance()

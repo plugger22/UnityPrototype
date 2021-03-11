@@ -2897,13 +2897,25 @@ public class NodeManager : MonoBehaviour
                         else
                         {
                             //Unsecured connection, no invisibility loss involved
-                            EventManager.i.PostNotification(EventType.UseAction, this, "Player Move", "NodeManager.cs -> ProcessPlayerMove");
+                            
+                            /*EventManager.i.PostNotification(EventType.UseAction, this, "Player Move", "NodeManager.cs -> ProcessPlayerMove");*/
+
+                            GameManager.i.turnScript.UseAction("PlayerMove");
                             //Nemesis, if at same node, can interact and damage player
                             GameManager.i.nemesisScript.CheckNemesisAtPlayerNode(true);
                         }
                     }
                 }
+                else
+                {
+                    //connection security ignored
 
+                    /*EventManager.i.PostNotification(EventType.UseAction, this, "Player Move", "NodeManager.cs -> ProcessPlayerMove");*/
+
+                    GameManager.i.turnScript.UseAction("PlayerMove");
+                    //Nemesis, if at same node, can interact and damage player
+                    GameManager.i.nemesisScript.CheckNemesisAtPlayerNode(true);
+                }
                 //Tracker Data
                 HistoryRebelMove history = new HistoryRebelMove();
                 history.turn = GameManager.i.turnScript.Turn;

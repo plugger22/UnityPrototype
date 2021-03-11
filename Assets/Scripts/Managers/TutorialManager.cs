@@ -150,6 +150,7 @@ public class TutorialManager : MonoBehaviour
             GameManager.i.optionScript.isGear = true;
             GameManager.i.optionScript.isRecruit = true;
             GameManager.i.optionScript.isMoveSecurity = true;
+            GameManager.i.optionScript.isActions = true;
             //turn OFF any features in list
             for (int i = 0; i < listOfFeaturesToToggleOff.Count; i++)
             {
@@ -222,6 +223,11 @@ public class TutorialManager : MonoBehaviour
                             GameManager.i.optionScript.isMoveSecurity = false;
                             GameManager.i.debugScript.optionMoveSecurity = "Move Sec ON";
                             Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: Move Security toggled Off{0}", "\n");
+                            break;
+                        case "Actions":
+                            GameManager.i.optionScript.isActions = false;
+                            GameManager.i.debugScript.optionActions = "Actions ON";
+                            Debug.LogFormat("[Tut] TutorialManager.cs -> UpdateFeatures: Actions toggled Off{0}", "\n");
                             break;
                         case "Targets":
                             GameManager.i.optionScript.isTargets = false;
@@ -517,11 +523,16 @@ public class TutorialManager : MonoBehaviour
             for (int i = 0; i < set.listOfFeaturesOff.Count; i++)
             { builder.AppendFormat(" {0}{1}", set.listOfFeaturesOff[i].name, "\n"); }
 
-            //current tutorialSet -> Goals
+            //current tutorialSet -> GUI Features Off
+            builder.AppendFormat("{0}-GUI features OFF for \"{1}\"{2}", "\n", set.name, "\n");
+            for (int i = 0; i < set.listOfGUIOff.Count; i++)
+            { builder.AppendFormat(" {0}{1}", set.listOfGUIOff[i].name, "\n"); }
+
+            //tutorialSet -> current Goals
             List<GoalTracker> listOfGoals = GameManager.i.dataScript.GetListOfTutorialGoals();
             if (listOfGoals != null)
             {
-                builder.AppendFormat("{0}-Goals for \"{1}\"{2}", "\n", set.name, "\n");
+                builder.AppendFormat("{0}-ACTIVE Goals for \"{1}\"{2}", "\n", set.name, "\n");
                 int count = listOfGoals.Count;
                 if (count > 0)
                 {
@@ -536,9 +547,22 @@ public class TutorialManager : MonoBehaviour
                         else { Debug.LogErrorFormat("Invalid goal (Null) for listOfGoals[{0}]", i); }
                     }
                 }
-                else { builder.AppendFormat(" No goals specified for this set{0}", "\n"); }
+                else { builder.AppendFormat(" No goals currently active for this set{0}", "\n"); }
             }
             else { Debug.LogError("Invalid listOfTutorialGoals (Null)"); }
+
+            //tutorialSet -> Goals
+            builder.AppendFormat("{0}-Goals for \"{1}\"{2}", "\n", set.name, "\n");
+            for (int i = 0; i < set.listOfTutorialItems.Count; i++)
+            {
+                TutorialItem item = set.listOfTutorialItems[i];
+                if (item.tutorialType.name.Equals("Goal", StringComparison.Ordinal) == true)
+                {
+                    TutorialGoal goal = item.goal;
+                    builder.AppendFormat(" {0} -> {1}, Tgt {2} -> {3}, Tgt {4}{5}", goal.name, goal.goal0.name, goal.target0, goal.goal1 == null ? "None" : goal.goal1.name, 
+                        goal.target1 == -1 ? "n.a" : Convert.ToString(goal.target1), "\n");
+                }
+            }
 
             //current tutorial -> Sets
             builder.AppendFormat("{0}-tutorialSets for \"{1}\"{2}", "\n", tutorial.name, "\n");

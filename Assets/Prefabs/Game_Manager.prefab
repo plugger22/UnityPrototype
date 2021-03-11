@@ -304,7 +304,7 @@ MonoBehaviour:
   isTargets: 1
   isGear: 1
   isRecruit: 1
-  isMoveSecurity: 0
+  isMoveSecurity: 1
 --- !u!114 &114177065037937216
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1813,6 +1813,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6d593459827a21745bbe7a4d2bd7b2f5, type: 2}
   - {fileID: 11400000, guid: 4c8ccd2de988d20498199b0d9d7349a8, type: 2}
   - {fileID: 11400000, guid: 2aa765f9c7f230e429a0c8cb20200a3b, type: 2}
+  - {fileID: 11400000, guid: 60b4bacf16a2f574fa7fa81a919e7bbc, type: 2}
   arrayOfTutorialItems:
   - {fileID: 11400000, guid: 7f4d9fc2a9069174e8d80e2d5a30df8e, type: 2}
   - {fileID: 11400000, guid: cf84719c70b337c48b65ccf56a5137ae, type: 2}
@@ -5956,6 +5957,7 @@ MonoBehaviour:
   isGear: 1
   isRecruit: 1
   isMoveSecurity: 1
+  isActions: 1
   showContacts: 0
   showPower: 1
   connectorTooltips: 0
@@ -6839,6 +6841,7 @@ MonoBehaviour:
   tabbedUIScript: {fileID: 0}
   tutorialUIScript: {fileID: 0}
   gameHelpScript: {fileID: 0}
+  newTurnScript: {fileID: 0}
   seedDev: 0
   autoRunTurns: 0
   scenarioStartLevel: 0

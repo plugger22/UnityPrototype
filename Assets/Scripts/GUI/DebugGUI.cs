@@ -97,6 +97,7 @@ public class DebugGUI : MonoBehaviour
     public string optionGear;
     public string optionRecruit;
     public string optionMoveSecurity;
+    public string optionActions;
 
     private void Awake()
     {
@@ -136,6 +137,7 @@ public class DebugGUI : MonoBehaviour
         optionGear = "Gear OFF";
         optionRecruit = "Recruiting OFF";
         optionMoveSecurity = "Move Sec OFF";
+        optionActions = "Actions OFF";
     }
 
     // Update is called once per frame
@@ -990,6 +992,23 @@ public class DebugGUI : MonoBehaviour
                 {
                     GameManager.i.optionScript.isMoveSecurity = true;
                     optionMoveSecurity = "Move Sec OFF";
+                }
+            }
+
+            //Actions button
+            offset = 23;
+            if (GUI.Button(new Rect(box_option + offset_x, box_y + gap_y + offset_y * offset + button_height * offset, button_width, button_height), optionActions))
+            {
+                Debug.Log("[Dbg] Button -> Toggle Actions option");
+                if (GameManager.i.optionScript.isActions == true)
+                {
+                    GameManager.i.optionScript.isActions = false;
+                    optionActions = "Actions ON";
+                }
+                else
+                {
+                    GameManager.i.optionScript.isActions = true;
+                    optionActions = "Actions OFF";
                 }
             }
 
@@ -2466,7 +2485,7 @@ public class DebugGUI : MonoBehaviour
                     case 115:
                         customBackground.alignment = TextAnchor.UpperLeft;
                         analysis = GameManager.i.tutorialScript.DebugDisplayTutorialData();
-                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 600), analysis, customBackground);
+                        GUI.Box(new Rect(Screen.width - 410, 10, 400, 700), analysis, customBackground);
                         break;
                 }
             }

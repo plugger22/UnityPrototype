@@ -38,8 +38,11 @@ public class FeatureManager : MonoBehaviour
     public bool isRecruit;
     [Tooltip("If false connection security is ignored when moving (can be adjusted by code later)")]
     public bool isMoveSecurity;
+    [Tooltip("If false actions aren't expended and a new turn is by request only, eg. press 'Enter'")]
+    public bool isActions;
 
 
+    #region Initialisation...
     /// <summary>
     /// Master method that creates a level (city)
     /// </summary>
@@ -60,6 +63,7 @@ public class FeatureManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
 
     #region InitialiseSubmethods
@@ -79,6 +83,7 @@ public class FeatureManager : MonoBehaviour
 
     #endregion
 
+    #region InitialiseFeatures
     /// <summary>
     /// sets togglable features in optionManager.cs prior to running start up sequences
     /// </summary>
@@ -98,6 +103,7 @@ public class FeatureManager : MonoBehaviour
         GameManager.i.optionScript.isGear = isGear;
         GameManager.i.optionScript.isRecruit = isRecruit;
         GameManager.i.optionScript.isMoveSecurity = isMoveSecurity;
+        GameManager.i.optionScript.isActions = isActions;
         if (isTargets == false)
         {
             //automatically disable Objectives and Organisations if targets are also disabled
@@ -147,9 +153,13 @@ public class FeatureManager : MonoBehaviour
         if (isMoveSecurity == true)
         { GameManager.i.debugScript.optionMoveSecurity = "Move Sec OFF"; }
         else { GameManager.i.debugScript.optionMoveSecurity = "Move Sec ON"; }
+        if (isActions == true)
+        { GameManager.i.debugScript.optionActions = "Actions OFF"; }
+        else { GameManager.i.debugScript.optionActions = "Actions ON"; }
     }
+    #endregion
 
-
+    #region ToggleOnMapActors
     /// <summary>
     /// OnMap actors on/off -> includes toggling 'Actor' topics 
     /// </summary>
@@ -171,7 +181,9 @@ public class FeatureManager : MonoBehaviour
             GameManager.i.actorScript.ToggleOnMapActors(false);
         }
     }
+    #endregion
 
+    #region ToggleAISideWidget
     /// <summary>
     /// toggle AI side tab and display
     /// </summary>
@@ -208,7 +220,7 @@ public class FeatureManager : MonoBehaviour
             }
         }
     }
-
+    #endregion
 
 
 
