@@ -23,7 +23,8 @@ MonoBehaviour:
   isIgnoreMood: 0
   isTutorial: 1
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 1fa1becf0646d474ca4f44d743f71524, type: 2}
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}

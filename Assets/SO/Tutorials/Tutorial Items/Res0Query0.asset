@@ -21,4 +21,12 @@ MonoBehaviour:
   queryText: What job did you do before joining us here at the Resistance?<br><br>We're
     looking for useful skills...
   isRandomOptions: 1
-  listOfOptions: []
+  listOfOptions:
+  - {fileID: 11400000, guid: 597c5d5aabcbc284491e99651e7dfcf7, type: 2}
+  - {fileID: 11400000, guid: 1e02094ca7a3cf341b3b51c4ad939f22, type: 2}
+  - {fileID: 11400000, guid: f7e1f81555525344eb617faa6512936b, type: 2}
+  - {fileID: 11400000, guid: d17707de280de884a9bb098e721e29d6, type: 2}
+  - {fileID: 11400000, guid: fd79afb1ba999a346a480acd071da842, type: 2}
+  - {fileID: 11400000, guid: d798df6f19a13934890a8af9024f887c, type: 2}
+  - {fileID: 11400000, guid: 17f67b7f9c7d81348b37ff623eae847c, type: 2}
+  - {fileID: 11400000, guid: 24d228b3ee49c3d40b01a582957e1d57, type: 2}

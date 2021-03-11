@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57b1579be188f26488ce94fa178d2cd3, type: 3}
   m_Name: TutJobWaster
   m_EditorClassIdentifier: 
-  descriptor: Tutorial Job -> Smog Police
+  descriptor: Tutorial Job -> Unemployed

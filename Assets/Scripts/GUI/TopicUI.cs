@@ -623,6 +623,8 @@ public class TopicUI : MonoBehaviour
     {
         if (data != null)
         {
+            //update dataPackage (only necessary if coming via an event but do so regardless to cover all cases)
+            dataPackage = data;
             int index = (int)TopicBase.Normal;
             //deactivate all options
             for (int i = 0; i < arrayOfButtons.GetUpperBound(1) + 1; i++)
@@ -909,7 +911,7 @@ public class TopicUI : MonoBehaviour
             }
             else { Debug.LogWarningFormat("Invalid listOfOptions (Null) for topic \"{0}\"", data.topicName); }
             //show Me button
-            if (dataPackage.nodeID > -1)
+            if (data.nodeID > -1)  //NOTE: Thurs 11Mar21 -> was dataPackage.nodeID
             {
                 buttonNormalShowMe.gameObject.SetActive(true);
                 normalInteractiveShowMe.SetButton(EventType.TopicDisplayShowMe, -1);
@@ -1247,6 +1249,7 @@ public class TopicUI : MonoBehaviour
     }
     #endregion
 
+    #region CloseTopicUI
     /// <summary>
     /// close TopicUI display. Outcome if parameter >= 0, none if otherwise
     /// </summary>
@@ -1274,7 +1277,9 @@ public class TopicUI : MonoBehaviour
             GameManager.i.guiScript.waitUntilDone = false;
         }
     }
+    #endregion
 
+    #region RestoreTopicUI
     /// <summary>
     /// Restore topicUI after a 'ShowMe'
     /// </summary>
@@ -1288,7 +1293,9 @@ public class TopicUI : MonoBehaviour
         topicCanvas.gameObject.SetActive(true);
         Debug.LogFormat("[UI] TopicUI.cs -> RestoreTopicUI after 'ShowMe'{0}", "\n");
     }
+    #endregion
 
+    #region ProcessTopicIgnore
     /// <summary>
     /// Ignore button pressed, no option selected
     /// </summary>
@@ -1308,8 +1315,15 @@ public class TopicUI : MonoBehaviour
             {
                 //close TopicUI without an Outcome dialogue
                 CloseTopicUI(-1);
-                GameManager.i.topicScript.ProcessIgnoreBossOpinion();
-                GameManager.i.topicScript.ProcessTopicAdmin();
+                if (dataPackage.uiType != TopicDecisionType.Tutorial)
+                {
+                    GameManager.i.topicScript.ProcessIgnoreBossOpinion();
+                    GameManager.i.topicScript.ProcessTopicAdmin();
+                }
+                else
+                {
+                    //Tutorial option -> To do
+                }
             }
         }
         else
@@ -1319,7 +1333,9 @@ public class TopicUI : MonoBehaviour
             CloseTopicUI(-1);
         }
     }
+    #endregion
 
+    #region ProcessShowMe
     /// <summary>
     /// Show Me button pressed, no option selected
     /// </summary>
@@ -1338,7 +1354,9 @@ public class TopicUI : MonoBehaviour
         }
         /*else { Debug.LogWarningFormat("Invalid nodeID \"{0}\" (expected to be > -1)", dataPackage.nodeID); } -> Edit: commented out as you could press SPACE and there might not be a showMe button*/
     }
+    #endregion
 
+    #region ProcessTopicOption
     /// <summary>
     /// Process selected Topic Option (index range 0 -> 3 (maxOptions -1)
     /// </summary>
@@ -1352,8 +1370,19 @@ public class TopicUI : MonoBehaviour
             {
                 //close TopicUI (with parameter > -1 to indicate outcome window required)
                 CloseTopicUI(optionIndex);
-                //actual processing of selected option is handled by topicManager.cs
-                GameManager.i.topicScript.ProcessOption(optionIndex);
+                switch (dataPackage.uiType)
+                {
+                    case TopicDecisionType.Normal:
+                    case TopicDecisionType.Letter:
+                    case TopicDecisionType.Comms:
+                        //actual processing of selected option is handled by topicManager.cs
+                        GameManager.i.topicScript.ProcessOption(optionIndex);
+                        break;
+                    case TopicDecisionType.Tutorial:
+                        //To Do
+                        break;
+                    default: Debug.LogWarningFormat("Unrecognised dataPackage.uiType \"{0}\"", dataPackage.uiType); break;
+                }
             }
         }
         else
@@ -1363,7 +1392,7 @@ public class TopicUI : MonoBehaviour
             CloseTopicUI(-1);
         }
     }
-
+    #endregion
 
 
 

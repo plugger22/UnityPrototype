@@ -9,17 +9,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3458162b5dad7e54f97b5fe34ac8ba93, type: 3}
-  m_Name: TutJobChicken 4
+  m_Name: TutJobWaster
   m_EditorClassIdentifier: 
-  description: 
+  description: Unemployed
   ongoingTooltip: 
   listOfCriteria: []
-  apply: {fileID: 0}
+  apply: {fileID: 11400000, guid: c5805ba95bd472d4e847c6013830f172, type: 2}
   topicApply: {fileID: 0}
-  outcome: {fileID: 0}
+  outcome: {fileID: 11400000, guid: faec3dd6149330e43a64dd04ead04180, type: 2}
   operand: {fileID: 0}
-  typeOfEffect: {fileID: 0}
-  duration: {fileID: 0}
+  typeOfEffect: {fileID: 11400000, guid: ab60da490d5ef1d45a3b554233ef4eb3, type: 2}
+  duration: {fileID: 11400000, guid: 1b18940ee7feef74fbd1809379e998dd, type: 2}
   value: 0
   ignoreEffect: 0
   isMoodEffect: 0

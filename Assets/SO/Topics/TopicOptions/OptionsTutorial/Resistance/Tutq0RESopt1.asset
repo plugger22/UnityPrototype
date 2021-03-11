@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Tutorial Query0 Resistance Option 1
   tag: Incarcerated
-  text: I've just been released from Prison
+  text: I was released from Prison yesterday
   topic: {fileID: 0}
   tutorialItem: {fileID: 11400000, guid: 0ba135735cfb2314c9c4a1778a1aa27a, type: 2}
   isPreferredByHQ: 0
@@ -23,7 +23,8 @@ MonoBehaviour:
   isIgnoreMood: 0
   isTutorial: 1
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: b470b1b4191ee8345895afc9c059ce34, type: 2}
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}

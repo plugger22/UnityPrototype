@@ -103,6 +103,7 @@ public class LoadManager : MonoBehaviour
     public Effect[] arrayOfEffectsResistance;
     public Effect[] arrayOfEffectsTeams;
     public Effect[] arrayOfEffectsTopics;
+    public Effect[] arrayOfEffectsTutorial;
 
     [Header("Billboards")]
     public Billboard[] arrayOfBillboardAdverts;
@@ -164,6 +165,7 @@ public class LoadManager : MonoBehaviour
     public TopicOption[] arrayOfOptionsStoryLunaHub;
     public TopicOption[] arrayOfOptionsStoryParents;
     public TopicOption[] arrayOfOptionsStoryPurplePig;
+    public TopicOption[] arrayOfOptionsTutorial;
 
     [Header("Targets")]
     public Target[] arrayOfTargetsGeneric;
@@ -324,6 +326,7 @@ public class LoadManager : MonoBehaviour
         listOfOptions.AddRange(arrayOfOptionsStoryLunaHub);
         listOfOptions.AddRange(arrayOfOptionsStoryParents);
         listOfOptions.AddRange(arrayOfOptionsStoryPurplePig);
+        listOfOptions.AddRange(arrayOfOptionsTutorial);
         arrayOfTopicOptions = listOfOptions.ToArray();
         //
         // - - - MetaOptions (consolidate arrays)
@@ -424,6 +427,7 @@ public class LoadManager : MonoBehaviour
         listOfEffects.AddRange(arrayOfEffectsResistance);
         listOfEffects.AddRange(arrayOfEffectsTeams);
         listOfEffects.AddRange(arrayOfEffectsTopics);
+        listOfEffects.AddRange(arrayOfEffectsTutorial);
         arrayOfEffects = listOfEffects.ToArray();
         numArray = arrayOfEffects.Length;
         Debug.LogFormat("[Loa] InitialiseStart -> arrayOfEffects has {0} entries{1}", numArray, "\n");

@@ -1,9 +1,11 @@
 ﻿using gameAPI;
 using modalAPI;
 using packageAPI;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// handles all tutorial side bar UI functionality
@@ -51,6 +53,7 @@ public class TutorialUI : MonoBehaviour
 
     //fast access
     private int maxNumOfItems = -1;
+    private int maxOptions = -1;
     private Color colourDialogue;
     private Color colourInfo;
     private Color colourQuestion;
@@ -111,7 +114,9 @@ public class TutorialUI : MonoBehaviour
     private void SubInitialiseFastAccess()
     {
         maxNumOfItems = GameManager.i.tutorialScript.maxNumOfItems;
+        maxOptions = GameManager.i.topicScript.maxOptions;
         Debug.Assert(maxNumOfItems > -1, "Invalid maxNumOfItems (-1)");
+        Debug.Assert(maxOptions > -1, "Invalid maxOptions (-1)");
         //colours
         colourDialogue = GameManager.i.uiScript.tutDialogue;
         colourInfo = GameManager.i.uiScript.tutInfo;
@@ -418,7 +423,6 @@ public class TutorialUI : MonoBehaviour
         if (item != null)
         {
             int index, limit, count;
-            int maxOptions = GameManager.i.topicScript.maxOptions;
             //create temp list by Value (will be deleting
             List<TopicOption> listOfTempOptions = new List<TopicOption>(item.listOfOptions) { };
             //data package
@@ -427,6 +431,7 @@ public class TutorialUI : MonoBehaviour
             data.header = item.queryHeader;
             data.text = item.queryText;
             data.isBoss = false;
+            data.nodeID = -1;
             data.uiType = TopicDecisionType.Tutorial;
             data.spriteMain = GameManager.i.tutorialScript.tutorial.sprite;
             //options
@@ -442,6 +447,10 @@ public class TutorialUI : MonoBehaviour
                     TopicOption option = listOfTempOptions[index];
                     if (option != null)
                     {
+                        /*//change last character to a 0 - 3 sequential series to fit in with TopicUI.cs code
+                        option.name = option.name.Remove(option.name.Length - 1, 1) + Convert.ToString(i);*/
+
+                        option.textToDisplay = string.Format("{0}", GameManager.i.topicScript.CheckTopicText(option.text, false));
                         data.listOfOptions.Add(option);
                         listOfTempOptions.RemoveAt(index);
                     }
@@ -450,7 +459,7 @@ public class TutorialUI : MonoBehaviour
             }
             else
             {
-                //NOT random, take up to four options
+                //NOT random, take up to first four options
                 limit = Mathf.Min(maxOptions, count);
                 for (int i = 0; i < limit; i++)
                 {

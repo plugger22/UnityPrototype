@@ -23,7 +23,8 @@ MonoBehaviour:
   isIgnoreMood: 0
   isTutorial: 1
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 0937a0c79ed04ea4ebdb71da500bbadd, type: 2}
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
@@ -35,4 +36,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 4
+  optionNumber: 5

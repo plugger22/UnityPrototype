@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Name: Tutq0RESopt0
   m_EditorClassIdentifier: 
   descriptor: Tutorial Query0 Resistance Option 0
-  tag: Animal Lover
-  text: I was a Chicken Sexer
+  tag: Farm
+  text: I was a Maggot Farmer
   topic: {fileID: 0}
   tutorialItem: {fileID: 11400000, guid: 0ba135735cfb2314c9c4a1778a1aa27a, type: 2}
   isPreferredByHQ: 0
@@ -23,7 +23,8 @@ MonoBehaviour:
   isIgnoreMood: 0
   isTutorial: 1
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: d0fa3aea2e8b1c54c9bf6fbb1fffcd95, type: 2}
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Tutorial Query0 Resistance Option 2
   tag: Lawyer
-  text: I did great things in the Law
+  text: 'I stood up for down trodden Office Drones '
   topic: {fileID: 0}
   tutorialItem: {fileID: 11400000, guid: 0ba135735cfb2314c9c4a1778a1aa27a, type: 2}
   isPreferredByHQ: 0
@@ -23,7 +23,8 @@ MonoBehaviour:
   isIgnoreMood: 0
   isTutorial: 1
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 98a06f5fb9c4f9e4194a09f7e1bd77f5, type: 2}
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
@@ -34,5 +35,5 @@ MonoBehaviour:
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
-  textToDisplay: 
+  textToDisplay: I did great things in the Law
   optionNumber: 2

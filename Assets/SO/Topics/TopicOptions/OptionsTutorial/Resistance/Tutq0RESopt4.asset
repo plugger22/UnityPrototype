@@ -23,7 +23,8 @@ MonoBehaviour:
   isIgnoreMood: 0
   isTutorial: 1
   listOfCriteria: []
-  listOfGoodEffects: []
+  listOfGoodEffects:
+  - {fileID: 11400000, guid: 85ba4f352e32a8c4f85eeaa5acad0483, type: 2}
   listOfBadEffects: []
   moodEffect: {fileID: 0}
   chance: {fileID: 0}
@@ -34,5 +35,5 @@ MonoBehaviour:
   tooltipMain: 
   tooltipDetails: 
   isValid: 0
-  textToDisplay: 
-  optionNumber: 3
+  textToDisplay: I binged on SerialFlix. Watched everything
+  optionNumber: 4
