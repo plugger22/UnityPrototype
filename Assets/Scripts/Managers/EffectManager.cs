@@ -70,6 +70,7 @@ public class EffectManager : MonoBehaviour
     private int powerHigh = 3;
     private int powerExtreme = 5;
 
+    #region fastAccess
     //fast access -> spiders
     private int delayNoSpider;
     private int delayYesSpider;
@@ -108,8 +109,9 @@ public class EffectManager : MonoBehaviour
     private Condition conditionImaged;
     private Condition conditionDoomed;
     private Condition conditionAddicted;
+    #endregion
 
-
+    #region Colours
     //colour palette for Modal Outcome
     private string colourGoodSide; //good effect Resisance / bad effect Authority
     private string colourBadSide; //bad effect Authority / bad effect Resistance
@@ -123,9 +125,11 @@ public class EffectManager : MonoBehaviour
     private string colourGrey;
     private string colourActor;
     private string colourEnd;
+    #endregion
 
     [HideInInspector] private static int ongoingEffectIDCounter = 0;              //used to sequentially number ongoing Effect ID's
 
+    #region Intialise...
     /// <summary>
     /// Not for GameState.LoadGame
     /// </summary>
@@ -228,7 +232,9 @@ public class EffectManager : MonoBehaviour
 
     #endregion
 
+    #endregion
 
+    #region OnEvent
     /// <summary>
     /// Event Handler
     /// </summary>
@@ -248,6 +254,7 @@ public class EffectManager : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
     #region SetColours
     /// <summary>
@@ -2078,6 +2085,21 @@ public class EffectManager : MonoBehaviour
                         }
                         break;
                     //
+                    // - - - Tutorial
+                    //
+                    case "TutJobFungus":
+                    case "TutJobInformant":
+                    case "TutJobLawyer":
+                    case "TutJobLion":
+                    case "TutJobMaggot":
+                    case "TutJobPorn":
+                    case "TutJobPrison":
+                    case "TutJobSmog":
+                    case "TutJobWaster":
+                        effectResolve = ResolveTutorialData(effect);
+                        effectReturn = ConvertEffectResolveToReturn(effectResolve, effectReturn);
+                        break;
+                    //
                     // - - - Player Mood effects - - -
                     //
                     case "AgreeablenessBad":
@@ -2624,7 +2646,9 @@ public class EffectManager : MonoBehaviour
     }
     #endregion
 
+    #region Resolve...
 
+    #region ResolveGroupActorEffect
     /// <summary>
     /// Sub method to process group actor effects, eg. All actors Opinion +1. If actor != null then this actor is excluded from the effect. Returns true if successful, false otherwise
     /// NOTE: Effect, dataInput and Actor are checked for null by the calling method
@@ -2742,7 +2766,9 @@ public class EffectManager : MonoBehaviour
         else { Debug.LogWarning("Invalid arrayOfActors (Null)"); isSuccess = false; }
         return isSuccess;
     }
+    #endregion
 
+    #region ResolveNodeData
     /// <summary>
     /// Sub method to process Node Stability/Security/Support
     /// Note: Effect and Node checked for null by the calling method
@@ -3169,7 +3195,9 @@ public class EffectManager : MonoBehaviour
         //return data to calling method (ProcessEffect)
         return effectResolve;
     }
+    #endregion
 
+    #region ResolveConnectionData
     /// <summary>
     /// Sub method to process Connection Security
     /// Note: effect and node checked for Null by calling method
@@ -3408,7 +3436,9 @@ public class EffectManager : MonoBehaviour
         //return data to calling method (ProcessEffect)
         return effectResolve;
     }
+    #endregion
 
+    #region ResolveConditionData
     /// <summary>
     /// Sub method to process Actor Condition. Can pass a Null actor (default) provided it is a Player condition
     /// Note: effect and actor checked for null by the calling method.
@@ -3730,7 +3760,9 @@ public class EffectManager : MonoBehaviour
         }
         return effectResolve;
     }
+    #endregion
 
+    #region GetRandomCondition
     /// <summary>
     /// Given a list of conditions it chooses a random one of the specified type (Good/Bad). Returns null if not found. Sub method for ResolveConditionData
     /// </summary>
@@ -3792,7 +3824,9 @@ public class EffectManager : MonoBehaviour
         else { Debug.LogWarning("Invalid listOfConditios (Null or Empty)"); }
         return conditionSelected;
     }
+    #endregion
 
+    #region ResolveManageData
     /// <summary>
     /// subMethod to handle all manage effects
     /// Note: Actor has been checked for null by the calling method
@@ -3904,7 +3938,9 @@ public class EffectManager : MonoBehaviour
         }
         return effectResolve;
     }
+    #endregion
 
+    #region ResolveSpecialActorEffect
     /// <summary>
     /// subMethod to handle special actor effects
     /// </summary>
@@ -3948,7 +3984,9 @@ public class EffectManager : MonoBehaviour
 
         return effectResolve;
     }
+    #endregion
 
+    #region ResolvePlayerData
     /// <summary>
     /// subMethod to process special player effects
     /// </summary>
@@ -4074,7 +4112,9 @@ public class EffectManager : MonoBehaviour
         else { Debug.LogWarning(string.Format("Invalid typeOfEffect (Null) for \"{0}\"", effect.name)); }
         return effectResolve;
     }
+    #endregion
 
+    #region ResolveMoodData
     /// <summary>
     /// subMethod to process player mood personality related effects
     /// </summary>
@@ -4100,8 +4140,44 @@ public class EffectManager : MonoBehaviour
         else { effectResolve.bottomText = string.Format("{0}No Effect on Player Mood{1}", colourGrey, colourEnd); }
         return effectResolve;
     }
+    #endregion
 
+    #region ResolveTutorialData
+    /// <summary>
+    /// subMethod to process Tutorial Query option effects
+    /// </summary>
+    /// <param name="effect"></param>
+    /// <param name="dataInput"></param>
+    /// <returns></returns>
+    private EffectDataResolve ResolveTutorialData(Effect effect)
+    {
+        //data package to return to the calling methods
+        EffectDataResolve effectResolve = new EffectDataResolve();
+        switch (effect.outcome.name)
+        {
+            case "TutJobFungus": 
+            case "TutJobInformant":
+            case "TutJobLawyer":
+            case "TutJobLion":
+            case "TutJobMaggot":
+            case "TutJobPorn":
+            case "TutJobPrison":
+            case "TutJobSmog":
+            case "TutJobWaster":
+                GameManager.i.playerScript.previousJob = effect.description;
+                effectResolve.bottomText = string.Format("Your previous occupation of {0}{1}{2} is now on the record", colourNeutral, effect.description, colourEnd);
+                break;
+            default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\"", effect.outcome.name); break;
+        }
+        return effectResolve;
+    }
+    #endregion
 
+    #endregion
+
+    #region OngoingEffects...
+
+    #region AddOngoingEffectToDict
     /// <summary>
     /// subMethod to handle Ongoing Effects for Gear (Personal Use -> Actions +/-)
     /// </summary>
@@ -4125,7 +4201,9 @@ public class EffectManager : MonoBehaviour
         GameManager.i.dataScript.AddOngoingEffectToDict(effectOngoing);
         return effectOngoing.ongoingID;
     }
+    #endregion
 
+    #region ProcessOngoingEffect
     /// <summary>
     /// subMethod to handle Ongoing effects for Nodes
     /// </summary>
@@ -4146,19 +4224,25 @@ public class EffectManager : MonoBehaviour
         //add to effectProcess
         effectProcess.effectOngoing = effectOngoing;
     }
+    #endregion
 
-
+    #region GetOngoingEffect
     /// <summary>
     /// gets a unique ID for ongoing effects. All
     /// </summary>
     /// <returns></returns>
     public int GetOngoingEffectID()
     { return ongoingEffectIDCounter++; }
+    #endregion
 
+    #endregion
+
+    #region MetaGame Effects...
     //
     // - - - MetaGame effects - - -
     //
 
+    #region ResolveMetaGame
     public EffectDataResolve ResolveMetaGame(Effect effect, EffectDataInput dataInput)
     {
         //data package to return to the calling methods
@@ -4214,7 +4298,11 @@ public class EffectManager : MonoBehaviour
         }
         return effectResolve;
     }
+    #endregion
 
+    #endregion
+
+    #region Topic Effects...
     //
     // - - - Topic Effects - - -
     //
@@ -5190,6 +5278,10 @@ public class EffectManager : MonoBehaviour
         return effectResolve;
     }
 
+
+    #endregion
+
+    #region SubMethods...
     //
     // - - - SubMethods - - - 
     //
@@ -6592,6 +6684,8 @@ public class EffectManager : MonoBehaviour
         else { Debug.LogWarning("Invalid effectOutcome (Null)"); }
         return condition;
     }
+
+    #endregion
 
     //place methods above here
 }

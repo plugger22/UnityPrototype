@@ -55,6 +55,7 @@ public class PlayerManager : MonoBehaviour
     [HideInInspector] public int maxNumOfDevices;                                   //max number of interrogation devices (captureTools) player can have in inventory at any one time (UI restriction)
     [HideInInspector] public string backstory0;
     [HideInInspector] public string backstory1;
+    [HideInInspector] public string previousJob;
     //collections
     private bool[] arrayOfCaptureTools = new bool[4];                               //if true Player has CaptureTool.SO corresponding to array index (0 to 3) level of Innocence
     private List<string> listOfGear = new List<string>();                           //gear names of all gear items in inventory

@@ -13,6 +13,8 @@ public class TutorialItem : ScriptableObject
     public TutorialType tutorialType;
     [Tooltip("Text that appears on tutorial side bar object tooltip (two word limit)")]
     public string tag;
+    [Tooltip("Parent TutorialSet for this item, for validation purposes only")]
+    public TutorialSet set;
 
     [Header("Dialogue")]
     [Tooltip("Top text in dialogue (larger size")]
@@ -34,8 +36,10 @@ public class TutorialItem : ScriptableObject
     [TextArea(2, 3)] public string queryText;
     [Tooltip("If false then standard option restrictions apply (min 2 max 4). If true then any number allowed and the max number (if present) are chosen randomly from the list to provide replayability")]
     public bool isRandomOptions;
-    [Tooltip("Maximum of 4 topic Options, mininum of 2, sourced from Topics / TopicOptions / OptionsTutorial")]
+    [Tooltip("Maximum of 4 topic Options, mininum of 2, sourced from Topics / TopicOptions / OptionsTutorial. Compulsory")]
     public List<TopicOption> listOfOptions;
+    [Tooltip("Option/s that apply if the player selects 'Ignore', only the first 2 are used. Compulsory")]
+    public List<TopicOption> listOfIgnoreOptions;
 
 
     public void OnEnable()
@@ -56,7 +60,10 @@ public class TutorialItem : ScriptableObject
                 Debug.AssertFormat(goal != null, "Invalid goal (Null) for {0}", name);
                 break;
             case "Question":
-                //To do
+                Debug.AssertFormat(queryHeader != null, "Invalid queryHeader (Null) for {0}", name);
+                Debug.AssertFormat(queryText != null, "Invalid queryText (Null) for {0}", name);
+                Debug.AssertFormat(listOfOptions.Count > 0, "Invalid listOfOptions (Empty) for {0}", name);
+                Debug.AssertFormat(listOfOptions.Count > 0, "Invalid listOfIgnoreOptions (Empty) for {0}", name);
                 break;
             default: Debug.LogWarningFormat("Unrecognised tutorialType \"{0}\" for {1}", tutorialType.name, name); break;
 

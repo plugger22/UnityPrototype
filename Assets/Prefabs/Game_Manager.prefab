@@ -5952,6 +5952,7 @@ MonoBehaviour:
   resistanceTutorial: {fileID: 11400000, guid: c050560a8867a3a4c806544632dda679, type: 2}
   authorityTutorial: {fileID: 0}
   maxNumOfItems: 10
+  textListJob: {fileID: 11400000, guid: 77da817c0d61f5d4cb968b30ce6512c1, type: 2}
   tutorial: {fileID: 0}
   set: {fileID: 0}
   index: 0

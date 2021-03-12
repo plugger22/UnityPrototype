@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
+  m_Name: ShortTutorialOptJob
+  m_EditorClassIdentifier: 
+  descriptor: 'Used for tutorial option tooltips -> What job?
+
+    Self contained, short, shows as main tooltip text under tag for Job option'
+  category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
+  randomList:
+  - This will go on your record under 'Previous Employment'
+  - Are you being truthful here? Lying is frowned upon...
+  - Is that right? Who would have thought?
+  - You sure don't look like that type of person to me
+  - Well, blow me down with a feather. I wouldn't have guessed that
+  - You're kidding me, right?
+  - How long did you do that for?
+  - HQ are going to love you. Boy, oh boy!
+  - I suppose somebody has to do it
+  - Does you family know about this?
+  - This will be official, you understand that?
+  - Are you certain that you want that on your record?
+  - Do you want to think about that some more?
+  - Man, that's not something I'd want to do
+  - You realise that this is it. You can't change your mind
+  - It takes all types, I suppose
+  - Surely not! Tell me what you really did
+  - If you say so...
+  - HQ will being running background checks so be truthful
+  - Well that's a conversation stopper!
+  index: 0

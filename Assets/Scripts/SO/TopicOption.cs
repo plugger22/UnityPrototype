@@ -94,6 +94,7 @@ public class TopicOption : ScriptableObject
         { Debug.LogWarningFormat("Invalid conversion, Overflow exception for {0}", name); }
         catch(FormatException)
         { Debug.LogWarningFormat("Invalid conversion, formatException for {0}", name); }
-        Debug.AssertFormat(optionNumber > -1 && optionNumber < 4, "Invalid optionNumber \"{0}\" (should be 0 to 3) for {1}", optionNumber, name);
+        if (isTutorial == false)
+        { Debug.AssertFormat(optionNumber > -1 && optionNumber < 4, "Invalid optionNumber \"{0}\" (should be 0 to 3) for {1}", optionNumber, name); }
     }
 }

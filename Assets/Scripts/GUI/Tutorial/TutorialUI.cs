@@ -434,12 +434,14 @@ public class TutorialUI : MonoBehaviour
             data.nodeID = -1;
             data.uiType = TopicDecisionType.Tutorial;
             data.spriteMain = GameManager.i.tutorialScript.tutorial.sprite;
+            data.ignoreTooltipHeader = string.Format("<size=120%>{0}</size>", GameManager.Formatt("Disappointed", ColourType.badText));
+            data.ignoreTooltipMain = "Yes, I am. Being able to make a decision is important, what's wrong with you?";
+            data.ignoreTooltipDetails = string.Format("<size=115%>{0}</size>", GameManager.Formatt("I'll have to make it for you", ColourType.neutralText));
             //options
             count = item.listOfOptions.Count;
             if (item.isRandomOptions == true)
             {
                 limit = Mathf.Min(maxOptions, count);
-
                 //select up to four options randomly
                 for (int i = 0; i < limit; i++)
                 {
@@ -447,10 +449,7 @@ public class TutorialUI : MonoBehaviour
                     TopicOption option = listOfTempOptions[index];
                     if (option != null)
                     {
-                        /*//change last character to a 0 - 3 sequential series to fit in with TopicUI.cs code
-                        option.name = option.name.Remove(option.name.Length - 1, 1) + Convert.ToString(i);*/
-
-                        option.textToDisplay = string.Format("{0}", GameManager.i.topicScript.CheckTopicText(option.text, false));
+                        option.textToDisplay = GameManager.i.topicScript.GetOptionString(option.text);
                         data.listOfOptions.Add(option);
                         listOfTempOptions.RemoveAt(index);
                     }
@@ -469,6 +468,17 @@ public class TutorialUI : MonoBehaviour
                         else { Debug.LogWarningFormat("Invalid topicOption (Null) for normal listOfTempOptions[{0}]", i); }
                 }
             }
+            //option tooltips
+            for (int i = 0; i < data.listOfOptions.Count; i++)
+            {
+                TopicOption option = data.listOfOptions[i];
+                if (option != null)
+                {
+                    option.tooltipHeader = string.Format("<size=120%>{0}</size>", GameManager.Formatt(option.tag, ColourType.neutralText));
+                    option.tooltipMain = GameManager.i.tutorialScript.GetTutorialJobTooltip();
+                }
+                else { Debug.LogWarningFormat("Invalid topicOption (Null) for data.listOfOptions[{0}]", i); }
+            }
             return data;
         }
         else { Debug.LogWarning("Invalid (Tutorial) item (Null)"); }
@@ -476,4 +486,6 @@ public class TutorialUI : MonoBehaviour
     }
     #endregion
 
+
+ 
 }

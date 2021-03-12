@@ -45,6 +45,7 @@ public class ModalGUI : MonoBehaviour
 
     private int modalLevel;                                                 //level of modalUI, '0' if none, '1' if first level, '2' if second (eg. outcome window over an inventory window)
 
+    #region Static instance...
     private static ModalGUI modalGUI;
 
     /// <summary>
@@ -61,7 +62,9 @@ public class ModalGUI : MonoBehaviour
         }
         return modalGUI;
     }
+    #endregion
 
+    #region Initialise
     /// <summary>
     /// Initialisation
     /// </summary>
@@ -85,11 +88,13 @@ public class ModalGUI : MonoBehaviour
         //disable all backgrounds
         CloseBackgrounds();
     }
+    #endregion
 
     //
     // - - - Modal levels - - -
     //
 
+    #region SetModalMasks
     /// <summary>
     /// Sets modal masks which are (for base level) a combination of two masks to provide an all over greyed background and a partial blocking of mouse input to UI elements
     /// level refers to modal level (can have multiple, like layers, separating UI components)
@@ -136,6 +141,7 @@ public class ModalGUI : MonoBehaviour
         }
         Debug.LogFormat("[Inp] ModalGUI.cs -> SetModalMasks: modal0 {0}, modal1 {1}, modal2 {2}, level {3}{4}", modal0.activeSelf, modal1.activeSelf, modal2.activeSelf, modalLevel, "\n");
     }
+    #endregion
 
 
     public int CheckModalLevel()
@@ -145,6 +151,7 @@ public class ModalGUI : MonoBehaviour
     // - - - Backgrounds - - -
     //
 
+    #region SetBackground
     /// <summary>
     /// Display background
     /// </summary>
@@ -196,8 +203,9 @@ public class ModalGUI : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
-
+    #region CloseBackground
     /// <summary>
     /// closes all backgrounds except the specified exclusion (default no exclusion, disable all)
     /// </summary>
@@ -255,11 +263,12 @@ public class ModalGUI : MonoBehaviour
             }
         }
     }
-
+    #endregion
 
     public void CloseSaveGameBackground()
     { backgroundSaveGame.gameObject.SetActive(false); }
 
+    #region DebugDisplayBackgrounds
     /// <summary>
     /// debug display of backgrounds for game state
     /// </summary>
@@ -281,6 +290,7 @@ public class ModalGUI : MonoBehaviour
         builder.AppendFormat(" SaveGame: {0}{1}", backgroundSaveGame.gameObject.activeSelf, "\n");
         return builder.ToString();
     }
+    #endregion
 
     //new methods above here
 }

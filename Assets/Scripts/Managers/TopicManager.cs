@@ -7720,6 +7720,23 @@ public class TopicManager : MonoBehaviour
     }
     #endregion
 
+    #region External...
+    //
+    // External hooks into TopicManager.cs
+    //
+
+    /// <summary>
+    /// Used by TutorialUI.cs -> GetTopicData
+    /// </summary>
+    /// <param name="optionText"></param>
+    /// <returns></returns>
+    public string GetOptionString(string optionText)
+    {
+        return string.Format("{0}{1}{2}", colourNeutral, CheckTopicText(optionText, false), colourEnd);
+    }
+
+    #endregion
+
     #region Debug Methods...
     //
     // - - - Debug - - -

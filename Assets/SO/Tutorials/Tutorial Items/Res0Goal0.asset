@@ -13,8 +13,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorialType: {fileID: 11400000, guid: 3ea5e079678bd114896744e070740f21, type: 2}
   tag: Movement
+  set: {fileID: 11400000, guid: 8684e764709be71419fb07dae908d1e0, type: 2}
   topText: 
   bottomText: 
   gameHelp: {fileID: 0}
   goal: {fileID: 11400000, guid: 33e14c1b26727af4796ede7d57be31f2, type: 2}
-  testQuestion: 
+  queryHeader: 
+  queryText: 
+  isRandomOptions: 0
+  listOfOptions: []
+  listOfIgnoreOptions: []

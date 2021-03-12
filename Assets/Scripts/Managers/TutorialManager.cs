@@ -19,6 +19,10 @@ public class TutorialManager : MonoBehaviour
     [Tooltip("Maximum number of Tutorial Items allowed per TutorialSet")]
     [Range(5, 15)] public int maxNumOfItems = 10;
 
+    [Header("Text Lists")]
+    [Tooltip("Reasons for the job query tooltip")]
+    public TextList textListJob;
+
     #region save data compatibile
     [HideInInspector] public Tutorial tutorial;
     [HideInInspector] public TutorialSet set;
@@ -35,6 +39,7 @@ public class TutorialManager : MonoBehaviour
         switch (state)
         {
             case GameState.TutorialOptions:
+                SubInitialiseAsserts();
                 SubInitialiseFastAccess();
                 SubInitialiseTutorial();
                 break;
@@ -50,6 +55,13 @@ public class TutorialManager : MonoBehaviour
                 break;
         }
     }
+
+    #region SubInitialiseAsserts
+    private void SubInitialiseAsserts()
+    {
+        Debug.Assert(textListJob != null, "Invalid textListJob (Null)");
+    }
+    #endregion
 
     #region SubInitialiseFastAccess
     private void SubInitialiseFastAccess()
@@ -500,6 +512,16 @@ public class TutorialManager : MonoBehaviour
         return goalValue;
     }
     #endregion
+
+    #endregion
+
+    #region Textlists...
+    //
+    // - - - Textlists
+    //
+
+    public string GetTutorialJobTooltip()
+    { return textListJob.GetIndexedRecord(); }
 
     #endregion
 

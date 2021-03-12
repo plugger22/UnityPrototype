@@ -13,9 +13,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorialType: {fileID: 11400000, guid: 6af73092ead59e34f89fadf31d6d355c, type: 2}
   tag: Introduction
+  set: {fileID: 11400000, guid: 8684e764709be71419fb07dae908d1e0, type: 2}
   topText: Well hello there! Welcome to our training simulation. You can call me Fred
   bottomText: Look sharp. The one before you? Dead within days. Didn't pay attention<br><br>Work
     your way through the tasks on the right. Take your time
-  testInformation: 
-  testGoal: 
-  testQuestion: 
+  gameHelp: {fileID: 0}
+  goal: {fileID: 0}
+  queryHeader: 
+  queryText: 
+  isRandomOptions: 0
+  listOfOptions: []
+  listOfIgnoreOptions: []

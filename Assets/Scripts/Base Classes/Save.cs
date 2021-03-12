@@ -247,6 +247,7 @@ public class SavePlayerData
     public int mood;
     public string backstory0;
     public string backstory1;
+    public string previousJob;
     public ActorStatus status;
     public ActorTooltip tooltipStatus;
     public ActorInactive inactiveStatus;

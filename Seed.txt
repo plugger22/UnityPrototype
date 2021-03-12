@@ -1226,3 +1226,59 @@ TopicManager.ProcessIgnoreBossOpinion () (at Assets/Scripts/Managers/TopicManage
 	
 Dev seed 13847 -> Thursday, 11 March 2021 8:20 PM
 City seed 16877 -> VirtualCity, Eurasia
+
+Dev seed 1174 -> Friday, 12 March 2021 10:08 AM
+City seed 24785 -> VirtualCity, Eurasia
+
+Dev seed 8671 -> Friday, 12 March 2021 10:16 AM
+City seed 24727 -> VirtualCity, Eurasia
+
+Dev seed 56603 -> Friday, 12 March 2021 10:20 AM
+City seed 35980 -> VirtualCity, Eurasia
+
+Dev seed 12603 -> Friday, 12 March 2021 10:23 AM
+City seed 50016 -> VirtualCity, Eurasia
+
+Dev seed 47444 -> Friday, 12 March 2021 10:24 AM
+City seed 61389 -> VirtualCity, Eurasia
+
+Dev seed 54583 -> Friday, 12 March 2021 10:30 AM
+City seed 18598 -> VirtualCity, Eurasia
+ERROR Invalid modalLevel 1
+UnityEngine.Debug:LogError(Object)
+	ModalGUI:SetModalMasks(Boolean, Int32) (at Assets/Scripts/GUI/ModalGUI.cs:134)
+	GUIManager:SetIsBlocked(Boolean, Int32) (at Assets/Scripts/Managers/GUIManager.cs:400)
+	TopicUI:CloseTopicUI(Int32) (at Assets/Scripts/GUI/TopicUI.cs:1272)
+	TopicUI:ProcessTopicIgnore() (at Assets/Scripts/GUI/TopicUI.cs:1320)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:463)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:371)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 60452 -> Friday, 12 March 2021 10:32 AM
+City seed 35364 -> VirtualCity, Eurasia
+City seed 26529 -> Londus, Eurasia
+
+Dev seed 48341 -> Friday, 12 March 2021 10:49 AM
+City seed 63114 -> VirtualCity, Eurasia
+
+Dev seed 48818 -> Friday, 12 March 2021 10:56 AM
+City seed 45034 -> VirtualCity, Eurasia
+
+Dev seed 23974 -> Friday, 12 March 2021 11:17 AM
+WARNING [Val] ValidateSO: MISMATCH on TextList, array 90, assets 91 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:2102)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2021)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	City seed 17255 -> VirtualCity, Eurasia
+
+Dev seed 4937 -> Friday, 12 March 2021 11:27 AM
+WARNING [Val] ValidateSO: MISMATCH on TextList, array 90, assets 91 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:2102)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2021)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	City seed 29642 -> VirtualCity, Eurasia

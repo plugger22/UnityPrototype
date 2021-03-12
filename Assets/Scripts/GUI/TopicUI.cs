@@ -1266,9 +1266,12 @@ public class TopicUI : MonoBehaviour
         if (commsCoroutine != null)
         { StopCoroutine(commsCoroutine); }
 
-        /*//set game state -> EDIT: Don't do this as you are going straight to the maininfoApp on every occasion and resetting the state allows clicks to node in the interim.
-        GameManager.instance.inputScript.ResetStates();
-        GameManager.instance.guiScript.SetIsBlocked(false);*/
+        //set game state -> NOTE: Don't do this (unless it's Tutorial mode) as you are going straight to the maininfoApp on every occasion and resetting the state allows clicks to node in the interim.
+        if (dataPackage.uiType == TopicDecisionType.Tutorial)
+        {
+            GameManager.i.guiScript.SetIsBlocked(false); //needs to be BEFORE ResetStates in order to return modal level to 0
+            GameManager.i.inputScript.ResetStates(ModalSubState.None);
+        }
 
         //set waitUntilDone false to continue with pipeline only if there is no outcome from the topic option selected
         if (isOutcome < 0)

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorialType: {fileID: 11400000, guid: 8b2847a7a246595458eee2b6a64e9b06, type: 2}
   tag: Your Job
+  set: {fileID: 11400000, guid: 8684e764709be71419fb07dae908d1e0, type: 2}
   topText: 
   bottomText: 
   gameHelp: {fileID: 0}
@@ -30,3 +31,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d798df6f19a13934890a8af9024f887c, type: 2}
   - {fileID: 11400000, guid: 17f67b7f9c7d81348b37ff623eae847c, type: 2}
   - {fileID: 11400000, guid: 24d228b3ee49c3d40b01a582957e1d57, type: 2}
+  listOfIgnoreOptions:
+  - {fileID: 11400000, guid: db7d0504b22386d4da99171458e8cb1f, type: 2}
