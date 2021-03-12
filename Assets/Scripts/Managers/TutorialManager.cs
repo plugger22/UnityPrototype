@@ -41,11 +41,12 @@ public class TutorialManager : MonoBehaviour
             case GameState.TutorialOptions:
                 SubInitialiseAsserts();
                 SubInitialiseFastAccess();
+                SubInitialiseReset();
                 SubInitialiseTutorial();
                 break;
-            case GameState.LoadGame:
             case GameState.NewInitialisation:
             case GameState.LoadAtStart:
+            case GameState.LoadGame:
             case GameState.StartUp:
             case GameState.FollowOnInitialisation:
                 //do nothing
@@ -75,6 +76,24 @@ public class TutorialManager : MonoBehaviour
     private void SubInitialiseTutorial()
     {
         InitialiseTutorial();
+    }
+    #endregion
+
+    #region SubInitialiseReset
+    private void SubInitialiseReset()
+    {
+        //reset all tutorialItem.SO's back to 'isQueryDone' -> false
+        TutorialItem[] arrayOfItems = GameManager.i.loadScript.arrayOfTutorialItems;
+        if (arrayOfItems != null)
+        {
+            for (int i = 0; i < arrayOfItems.Length; i++)
+            {
+                if (arrayOfItems[i] != null)
+                { arrayOfItems[i].isQueryDone = false; }
+                else { Debug.LogWarningFormat("Invalid TopicItem (Null) in arrayOfItems[{0}]", i); }
+            }
+        }
+        else { Debug.LogError("Invalid arrayOfTutorialItems (Null)"); }
     }
     #endregion
 
@@ -515,15 +534,89 @@ public class TutorialManager : MonoBehaviour
 
     #endregion
 
-    #region Textlists...
+    #region QueryOptions
     //
-    // - - - Textlists
+    // - - - TutorialItem -> Query -> Options
     //
 
+    /// <summary>
+    /// Process selected option from TopicUI.cs
+    /// </summary>
+    /// <param name="option"></param>
+    public void ProcessTutorialOption(TopicOption option)
+    {
+        bool isErrorFlag = false;
+        if (option != null)
+        {
+            string topText = "Unknown";
+            string bottomText = "Unknown";
+            EffectDataReturn effectReturn = new EffectDataReturn();
+            //needed for EffectManager.cs code
+            EffectDataInput dataInput = new EffectDataInput();
+            //Process Effect (Only the first effect in listOfGoodEffects is processed, the rest are ignored)
+            Effect effect = option.listOfGoodEffects[0];
+            if (effect != null)
+            {
+                //use player node (need a node for EffectManager.cs code)
+                Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
+                if (node != null)
+                {
+                    //process effect
+                    effectReturn = GameManager.i.effectScript.ProcessEffect(effect, node, dataInput);
+                    if (effectReturn != null)
+                    {
+                        //top text
+                        if (string.IsNullOrEmpty(effectReturn.topText) == false)
+                        { topText = effectReturn.topText; }
+                        //bottom text
+                        if (string.IsNullOrEmpty(effectReturn.bottomText) == false)
+                        { bottomText = string.Format("{0}", effectReturn.bottomText); }
+                    }
+                    else
+                    {
+                        Debug.LogWarningFormat("Invalid effectReturn (Null)");
+                        isErrorFlag = true;
+                    }
+                }
+                else { Debug.LogWarningFormat("Effect \"{0}\" not processed as invalid Node (Null) for option \"{1}\"", effect.name, option.name); }
+            }
+            else { Debug.LogError("Invalid effect (Null) for option.listOfGoodEffects[0]"); }
+            //Output
+            if (isErrorFlag == false)
+            {
+                //repeat prevention
+                option.tutorialItem.isQueryDone = true;
+                //Outcome
+                ModalOutcomeDetails details = new ModalOutcomeDetails()
+                {
+                    side = GameManager.i.sideScript.PlayerSide,
+                    textTop = topText,
+                    textBottom = bottomText,
+                    sprite = tutorial.sprite,
+                    isSpecial = true,
+                    isSpecialGood = true
+                };
+                EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
+            }
+            else
+            {
+                //no outcome -> Error
+                Debug.LogWarningFormat("No Outcome for option \"{0}\" (isErrorFlag true)", option.name);
+            }
+
+        }
+        else { Debug.LogError("Invalid option (Null)"); }
+    }
+
+    /// <summary>
+    /// Get a tooltip.main text for a TutorialOption
+    /// </summary>
+    /// <returns></returns>
     public string GetTutorialJobTooltip()
     { return textListJob.GetIndexedRecord(); }
 
     #endregion
+
 
     #region DebugDisplayTutorialData
     /// <summary>
@@ -581,7 +674,7 @@ public class TutorialManager : MonoBehaviour
                 if (item.tutorialType.name.Equals("Goal", StringComparison.Ordinal) == true)
                 {
                     TutorialGoal goal = item.goal;
-                    builder.AppendFormat(" {0} -> {1}, Tgt {2} -> {3}, Tgt {4}{5}", goal.name, goal.goal0.name, goal.target0, goal.goal1 == null ? "None" : goal.goal1.name, 
+                    builder.AppendFormat(" {0} -> {1}, Tgt {2} -> {3}, Tgt {4}{5}", goal.name, goal.goal0.name, goal.target0, goal.goal1 == null ? "None" : goal.goal1.name,
                         goal.target1 == -1 ? "n.a" : Convert.ToString(goal.target1), "\n");
                 }
             }

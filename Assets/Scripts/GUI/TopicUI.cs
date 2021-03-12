@@ -1251,7 +1251,7 @@ public class TopicUI : MonoBehaviour
 
     #region CloseTopicUI
     /// <summary>
-    /// close TopicUI display. Outcome if parameter >= 0, none if otherwise
+    /// close TopicUI display. Outcome if parameter >= 0, none if otherwise (NOTE: doesn't apply to Tutorial options, set to -1 for these)
     /// </summary>
     private void CloseTopicUI(int isOutcome)
     {
@@ -1382,7 +1382,8 @@ public class TopicUI : MonoBehaviour
                         GameManager.i.topicScript.ProcessOption(optionIndex);
                         break;
                     case TopicDecisionType.Tutorial:
-                        //To Do
+                        CloseTopicUI(-1);
+                        GameManager.i.tutorialScript.ProcessTutorialOption(dataPackage.listOfOptions[optionIndex]);
                         break;
                     default: Debug.LogWarningFormat("Unrecognised dataPackage.uiType \"{0}\"", dataPackage.uiType); break;
                 }

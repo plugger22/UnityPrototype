@@ -254,7 +254,6 @@ public class TutorialUI : MonoBehaviour
     {
         if (set != null)
         {
-            listOfSetItems.Clear();
             //populate list with current set tutorial items (indexes match button.buttonInteraction.returnValue)
             listOfSetItems = set.listOfTutorialItems;
             if (listOfSetItems != null)
@@ -388,17 +387,46 @@ public class TutorialUI : MonoBehaviour
                         case "Goal":
                             GameManager.i.tutorialScript.UpdateGoal(currentItem.goal);
                             //change colour to completed (indicates that you're currently doing, or have done, the goal)
-                            ColorBlock buttonColours = listOfButtons[index].colors;
-                            buttonColours.normalColor = colourCompleted;
-                            listOfButtons[index].colors = buttonColours;
+                            ColorBlock goalColours = listOfButtons[index].colors;
+                            goalColours.normalColor = colourCompleted;
+                            listOfButtons[index].colors = goalColours;
                             break;
                         case "Information":
                             EventManager.i.PostNotification(EventType.GameHelpOpen, this, currentItem.gameHelp);
                             break;
                         case "Question":
-                            TopicUIData data = GetTopicData(currentItem);
-                            if (data != null)
-                            { EventManager.i.PostNotification(EventType.TopicDisplayOpen, this, data); }
+                            if (currentItem.isQueryDone == false)
+                            {
+                                TopicUIData data = GetTopicData(currentItem);
+                                if (data != null)
+                                { EventManager.i.PostNotification(EventType.TopicDisplayOpen, this, data); }
+                                //change colour to completed (indicates that you're currently doing, or have done, the query)
+                                ColorBlock itemColours = listOfButtons[index].colors;
+                                itemColours.normalColor = colourCompleted;
+                                listOfButtons[index].colors = itemColours;
+                            }
+                            else
+                            {
+                                //query has already been done
+                                ModalOutcomeDetails detailsDone = new ModalOutcomeDetails()
+                                {
+                                    side = GameManager.i.sideScript.PlayerSide,
+                                    textBottom = "Haven't we already covered that?<br><br>I must be having a <b>Senior Moment</b>",
+                                    sprite = GameManager.i.tutorialScript.tutorial.sprite,
+                                    isAction = false,
+                                    isSpecial = true,
+                                    isSpecialGood = false
+                                };
+                                if (string.IsNullOrEmpty(currentItem.queryHeader) == false)
+                                { detailsDone.textTop = GameManager.Formatt(currentItem.queryHeader, ColourType.moccasinText); }
+                                else
+                                {
+                                    detailsDone.textTop = GameManager.Formatt("I beg your pardon", ColourType.moccasinText);
+                                    Debug.LogWarningFormat("Invalid queryHeader (Null or Empty) for \"{0}\"", currentItem.name);
+                                }
+                                //special outcome
+                                EventManager.i.PostNotification(EventType.OutcomeOpen, this, detailsDone);
+                            }
                             break;
                         default: Debug.LogWarningFormat("Unrecognised item.TutorialType \"{0}\"", currentItem.tutorialType.name); break;
                     }
@@ -468,7 +496,7 @@ public class TutorialUI : MonoBehaviour
                         else { Debug.LogWarningFormat("Invalid topicOption (Null) for normal listOfTempOptions[{0}]", i); }
                 }
             }
-            //option tooltips
+            //option tooltips and optionNumber
             for (int i = 0; i < data.listOfOptions.Count; i++)
             {
                 TopicOption option = data.listOfOptions[i];
@@ -476,6 +504,10 @@ public class TutorialUI : MonoBehaviour
                 {
                     option.tooltipHeader = string.Format("<size=120%>{0}</size>", GameManager.Formatt(option.tag, ColourType.neutralText));
                     option.tooltipMain = GameManager.i.tutorialScript.GetTutorialJobTooltip();
+                    //reassign option number to be the position in the listOfOptions
+                    option.optionNumber = i;
+                    //set all options as Valid
+                    option.isValid = true;
                 }
                 else { Debug.LogWarningFormat("Invalid topicOption (Null) for data.listOfOptions[{0}]", i); }
             }

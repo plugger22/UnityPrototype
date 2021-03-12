@@ -3712,7 +3712,7 @@ public class TopicManager : MonoBehaviour
                                     builderTag.AppendFormat("{0}", effectReturn.bottomText);
                                     //display story topic info effects in larger text size for ease of reading
                                     if (effectReturn.isLargeText == true)
-                                    { builderBottom.AppendFormat("<size=115%>{0}</size>", effectReturn.bottomText); }
+                                    { builderBottom.AppendFormat("<size=110%>{0}</size>", effectReturn.bottomText); }
                                     //all else
                                     else { builderBottom.AppendFormat("{0}", effectReturn.bottomText); }
                                 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Tutq0RESopt4
   m_EditorClassIdentifier: 
   descriptor: Tutorial Query0 Resistance Option 4
-  tag: Waster
+  tag: Unemployed Waster
   text: I binged on SerialFlix. Watched everything
   topic: {fileID: 0}
   tutorialItem: {fileID: 11400000, guid: 0ba135735cfb2314c9c4a1778a1aa27a, type: 2}
@@ -31,9 +31,9 @@ MonoBehaviour:
   news: 
   storyInfo: 
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
+  tooltipHeader: <size=120%><color=#EEFB73>Waster</color></size>
+  tooltipMain: Are you certain that you want that on your record?
   tooltipDetails: 
   isValid: 0
-  textToDisplay: I binged on SerialFlix. Watched everything
+  textToDisplay: <color=#EEFB73>I binged on SerialFlix. Watched everything</color>
   optionNumber: 4

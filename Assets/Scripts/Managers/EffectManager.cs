@@ -2088,7 +2088,7 @@ public class EffectManager : MonoBehaviour
                     // - - - Tutorial
                     //
                     case "TutJobFungus":
-                    case "TutJobInformant":
+                    case "TutJobInform":
                     case "TutJobLawyer":
                     case "TutJobLion":
                     case "TutJobMaggot":
@@ -4144,7 +4144,7 @@ public class EffectManager : MonoBehaviour
 
     #region ResolveTutorialData
     /// <summary>
-    /// subMethod to process Tutorial Query option effects
+    /// subMethod to process Tutorial Query option effects. NOTE: TutorialManager.cs -> ProcessTutorialOption  expects it to return BOTH top and bottom texts
     /// </summary>
     /// <param name="effect"></param>
     /// <param name="dataInput"></param>
@@ -4165,7 +4165,8 @@ public class EffectManager : MonoBehaviour
             case "TutJobSmog":
             case "TutJobWaster":
                 GameManager.i.playerScript.previousJob = effect.description;
-                effectResolve.bottomText = string.Format("Your previous occupation of {0}{1}{2} is now on the record", colourNeutral, effect.description, colourEnd);
+                effectResolve.topText = string.Format("{0}It's official{1}", colourAlert, colourEnd);
+                effectResolve.bottomText = string.Format("Your previous occupation of<br><br>{0}{1}{2}<br><br>is now on the record", colourNeutral, effect.description, colourEnd);
                 break;
             default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\"", effect.outcome.name); break;
         }

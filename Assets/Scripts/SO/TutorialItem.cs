@@ -41,6 +41,8 @@ public class TutorialItem : ScriptableObject
     [Tooltip("Option/s that apply if the player selects 'Ignore', only the first 2 are used. Compulsory")]
     public List<TopicOption> listOfIgnoreOptions;
 
+    [HideInInspector] public bool isQueryDone;                   //set true once done to prevent player repeating query, reset at start of every new session
+
 
     public void OnEnable()
     {

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Tutq0RESopt1
   m_EditorClassIdentifier: 
   descriptor: Tutorial Query0 Resistance Option 1
-  tag: Incarcerated
+  tag: Ex-Prisoner
   text: I was released from Prison yesterday
   topic: {fileID: 0}
   tutorialItem: {fileID: 11400000, guid: 0ba135735cfb2314c9c4a1778a1aa27a, type: 2}
@@ -31,9 +31,9 @@ MonoBehaviour:
   news: 
   storyInfo: 
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
+  tooltipHeader: <size=120%><color=#EEFB73>Incarcerated</color></size>
+  tooltipMain: Man, that's not something I'd want to do
   tooltipDetails: 
   isValid: 0
-  textToDisplay: 
+  textToDisplay: <color=#EEFB73>I was released from Prison yesterday</color>
   optionNumber: 1

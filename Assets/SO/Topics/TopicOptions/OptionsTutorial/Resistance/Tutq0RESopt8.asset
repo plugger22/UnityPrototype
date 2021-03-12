@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   descriptor: Tutorial Query0 Resistance Option 8
   tag: Porn Star
-  text: I met a lot of people
+  text: I've met a lot of people
   topic: {fileID: 0}
   tutorialItem: {fileID: 11400000, guid: 0ba135735cfb2314c9c4a1778a1aa27a, type: 2}
   isPreferredByHQ: 0
@@ -36,4 +36,4 @@ MonoBehaviour:
   tooltipDetails: 
   isValid: 0
   textToDisplay: 
-  optionNumber: 7
+  optionNumber: 8

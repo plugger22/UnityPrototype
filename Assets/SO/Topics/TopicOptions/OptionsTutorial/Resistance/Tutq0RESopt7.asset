@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Tutq0RESopt7
   m_EditorClassIdentifier: 
   descriptor: Tutorial Query0 Resistance Option 7
-  tag: Official
+  tag: Pollution Officer
   text: See that badge? Smog Police
   topic: {fileID: 0}
   tutorialItem: {fileID: 11400000, guid: 0ba135735cfb2314c9c4a1778a1aa27a, type: 2}
@@ -31,9 +31,9 @@ MonoBehaviour:
   news: 
   storyInfo: 
   storyTarget: {fileID: 0}
-  tooltipHeader: 
-  tooltipMain: 
+  tooltipHeader: <size=120%><color=#EEFB73>Official</color></size>
+  tooltipMain: Do you want to think about that some more?
   tooltipDetails: 
   isValid: 0
-  textToDisplay: 
+  textToDisplay: <color=#EEFB73>See that badge? Smog Police</color>
   optionNumber: 7
