@@ -18,6 +18,8 @@ public class TutorialManager : MonoBehaviour
     [Header("Globals")]
     [Tooltip("Maximum number of Tutorial Items allowed per TutorialSet")]
     [Range(5, 15)] public int maxNumOfItems = 10;
+    [Tooltip("Mininum number of TopicOptions for a Question type TutorialItem in listOfOptions")]
+    [Range(2, 2)] public int minNumOfOptions = 2;
 
     [Header("Text Lists")]
     [Tooltip("Reasons for the job query tooltip")]

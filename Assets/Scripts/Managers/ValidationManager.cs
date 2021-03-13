@@ -149,7 +149,7 @@ public class ValidationManager : MonoBehaviour
     private string levelScopeName;
     private string campaignScopeName;
 
-
+    #region Initialise...
     /// <summary>
     /// Not called for GameState.LoadGame
     /// </summary>
@@ -495,6 +495,8 @@ public class ValidationManager : MonoBehaviour
             else { Debug.LogError("Invalid orgInfoSubType (Null)"); }
         }
     }
+    #endregion
+
     #endregion
 
     #endregion
@@ -977,7 +979,7 @@ public class ValidationManager : MonoBehaviour
                 if (dictOfBeliefs != null)
                 {
                     //create a list of option names that you can progressively delete from to check if any are left over at the end
-                    List<string> listOfOptionNames = arrayOfTopicOptions.Select(x => x.name).ToList();
+                    List<string> listOfOptionNames = arrayOfTopicOptions.Where(x => x.isTutorial == false).Select(x => x.name).ToList();
                     string topicName;
                     //loop topics
                     for (int i = 0; i < arrayOfTopics.Length; i++)
@@ -989,9 +991,8 @@ public class ValidationManager : MonoBehaviour
 
                             switch (topic.subType.name)
                             {
-
-                                /* -> DEBUG -> temporarily switched off -> Turn back on when dealing with Topics
-                                 
+                                /*
+                                //DEBUG -> Temporarily switched off as no data yet for these
                                 case "StoryAlpha":
                                     //Comms Decision topics
                                     if (topic.comms != null)
@@ -1019,6 +1020,7 @@ public class ValidationManager : MonoBehaviour
                                 case "StoryAlpha":  //debug temp while code above disabled
                                 case "StoryBravo":  //debug temp while code above disabled
                                     break;
+
 
                                 default:
                                     //Normal Decision Topics
@@ -1229,6 +1231,34 @@ public class ValidationManager : MonoBehaviour
             else { Debug.LogError("Invalid arrayOfTopicOptions (Null)"); }
         }
         else { Debug.LogError("Invalid arrayOfTopics (Null)"); }
+        #endregion
+
+        #region Topic Options
+        //
+        // - - - Topic Options -> check all
+        //
+        for (int i = 0; i < arrayOfTopicOptions.Length; i++)
+        {
+            TopicOption option = arrayOfTopicOptions[i];
+            //Check normal and Tutorial options
+            if (option.isTutorial == true)
+            {
+                //tutorial option (independent option)
+                if (option.topic != null)
+                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Tutorial option \"{0}\" has an Invalid option.topic \"{1}\" (should be Null){2}", option.name, option.topic, "\n"); }
+                if (option.tutorialItem == null)
+                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Tutorial option \"{0}\" has an Invalid option.tutorialItem (Null){1}", option.name, "\n"); }
+            }
+            else
+            {
+                //normal option
+                if (option.topic == null)
+                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: option \"{0}\" has an Invalid option.topic (Null){1}", option.name, "\n"); }
+                if (option.tutorialItem != null)
+                { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTopics: Tutorial option \"{0}\" has an Invalid option.tutorialItem \"{1}\" (should be Null){2}", option.name, option.tutorialItem, "\n"); }
+            }
+        }
+        
         #endregion
 
         #region Topic Pools
@@ -1808,7 +1838,10 @@ public class ValidationManager : MonoBehaviour
     /// </summary>
     private void ValidateTutorialData()
     {
+        int count;
         int maxTutorialItems = GameManager.i.tutorialScript.maxNumOfItems;
+        int maxTutorialOptions = GameManager.i.topicScript.maxOptions;
+        int minTutorialOptions = GameManager.i.tutorialScript.minNumOfOptions;
         string tag = "[Val] ValidationManager.cs -> ValidateTutorialData:";
         //Tutorials
         Tutorial[] arrayOfTutorials = GameManager.i.loadScript.arrayOfTutorials;
@@ -1863,9 +1896,113 @@ public class ValidationManager : MonoBehaviour
                                                 set.tutorial.name, set.listOfTutorialItems.Count, maxTutorialItems, "\n");
                                         }
                                     }
+                                    //loop tutorialItems
+                                    for (int k = 0; k < set.listOfTutorialItems.Count; k++)
+                                    {
+                                        //Item set should match parent set
+                                        TutorialItem item = set.listOfTutorialItems[k];
+                                        if (item.set.name.Equals(set.name, StringComparison.Ordinal) == false)
+                                        { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: TutorialItem \"{0}\" mismatch with set (is {1}, should be {2}){3}", item.name, item.set.name, set.name, "\n"); }
+                                        //Query item
+                                        switch (item.tutorialType.name)
+                                        {
+                                            case "Question":
+                                                //listOfOptions
+                                                count = item.listOfOptions.Count();
+                                                //check mininum number Of options
+                                                if (count < minTutorialOptions)
+                                                {
+                                                    Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: TutorialItem \"{0}\", QUESTION, invalid listOfOptions (is {1}, Min {2}){3}",
+                                                      item.name, count, minTutorialOptions, "\n");
+                                                }
+                                                //random -> any number, not random, check max number of Options
+                                                if (item.isRandomOptions == false)
+                                                {
+                                                    if (count > maxTutorialOptions)
+                                                    {
+                                                        Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: TutorialItem \"{0}\", QUESTION, invalid listOfOptions (is {1}, Max {2}){3}",
+                                                          item.name, count, maxTutorialOptions, "\n");
+                                                    }
+                                                }
+                                                //loop topicOptions in listsOfOptions
+                                                for (int m = 0; m < item.listOfOptions.Count; m++)
+                                                {
+                                                    TopicOption option = item.listOfOptions[m];
+                                                    //option tutorialItem should match parent
+                                                    if (option.tutorialItem != null)
+                                                    {
+                                                        if (option.tutorialItem != item)
+                                                        {
+                                                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: TopicOption \"{0}\" mismatch with Item (is {1}, should be {2}){3}",
+                                                                option.name, option.tutorialItem.name, item.name, "\n");
+                                                        }
+                                                        //check listOfGoodEffects has 1 entry
+                                                        if (option.listOfGoodEffects.Count != 1)
+                                                        {
+                                                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: TopicOption \"{0}\" Invalid listOfGoodEffects.Count (is {1}, should be ONE){2}",
+                                                                option.name, option.listOfGoodEffects.Count, "\n");
+                                                        }
+                                                        //check listOfBadEffects is empty
+                                                        if (option.listOfBadEffects.Count != 0)
+                                                        {
+                                                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: TopicOption \"{0}\" Invalid listOfBadEffects.Count (is {1}, should be EMPTY){2}",
+                                                                option.name, option.listOfBadEffects.Count, "\n");
+                                                        }
+                                                        //option should have isTutorial true
+                                                        if (option.isTutorial == false)
+                                                        {
+                                                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: TopicOption \"{0}\" Invalid field 'isTutorial' (is {1} should be True){2}",
+                                                                option.name, option.isTutorial, "\n");
+                                                        }
+                                                    }
+                                                    else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: TopicOption \"{0}\" Invalid tutorialItem (Null){1}",  option.name, "\n"); }
+                                                }
+                                                //loop topicOptions in listsOfIgnoreOptions
+                                                for (int m = 0; m < item.listOfIgnoreOptions.Count; m++)
+                                                {
+                                                    TopicOption option = item.listOfIgnoreOptions[m];
+                                                    //option tutorialItem should match parent
+                                                    if (option.tutorialItem != null)
+                                                    {
+                                                        if (option.tutorialItem != item)
+                                                        {
+                                                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: IGNORE TopicOption \"{0}\" mismatch with Item (is {1}, should be {2}){3}",
+                                                                option.name, option.tutorialItem.name, item.name, "\n");
+                                                        }
+                                                        //check listOfGoodEffects has 1 entry
+                                                        if (option.listOfGoodEffects.Count != 1)
+                                                        {
+                                                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: IGNORE TopicOption \"{0}\" Invalid listOfGoodEffects.Count (is {1}, should be ONE){2}",
+                                                                option.name, option.listOfGoodEffects.Count, "\n");
+                                                        }
+                                                        //check listOfBadEffects is empty
+                                                        if (option.listOfBadEffects.Count != 0)
+                                                        {
+                                                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: IGNORE TopicOption \"{0}\" Invalid listOfBadEffects.Count (is {1}, should be EMPTY){2}",
+                                                                option.name, option.listOfBadEffects.Count, "\n");
+                                                        }
+                                                        //option should have isTutorial true
+                                                        if (option.isTutorial == false)
+                                                        {
+                                                            Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: IGNORE TopicOption \"{0}\" Invalid field 'isTutorial' (is {1} should be True){2}",
+                                                                option.name, option.isTutorial, "\n");
+                                                        }
+                                                    }
+                                                    else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: IGNORE TopicOption \"{0}\" Invalid tutorialItem (Null){1}", option.name, "\n"); }
+                                                }
+                                                break;
+                                            case "Information":
 
+                                                break;
+                                            case "Goal":
 
+                                                break;
+                                            case "Dialogue":
 
+                                                break;
+                                            default: Debug.LogWarningFormat("Unrecognised item.tutorialType \"{0}\"", item.tutorialType.name); break;
+                                        }
+                                    }
                                 }
                             }
                             else { Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: Invalid set (Null) for tutorial \"{0}\" , listOfSets[{1}]{2}", tutorial.name, j, "\n"); }

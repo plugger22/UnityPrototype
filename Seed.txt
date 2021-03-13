@@ -1813,3 +1813,67 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	City seed 13572 -> VirtualCity, Eurasia
 City seed 15562 -> VirtualCity, Eurasia
 City seed 702 -> VirtualCity, Eurasia
+
+Dev seed 63157 -> Saturday, 13 March 2021 11:01 AM
+WARNING [Val] ValidateSO: MISMATCH on EffectOutcome, array 128, assets 129 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(EffectOutcome[]) (at Assets/Scripts/Managers/ValidationManager.cs:2102)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1917)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	WARNING [Val] ValidateSO: MISMATCH on Effect, array 424, assets 425 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(Effect[]) (at Assets/Scripts/Managers/ValidationManager.cs:2102)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1969)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	WARNING [Val] ValidateSO: MISMATCH on TopicOption, array 1519, assets 1520 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicOption[]) (at Assets/Scripts/Managers/ValidationManager.cs:2102)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:1987)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	WARNING [Val] ValidateSO: MISMATCH on TextList, array 90, assets 91 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:2102)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2021)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	City seed 56398 -> VirtualCity, Eurasia
+
+Dev seed 22470 -> Saturday, 13 March 2021 11:34 AM
+City seed 14565 -> Londus, Eurasia
+
+Dev seed 38219 -> Saturday, 13 March 2021 11:37 AM
+City seed 2514 -> VirtualCity, Eurasia
+WARNING Invalid (Game) help (Null)
+UnityEngine.Debug:LogWarning(Object)
+	GameHelpUI:SetGameHelp(GameHelp) (at Assets/Scripts/GUI/GameHelpUI.cs:177)
+	GameHelpUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/GameHelpUI.cs:125)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:371)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:395)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:239)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:371)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 20304 -> Saturday, 13 March 2021 11:47 AM
+City seed 36100 -> VirtualCity, Eurasia
+
+Dev seed 44466 -> Saturday, 13 March 2021 11:48 AM
+City seed 29373 -> VirtualCity, Eurasia
+
+Dev seed 49065 -> Saturday, 13 March 2021 11:48 AM
+City seed 60568 -> VirtualCity, Eurasia
+
+Dev seed 17276 -> Saturday, 13 March 2021 11:49 AM
+City seed 50730 -> VirtualCity, Eurasia
+
+Dev seed 24461 -> Saturday, 13 March 2021 11:50 AM
+City seed 7822 -> VirtualCity, Eurasia
+
+Dev seed 35223 -> Saturday, 13 March 2021 12:23 PM
+City seed 53071 -> VirtualCity, Eurasia
+
+Dev seed 3670 -> Saturday, 13 March 2021 12:35 PM
+City seed 39247 -> VirtualCity, Eurasia

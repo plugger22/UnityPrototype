@@ -1463,6 +1463,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 69e015214a2c49e408ecd2e75f73635a, type: 2}
   - {fileID: 11400000, guid: e67efbe36b728204ba285232b7032fad, type: 2}
   - {fileID: 11400000, guid: faec3dd6149330e43a64dd04ead04180, type: 2}
+  - {fileID: 11400000, guid: de77372c4703b3042a9173530389128a, type: 2}
   arrayOfContactTypes:
   - {fileID: 11400000, guid: e83571238ceb3544f8ef9d46cb18cbc3, type: 2}
   - {fileID: 11400000, guid: 88efaf6304c9e364c8719f9c954d687d, type: 2}
@@ -1766,6 +1767,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8b585f005cb8dd445acd54866f2c7a16, type: 2}
   - {fileID: 11400000, guid: 05884381eaf873742a3b551c2861bd8b, type: 2}
   - {fileID: 11400000, guid: 8ab2e853c9eabee47af61a605f911459, type: 2}
+  - {fileID: 11400000, guid: 77da817c0d61f5d4cb968b30ce6512c1, type: 2}
   arrayOfFactorTextLists:
   - {fileID: 11400000, guid: af68fbbc11f44364b93c0e5a481f60cb, type: 2}
   - {fileID: 11400000, guid: 821105cf4673ea746a20af596d2561bb, type: 2}
@@ -2335,6 +2337,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b470b1b4191ee8345895afc9c059ce34, type: 2}
   - {fileID: 11400000, guid: 525754514331fea4b8e174d143d4e541, type: 2}
   - {fileID: 11400000, guid: 85ba4f352e32a8c4f85eeaa5acad0483, type: 2}
+  - {fileID: 11400000, guid: caa1206bb42a99a45bd8515b95e6e5df, type: 2}
   arrayOfBillboardAdverts:
   - {fileID: 11400000, guid: 0f4fcf7e686e3284a96ac4c137d953e7, type: 2}
   - {fileID: 11400000, guid: 53dcb7642d407c34b8e3a0c64391a16f, type: 2}
@@ -4938,6 +4941,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d798df6f19a13934890a8af9024f887c, type: 2}
   - {fileID: 11400000, guid: 17f67b7f9c7d81348b37ff623eae847c, type: 2}
   - {fileID: 11400000, guid: 24d228b3ee49c3d40b01a582957e1d57, type: 2}
+  - {fileID: 11400000, guid: db7d0504b22386d4da99171458e8cb1f, type: 2}
   arrayOfTargetsGeneric:
   - {fileID: 11400000, guid: 91845915c557ef343b3d28510c5adf98, type: 2}
   - {fileID: 11400000, guid: 01a82fef77c93dc4985ff90d1bd3c64e, type: 2}
@@ -6457,6 +6461,7 @@ MonoBehaviour:
   maxNumOfDevices: 0
   backstory0: 
   backstory1: 
+  previousJob: 
 --- !u!114 &114704934405690708
 MonoBehaviour:
   m_ObjectHideFlags: 1
