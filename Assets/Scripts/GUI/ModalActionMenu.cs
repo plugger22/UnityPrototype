@@ -106,6 +106,9 @@ public class ModalActionMenu : MonoBehaviour
     /// <param name="details"></param>
     public void SetActionMenu(ModalGenericMenuDetails details)
     {
+        //set states (done up front to prevent node tooltip reoccuring during menu display)
+        ModalStateData package = new ModalStateData() { mainState = ModalSubState.ActionMenu };
+        GameManager.i.inputScript.SetModalState(package);
         //close all tooltips
         GameManager.i.guiScript.SetTooltipsOff();
         //check enough actions
@@ -219,9 +222,6 @@ public class ModalActionMenu : MonoBehaviour
             { screenPos.x += offset; }
             //set new position
             modalMenuObject.transform.position = screenPos;
-            //set states
-            ModalStateData package = new ModalStateData() { mainState = ModalSubState.ActionMenu };
-            GameManager.i.inputScript.SetModalState(package);
             //block raycasts to gameobjects
             GameManager.i.guiScript.SetIsBlocked(true, details.modalLevel);
             modalLevel = details.modalLevel;

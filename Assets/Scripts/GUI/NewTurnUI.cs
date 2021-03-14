@@ -1,5 +1,5 @@
 ﻿using gameAPI;
-using System.Collections;
+using packageAPI;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -17,6 +17,7 @@ public class NewTurnUI : MonoBehaviour, IPointerClickHandler
     public Image turnImage;
     public TextMeshProUGUI turnText;
 
+    private GenericHelpTooltipUI help;
 
     #region static instance...
     private static NewTurnUI newTurnUI;
@@ -89,7 +90,14 @@ public class NewTurnUI : MonoBehaviour, IPointerClickHandler
         turnObject.SetActive(true);
         turnImage.gameObject.SetActive(true);
         turnText.gameObject.SetActive(true);
-
+        //help
+        help = turnImage.GetComponent<GenericHelpTooltipUI>();
+        if (help != null)
+        {
+            List<HelpData> listOfHelp = GameManager.i.helpScript.GetHelpData("newTurn_0");
+            help.SetHelpTooltip(listOfHelp, -350, 200);
+        }
+        else { Debug.LogError("Invalid GenericHelpTooltipUI (Null) for NewTurnUI"); }
     }
     #endregion
 

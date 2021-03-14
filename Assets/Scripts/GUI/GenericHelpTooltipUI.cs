@@ -95,7 +95,7 @@ public class GenericHelpTooltipUI : MonoBehaviour, IPointerEnterHandler, IPointe
         //delay before tooltip kicks in
         yield return new WaitForSeconds(mouseOverDelay);
         //activate tool tip if mouse still over button
-        if (onMouseFlag == true && GameManager.i.inputScript.ModalState == ModalState.ModalUI)
+        if (onMouseFlag == true /*&& GameManager.i.inputScript.ModalState == ModalState.ModalUI*/)   //NOTE -> commented out ModalState check to allow for help on NewTurn button to work. Unsure of implications elsewhere
         {
             if (listOfHelp != null)
             {

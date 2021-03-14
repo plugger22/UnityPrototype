@@ -1877,3 +1877,70 @@ City seed 53071 -> VirtualCity, Eurasia
 
 Dev seed 3670 -> Saturday, 13 March 2021 12:35 PM
 City seed 39247 -> VirtualCity, Eurasia
+
+Dev seed 38213 -> Monday, 15 March 2021 9:06 AM
+City seed 60963 -> Londus, Eurasia
+
+Dev seed 61471 -> Monday, 15 March 2021 9:21 AM
+City seed 65265 -> Londus, Eurasia
+
+Dev seed 7489 -> Monday, 15 March 2021 9:22 AM
+WARNING Invalid listOfHelp (Empty)
+UnityEngine.Debug:LogWarning(Object)
+	<ShowTooltip>c__Iterator0:MoveNext() (at Assets/Scripts/GUI/GenericHelpTooltipUI.cs:114)
+	UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+	City seed 47548 -> Londus, Eurasia
+
+Dev seed 39515 -> Monday, 15 March 2021 9:25 AM
+City seed 23742 -> Londus, Eurasia
+
+Dev seed 52049 -> Monday, 15 March 2021 9:27 AM
+City seed 61030 -> Londus, Eurasia
+
+Dev seed 61866 -> Monday, 15 March 2021 9:29 AM
+City seed 4818 -> Londus, Eurasia
+
+Dev seed 56195 -> Monday, 15 March 2021 9:31 AM
+City seed 39505 -> Londus, Eurasia
+
+Dev seed 31130 -> Monday, 15 March 2021 9:33 AM
+City seed 11616 -> Londus, Eurasia
+
+Dev seed 61332 -> Monday, 15 March 2021 9:39 AM
+City seed 58312 -> Londus, Eurasia
+
+Dev seed 34424 -> Monday, 15 March 2021 9:41 AM
+City seed 17032 -> Londus, Eurasia
+
+Dev seed 19590 -> Monday, 15 March 2021 9:44 AM
+City seed 13035 -> Londus, Eurasia
+
+Dev seed 984 -> Monday, 15 March 2021 9:48 AM
+City seed 63700 -> Londus, Eurasia
+
+Dev seed 62293 -> Monday, 15 March 2021 9:49 AM
+City seed 50213 -> Londus, Eurasia
+
+Dev seed 21872 -> Monday, 15 March 2021 9:50 AM
+City seed 10685 -> Londus, Eurasia
+
+Dev seed 6799 -> Monday, 15 March 2021 9:51 AM
+City seed 44245 -> Londus, Eurasia
+
+Dev seed 3344 -> Monday, 15 March 2021 9:52 AM
+City seed 62034 -> Londus, Eurasia
+
+Dev seed 38631 -> Monday, 15 March 2021 9:53 AM
+City seed 61649 -> Londus, Eurasia
+
+Dev seed 8763 -> Monday, 15 March 2021 9:53 AM
+City seed 40231 -> Londus, Eurasia
+
+Dev seed 22210 -> Monday, 15 March 2021 9:54 AM
+City seed 35230 -> Londus, Eurasia
+
+Dev seed 39617 -> Monday, 15 March 2021 9:55 AM
+City seed 38296 -> Londus, Eurasia
+
+Dev seed 14866 -> Monday, 15 March 2021 9:56 AM
+City seed 37296 -> Londus, Eurasia

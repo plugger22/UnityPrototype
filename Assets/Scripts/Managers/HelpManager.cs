@@ -694,6 +694,18 @@ public class HelpManager : MonoBehaviour
 
         #endregion
 
+        #region NewTurn UI
+        //
+        // - - - New Turn Ui
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "newTurn_0";
+        data.header = "New Turn";
+        data.text = string.Format("When you are ready, press {0}ENTER{1} for a new turn or {2}Click{3} the button", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
         #endregion
 
         #region ...Topics
