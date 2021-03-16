@@ -1950,3 +1950,26 @@ City seed 23639 -> VirtualCity, Eurasia
 
 Dev seed 50079 -> Tuesday, 16 March 2021 12:26 PM
 City seed 9097 -> VirtualCity, Eurasia
+
+Dev seed 1138 -> Tuesday, 16 March 2021 2:51 PM
+City seed 28757 -> VirtualCity, Eurasia
+
+Dev seed 46842 -> Tuesday, 16 March 2021 2:51 PM
+City seed 25660 -> VirtualCity, Eurasia
+
+Dev seed 36850 -> Tuesday, 16 March 2021 2:53 PM
+City seed 1734 -> VirtualCity, Eurasia
+
+Dev seed 36130 -> Tuesday, 16 March 2021 2:54 PM
+City seed 13443 -> VirtualCity, Eurasia
+WARNING Invalid (Game) help (Null)
+UnityEngine.Debug:LogWarning(Object)
+	GameHelpUI:SetGameHelp(GameHelp) (at Assets/Scripts/GUI/GameHelpUI.cs:177)
+	GameHelpUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/GameHelpUI.cs:125)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:371)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:412)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:256)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:371)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	

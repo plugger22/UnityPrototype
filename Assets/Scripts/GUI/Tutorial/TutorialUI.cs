@@ -3,6 +3,7 @@ using modalAPI;
 using packageAPI;
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -28,6 +29,12 @@ public class TutorialUI : MonoBehaviour
     public Button button7;
     public Button button8;
     public Button button9;
+
+    [Header("Tutorial Control Widget")]
+    public Image widget;
+    public TextMeshProUGUI widgetLeft;
+    public TextMeshProUGUI widgetRight;
+    public TextMeshProUGUI widgetQuestion;
 
     #region Private...
     //button sprites
@@ -142,6 +149,10 @@ public class TutorialUI : MonoBehaviour
         Debug.Assert(button7 != null, "Invalid button7 (Null)");
         Debug.Assert(button8 != null, "Invalid button8 (Null)");
         Debug.Assert(button9 != null, "Invalid button9 (Null)");
+        Debug.Assert(widget != null, "Invalid widget (Null)");
+        Debug.Assert(widgetLeft != null, "Invalid widgetLeft (Null)");
+        Debug.Assert(widgetRight != null, "Invalid widgetRight (Null)");
+        Debug.Assert(widgetQuestion != null, "Invalid widgetQuestion (Null)");
     }
     #endregion
 
@@ -199,6 +210,12 @@ public class TutorialUI : MonoBehaviour
         listOfInteractions.Add(interact7);
         listOfInteractions.Add(interact8);
         listOfInteractions.Add(interact9);
+        //widget
+        widget.gameObject.SetActive(true);
+        widgetLeft.text = string.Format("{0}", GameManager.i.guiScript.tutArrowLeft);
+        widgetRight.text = string.Format("{0}", GameManager.i.guiScript.tutArrowRight);
+        widgetQuestion.text = string.Format("{0}", GameManager.i.guiScript.tutQuestion);
+
     }
     #endregion
 

@@ -182,6 +182,8 @@ public class GUIManager : MonoBehaviour
     [HideInInspector] public char tutInfo;
     [HideInInspector] public char tutQuestion;
     [HideInInspector] public char tutGoal;
+    [HideInInspector] public char tutArrowLeft;
+    [HideInInspector] public char tutArrowRight;
 
     //UI
     [HideInInspector] public char arrowRight;
@@ -304,6 +306,8 @@ public class GUIManager : MonoBehaviour
         tutInfo = '\uf129';
         tutQuestion = '\uf128';
         tutGoal = '\uf46c';
+        tutArrowLeft = '\uf060';
+        tutArrowRight = '\uf061';
 
     }
     #endregion
