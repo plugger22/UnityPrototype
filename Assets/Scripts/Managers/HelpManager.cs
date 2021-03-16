@@ -708,6 +708,32 @@ public class HelpManager : MonoBehaviour
 
         #endregion
 
+        #region Tutorial UI
+        //
+        // - - - Tutorial UI
+        //
+        //Overview
+        data = new HelpData();
+        data.tag = "tutorial_0";
+        data.header = "Tutorial";
+        data.text = string.Format("This control allows you to {0}move{1} between different parts of the tutorial and access the {2}Master Help{3}", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Controls
+        data = new HelpData();
+        data.tag = "tutorial_1";
+        data.header = "Controls";
+        data.text = string.Format("Click on the {0}RIGHT ARROW{1} to move to the next stage of the tutorial, the {2}LEFT ARROW{3} for the previous. Click on the {4}QUESTION{5} for Help", 
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        //Master Help
+        data = new HelpData();
+        data.tag = "tutorial_2";
+        data.header = string.Format("{0}Hint{1}", colourTip, colourEnd);
+        data.text = string.Format("The tutorial is flexible and allows you to bounce around if you wish but proceeding through in logical manner is recommended", colourAlert, colourEnd, colourAlert, colourEnd);
+        listOfHelp.Add(data);
+        #endregion
+
+
         #region ...Topics
 
         #region Topic UI

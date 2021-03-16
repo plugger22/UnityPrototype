@@ -48,6 +48,7 @@ public class TutorialUI : MonoBehaviour
     private TutorialButtonInteraction interact7;
     private TutorialButtonInteraction interact8;
     private TutorialButtonInteraction interact9;
+    private GenericHelpTooltipUI widgetHelp;
 
     //assorted
     private int numOfItems;                                                         //number of active items/buttons for this set
@@ -215,7 +216,14 @@ public class TutorialUI : MonoBehaviour
         widgetLeft.text = string.Format("{0}", GameManager.i.guiScript.tutArrowLeft);
         widgetRight.text = string.Format("{0}", GameManager.i.guiScript.tutArrowRight);
         widgetQuestion.text = string.Format("{0}", GameManager.i.guiScript.tutQuestion);
-
+        //widget help
+        widgetHelp = widget.GetComponent<GenericHelpTooltipUI>();
+        if (widgetHelp != null)
+        {
+            List<HelpData> listOfHelp = GameManager.i.helpScript.GetHelpData("tutorial_0", "tutorial_1", "tutorial_2");
+            widgetHelp.SetHelpTooltip(listOfHelp, -200, 200);
+        }
+        else { Debug.LogError("Invalid GenericHelpTooltipUI (Null) for widget"); }
     }
     #endregion
 
