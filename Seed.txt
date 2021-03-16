@@ -1973,3 +1973,24 @@ UnityEngine.Debug:LogWarning(Object)
 	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
 	UnityEngine.EventSystems.EventSystem:Update()
 	
+Dev seed 32018 -> Tuesday, 16 March 2021 3:38 PM
+City seed 44881 -> VirtualCity, Eurasia
+
+Dev seed 39826 -> Tuesday, 16 March 2021 3:39 PM
+City seed 14652 -> VirtualCity, Eurasia
+WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "TutorialPreviousSet"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:361)
+	TutorialWidgetLeft:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetLeft.cs:24)
+	UnityEngine.EventSystems.EventSystem:Update()
+	WARNING EventManager: Invalid event (No listeners present in dictOfListeners) for "TutorialPreviousSet"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:361)
+	TutorialWidgetLeft:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/Tutorial/TutorialWidgetLeft.cs:24)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 4150 -> Tuesday, 16 March 2021 3:40 PM
+City seed 23114 -> VirtualCity, Eurasia
+
+Dev seed 57 -> Tuesday, 16 March 2021 3:52 PM
+City seed 42373 -> VirtualCity, Eurasia

@@ -45,6 +45,7 @@ public class TutorialManager : MonoBehaviour
                 SubInitialiseFastAccess();
                 SubInitialiseReset();
                 SubInitialiseTutorial();
+                SubInitialiseEvents();
                 break;
             case GameState.NewInitialisation:
             case GameState.LoadAtStart:
@@ -99,8 +100,46 @@ public class TutorialManager : MonoBehaviour
     }
     #endregion
 
+    #region SubInitialiseEvents
+    private void SubInitialiseEvents()
+    {
+        //register listener
+        EventManager.i.AddListener(EventType.TutorialPreviousSet, OnEvent, "TutorialManager.cs");
+        EventManager.i.AddListener(EventType.TutorialNextSet, OnEvent, "TutorialManager.cs");
+        EventManager.i.AddListener(EventType.TutorialMasterHelp, OnEvent, "TutorialManager.cs");
+
+    }
     #endregion
 
+    #endregion
+
+    #region OnEvent
+    /// <summary>
+    /// Event Handler
+    /// </summary>
+    /// <param name="eventType"></param>
+    /// <param name="Sender"></param>
+    /// <param name="Param"></param>
+    public void OnEvent(EventType eventType, Component Sender, object Param = null)
+    {
+        //select event type
+        switch (eventType)
+        {
+            case EventType.TutorialPreviousSet:
+                SetPreviousSet();
+                break;
+            case EventType.TutorialNextSet:
+                SetNextSet();
+                break;
+            case EventType.TutorialMasterHelp:
+                SetMasterHelp();
+                break;
+            default:
+                Debug.LogError(string.Format("Invalid eventType {0}{1}", eventType, "\n"));
+                break;
+        }
+    }
+    #endregion
 
     #region InitialiseTutorial
     /// <summary>
@@ -616,6 +655,40 @@ public class TutorialManager : MonoBehaviour
     /// <returns></returns>
     public string GetTutorialJobTooltip()
     { return textListJob.GetIndexedRecord(); }
+
+    #endregion
+
+    #region Widget Interaction...
+
+    #region SetPreviousSet
+    /// <summary>
+    /// Back to previous tutorialSet (left arrow of tutorial Widget pressed)
+    /// </summary>
+    private void SetPreviousSet()
+    {
+        Debug.LogFormat("[Tst] TutorialManager.cs -> SetPreviousSet: Go BACK one TutorialSet{0}", "\n");
+    }
+    #endregion
+
+    #region SetNextSet
+    /// <summary>
+    /// Go to the Next tutorialSet (right arrow of tutorial Widget pressed)
+    /// </summary>
+    private void SetNextSet()
+    {
+        Debug.LogFormat("[Tst] TutorialManager.cs -> SetNextSet: Go FORWARD one TutorialSet{0}", "\n");
+    }
+    #endregion
+
+    #region SetMasterHelp
+    /// <summary>
+    /// Open Master Help (question on tutorial Widget pressed)
+    /// </summary>
+    private void SetMasterHelp()
+    {
+        Debug.LogFormat("[Tst] TutorialManager.cs -> SetMasterHelp: OPEN Master Helps{0}", "\n");
+    }
+    #endregion
 
     #endregion
 
