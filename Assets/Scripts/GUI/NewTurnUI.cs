@@ -95,7 +95,7 @@ public class NewTurnUI : MonoBehaviour, IPointerClickHandler
         if (help != null)
         {
             List<HelpData> listOfHelp = GameManager.i.helpScript.GetHelpData("newTurn_0");
-            help.SetHelpTooltip(listOfHelp, -350, 200);
+            help.SetHelpTooltip(listOfHelp, 0, 100);
         }
         else { Debug.LogError("Invalid GenericHelpTooltipUI (Null) for NewTurnUI"); }
     }

@@ -221,7 +221,7 @@ public class TutorialUI : MonoBehaviour
         if (widgetHelp != null)
         {
             List<HelpData> listOfHelp = GameManager.i.helpScript.GetHelpData("tutorial_0", "tutorial_1", "tutorial_2");
-            widgetHelp.SetHelpTooltip(listOfHelp, -200, 200);
+            widgetHelp.SetHelpTooltip(listOfHelp, -50, 0);
         }
         else { Debug.LogError("Invalid GenericHelpTooltipUI (Null) for widget"); }
     }

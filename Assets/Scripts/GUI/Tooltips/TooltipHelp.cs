@@ -148,7 +148,10 @@ public class TooltipHelp : MonoBehaviour
             { screenPos.y += difference_y * -1 + offset; }
             //x pos
             if (screenPos.x + width >= Screen.width)
-            { screenPos.x -= (width * 2 + screenPos.x - Screen.width); }
+            {
+                /*screenPos.x -= (width * 2 + screenPos.x - Screen.width);*/
+                screenPos.x -= (screenPos.x + width  - Screen.width - width / 4);
+            }
             //minimum position of tooltip from Left Hand side is half width
             else if (screenPos.x <= halfWidth)
             { screenPos.x = halfWidth; }

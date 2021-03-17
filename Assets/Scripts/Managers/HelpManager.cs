@@ -722,8 +722,8 @@ public class HelpManager : MonoBehaviour
         data = new HelpData();
         data.tag = "tutorial_1";
         data.header = "Controls";
-        data.text = string.Format("Click on the {0}RIGHT ARROW{1} to move to the next stage of the tutorial, the {2}LEFT ARROW{3} for the previous. Click on the {4}QUESTION{5} for Help", 
-            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
+        data.text = string.Format("Click on the {0}RIGHT{1} arrow to move to the {2}Next{3} stage of the tutorial, the {4}LEFT{5} for the {6}Previous{7}. Click on the {8}QUESTION{9} for {10}Help{11}", 
+            colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd, colourAlert, colourEnd);
         listOfHelp.Add(data);
         //Master Help
         data = new HelpData();
