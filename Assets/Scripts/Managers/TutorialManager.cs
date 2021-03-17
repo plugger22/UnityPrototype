@@ -174,11 +174,8 @@ public class TutorialManager : MonoBehaviour
                         set = tutorial.listOfSets[index];
                         if (set != null)
                         {
-                            Debug.LogFormat("[Tut] TutorialManager.cs -> InitialiseTutorial: set \"{0}\" loaded{1}", set.name, "\n");
-                            // Features toggle on/off
-                            UpdateFeatures(set.listOfFeaturesOff, set.listOfGUIOff);
-                            //Goals reset
-                            GameManager.i.dataScript.ClearListOfTutorialGoals();
+                            //Initialise tutorial SET
+                            InitialiseTutorialSet(set);
                         }
                         else { Debug.LogErrorFormat("Invalid tutorialSet (Null) for index {0}", index); }
                     }
@@ -189,8 +186,21 @@ public class TutorialManager : MonoBehaviour
             else { Debug.LogError("Invalid tutorial city (Null)"); }
         }
         else { Debug.LogError("Invalid tutorial Scenario (Null)"); }
+    }
+    #endregion
 
-
+    #region InitialiseTutorialSet
+    /// <summary>
+    /// Initialises a tutorial set within a tutorial (could be called by starting a new tutorial or from bouncing around within a tutorial)
+    /// </summary>
+    /// <param name="set"></param>
+    private void InitialiseTutorialSet(TutorialSet set)
+    {
+        Debug.LogFormat("[Tut] TutorialManager.cs -> InitialiseTutorialSet: set \"{0}\" loaded{1}", set.name, "\n");
+        // Features toggle on/off
+        UpdateFeatures(set.listOfFeaturesOff, set.listOfGUIOff);
+        //Goals reset
+        GameManager.i.dataScript.ClearListOfTutorialGoals();
     }
     #endregion
 
@@ -667,6 +677,24 @@ public class TutorialManager : MonoBehaviour
     private void SetPreviousSet()
     {
         Debug.LogFormat("[Tst] TutorialManager.cs -> SetPreviousSet: Go BACK one TutorialSet{0}", "\n");
+        if (index > 0)
+        {
+            index--;
+            set = tutorial.listOfSets[index];
+            if (set != null)
+            {
+                InitialiseTutorialSet(set);
+                //activate tutorialUI
+                EventManager.i.PostNotification(EventType.TutorialOpenUI, this, set, "TutorialManager.cs -> SetPreviousSet");
+            }
+            else { Debug.LogErrorFormat("Invalid set (Null) for tutorial \"{0}\" listOfSets[{1}]", tutorial.name, index); }
+        }
+        else
+        {
+            //at the beginning of the tutorial
+
+            //To do -> Message
+        }
     }
     #endregion
 
@@ -677,6 +705,34 @@ public class TutorialManager : MonoBehaviour
     private void SetNextSet()
     {
         Debug.LogFormat("[Tst] TutorialManager.cs -> SetNextSet: Go FORWARD one TutorialSet{0}", "\n");
+        index++;
+        if (index < tutorial.listOfSets.Count)
+        {
+            set = tutorial.listOfSets[index];
+            if (set != null)
+            {
+                InitialiseTutorialSet(set);
+                //activate tutorialUI
+                EventManager.i.PostNotification(EventType.TutorialOpenUI, this, set, "TutorialManager.cs -> SetNextSet");
+            }
+            else { Debug.LogErrorFormat("Invalid set (Null) for tutorial \"{0}\" listOfSets[{1}]", tutorial.name, index); }
+        }
+        else
+        {
+            //maxxed out sets
+            index--;
+            //Message
+            ModalOutcomeDetails details = new ModalOutcomeDetails()
+            {
+                side = GameManager.i.sideScript.PlayerSide,
+                textTop = "Well that's it. Consider yourself trained and ready",
+                textBottom = "Don't go embarrassing me now and get yourself killed<br><br>Press ESC to return to the Main Menu",
+                sprite = tutorial.sprite,
+                isSpecial = true,
+                isSpecialGood = true
+            };
+            EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
+        }
     }
     #endregion
 

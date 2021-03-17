@@ -1832,6 +1832,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 62ce9c7fd109e9a4a9dd9a4fb8bb01b4, type: 2}
   - {fileID: 11400000, guid: 369ffecea2dba2d498950da307347892, type: 2}
   - {fileID: 11400000, guid: 0ba135735cfb2314c9c4a1778a1aa27a, type: 2}
+  - {fileID: 11400000, guid: 8daec609db5c94d4c808e9a92441f9fe, type: 2}
+  - {fileID: 11400000, guid: 2f16ad5d6a7fbb640bf5acab159bff6c, type: 2}
   arrayOfTutorialTypes:
   - {fileID: 11400000, guid: 6af73092ead59e34f89fadf31d6d355c, type: 2}
   - {fileID: 11400000, guid: 3ea5e079678bd114896744e070740f21, type: 2}
@@ -5956,6 +5958,7 @@ MonoBehaviour:
   resistanceTutorial: {fileID: 11400000, guid: c050560a8867a3a4c806544632dda679, type: 2}
   authorityTutorial: {fileID: 0}
   maxNumOfItems: 10
+  minNumOfOptions: 2
   textListJob: {fileID: 11400000, guid: 77da817c0d61f5d4cb968b30ce6512c1, type: 2}
   tutorial: {fileID: 0}
   set: {fileID: 0}
@@ -6748,6 +6751,8 @@ MonoBehaviour:
   tutInfo: 0
   tutQuestion: 0
   tutGoal: 0
+  tutArrowLeft: 0
+  tutArrowRight: 0
   arrowRight: 0
   arrowLeft: 0
   stabilityIcon: 

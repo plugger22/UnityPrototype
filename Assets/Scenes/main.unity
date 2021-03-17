@@ -71735,7 +71735,7 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -76049,7 +76049,7 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -88022,7 +88022,7 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -112798,6 +112798,7 @@ GameObject:
   - component: {fileID: 1887050437}
   - component: {fileID: 1887050439}
   - component: {fileID: 1887050438}
+  - component: {fileID: 1887050440}
   m_Layer: 5
   m_Name: widget
   m_TagString: Untagged
@@ -112860,6 +112861,17 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1887050436}
   m_CullTransparentMesh: 0
+--- !u!114 &1887050440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1887050436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a9ffc462656cc842975ce665d296215, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1891406607
 GameObject:
   m_ObjectHideFlags: 0
@@ -121614,7 +121626,7 @@ GameObject:
   - component: {fileID: 2040445475}
   - component: {fileID: 2040445474}
   - component: {fileID: 2040445476}
-  - component: {fileID: 2040445477}
+  - component: {fileID: 2040445478}
   m_Layer: 5
   m_Name: newTurnImage
   m_TagString: Untagged
@@ -121690,7 +121702,7 @@ MonoBehaviour:
   turnObject: {fileID: 0}
   turnImage: {fileID: 0}
   turnText: {fileID: 0}
---- !u!114 &2040445477
+--- !u!114 &2040445478
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121698,9 +121710,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 2040445472}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a9ffc462656cc842975ce665d296215, type: 3}
+  m_Script: {fileID: 11500000, guid: ca7d8d72305dd0342acffd3c30b3c77f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tooltipHeader: 
+  tooltipMain: 
+  tooltipDetails: 
+  x_offset: 0
+  y_offset: 0
+  nodeID: 0
+  connID: 0
+  testTag: 
+  isIgnoreClick: 0
+  tooltipType: 0
 --- !u!1001 &2040781240
 Prefab:
   m_ObjectHideFlags: 0
