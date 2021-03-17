@@ -1869,6 +1869,12 @@ public class ValidationManager : MonoBehaviour
                                 else
                                 {
                                     List<string> listOfNames = new List<string>();
+                                    //check set index corresponds to list index
+                                    if (set.index != j)
+                                    {
+                                        Debug.LogFormat("[Val] ValidationManager.cs -> ValidateTutorialData: Set \"{0}\", for tutorial \"{1}\", has an invalid index (is \"{2}\", should be \"{3}\"){4}",
+                                            set.name, set.tutorial.name, set.index, j, "\n");
+                                    }
                                     //check set -> features lists for null
                                     if (CheckList(set.listOfFeaturesOff, "listOfFeaturesOff", tag) == true)
                                     {

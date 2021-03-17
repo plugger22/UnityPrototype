@@ -691,9 +691,17 @@ public class TutorialManager : MonoBehaviour
         }
         else
         {
-            //at the beginning of the tutorial
-
-            //To do -> Message
+            //at the beginning of the tutorial -> Message
+            ModalOutcomeDetails details = new ModalOutcomeDetails()
+            {
+                side = GameManager.i.sideScript.PlayerSide,
+                textTop = string.Format("{0}", GameManager.Formatt("We're back where we started", ColourType.neutralText)),
+                textBottom = string.Format("Nothing wrong with that, it's good to review what you've learnt<br><br>{0}", GameManager.Formatt("You are free to move around the Tutorial", ColourType.salmonText)),
+                sprite = tutorial.sprite,
+                isSpecial = true,
+                isSpecialGood = true
+            };
+            EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
         }
     }
     #endregion
@@ -725,8 +733,8 @@ public class TutorialManager : MonoBehaviour
             ModalOutcomeDetails details = new ModalOutcomeDetails()
             {
                 side = GameManager.i.sideScript.PlayerSide,
-                textTop = "Well that's it. Consider yourself trained and ready",
-                textBottom = "Don't go embarrassing me now and get yourself killed<br><br>Press ESC to return to the Main Menu",
+                textTop = string.Format("Well that's it. Consider yourself {0}", GameManager.Formatt("trained and ready", ColourType.neutralText)),
+                textBottom = string.Format("Don't go embarrassing me now and get yourself killed<br><br>{0}", GameManager.Formatt("Press ESC to return to the Main Menu", ColourType.salmonText)),
                 sprite = tutorial.sprite,
                 isSpecial = true,
                 isSpecialGood = true

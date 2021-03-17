@@ -15,6 +15,7 @@ using gameAPI;
 public class ModalActionMenu : MonoBehaviour
 {
     //public GameObject modalActionObject;
+    public Canvas menuCanvas;
     public GameObject modalMenuObject;
     public Image modalPanel;
     public Image background;
@@ -69,16 +70,43 @@ public class ModalActionMenu : MonoBehaviour
     }
     #endregion
 
+    #region Start
     /// <summary>
     /// initialisation
     /// </summary>
     private void Start()
     {
+        //asserts
+        Debug.Assert(menuCanvas != null, "Invalid menuCanvas (Null)");
+        Debug.Assert(modalMenuObject != null, "Invalid modalMenuObject (Null)");
+        Debug.Assert(modalPanel != null, "Invalid modalPanel (Null)");
+        Debug.Assert(background != null, "Invalid background (Null)");
+        Debug.Assert(divider != null, "Invalid divider (Null)");
+        Debug.Assert(itemDetails != null, "Invalid itemDetails (Null)");
+        Debug.Assert(button1 != null, "Invalid button1 (Null)");
+        Debug.Assert(button2 != null, "Invalid button2 (Null)");
+        Debug.Assert(button3 != null, "Invalid button3 (Null)");
+        Debug.Assert(button4 != null, "Invalid button4 (Null)");
+        Debug.Assert(button5 != null, "Invalid button5 (Null)");
+        Debug.Assert(button6 != null, "Invalid button6 (Null)");
+        Debug.Assert(button1Text != null, "Invalid button1Text (Null)");
+        Debug.Assert(button2Text != null, "Invalid button2Text (Null)");
+        Debug.Assert(button3Text != null, "Invalid button3Text (Null)");
+        Debug.Assert(button4Text != null, "Invalid button4Text (Null)");
+        Debug.Assert(button5Text != null, "Invalid button5Text (Null)");
+        Debug.Assert(button6Text != null, "Invalid button6Text (Null)");
+        //offset
         offset = GameManager.i.guiScript.tooltipOffset * 2;
+        //activate object
+        modalMenuObject.SetActive(true);
+        //deactivate canvas
+        menuCanvas.gameObject.SetActive(false);
         //register listener
         EventManager.i.AddListener(EventType.CloseActionMenu, OnEvent, "ModalActionMenu");
     }
+    #endregion
 
+    #region OnEvent
     /// <summary>
     /// Event Handler
     /// </summary>
@@ -98,6 +126,7 @@ public class ModalActionMenu : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
     #region SetActionMenu
     /// <summary>
@@ -115,7 +144,8 @@ public class ModalActionMenu : MonoBehaviour
         if (GameManager.i.turnScript.CheckRemainingActions() == true)
         {
             //modalActionObject.SetActive(true);
-            modalMenuObject.SetActive(true);
+            menuCanvas.gameObject.SetActive(true);
+
             //set all states to off
             button1.gameObject.SetActive(false);
             button2.gameObject.SetActive(false);
@@ -245,13 +275,14 @@ public class ModalActionMenu : MonoBehaviour
     }
     #endregion
 
+    #region CloseActionMenu
     /// <summary>
     /// close Action Menu
     /// </summary>
     public void CloseActionMenu()
     {
         //modalActionObject.SetActive(false);
-        modalMenuObject.SetActive(false);
+        menuCanvas.gameObject.SetActive(false);
         GameManager.i.guiScript.SetIsBlocked(false, modalLevel);
         //remove highlight from node
         GameManager.i.nodeScript.ToggleNodeHighlight();
@@ -266,6 +297,8 @@ public class ModalActionMenu : MonoBehaviour
         GameManager.i.inputScript.ResetStates(modalState);
         Debug.LogFormat("[UI] ModalActionMenu.cs -> CloseActionMenu{0}", "\n");
     }
+    #endregion
+
 }
 
 
