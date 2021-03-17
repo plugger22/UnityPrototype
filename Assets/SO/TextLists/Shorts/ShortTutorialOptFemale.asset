@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd28eb1d1c869e498706f16d0e613c3, type: 3}
+  m_Name: ShortTutorialOptFemale
+  m_EditorClassIdentifier: 
+  descriptor: 'Used for tutorial option tooltips -> What name?
+
+    Self contained, short, shows as main tooltip text under tag for name Option. Each
+    name needs a first and last name component'
+  category: {fileID: 11400000, guid: 6825b2997be0191448f1e386a06ee602, type: 2}
+  isTestForDuplicates: 1
+  isTestForTextTags: 0
+  randomList:
+  - Ellen Ripley
+  - Sarah Connor
+  - Katniss Everdeen
+  - Scarlett O'Hara
+  - Clarice Starling
+  - Miranda Priestley
+  - Lisbeth Solander
+  - Elizabeth Bennett
+  - Arya Stark
+  - Gracie Hart
+  index: 12
