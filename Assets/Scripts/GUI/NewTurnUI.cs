@@ -17,7 +17,7 @@ public class NewTurnUI : MonoBehaviour, IPointerClickHandler
     public Image turnImage;
     public TextMeshProUGUI turnText;
 
-    private GenericHelpTooltipUI help;
+    private GenericTooltipUI help;
 
     #region static instance...
     private static NewTurnUI newTurnUI;
@@ -91,13 +91,15 @@ public class NewTurnUI : MonoBehaviour, IPointerClickHandler
         turnImage.gameObject.SetActive(true);
         turnText.gameObject.SetActive(true);
         //help
-        help = turnImage.GetComponent<GenericHelpTooltipUI>();
+        help = turnImage.GetComponent<GenericTooltipUI>();
         if (help != null)
         {
-            List<HelpData> listOfHelp = GameManager.i.helpScript.GetHelpData("newTurn_0");
-            help.SetHelpTooltip(listOfHelp, 0, 100);
+            help.tooltipHeader = string.Format("<size=120%>{0}</size>",GameManager.Formatt("New Turn", ColourType.salmonText));
+            help.tooltipMain = string.Format("When you are ready, press {0} or <b>Click this button</b> for the next turn", GameManager.Formatt("ENTER", ColourType.neutralText));
+            help.x_offset = 25;
+            help.y_offset = 50;
         }
-        else { Debug.LogError("Invalid GenericHelpTooltipUI (Null) for NewTurnUI"); }
+        else { Debug.LogError("Invalid GenericTooltipUI (Null) for NewTurnUI"); }
     }
     #endregion
 
