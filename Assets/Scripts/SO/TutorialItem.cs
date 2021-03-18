@@ -41,10 +41,10 @@ public class TutorialItem : ScriptableObject
     public bool isRandomOptions;
     [Tooltip("Maximum of 4 topic Options, mininum of 2, sourced from Topics / TopicOptions / OptionsTutorial. Compulsory")]
     public List<TutorialOption> listOfOptions;
-    [Tooltip("Option/s that apply if the player selects 'Ignore', only the first 2 are used. Compulsory")]
+    [Tooltip("Option/s that apply if the player selects 'Ignore', only the first one is used. Compulsory")]
     public List<TutorialOption> listOfIgnoreOptions;
 
-
+    /*[HideInInspector] public bool isQueryDone;*/
 
     public void OnEnable()
     {

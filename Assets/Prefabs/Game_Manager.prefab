@@ -1459,6 +1459,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 27e68d4562a8768428a07bae849067f7, type: 2}
   - {fileID: 11400000, guid: 0454e0296aeb0e84481503e083c07051, type: 2}
   - {fileID: 11400000, guid: 0ce6de063ba03c84aa26c8d4e42a3ac8, type: 2}
+  - {fileID: 11400000, guid: f4e716033ff187a43bab159cb3b4b09a, type: 2}
   arrayOfContactTypes:
   - {fileID: 11400000, guid: e83571238ceb3544f8ef9d46cb18cbc3, type: 2}
   - {fileID: 11400000, guid: 88efaf6304c9e364c8719f9c954d687d, type: 2}
@@ -2353,6 +2354,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1fa1becf0646d474ca4f44d743f71524, type: 2}
   - {fileID: 11400000, guid: 98a06f5fb9c4f9e4194a09f7e1bd77f5, type: 2}
   - {fileID: 11400000, guid: 0937a0c79ed04ea4ebdb71da500bbadd, type: 2}
+  - {fileID: 11400000, guid: cb9b78c1e4e4caa4580f6e8e0505e17b, type: 2}
   arrayOfBillboardAdverts:
   - {fileID: 11400000, guid: 0f4fcf7e686e3284a96ac4c137d953e7, type: 2}
   - {fileID: 11400000, guid: 53dcb7642d407c34b8e3a0c64391a16f, type: 2}
@@ -5975,6 +5977,7 @@ MonoBehaviour:
   option1Tag: 
   option2Tag: 
   option3Tag: 
+  optionIgnoreTag: 
   queryType: {fileID: 0}
 --- !u!114 &114525357966728784
 MonoBehaviour:

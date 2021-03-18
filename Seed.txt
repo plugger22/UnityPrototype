@@ -2211,3 +2211,163 @@ UnityEngine.Debug:LogWarningFormat(String, Object[])
 	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
 	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
 	City seed 10642 -> VirtualCity, Eurasia
+
+Dev seed 53619 -> Thursday, 18 March 2021 4:33 PM
+WARNING [Val] ValidateSO: MISMATCH on TextList, array 91, assets 93 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:2256)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2171)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialItem, array 7, assets 8 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialItem[]) (at Assets/Scripts/Managers/ValidationManager.cs:2256)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2215)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	City seed 48301 -> VirtualCity, Eurasia
+
+Dev seed 4542 -> Thursday, 18 March 2021 4:35 PM
+WARNING [Val] ValidateSO: MISMATCH on TextList, array 91, assets 93 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:2256)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2171)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialItem, array 7, assets 8 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialItem[]) (at Assets/Scripts/Managers/ValidationManager.cs:2256)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2215)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	City seed 57866 -> VirtualCity, Eurasia
+
+Dev seed 38055 -> Thursday, 18 March 2021 5:17 PM
+WARNING [Val] ValidateSO: MISMATCH on TopicOption, array 1515, assets 1516 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicOption[]) (at Assets/Scripts/Managers/ValidationManager.cs:2256)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2137)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	WARNING [Val] ValidateSO: MISMATCH on TextList, array 91, assets 93 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:2256)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2171)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialItem, array 7, assets 8 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialItem[]) (at Assets/Scripts/Managers/ValidationManager.cs:2256)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2215)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	City seed 64042 -> VirtualCity, Eurasia
+WARNING Invalid listOfIgnoreOptions (Empty) for topicItem "Res0Query0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialUI:GetTopicData(TutorialItem) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:582)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:456)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:263)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 43650 -> Thursday, 18 March 2021 5:18 PM
+WARNING [Val] ValidateSO: MISMATCH on TopicOption, array 1515, assets 1516 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicOption[]) (at Assets/Scripts/Managers/ValidationManager.cs:2256)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2137)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	WARNING [Val] ValidateSO: MISMATCH on TextList, array 91, assets 93 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:2256)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2171)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialItem, array 7, assets 8 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialItem[]) (at Assets/Scripts/Managers/ValidationManager.cs:2256)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2215)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	City seed 45055 -> VirtualCity, Eurasia
+WARNING Invalid listOfIgnoreOptions (Empty) for topicItem "Res0Query0"
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	TutorialUI:GetTopicData(TutorialItem) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:582)
+	TutorialUI:OpenTutorialItem(Int32) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:456)
+	TutorialUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/Tutorial/TutorialUI.cs:263)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 12614 -> Thursday, 18 March 2021 5:21 PM
+WARNING [Val] ValidateSO: MISMATCH on TopicOption, array 1515, assets 1516 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicOption[]) (at Assets/Scripts/Managers/ValidationManager.cs:2256)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2137)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	WARNING [Val] ValidateSO: MISMATCH on TextList, array 91, assets 93 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:2256)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2171)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialItem, array 7, assets 8 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialItem[]) (at Assets/Scripts/Managers/ValidationManager.cs:2256)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2215)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	City seed 870 -> VirtualCity, Eurasia
+
+Dev seed 9860 -> Thursday, 18 March 2021 5:22 PM
+WARNING [Val] ValidateSO: MISMATCH on TopicOption, array 1515, assets 1516 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicOption[]) (at Assets/Scripts/Managers/ValidationManager.cs:2256)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2137)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	WARNING [Val] ValidateSO: MISMATCH on TextList, array 91, assets 93 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:2256)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2171)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialItem, array 7, assets 8 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialItem[]) (at Assets/Scripts/Managers/ValidationManager.cs:2256)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2215)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	City seed 45882 -> VirtualCity, Eurasia
+ERROR Invalid effectOutcome "TutIgnore"
+UnityEngine.Debug:LogError(Object)
+	EffectManager:ProcessEffect(Effect, Node, EffectDataInput, Actor) (at Assets/Scripts/Managers/EffectManager.cs:2534)
+	TutorialManager:ProcessTutorialIgnoreOption(List`1) (at Assets/Scripts/Managers/TutorialManager.cs:704)
+	TopicUI:ProcessTopicIgnore() (at Assets/Scripts/GUI/TopicUI.cs:1322)
+	TopicUI:OnEvent(EventType, Component, Object) (at Assets/Scripts/GUI/TopicUI.cs:463)
+	EventManager:PostNotification(EventType, Component, Object, String) (at Assets/Scripts/Managers/EventManager.cs:374)
+	ButtonInteraction:OnPointerClick(PointerEventData) (at Assets/Scripts/GUI/ButtonInteraction.cs:42)
+	UnityEngine.EventSystems.EventSystem:Update()
+	
+Dev seed 39772 -> Thursday, 18 March 2021 5:24 PM
+WARNING [Val] ValidateSO: MISMATCH on TopicOption, array 1515, assets 1516 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TopicOption[]) (at Assets/Scripts/Managers/ValidationManager.cs:2256)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2137)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	WARNING [Val] ValidateSO: MISMATCH on TextList, array 91, assets 93 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TextList[]) (at Assets/Scripts/Managers/ValidationManager.cs:2256)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2171)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	WARNING [Val] ValidateSO: MISMATCH on TutorialItem, array 7, assets 8 records
+UnityEngine.Debug:LogWarningFormat(String, Object[])
+	ValidationManager:ValidateSOGeneric(TutorialItem[]) (at Assets/Scripts/Managers/ValidationManager.cs:2256)
+	ValidationManager:ValidateSO(GameState) (at Assets/Scripts/Managers/ValidationManager.cs:2215)
+	GameManager:InitialiseWithPerformanceMonitoring(List`1) (at Assets/Scripts/GameManager.cs:926)
+	GameManager:Start() (at Assets/Scripts/GameManager.cs:429)
+	City seed 13778 -> VirtualCity, Eurasia

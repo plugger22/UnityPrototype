@@ -1319,7 +1319,7 @@ public class TopicUI : MonoBehaviour
                         GameManager.i.topicScript.ProcessIgnore();
                         break;
                     case TopicDecisionType.Tutorial:
-                        GameManager.i.tutorialScript.ProcessTutorialOption(dataPackage.listOfIgnoreEffects[0]);
+                        GameManager.i.tutorialScript.ProcessTutorialIgnoreOption(dataPackage.listOfIgnoreEffects);
                         break;
                     default: Debug.LogWarningFormat("Unrecognised dataPackage.uiType \"{0}\"", dataPackage.uiType); break;
                 }

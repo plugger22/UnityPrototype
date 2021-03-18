@@ -38,6 +38,7 @@ public class TutorialManager : MonoBehaviour
     [HideInInspector] public string option1Tag;
     [HideInInspector] public string option2Tag;
     [HideInInspector] public string option3Tag;
+    [HideInInspector] public string optionIgnoreTag;
     [HideInInspector] public TutorialQueryType queryType;
 
     #endregion
@@ -674,6 +675,79 @@ public class TutorialManager : MonoBehaviour
 
         }
         else { Debug.LogError("Invalid option (Null)"); }
+    }
+
+    /// <summary>
+    /// Process Ignore option from TopicUI.cs
+    /// </summary>
+    /// <param name="option"></param>
+    public void ProcessTutorialIgnoreOption(List<Effect> listOfIgnoreEffects)
+    {
+        bool isErrorFlag = false;
+        if (listOfIgnoreEffects != null)
+        {
+            string topText = "Unknown";
+            string bottomText = "Unknown";
+            EffectDataReturn effectReturn = new EffectDataReturn();
+            //needed for EffectManager.cs code
+            EffectDataInput dataInput = new EffectDataInput();
+            dataInput.queryType = queryType;
+            //Process Effect (Only the first effect in listOfIgnoreEffects is processed, the rest are ignored)
+            Effect effect = listOfIgnoreEffects[0];
+            if (effect != null)
+            {
+                //use player node (need a node for EffectManager.cs code)
+                Node node = GameManager.i.dataScript.GetNode(GameManager.i.nodeScript.GetPlayerNodeID());
+                if (node != null)
+                {
+                    //process effect
+                    effectReturn = GameManager.i.effectScript.ProcessEffect(effect, node, dataInput);
+                    if (effectReturn != null)
+                    {
+                        //top text
+                        if (string.IsNullOrEmpty(effectReturn.topText) == false)
+                        { topText = effectReturn.topText; }
+                        //bottom text
+                        if (string.IsNullOrEmpty(effectReturn.bottomText) == false)
+                        { bottomText = string.Format("{0}", effectReturn.bottomText); }
+                    }
+                    else
+                    {
+                        Debug.LogWarningFormat("Invalid effectReturn (Null)");
+                        isErrorFlag = true;
+                    }
+                }
+                else { Debug.LogWarningFormat("Effect \"{0}\" not processed as invalid Node (Null) for IGNORE", effect.name); }
+            }
+            else { Debug.LogError("Invalid effect (Null) for option.listOfIgnoreEffects[0]"); }
+            //Output
+            if (isErrorFlag == false)
+            {
+                /*
+                //repeat prevention
+                option.tutorialItem.isQueryDone = true;
+                */
+
+                //Outcome
+                ModalOutcomeDetails details = new ModalOutcomeDetails()
+                {
+                    side = GameManager.i.sideScript.PlayerSide,
+                    textTop = topText,
+                    textBottom = bottomText,
+                    sprite = tutorial.sprite,
+                    isSpecial = true,
+                    isSpecialGood = true
+                };
+                EventManager.i.PostNotification(EventType.OutcomeOpen, this, details);
+            }
+            else
+            {
+                //no outcome -> Error
+                Debug.LogWarning("No Outcome for IGNORE option  (isErrorFlag true)");
+            }
+
+        }
+        else { Debug.LogError("Invalid listOfIgnoreEffects (Null)"); }
     }
 
     /// <summary>

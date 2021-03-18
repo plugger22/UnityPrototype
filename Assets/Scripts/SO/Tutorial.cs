@@ -21,6 +21,9 @@ public class Tutorial : ScriptableObject
     [Tooltip("Template options for use with all TutorialItem Queries. Required to be FOUR")]
     public TopicOption[] arrayOfOptions = new TopicOption[4];
 
+    [Tooltip("Template option for use with tutorialItem Queries where the IGNORE button is pressed. Required")]
+    public TopicOption ignoreOption;
+
 
     public void OnEnable()
     {

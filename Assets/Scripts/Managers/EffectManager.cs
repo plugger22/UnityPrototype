@@ -2091,6 +2091,7 @@ public class EffectManager : MonoBehaviour
                     case "TutOption1":
                     case "TutOption2":
                     case "TutOption3":
+                    case "TutIgnore":
                         effectResolve = ResolveTutorialData(effect, dataInput);
                         effectReturn = ConvertEffectResolveToReturn(effectResolve, effectReturn);
                         break;
@@ -4151,13 +4152,14 @@ public class EffectManager : MonoBehaviour
         EffectDataResolve effectResolve = new EffectDataResolve();
         //get relevant option text
         switch (effect.outcome.name)
-                {
-                    case "TutOption0": optionText = GameManager.i.tutorialScript.option0Tag; break;
-                    case "TutOption1": optionText = GameManager.i.tutorialScript.option1Tag; break;
-                    case "TutOption2": optionText = GameManager.i.tutorialScript.option2Tag; break;
-                    case "TutOption3": optionText = GameManager.i.tutorialScript.option3Tag; break;
-                    default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\"", effect.outcome.name); break;
-                }
+        {
+            case "TutOption0": optionText = GameManager.i.tutorialScript.option0Tag; break;
+            case "TutOption1": optionText = GameManager.i.tutorialScript.option1Tag; break;
+            case "TutOption2": optionText = GameManager.i.tutorialScript.option2Tag; break;
+            case "TutOption3": optionText = GameManager.i.tutorialScript.option3Tag; break;
+            case "TutIgnore": optionText = GameManager.i.tutorialScript.optionIgnoreTag; break;
+            default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\"", effect.outcome.name); break;
+        }
         switch (data.queryType.name)
         {
             case "Job":
@@ -4189,7 +4191,7 @@ public class EffectManager : MonoBehaviour
                         default: Debug.LogWarningFormat("Unrecognised playerSide \"{0}\"", data.side); break;
                     }
                     effectResolve.topText = string.Format("{0}Good Choice!{1}", colourAlert, colourEnd);
-                    effectResolve.bottomText = string.Format("You'll be known as {0}{1}{2} until you've completed your first successful mission<br><br>You can then change it to whatever you'd like", 
+                    effectResolve.bottomText = string.Format("You'll be known as {0}{1}{2} until you've completed your first successful mission<br><br>You can then change it to whatever you'd like",
                         colourNeutral, optionText, colourEnd);
                 }
                 else { Debug.LogWarning("Invalid optionText (Null) for effect Query type Name"); }
