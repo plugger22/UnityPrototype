@@ -19,7 +19,7 @@ public class TutorialManager : MonoBehaviour
     [Tooltip("Maximum number of Tutorial Items allowed per TutorialSet")]
     [Range(5, 15)] public int maxNumOfItems = 10;
     [Tooltip("Mininum number of TopicOptions for a Question type TutorialItem in listOfOptions")]
-    [Range(2, 2)] public int minNumOfOptions = 2;
+    [Range(4, 4)] public int minNumOfOptions = 4;
 
     [Header("Text Lists")]
     [Tooltip("Reasons for the job query tooltip")]
@@ -38,10 +38,7 @@ public class TutorialManager : MonoBehaviour
     [HideInInspector] public string option1Tag;
     [HideInInspector] public string option2Tag;
     [HideInInspector] public string option3Tag;
-    [HideInInspector] public string option0Text;
-    [HideInInspector] public string option1Text;
-    [HideInInspector] public string option2Text;
-    [HideInInspector] public string option3Text;
+    [HideInInspector] public TutorialQueryType queryType;
 
     #endregion
 
@@ -99,6 +96,7 @@ public class TutorialManager : MonoBehaviour
     #region SubInitialiseReset
     private void SubInitialiseReset()
     {
+        /*
         //reset all tutorialItem.SO's back to 'isQueryDone' -> false
         TutorialItem[] arrayOfItems = GameManager.i.loadScript.arrayOfTutorialItems;
         if (arrayOfItems != null)
@@ -111,6 +109,7 @@ public class TutorialManager : MonoBehaviour
             }
         }
         else { Debug.LogError("Invalid arrayOfTutorialItems (Null)"); }
+        */
     }
     #endregion
 
@@ -618,6 +617,7 @@ public class TutorialManager : MonoBehaviour
             EffectDataReturn effectReturn = new EffectDataReturn();
             //needed for EffectManager.cs code
             EffectDataInput dataInput = new EffectDataInput();
+            dataInput.queryType = queryType;
             //Process Effect (Only the first effect in listOfGoodEffects is processed, the rest are ignored)
             Effect effect = option.listOfGoodEffects[0];
             if (effect != null)

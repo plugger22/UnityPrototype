@@ -1311,8 +1311,20 @@ public class TopicUI : MonoBehaviour
             {
                 //close TopicUI (with an arbitrary parameter > -1 to indicate outcome window required)
                 CloseTopicUI(1);
+                switch (dataPackage.uiType)
+                {
+                    case TopicDecisionType.Normal:
+                    case TopicDecisionType.Letter:
+                    case TopicDecisionType.Comms:
+                        GameManager.i.topicScript.ProcessIgnore();
+                        break;
+                    case TopicDecisionType.Tutorial:
+                        GameManager.i.tutorialScript.ProcessTutorialOption(dataPackage.listOfIgnoreEffects[0]);
+                        break;
+                    default: Debug.LogWarningFormat("Unrecognised dataPackage.uiType \"{0}\"", dataPackage.uiType); break;
+                }
                 //actual processing of selected option is handled by topicManager.cs
-                GameManager.i.topicScript.ProcessIgnore();
+
             }
             else
             {

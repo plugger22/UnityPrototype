@@ -2091,7 +2091,7 @@ public class EffectManager : MonoBehaviour
                     case "TutOption1":
                     case "TutOption2":
                     case "TutOption3":
-                        effectResolve = ResolveTutorialData(effect);
+                        effectResolve = ResolveTutorialData(effect, dataInput);
                         effectReturn = ConvertEffectResolveToReturn(effectResolve, effectReturn);
                         break;
                     //
@@ -4144,23 +4144,59 @@ public class EffectManager : MonoBehaviour
     /// <param name="effect"></param>
     /// <param name="dataInput"></param>
     /// <returns></returns>
-    private EffectDataResolve ResolveTutorialData(Effect effect)
+    private EffectDataResolve ResolveTutorialData(Effect effect, EffectDataInput data)
     {
+        string optionText = "Unknown";
         //data package to return to the calling methods
         EffectDataResolve effectResolve = new EffectDataResolve();
+        //get relevant option text
         switch (effect.outcome.name)
+                {
+                    case "TutOption0": optionText = GameManager.i.tutorialScript.option0Tag; break;
+                    case "TutOption1": optionText = GameManager.i.tutorialScript.option1Tag; break;
+                    case "TutOption2": optionText = GameManager.i.tutorialScript.option2Tag; break;
+                    case "TutOption3": optionText = GameManager.i.tutorialScript.option3Tag; break;
+                    default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\"", effect.outcome.name); break;
+                }
+        switch (data.queryType.name)
         {
-            case "TutOption0": 
-            case "TutOption1":
-            case "TutOption2":
-            case "TutOption3":
-                //job
-                GameManager.i.playerScript.previousJob = effect.description;
+            case "Job":
+                //Previous job
+                GameManager.i.playerScript.previousJob = optionText;
                 effectResolve.topText = string.Format("{0}It's official{1}", colourAlert, colourEnd);
-                effectResolve.bottomText = string.Format("Your previous occupation of<br><br>{0}{1}{2}<br><br>is now on the record", colourNeutral, effect.description, colourEnd);
+                effectResolve.bottomText = string.Format("Your previous occupation of<br><br>{0}{1}{2}<br><br>is now on the record", colourNeutral, optionText, colourEnd);
                 break;
-            default: Debug.LogWarningFormat("Unrecognised effect.outcome \"{0}\"", effect.outcome.name); break;
+            case "Name":
+                //Male/Female name
+                string fullName = optionText;
+                string firstName = "Unknown";
+                if (string.IsNullOrEmpty(optionText) == false)
+                {
+                    var names = fullName.Split(' ');
+                    switch (names.Length)
+                    {
+                        case 0: Debug.LogWarningFormat("Invalid name (Length Zero) from optionText \"{0}\"", optionText); optionText = "Unknown"; break;
+                        case 1: Debug.LogWarningFormat("Missing name (last) from optionText \"{0}\"", optionText); firstName = names[0]; break;
+                        case 2: firstName = names[0]; break;  //Working as designed
+                        default: Debug.LogWarningFormat("Too many names (there are {0}, should be 2) for optionText \"{1}\"", names.Length, optionText); break;
+                    }
+                    //set name
+                    GameManager.i.playerScript.SetPlayerFirstName(firstName);
+                    switch (data.side.level)
+                    {
+                        case 1: GameManager.i.playerScript.SetPlayerNameAuthority(fullName); break;
+                        case 2: GameManager.i.playerScript.SetPlayerNameResistance(fullName); break;
+                        default: Debug.LogWarningFormat("Unrecognised playerSide \"{0}\"", data.side); break;
+                    }
+                    effectResolve.topText = string.Format("{0}Good Choice!{1}", colourAlert, colourEnd);
+                    effectResolve.bottomText = string.Format("You'll be known as {0}{1}{2} until you've completed your first successful mission<br><br>You can then change it to whatever you'd like", 
+                        colourNeutral, optionText, colourEnd);
+                }
+                else { Debug.LogWarning("Invalid optionText (Null) for effect Query type Name"); }
+                break;
+            default: Debug.LogWarningFormat("Unrecognised effect.outcome.name \"{0}\"", effect.outcome.name); break;
         }
+
         return effectResolve;
     }
     #endregion
@@ -5176,7 +5212,7 @@ public class EffectManager : MonoBehaviour
                 megaCorpName = GameManager.i.dataScript.GetMegaCorpName(MegaCorpType.MegaCorpFive);
                 megaCorpType = MegaCorpType.MegaCorpFive;
                 break;
-            default: Debug.LogWarningFormat("Unrecognised effect.outcome.name \"{0}\"", effect.outcome.name); isProceed = false;  break;
+            default: Debug.LogWarningFormat("Unrecognised effect.outcome.name \"{0}\"", effect.outcome.name); isProceed = false; break;
         }
         if (isProceed == true)
         {
@@ -6186,7 +6222,7 @@ public class EffectManager : MonoBehaviour
                         {
                             if (secret.listOfEffects.Count > 0)
                             { builder.AppendFormat("{0}{1} Reveals Secret{2}", colourNormal, org.tag, colourEnd); }
-                            
+
                             /*//loop effects -> EDIT: Redundant code left in place until replacement code below is checked, Dec 16, '20
                             foreach (Effect effect in secret.listOfEffects)
                             {

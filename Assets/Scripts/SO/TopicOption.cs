@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -76,23 +75,26 @@ public class TopicOption : ScriptableObject
 
     public void OnEnable()
     {
-        /*Debug.AssertFormat(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or Empty) for {0}", name); DEBUG -> need to activate this once topics in place*/
-        Debug.AssertFormat(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty) for {0}", name);
+        //normal topics
         if (isTutorial == false)
-        { Debug.AssertFormat(topic != null, "Invalid topic (Null)"); }
+        {
+            Debug.AssertFormat(string.IsNullOrEmpty(tag) == false, "Invalid tag (Null or Empty) for {0}", name);
+            /*Debug.AssertFormat(string.IsNullOrEmpty(descriptor) == false, "Invalid descriptor (Null or Empty) for {0}", name);*/  //TO DO -> activate this once all topics are game ready
+            Debug.AssertFormat(topic != null, "Invalid topic (Null)");
+        }
         //assign optionNumber based on TopicOption name (last char is number of option in sequence, eg. 0 -> 3)
         string last;
         optionNumber = -1;
         try
-         {
+        {
             last = name.Substring(name.Length - 1, 1);
             optionNumber = Convert.ToInt32(last);
         }
-        catch(ArgumentOutOfRangeException)
+        catch (ArgumentOutOfRangeException)
         { Debug.LogWarningFormat("Invalid subString arguments for last for {0}", name); }
-        catch(OverflowException)
+        catch (OverflowException)
         { Debug.LogWarningFormat("Invalid conversion, Overflow exception for {0}", name); }
-        catch(FormatException)
+        catch (FormatException)
         { Debug.LogWarningFormat("Invalid conversion, formatException for {0}", name); }
         if (isTutorial == false)
         { Debug.AssertFormat(optionNumber > -1 && optionNumber < 4, "Invalid optionNumber \"{0}\" (should be 0 to 3) for {1}", optionNumber, name); }

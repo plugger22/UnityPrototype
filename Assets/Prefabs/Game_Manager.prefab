@@ -1836,7 +1836,26 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8b2847a7a246595458eee2b6a64e9b06, type: 2}
   arrayOfTutorialGoals:
   - {fileID: 11400000, guid: 33e14c1b26727af4796ede7d57be31f2, type: 2}
-  arrayOfTutorialOptions: []
+  arrayOfTutorialOptions:
+  - {fileID: 11400000, guid: 69514e86ece5f2f459a0d40a918ebac6, type: 2}
+  - {fileID: 11400000, guid: a280ec036d8e7af46b930840b4e09a04, type: 2}
+  - {fileID: 11400000, guid: 924e68d3cededc04e9577b9ffdf24192, type: 2}
+  - {fileID: 11400000, guid: 893bad95b68a0b24c95d4df6db598056, type: 2}
+  - {fileID: 11400000, guid: 1b6c9d6bfe7374940be6d096b66d45ee, type: 2}
+  - {fileID: 11400000, guid: 44201d12857820947b49d0ec20337374, type: 2}
+  - {fileID: 11400000, guid: e0fb46a78fd130b488be11c9bf72f0e7, type: 2}
+  - {fileID: 11400000, guid: 836452e57025a8f419a8d21f9e8869af, type: 2}
+  - {fileID: 11400000, guid: 99feae060da509c45bc2e040f139115c, type: 2}
+  - {fileID: 11400000, guid: 1bd7497d20068ac4c92f7fefdaa75e85, type: 2}
+  - {fileID: 11400000, guid: efdc3f22b5c0eda4ead314f8a3a942fc, type: 2}
+  - {fileID: 11400000, guid: 85bb0ff6c76e09049b7e75c402acf03a, type: 2}
+  - {fileID: 11400000, guid: fb78ff1ca1393ee4596a88d3066e3e60, type: 2}
+  - {fileID: 11400000, guid: 5d9510a2bb69b394fa03b24af2d8f144, type: 2}
+  - {fileID: 11400000, guid: 89a4abf95b7f4aa4ea6326a42e0b55f5, type: 2}
+  - {fileID: 11400000, guid: 05ff78f8de101d84e984560f8545d2ad, type: 2}
+  - {fileID: 11400000, guid: cec43b58deccab74686bb62b0d729890, type: 2}
+  - {fileID: 11400000, guid: 8042c6fd2bb64ab43a746ea37ce644e4, type: 2}
+  - {fileID: 11400000, guid: 1ab89e9322cd8f74da62511c326a3c89, type: 2}
   arrayOfTutorialGoalTypes:
   - {fileID: 11400000, guid: 5237bc6f2db221e4cbec1efa3fbd5e9a, type: 2}
   arrayOfTutorialQueryTypes:
@@ -5956,10 +5975,7 @@ MonoBehaviour:
   option1Tag: 
   option2Tag: 
   option3Tag: 
-  option0Text: 
-  option1Text: 
-  option2Text: 
-  option3Text: 
+  queryType: {fileID: 0}
 --- !u!114 &114525357966728784
 MonoBehaviour:
   m_ObjectHideFlags: 1

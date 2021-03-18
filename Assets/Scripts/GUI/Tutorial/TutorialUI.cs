@@ -419,6 +419,7 @@ public class TutorialUI : MonoBehaviour
                             EventManager.i.PostNotification(EventType.GameHelpOpen, this, currentItem.gameHelp);
                             break;
                         case "Question":
+                            /*
                             if (currentItem.isQueryDone == false)
                             {
                                 TopicUIData data = GetTopicData(currentItem);
@@ -450,7 +451,17 @@ public class TutorialUI : MonoBehaviour
                                 }
                                 //special outcome
                                 EventManager.i.PostNotification(EventType.OutcomeOpen, this, detailsDone);
-                            }
+                            }*/
+
+                            TopicUIData data = GetTopicData(currentItem);
+                            if (data != null)
+                            { EventManager.i.PostNotification(EventType.TopicDisplayOpen, this, data); }
+
+                            /*//change colour to completed (indicates that you're currently doing, or have done, the query)
+                            ColorBlock itemColours = listOfButtons[index].colors;
+                            itemColours.normalColor = colourCompleted;
+                            listOfButtons[index].colors = itemColours;*/
+
                             break;
                         default: Debug.LogWarningFormat("Unrecognised item.TutorialType \"{0}\"", currentItem.tutorialType.name); break;
                     }
@@ -489,87 +500,103 @@ public class TutorialUI : MonoBehaviour
             data.ignoreTooltipHeader = string.Format("<size=120%>{0}</size>", GameManager.Formatt("Disappointed", ColourType.badText));
             data.ignoreTooltipMain = "Yes, I am. Being able to make a decision is important, what's wrong with you?";
             data.ignoreTooltipDetails = string.Format("<size=115%>{0}</size>", GameManager.Formatt("I'll have to make it for you", ColourType.neutralText));
-            //Topic options
-            TopicOption[] arrayOfTopicOptions = GameManager.i.tutorialScript.tutorial.arrayOfOptions;
-            if (arrayOfTopicOptions != null)
+            if (item.queryType != null)
             {
-                //check there are four options and none are null
-                if (arrayOfTopicOptions.Length != maxOptions)
+                //query item type
+                GameManager.i.tutorialScript.queryType = item.queryType;
+                //Topic options
+                TopicOption[] arrayOfTopicOptions = GameManager.i.tutorialScript.tutorial.arrayOfOptions;
+                if (arrayOfTopicOptions != null)
                 {
-                    bool isProceed = true;
-                    for (int i = 0; i < arrayOfTopicOptions.Length; i++)
+                    //check there are four options and none are null
+                    if (arrayOfTopicOptions.Length == maxOptions)
                     {
-                        if (arrayOfTopicOptions[i] == null)
+                        bool isProceed = true;
+                        for (int i = 0; i < arrayOfTopicOptions.Length; i++)
                         {
-                            Debug.LogErrorFormat("Invalid topicOption (Null) for tutorial \"{0}\" arrayOfTopicOptions[{1}]", GameManager.i.tutorialScript.tutorial.name, i);
-                            isProceed = false;
-                        }
-                    }
-                    if (isProceed == true)
-                    {
-                        //Tutorial options
-                        count = item.listOfOptions.Count;
-                        if (item.isRandomOptions == true)
-                        {
-                            limit = Mathf.Min(maxOptions, count);
-                            //select up to four tutorial options randomly
-                            for (int i = 0; i < limit; i++)
+                            if (arrayOfTopicOptions[i] == null)
                             {
-                                index = Random.Range(0, listOfTempOptions.Count);
-                                TutorialOption optionTutorial = listOfTempOptions[index];
-                                if (optionTutorial != null)
+                                Debug.LogErrorFormat("Invalid topicOption (Null) for tutorial \"{0}\" arrayOfTopicOptions[{1}]", GameManager.i.tutorialScript.tutorial.name, i);
+                                isProceed = false;
+                            }
+                        }
+                        if (isProceed == true)
+                        {
+                            //Tutorial options
+                            count = item.listOfOptions.Count;
+                            if (item.isRandomOptions == true)
+                            {
+                                limit = Mathf.Min(maxOptions, count);
+                                //select up to four tutorial options randomly
+                                for (int i = 0; i < limit; i++)
                                 {
-                                    //Get Topic options
-                                    TopicOption optionTopic = arrayOfTopicOptions[i];
-                                    optionTopic.tag = optionTutorial.tag;
-                                    optionTopic.textToDisplay = GameManager.i.topicScript.GetOptionString(optionTutorial.text);
-                                    data.listOfOptions.Add(optionTopic);
-                                    listOfTempOptions.RemoveAt(index);
+                                    index = Random.Range(0, listOfTempOptions.Count);
+                                    TutorialOption optionTutorial = listOfTempOptions[index];
+                                    if (optionTutorial != null)
+                                    {
+                                        //Get Topic options
+                                        TopicOption optionTopic = arrayOfTopicOptions[i];
+                                        optionTopic.tag = optionTutorial.tag;
+                                        optionTopic.textToDisplay = GameManager.i.topicScript.GetOptionString(optionTutorial.text);
+                                        data.listOfOptions.Add(optionTopic);
+                                        listOfTempOptions.RemoveAt(index);
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid tutorialOption (Null) for isRandom listOfTempOptions[{0}]", index); }
                                 }
-                                else { Debug.LogWarningFormat("Invalid tutorialOption (Null) for isRandom listOfTempOptions[{0}]", index); }
                             }
-                        }
-                        else
-                        {
-                            //NOT random, take up to first four options
-                            limit = Mathf.Min(maxOptions, count);
-                            for (int i = 0; i < limit; i++)
+                            else
                             {
-                                TutorialOption optionTutorial = listOfTempOptions[i];
-                                if (optionTutorial != null)
+                                //NOT random, take up to first four options
+                                limit = Mathf.Min(maxOptions, count);
+                                for (int i = 0; i < limit; i++)
                                 {
-                                    TopicOption optionTopic = arrayOfTopicOptions[i];
-                                    optionTopic.tag = optionTutorial.tag;
-                                    optionTopic.text = optionTutorial.text;
-                                    data.listOfOptions.Add(optionTopic);
+                                    TutorialOption optionTutorial = listOfTempOptions[i];
+                                    if (optionTutorial != null)
+                                    {
+                                        TopicOption optionTopic = arrayOfTopicOptions[i];
+                                        optionTopic.tag = optionTutorial.tag;
+                                        optionTopic.text = optionTutorial.text;
+                                        data.listOfOptions.Add(optionTopic);
+                                    }
+                                    else { Debug.LogWarningFormat("Invalid topicOption (Null) for normal listOfTempOptions[{0}]", i); }
                                 }
-                                else { Debug.LogWarningFormat("Invalid topicOption (Null) for normal listOfTempOptions[{0}]", i); }
                             }
-                        }
-                        //option tooltips and optionNumber
-                        for (int i = 0; i < data.listOfOptions.Count; i++)
-                        {
-                            TopicOption option = data.listOfOptions[i];
-                            if (option != null)
+                            //option tooltips and optionNumber
+                            for (index = 0; index < data.listOfOptions.Count; index++)
                             {
-                                option.tooltipHeader = string.Format("<size=120%>{0}</size>", GameManager.Formatt(option.tag, ColourType.neutralText));
-                                option.tooltipMain = GameManager.i.tutorialScript.GetTutorialJobTooltip();
-                                //reassign option number to be the position in the listOfOptions
-                                option.optionNumber = i;
-                                //set all options as Valid
-                                option.isValid = true;
+                                TopicOption option = data.listOfOptions[index];
+                                if (option != null)
+                                {
+                                    option.tooltipHeader = string.Format("<size=120%>{0}</size>", GameManager.Formatt(option.tag, ColourType.neutralText));
+                                    option.tooltipMain = GameManager.i.tutorialScript.GetTutorialJobTooltip();
+                                    //reassign option number to be the position in the listOfOptions
+                                    option.optionNumber = index;
+                                    //set all options as Valid
+                                    option.isValid = true;
+                                    //copy data across to TutorialManager.cs fields
+                                    switch (index)
+                                    {
+                                        case 0: GameManager.i.tutorialScript.option0Tag = option.tag; break;
+                                        case 1: GameManager.i.tutorialScript.option1Tag = option.tag; break;
+                                        case 2: GameManager.i.tutorialScript.option2Tag = option.tag; break;
+                                        case 3: GameManager.i.tutorialScript.option3Tag = option.tag; break;
+                                        default: Debug.LogWarningFormat("Invalid index \"{0}\"", index); break;
+                                    }
+                                }
+                                else { Debug.LogWarningFormat("Invalid topicOption (Null) for data.listOfOptions[{0}]", index); }
                             }
-                            else { Debug.LogWarningFormat("Invalid topicOption (Null) for data.listOfOptions[{0}]", i); }
                         }
+                        return data;
                     }
-                    return data;
+                    else
+                    { Debug.LogErrorFormat("Invalid arrayOfTopicOptions (records, has {0}, needs {1}) for tutorial \"{2}\"", arrayOfTopicOptions.Length, maxOptions, GameManager.i.tutorialScript.tutorial.name); }
                 }
-                else
-                { Debug.LogErrorFormat("Invalid arrayOfTopicOptions (records, has {0}, needs {1}) for tutorial \"{2}\"", arrayOfTopicOptions.Length, maxOptions, GameManager.i.tutorialScript.tutorial.name); }
+                else { Debug.LogError("Invalid tutorial.arrayOfOptions (Null)"); }
             }
-            else { Debug.LogError("Invalid tutorial.arrayOfOptions (Null)"); }
+            else { Debug.LogWarning("Invalid (Tutorial) item (Null)"); }
         }
-        else { Debug.LogWarning("Invalid (Tutorial) item (Null)"); }
+        else { Debug.LogErrorFormat("Invalid queryType (Null) for TutorialItem \"{0}\"", item.name); }
+        //fault condition
         return null;
     }
     #endregion

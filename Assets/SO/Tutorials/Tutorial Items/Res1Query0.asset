@@ -19,7 +19,7 @@ MonoBehaviour:
   gameHelp: {fileID: 0}
   goal: {fileID: 0}
   queryType: {fileID: 11400000, guid: 7b12844901fc9f9478441b5e50b7ecc1, type: 2}
-  queryHeader: Existing Skill Set
+  queryHeader: Your Name
   queryText: What are we going to call you?<br><br>New folk like you don't get to
     use their <b>own name</b>. Not yet, anyway
   isRandomOptions: 1
